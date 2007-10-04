@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/images" >
+        <file>images/350x254black_error.png</file>
+        <file>images/black.png</file>
+        <file>images/eraser.png</file>
+        <file>images/exit.png</file>
+        <file>images/gear.png</file>
+        <file>images/hdd.png</file>
+        <file>images/imgp4355_Bot-freigestellt-275x264.png</file>
+        <file>images/kmplot.png</file>
+        <file>images/memory.png</file>
+        <file>images/reload.png</file>
+        <file>images/remote.png</file>
+        <file>images/splash.png</file>
+        <file>images/robot2_imgp3692.png</file>
+        <file>images/trashcan_empty.png</file>
+        <file>images/underFootOne.png</file>
+        <file>images/webcamreceive.png</file>
+        <file>images/webcamsend.png</file>
+    </qresource>
+</RCC>
