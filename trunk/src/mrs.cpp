@@ -8060,7 +8060,7 @@ void Mrs::showSensorData()
 }
 
 
-void Mrs::drive(unsigned char direction)
+void Mrs::drive(unsigned char command)
 {
 	switch (direction)
 	{

@@ -46,12 +46,10 @@ class Circuit;
 class Interface;
 class Laser;
 
-/*!
-\brief The class for all GUI actions
 
-This is the GUI.
+/**
+The class for all GUI actions
 */
-
 class Gui : public QMainWindow
 {
 	Q_OBJECT
@@ -59,47 +57,162 @@ class Gui : public QMainWindow
 	public:
 		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit *c, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
+	
+		/**
+		Shows a sensor distance in centimeters (cm) in a text label.
+		@param sensor is the sensor number.
+		@param distance is the distance in cm.
+		*/
 		void showDistance(int sensor, int distance);
-		void showDrivenDistance(int sensor, int distance);
+	
+		/**
+		Shows a sensor distance in a progress bar.
+		@param sensor is the sensor number.
+		@param distance is the internal sensor value (not a distance in cm!).
+		@sa SensorThread::convertToSensorValue(), SensorThread::convertToDistance()
+		*/
 		void showDistanceGraphical(int sensor, int sensorValue);
+		
+		/**
+		Shows the driven distance in a text label.
+		@param sensor is the sensor number.
+		@param distance is the distance in cm.
+		*/
+		void showDrivenDistance(int sensor, int distance);
+		
+		/**
+		Shows a sensor alarm (turns progressBars red, text in bold etc.)
+		@param sensor is the sensor number.
+		@param state can be ON or OFF.
+		*/
 		void showAlarm(short int sensor, unsigned char state);
+		
+		/**
+		Shows the status and direction of a motor (ON, OFF, RIGHT, LEFT)
+		@param motor is the motor number.
+		@param power can be ON or OFF.
+		@param direction can be FORWARD or BACKWARD.
+		*/
 		void showMotorStatus(unsigned char motor, unsigned char power, unsigned char direction);
 		
-		/*! Append text to the main log in the main window */
+		/**
+		Appends text to the main log in the main window.
+		@param text is the text to be displayed.
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
+		*/
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
 		
+		/**
+		@return The slider value of a motor speed.
+		@param motor is the motor number.
+		*/
 		int getSliderMotorSpeed(int motor);
+		
+		/**
+		@return The slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
+		*/
 		int getSliderObstacleValue();
+		
+		/**
+		@return The slider value of an obstacle distance for the laser scanner (when a alarm should be released).
+		*/
 		int getSliderObstacleLaserScannerValue();
 		
-		/*! returns the angle to which the robot has to fit between */
+		/**
+		@return The angle to which the robot has to fit between.
+		*/
 		int getSliderBotSlotValue();
 		
+		/**
+		@return The state of a Qt checkBox.
+		*/
 		Qt::CheckState getCheckBoxSaveSettings();
 		//Qt::CheckState getCheckBoxAutoSave();
 		
+		/**
+		Sets the slider MotorSpeed.
+		@param motor is the motor number.
+		@param value is the speed of the motor.
+		*/
 		void setSliderMotorSpeed(int motor, int value);
+		
+		/**
+		Sets the slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
+		@param value is distance in cm.
+		*/
 		void setSliderObstacleValue(int value);
+		
+		/**
+		Sets the slider value of an obstacle distance for the laser scanner (when a alarm should be released).
+		@param value is distance in cm.
+		*/
 		void setSliderObstacleLaserScannerValue(int value);
-		void setSliderPositionServo1(int value);
+		
+		//void setSliderPositionServo1(int value);
 		//void setSliderPositionServo2(int value);
+		
+		/**
+		Enables or disables the camera control in the GUI, whether a camera was found or not.
+		@param state can be true or false.
+		*/
 		void enableCamControls(bool state);
+		
+		/**
+		Enables or disables the laser scanner control in the GUI, whether the laser scanner is active or not.
+		@param state can be true or false.
+		*/
 		void enableLaserScannerControls(bool state);
+		
+		// TODO: Wo wird das benutzt?!? In enableLaserScannerControls aufrufen?!?
 		void enableLaserScannerObstacleControls(bool state);
+		
+		/**
+		Checks or unckecks the SaveSettings checkbox, depending on the value read from the ini-file.
+		*/
 		void setCheckBoxSaveSettings(Qt::CheckState state);
-		void setBtnSavePic(bool activate);
+		
+		//void setBtnSavePic(bool activate);
+
 
 	
 	public slots:
+		/**
+		Shows the new picture from the cam (live). This slot is called from the camera thread.
+		@sa CamThread()
+		*/
 		void setCamImage(IplImage* frame);
+		
+		/**
+		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
 		void setPlotData1(double *xval, double *yval, int size);
+		
+		/**
+		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
 		void setPlotData2(double *xval, double *yval, int size);
 		
-		/*!
+		/**
 		Append text to the network log in the main window
+		@param text is the text to be displayed.
+		@param CR=true adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		@param sayIt=true If true, the text is also spoken (default=false). This parameter is optional!
+		@sa appendLog()
 		*/
 		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
 		
+		/**
+		Refreshes the view of the lines from the laser scanner
+		*/
 		void refreshLaserView();
 	
 	
@@ -110,25 +223,29 @@ class Gui : public QMainWindow
 	
 
 	signals:
-		/*!
-		\brief Enables or disables the listening for the robot remote control.
-		
-		This signal is sent from the remote control button.
+		/**
+		Enables or disables the listening for the robot remote control. This signal is sent from the remote control button.
+		@param status can be true or false.
+		@sa NetworkThread()
 		*/
+		// TODO: change name to 'state'
 		void enableRemoteControlListening(bool status);
 	
-		/*!
-		\brief Enables or disables the robots simulation mode.
-		
+		/**
+		Enables or disables the robots simulation mode.
 		This signal is sent from the simulation button and received from all threads which deliver real signals from the bot.
-		Once the signal is received, the slots switch to simulation mode.
+		Once the signal is received, the slots switches to simulation mode.
+		@param status can be true or false.
+		@sa Mrs::setSimulationMode()
+		@sa SensorThread::setSimulationMode()
+		@sa LaserThread::setSimulationMode()
+		@sa ObstackeCheckThread::setSimulationMode()
 		*/
+		// TODO: change name to 'state'
 		void simulate(bool status);
 	
-		/*!
-		\brief Emits a speak signal.
-		
-		This signal is sent to the speakThread.
+		/*
+		Emits a speak signal. This signal is sent to the speakThread.
 		*/
 		// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
 		//void speak(QString text);
@@ -168,8 +285,16 @@ class Gui : public QMainWindow
 
 
 	private:
-		/*! Draws some help lines / distances / dimensons in the laser scanner view. */
+		/**
+		Draws some help lines / distances / dimensons in the laser scanner view.
+		*/
 		void drawLaserDistances(QPainter *painter, bool flatView);
+		
+		/**
+		Saves the current picture to disk (one time shot).
+		*/
+		void saveCamImage(void);
+
 		
 		Ui::Gui ui;
 		Mrs *mrs1;
@@ -200,22 +325,23 @@ class Gui : public QMainWindow
 		int lastScale;
 
 		
-		static const unsigned char ON  = 1;  /*! For motor "ON" */
-		static const unsigned char OFF = 0;  /*! For motor "OFF" */
+		static const unsigned char ON  = 1;  /** For motor "ON" */
+		static const unsigned char OFF = 0;  /** For motor "OFF" */
 		
 		static const unsigned char START = 5;
 		static const unsigned char STOP  = 6;
 		
-		static const unsigned char CLOCKWISE        = 0;  /*! Motor direction "CLOCKWISE" */
-		static const unsigned char COUNTERCLOCKWISE = 1;  /*! Motor direction "COUNTERCLOCKWISE" */
-		static const unsigned char SAME             = 3;  /*! Motor direction/power "same like before" */
-		static const unsigned char MOTOR1           = 10; /*! Motor 1 */
-		static const unsigned char MOTOR2           = 20; /*! Motor 2 */
+		static const unsigned char CLOCKWISE        = 0;  /** Motor direction "CLOCKWISE" */
+		static const unsigned char COUNTERCLOCKWISE = 1;  /** Motor direction "COUNTERCLOCKWISE" */
+		static const unsigned char SAME             = 3;  /** Motor direction/power "same like before" */
+		static const unsigned char MOTOR1           = 10; /** Motor 1 */
+		static const unsigned char MOTOR2           = 20; /** Motor 2 */
 		
 		static const unsigned char SERVO1           = 10; // Servo 1
 		//static const unsigned char SERVO2           = 20; // Servo 2
 		
-		/*! Give the sensors some names
+		/**
+		Give the sensors some names
 		
 		DONT CHANGE THIS NUMBERS!
 		THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!
@@ -229,25 +355,25 @@ class Gui : public QMainWindow
 		static const short int SENSOR7 = 64;
 		static const short int SENSOR8 = 128;
 		
-		/*! ultrasonic sensor */
+		/** ultrasonic sensor */
 		static const short int SENSOR16 = 256;
-		/*! Value if no sensor has a value to react */
+		/** Value if no sensor has a value to react */
 		static const short int NONE = 0;
 		
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 	
-		/*! factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels */
+		/** factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels */
 		static const int FITTOFRAMEFACTOR=45;
 		
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		/*!
+		/**
 		Defines the size of the laserLines[] array
 		This es equal to the number of degrees.
 		See also laserThread.h */
 		//static const unsigned char LASERSCANNERARRAYSIZE = 181;
 		
-		/*! The array with the laser lines (x1 x2 y1 y2 coordinates!) */
+		/** The array with the laser lines (x1 x2 y1 y2 coordinates!) */
 		// QLine laserLine[LASERSCANNERARRAYSIZE];
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 };

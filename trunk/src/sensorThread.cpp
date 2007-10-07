@@ -104,9 +104,6 @@ void SensorThread::stop()
 }
 
 
-/*!
-This method gets the values from ALL sensors (Infrared, Ultrasonic and wheel encoders)
-*/
 void SensorThread::run()
 {
 	//bool result = false;
@@ -416,9 +413,6 @@ void SensorThread::run()
 }
 
 
-/*!
-This method converts the measured value from a IR-Sensor into a distance in centimeters (cm).
-*/
 int SensorThread::convertToDistance(int sensorValue)
 {
 	unsigned char calibrationValue = 8;

@@ -617,12 +617,6 @@ void Gui::on_btnExecuteScript_clicked()
 */
 
 
-/*!
-Shows the distance value in centimeters (cm) in a text label.
-
-param1: sensor number
-param2: distance in cm.
-*/
 void Gui::showDistance(int sensor, int distance)
 {
 	QString str;
@@ -1136,10 +1130,12 @@ void Gui::setSliderObstacleLaserScannerValue(int value)
 }
 
 
+/*
 void Gui::setSliderPositionServo1(int value)
 {
 	ui.sliderPositionServo1->setValue(value);
 }
+*/
 
 
 void Gui::setCheckBoxSaveSettings(Qt::CheckState state)
@@ -1174,13 +1170,7 @@ void Gui::enableLaserScannerObstacleControls(bool state)
 
 void Gui::on_btnSavePicture_clicked()
 {
-	/*
-	if (ui.labelCmucam->pixmap()->isNull() == false)
-	{
-		ui.labelCmucam->pixmap()->save("picture.png", "PNG");
-		appendCamLog("picture.png saved.");
-	}
-	*/
+	saveCamImage();
 }
 
 
@@ -1192,8 +1182,6 @@ void Gui::on_btnAutoSavePicture_clicked()
 	{
 		toggle = ON;
 		
-		// disable some controls
-		ui.btnSavePicture->setEnabled(false);
 		// change text of button
 		ui.btnAutoSavePicture->setText("&Stop");
 		
@@ -1207,8 +1195,6 @@ void Gui::on_btnAutoSavePicture_clicked()
 	else
 	{
 		toggle = OFF;
-		// enable some controls
-		ui.btnSavePicture->setEnabled(true);
 		// change text of button
 		ui.btnAutoSavePicture->setText("&Start");
 		
@@ -1237,7 +1223,6 @@ void Gui::on_btnClearPicture_clicked()
 
 void Gui::setCamImage(IplImage* frame)
 {
-	static QDateTime timestamp;
 	//	ui.labelCmucam->setPixmap(QPixmap::fromImage(image.scaled(350, 350, Qt::KeepAspectRatio, Qt::FastTransformation)));
 	
 	// show pic only live, when ckecked in GUI
@@ -1254,27 +1239,35 @@ void Gui::setCamImage(IplImage* frame)
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )
 	{
-		//---------------------------
-		// grab cam pic from Qt-GUI
-		//---------------------------
-		// okay, aber kein bild! Daher grabWindow (geht auch mit overlay!)  cameraPicToSave = QPixmap::grabWidget(ui.groupBoxCamera);
-		// TODO: Seltsame Bildmaße! :-?
-		cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.groupBoxCamera->x()+19, ui.groupBoxCamera->y()+19, 474, 353);
+		saveCamImage();
+	}
+}
+
+
+void Gui::saveCamImage(void)
+{
+	//---------------------------
+	// grab cam pic from Qt-GUI
+	//---------------------------
+	static QDateTime timestamp;
+	
+	
+	// TODO: Seltsame Bildmaße! :-?
+	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.groupBoxCamera->x()+19, ui.groupBoxCamera->y()+19, 474, 353);
+	
+	//---------------------------------------------------------------------
+	// save image to disk, but not within the same seond (same timestamp)
+	//---------------------------------------------------------------------
+	if (QDateTime::currentDateTime() != timestamp)
+	{
+		// get the actual date and time
+		timestamp = QDateTime::currentDateTime();
+		QString filename = timestamp.toString("yyyy-MM-dd_hh-mm-ss");
+		filename += ".png";
 		
-		//---------------------------------------------------------------------
-		// save image to disk, but not within the same seond (same timestamp)
-		//---------------------------------------------------------------------
-		if (QDateTime::currentDateTime() != timestamp)
-		{
-			// get the actual date and time
-			timestamp = QDateTime::currentDateTime();
-			QString filename = timestamp.toString("yyyy-MM-dd_hh-mm-ss");
-			filename += ".png";
-			
-			// save
-			cameraPicToSave.save(filename.toAscii(), "PNG");
-			//appendLog(tr("Picture \"%1\" saved.").arg(filename));
-		}
+		// save
+		cameraPicToSave.save(filename.toAscii(), "PNG");
+		//appendLog(tr("Picture \"%1\" saved.").arg(filename));
 	}
 }
 

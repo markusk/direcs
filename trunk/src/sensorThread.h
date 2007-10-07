@@ -18,6 +18,10 @@
 #include <QThread>
 //-------------------------------------------------------------------
 
+/**
+The SensorThread class is a thread, responsible for getting all data from all sensors (infrared, ultrasonic, motor current sensors and wheel encoders) and to store them.
+It also gives read/write access to this data.
+*/
 class SensorThread : public QThread
 {
     Q_OBJECT
@@ -25,45 +29,93 @@ class SensorThread : public QThread
 	public:
 		SensorThread(InterfaceAvr *i, Servo *s);
 		~SensorThread();
+		
+		/**
+		Stops the thread.
+		*/
 		void stop();
+		
+		/**
+		Starts the thread.
+		*/
 		virtual void run();
 
+		/**
+		@return The value of an infrared sensor.
+		@param sensor is the sensor number.
+		*/
 		int getIrSensorValue(int sensor);
-		int getUsSensorValue(int sensor);
-		int getMotorSensorValue(int sensor);
-		int getDistance(int sensor);
-		int getDrivenDistance(int sensor);
-		void resetDrivenDistance(int sensor);
-		int convertToDistance(int);
 		
-		/*!
-		Converts a distance (in cm) to an IR sensor value.
+		/**
+		@return The value of an ultrasonic sensor.
+		@param sensor is the sensor number.
+		*/
+		int getUsSensorValue(int sensor);
+		
+		/**
+		@return The value of a motor sensor.
+		@param sensor is the sensor number.
+		*/
+		int getMotorSensorValue(int sensor);
+		
+		/**
+		@return The distance in cm, of a sensor.
+		@param sensor is the sensor number.
+		*/
+		int getDistance(int sensor);
+		
+		/**
+		@return The driven distance in cm, of a wheel encoder.
+		@param sensor is the sensor number.
+		*/
+		int getDrivenDistance(int sensor);
+		
+		/**
+		Resets the driven distance to 0.
+		@param sensor is the sensor number.
+		*/
+		void resetDrivenDistance(int sensor);
+		
+		/**
+		Converts a infrared sensor value to a distance in cm.
+		@param sensorValue is the measured sensor value.
+		@return The distance in cm.
+		@sa convertToSensorValue()
+		*/
+		int convertToDistance(int sensorValue);
+		
+		/**
+		Converts a distance in cm to an infrared sensor value.
+		@param sensorValue is the measured sensor value.
+		@return The sensor value.
+		@sa convertToDistance()
 		*/
 		int convertToSensorValue(int);
 		
-		/*!
-		Returns a measured motor sensor value from the mc to mili Ampare (mA).
+		/**
+		@return The measured motor sensor value in milli Ampere (mA).
+		@param motor is the motor number.
 		*/
 		int getMAmpere(int motor);
 		
 	
 	public slots:
-		/*!
+		/**
 		This slot enables or disables the simulation mode.
+		In the simulation mode all sensor values are set to a fixed value. No real sensor values are read from the robot, when set to true.
+		@param status can be true or false.
+		@sa Gui::simulate()
 		*/
+		// TODO:: change status to state
 		void setSimulationMode(bool status);
 
 
 	signals:
-		void sensorDataComplete();
-		
-		
-		/*!
-		\brief Enables or disables the robots simulation mode.
-		
-		This signal is sent from the simulation button.
+		/**
+		This signal is emitted when all sensors were read.
+		@sa Mrs::showSensorData()
 		*/
-		void simulate(bool status);
+		void sensorDataComplete();
 
 
 	private:
@@ -104,20 +156,24 @@ class SensorThread : public QThread
 		//
 		int iRSensorValue[SENSOR8+1]; // ToDo: array mit 129 Werten statt 8 für 8 Sensoren !!! Überleg dir was !!!
 		
-		/*! defines the size of the iRDistance[] array !! */
+		/** defines the size of the iRDistance[] array !! */
 		static const unsigned char IRSENSORARRAYSIZE = 40;
 		int iRDistance[IRSENSORARRAYSIZE];
 		
-		/*! defines the size of the usSensorValue[] array
-		    This es equal to the number of ultrasonic sensors. */
+		/**
+		Defines the size of the usSensorValue[] array
+		This es equal to the number of ultrasonic sensors.
+		*/
 		static const unsigned char USSENSORARRAYSIZE = 1;
 		int usSensorValue[USSENSORARRAYSIZE];
 		
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 		
-		/*! defines the size of the motorSensorValue[] array
-		   This es equal to the number of motor sensors. */
+		/**
+		Defines the size of the motorSensorValue[] array
+		This es equal to the number of motor sensors.
+		*/
 		static const unsigned char MOTORSENSORARRAYSIZE = 2;
 		int motorSensorValue[MOTORSENSORARRAYSIZE];
 		
@@ -126,8 +182,9 @@ class SensorThread : public QThread
 		static const unsigned char DRIVENDISTANCEARRAYSIZE = 2;
 		int drivenDistance[DRIVENDISTANCEARRAYSIZE];
 		
-		/*! Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.
-		    For example, a measured sensor value for a motor sensor is 100, this multiplied with a conversion factor 29 results in 290 mA.
+		/**
+		Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.
+		For example, a measured sensor value for a motor sensor is 100, this multiplied with a conversion factor 29 results in 290 mA.
 		*/
 		static const unsigned char CONVERSIONFACTORMOTORSENSOR = 29;
 		
