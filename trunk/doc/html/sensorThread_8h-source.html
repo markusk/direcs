@@ -36,125 +36,131 @@
 <a name="l00018"></a>00018 <span class="preprocessor">#include &lt;QThread&gt;</span>
 <a name="l00019"></a>00019 <span class="comment">//-------------------------------------------------------------------</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="keyword">class </span>SensorThread : <span class="keyword">public</span> QThread
-<a name="l00022"></a>00022 {
-<a name="l00023"></a>00023     Q_OBJECT
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025         <span class="keyword">public</span>:
-<a name="l00026"></a>00026                 SensorThread(InterfaceAvr *i, Servo *s);
-<a name="l00027"></a>00027                 ~SensorThread();
-<a name="l00028"></a>00028                 <span class="keywordtype">void</span> stop();
-<a name="l00029"></a>00029                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> run();
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031                 <span class="keywordtype">int</span> getIrSensorValue(<span class="keywordtype">int</span> sensor);
-<a name="l00032"></a>00032                 <span class="keywordtype">int</span> getUsSensorValue(<span class="keywordtype">int</span> sensor);
-<a name="l00033"></a>00033                 <span class="keywordtype">int</span> getMotorSensorValue(<span class="keywordtype">int</span> sensor);
-<a name="l00034"></a>00034                 <span class="keywordtype">int</span> getDistance(<span class="keywordtype">int</span> sensor);
-<a name="l00035"></a>00035                 <span class="keywordtype">int</span> getDrivenDistance(<span class="keywordtype">int</span> sensor);
-<a name="l00036"></a>00036                 <span class="keywordtype">void</span> resetDrivenDistance(<span class="keywordtype">int</span> sensor);
-<a name="l00037"></a>00037                 <span class="keywordtype">int</span> convertToDistance(<span class="keywordtype">int</span>);
-<a name="l00038"></a>00038                 
-<a name="l00042"></a>00042                 <span class="keywordtype">int</span> convertToSensorValue(<span class="keywordtype">int</span>);
-<a name="l00043"></a>00043                 
-<a name="l00047"></a>00047                 <span class="keywordtype">int</span> getMAmpere(<span class="keywordtype">int</span> motor);
+<a name="l00025"></a><a class="code" href="classSensorThread.html">00025</a> <span class="keyword">class </span><a class="code" href="classSensorThread.html">SensorThread</a> : <span class="keyword">public</span> QThread
+<a name="l00026"></a>00026 {
+<a name="l00027"></a>00027     Q_OBJECT
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029         <span class="keyword">public</span>:
+<a name="l00030"></a>00030                 <a class="code" href="classSensorThread.html">SensorThread</a>(InterfaceAvr *i, Servo *s);
+<a name="l00031"></a>00031                 ~<a class="code" href="classSensorThread.html">SensorThread</a>();
+<a name="l00032"></a>00032                 
+<a name="l00036"></a>00036                 <span class="keywordtype">void</span> <a class="code" href="classSensorThread.html#26436b23d31390a5b6f4346f6b29eab3">stop</a>();
+<a name="l00037"></a>00037                 
+<a name="l00041"></a>00041                 <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSensorThread.html#7f07b1cb000c5de8b88c7a44d637ec47">run</a>();
+<a name="l00042"></a>00042 
+<a name="l00047"></a>00047                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#d537703677bcea531378e97fade3834d">getIrSensorValue</a>(<span class="keywordtype">int</span> sensor);
 <a name="l00048"></a>00048                 
-<a name="l00049"></a>00049         
-<a name="l00050"></a>00050         <span class="keyword">public</span> slots:
-<a name="l00054"></a>00054                 <span class="keywordtype">void</span> setSimulationMode(<span class="keywordtype">bool</span> status);
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057         signals:
-<a name="l00058"></a>00058                 <span class="keywordtype">void</span> sensorDataComplete();
-<a name="l00059"></a>00059                 
+<a name="l00053"></a>00053                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#87206c0146c8157b7985098d015134ef">getUsSensorValue</a>(<span class="keywordtype">int</span> sensor);
+<a name="l00054"></a>00054                 
+<a name="l00059"></a>00059                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#fa0dbf40fd6d225ada4786e109c9701e">getMotorSensorValue</a>(<span class="keywordtype">int</span> sensor);
 <a name="l00060"></a>00060                 
-<a name="l00066"></a>00066                 <span class="keywordtype">void</span> simulate(<span class="keywordtype">bool</span> status);
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069         <span class="keyword">private</span>:
-<a name="l00070"></a>00070                 <span class="comment">//mutable QMutex mutex; // make this class thread-safe</span>
-<a name="l00071"></a>00071                 InterfaceAvr *interface1;
-<a name="l00072"></a>00072                 Servo *servos;
-<a name="l00073"></a>00073                 <span class="keyword">volatile</span> <span class="keywordtype">bool</span> stopped;
-<a name="l00074"></a>00074                 <span class="keywordtype">bool</span> simulationMode;
-<a name="l00075"></a>00075                 
-<a name="l00076"></a>00076                 <span class="comment">// Every thread sleeps some time, for having a bit more time fo the other threads!</span>
-<a name="l00077"></a>00077                 <span class="comment">// Time in milliseconds</span>
-<a name="l00078"></a>00078                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> THREADSLEEPTIME = 25; <span class="comment">// Default: 25 ms  (old: 5 ms)</span>
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080                 <span class="comment">// Give the infrared sensors some names</span>
-<a name="l00081"></a>00081                 <span class="comment">//</span>
-<a name="l00082"></a>00082                 <span class="comment">// DONT CHANGE THIS NUMBERS!</span>
-<a name="l00083"></a>00083                 <span class="comment">// THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!</span>
-<a name="l00084"></a>00084                 <span class="comment">//</span>
-<a name="l00085"></a>00085                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR1 = 1;
-<a name="l00086"></a>00086                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR2 = 2;
-<a name="l00087"></a>00087                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR3 = 4;
-<a name="l00088"></a>00088                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR4 = 8;
-<a name="l00089"></a>00089                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR5 = 16;
-<a name="l00090"></a>00090                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR6 = 32;
-<a name="l00091"></a>00091                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR7 = 64;
-<a name="l00092"></a>00092                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR8 = 128;
-<a name="l00093"></a>00093                 
-<a name="l00094"></a>00094                 <span class="comment">// ultrasonic sensor</span>
-<a name="l00095"></a>00095                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR16 = 256;
-<a name="l00096"></a>00096                 
-<a name="l00097"></a>00097                 <span class="comment">// 5 sensors + 1 = 16</span>
-<a name="l00098"></a>00098                 <span class="comment">// This just for convenience to call the array index by the sensor names.</span>
-<a name="l00099"></a>00099                 <span class="comment">// (wastin' some memory ;-) )</span>
-<a name="l00100"></a>00100                 <span class="comment">//</span>
-<a name="l00101"></a>00101                 <span class="comment">// #define SENSOR4 = 8</span>
-<a name="l00102"></a>00102                 <span class="comment">//</span>
-<a name="l00103"></a>00103                 <span class="comment">// For example:  iRSensorValue[SENSOR4] = 0;</span>
-<a name="l00104"></a>00104                 <span class="comment">//</span>
-<a name="l00105"></a>00105                 <span class="keywordtype">int</span> iRSensorValue[SENSOR8+1]; <span class="comment">// ToDo: array mit 129 Werten statt 8 für 8 Sensoren !!! Überleg dir was !!!</span>
-<a name="l00106"></a>00106                 
-<a name="l00108"></a>00108                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> IRSENSORARRAYSIZE = 40;
-<a name="l00109"></a>00109                 <span class="keywordtype">int</span> iRDistance[IRSENSORARRAYSIZE];
-<a name="l00110"></a>00110                 
-<a name="l00113"></a>00113                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> USSENSORARRAYSIZE = 1;
-<a name="l00114"></a>00114                 <span class="keywordtype">int</span> usSensorValue[USSENSORARRAYSIZE];
-<a name="l00115"></a>00115                 
-<a name="l00116"></a>00116                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> MOTORSENSOR1 = 0;
-<a name="l00117"></a>00117                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> MOTORSENSOR2 = 1;
-<a name="l00118"></a>00118                 
-<a name="l00121"></a>00121                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> MOTORSENSORARRAYSIZE = 2;
-<a name="l00122"></a>00122                 <span class="keywordtype">int</span> motorSensorValue[MOTORSENSORARRAYSIZE];
-<a name="l00123"></a>00123                 
-<a name="l00124"></a>00124                 <span class="comment">// defines the size of the drivenDistance[] array</span>
-<a name="l00125"></a>00125                 <span class="comment">// This es equal to the number of motors!</span>
-<a name="l00126"></a>00126                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> DRIVENDISTANCEARRAYSIZE = 2;
-<a name="l00127"></a>00127                 <span class="keywordtype">int</span> drivenDistance[DRIVENDISTANCEARRAYSIZE];
-<a name="l00128"></a>00128                 
-<a name="l00132"></a>00132                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> CONVERSIONFACTORMOTORSENSOR = 29;
-<a name="l00133"></a>00133                 
-<a name="l00134"></a>00134                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> SERVO1 = 10; <span class="comment">// Servo 1</span>
-<a name="l00135"></a>00135                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> SERVO2 = 20; <span class="comment">// Servo 2</span>
-<a name="l00136"></a>00136                 
-<a name="l00137"></a>00137                 <span class="comment">//</span>
-<a name="l00138"></a>00138                 <span class="comment">// the "serial" commands for the MC</span>
-<a name="l00139"></a>00139                 <span class="comment">//</span>
-<a name="l00140"></a>00140                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_1  = 1;
-<a name="l00141"></a>00141                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_2  = 2;
-<a name="l00142"></a>00142                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_3  = 3;
-<a name="l00143"></a>00143                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_4  = 4;
-<a name="l00144"></a>00144                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_5  = 5;
-<a name="l00145"></a>00145                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_6  = 6;
-<a name="l00146"></a>00146                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_7  = 7;
-<a name="l00147"></a>00147                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_8  = 8;
-<a name="l00148"></a>00148                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_16 = 16;
-<a name="l00149"></a>00149                 
-<a name="l00150"></a>00150                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_SENSOR1 = 28;
-<a name="l00151"></a>00151                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_SENSOR2 = 29;
-<a name="l00152"></a>00152                 
-<a name="l00153"></a>00153                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_DISTANCE1 = 30;
-<a name="l00154"></a>00154                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_DISTANCE2 = 31;
-<a name="l00155"></a>00155                 
-<a name="l00156"></a>00156                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> RESET_MOTOR_DISTANCE1 = 32;
-<a name="l00157"></a>00157                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> RESET_MOTOR_DISTANCE2 = 33;
-<a name="l00158"></a>00158 };
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160 <span class="preprocessor">#endif</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Oct 4 21:16:36 2007 for mrs.kdevelop by&nbsp;
+<a name="l00065"></a>00065                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#9c267070b70106a31ebfb505bd1630aa">getDistance</a>(<span class="keywordtype">int</span> sensor);
+<a name="l00066"></a>00066                 
+<a name="l00071"></a>00071                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#b5631f7e5eb5f83927d4daec7881e695">getDrivenDistance</a>(<span class="keywordtype">int</span> sensor);
+<a name="l00072"></a>00072                 
+<a name="l00077"></a>00077                 <span class="keywordtype">void</span> <a class="code" href="classSensorThread.html#e19eaf3f93d668d187f91872429eec7d">resetDrivenDistance</a>(<span class="keywordtype">int</span> sensor);
+<a name="l00078"></a>00078                 
+<a name="l00085"></a>00085                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#542a7e45676a73c31176063564f904f5">convertToDistance</a>(<span class="keywordtype">int</span> sensorValue);
+<a name="l00086"></a>00086                 
+<a name="l00093"></a>00093                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#b354d2dc3540e0bbe8752f8dd64ae4f1">convertToSensorValue</a>(<span class="keywordtype">int</span>);
+<a name="l00094"></a>00094                 
+<a name="l00099"></a>00099                 <span class="keywordtype">int</span> <a class="code" href="classSensorThread.html#3496bfa24ef59cc8ce1667bd04e131d4">getMAmpere</a>(<span class="keywordtype">int</span> motor);
+<a name="l00100"></a>00100                 
+<a name="l00101"></a>00101         
+<a name="l00102"></a>00102         <span class="keyword">public</span> slots:
+<a name="l00109"></a>00109                 <span class="comment">// TODO:: change status to state</span>
+<a name="l00110"></a>00110                 <span class="keywordtype">void</span> <a class="code" href="classSensorThread.html#ee48ebace332f7929b6dd0e3064a09dc">setSimulationMode</a>(<span class="keywordtype">bool</span> status);
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113         signals:
+<a name="l00118"></a>00118                 <span class="keywordtype">void</span> <a class="code" href="classSensorThread.html#184faa1dc7f377931953d1c2bf16b7cb">sensorDataComplete</a>();
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121         <span class="keyword">private</span>:
+<a name="l00122"></a>00122                 <span class="comment">//mutable QMutex mutex; // make this class thread-safe</span>
+<a name="l00123"></a>00123                 InterfaceAvr *interface1;
+<a name="l00124"></a>00124                 Servo *servos;
+<a name="l00125"></a>00125                 <span class="keyword">volatile</span> <span class="keywordtype">bool</span> stopped;
+<a name="l00126"></a>00126                 <span class="keywordtype">bool</span> simulationMode;
+<a name="l00127"></a>00127                 
+<a name="l00128"></a>00128                 <span class="comment">// Every thread sleeps some time, for having a bit more time fo the other threads!</span>
+<a name="l00129"></a>00129                 <span class="comment">// Time in milliseconds</span>
+<a name="l00130"></a>00130                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> THREADSLEEPTIME = 25; <span class="comment">// Default: 25 ms  (old: 5 ms)</span>
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132                 <span class="comment">// Give the infrared sensors some names</span>
+<a name="l00133"></a>00133                 <span class="comment">//</span>
+<a name="l00134"></a>00134                 <span class="comment">// DONT CHANGE THIS NUMBERS!</span>
+<a name="l00135"></a>00135                 <span class="comment">// THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!</span>
+<a name="l00136"></a>00136                 <span class="comment">//</span>
+<a name="l00137"></a>00137                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR1 = 1;
+<a name="l00138"></a>00138                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR2 = 2;
+<a name="l00139"></a>00139                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR3 = 4;
+<a name="l00140"></a>00140                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR4 = 8;
+<a name="l00141"></a>00141                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR5 = 16;
+<a name="l00142"></a>00142                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR6 = 32;
+<a name="l00143"></a>00143                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR7 = 64;
+<a name="l00144"></a>00144                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR8 = 128;
+<a name="l00145"></a>00145                 
+<a name="l00146"></a>00146                 <span class="comment">// ultrasonic sensor</span>
+<a name="l00147"></a>00147                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> SENSOR16 = 256;
+<a name="l00148"></a>00148                 
+<a name="l00149"></a>00149                 <span class="comment">// 5 sensors + 1 = 16</span>
+<a name="l00150"></a>00150                 <span class="comment">// This just for convenience to call the array index by the sensor names.</span>
+<a name="l00151"></a>00151                 <span class="comment">// (wastin' some memory ;-) )</span>
+<a name="l00152"></a>00152                 <span class="comment">//</span>
+<a name="l00153"></a>00153                 <span class="comment">// #define SENSOR4 = 8</span>
+<a name="l00154"></a>00154                 <span class="comment">//</span>
+<a name="l00155"></a>00155                 <span class="comment">// For example:  iRSensorValue[SENSOR4] = 0;</span>
+<a name="l00156"></a>00156                 <span class="comment">//</span>
+<a name="l00157"></a>00157                 <span class="keywordtype">int</span> iRSensorValue[SENSOR8+1]; <span class="comment">// ToDo: array mit 129 Werten statt 8 für 8 Sensoren !!! Überleg dir was !!!</span>
+<a name="l00158"></a>00158                 
+<a name="l00160"></a>00160                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> IRSENSORARRAYSIZE = 40;
+<a name="l00161"></a>00161                 <span class="keywordtype">int</span> iRDistance[IRSENSORARRAYSIZE];
+<a name="l00162"></a>00162                 
+<a name="l00167"></a>00167                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> USSENSORARRAYSIZE = 1;
+<a name="l00168"></a>00168                 <span class="keywordtype">int</span> usSensorValue[USSENSORARRAYSIZE];
+<a name="l00169"></a>00169                 
+<a name="l00170"></a>00170                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> MOTORSENSOR1 = 0;
+<a name="l00171"></a>00171                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> MOTORSENSOR2 = 1;
+<a name="l00172"></a>00172                 
+<a name="l00177"></a>00177                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> MOTORSENSORARRAYSIZE = 2;
+<a name="l00178"></a>00178                 <span class="keywordtype">int</span> motorSensorValue[MOTORSENSORARRAYSIZE];
+<a name="l00179"></a>00179                 
+<a name="l00180"></a>00180                 <span class="comment">// defines the size of the drivenDistance[] array</span>
+<a name="l00181"></a>00181                 <span class="comment">// This es equal to the number of motors!</span>
+<a name="l00182"></a>00182                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> DRIVENDISTANCEARRAYSIZE = 2;
+<a name="l00183"></a>00183                 <span class="keywordtype">int</span> drivenDistance[DRIVENDISTANCEARRAYSIZE];
+<a name="l00184"></a>00184                 
+<a name="l00189"></a>00189                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> CONVERSIONFACTORMOTORSENSOR = 29;
+<a name="l00190"></a>00190                 
+<a name="l00191"></a>00191                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> SERVO1 = 10; <span class="comment">// Servo 1</span>
+<a name="l00192"></a>00192                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> SERVO2 = 20; <span class="comment">// Servo 2</span>
+<a name="l00193"></a>00193                 
+<a name="l00194"></a>00194                 <span class="comment">//</span>
+<a name="l00195"></a>00195                 <span class="comment">// the "serial" commands for the MC</span>
+<a name="l00196"></a>00196                 <span class="comment">//</span>
+<a name="l00197"></a>00197                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_1  = 1;
+<a name="l00198"></a>00198                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_2  = 2;
+<a name="l00199"></a>00199                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_3  = 3;
+<a name="l00200"></a>00200                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_4  = 4;
+<a name="l00201"></a>00201                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_5  = 5;
+<a name="l00202"></a>00202                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_6  = 6;
+<a name="l00203"></a>00203                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_7  = 7;
+<a name="l00204"></a>00204                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_8  = 8;
+<a name="l00205"></a>00205                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_SENSOR_16 = 16;
+<a name="l00206"></a>00206                 
+<a name="l00207"></a>00207                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_SENSOR1 = 28;
+<a name="l00208"></a>00208                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_SENSOR2 = 29;
+<a name="l00209"></a>00209                 
+<a name="l00210"></a>00210                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_DISTANCE1 = 30;
+<a name="l00211"></a>00211                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> READ_MOTOR_DISTANCE2 = 31;
+<a name="l00212"></a>00212                 
+<a name="l00213"></a>00213                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> RESET_MOTOR_DISTANCE1 = 32;
+<a name="l00214"></a>00214                 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span> RESET_MOTOR_DISTANCE2 = 33;
+<a name="l00215"></a>00215 };
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217 <span class="preprocessor">#endif</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sun Oct 7 22:09:04 2007 for mrs.kdevelop by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

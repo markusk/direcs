@@ -1,3 +1,4 @@
-<area shape="rect" href="$classMrs.html" title="The main class of the whole robot programm." alt="" coords="156,188,201,212">
-<area shape="rect" href="$classQtGLContext.html" title="QtGLContext" alt="" coords="156,7,263,31">
-<area shape="rect" href="$classSpeakThread.html" title="Speak a text with festival." alt="" coords="5,98,115,122">
+<area shape="rect" href="$classMrs.html" title="Mrs" alt="" coords="157,188,203,212">
+<area shape="rect" href="$classQtGLContext.html" title="QtGLContext" alt="" coords="153,7,260,31">
+<area shape="rect" href="$classSensorThread.html" title="SensorThread" alt="" coords="5,7,120,31">
+<area shape="rect" href="$classSpeakThread.html" title="Speak a text with festival." alt="" coords="240,98,349,122">

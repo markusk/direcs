@@ -21,17 +21,14 @@
     <li><a href="functions.html"><span>Class&nbsp;Members</span></a></li>
   </ul>
 </div>
-<h1>Mrs Class Reference</h1><!-- doxytag: class="Mrs" -->The main class of the whole robot programm.  
-<a href="#_details">More...</a>
-<p>
-<code>#include &lt;<a class="el" href="mrs_8h-source.html">mrs.h</a>&gt;</code>
+<h1>Mrs Class Reference</h1><!-- doxytag: class="Mrs" --><code>#include &lt;<a class="el" href="mrs_8h-source.html">mrs.h</a>&gt;</code>
 <p>
 <div class="dynheader">
 Collaboration diagram for Mrs:</div>
 <div class="dynsection">
 <p><center><img src="classMrs__coll__graph.png" border="0" usemap="#Mrs__coll__map" alt="Collaboration graph"></center>
 <map name="Mrs__coll__map">
-<area shape="rect" href="classGui.html" title="The class for all GUI actions." alt="" coords="152,188,197,212"><area shape="rect" href="classQtGLContext.html" title="QtGLContext" alt="" coords="5,98,112,122"><area shape="rect" href="classSpeakThread.html" title="Speak a text with festival." alt="" coords="152,7,261,31"></map>
+<area shape="rect" href="classGui.html" title="Gui" alt="" coords="167,188,212,212"><area shape="rect" href="classQtGLContext.html" title="QtGLContext" alt="" coords="5,98,112,122"><area shape="rect" href="classSensorThread.html" title="SensorThread" alt="" coords="123,7,237,31"><area shape="rect" href="classSpeakThread.html" title="Speak a text with festival." alt="" coords="277,7,387,31"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -40,54 +37,38 @@ Collaboration diagram for Mrs:</div>
 <tr><td colspan="2"><br><h2>Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#b26bdcc2268443e9f2607cb90cfcfaa3">logicalUnit</a> (int sensorAlarm)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The locialUnit handles the behavior of the robot.  <a href="#b26bdcc2268443e9f2607cb90cfcfaa3"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="7d2497810c8292cb4a276716570bab53"></a><!-- doxytag: member="Mrs::showSensorData" ref="7d2497810c8292cb4a276716570bab53" args="()" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#7d2497810c8292cb4a276716570bab53">showSensorData</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#7d2497810c8292cb4a276716570bab53">showSensorData</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Shows the sensor data in a graphical way (progressBars) and as a number in the GUI. This slot is called from the Signal sensorDataComplete from the sensorThread. <br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#93447869b7a26386d152c20e35671892">showExitDialog</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Shows the yes-no exit dialog for the main program.  <a href="#93447869b7a26386d152c20e35671892"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#eb75572475a0e46165d104c25bfc08a0">enableRemoteControlListening</a> (bool status)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Enables or disables the listening for the robot remote control.  <a href="#eb75572475a0e46165d104c25bfc08a0"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#26e07d110b5fadd912ccc2e65cf182ec">executeRemoteCommand</a> (QString command)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#11eec8254e49dc7d33fa4f0cd232308a">setSimulationMode</a> (bool status)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="902576bc27b86eead1eff4f706e7dade"></a><!-- doxytag: member="Mrs::finishSplash" ref="902576bc27b86eead1eff4f706e7dade" args="()" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>finishSplash</b> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#902576bc27b86eead1eff4f706e7dade">finishSplash</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#d128214761bc55b94a2af0c8fa64c458">Mrs</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The main class of the whole robot programm.  <a href="#d128214761bc55b94a2af0c8fa64c458"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="00c3356f38e4e2950c2e42cc8a45a978"></a><!-- doxytag: member="Mrs::drive" ref="00c3356f38e4e2950c2e42cc8a45a978" args="(unsigned char direction)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>drive</b> (unsigned char direction)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#c22c3fae89edecc5438ca6f7aa369a74">drive</a> (unsigned char command)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="cf9db46f8916d31fe0b250833f533bd2"></a><!-- doxytag: member="Mrs::setMinObstacleDistance" ref="cf9db46f8916d31fe0b250833f533bd2" args="(short int value)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>setMinObstacleDistance</b> (short int value)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#fec132e05a4623abdd9ec9c22eb2cba6">test</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="fec132e05a4623abdd9ec9c22eb2cba6"></a><!-- doxytag: member="Mrs::test" ref="fec132e05a4623abdd9ec9c22eb2cba6" args="()" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>test</b> ()</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="aed2d46f15387f16f1f458f9a8d38093"></a><!-- doxytag: member="Mrs::speak" ref="aed2d46f15387f16f1f458f9a8d38093" args="(QString text)" -->
-void&nbsp;</td><td class="memItemRight" valign="bottom"><b>speak</b> (QString text)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#aed2d46f15387f16f1f458f9a8d38093">speak</a> (QString text)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#fe3880d8b98882572ffd1112f8e1f642">simulationMode</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="52328e3cd1c6651273b6b69f28b12b0c"></a><!-- doxytag: member="Mrs::noHardwareErrorMessages" ref="52328e3cd1c6651273b6b69f28b12b0c" args="" -->
-bool&nbsp;</td><td class="memItemRight" valign="bottom"><b>noHardwareErrorMessages</b></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#52328e3cd1c6651273b6b69f28b12b0c">noHardwareErrorMessages</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="2dfaa0e663f8fc14d8311154b9fa9b79"></a><!-- doxytag: member="Mrs::exitDialog" ref="2dfaa0e663f8fc14d8311154b9fa9b79" args="" -->
-bool&nbsp;</td><td class="memItemRight" valign="bottom"><b>exitDialog</b></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMrs.html#2dfaa0e663f8fc14d8311154b9fa9b79">exitDialog</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
-The main class of the whole robot programm. 
-<p>
-All objects are created here. This method also starts the GUI. <hr><h2>Constructor &amp; Destructor Documentation</h2>
+The main class of the whole robot programm. All objects are created here. This method also starts the GUI. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="d128214761bc55b94a2af0c8fa64c458"></a><!-- doxytag: member="Mrs::Mrs" ref="d128214761bc55b94a2af0c8fa64c458" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -110,6 +91,75 @@ All objects are created here. This method also starts the GUI.
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="c22c3fae89edecc5438ca6f7aa369a74"></a><!-- doxytag: member="Mrs::drive" ref="c22c3fae89edecc5438ca6f7aa369a74" args="(unsigned char command)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mrs::drive           </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>command</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>command</em>&nbsp;</td><td></td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="fec132e05a4623abdd9ec9c22eb2cba6"></a><!-- doxytag: member="Mrs::test" ref="fec132e05a4623abdd9ec9c22eb2cba6" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mrs::test           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+The method for the test button in the GUI 
+</div>
+</div><p>
+<a class="anchor" name="aed2d46f15387f16f1f458f9a8d38093"></a><!-- doxytag: member="Mrs::speak" ref="aed2d46f15387f16f1f458f9a8d38093" args="(QString text)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mrs::speak           </td>
+          <td>(</td>
+          <td class="paramtype">QString&nbsp;</td>
+          <td class="paramname"> <em>text</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Speaks a text with festival. All HTML-Code in the parameter (text) is also removed internally). <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>text</em>&nbsp;</td><td>is the text to speak. </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
 <a class="anchor" name="fe3880d8b98882572ffd1112f8e1f642"></a><!-- doxytag: member="Mrs::simulationMode" ref="fe3880d8b98882572ffd1112f8e1f642" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -126,7 +176,7 @@ All objects are created here. This method also starts the GUI.
 <div class="memdoc">
 
 <p>
-Returns the status of the program. True, if the simulationMode ist active. 
+Returns the status of the main program. True, if the simulationMode ist active. 
 </div>
 </div><p>
 <a class="anchor" name="b26bdcc2268443e9f2607cb90cfcfaa3"></a><!-- doxytag: member="Mrs::logicalUnit" ref="b26bdcc2268443e9f2607cb90cfcfaa3" args="(int sensorAlarm)" -->
@@ -146,9 +196,31 @@ Returns the status of the program. True, if the simulationMode ist active.
 <div class="memdoc">
 
 <p>
-The locialUnit handles the behavior of the robot. 
+The locialUnit handles the behavior of the robot. This slot is called if an obstacle is detected from the obstacleCheckThread. It lets the robot "react" depending on which sensor made the alarm. The number of alarms are also counted. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sensorAlarm</em>&nbsp;</td><td>consists of the sum of all infrared and ultrasonic sensor numbers, which had an alarm. </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="7d2497810c8292cb4a276716570bab53"></a><!-- doxytag: member="Mrs::showSensorData" ref="7d2497810c8292cb4a276716570bab53" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mrs::showSensorData           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
 <p>
-This slot and called if an obstacle is detected.from the obstacleCheckThread. Turn the robot depending on which sensor made the alarm or stop / start it. The number of alarms are also counted. 
+Shows the sensor data in a graphical way (progressBars) and as a number in the GUI. This slot is called from the Signal sensorDataComplete from the sensorThread. 
 </div>
 </div><p>
 <a class="anchor" name="93447869b7a26386d152c20e35671892"></a><!-- doxytag: member="Mrs::showExitDialog" ref="93447869b7a26386d152c20e35671892" args="()" -->
@@ -167,9 +239,7 @@ This slot and called if an obstacle is detected.from the obstacleCheckThread. Tu
 <div class="memdoc">
 
 <p>
-Shows the yes-no exit dialog for the main program. 
-<p>
-This slot is called when massive errors occur! 
+Shows the yes-no exit dialog for the main program. This slot is called when massive communication errors occur while talking to the robots interface! 
 </div>
 </div><p>
 <a class="anchor" name="eb75572475a0e46165d104c25bfc08a0"></a><!-- doxytag: member="Mrs::enableRemoteControlListening" ref="eb75572475a0e46165d104c25bfc08a0" args="(bool status)" -->
@@ -189,9 +259,12 @@ This slot is called when massive errors occur!
 <div class="memdoc">
 
 <p>
-Enables or disables the listening for the robot remote control. 
-<p>
-This slot is called from an event from the GUI (enable remote button). 
+Enables or disables the listening for the robot remote control. This slot is called from an event from the GUI (enable remote button). <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status</em>&nbsp;</td><td></td></tr>
+  </table>
+</dl>
+
 </div>
 </div><p>
 <a class="anchor" name="26e07d110b5fadd912ccc2e65cf182ec"></a><!-- doxytag: member="Mrs::executeRemoteCommand" ref="26e07d110b5fadd912ccc2e65cf182ec" args="(QString command)" -->
@@ -211,7 +284,7 @@ This slot is called from an event from the GUI (enable remote button).
 <div class="memdoc">
 
 <p>
-This slot executes the network remote commands. 
+This slot executes remote commands it receives via network (e.g. WLAN). 
 </div>
 </div><p>
 <a class="anchor" name="11eec8254e49dc7d33fa4f0cd232308a"></a><!-- doxytag: member="Mrs::setSimulationMode" ref="11eec8254e49dc7d33fa4f0cd232308a" args="(bool status)" -->
@@ -231,12 +304,67 @@ This slot executes the network remote commands.
 <div class="memdoc">
 
 <p>
-This slot enables or disables the simulation mode. 
+This slot enables or disables the simulation mode. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status</em>&nbsp;</td><td></td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="902576bc27b86eead1eff4f706e7dade"></a><!-- doxytag: member="Mrs::finishSplash" ref="902576bc27b86eead1eff4f706e7dade" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mrs::finishSplash           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Finishes the splash screen and displays the main window. 
+</div>
+</div><p>
+<hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="52328e3cd1c6651273b6b69f28b12b0c"></a><!-- doxytag: member="Mrs::noHardwareErrorMessages" ref="52328e3cd1c6651273b6b69f28b12b0c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classMrs.html#52328e3cd1c6651273b6b69f28b12b0c">Mrs::noHardwareErrorMessages</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Currently not in use... 
+</div>
+</div><p>
+<a class="anchor" name="2dfaa0e663f8fc14d8311154b9fa9b79"></a><!-- doxytag: member="Mrs::exitDialog" ref="2dfaa0e663f8fc14d8311154b9fa9b79" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classMrs.html#2dfaa0e663f8fc14d8311154b9fa9b79">Mrs::exitDialog</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Configures if an exit dialog should be shown, when exiting the main program. 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>develop/subversion/applications/mrs/trunk/src/<a class="el" href="mrs_8h-source.html">mrs.h</a><li>develop/subversion/applications/mrs/trunk/src/mrs.cpp</ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Oct 4 21:16:37 2007 for mrs.kdevelop by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sun Oct 7 22:09:05 2007 for mrs.kdevelop by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>
