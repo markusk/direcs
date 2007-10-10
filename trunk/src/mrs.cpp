@@ -8062,7 +8062,7 @@ void Mrs::showSensorData()
 
 void Mrs::drive(unsigned char command)
 {
-	switch (direction)
+	switch (command)
 	{
 		case FORWARD:
 			gui1->showMotorStatus(MOTOR1, SAME, CLOCKWISE);

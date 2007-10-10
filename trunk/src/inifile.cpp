@@ -109,7 +109,7 @@ int Inifile::readSetting(QString group, QString name)
 	}
 	
 	// string for group+value in inifile
-	QString iniSection = group + "/" + value;
+	QString iniSection = group + "/" + name;
 
 	// read value from ini-file
 	// return value or -1 on error.
