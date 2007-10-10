@@ -8,7 +8,9 @@
 #include <QCoreApplication>
 //-------------------------------------------------------------------
 
-
+/**
+The Motor class gives access to the motors of the robot.
+*/
 class Motor : public QObject
 {
     Q_OBJECT
@@ -16,22 +18,74 @@ class Motor : public QObject
 	public:
 		Motor(InterfaceAvr *i);
 		~Motor();
+		
+		/**
+		Controls a motor.
+		@param motor is the motor number.
+		@param power can be ON or OFF.
+		@param direction can be CLOCKWISE or COUNTERCLOCKWISE.
+		*/
 		void motorControl(unsigned char motor, unsigned char power, unsigned char direction);
+		
+		/**
+		Sets the speed of a motor.
+		@param motor is the motor number.
+		@param speed is the speed (0 - 255).
+		*/
 		void setMotorSpeed(int motor, int speed);
+		
+		/**
+		@return The speed of a motor.
+		@param motor is the motor number.
+		*/
 		int getMotorSpeed(int motor);
 
 		//bool isMotorActive();
 		//unsigned int getSteps1();
 		//unsigned int getSteps2();
+		
+		/**
+		@return The revolutions made of a motor1 (stored in the microcontroller till power off).
+		*/
+		// TODO: change to one method?!?
 		unsigned int getRevolutions1();
+		
+		/**
+		@return The revolutions made of a motor2 (stored in the microcontroller till power off).
+		*/
+		// TODO: change to one method?!?
 		unsigned int getRevolutions2();
+		
+		/**
+		@return The driven distance in cm made of wheel1.
+		*/
+		// TODO: change to one method?!?
+		// FIXME: check the conversion value and make it a const!
 		double getDrivenDistance1();
+		
+		/**
+		@return The driven distance in cm made of wheel2.
+		*/
+		// TODO: change to one method?!?
+		// FIXME: check the conversion value and make it a const!
 		double getDrivenDistance2();
+		
+		/**
+		Resets the stored driven distances and made revolutions in this class and in the microcontroller.
+		@param motor is the motor number.
+		*/
 		void resetMovementCounter(short int motor);
+		
+		/**
+		Turns the flashlight ON or OFF.
+		@param state can be ON or OFF.
+		*/
+		// TODO: put it somewhere else...
 		void flashlight(unsigned char state);
 
 
 	private:
+		// FIXME: check the conversion value and make it a const!
 		void calculateMovement();
 
 		InterfaceAvr *interface1;

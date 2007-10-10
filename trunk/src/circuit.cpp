@@ -36,13 +36,13 @@ bool Circuit::initCircuit()
 		if (answer == 64)
 		{
 			// everthing's fine :-)
-			qDebug("Robot is ON.");
+			//qDebug("Robot is ON.");
 			return true;
 		}
 	}
 	
 	// error!
-	qDebug("Robot did not answer. Is it Off?");
+	//qDebug("Robot did not answer. Is it Off?");
 	return false;
 }
 

@@ -11,6 +11,7 @@ Inifile::Inifile()
 	//------------------------------------------------------------------
 	// set the name of the programms ini-file
 	//------------------------------------------------------------------
+	// TODO: put this to mrs class! With a set-method!
 	mainIniFilename = "mrs.ini";
 	
 	//------------------------------------------------------------------
@@ -98,7 +99,7 @@ void Inifile::writeSetting(QString group, QString name, int value)
 }
 
 
-int Inifile::readSetting(QString group, QString value)
+int Inifile::readSetting(QString group, QString name)
 {
 	
 	// check if ini-file is writable
