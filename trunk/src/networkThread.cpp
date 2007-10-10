@@ -1,6 +1,5 @@
 #include "networkThread.h"
 
-// Todo: Change this to a non-thread! Is the a possibility to "disconnect" oder just no "emit"?
 NetworkThread::NetworkThread()
 {
 	stopped = false;
@@ -72,7 +71,7 @@ void NetworkThread::processPendingDatagrams()
 	}
 }
 
-
+/*
 void NetworkThread::sendNetworkCommand()
 {
 	QString command = "command";
@@ -81,3 +80,4 @@ void NetworkThread::sendNetworkCommand()
 	QByteArray datagram = command.toAscii();
 	udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, PORT);
 }
+*/
