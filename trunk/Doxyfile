@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 PROJECT_NAME           = mrs.kdevelop
 PROJECT_NUMBER         = 0.1
-OUTPUT_DIRECTORY       = /home/markus/develop/subversion/applications/mrs/trunk/doc
+OUTPUT_DIRECTORY       = /home/markus/develop/sourceforge/mrs/mrs/trunk/doc
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 USE_WINDOWS_ENCODING   = NO
@@ -83,7 +83,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /home/markus/develop/subversion/applications/mrs/trunk
+INPUT                  = /home/markus/develop/sourceforge/mrs/mrs/trunk/
 FILE_PATTERNS          = *.c \
                          *.cc \
                          *.cxx \
