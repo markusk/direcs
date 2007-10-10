@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/back.png</file>
+        <file>images/down.png</file>
+        <file>images/exit.png</file>
+        <file>images/forward.png</file>
+        <file>images/stop.png</file>
+        <file>images/underFootOne.png</file>
+        <file>images/up.png</file>
+    </qresource>
+</RCC>
