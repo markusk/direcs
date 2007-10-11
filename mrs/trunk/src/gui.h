@@ -310,13 +310,7 @@ class Gui : public QMainWindow
 		Servo *servos;
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
-		// OpenGL objekt
-		QtGLContext *m_glContext;
-		QLabel *label;
-		QWidget *myWidget;
-		QLabel *myLabel;
 		QPixmap cameraPicToSave;
-		
 		QColor colorLaserObstacle;
 		QColor colorLaserFreeWay;
 		QColor colorLaserPreferredDrivingDirection;

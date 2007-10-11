@@ -122,14 +122,10 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
 	
 	QColor col = Qt::red;
-	#if QT_VERSION >= 0x040000
-		curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
-		col.setAlpha(150);
-		curve1.setPen(QPen(col));
-		curve1.setBrush(col);
-	#else
-		curve1.setPen(QPen(col));
-	#endif
+	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	col.setAlpha(150);
+	curve1.setPen(QPen(col));
+	curve1.setBrush(col);
 	
 	
 	//--------------------------------------
@@ -149,14 +145,10 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
 	
 	col = Qt::blue;
-	#if QT_VERSION >= 0x040000
-		curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
-		col.setAlpha(150);
-		curve2.setPen(QPen(col));
-		curve2.setBrush(col);
-	#else
-		curve2.setPen(QPen(col));
-	#endif
+	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	col.setAlpha(150);
+	curve2.setPen(QPen(col));
+	curve2.setBrush(col);
 	
 	
 	//----------------------------------------------------------------------------
@@ -164,45 +156,8 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	// (Whenever the plot thread has new data, the data are show in the GUI)
 	//----------------------------------------------------------------------------
 	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), this, SLOT( setPlotData1(double *, double *, int) ));
-	
 	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), this, SLOT( setPlotData2(double *, double *, int) ));
 	
-	
-	//---------------------------------------
-	// camera stuff
-	//---------------------------------------
-	// create the OpenGL object
-	m_glContext = new QtGLContext();
-	
-	label = new QLabel();
-	
-	QHBoxLayout *layout = new QHBoxLayout;
-
-	// add the OpenGL object to the layout
-	// (the camera picture)
-	layout->addWidget(m_glContext);
-	
-	label->setParent(this);
-	label->setLayout(layout);
-	// set label on a nice position and resize it
-	//                   x   y  width height
-	label->setGeometry(ui.groupBoxCamera->x()+10, ui.groupBoxCamera->y()+10, 495,  371);
-	
-
-	// test test test
-	// test test test
-	// test test test
-	/*
-	myWidget = new QWidget();
-	myLabel = new QLabel();
-	layout->addWidget(myWidget);
-	myLabel->setParent(this);
-	myLabel->setGeometry(1, 1, 200,  200);
-	*/
-	// test test test
-	// test test test
-	// test test test
-
 	
 	//----------------------------------------------------------------------------
 	// connect camDataComplete from the cam thread to signal "setCamImage"
@@ -232,18 +187,6 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 
 Gui::~Gui()
 {
-	/*
-	delete speech1;
-	delete netThread;
-	delete cam1;
-	delete sensThread;
-	delete obstCheckThread;
-	delete circuit1;
-	//delete interface1;
-	delete motors;
-	delete servos;
-	//delete mrs1; << to check!
-	*/
 }
 
 
@@ -1229,10 +1172,10 @@ void Gui::setCamImage(IplImage* frame)
 	if ( ui.checkBoxCamPicLive->isChecked() )
 	{
 		// set image 
-		m_glContext->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
+		ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
 		
 		// refresh picture
-		m_glContext->updateGL();
+		ui.frameCamera->updateGL();
 	}
 	
 	
@@ -1370,9 +1313,7 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 }
 
 
-/*!
-Draws the "laser lines" from the laser measured distances.
-*/
+
 void Gui::refreshLaserView()
 {
 /*
@@ -1403,13 +1344,11 @@ void Gui::paintEvent(QPaintEvent *)
 	int measuredLaserDistance = 0;
 	
 	
-	#if QT_VERSION >= 0x040000
 	if (ui.checkBoxAntiAlias->checkState() == Qt::Checked) // this is default!
 	{
 		// this causes higher CPU load
 		painter.setRenderHint(QPainter::Antialiasing);
 	}
-	#endif
 	
 	// set the default color of the laser lines
 	painter.setPen(colorLaserFreeWay);
