@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gui.ui'
 **
-** Created: Thu Oct 4 21:50:55 2007
+** Created: Thu Oct 11 22:44:14 2007
 **      by: Qt User Interface Compiler version 4.3.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -24,6 +24,7 @@
 #include <QtGui/QSpinBox>
 #include <QtGui/QTextEdit>
 #include <QtGui/QWidget>
+#include "QtGLContext.h"
 #include "qwt_plot.h"
 
 class Ui_Gui
@@ -100,6 +101,7 @@ public:
     QCheckBox *checkBoxCamPicLive;
     QPushButton *btnSavePicture;
     QCheckBox *checkBoxAutoSave;
+    QtGLContext *frameCamera;
     QGroupBox *groupBoxBot;
     QLabel *labelSensorAlarm1;
     QLabel *label_7;
@@ -614,6 +616,9 @@ public:
     checkBoxAutoSave = new QCheckBox(groupBoxCamera);
     checkBoxAutoSave->setObjectName(QString::fromUtf8("checkBoxAutoSave"));
     checkBoxAutoSave->setGeometry(QRect(620, 160, 81, 20));
+    frameCamera = new QtGLContext(groupBoxCamera);
+    frameCamera->setObjectName(QString::fromUtf8("frameCamera"));
+    frameCamera->setGeometry(QRect(10, 20, 521, 351));
     groupBoxBot = new QGroupBox(Gui);
     groupBoxBot->setObjectName(QString::fromUtf8("groupBoxBot"));
     groupBoxBot->setGeometry(QRect(10, 310, 621, 361));

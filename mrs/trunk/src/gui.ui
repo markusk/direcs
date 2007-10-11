@@ -2230,6 +2230,16 @@ p, li { white-space: pre-wrap; }
      <string>Auto Save</string>
     </property>
    </widget>
+   <widget class="QtGLContext" native="1" name="frameCamera" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>521</width>
+      <height>351</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBoxBot" >
    <property name="geometry" >
@@ -2917,6 +2927,12 @@ p, li { white-space: pre-wrap; }
    <class>QwtPlot</class>
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QtGLContext</class>
+   <extends>QWidget</extends>
+   <header>QtGLContext.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
