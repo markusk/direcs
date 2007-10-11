@@ -14,7 +14,6 @@ Servo::Servo(InterfaceAvr *i)
 
 Servo::~Servo()
 {
-	delete interface1;
 }
 
 
