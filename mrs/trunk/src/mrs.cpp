@@ -767,13 +767,13 @@ Mrs::~Mrs()
 	delete netThread;
 	delete cam1;
 	delete inifile1;
-	//delete obstCheckThread;  // FixMe: segmentation fault, when uncomenting this line! why???
+	delete obstCheckThread;
 	delete servos;
 	delete motors;
 	delete sensorThread;
 	delete circuit1;
 	delete interface1;
-	//delete gui1;             // segmentation fault, when uncomenting this line! why???
+	delete gui1;
 
 	//---------------
 	// End program
@@ -8060,7 +8060,7 @@ void Mrs::showSensorData()
 }
 
 
-void Mrs::drive(unsigned char command)
+void Mrs::drive(const unsigned char command)
 {
 	switch (command)
 	{
@@ -8577,7 +8577,7 @@ void Mrs::executeRemoteCommand(QString command)
 }
 
 
-bool Mrs::simulationMode()
+bool Mrs::simulationMode() const
 {
 	return robotSimulationMode;
 }

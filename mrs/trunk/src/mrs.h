@@ -42,11 +42,11 @@ class Mrs : public QObject
 		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
 		@param command
 		*/
-		void drive(unsigned char command);
-		
+		void drive(const unsigned char command);
+
 		//void setMinObstacleDistance(short int value);
 		//void startStopCommandClock(int command);
-		
+
 		/**
 		The method for the test button in the GUI
 		*/
@@ -55,14 +55,13 @@ class Mrs : public QObject
 		/**
 		Speaks a text with festival. All HTML-Code in the parameter (text) is also removed internally).
 		@param text is the text to speak.
-		 */
+		*/
 		void speak(QString text);
-		
-		
+	
 		/**
 		Returns the status of the main program. True, if the simulationMode ist active.
 		*/
-		bool simulationMode();
+		bool simulationMode() const;
 		
 		/**
 		Currently not in use...
