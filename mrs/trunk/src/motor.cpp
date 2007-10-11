@@ -28,7 +28,6 @@ Motor::Motor(InterfaceAvr *i)
 
 Motor::~Motor()
 {
-	delete interface1;
 }
 
 

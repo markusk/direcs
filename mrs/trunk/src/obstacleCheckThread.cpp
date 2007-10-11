@@ -24,7 +24,6 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 
 ObstacleCheckThread::~ObstacleCheckThread()
 {
-	delete sensThread;
 }
 
 

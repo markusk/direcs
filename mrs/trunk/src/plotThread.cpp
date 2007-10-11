@@ -39,7 +39,6 @@ PlotThread::PlotThread(SensorThread *s)
 
 PlotThread::~PlotThread()
 {
-	delete sensThread;
 }
 
 
