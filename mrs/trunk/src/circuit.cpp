@@ -11,7 +11,6 @@ Circuit::Circuit(InterfaceAvr *i)
 
 Circuit::~Circuit()
 {
-	delete interface1;
 }
 
 
