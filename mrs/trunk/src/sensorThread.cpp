@@ -94,7 +94,6 @@ SensorThread::SensorThread(InterfaceAvr *i, Servo *s)
 
 SensorThread::~SensorThread()
 {
-	delete interface1;
 }
 
 
