@@ -257,7 +257,7 @@ p, li { white-space: pre-wrap; }
      <x>10</x>
      <y>0</y>
      <width>621</width>
-     <height>301</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="title" >
@@ -2245,39 +2245,25 @@ p, li { white-space: pre-wrap; }
    <property name="geometry" >
     <rect>
      <x>10</x>
-     <y>310</y>
+     <y>20</y>
      <width>621</width>
-     <height>361</height>
+     <height>651</height>
     </rect>
    </property>
    <property name="title" >
     <string>Bot</string>
    </property>
    <widget class="QLabel" name="labelSensorAlarm1" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
-      <x>109</x>
-      <y>60</y>
-      <width>84</width>
-      <height>20</height>
+      <x>170</x>
+      <y>90</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
     <property name="text" >
-     <string>SENSOR 1</string>
+     <string>1</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignCenter</set>
@@ -2286,8 +2272,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label_7" >
     <property name="geometry" >
      <rect>
-      <x>421</x>
-      <y>39</y>
+      <x>330</x>
+      <y>600</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -2297,542 +2283,279 @@ p, li { white-space: pre-wrap; }
     </property>
    </widget>
    <widget class="QLabel" name="labelSensorAlarm4" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
-      <x>112</x>
-      <y>268</y>
-      <width>84</width>
-      <height>21</height>
+      <x>260</x>
+      <y>90</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
     <property name="text" >
-     <string>SENSOR 4</string>
+     <string>4</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="labelSensorDistance5" >
-    <property name="geometry" >
-     <rect>
-      <x>93</x>
-      <y>180</y>
-      <width>41</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string>0 cm</string>
-    </property>
-    <property name="alignment" >
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
    <widget class="QProgressBar" name="progressBarSensor5" >
     <property name="geometry" >
      <rect>
-      <x>102</x>
-      <y>142</y>
-      <width>35</width>
-      <height>18</height>
+      <x>290</x>
+      <y>20</y>
+      <width>18</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="autoFillBackground" >
      <bool>true</bool>
     </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
     <property name="textVisible" >
-     <bool>false</bool>
-    </property>
-    <property name="invertedAppearance" >
      <bool>true</bool>
+    </property>
+    <property name="orientation" >
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="format" >
+     <string>%v</string>
     </property>
    </widget>
    <widget class="QProgressBar" name="progressBarSensor4" >
     <property name="geometry" >
      <rect>
-      <x>161</x>
-      <y>250</y>
-      <width>35</width>
-      <height>18</height>
+      <x>260</x>
+      <y>20</y>
+      <width>18</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="autoFillBackground" >
      <bool>true</bool>
     </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
     <property name="textVisible" >
-     <bool>false</bool>
-    </property>
-    <property name="invertedAppearance" >
      <bool>true</bool>
     </property>
+    <property name="orientation" >
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="format" >
+     <string>%v</string>
+    </property>
    </widget>
-   <widget class="QLabel" name="labelSensorDistance16" >
+   <widget class="QLabel" name="labelSensorAlarm2" >
     <property name="geometry" >
      <rect>
-      <x>342</x>
-      <y>39</y>
-      <width>41</width>
+      <x>200</x>
+      <y>90</y>
+      <width>16</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text" >
-     <string>0 cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSensorAlarm2" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
-    <property name="geometry" >
-     <rect>
-      <x>392</x>
-      <y>60</y>
-      <width>84</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
-    <property name="text" >
-     <string>SENSOR 2</string>
+     <string>2</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="labelSensorAlarm16" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
-      <x>341</x>
-      <y>20</y>
-      <width>94</width>
-      <height>20</height>
+      <x>330</x>
+      <y>580</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
     <property name="text" >
-     <string>SENSOR 16</string>
-    </property>
-    <property name="alignment" >
-     <set>Qt::AlignCenter</set>
+     <string>16</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelSensorAlarm8" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
-      <x>290</x>
-      <y>300</y>
-      <width>84</width>
-      <height>20</height>
+      <x>380</x>
+      <y>90</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
     <property name="text" >
-     <string>SENSOR 8</string>
+     <string>8</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="labelSensorAlarm5" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
-      <x>51</x>
-      <y>160</y>
-      <width>84</width>
-      <height>20</height>
+      <x>290</x>
+      <y>90</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
     <property name="text" >
-     <string>SENSOR 5</string>
+     <string>5</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="labelSensorAlarm7" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
-      <x>421</x>
-      <y>160</y>
-      <width>84</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
-    <property name="text" >
-     <string>SENSOR 7</string>
-    </property>
-    <property name="alignment" >
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSensorDistance4" >
-    <property name="geometry" >
-     <rect>
-      <x>154</x>
-      <y>289</y>
-      <width>41</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string>0 cm</string>
-    </property>
-    <property name="alignment" >
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="progressBarSensor7" >
-    <property name="geometry" >
-     <rect>
-      <x>420</x>
-      <y>142</y>
-      <width>35</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground" >
-     <bool>true</bool>
-    </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
-    <property name="textVisible" >
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblRobotPic" >
-    <property name="geometry" >
-     <rect>
-      <x>140</x>
-      <y>40</y>
-      <width>281</width>
-      <height>261</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string/>
-    </property>
-    <property name="pixmap" >
-     <pixmap resource="../mrs.qrc" >:/images/images/imgp4355_Bot-freigestellt-275x264.png</pixmap>
-    </property>
-    <property name="scaledContents" >
-     <bool>true</bool>
-    </property>
-    <property name="alignment" >
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSensorDistance2" >
-    <property name="geometry" >
-     <rect>
-      <x>394</x>
-      <y>80</y>
-      <width>41</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string>0 cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSensorDistance8" >
-    <property name="geometry" >
-     <rect>
-      <x>326</x>
-      <y>320</y>
-      <width>41</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string>0 cm</string>
-    </property>
-    <property name="alignment" >
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="progressBarSensor6" >
-    <property name="geometry" >
-     <rect>
-      <x>240</x>
-      <y>20</y>
-      <width>18</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground" >
-     <bool>true</bool>
-    </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
-    <property name="textVisible" >
-     <bool>false</bool>
-    </property>
-    <property name="orientation" >
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="progressBarSensor3" >
-    <property name="geometry" >
-     <rect>
-      <x>391</x>
-      <y>250</y>
-      <width>35</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground" >
-     <bool>true</bool>
-    </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
-    <property name="textVisible" >
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6" >
-    <property name="geometry" >
-     <rect>
-      <x>156</x>
-      <y>40</y>
+      <x>350</x>
+      <y>90</y>
       <width>16</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text" >
-     <string>IR</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSensorAlarm3" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
-    <property name="geometry" >
-     <rect>
-      <x>391</x>
-      <y>268</y>
-      <width>81</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
-    <property name="text" >
-     <string>SENSOR 3</string>
+     <string>7</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="labelSensorDistance3" >
+   <widget class="QProgressBar" name="progressBarSensor7" >
     <property name="geometry" >
      <rect>
-      <x>391</x>
-      <y>285</y>
-      <width>41</width>
-      <height>16</height>
+      <x>350</x>
+      <y>20</y>
+      <width>18</width>
+      <height>61</height>
      </rect>
     </property>
-    <property name="text" >
-     <string>0 cm</string>
+    <property name="autoFillBackground" >
+     <bool>true</bool>
+    </property>
+    <property name="textVisible" >
+     <bool>true</bool>
+    </property>
+    <property name="orientation" >
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="format" >
+     <string>%v</string>
     </property>
    </widget>
-   <widget class="QLabel" name="labelSensorDistance6" >
+   <widget class="QProgressBar" name="progressBarSensor6" >
     <property name="geometry" >
      <rect>
-      <x>196</x>
-      <y>40</y>
-      <width>41</width>
+      <x>320</x>
+      <y>20</y>
+      <width>18</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground" >
+     <bool>true</bool>
+    </property>
+    <property name="textVisible" >
+     <bool>true</bool>
+    </property>
+    <property name="orientation" >
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="format" >
+     <string>%v</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBarSensor3" >
+    <property name="geometry" >
+     <rect>
+      <x>230</x>
+      <y>20</y>
+      <width>18</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground" >
+     <bool>true</bool>
+    </property>
+    <property name="textVisible" >
+     <bool>true</bool>
+    </property>
+    <property name="orientation" >
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="format" >
+     <string>%v</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelSensorAlarm3" >
+    <property name="geometry" >
+     <rect>
+      <x>230</x>
+      <y>90</y>
+      <width>16</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text" >
-     <string>0 cm</string>
+     <string>3</string>
     </property>
     <property name="alignment" >
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSensorDistance7" >
-    <property name="geometry" >
-     <rect>
-      <x>424</x>
-      <y>180</y>
-      <width>41</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string>0 cm</string>
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QProgressBar" name="progressBarSensor2" >
     <property name="geometry" >
      <rect>
-      <x>371</x>
-      <y>60</y>
+      <x>200</x>
+      <y>20</y>
       <width>18</width>
-      <height>35</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="autoFillBackground" >
      <bool>true</bool>
     </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
     <property name="textVisible" >
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="orientation" >
      <enum>Qt::Vertical</enum>
+    </property>
+    <property name="format" >
+     <string>%v</string>
     </property>
    </widget>
    <widget class="QProgressBar" name="progressBarSensor8" >
     <property name="geometry" >
      <rect>
-      <x>270</x>
-      <y>300</y>
+      <x>380</x>
+      <y>20</y>
       <width>18</width>
-      <height>35</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="autoFillBackground" >
      <bool>true</bool>
     </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
     <property name="textVisible" >
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="orientation" >
      <enum>Qt::Vertical</enum>
     </property>
-    <property name="invertedAppearance" >
-     <bool>true</bool>
+    <property name="format" >
+     <string>%v</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelSensorAlarm6" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
-      <x>153</x>
-      <y>20</y>
-      <width>84</width>
-      <height>20</height>
+      <x>320</x>
+      <y>90</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="font" >
-     <font>
-      <family>Sans Serif</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
     <property name="text" >
-     <string>SENSOR 6</string>
+     <string>6</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignCenter</set>
@@ -2841,10 +2564,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QProgressBar" name="progressBarSensor16" >
     <property name="geometry" >
      <rect>
-      <x>321</x>
-      <y>20</y>
-      <width>18</width>
-      <height>35</height>
+      <x>300</x>
+      <y>580</y>
+      <width>20</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="autoFillBackground" >
@@ -2855,41 +2578,100 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="orientation" >
      <enum>Qt::Vertical</enum>
+    </property>
+    <property name="invertedAppearance" >
+     <bool>true</bool>
+    </property>
+    <property name="format" >
+     <string>%v</string>
     </property>
    </widget>
    <widget class="QProgressBar" name="progressBarSensor1" >
     <property name="geometry" >
      <rect>
-      <x>195</x>
-      <y>60</y>
+      <x>170</x>
+      <y>20</y>
       <width>18</width>
-      <height>35</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="autoFillBackground" >
      <bool>true</bool>
     </property>
-    <property name="value" >
-     <number>-1</number>
-    </property>
     <property name="textVisible" >
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="orientation" >
      <enum>Qt::Vertical</enum>
     </property>
+    <property name="format" >
+     <string>%v</string>
+    </property>
    </widget>
-   <widget class="QLabel" name="labelSensorDistance1" >
+   <widget class="QGraphicsView" name="graphicsViewLaser" >
     <property name="geometry" >
      <rect>
-      <x>151</x>
-      <y>80</y>
+      <x>10</x>
+      <y>110</y>
+      <width>601</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <property name="palette" >
+     <palette>
+      <active>
+       <colorrole role="Base" >
+        <brush brushstyle="SolidPattern" >
+         <color alpha="255" >
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Base" >
+        <brush brushstyle="SolidPattern" >
+         <color alpha="255" >
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Base" >
+        <brush brushstyle="SolidPattern" >
+         <color alpha="255" >
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="alignment" >
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+    <property name="renderHints" >
+     <set>QPainter::Antialiasing|QPainter::TextAntialiasing</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label18_2" >
+    <property name="geometry" >
+     <rect>
+      <x>120</x>
+      <y>90</y>
       <width>41</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text" >
-     <string>0 cm</string>
+     <string>Sensor</string>
     </property>
     <property name="alignment" >
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
