@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	Q_INIT_RESOURCE(mrs);
 
 	QApplication app(argc, argv);
-	
+
 	//----------------------
 	// the splash screen
 	//----------------------
@@ -211,8 +211,7 @@ Mrs::Mrs()
 	else
 	{
 		robotIsOn = false;
-		// also say the warning
-		gui1->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>", true, true);
+		gui1->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 	}
 
 	
@@ -346,6 +345,14 @@ Mrs::Mrs()
 	}
 	else
 	{
+		// TODO: nice exit point and error message
+		if (!QGLFormat::hasOpenGL())
+		{
+			qDebug() << "This system has no OpenGL support" << endl;
+			showExitDialog();
+		}
+		
+		
 		if (laserThread->isRunning() == false)
 		{
 			gui1->appendLog("Starting Laser thread...", false);
@@ -8029,16 +8036,17 @@ void Mrs::showSensorData()
 	//----------------------------------------
 	// show sensor values with progress bars
 	//----------------------------------------
-	gui1->showDistanceGraphical(SENSOR1, sensorThread->getIrSensorValue(SENSOR1));
-	gui1->showDistanceGraphical(SENSOR2, sensorThread->getIrSensorValue(SENSOR2));
-	gui1->showDistanceGraphical(SENSOR3, sensorThread->getIrSensorValue(SENSOR3));
-	gui1->showDistanceGraphical(SENSOR4, sensorThread->getIrSensorValue(SENSOR4));
-	gui1->showDistanceGraphical(SENSOR5, sensorThread->getIrSensorValue(SENSOR5));
-	gui1->showDistanceGraphical(SENSOR6, sensorThread->getIrSensorValue(SENSOR6));
-	gui1->showDistanceGraphical(SENSOR7, sensorThread->getIrSensorValue(SENSOR7));
-	gui1->showDistanceGraphical(SENSOR8, sensorThread->getIrSensorValue(SENSOR8));
+	gui1->showDistanceGraphical(SENSOR1, sensorThread->getDistance(SENSOR1));
+	gui1->showDistanceGraphical(SENSOR2, sensorThread->getDistance(SENSOR2));
+	gui1->showDistanceGraphical(SENSOR3, sensorThread->getDistance(SENSOR3));
+	gui1->showDistanceGraphical(SENSOR4, sensorThread->getDistance(SENSOR4));
+	gui1->showDistanceGraphical(SENSOR5, sensorThread->getDistance(SENSOR5));
+	gui1->showDistanceGraphical(SENSOR6, sensorThread->getDistance(SENSOR6));
+	gui1->showDistanceGraphical(SENSOR7, sensorThread->getDistance(SENSOR7));
+	gui1->showDistanceGraphical(SENSOR8, sensorThread->getDistance(SENSOR8));
 	gui1->showDistanceGraphical(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
 	
+	/*
 	//-------------------------------------------------------
 	// show distance value in a text label (in centimeters!)
 	//-------------------------------------------------------
@@ -8051,6 +8059,7 @@ void Mrs::showSensorData()
 	gui1->showDistance(SENSOR7, sensorThread->getDistance(SENSOR7));
 	gui1->showDistance(SENSOR8, sensorThread->getDistance(SENSOR8));
 	gui1->showDistance(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
+	*/
 	
 	//--------------------------------------------------------------
 	// show driven distance value in a text label (in centimeters!)
