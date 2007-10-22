@@ -28,8 +28,10 @@
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
 //-------------------------------------------------------------------
-#include <QPainter> // for drawing lines
+#include <QPainter> // for drawing lines (old method)
 #include <QtGui>
+#include <QtOpenGL>
+#include <QGraphicsScene> // for OpenGL (Laser lines)
 //-------------------------------------------------------------------
 
 
@@ -58,20 +60,20 @@ class Gui : public QMainWindow
 		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit *c, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
-		/**
+		/*
 		Shows a sensor distance in centimeters (cm) in a text label.
 		@param sensor is the sensor number.
 		@param distance is the distance in cm.
-		*/
 		void showDistance(int sensor, int distance);
+		*/
 	
 		/**
 		Shows a sensor distance in a progress bar.
 		@param sensor is the sensor number.
-		@param distance is the internal sensor value (not a distance in cm!).
+		@param distance is the distance in cm.
 		@sa SensorThread::convertToSensorValue(), SensorThread::convertToDistance()
 		*/
-		void showDistanceGraphical(int sensor, int sensorValue);
+		void showDistanceGraphical(int sensor, int distance);
 		
 		/**
 		Shows the driven distance in a text label.
@@ -217,7 +219,6 @@ class Gui : public QMainWindow
 	
 	
 	protected:
-		//void closeEvent(QCloseEvent *event);
 		void closeEvent();
 		void paintEvent(QPaintEvent *);
 	
@@ -295,6 +296,8 @@ class Gui : public QMainWindow
 		*/
 		void saveCamImage(void);
 
+		// TODO: doxygen for laser lines
+		void drawLaserLines();
 		
 		Ui::Gui ui;
 		Mrs *mrs1;
@@ -316,7 +319,13 @@ class Gui : public QMainWindow
 		QColor colorLaserPreferredDrivingDirection;
 		QColor colorHelpLine;
 		QColor colorHelpLineText;
+		QColor colorGraphicsSceneBackground;
 		int lastScale;
+		
+		// TODO: doxygen tags
+		QGraphicsScene *scene; /** The QGraphicsScene for showing the laser lines in the GUI */
+		//QGraphicsPixmapItem *pixmapBot;
+		QList <QGraphicsLineItem*> *list; /** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
 
 		
 		static const unsigned char ON  = 1;  /** For motor "ON" */

@@ -15,31 +15,23 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	servos = serv;
 	netThread = net;
 	lsrThread = l;
-
 	
-	//-------------------------------------------------------
-	// set some nice colors for some widgets
-	//-------------------------------------------------------
-	colorLaserObstacle = Qt::red;
-	colorLaserFreeWay = Qt::darkRed;
-	colorLaserPreferredDrivingDirection = Qt::darkGreen;
-	colorHelpLine = Qt::darkGray;
-	colorHelpLineText = Qt::black;
 	
 	//-------------------------------------------------------
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
 
-	// 
-	ui.progressBarSensor1->setMaximum(1011);
-	ui.progressBarSensor2->setMaximum(1011);
-	ui.progressBarSensor3->setMaximum(1011);
-	ui.progressBarSensor4->setMaximum(1011);
-	ui.progressBarSensor5->setMaximum(1011);
-	ui.progressBarSensor6->setMaximum(1011);
-	ui.progressBarSensor7->setMaximum(1011);
-	ui.progressBarSensor8->setMaximum(1011);
+	// TODO: make a const of this! see also sensorThread
+	// value in cm
+	ui.progressBarSensor1->setMaximum(50);
+	ui.progressBarSensor2->setMaximum(50);
+	ui.progressBarSensor3->setMaximum(50);
+	ui.progressBarSensor4->setMaximum(50);
+	ui.progressBarSensor5->setMaximum(50);
+	ui.progressBarSensor6->setMaximum(50);
+	ui.progressBarSensor7->setMaximum(50);
+	ui.progressBarSensor8->setMaximum(50);
 	ui.progressBarSensor16->setMaximum(400); // max. 400 cm ultra sonic sensor !!
 	
 	
@@ -182,11 +174,74 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	
 	// init the scale for the laser line / distances drawing stuff
 	lastScale = 0;
+	
+	
+	//-------------------------------------------------------
+	// OpemGL stuff (Laser lines)
+	//-------------------------------------------------------
+	
+	// set some nice colors for some widgets
+	colorLaserObstacle = Qt::red;
+	colorLaserFreeWay = Qt::darkRed;
+	colorLaserPreferredDrivingDirection = Qt::darkGreen;
+	colorHelpLine = Qt::darkGray;
+	colorHelpLineText = Qt::white;
+	colorGraphicsSceneBackground = Qt::black;
+	
+	// the scene for the laser scanner lines
+	scene = new QGraphicsScene();
+	
+	// set some colors
+	scene->setBackgroundBrush(colorGraphicsSceneBackground);
+	
+	// set scene to the GUI
+	ui.graphicsViewLaser->setScene(scene);
+	
+	// TODO: check if really faster! Quality looks worser than without OpenGL.
+	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
+	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+	
+	
+	// add items to the scene
+	//scene->addText("Hello, world!");
+	QGraphicsPixmapItem *pixmapBot = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
+	scene->addItem(pixmapBot);
+	
+	// horizontal center 
+	// FIXME: calculate the correct position!
+	//pixmapBot->setOffset((int)(ui.graphicsViewLaser->width()/2), 0);
+	pixmapBot->setOffset(150, 0);
+	
+	// create the line list
+	list = new QList <QGraphicsLineItem*>();
+	
+	// TODO: check if always 180 lines!
+	// create 180 laser lines
+	for (int i=-90; i<=90; i++)
+	{
+		QGraphicsLineItem *line = new QGraphicsLineItem();
+		
+		// set line color and position
+		line->setPen(QPen(colorLaserFreeWay));
+		
+		// 200 = length in pixel
+		line->setLine(0,0,0,178);
+		
+		// set position of each line
+		line->rotate(i);
+		// FIXME: calculate the correct position!
+		line->setPos(280,270);
+		
+		list->append(line);
+		scene->addItem(line);
+	}
 }
 
 
 Gui::~Gui()
 {
+//	delete view;
+	delete scene;
 }
 
 
@@ -217,8 +272,6 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 	if (sayIt == true)
 	{
 		mrs1->speak(text);
-		// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
-		//emit speak(text);
 	}
 }
 
@@ -242,8 +295,6 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	if (sayIt == true)
 	{
 		mrs1->speak(text);
-		// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
-		//emit speak(text);
 	}
 }
 
@@ -560,11 +611,9 @@ void Gui::on_btnExecuteScript_clicked()
 */
 
 
+/*		
 void Gui::showDistance(int sensor, int distance)
 {
-	QString str;
-
-	
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
 	  return;
@@ -574,54 +623,49 @@ void Gui::showDistance(int sensor, int distance)
 	switch (sensor)
 	{
 		case SENSOR1:
-			ui.labelSensorDistance1->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance1->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR2:
-			ui.labelSensorDistance2->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance2->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR3:
-			ui.labelSensorDistance3->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance3->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR4:
-			ui.labelSensorDistance4->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance4->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR5:
-			ui.labelSensorDistance5->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance5->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR6:
-			ui.labelSensorDistance6->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance6->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR7:
-			ui.labelSensorDistance7->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance7->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR8:
-			ui.labelSensorDistance8->setText(QString("%1 cm").arg(distance));
+			ui.labelSensorDistance8->setText(QString("%1").arg(distance));
 			return;
 			break;
 		case SENSOR16:
+			// super sonic sensor
 			ui.labelSensorDistance16->setText(QString("%1 cm").arg(distance));
 			return;
 			break;
 	}
 }
+*/
 
 
-void Gui::showDistanceGraphical(int sensor, int sensorValue)
+void Gui::showDistanceGraphical(int sensor, int distance)
 {
-	// show the distance with the progress bar
-	// erwartet den echten sensor value! nicht cm!
-	// AUSSER bei den Ultraschallsensoren!!
-	
-	
-	//qDebug("showDistanceGraphical SENSOR '%d': %d", sensor, sensorValue);
-	
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
 	  return;
@@ -631,39 +675,39 @@ void Gui::showDistanceGraphical(int sensor, int sensorValue)
 	switch (sensor)
 	{
 		case SENSOR1:
-			ui.progressBarSensor1->setValue(sensorValue);
+			ui.progressBarSensor1->setValue(distance);
 			return;
 			break;
 		case SENSOR2:
-			ui.progressBarSensor2->setValue(sensorValue);
+			ui.progressBarSensor2->setValue(distance);
 			return;
 			break;
 		case SENSOR3:
-			ui.progressBarSensor3->setValue(sensorValue);
+			ui.progressBarSensor3->setValue(distance);
 			return;
 			break;
 		case SENSOR4:
-			ui.progressBarSensor4->setValue(sensorValue);
+			ui.progressBarSensor4->setValue(distance);
 			return;
 			break;
 		case SENSOR5:
-			ui.progressBarSensor5->setValue(sensorValue);
+			ui.progressBarSensor5->setValue(distance);
 			return;
 			break;
 		case SENSOR6:
-			ui.progressBarSensor6->setValue(sensorValue);
+			ui.progressBarSensor6->setValue(distance);
 			return;
 			break;
 		case SENSOR7:
-			ui.progressBarSensor7->setValue(sensorValue);
+			ui.progressBarSensor7->setValue(distance);
 			return;
 			break;
 		case SENSOR8:
-			ui.progressBarSensor8->setValue(sensorValue);
+			ui.progressBarSensor8->setValue(distance);
 			return;
 			break;
 		case SENSOR16:
-			ui.progressBarSensor16->setValue(sensorValue);
+			ui.progressBarSensor16->setValue(distance);
 			return;
 			break;
 	}
@@ -699,15 +743,12 @@ void Gui::showDrivenDistance(int sensor, int distance)
 
 void Gui::showAlarm(short int sensor, unsigned char state)
 {
-	// show the distance with the progress bar
-	// erwartet den echten sensor value! nicht cm!
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
 		qDebug("error in showAlarm! sensorValue=%d", sensor);
 		return;
 	}
 
-	//qDebug("showAlarm (GUI) for sensors: %d = %d (1=ON)",sensor, state);
 
 	switch (sensor)
 	{
@@ -716,7 +757,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic1->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm1->setEnabled(true);
+				//ui.labelSensorAlarm1->setEnabled(true);
 				//ui.frameSensorAlarm1->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBar background
 				ui.progressBarSensor1->setPalette(QPalette(QColor(255, 64, 64)));
@@ -725,7 +766,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic1->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm1->setEnabled(false);
+				//ui.labelSensorAlarm1->setEnabled(false);
 				//ui.frameSensorAlarm1->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor1->setPalette(QPalette(QColor(255, 255, 255)));
@@ -737,7 +778,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic2->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm2->setEnabled(true);
+				//ui.labelSensorAlarm2->setEnabled(true);
 				//ui.frameSensorAlarm2->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBar background
 				ui.progressBarSensor2->setPalette(QPalette(QColor(255, 64, 64)));
@@ -746,7 +787,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic2->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm2->setEnabled(false);
+				//ui.labelSensorAlarm2->setEnabled(false);
 				//ui.frameSensorAlarm2->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor2->setPalette(QPalette(QColor(255, 255, 255)));
@@ -758,7 +799,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic3->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm3->setEnabled(true);
+				//ui.labelSensorAlarm3->setEnabled(true);
 				//ui.frameSensorAlarm3->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBar background
 				ui.progressBarSensor3->setPalette(QPalette(QColor(255, 64, 64)));
@@ -767,7 +808,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic3->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm3->setEnabled(false);
+				//ui.labelSensorAlarm3->setEnabled(false);
 				//ui.frameSensorAlarm3->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor3->setPalette(QPalette(QColor(255, 255, 255)));
@@ -779,7 +820,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic4->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm4->setEnabled(true);
+				//ui.labelSensorAlarm4->setEnabled(true);
 				//ui.frameSensorAlarm4->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBar background
 				ui.progressBarSensor4->setPalette(QPalette(QColor(255, 64, 64)));
@@ -788,7 +829,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic4->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm4->setEnabled(false);
+				//ui.labelSensorAlarm4->setEnabled(false);
 				//ui.frameSensorAlarm4->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor4->setPalette(QPalette(QColor(255, 255, 255)));
@@ -800,7 +841,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic5->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm5->setEnabled(true);
+				//ui.labelSensorAlarm5->setEnabled(true);
 				//ui.frameSensorAlarm5->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBar background
 				ui.progressBarSensor5->setPalette(QPalette(QColor(255, 64, 64)));
@@ -809,7 +850,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic5->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm5->setEnabled(false);
+				//ui.labelSensorAlarm5->setEnabled(false);
 				//ui.frameSensorAlarm5->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor5->setPalette(QPalette(QColor(255, 255, 255)));
@@ -821,7 +862,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic6->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm6->setEnabled(true);
+				//ui.labelSensorAlarm6->setEnabled(true);
 				//ui.frameSensorAlarm6->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBar background
 				ui.progressBarSensor6->setPalette(QPalette(QColor(255, 64, 64)));
@@ -830,7 +871,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic6->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm6->setEnabled(false);
+				//ui.labelSensorAlarm6->setEnabled(false);
 				//ui.frameSensorAlarm6->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor6->setPalette(QPalette(QColor(255, 255, 255)));
@@ -842,7 +883,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic7->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm7->setEnabled(true);
+				//ui.labelSensorAlarm7->setEnabled(true);
 				//ui.frameSensorAlarm7->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBar background
 				ui.progressBarSensor7->setPalette(QPalette(QColor(255, 64, 64)));
@@ -851,7 +892,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic7->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm7->setEnabled(false);
+				//ui.labelSensorAlarm7->setEnabled(false);
 				//ui.frameSensorAlarm7->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor7->setPalette(QPalette(QColor(255, 255, 255)));
@@ -863,7 +904,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic8->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm8->setEnabled(true);
+				//ui.labelSensorAlarm8->setEnabled(true);
 				//ui.frameSensorAlarm8->setPalette(QPalette(QColor(255, 64, 64)));
 				// red progressBot background
 				ui.progressBarSensor8->setPalette(QPalette(QColor(255, 64, 64)));
@@ -872,7 +913,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic8->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm8->setEnabled(false);
+				//ui.labelSensorAlarm8->setEnabled(false);
 				//ui.frameSensorAlarm8->setPalette(QPalette(QColor(255,255,255)));
 				// progressBar background white
 				ui.progressBarSensor8->setPalette(QPalette(QColor(255, 255, 255)));
@@ -884,15 +925,17 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
 				//ui.labelSensorPic16->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.labelSensorAlarm16->setEnabled(true);
+				//ui.labelSensorAlarm16->setEnabled(true);
 				//ui.frameSensorAlarm16->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor16->setPalette(QPalette(QColor(255, 64, 64)));
 			}
 			else
 			{
 				// change sensor-pixmap color to white
 				//ui.labelSensorPic16->setPalette(QPalette(QColor(255,255,255)));
-				ui.labelSensorAlarm16->setEnabled(false);
+				//ui.labelSensorAlarm16->setEnabled(false);
 				//ui.frameSensorAlarm16->setPalette(QPalette(QColor(255,255,255)));
+				ui.progressBarSensor16->setPalette(QPalette(QColor(255, 255, 255)));
 			}
 			return;
 			break;
@@ -1269,14 +1312,14 @@ void Gui::on_btnSimulate_clicked()
 {
 	if (ui.btnSimulate->isChecked())
 	{
-		// red progressBar background
+		// nice red button background
 		ui.btnSimulate->setPalette(QPalette(QColor(255, 64, 64)));
 		enableLaserScannerControls(true);
 		emit simulate(true);
 	}
 	else
 	{
-		// Todo: set back to default color!!
+		// set back to default color!!
 		ui.btnSimulate->setPalette(QApplication::palette());
 		emit simulate(false);
 	}
@@ -1552,7 +1595,6 @@ void Gui::drawLaserDistances(QPainter *painter, bool flatView)
 	static bool firstDraw = true;
 	QString dimensionText;
 	int dimensionLine = 0;
-	int newDimensionLine = 0;
 
 	// reduce drawing actions to the laser group box!!!
 	//painter.setClipRect(ui.groupBoxLaserScanner->x(), ui.groupBoxLaserScanner->y()+10, ui.groupBoxLaserScanner->width()-50, ui.groupBoxLaserScanner->height()-10, Qt::ReplaceClip);
@@ -1644,4 +1686,9 @@ void Gui::drawLaserDistances(QPainter *painter, bool flatView)
 			}
 		} // flatView
 	} 
+}
+
+
+void Gui::drawLaserLines()
+{
 }
