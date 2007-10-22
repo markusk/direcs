@@ -43,14 +43,14 @@ CONFIG += debug \
 warn_on \
 qt
 TEMPLATE = app
-unix{
+unix {
     HEADERS += usb_posix.h \
   posix_qextserialport.h \
   QtGLContext.h
     SOURCES += usb_posix.cpp \
   QtGLContext.cpp
 }
-win32{
+win32 {
     HEADERS += usb_win.h \
   win_qextserialport.h
     SOURCES += usb_win.cpp
