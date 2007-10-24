@@ -322,8 +322,6 @@ class Gui : public QMainWindow
 		// TODO: doxygen tags
 		QGraphicsScene *scene; /** The QGraphicsScene for showing the laser lines in the GUI */
 		QList <QGraphicsLineItem*> *laserLineList;  /** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
-		//QList <QGraphicsRectItem*> *sensorRectList; /** A pointer to a QList of pointers to the sensor rectangles (QGraphicsRectItems) - instead of vertival progressBars. */
-		//QList <QGraphicsTextItem*> *sensorTextList; /** A pointer to a QList of pointers to the sensor text */
 
 		
 		static const unsigned char ON  = 1;  /** For motor "ON" */

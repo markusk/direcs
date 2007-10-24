@@ -254,87 +254,12 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot2->setZValue(3);
 	
-/*
-	//--------------------------------------------------------------
-	// create the rect list
-	// create sensor rectangles (instead of vertical progressBars)
-	//--------------------------------------------------------------
-	sensorRectList = new QList <QGraphicsRectItem*>();
-	sensorTextList = new QList <QGraphicsTextItem*>();
-	
-	//--
-	// most left rect
-	//--
-	QGraphicsRectItem *rect1 = new QGraphicsRectItem();
-	
-	// set rect color and position
-	rect1->setPen(QPen(colorLaserPreferredDrivingDirection));
-	// and fill it
-	rect1->setBrush(QBrush(colorLaserPreferredDrivingDirection));
-	
-	// 200 = length in pixel
-	rect1->setRect(0,0,16,60);
-	
-	// FIXME: calculate the correct position!
-	rect1->rotate(-45);
-	rect1->setPos(139,40);
-	sensorRectList->append(rect1);
-	scene->addItem(rect1);
-
-	
-	// TODO: create only a number of sensors which is defined through a const
-	// create 8 sensor rectangles (instead of vertical progressBars)
-	for (int i=1, x=0; i<=6; i++, x+=26)
-	{
-		QGraphicsRectItem *rect = new QGraphicsRectItem();
-		
-		// set rect color and position
-		rect->setPen(QPen(colorLaserPreferredDrivingDirection));
-		// and fill it
-		rect->setBrush(QBrush(colorLaserPreferredDrivingDirection));
-		
-		// 200 = length in pixel
-		rect->setRect(0,0,16,60);
-		
-		// FIXME: calculate the correct position!
-		rect->setPos(202+x,10);
-		
-		sensorRectList->append(rect);
-		scene->addItem(rect);
-		
-		QGraphicsTextItem *text = new QGraphicsTextItem();
-		text->setPlainText(QString("%1").arg(i));
-		text->setDefaultTextColor(Qt::black);
-		text->setPos(206+x,50);
-		sensorTextList->append(text);
-		scene->addItem(text);
-	}
-	
-	
-	//--
-	// most right rect
-	//--
-	QGraphicsRectItem *rect2 = new QGraphicsRectItem();
-	
-	// set rect color and position
-	rect2->setPen(QPen(colorLaserPreferredDrivingDirection));
-	// and fill it
-	rect2->setBrush(QBrush(colorLaserPreferredDrivingDirection));
-	
-	// 200 = length in pixel
-	rect2->setRect(0,0,16,60);
-	
-	// FIXME: calculate the correct position!
-	rect2->rotate(45);
-	rect2->setPos(400,29);
-	sensorRectList->append(rect2);
-	scene->addItem(rect2);
-*/
 }
 
 
 Gui::~Gui()
 {
+	// FIXME: add deletes!!
 //	delete view;
 	delete scene;
 }
