@@ -2,6 +2,7 @@
     <qresource prefix="/images" >
         <file>images/black.png</file>
         <file>images/bot_from_above.png</file>
+        <file>images/bot_from_above_TOP2.png</file>
         <file>images/eraser.png</file>
         <file>images/exit.png</file>
         <file>images/gear.png</file>
