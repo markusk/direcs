@@ -257,7 +257,6 @@ Mrs::Mrs()
 			gui1->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			obstCheckThread->setMinObstacleDistance(minObstDist);
-			gui1->enableLaserScannerObstacleControls(true);
 			gui1->appendLog("Obstacle check thread started.");
 		}
 	}
@@ -265,7 +264,6 @@ Mrs::Mrs()
 	{
 		// show message
 		gui1->appendLog("Robot is OFF! Obstacle check thread NOT started!");
-		gui1->enableLaserScannerObstacleControls(false);
 	}
 
 
