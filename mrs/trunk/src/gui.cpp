@@ -10,7 +10,6 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	obstCheckThread = o;
 	circuit1 = c;
 	cam1 = ca;
-	//interface1 = i;
 	motors = mot;
 	servos = serv;
 	netThread = net;
@@ -22,41 +21,27 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//-------------------------------------------------------
 	ui.setupUi(this);
 
-	// TODO: make a const of this! see also sensorThread
+	// TODO: make a const of this init values! see also sensorThread
 	// value in cm
+	// set maximum in cm AND raise the widget (make it topmost)!
 	ui.progressBarSensor1->setMaximum(50);
+	ui.progressBarSensor1->raise();
 	ui.progressBarSensor2->setMaximum(50);
+	ui.progressBarSensor2->raise();
 	ui.progressBarSensor3->setMaximum(50);
+	ui.progressBarSensor3->raise();
 	ui.progressBarSensor4->setMaximum(50);
+	ui.progressBarSensor4->raise();
 	ui.progressBarSensor5->setMaximum(50);
+	ui.progressBarSensor5->raise();
 	ui.progressBarSensor6->setMaximum(50);
+	ui.progressBarSensor6->raise();
 	ui.progressBarSensor7->setMaximum(50);
+	ui.progressBarSensor7->raise();
 	ui.progressBarSensor8->setMaximum(50);
+	ui.progressBarSensor8->raise();
 	ui.progressBarSensor16->setMaximum(400); // max. 400 cm ultra sonic sensor !!
-	
-	
-	/*
-	// set the "robot progressBars" maximums equal to the other progressBars
-	ui.progressBarBotSensor1->setMaximum(ui.progressBarSensor1->maximum());
-	ui.progressBarBotSensor2->setMaximum(ui.progressBarSensor2->maximum());
-	ui.progressBarBotSensor3->setMaximum(ui.progressBarSensor3->maximum());
-	ui.progressBarBotSensor4->setMaximum(ui.progressBarSensor4->maximum());
-	ui.progressBarBotSensor5->setMaximum(ui.progressBarSensor5->maximum());
-	ui.progressBarBotSensor6->setMaximum(ui.progressBarSensor6->maximum());
-	ui.progressBarBotSensor7->setMaximum(ui.progressBarSensor7->maximum());
-	ui.progressBarBotSensor8->setMaximum(ui.progressBarSensor8->maximum());
-	
-	// let the "robot progressBars" react like the "sensor progressBars"
-	// Or: "change the value of the progressBarBotSensorX when the value of the progressBarSensorX changes"
-	connect(ui.progressBarSensor1, SIGNAL(valueChanged(int)), ui.progressBarBotSensor1, SLOT(setValue(int)));
-	connect(ui.progressBarSensor2, SIGNAL(valueChanged(int)), ui.progressBarBotSensor2, SLOT(setValue(int)));
-	connect(ui.progressBarSensor3, SIGNAL(valueChanged(int)), ui.progressBarBotSensor3, SLOT(setValue(int)));
-	connect(ui.progressBarSensor4, SIGNAL(valueChanged(int)), ui.progressBarBotSensor4, SLOT(setValue(int)));
-	connect(ui.progressBarSensor5, SIGNAL(valueChanged(int)), ui.progressBarBotSensor5, SLOT(setValue(int)));
-	connect(ui.progressBarSensor6, SIGNAL(valueChanged(int)), ui.progressBarBotSensor6, SLOT(setValue(int)));
-	connect(ui.progressBarSensor7, SIGNAL(valueChanged(int)), ui.progressBarBotSensor7, SLOT(setValue(int)));
-	connect(ui.progressBarSensor8, SIGNAL(valueChanged(int)), ui.progressBarBotSensor8, SLOT(setValue(int)));
-	*/
+	//ui.progressBarSensor16->raise();
 	
 	
 	// change the value of the spinBoxServo1 when the value of the sliderPositionServo1 changes
@@ -72,19 +57,8 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), ui.sliderBotSlot, SLOT(setValue(int)));
 	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 	
-	// to init the value for the obstacle check thread
+	// TODO: to init the value for the obstacle check thread emit something?!?
 	//emit (); ?!?
-	
-	
-	/*
-	// change label values automatically, when sliders are moved
-	connect(ui.sliderHCam1, SIGNAL(sliderMoved(int)), ui.labelHCam1,  SLOT(setNum(int)));
-	connect(ui.sliderVCam1, SIGNAL(sliderMoved(int)), ui.labelVCam1,  SLOT(setNum(int)));
-	// turn off slider tracking (emit valueChanged only when user releases the slider)
-	ui.sliderHCam1->setTracking(false);
-	ui.sliderVCam1->setTracking(false);
-	*/
-	
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
@@ -183,7 +157,8 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	// set some nice colors for some widgets
 	colorLaserObstacle = Qt::red;
 	colorLaserFreeWay = Qt::darkRed;
-	colorLaserPreferredDrivingDirection = Qt::darkGreen;
+	colorLaserFreeWay.setAlpha(180);
+	colorLaserPreferredDrivingDirection = QColor(7, 68, 30, 150);
 	colorHelpLine = Qt::darkGray;
 	colorHelpLineText = Qt::white;
 	colorGraphicsSceneBackground = Qt::black;
@@ -202,18 +177,40 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 	
 	
+	//--------------------------------------------------------------
+	// add robot picture1
+	//--------------------------------------------------------------
 	// add items to the scene
-	//scene->addText("Hello, world!");
-	QGraphicsPixmapItem *pixmapBot = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
-	scene->addItem(pixmapBot);
+	QGraphicsPixmapItem *pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
+	scene->addItem(pixmapBot1);
 	
-	// horizontal center 
-	// FIXME: calculate the correct position!
-	//pixmapBot->setOffset((int)(ui.graphicsViewLaser->width()/2), 0);
-	pixmapBot->setOffset(150, 0);
+	// horizontal center
+	pixmapBot1->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot1->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
 	
-	// create the line list
-	list = new QList <QGraphicsLineItem*>();
+	// FIXME doesn't work
+	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
+	pixmapBot1->setZValue(1);
+	
+	
+	//--------------------------------------------------------------
+	// create the laser line list
+	//--------------------------------------------------------------
+	laserLineList = new QList <QGraphicsLineItem*>();
+
+	/*
+	//TODO: HIGHRES MODE with 4x180 lines
+	//draw the first real line
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	
+	// fill the spaces between the lines
+	painter.rotate(0.25);
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.rotate(0.25);
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.rotate(0.25);
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.rotate(0.25);
+	*/
 	
 	// TODO: check if always 180 lines!
 	// create 180 laser lines
@@ -224,17 +221,115 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 		// set line color and position
 		line->setPen(QPen(colorLaserFreeWay));
 		
-		// 200 = length in pixel
-		line->setLine(0,0,0,178);
+		// 178 = length in pixel
+		line->setLine(0,0,0,278);
 		
 		// set position of each line
 		line->rotate(i);
-		// FIXME: calculate the correct position!
-		line->setPos(280,270);
 		
-		list->append(line);
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		line->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
+		
+		// FIXME doesn't work?!
+		line->setZValue(2);
+		
+		laserLineList->append(line);
 		scene->addItem(line);
 	}
+	
+	
+	//--------------------------------------------------------------
+	// add robot picture2
+	//--------------------------------------------------------------
+	// add items to the scene
+	QGraphicsPixmapItem *pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
+	scene->addItem(pixmapBot2);
+	
+	// horizontal center
+	pixmapBot2->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot2->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
+	
+	// FIXME doesn't work
+	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
+	pixmapBot2->setZValue(3);
+	
+/*
+	//--------------------------------------------------------------
+	// create the rect list
+	// create sensor rectangles (instead of vertical progressBars)
+	//--------------------------------------------------------------
+	sensorRectList = new QList <QGraphicsRectItem*>();
+	sensorTextList = new QList <QGraphicsTextItem*>();
+	
+	//--
+	// most left rect
+	//--
+	QGraphicsRectItem *rect1 = new QGraphicsRectItem();
+	
+	// set rect color and position
+	rect1->setPen(QPen(colorLaserPreferredDrivingDirection));
+	// and fill it
+	rect1->setBrush(QBrush(colorLaserPreferredDrivingDirection));
+	
+	// 200 = length in pixel
+	rect1->setRect(0,0,16,60);
+	
+	// FIXME: calculate the correct position!
+	rect1->rotate(-45);
+	rect1->setPos(139,40);
+	sensorRectList->append(rect1);
+	scene->addItem(rect1);
+
+	
+	// TODO: create only a number of sensors which is defined through a const
+	// create 8 sensor rectangles (instead of vertical progressBars)
+	for (int i=1, x=0; i<=6; i++, x+=26)
+	{
+		QGraphicsRectItem *rect = new QGraphicsRectItem();
+		
+		// set rect color and position
+		rect->setPen(QPen(colorLaserPreferredDrivingDirection));
+		// and fill it
+		rect->setBrush(QBrush(colorLaserPreferredDrivingDirection));
+		
+		// 200 = length in pixel
+		rect->setRect(0,0,16,60);
+		
+		// FIXME: calculate the correct position!
+		rect->setPos(202+x,10);
+		
+		sensorRectList->append(rect);
+		scene->addItem(rect);
+		
+		QGraphicsTextItem *text = new QGraphicsTextItem();
+		text->setPlainText(QString("%1").arg(i));
+		text->setDefaultTextColor(Qt::black);
+		text->setPos(206+x,50);
+		sensorTextList->append(text);
+		scene->addItem(text);
+	}
+	
+	
+	//--
+	// most right rect
+	//--
+	QGraphicsRectItem *rect2 = new QGraphicsRectItem();
+	
+	// set rect color and position
+	rect2->setPen(QPen(colorLaserPreferredDrivingDirection));
+	// and fill it
+	rect2->setBrush(QBrush(colorLaserPreferredDrivingDirection));
+	
+	// 200 = length in pixel
+	rect2->setRect(0,0,16,60);
+	
+	// FIXME: calculate the correct position!
+	rect2->rotate(45);
+	rect2->setPos(400,29);
+	sensorRectList->append(rect2);
+	scene->addItem(rect2);
+*/
 }
 
 
@@ -1140,14 +1235,8 @@ void Gui::enableCamControls(bool state)
 void Gui::enableLaserScannerControls(bool state)
 {
 	// enable/disable all laser scanner in the gui
-	ui.groupBoxLaserScanner->setEnabled(state);
+	//ui.groupBoxLaserScanner->setEnabled(state);
 	
-	enableLaserScannerObstacleControls(state);
-}
-
-
-void Gui::enableLaserScannerObstacleControls(bool state)
-{
 	ui.sliderObstacleLaserScanner->setEnabled(state);
 	ui.spinBoxObstacleLaserScanner->setEnabled(state);
 	ui.checkBoxLaserAlert->setEnabled(state);
@@ -1359,26 +1448,13 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 
 void Gui::refreshLaserView()
 {
-/*
-	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	not currently used!! SLOWER?!?
-	
-	// get the scale (here, because it's faster, than in the for-loop)
-	int scaleView = ui.sliderLaserScale->value();
-	
-	// /get the data from 180° to 0° (right to left!!)
-	for (int i=lsrThread->getNumReadings(); i>0; i--)
-	{
-		laserLine[i] = QLine(i, 0, i, (int) (lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView));
-	}
-	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-*/
-	update();
+	//update(); no more "paint" events for this anymore!  :-D
 }
 
 
 void Gui::paintEvent(QPaintEvent *)
 {
+/*
 	QPainter painter(this);
 	
 	
@@ -1572,14 +1648,6 @@ void Gui::paintEvent(QPaintEvent *)
 			painter.drawLine(i, 0, i, (int) (lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView));
 		}
 		
-		/*
-		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		currently not in use!! SLOWER?!?
-		painter.setPen(colorLaserFreeWay);
-		painter.drawLines(laserLine, lsrThread->getNumReadings());
-		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		*/
-		
 		
 		//------------------------------------------------
 		// draw some help lines / distances / dimensons
@@ -1587,11 +1655,13 @@ void Gui::paintEvent(QPaintEvent *)
 		//------------------------------------------------
 		drawLaserDistances(&painter, true);
 	}
+*/
 }
 
 
 void Gui::drawLaserDistances(QPainter *painter, bool flatView)
 {
+/*
 	static bool firstDraw = true;
 	QString dimensionText;
 	int dimensionLine = 0;
@@ -1685,7 +1755,8 @@ void Gui::drawLaserDistances(QPainter *painter, bool flatView)
 				painter->drawText(-100, (int)(i*dimensionLine), dimensionText.toAscii());
 			}
 		} // flatView
-	} 
+	}
+*/
 }
 
 
