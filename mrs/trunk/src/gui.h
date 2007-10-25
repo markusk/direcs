@@ -217,8 +217,7 @@ class Gui : public QMainWindow
 	
 	protected:
 		void closeEvent();
-		void paintEvent(QPaintEvent *);
-	
+
 
 	signals:
 		/**
@@ -286,15 +285,12 @@ class Gui : public QMainWindow
 		/**
 		Draws some help lines / distances / dimensons in the laser scanner view.
 		*/
-		void drawLaserDistances(QPainter *painter, bool flatView);
+		void drawLaserDistances(bool flatView);
 		
 		/**
 		Saves the current picture to disk (one time shot).
 		*/
 		void saveCamImage(void);
-
-		// TODO: doxygen for laser lines
-		void drawLaserLines();
 		
 		Ui::Gui ui;
 		Mrs *mrs1;
@@ -305,7 +301,6 @@ class Gui : public QMainWindow
 		CamThread *cam1;
 		NetworkThread *netThread;
 		LaserThread *lsrThread;
-		//Interface *interface1;
 		Motor *motors;
 		Servo *servos;
 		QwtPlotCurve curve1;
@@ -317,11 +312,13 @@ class Gui : public QMainWindow
 		QColor colorHelpLine;
 		QColor colorHelpLineText;
 		QColor colorGraphicsSceneBackground;
+		QPen laserLinePen;
 		int lastScale;
 		
 		// TODO: doxygen tags
 		QGraphicsScene *scene; /** The QGraphicsScene for showing the laser lines in the GUI */
 		QList <QGraphicsLineItem*> *laserLineList;  /** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
+		QList <QGraphicsLineItem*> *laserDistanceLineList;  /** A pointer to a QList of pointers to the shown distances from the laser lines (kind of coordinate system) */
 
 		
 		static const unsigned char ON  = 1;  /** For motor "ON" */
@@ -371,9 +368,5 @@ class Gui : public QMainWindow
 		This es equal to the number of degrees.
 		See also laserThread.h */
 		//static const unsigned char LASERSCANNERARRAYSIZE = 181;
-		
-		/** The array with the laser lines (x1 x2 y1 y2 coordinates!) */
-		// QLine laserLine[LASERSCANNERARRAYSIZE];
-		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 };
 #endif
