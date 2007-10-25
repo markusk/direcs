@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gui.ui'
 **
-** Created: Wed Oct 24 20:11:28 2007
+** Created: Thu Oct 25 21:00:16 2007
 **      by: Qt User Interface Compiler version 4.3.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -572,6 +572,8 @@ public:
     graphicsViewLaser = new QGraphicsView(groupBoxBot);
     graphicsViewLaser->setObjectName(QString::fromUtf8("graphicsViewLaser"));
     graphicsViewLaser->setGeometry(QRect(10, 40, 601, 541));
+    graphicsViewLaser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    graphicsViewLaser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsViewLaser->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
     graphicsViewLaser->setRenderHints(QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing);
     label18_2 = new QLabel(groupBoxBot);
