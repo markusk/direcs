@@ -47,9 +47,6 @@ void LaserThread::stop()
 }
 
 
-/*!
-This method reads the values from the Laser Scanner and emits a signal to show them in the GUI.
-*/
 void LaserThread::run()
 {
 	// check if all 180 beams were read
