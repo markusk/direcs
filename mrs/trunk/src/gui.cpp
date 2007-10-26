@@ -264,8 +264,7 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 
 Gui::~Gui()
 {
-	// FIXME: add deletes!!
-//	delete view;
+	delete laserLineList;
 	delete scene;
 }
 
