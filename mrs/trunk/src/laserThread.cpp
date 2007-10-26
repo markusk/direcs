@@ -21,14 +21,25 @@ LaserThread::LaserThread()
 	//QMutexLocker locker(&mutex); // make this class thread-safe
 	
 	
-	// initialisation
+	//laserScannerValues = new QList <float*>();
+	//laserScannerFlags = new QList <int*>();
+	
+	// initialisation	
 	for (int i=0; i<LASERSCANNERARRAYSIZE; i++)
 	{
 		// the distances
-		laserScannerValue[i][DISTANCE] = 0;
+		//laserScannerValue[i][DISTANCE] = 0;
 		// the flags
-		laserScannerValue[i][FLAG] = 0;
+		//laserScannerValue[i][FLAG] = 0;
+		
+		// add a 0 m laser distance
+		laserScannerValues.append(0);
+		
+		// add a 0 flag
+		laserScannerFlags.append(0);
 	}
+	
+
 }
 
 
@@ -37,6 +48,9 @@ LaserThread::~LaserThread()
 	stopped = false;
 	
 	//QMutexLocker locker(&mutex); // make this class thread-safe
+	
+	//delete laserScannerFlags;
+	//delete laserScannerValues;
 }
 
 
@@ -76,7 +90,9 @@ void LaserThread::run()
 				{
 					// get value from laser
 					// store the value in an array in this thread
-					laserScannerValue[i][DISTANCE] = getLaserDistance(i);
+					//laserScannerValue[i][DISTANCE] = getLaserDistance(i);
+					
+					laserScannerValues[i] = getLaserDistance(i);
 				}
 				
 				
@@ -112,7 +128,8 @@ float LaserThread::getLaserScannerValue(int angle)
 	}
 	
 	
-	return laserScannerValue[angle][DISTANCE];
+	//return laserScannerValue[angle][DISTANCE];
+	return laserScannerValues.at(angle);
 }
 
 
@@ -124,7 +141,8 @@ float LaserThread::getLaserScannerFlag(int angle)
 	}
 	
 	
-	return laserScannerValue[angle][FLAG];
+	//return laserScannerValue[angle][FLAG];
+	return laserScannerFlags.at(angle);
 }
 
 
@@ -136,7 +154,8 @@ void LaserThread::setLaserScannerFlag(int angle, int flag)
 	}
 	
 	
-	laserScannerValue[angle][FLAG] = flag;
+	//laserScannerValue[angle][FLAG] = flag;
+	laserScannerFlags[angle] = flag;
 }
 
 
@@ -158,6 +177,8 @@ void LaserThread::setSimulationMode(bool status)
 		
 		// fill the array with some nice values
 		//for (int i=0; i<LASERSCANNERARRAYSIZE; i++)
+		
+		/*
 		laserScannerValue[0][DISTANCE]		= 1.0;
 		laserScannerValue[1][DISTANCE]		= 1.0;
 		laserScannerValue[2][DISTANCE]		= 1.0;
@@ -338,14 +359,197 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValue[177][DISTANCE]	= 2.0;
 		laserScannerValue[178][DISTANCE]	= 2.0;
 		laserScannerValue[179][DISTANCE]	= 2.0;
+		*/
 
+		laserScannerValues[0]	= 1.0;
+		laserScannerValues[1]	= 1.0;
+		laserScannerValues[2]	= 1.0;
+		laserScannerValues[3]	= 1.0;
+		laserScannerValues[4]	= 1.0;
+		laserScannerValues[5]	= 1.0;
+		laserScannerValues[6]	= 1.0;
+		laserScannerValues[7]	= 1.0;
+		laserScannerValues[8]	= 1.0;
+		laserScannerValues[9]	= 1.0;
+		laserScannerValues[10]	= 1.5;
+		laserScannerValues[11]	= 1.5;
+		laserScannerValues[12]	= 1.5;
+		laserScannerValues[13]	= 1.5;
+		laserScannerValues[14]	= 1.5;
+		laserScannerValues[15]	= 1.5;
+		laserScannerValues[16]	= 1.5;
+		laserScannerValues[17]	= 1.5;
+		laserScannerValues[18]	= 1.5;
+		laserScannerValues[19]	= 1.5;
+		laserScannerValues[20]	= 2.0;
+		laserScannerValues[21]	= 2.0;
+		laserScannerValues[22]	= 2.0;
+		laserScannerValues[23]	= 2.0;
+		laserScannerValues[24]	= 2.0;
+		laserScannerValues[25]	= 2.0;
+		laserScannerValues[26]	= 2.0;
+		laserScannerValues[27]	= 2.0;
+		laserScannerValues[28]	= 2.0;
+		laserScannerValues[29]	= 2.0;
+		laserScannerValues[30]	= 2.5;
+		laserScannerValues[31]	= 2.5;
+		laserScannerValues[32]	= 2.5;
+		laserScannerValues[33]	= 2.5;
+		laserScannerValues[34]	= 2.5;
+		laserScannerValues[35]	= 2.5;
+		laserScannerValues[36]	= 2.5;
+		laserScannerValues[37]	= 2.5;
+		laserScannerValues[38]	= 2.5;
+		laserScannerValues[39]	= 2.5;
+		laserScannerValues[40]	= 3.25;
+		laserScannerValues[41]	= 3.25;
+		laserScannerValues[42]	= 3.25;
+		laserScannerValues[43]	= 3.25;
+		laserScannerValues[44]	= 3.25;
+		laserScannerValues[45]	= 3.25;
+		laserScannerValues[46]	= 3.25;
+		laserScannerValues[47]	= 3.25;
+		laserScannerValues[48]	= 3.25;
+		laserScannerValues[49]	= 3.25;
+		laserScannerValues[50]	= 3.5;
+		laserScannerValues[51]	= 3.5;
+		laserScannerValues[52]	= 3.5;
+		laserScannerValues[53]	= 3.5;
+		laserScannerValues[54]	= 3.5;
+		laserScannerValues[55]	= 3.5;
+		laserScannerValues[56]	= 3.5;
+		laserScannerValues[57]	= 3.5;
+		laserScannerValues[58]	= 3.5;
+		laserScannerValues[59]	= 3.5;
+		laserScannerValues[60]	= 4.0;
+		laserScannerValues[61]	= 4.0;
+		laserScannerValues[62]	= 4.0;
+		laserScannerValues[63]	= 4.0;
+		laserScannerValues[64]	= 4.0;
+		laserScannerValues[65]	= 4.0;
+		laserScannerValues[66]	= 4.0;
+		laserScannerValues[67]	= 4.0;
+		laserScannerValues[68]	= 4.0;
+		laserScannerValues[69]	= 4.0;
+		laserScannerValues[70]	= 4.5;
+		laserScannerValues[71]	= 4.5;
+		laserScannerValues[72]	= 4.5;
+		laserScannerValues[73]	= 4.5;
+		laserScannerValues[74]	= 4.5;
+		laserScannerValues[75]	= 4.5;
+		laserScannerValues[76]	= 4.5;
+		laserScannerValues[77]	= 4.5;
+		laserScannerValues[78]	= 4.5;
+		laserScannerValues[79]	= 4.5;
+		laserScannerValues[80]	= 5.0;
+		laserScannerValues[81]	= 5.0;
+		laserScannerValues[82]	= 5.0;
+		laserScannerValues[83]	= 5.0;
+		laserScannerValues[84]	= 5.0;
+		laserScannerValues[85]	= 5.0;
+		laserScannerValues[86]	= 2.5;
+		laserScannerValues[87]	= 2.5;
+		laserScannerValues[88]	= 2.5;
+		laserScannerValues[89]	= 2.5;
+		laserScannerValues[90]	= 2.5;
+		laserScannerValues[91]	= 2.5;
+		laserScannerValues[92]	= 2.5;
+		laserScannerValues[93]	= 2.5;
+		laserScannerValues[94]	= 2.5;
+		laserScannerValues[95]	= 2.5;
+		laserScannerValues[96]	= 2.5;
+		laserScannerValues[97]	= 2.5;
+		laserScannerValues[98]	= 2.5;
+		laserScannerValues[99]	= 2.5;
+		laserScannerValues[100]	= 2.0;
+		laserScannerValues[101]	= 2.0;
+		laserScannerValues[102]	= 2.0;
+		laserScannerValues[103]	= 2.0;
+		laserScannerValues[104]	= 2.0;
+		laserScannerValues[105]	= 2.0;
+		laserScannerValues[106]	= 3.0;
+		laserScannerValues[107]	= 3.0;
+		laserScannerValues[108]	= 3.0;
+		laserScannerValues[109]	= 3.0;
+		laserScannerValues[110]	= 3.0;
+		laserScannerValues[111]	= 3.0;
+		laserScannerValues[112]	= 3.0;
+		laserScannerValues[113]	= 3.0;
+		laserScannerValues[114]	= 3.0;
+		laserScannerValues[115]	= 3.0;
+		laserScannerValues[116]	= 3.0;
+		laserScannerValues[117]	= 3.0;
+		laserScannerValues[118]	= 3.0;
+		laserScannerValues[119]	= 3.0;
+		laserScannerValues[120]	= 2.0;
+		laserScannerValues[121]	= 2.0;
+		laserScannerValues[122]	= 2.0;
+		laserScannerValues[123]	= 2.0;
+		laserScannerValues[124]	= 2.0;
+		laserScannerValues[125]	= 2.0;
+		laserScannerValues[126]	= 2.0;
+		laserScannerValues[127]	= 2.0;
+		laserScannerValues[128]	= 2.0;
+		laserScannerValues[129]	= 2.0;
+		laserScannerValues[130]	= 2.0;
+		laserScannerValues[131]	= 2.0;
+		laserScannerValues[132]	= 2.0;
+		laserScannerValues[133]	= 2.0;
+		laserScannerValues[134]	= 2.0;
+		laserScannerValues[135]	= 2.0;
+		laserScannerValues[136]	= 2.0;
+		laserScannerValues[137]	= 2.0;
+		laserScannerValues[138]	= 2.0;
+		laserScannerValues[139]	= 2.0;
+		laserScannerValues[140]	= 6.0;
+		laserScannerValues[141]	= 6.0;
+		laserScannerValues[142]	= 6.0;
+		laserScannerValues[143]	= 6.0;
+		laserScannerValues[144]	= 6.0;
+		laserScannerValues[145]	= 6.0;
+		laserScannerValues[146]	= 6.0;
+		laserScannerValues[147]	= 6.0;
+		laserScannerValues[148]	= 6.0;
+		laserScannerValues[149]	= 6.0;
+		laserScannerValues[150]	= 9.0;
+		laserScannerValues[151]	= 9.0;
+		laserScannerValues[152]	= 9.0;
+		laserScannerValues[153]	= 9.0;
+		laserScannerValues[154]	= 9.0;
+		laserScannerValues[155]	= 9.0;
+		laserScannerValues[156]	= 9.0;
+		laserScannerValues[157]	= 9.0;
+		laserScannerValues[158]	= 9.0;
+		laserScannerValues[159]	= 9.0;
+		laserScannerValues[160]	= 4.0;
+		laserScannerValues[161]	= 4.0;
+		laserScannerValues[162]	= 4.0;
+		laserScannerValues[163]	= 4.0;
+		laserScannerValues[164]	= 4.0;
+		laserScannerValues[165]	= 4.0;
+		laserScannerValues[166]	= 4.0;
+		laserScannerValues[167]	= 4.0;
+		laserScannerValues[168]	= 4.0;
+		laserScannerValues[169]	= 4.0;
+		laserScannerValues[170]	= 2.0;
+		laserScannerValues[171]	= 2.0;
+		laserScannerValues[172]	= 2.0;
+		laserScannerValues[173]	= 2.0;
+		laserScannerValues[174]	= 2.0;
+		laserScannerValues[175]	= 2.0;
+		laserScannerValues[176]	= 2.0;
+		laserScannerValues[177]	= 2.0;
+		laserScannerValues[178]	= 2.0;
+		laserScannerValues[179]	= 2.0;
+
+		
 		/*
 		for (int i=0; i<LASERSCANNERARRAYSIZE; i++)
 		{
 			// the distances
-			laserScannerValue[i][DISTANCE] = 4.0;
+			laserScannerValues[i] = 4.0;
 			// the flags
-			laserScannerValue[i][FLAG] = 0;
+			laserScannerFlags[i] = 0;
 		}
 		*/
 		
@@ -356,9 +560,11 @@ void LaserThread::setSimulationMode(bool status)
 		for (int i=0; i<LASERSCANNERARRAYSIZE; i++)
 		{
 			// the distances
-			laserScannerValue[i][DISTANCE] = 0;
+			//laserScannerValue[i][DISTANCE] = 0;
+			laserScannerValues[i] = 0;
 			// the flags
-			laserScannerValue[i][FLAG] = 0;
+			//laserScannerValue[i][FLAG] = 0;
+			laserScannerFlags[i] = 0;
 		}
 		
 		// for refreshing the gui (deleting simulated laser lines)
