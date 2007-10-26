@@ -144,7 +144,7 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//----------------------------------------------------------------------------
 	// refresh laser view, when check box changes
 	// TODO how to refresh view without providing with parameter?!
-	connect(ui.checkBoxHiResView, SIGNAL( stateChanged(int) ), this, SLOT( refreshLaserView() ));
+//	connect(ui.checkBoxHiResView, SIGNAL( stateChanged(int) ), this, SLOT( refreshLaserView(float *, float *) ));
 		
 	// init the scale for the laser line / distances drawing stuff
 	lastScale = 0;
@@ -1313,7 +1313,7 @@ void Gui::on_sliderLaserScale_valueChanged(int value)
 	ui.labelLaserTop->setText(tr("1:%1").arg(value));
 	
 	// TODO: refresh laser view immediately?!?
-	refreshLaserView();
+	//refreshLaserView();
 }
 
 
@@ -1335,11 +1335,11 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 	}
 	
 	// TODO: refresh laser view immediately?!?
-	refreshLaserView();
+	//refreshLaserView();
 }
 
 
-void Gui::refreshLaserView()
+void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 {
 	int measuredLaserDistance = 0;
 	
@@ -1375,20 +1375,22 @@ void Gui::refreshLaserView()
 			for (int i=0; i<laserLineList->size(); i++)
 			{
 				// get value from laser
-				measuredLaserDistance = (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView);
+//				measuredLaserDistance = (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView);
+				measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
 			
 				// if warnings should be displayed in a different color, do so
 				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
 				{
 					// check if there was an obstacle
-					if (lsrThread->getLaserScannerFlag(i) == 1)
+//					if (lsrThread->getLaserScannerFlag(i) == 1)
+					if (laserScannerFlags[i] == 1)
 					{
 						// obstacle detected!
 						laserLineList->at(i)->setPen(QPen(colorLaserObstacle));
 					}
 					else
 					{
-						if (lsrThread->getLaserScannerFlag(i) == 3)
+						if (laserScannerFlags[i] == 3)
 						{
 							// f r e e   w a y
 							laserLineList->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
@@ -1434,14 +1436,15 @@ void Gui::refreshLaserView()
 				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
 				{
 					// check if there was an obstacle
-					if (lsrThread->getLaserScannerFlag(i) == 1)
+//					if (lsrThread->getLaserScannerFlag(i) == 1)
+					if (laserScannerFlags[i] == 1)
 					{
 						// obstacle detected!
 						laserLineList->at(i)->setPen(QPen(colorLaserObstacle));
 					}
 					else
 					{
-						if (lsrThread->getLaserScannerFlag(i) == 3)
+						if (laserScannerFlags[i] == 3)
 						{
 							// f r e e   w a y
 							laserLineList->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
@@ -1461,7 +1464,8 @@ void Gui::refreshLaserView()
 				
 				// get value from laser and
 				// draw the lines at every 1°
-				measuredLaserDistance = (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView);
+//				measuredLaserDistance = (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView);
+				measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
 				laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
 			}
 		}
@@ -1496,14 +1500,14 @@ void Gui::refreshLaserView()
 			if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
 			{
 				// check if there was an obstacle
-				if (lsrThread->getLaserScannerFlag(i) == 1)
+				if (laserScannerFlags[i] == 1)
 				{
 					// obstacle detected!
 					painter.setPen(colorLaserObstacle);
 				}
 				else
 				{
-					if (lsrThread->getLaserScannerFlag(i) == 3)
+					if (laserScannerFlags[i] == 3)
 					{
 						// f r e e   w a y
 						painter.setPen(colorLaserPreferredDrivingDirection);
@@ -1521,7 +1525,7 @@ void Gui::refreshLaserView()
 				painter.setPen(colorLaserFreeWay);
 			}
 			// draw the line
-			painter.drawLine(i, 0, i, (int) (lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView));
+			painter.drawLine(i, 0, i, (int) (laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView));
 		}
 		
 		
@@ -1533,213 +1537,6 @@ void Gui::refreshLaserView()
 	}
 */
 }
-
-
-/*
-void Gui::paintEvent(QPaintEvent *)
-{
-	QPainter painter(this);
-	
-	
-	// reduce drawing actions to the laser group box!!!
-	painter.setClipRect(ui.groupBoxLaserScanner->x(), ui.groupBoxLaserScanner->y()+10, ui.groupBoxLaserScanner->width()-50, ui.groupBoxLaserScanner->height()-10, Qt::ReplaceClip);
-	int measuredLaserDistance = 0;
-	
-	
-	if (ui.checkBoxAntiAlias->checkState() == Qt::Checked) // this is default!
-	{
-		// this causes higher CPU load
-		painter.setRenderHint(QPainter::Antialiasing);
-	}
-	
-	// set the default color of the laser lines
-	painter.setPen(colorLaserFreeWay);
-	
-	
-	// get a scale to fit the beams into the window
-	int scaleView = ui.sliderLaserScale->value();
-
-	
-	//------------------------------------------------------
-	// decide, which view: 180° or "flat horizontal" view
-	//------------------------------------------------------
-	if (ui.checkBoxAngleView->checkState() == Qt::Checked) // this is default!
-	{
-		//------------
-		// angle view
-		//------------
-		// translate coordinate system to the destination frame in the gui
-		// (set it in the "groupBoxLaser" exactly in middle of the "laserLine90")
-		painter.translate(ui.groupBoxLaserScanner->x() + ui.lineLaser90->x(), ui.groupBoxLaserScanner->y() + ui.lineLaser90->y() + ui.lineLaser90->height());
-		
-		painter.rotate(90);
-		
-		// draw some lines between the 1° spaces or not
-		// Two complete for-loops, because of performance reasons
-		if (ui.checkBoxHiResView->checkState() == Qt::Checked) // this is NOT default
-		{
-			//
-			// draw HIGH RES
-			//
-			// /get the data from 180° to 0° (right to left!!)
-			for (int i=lsrThread->getNumReadings(); i>0; i--)
-			{
-				// get value from laser
-				measuredLaserDistance = (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView);
-			
-				// if warnings should be displayed in a different color, do so
-				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
-				{
-					// check if there was an obstacle
-					if (lsrThread->getLaserScannerFlag(i) == 1)
-					{
-						// obstacle detected!
-						painter.setPen(colorLaserObstacle);
-					}
-					else
-					{
-						if (lsrThread->getLaserScannerFlag(i) == 3)
-						{
-							// f r e e   w a y
-							painter.setPen(colorLaserPreferredDrivingDirection);
-						}
-						else
-						{
-							// no obstacle
-							painter.setPen(colorLaserFreeWay);
-						}
-					}
-				}
-				else
-				{
-					// only one laser color
-					painter.setPen(colorLaserFreeWay);
-				}
-	
-				//draw the first real line
-				painter.drawLine(0, 0, 0, measuredLaserDistance);
-				
-				// fill the spaces between the lines
-				painter.rotate(0.25);
-				painter.drawLine(0, 0, 0, measuredLaserDistance);
-				painter.rotate(0.25);
-				painter.drawLine(0, 0, 0, measuredLaserDistance);
-				painter.rotate(0.25);
-				painter.drawLine(0, 0, 0, measuredLaserDistance);
-				painter.rotate(0.25);
-			}
-		}
-		else
-		{
-			//
-			// draw LOW RES (faster and default)
-			//
-			// /get the data from 180° to 0° (right to left!!)
-			for (int i=lsrThread->getNumReadings(); i>0; i--)
-			{
-				// if warnings should be displayed in a different color, do so
-				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
-				{
-					// check if there was an obstacle
-					if (lsrThread->getLaserScannerFlag(i) == 1)
-					{
-						// obstacle detected!
-						painter.setPen(colorLaserObstacle);
-					}
-					else
-					{
-						if (lsrThread->getLaserScannerFlag(i) == 3)
-						{
-							// f r e e   w a y
-							painter.setPen(colorLaserPreferredDrivingDirection);
-						}
-						else
-						{
-							// no obstacle
-							painter.setPen(colorLaserFreeWay);
-						}
-					}
-				}
-				else
-				{
-					// only one laser color
-					painter.setPen(colorLaserFreeWay);
-				}
-				
-				// get value from laser and
-				//draw the lines at every 1°
-				painter.drawLine(0, 0, 0, (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView));
-				
-				painter.rotate(1);
-			}
-		}
-
-
-		//------------------------------------------------
-		// draw some help lines / distances / dimensons
-		// (flatView=false)
-		//------------------------------------------------
-		drawLaserDistances(&painter, false);
-	}
-	else
-	{
-		//------------
-		// flat view
-		//------------
-		// translate coordinate system to the destination frame in the gui
-		// (set it in the "groupBoxLaser" exactly in middle of the "laserLine90")
-		painter.translate(ui.groupBoxLaserScanner->x() + ui.lineLaser90->x() + 92, ui.groupBoxLaserScanner->y() + ui.lineLaser90->y() + ui.lineLaser90->height());
-		//painter.translate(ui.groupBoxLaserScanner->x() + ui.lineLaser90->x() - 92, ui.groupBoxLaserScanner->y() + ui.lineLaser90->y());
-		
-		painter.rotate(-180);
-		//int newY=ui.lineLaser90->height();
-		
-		// draw!
-		// /get the data from 180° to 0° (right to left!!)
-		for (int i=lsrThread->getNumReadings(); i>0; i--)
-		{
-		
-			// if warnings should be displayed in a different color, do so
-			if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
-			{
-				// check if there was an obstacle
-				if (lsrThread->getLaserScannerFlag(i) == 1)
-				{
-					// obstacle detected!
-					painter.setPen(colorLaserObstacle);
-				}
-				else
-				{
-					if (lsrThread->getLaserScannerFlag(i) == 3)
-					{
-						// f r e e   w a y
-						painter.setPen(colorLaserPreferredDrivingDirection);
-					}
-					else
-					{
-						// no obstacle
-						painter.setPen(colorLaserFreeWay);
-					}
-				}
-			}
-			else
-			{
-				// only one laser color
-				painter.setPen(colorLaserFreeWay);
-			}
-			// draw the line
-			painter.drawLine(i, 0, i, (int) (lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView));
-		}
-		
-		
-		//------------------------------------------------
-		// draw some help lines / distances / dimensons
-		// (flatView=true)
-		//------------------------------------------------
-		drawLaserDistances(&painter, true);
-	}
-}
-*/
 
 
 void Gui::drawLaserDistances(bool flatView)

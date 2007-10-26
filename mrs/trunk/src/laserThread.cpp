@@ -99,7 +99,7 @@ void LaserThread::run()
 				//====================================================================
 				//  e m i t  Signal
 				//====================================================================
-				emit laserDataComplete();
+				emit laserDataComplete(&laserScannerValues[0], &laserScannerFlags[0]);
 			}
 		}
 		else
@@ -109,7 +109,7 @@ void LaserThread::run()
 			//---------------------------------
 			numReadings = 180;
 			
-			emit laserDataComplete();
+				emit laserDataComplete(&laserScannerValues[0], &laserScannerFlags[0]);
 		}
 	}
 	stopped = false;
@@ -568,6 +568,6 @@ void LaserThread::setSimulationMode(bool status)
 		}
 		
 		// for refreshing the gui (deleting simulated laser lines)
-		emit laserDataComplete();
+		emit laserDataComplete(&laserScannerValues[0], &laserScannerFlags[0]);
 	}
 }

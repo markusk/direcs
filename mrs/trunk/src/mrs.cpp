@@ -320,7 +320,7 @@ Mrs::Mrs()
 	// connect laserThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(laserThread, SIGNAL( laserDataComplete() ), gui1, SLOT( refreshLaserView() ));
+	connect(laserThread, SIGNAL( laserDataComplete(float *, int *) ), gui1, SLOT( refreshLaserView(float *, int *) ));
 	
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
