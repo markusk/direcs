@@ -23,7 +23,7 @@ bool Circuit::initCircuit()
 	// set the direction
 	if (interface1->sendChar(INIT) == false)
 	{
-		qDebug("ERROR sending to serial port (initCircuit)");
+		//qDebug("ERROR sending to serial port (initCircuit)");
 		return false;
 	}
 	else

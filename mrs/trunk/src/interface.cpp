@@ -54,7 +54,7 @@ bool InterfaceAvr::sendChar(char character)
 	if (serialPort->putChar(character) == false)
 	{	
 		receiveErrorCounter++;
-		qDebug("%d. ERROR sendChar to serial port (sendChar, InterfaceAvr)", receiveErrorCounter);
+		//qDebug("%d. ERROR sendChar to serial port (sendChar, InterfaceAvr)", receiveErrorCounter);
 	
 		//
 		// MASSIVE COMMUNICATION ERROR!
@@ -93,7 +93,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	if (receiveChar(&character) == false)
 	{
 		receiveErrorCounter++;
-		qDebug("%d. ERROR receiving from serial port (receiveInt, InterfaceAvr)", receiveErrorCounter);
+		//qDebug("%d. ERROR receiving from serial port (receiveInt, InterfaceAvr)", receiveErrorCounter);
 	
 		//
 		// MASSIVE COMMUNICATION ERROR!
@@ -121,7 +121,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	//-----------------
 	if (receiveChar(&character) == false)
 	{
-		qDebug("ERROR receiving from serial port (receiveInt, InterfaceAvr)");
+		//qDebug("ERROR receiving from serial port (receiveInt, InterfaceAvr)");
 		value = 0;
 		return false;
 	}
