@@ -13,7 +13,7 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	motors = mot;
 	servos = serv;
 	netThread = net;
-	lsrThread = l;
+	laserThread = l;
 	
 	
 	//-------------------------------------------------------
@@ -71,59 +71,6 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	ui.sliderMotor1Speed->setTracking(false);
 	ui.sliderMotor2Speed->setTracking(false);
 	
-	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 1
-	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1");
-	//ui.qwtPlotCurrent1->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
-
-	// Set axis titles
-	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
-
-	// Set axis scale (instead of using autoscale, which is default)
-	// time
-	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
-	// Ampere (1000 mA, Step 200)
-	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
-	
-	QColor col = Qt::red;
-	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
-	col.setAlpha(150);
-	curve1.setPen(QPen(col));
-	curve1.setBrush(col);
-	
-	
-	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 2
-	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 2");
-	//ui.qwtPlotCurrent2->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
-
-	// Set axis titles
-	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
-
-	// Set axis scale (instead of using autoscale, which is default)
-	// time
-	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
-	// Ampere (1000 mA, Step 200)
-	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
-	
-	col = Qt::blue;
-	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
-	col.setAlpha(150);
-	curve2.setPen(QPen(col));
-	curve2.setBrush(col);
-	
-	
-	//----------------------------------------------------------------------------
-	// connect plotThread signal to "setPlotData"
-	// (Whenever the plot thread has new data, the data are show in the GUI)
-	//----------------------------------------------------------------------------
-	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), this, SLOT( setPlotData1(double *, double *, int) ));
-	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), this, SLOT( setPlotData2(double *, double *, int) ));
-	
 	
 	//----------------------------------------------------------------------------
 	// connect camDataComplete from the cam thread to signal "setCamImage"
@@ -138,142 +85,46 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//----------------------------------------------------------------------------
 	connect(netThread, SIGNAL( dataReceived(QString) ), this, SLOT( appendNetworkLog(QString) ));
 	
+
+	//----------------------------------------------------------------------------
+	// Plot stuff
+	//----------------------------------------------------------------------------
+	initializePlots();
+	
 	
 	//----------------------------------------------------------------------------
-	// Laser Stuff
+	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
-	// refresh laser view, when check box changes
-	// TODO how to refresh view without providing with parameter?!
-//	connect(ui.checkBoxHiResView, SIGNAL( stateChanged(int) ), this, SLOT( refreshLaserView(float *, float *) ));
-		
-	// init the scale for the laser line / distances drawing stuff
-	lastScale = 0;
+	createLaserScannerObjects();
 	
-	
-	//-------------------------------------------------------
-	// OpemGL stuff (Laser lines)
-	//-------------------------------------------------------
-	
-	// set some nice colors for some widgets
-	colorLaserObstacle =  QColor(255, 50, 50, 180); // light red
-	colorLaserFreeWay = Qt::darkRed;
-	colorLaserFreeWay.setAlpha(180);
-	colorLaserPreferredDrivingDirection = QColor(7, 68, 30, 150); // green
-	colorHelpLine = Qt::darkGray;
-	colorHelpLineText = Qt::white;
-	colorGraphicsSceneBackground = Qt::black;
-	
-	// the scene for the laser scanner lines
-	scene = new QGraphicsScene();
-	
-	// set some colors
-	scene->setBackgroundBrush(colorGraphicsSceneBackground);
-	
-	// set scene to the GUI
-	ui.graphicsViewLaser->setScene(scene);
-	
-	// TODO: check if really faster! Quality looks worser than without OpenGL.
-	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
-	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
-	
-	
-	//--------------------------------------------------------------
-	// add robot picture1
-	//--------------------------------------------------------------
-	// add items to the scene
-	QGraphicsPixmapItem *pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
-	scene->addItem(pixmapBot1);
-	
-	// horizontal center
-	pixmapBot1->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot1->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
-	
-	// FIXME doesn't work
-	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
-	pixmapBot1->setZValue(1);
-	
-	
-	//--------------------------------------------------------------
-	// create the laser line list
-	//--------------------------------------------------------------
-	laserLineList = new QList <QGraphicsLineItem*>();
-
-	/*
-	//TODO: HIGHRES MODE with 4x180 lines
-	//draw the first real line
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
-	
-	// fill the spaces between the lines
-	painter.rotate(0.25);
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
-	painter.rotate(0.25);
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
-	painter.rotate(0.25);
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
-	painter.rotate(0.25);
-	*/
-	
-	
-	// TODO: check if always 180 lines!
-	// create 180 laser lines
-	for (int i=-90; i<=90; i++)
-	{
-		QGraphicsLineItem *line = new QGraphicsLineItem();
-		
-		// set line color and position
-		line->setPen(QPen(colorLaserFreeWay));
-		
- 		// FIXME: does not work. no line visible :-(
-		//line->setPen(QPen(QBrush(colorLaserFreeWay), 3));
-
-		
-		// 178 = length in pixel
-		line->setLine(0,0,0,278);
-		
-		// set position of each line
-		line->rotate(i);
-		
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-		line->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
-		
-		// FIXME doesn't work?!
-		line->setZValue(2);
-		
-		laserLineList->append(line);
-		scene->addItem(line);
-	}
-	
-	
-	//--------------------------------------------------------------
-	// add robot picture2
-	//--------------------------------------------------------------
-	// add items to the scene
-	QGraphicsPixmapItem *pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
-	scene->addItem(pixmapBot2);
-	
-	// horizontal center
-	pixmapBot2->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot2->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
-	
-	// FIXME doesn't work
-	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
-	pixmapBot2->setZValue(3);
-	
+//	createLaserDistanceObjects();
 }
 
 
 Gui::~Gui()
 {
-	delete laserLineList;
+/*
+	TODO: empty list
+	// empty QList
+	while (!laserDistanceLineList->isEmpty())
+	{
+		delete laserDistanceLineList->takeFirst();
+	}
+	delete laserDistanceLineList;
+*/
+
+	// empty QList
+	while (!laserLineList->isEmpty())
+	{
+		delete laserLineList->takeFirst();
+	}
+	delete laserLineList;	
 	delete scene;
 }
 
 
-// Original void Gui::closeEvent(QCloseEvent *event)
-// is 'event' really needed??? < < < 
 void Gui::closeEvent()
 {
-	//mrs1->~Mrs();
 }
 
 
@@ -1311,9 +1162,6 @@ void Gui::on_sliderLaserScale_valueChanged(int value)
 {
 	// show the value in a label
 	ui.labelLaserTop->setText(tr("1:%1").arg(value));
-	
-	// TODO: refresh laser view immediately?!?
-	//refreshLaserView();
 }
 
 
@@ -1375,14 +1223,12 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			for (int i=0; i<laserLineList->size(); i++)
 			{
 				// get value from laser
-//				measuredLaserDistance = (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView);
 				measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
 			
 				// if warnings should be displayed in a different color, do so
 				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
 				{
 					// check if there was an obstacle
-//					if (lsrThread->getLaserScannerFlag(i) == 1)
 					if (laserScannerFlags[i] == 1)
 					{
 						// obstacle detected!
@@ -1430,13 +1276,14 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			// draw LOW RES (faster and default)
 			//
 			// /get the data from 180° to 0° (right to left!!)
-			for (int i=lsrThread->getNumReadings(); i>0; i--)
+			//for (int i=laserThread->getNumReadings(); i>0; i--)
+			for (int i=0; i<laserLineList->size(); i++)
 			{
 				// if warnings should be displayed in a different color, do so
 				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
 				{
 					// check if there was an obstacle
-//					if (lsrThread->getLaserScannerFlag(i) == 1)
+//					if (laserThread->getLaserScannerFlag(i) == 1)
 					if (laserScannerFlags[i] == 1)
 					{
 						// obstacle detected!
@@ -1464,9 +1311,11 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 				
 				// get value from laser and
 				// draw the lines at every 1°
-//				measuredLaserDistance = (int)qRound(lsrThread->getLaserScannerValue(i)*FITTOFRAMEFACTOR*scaleView);
 				measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
 				laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
+				
+				// set tool tip of the line to the distance
+				laserLineList->at(i)->setToolTip(QString("%1 m").arg(laserScannerValues[i]));
 			}
 		}
 
@@ -1475,7 +1324,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		// draw some help lines / distances / dimensons
 		// (flatView=false)
 		//------------------------------------------------
-		//drawLaserDistances(&painter, false);
+		drawLaserDistances(false);
 	}
 /*	
 	else
@@ -1492,8 +1341,9 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		//int newY=ui.lineLaser90->height();
 		
 		// draw!
+		//for (int i=laserThread->getNumReadings(); i>0; i--)
 		// /get the data from 180° to 0° (right to left!!)
-		for (int i=lsrThread->getNumReadings(); i>0; i--)
+		for (int i=0; i<laserLineList->size(); i++)
 		{
 		
 			// if warnings should be displayed in a different color, do so
@@ -1533,7 +1383,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		// draw some help lines / distances / dimensons
 		// (flatView=true)
 		//------------------------------------------------
-		//drawLaserDistances(&painter, true);
+		drawLaserDistances(true);
 	}
 */
 }
@@ -1635,6 +1485,321 @@ void Gui::drawLaserDistances(bool flatView)
 				painter->drawText(-100, (int)(i*dimensionLine), dimensionText.toAscii());
 			}
 		} // flatView
+	}
+*/
+}
+
+
+void Gui::initializePlots()
+{
+	//--------------------------------------
+	// plot curve "MOTOR CURRENT" 1
+	//--------------------------------------
+	ui.qwtPlotCurrent1->setTitle("Motor 1");
+	//ui.qwtPlotCurrent1->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
+
+	// Set axis titles
+	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// time
+	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// Ampere (1000 mA, Step 200)
+	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
+	
+	QColor col = Qt::red;
+	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	col.setAlpha(150);
+	curve1.setPen(QPen(col));
+	curve1.setBrush(col);
+	
+	
+	//--------------------------------------
+	// plot curve "MOTOR CURRENT" 2
+	//--------------------------------------
+	ui.qwtPlotCurrent2->setTitle("Motor 2");
+	//ui.qwtPlotCurrent2->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
+
+	// Set axis titles
+	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// time
+	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// Ampere (1000 mA, Step 200)
+	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
+	
+	col = Qt::blue;
+	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	col.setAlpha(150);
+	curve2.setPen(QPen(col));
+	curve2.setBrush(col);
+	
+	
+	//----------------------------------------------------------------------------
+	// connect plotThread signal to "setPlotData"
+	// (Whenever the plot thread has new data, the data are show in the GUI)
+	//----------------------------------------------------------------------------
+	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), this, SLOT( setPlotData1(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), this, SLOT( setPlotData2(double *, double *, int) ));
+}
+
+
+void Gui::createLaserScannerObjects()
+{
+	// refresh laser view, when check box changes
+	// TODO how to refresh view without providing with parameter?!
+	//	connect(ui.checkBoxHiResView, SIGNAL( stateChanged(int) ), this, SLOT( refreshLaserView(float *, float *) ));
+		
+	// init the scale for the laser line / distances drawing stuff
+	lastScale = 0;
+	
+	
+	//-------------------------------------------------------
+	// OpenGL stuff (Laser lines)
+	//-------------------------------------------------------
+	
+	// set some nice colors for some widgets
+	colorLaserObstacle =  QColor(255, 50, 50, 180); // light red
+	colorLaserFreeWay = Qt::darkRed;
+	colorLaserFreeWay.setAlpha(180);
+	colorLaserPreferredDrivingDirection = QColor(7, 68, 30, 150); // green
+	colorGraphicsSceneBackground = Qt::black;
+	
+	// the scene for the laser scanner lines
+	scene = new QGraphicsScene();
+	
+	// set some colors
+	scene->setBackgroundBrush(colorGraphicsSceneBackground);
+	
+	// set scene to the GUI
+	ui.graphicsViewLaser->setScene(scene);
+	
+	// TODO: check if really faster! Quality looks worser than without OpenGL.
+	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
+	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+	
+	
+	//--------------------------------------------------------------
+	// add robot picture1
+	//--------------------------------------------------------------
+	// add items to the scene
+	QGraphicsPixmapItem *pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
+	scene->addItem(pixmapBot1);
+	
+	// horizontal center
+	pixmapBot1->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot1->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
+	
+	// FIXME doesn't work
+	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
+	pixmapBot1->setZValue(1);
+	
+	
+	//--------------------------------------------------------------
+	// create the laser line list
+	//--------------------------------------------------------------
+	laserLineList = new QList <QGraphicsLineItem*>();
+
+	/*
+	//TODO: HIGHRES MODE with 4x180 lines
+	//draw the first real line
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	
+	// fill the spaces between the lines
+	painter.rotate(0.25);
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.rotate(0.25);
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.rotate(0.25);
+	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.rotate(0.25);
+	*/
+	
+	
+	// TODO: check if always 180 lines!
+	// create 180 laser lines
+	for (int i=-90; i<90; i++)
+	{
+		QGraphicsLineItem *line = new QGraphicsLineItem();
+		
+		// set line color and position
+		line->setPen(QPen(colorLaserFreeWay));
+		
+ 		// FIXME: does not work. no line visible :-(
+		//line->setPen(QPen(QBrush(colorLaserFreeWay), 3));
+
+		
+		// the length (and position) of the laser line in pixel
+		//line->setLine(0,0,0,LASERLINELENGTH);
+		line->setLine(0,0,0,0);
+		
+		// set position of each line
+		line->rotate(i);
+		
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		line->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
+		
+		// FIXME doesn't work?!
+		line->setZValue(2);
+		
+		// add line to QList
+		laserLineList->append(line);
+		
+		// add line to scene
+		scene->addItem(line);
+	}
+	
+	
+	//--------------------------------------------------------------
+	// add robot picture2
+	//--------------------------------------------------------------
+	// add items to the scene
+	QGraphicsPixmapItem *pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
+	scene->addItem(pixmapBot2);
+	
+	// horizontal center
+	pixmapBot2->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot2->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
+	
+	// FIXME doesn't work
+	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
+	pixmapBot2->setZValue(3);
+	
+}
+
+
+void Gui::createLaserDistanceObjects()
+{
+	static bool firstDraw = true;
+	QString dimensionText;
+	int dimensionLine = 0;
+	int newY = 0;
+	qreal startArcX = 0;
+	qreal startArcY = 0;
+	qreal endArcX = 0;
+	qreal endArcY = 0;
+	
+	
+	// set colors
+	colorHelpLine = Qt::white;
+	colorHelpLineText = Qt::white;
+	
+	
+	//--------------------------------------------------------------
+	// scaling
+	//--------------------------------------------------------------
+	// store the current scale to fit the lines into the window
+	lastScale = ui.sliderLaserScale->value();
+	// set the y-position of the line/text
+	dimensionLine = (FITTOFRAMEFACTOR*lastScale);
+	newY = ui.graphicsViewLaser->height();
+	
+	
+	//--------------------------------------------------------------
+	// create the laser line distances
+	//--------------------------------------------------------------
+	laserDistanceLineList = new QList <QGraphicsPathItem*>();
+	
+	// create and add twelve semi circles
+//	for (float i=0.5; i<=6; i+=0.5)
+	for (float i=0.5; i<=0.5; i+=0.5)
+	{
+		startArcX = ((ui.graphicsViewLaser->width() / 2) - LASERLINELENGTH);
+		startArcY = laserLineList->at(0)->y();
+		
+		endArcX = ((ui.graphicsViewLaser->width() / 2) + LASERLINELENGTH);
+		endArcY = startArcY;
+		
+		// first create a path
+//		QPainterPath path(QPointF(startArcX, startArcY));
+		QPainterPath path(QPointF(0, 0));
+
+		// void QPainterPath::arcTo ( qreal x, qreal y, qreal width, qreal height, qreal startAngle, qreal sweepLength )
+//		path.arcTo(endArcX, endArcY, (LASERLINELENGTH + LASERLINELENGTH), LASERLINELENGTH, 0, 180);
+		//path.arcTo((LASERLINELENGTH + LASERLINELENGTH), 0, (LASERLINELENGTH + LASERLINELENGTH), LASERLINELENGTH, 0, -180);
+		path.arcTo(0, 0, 200, 200, 0, -180);
+		
+		//path.arcTo( (ui.graphicsViewLaser->width() - LASERLINELENGTH) /*- (i*dimensionLine)*/, ( laserLineList->at(i)->y() /*- (i*dimensionLine)*/), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
+
+		//			x,						y,			width,		height,		startAngle, spanAngle
+		//painter->drawArc(ui.lineLaser90->x() - (i*dimensionLine), (newY - (i*dimensionLine)), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
+
+
+		// create semi circle along the created path
+		QGraphicsPathItem *semiCircle = new QGraphicsPathItem(path);
+
+		
+		// set semiCircle color and position
+		semiCircle->setPen(QPen(colorHelpLine));
+		
+ 		// FIXME: does not work. no line visible :-(
+		//set color and width
+		//semiCircle->setPen(QPen(QBrush(colorHelpLine), 3));
+
+		
+		// set position of each semiCircle
+		// TODO
+		
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		//semiCircle->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
+		
+		// FIXME doesn't work?!
+		semiCircle->setZValue(4);
+		
+		// add semiCircle to QList
+		laserDistanceLineList->append(semiCircle);
+		
+		// add semiCircle to scene
+		scene->addItem(semiCircle);
+	}
+
+
+	
+/*	
+	//
+	// draw the arcs !!!
+	//
+	// translate the matrix
+	// "-6" is the correction value to put it on the horizontal middle of the vertival 90° line!
+	// FIXME: !!check where to positionate!!
+	//painter->translate(ui.groupBoxLaserScanner->x()+ui.lineLaser0->x()-12, ui.graphicsViewLaser->y()+ui.lineLaser90->y()-20);
+	
+	
+	// 0.5 meter to 6 meter (step 0.5 meter)
+	for (float i=0.5; i<=6; i+=0.5)
+	{
+		//if (i==1)
+		//			x,						y,			width,		height,		startAngle, spanAngle
+		painter->drawArc(ui.lineLaser90->x() - (i*dimensionLine), (newY - (i*dimensionLine)), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
+	}
+	
+	
+	// new origin at the vertical "lineLaser90" in the GUI
+	painter->resetTransform();
+	
+	// translate the matrix
+	// "-6" is the correction value to put it on the horizontal middle of the vertival 90° line!
+	painter->translate(ui.groupBoxLaserScanner->x() - 6 + ui.lineLaser90->x(), ui.groupBoxLaserScanner->y());
+	
+	// choose a nice pen color
+	painter->setPen(colorHelpLineText);
+	
+	//-------------
+	// 360° view
+	//-------------
+	// 0.5 meter to 6 meter (step 0.5 meter)
+	for (float i=0.5; i<=6; i+=0.5)
+	{
+		//dimensionText = tr("--- %1 m").arg(i);
+		dimensionText = tr("  %1 m").arg(i);
+		// y-4 Pixel for putting it ON the higher than the later following arcs
+		painter->drawText(1, (newY - (i*dimensionLine))-6, dimensionText.toAscii());
+		//ui.lblScale1->move(5, (i*dimensionLine));
 	}
 */
 }

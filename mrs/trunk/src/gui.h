@@ -282,6 +282,14 @@ class Gui : public QMainWindow
 
 
 	private:
+		void initializePlots();
+		
+		/**
+		Creates all objects, lines, scene, view etc.
+		*/
+		void createLaserScannerObjects();
+		void createLaserDistanceObjects();
+		
 		/**
 		Draws some help lines / distances / dimensons in the laser scanner view.
 		*/
@@ -300,7 +308,7 @@ class Gui : public QMainWindow
 		Circuit *circuit1;
 		CamThread *cam1;
 		NetworkThread *netThread;
-		LaserThread *lsrThread;
+		LaserThread *laserThread;
 		Motor *motors;
 		Servo *servos;
 		QwtPlotCurve curve1;
@@ -316,9 +324,9 @@ class Gui : public QMainWindow
 		int lastScale;
 		
 		// TODO: doxygen tags
-		QGraphicsScene *scene; /** The QGraphicsScene for showing the laser lines in the GUI */
-		QList <QGraphicsLineItem*> *laserLineList;  /** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
-		QList <QGraphicsLineItem*> *laserDistanceLineList;  /** A pointer to a QList of pointers to the shown distances from the laser lines (kind of coordinate system) */
+		QGraphicsScene *scene;					/** The QGraphicsScene for showing the laser lines in the GUI */
+		QList <QGraphicsLineItem*> *laserLineList;		/** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
+		QList <QGraphicsPathItem*> *laserDistanceLineList;	/** A pointer to a QList of pointers to the shown distances from the laser lines (kind of coordinate system) */
 
 		
 		static const unsigned char ON  = 1;  /** For motor "ON" */
@@ -361,6 +369,8 @@ class Gui : public QMainWindow
 	
 		/** factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels */
 		static const int FITTOFRAMEFACTOR=45;
+		
+		static const int LASERLINELENGTH=278;
 		
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		/**
