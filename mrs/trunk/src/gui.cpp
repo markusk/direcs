@@ -67,11 +67,6 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
 	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
 	
-	// turn off slider tracking (emit valueChanged only when user releases the slider)
-	ui.sliderMotor1Speed->setTracking(false);
-	ui.sliderMotor2Speed->setTracking(false);
-	
-	
 	//----------------------------------------------------------------------------
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)

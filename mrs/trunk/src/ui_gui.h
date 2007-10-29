@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gui.ui'
 **
-** Created: Mon Oct 29 18:16:19 2007
+** Created: Mon Oct 29 18:33:06 2007
 **      by: Qt User Interface Compiler version 4.3.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -202,6 +202,7 @@ public:
     sliderMotor1Speed->setMaximum(255);
     sliderMotor1Speed->setValue(100);
     sliderMotor1Speed->setSliderPosition(100);
+    sliderMotor1Speed->setTracking(false);
     sliderMotor1Speed->setOrientation(Qt::Vertical);
     sliderMotor1Speed->setTickPosition(QSlider::TicksBelow);
     sliderMotor1Speed->setTickInterval(20);
@@ -235,6 +236,7 @@ public:
     sliderMotor2Speed->setMaximum(255);
     sliderMotor2Speed->setValue(100);
     sliderMotor2Speed->setSliderPosition(100);
+    sliderMotor2Speed->setTracking(false);
     sliderMotor2Speed->setOrientation(Qt::Vertical);
     sliderMotor2Speed->setTickPosition(QSlider::TicksBelow);
     sliderMotor2Speed->setTickInterval(20);
@@ -589,7 +591,6 @@ public:
     sliderLaserScale->setPageStep(1);
     sliderLaserScale->setValue(1);
     sliderLaserScale->setSliderPosition(1);
-    sliderLaserScale->setTracking(false);
     sliderLaserScale->setOrientation(Qt::Horizontal);
     sliderLaserScale->setTickPosition(QSlider::TicksAbove);
     sliderLaserScale->setTickInterval(1);

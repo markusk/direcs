@@ -300,6 +300,9 @@ p, li { white-space: pre-wrap; }
     <property name="sliderPosition" >
      <number>100</number>
     </property>
+    <property name="tracking" >
+     <bool>false</bool>
+    </property>
     <property name="orientation" >
      <enum>Qt::Vertical</enum>
     </property>
@@ -402,6 +405,9 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="sliderPosition" >
      <number>100</number>
+    </property>
+    <property name="tracking" >
+     <bool>false</bool>
     </property>
     <property name="orientation" >
      <enum>Qt::Vertical</enum>
@@ -1772,9 +1778,6 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="sliderPosition" >
      <number>1</number>
-    </property>
-    <property name="tracking" >
-     <bool>false</bool>
     </property>
     <property name="orientation" >
      <enum>Qt::Horizontal</enum>
