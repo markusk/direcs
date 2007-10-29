@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gui.ui'
 **
-** Created: Sun Oct 28 22:01:46 2007
+** Created: Mon Oct 29 18:16:19 2007
 **      by: Qt User Interface Compiler version 4.3.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -117,9 +117,7 @@ public:
     QLabel *labelLaserTop;
     QSlider *sliderLaserScale;
     QLabel *label_11;
-    QCheckBox *checkBoxAntiAlias;
     QLabel *label_10;
-    QCheckBox *checkBoxLaserAlert;
     QCheckBox *checkBoxAngleView;
     QCheckBox *checkBoxHiResView;
     QLabel *label18_3;
@@ -598,23 +596,16 @@ public:
     label_11 = new QLabel(groupBoxBot);
     label_11->setObjectName(QString::fromUtf8("label_11"));
     label_11->setGeometry(QRect(517, 590, 25, 20));
-    checkBoxAntiAlias = new QCheckBox(groupBoxBot);
-    checkBoxAntiAlias->setObjectName(QString::fromUtf8("checkBoxAntiAlias"));
-    checkBoxAntiAlias->setGeometry(QRect(560, 650, 51, 16));
     label_10 = new QLabel(groupBoxBot);
     label_10->setObjectName(QString::fromUtf8("label_10"));
     label_10->setGeometry(QRect(452, 640, 21, 16));
-    checkBoxLaserAlert = new QCheckBox(groupBoxBot);
-    checkBoxLaserAlert->setObjectName(QString::fromUtf8("checkBoxLaserAlert"));
-    checkBoxLaserAlert->setGeometry(QRect(560, 590, 51, 16));
-    checkBoxLaserAlert->setChecked(true);
     checkBoxAngleView = new QCheckBox(groupBoxBot);
     checkBoxAngleView->setObjectName(QString::fromUtf8("checkBoxAngleView"));
-    checkBoxAngleView->setGeometry(QRect(560, 610, 51, 16));
+    checkBoxAngleView->setGeometry(QRect(560, 600, 51, 16));
     checkBoxAngleView->setChecked(true);
     checkBoxHiResView = new QCheckBox(groupBoxBot);
     checkBoxHiResView->setObjectName(QString::fromUtf8("checkBoxHiResView"));
-    checkBoxHiResView->setGeometry(QRect(560, 630, 51, 16));
+    checkBoxHiResView->setGeometry(QRect(560, 620, 51, 16));
     label18_3 = new QLabel(groupBoxBot);
     label18_3->setObjectName(QString::fromUtf8("label18_3"));
     label18_3->setGeometry(QRect(250, 590, 41, 16));
@@ -709,10 +700,7 @@ public:
     label18_2->setText(QApplication::translate("Gui", "Sensor", 0, QApplication::UnicodeUTF8));
     labelLaserTop->setText(QApplication::translate("Gui", "1:1", 0, QApplication::UnicodeUTF8));
     label_11->setText(QApplication::translate("Gui", "1:10", 0, QApplication::UnicodeUTF8));
-    checkBoxAntiAlias->setToolTip(QApplication::translate("Gui", "AntiAlias", 0, QApplication::UnicodeUTF8));
-    checkBoxAntiAlias->setText(QApplication::translate("Gui", "AA", 0, QApplication::UnicodeUTF8));
     label_10->setText(QApplication::translate("Gui", "1:1", 0, QApplication::UnicodeUTF8));
-    checkBoxLaserAlert->setText(QApplication::translate("Gui", "Alert", 0, QApplication::UnicodeUTF8));
     checkBoxAngleView->setText(QApplication::translate("Gui", "180\302\260", 0, QApplication::UnicodeUTF8));
     checkBoxHiResView->setText(QApplication::translate("Gui", "HiRes", 0, QApplication::UnicodeUTF8));
     label18_3->setText(QApplication::translate("Gui", "Sensor", 0, QApplication::UnicodeUTF8));
