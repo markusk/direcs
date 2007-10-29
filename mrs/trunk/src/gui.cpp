@@ -97,7 +97,7 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//----------------------------------------------------------------------------
 	createLaserScannerObjects();
 	
-//	createLaserDistanceObjects();
+	//createLaserDistanceObjects();
 }
 
 
@@ -982,7 +982,6 @@ void Gui::enableLaserScannerControls(bool state)
 	
 	ui.sliderObstacleLaserScanner->setEnabled(state);
 	ui.spinBoxObstacleLaserScanner->setEnabled(state);
-	ui.checkBoxLaserAlert->setEnabled(state);
 }
 
 
@@ -1173,6 +1172,7 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 		// angle view
 		//------------
 		ui.checkBoxHiResView->setEnabled(true);
+		switchToAngleView();
 	}
 	else
 	{
@@ -1180,212 +1180,103 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 		// flat view
 		//------------
 		ui.checkBoxHiResView->setEnabled(false);
+		switchToFlatView();
 	}
-	
-	// TODO: refresh laser view immediately?!?
-	//refreshLaserView();
 }
 
 
 void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 {
 	int measuredLaserDistance = 0;
-	
-	
-	if (ui.checkBoxAntiAlias->checkState() == Qt::Checked) // this is default
-	{
-		// TODO: antialiasing or not
-	}
-	
-	
-	
-	// get a scale to fit the beams into the window
-	int scaleView = ui.sliderLaserScale->value();
+	int scaleView = ui.sliderLaserScale->value(); // get a scale to fit the beams into the window
 
-	
-	//------------------------------------------------------
-	// decide, which view: 180° or "flat horizontal" view
-	//------------------------------------------------------
-	if (ui.checkBoxAngleView->checkState() == Qt::Checked) // this is default!
+
+	//----------------------------------------------------------------------------------------
+	// Change the laser lines (color and length)
+	//----------------------------------------------------------------------------------------
+	// First: set/change the color of each line, depending on the flag set in the laserThread
+	//----------------------------------------------------------------------------------------
+	for (int i=0; i<laserLineList->size(); i++)
 	{
-		//------------
-		// angle view
-		//------------
-		
-		// draw some lines between the 1° spaces or not
-		// Two complete for-loops, because of performance reasons
-		if (ui.checkBoxHiResView->checkState() == Qt::Checked) // this is NOT default
+		// check if there was an obstacle
+		if (laserScannerFlags[i] == 1)
 		{
-			//
-			// draw HIGH RES
-			//
-			// get the data from 0 to 180° (left to right)
-			for (int i=0; i<laserLineList->size(); i++)
-			{
-				// get value from laser
-				measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
-			
-				// if warnings should be displayed in a different color, do so
-				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
-				{
-					// check if there was an obstacle
-					if (laserScannerFlags[i] == 1)
-					{
-						// obstacle detected!
-						laserLineList->at(i)->setPen(QPen(colorLaserObstacle));
-					}
-					else
-					{
-						if (laserScannerFlags[i] == 3)
-						{
-							// f r e e   w a y
-							laserLineList->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
-						}
-						else
-						{
-							// no obstacle
-							laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
-						}
-					}
-				}
-				else
-				{
-					// only one laser color
-					laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
-				}
-	
-				//draw the first real line
-				laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
-				
-				
-				/*
-				// fill the spaces between the lines
-				painter.rotate(0.25);
-				painter.drawLine(0, 0, 0, measuredLaserDistance);
-				painter.rotate(0.25);
-				painter.drawLine(0, 0, 0, measuredLaserDistance);
-				painter.rotate(0.25);
-				painter.drawLine(0, 0, 0, measuredLaserDistance);
-				painter.rotate(0.25);
-				*/
-			}
+			// obstacle detected!
+			laserLineList->at(i)->setPen(QPen(colorLaserObstacle));
 		}
 		else
 		{
-			//
-			// draw LOW RES (faster and default)
-			//
-			// /get the data from 180° to 0° (right to left!!)
-			//for (int i=laserThread->getNumReadings(); i>0; i--)
-			for (int i=0; i<laserLineList->size(); i++)
+			if (laserScannerFlags[i] == 3)
 			{
-				// if warnings should be displayed in a different color, do so
-				if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
-				{
-					// check if there was an obstacle
-//					if (laserThread->getLaserScannerFlag(i) == 1)
-					if (laserScannerFlags[i] == 1)
-					{
-						// obstacle detected!
-						laserLineList->at(i)->setPen(QPen(colorLaserObstacle));
-					}
-					else
-					{
-						if (laserScannerFlags[i] == 3)
-						{
-							// f r e e   w a y
-							laserLineList->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
-						}
-						else
-						{
-							// no obstacle
-							laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
-						}
-					}
-				}
-				else
-				{
-					// only one laser color
-					laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
-				}
-				
-				// get value from laser and
-				// draw the lines at every 1°
-				measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
-				laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
-				
-				// set tool tip of the line to the distance
-				laserLineList->at(i)->setToolTip(QString("%1 m").arg(laserScannerValues[i]));
-			}
-		}
-
-
-		//------------------------------------------------
-		// draw some help lines / distances / dimensons
-		// (flatView=false)
-		//------------------------------------------------
-		drawLaserDistances(false);
-	}
-/*	
-	else
-	{
-		//------------
-		// flat view
-		//------------
-		// translate coordinate system to the destination frame in the gui
-		// (set it in the "groupBoxLaser" exactly in middle of the "laserLine90")
-		painter.translate(ui.groupBoxLaserScanner->x() + ui.lineLaser90->x() + 92, ui.groupBoxLaserScanner->y() + ui.lineLaser90->y() + ui.lineLaser90->height());
-		//painter.translate(ui.groupBoxLaserScanner->x() + ui.lineLaser90->x() - 92, ui.groupBoxLaserScanner->y() + ui.lineLaser90->y());
-		
-		painter.rotate(-180);
-		//int newY=ui.lineLaser90->height();
-		
-		// draw!
-		//for (int i=laserThread->getNumReadings(); i>0; i--)
-		// /get the data from 180° to 0° (right to left!!)
-		for (int i=0; i<laserLineList->size(); i++)
-		{
-		
-			// if warnings should be displayed in a different color, do so
-			if (ui.checkBoxLaserAlert->checkState() == Qt::Checked) // this is default!
-			{
-				// check if there was an obstacle
-				if (laserScannerFlags[i] == 1)
-				{
-					// obstacle detected!
-					painter.setPen(colorLaserObstacle);
-				}
-				else
-				{
-					if (laserScannerFlags[i] == 3)
-					{
-						// f r e e   w a y
-						painter.setPen(colorLaserPreferredDrivingDirection);
-					}
-					else
-					{
-						// no obstacle
-						painter.setPen(colorLaserFreeWay);
-					}
-				}
+				// f r e e   w a y
+				laserLineList->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
 			}
 			else
 			{
-				// only one laser color
-				painter.setPen(colorLaserFreeWay);
+				// no obstacle
+				laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
 			}
-			// draw the line
-			painter.drawLine(i, 0, i, (int) (laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView));
 		}
-		
-		
-		//------------------------------------------------
-		// draw some help lines / distances / dimensons
-		// (flatView=true)
-		//------------------------------------------------
-		drawLaserDistances(true);
 	}
-*/
+	
+	
+	//---------------------------------------------------------------------------
+	// Second: change the *length* of each line!
+	//---------------------------------------------------------------------------
+	if (ui.checkBoxHiResView->checkState() == Qt::Checked) // this is NOT default
+	{
+		//
+		// draw HIGH RES
+		//
+		// get the data from 0 to 180° (left to right)
+		for (int i=0; i<laserLineList->size(); i++)
+		{
+			// get value from laser
+			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
+
+			//draw the first real line
+			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
+			
+			/*
+			// fill the spaces between the lines
+			painter.rotate(0.25);
+			painter.drawLine(0, 0, 0, measuredLaserDistance);
+			painter.rotate(0.25);
+			painter.drawLine(0, 0, 0, measuredLaserDistance);
+			painter.rotate(0.25);
+			painter.drawLine(0, 0, 0, measuredLaserDistance);
+			painter.rotate(0.25);
+			*/
+				
+			// set tool tip of the line to the distance
+			laserLineList->at(i)->setToolTip(QString("%1 m").arg(laserScannerValues[i]));
+		}
+	}
+	else
+	{
+		//
+		// draw LOW RES (faster and default)
+		//
+		// /get the data from 180° to 0° (right to left!!)
+		//for (int i=laserThread->getNumReadings(); i>0; i--)
+		for (int i=0; i<laserLineList->size(); i++)
+		{
+			// get value from laser and
+			// draw the lines at every 1°
+			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
+			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
+			
+			// set tool tip of the line to the distance
+			laserLineList->at(i)->setToolTip(QString("%1 m").arg(laserScannerValues[i]));
+		}
+	}
+
+
+	//------------------------------------------------------
+	// Third: draw some help lines / distances / dimensons
+	// (flatView=false)
+	//------------------------------------------------------
+	drawLaserDistances(false);
 }
 
 
@@ -1632,7 +1523,6 @@ void Gui::createLaserScannerObjects()
 
 		
 		// the length (and position) of the laser line in pixel
-		//line->setLine(0,0,0,LASERLINELENGTH);
 		line->setLine(0,0,0,0);
 		
 		// set position of each line
@@ -1641,7 +1531,7 @@ void Gui::createLaserScannerObjects()
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
-		line->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
+//		line->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
 		
 		// FIXME doesn't work?!
 		line->setZValue(2);
@@ -1652,6 +1542,9 @@ void Gui::createLaserScannerObjects()
 		// add line to scene
 		scene->addItem(line);
 	}
+	
+	// set the 180° view per default
+	switchToAngleView();
 	
 	
 	//--------------------------------------------------------------
@@ -1668,6 +1561,38 @@ void Gui::createLaserScannerObjects()
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot2->setZValue(3);
 	
+}
+
+
+void Gui::switchToAngleView()
+{
+	for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
+	{
+		// reset transform or rotation
+		laserLineList->at(i)->resetTransform();
+		
+		// set position of each line
+		laserLineList->at(i)->rotate(angle);
+		
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
+	}
+}
+
+
+void Gui::switchToFlatView()
+{
+	for (int i=0; i<laserLineList->size(); i++)
+	{
+		// reset transform or rotation
+		laserLineList->at(i)->resetTransform();
+		
+		// x = middle of the bot pixmap in the view + half of the number of lines (the middle laser line is on the middle of the graphicsView)
+		// y = set manually
+		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) + (laserLineList->size() / 2) - i, 228);
+	}
 }
 
 
@@ -1715,11 +1640,12 @@ void Gui::createLaserDistanceObjects()
 		
 		// first create a path
 //		QPainterPath path(QPointF(startArcX, startArcY));
-		QPainterPath path(QPointF(0, 0));
+		QPainterPath path(QPointF(200, 200));
 
 		// void QPainterPath::arcTo ( qreal x, qreal y, qreal width, qreal height, qreal startAngle, qreal sweepLength )
 //		path.arcTo(endArcX, endArcY, (LASERLINELENGTH + LASERLINELENGTH), LASERLINELENGTH, 0, 180);
 		//path.arcTo((LASERLINELENGTH + LASERLINELENGTH), 0, (LASERLINELENGTH + LASERLINELENGTH), LASERLINELENGTH, 0, -180);
+		path.moveTo(0,0);
 		path.arcTo(0, 0, 200, 200, 0, -180);
 		
 		//path.arcTo( (ui.graphicsViewLaser->width() - LASERLINELENGTH) /*- (i*dimensionLine)*/, ( laserLineList->at(i)->y() /*- (i*dimensionLine)*/), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
