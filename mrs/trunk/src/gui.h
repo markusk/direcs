@@ -290,6 +290,11 @@ class Gui : public QMainWindow
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
 		
+		void switchToAngleView();
+		
+		void switchToFlatView();
+
+		
 		/**
 		Draws some help lines / distances / dimensons in the laser scanner view.
 		*/
