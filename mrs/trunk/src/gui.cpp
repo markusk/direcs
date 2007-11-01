@@ -98,7 +98,9 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 
 Gui::~Gui()
 {
-/*
+	delete pixmapBot1;
+	
+	/*
 	TODO: empty list
 	// empty QList
 	while (!laserDistanceLineList->isEmpty())
@@ -1156,6 +1158,12 @@ void Gui::on_sliderLaserScale_valueChanged(int value)
 {
 	// show the value in a label
 	ui.labelLaserTop->setText(tr("1:%1").arg(value));
+	
+	// TODO: change also scale of the robot pixmap
+	//pixmapBot1->scale(startScale*value, startScale*value);
+	
+	// TODO: change sclae of pixmap2
+	//pixmapBot1->scale(0.1, 0.1);
 }
 
 
@@ -1184,7 +1192,10 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 {
 	int measuredLaserDistance = 0;
 	int scaleView = ui.sliderLaserScale->value(); // get a scale to fit the beams into the window
-
+	/*
+	QPen orgPen = laserLineList->at(0)->pen();
+	QBrush orgBrush = orgPen.brush();
+	*/
 
 	//----------------------------------------------------------------------------------------
 	// Change the laser lines (color and length)
@@ -1194,22 +1205,31 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	for (int i=0; i<laserLineList->size(); i++)
 	{
 		// check if there was an obstacle
-		if (laserScannerFlags[i] == 1)
+		if (laserScannerFlags[i] == OBSTACLE)
 		{
 			// obstacle detected!
+			//orgBrush.setColor(colorLaserObstacle);
 			laserLineList->at(i)->setPen(QPen(colorLaserObstacle));
 		}
 		else
 		{
-			if (laserScannerFlags[i] == 3)
+			if (laserScannerFlags[i] == LARGESTFREEWAY)
 			{
-				// f r e e   w a y
+				// l a r g e s t   f r e e   w a y
 				laserLineList->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
 			}
 			else
 			{
-				// no obstacle
-				laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
+				if (laserScannerFlags[i] == CENTEROFLARGESTFREEWAY)
+				{
+					//  center of free way (only one line)
+					laserLineList->at(i)->setPen(QPen(colorLaserCenterDrivingDirection));
+				}
+				else
+				{
+					//   n o   o b s t a c l e
+					laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
+				}
 			}
 		}
 	}
@@ -1244,7 +1264,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			*/
 				
 			// set tool tip of the line to the distance
-			laserLineList->at(i)->setToolTip(QString("%1 m").arg(laserScannerValues[i]));
+			laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
 		}
 	}
 	else
@@ -1262,10 +1282,9 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
 			
 			// set tool tip of the line to the distance
-			laserLineList->at(i)->setToolTip(QString("%1 m").arg(laserScannerValues[i]));
+			laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
 		}
 	}
-
 
 	//------------------------------------------------------
 	// Third: draw some help lines / distances / dimensons
@@ -1441,6 +1460,7 @@ void Gui::createLaserScannerObjects()
 		
 	// init the scale for the laser line / distances drawing stuff
 	lastScale = 0;
+	startScale = 0.1;
 	
 	
 	//-------------------------------------------------------
@@ -1452,6 +1472,7 @@ void Gui::createLaserScannerObjects()
 	colorLaserFreeWay = Qt::darkRed;
 	colorLaserFreeWay.setAlpha(180);
 	colorLaserPreferredDrivingDirection = QColor(7, 68, 30, 150); // green
+	colorLaserCenterDrivingDirection = Qt::green;
 	colorGraphicsSceneBackground = Qt::black;
 	
 	// the scene for the laser scanner lines
@@ -1472,11 +1493,14 @@ void Gui::createLaserScannerObjects()
 	// add robot picture1
 	//--------------------------------------------------------------
 	// add items to the scene
-	QGraphicsPixmapItem *pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
+	pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
 	scene->addItem(pixmapBot1);
 	
 	// horizontal center
 	pixmapBot1->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot1->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
+	
+	// change scale of the robot pic
+	pixmapBot1->scale(startScale, startScale);
 	
 	// FIXME doesn't work
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
@@ -1510,12 +1534,14 @@ void Gui::createLaserScannerObjects()
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 		
+		// FIXME doest not work
+		/*
 		// set line color and position
-		line->setPen(QPen(colorLaserFreeWay));
-		
- 		// FIXME: does not work. no line visible :-(
-		//line->setPen(QPen(QBrush(colorLaserFreeWay), 3));
-
+		QPen pen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
+		pen.setWidth(3);
+		//pen.setColor(colorLaserFreeWay);
+		line->setPen(pen);
+		*/
 		
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
@@ -1541,12 +1567,12 @@ void Gui::createLaserScannerObjects()
 	// set the 180° view per default
 	switchToAngleView();
 	
-	
+/*
 	//--------------------------------------------------------------
 	// add robot picture2
 	//--------------------------------------------------------------
 	// add items to the scene
-	QGraphicsPixmapItem *pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
+	pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
 	scene->addItem(pixmapBot2);
 	
 	// horizontal center
@@ -1555,7 +1581,7 @@ void Gui::createLaserScannerObjects()
 	// FIXME doesn't work
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot2->setZValue(3);
-	
+*/	
 }
 
 

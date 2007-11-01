@@ -322,16 +322,21 @@ class Gui : public QMainWindow
 		QColor colorLaserObstacle;
 		QColor colorLaserFreeWay;
 		QColor colorLaserPreferredDrivingDirection;
+		QColor colorLaserCenterDrivingDirection;
 		QColor colorHelpLine;
 		QColor colorHelpLineText;
 		QColor colorGraphicsSceneBackground;
 		QPen laserLinePen;
 		int lastScale;
+		qreal startScale;
 		
 		// TODO: doxygen tags
 		QGraphicsScene *scene;					/** The QGraphicsScene for showing the laser lines in the GUI */
 		QList <QGraphicsLineItem*> *laserLineList;		/** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
 		QList <QGraphicsPathItem*> *laserDistanceLineList;	/** A pointer to a QList of pointers to the shown distances from the laser lines (kind of coordinate system) */
+		QGraphicsPixmapItem *pixmapBot1;
+		QGraphicsPixmapItem *pixmapBot2;
+
 
 		
 		static const unsigned char ON  = 1;  /** For motor "ON" */
@@ -376,6 +381,13 @@ class Gui : public QMainWindow
 		static const int FITTOFRAMEFACTOR=45;
 		
 		static const int LASERLINELENGTH=278;
+		
+		// the tags for the laser lines
+		static const int FREEWAY = 0;
+		static const int OBSTACLE = 1;
+		static const int LARGESTFREEWAY = 2;
+		static const int CENTEROFLARGESTFREEWAY = 3;
+
 		
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		/**
