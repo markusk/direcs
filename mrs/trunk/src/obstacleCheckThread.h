@@ -61,6 +61,12 @@ class ObstacleCheckThread : public QThread
 		/*! defines the minimum slot in degrees, where the robot has to fit thru */
 		int robotSlot;
 		
+		// the tags for the laser lines
+		static const int FREEWAY = 0;
+		static const int OBSTACLE = 1;
+		static const int LARGESTFREEWAY = 2;
+		static const int CENTEROFLARGESTFREEWAY = 3;
+		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 100; // 100 ! original !

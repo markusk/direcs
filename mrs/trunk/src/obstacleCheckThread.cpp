@@ -202,7 +202,7 @@ void ObstacleCheckThread::run()
 		for (int angle=0; angle<180; angle++)
 		{
 			// check only lines with no obstacles!
-			if (laserThread->getLaserScannerFlag(angle) == 0)
+			if (laserThread->getLaserScannerFlag(angle) == FREEWAY)
 			{
 				// Actual angle has "free" sight (no obstacles)!
 				// If next angle is free AND the angle before this actual is NOT free, set this one as "start"
@@ -210,8 +210,8 @@ void ObstacleCheckThread::run()
 				// Additionaly angles at the size of 1° will be ignored with this logic!
 				//
 				if (
-					((laserThread->getLaserScannerFlag(angle+1) == 0) && (laserThread->getLaserScannerFlag(angle-1) == 1)) ||
-					((laserThread->getLaserScannerFlag(angle+1) == 0) && (angle == 0))
+					((laserThread->getLaserScannerFlag(angle+1) == FREEWAY) && (laserThread->getLaserScannerFlag(angle-1) == OBSTACLE)) ||
+					((laserThread->getLaserScannerFlag(angle+1) == FREEWAY) && (angle == 0))
 					)
 				{
 					// store current free area beginning
@@ -221,7 +221,7 @@ void ObstacleCheckThread::run()
 				// Actual angle has "free" sight (no obstacles)!
 				// If next angle is NOT free, set this one as "end"
 				// and angle slot is wide enough for the robot
-				if ( (laserThread->getLaserScannerFlag(angle+1) == 1) && ((angle - actualFreeAreaStart) >=robotSlot) )
+				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && ((angle - actualFreeAreaStart) >=robotSlot) )
 				{
 					// store current free area end
 					actualFreeAreaEnd = angle;
@@ -247,7 +247,7 @@ void ObstacleCheckThread::run()
 		{
 			for (int angle=largestFreeAreaStart; angle<=largestFreeAreaEnd; angle++)
 			{
-				laserThread->setLaserScannerFlag(angle, 3);
+				laserThread->setLaserScannerFlag(angle, LARGESTFREEWAY);
 			}
 		}
 		else
@@ -257,22 +257,31 @@ void ObstacleCheckThread::run()
 			{
 				for (int angle=actualFreeAreaStart; angle<=actualFreeAreaEnd; angle++)
 				{
-					laserThread->setLaserScannerFlag(angle, 3);
+					laserThread->setLaserScannerFlag(angle, LARGESTFREEWAY);
 				}
 			}
 		}
-		
 	
 		
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP III
 		//----------------------------------------------------------------------------
-		// Find the widest free area for the robot
+		// Find the center of the widest free area for the robot
+		//----------------------------------------------------------------------------
+		
+		// set the "center flag"
+		laserThread->setLaserScannerFlag( (largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2)), CENTEROFLARGESTFREEWAY);
+		
+		
+		//----------------------------------------------------------------------------
+		// LASER SCANNER DATA ANALYSIS - STEP IV
+		//----------------------------------------------------------------------------
+		// Find the widest free area for the robot 	TODO: is this step still necessary?!?
 		//----------------------------------------------------------------------------
 		// robotSlot value!
 		
 		//----------------------------------------------------------------------------
-		// LASER SCANNER DATA ANALYSIS - STEP IV
+		// LASER SCANNER DATA ANALYSIS - STEP V
 		//----------------------------------------------------------------------------
 		// Find the longest distance within the free space for the robot.
 		//----------------------------------------------------------------------------
