@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gui.ui'
 **
-** Created: Mon Oct 29 18:33:06 2007
+** Created: Sun Nov 4 17:55:11 2007
 **      by: Qt User Interface Compiler version 4.3.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -115,12 +115,13 @@ public:
     QGraphicsView *graphicsViewLaser;
     QLabel *label18_2;
     QLabel *labelLaserTop;
-    QSlider *sliderLaserScale;
+    QSlider *sliderZoom;
     QLabel *label_11;
     QLabel *label_10;
     QCheckBox *checkBoxAngleView;
     QCheckBox *checkBoxHiResView;
     QLabel *label18_3;
+    QLabel *label_33;
     QPushButton *btnSimulate;
 
     void setupUi(QWidget *Gui)
@@ -582,24 +583,26 @@ public:
     label18_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
     labelLaserTop = new QLabel(groupBoxBot);
     labelLaserTop->setObjectName(QString::fromUtf8("labelLaserTop"));
-    labelLaserTop->setGeometry(QRect(387, 590, 25, 20));
-    sliderLaserScale = new QSlider(groupBoxBot);
-    sliderLaserScale->setObjectName(QString::fromUtf8("sliderLaserScale"));
-    sliderLaserScale->setGeometry(QRect(390, 610, 141, 25));
-    sliderLaserScale->setMinimum(1);
-    sliderLaserScale->setMaximum(10);
-    sliderLaserScale->setPageStep(1);
-    sliderLaserScale->setValue(1);
-    sliderLaserScale->setSliderPosition(1);
-    sliderLaserScale->setOrientation(Qt::Horizontal);
-    sliderLaserScale->setTickPosition(QSlider::TicksAbove);
-    sliderLaserScale->setTickInterval(1);
+    labelLaserTop->setGeometry(QRect(430, 640, 21, 21));
+    sliderZoom = new QSlider(groupBoxBot);
+    sliderZoom->setObjectName(QString::fromUtf8("sliderZoom"));
+    sliderZoom->setGeometry(QRect(390, 610, 141, 25));
+    sliderZoom->setMinimum(1);
+    sliderZoom->setMaximum(10);
+    sliderZoom->setPageStep(1);
+    sliderZoom->setValue(1);
+    sliderZoom->setSliderPosition(1);
+    sliderZoom->setTracking(false);
+    sliderZoom->setOrientation(Qt::Horizontal);
+    sliderZoom->setTickPosition(QSlider::TicksAbove);
+    sliderZoom->setTickInterval(1);
     label_11 = new QLabel(groupBoxBot);
     label_11->setObjectName(QString::fromUtf8("label_11"));
-    label_11->setGeometry(QRect(517, 590, 25, 20));
+    label_11->setGeometry(QRect(518, 590, 16, 20));
     label_10 = new QLabel(groupBoxBot);
     label_10->setObjectName(QString::fromUtf8("label_10"));
-    label_10->setGeometry(QRect(452, 640, 21, 16));
+    label_10->setGeometry(QRect(388, 590, 16, 16));
+    label_10->setAlignment(Qt::AlignCenter);
     checkBoxAngleView = new QCheckBox(groupBoxBot);
     checkBoxAngleView->setObjectName(QString::fromUtf8("checkBoxAngleView"));
     checkBoxAngleView->setGeometry(QRect(560, 600, 51, 16));
@@ -611,6 +614,9 @@ public:
     label18_3->setObjectName(QString::fromUtf8("label18_3"));
     label18_3->setGeometry(QRect(250, 590, 41, 16));
     label18_3->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+    label_33 = new QLabel(groupBoxBot);
+    label_33->setObjectName(QString::fromUtf8("label_33"));
+    label_33->setGeometry(QRect(390, 640, 38, 21));
     btnSimulate = new QPushButton(Gui);
     btnSimulate->setObjectName(QString::fromUtf8("btnSimulate"));
     btnSimulate->setGeometry(QRect(1280, 790, 101, 28));
@@ -699,12 +705,13 @@ public:
     progressBarSensor16->setFormat(QApplication::translate("Gui", "%v", 0, QApplication::UnicodeUTF8));
     progressBarSensor1->setFormat(QApplication::translate("Gui", "%v", 0, QApplication::UnicodeUTF8));
     label18_2->setText(QApplication::translate("Gui", "Sensor", 0, QApplication::UnicodeUTF8));
-    labelLaserTop->setText(QApplication::translate("Gui", "1:1", 0, QApplication::UnicodeUTF8));
-    label_11->setText(QApplication::translate("Gui", "1:10", 0, QApplication::UnicodeUTF8));
-    label_10->setText(QApplication::translate("Gui", "1:1", 0, QApplication::UnicodeUTF8));
+    labelLaserTop->setText(QApplication::translate("Gui", "1", 0, QApplication::UnicodeUTF8));
+    label_11->setText(QApplication::translate("Gui", "10", 0, QApplication::UnicodeUTF8));
+    label_10->setText(QApplication::translate("Gui", "1", 0, QApplication::UnicodeUTF8));
     checkBoxAngleView->setText(QApplication::translate("Gui", "180\302\260", 0, QApplication::UnicodeUTF8));
     checkBoxHiResView->setText(QApplication::translate("Gui", "HiRes", 0, QApplication::UnicodeUTF8));
     label18_3->setText(QApplication::translate("Gui", "Sensor", 0, QApplication::UnicodeUTF8));
+    label_33->setText(QApplication::translate("Gui", "Zoom:", 0, QApplication::UnicodeUTF8));
     btnSimulate->setText(QApplication::translate("Gui", " S&imulate", 0, QApplication::UnicodeUTF8));
     btnSimulate->setShortcut(QApplication::translate("Gui", "Alt+I", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(Gui);

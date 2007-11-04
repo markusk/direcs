@@ -1745,17 +1745,17 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="labelLaserTop" >
     <property name="geometry" >
      <rect>
-      <x>387</x>
-      <y>590</y>
-      <width>25</width>
-      <height>20</height>
+      <x>430</x>
+      <y>640</y>
+      <width>21</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text" >
-     <string>1:1</string>
+     <string>1</string>
     </property>
    </widget>
-   <widget class="QSlider" name="sliderLaserScale" >
+   <widget class="QSlider" name="sliderZoom" >
     <property name="geometry" >
      <rect>
       <x>390</x>
@@ -1779,6 +1779,9 @@ p, li { white-space: pre-wrap; }
     <property name="sliderPosition" >
      <number>1</number>
     </property>
+    <property name="tracking" >
+     <bool>false</bool>
+    </property>
     <property name="orientation" >
      <enum>Qt::Horizontal</enum>
     </property>
@@ -1792,27 +1795,30 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label_11" >
     <property name="geometry" >
      <rect>
-      <x>517</x>
+      <x>518</x>
       <y>590</y>
-      <width>25</width>
+      <width>16</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text" >
-     <string>1:10</string>
+     <string>10</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_10" >
     <property name="geometry" >
      <rect>
-      <x>452</x>
-      <y>640</y>
-      <width>21</width>
+      <x>388</x>
+      <y>590</y>
+      <width>16</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text" >
-     <string>1:1</string>
+     <string>1</string>
+    </property>
+    <property name="alignment" >
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBoxAngleView" >
@@ -1858,6 +1864,19 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="alignment" >
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_33" >
+    <property name="geometry" >
+     <rect>
+      <x>390</x>
+      <y>640</y>
+      <width>38</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Zoom:</string>
     </property>
    </widget>
   </widget>
