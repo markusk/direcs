@@ -277,7 +277,7 @@ class Gui : public QMainWindow
 		void on_btnClearPicture_clicked();
 		void on_btnEnableRemote_clicked();
 		void on_btnSimulate_clicked();
-		void on_sliderLaserScale_valueChanged(int);
+		void on_sliderZoom_valueChanged(int);
 		void on_checkBoxAngleView_stateChanged(int);
 
 
@@ -299,6 +299,11 @@ class Gui : public QMainWindow
 		Draws some help lines / distances / dimensons in the laser scanner view.
 		*/
 		void drawLaserDistances(bool flatView);
+		
+		/**
+		Sets the bot picture to a nice position in the laser scanner view.
+		*/
+		void drawBotPicture();
 		
 		/**
 		Saves the current picture to disk (one time shot).
@@ -327,8 +332,10 @@ class Gui : public QMainWindow
 		QColor colorHelpLineText;
 		QColor colorGraphicsSceneBackground;
 		QPen laserLinePen;
-		int lastScale;
+		int lastZoom;
 		qreal startScale;
+		qreal laserXPos;
+		qreal laserYPos;
 		
 		// TODO: doxygen tags
 		QGraphicsScene *scene;					/** The QGraphicsScene for showing the laser lines in the GUI */
@@ -379,8 +386,8 @@ class Gui : public QMainWindow
 	
 		/** factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels */
 		static const int FITTOFRAMEFACTOR=45;
-		
 		static const int LASERLINELENGTH=278;
+		
 		
 		// the tags for the laser lines
 		static const int FREEWAY = 0;

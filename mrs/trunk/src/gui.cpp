@@ -246,6 +246,7 @@ void Gui::on_spinBoxMotor2Speed_valueChanged(int value)
 
 void Gui::on_sliderObstacle_valueChanged(int value)
 {
+	// TODO: change to signal slot auto connection
 	obstCheckThread->setMinObstacleDistance(value);
 	ui.spinBoxObstacle->setValue(value);
 }
@@ -253,6 +254,7 @@ void Gui::on_sliderObstacle_valueChanged(int value)
 
 void Gui::on_sliderObstacleLaserScanner_valueChanged(int value)
 {
+	// TODO: change to signal slot auto connection
 	obstCheckThread->setMinObstacleDistanceLaser(value);
 	ui.spinBoxObstacleLaserScanner->setValue(value);
 }
@@ -260,6 +262,7 @@ void Gui::on_sliderObstacleLaserScanner_valueChanged(int value)
 
 void Gui::on_spinBoxObstacle_valueChanged(int value)
 {
+	// TODO: change to signal slot auto connection
 	obstCheckThread->setMinObstacleDistance(value);
 	ui.sliderObstacle->setValue(value);
 }
@@ -1154,16 +1157,39 @@ void Gui::on_btnSimulate_clicked()
 }
 
 
-void Gui::on_sliderLaserScale_valueChanged(int value)
+void Gui::on_sliderZoom_valueChanged(int value)
 {
 	// show the value in a label
-	ui.labelLaserTop->setText(tr("1:%1").arg(value));
+	ui.labelLaserTop->setText(tr("%1").arg(value));
+
 	
-	// TODO: change also scale of the robot pixmap
-	//pixmapBot1->scale(startScale*value, startScale*value);
+	// rescale the robot pixmap to the last scale
+	// (the laser lines are rescaled automatically by in the slot)
+	pixmapBot1->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
+	pixmapBot2->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
 	
-	// TODO: change sclae of pixmap2
-	//pixmapBot1->scale(0.1, 0.1);
+	// scale to the actual slider value
+	pixmapBot1->scale(value, value);
+	pixmapBot2->scale(value, value);
+	
+	// store the actual scale
+	lastZoom = value;
+	
+	// position the bot
+	drawBotPicture();
+	
+	
+	// change the y position of the laser lines, too
+	qreal x = ui.graphicsViewLaser->width() / 2;
+	qreal y = laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
+	
+	for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
+	{
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		laserLineList->at(i)->setPos(x, y);
+	}
 }
 
 
@@ -1191,7 +1217,7 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 {
 	int measuredLaserDistance = 0;
-	int scaleView = ui.sliderLaserScale->value(); // get a scale to fit the beams into the window
+	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 	/*
 	QPen orgPen = laserLineList->at(0)->pen();
 	QBrush orgBrush = orgPen.brush();
@@ -1247,7 +1273,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		for (int i=0; i<laserLineList->size(); i++)
 		{
 			// get value from laser
-			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
+			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView);
 
 			//draw the first real line
 			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
@@ -1278,7 +1304,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		{
 			// get value from laser and
 			// draw the lines at every 1°
-			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*scaleView);
+			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView);
 			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
 			
 			// set tool tip of the line to the distance
@@ -1310,17 +1336,17 @@ void Gui::drawLaserDistances(bool flatView)
 	// or it is the first time for this
 	// draw some help lines / distances / dimensons
 	//------------------------------------------------
-//	if ( (lastScale != ui.sliderLaserScale->value()) || (firstDraw == true) )
+//	if ( (lastZoom != ui.sliderZoom->value()) || (firstDraw == true) )
 	// FixMe: Draw only on changes to the scale.
 	if (true)
 	{
 		firstDraw = false;
 		// store the current scale to fit the lines into the window
-		lastScale = ui.sliderLaserScale->value();
+		lastZoom = ui.sliderZoom->value();
 		
 		
 		// set the y-position of the line/text
-		dimensionLine = (FITTOFRAMEFACTOR*lastScale);
+		dimensionLine = (FITTOFRAMEFACTOR*lastZoom);
 		int newY = ui.groupBoxLaserScanner->height();
 		
 		// draw!
@@ -1454,14 +1480,8 @@ void Gui::initializePlots()
 
 void Gui::createLaserScannerObjects()
 {
-	// refresh laser view, when check box changes
-	// TODO how to refresh view without providing with parameter?!
-	//	connect(ui.checkBoxHiResView, SIGNAL( stateChanged(int) ), this, SLOT( refreshLaserView(float *, float *) ));
-		
 	// init the scale for the laser line / distances drawing stuff
-	lastScale = 0;
-	startScale = 0.1;
-	
+	lastZoom = ui.sliderZoom->value();
 	
 	//-------------------------------------------------------
 	// OpenGL stuff (Laser lines)
@@ -1481,26 +1501,38 @@ void Gui::createLaserScannerObjects()
 	// set some colors
 	scene->setBackgroundBrush(colorGraphicsSceneBackground);
 	
+	// turn off moving of scene, when objects extend the scene
+	// (set scene rect to size of GUI element)
+	scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());
+	
 	// set scene to the GUI
 	ui.graphicsViewLaser->setScene(scene);
 	
-	// TODO: check if really faster! Quality looks worser than without OpenGL.
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
 	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
-	
-	
+
+
 	//--------------------------------------------------------------
 	// add robot picture1
 	//--------------------------------------------------------------
 	// add items to the scene
 	pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
-	scene->addItem(pixmapBot1);
+	
+	//--------------------------------------------------------------
+	// calculate a nice y position in the view
+	//--------------------------------------------------------------
+	startScale = 10;
+	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
+	laserYPos = ui.progressBarSensor4->height() + 20;
+	
+	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
+	pixmapBot1->scale( (1.0 / startScale), (1.0 / startScale));
 	
 	// horizontal center
-	pixmapBot1->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot1->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
+	pixmapBot1->setPos(laserXPos, laserYPos);
 	
-	// change scale of the robot pic
-	pixmapBot1->scale(startScale, startScale);
+	// add the pixmap
+	scene->addItem(pixmapBot1);
 	
 	// FIXME doesn't work
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
@@ -1567,26 +1599,41 @@ void Gui::createLaserScannerObjects()
 	// set the 180° view per default
 	switchToAngleView();
 	
-/*
+
 	//--------------------------------------------------------------
 	// add robot picture2
 	//--------------------------------------------------------------
 	// add items to the scene
 	pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
+	/*
 	scene->addItem(pixmapBot2);
 	
 	// horizontal center
 	pixmapBot2->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot2->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
+	*/
+	
+	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
+	pixmapBot2->scale( (1.0 / startScale), (1.0 / startScale));
+	
+	// horizontal center
+	pixmapBot2->setPos(laserXPos, laserYPos);
+	
+	// add the pixmap
+	scene->addItem(pixmapBot2);
+
 	
 	// FIXME doesn't work
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot2->setZValue(3);
-*/	
 }
 
 
 void Gui::switchToAngleView()
 {
+	qreal x = ui.graphicsViewLaser->width() / 2;
+	qreal y = laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
+	
+	
 	for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
 	{
 		// reset transform or rotation
@@ -1598,7 +1645,7 @@ void Gui::switchToAngleView()
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
-		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
+		laserLineList->at(i)->setPos(x, y);
 	}
 }
 
@@ -1638,9 +1685,9 @@ void Gui::createLaserDistanceObjects()
 	// scaling
 	//--------------------------------------------------------------
 	// store the current scale to fit the lines into the window
-	lastScale = ui.sliderLaserScale->value();
+	lastZoom = ui.sliderZoom->value();
 	// set the y-position of the line/text
-	dimensionLine = (FITTOFRAMEFACTOR*lastScale);
+	dimensionLine = (FITTOFRAMEFACTOR*lastZoom);
 	newY = ui.graphicsViewLaser->height();
 	
 	
@@ -1749,4 +1796,16 @@ void Gui::createLaserDistanceObjects()
 		//ui.lblScale1->move(5, (i*dimensionLine));
 	}
 */
+}
+
+
+void Gui::drawBotPicture()
+{
+	// recalculate the middle position of the bot pixmap!
+	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
+	laserYPos = ui.progressBarSensor4->height() + 20;
+	
+	// horizontal center
+	pixmapBot1->setPos(laserXPos, laserYPos);
+	pixmapBot2->setPos(laserXPos, laserYPos);
 }
