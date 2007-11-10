@@ -143,7 +143,7 @@ Mrs::Mrs()
 	
 	
 	//----------------------------------------------------------------------------
-	// say a text 
+	// say a text
 	//----------------------------------------------------------------------------
 	/*
 	// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
@@ -357,6 +357,17 @@ Mrs::Mrs()
 			laserThread->start();
 			gui1->appendLog("Laser thread started.");
 		}
+		
+// FIXME: test test test!!!
+		if (obstCheckThread->isRunning() == false)
+		{
+			gui1->appendLog("Starting obstacle check thread...", false);
+			obstCheckThread->start();
+			obstCheckThread->setMinObstacleDistance(minObstDist);
+			gui1->appendLog("Obstacle check thread started.");
+		}
+// FIXME: test test test!!!
+		
 		
 		//--------------------------------------------
 		// start the "ex-CARMEN" laser module ! ! !
