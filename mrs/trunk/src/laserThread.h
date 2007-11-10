@@ -57,14 +57,14 @@ class LaserThread : public QThread
 		
 		/*!
 		Defines the size of the laserScannerValue[] array
-		This es equal to the number of degrees. */
-		static const unsigned char LASERSCANNERARRAYSIZE = 181;
+		This es equal to the number of degrees.
+		*/
+		static const unsigned char LASERSCANNERARRAYSIZE = 180;
 		
 		/*!
 		The first column of this array is the measured distance to an object (the length of the real laser line in meter (m)).
 		The second column is an flag if an obstacle is detected (the distance is to small from the robot to an object)
 		*/
-		// float laserScannerValue[LASERSCANNERARRAYSIZE][2];
 		QList <float> laserScannerValues;  /** The measured distances from the laser scanner. */
 		QList <int> laserScannerFlags;  /** Some flags for each laser line (like "free way", "obstacle" etc. */
 		
