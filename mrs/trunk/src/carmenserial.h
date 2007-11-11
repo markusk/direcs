@@ -39,11 +39,12 @@
 
 #ifndef CARMEN_SERIAL_H
 #define CARMEN_SERIAL_H
-
+/*
+Markus Original:
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+*/
   /** Open a connection to the serial line 
    *
    * @param *dev_fd returns the file descriptor associated to the serial line
@@ -109,10 +110,12 @@ int carmen_serial_close(int dev_fd);
    * @return 0=successful switched to low latency mode. 0=continue in normal mode.
    **/
 int carmen_serial_set_low_latency(int fd);
-
+/*
+Markus Original:
 #ifdef __cplusplus
 }
 #endif
+*/
 
 #endif
 // @}

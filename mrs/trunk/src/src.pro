@@ -59,25 +59,22 @@ win32 {
 }
 QT += network \
 opengl
+DESTDIR = .
+
 INCLUDEPATH += /usr/include/atk-1.0/ \
 /usr/lib/gtk-2.0/include/ \
 /usr/lib/glib-2.0/include/ \
 /usr/lib/glib/include/ \
-/usr/include/pango-1.0/ \
 /usr/include/glib-2.0/ \
+/usr/include/pango-1.0/ \
 /usr/include/cairo/ \
 /usr/include/gtk-2.0/ \
-/home/markus/develop/carmen/include/carmen \
-/home/markus/develop/carmen/include \
-/home/markus/develop/subversion/applications/mrs/trunk/src \
 /usr/include/speech_tools \
 /usr/include/festival \
 /usr/local/qwt/include \
 /usr/local/include/opencv
 LIBS += -L/usr/local/qwt/lib/ \
 -L/usr/local/lib \
--L/home/markus/develop/carmen/lib \
--L/home/markus/develop/carmen/sharedlib \
 -L/usr/lib/festival/ \
 -L/usr/lib/speech_tools/ \
 -lFestival \
@@ -86,20 +83,8 @@ LIBS += -L/usr/local/qwt/lib/ \
 -leststring \
 -ltermcap \
 -lesd \
--lrobot_interface \
--lrobot \
--lconventional \
--larm_interface \
 -lqextserialport \
 -lqwt \
 -lcv \
 -lhighgui \
--lglib-2.0 \
--lcarmenserial \
--lbase_interface \
--lparam_interface \
--lglobal \
--lipc \
--lglobal_graphics \
--llaser \
--llaser_interface
+-lglib-2.0
