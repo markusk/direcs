@@ -29,8 +29,95 @@
 #define CARMEN_LASER_USE_SELECT 1
 #define CARMEN_LASER_LOW_LATENCY 1
 
-#include <carmen/carmen.h>
-#include <carmen/carmenserial.h>
+
+#include <QtGlobal>
+
+
+//#include <carmen/carmen.h>
+//
+// FROM carmen.h:
+//
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#ifndef va_copy
+#define va_copy __va_copy
+#endif 
+
+#include <unistd.h>
+#include <ctype.h>
+#ifdef __USE_BSD
+#undef __USE_BSD
+#include <string.h>
+#define __USE_BSD
+#else
+#include <string.h>
+#endif
+#include <signal.h>
+#include <math.h>
+#include <time.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#ifdef CYGWIN
+#include <sys/socket.h>
+#endif
+#include <errno.h>
+#include <limits.h>
+#include <float.h>
+#ifndef MAXDOUBLE
+#define MAXDOUBLE DBL_MAX
+#endif
+#ifndef MAXFLOAT
+#define MAXFLOAT FLT_MAX
+#endif
+
+
+//
+// FROM global.h:
+//
+#ifndef TRUE
+#define TRUE 1
+#endif
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846  /* pi */
+#endif
+
+// TODO: nedded?
+// #define carmen_test_alloc(X) do {if ((void *)(X) == NULL) carmen_die("Out of memory in %s, (%s, line %d).\n", __FUNCTION__, __FILE__, __LINE__); } while (0)
+
+
+
+//
+// FROM rflex-io.c
+//
+#include <string.h>
+#include <signal.h>
+#include <math.h>
+#include <unistd.h>
+#include <termios.h>
+#include <fcntl.h>
+#include <sys/signal.h>
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/ioctl.h>
+#ifdef CYGWIN
+#include <sys/socket.h>
+#endif
+
+
+
+//----------------------------------------------------------------------------------
+// from here: original sick.cpp 
+
+// MK original: #include <carmen/carmenserial.h>  // < < < < <
+#include "carmenserial.h"
+
 #include <sys/types.h>
 #include <sys/select.h>
 
@@ -221,7 +308,7 @@ void sick_set_baudrate(sick_laser_p laser, int brate)
     if (ioctl(laser->dev.fd, TIOCGSERIAL, &serinfo) < 0) {
       fprintf(stderr," cannot get serial info\n");
       close(laser->dev.fd);
-      shutdown_laser(1);
+      // Markus shutdown_laser(1);
     }
     serinfo.flags =
       ( serinfo.flags & ~ASYNC_SPD_MASK) | ASYNC_SPD_CUST;
@@ -229,7 +316,7 @@ void sick_set_baudrate(sick_laser_p laser, int brate)
     if (ioctl(laser->dev.fd, TIOCSSERIAL, &serinfo) < 0) {
       fprintf(stderr," cannot set serial info\n");
       close(laser->dev.fd);
-      shutdown_laser(1);
+      // Markus shutdown_laser(1);
     }
   } else {
     cfsetispeed ( &ctio, (speed_t) cBaudrate(brate) );
@@ -293,69 +380,93 @@ static int sick_compute_checksum(unsigned char *CommData, int uLen)
   return (((int)uCrc16[0]) * 256 + ((int)uCrc16[1]));
 }
 
+
 int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout)
 {
-  static int val, i, j, l, pos, chk1, chk2;
-  double start_time;
-#ifdef CARMEN_LASER_USE_SELECT
-  fd_set read_set;
-  struct timeval timer;
-  timer.tv_sec=(long)(floor(timeout));
-  timer.tv_usec=(long)((timeout-floor(timeout))*1000000);
-  FD_ZERO(&read_set);
-  FD_SET(laser->dev.fd, &read_set);
-#endif
+	static int val, i, j, l, pos, chk1, chk2;
+	double start_time;
 
-  l    = BUFFER_SIZE;
-  pos  = 0;
-  chk1 = FALSE;
-  chk2 = FALSE;
-#ifdef CARMEN_LASER_USE_SELECT
-  while(select(laser->dev.fd+1, &read_set, NULL, NULL, &timer)) {
-  start_time = carmen_get_time();
-#else
-  start_time = carmen_get_time();
-  while(carmen_get_time() - start_time < timeout) {
-#endif
-    val = carmen_serial_numChars(laser->dev.fd);
-    if(val > 0) {
-      if(pos + val >= BUFFER_SIZE)
+	#ifdef CARMEN_LASER_USE_SELECT
+	fd_set read_set;
+	struct timeval timer;
+	timer.tv_sec=(long)(floor(timeout));
+	timer.tv_usec=(long)((timeout-floor(timeout))*1000000);
+	FD_ZERO(&read_set);
+	FD_SET(laser->dev.fd, &read_set);
+	#endif
+
+	l    = BUFFER_SIZE;
+	pos  = 0;
+	chk1 = FALSE;
+	chk2 = FALSE;
+
+	#ifdef CARMEN_LASER_USE_SELECT
+	while(select(laser->dev.fd+1, &read_set, NULL, NULL, &timer))
+	{
+		start_time = carmen_get_time();
+	#else
+
+	start_time = carmen_get_time();
+		
+	while(carmen_get_time() - start_time < timeout)
+	{
+	#endif
+		val = carmen_serial_numChars(laser->dev.fd);
+		
+		if(val > 0)
+		{
+			if(pos + val >= BUFFER_SIZE)
+				return(0);
+			
+			if(pos + val >= l + 6)
+				val = l + 6 - pos;
+	
+			read(laser->dev.fd, &(data[pos]), val);
+			pos += val;
+			
+			if(!chk1 && pos > 2)
+			{
+				if(data[0] != STX || data[1] != LID)
+				{
+					for(i = 1; i < pos - 1; i++)
+					{
+						if(data[i] == STX && data[i+1] == LID)
+						{
+							for(j = i; j < pos; j++)
+							{
+								data[j - i] = data[j];
+							}
+							pos -= i;
+							chk1 = TRUE;
+							break;
+						}
+					}
+					
+					if(!chk1)
+						pos = 0;
+				}
+				else
+					chk1 = TRUE;
+			}
+			
+			if(!chk2 && pos > 4)
+			{
+				l = data[3] * 256 + data[2];
+				chk2 = TRUE;
+			}
+		}
+		
+		if(pos == l + 6)
+			return(l + 6);
+		
+		#ifndef CARMEN_LASER_USE_SELECT
+		usleep(1000);
+		#endif
+	}
+	
 	return(0);
-      if(pos + val >= l + 6)
-	val = l + 6 - pos;
-      read(laser->dev.fd, &(data[pos]), val);
-      pos += val;
-      if(!chk1 && pos > 2) {
-	if(data[0] != STX || data[1] != LID) {
-	  for(i = 1; i < pos - 1; i++) {
-	    if(data[i] == STX && data[i+1] == LID) {
-	      for(j = i; j < pos; j++) {
-		data[j - i] = data[j];
-	      }
-	      pos -= i;
-	      chk1 = TRUE;
-	      break;
-	    }
-	  }
-	  if(!chk1)
-	    pos = 0;
-	} 
-	else
-	  chk1 = TRUE;
-      }
-      if(!chk2 && pos > 4) {
-	l = data[3] * 256 + data[2];
-	chk2 = TRUE;
-      }
-    }
-    if(pos == l + 6)
-      return(l + 6);
-#ifndef CARMEN_LASER_USE_SELECT
-    usleep(1000);
-#endif
-  }
-  return(0);
 }
+
 
 int sick_write_command(sick_laser_p laser, unsigned char command,
 		       unsigned char *argument, int arg_length)
@@ -745,57 +856,79 @@ int sick_check_baudrate(sick_laser_p laser, int brate)
   }
 }
 
+
 void sick_install_settings(sick_laser_p laser)
 {
-  laser->dev.type = laser->settings.type;
-  laser->dev.baudrate = laser->settings.start_baudrate;
-  laser->dev.parity = laser->settings.parity;
-  laser->dev.fd = -1;
-  laser->dev.databits = laser->settings.databits;
-  laser->dev.stopbits = laser->settings.stopbits;
-  laser->dev.hwf = laser->settings.hwf;
-  laser->dev.swf = laser->settings.swf;
-  strncpy((char *)laser->dev.passwd, (const char *)laser->settings.password, 8);
-  laser->dev.ttyport =
-    (char *)malloc((strlen(laser->settings.device_name) + 1) * sizeof(char));
-  carmen_test_alloc(laser->dev.ttyport);
-  strcpy(laser->dev.ttyport, laser->settings.device_name);
+	laser->dev.type = laser->settings.type;
+	laser->dev.baudrate = laser->settings.start_baudrate;
+	laser->dev.parity = laser->settings.parity;
+	laser->dev.fd = -1;
+	laser->dev.databits = laser->settings.databits;
+	laser->dev.stopbits = laser->settings.stopbits;
+	laser->dev.hwf = laser->settings.hwf;
+	laser->dev.swf = laser->settings.swf;
+	strncpy((char *)laser->dev.passwd, (const char *)laser->settings.password, 8);
+	laser->dev.ttyport = (char *)malloc((strlen(laser->settings.device_name) + 1) * sizeof(char));
+
+	// TODO: nedded?
+	// Markus Original: carmen_test_alloc(laser->dev.ttyport);
+
+	strcpy(laser->dev.ttyport, laser->settings.device_name);
 }
+
 
 void sick_allocate_laser(sick_laser_p laser)
 {
-  int i;
-  
-  laser->numvalues = laser->settings.num_values;
-  laser->range = (double *)malloc(laser->settings.num_values * sizeof(double));
-  carmen_test_alloc(laser->range);
-  laser->glare = (int *)malloc(laser->settings.num_values * sizeof(int));
-  carmen_test_alloc(laser->glare);
-  laser->wfv = (int *)malloc(laser->settings.num_values * sizeof(int));
-  carmen_test_alloc(laser->wfv);
-  laser->sfv = (int *)malloc(laser->settings.num_values * sizeof(int));
-  carmen_test_alloc(laser->sfv);
-  laser->buffer = (unsigned char *)malloc(LASER_BUFFER_SIZE);
-  carmen_test_alloc(laser->buffer);
-  laser->new_reading = 0;
-  laser->buffer_position = 0;
-  laser->processed_mark = 0;
-  for(i = 0; i < laser->settings.num_values; i++) {
-    laser->range[i] = 0.0;
-    laser->glare[i] = 0;
-    laser->wfv[i] = 0;
-    laser->sfv[i] = 0;
-  }
-// *** REI - START *** //
-  if(laser->settings.use_remission) {
-    laser->remvalues = laser->settings.rem_values;
-	laser->remission = (double *)malloc(laser->settings.rem_values * sizeof(double));
-	carmen_test_alloc(laser->remission);
-	for(i = 0; i< laser->settings.rem_values; i++) 
-	  laser->remission[i] = 0;
-  }
-// *** REI - END *** //
+	int i;
+	
+	laser->numvalues = laser->settings.num_values;
+	
+	laser->range = (double *)malloc(laser->settings.num_values * sizeof(double));
+	// TODO: nedded?
+	//carmen_test_alloc(laser->range);
+	
+	laser->glare = (int *)malloc(laser->settings.num_values * sizeof(int));
+	// TODO: nedded?
+	// carmen_test_alloc(laser->glare);
+	
+	laser->wfv = (int *)malloc(laser->settings.num_values * sizeof(int));
+	// TODO: nedded?
+	//carmen_test_alloc(laser->wfv);
+	
+	laser->sfv = (int *)malloc(laser->settings.num_values * sizeof(int));
+	// TODO: nedded?
+	//carmen_test_alloc(laser->sfv);
+	
+	laser->buffer = (unsigned char *)malloc(LASER_BUFFER_SIZE);
+	// TODO: nedded?
+	//carmen_test_alloc(laser->buffer);
+	
+	laser->new_reading = 0;
+	laser->buffer_position = 0;
+	laser->processed_mark = 0;
+	
+	for(i = 0; i < laser->settings.num_values; i++)
+	{
+		laser->range[i] = 0.0;
+		laser->glare[i] = 0;
+		laser->wfv[i] = 0;
+		laser->sfv[i] = 0;
+	}
+	
+	// *** REI - START *** //
+	if(laser->settings.use_remission)
+	{
+		laser->remvalues = laser->settings.rem_values;
+		laser->remission = (double *)malloc(laser->settings.rem_values * sizeof(double));
+		// TODO: nedded?
+		//carmen_test_alloc(laser->remission);
+		
+		for(i = 0; i< laser->settings.rem_values; i++)
+	  		laser->remission[i] = 0;
+	}
+	// *** REI - END *** //
 }
+
 
 void sick_connect_device(sick_laser_p laser)
 {
@@ -1110,4 +1243,24 @@ void sick_stop_laser(sick_laser_p laser)
   sick_stop_continuous_mode(laser);
   fprintf(stderr, "ok\n");
   close(laser->dev.fd);
+}
+
+
+//
+// from global.c
+//
+double carmen_get_time(void)
+{
+	struct timeval tv;
+	double t;
+
+	if (gettimeofday(&tv, NULL) < 0)
+	{
+		// Markus Original: carmen_warn("carmen_get_time encountered error in gettimeofday : %s\n", strerror(errno));
+		qDebug("carmen_get_time encountered error in gettimeofday : %s", strerror(errno));
+	}
+	
+	t = tv.tv_sec + tv.tv_usec/1000000.0;
+	
+	return t;
 }

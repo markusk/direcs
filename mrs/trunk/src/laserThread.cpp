@@ -67,9 +67,12 @@ void LaserThread::run()
 		if (simulationMode==false)
 		{
 			// check if all 180 beams were read (in the laser module)
-			numReadings = getLaserNumReadings();
+			// FIXME: get value from new laser module!!
+			numReadings = 180;
+			//numReadings = getLaserNumReadings();
 			
 			// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
+			// TODO: 180 elements vs. const vs. 
 			if (numReadings>=180)
 				numReadings = 179;
 			
@@ -83,9 +86,9 @@ void LaserThread::run()
 				{
 					// get value from laser
 					// store the value in an array in this thread
-					//laserScannerValue[i][DISTANCE] = getLaserDistance(i);
-					
-					laserScannerValues[i] = getLaserDistance(i);
+					// FIXME: get value from new laser module!!
+					//laserScannerValues[i] = getLaserDistance(i);
+					laserScannerValues[i] = (float)(i/18);
 				}
 				
 				

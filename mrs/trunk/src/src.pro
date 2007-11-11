@@ -18,9 +18,10 @@ HEADERS += camThread.h \
            plotThread.h \
            networkThread.h \
            servo.h \
-           laser.h \
            laserThread.h \
-           speakThread.h
+           speakThread.h \
+ sick.h \
+ carmenserial.h
 SOURCES += camThread.cpp \
            circuit.cpp \
            gui.cpp \
@@ -33,9 +34,10 @@ SOURCES += camThread.cpp \
            plotThread.cpp \
            networkThread.cpp \
            servo.cpp \
-           laser.cpp \
            laserThread.cpp \
-           speakThread.cpp
+           speakThread.cpp \
+ sick.cpp \
+ carmenserial.cpp
 RESOURCES = ../mrs.qrc
 DEFINES = _TTY_POSIX_
 TARGET = ../bin/mrs

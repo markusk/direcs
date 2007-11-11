@@ -14,7 +14,8 @@
 #include "inifile.h"
 #include "camThread.h"
 #include "networkThread.h"
-#include "laser.h"
+//#include "laser.h"
+#include "sick.h"
 #include "laserThread.h"
 //-------------------------------------------------------------------
 #include <QtGui>

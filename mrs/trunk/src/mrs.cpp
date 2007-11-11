@@ -373,7 +373,9 @@ Mrs::Mrs()
 		// start the "ex-CARMEN" laser module ! ! !
 		//--------------------------------------------
 		splash->showMessage(QObject::tr("Starting laser scanner module..."), somewhere, splashColor);
-		startlaser();
+		
+		// FIXME: start new laser module!!
+		//startlaser();
 	}
 	//splash->showMessage(QObject::tr("Ready."), somewhere, splashColor);
 }
@@ -519,7 +521,8 @@ Mrs::~Mrs()
 	
 	
 	// shutdown laser module ! ! !
-	shutdown_laserview();
+	// FIXME: stop new laser module!!
+	//shutdown_laserview();
 
 	
 	#ifdef _TTY_POSIX_
