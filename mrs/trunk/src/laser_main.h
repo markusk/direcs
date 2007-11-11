@@ -28,10 +28,12 @@
 
 #ifndef CARMEN_LASER_MAIN_H
 #define CARMEN_LASER_MAIN_H
-
+/*
+Markus Original
 #ifdef __cplusplus
 extern "C" {
 #endif
+*/
 
 int carmen_laser_start(int argc, char **argv);
 
@@ -40,9 +42,11 @@ void carmen_laser_shutdown(int x);
 int carmen_laser_run(void);
 
 void shutdown_laser(int x);
+/*
+Markus Original
 
 #ifdef __cplusplus
 }
 #endif
-
+*/
 #endif

@@ -26,7 +26,7 @@
  *
  ********************************************************/
 
-#include <carmen/carmen.h>
+// Markus #include <carmen/carmen.h>
 #include "sick.h"
 #include "laser.h"
 #include "laser_ipc.h"
