@@ -86,5 +86,4 @@ LIBS += -L/usr/local/qwt/lib/ \
 -lqextserialport \
 -lqwt \
 -lcv \
--lhighgui \
--lglib-2.0
+-lhighgui
