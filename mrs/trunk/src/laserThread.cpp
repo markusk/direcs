@@ -30,7 +30,24 @@ LaserThread::LaserThread()
 		laserScannerFlags.append(0);
 	}
 	
-
+	
+	//----------------------------------------------
+	// start the (former CARMEN) laser module here!
+	//----------------------------------------------
+	// 0. server_initialize
+	// 1. carmen_ipc_initialize
+	// 2. carmen_param_check_version
+	// 3. carmen_laser_start
+	// 4. carmen_laser_run
+	// 5. carmen_ipc_sleep
+	//
+	// AUS EIGENER laser.cpp
+	// 6. carmen_ipc_initialize(argc, argv);
+	// 7. laser_num  = 0;
+	// 8. carmen_laser_subscribe_frontlaser_message (&laser, (carmen_handler_t)laser_handler, CARMEN_SUBSCRIBE_LATEST);
+	// 9. start_time = carmen_get_time();
+	// 10.carmen_graphics_update_ipc_callbacks((GdkInputFunction)updateIPC);
+	// 11. gtk_main();
 }
 
 
