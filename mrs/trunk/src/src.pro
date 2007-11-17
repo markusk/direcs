@@ -22,7 +22,9 @@ HEADERS += camThread.h \
            speakThread.h \
  sick.h \
  carmenserial.h \
- laser_main.h
+ laser_main.h \
+ param_interface.h \
+ param_messages.h
 SOURCES += camThread.cpp \
            circuit.cpp \
            gui.cpp \
