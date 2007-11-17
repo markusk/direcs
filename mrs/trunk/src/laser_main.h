@@ -35,13 +35,53 @@ extern "C" {
 #endif
 */
 
-int carmen_laser_start(int argc, char **argv);
+//----------------
+//Markus:
+
+// from laser.h
+#define     CARMEN_FRONT_LASER_NUM       0
+#define     CARMEN_REAR_LASER_NUM        1
+#define     CARMEN_LASER3_NUM            2
+#define     CARMEN_LASER4_NUM            3
+#define     CARMEN_LASER5_NUM            4
+
+
+
+# include "param_interface.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <QtGlobal>
+
+//----------------
+
+
+// Markus Original: int carmen_laser_start(int argc, char **argv);
+int carmen_laser_start(void);
 
 void carmen_laser_shutdown(int x);
 
 int carmen_laser_run(void);
 
 void shutdown_laser(int x);
+
+//---------------
+// FROM global.h
+extern inline double carmen_radians_to_degrees(double theta)
+{
+  return (theta * 180.0 / M_PI);
+}
+
+extern inline double carmen_degrees_to_radians(double theta)
+{
+  return (theta * M_PI / 180.0);
+}
+//---------------
+
+
+
 /*
 Markus Original
 
