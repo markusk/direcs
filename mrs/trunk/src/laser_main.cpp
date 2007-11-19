@@ -33,11 +33,13 @@
 // Markus #include "laser_ipc.h"
 #include "laser_messages.h"
 
-sick_laser_t laser1, laser2, laser3, laser4, laser5;
+// Markus Original: sick_laser_t laser1, laser2, laser3, laser4, laser5;
+static sick_laser_t laser1, laser2, laser3, laser4, laser5;
 
 carmen_laser_laser_config_t laser1_config, laser2_config, laser3_config, laser4_config, laser5_config;
 
-int use_laser1 = 0, use_laser2 = 0;
+// Markus Orginal: int use_laser1 = 0, use_laser2 = 0;
+int use_laser1 = 1, use_laser2 = 0;
 int use_laser3 = 0, use_laser4 = 0;
 int use_laser5 = 0;
 int quit_signal = 0;
@@ -49,6 +51,7 @@ void set_default_parameters(sick_laser_p laser, int laser_num)
   laser->settings.range_dist = SICK_RANGE80M;
   laser->settings.laser_num = laser_num;
   strcpy(laser->settings.device_name, "/dev/ttyUSB0");
+  //qDebug("laser_main.cpp, set_default_parameters, ttyUSB0 successfully set");
   laser->settings.detect_baudrate = TRUE;
   laser->settings.use_highspeed = FALSE;
   laser->settings.start_baudrate = 9600;
@@ -159,21 +162,23 @@ void check_parameter_settings(sick_laser_p laser)
 
 void interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov)
 {
-  strcpy(laser->settings.device_name, dev);
-  if(strcmp(type, "LMS") == 0)
-    laser->settings.type = LMS;
-  else if(strcmp(type, "PLS") == 0)
-    laser->settings.type = PLS;
-  
+	strcpy(laser->settings.device_name, dev);
+	
+	if(strcmp(type, "LMS") == 0)
+		laser->settings.type = LMS;
+	else if(strcmp(type, "PLS") == 0)
+		laser->settings.type = PLS;
+
 	if (fabs(fov-M_PI) < 0.1 || fabs(fov-100.0/180.0*M_PI) < 0.1)
-		qDebug("The parameter laser_laserX_fov in the ini file must\nbe specified in degrees not in radians!\n");
-  
-  // Markus Original: laser->settings.angle_range = carmen_round(fov);
-  laser->settings.angle_range = qRound(fov);
-  
-  if ( laser->settings.angle_range != 180 && 
-       laser->settings.angle_range != 100 )
-    qDebug("The laser driver only provides 180 deg and 100 deg field of view!\n");
+		qDebug("The parameter laser_laserX_fov in the ini file must\nbe specified in degrees not in radians!");
+
+	// Markus Original: laser->settings.angle_range = carmen_round(fov);
+	// FIXME error here!
+	laser->settings.angle_range = qRound(fov);
+	//qDebug("interpret_params: laser->settings.angle_range = %f", fov);
+
+	if ( laser->settings.angle_range != 180 && laser->settings.angle_range != 100 )
+		qDebug("The laser driver only provides 180 deg and 100 deg field of view!");
 
   if(res == 0.25) {
     laser->settings.angle_resolution = RES_0_25_DEGREE;
@@ -215,7 +220,38 @@ void read_parameters(void)
 	double res1, res2, res3, res4, res5;
 	double fov1, fov2, fov3, fov4, fov5;
 	char *rem1, *rem2, *rem3, *rem4, *rem5;
+	//--------------------------
+	// Markus:
+	dev1 = "/dev/ttyUSB0";
+	dev2 = "/dev/ttyUSB99";
+	dev3 = "/dev/ttyUSB99";
+	dev4 = "/dev/ttyUSB99";
+	dev5 = "/dev/ttyUSB99";
+	str1 = "PLS";
+	str2 = "PLS";
+	str3 = "PLS";
+	str4 = "PLS";
+	str5 = "PLS";
+	res1 = 1.0;
+	res2 = 1.0;
+	res3 = 1.0;
+	res4 = 1.0;
+	res5 = 1.0;
+	rem1 = "no";
+	rem2 = "no";
+	rem3 = "no";
+	rem4 = "no";
+	rem5 = "no";
+	fov1 = 180;
+	fov2 = 180;
+	fov3 = 180;
+	fov4 = 180;
+	fov5 = 180;
+	//qDebug("fov1=%f", fov1);
+	//--------------------------
 
+
+	// the five possible lasers
 	carmen_param_t laser_devs[] = {
 		{"laser", "front_laser_dev", CARMEN_PARAM_STRING, &dev1, 0, NULL},
 		{"laser", "rear_laser_dev", CARMEN_PARAM_STRING, &dev2, 0, NULL},
@@ -269,7 +305,7 @@ void read_parameters(void)
 	if(strncmp(dev1, "none", 4) != 0)
 	{
 		use_laser1 = 1;
-		// FIXME: store the parameters somewhere
+		// FIXME get and store the parameters somewhere
 		//carmen_param_install_params(argc, argv, laser1_params, sizeof(laser1_params) / sizeof(laser1_params[0]));
 		interpret_params(&laser1, dev1, str1, res1, rem1, fov1);
 	}
@@ -277,7 +313,7 @@ void read_parameters(void)
 	if(strncmp(dev2, "none", 4) != 0)
 	{
 		use_laser2 = 1;
-		// FIXME: store the parameters somewhere
+		// FIXME: get and store the parameters somewhere
 		//carmen_param_install_params(argc, argv, laser2_params, sizeof(laser2_params) / sizeof(laser2_params[0]));
 		interpret_params(&laser2, dev2, str2, res2, rem2, fov2);
 	}
@@ -285,7 +321,7 @@ void read_parameters(void)
 	if(strncmp(dev3, "none", 4) != 0)
 	{
 		use_laser3 = 1;
-		// FIXME: store the parameters somewhere
+		// FIXME: get and store the parameters somewhere
 		//carmen_param_install_params(argc, argv, laser3_params, sizeof(laser3_params) / sizeof(laser3_params[0]));
 		interpret_params(&laser3, dev3, str3, res3, rem3, fov3);
 	}
@@ -293,7 +329,7 @@ void read_parameters(void)
 	if(strncmp(dev4, "none", 4) != 0)
 	{
 		use_laser4 = 1;
-		// FIXME: store the parameters somewhere
+		// FIXME: get and store the parameters somewhere
 		//carmen_param_install_params(argc, argv, laser4_params, sizeof(laser4_params) / sizeof(laser4_params[0]));
 		interpret_params(&laser4, dev4, str4, res4, rem4, fov4);
 	}
@@ -301,7 +337,7 @@ void read_parameters(void)
 	if(strncmp(dev5, "none", 4) != 0)
 	{
 		use_laser5 = 1;
-		// FIXME: store the parameters somewhere
+		// FIXME: get and store the parameters somewhere
 		//carmen_param_install_params(argc, argv, laser5_params, sizeof(laser5_params) / sizeof(laser5_params[0]));
 		interpret_params(&laser5, dev5, str5, res5, rem5, fov5);
 	}
@@ -407,46 +443,60 @@ void  set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t
 
 }
 
+
 // Markus Orignal: int carmen_laser_start(int argc, char **argv)
 int carmen_laser_start(void)
 {
-  /* initialize laser messages */
-  // Markus ipc_initialize_messages();
+	/* initialize laser messages */
+	// Markus ipc_initialize_messages();
+	
+	/* get laser default parameters */
+	set_default_parameters(&laser1, CARMEN_FRONT_LASER_NUM); // okay
+	set_default_parameters(&laser2, CARMEN_REAR_LASER_NUM);
+	set_default_parameters(&laser3, CARMEN_LASER3_NUM);
+	set_default_parameters(&laser4, CARMEN_LASER4_NUM);
+	set_default_parameters(&laser5, CARMEN_LASER5_NUM);
+	//qDebug("carmen_laser_start, laser->settings.angle_range = %d", laser1.settings.angle_range);
+	
+	// Markus read_parameters(argc, argv);
+	read_parameters();
 
-  /* get laser parameters */
-  set_default_parameters(&laser1, CARMEN_FRONT_LASER_NUM);
-  set_default_parameters(&laser2, CARMEN_REAR_LASER_NUM);
-  set_default_parameters(&laser3, CARMEN_LASER3_NUM);
-  set_default_parameters(&laser4, CARMEN_LASER4_NUM);
-  set_default_parameters(&laser5, CARMEN_LASER5_NUM);
-  
-  // Markus read_parameters(argc, argv);
-  read_parameters();
-  
 
-  /* start lasers, and start publishing scans */
-  if(use_laser1) {
-    set_laser_config_structure(&laser1, &laser1_config);
-    sick_start_laser(&laser1);
-  }
-  if(use_laser2) {
-    set_laser_config_structure(&laser2, &laser2_config);
-    sick_start_laser(&laser2);
-  }
-  if(use_laser3) {
-    set_laser_config_structure(&laser3, &laser3_config);
-    sick_start_laser(&laser3);
-  }
-  if(use_laser4) {
-    set_laser_config_structure(&laser4, &laser4_config);
-    sick_start_laser(&laser4);
-  }
-  if(use_laser5) {
-    set_laser_config_structure(&laser5, &laser5_config);
-    sick_start_laser(&laser5);
-  }
-  return 0;
+	/* start lasers, and start publishing scans */
+	if(use_laser1)
+	{
+		qDebug("use_laser1...");
+		set_laser_config_structure(&laser1, &laser1_config);
+		sick_start_laser(&laser1);
+	}
+
+	if(use_laser2)
+	{
+		set_laser_config_structure(&laser2, &laser2_config);
+		sick_start_laser(&laser2);
+	}
+
+	if(use_laser3)
+	{
+		set_laser_config_structure(&laser3, &laser3_config);
+		sick_start_laser(&laser3);
+	}
+
+	if(use_laser4)
+	{
+		set_laser_config_structure(&laser4, &laser4_config);
+		sick_start_laser(&laser4);
+	}
+
+	if(use_laser5)
+	{
+		set_laser_config_structure(&laser5, &laser5_config);
+		sick_start_laser(&laser5);
+	}
+
+	return 0;
 }
+
 
 void carmen_laser_shutdown(int signo __attribute__ ((unused)))
 {
