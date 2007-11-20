@@ -29,37 +29,16 @@ LaserThread::LaserThread()
 		// add a 0 flag
 		laserScannerFlags.append(0);
 	}
-	
-	
-	//----------------------------------------------
-	// start the (former CARMEN) laser module here!
-	//----------------------------------------------
-	// 0. server_initialize -> NO
-	// 1. carmen_ipc_initialize -> NO
-	// 2. carmen_param_check_version -> NO
-	// 3. carmen_laser_start -> YES
-	int wert = carmen_laser_start();
-	qDebug("carmen_laser_start=%d", wert);
-	
-	// 4. carmen_laser_run
-	wert = carmen_laser_run();
-	qDebug("carmen_laser_run=%d", wert);
-	
-	// 5. carmen_ipc_sleep
-	//
-	// AUS EIGENER laser.cpp
-	// 6. carmen_ipc_initialize(argc, argv); -> NO
-	// 7. laser_num  = 0;
-	// 8. carmen_laser_subscribe_frontlaser_message (&laser, (carmen_handler_t)laser_handler, CARMEN_SUBSCRIBE_LATEST);
-	// 9. start_time = carmen_get_time();
-	// 10.carmen_graphics_update_ipc_callbacks((GdkInputFunction)updateIPC);
-	// 11. gtk_main();
 }
 
 
 LaserThread::~LaserThread()
 {
 	stopped = false;
+	
+	// shutdown laser
+	// the parameter '0' is unused!!
+	carmen_laser_shutdown(0);
 	
 	//QMutexLocker locker(&mutex); // make this class thread-safe
 }
@@ -74,6 +53,52 @@ void LaserThread::stop()
 
 void LaserThread::run()
 {
+	//################################################################################################################################
+	//################################################################################################################################
+	//################################################################################################################################
+	static bool initialized = false;
+	qDebug("carmen_laser_start...");
+
+
+	if (!initialized)
+	{
+		initialized = true;
+		//----------------------------------------------
+		// start the (former CARMEN) laser module here!
+		//----------------------------------------------
+		// 0. server_initialize -> NO
+		// 1. carmen_ipc_initialize -> NO
+		// 2. carmen_param_check_version -> NO
+		// 3. carmen_laser_start -> YES
+		if ( carmen_laser_start() != 0 )
+		{
+			qDebug("serial problem... :-/");
+		}
+		else
+		{
+			// 4. carmen_laser_run
+			if ( carmen_laser_run() != 0 )
+			{
+				qDebug("laser problem... :-/");
+			}
+		}
+
+
+		// 5. carmen_ipc_sleep
+		//
+		// AUS EIGENER laser.cpp
+		// 6. carmen_ipc_initialize(argc, argv); -> NO
+		// 7. laser_num  = 0;
+		// 8. carmen_laser_subscribe_frontlaser_message (&laser, (carmen_handler_t)laser_handler, CARMEN_SUBSCRIBE_LATEST);
+		// 9. start_time = carmen_get_time();
+		// 10.carmen_graphics_update_ipc_callbacks((GdkInputFunction)updateIPC);
+		// 11. gtk_main();
+		//################################################################################################################################
+		//################################################################################################################################
+		//################################################################################################################################
+	}
+	
+	
 	// check if all 180 beams were read
 	numReadings = 0;
 	

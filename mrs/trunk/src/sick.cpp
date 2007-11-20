@@ -113,7 +113,7 @@
 
 
 //----------------------------------------------------------------------------------
-// from here: original sick.cpp 
+// from here: original sick.cpp
 
 // MK original: #include <carmen/carmenserial.h>  // < < < < <
 #include "carmenserial.h"
@@ -949,7 +949,11 @@ void sick_connect_device(sick_laser_p laser)
   fprintf(stderr, "ok\n");
 }
 
-void sick_start_laser(sick_laser_p laser)
+
+/**
+Establish the serial connection to the laser and set the laser in the wanted mode(s).
+*/
+int sick_start_laser(sick_laser_p laser)
 {
   int brate = 0;
 
@@ -967,16 +971,21 @@ void sick_start_laser(sick_laser_p laser)
   sick_connect_device(laser);
   
   /* make sure the baudrate is set correctly, change it if necessary */
-  if(laser->settings.detect_baudrate) {
+  if(laser->settings.detect_baudrate)
+  {
     brate = sick_detect_baudrate(laser);
     if(!brate)
-      exit(1);
+      return(1);
+      //exit(1);
   } 
-  else if(!sick_check_baudrate(laser, laser->settings.start_baudrate)) {
+  else if(!sick_check_baudrate(laser, laser->settings.start_baudrate))
+  {
     fprintf(stderr, "ERROR: communication does not work!\n");
-    exit(1);
+    return(1);
+    //exit(1);
   }
-  if(brate != laser->settings.set_baudrate) {
+  if(brate != laser->settings.set_baudrate)
+  {
     fprintf(stderr, "INFO: set LASER in config-mode ........ ");
     while(!sick_set_config_mode(laser));
     fprintf(stderr, "ok\n");
@@ -1029,12 +1038,15 @@ void sick_start_laser(sick_laser_p laser)
   laser->packet_timestamp=-1;
   fprintf(stderr, "ok\n");
   fprintf(stderr, "###########################################\n");
+
+  // Markus:
+  return 0;
 }
 
-/* sick_valid_packet - This function returns 1 if a valid packet is
+
+/** sick_valid_packet - This function returns 1 if a valid packet is
    detected in a chunk of data.  An offset and packet length are 
    returned. */
-
 int sick_valid_packet(unsigned char *data, long size,
 		      long *offset, long *len)
 {
@@ -1075,9 +1087,9 @@ int sick_valid_packet(unsigned char *data, long size,
   return 0;
 }
 
-/* sick_process_packet - Interpret packets received from the laser.  If
-   the packets contain laser data, expand the data into a useful form. */
 
+/** sick_process_packet - Interpret packets received from the laser.  If
+   the packets contain laser data, expand the data into a useful form. */
 static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet)
 {
   int i = 0, LoB = 0, HiB = 0, bit14, bit15, numMeasurements;

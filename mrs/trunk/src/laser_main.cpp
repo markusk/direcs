@@ -44,6 +44,7 @@ int use_laser3 = 0, use_laser4 = 0;
 int use_laser5 = 0;
 int quit_signal = 0;
 
+
 void set_default_parameters(sick_laser_p laser, int laser_num)
 {
   laser->settings.type = LMS;
@@ -447,6 +448,9 @@ void  set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t
 // Markus Orignal: int carmen_laser_start(int argc, char **argv)
 int carmen_laser_start(void)
 {
+	// Markus:
+	int returncode = 0;
+	
 	/* initialize laser messages */
 	// Markus ipc_initialize_messages();
 	
@@ -465,36 +469,37 @@ int carmen_laser_start(void)
 	/* start lasers, and start publishing scans */
 	if(use_laser1)
 	{
-		qDebug("use_laser1...");
 		set_laser_config_structure(&laser1, &laser1_config);
-		sick_start_laser(&laser1);
+		// Markus Original: sick_start_laser(&laser1);
+		returncode = sick_start_laser(&laser1);
 	}
 
 	if(use_laser2)
 	{
 		set_laser_config_structure(&laser2, &laser2_config);
-		sick_start_laser(&laser2);
+		returncode = sick_start_laser(&laser2);
 	}
 
 	if(use_laser3)
 	{
 		set_laser_config_structure(&laser3, &laser3_config);
-		sick_start_laser(&laser3);
+		returncode = sick_start_laser(&laser3);
 	}
 
 	if(use_laser4)
 	{
 		set_laser_config_structure(&laser4, &laser4_config);
-		sick_start_laser(&laser4);
+		returncode = sick_start_laser(&laser4);
 	}
 
 	if(use_laser5)
 	{
 		set_laser_config_structure(&laser5, &laser5_config);
-		sick_start_laser(&laser5);
+		returncode = sick_start_laser(&laser5);
 	}
 
-	return 0;
+	// Markus Original: return 0;
+	return returncode;
 }
 
 
