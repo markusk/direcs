@@ -223,10 +223,10 @@ void read_parameters(void)
 	//--------------------------
 	// Markus:
 	dev1 = "/dev/ttyUSB0";
-	dev2 = "/dev/ttyUSB99";
-	dev3 = "/dev/ttyUSB99";
-	dev4 = "/dev/ttyUSB99";
-	dev5 = "/dev/ttyUSB99";
+	dev2 = "none";
+	dev3 = "none";
+	dev4 = "none";
+	dev5 = "none";
 	str1 = "PLS";
 	str2 = "PLS";
 	str3 = "PLS";

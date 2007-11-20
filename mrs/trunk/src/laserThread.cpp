@@ -42,6 +42,9 @@ LaserThread::LaserThread()
 	qDebug("carmen_laser_start=%d", wert);
 	
 	// 4. carmen_laser_run
+	wert = carmen_laser_run();
+	qDebug("carmen_laser_run=%d", wert);
+	
 	// 5. carmen_ipc_sleep
 	//
 	// AUS EIGENER laser.cpp
