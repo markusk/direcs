@@ -57,7 +57,6 @@ void LaserThread::run()
 	//################################################################################################################################
 	//################################################################################################################################
 	static bool initialized = false;
-	qDebug("carmen_laser_start...");
 
 
 	if (!initialized)
@@ -66,28 +65,20 @@ void LaserThread::run()
 		//----------------------------------------------
 		// start the (former CARMEN) laser module here!
 		//----------------------------------------------
-		// 0. server_initialize -> NO
-		// 1. carmen_ipc_initialize -> NO
-		// 2. carmen_param_check_version -> NO
-		// 3. carmen_laser_start -> YES
+		// 0. server_initialize			-> NO
+		// 1. carmen_ipc_initialize		-> NO
+		// 2. carmen_param_check_version	-> NO
+		// 3. carmen_laser_start		-> YES
 		if ( carmen_laser_start() != 0 )
 		{
 			qDebug("serial problem... :-/");
 		}
-		else
-		{
-			// 4. carmen_laser_run
-			if ( carmen_laser_run() != 0 )
-			{
-				qDebug("laser problem... :-/");
-			}
-		}
-
-
-		// 5. carmen_ipc_sleep
+		// 4. carmen_laser_run			-> YES (scroll down!)
+		
+		// 5. carmen_ipc_sleep			-> NO
 		//
 		// AUS EIGENER laser.cpp
-		// 6. carmen_ipc_initialize(argc, argv); -> NO
+		// 6. carmen_ipc_initialize(argc, argv);-> NO
 		// 7. laser_num  = 0;
 		// 8. carmen_laser_subscribe_frontlaser_message (&laser, (carmen_handler_t)laser_handler, CARMEN_SUBSCRIBE_LATEST);
 		// 9. start_time = carmen_get_time();
@@ -114,6 +105,110 @@ void LaserThread::run()
 		
 		if (simulationMode==false)
 		{
+			if ( carmen_laser_run() != 0 )
+			{
+				qDebug("laser problem... :-/");
+			}
+/*
+			// *******************************************
+			// * from laser_ipc.c, publish_laser_message *
+			// *******************************************
+			void publish_laser_message(sick_laser_p laser, const carmen_laser_laser_config_t* config)
+			{
+				static carmen_laser_laser_message msg;
+				
+				IPC_RETURN_TYPE err;
+				int i;
+				
+				msg.host = carmen_get_host();
+				msg.num_readings = laser->numvalues; 
+				msg.timestamp = laser->timestamp;
+				msg.config = *config;
+				
+				
+				if(msg.num_readings != allocsize[laser->settings.laser_num])
+				{
+					range_buffer[laser->settings.laser_num] = 
+					realloc(range_buffer[laser->settings.laser_num], msg.num_readings * sizeof(float));
+					carmen_test_alloc(range_buffer[laser->settings.laser_num]);
+					allocsize[laser->settings.laser_num] = msg.num_readings;
+				}
+				msg.range = range_buffer[laser->settings.laser_num];
+				
+				if( laser->settings.laser_flipped == 0)
+				{
+					for(i = 0; i < msg.num_readings; i++)
+						msg.range[i] = laser->range[i] / 100.0;
+				}
+				else
+				{
+					for(i = 0; i < msg.num_readings; i++)
+						msg.range[i] = laser->range[msg.num_readings-1-i] / 100.0;
+				}
+				
+				if(laser->settings.use_remission == 1)
+				{
+					msg.num_remissions = msg.num_readings;
+					
+					if(msg.num_remissions != allocremsize[laser->settings.laser_num])
+					{
+						remission_buffer[laser->settings.laser_num] = realloc(remission_buffer[laser->settings.laser_num], msg.num_remissions * sizeof(float));
+						carmen_test_alloc(remission_buffer[laser->settings.laser_num]);
+						allocremsize[laser->settings.laser_num] = msg.num_remissions;
+					}
+					msg.remission = remission_buffer[laser->settings.laser_num];
+					
+					if( laser->settings.laser_flipped == 0)
+					{
+						for(i = 0; i < msg.num_remissions; i++)
+							msg.remission[i] = laser->remission[i];
+					}
+					else
+					{
+						for(i = 0; i < msg.num_remissions; i++)
+							msg.remission[i] = laser->remission[msg.num_remissions-1-i];
+					}
+				}
+				else
+				{
+					msg.num_remissions = 0;
+					msg.remission = NULL ;
+				}
+				
+				switch(laser->settings.laser_num)
+				{
+					case CARMEN_FRONT_LASER_NUM:
+						msg.id = 1;
+						err = IPC_publishData(CARMEN_LASER_FRONTLASER_NAME, &msg);
+						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_FRONTLASER_NAME);
+						break;
+					case CARMEN_REAR_LASER_NUM:
+						msg.id = 2;
+						err = IPC_publishData(CARMEN_LASER_REARLASER_NAME, &msg);
+						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_REARLASER_NAME);
+						break;
+					case CARMEN_LASER3_NUM:
+						msg.id = 3;
+						err = IPC_publishData(CARMEN_LASER_LASER3_NAME, &msg);
+						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_LASER3_NAME);
+						break;
+					case CARMEN_LASER4_NUM:
+						msg.id = 4;
+						err = IPC_publishData(CARMEN_LASER_LASER4_NAME, &msg);
+						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_LASER4_NAME);
+						break;
+					case CARMEN_LASER5_NUM:
+						msg.id = 5;
+						err = IPC_publishData(CARMEN_LASER_LASER5_NAME, &msg);
+						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_LASER5_NAME);
+						break;
+				}
+			}
+			// ***********************************************
+			// ***********************************************
+			// ***********************************************
+*/
+
 			// check if all 180 beams were read (in the laser module)
 			// FIXME: get value from new laser module!!
 			numReadings = 180;
@@ -134,6 +229,7 @@ void LaserThread::run()
 				{
 					// get value from laser
 					// store the value in an array in this thread
+					
 					// FIXME: get value from new laser module!!
 					//laserScannerValues[i] = getLaserDistance(i);
 					laserScannerValues[i] = (float)(i/18);
