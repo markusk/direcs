@@ -34,7 +34,7 @@
 #include "laser_messages.h"
 
 // Markus Original: sick_laser_t laser1, laser2, laser3, laser4, laser5;
-static sick_laser_t laser1, laser2, laser3, laser4, laser5;
+static sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
 
 carmen_laser_laser_config_t laser1_config, laser2_config, laser3_config, laser4_config, laser5_config;
 
