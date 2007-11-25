@@ -109,122 +109,10 @@ void LaserThread::run()
 			// CARMEN laser module
 			laserValue = carmen_laser_run();
 			
-			
-			// laser scanner 1 is ready with reading!
-			if (laserValue == LASER1)
-			{
-			/*
-			// *******************************************
-			// * from laser_ipc.c, publish_laser_message *
-			// *******************************************
-			//
-			// Markus: laser changed to laser1 !
-			//
-			void publish_laser_message(sick_laser_p laser, const carmen_laser_laser_config_t* config)
-			{
-			*/
-				// Markus Original: static carmen_laser_laser_message msg;
-				// Markus Original: IPC_RETURN_TYPE err;
-				int i;
-				/*
-				msg.host = carmen_get_host();
-				
-				msg.num_readings = laser1.numvalues;
-				msg.timestamp = laser1.timestamp;
-				msg.config = *config;
-				
-				
-				if(msg.num_readings != allocsize[laser1.settings.laser_num])
-				{
-					range_buffer[laser1.settings.laser_num] = realloc(range_buffer[laser1.settings.laser_num], msg.num_readings * sizeof(float));
-					// Markus Original: carmen_test_alloc(range_buffer[laser->settings.laser_num]);
-					allocsize[laser1.settings.laser_num] = msg.num_readings;
-				}
-				msg.range = range_buffer[laser1.settings.laser_num];
-				*/
-/*
-				if( laser1.settings.laser_flipped == 0)
-				{
-					for(i = 0; i < msg.num_readings; i++)
-						msg.range[i] = laser1.range[i] / 100.0;
-				}
-				else
-				{
-					for(i = 0; i < msg.num_readings; i++)
-						msg.range[i] = laser1.range[msg.num_readings-1-i] / 100.0;
-				}
-*/				
-				/* TODO: remission currently not in use. Convert code to "mrs", when uncommenting the following lines
-				if(laser1.settings.use_remission == 1)
-				{
-					msg.num_remissions = msg.num_readings;
-					
-					if(msg.num_remissions != allocremsize[laser1.settings.laser_num])
-					{
-						remission_buffer[laser1.settings.laser_num] = realloc(remission_buffer[laser1.settings.laser_num], msg.num_remissions * sizeof(float));
-						carmen_test_alloc(remission_buffer[laser1.settings.laser_num]);
-						allocremsize[laser1.settings.laser_num] = msg.num_remissions;
-					}
-					
-					msg.remission = remission_buffer[laser1.settings.laser_num];
-					
-					if( laser1.settings.laser_flipped == 0)
-					{
-						for(i = 0; i < msg.num_remissions; i++)
-							msg.remission[i] = laser1.remission[i];
-					}
-					else
-					{
-						for(i = 0; i < msg.num_remissions; i++)
-							msg.remission[i] = laser1.remission[msg.num_remissions-1-i];
-					}
-				}
-				else
-				{
-				*/
-//					msg.num_remissions = 0;
-//					msg.remission = NULL ;
-				/*
-				}
-				*/
-				
-				/*
-				switch(laser->settings.laser_num)
-				{
-					case CARMEN_FRONT_LASER_NUM:
-						msg.id = 1;
-						err = IPC_publishData(CARMEN_LASER_FRONTLASER_NAME, &msg);
-						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_FRONTLASER_NAME);
-						break;
-					case CARMEN_REAR_LASER_NUM:
-						msg.id = 2;
-						err = IPC_publishData(CARMEN_LASER_REARLASER_NAME, &msg);
-						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_REARLASER_NAME);
-						break;
-					case CARMEN_LASER3_NUM:
-						msg.id = 3;
-						err = IPC_publishData(CARMEN_LASER_LASER3_NAME, &msg);
-						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_LASER3_NAME);
-						break;
-					case CARMEN_LASER4_NUM:
-						msg.id = 4;
-						err = IPC_publishData(CARMEN_LASER_LASER4_NAME, &msg);
-						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_LASER4_NAME);
-						break;
-					case CARMEN_LASER5_NUM:
-						msg.id = 5;
-						err = IPC_publishData(CARMEN_LASER_LASER5_NAME, &msg);
-						carmen_test_ipc_exit(err, "Could not publish", CARMEN_LASER_LASER5_NAME);
-						break;
-				}
-				*/
-			}
-			// ***********************************************
-			// ***********************************************
-			// ***********************************************
-
+			// TODO: get value FROM laserValue
 
 			// check if all 180 beams were read (in the laser module)
+			// TODO: case for LASER1,...n
 			numReadings = getLaserNumReadings(LASER1);
 			
 			// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
@@ -240,6 +128,7 @@ void LaserThread::run()
 				{
 					// get value from laser
 					// store the value in an array in this thread
+					// TODO: case for LASER1,...n
 					laserScannerValues[i] = getLaserDistance(LASER1, i);
 				}
 				
