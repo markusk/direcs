@@ -74,6 +74,15 @@ class LaserThread : public QThread
 		*/
 		static const unsigned char DISTANCE = 0;
 		static const unsigned char FLAG = 1;
+		
+		/*!
+		For the integrated CARMEN laser module
+		*/
+		static const short int LASER1 = 1;
+		static const short int LASER2 = 2;
+		static const short int LASER3 = 4;
+		static const short int LASER4 = 8;
+		static const short int LASER5 = 16;
 };
 
 #endif
