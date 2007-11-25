@@ -570,8 +570,7 @@ int carmen_laser_run(void)
 		//**
 		
 		if (print_stats)
-			fprintf(stderr, "L1: %s(%.1f%% full) ", laser1_stalled ? 
-			"STALLED " : " ", (laser1.buffer_position - laser1.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
+			fprintf(stderr, "L1: %s(%.1f%% full) ", laser1_stalled ? "STALLED " : " ", (laser1.buffer_position - laser1.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
 	}
 	
 	
@@ -592,8 +591,7 @@ int carmen_laser_run(void)
 		laser2_stalled = (current_time - laser2.timestamp > 1.0);
 		
 		if (print_stats)
-			fprintf(stderr, "L2: %s(%.1f%% full) ", laser2_stalled ?
-			"STALLED " : " ", (laser2.buffer_position - laser2.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
+			fprintf(stderr, "L2: %s(%.1f%% full) ", laser2_stalled ? "STALLED " : " ", (laser2.buffer_position - laser2.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
 	}
 	
 	
@@ -614,8 +612,7 @@ int carmen_laser_run(void)
 		laser3_stalled = (current_time - laser3.timestamp > 1.0);
 		
 		if (print_stats)
-			fprintf(stderr, "L3: %s(%.1f%% full) ", laser3_stalled ?
-			"STALLED " : " ", laser3.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
+			fprintf(stderr, "L3: %s(%.1f%% full) ", laser3_stalled ? "STALLED " : " ", laser3.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
 	}
 	
 	
@@ -636,8 +633,7 @@ int carmen_laser_run(void)
 		laser4_stalled = (current_time - laser4.timestamp > 1.0);
 
 		if(print_stats)
-			fprintf(stderr, "L4: %s(%.1f%% full) ", laser4_stalled ?
-			"STALLED " : " ", laser4.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
+			fprintf(stderr, "L4: %s(%.1f%% full) ", laser4_stalled ? "STALLED " : " ", laser4.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
 	}
 	
 	
@@ -658,8 +654,7 @@ int carmen_laser_run(void)
 		laser5_stalled = (current_time - laser5.timestamp > 1.0);
 		
 		if(print_stats)
-			fprintf(stderr, "L5: %s(%.1f%% full) ", laser5_stalled ?
-			"STALLED " : " ", laser5.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
+			fprintf(stderr, "L5: %s(%.1f%% full) ", laser5_stalled ? "STALLED " : " ", laser5.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
 	}
 	
 	if (print_stats)
@@ -688,4 +683,47 @@ void shutdown_laser(int x)
   carmen_laser_shutdown(x);
   // Markus carmen_ipc_disconnect();
   exit(-1);
+}
+
+
+int getLaserNumReadings(int laser)
+{
+	//
+	// Daten aus aus Laser-Objekt holen 
+	//
+	switch (laser)
+	{
+		case LASER1:
+			return laser1.numvalues;
+			break;
+	}
+}
+
+
+float getLaserDistance(int laser, int angle)
+{
+	int numreadings;
+	double *laserrange = NULL;
+	
+	
+	//
+	// Daten aus aus Laser-Objekt holen < < < <
+	//
+	switch (laser)
+	{
+		case LASER1:
+			numreadings = laser1.numvalues;
+			laserrange = laser1.range;
+			laserrange[angle] /= 100;
+			return laserrange[angle];
+			break;
+	}
+	
+	/*
+	// greater than 180° ?
+	if (angle > laser.num_readings)
+	{
+		return -2;
+	}
+	*/
 }

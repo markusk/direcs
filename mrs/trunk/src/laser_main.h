@@ -70,12 +70,15 @@ static const short int LASER5 = 16;
 
 // Markus Original: int carmen_laser_start(int argc, char **argv);
 int carmen_laser_start(void);
-
 void carmen_laser_shutdown(int x);
-
 int carmen_laser_run(void);
-
 void shutdown_laser(int x);
+
+
+// Markus:
+int getLaserNumReadings(int laser);
+float getLaserDistance(int laser, int angle);
+
 
 //---------------
 // FROM global.h
