@@ -957,6 +957,7 @@ int sick_start_laser(sick_laser_p laser)
 {
   int brate = 0;
 
+  // TODO: set output to GUI
   fprintf(stderr, "###########################################\n");
   fprintf(stderr, "INFO: select mode ..................... ");
 #ifdef CARMEN_LASER_USE_SELECT
