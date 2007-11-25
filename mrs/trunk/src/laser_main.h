@@ -37,7 +37,6 @@ extern "C" {
 
 //----------------
 //Markus:
-
 // from laser.h
 #define     CARMEN_FRONT_LASER_NUM       0
 #define     CARMEN_REAR_LASER_NUM        1
@@ -45,17 +44,28 @@ extern "C" {
 #define     CARMEN_LASER4_NUM            3
 #define     CARMEN_LASER5_NUM            4
 
-
-
-# include "param_interface.h"
+#include "param_interface.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <QtGlobal>
-
 //----------------
+
+// Markus:
+/*!
+For the mrs laserThread
+*/
+static const short int LASER1 = 1;
+static const short int LASER2 = 2;
+static const short int LASER3 = 4;
+static const short int LASER4 = 8;
+static const short int LASER5 = 16;
+
+
+
+
 
 
 // Markus Original: int carmen_laser_start(int argc, char **argv);

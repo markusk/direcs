@@ -28,13 +28,19 @@
 
 // Markus #include <carmen/carmen.h>
 #include "laser_main.h" // markus
+
+
+//
+// from laser_main.cpp (global) !
+//
 #include "sick.h"
-#include "laser.h"
+// #include "laser.h"
 // Markus #include "laser_ipc.h"
 #include "laser_messages.h"
 
 // Markus Original: sick_laser_t laser1, laser2, laser3, laser4, laser5;
-static sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
+//static sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
+sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
 
 carmen_laser_laser_config_t laser1_config, laser2_config, laser3_config, laser4_config, laser5_config;
 
@@ -43,16 +49,21 @@ int use_laser1 = 1, use_laser2 = 0;
 int use_laser3 = 0, use_laser4 = 0;
 int use_laser5 = 0;
 int quit_signal = 0;
+//
+// from laser_main.cpp (global) !
+//
+
 
 
 void set_default_parameters(sick_laser_p laser, int laser_num)
 {
+  // TODO: read default settings from ini-file
   laser->settings.type = LMS;
   laser->settings.range_res = CM;
   laser->settings.range_dist = SICK_RANGE80M;
   laser->settings.laser_num = laser_num;
+  // TODO: different to read_settings ?!?
   strcpy(laser->settings.device_name, "/dev/ttyUSB0");
-  //qDebug("laser_main.cpp, set_default_parameters, ttyUSB0 successfully set");
   laser->settings.detect_baudrate = TRUE;
   laser->settings.use_highspeed = FALSE;
   laser->settings.start_baudrate = 9600;
@@ -174,9 +185,7 @@ void interpret_params(sick_laser_p laser, char *dev, char *type, double res, cha
 		qDebug("The parameter laser_laserX_fov in the ini file must\nbe specified in degrees not in radians!");
 
 	// Markus Original: laser->settings.angle_range = carmen_round(fov);
-	// FIXME error here!
 	laser->settings.angle_range = qRound(fov);
-	//qDebug("interpret_params: laser->settings.angle_range = %f", fov);
 
 	if ( laser->settings.angle_range != 180 && laser->settings.angle_range != 100 )
 		qDebug("The laser driver only provides 180 deg and 100 deg field of view!");
@@ -223,6 +232,7 @@ void read_parameters(void)
 	char *rem1, *rem2, *rem3, *rem4, *rem5;
 	//--------------------------
 	// Markus:
+	// TODO: read settings from ini file
 	dev1 = "/dev/ttyUSB0";
 	dev2 = "none";
 	dev3 = "none";
@@ -526,6 +536,8 @@ int carmen_laser_run(void)
 	double current_time;
 	int print_stats;
 	static int laser1_stalled = 0, laser2_stalled = 0, laser3_stalled = 0, laser4_stalled = 0, laser5_stalled = 0;;
+	// Markus:
+	int laserValue = 0;
 
 	
 	if (first)
@@ -544,8 +556,12 @@ int carmen_laser_run(void)
 		
 		if (laser1.new_reading)
 		{
-			// FIXME: make a signal of this!
+			// Markus Original:
 			//publish_laser_message(&laser1, &laser1_config);
+			
+			// Markus
+			// new return value (instead of 'publish_laser_message')
+			laserValue += LASER1;
 		}
 		
 		laser1_stalled = (current_time - laser1.timestamp > 1.0);
@@ -565,8 +581,12 @@ int carmen_laser_run(void)
 		
 		if (laser2.new_reading)
 		{
-			// FIXME: make a signal of this!
+			// Markus Original:
 			//publish_laser_message(&laser2, &laser2_config);
+			
+			// Markus
+			// new return value (instead of 'publish_laser_message')
+			laserValue += LASER2;
 		}
 		
 		laser2_stalled = (current_time - laser2.timestamp > 1.0);
@@ -583,8 +603,12 @@ int carmen_laser_run(void)
 		
 		if (laser3.new_reading)
 		{
-			// FIXME: make a signal of this!
+			// Markus Original:
 			//publish_laser_message(&laser3, &laser3_config);
+			
+			// Markus
+			// new return value (instead of 'publish_laser_message')
+			laserValue += LASER3;
 		}
 		
 		laser3_stalled = (current_time - laser3.timestamp > 1.0);
@@ -601,8 +625,12 @@ int carmen_laser_run(void)
 		
 		if (laser4.new_reading)
 		{
-			// FIXME: make a signal of this!
+			// Markus Original:
 			//publish_laser_message(&laser4, &laser4_config);
+			
+			// Markus
+			// new return value (instead of 'publish_laser_message')
+			laserValue += LASER4;
 		}
 		
 		laser4_stalled = (current_time - laser4.timestamp > 1.0);
@@ -619,8 +647,12 @@ int carmen_laser_run(void)
 		
 		if(laser5.new_reading)
 		{
-			// FIXME: make a signal of this!
+			// Markus Original:
 			//publish_laser_message(&laser5, &laser5_config);
+			
+			// Markus
+			// new return value (instead of 'publish_laser_message')
+			laserValue += LASER5;
 		}
 		
 		laser5_stalled = (current_time - laser5.timestamp > 1.0);
@@ -643,10 +675,11 @@ int carmen_laser_run(void)
 		last_alive = current_time;
 	}
 
-	// FIXME: make a signal of this!
+	// Markus Original:
 	//carmen_publish_heartbeat("laser");
 
-  return 0;
+	// Markus:
+	return laserValue;
 }
 
 
