@@ -569,8 +569,10 @@ int carmen_laser_run(void)
 		//fprintf(stderr, "time: %.1f",current_time - laser1.timestamp);
 		//**
 		
+		/* Markus Original:
 		if (print_stats)
 			fprintf(stderr, "L1: %s(%.1f%% full) ", laser1_stalled ? "STALLED " : " ", (laser1.buffer_position - laser1.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
+		*/
 	}
 	
 	
@@ -657,15 +659,17 @@ int carmen_laser_run(void)
 			fprintf(stderr, "L5: %s(%.1f%% full) ", laser5_stalled ? "STALLED " : " ", laser5.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
 	}
 	
+	/* Markus Original:
 	if (print_stats)
 	{
 		fprintf(stderr, "\n");
 		last_update = current_time;
 	}
+	*/
 	
 	if(current_time - last_alive > 1.0)
 	{
-		// FIXME: make a signal of this!
+		// Markus Original:
 		//publish_laser_alive(laser1_stalled, laser2_stalled, laser3_stalled, laser4_stalled, laser5_stalled);
 		last_alive = current_time;
 	}
