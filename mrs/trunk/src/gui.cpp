@@ -1654,14 +1654,15 @@ void Gui::switchToAngleView()
 void Gui::switchToFlatView()
 {
 	//for (int i=0; i<laserLineList->size(); i++)
-	for (int i=laserLineList->size()-1; i>0; i--)
+	for (int i=laserLineList->size()-1; i>=0; i--)
 	{
 		// reset transform or rotation
 		laserLineList->at(i)->resetTransform();
 		
 		// x = middle of the bot pixmap in the view + half of the number of lines (the middle laser line is on the middle of the graphicsView)
 		// y = set manually
-		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) + (laserLineList->size() / 2) - i, 228);
+		//laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) + (laserLineList->size() / 2) - i, 228);
+		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) - (laserLineList->size() / 2) + i, 228);
 	}
 }
 
