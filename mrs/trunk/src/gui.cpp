@@ -1634,7 +1634,8 @@ void Gui::switchToAngleView()
 	qreal y = laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
 	
 	
-	for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
+	//for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
+	for (int i=0, angle=90; i<laserLineList->size(); i++, angle--)
 	{
 		// reset transform or rotation
 		laserLineList->at(i)->resetTransform();
@@ -1652,7 +1653,8 @@ void Gui::switchToAngleView()
 
 void Gui::switchToFlatView()
 {
-	for (int i=0; i<laserLineList->size(); i++)
+	//for (int i=0; i<laserLineList->size(); i++)
+	for (int i=laserLineList->size()-1; i>0; i--)
 	{
 		// reset transform or rotation
 		laserLineList->at(i)->resetTransform();
