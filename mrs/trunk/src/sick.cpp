@@ -1252,6 +1252,7 @@ void sick_handle_laser(sick_laser_p laser)
 
 void sick_stop_laser(sick_laser_p laser)
 {
+  // TODO: change std output
   fprintf(stderr, "\nINFO: stop LASER continuous mode ....... ");
   sick_stop_continuous_mode(laser);
   fprintf(stderr, "ok\n");
