@@ -1180,8 +1180,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	
 	
 	// change the y position of the laser lines, too
-	qreal x = ui.graphicsViewLaser->width() / 2;
-	qreal y = laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
+	qreal x = calculateLaserXpos();
+	qreal y = calculateLaserYpos();
 	
 	for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
 	{
@@ -1273,7 +1273,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		for (int i=0; i<laserLineList->size(); i++)
 		{
 			// get value from laser
-			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView);
+			measuredLaserDistance = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
 
 			//draw the first real line
 			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
@@ -1290,7 +1290,8 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			*/
 				
 			// set tool tip of the line to the distance
-			laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
+			//laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
+			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
 		}
 	}
 	else
@@ -1299,16 +1300,16 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		// draw LOW RES (faster and default)
 		//
 		// /get the data from 180° to 0° (right to left!!)
-		//for (int i=laserThread->getNumReadings(); i>0; i--)
 		for (int i=0; i<laserLineList->size(); i++)
 		{
 			// get value from laser and
 			// draw the lines at every 1°
-			measuredLaserDistance = (int)qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView);
+			measuredLaserDistance = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
 			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
 			
 			// set tool tip of the line to the distance
-			laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
+			//laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
+			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
 		}
 	}
 
@@ -1480,12 +1481,9 @@ void Gui::initializePlots()
 
 void Gui::createLaserScannerObjects()
 {
-	// init the scale for the laser line / distances drawing stuff
-	lastZoom = ui.sliderZoom->value();
-	
-	//-------------------------------------------------------
+	//=======================================================
 	// OpenGL stuff (Laser lines)
-	//-------------------------------------------------------
+	//=======================================================
 	
 	// set some nice colors for some widgets
 	colorLaserObstacle =  QColor(255, 50, 50, 180); // light red
@@ -1512,11 +1510,14 @@ void Gui::createLaserScannerObjects()
 	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 
 
-	//--------------------------------------------------------------
+	//=======================================================
 	// add robot picture1
-	//--------------------------------------------------------------
+	//=======================================================
 	// add items to the scene
 	pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
+	
+	// init the scale for the laser line / distances drawing stuff
+	lastZoom = ui.sliderZoom->value();
 	
 	//--------------------------------------------------------------
 	// calculate a nice y position in the view
@@ -1539,9 +1540,9 @@ void Gui::createLaserScannerObjects()
 	pixmapBot1->setZValue(1);
 	
 	
-	//--------------------------------------------------------------
+	//=======================================================
 	// create the laser line list
-	//--------------------------------------------------------------
+	//=======================================================
 	laserLineList = new QList <QGraphicsLineItem*>();
 
 	/*
@@ -1558,15 +1559,15 @@ void Gui::createLaserScannerObjects()
 	painter.drawLine(0, 0, 0, measuredLaserDistance);
 	painter.rotate(0.25);
 	*/
-	
+
 	
 	// TODO: check if always 180 lines!
-	// create 180 laser lines
+	// create 180 laser lines (0 to 179)
 	for (int i=-90; i<90; i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 		
-		// FIXME doest not work
+		// FIXME doest not work: Make a thicker line to fil the gaps
 		/*
 		// set line color and position
 		QPen pen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
@@ -1581,11 +1582,6 @@ void Gui::createLaserScannerObjects()
 		// set position of each line
 		line->rotate(i);
 		
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-//		line->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
-		
 		// FIXME doesn't work?!
 		line->setZValue(2);
 		
@@ -1596,21 +1592,16 @@ void Gui::createLaserScannerObjects()
 		scene->addItem(line);
 	}
 	
+	
 	// set the 180° view per default
 	switchToAngleView();
 	
 
-	//--------------------------------------------------------------
+	//=======================================================
 	// add robot picture2
-	//--------------------------------------------------------------
+	//=======================================================
 	// add items to the scene
 	pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
-	/*
-	scene->addItem(pixmapBot2);
-	
-	// horizontal center
-	pixmapBot2->setOffset((int)((ui.graphicsViewLaser->width()/2) - (QPixmap(pixmapBot2->pixmap()).width()/2)), ui.progressBarSensor4->height()+10);
-	*/
 	
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot2->scale( (1.0 / startScale), (1.0 / startScale));
@@ -1630,8 +1621,8 @@ void Gui::createLaserScannerObjects()
 
 void Gui::switchToAngleView()
 {
-	qreal x = ui.graphicsViewLaser->width() / 2;
-	qreal y = laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
+	qreal x = calculateLaserXpos();
+	qreal y = calculateLaserYpos();
 	
 	
 	//for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
@@ -1662,7 +1653,7 @@ void Gui::switchToFlatView()
 		// x = middle of the bot pixmap in the view + half of the number of lines (the middle laser line is on the middle of the graphicsView)
 		// y = set manually
 		//laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) + (laserLineList->size() / 2) - i, 228);
-		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) - (laserLineList->size() / 2) + i, 228);
+		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) - (laserLineList->size() / 2) + i, 128);
 	}
 }
 
@@ -1806,9 +1797,20 @@ void Gui::drawBotPicture()
 {
 	// recalculate the middle position of the bot pixmap!
 	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
-	laserYPos = ui.progressBarSensor4->height() + 20;
 	
 	// horizontal center
 	pixmapBot1->setPos(laserXPos, laserYPos);
 	pixmapBot2->setPos(laserXPos, laserYPos);
+}
+
+
+qreal Gui::calculateLaserXpos()
+{
+	return ui.graphicsViewLaser->width() / 2;
+}
+
+
+qreal Gui::calculateLaserYpos()
+{
+	return laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
 }
