@@ -125,6 +125,15 @@ void Gui::closeEvent()
 }
 
 
+/*
+void Gui::appLog(QString text)
+{
+	// just a quick and dirty wrapper static method for old CARMEN standard C code!
+	Gui::appendLog(text);
+}
+*/
+
+
 void Gui::appendLog(QString text, bool CR, bool sayIt)
 {
 	// insert the text

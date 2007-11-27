@@ -104,6 +104,10 @@ class Gui : public QMainWindow
 		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
 		*/
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
+		/*
+		// just a quick and dirty wrapper static method for old CARMEN standard C code!
+		static void appLog(QString text);
+		*/
 		
 		/**
 		@return The slider value of a motor speed.
