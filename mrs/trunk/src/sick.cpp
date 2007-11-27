@@ -957,7 +957,7 @@ int sick_start_laser(sick_laser_p laser)
 {
   int brate = 0;
 
-  // TODO: set output to GUI
+  // TODO: change std output
   fprintf(stderr, "###########################################\n");
   fprintf(stderr, "INFO: select mode ..................... ");
 #ifdef CARMEN_LASER_USE_SELECT
@@ -1231,7 +1231,8 @@ void sick_handle_laser(sick_laser_p laser)
 	  while (leftover>laser->packet_length) {
 	      laser->processed_mark +=laser->packet_length;
 	      leftover-=laser->packet_length;
-	      fprintf(stderr,"D");
+	      // TODO: change std output
+	      // fprintf(stderr,"D");
 	  }
 	  if(leftover == 0) {
 	      laser->buffer_position = 0;
