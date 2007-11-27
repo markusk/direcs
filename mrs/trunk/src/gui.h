@@ -306,6 +306,17 @@ class Gui : public QMainWindow
 		void drawBotPicture();
 		
 		/**
+		Set a X position for the laser lines "start point"
+		*/
+		qreal calculateLaserXpos();
+		
+		/**
+		Set a Y position for the laser lines "start point"
+		*/
+		qreal calculateLaserYpos();
+
+		
+		/**
 		Saves the current picture to disk (one time shot).
 		*/
 		void saveCamImage(void);
