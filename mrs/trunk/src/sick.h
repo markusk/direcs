@@ -29,6 +29,87 @@
 #ifndef CARMEN_SICK_H
 #define CARMEN_SICK_H
 
+
+// FROM carmen/carmen.h:
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#ifndef va_copy
+#define va_copy __va_copy
+#endif 
+
+#include <unistd.h>
+#include <ctype.h>
+#ifdef __USE_BSD
+#undef __USE_BSD
+#include <string.h>
+#define __USE_BSD
+#else
+#include <string.h>
+#endif
+#include <signal.h>
+#include <math.h>
+#include <time.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#ifdef CYGWIN
+#include <sys/socket.h>
+#endif
+#include <errno.h>
+#include <limits.h>
+#include <float.h>
+#ifndef MAXDOUBLE
+#define MAXDOUBLE DBL_MAX
+#endif
+#ifndef MAXFLOAT
+#define MAXFLOAT FLT_MAX
+#endif
+
+
+// FROM global.h:
+#ifndef TRUE
+#define TRUE 1
+#endif
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846  /* pi */
+#endif
+
+// FROM rflex-io.c:
+#include <termios.h>
+#include <fcntl.h>
+#include <sys/signal.h>
+#include <sys/time.h>
+#include <sys/ioctl.h>
+#ifdef CYGWIN
+#include <sys/socket.h>
+#endif
+// - - - - - - - - - - - - -
+
+#define CARMEN_LASER_USE_SELECT 1
+#define CARMEN_LASER_LOW_LATENCY 1
+
+
+#include "carmenserial.h"
+
+#include <sys/types.h>
+#include <sys/select.h>
+
+/*****  DIRK WAS HERE - START ******/
+#include <sys/utsname.h>
+#if !defined(CYGWIN) && !defined(__APPLE__)
+#include <linux/serial.h>
+#include <linux/version.h>
+#endif
+/*****  DIRK WAS HERE - END ******/
+
+
+
 #define LASER_BUFFER_SIZE                100000
 
 #define CRC16_GEN_POL                    0x8005

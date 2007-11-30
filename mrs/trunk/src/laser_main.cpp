@@ -26,33 +26,15 @@
  *
  ********************************************************/
 
-// Markus #include <carmen/carmen.h>
-#include "laser_main.h" // markus
+#include "laser_main.h"
 
-
-//
-// from laser_main.cpp (global) !
-//
-#include "sick.h"
-// #include "laser.h"
-// Markus #include "laser_ipc.h"
-#include "laser_messages.h"
-
-// Markus Original: sick_laser_t laser1, laser2, laser3, laser4, laser5;
-//static sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
 sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
-
 carmen_laser_laser_config_t laser1_config, laser2_config, laser3_config, laser4_config, laser5_config;
 
-// Markus Orginal: int use_laser1 = 0, use_laser2 = 0;
 int use_laser1 = 1, use_laser2 = 0;
 int use_laser3 = 0, use_laser4 = 0;
 int use_laser5 = 0;
 int quit_signal = 0;
-//
-// from laser_main.cpp (global) !
-//
-
 
 
 void set_default_parameters(sick_laser_p laser, int laser_num)
@@ -685,20 +667,25 @@ int carmen_laser_run(void)
 void shutdown_laser(int x)
 {
   carmen_laser_shutdown(x);
-  // Markus carmen_ipc_disconnect();
   exit(-1);
 }
 
 
 int getLaserNumReadings(int laser)
 {
-	//
-	// Daten aus aus Laser-Objekt holen 
-	//
 	switch (laser)
 	{
 		case LASER1:
 			return laser1.numvalues;
+			break;
+		case LASER2:
+			return laser2.numvalues;
+			break;
+		case LASER3:
+			return laser3.numvalues;
+			break;
+		case LASER4:
+			return laser4.numvalues;
 			break;
 	}
 }
@@ -708,11 +695,8 @@ float getLaserDistance(int laser, int angle)
 {
 	int numreadings;
 	double *laserrange = NULL;
-	
-	
-	//
-	// Daten aus aus Laser-Objekt holen < < < <
-	//
+
+
 	switch (laser)
 	{
 		case LASER1:
@@ -721,13 +705,23 @@ float getLaserDistance(int laser, int angle)
 			laserrange[angle] /= 100;
 			return laserrange[angle];
 			break;
+		case LASER2:
+			numreadings = laser2.numvalues;
+			laserrange = laser2.range;
+			laserrange[angle] /= 100;
+			return laserrange[angle];
+			break;
+		case LASER3:
+			numreadings = laser3.numvalues;
+			laserrange = laser3.range;
+			laserrange[angle] /= 100;
+			return laserrange[angle];
+			break;
+		case LASER4:
+			numreadings = laser4.numvalues;
+			laserrange = laser4.range;
+			laserrange[angle] /= 100;
+			return laserrange[angle];
+			break;
 	}
-	
-	/*
-	// greater than 180° ?
-	if (angle > laser.num_readings)
-	{
-		return -2;
-	}
-	*/
 }
