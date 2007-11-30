@@ -31,12 +31,10 @@
 
 
 #include <QtGlobal>
+#include "sick.h"
 
 
-//#include <carmen/carmen.h>
-//
-// FROM carmen.h:
-//
+// FROM carmen/carmen.h:
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -74,9 +72,7 @@
 #endif
 
 
-//
 // FROM global.h:
-//
 #ifndef TRUE
 #define TRUE 1
 #endif
@@ -88,34 +84,18 @@
 #define M_PI 3.14159265358979323846  /* pi */
 #endif
 
-// Markus Original:
-// #define carmen_test_alloc(X) do {if ((void *)(X) == NULL) carmen_die("Out of memory in %s, (%s, line %d).\n", __FUNCTION__, __FILE__, __LINE__); } while (0)
-
-
-
-//
-// FROM rflex-io.c
-//
-#include <string.h>
-#include <signal.h>
-#include <math.h>
-#include <unistd.h>
+// FROM rflex-io.c:
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/signal.h>
-#include <sys/types.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #ifdef CYGWIN
 #include <sys/socket.h>
 #endif
+// - - - - - - - - - - - - - 
 
 
-
-//----------------------------------------------------------------------------------
-// from here: original sick.cpp
-
-// Markus original: #include <carmen/carmenserial.h>  // < < < < <
 #include "carmenserial.h"
 
 #include <sys/types.h>
@@ -128,20 +108,6 @@
 #include <linux/version.h>
 #endif
 /*****  DIRK WAS HERE - END ******/
-
-//#include "laser_ipc.h"
-#include "sick.h"
-
-
-Sick::Sick()
-{
-}
-
-
-Sick::~Sick()
-{
-}
-
 
 
 /*****  DIRK WAS HERE - START ******/
@@ -965,7 +931,7 @@ void sick_connect_device(sick_laser_p laser)
 /**
 Establish the serial connection to the laser and set the laser in the wanted mode(s).
 */
-int Sick::sick_start_laser(sick_laser_p laser)
+int sick_start_laser(sick_laser_p laser)
 {
   int brate = 0;
 
@@ -1198,7 +1164,7 @@ static void sick_process_packet(sick_laser_p laser, unsigned char *packet)
 /* sick_handle_laser - Process any data that is available from the 
    laser. Attempt to detect valid packets in the data. */
 
-void Sick::sick_handle_laser(sick_laser_p laser)
+void sick_handle_laser(sick_laser_p laser)
 {
   int bytes_available, bytes_read;
   int leftover;
@@ -1263,7 +1229,7 @@ void Sick::sick_handle_laser(sick_laser_p laser)
   } 
 }
 
-void Sick::sick_stop_laser(sick_laser_p laser)
+void sick_stop_laser(sick_laser_p laser)
 {
   // TODO: change std output
   fprintf(stderr, "\nINFO: stop LASER continuous mode ....... ");
@@ -1273,9 +1239,7 @@ void Sick::sick_stop_laser(sick_laser_p laser)
 }
 
 
-//
-// from global.c
-//
+// from global.c:
 double carmen_get_time(void)
 {
 	struct timeval tv;

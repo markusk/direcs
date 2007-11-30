@@ -29,12 +29,6 @@
 #ifndef CARMEN_SICK_H
 #define CARMEN_SICK_H
 
-//-------------------------------------------------------------------
-// Markus:
-#include <QObject>
-//-------------------------------------------------------------------
-
-
 #define LASER_BUFFER_SIZE                100000
 
 #define CRC16_GEN_POL                    0x8005
@@ -83,6 +77,7 @@ typedef enum { CM, MM, DM } range_res_t;
 typedef enum { SICK_RANGE80M, SICK_RANGE160M, SICK_RANGE320M, SICK_REMISSION_NORM, SICK_REMISSION_DIRECT } range_dist_t;
 typedef enum { N, E, O } parity_t;
 
+
 typedef struct {
   int                fd;
   laser_model_t      type;
@@ -96,6 +91,7 @@ typedef struct {
   int                swf;
   int                laser_num;
 } laser_device_t, *laser_device_p;
+
 
 typedef struct {
   char device_name[MAX_NAME_LENGTH];
@@ -116,6 +112,7 @@ typedef struct {
   int laser_flipped;
 } laser_settings_t;
 
+
 typedef struct {
   laser_settings_t settings;
   laser_device_t dev;
@@ -135,26 +132,14 @@ typedef struct {
 } sick_laser_t, *sick_laser_p;
 
 
-class Sick : public QObject
-{
-    Q_OBJECT
-
-	public:
-		Sick();
-		~Sick();
-
-// Markus Original: void sick_start_laser(sick_laser_p laser);
+//
+// declarations
+//
 int  sick_start_laser(sick_laser_p laser);
 void sick_stop_laser(sick_laser_p laser);
 void sick_handle_laser(sick_laser_p laser);
-
-
-};
-
-//
-// from global.c
-//
+// from global.c:
 double carmen_get_time(void);
-//void carmen_die(char* fmt, ...) __attribute__ ((format (printf, 1, 2)));
+
 
 #endif
