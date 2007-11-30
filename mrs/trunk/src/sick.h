@@ -29,6 +29,7 @@
 #ifndef CARMEN_SICK_H
 #define CARMEN_SICK_H
 
+#include <QtGlobal>
 
 // FROM carmen/carmen.h:
 #include <stdio.h>
@@ -219,6 +220,10 @@ typedef struct {
 int  sick_start_laser(sick_laser_p laser);
 void sick_stop_laser(sick_laser_p laser);
 void sick_handle_laser(sick_laser_p laser);
+
+int sick_connect_device(sick_laser_p laser);
+
+
 // from global.c:
 double carmen_get_time(void);
 

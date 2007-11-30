@@ -828,23 +828,29 @@ void sick_allocate_laser(sick_laser_p laser)
 }
 
 
-void sick_connect_device(sick_laser_p laser)
+int sick_connect_device(sick_laser_p laser)
 {
-  sick_install_settings(laser);
-  sick_allocate_laser(laser);
-  fprintf(stderr, "INFO: connect TTY %-14s ...... ", laser->dev.ttyport);
-  sick_serial_connect(laser);
-  if(laser->dev.fd == -1) {
-    fprintf(stderr, "failed\n");
-    exit(1);
-  }
-  fprintf(stderr, "ok\n");
-  fprintf(stderr, "INFO: set port param %6d:%d%c%d ....... ",
-	  laser->dev.baudrate, laser->dev.databits,
-	  (laser->dev.parity == N ? 'N' : laser->dev.parity == E ? 'E' : 'O'),
-	  laser->dev.stopbits);
-  sick_set_serial_params(laser);
-  fprintf(stderr, "ok\n");
+	sick_install_settings(laser);
+	sick_allocate_laser(laser);
+	
+	fprintf(stderr, "INFO: connect TTY %-14s ...... ", laser->dev.ttyport);
+	sick_serial_connect(laser);
+	
+	if(laser->dev.fd == -1)
+	{
+		fprintf(stderr, "failed\n");
+		return 1;
+	}
+	
+	// TODO: change std output
+	/*
+	fprintf(stderr, "ok\n");
+	fprintf(stderr, "INFO: set port param %6d:%d%c%d ....... ", laser->dev.baudrate, laser->dev.databits, (laser->dev.parity == N ? 'N' : laser->dev.parity == E ? 'E' : 'O'), laser->dev.stopbits);
+	*/
+	sick_set_serial_params(laser);
+	//fprintf(stderr, "ok\n");
+	
+	return 0;
 }
 
 
@@ -853,93 +859,132 @@ Establish the serial connection to the laser and set the laser in the wanted mod
 */
 int sick_start_laser(sick_laser_p laser)
 {
-  int brate = 0;
+	int brate = 0;
 
-  // TODO: change std output
-  fprintf(stderr, "###########################################\n");
-  fprintf(stderr, "INFO: select mode ..................... ");
-#ifdef CARMEN_LASER_USE_SELECT
-  fprintf(stderr, "on\n");
-#else
-  fprintf(stderr, "off\n");
-#endif
-  fprintf(stderr, "INFO: LASER type ...................... ");
-  fprintf(stderr, "%s\n", (laser->settings.type == PLS) ? "PLS" : "LMS");
-  
-  /* open the serial port */
-  sick_connect_device(laser);
-  
-  /* make sure the baudrate is set correctly, change it if necessary */
-  if(laser->settings.detect_baudrate)
-  {
-    brate = sick_detect_baudrate(laser);
-    if(!brate)
-      return(1);
-      //exit(1);
-  } 
-  else if(!sick_check_baudrate(laser, laser->settings.start_baudrate))
-  {
-    fprintf(stderr, "ERROR: communication does not work!\n");
-    return(1);
-    //exit(1);
-  }
-  if(brate != laser->settings.set_baudrate)
-  {
-    fprintf(stderr, "INFO: set LASER in config-mode ........ ");
-    while(!sick_set_config_mode(laser));
-    fprintf(stderr, "ok\n");
-    fprintf(stderr, "INFO: set LASER baudrate to %6d .... ",
-	    laser->settings.set_baudrate);
-    while(!sick_set_laser_baudrate(laser, laser->settings.set_baudrate));
-    sick_set_baudrate(laser, laser->settings.set_baudrate);
-    fprintf(stderr, "ok\n");
-  }
-  
-  /* set the resolution of the blue lasers */
-  if(laser->settings.type == LMS) {
-    fprintf(stderr, "INFO: angle range ..................... %3d\n",
-	    laser->settings.angle_range);
-    fprintf(stderr, "INFO: angle resolution ................ %1.2f\n",
-	    (laser->settings.angle_resolution == RES_1_00_DEGREE ? 1.0 :
-	     laser->settings.angle_resolution == RES_0_50_DEGREE ? 0.5 : 
-	     0.25));
-    fprintf(stderr, "INFO: set LASER mode .................. ");
-    while(!sick_set_lms_resolution(laser));
-    fprintf(stderr, "ok\n");
-    usleep(100000);
-    fprintf(stderr, "INFO: get LMS configuration ........... ");
-    while(!sick_set_lms_range(laser));
-    fprintf(stderr, "ok\n");
-  }
-  
-  /* set the laser to continuous mode */
-// *** REI - START *** //
-  if(laser->settings.use_remission == 1) {
 
-    fprintf(stderr, "INFO: using remission mode ............ ");
-    if (laser->settings.range_dist == SICK_REMISSION_NORM) {
-      fprintf(stderr, "normalized\n");
-    }
-    else  if (laser->settings.range_dist == SICK_REMISSION_DIRECT) {
-      fprintf(stderr, "direct\n");
-    }
-    else fprintf(stderr, "unknwon\n");
+	// TODO: change std output
+	fprintf(stderr, "###########################################\n");
+	/*
+	fprintf(stderr, "INFO: select mode ..................... ");
+	#ifdef CARMEN_LASER_USE_SELECT
+	fprintf(stderr, "on\n");
+	#else
+	fprintf(stderr, "off\n");
+	#endif
+	fprintf(stderr, "INFO: LASER type ...................... ");
+	fprintf(stderr, "%s\n", (laser->settings.type == PLS) ? "PLS" : "LMS");
+	*/
 
-    fprintf(stderr, "INFO: start LASER continuous remission mode ..... ");
-	sick_start_continuous_remission_part_mode(laser);
-//	sick_start_remission_part_mode(laser);
-// *** REI - END *** //
-  } else {
-    fprintf(stderr, "INFO: using remission mode ............ none\n");
-    fprintf(stderr, "INFO: start LASER continuous mode ..... ");
-	sick_start_continuous_mode(laser);
-  }
-  laser->packet_timestamp=-1;
-  fprintf(stderr, "ok\n");
-  fprintf(stderr, "###########################################\n");
 
-  // Markus:
-  return 0;
+	/* open the serial port */
+	if (sick_connect_device(laser) != 0)
+	{
+		return 1;
+	}
+
+
+	/* make sure the baudrate is set correctly, change it if necessary */
+	if(laser->settings.detect_baudrate)
+	{
+		brate = sick_detect_baudrate(laser);
+		
+		if (!brate)
+		{
+			return 1;
+			//exit(1);
+		}
+	}
+	else if(!sick_check_baudrate(laser, laser->settings.start_baudrate))
+	{
+		fprintf(stderr, "ERROR: communication does not work!\n");
+		return 1;
+		//exit(1);
+	}
+
+
+	if(brate != laser->settings.set_baudrate)
+	{
+		// TODO: change std output
+		//fprintf(stderr, "INFO: set LASER in config-mode ........ ");
+		while(!sick_set_config_mode(laser));
+		
+		/*
+		fprintf(stderr, "ok\n");
+		fprintf(stderr, "INFO: set LASER baudrate to %6d .... ", laser->settings.set_baudrate);
+		*/
+		
+		while(!sick_set_laser_baudrate(laser, laser->settings.set_baudrate));
+		
+		sick_set_baudrate(laser, laser->settings.set_baudrate);
+		//fprintf(stderr, "ok\n");
+	}
+
+	
+	/* set the resolution of the blue lasers */
+	if(laser->settings.type == LMS)
+	{
+		// TODO: change std output
+		/*
+		fprintf(stderr, "INFO: angle range ..................... %3d\n", laser->settings.angle_range);
+		fprintf(stderr, "INFO: angle resolution ................ %1.2f\n", (laser->settings.angle_resolution == RES_1_00_DEGREE ? 1.0 : laser->settings.angle_resolution == RES_0_50_DEGREE ? 0.5 : 0.25));
+		fprintf(stderr, "INFO: set LASER mode .................. ");
+		*/
+		while(!sick_set_lms_resolution(laser));
+		
+		//fprintf(stderr, "ok\n");
+		usleep(100000);
+		
+		//fprintf(stderr, "INFO: get LMS configuration ........... ");
+		while(!sick_set_lms_range(laser));
+		
+		//fprintf(stderr, "ok\n");
+	}
+
+
+	/* set the laser to continuous mode */
+	// *** REI - START *** //
+	if(laser->settings.use_remission == 1)
+	{
+		/*
+		fprintf(stderr, "INFO: using remission mode ............ ");
+
+		if (laser->settings.range_dist == SICK_REMISSION_NORM)
+		{
+			fprintf(stderr, "normalized\n");
+		}
+		else
+		{
+			if (laser->settings.range_dist == SICK_REMISSION_DIRECT)
+			{
+				fprintf(stderr, "direct\n");
+			}
+			else
+			{
+				fprintf(stderr, "unknwon\n");
+			}
+		}
+		
+		fprintf(stderr, "INFO: start LASER continuous remission mode ..... ");
+		*/
+		sick_start_continuous_remission_part_mode(laser);
+		// sick_start_remission_part_mode(laser);
+		// *** REI - END *** //
+	}
+	else
+	{
+		/*
+		fprintf(stderr, "INFO: using remission mode ............ none\n");
+		fprintf(stderr, "INFO: start LASER continuous mode ..... ");
+		*/
+		sick_start_continuous_mode(laser);
+	}
+
+	laser->packet_timestamp=-1;
+	fprintf(stderr, "ok\n");
+	//fprintf(stderr, "###########################################\n");
+
+	
+	return 0;
 }
 
 
