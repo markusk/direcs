@@ -29,6 +29,12 @@
 #ifndef CARMEN_SICK_H
 #define CARMEN_SICK_H
 
+//-------------------------------------------------------------------
+// Markus:
+#include <QObject>
+//-------------------------------------------------------------------
+
+
 #define LASER_BUFFER_SIZE                100000
 
 #define CRC16_GEN_POL                    0x8005
@@ -70,6 +76,7 @@
 #define RAW                              1
 #define CBREAK                           64
 #endif
+
 
 typedef enum { PLS, LMS } laser_model_t;
 typedef enum { CM, MM, DM } range_res_t;
@@ -127,17 +134,27 @@ typedef struct {
   double packet_timestamp;
 } sick_laser_t, *sick_laser_p;
 
+
+class Sick : public QObject
+{
+    Q_OBJECT
+
+	public:
+		Sick();
+		~Sick();
+
 // Markus Original: void sick_start_laser(sick_laser_p laser);
 int  sick_start_laser(sick_laser_p laser);
 void sick_stop_laser(sick_laser_p laser);
 void sick_handle_laser(sick_laser_p laser);
 
 
+};
+
 //
 // from global.c
 //
 double carmen_get_time(void);
 //void carmen_die(char* fmt, ...) __attribute__ ((format (printf, 1, 2)));
-
 
 #endif

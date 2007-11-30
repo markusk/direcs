@@ -88,7 +88,7 @@
 #define M_PI 3.14159265358979323846  /* pi */
 #endif
 
-// TODO: nedded?
+// Markus Original:
 // #define carmen_test_alloc(X) do {if ((void *)(X) == NULL) carmen_die("Out of memory in %s, (%s, line %d).\n", __FUNCTION__, __FILE__, __LINE__); } while (0)
 
 
@@ -115,7 +115,7 @@
 //----------------------------------------------------------------------------------
 // from here: original sick.cpp
 
-// MK original: #include <carmen/carmenserial.h>  // < < < < <
+// Markus original: #include <carmen/carmenserial.h>  // < < < < <
 #include "carmenserial.h"
 
 #include <sys/types.h>
@@ -131,6 +131,18 @@
 
 //#include "laser_ipc.h"
 #include "sick.h"
+
+
+Sick::Sick()
+{
+}
+
+
+Sick::~Sick()
+{
+}
+
+
 
 /*****  DIRK WAS HERE - START ******/
 extern void shutdown_laser(int x);
@@ -953,7 +965,7 @@ void sick_connect_device(sick_laser_p laser)
 /**
 Establish the serial connection to the laser and set the laser in the wanted mode(s).
 */
-int sick_start_laser(sick_laser_p laser)
+int Sick::sick_start_laser(sick_laser_p laser)
 {
   int brate = 0;
 
@@ -1186,7 +1198,7 @@ static void sick_process_packet(sick_laser_p laser, unsigned char *packet)
 /* sick_handle_laser - Process any data that is available from the 
    laser. Attempt to detect valid packets in the data. */
 
-void sick_handle_laser(sick_laser_p laser)
+void Sick::sick_handle_laser(sick_laser_p laser)
 {
   int bytes_available, bytes_read;
   int leftover;
@@ -1251,7 +1263,7 @@ void sick_handle_laser(sick_laser_p laser)
   } 
 }
 
-void sick_stop_laser(sick_laser_p laser)
+void Sick::sick_stop_laser(sick_laser_p laser)
 {
   // TODO: change std output
   fprintf(stderr, "\nINFO: stop LASER continuous mode ....... ");
