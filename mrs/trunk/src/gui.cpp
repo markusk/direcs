@@ -93,6 +93,9 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	createLaserScannerObjects();
 	
 	//createLaserDistanceObjects();
+	
+	// zoom into the laser lines by factor 3
+	//on_sliderZoom_valueChanged(3);
 }
 
 
