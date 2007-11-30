@@ -351,6 +351,8 @@ Mrs::Mrs()
 		}
 		
 		
+		splash->showMessage(QObject::tr("Starting laser scanner module..."), somewhere, splashColor);
+		
 		if (laserThread->isRunning() == false)
 		{
 			gui1->appendLog("Starting Laser thread...", false);
@@ -358,7 +360,7 @@ Mrs::Mrs()
 			gui1->appendLog("Laser thread started.");
 		}
 		
-// FIXME: test test test!!!
+		// FIXME: test test test start!!!
 		if (obstCheckThread->isRunning() == false)
 		{
 			gui1->appendLog("Starting obstacle check thread...", false);
@@ -366,18 +368,8 @@ Mrs::Mrs()
 			obstCheckThread->setMinObstacleDistance(minObstDist);
 			gui1->appendLog("Obstacle check thread started.");
 		}
-// FIXME: test test test!!!
-		
-		
-		//--------------------------------------------
-		// start the "ex-CARMEN" laser module ! ! !
-		//--------------------------------------------
-		splash->showMessage(QObject::tr("Starting laser scanner module..."), somewhere, splashColor);
-		
-		// FIXME: start new laser module!!
-		//startlaser();
+		// FIXME: test test test end!!!
 	}
-	//splash->showMessage(QObject::tr("Ready."), somewhere, splashColor);
 }
 
 
