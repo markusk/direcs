@@ -88,8 +88,8 @@ class Joystick : public QThread
 		uint16_t btnmap[KEY_MAX - BTN_MISC + 1];
 		uint8_t axmap[ABS_MAX + 1];
 		
-		char *axis_names[ABS_MAX + 1];
-		char *button_names[KEY_MAX - BTN_MISC + 1];
+		QString axis_names[ABS_MAX + 1];
+		QString button_names[KEY_MAX - BTN_MISC + 1];
 	
 		int *axis;
 		char *button;
