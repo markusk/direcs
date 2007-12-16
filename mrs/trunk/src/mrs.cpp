@@ -338,10 +338,11 @@ Mrs::Mrs()
 	connect(laserThread, SIGNAL( laserDataComplete(float *, int *) ), gui1, SLOT( refreshLaserView(float *, int *) ));
 	
 	//----------------------------------------------------------------------------
-	// connect joystick signals to "show sensor data"
-	// (Whenever the joystick is moved, show the result in the GUI)
+	// connect joystick signals to "show joystick data"
+	// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
 	//----------------------------------------------------------------------------
 	connect(joystick, SIGNAL(joystickMoved(int, int)), gui1, SLOT(showJoystickAxes(int, int)));
+	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui1, SLOT(showJoystickButtons(int, bool)));
 	
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
