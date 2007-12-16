@@ -1491,6 +1491,17 @@ void Gui::initializePlots()
 }
 
 
+void Gui::showJoystickAxes(int axisNumber, int axisValue)
+{
+	// TODO: put axis numbers to ini-file
+	if (axisNumber == 2)
+		ui.sliderJoystickY->setValue(axisValue);
+	
+	if (axisNumber == 3)
+		ui.sliderJoystickX->setValue(axisValue);
+}
+
+
 void Gui::createLaserScannerObjects()
 {
 	//=======================================================

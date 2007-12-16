@@ -217,8 +217,13 @@ class Gui : public QMainWindow
 		Refreshes the view of the lines from the laser scanner
 		*/
 		void refreshLaserView(float *laserScannerValues, int *laserScannerFlags);
-	
-	
+		
+		/**
+		Sets the joystick values to show the joystick movement
+		*/
+		void showJoystickAxes(int axisNumber, int axisValue);
+
+
 	protected:
 		void closeEvent();
 
