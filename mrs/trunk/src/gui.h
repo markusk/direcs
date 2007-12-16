@@ -219,9 +219,14 @@ class Gui : public QMainWindow
 		void refreshLaserView(float *laserScannerValues, int *laserScannerFlags);
 		
 		/**
-		Sets the joystick values to show the joystick movement
+		Shows the joystick values when it moves.
 		*/
 		void showJoystickAxes(int axisNumber, int axisValue);
+		
+		/**
+		Shows the joystick button states when pressed.
+		*/
+		void showJoystickButtons(int buttonNumber, bool buttonState);
 
 
 	protected:

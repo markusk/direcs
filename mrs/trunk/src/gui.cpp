@@ -1502,6 +1502,39 @@ void Gui::showJoystickAxes(int axisNumber, int axisValue)
 }
 
 
+void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
+{
+	// TODO: put button numbers to ini-file
+	switch (buttonNumber)
+	{
+		case 0:
+			ui.radioBtnJoy0->setChecked(buttonState);
+			break;
+		case 1:
+			ui.radioBtnJoy1->setChecked(buttonState);
+			break;
+		case 2:
+			ui.radioBtnJoy2->setChecked(buttonState);
+			break;
+		case 3:
+			ui.radioBtnJoy3->setChecked(buttonState);
+			break;
+		case 4:
+			ui.radioBtnJoy4->setChecked(buttonState);
+			break;
+		case 5:
+			ui.radioBtnJoy5->setChecked(buttonState);
+			break;
+		case 10:
+			ui.radioBtnJoy10->setChecked(buttonState);
+			break;
+		case 11:
+			ui.radioBtnJoy11->setChecked(buttonState);
+			break;
+	}
+}
+
+
 void Gui::createLaserScannerObjects()
 {
 	//=======================================================
