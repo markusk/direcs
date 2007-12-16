@@ -38,35 +38,159 @@
  * Vojtech Pavlik, Simunkova 1594, Prague 8, 182 00 Czech Republic
  */
 
+
+//
+// C++ Implementation: joystick
+//
+// Description: 
+//
+//
+// Author: Markus Knapp <webmaster@direcs.de>, (C) 2007
+//
+// Copyright: See COPYING file that comes with this distribution
+//
+//
+
+
 #include "joystick.h"
+
 
 Joystick::Joystick()
 {
-/*
-	char *axis_names[ABS_MAX + 1] = {
-	"X", "Y", "Z", "Rx", "Ry", "Rz", "Throttle", "Rudder", 
-	"Wheel", "Gas", "Brake", "?", "?", "?", "?", "?",
-	"Hat0X", "Hat0Y", "Hat1X", "Hat1Y", "Hat2X", "Hat2Y", "Hat3X", "Hat3Y",
-	"?", "?", "?", "?", "?", "?", "?", 
-	};
+	//QMutexLocker locker(&mutex); // make this class thread-safe
+	stopped = false;
 	
-	char *button_names[KEY_MAX - BTN_MISC + 1] = {
-	"Btn0", "Btn1", "Btn2", "Btn3", "Btn4", "Btn5", "Btn6", "Btn7", "Btn8", "Btn9", "?", "?", "?", "?", "?", "?",
-	"LeftBtn", "RightBtn", "MiddleBtn", "SideBtn", "ExtraBtn", "ForwardBtn", "BackBtn", "TaskBtn", "?", "?", "?", "?", "?", "?", "?", "?",
-	"Trigger", "ThumbBtn", "ThumbBtn2", "TopBtn", "TopBtn2", "PinkieBtn", "BaseBtn", "BaseBtn2", "BaseBtn3", "BaseBtn4", "BaseBtn5", "BaseBtn6", "BtnDead",
-	"BtnA", "BtnB", "BtnC", "BtnX", "BtnY", "BtnZ", "BtnTL", "BtnTR", "BtnTL2", "BtnTR2", "BtnSelect", "BtnStart", "BtnMode", "BtnThumbL", "BtnThumbR", "?",
-	"?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", 
-	"WheelBtn", "Gear up",
-	};
-*/
+	
+	*axis_names[0] = "X";
+	*axis_names[1] = "Y";
+	*axis_names[2] = "Z";
+	*axis_names[3] = "Rx";
+	*axis_names[4] = "Ry";
+	*axis_names[5] = "Rz";
+	*axis_names[6] = "Throttle";
+	*axis_names[7] = "Rudder";
+	*axis_names[8] = "Wheel";
+	*axis_names[9] = "Gas";
+	*axis_names[10] = "Brake";
+	*axis_names[11] = "?";
+	*axis_names[12] = "?";
+	*axis_names[13] = "?";
+	*axis_names[14] = "?";
+	*axis_names[15] = "Hat0X";
+	*axis_names[16] = "Hat0Y";
+	*axis_names[17] = "Hat1X";
+	*axis_names[18] = "Hat1Y";
+	*axis_names[19] = "Hat2X";
+	*axis_names[20] = "Hat2Y";
+	*axis_names[21] = "Hat3X";
+	*axis_names[22] = "Hat3Y";
+	*axis_names[23] = "?";
+	*axis_names[24] = "?";
+	*axis_names[25] = "?";
+	*axis_names[26] = "?";
+	*axis_names[27] = "?";
+	*axis_names[28] = "?";
+	*axis_names[29] = "?";
+	
+	
+	*button_names[0] = "Btn0";
+	*button_names[1] = "Btn1";
+	*button_names[2] = "Btn2";
+	*button_names[3] = "Btn3";
+	*button_names[4] = "Btn4";
+	*button_names[5] = "Btn5";
+	*button_names[6] = "Btn6";
+	*button_names[7] = "Btn7";
+	*button_names[8] = "Btn8";
+	*button_names[9] = "Btn9";
+	*button_names[10] = "?";
+	*button_names[11] = "?";
+	*button_names[12] = "?";
+	*button_names[13] = "?";
+	*button_names[14] = "?";
+	*button_names[15] = "?";
+	*button_names[16] = "LeftBtn";
+	*button_names[17] = "RightBtn";
+	*button_names[18] = "MiddleBtn";
+	*button_names[19] = "SideBtn";
+	*button_names[20] = "ExtraBtn";
+	*button_names[21] = "ForwardBtn";
+	*button_names[22] = "BackBtn";
+	*button_names[23] = "TaskBtn";
+	*button_names[24] = "?";
+	*button_names[25] = "?";
+	*button_names[26] = "?";
+	*button_names[27] = "?";
+	*button_names[28] = "?";
+	*button_names[29] = "?";
+	*button_names[30] = "?";
+	*button_names[31] = "?";
+	*button_names[32] = "Trigger";
+	*button_names[33] = "ThumbBtn";
+	*button_names[34] = "ThumbBtn2";
+	*button_names[35] = "TopBtn";
+	*button_names[36] = "TopBtn2";
+	*button_names[37] = "PinkieBtn";
+	*button_names[38] = "BaseBtn";
+	*button_names[39] = "BaseBtn2";
+	*button_names[40] = "BaseBtn3";
+	*button_names[41] = "BaseBtn4";
+	*button_names[42] = "BaseBtn5";
+	*button_names[43] = "BaseBtn6";
+	*button_names[44] = "BtnDead";
+	*button_names[45] = "BtnA";
+	*button_names[46] = "BtnB";
+	*button_names[47] = "BtnC";
+	*button_names[48] = "BtnX";
+	*button_names[49] = "BtnY";
+	*button_names[50] = "BtnZ";
+	*button_names[51] = "BtnTL";
+	*button_names[52] = "BtnTR";
+	*button_names[53] = "BtnTL2";
+	*button_names[54] = "BtnTR2";
+	*button_names[55] = "BtnSelect";
+	*button_names[56] = "BtnStart";
+	*button_names[57] = "BtnMode";
+	*button_names[58] = "BtnThumbL";
+	*button_names[59] = "BtnThumbR";
+	*button_names[60] = "?";
+	*button_names[61] = "?";
+	*button_names[62] = "?";
+	*button_names[63] = "?";
+	*button_names[64] = "?";
+	*button_names[65] = "?";
+	*button_names[66] = "?";
+	*button_names[67] = "?";
+	*button_names[68] = "?";
+	*button_names[69] = "?";
+	*button_names[70] = "?";
+	*button_names[71] = "?";
+	*button_names[72] = "?";
+	*button_names[73] = "?";
+	*button_names[74] = "?";
+	*button_names[75] = "?";
+	*button_names[76] = "?";
+	*button_names[77] = "WheelBtn";
+	*button_names[78] = "Gear up";
 }
-#define NAME_LENGTH 128
 
-JoyStick::~Joystick()
+
+Joystick::~Joystick()
+{
+}
+
+
+void Joystick::stop()
+{
+	stopped = true;
+}
+
+
+void Joystick::run()
 {
 	axes = 2;
 	buttons = 2;
-	version = 0x000800;
+	//version = 0x000800;
 	//name[NAME_LENGTH] = "Unknown";
 
 	/*
@@ -86,9 +210,12 @@ JoyStick::~Joystick()
 	*/
 	
 	//if ((fd = open(argv[argc - 1], O_RDONLY)) < 0) {
-	if ((fd = open("/dev/input/js0", O_RDONLY)) < 0) {
-		perror("jstest");
-		exit(1);
+	if ((fd = open("/dev/input/js0", O_RDONLY)) < 0)
+	{
+		//perror("jstest");
+		qDebug("NO joystick connected (Could not open /dev/input/jd0)!");
+		stopped = true;
+		return;
 	}
 
 	ioctl(fd, JSIOCGVERSION, &version);
@@ -99,20 +226,19 @@ JoyStick::~Joystick()
 	ioctl(fd, JSIOCGBTNMAP, btnmap);
 
 
-	printf("Driver version is %d.%d.%d.\n",
-		version >> 16, (version >> 8) & 0xff, version & 0xff);
+	qDebug("Driver version is %d.%d.%d.\n", version >> 16, (version >> 8) & 0xff, version & 0xff);
 
-	printf("Joystick (%s) has %d axes (", name, axes);
+	qDebug("Joystick (%s) has %d axes (", name, axes);
 	for (i = 0; i < axes; i++)
-		printf("%s%s", i > 0 ? ", " : "", axis_names[axmap[i]]);
+		qDebug("%s%s", i > 0 ? ", " : "", axis_names[axmap[i]]);
 	puts(")");
 
-	printf("and %d buttons (", buttons);
+	qDebug("and %d buttons (", buttons);
 	for (i = 0; i < buttons; i++)
 		printf("%s%s", i > 0 ? ", " : "", button_names[btnmap[i] - BTN_MISC]);
 	puts(").");
 
-	printf("Testing ... (interrupt to exit)\n");
+	qDebug("Testing ... (interrupt to exit)\n");
 
 /*
  * Old (0.x) interface.
@@ -138,53 +264,55 @@ JoyStick::~Joystick()
 		}
 	}
 */
+
+	
+	/*
+	* Event interface, single line readout.
+	*/
+	axis = calloc(axes, sizeof(int));
+	button = calloc(buttons, sizeof(char));
 /*
- * Event interface, single line readout.
- */
-
-//	if (argc == 2 || !strcmp("--normal", argv[1])) {
-
-		int *axis;
-		char *button;
-		int i;
-		struct js_event js;
-
-		axis = calloc(axes, sizeof(int));
-		button = calloc(buttons, sizeof(char));
-
-		while (1) {
-			if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event)) {
-				perror("\njstest: error reading");
-				exit(1);
-			}
-
-			switch(js.type & ~JS_EVENT_INIT) {
-			case JS_EVENT_BUTTON:
-				button[js.number] = js.value;
-				break;
-			case JS_EVENT_AXIS:
-				axis[js.number] = js.value;
-				break;
-			}
-
-			printf("\r");
-
-			if (axes) {
-				printf("Axes: ");
-				for (i = 0; i < axes; i++)
-					printf("%2d:%6d ", i, axis[i]);
-			}
-
-			if (buttons) {
-				printf("Buttons: ");
-				for (i = 0; i < buttons; i++)
-					printf("%2d:%s ", i, button[i] ? "on " : "off");
-			}
-
-			fflush(stdout);
+	//
+	//  start "threading"...
+	//
+	while (!stopped)
+	{
+		if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event))
+		{
+			qDebug("\nerror reading joystick device / file.");
+			stopped = true;
+			return;
 		}
-//	}
 
+		switch(js.type & ~JS_EVENT_INIT)
+		{
+		case JS_EVENT_BUTTON:
+			button[js.number] = js.value;
+			break;
+		case JS_EVENT_AXIS:
+			axis[js.number] = js.value;
+			break;
+		}
+
+		printf("\r");
+
+		if (axes) {
+			printf("Axes: ");
+			for (i = 0; i < axes; i++)
+				qDebug("%2d:%6d ", i, axis[i]);
+		}
+
+		if (buttons) {
+			qDebug("Buttons: ");
+			for (i = 0; i < buttons; i++)
+				qDebug("%2d:%s ", i, button[i] ? "on " : "off");
+		}
+
+		fflush(stdout);
+		
+		//emit joystickMoved(&laserScannerValues[0], &laserScannerFlags[0]);
+	}
+*/
 
 /*
  * Event interface, events being printed.
@@ -266,6 +394,6 @@ JoyStick::~Joystick()
 		}
 	}
 */
-	printf("jstest: unknown mode: %s\n", argv[1]);
-	exit(-1);
+	//printf("jstest: unknown mode: %s\n", argv[1]);
+	stopped = false;
 }

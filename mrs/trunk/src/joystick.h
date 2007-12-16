@@ -53,23 +53,33 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-// /usr/include/linux/input.h
 #include <linux/input.h>
-// /usr/include/linux/joystick.h
 #include <linux/joystick.h>
 
 #define NAME_LENGTH 128
 
+#include <QThread>
 
-class Joystick
+
+class Joystick : public QThread
 {
+    Q_OBJECT
+
 	public:
 		Joystick();
 		~Joystick();
-		
+		void stop();
+		virtual void run();
+
+
+	//signals:
+		/*! emits a pointer to the array with the 180 laser values (distances) */
+		//void joystickMoved(float *laserScannerValues, int *laserScannerFlags);
+
+
 	private:
-		//char *axis_names[ABS_MAX + 1];
-		//char *button_names[KEY_MAX - BTN_MISC + 1];
+		//mutable QMutex mutex; // make this class thread-safe
+		volatile bool stopped;
 		int fd, i;
 		unsigned char axes;
 		unsigned char buttons;
@@ -78,21 +88,11 @@ class Joystick
 		uint16_t btnmap[KEY_MAX - BTN_MISC + 1];
 		uint8_t axmap[ABS_MAX + 1];
 		
-		
-		static const char *axis_names[ABS_MAX + 1] = {
-		"X", "Y", "Z", "Rx", "Ry", "Rz", "Throttle", "Rudder", 
-		"Wheel", "Gas", "Brake", "?", "?", "?", "?", "?",
-		"Hat0X", "Hat0Y", "Hat1X", "Hat1Y", "Hat2X", "Hat2Y", "Hat3X", "Hat3Y",
-		"?", "?", "?", "?", "?", "?", "?", 
-		};
+		char *axis_names[ABS_MAX + 1];
+		char *button_names[KEY_MAX - BTN_MISC + 1];
 	
-		static const char *button_names[KEY_MAX - BTN_MISC + 1] = {
-		"Btn0", "Btn1", "Btn2", "Btn3", "Btn4", "Btn5", "Btn6", "Btn7", "Btn8", "Btn9", "?", "?", "?", "?", "?", "?",
-		"LeftBtn", "RightBtn", "MiddleBtn", "SideBtn", "ExtraBtn", "ForwardBtn", "BackBtn", "TaskBtn", "?", "?", "?", "?", "?", "?", "?", "?",
-		"Trigger", "ThumbBtn", "ThumbBtn2", "TopBtn", "TopBtn2", "PinkieBtn", "BaseBtn", "BaseBtn2", "BaseBtn3", "BaseBtn4", "BaseBtn5", "BaseBtn6", "BtnDead",
-		"BtnA", "BtnB", "BtnC", "BtnX", "BtnY", "BtnZ", "BtnTL", "BtnTR", "BtnTL2", "BtnTR2", "BtnSelect", "BtnStart", "BtnMode", "BtnThumbL", "BtnThumbR", "?",
-		"?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", 
-		"WheelBtn", "Gear up",
-		};
-}
+		int *axis;
+		char *button;
+		struct js_event js;
+};
 #endif
