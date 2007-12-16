@@ -72,9 +72,13 @@ class Joystick : public QThread
 		virtual void run();
 
 
-	//signals:
-		/*! emits a pointer to the array with the 180 laser values (distances) */
-		//void joystickMoved(float *laserScannerValues, int *laserScannerFlags);
+	signals:
+		/*!
+		Emits a signal when an joystick event occured (move or button)
+		@param axisNumber is the number of the joysticks axis
+		@param axisValue is the axis value
+		*/
+		void joystickMoved(int axisNumber, int axisValue);
 
 
 	private:
@@ -94,5 +98,7 @@ class Joystick : public QThread
 		int *axis;
 		char *button;
 		struct js_event js;
+		short int axisNumber;
+		short int axisValue;
 };
 #endif

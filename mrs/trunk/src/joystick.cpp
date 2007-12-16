@@ -190,26 +190,11 @@ void Joystick::run()
 {
 	axes = 2;
 	buttons = 2;
-	//version = 0x000800;
-	//name[NAME_LENGTH] = "Unknown";
+	axisNumber = 0;
+	axisValue = 0;
 
-	/*
-	if (argc < 2 || argc > 3 || !strcmp("--help", argv[1])) {
-		puts("");
-		puts("Usage: jstest [<mode>] <device>");
-		puts("");
-		puts("Modes:");
-		puts("  --normal           One-line mode showing immediate status");
-		puts("  --old              Same as --normal, using 0.x interface");
-		puts("  --event            Prints events as they come in");
-		puts("  --nonblock         Same as --event, in nonblocking mode");
-		puts("  --select           Same as --event, using select() call");
-		puts("");
-		return 1;
-	}
-	*/
 	
-	//if ((fd = open(argv[argc - 1], O_RDONLY)) < 0) {
+	// TODO: put filename numbers to ini-file
 	if ((fd = open("/dev/input/js0", O_RDONLY)) < 0)
 	{
 		//perror("jstest");
@@ -235,7 +220,7 @@ void Joystick::run()
 		qDebug("%s%s", i > 0 ? ", " : "", axis_names[axmap[i]]);
 	}
 	*/
-	puts(")");
+	//puts(")");
 
 	qDebug("and %d buttons (", buttons);
 	/*
@@ -275,7 +260,6 @@ void Joystick::run()
 	*/
 	axis = calloc(axes, sizeof(int));
 	button = calloc(buttons, sizeof(char));
-/*
 	//
 	//  start "threading"...
 	//
@@ -294,10 +278,14 @@ void Joystick::run()
 			button[js.number] = js.value;
 			break;
 		case JS_EVENT_AXIS:
-			axis[js.number] = js.value;
+			//axis[js.number] = js.value;
+			axisNumber = js.number;
+			axisValue = js.value;
+			emit joystickMoved(axisNumber, axisValue);
 			break;
 		}
 
+		/*
 		printf("\r");
 
 		if (axes) {
@@ -313,10 +301,10 @@ void Joystick::run()
 		}
 
 		fflush(stdout);
+		*/
 		
-		//emit joystickMoved(&laserScannerValues[0], &laserScannerFlags[0]);
 	}
-*/
+
 
 /*
  * Event interface, events being printed.
