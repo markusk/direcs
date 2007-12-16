@@ -1398,6 +1398,158 @@ p, li { white-space: pre-wrap; }
      <number>2000</number>
     </property>
    </widget>
+   <widget class="QRadioButton" name="radioBtnJoy0" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>670</x>
+      <y>230</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy2" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>680</x>
+      <y>240</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy1" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>680</x>
+      <y>220</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy3" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>690</x>
+      <y>230</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy4" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>690</x>
+      <y>210</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy5" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>700</x>
+      <y>220</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy10" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>670</x>
+      <y>210</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy11" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>550</x>
+      <y>210</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBoxBot" >
    <property name="geometry" >
