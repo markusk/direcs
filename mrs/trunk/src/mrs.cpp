@@ -64,6 +64,7 @@ Mrs::Mrs()
 	inifile1 = new Inifile();
 	cam1 = new CamThread();
 	netThread = new NetworkThread();
+	joystick = new Joystick();
 	
 	
 	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, circuit1, cam1, motors, servos, netThread, laserThread);
@@ -285,7 +286,21 @@ Mrs::Mrs()
 		// show message
 		gui1->appendLog("Robot is OFF! Plot thread NOT started!");
 	}
+
 	
+	//-----------------------------------------------------------
+	// start the joystick thread
+	//-----------------------------------------------------------
+	if (1 == true) // FIXME: check if joystick is connected and readable
+	{
+		if (joystick->isRunning() == false)
+		{
+			gui1->appendLog("Starting joystick thread...", false);
+			joystick->start();
+			gui1->appendLog("Joystick thread started.");
+		}
+	}
+
 
 	// FixMe: check if the camera is on (getStatus)
 	//-------------------------------
@@ -597,6 +612,43 @@ Mrs::~Mrs()
 
 	
 	//--------------------------------
+	// quit the joystick thread
+	//--------------------------------
+	if (joystick->isRunning() == true)
+	{
+		gui1->appendLog("Stopping joystick thread...");
+		
+		// my own stop routine :-)
+		joystick->stop();
+		
+		// slowing thread down
+		joystick->setPriority(QThread::IdlePriority);
+		joystick->quit();
+		
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((joystick->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (joystick->isFinished() == true)
+		{
+			gui1->appendLog("Joystick thread stopped.");
+		}
+		else
+		{
+			gui1->appendLog("Terminating joystick thread because it doesn't answer...");
+			joystick->terminate();
+			joystick->wait(1000);
+			gui1->appendLog("Joystick thread terminated.");
+		}
+	}
+
+	
+	//--------------------------------
 	// quit the plotThread
 	//--------------------------------
 	if (plotThread->isRunning() == true)
@@ -631,8 +683,7 @@ Mrs::~Mrs()
 			gui1->appendLog("Plot thread terminated.");
 		}
 	}
-	
-	
+
 
 
 	//--------------------------------
@@ -776,6 +827,8 @@ Mrs::~Mrs()
 	delete laserThread;
 	//delete winLIRC;
 	delete netThread;
+	delete joystick;
+	delete plotThread;
 	delete cam1;
 	delete inifile1;
 	delete obstCheckThread;

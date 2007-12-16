@@ -17,6 +17,7 @@
 //#include "laser.h"
 #include "sick.h"
 #include "laserThread.h"
+#include "joystick.h"
 //-------------------------------------------------------------------
 #include <QtGui>
 #include <QSplashScreen>
@@ -139,6 +140,7 @@ class Mrs : public QObject
 		NetworkThread *netThread;
 		LaserThread *laserThread;
 		SpeakThread *speakThread;
+		Joystick *joystick;
 		QString commaSeparator;
 		bool robotIsOn; //! Stores the state of the robots circuit. TRUE, when the cirvuit is ON.
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
