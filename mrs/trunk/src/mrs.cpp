@@ -244,7 +244,7 @@ Mrs::Mrs()
 	else
 	{
 		// show message
-		gui1->appendLog("Robot is OFF! Sensor thread NOT started!");
+		gui1->appendLog("Sensor thread NOT started!");
 	}
 
 
@@ -264,7 +264,7 @@ Mrs::Mrs()
 	else
 	{
 		// show message
-		gui1->appendLog("Robot is OFF! Obstacle check thread NOT started!");
+		gui1->appendLog("Obstacle check thread NOT started!");
 	}
 
 
@@ -284,7 +284,7 @@ Mrs::Mrs()
 	else
 	{
 		// show message
-		gui1->appendLog("Robot is OFF! Plot thread NOT started!");
+		gui1->appendLog("Plot thread NOT started!");
 	}
 
 	
@@ -336,6 +336,12 @@ Mrs::Mrs()
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
 	connect(laserThread, SIGNAL( laserDataComplete(float *, int *) ), gui1, SLOT( refreshLaserView(float *, int *) ));
+	
+	//----------------------------------------------------------------------------
+	// connect joystick signals to "show sensor data"
+	// (Whenever the joystick is moved, show the result in the GUI)
+	//----------------------------------------------------------------------------
+	connect(joystick, SIGNAL(joystickMoved(int, int)), gui1, SLOT(showJoystickAxes(int, int)));
 	
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
