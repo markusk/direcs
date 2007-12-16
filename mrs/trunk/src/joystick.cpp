@@ -190,8 +190,8 @@ void Joystick::run()
 {
 	axes = 2;
 	buttons = 2;
-	axisNumber = 0;
-	axisValue = 0;
+	axisButtonNumber = 0;
+	axisButtonValue = 0;
 
 	
 	// TODO: put filename numbers to ini-file
@@ -213,7 +213,7 @@ void Joystick::run()
 
 	//qDebug("Driver version is %d.%d.%d.\n", version >> 16, (version >> 8) & 0xff, version & 0xff);
 
-	qDebug("Joystick (%s) has %d axes (", name, axes);
+	//qDebug("Joystick (%s) has %d axes (", name, axes);
 	/*
 	for (i = 0; i < axes; i++)
 	{
@@ -222,7 +222,7 @@ void Joystick::run()
 	*/
 	//puts(")");
 
-	qDebug("and %d buttons (", buttons);
+	//qDebug("and %d buttons (", buttons);
 	/*
 	for (i = 0; i < buttons; i++)
 		printf("%s%s", i > 0 ? ", " : "", button_names[btnmap[i] - BTN_MISC]);
@@ -275,13 +275,16 @@ void Joystick::run()
 		switch(js.type & ~JS_EVENT_INIT)
 		{
 		case JS_EVENT_BUTTON:
-			button[js.number] = js.value;
+			axisButtonNumber = js.number;
+			if (js.value == 0)
+				emit joystickButtonPressed(axisButtonNumber, false);
+			if (js.value == 1)
+				emit joystickButtonPressed(axisButtonNumber, true);
 			break;
 		case JS_EVENT_AXIS:
-			//axis[js.number] = js.value;
-			axisNumber = js.number;
-			axisValue = js.value;
-			emit joystickMoved(axisNumber, axisValue);
+			axisButtonNumber = js.number;
+			axisButtonValue = js.value;
+			emit joystickMoved(axisButtonNumber, axisButtonValue);
 			break;
 		}
 
