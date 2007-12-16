@@ -42,7 +42,7 @@ class LaserThread : public QThread
 
 
 	signals:
-		/*! emits a pointer to the array with the 180 laser values (distances) */
+		/*! Emits a pointer to the array with the 180 laser values (distances) */
 		void laserDataComplete(float *laserScannerValues, int *laserScannerFlags);
 
 
