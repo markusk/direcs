@@ -347,7 +347,11 @@ Mrs::Mrs()
 	// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
 	//----------------------------------------------------------------------------
 	connect(joystick, SIGNAL(joystickMoved(int, int)), gui1, SLOT(showJoystickAxes(int, int)));
+	connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
+	
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui1, SLOT(showJoystickButtons(int, bool)));
+	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
+	
 	
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
@@ -8564,12 +8568,14 @@ void Mrs::enableRemoteControlListening(bool status)
 			gui1->appendLog("Network thread stopped.");
 		}
 		
-		if (joystick->isRunning() == true)
-		{
-			gui1->appendLog("Stopping joystick thread...", false);
-			joystick->stop();
-			gui1->appendLog("Joystick thread stopped.");
-		}
+		//
+		// NOT stopping joystick thread!
+		// It' still nice to see it in the GUI, when being moved, :-)
+		// So just dosconnect the Signal from the receiver here.
+		// TODO: connect again, when needed!
+		// FIXME: Object::disconnect: No such signal Mrs::joystickMoved(int,int)
+		//this->disconnect(SIGNAL(joystickMoved(int, int)));
+		//this->disconnect(SIGNAL(joystickButtonPressed(int, bool)));
 	}
 }
 
@@ -8668,6 +8674,83 @@ void Mrs::executeRemoteCommand(QString command)
 		motors->setMotorSpeed(2, newSpeed);
 		gui1->setSliderMotorSpeed(2, newSpeed);
 		return;
+	}
+}
+
+
+void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
+{
+	// TODO: put axis numbers to ini-file
+	if (axisNumber == 2) // Y axis
+	{
+		//gui1->appendLog("<font color=\"#0000FF\">Y achse</front>");
+	}
+		
+	
+	if (axisNumber == 3) // X axis
+	{
+		//gui1->appendLog("<font color=\"#0000FF\">X achse</front>");
+	}
+}
+
+
+void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
+{
+	static bool toggle0 = false;
+	static bool toggle1 = false;
+	static bool toggle2 = false;
+	static bool toggle3 = false;
+	static bool toggle4 = false;
+	static bool toggle5 = false;
+	static bool toggle10 = false;
+	static bool toggle11 = false;
+	
+	
+	// TODO: put button numbers to ini-file
+	switch (buttonNumber)
+	{
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 10:
+			if (buttonState==true)
+			{
+				if (toggle10 == false)
+				{
+					toggle10=true;
+					gui1->appendLog("<font color=\"#0000FF\">Button 10 ON</front>");
+				}
+				else
+				{
+					toggle10=false;
+					gui1->appendLog("<font color=\"#0000FF\">Button 10 OFF</front>");
+				}
+			}
+			break;
+		case 11:
+			if (buttonState==true)
+			{
+				if (toggle11 == false)
+				{
+					toggle11=true;
+					gui1->appendLog("<font color=\"#0000FF\">Button 11 ON</front>");
+				}
+				else
+				{
+					toggle11=false;
+					gui1->appendLog("<font color=\"#0000FF\">Button 11 OFF</front>");
+				}
+			}
+			break;
 	}
 }
 
