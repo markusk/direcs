@@ -35,17 +35,16 @@ LaserThread::LaserThread()
 LaserThread::~LaserThread()
 {
 	stopped = false;
-	
-	// shutdown laser
-	// the parameter '0' is unused!!
-	carmen_laser_shutdown(0);
-	
 	//QMutexLocker locker(&mutex); // make this class thread-safe
 }
 
 
 void LaserThread::stop()
 {
+	// shutdown laser
+	// (the parameter '0' is not in use!)
+	carmen_laser_shutdown(0);
+	
 	stopped = true;
 	numReadings = 0;
 }
