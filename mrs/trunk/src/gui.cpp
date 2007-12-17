@@ -1450,7 +1450,7 @@ void Gui::initializePlots()
 	// time
 	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
-	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
+	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
 	QColor col = Qt::red;
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -1473,7 +1473,7 @@ void Gui::initializePlots()
 	// time
 	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
-	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 2000.0, 400);
+	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
 	col = Qt::blue;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
