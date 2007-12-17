@@ -70,6 +70,12 @@ class Joystick : public QThread
 		~Joystick();
 		void stop();
 		virtual void run();
+		
+		/*!
+		Returns the state of a connected joystick.
+		@return true, if connected
+		*/
+		bool isConnected();
 
 
 	signals:
@@ -99,9 +105,6 @@ class Joystick : public QThread
 		uint16_t btnmap[KEY_MAX - BTN_MISC + 1];
 		uint8_t axmap[ABS_MAX + 1];
 		
-		QString axis_names[ABS_MAX + 1];
-		QString button_names[KEY_MAX - BTN_MISC + 1];
-	
 		int *axis;
 		char *button;
 		struct js_event js;
