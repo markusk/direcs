@@ -109,6 +109,12 @@ class Mrs : public QObject
 		void executeRemoteCommand(QString command);
 		
 		/**
+		This slot executes commands from a connected joystick.
+		*/
+		void executeJoystickCommand(int axisNumber, int axisValue);
+		void executeJoystickCommand(int buttonNumber, bool buttonState);
+		
+		/**
 		This slot enables or disables the simulation mode.
 		@param status
 		*/
