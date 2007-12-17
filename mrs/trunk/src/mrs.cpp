@@ -289,16 +289,21 @@ Mrs::Mrs()
 
 	
 	//-----------------------------------------------------------
-	// start the joystick thread
+	// check if joystick is connected
 	//-----------------------------------------------------------
-	if (1 == true) // FIXME: check if joystick is connected and readable
+	if (joystick->isConnected())
 	{
+		// start the joystick thread
 		if (joystick->isRunning() == false)
 		{
 			gui1->appendLog("Starting joystick thread...", false);
 			joystick->start();
 			gui1->appendLog("Joystick thread started.");
 		}
+	}
+	else
+	{
+		gui1->appendLog("Joystick thread NOT started!");
 	}
 
 
@@ -8518,27 +8523,37 @@ void Mrs::readSettings()
 
 void Mrs::enableRemoteControlListening(bool status)
 {
-	//-----------------------------------------------------------
-	// start the network thread (getting commands via network)
-	//-----------------------------------------------------------
 	if (status == true)
 	{
-		//if (robotIsOn == true)
-		//{
+		//-----------------------------------------------------------
+		// start the network thread (getting commands via network)
+		//-----------------------------------------------------------
 		if (netThread->isRunning() == false)
 		{
 			gui1->appendLog("Starting network thread...", false);
 			netThread->start();
 			gui1->appendLog("Network thread started.");
 		}
-		/*	
-		}
-			else
+		
+		
+		//-----------------------------------------------------------
+		// check if joystick is connected
+		//-----------------------------------------------------------
+		if (joystick->isConnected())
+		{
+			// start the joystick thread
+			if (joystick->isRunning() == false)
 			{
-				// show message
-				gui1->appendLog("<font color=\"#FF0000\">Robot is OFF! Network thread NOT started!</font>");
+				gui1->appendLog("Starting joystick thread...", false);
+				joystick->start();
+				gui1->appendLog("Joystick thread started.");
 			}
-		*/
+		}
+		else
+		{
+			gui1->appendLog("Joystick thread NOT started!");
+		}
+
 	}
 	else
 	{
@@ -8547,6 +8562,13 @@ void Mrs::enableRemoteControlListening(bool status)
 			gui1->appendLog("Stopping network thread...", false);
 			netThread->stop();
 			gui1->appendLog("Network thread stopped.");
+		}
+		
+		if (joystick->isRunning() == true)
+		{
+			gui1->appendLog("Stopping joystick thread...", false);
+			joystick->stop();
+			gui1->appendLog("Joystick thread stopped.");
 		}
 	}
 }
