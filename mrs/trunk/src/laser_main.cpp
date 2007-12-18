@@ -45,7 +45,7 @@ void set_default_parameters(sick_laser_p laser, int laser_num)
   laser->settings.range_dist = SICK_RANGE80M;
   laser->settings.laser_num = laser_num;
   // TODO: different to read_settings ?!?
-  strcpy(laser->settings.device_name, "/dev/ttyUSB0");
+  strcpy(laser->settings.device_name, "/dev/ttyUSB1");
   laser->settings.detect_baudrate = TRUE;
   laser->settings.use_highspeed = FALSE;
   laser->settings.start_baudrate = 9600;
@@ -215,7 +215,7 @@ void read_parameters(void)
 	//--------------------------
 	// Markus:
 	// TODO: read settings from ini file
-	dev1 = "/dev/ttyUSB0";
+	dev1 = "/dev/ttyUSB1";
 	dev2 = "none";
 	dev3 = "none";
 	dev4 = "none";
