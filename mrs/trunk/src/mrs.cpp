@@ -8680,28 +8680,146 @@ void Mrs::executeRemoteCommand(QString command)
 
 void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 {
-	// TODO: put axis numbers to ini-file
-	if (axisNumber == 2) // Y axis
-	{
-		//gui1->appendLog("<font color=\"#0000FF\">Y achse</front>");
-	}
-		
+	int speed = 0;
 	
-	if (axisNumber == 3) // X axis
+	
+	//
+	// Y axis
+	//
+	if (axisNumber == JOYSTICKAXISY)
 	{
-		//gui1->appendLog("<font color=\"#0000FF\">X achse</front>");
+		//------------------
+		// DRIVE backward
+		//------------------
+		if (axisValue > 0)
+		{
+			speed = (axisValue / JOYSTICKDIVISOR);
+			
+			motors->setMotorSpeed(1, speed);
+			motors->setMotorSpeed(2, speed);
+			
+			gui1->setSliderMotorSpeed(1, speed);
+			gui1->setSliderMotorSpeed(2, speed);
+			
+			if (robotDrives == false)
+			{
+				drive(START);
+			}
+			
+			drive(BACKWARD);
+			
+			return;
+		}
+		
+		//------------------
+		// DRIVE forward
+		//------------------
+		if (axisValue < 0)
+		{
+			speed = (-axisValue / JOYSTICKDIVISOR);
+			
+			motors->setMotorSpeed(1, speed);
+			motors->setMotorSpeed(2, speed);
+			
+			gui1->setSliderMotorSpeed(1, speed);
+			gui1->setSliderMotorSpeed(2, speed);
+			
+			if (robotDrives == false)
+			{
+				drive(START);
+			}
+			
+			drive(FORWARD);
+			
+			return;
+		}
+		
+		//------------------
+		// STOP
+		//------------------
+		if (axisValue == 0)
+		{
+			// TODO: WAIT or STOP?
+			drive(WAIT);
+			return;
+		}
+	}
+
+	
+	//
+	// X axis
+	//
+	if (axisNumber == JOYSTICKAXISX) 
+	{
+		//------------------
+		// DRIVE right
+		//------------------
+		if (axisValue > 0)
+		{
+			speed = (axisValue / JOYSTICKDIVISOR);
+			
+			motors->setMotorSpeed(1, speed);
+			motors->setMotorSpeed(2, speed);
+			
+			gui1->setSliderMotorSpeed(1, speed);
+			gui1->setSliderMotorSpeed(2, speed);
+			
+			if (robotDrives == false)
+			{
+				drive(START);
+			}
+			
+			drive(RIGHT);
+			
+			return;
+		}
+		
+		//------------------
+		// DRIVE left
+		//------------------
+		if (axisValue < 0)
+		{
+			speed = (-axisValue / JOYSTICKDIVISOR);
+			
+			motors->setMotorSpeed(1, speed);
+			motors->setMotorSpeed(2, speed);
+			
+			gui1->setSliderMotorSpeed(1, speed);
+			gui1->setSliderMotorSpeed(2, speed);
+			
+			if (robotDrives == false)
+			{
+				drive(START);
+			}
+			
+			drive(LEFT);
+			
+			return;
+		}
+		
+		//------------------
+		// STOP
+		//------------------
+		if (axisValue == 0)
+		{
+			// TODO: WAIT or STOP?
+			drive(WAIT);
+			return;
+		}
 	}
 }
 
 
 void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 {
+	/*
 	static bool toggle0 = false;
 	static bool toggle1 = false;
 	static bool toggle2 = false;
 	static bool toggle3 = false;
 	static bool toggle4 = false;
 	static bool toggle5 = false;
+	*/
 	static bool toggle10 = false;
 	static bool toggle11 = false;
 	
