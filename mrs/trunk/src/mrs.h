@@ -200,6 +200,13 @@ class Mrs : public QObject
 		//! The motor sensors
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
+		
+		// TODO: put axis numbers to ini-file
+		//! Joystick axis numbers
+		static const int JOYSTICKAXISX = 3;
+		static const int JOYSTICKAXISY = 2;
+		//! Joystick conversion divisor. Converts the joystick axis value to the robot speed.
+		static const int JOYSTICKDIVISOR = 128;
 };
 
 #endif
