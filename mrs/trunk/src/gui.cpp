@@ -1504,12 +1504,14 @@ void Gui::showJoystickAxes(int axisNumber, int axisValue)
 
 void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
 {
+	/*
 	static bool toggle0 = false;
 	static bool toggle1 = false;
 	static bool toggle2 = false;
 	static bool toggle3 = false;
 	static bool toggle4 = false;
 	static bool toggle5 = false;
+	*/
 	static bool toggle10 = false;
 	static bool toggle11 = false;
 	
