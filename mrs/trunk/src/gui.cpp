@@ -1276,6 +1276,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
+	/*
 	if (ui.checkBoxHiResView->checkState() == Qt::Checked) // this is NOT default
 	{
 		//
@@ -1290,17 +1291,15 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			//draw the first real line
 			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
 			
-			/*
 			// fill the spaces between the lines
-			painter.rotate(0.25);
-			painter.drawLine(0, 0, 0, measuredLaserDistance);
-			painter.rotate(0.25);
-			painter.drawLine(0, 0, 0, measuredLaserDistance);
-			painter.rotate(0.25);
-			painter.drawLine(0, 0, 0, measuredLaserDistance);
-			painter.rotate(0.25);
-			*/
-				
+			//painter.rotate(0.25);
+			//painter.drawLine(0, 0, 0, measuredLaserDistance);
+			//painter.rotate(0.25);
+			//painter.drawLine(0, 0, 0, measuredLaserDistance);
+			//painter.rotate(0.25);
+			//painter.drawLine(0, 0, 0, measuredLaserDistance);
+			//painter.rotate(0.25);	
+			
 			// set tool tip of the line to the distance
 			//laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
 			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
@@ -1308,6 +1307,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	}
 	else
 	{
+	*/
 		//
 		// draw LOW RES (faster and default)
 		//
@@ -1323,7 +1323,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			//laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
 			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
 		}
-	}
+	//}
 
 	//------------------------------------------------------
 	// Third: draw some help lines / distances / dimensons
@@ -1896,11 +1896,13 @@ void Gui::drawBotPicture()
 
 qreal Gui::calculateLaserXpos()
 {
+	// value for normal drawing (from center to border of control)
 	return ui.graphicsViewLaser->width() / 2;
 }
 
 
 qreal Gui::calculateLaserYpos()
 {
+	// value for normal drawing (from center to border of control)
 	return laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
 }
