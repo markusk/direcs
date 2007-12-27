@@ -370,16 +370,16 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValues[167]	= 4.0;
 		laserScannerValues[168]	= 4.0;
 		laserScannerValues[169]	= 4.0;
-		laserScannerValues[170]	= 0.25;
-		laserScannerValues[171]	= 0.25;
-		laserScannerValues[172]	= 0.25;
-		laserScannerValues[173]	= 0.25;
-		laserScannerValues[174]	= 0.25;
-		laserScannerValues[175]	= 0.25;
-		laserScannerValues[176]	= 0.25;
-		laserScannerValues[177]	= 0.25;
-		laserScannerValues[178]	= 0.25;
-		laserScannerValues[179]	= 0.25;
+		laserScannerValues[170]	= 0.1;
+		laserScannerValues[171]	= 0.1;
+		laserScannerValues[172]	= 0.1;
+		laserScannerValues[173]	= 0.1;
+		laserScannerValues[174]	= 0.1;
+		laserScannerValues[175]	= 0.1;
+		laserScannerValues[176]	= 0.1;
+		laserScannerValues[177]	= 0.1;
+		laserScannerValues[178]	= 0.1;
+		laserScannerValues[179]	= 0.1;
 	}
 	else
 	{
