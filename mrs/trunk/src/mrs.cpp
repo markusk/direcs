@@ -176,9 +176,10 @@ Mrs::Mrs()
 		gui1->appendLog(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 		
 		splash->showMessage(QObject::tr("Reading settings..."), somewhere, splashColor);
-		//--------------------
+		
+		//====================
 		// read all settings
-		//--------------------
+		//====================
 		readSettings();
 	}
 	
@@ -366,6 +367,8 @@ Mrs::Mrs()
 	//---------------------------------------------------------------------
 	// check if laser scanner is enabled by ini-file and than start it
 	//---------------------------------------------------------------------
+	laserThread->setLaserScannerFlag(noLaserScanner);
+	
 	if (noLaserScanner == true)
 	{
 		// disable the control in the GUI

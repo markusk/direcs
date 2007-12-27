@@ -18,6 +18,8 @@ LaserThread::LaserThread()
 	numReadings = 0;
 	stopped = false;
 	simulationMode = false;
+	noLaserScanner = false;
+
 
 
 	// initialisation
@@ -41,9 +43,12 @@ LaserThread::~LaserThread()
 
 void LaserThread::stop()
 {
-	// shutdown laser
-	// (the parameter '0' is not in use!)
-	carmen_laser_shutdown(0);
+	if (noLaserScanner == false)
+	{
+		// shutdown laser
+		// (the parameter '0' is not in use!)
+		carmen_laser_shutdown(0);
+	}
 	
 	stopped = true;
 	numReadings = 0;
@@ -57,7 +62,7 @@ void LaserThread::run()
 
 	
 	// initialze the laser scanner
-	if ((initialized == false) && (simulationMode == false))
+	if ((initialized == false) && (simulationMode == false) && (noLaserScanner == false))
 	{
 		initialized = true;
 		
@@ -390,4 +395,10 @@ void LaserThread::setSimulationMode(bool status)
 		// for refreshing the gui (deleting simulated laser lines)
 		emit laserDataComplete(&laserScannerValues[0], &laserScannerFlags[0]);
 	}
+}
+
+
+void LaserThread::setLaserScannerFlag(bool flag)
+{
+	noLaserScanner = flag;
 }
