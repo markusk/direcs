@@ -1308,6 +1308,11 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	else
 	{
 	*/
+		QLineF line;
+		QPointF pos;
+		qreal x = 0;
+		int length = 0;
+		
 		//
 		// draw LOW RES (faster and default)
 		//
@@ -1317,11 +1322,22 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 			// get value from laser and
 			// draw the lines at every 1°
 			measuredLaserDistance = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
+			
+			
+//			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
+			pos = laserLineList->at(i)->scenePos();
+			line = laserLineList->at(i)->line();
+			length = line.length();
+			
+			x = pos.x() - length;
 			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
 			
 			// set tool tip of the line to the distance
-			//laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
-			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
+			//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
+			//laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
+			
+//			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
+			laserLineList->at(i)->setToolTip(QString("x=%1 (%2 deg)").arg(pos.x()).arg(i));
 		}
 	//}
 
@@ -1713,6 +1729,7 @@ void Gui::switchToAngleView()
 {
 	qreal x = calculateLaserXpos();
 	qreal y = calculateLaserYpos();
+	QLineF line;
 	
 	
 	//for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
@@ -1727,7 +1744,10 @@ void Gui::switchToAngleView()
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
-		laserLineList->at(i)->setPos(x, y);
+//		laserLineList->at(i)->setPos(x, y);
+		
+		line = laserLineList->at(i)->line();
+		laserLineList->at(i)->setPos((x - line.length()), y);
 	}
 }
 
