@@ -353,6 +353,10 @@ Mrs::Mrs()
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui1, SLOT(showJoystickButtons(int, bool)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 	
+	// let the GUI show messages in the log
+	// FIXME: no such signal Joystick:: emitMessage(QString) at runtime=?!
+	connect(joystick, SIGNAL(emitMessage(Qstring)), gui1, SLOT(appendLog(QString, bool, bool)));
+	
 	
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
