@@ -86,6 +86,12 @@ class Joystick : public QThread
 
 	signals:
 		/*!
+		Sends a string to the GUI log.
+		@param text is the message to be emitted
+		*/
+		void emitMessage(QString text);
+		
+		/*!
 		Emits a signal when an joystick move event occured.
 		@param axisButtonNumber is the number of the joysticks axis
 		@param axisButtonValue is the axis value

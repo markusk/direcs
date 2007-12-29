@@ -91,8 +91,7 @@ void Joystick::run()
 	{
 		if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event))
 		{
-			// TODO: put this to slot appendLog from GUI
-			qDebug("\nerror reading joystick device / file.");
+			emit emitMessage("Error reading joystick device!");
 			stopped = true;
 			return;
 		}
@@ -122,8 +121,8 @@ bool Joystick::isConnected()
 {
 	if ((fd = open(joystickPort.toAscii(), O_RDONLY)) < 0)
 	{
-		// TODO: put this to slot appendLog from GUI
-		qDebug( QString(QString("NO joystick found at %1").arg(joystickPort)).toAscii() );
+		//qDebug( QString(QString("NO joystick found at %1").arg(joystickPort)).toAscii() );
+		emit emitMessage( QString(QString("NO joystick found at %1").arg(joystickPort)).toAscii() );
 		stopped = true;
 		return false;
 	}
