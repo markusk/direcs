@@ -98,18 +98,6 @@ class Gui : public QMainWindow
 		void showMotorStatus(unsigned char motor, unsigned char power, unsigned char direction);
 		
 		/**
-		Appends text to the main log in the main window.
-		@param text is the text to be displayed.
-		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
-		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
-		*/
-		void appendLog(QString text, bool CR=true, bool sayIt=false);
-		/*
-		// just a quick and dirty wrapper static method for old CARMEN standard C code!
-		static void appLog(QString text);
-		*/
-		
-		/**
 		@return The slider value of a motor speed.
 		@param motor is the motor number.
 		*/
@@ -180,6 +168,18 @@ class Gui : public QMainWindow
 
 	
 	public slots:
+		/**
+		Appends text to the main log in the main window.
+		@param text is the text to be displayed.
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
+		 */
+		void appendLog(QString text, bool CR=true, bool sayIt=false);
+		/*
+		// just a quick and dirty wrapper static method for old CARMEN standard C code!
+		static void appLog(QString text);
+		*/
+		
 		/**
 		Shows the new picture from the cam (live). This slot is called from the camera thread.
 		@sa CamThread()
