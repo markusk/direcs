@@ -72,6 +72,12 @@ class Joystick : public QThread
 		virtual void run();
 		
 		/*!
+		Sets the joystick port.
+		@param port is the joystick port (e.g. /dev/input/js0)
+		 */
+		void setPort(QString port);
+		
+		/*!
 		Returns the state of a connected joystick.
 		@return true, if connected
 		*/
@@ -97,6 +103,7 @@ class Joystick : public QThread
 	private:
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
+		QString joystickPort;
 		int fd, i;
 		unsigned char axes;
 		unsigned char buttons;
