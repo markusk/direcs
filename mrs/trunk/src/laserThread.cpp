@@ -288,9 +288,9 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValues[85]	= 5.0;
 		laserScannerValues[86]	= 9.0;
 		laserScannerValues[87]	= 9.0;
-		laserScannerValues[88]	= 9.0;
-		laserScannerValues[89]	= 9.0;
-		laserScannerValues[90]	= 2.5;
+		laserScannerValues[88]	= 2.0;
+		laserScannerValues[89]	= 2.0;
+		laserScannerValues[90]	= 2.0;
 		laserScannerValues[91]	= 2.5;
 		laserScannerValues[92]	= 2.5;
 		laserScannerValues[93]	= 2.5;
