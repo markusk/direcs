@@ -1222,36 +1222,30 @@ void Mrs::readSettings()
 	}
 
 
-	/*
-	
-	//
-	// only for CMUCAM
-	//
-	
 	//---------------------------------------------------------------------
 	// read setting
-	QString serialPortCamera;
-	serialPortCamera = inifile1->readString("Config", "serialPortCamera");
+	QString joystickPort = inifile1->readString("Config", "joystickPort");
 	
-	if (serialPortCamera == "error2")
+	if (joystickPort == "error2")
 	{
 		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
-		if (serialPortCamera == "error1")
+		if (joystickPort == "error1")
 		{
-			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPort\" not found in ini-file!</font>");
+			gui1->appendLog("<font color=\"#FF0000\">Value \"joystickPort\" not found in ini-file!</font>");
 		}
 		else
 		{
 			//
 			// everything okay
 			//
-			gui1->appendLog(QString("Serial port for camera set to %1.").arg(serialPortCamera));
+			// tell the  obstacle check thread the distance
+			joystick->setPort(joystickPort);
+			gui1->appendLog(QString("Joystick port set to %1.").arg(joystickPort));
 		}
 	}
-	*/
 	
 	
 	//---------------------------------------------------------------------
