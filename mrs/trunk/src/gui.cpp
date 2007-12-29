@@ -1228,7 +1228,7 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 
 void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 {
-	int measuredLaserDistance = 0;
+	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 	/*
 	QPen orgPen = laserLineList->at(0)->pen();
@@ -1276,70 +1276,36 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
-	/*
-	if (ui.checkBoxHiResView->checkState() == Qt::Checked) // this is NOT default
+	QLineF line;
+	QPointF pos;
+	qreal x = 0;
+	int length = 0;
+	
+	// /get the data from 180° to 0° (right to left!!)
+	for (int i=0; i<laserLineList->size(); i++)
 	{
-		//
-		// draw HIGH RES
-		//
-		// get the data from 0 to 180° (left to right)
-		for (int i=0; i<laserLineList->size(); i++)
-		{
-			// get value from laser
-			measuredLaserDistance = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
-
-			//draw the first real line
-			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
-			
-			// fill the spaces between the lines
-			//painter.rotate(0.25);
-			//painter.drawLine(0, 0, 0, measuredLaserDistance);
-			//painter.rotate(0.25);
-			//painter.drawLine(0, 0, 0, measuredLaserDistance);
-			//painter.rotate(0.25);
-			//painter.drawLine(0, 0, 0, measuredLaserDistance);
-			//painter.rotate(0.25);	
-			
-			// set tool tip of the line to the distance
-			//laserLineList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
-			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
-		}
-	}
-	else
-	{
-	*/
-		QLineF line;
-		QPointF pos;
-		qreal x = 0;
-		int length = 0;
+		// get value from laser and
+		// draw the lines at every 1°
+		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
 		
-		//
-		// draw LOW RES (faster and default)
-		//
-		// /get the data from 180° to 0° (right to left!!)
-		for (int i=0; i<laserLineList->size(); i++)
-		{
-			// get value from laser and
-			// draw the lines at every 1°
-			measuredLaserDistance = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
-			
-			
-//			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
-			pos = laserLineList->at(i)->scenePos();
-			line = laserLineList->at(i)->line();
-			length = line.length();
-			
-			x = pos.x() - length;
-			laserLineList->at(i)->setLine(0, 0, 0, measuredLaserDistance);
-			
-			// set tool tip of the line to the distance
-			//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(measuredLaserDistance));
-			//laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
-			
-//			laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
-			laserLineList->at(i)->setToolTip(QString("x=%1 (%2 deg)").arg(pos.x()).arg(i));
-		}
-	//}
+		
+		laserLineList->at(i)->setLine(0, 0, 0, laserLineLength);
+		/*
+		pos = laserLineList->at(i)->scenePos();
+		line = laserLineList->at(i)->line();
+		length = line.length();
+		
+		x = pos.x() - length;
+		laserLineList->at(i)->setLine(0, 0, 0, laserLineLength);
+		*/
+		
+		// set tool tip of the line to the distance
+		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
+		//laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
+		laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
+//		laserLineList->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
+	}
+
 
 	//------------------------------------------------------
 	// Third: draw some help lines / distances / dimensons
@@ -1654,15 +1620,15 @@ void Gui::createLaserScannerObjects()
 	/*
 	//TODO: HIGHRES MODE with 4x180 lines
 	//draw the first real line
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.drawLine(0, 0, 0, laserLineLength);
 	
 	// fill the spaces between the lines
 	painter.rotate(0.25);
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.drawLine(0, 0, 0, laserLineLength);
 	painter.rotate(0.25);
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.drawLine(0, 0, 0, laserLineLength);
 	painter.rotate(0.25);
-	painter.drawLine(0, 0, 0, measuredLaserDistance);
+	painter.drawLine(0, 0, 0, laserLineLength);
 	painter.rotate(0.25);
 	*/
 
