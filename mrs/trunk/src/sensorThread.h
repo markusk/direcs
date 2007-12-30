@@ -19,6 +19,8 @@
 //-------------------------------------------------------------------
 
 /**
+\brief Responsible for getting all data from all sensors.
+
 The SensorThread class is a thread, responsible for getting all data from all sensors (infrared, ultrasonic, motor current sensors and wheel encoders) and to store them.
 It also gives read/write access to this data.
 */
