@@ -14,6 +14,9 @@
 class SensorThread;
 
 
+/*!
+Check if there is an obstacle in front of every IR-Sensor and emit the number of the sensor(s). This value contains the sum of all SENSORx values!
+*/
 class ObstacleCheckThread : public QThread
 {
     Q_OBJECT
