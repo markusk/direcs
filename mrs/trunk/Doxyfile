@@ -4,8 +4,8 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = mrs.kdevelop
-PROJECT_NUMBER         = 0.1
-OUTPUT_DIRECTORY       = /home/markus/develop/sourceforge/mrs/mrs/trunk/doc
+PROJECT_NUMBER         = 0.2
+OUTPUT_DIRECTORY       = /home/markus/develop/sourceforge/mrs/trunk/doc
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 USE_WINDOWS_ENCODING   = NO
@@ -25,8 +25,7 @@ ABBREVIATE_BRIEF       = "The $name class" \
 ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
-STRIP_FROM_PATH        = /home/markus/ \
-                         /home/markus/develop/subversion/applications
+STRIP_FROM_PATH        = /home/markus/develop/sourceforge/
 STRIP_FROM_INC_PATH    = 
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = NO
@@ -83,7 +82,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /home/markus/develop/sourceforge/mrs/mrs/trunk/
+INPUT                  = /home/markus/develop/sourceforge/mrs/trunk
 FILE_PATTERNS          = *.c \
                          *.cc \
                          *.cxx \
