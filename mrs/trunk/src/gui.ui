@@ -2096,6 +2096,122 @@ p, li { white-space: pre-wrap; }
      <string>Zoom:</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label18_4" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>590</y>
+      <width>132</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Largest free area start:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label18_5" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>610</y>
+      <width>129</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Largest free area end:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label18_6" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>630</y>
+      <width>129</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Center of free area:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblLaserFrontFreeStart" >
+    <property name="geometry" >
+     <rect>
+      <x>150</x>
+      <y>590</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>0 deg</string>
+    </property>
+    <property name="alignment" >
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblLaserFrontFreeEnd" >
+    <property name="geometry" >
+     <rect>
+      <x>150</x>
+      <y>610</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>0 deg</string>
+    </property>
+    <property name="alignment" >
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblLaserFrontFreeCenter" >
+    <property name="geometry" >
+     <rect>
+      <x>150</x>
+      <y>630</y>
+      <width>45</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>0 deg</string>
+    </property>
+    <property name="alignment" >
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label18_7" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>650</y>
+      <width>129</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Preferred direction:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblPreferredDirection" >
+    <property name="geometry" >
+     <rect>
+      <x>135</x>
+      <y>650</y>
+      <width>60</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>BACKWARD</string>
+    </property>
+    <property name="alignment" >
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QPushButton" name="btnSimulate" >
    <property name="geometry" >
