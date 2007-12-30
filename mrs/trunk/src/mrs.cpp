@@ -311,7 +311,7 @@ Mrs::Mrs()
 	}
 
 
-	// FixMe: check if the camera is on (getStatus)
+	// FIXME: check if the camera is on (getStatus)
 	//-------------------------------
 	// enable the camera controls
 	//-------------------------------
@@ -328,6 +328,12 @@ Mrs::Mrs()
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
 	//------------------------------------------------------------------
 	connect(obstCheckThread, SIGNAL(obstacleDetected(int)), SLOT(logicalUnit(int)));
+	
+	// show the angle where to drive in a GUI label
+	connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui1, SLOT(showLaserFrontAngles(int, int, int)));
+	
+	// show the preferred driving direction in a GUI label
+	connect(this, SIGNAL(showPreferredDirection(QString)), gui1, SLOT(showPreferredDirection(QString)));
 	
 	//----------------------------------------------------------------------------
 	// connect remote control button from gui to remote control method here
@@ -926,11 +932,12 @@ void Mrs::logicalUnit(int sensorAlarm)
 		alarmCounter++;
 		return;
 	}
-	
+
 
 	if (sensorAlarm == NONE)
 	{
-
+		emit showPreferredDirection("FORWARD");
+		
 		if (robotDrives == true)
 		{
 			gui1->appendLog("No obstacle in front of any sensor. :-)");
@@ -950,6 +957,51 @@ void Mrs::logicalUnit(int sensorAlarm)
 		return;
 	}
 
+
+	if (sensorAlarm == OBSTACLEFRONTLEFT)
+	{
+		emit showPreferredDirection("RIGHT");
+		
+		if (robotDrives == true)
+		{
+			gui1->appendLog(QString("<b>Obstacle %1 front left. Turning right.</b>").arg(alarmCounter));
+			
+			//----------------
+			// drive right
+			//----------------
+			drive(RIGHT);
+			motors->flashlight(OFF);
+			
+			// store this sensor alarm value
+			lastSensorValue = sensorAlarm;
+			// reset the alarm counter
+			alarmCounter = 0;
+		}
+		return;
+	}
+
+
+	if (sensorAlarm == OBSTACLEFRONTRIGHT)
+	{
+		emit showPreferredDirection("LEFT");
+		
+		if (robotDrives == true)
+		{
+			gui1->appendLog("<b>Obstacle front right. Turning left.</b>");
+			
+			//----------------
+			// drive left
+			//----------------
+			drive(LEFT);
+			motors->flashlight(OFF);
+			
+			// store this sensor alarm value
+			lastSensorValue = sensorAlarm;
+			// reset the alarm counter
+			alarmCounter = 0;
+		}
+		return;
+	}
 }
 
 

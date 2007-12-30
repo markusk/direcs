@@ -15,7 +15,9 @@ class SensorThread;
 
 
 /*!
-Check if there is an obstacle in front of every IR-Sensor and emit the number of the sensor(s). This value contains the sum of all SENSORx values!
+\brief Checks if there is an obstacle in front of any sensor.
+
+ Emits the number of the sensor(s). This value contains the sum of all SENSORx values!
 */
 class ObstacleCheckThread : public QThread
 {
@@ -44,6 +46,7 @@ class ObstacleCheckThread : public QThread
 
 	signals:
 		void obstacleDetected(int sensors);
+		void newDrivingAngleSet(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
 
 
 	private:
@@ -60,6 +63,8 @@ class ObstacleCheckThread : public QThread
 		
 		int largestFreeAreaStart;
 		int largestFreeAreaEnd;
+		
+		int centerOfFreeWay;
 		
 		/*! defines the minimum slot in degrees, where the robot has to fit thru */
 		int robotSlot;
@@ -79,6 +84,7 @@ class ObstacleCheckThread : public QThread
 		// DONT CHANGE THIS NUMBERS!
 		// THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!
 		//
+		// TODO: make these values nicer
 		static const short int SENSOR1 = 1;
 		static const short int SENSOR2 = 2;
 		static const short int SENSOR3 = 4;
@@ -90,6 +96,11 @@ class ObstacleCheckThread : public QThread
 		
 		// ultrasonic sensor
 		static const short int SENSOR16 = 256;
+		
+		// TODO: make these values nicer
+		static const short int OBSTACLEFRONTLEFT = 512;
+		static const short int OBSTACLEFRONTRIGHT = 1024;
+		
 		// Value if no sensor has a value to react
 		static const short int NONE = 0;
 };

@@ -568,9 +568,6 @@ void Gui::showDrivenDistance(int sensor, int distance)
 {
 	// show distance value in centimeters in a text label
 	// erwartet den value als distance (z.B. in cm)!
-	QString str;
-
-	
 	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR2))
 	{
 	  return;
@@ -890,6 +887,20 @@ void Gui::showMotorStatus(unsigned char motor, unsigned char power, unsigned cha
 			return;
 			break;
 	}
+}
+
+
+void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay)
+{
+	ui.lblLaserFrontFreeStart->setText(QString("%1 deg").arg(largestFreeAreaStart));
+	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
+	ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
+}
+
+
+void Gui::showPreferredDirection(QString direction)
+{
+	ui.lblPreferredDirection->setText(direction);
 }
 
 

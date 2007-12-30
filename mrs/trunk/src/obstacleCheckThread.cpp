@@ -17,6 +17,8 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 
 	largestFreeAreaStart = -1;
 	largestFreeAreaEnd = -1;
+
+	centerOfFreeWay = 90;
 	
 	robotSlot = 1;
 }
@@ -35,13 +37,6 @@ void ObstacleCheckThread::stop()
 
 void ObstacleCheckThread::run()
 {
-	//------------------------------------------------------------
-	// Check if there is an obstacle in front of every IR-Sensor
-	// and emit the number of the sensor(s).
-	// This value contains the sum of all SENSORx values!
-	//------------------------------------------------------------
-	
-	
 	//  start "threading"...
 	while (!stopped)
 	{
@@ -53,6 +48,9 @@ void ObstacleCheckThread::run()
 		
 		// This value contains the sum of all SENSORx values!
 		sensorValue = NONE;
+		
+		// reset "drive to angle" to 90° -> FORWARD
+		centerOfFreeWay = 90;
 	
 		
 		//-------------------------------------------------------------
@@ -152,7 +150,7 @@ void ObstacleCheckThread::run()
 		//   First  e m i t  of the sensor data
 		//
 		//qDebug("obstacleCheckThread:  emit sensorValue: %d", sensorValue);
-		emit obstacleDetected(sensorValue);
+//		emit obstacleDetected(sensorValue);
 		//=======================================================================================================
 	
 		
@@ -237,7 +235,7 @@ void ObstacleCheckThread::run()
 					}
 				}
 			}
-		} // for
+		}
 		
 		
 		//------------------------------------------------------------
@@ -267,30 +265,44 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP III
 		//----------------------------------------------------------------------------
-		// Find the center of the widest free area for the robot
+		// Find the center of the largest free area for the robot
 		//----------------------------------------------------------------------------
+		centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
 		
-		// set the "center flag"
-		laserThread->setLaserScannerFlag( (largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2)), CENTEROFLARGESTFREEWAY);
+		// FIXME: what, if = -1 ?!?
 		
-		
+		// set flag to "light green"
+		laserThread->setLaserScannerFlag(centerOfFreeWay, CENTEROFLARGESTFREEWAY);
+
+
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP IV
 		//----------------------------------------------------------------------------
-		// Find the widest free area for the robot 	TODO: is this step still necessary?!?
+		// Emit the result
 		//----------------------------------------------------------------------------
-		// robotSlot value!
+		// FIXME: correct some lines above!!
+		if (centerOfFreeWay == -1)
+			centerOfFreeWay == 90;
+
+		emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWay);
+
+		if (centerOfFreeWay < 90)
+		{
+			// obstacle LEFT, drive RIGHT
+			emit obstacleDetected(OBSTACLEFRONTLEFT);
+		}
 		
-		//----------------------------------------------------------------------------
-		// LASER SCANNER DATA ANALYSIS - STEP V
-		//----------------------------------------------------------------------------
-		// Find the longest distance within the free space for the robot.
-		//----------------------------------------------------------------------------
+		if (centerOfFreeWay > 90)
+		{
+			// obstacle RIGHT, drive LEFT
+			emit obstacleDetected(OBSTACLEFRONTRIGHT);
+		}
 		
-		
-		
-		// Todo: check to emit the laser scanner data
-		// emit laser data?!?
+		if (centerOfFreeWay == 90)
+		{
+			// obstacle FRONTMIDDLE
+			emit obstacleDetected(NONE);
+		}
 	}
 	
 	stopped = false;

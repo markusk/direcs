@@ -29,7 +29,9 @@ class Gui;
 //-------------------------------------------------------------------
 
 /**
-The main class of the whole robot programm. All objects are created here. This method also starts the GUI.
+\brief The main class of the whole robot programm.
+ 
+ All objects are created here. This method also starts the GUI and its splash screen.
 */
 class Mrs : public QObject
 {
@@ -125,6 +127,9 @@ class Mrs : public QObject
 		*/
 		void finishSplash();
 
+	signals:
+		void showPreferredDirection(QString direction);
+
 
 	private:
 		/**
@@ -187,9 +192,16 @@ class Mrs : public QObject
 		static const short int SENSOR8 = 128;
 		
 		//! The ultrasonic sensor
+		// TODO: make these values nicer
 		static const short int SENSOR16 = 256;
+		
 		//! Value, if no sensor has a value to react
 		static const short int NONE = 0;
+		
+		// TODO: make these values nicer
+		static const short int OBSTACLEFRONTLEFT = 512;
+		static const short int OBSTACLEFRONTRIGHT = 1024;
+		
 		
 		static const unsigned char CLOCKWISE        = 0;  //! Motor direction "CLOCKWISE"
 		static const unsigned char COUNTERCLOCKWISE = 1;  //! Motor direction "COUNTERCLOCKWISE"

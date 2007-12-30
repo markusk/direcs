@@ -50,7 +50,7 @@ class Laser;
 
 
 /**
-The class for all GUI actions
+\brief The class for all GUI actions
 */
 class Gui : public QMainWindow
 {
@@ -227,6 +227,20 @@ class Gui : public QMainWindow
 		Shows the joystick button states when pressed.
 		*/
 		void showJoystickButtons(int buttonNumber, bool buttonState);
+		
+		/**
+		Shows the angles of the free area where to drive in lables.
+		@param largestFreeAreaStart
+		@param largestFreeAreaEnd
+		@param centerOfFreeWay
+		*/
+		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
+		
+		/**
+		Shows the preferred driving direction in a lable.
+		@param direction can be FORWARD, BACKWARD...
+		*/
+		void showPreferredDirection(QString direction);
 
 
 	protected:
