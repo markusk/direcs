@@ -292,6 +292,9 @@ Mrs::Mrs()
 	//-----------------------------------------------------------
 	// check if joystick is connected
 	//-----------------------------------------------------------
+	// let the GUI show messages in the log
+	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
+	
 	if (joystick->isConnected())
 	{
 		// start the joystick thread
@@ -352,10 +355,6 @@ Mrs::Mrs()
 	
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui1, SLOT(showJoystickButtons(int, bool)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
-	
-	// let the GUI show messages in the log
-	// FIXME: no such signal Joystick:: emitMessage(QString) at runtime=?!
-	connect(joystick, SIGNAL(emitMessage(Qstring)), gui1, SLOT(appendLog(QString, bool, bool)));
 	
 	
 	//----------------------------------------------------------------------------
@@ -951,18 +950,6 @@ void Mrs::logicalUnit(int sensorAlarm)
 		return;
 	}
 
-	
-	// ++++++++++++++++++++++++++++++++++++
-	//
-	//  START pasting logic code HERE !!!
-	//
-	// ++++++++++++++++++++++++++++++++++++
-	
-	// ++++++++++++++++++++++++++++++++++++
-	//
-	//  STOP pasting logic code HERE !!!
-	//
-	// ++++++++++++++++++++++++++++++++++++
 }
 
 
