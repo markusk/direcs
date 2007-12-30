@@ -11,6 +11,8 @@ class QextSerialPort;
 
 
 /**
+\brief Provides the low level communication between the robots microcontroller and the laptop.
+
 This class is used for the low level communication between the robots microcontroller and the laptop. It is based on qextserialport for the serial communication.
 */
 class InterfaceAvr : public QObject

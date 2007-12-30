@@ -6,6 +6,8 @@
 //-------------------------------------------------------------------
 
 /**
+\brief Handles the access to the global ini-file.
+
 This class handles the access to the global ini-file where all settings are stored.
 */
 class Inifile : public QObject

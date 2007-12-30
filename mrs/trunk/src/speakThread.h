@@ -20,9 +20,9 @@
 
 
 /*!
-\brief Speak a text with festival.
+\brief Speaks a text with festival.
 
-(Also removes HTML-Tags internally).
+Also removes HTML-Tags from the text to speak.
 */
 class SpeakThread : public QThread
 {

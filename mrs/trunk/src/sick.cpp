@@ -702,26 +702,26 @@ int sick_testBaudrate(sick_laser_p laser, int brate)
 
 int sick_detect_baudrate(sick_laser_p laser)
 {
-  fprintf(stderr, "INFO: detect connected baudrate: ...... 9600");
+  fprintf(stderr, "INFO: detect connected baudrate: ...... 9600\n");
   if(sick_testBaudrate(laser, 9600)) {
     fprintf(stderr, "\n");
     return(9600);
   } 
   else {
-    fprintf(stderr, "\rINFO: detect connected baudrate: ...... 19200");
+    fprintf(stderr, "\rINFO: detect connected baudrate: ...... 19200\n");
     if(sick_testBaudrate(laser, 19200)) {
       fprintf(stderr, "\n");
       return(19200);
     } 
     else {
-      fprintf(stderr, "\rINFO: detect connected baudrate: ...... 38400");
+      fprintf(stderr, "\rINFO: detect connected baudrate: ...... 38400\n");
       if(sick_testBaudrate(laser, 38400)) {
 	fprintf(stderr, "\n");
 	return(38400);
       } 
       else {
 	if(laser->settings.use_highspeed) {
-	  fprintf(stderr, "\rINFO: detect connected baudrate: ...... 500000");
+	  fprintf(stderr, "\rINFO: detect connected baudrate: ...... 500000\n");
 	  if(sick_testBaudrate(laser, 500000)) {
 	    fprintf(stderr, "\n");
 	    return(500000);
@@ -833,7 +833,7 @@ int sick_connect_device(sick_laser_p laser)
 	sick_install_settings(laser);
 	sick_allocate_laser(laser);
 	
-	fprintf(stderr, "INFO: connect TTY %-14s ...... ", laser->dev.ttyport);
+	fprintf(stderr, "INFO: connecting Laser Scanner to %-14s ...... \n", laser->dev.ttyport);
 	sick_serial_connect(laser);
 	
 	if(laser->dev.fd == -1)
@@ -862,8 +862,7 @@ int sick_start_laser(sick_laser_p laser)
 	int brate = 0;
 
 
-	// TODO: change std output
-	fprintf(stderr, "###########################################\n");
+	//fprintf(stderr, "###########################################\n");
 	/*
 	fprintf(stderr, "INFO: select mode ..................... ");
 	#ifdef CARMEN_LASER_USE_SELECT

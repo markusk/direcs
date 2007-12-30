@@ -9,6 +9,8 @@
 //-------------------------------------------------------------------
 
 /**
+\brief Gives access to the motors of the robot.
+
 The Motor class gives access to the motors of the robot.
 */
 class Motor : public QObject

@@ -6,6 +6,8 @@
 //-------------------------------------------------------------------
 
 /**
+\brief Delivers a initialisation for the robot's circuits
+
 This class delivers a initialisation for the robot's circuits. It also checks, if the robot is ON or OFF.
 */
 class Circuit
