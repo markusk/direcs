@@ -139,6 +139,9 @@ void SensorThread::run()
 				servoPosition2 = 8;
 			*/
 			
+
+/*
+FIXME: temporarily removed from robot!!
 			
 			//------------------------------------------------------
 			// read value from sensor 1
@@ -160,11 +163,10 @@ void SensorThread::run()
 			value = 0;
 	
 		
-			/*
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//+++++++++  end servo test  +++++++++++++++++++++++++++++++++++++++++++++
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			*/
+
 			
 			//------------------------------------------------------
 			// read value from sensor 2
@@ -183,7 +185,7 @@ void SensorThread::run()
 			iRSensorValue[SENSOR2] = value;
 			//qDebug("received value sensor2: %d", value);
 			value = 0;
-			
+*/	
 			
 			//------------------------------------------------------
 			// read value from sensor 3
@@ -222,7 +224,8 @@ void SensorThread::run()
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
 			
-			
+/*
+FIXME: temporarily removed from robot!!
 			//------------------------------------------------------
 			// read value from sensor 5
 			//------------------------------------------------------
@@ -240,7 +243,7 @@ void SensorThread::run()
 			iRSensorValue[SENSOR5] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
-			
+*/
 			
 			//------------------------------------------------------
 			// read value from sensor 6
@@ -261,7 +264,8 @@ void SensorThread::run()
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
 			
-			
+/*
+FIXME: temporarily removed from robot!!
 			//------------------------------------------------------
 			// read value from sensor 7
 			//------------------------------------------------------
@@ -298,7 +302,7 @@ void SensorThread::run()
 			iRSensorValue[SENSOR8] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
-	
+*/
 	
 			//====================================================================
 	
