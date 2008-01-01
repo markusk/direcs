@@ -282,7 +282,7 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// FIXME: correct some lines above!!
 		if (centerOfFreeWay == -1)
-			centerOfFreeWay == 90;
+			centerOfFreeWay = 90;
 
 		emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWay);
 
