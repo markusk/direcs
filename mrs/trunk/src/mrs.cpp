@@ -1,16 +1,9 @@
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <stdio.h>
-#include <stdlib.h>
-
+//#ifdef HAVE_CONFIG_H
+//#include <config.h>
+//#endif
 
 #include "mrs.h"
 
-//
-// 01.01.2007: 4550 lines of code
-//
 
 QSplashScreen *splash;
 Qt::Alignment somewhere = Qt::AlignHCenter | Qt::AlignBottom;
@@ -374,17 +367,11 @@ Mrs::Mrs()
 	
 
 	//---------------------------------------------------------------------
-	// check if laser scanner is enabled by ini-file and than start it
+	// check if laser is connected and than start it
 	//---------------------------------------------------------------------
-	laserThread->setLaserScannerFlag(noLaserScanner);
+	splash->showMessage(QObject::tr("Starting laser scanner module..."), somewhere, splashColor);
 	
-	if (noLaserScanner == true)
-	{
-		// disable the control in the GUI
-		gui1->enableLaserScannerControls(false);
-		gui1->appendLog("Laser scanner module NOT started (see ini-file)!");
-	}
-	else
+	if (laserThread->isConnected())
 	{
 		// TODO: nice exit point and error message
 		if (!QGLFormat::hasOpenGL())
@@ -394,7 +381,6 @@ Mrs::Mrs()
 		}
 		
 		
-		splash->showMessage(QObject::tr("Starting laser scanner module..."), somewhere, splashColor);
 		
 		if (laserThread->isRunning() == false)
 		{
@@ -412,6 +398,12 @@ Mrs::Mrs()
 			gui1->appendLog("Obstacle check thread started.");
 		}
 		// FIXME: test test test end!!!
+	}
+	else
+	{
+		// disable the control in the GUI
+		gui1->enableLaserScannerControls(false);
+		gui1->appendLog("<font color=\"#FF0000\">Laser scanner not found. Thread NOT started!</font>");
 	}
 }
 
@@ -1812,35 +1804,6 @@ void Mrs::setSimulationMode(bool status)
 	}
 	else
 	{
-		if (obstCheckThread->isRunning() == true)
-		{
-			gui1->appendLog("Stopping obstacle check thread...", false);
-			obstCheckThread->stop();
-			gui1->appendLog("Obstacle check thread stopped.");
-		}
-		
-		if (plotThread->isRunning() == true)
-		{
-			gui1->appendLog("Stopping Plot thread...", false);
-			plotThread->stop();
-			gui1->appendLog("Plot thread stopped.");
-		}
-		
-		if (sensorThread->isRunning() == true)
-		{
-			gui1->appendLog("Stopping Sensor thread...", false);
-			sensorThread->stop();
-			gui1->appendLog("Sensor thread stopped.");
-		}
-		
-		if (laserThread->isRunning() == true)
-		{
-			gui1->appendLog("Stopping Laser thread...", false);
-			laserThread->stop();
-			gui1->appendLog("Laser thread stopped.");
-		}
-		
-		
 		gui1->appendLog("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
 }
