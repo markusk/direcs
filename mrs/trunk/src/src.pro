@@ -46,7 +46,6 @@ SOURCES += camThread.cpp \
  joystick.cpp
 RESOURCES = ../mrs.qrc
 DEFINES = _TTY_POSIX_
-TARGET = ../bin/mrs
 CONFIG += debug \
 warn_on \
 qt
@@ -93,3 +92,5 @@ LIBS += -L/usr/local/qwt/lib/ \
 -lqwt \
 -lcv \
 -lhighgui
+TARGET = ../bin/mrs
+
