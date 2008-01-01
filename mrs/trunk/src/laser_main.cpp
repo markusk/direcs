@@ -39,27 +39,28 @@ int quit_signal = 0;
 
 void set_default_parameters(sick_laser_p laser, int laser_num)
 {
-  // TODO: read default settings from ini-file
-  laser->settings.type = LMS;
-  laser->settings.range_res = CM;
-  laser->settings.range_dist = SICK_RANGE80M;
-  laser->settings.laser_num = laser_num;
-  // TODO: different to read_settings ?!?
-  strcpy(laser->settings.device_name, "/dev/ttyUSB1");
-  laser->settings.detect_baudrate = TRUE;
-  laser->settings.use_highspeed = FALSE;
-  laser->settings.start_baudrate = 9600;
-  laser->settings.set_baudrate = 38400;
-  laser->settings.databits = 8;
-  laser->settings.parity = N;
-  laser->settings.stopbits = 1;
-  laser->settings.hwf = 0;
-  laser->settings.swf = 0;
-  laser->settings.angle_range = 180;
-  laser->settings.angle_resolution = RES_1_00_DEGREE;
-  laser->settings.laser_flipped = 0;
-  laser->settings.use_remission = 0;
+	// TODO: read default settings from ini-file
+	laser->settings.type = LMS;
+	laser->settings.range_res = CM;
+	laser->settings.range_dist = SICK_RANGE80M;
+	laser->settings.laser_num = laser_num;
+	// TODO: different to read_parameters ?!?
+	strcpy(laser->settings.device_name, "/dev/ttyUSB1");
+	laser->settings.detect_baudrate = TRUE;
+	laser->settings.use_highspeed = FALSE;
+	laser->settings.start_baudrate = 9600;
+	laser->settings.set_baudrate = 38400;
+	laser->settings.databits = 8;
+	laser->settings.parity = N;
+	laser->settings.stopbits = 1;
+	laser->settings.hwf = 0;
+	laser->settings.swf = 0;
+	laser->settings.angle_range = 180;
+	laser->settings.angle_resolution = RES_1_00_DEGREE;
+	laser->settings.laser_flipped = 0;
+	laser->settings.use_remission = 0;
 }
+
 
 void check_parameter_settings(sick_laser_p laser)
 {
