@@ -44,21 +44,23 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//ui.progressBarSensor16->raise();
 	
 	
-	// change the value of the spinBoxServo1 when the value of the sliderPositionServo1 changes
-	connect(ui.sliderPositionServo1, SIGNAL(valueChanged(int)), ui.spinBoxPositionServo1, SLOT(setValue(int)));
-	//connect(ui.sliderPositionServo2, SIGNAL(valueChanged(int)), ui.spinBoxPositionServo2, SLOT(setValue(int)));
+	// change the value of the spinBox when the value of the corrsponding slider changes
+	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), ui.spinBoxBotSlotTolerance, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxPositionServo1, SIGNAL(valueChanged(int)), ui.sliderPositionServo1, SLOT(setValue(int)));
-	//connect(ui.spinBoxPositionServo2, SIGNAL(valueChanged(int)), ui.sliderPositionServo2, SLOT(setValue(int)));
+	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), ui.sliderBotSlotTolerance, SLOT(setValue(int)));
 	
 	// change the value of the spinBoxBotSlot when the value of the corresponding slider changes
 	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), ui.spinBoxBotSlot, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), ui.sliderBotSlot, SLOT(setValue(int)));
-	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 	
-	// TODO: to init the value for the obstacle check thread emit something?!?
-	//emit (); ?!?
+	// and give the new value to the obstacle check thread!
+	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	// and give the new value to the obstacle check thread!
+	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
+	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
+	
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
@@ -95,12 +97,14 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//createLaserDistanceObjects();
 	
 	// zoom into the laser lines by factor 3
-	//on_sliderZoom_valueChanged(3);
+	ui.sliderZoom->setValue(5);
 }
 
 
 Gui::~Gui()
 {
+	delete scannerSplash;
+	delete pixmapBot2;
 	delete pixmapBot1;
 	
 	/*
@@ -277,15 +281,6 @@ void Gui::on_spinBoxObstacle_valueChanged(int value)
 	// TODO: change to signal slot auto connection
 	obstCheckThread->setMinObstacleDistance(value);
 	ui.sliderObstacle->setValue(value);
-}
-
-
-void Gui::on_sliderPositionServo1_valueChanged(int position)
-{
-	//servos->setServoPosition(SERVO1, position);
-	
-	// pseudo code to avoid complier warning
-	position++;
 }
 
 
@@ -931,6 +926,18 @@ int Gui::getSliderObstacleLaserScannerValue()
 }
 
 
+int Gui::getSliderBotSlotValue()
+{
+	return ui.sliderBotSlot->value();
+}
+
+
+int Gui::getSliderSlotTolerance()
+{
+	return ui.sliderBotSlotTolerance->value();
+}
+
+
 Qt::CheckState Gui::getCheckBoxSaveSettings()
 {
 	return ui.checkBoxSaveSettings->checkState();
@@ -963,14 +970,6 @@ void Gui::setSliderObstacleLaserScannerValue(int value)
 {
 	ui.sliderObstacleLaserScanner->setValue(value);
 }
-
-
-/*
-void Gui::setSliderPositionServo1(int value)
-{
-	ui.sliderPositionServo1->setValue(value);
-}
-*/
 
 
 void Gui::setCheckBoxSaveSettings(Qt::CheckState state)
@@ -1186,18 +1185,10 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 {
 	if (state == Qt::Checked)
 	{
-		//------------
-		// angle view
-		//------------
-		ui.checkBoxHiResView->setEnabled(true);
 		switchToAngleView();
 	}
 	else
 	{
-		//------------
-		// flat view
-		//------------
-		ui.checkBoxHiResView->setEnabled(false);
 		switchToFlatView();
 	}
 }
@@ -1205,6 +1196,29 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 
 void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 {
+	static bool showLaserSplash = true;
+	
+	
+	if (showLaserSplash == true)
+	{
+		// first line is longer than 0 m ! (a values was measured)
+		if (laserLineList->at(0)->line().length() > 0)
+		{
+			showLaserSplash = false;
+			scannerSplash->setVisible(false);
+			pixmapBot1->setVisible(true);
+			pixmapBot2->setVisible(true);
+			
+			for (int i=laserLineList->size()-1; i>=0; i--)
+			{
+				// reset transform or rotation
+				laserLineList->at(i)->setVisible(true);
+			}
+		}
+	}
+	
+	
+	
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 	/*
@@ -1253,10 +1267,12 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
+	/*
 	QLineF line;
 	QPointF pos;
 	qreal x = 0;
 	int length = 0;
+	*/
 	
 	// /get the data from 180° to 0° (right to left!!)
 	for (int i=0; i<laserLineList->size(); i++)
@@ -1558,7 +1574,17 @@ void Gui::createLaserScannerObjects()
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
 	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 
+	//=======================================================
+	// add "searching laser scanner" pic "splash"
+	//=======================================================
+	// add items to the scene
+	scannerSplash = new QGraphicsPixmapItem(QPixmap(":/images/images/sick_bl2.png"));
+	// add the pixmap
+	scene->addItem(scannerSplash);
+	// center it
+	scannerSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height() / 2) - 74));
 
+	
 	//=======================================================
 	// add robot picture1
 	//=======================================================
@@ -1581,7 +1607,8 @@ void Gui::createLaserScannerObjects()
 	// horizontal center
 	pixmapBot1->setPos(laserXPos, laserYPos);
 	
-	// add the pixmap
+	// add the pixmap (invisible)
+	pixmapBot1->setVisible(false);
 	scene->addItem(pixmapBot1);
 	
 	// FIXME doesn't work
@@ -1638,6 +1665,7 @@ void Gui::createLaserScannerObjects()
 		laserLineList->append(line);
 		
 		// add line to scene
+		line->setVisible(false);
 		scene->addItem(line);
 	}
 	
@@ -1658,7 +1686,8 @@ void Gui::createLaserScannerObjects()
 	// horizontal center
 	pixmapBot2->setPos(laserXPos, laserYPos);
 	
-	// add the pixmap
+	// add the pixmap (invisible)
+	pixmapBot2->setVisible(false);
 	scene->addItem(pixmapBot2);
 
 	

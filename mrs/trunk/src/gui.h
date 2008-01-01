@@ -119,6 +119,11 @@ class Gui : public QMainWindow
 		int getSliderBotSlotValue();
 		
 		/**
+		@return The slider value of an angle for the tolorance value.
+		*/
+		int getSliderSlotTolerance();
+		
+		/**
 		@return The state of a Qt checkBox.
 		*/
 		Qt::CheckState getCheckBoxSaveSettings();
@@ -142,9 +147,6 @@ class Gui : public QMainWindow
 		@param value is distance in cm.
 		*/
 		void setSliderObstacleLaserScannerValue(int value);
-		
-		//void setSliderPositionServo1(int value);
-		//void setSliderPositionServo2(int value);
 		
 		/**
 		Enables or disables the camera control in the GUI, whether a camera was found or not.
@@ -285,7 +287,6 @@ class Gui : public QMainWindow
 		void on_sliderObstacle_valueChanged(int);
 		void on_spinBoxObstacle_valueChanged(int);
 		void on_sliderObstacleLaserScanner_valueChanged(int);
-		void on_sliderPositionServo1_valueChanged(int);
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
 		void on_btnDrive_clicked();
@@ -374,6 +375,7 @@ class Gui : public QMainWindow
 		QList <QGraphicsPathItem*> *laserDistanceLineList;	/** A pointer to a QList of pointers to the shown distances from the laser lines (kind of coordinate system) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
+		QGraphicsPixmapItem *scannerSplash;
 
 
 		
