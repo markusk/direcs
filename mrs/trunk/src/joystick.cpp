@@ -121,7 +121,6 @@ bool Joystick::isConnected()
 {
 	if ((fd = open(joystickPort.toAscii(), O_RDONLY)) < 0)
 	{
-		//qDebug( QString(QString("NO joystick found at %1").arg(joystickPort)).toAscii() );
 		emit emitMessage( QString(QString("No joystick found at %1").arg(joystickPort)).toAscii() );
 		stopped = true;
 		return false;
