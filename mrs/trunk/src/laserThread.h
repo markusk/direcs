@@ -17,7 +17,10 @@
 #include <QThread>
 //-------------------------------------------------------------------
 
-
+/*!
+\brief Handles all the Laser scanners.
+It checks, if they are connected, accesses them and emits all read data via Signal. It also provides a simulation mode.
+*/
 class LaserThread : public QThread
 {
     Q_OBJECT
@@ -68,7 +71,7 @@ class LaserThread : public QThread
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 200; // Default: 500 ms
+		static const unsigned long THREADSLEEPTIME = 150; // Default: 150 ms
 		
 		/*!
 		Defines the size of the laserScannerValue[] array
