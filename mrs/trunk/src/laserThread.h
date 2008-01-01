@@ -13,8 +13,7 @@
 #define LASERTHREAD_H
 
 //-------------------------------------------------------------------
-//#include "laser.h"
-#include "laser_main.h" // new CARMEN module
+#include "laser_main.h" // modified CARMEN module
 #include <QThread>
 //-------------------------------------------------------------------
 
@@ -40,10 +39,12 @@ class LaserThread : public QThread
 		void setLaserScannerFlag(bool flag);
 		
 		/*!
-		Returns the state of a connected laser scanner.
+		Returns the state of a connected laser scanner. Also sets the serial port.
+		@param serialPortLaserscannerFront is the port of the front Laser scanner
+		@param serialPortLaserscannerRear is the port of the rear Laser scanner
 		@return true, if connected
 		*/
-		bool isConnected();
+		bool isConnected(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear);
 	
 	
 	public slots:

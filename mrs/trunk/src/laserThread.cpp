@@ -382,12 +382,12 @@ void LaserThread::setLaserScannerFlag(bool flag)
 }
 
 
-bool LaserThread::isConnected()
+bool LaserThread::isConnected(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear)
 {
 	//-----------------------------------------------------
 	// try to start the (former CARMEN) laser module here!
 	//-----------------------------------------------------
-	if ( carmen_laser_start() != 0 )
+	if ( carmen_laser_start(serialPortLaserscannerFront, serialPortLaserscannerRear) != 0 )
 	{
 		laserScannerIsConnected = false;
 		// stopping laser thread
