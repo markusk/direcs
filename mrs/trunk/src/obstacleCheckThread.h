@@ -43,6 +43,12 @@ class ObstacleCheckThread : public QThread
 		*/
 		void setRobotSlot(int angle);
 
+		// TODO:
+		/*!
+		This slots set the tolorance for the angle, where.... [to be defined]...Slot tolerance or drive-90°-forward-tolerance?
+		*/
+		void setRobotSlotTolerance(int tolerance);
+
 
 	signals:
 		void obstacleDetected(int sensors);
@@ -66,9 +72,12 @@ class ObstacleCheckThread : public QThread
 		
 		int centerOfFreeWay;
 		
-		/*! defines the minimum slot in degrees, where the robot has to fit thru */
+		/*! defines the minimum slot in degrees, where the robot has to fit through */
 		int robotSlot;
 		
+		/*! and this is the tolerance */
+		int robotSlotTolerance;
+	
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;

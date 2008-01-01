@@ -21,6 +21,7 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	centerOfFreeWay = -1;
 	
 	robotSlot = 1;
+	robotSlotTolerance = 0;
 }
 
 
@@ -222,7 +223,8 @@ void ObstacleCheckThread::run()
 				// Actual angle has "free" sight (no obstacles)!
 				// If next angle is NOT free, set this one as "end"
 				// and angle slot is wide enough for the robot
-				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && ((angle - actualFreeAreaStart) >=robotSlot) )
+				// TODO: robotSlot *plus* tolerance?!?
+				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && ((angle - actualFreeAreaStart) >= robotSlot) )
 				{
 					// store current free area end
 					actualFreeAreaEnd = angle;
@@ -296,24 +298,33 @@ void ObstacleCheckThread::run()
 			// obstacles EVERYWHERE IN FRONT
 			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT);
 		}
-		
-		if ( (centerOfFreeWay < 90) && (centerOfFreeWay > -1) )
+		else
 		{
-			// obstacle LEFT, drive RIGHT
-			emit obstacleDetected(OBSTACLEFRONTLEFT);
-		}
-		
-		if (centerOfFreeWay > 90)
-		{
-			// obstacle RIGHT, drive LEFT
-			emit obstacleDetected(OBSTACLEFRONTRIGHT);
-		}
-		
-		// TODO: add/substract tolerance value !
-		if (centerOfFreeWay == 90)
-		{
-			// obstacle FRONTMIDDLE
-			emit obstacleDetected(NONE);
+			// value within the tolerance range?
+			if (
+				( (centerOfFreeWay < 90) && (centerOfFreeWay >= (90 - robotSlotTolerance)) ) ||
+				( (centerOfFreeWay > 90) && (centerOfFreeWay <= (90 + robotSlotTolerance)) )
+			   )
+			{
+				// NO obstacle
+				emit obstacleDetected(NONE);
+			}
+			else
+			{
+				if ( (centerOfFreeWay < 90) && (centerOfFreeWay > -1) )
+				{
+					// obstacle LEFT
+					emit obstacleDetected(OBSTACLEFRONTLEFT);
+				}
+				else
+				{
+					if (centerOfFreeWay > 90)
+					{
+						// obstacle RIGHT
+						emit obstacleDetected(OBSTACLEFRONTRIGHT);
+					}
+				}
+			}
 		}
 	}
 	
@@ -336,6 +347,12 @@ void ObstacleCheckThread::setMinObstacleDistanceLaser(int value)
 void ObstacleCheckThread::setRobotSlot(int angle)
 {
 	robotSlot = angle;
+}
+
+
+void ObstacleCheckThread::setRobotSlotTolerance(int tolerance)
+{
+	robotSlotTolerance = tolerance;
 }
 
 
