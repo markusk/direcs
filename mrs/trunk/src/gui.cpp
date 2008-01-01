@@ -289,18 +289,6 @@ void Gui::on_sliderPositionServo1_valueChanged(int position)
 }
 
 
-void Gui::on_btnClearLog_clicked()
-{
-	ui.textEditLog->clear();
-}
-
-
-void Gui::on_btnClearNetworkLog_clicked()
-{
-	ui.textEditNetworkLog->clear();
-}
-
-
 void Gui::on_btnReset_clicked()
 {
 	// reset the circuit (motors off etc.)
@@ -1011,6 +999,7 @@ void Gui::enableLaserScannerControls(bool state)
 void Gui::on_btnSavePicture_clicked()
 {
 	saveCamImage();
+	appendLog("Picture saved");
 }
 
 
@@ -1044,36 +1033,12 @@ void Gui::on_btnAutoSavePicture_clicked()
 }
 
 
-void Gui::on_btnClearPicture_clicked()
-{
-	// clear the picture
-	//ui.label->clear();
-	//ui.labelCmucam->setText("Camera");
-	
-	/*
-	// fill the camera label with a black image
-	QImage blackImage = QImage(350, 286, QImage::Format_RGB32);
-	// fill image with color palette entry 0
-	blackImage.fill(0); // Fixme: Funktioniert nicht!! Wie füllt man ein Bild?!?
-	
-	setCamImage(blackImage);
-	*/
-}
-
-
 void Gui::setCamImage(IplImage* frame)
 {
-	//	ui.labelCmucam->setPixmap(QPixmap::fromImage(image.scaled(350, 350, Qt::KeepAspectRatio, Qt::FastTransformation)));
 	
-	// show pic only live, when ckecked in GUI
-	if ( ui.checkBoxCamPicLive->isChecked() )
-	{
-		// set image 
-		ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
-		
-		// refresh picture
-		ui.frameCamera->updateGL();
-	}
+	// set image
+	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
+	// ui.labelCmucam->setPixmap(QPixmap::fromImage(image.scaled(350, 350, Qt::KeepAspectRatio, Qt::FastTransformation)));
 	
 	
 	// save pic, when ckecked in GUI
@@ -1098,6 +1063,7 @@ void Gui::saveCamImage(void)
 	//---------------------------------------------------------------------
 	// save image to disk, but not within the same seond (same timestamp)
 	//---------------------------------------------------------------------
+	// FIXME: every second is too intensive!!!
 	if (QDateTime::currentDateTime() != timestamp)
 	{
 		// get the actual date and time
