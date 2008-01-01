@@ -32,10 +32,18 @@ class LaserThread : public QThread
 		float getLaserScannerFlag(int angle);
 		void setLaserScannerFlag(int angle, int flag);
 		int getNumReadings();
+		
 		/*!
-		This method sets the "nolaserScannerFlag". If true, NO Laser Scanner is connected and the CARMEN modules are not started or accessed.
+		This method sets the "nolaserScannerFlag".
+		@param flag is true, when a Laser Scanner <b>is</b> connected and the CARMEN modules <b>are</b> started.
 		*/
 		void setLaserScannerFlag(bool flag);
+		
+		/*!
+		Returns the state of a connected laser scanner.
+		@return true, if connected
+		*/
+		bool isConnected();
 	
 	
 	public slots:
@@ -51,11 +59,11 @@ class LaserThread : public QThread
 
 
 	private:
-		int numReadings;
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
+		bool laserScannerIsConnected;
+		int numReadings;
 		bool simulationMode;
-		bool noLaserScanner;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

@@ -15,11 +15,10 @@
 LaserThread::LaserThread()
 {
 	//QMutexLocker locker(&mutex); // make this class thread-safe
-	numReadings = 0;
 	stopped = false;
+	laserScannerIsConnected = false;
 	simulationMode = false;
-	noLaserScanner = false;
-
+	numReadings = 0;
 
 
 	// initialisation
@@ -36,20 +35,18 @@ LaserThread::LaserThread()
 
 LaserThread::~LaserThread()
 {
-	stopped = false;
+	if (laserScannerIsConnected == true)
+	{
+		// shutdown laser (parameter '0' is not in use)
+		carmen_laser_shutdown(0);
+	}
+	
 	//QMutexLocker locker(&mutex); // make this class thread-safe
 }
 
 
 void LaserThread::stop()
 {
-	if (noLaserScanner == false)
-	{
-		// shutdown laser
-		// (the parameter '0' is not in use!)
-		carmen_laser_shutdown(0);
-	}
-	
 	stopped = true;
 	numReadings = 0;
 }
@@ -57,27 +54,8 @@ void LaserThread::stop()
 
 void LaserThread::run()
 {
-	static bool initialized = false;
 	int laserValue = 0;
 
-	
-	// initialze the laser scanner
-	if ((initialized == false) && (simulationMode == false) && (noLaserScanner == false))
-	{
-		initialized = true;
-		
-		//----------------------------------------------
-		// start the (former CARMEN) laser module here!
-		//----------------------------------------------
-		if ( carmen_laser_start() != 0 )
-		{
-			qDebug("No access to serial port of the laser scanner... Stopping LaserThread!");
-			
-			// stopping laser Thread!
-			stopped = true;
-		}
-	}
-	
 	
 	// check if all 180 beams were read
 	numReadings = 0;
@@ -93,7 +71,7 @@ void LaserThread::run()
 		msleep(THREADSLEEPTIME);
 		
 		
-		if (simulationMode==false)
+		if ( (simulationMode==false) && (laserScannerIsConnected == true) )
 		{
 			// CARMEN laser module
 			laserValue = carmen_laser_run();
@@ -400,5 +378,23 @@ void LaserThread::setSimulationMode(bool status)
 
 void LaserThread::setLaserScannerFlag(bool flag)
 {
-	noLaserScanner = flag;
+	laserScannerIsConnected = flag;
+}
+
+
+bool LaserThread::isConnected()
+{
+	//-----------------------------------------------------
+	// try to start the (former CARMEN) laser module here!
+	//-----------------------------------------------------
+	if ( carmen_laser_start() != 0 )
+	{
+		laserScannerIsConnected = false;
+		// stopping laser thread
+		stopped = true;
+		return false;
+	}
+	
+	laserScannerIsConnected = true;
+	return true;
 }
