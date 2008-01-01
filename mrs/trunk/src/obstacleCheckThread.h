@@ -100,6 +100,7 @@ class ObstacleCheckThread : public QThread
 		// TODO: make these values nicer
 		static const short int OBSTACLEFRONTLEFT = 512;
 		static const short int OBSTACLEFRONTRIGHT = 1024;
+		static const short int OBSTACLESEVERYWHEREINFRONT = 2048;
 		
 		// Value if no sensor has a value to react
 		static const short int NONE = 0;

@@ -201,7 +201,7 @@ class Mrs : public QObject
 		// TODO: make these values nicer
 		static const short int OBSTACLEFRONTLEFT = 512;
 		static const short int OBSTACLEFRONTRIGHT = 1024;
-		
+		static const short int OBSTACLESEVERYWHEREINFRONT = 2048;
 		
 		static const unsigned char CLOCKWISE        = 0;  //! Motor direction "CLOCKWISE"
 		static const unsigned char COUNTERCLOCKWISE = 1;  //! Motor direction "COUNTERCLOCKWISE"

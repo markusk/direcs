@@ -18,7 +18,7 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	largestFreeAreaStart = -1;
 	largestFreeAreaEnd = -1;
 
-	centerOfFreeWay = 90;
+	centerOfFreeWay = -1;
 	
 	robotSlot = 1;
 }
@@ -193,6 +193,8 @@ void ObstacleCheckThread::run()
 		
 		largestFreeAreaStart = -1;
 		largestFreeAreaEnd   = -1;
+	
+		centerOfFreeWay = -1;
 		
 		
 		//--------------------------------------------------------------------------------
@@ -267,12 +269,19 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// Find the center of the largest free area for the robot
 		//----------------------------------------------------------------------------
-		centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
 		
-		// FIXME: what, if = -1 ?!?
-		
-		// set flag to "light green"
-		laserThread->setLaserScannerFlag(centerOfFreeWay, CENTEROFLARGESTFREEWAY);
+		// free area found  :-)
+		if (largestFreeAreaEnd != -1)
+		{
+			// find the center of the largest free area
+			centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
+			
+			// set flag to "light green"
+			laserThread->setLaserScannerFlag(centerOfFreeWay, CENTEROFLARGESTFREEWAY);
+		}
+		else
+		{
+		}
 
 
 		//----------------------------------------------------------------------------
@@ -280,13 +289,15 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// Emit the result
 		//----------------------------------------------------------------------------
-		// FIXME: correct some lines above!!
-		if (centerOfFreeWay == -1)
-			centerOfFreeWay = 90;
-
 		emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWay);
 
-		if (centerOfFreeWay < 90)
+		if (centerOfFreeWay == -1)
+		{
+			// obstacles EVERYWHERE IN FRONT
+			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT);
+		}
+		
+		if ( (centerOfFreeWay < 90) && (centerOfFreeWay > -1) )
 		{
 			// obstacle LEFT, drive RIGHT
 			emit obstacleDetected(OBSTACLEFRONTLEFT);
@@ -298,6 +309,7 @@ void ObstacleCheckThread::run()
 			emit obstacleDetected(OBSTACLEFRONTRIGHT);
 		}
 		
+		// TODO: add/substract tolerance value !
 		if (centerOfFreeWay == 90)
 		{
 			// obstacle FRONTMIDDLE
