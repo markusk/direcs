@@ -39,13 +39,11 @@ int quit_signal = 0;
 
 void set_default_parameters(sick_laser_p laser, int laser_num)
 {
-	// TODO: read default settings from ini-file
 	laser->settings.type = LMS;
 	laser->settings.range_res = CM;
 	laser->settings.range_dist = SICK_RANGE80M;
 	laser->settings.laser_num = laser_num;
-	// TODO: different to read_parameters ?!?
-	strcpy(laser->settings.device_name, "/dev/ttyUSB1");
+	strcpy(laser->settings.device_name, "/dev/tty0"); // only default! real value set in read_settings!
 	laser->settings.detect_baudrate = TRUE;
 	laser->settings.use_highspeed = FALSE;
 	laser->settings.start_baudrate = 9600;
@@ -206,18 +204,22 @@ void interpret_params(sick_laser_p laser, char *dev, char *type, double res, cha
 
 
 // Markus Orignal: void read_parameters(int argc, char **argv)
-void read_parameters(void)
+void read_parameters(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear)
 {
 	char *dev1, *dev2, *dev3, *dev4, *dev5;
 	char *str1, *str2, *str3, *str4, *str5;
 	double res1, res2, res3, res4, res5;
 	double fov1, fov2, fov3, fov4, fov5;
 	char *rem1, *rem2, *rem3, *rem4, *rem5;
-	//--------------------------
 	// Markus:
-	// TODO: read settings from ini file
-	dev1 = "/dev/ttyUSB1";
-	dev2 = "none";
+	QByteArray ba;
+	
+	ba = serialPortLaserscannerFront.toLatin1();
+	dev1 = ba.data();
+	
+	ba = serialPortLaserscannerRear.toLatin1();
+	dev2 = ba.data();
+	
 	dev3 = "none";
 	dev4 = "none";
 	dev5 = "none";
@@ -439,7 +441,7 @@ void  set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t
 
 
 // Markus Orignal: int carmen_laser_start(int argc, char **argv)
-int carmen_laser_start(void)
+int carmen_laser_start(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear)
 {
 	// Markus:
 	int returncode = 0;
@@ -456,7 +458,7 @@ int carmen_laser_start(void)
 	//qDebug("carmen_laser_start, laser->settings.angle_range = %d", laser1.settings.angle_range);
 	
 	// Markus read_parameters(argc, argv);
-	read_parameters();
+	read_parameters(serialPortLaserscannerFront, serialPortLaserscannerRear);
 
 
 	/* start lasers, and start publishing scans */

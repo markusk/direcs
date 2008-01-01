@@ -46,6 +46,7 @@
 #include <string.h>
 #include <math.h>
 #include <QtGlobal>
+#include <QString>
 
 
 /*!
@@ -61,7 +62,7 @@ static const short int LASER5 = 16;
 //
 // declarations
 //
-int carmen_laser_start(void);
+int carmen_laser_start(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear);
 void carmen_laser_shutdown(int x);
 int carmen_laser_run(void);
 void shutdown_laser(int x);
