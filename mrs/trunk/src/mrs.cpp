@@ -1,7 +1,3 @@
-//#ifdef HAVE_CONFIG_H
-//#include <config.h>
-//#endif
-
 #include "mrs.h"
 
 
@@ -98,12 +94,12 @@ Mrs::Mrs()
 	// nomen est omen
 	//------------------------------------------------------------------
 	serialPortMicrocontroller = "error1";
+	serialPortLaserscannerFront = "error1";
 	robotIsOn = false;
 	robotDrives = false;
 	mot1Speed = 0;
 	mot2Speed = 0;
 	minObstDist = 0;
-	noLaserScanner = false;
 	robotSimulationMode = false;
 	
 	//------------------------------------------------------------------
@@ -175,7 +171,7 @@ Mrs::Mrs()
 		//====================
 		readSettings();
 	}
-	
+
 
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
@@ -364,14 +360,15 @@ Mrs::Mrs()
 	connect(gui1, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
 	connect(gui1, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
 	connect(gui1, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
-	
+
 
 	//---------------------------------------------------------------------
 	// check if laser is connected and than start it
 	//---------------------------------------------------------------------
 	splash->showMessage(QObject::tr("Starting laser scanner module..."), somewhere, splashColor);
 	
-	if (laserThread->isConnected())
+
+	if (laserThread->isConnected(serialPortLaserscannerFront, serialPortLaserscannerRear))
 	{
 		// TODO: nice exit point and error message
 		if (!QGLFormat::hasOpenGL())
@@ -381,7 +378,6 @@ Mrs::Mrs()
 		}
 		
 		
-		
 		if (laserThread->isRunning() == false)
 		{
 			gui1->appendLog("Starting Laser thread...", false);
@@ -389,7 +385,7 @@ Mrs::Mrs()
 			gui1->appendLog("Laser thread started.");
 		}
 		
-		// FIXME: test test test start!!!
+
 		if (obstCheckThread->isRunning() == false)
 		{
 			gui1->appendLog("Starting obstacle check thread...", false);
@@ -397,7 +393,6 @@ Mrs::Mrs()
 			obstCheckThread->setMinObstacleDistance(minObstDist);
 			gui1->appendLog("Obstacle check thread started.");
 		}
-		// FIXME: test test test end!!!
 	}
 	else
 	{
@@ -410,7 +405,7 @@ Mrs::Mrs()
 
 Mrs::~Mrs()
 {
-	/*
+/*
 	if (ClientSocket1->Active == true)
 	{
 		ClientSocket1->Close();
@@ -447,7 +442,7 @@ Mrs::~Mrs()
 	else
 	{
 		// THIS SETTING HAS TO BE SAVED ALWAYS!
-		// ("Save the setting, that no settings shoud be saved")
+		// "Save the setting, that no settings shoud be saved"
 		//
 		// save check box status
 		inifile1->writeSetting("Config", "saveOnExit", gui1->getCheckBoxSaveSettings());
@@ -473,6 +468,8 @@ Mrs::~Mrs()
 	}
 
 	
+	// TODO: a universal quit-threads-method
+
 	//--------------------------------
 	// quit the camThread
 	//--------------------------------
@@ -1144,7 +1141,55 @@ void Mrs::readSettings()
 			//
 			// everything okay
 			//
-			gui1->appendLog(QString("Serial port for microcontroller set to %1.").arg(serialPortMicrocontroller));
+			gui1->appendLog(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
+		}
+	}
+
+
+	//---------------------------------------------------------------------
+	// read setting
+	serialPortLaserscannerFront = inifile1->readString("Config", "serialPortLaserscannerFront");
+	
+	if (serialPortLaserscannerFront == "error2")
+	{
+		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+	}
+	else
+	{
+		if (serialPortLaserscannerFront == "error1")
+		{
+			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerFront\" not found in ini-file!</font>");
+		}
+		else
+		{
+			//
+			// everything okay
+			//
+			gui1->appendLog(QString("Serial port for front Laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
+		}
+	}
+
+
+	//---------------------------------------------------------------------
+	// read setting
+	serialPortLaserscannerRear = inifile1->readString("Config", "serialPortLaserscannerRear");
+	
+	if (serialPortLaserscannerRear == "error2")
+	{
+		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+	}
+	else
+	{
+		if (serialPortLaserscannerRear == "error1")
+		{
+			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerRear\" not found in ini-file!</font>");
+		}
+		else
+		{
+			//
+			// everything okay
+			//
+			gui1->appendLog(QString("Serial port for rear Laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
 		}
 	}
 	
@@ -1227,7 +1272,7 @@ void Mrs::readSettings()
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstDist);
 			// show text
-			gui1->appendLog(QString("Obstacle distance set to %1 cm.").arg(minObstDist));
+			gui1->appendLog(QString("Obstacle distance set to <b>%1</b> cm.").arg(minObstDist));
 			break;
 	}
 
@@ -1252,7 +1297,7 @@ void Mrs::readSettings()
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstDistLaserScanner);
 			// show text
-			gui1->appendLog(QString("Obstacle distance Laser Scanner set to %1 cm.").arg(minObstDistLaserScanner));
+			gui1->appendLog(QString("Obstacle distance Laser Scanner set to <b>%1</b> cm.").arg(minObstDistLaserScanner));
 			break;
 	}
 
@@ -1278,7 +1323,7 @@ void Mrs::readSettings()
 			//
 			// tell the  obstacle check thread the distance
 			joystick->setPort(joystickPort);
-			gui1->appendLog(QString("Joystick port set to %1.").arg(joystickPort));
+			gui1->appendLog(QString("Joystick port set to <b>%1</b>.").arg(joystickPort));
 		}
 	}
 	
@@ -1307,7 +1352,7 @@ void Mrs::readSettings()
 			// set slider to the read value
 			gui1->setSliderMotorSpeed(1, mot1Speed);
 			// show text
-			gui1->appendLog(QString("Motor1 speed set to %1.").arg(mot1Speed));
+			gui1->appendLog(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
 			break;
 	}
 	
@@ -1336,32 +1381,10 @@ void Mrs::readSettings()
 			// set slider to the read value
 			gui1->setSliderMotorSpeed(2, mot2Speed);
 			// show text
-			gui1->appendLog(QString("Motor2 speed set to %1.").arg(mot2Speed));
+			gui1->appendLog(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
 	}
 	
-	//---------------------------------------------------------------------
-	// read setting / and error handling
-	int hello=inifile1->readSetting("Config", "noLaserScanner");
-	
-	switch (hello)
-	{
-		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
-		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"noLaserScanner\" not found in ini-file!</font>");
-			break;
-		case 0:
-			// use the laser scanner
-			noLaserScanner = false;
-			break;
-		case 1:
-			gui1->appendLog("no laser scanner = true (1)");
-			noLaserScanner = true;
-			break;
-	}
-
 
 /*	
 	//---------------------------------------------------------------------
@@ -1382,7 +1405,7 @@ void Mrs::readSettings()
 			// set slider to the read value
 			gui1->setSliderPositionServo1(servoPositionSensor1);
 			// show text
-			gui1->appendLog(QString("Servo position sensor 1 set to %1.").arg(servoPositionSensor1));
+			gui1->appendLog(QString("Servo position sensor 1 set to <b>%1</b>.").arg(servoPositionSensor1));
 			break;
 	}
 
@@ -1405,7 +1428,7 @@ void Mrs::readSettings()
 			// set slider to the read value
 			gui1->setSliderPositionServo2(servoPositionSensor2);
 			// show text
-			gui1->appendLog(QString("Servo position sensor 2 set to %1.").arg(servoPositionSensor2));
+			gui1->appendLog(QString("Servo position sensor 2 set to <b>%1</b>.").arg(servoPositionSensor2));
 			break;
 	}
 */

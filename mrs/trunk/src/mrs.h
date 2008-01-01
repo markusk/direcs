@@ -14,8 +14,7 @@
 #include "inifile.h"
 #include "camThread.h"
 #include "networkThread.h"
-//#include "laser.h"
-#include "sick.h"
+//#include "sick.h"
 #include "laserThread.h"
 #include "joystick.h"
 //-------------------------------------------------------------------
@@ -138,6 +137,8 @@ class Mrs : public QObject
 		void readSettings();
 		
 		QString serialPortMicrocontroller;
+		QString serialPortLaserscannerFront;
+		QString serialPortLaserscannerRear;
 		Gui *gui1;
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
@@ -155,7 +156,6 @@ class Mrs : public QObject
 		QString commaSeparator;
 		bool robotIsOn; //! Stores the state of the robots circuit. TRUE, when the cirvuit is ON.
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
-		bool noLaserScanner; //! Don't start the laser thread and the laser module, if this value is TRUE. Used in the ini file.
 		bool robotSimulationMode; //! Stores the robots simulation state
 		int mot1Speed;
 		int mot2Speed;
