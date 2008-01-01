@@ -913,12 +913,14 @@ void Mrs::logicalUnit(int sensorAlarm)
 	gui1->showAlarm(SENSOR16, OFF);
 	
 	
-	// if all sensor values are the same like the last, do nothing!	
+	// if all sensor values are the same like the last, do nothing!
 	if (sensorAlarm == lastSensorValue)
 	{
 		// store this sensor alarm value
 		lastSensorValue = sensorAlarm;
 		alarmCounter++;
+		
+		// FIXME: check this method in general !! < < < < < < < <
 		return;
 	}
 
@@ -937,6 +939,30 @@ void Mrs::logicalUnit(int sensorAlarm)
 			//----------------
 			drive(FORWARD);
 			motors->flashlight(OFF);
+			
+			// store this sensor alarm value
+			lastSensorValue = sensorAlarm;
+			// reset the alarm counter
+			alarmCounter = 0;
+		}
+		return;
+	}
+
+
+	if (sensorAlarm == OBSTACLESEVERYWHEREINFRONT)
+	{
+		emit showPreferredDirection("*NONE*");
+		
+		if (robotDrives == true)
+		{
+			gui1->appendLog(QString("<b>Obstacle %1 everywhere in front of the robot. Waiting.</b>").arg(alarmCounter));
+			
+			//----------------
+			// drive WAIT
+			//----------------
+			drive(WAIT);
+			motors->flashlight(ON);
+			emit speak("I think, I need some help!");
 			
 			// store this sensor alarm value
 			lastSensorValue = sensorAlarm;
@@ -1272,7 +1298,7 @@ void Mrs::readSettings()
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstDist);
 			// show text
-			gui1->appendLog(QString("Obstacle distance set to <b>%1</b> cm.").arg(minObstDist));
+			gui1->appendLog(QString("Obstacle distance set to <b>%1 cm</b>.").arg(minObstDist));
 			break;
 	}
 
@@ -1297,7 +1323,7 @@ void Mrs::readSettings()
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstDistLaserScanner);
 			// show text
-			gui1->appendLog(QString("Obstacle distance Laser Scanner set to <b>%1</b> cm.").arg(minObstDistLaserScanner));
+			gui1->appendLog(QString("Obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstDistLaserScanner));
 			break;
 	}
 
