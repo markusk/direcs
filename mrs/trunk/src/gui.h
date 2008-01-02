@@ -239,6 +239,12 @@ class Gui : public QMainWindow
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
 		
 		/**
+		Shows a graphic in the laser scanner view while searching for the scanner.
+		@param status can be true or false
+		*/
+		void laserSplash(bool status);
+		
+		/**
 		Shows the preferred driving direction in a lable.
 		@param direction can be FORWARD, BACKWARD...
 		*/
@@ -286,7 +292,6 @@ class Gui : public QMainWindow
 		void on_spinBoxMotor2Speed_valueChanged(int);
 		void on_sliderObstacle_valueChanged(int);
 		void on_spinBoxObstacle_valueChanged(int);
-		void on_sliderObstacleLaserScanner_valueChanged(int);
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
 		void on_btnDrive_clicked();
