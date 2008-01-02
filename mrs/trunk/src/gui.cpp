@@ -55,6 +55,14 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), ui.sliderBotSlot, SLOT(setValue(int)));
 	
 	// and give the new value to the obstacle check thread!
+	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+	// change the value of a spinBox when the value of the corresponding slider changes
+	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.spinBoxObstacleLaserScanner, SLOT(setValue(int)));
+	// and vice versa
+	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.sliderObstacleLaserScanner, SLOT(setValue(int)));
+	
+	
 	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 	// and give the new value to the obstacle check thread!
@@ -265,14 +273,6 @@ void Gui::on_sliderObstacle_valueChanged(int value)
 	// TODO: change to signal slot auto connection
 	obstCheckThread->setMinObstacleDistance(value);
 	ui.spinBoxObstacle->setValue(value);
-}
-
-
-void Gui::on_sliderObstacleLaserScanner_valueChanged(int value)
-{
-	// TODO: change to signal slot auto connection
-	obstCheckThread->setMinObstacleDistanceLaser(value);
-	ui.spinBoxObstacleLaserScanner->setValue(value);
 }
 
 
@@ -1204,16 +1204,9 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		// first line is longer than 0 m ! (a values was measured)
 		if (laserLineList->at(0)->line().length() > 0)
 		{
+			// laser splash screen OFF
 			showLaserSplash = false;
-			scannerSplash->setVisible(false);
-			pixmapBot1->setVisible(true);
-			pixmapBot2->setVisible(true);
-			
-			for (int i=laserLineList->size()-1; i>=0; i--)
-			{
-				// reset transform or rotation
-				laserLineList->at(i)->setVisible(true);
-			}
+			laserSplash(false);
 		}
 	}
 	
@@ -1897,4 +1890,35 @@ qreal Gui::calculateLaserYpos()
 {
 	// value for normal drawing (from center to border of control)
 	return laserYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
+}
+
+
+void Gui::laserSplash(bool status)
+{
+	if (status == true)
+	{
+		scannerSplash->setVisible(true);
+		
+		pixmapBot1->setVisible(false);
+		pixmapBot2->setVisible(false);
+			
+		for (int i=laserLineList->size()-1; i>=0; i--)
+		{
+				// reset transform or rotation
+			laserLineList->at(i)->setVisible(false);
+		}
+	}
+	else
+	{
+		scannerSplash->setVisible(false);
+		
+		pixmapBot1->setVisible(true);
+		pixmapBot2->setVisible(true);
+			
+		for (int i=laserLineList->size()-1; i>=0; i--)
+		{
+				// reset transform or rotation
+			laserLineList->at(i)->setVisible(true);
+		}
+	}
 }
