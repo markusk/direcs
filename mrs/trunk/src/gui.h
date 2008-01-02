@@ -280,18 +280,13 @@ class Gui : public QMainWindow
 		/*
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
-		// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
+		// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded 
 		//void speak(QString text);
 
-		
+
 	private slots:
-		//void on_sliderMotorSpeed_valueChanged(int);
 		void on_sliderMotor1Speed_sliderReleased();
-		void on_spinBoxMotor1Speed_valueChanged(int);
 		void on_sliderMotor2Speed_sliderReleased();
-		void on_spinBoxMotor2Speed_valueChanged(int);
-		void on_sliderObstacle_valueChanged(int);
-		void on_spinBoxObstacle_valueChanged(int);
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
 		void on_btnDrive_clicked();

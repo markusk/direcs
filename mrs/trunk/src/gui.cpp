@@ -43,18 +43,36 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	ui.progressBarSensor16->setMaximum(400); // max. 400 cm ultra sonic sensor !!
 	//ui.progressBarSensor16->raise();
 	
-	
-	// change the value of the spinBox when the value of the corrsponding slider changes
-	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), ui.spinBoxBotSlotTolerance, SLOT(setValue(int)));
+	// change the value of a spinBox when the value of the corresponding slider changes
+	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
+	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), ui.sliderBotSlotTolerance, SLOT(setValue(int)));
+	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
+	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
 	
+	//
+	// set the bot slot
+	//
+	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 	// change the value of the spinBoxBotSlot when the value of the corresponding slider changes
 	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), ui.spinBoxBotSlot, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), ui.sliderBotSlot, SLOT(setValue(int)));
 	
-	// and give the new value to the obstacle check thread!
+	//
+	// set the bot slot tolerance
+	//
+	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
+	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
+	// change the value of the spinBox when the value of the corrsponding slider changes
+	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), ui.spinBoxBotSlotTolerance, SLOT(setValue(int)));
+	// and vice versa
+	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), ui.sliderBotSlotTolerance, SLOT(setValue(int)));
+	
+	//
+	// set the minimum distance (laser scanner)
+	//
 	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
 	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
@@ -62,20 +80,16 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	// and vice versa
 	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.sliderObstacleLaserScanner, SLOT(setValue(int)));
 	
-	
-	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-	// and give the new value to the obstacle check thread!
-	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
-	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
-	
-	
+	//
+	// set the minimum distance (infrared and ultrasonic sensors)
+	//
+	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
+	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
-	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
+	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
-	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
+	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), ui.sliderObstacle, SLOT(setValue(int)));
+	
 	
 	//----------------------------------------------------------------------------
 	// connect camDataComplete from the cam thread to signal "setCamImage"
@@ -229,58 +243,15 @@ void Gui::on_btnDrive_clicked()
 }
 
 
-//void Gui::on_sliderMotorSpeed_valueChanged(int value)
 void Gui::on_sliderMotor1Speed_sliderReleased()
 {
-	//int value = ui.sliderMotor1Speed->value();
 	motors->setMotorSpeed(1, ui.sliderMotor1Speed->value());
-	
-	// durch signal-slot erledit!
-	//ui.spinBoxMotor1Speed->setValue(value);
 }
 
 
-void Gui::on_spinBoxMotor1Speed_valueChanged(int value)
-{
-	motors->setMotorSpeed(1, value);
-	
-	// durch signal-slot erledit!
-	//ui.sliderMotor1Speed->setValue(value);
-}
-
-
-//void Gui::on_sliderMotorSpeed_valueChanged(int value)
 void Gui::on_sliderMotor2Speed_sliderReleased()
 {
-	//int value = ui.sliderMotor2Speed->value();
-	
 	motors->setMotorSpeed(2, ui.sliderMotor2Speed->value());
-	
-	// durch signal-slot erledit!
-	//ui.spinBoxMotor2Speed->setValue(value);
-}
-
-
-void Gui::on_spinBoxMotor2Speed_valueChanged(int value)
-{
-	motors->setMotorSpeed(2, value);
-	//ui.sliderMotor2Speed->setValue(value);
-}
-
-
-void Gui::on_sliderObstacle_valueChanged(int value)
-{
-	// TODO: change to signal slot auto connection
-	obstCheckThread->setMinObstacleDistance(value);
-	ui.spinBoxObstacle->setValue(value);
-}
-
-
-void Gui::on_spinBoxObstacle_valueChanged(int value)
-{
-	// TODO: change to signal slot auto connection
-	obstCheckThread->setMinObstacleDistance(value);
-	ui.sliderObstacle->setValue(value);
 }
 
 
@@ -346,14 +317,6 @@ void Gui::on_btnReset_clicked()
 	ui.sliderMotor2Speed->setEnabled(true);
 	ui.spinBoxMotor2Speed->setEnabled(true);
 }
-
-
-/*
-void Gui::on_btnConnectToLIRC_clicked()
-{
-	//winLIRC->requestNewConnection();
-}
-*/
 
 
 void Gui::on_btnResetMovement1_clicked()
