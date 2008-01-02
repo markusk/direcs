@@ -26,8 +26,6 @@ class ObstacleCheckThread : public QThread
 	public:
 		ObstacleCheckThread(SensorThread *s, LaserThread *l);
 		~ObstacleCheckThread();
-		void setMinObstacleDistance(int value);
-		void setMinObstacleDistanceLaser(int value);
 		void stop();
 		virtual void run();
 		
@@ -39,15 +37,27 @@ class ObstacleCheckThread : public QThread
 		void setSimulationMode(bool status);
 		
 		/*!
-		This slots set the angle, where the robots has to fit thru
+		This slot sets the angle, where the robots has to fit thru
 		*/
 		void setRobotSlot(int angle);
 
 		// TODO:
 		/*!
-		This slots set the tolorance for the angle, where.... [to be defined]...Slot tolerance or drive-90°-forward-tolerance?
+		This slot sets the tolorance for the angle, where.... [to be defined]...Slot tolerance or drive-90°-forward-tolerance?
 		*/
 		void setRobotSlotTolerance(int tolerance);
+		
+		/*!
+		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
+		@param distance in centimeters
+		*/
+		void setMinObstacleDistance(int distance);
+		
+		/*!
+		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
+		@param distance in centimeters
+		 */
+		void setMinObstacleDistanceLaser(int distance);
 
 
 	signals:
