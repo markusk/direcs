@@ -332,15 +332,15 @@ void ObstacleCheckThread::run()
 }
 
 
-void ObstacleCheckThread::setMinObstacleDistance(int value)
+void ObstacleCheckThread::setMinObstacleDistance(int distance)
 {
-	minObstacleDistance = value;
+	minObstacleDistance = distance;
 }
 
 
-void ObstacleCheckThread::setMinObstacleDistanceLaser(int value)
+void ObstacleCheckThread::setMinObstacleDistanceLaser(int distance)
 {
-	minObstacleDistanceLaserScanner = value;
+	minObstacleDistanceLaserScanner = distance;
 }
 
 
