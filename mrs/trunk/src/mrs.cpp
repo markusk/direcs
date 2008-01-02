@@ -398,6 +398,8 @@ Mrs::Mrs()
 	{
 		// disable the control in the GUI
 		gui1->enableLaserScannerControls(false);
+		// turn off laser splash
+		gui1->laserSplash(false);
 		gui1->appendLog("<font color=\"#FF0000\">Laser scanner not found. Thread NOT started!</font>");
 	}
 }
