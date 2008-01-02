@@ -245,12 +245,14 @@ void Gui::on_btnDrive_clicked()
 
 void Gui::on_sliderMotor1Speed_sliderReleased()
 {
+	// no auto connect in constructor, because this slot has no "value" parameter!
 	motors->setMotorSpeed(1, ui.sliderMotor1Speed->value());
 }
 
 
 void Gui::on_sliderMotor2Speed_sliderReleased()
 {
+	// no auto connect in constructor, because this slot has no "value" parameter!
 	motors->setMotorSpeed(2, ui.sliderMotor2Speed->value());
 }
 
@@ -265,17 +267,6 @@ void Gui::on_btnReset_clicked()
 	// stop motorTimer
 	mrs1->drive(STOP);
  
-	// stop commandTimer (for reading commands from ini-file)
-	// startStopCommandClock(STOP);
-
-	// Inizialize the (script) command counter
-	//commandCounter = 0;
-	// Inizialize the last command for the robot
-	//lastCommand = "stop";
-
-	// Name of the section to search for in the ini-file (script exection)
-	//iniSection = "Sequence1";
-
 	ui.textEditLog->append("Reseted.");
 
 	// reset progressBars
@@ -352,59 +343,6 @@ void Gui::on_btnTest_clicked()
 {
 	mrs1->test();
 }
-
-
-/*
-void Gui::on_btnExecuteScript_clicked()
-{
-	static bool toggle = false;
-
-	
-	if (toggle == false)
-	{
-		toggle = true;
-		
-		// deactivate edit fields and buttons
-		ui.btnExecuteScript->setText("Stop s&cript");
-		ui.btnStartMotorClock->setEnabled(false);
-		ui.sliderMotorSpeed->setEnabled(false);
-		ui.spinBoxMotorSpeed->setEnabled(false);
-		// deactivate groupBoxes
-		ui.groupBoxPower1->setEnabled(false);
-		ui.groupBoxPower2->setEnabled(false);
-		ui.groupBoxDirection1->setEnabled(false);
-		ui.groupBoxDirection2->setEnabled(false);
-
-		// stop sensor timer    < < < < < < ? ? ? ? ? < < < < < <
-		// sensThread->startStopSensorClock(STOP);
-
-		// start command timer
-		//startStopCommandClock(START);    < < < < <
-	}
-	else
-	{
-		toggle = false;
-		
-		// activate edit fields and buttons
-		ui.btnExecuteScript->setText("Execute s&cript");
-		ui.btnStartMotorClock->setEnabled(true);
-		ui.sliderMotorSpeed->setEnabled(true);
-		ui.spinBoxMotorSpeed->setEnabled(true);
-		// activate groupBoxes
-		ui.groupBoxPower1->setEnabled(true);
-		ui.groupBoxPower2->setEnabled(true);
-		ui.groupBoxDirection1->setEnabled(true);
-		ui.groupBoxDirection2->setEnabled(true);
-
-		// stop command timer
-		//startStopCommandClock(STOP); < < < < <
-		
-		// stop motorTimer
-		// (to stop the robot, if still driving!)
-		mrs1->drive(STOP);
-	}
-}
-*/
 
 
 /*		
