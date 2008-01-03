@@ -230,7 +230,7 @@ void ObstacleCheckThread::run()
 				//
 				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area end"!)
 				//
-				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot) )
+				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1) )
 				{
 					// store current free area end
 					actualFreeAreaEnd = angle;
@@ -309,8 +309,8 @@ void ObstacleCheckThread::run()
 		{
 			// value within the tolerance range?
 			if (
-				( (centerOfFreeWay < 90) && (centerOfFreeWay >= (90 - robotSlotTolerance)) ) ||
-				( (centerOfFreeWay > 90) && (centerOfFreeWay <= (90 + robotSlotTolerance)) )
+				( (centerOfFreeWay < 90) && (centerOfFreeWay >= (90 - robotSlotTolerance - 1)) ) ||
+				( (centerOfFreeWay > 90) && (centerOfFreeWay <= (90 + robotSlotTolerance - 1)) )
 			   )
 			{
 				// NO obstacle
