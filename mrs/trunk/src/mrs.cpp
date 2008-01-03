@@ -393,8 +393,6 @@ Mrs::Mrs()
 	}
 	else
 	{
-		// disable the control in the GUI
-		gui1->enableLaserScannerControls(false);
 		// turn off laser splash
 		gui1->laserSplash(false);
 		gui1->appendLog("<font color=\"#FF0000\">Laser scanner not found. Thread NOT started!</font>");
@@ -425,6 +423,8 @@ Mrs::~Mrs()
 		inifile1->writeSetting("Config", "motor2Speed", gui1->getSliderMotorSpeed(2));
 		inifile1->writeSetting("Config", "minObstacleDistance", gui1->getSliderObstacleValue());
 		inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", gui1->getSliderObstacleLaserScannerValue());
+		inifile1->writeSetting("Config", "robotSlot", gui1->getSliderRobotSlotValue());
+		inifile1->writeSetting("Config", "straightForwardDeviation", gui1->getSliderStraightForwardDeviationValue());
 
 		// save check box status
 		inifile1->writeSetting("Config", "saveOnExit", gui1->getCheckBoxSaveSettings());
@@ -1350,23 +1350,23 @@ void Mrs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	int robotSlotTolerance = inifile1->readSetting("Config", "robotSlotTolerance");
+	int straightForwardDeviation = inifile1->readSetting("Config", "straightForwardDeviation");
 	
-	switch (robotSlotTolerance)
+	switch (straightForwardDeviation)
 	{
 		case -2:
 			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"robotSlotTolerance\"not found in ini-file!</font>");
+			gui1->appendLog("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
 			break;
 		default:
 			// set slider to the read value
-			gui1->setSliderRobotSlotTolerance(robotSlotTolerance);
+			gui1->setSliderStraightForwardDeviation(straightForwardDeviation);
 			// tell it the obstacle check thread
-			obstCheckThread->setRobotSlotTolerance(robotSlotTolerance);
+			obstCheckThread->setStraightForwardDeviation(straightForwardDeviation);
 			// show text
-			gui1->appendLog(QString("Robot slot tolerance set to <b>%1 deg.</b>").arg(robotSlotTolerance));
+			gui1->appendLog(QString("Straight forward deviation set to <b>%1 deg.</b>").arg(straightForwardDeviation));
 			break;
 	}
 
