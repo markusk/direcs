@@ -21,7 +21,7 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	centerOfFreeWay = -1;
 	
 	robotSlot = 1;
-	robotSlotTolerance = 0;
+	straightForwardDeviation = 0;
 }
 
 
@@ -230,6 +230,9 @@ void ObstacleCheckThread::run()
 				//
 				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area end"!)
 				//
+				// FIXME: 1 degree for robot slot ist still free, when current angle is 2 deg.
+				// FIXME: why -1 ?!? But works so far!
+				//
 				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1) )
 				{
 					// store current free area end
@@ -307,10 +310,11 @@ void ObstacleCheckThread::run()
 		}
 		else
 		{
-			// value within the tolerance range?
+			// value within the tolerance range (deviation to 90 deg.)?
 			if (
-				( (centerOfFreeWay < 90) && (centerOfFreeWay >= (90 - robotSlotTolerance - 1)) ) ||
-				( (centerOfFreeWay > 90) && (centerOfFreeWay <= (90 + robotSlotTolerance - 1)) )
+				// FIXME: why -1 ?!? But works so far!
+				( (centerOfFreeWay < 90) && (centerOfFreeWay >= (90 - straightForwardDeviation - 1)) ) ||
+				( (centerOfFreeWay > 90) && (centerOfFreeWay <= (90 + straightForwardDeviation - 1)) )
 			   )
 			{
 				// NO obstacle
@@ -357,9 +361,9 @@ void ObstacleCheckThread::setRobotSlot(int angle)
 }
 
 
-void ObstacleCheckThread::setRobotSlotTolerance(int tolerance)
+void ObstacleCheckThread::setStraightForwardDeviation(int deviation)
 {
-	robotSlotTolerance = tolerance;
+	straightForwardDeviation = deviation;
 }
 
 

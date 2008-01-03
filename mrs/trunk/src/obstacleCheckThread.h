@@ -41,11 +41,11 @@ class ObstacleCheckThread : public QThread
 		*/
 		void setRobotSlot(int angle);
 
-		// TODO:
 		/*!
-		This slot sets the tolorance for the angle, where.... [to be defined]...Slot tolerance or drive-90°-forward-tolerance?
+		This slot sets the deviation to 90 degrees when the robot drives forward.
+		@param deviation is the angle in degrees.
 		*/
-		void setRobotSlotTolerance(int tolerance);
+		void setStraightForwardDeviation(int deviation);
 		
 		/*!
 		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
@@ -85,8 +85,8 @@ class ObstacleCheckThread : public QThread
 		/*! defines the minimum slot in degrees, where the robot has to fit through */
 		int robotSlot;
 		
-		/*! and this is the tolerance */
-		int robotSlotTolerance;
+		/*! and this is the deviation to 90 degrees, when driving forward */
+		int straightForwardDeviation;
 	
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
