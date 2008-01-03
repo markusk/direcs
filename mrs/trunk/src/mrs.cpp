@@ -99,7 +99,6 @@ Mrs::Mrs()
 	robotDrives = false;
 	mot1Speed = 0;
 	mot2Speed = 0;
-	minObstDist = 0;
 	robotSimulationMode = false;
 	
 	//------------------------------------------------------------------
@@ -247,7 +246,6 @@ Mrs::Mrs()
 		{
 			gui1->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
-			obstCheckThread->setMinObstacleDistance(minObstDist);
 			gui1->appendLog("Obstacle check thread started.");
 		}
 	}
@@ -390,7 +388,6 @@ Mrs::Mrs()
 		{
 			gui1->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
-			obstCheckThread->setMinObstacleDistance(minObstDist);
 			gui1->appendLog("Obstacle check thread started.");
 		}
 	}
@@ -415,6 +412,7 @@ Mrs::~Mrs()
 	}
 */
 
+	// TODO: put this to a saveSetings()
 	//---------------------------------------------------------------
 	// save changes to ini-file (if check box is checked!)
 	//---------------------------------------------------------------
@@ -426,6 +424,7 @@ Mrs::~Mrs()
 		inifile1->writeSetting("Config", "motor1Speed", gui1->getSliderMotorSpeed(1));
 		inifile1->writeSetting("Config", "motor2Speed", gui1->getSliderMotorSpeed(2));
 		inifile1->writeSetting("Config", "minObstacleDistance", gui1->getSliderObstacleValue());
+		inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", gui1->getSliderObstacleLaserScannerValue());
 
 		// save check box status
 		inifile1->writeSetting("Config", "saveOnExit", gui1->getCheckBoxSaveSettings());
@@ -1282,50 +1281,92 @@ void Mrs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	minObstDist = inifile1->readSetting("Config", "minObstacleDistance");
+	int minObstacleDistance = inifile1->readSetting("Config", "minObstacleDistance");
 	
-	switch (minObstDist)
+	switch (minObstacleDistance)
 	{
 		case -2:
 			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			minObstDist = 0;
 			break;
 		case -1:
 			gui1->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
-			minObstDist = 0;
 			break;
 		default:
 			// set slider to the read value
-			gui1->setSliderObstacleValue(minObstDist);
+			gui1->setSliderObstacleValue(minObstacleDistance);
 			// tell the  obstacle check thread the distance
-			obstCheckThread->setMinObstacleDistance(minObstDist);
+			obstCheckThread->setMinObstacleDistance(minObstacleDistance);
 			// show text
-			gui1->appendLog(QString("Obstacle distance set to <b>%1 cm</b>.").arg(minObstDist));
+			gui1->appendLog(QString("Min. obstacle distance set to <b>%1 cm</b>.").arg(minObstacleDistance));
 			break;
 	}
 
 
 	//---------------------------------------------------------------------
 	// read setting
-	int minObstDistLaserScanner = inifile1->readSetting("Config", "minObstDistLaserScanner");
+	int minObstacleDistanceLaserScanner = inifile1->readSetting("Config", "minObstacleDistanceLaserScanner");
 	
-	switch (minObstDist)
+	switch (minObstacleDistanceLaserScanner)
 	{
 		case -2:
 			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			minObstDist = 0;
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"minObstDistLaserScanner\"not found in ini-file!</font>");
-			minObstDist = 0;
+			gui1->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
 			break;
 		default:
 			// set slider to the read value
-			gui1->setSliderObstacleLaserScannerValue(minObstDistLaserScanner);
-			// tell the  obstacle check thread the distance
-			obstCheckThread->setMinObstacleDistance(minObstDistLaserScanner);
+			gui1->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
+			// tell it the obstacle check thread
+			obstCheckThread->setMinObstacleDistance(minObstacleDistanceLaserScanner);
 			// show text
-			gui1->appendLog(QString("Obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstDistLaserScanner));
+			gui1->appendLog(QString("Min. obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner));
+			break;
+	}
+
+
+	//---------------------------------------------------------------------
+	// read setting
+	int robotSlot = inifile1->readSetting("Config", "robotSlot");
+	
+	switch (robotSlot)
+	{
+		case -2:
+			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			break;
+		case -1:
+			gui1->appendLog("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
+			break;
+		default:
+			// set slider to the read value
+			gui1->setSliderRobotSlot(robotSlot);
+			// tell it the obstacle check thread
+			obstCheckThread->setRobotSlot(robotSlot);
+			// show text
+			gui1->appendLog(QString("Robot slot set to <b>%1 deg.</b>").arg(robotSlot));
+			break;
+	}
+
+
+	//---------------------------------------------------------------------
+	// read setting
+	int robotSlotTolerance = inifile1->readSetting("Config", "robotSlotTolerance");
+	
+	switch (robotSlotTolerance)
+	{
+		case -2:
+			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			break;
+		case -1:
+			gui1->appendLog("<font color=\"#FF0000\">Value \"robotSlotTolerance\"not found in ini-file!</font>");
+			break;
+		default:
+			// set slider to the read value
+			gui1->setSliderRobotSlotTolerance(robotSlotTolerance);
+			// tell it the obstacle check thread
+			obstCheckThread->setRobotSlotTolerance(robotSlotTolerance);
+			// show text
+			gui1->appendLog(QString("Robot slot tolerance set to <b>%1 deg.</b>").arg(robotSlotTolerance));
 			break;
 	}
 
