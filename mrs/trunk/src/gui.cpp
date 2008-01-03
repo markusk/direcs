@@ -64,12 +64,12 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//
 	// set the bot slot tolerance
 	//
-	connect(ui.sliderRobotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
-	connect(ui.spinBoxRobotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
+	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
+	connect(ui.spinBoxStraightForwardDeviation, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
 	// change the value of the spinBox when the value of the corrsponding slider changes
-	connect(ui.sliderRobotSlotTolerance, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlotTolerance, SLOT(setValue(int)));
+	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxRobotSlotTolerance, SIGNAL(valueChanged(int)), ui.sliderRobotSlotTolerance, SLOT(setValue(int)));
+	connect(ui.spinBoxStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.sliderStraightForwardDeviation, SLOT(setValue(int)));
 	
 	//
 	// set the minimum distance (laser scanner)
@@ -834,9 +834,9 @@ int Gui::getSliderRobotSlotValue()
 }
 
 
-int Gui::getSliderSlotTolerance()
+int Gui::getSliderStraightForwardDeviationValue()
 {
-	return ui.sliderRobotSlotTolerance->value();
+	return ui.sliderStraightForwardDeviation->value();
 }
 
 
@@ -880,9 +880,9 @@ void Gui::setSliderRobotSlot(int angle)
 }
 
 
-void Gui::setSliderRobotSlotTolerance(int angle)
+void Gui::setSliderStraightForwardDeviation(int angle)
 {
-	ui.sliderRobotSlotTolerance->setValue(angle);
+	ui.sliderStraightForwardDeviation->setValue(angle);
 }
 
 
@@ -896,16 +896,6 @@ void Gui::enableCamControls(bool state)
 {
 	// enable/disable all camera elements in the gui
 	ui.groupBoxCamera->setEnabled(state);
-}
-
-
-void Gui::enableLaserScannerControls(bool state)
-{
-	// enable/disable all laser scanner in the gui
-	//ui.groupBoxLaserScanner->setEnabled(state);
-	
-	ui.sliderObstacleLaserScanner->setEnabled(state);
-	ui.spinBoxObstacleLaserScanner->setEnabled(state);
 }
 
 
@@ -1047,7 +1037,6 @@ void Gui::on_btnSimulate_clicked()
 	{
 		// nice red button background
 		ui.btnSimulate->setPalette(QPalette(QColor(255, 64, 64)));
-		enableLaserScannerControls(true);
 		emit simulate(true);
 	}
 	else
@@ -1649,7 +1638,6 @@ void Gui::switchToFlatView()
 
 void Gui::createLaserDistanceObjects()
 {
-	static bool firstDraw = true;
 	QString dimensionText;
 	int dimensionLine = 0;
 	int newY = 0;

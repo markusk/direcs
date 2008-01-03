@@ -119,9 +119,9 @@ class Gui : public QMainWindow
 		int getSliderRobotSlotValue();
 		
 		/**
-		@return The slider value of an angle for the tolorance value.
+		@return The slider value of the deviation to drive forward (deviation to 90 degrees).
 		*/
-		int getSliderSlotTolerance();
+		int getSliderStraightForwardDeviationValue();
 		
 		/**
 		@return The state of a Qt checkBox.
@@ -155,22 +155,16 @@ class Gui : public QMainWindow
 		void setSliderRobotSlot(int angle);
 		
 		/**
-		Sets the slider value of the robot slot tolerance.
-		@param angle is the minimum angle in degrees.
+		Sets the slider value of the deviation to drive forward (deviation to 90 degrees).
+		@param angle is the maximum angle in degrees.
 		*/
-		void setSliderRobotSlotTolerance(int angle);
+		void setSliderStraightForwardDeviation(int angle);
 		
 		/**
 		Enables or disables the camera control in the GUI, whether a camera was found or not.
 		@param state can be true or false.
 		*/
 		void enableCamControls(bool state);
-		
-		/**
-		Enables or disables the laser scanner control in the GUI, whether the laser scanner is active or not.
-		@param state can be true or false.
-		*/
-		void enableLaserScannerControls(bool state);
 		
 		/**
 		Checks or unckecks the SaveSettings checkbox, depending on the value read from the ini-file.
