@@ -116,7 +116,7 @@ class Gui : public QMainWindow
 		/**
 		@return The angle to which the robot has to fit between.
 		*/
-		int getSliderBotSlotValue();
+		int getSliderRobotSlotValue();
 		
 		/**
 		@return The slider value of an angle for the tolorance value.
@@ -147,6 +147,18 @@ class Gui : public QMainWindow
 		@param value is distance in cm.
 		*/
 		void setSliderObstacleLaserScannerValue(int value);
+		
+		/**
+		Sets the slider value of the robot slot, where it has to fit through.
+		@param angle is the minimum angle in degrees.
+		*/
+		void setSliderRobotSlot(int angle);
+		
+		/**
+		Sets the slider value of the robot slot tolerance.
+		@param angle is the minimum angle in degrees.
+		*/
+		void setSliderRobotSlotTolerance(int angle);
 		
 		/**
 		Enables or disables the camera control in the GUI, whether a camera was found or not.

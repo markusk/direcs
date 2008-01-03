@@ -44,6 +44,7 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//ui.progressBarSensor16->raise();
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
+	// TODO: connect to setMotorSpeed !
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
 	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
 	// and vice versa
@@ -53,22 +54,22 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit
 	//
 	// set the bot slot
 	//
-	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-	// change the value of the spinBoxBotSlot when the value of the corresponding slider changes
-	connect(ui.sliderBotSlot, SIGNAL(valueChanged(int)), ui.spinBoxBotSlot, SLOT(setValue(int)));
+	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	connect(ui.spinBoxRobotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	// change the value of the spinBoxRobotSlot when the value of the corresponding slider changes
+	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlot, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxBotSlot, SIGNAL(valueChanged(int)), ui.sliderBotSlot, SLOT(setValue(int)));
+	connect(ui.spinBoxRobotSlot, SIGNAL(valueChanged(int)), ui.sliderRobotSlot, SLOT(setValue(int)));
 	
 	//
 	// set the bot slot tolerance
 	//
-	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
-	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
+	connect(ui.sliderRobotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
+	connect(ui.spinBoxRobotSlotTolerance, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlotTolerance(int)));
 	// change the value of the spinBox when the value of the corrsponding slider changes
-	connect(ui.sliderBotSlotTolerance, SIGNAL(valueChanged(int)), ui.spinBoxBotSlotTolerance, SLOT(setValue(int)));
+	connect(ui.sliderRobotSlotTolerance, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlotTolerance, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxBotSlotTolerance, SIGNAL(valueChanged(int)), ui.sliderBotSlotTolerance, SLOT(setValue(int)));
+	connect(ui.spinBoxRobotSlotTolerance, SIGNAL(valueChanged(int)), ui.sliderRobotSlotTolerance, SLOT(setValue(int)));
 	
 	//
 	// set the minimum distance (laser scanner)
@@ -827,15 +828,15 @@ int Gui::getSliderObstacleLaserScannerValue()
 }
 
 
-int Gui::getSliderBotSlotValue()
+int Gui::getSliderRobotSlotValue()
 {
-	return ui.sliderBotSlot->value();
+	return ui.sliderRobotSlot->value();
 }
 
 
 int Gui::getSliderSlotTolerance()
 {
-	return ui.sliderBotSlotTolerance->value();
+	return ui.sliderRobotSlotTolerance->value();
 }
 
 
@@ -870,6 +871,18 @@ void Gui::setSliderObstacleValue(int value)
 void Gui::setSliderObstacleLaserScannerValue(int value)
 {
 	ui.sliderObstacleLaserScanner->setValue(value);
+}
+
+
+void Gui::setSliderRobotSlot(int angle)
+{
+	ui.sliderRobotSlot->setValue(angle);
+}
+
+
+void Gui::setSliderRobotSlotTolerance(int angle)
+{
+	ui.sliderRobotSlotTolerance->setValue(angle);
 }
 
 
@@ -1189,7 +1202,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 		// set tool tip of the line to the distance
 		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
 		//laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
-		laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
+		laserLineList->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]) );
 //		laserLineList->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
 	}
 
