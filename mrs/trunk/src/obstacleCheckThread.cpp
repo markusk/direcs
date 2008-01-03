@@ -165,24 +165,23 @@ void ObstacleCheckThread::run()
 		for (int angle=0; angle<180; angle++)
 		{
 			// if obstacle detected
-			if ((int) (laserThread->getLaserScannerValue(angle)*100) <= minObstacleDistanceLaserScanner)
+			if ( ((int) (laserThread->getLaserScannerValue(angle)*100)) < minObstacleDistanceLaserScanner)
 			{
 				//-----------------------------
 				// set the "obstacle flag"
 				//-----------------------------
-				laserThread->setLaserScannerFlag(angle, 1);
-				//qDebug("laser line %d black", laserThread->getLaserScannerValue(angle));
+				laserThread->setLaserScannerFlag(angle, OBSTACLE);
 			}
 			else
 			{
 				//-------------------------------------------------------------
 				// delete the "obstacle flag" -> free way at the actual angle
 				//-------------------------------------------------------------
-				laserThread->setLaserScannerFlag(angle, 0);
+				laserThread->setLaserScannerFlag(angle, FREEWAY);
 			}
 		}
-		
-		
+
+
 		//---------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP II
 		//---------------------------------------------------------
@@ -191,13 +190,12 @@ void ObstacleCheckThread::run()
 		//---------------------------------------------------------
 		actualFreeAreaStart = -1;
 		actualFreeAreaEnd   = -1;
-		
+
 		largestFreeAreaStart = -1;
 		largestFreeAreaEnd   = -1;
-	
+
 		centerOfFreeWay = -1;
-		
-		
+	
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
@@ -206,25 +204,33 @@ void ObstacleCheckThread::run()
 			// check only lines with no obstacles!
 			if (laserThread->getLaserScannerFlag(angle) == FREEWAY)
 			{
-				// Actual angle has "free" sight (no obstacles)!
-				// If next angle is free AND the angle before this actual is NOT free, set this one as "start"
+				// If this is the FIRST angle AND the next angle is "free"
+				// OR
+				// If current angle has "free" sight (no obstacles) AND next angle is free AND the angle before current is NOT free,
+				// THEN set the current angle to "free area start"
 				//
-				// Additionaly angles at the size of 1° will be ignored with this logic!
+				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area start"!)
 				//
 				if (
-					((laserThread->getLaserScannerFlag(angle+1) == FREEWAY) && (laserThread->getLaserScannerFlag(angle-1) == OBSTACLE)) ||
-					((laserThread->getLaserScannerFlag(angle+1) == FREEWAY) && (angle == 0))
-					)
+					((laserThread->getLaserScannerFlag(angle+1) == FREEWAY) && (angle == 0)) ||
+					((laserThread->getLaserScannerFlag(angle+1) == FREEWAY) && (laserThread->getLaserScannerFlag(angle-1) == OBSTACLE))
+				   )
 				{
 					// store current free area beginning
 					actualFreeAreaStart = angle;
+					//qDebug("angle=%d / actualFreeAreaStart=%d", angle, actualFreeAreaStart);
 				}
 				
-				// Actual angle has "free" sight (no obstacles)!
-				// If next angle is NOT free, set this one as "end"
-				// and angle slot is wide enough for the robot
-				// TODO: robotSlot *plus* tolerance?!?
-				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && ((angle - actualFreeAreaStart) >= robotSlot) )
+				// If current angle has "free" sight (no obstacles)
+				// AND next angle is NOT free, set this one as "end"
+				// AND the angle before current is free
+				// AND angle robot slot is wide enough
+				//
+				// THEN set the current angle to "free area end"
+				//
+				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area end"!)
+				//
+				if ( (laserThread->getLaserScannerFlag(angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot) )
 				{
 					// store current free area end
 					actualFreeAreaEnd = angle;
@@ -245,6 +251,7 @@ void ObstacleCheckThread::run()
 		//------------------------------------------------------------
 		// Then tag the *largest* free area, if multiple were found
 		// (to show it in the GUI and to know, where to drive)
+		// The old flags were set to new values above in this code!
 		//------------------------------------------------------------
 		if (largestFreeAreaEnd != -1)
 		{
