@@ -318,6 +318,11 @@ class Gui : public QMainWindow
 		void on_btnSimulate_clicked();
 		void on_sliderZoom_valueChanged(int);
 		void on_checkBoxAngleView_stateChanged(int);
+		
+		/**
+		Saves the current picture to disk (one time shot).
+		*/
+		void saveCamImage(void);
 
 
 	private:
@@ -353,12 +358,6 @@ class Gui : public QMainWindow
 		Set a Y position for the laser lines "start point"
 		*/
 		qreal calculateLaserYpos();
-
-		
-		/**
-		Saves the current picture to disk (one time shot).
-		*/
-		void saveCamImage(void);
 		
 		Ui::Gui ui;
 		Mrs *mrs1;
@@ -386,8 +385,6 @@ class Gui : public QMainWindow
 		qreal startScale;
 		qreal laserXPos;
 		qreal laserYPos;
-		
-		// TODO: doxygen tags
 		QGraphicsScene *scene;					/** The QGraphicsScene for showing the laser lines in the GUI */
 		QList <QGraphicsLineItem*> *laserLineList;		/** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
 		QList <QGraphicsPathItem*> *laserDistanceLineList;	/** A pointer to a QList of pointers to the shown distances from the laser lines (kind of coordinate system) */
