@@ -421,6 +421,8 @@ Mrs::~Mrs()
 		// save gui slider values
 		inifile1->writeSetting("Config", "motor1Speed", gui1->getSliderMotorSpeed(1));
 		inifile1->writeSetting("Config", "motor2Speed", gui1->getSliderMotorSpeed(2));
+		inifile1->writeSetting("Config", "minimumSpeed", gui1->getSliderMinimumSpeed());
+		inifile1->writeSetting("Config", "maximumSpeed", gui1->getSliderMaximumSpeed());
 		inifile1->writeSetting("Config", "minObstacleDistance", gui1->getSliderObstacleValue());
 		inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", gui1->getSliderObstacleLaserScannerValue());
 		inifile1->writeSetting("Config", "robotSlot", gui1->getSliderRobotSlotValue());
@@ -1454,6 +1456,64 @@ void Mrs::readSettings()
 			break;
 	}
 	
+	
+	//---------------------------------------------------------------------
+	// read setting
+	minimumSpeed = inifile1->readSetting("Config", "minimumSpeed");
+	
+	switch (minimumSpeed)
+	{
+		case -2:
+			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			minimumSpeed = 0;
+			break;
+		case -1:
+			gui1->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" not found in ini-file!</font>");
+			minimumSpeed = 0;
+			break;
+		default:
+			if (minimumSpeed > 254)
+			{
+				gui1->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than 255!! Value set to 255!</font>");
+				minimumSpeed = 255;
+			}
+			
+			// set slider to the read value
+			gui1->setSliderMinimumSpeed(minimumSpeed);
+			// show text
+			gui1->appendLog(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
+			break;
+	}
+	
+	
+	//---------------------------------------------------------------------
+	// read setting
+	maximumSpeed = inifile1->readSetting("Config", "maximumSpeed");
+	
+	switch (maximumSpeed)
+	{
+		case -2:
+			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			maximumSpeed = 0;
+			break;
+		case -1:
+			gui1->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" not found in ini-file!</font>");
+			maximumSpeed = 0;
+			break;
+		default:
+			if (maximumSpeed > 254)
+			{
+				gui1->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than 255!! Value set to 255!</font>");
+				maximumSpeed = 255;
+			}
+			
+			// set slider to the read value
+			gui1->setSliderMaximumSpeed(maximumSpeed);
+			// show text
+			gui1->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
+			break;
+	}
+
 
 /*	
 	//---------------------------------------------------------------------

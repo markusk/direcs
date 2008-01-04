@@ -159,6 +159,8 @@ class Mrs : public QObject
 		bool robotSimulationMode; //! Stores the robots simulation state
 		int mot1Speed;
 		int mot2Speed;
+		int minimumSpeed;
+		int maximumSpeed;
 
 
 		//! The splash screen time of view in ms
