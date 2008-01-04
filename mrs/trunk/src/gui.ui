@@ -1281,8 +1281,8 @@
    <widget class="QProgressBar" name="progressBarSensor5" >
     <property name="geometry" >
      <rect>
-      <x>310</x>
-      <y>50</y>
+      <x>300</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
@@ -1303,8 +1303,8 @@
    <widget class="QProgressBar" name="progressBarSensor4" >
     <property name="geometry" >
      <rect>
-      <x>280</x>
-      <y>50</y>
+      <x>270</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
@@ -1325,8 +1325,8 @@
    <widget class="QProgressBar" name="progressBarSensor7" >
     <property name="geometry" >
      <rect>
-      <x>370</x>
-      <y>50</y>
+      <x>360</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
@@ -1347,8 +1347,8 @@
    <widget class="QProgressBar" name="progressBarSensor6" >
     <property name="geometry" >
      <rect>
-      <x>340</x>
-      <y>50</y>
+      <x>330</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
@@ -1369,8 +1369,8 @@
    <widget class="QProgressBar" name="progressBarSensor3" >
     <property name="geometry" >
      <rect>
-      <x>250</x>
-      <y>50</y>
+      <x>240</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
@@ -1391,8 +1391,8 @@
    <widget class="QProgressBar" name="progressBarSensor2" >
     <property name="geometry" >
      <rect>
-      <x>220</x>
-      <y>50</y>
+      <x>210</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
@@ -1413,8 +1413,8 @@
    <widget class="QProgressBar" name="progressBarSensor8" >
     <property name="geometry" >
      <rect>
-      <x>400</x>
-      <y>50</y>
+      <x>390</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
@@ -1463,8 +1463,8 @@
    <widget class="QProgressBar" name="progressBarSensor1" >
     <property name="geometry" >
      <rect>
-      <x>190</x>
-      <y>50</y>
+      <x>180</x>
+      <y>24</y>
       <width>18</width>
       <height>61</height>
      </rect>
