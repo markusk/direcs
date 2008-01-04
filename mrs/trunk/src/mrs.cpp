@@ -122,7 +122,7 @@ Mrs::Mrs()
 	//--------------------------------------------------------------------------
 	// Check for the current programm path 
 	//--------------------------------------------------------------------------
-	gui1->appendLog(QString("Current programm path: %1").arg(inifile1->checkPath()));
+	gui1->appendLog(QString("Current path: %1").arg(inifile1->checkPath()));
 	
 	
 	//--------------------------------------------------------------------------
@@ -175,7 +175,7 @@ Mrs::Mrs()
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
-	gui1->appendLog("Opening serial port for microcontroller communication...", false);
+	gui1->appendLog("Opening serial port for microcontroller communication...");
 	
 	if (interface1->openComPort(serialPortMicrocontroller) == true)
 	{
@@ -297,12 +297,26 @@ Mrs::Mrs()
 		gui1->appendLog("Joystick thread NOT started!");
 	}
 
-
-	// FIXME: check if the camera is on (getStatus)
-	//-------------------------------
-	// enable the camera controls
-	//-------------------------------
-	gui1->enableCamControls(true);
+	// let the GUI show messages in the log
+	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
+	
+	
+	//-----------------------------------------------------------
+	// check if camera is connected
+	//-----------------------------------------------------------
+	if (cam1->isConnected())
+	{
+		if (cam1->isRunning() == false)
+		{
+			gui1->appendLog("Starting cam thread...", false);
+			cam1->start();
+			gui1->appendLog("Camera thread started.");
+		}
+	}
+	else
+	{
+		gui1->appendLog("Camera thread NOT started!");
+	}
 	
 	
 	//----------------------------------------------------------------------------
