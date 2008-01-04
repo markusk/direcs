@@ -926,9 +926,8 @@ void Gui::on_btnSavePicture_clicked()
 void Gui::setCamImage(IplImage* frame)
 {
 	
-	// set image
+	// set image from gl context to frame
 	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
-	// ui.labelCmucam->setPixmap(QPixmap::fromImage(image.scaled(350, 350, Qt::KeepAspectRatio, Qt::FastTransformation)));
 	
 	
 	// save pic, when ckecked in GUI
@@ -1478,8 +1477,9 @@ void Gui::createLaserScannerObjects()
 	// calculate a nice y position in the view
 	//--------------------------------------------------------------
 	startScale = 10;
-	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
-	laserYPos = ui.progressBarSensor4->height() + 20;
+	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
+	//laserYPos = ui.progressBarSensor4->height() + 20;
+	laserYPos = ((int)(ui.graphicsViewLaser->height() / 2)*0.33) - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
 	
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot1->scale( (1.0 / startScale), (1.0 / startScale));
@@ -1622,6 +1622,7 @@ void Gui::switchToFlatView()
 
 void Gui::createLaserDistanceObjects()
 {
+	/*
 	QString dimensionText;
 	int dimensionLine = 0;
 	int newY = 0;
@@ -1670,12 +1671,12 @@ void Gui::createLaserDistanceObjects()
 		//path.arcTo((LASERLINELENGTH + LASERLINELENGTH), 0, (LASERLINELENGTH + LASERLINELENGTH), LASERLINELENGTH, 0, -180);
 		path.moveTo(0,0);
 		path.arcTo(0, 0, 200, 200, 0, -180);
-		
+*/		
 		//path.arcTo( (ui.graphicsViewLaser->width() - LASERLINELENGTH) /*- (i*dimensionLine)*/, ( laserLineList->at(i)->y() /*- (i*dimensionLine)*/), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
 
 		//			x,						y,			width,		height,		startAngle, spanAngle
 		//painter->drawArc(ui.lineLaser90->x() - (i*dimensionLine), (newY - (i*dimensionLine)), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
-
+/*
 
 		// create semi circle along the created path
 		QGraphicsPathItem *semiCircle = new QGraphicsPathItem(path);
