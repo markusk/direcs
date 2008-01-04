@@ -13,7 +13,10 @@
 #include <ctype.h>
 //-------------------------------------------------------------------
 
-
+/*!
+\brief This class gets a live picture from a connected camera.
+This class uses the Open Source Computer Vision Library.
+*/
 class CamThread : public QThread
 {
     Q_OBJECT
@@ -22,8 +25,11 @@ class CamThread : public QThread
 		CamThread();
 		~CamThread();
 		QImage getFrame(bool hiResMode, bool stretchMode);
+		/*
 		bool getStatus();
 		void setStatus(bool status);
+		*/
+		bool isConnected(void);
 		
 		void stop();
 		virtual void run();
@@ -34,21 +40,17 @@ class CamThread : public QThread
 
 
 	private:
-		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		CvScalar hsv2rgb( float hue );
-		//CvCapture* capture;
-		IplImage* frame;
-		IplImage* imgPtr;
-		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		bool cameraIsOn;
-		
+		CvScalar hsv2rgb( float hue );
+		IplImage *frame;
+		IplImage *imgPtr;
+		CvCapture *capture;
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 		
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 100; // Default: 7.000 ms
-		
+		static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
 };
 
 #endif
