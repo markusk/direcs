@@ -32,6 +32,7 @@ public:
 
 signals:
 	void boxCreated(int x, int y, int x2, int y2);
+	void saveImage();
 
 protected:
 

@@ -52,12 +52,12 @@ void QtGLContext::paintGL()
 }
 
 
- /** 
+ /**
 draws the texture sub image on the screen
-@param upper left x coordinate
-@param upper left y coordinate
-@param lower right x coordinate
-@param lower right y coordinate
+@param ulX is the upper left x coordinate
+@param ulY is the upper left y coordinate
+@param lrX is the lower right x coordinate
+@param lrY is the lower right y coordinate
 */
 void QtGLContext::drawTexture(float ulX, float ulY, float lrX, float lrY)
 {
@@ -129,6 +129,8 @@ void QtGLContext::mousePressEvent ( QMouseEvent * event )
 	m_exit = QPoint(0,0);
 	m_mousePressed = true;
 	this->updateGL();
+	
+	emit saveImage();
 }
 
 void QtGLContext::mouseReleaseEvent(QMouseEvent* event)
