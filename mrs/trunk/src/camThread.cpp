@@ -32,23 +32,6 @@ CamThread::~CamThread()
 }
 
 
-/*
-bool CamThread::getStatus()
-{
-	// TODO: do something with the cam and check the answer
-	cameraIsOn = true;
-	return cameraIsOn;
-}
-
-
-void CamThread::setStatus(bool status)
-{
-	// set the status
-	cameraIsOn = status;
-}
-*/
-
-
 void CamThread::stop()
 {
 	stopped = true;
@@ -76,32 +59,14 @@ void CamThread::run()
 		
 			imgPtr = cvRetrieveFrame(capture);
 		
-		
-			/*
-			//---------------------------------------------------------------------
-			// save image to disk, but not within the same seond (same timestamp)
-			//---------------------------------------------------------------------
-			if (QDateTime::currentDateTime() != timestamp)
-			{
-				// get the actual date and time
-				timestamp = QDateTime::currentDateTime();
-				QString filename = timestamp.toString("yyyy-MM-dd_hh-mm-ss");
-				filename += ".png";
-				//cvSaveImage(filename.toAscii(), frame);
-				cvSaveImage(filename.toAscii(), imgPtr);
-			}
-			*/
-	
-	
 			//====================================================================
 			//  e m i t  Signal
 			//====================================================================
 			emit camDataComplete(imgPtr);
 		
-		
 			// let the thread sleep some time
-			msleep(THREADSLEEPTIME);
-		} // camera is ON
+			//msleep(THREADSLEEPTIME);
+		}
 	}
 	
 	

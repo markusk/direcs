@@ -25,10 +25,6 @@ class CamThread : public QThread
 		CamThread();
 		~CamThread();
 		QImage getFrame(bool hiResMode, bool stretchMode);
-		/*
-		bool getStatus();
-		void setStatus(bool status);
-		*/
 		bool isConnected(void);
 		
 		void stop();
@@ -50,7 +46,7 @@ class CamThread : public QThread
 		
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
+		// static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
 };
 
 #endif
