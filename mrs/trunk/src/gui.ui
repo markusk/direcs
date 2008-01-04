@@ -1194,9 +1194,6 @@
      <height>401</height>
     </rect>
    </property>
-   <property name="cursor" >
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
    <property name="title" >
     <string>Camera</string>
    </property>
@@ -1262,6 +1259,9 @@
        <width>481</width>
        <height>331</height>
       </rect>
+     </property>
+     <property name="cursor" >
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
     </widget>
    </widget>
