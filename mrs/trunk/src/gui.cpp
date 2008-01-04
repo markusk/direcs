@@ -816,6 +816,18 @@ int Gui::getSliderMotorSpeed(int motor)
 }
 
 
+int Gui::getSliderMinimumSpeed(void)
+{
+	return ui.sliderMinimumSpeed->value();
+}
+
+
+int Gui::getSliderMaximumSpeed(void)
+{
+	return ui.sliderMaximumSpeed->value();
+}
+
+
 int Gui::getSliderObstacleValue()
 {
 	return ui.sliderObstacle->value();
@@ -859,6 +871,18 @@ void Gui::setSliderMotorSpeed(int motor, int value)
 			ui.spinBoxMotor2Speed->setValue(value);
 			break;
 	}
+}
+
+
+void Gui::setSliderMinimumSpeed(int speed)
+{
+	ui.sliderMinimumSpeed->setValue(speed);
+}
+
+
+void Gui::setSliderMaximumSpeed(int speed)
+{
+	ui.sliderMaximumSpeed->setValue(speed);
 }
 
 

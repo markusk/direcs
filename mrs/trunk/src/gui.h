@@ -104,6 +104,16 @@ class Gui : public QMainWindow
 		int getSliderMotorSpeed(int motor);
 		
 		/**
+		@return The slider value of the minimum speed.
+		*/
+		int getSliderMinimumSpeed(void);
+		
+		/**
+		@return The slider value of the maximum speed.
+		*/
+		int getSliderMaximumSpeed(void);
+		
+		/**
 		@return The slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
 		*/
 		int getSliderObstacleValue();
@@ -135,6 +145,18 @@ class Gui : public QMainWindow
 		@param value is the speed of the motor.
 		*/
 		void setSliderMotorSpeed(int motor, int value);
+		
+		/**
+		Sets the slider minimum speed.
+		@param value is the minimum speed of the motors.
+		*/
+		void setSliderMinimumSpeed(int speed);
+		
+		/**
+		Sets the slider maximum speed.
+		@param value is the maximum speed of the motors.
+		*/
+		void setSliderMaximumSpeed(int speed);
 		
 		/**
 		Sets the slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
