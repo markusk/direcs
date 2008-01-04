@@ -916,47 +916,10 @@ void Gui::setCheckBoxSaveSettings(Qt::CheckState state)
 }
 
 
-void Gui::enableCamControls(bool state)
-{
-	// enable/disable all camera elements in the gui
-	ui.groupBoxCamera->setEnabled(state);
-}
-
-
 void Gui::on_btnSavePicture_clicked()
 {
 	saveCamImage();
 	appendLog("Picture saved");
-}
-
-
-void Gui::on_btnAutoSavePicture_clicked()
-{
-	static unsigned char toggle = OFF;
-	
-	if (toggle == OFF)
-	{
-		toggle = ON;
-		
-		// change text of button
-		ui.btnAutoSavePicture->setText("&Stop");
-		
-		if (cam1->isRunning() == false)
-		{
-			appendLog("Starting cam thread...", false);
-			cam1->start();
-			appendLog("Camera thread started.");
-		}
-	}
-	else
-	{
-		toggle = OFF;
-		// change text of button
-		ui.btnAutoSavePicture->setText("&Start");
-		
-		cam1->stop();
-		appendLog("Camera thread stopped.");
-	}
 }
 
 
@@ -1334,12 +1297,11 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1");
-	//ui.qwtPlotCurrent1->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
+	//ui.qwtPlotCurrent1->setTitle("Motor 1");
 
 	// Set axis titles
-	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -1357,12 +1319,11 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 2
 	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 2");
-	//ui.qwtPlotCurrent2->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
+	//ui.qwtPlotCurrent2->setTitle("Motor 2");
 
 	// Set axis titles
-	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -1375,7 +1336,6 @@ void Gui::initializePlots()
 	col.setAlpha(150);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
-	
 	
 	//----------------------------------------------------------------------------
 	// connect plotThread signal to "setPlotData"

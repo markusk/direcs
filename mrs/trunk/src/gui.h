@@ -183,18 +183,9 @@ class Gui : public QMainWindow
 		void setSliderStraightForwardDeviation(int angle);
 		
 		/**
-		Enables or disables the camera control in the GUI, whether a camera was found or not.
-		@param state can be true or false.
-		*/
-		void enableCamControls(bool state);
-		
-		/**
 		Checks or unckecks the SaveSettings checkbox, depending on the value read from the ini-file.
 		*/
 		void setCheckBoxSaveSettings(Qt::CheckState state);
-		
-		//void setBtnSavePic(bool activate);
-
 
 	
 	public slots:
@@ -323,7 +314,6 @@ class Gui : public QMainWindow
 		void on_btnTest_clicked();
 		//void on_ckeckBoxSaveSettings_stateChanged(int state);
 		void on_btnSavePicture_clicked();
-		void on_btnAutoSavePicture_clicked();
 		void on_btnEnableRemote_clicked();
 		void on_btnSimulate_clicked();
 		void on_sliderZoom_valueChanged(int);
