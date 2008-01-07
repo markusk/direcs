@@ -1710,7 +1710,7 @@ void Gui::createLaserDistanceObjects()
 
 
 	
-/*	
+	
 	//
 	// draw the arcs !!!
 	//
