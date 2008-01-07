@@ -182,7 +182,7 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 	// say the message via festival
 	if (sayIt == true)
 	{
-		mrs1->speak(text);
+		emit speak(text);
 	}
 }
 
@@ -205,7 +205,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	// say the message via festival
 	if (sayIt == true)
 	{
-		mrs1->speak(text);
+		emit speak(text);
 	}
 }
 

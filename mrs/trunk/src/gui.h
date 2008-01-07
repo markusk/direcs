@@ -296,11 +296,10 @@ class Gui : public QMainWindow
 		// TODO: change name to 'state'
 		void simulate(bool status);
 	
-		/*
+		/**
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
-		// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded 
-		//void speak(QString text);
+		void speak(QString text);
 
 
 	private slots:
