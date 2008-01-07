@@ -39,9 +39,7 @@
 #ifndef CARMEN_PARAMETER_INTERFACE_H
 #define CARMEN_PARAMETER_INTERFACE_H
 
-// Markus
-// Markus #include <carmen/carmen.h>
-#include "param_messages.h"
+//#include "param_messages.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
