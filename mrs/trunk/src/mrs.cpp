@@ -39,7 +39,6 @@ Mrs::Mrs()
 	// create the objects
 	//------------------------------------------------------------------
 	#ifdef _TTY_POSIX_
-	// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
 	//speakThread = new SpeakThread();
 	#endif
 	interface1 = new InterfaceAvr();
@@ -108,16 +107,6 @@ Mrs::Mrs()
 	QLocale::setDefault(QLocale::German);
 	commaSeparator = ",";
 
-
-	//----------------------------------------------------------------------------
-	// Initialize the speech engine festival
-	//----------------------------------------------------------------------------
-	#ifdef _TTY_POSIX_
-	//      1 = we want the festival init files loaded
-	// 500000 = default scheme heap size
-	festival_initialize(1, 500000);
-	#endif
-
 	
 	//--------------------------------------------------------------------------
 	// Check for the current programm path 
@@ -134,19 +123,29 @@ Mrs::Mrs()
 	//----------------------------------------------------------------------------
 	// say a text
 	//----------------------------------------------------------------------------
-	/*
-	// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
 	#ifdef _TTY_POSIX_
-	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-		
+	// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
+	//connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+	//connect(gui1, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+	connect(gui1, SIGNAL( speak(QString) ), this, SLOT( speak(QString) ));
+	
+	//----------------------------------------------------------------------------
+	// Initialize the speech engine festival
+	//----------------------------------------------------------------------------
+	//      1 = we want the festival init files loaded
+	// 500000 = default scheme heap size
+	festival_initialize(1, 500000);
+	
+	// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
+	/*
 	if (speakThread->isRunning() == false)
 	{
 		gui1->appendLog("Starting speak thread...", false);
 		speakThread->start();
-		gui1->appendLog("Sensor speak started.");
+		gui1->appendLog("Speak thread started.");
 	}
-	#endif
 	*/
+	#endif
 	
 	
 	//--------------------------------------------------------------------------
@@ -561,13 +560,7 @@ Mrs::~Mrs()
 	}
 	
 	
-	// shutdown laser module ! ! !
-	// FIXME: stop new laser module!!
-	//shutdown_laserview();
-
-	
 	#ifdef _TTY_POSIX_
-	// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
 	/*
 	//--------------------------------
 	// quit the speakThread
@@ -606,7 +599,6 @@ Mrs::~Mrs()
 	}
 	*/
 	#endif
-	
 	
 	//--------------------------------
 	// quit the network thread
@@ -855,7 +847,6 @@ Mrs::~Mrs()
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
 	#ifdef _TTY_POSIX_
-	// FixMe: SIOD ERROR: the currently assigned stack limit has been exceded 
 	//delete speakThread;
 	#endif
 	delete laserThread;

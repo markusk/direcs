@@ -3,7 +3,7 @@
 
 //-------------------------------------------------------------------
 #include "gui.h"
-#include "speakThread.h"
+//#include "speakThread.h"
 #include "circuit.h"
 #include "interface.h"
 #include "sensorThread.h"
@@ -18,6 +18,7 @@
 #include "laserThread.h"
 #include "joystick.h"
 //-------------------------------------------------------------------
+#include <festival.h> // FIXME: instead of speakThread-include!
 #include <QtGui>
 #include <QSplashScreen>
 //-------------------------------------------------------------------
@@ -54,12 +55,6 @@ class Mrs : public QObject
 		The method for the test button in the GUI
 		*/
 		void test();
-		
-		/**
-		Speaks a text with festival. All HTML-Code in the parameter (text) is also removed internally).
-		@param text is the text to speak.
-		*/
-		void speak(QString text);
 	
 		/**
 		Returns the status of the main program. True, if the simulationMode ist active.
@@ -125,9 +120,22 @@ class Mrs : public QObject
 		Finishes the splash screen and displays the main window.
 		*/
 		void finishSplash();
+		
+		/**
+		Speaks a text with festival. All HTML-Code in the parameter (text) is also removed internally).
+		@param text is the text to speak.
+		*/
+		// FIXME: use speakThread instead!!
+		void speak(QString text);
+
 
 	signals:
 		void showPreferredDirection(QString direction);
+	
+		/**
+		Emits a speak signal. This signal is sent to the speakThread.
+		*/
+		//void speak(QString text);
 
 
 	private:
@@ -151,7 +159,7 @@ class Mrs : public QObject
 		CamThread *cam1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-		SpeakThread *speakThread;
+		//SpeakThread *speakThread;
 		Joystick *joystick;
 		QString commaSeparator;
 		bool robotIsOn; //! Stores the state of the robots circuit. TRUE, when the cirvuit is ON.
