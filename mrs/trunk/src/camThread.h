@@ -24,7 +24,6 @@ class CamThread : public QThread
 	public:
 		CamThread();
 		~CamThread();
-		QImage getFrame(bool hiResMode, bool stretchMode);
 		bool isConnected(void);
 		
 		void stop();
