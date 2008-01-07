@@ -833,12 +833,12 @@ int sick_connect_device(sick_laser_p laser)
 	sick_install_settings(laser);
 	sick_allocate_laser(laser);
 	
-	fprintf(stderr, "INFO: connecting Laser Scanner to %-14s ...... \n", laser->dev.ttyport);
+	fprintf(stderr, "INFO: connecting Laser Scanner to %-14s...... ", laser->dev.ttyport);
 	sick_serial_connect(laser);
 	
 	if(laser->dev.fd == -1)
 	{
-		fprintf(stderr, "failed\n");
+		fprintf(stderr, "failed!\n");
 		return 1;
 	}
 	
