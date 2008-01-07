@@ -10,12 +10,12 @@ CamThread::CamThread() : QThread()
 	imgPtr = new IplImage();
 	
 	
-	// try to capture from the first camera (0
+	// try to capture from the first camera (0)
 	capture = cvCaptureFromCAM(0);
 	
 	if (!capture)
 	{
-		qDebug("Could not initialize capturing! :-(");
+		qDebug("INFO: could not initialize capturing from /dev/video0. No camera connected?");
 		cameraIsOn = false;
 		stopped = true;
 	}
