@@ -24,8 +24,8 @@ HEADERS += camThread.h \
  carmenserial.h \
  laser_main.h \
  param_interface.h \
- param_messages.h \
- joystick.h
+ joystick.h \
+ laser_messages.h
 SOURCES += camThread.cpp \
            circuit.cpp \
            gui.cpp \
