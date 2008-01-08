@@ -136,6 +136,11 @@ class Mrs : public QObject
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
 		//void speak(QString text);
+		
+		/**
+		Initialize the robots basic circuit.
+		*/
+		void initCircuit();
 
 
 	private:
@@ -162,7 +167,6 @@ class Mrs : public QObject
 		//SpeakThread *speakThread;
 		Joystick *joystick;
 		QString commaSeparator;
-		bool robotIsOn; //! Stores the state of the robots circuit. TRUE, when the cirvuit is ON.
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; //! Stores the robots simulation state
 		int mot1Speed;
