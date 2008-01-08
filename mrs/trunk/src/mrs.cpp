@@ -55,7 +55,7 @@ Mrs::Mrs()
 	joystick = new Joystick();
 	
 	
-	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, circuit1, cam1, motors, servos, netThread, laserThread);
+	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, cam1, motors, servos, netThread, laserThread);
 
 
 	//------------------------------------------------------------------
@@ -94,7 +94,6 @@ Mrs::Mrs()
 	//------------------------------------------------------------------
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
-	robotIsOn = false;
 	robotDrives = false;
 	mot1Speed = 0;
 	mot2Speed = 0;
@@ -192,14 +191,18 @@ Mrs::Mrs()
 	//-------------------------------------------------------
 	splash->showMessage(QObject::tr("Searching robot..."), somewhere, splashColor);
 	
-	if (circuit1->initCircuit() == true)
+	connect(this, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+	connect(gui1, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+	
+	emit initCircuit();
+	
+	// TODO: what, if the iniCircuit answers too late?! copy slot to a double normal method in Circuit?
+	if (circuit1->isConnected() == true)
 	{
-		robotIsOn = true;
 		gui1->appendLog("Robot is ON and answers.");
 	}
 	else
 	{
-		robotIsOn = false;
 		gui1->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 	}
 
@@ -207,7 +210,7 @@ Mrs::Mrs()
 	//-------------------------------------------------------
 	// set the read motor speed
 	//-------------------------------------------------------
-	if (robotIsOn == true)
+	if (circuit1->isConnected())
 	{
 		// tell the microcontroller the motor speed
 		motors->setMotorSpeed(1, mot1Speed);
@@ -220,7 +223,7 @@ Mrs::Mrs()
 	//-----------------------------------------------------------
 	// start the sensor thread ("clock" for reading the sensors)
 	//-----------------------------------------------------------
-	if (robotIsOn == true)
+	if (circuit1->isConnected())
 	{
 		if (sensorThread->isRunning() == false)
 		{
@@ -239,7 +242,7 @@ Mrs::Mrs()
 	//-----------------------------------------------------------
 	// start the obstacle check thread
 	//-----------------------------------------------------------
-	if (robotIsOn == true)
+	if (circuit1->isConnected())
 	{
 		if (obstCheckThread->isRunning() == false)
 		{
@@ -259,7 +262,7 @@ Mrs::Mrs()
 	//-----------------------------------------------------------
 	// start the plot thread ("clock" for plotting the curves)
 	//-----------------------------------------------------------
-	if (robotIsOn == true)
+	if (circuit1->isConnected())
 	{
 		if (plotThread->isRunning() == false)
 		{
@@ -829,9 +832,9 @@ Mrs::~Mrs()
 	// Last init for the robots circuits
 	//-------------------------------------------------------
 	gui1->appendLog("Last circuit init...");
-	if (robotIsOn == true)
+	if (circuit1->isConnected())
 	{
-		circuit1->initCircuit();
+		emit initCircuit();
 	}
 
 	//-----------------------------
@@ -1099,7 +1102,7 @@ void Mrs::drive(const unsigned char command)
 			return;
 			break;
 		case START:
-			if (robotIsOn == true)
+			if (circuit1->isConnected())
 			{
 				robotDrives = true;
 				gui1->appendLog("Starting to drive forward...");
