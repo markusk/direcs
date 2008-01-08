@@ -26,7 +26,8 @@
  *
  ********************************************************/
 
-// /** @addtogroup param_daemon libparam_interface **/
+// Markus:
+/* * @addtogroup param_daemon libparam_interface * */
 // @{
 
 /** \file param_interface.h

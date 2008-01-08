@@ -26,7 +26,8 @@
  *
  ********************************************************/
 
-/** @addtogroup laser **/
+// Markus:
+/* * @addtogroup laser * */
 // @{
 
 /** \file laser_messages.h
