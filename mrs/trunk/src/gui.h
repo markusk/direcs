@@ -12,7 +12,6 @@
 #include "camThread.h"
 #include "networkThread.h"
 #include "laserThread.h"
-#include "circuit.h"
 #include "interface.h"
 //-------------------------------------------------------------------
 #include "cv.h"
@@ -44,7 +43,6 @@ class PlotThread;
 class ObstacleCheckThread;
 class CamThread;
 class NetworkThread;
-class Circuit;
 class Interface;
 class Laser;
 
@@ -57,7 +55,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit *c, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent = 0);
+		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -276,6 +274,11 @@ class Gui : public QMainWindow
 
 	signals:
 		/**
+		Initialize the robots basic circuit.
+		 */
+		void initCircuit();
+		
+		/**
 		Enables or disables the listening for the robot remote control. This signal is sent from the remote control button.
 		@param status can be true or false.
 		@sa NetworkThread()
@@ -363,7 +366,6 @@ class Gui : public QMainWindow
 		SensorThread *sensThread;
 		PlotThread *plotThread;
 		ObstacleCheckThread *obstCheckThread;
-		Circuit *circuit1;
 		CamThread *cam1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;

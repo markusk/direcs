@@ -1,14 +1,13 @@
 #include "gui.h"
 
 
-Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Circuit *c, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
 	mrs1 = m;
 	sensThread = s;
 	plotThread = p;
 	obstCheckThread = o;
-	circuit1 = c;
 	cam1 = ca;
 	motors = mot;
 	servos = serv;
@@ -261,9 +260,7 @@ void Gui::on_sliderMotor2Speed_sliderReleased()
 void Gui::on_btnReset_clicked()
 {
 	// reset the circuit (motors off etc.)
-	circuit1->initCircuit();
-
-	//circuit1->findRobotHardware();
+	emit initCircuit();
 
 	// stop motorTimer
 	mrs1->drive(STOP);
