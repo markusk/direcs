@@ -438,6 +438,8 @@ int Motor::getMotorSpeed(int motor)
 			return motor2Speed;
 			break;
 	}
+	
+	return -1;
 }
 
 
