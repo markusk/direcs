@@ -17,7 +17,6 @@ HEADERS += camThread.h \
            interface.h  \
            plotThread.h \
            networkThread.h \
-           servo.h \
            laserThread.h \
            speakThread.h \
  sick.h \
@@ -37,7 +36,6 @@ SOURCES += camThread.cpp \
            interface.cpp  \
            plotThread.cpp \
            networkThread.cpp \
-           servo.cpp \
            laserThread.cpp \
            speakThread.cpp \
  sick.cpp \
@@ -61,6 +59,10 @@ win32 {
     HEADERS += usb_win.h \
   win_qextserialport.h
     SOURCES += usb_win.cpp
+    SOURCES -= servo.cpp
+
+    HEADERS -= servo.h
+
 }
 QT += network \
 opengl
