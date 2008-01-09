@@ -50,12 +50,12 @@ Mrs::Mrs()
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
 	plotThread = new PlotThread(sensorThread);
 	inifile1 = new Inifile();
-	cam1 = new CamThread();
+//	cam1 = new CamThread();
 	netThread = new NetworkThread();
 	joystick = new Joystick();
 	
 	
-	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, cam1, motors, servos, netThread, laserThread);
+	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, /*cam1,*/ motors, servos, netThread, laserThread);
 
 
 	//------------------------------------------------------------------
@@ -302,7 +302,7 @@ Mrs::Mrs()
 	// let the GUI show messages in the log
 	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
 	
-	
+/*	
 	//-----------------------------------------------------------
 	// check if camera is connected
 	//-----------------------------------------------------------
@@ -319,7 +319,7 @@ Mrs::Mrs()
 	{
 		gui1->appendLog("Camera thread NOT started!");
 	}
-	
+*/	
 	
 	//----------------------------------------------------------------------------
 	// connect sensor signals to "show sensor data"
@@ -489,6 +489,7 @@ Mrs::~Mrs()
 	
 	// TODO: a universal quit-threads-method
 
+/*
 	//--------------------------------
 	// quit the camThread
 	//--------------------------------
@@ -524,7 +525,7 @@ Mrs::~Mrs()
 			gui1->appendLog("Camera thread terminated.");
 		}
 	}
-
+*/
 	
 	//--------------------------------
 	// quit the laserThread
@@ -857,7 +858,7 @@ Mrs::~Mrs()
 	delete netThread;
 	delete joystick;
 	delete plotThread;
-	delete cam1;
+	//delete cam1;
 	delete inifile1;
 	delete obstCheckThread;
 	delete servos;

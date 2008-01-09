@@ -12,7 +12,7 @@
 //#include "servo.h"
 #include "obstacleCheckThread.h"
 #include "inifile.h"
-#include "camThread.h"
+//#include "camThread.h"
 #include "networkThread.h"
 //#include "sick.h"
 #include "laserThread.h"
@@ -161,7 +161,7 @@ class Mrs : public QObject
 		Servo *servos;
 		ObstacleCheckThread *obstCheckThread;
 		Inifile *inifile1;
-		CamThread *cam1;
+		//CamThread *cam1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
 		//SpeakThread *speakThread;
