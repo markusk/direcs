@@ -1,14 +1,15 @@
 #include "gui.h"
 
 
-Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, /*CamThread *ca,*/ Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
 	mrs1 = m;
 	sensThread = s;
 	plotThread = p;
 	obstCheckThread = o;
-	cam1 = ca;
+//	cam1 = ca;
+	cam1 = new CamThread();
 	motors = mot;
 	servos = serv;
 	netThread = net;
@@ -97,6 +98,23 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, CamThre
 	//----------------------------------------------------------------------------
 	connect(cam1, SIGNAL( camDataComplete(IplImage*) ), this, SLOT( setCamImage(IplImage*) ));
 	
+	//-----------------------------------------------------------
+	// check if camera is connected
+	//-----------------------------------------------------------
+	if (cam1->isConnected())
+	{
+		if (cam1->isRunning() == false)
+		{
+			appendLog("Starting cam thread...", false);
+			cam1->start();
+			appendLog("Camera thread started.");
+		}
+	}
+	else
+	{
+		appendLog("Camera thread NOT started!");
+	}
+
 	
 	//----------------------------------------------------------------------------
 	// connect networkThread signal to "dataReceived"
@@ -125,9 +143,48 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, CamThre
 
 Gui::~Gui()
 {
+	//--------------------------------
+	// quit the camThread
+	//--------------------------------
+	if (cam1->isRunning() == true)
+	{
+		appendLog("Stopping camera thread...");
+		
+		// my own stop routine :-)
+		cam1->stop();
+		
+		// slowing thread down
+		cam1->setPriority(QThread::IdlePriority);
+		cam1->quit();
+		
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((cam1->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (cam1->isFinished() == true)
+		{
+			appendLog("Camera thread stopped.");
+		}
+		else
+		{
+			appendLog("Terminating camera thread because it doesn't answer...");
+			cam1->terminate();
+			cam1->wait(1000);
+			appendLog("Camera thread terminated.");
+		}
+	}
+	
+	
+	delete cam1;
 	delete scannerSplash;
 	delete pixmapBot2;
 	delete pixmapBot1;
+	
 	
 	/*
 	TODO: empty list

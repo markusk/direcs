@@ -41,7 +41,7 @@ class Servo;
 class SensorThread;
 class PlotThread;
 class ObstacleCheckThread;
-class CamThread;
+//class CamThread;
 class NetworkThread;
 class Interface;
 class Laser;
@@ -55,7 +55,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, CamThread *ca, Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent = 0);
+		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, /*CamThread *ca,*/ Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -363,10 +363,10 @@ class Gui : public QMainWindow
 		
 		Ui::Gui ui;
 		Mrs *mrs1;
+		CamThread *cam1;
 		SensorThread *sensThread;
 		PlotThread *plotThread;
 		ObstacleCheckThread *obstCheckThread;
-		CamThread *cam1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
 		Motor *motors;
