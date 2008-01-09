@@ -50,12 +50,11 @@ Mrs::Mrs()
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
 	plotThread = new PlotThread(sensorThread);
 	inifile1 = new Inifile();
-//	cam1 = new CamThread();
 	netThread = new NetworkThread();
 	joystick = new Joystick();
 	
 	
-	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, /*cam1,*/ motors, servos, netThread, laserThread);
+	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, motors, servos, netThread, laserThread);
 
 
 	//------------------------------------------------------------------
@@ -301,26 +300,7 @@ Mrs::Mrs()
 
 	// let the GUI show messages in the log
 	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
-	
-/*	
-	//-----------------------------------------------------------
-	// check if camera is connected
-	//-----------------------------------------------------------
-	if (cam1->isConnected())
-	{
-		if (cam1->isRunning() == false)
-		{
-			gui1->appendLog("Starting cam thread...", false);
-			cam1->start();
-			gui1->appendLog("Camera thread started.");
-		}
-	}
-	else
-	{
-		gui1->appendLog("Camera thread NOT started!");
-	}
-*/	
-	
+		
 	//----------------------------------------------------------------------------
 	// connect sensor signals to "show sensor data"
 	// (Whenever the sensor data are completely read, show the result in the GUI)
@@ -489,44 +469,6 @@ Mrs::~Mrs()
 	
 	// TODO: a universal quit-threads-method
 
-/*
-	//--------------------------------
-	// quit the camThread
-	//--------------------------------
-	if (cam1->isRunning() == true)
-	{
-		gui1->appendLog("Stopping camera thread...");
-		
-		// my own stop routine :-)
-		cam1->stop();
-		
-		// slowing thread down
-		cam1->setPriority(QThread::IdlePriority);
-		cam1->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((cam1->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (cam1->isFinished() == true)
-		{
-			gui1->appendLog("Camera thread stopped.");
-		}
-		else
-		{
-			gui1->appendLog("Terminating camera thread because it doesn't answer...");
-			cam1->terminate();
-			cam1->wait(1000);
-			gui1->appendLog("Camera thread terminated.");
-		}
-	}
-*/
-	
 	//--------------------------------
 	// quit the laserThread
 	//--------------------------------
@@ -858,7 +800,6 @@ Mrs::~Mrs()
 	delete netThread;
 	delete joystick;
 	delete plotThread;
-	//delete cam1;
 	delete inifile1;
 	delete obstCheckThread;
 	delete servos;
