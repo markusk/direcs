@@ -44,8 +44,7 @@ Mrs::Mrs()
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1);
 	motors = new Motor(interface1);
-	servos = new Servo(interface1);
-	sensorThread = new SensorThread(interface1, servos);
+	sensorThread = new SensorThread(interface1);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
 	plotThread = new PlotThread(sensorThread);
@@ -54,7 +53,7 @@ Mrs::Mrs()
 	joystick = new Joystick();
 	
 	
-	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, motors, servos, laserThread);
+	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, motors, laserThread);
 
 
 	//------------------------------------------------------------------
@@ -801,13 +800,11 @@ Mrs::~Mrs()
 	//delete speakThread;
 	#endif
 	delete laserThread;
-	//delete winLIRC;
 	delete netThread;
 	delete joystick;
 	delete plotThread;
 	delete inifile1;
 	delete obstCheckThread;
-	delete servos;
 	delete motors;
 	delete sensorThread;
 	delete circuit1;
@@ -1468,54 +1465,6 @@ void Mrs::readSettings()
 			gui1->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
 	}
-
-
-/*	
-	//---------------------------------------------------------------------
-	// read setting
-	int servoPositionSensor1 = inifile1->readSetting("Config", "servoPositionSensor1");
-	
-	switch (servoPositionSensor1)
-	{
-		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			servoPositionSensor1 = 4;
-			break;
-		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"servoPositionSensor1\" not found in ini-file!</font>");
-			servoPositionSensor1 = 4;
-			break;
-		default:
-			// set slider to the read value
-			gui1->setSliderPositionServo1(servoPositionSensor1);
-			// show text
-			gui1->appendLog(QString("Servo position sensor 1 set to <b>%1</b>.").arg(servoPositionSensor1));
-			break;
-	}
-
-
-	//---------------------------------------------------------------------
-	// read setting
-	int servoPositionSensor2 = inifile1->readSetting("Config", "servoPositionSensor2");
-	
-	switch (servoPositionSensor2)
-	{
-		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			servoPositionSensor2 = 4;
-			break;
-		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"servoPositionSensor2\" not found in ini-file!</font>");
-			servoPositionSensor2 = 4;
-			break;
-		default:
-			// set slider to the read value
-			gui1->setSliderPositionServo2(servoPositionSensor2);
-			// show text
-			gui1->appendLog(QString("Servo position sensor 2 set to <b>%1</b>.").arg(servoPositionSensor2));
-			break;
-	}
-*/
 }
 
 

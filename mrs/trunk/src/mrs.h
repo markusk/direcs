@@ -9,7 +9,6 @@
 #include "sensorThread.h"
 #include "plotThread.h"
 #include "motor.h"
-//#include "servo.h"
 #include "obstacleCheckThread.h"
 #include "inifile.h"
 #include "networkThread.h"
@@ -156,7 +155,6 @@ class Mrs : public QObject
 		SensorThread *sensorThread;
 		PlotThread *plotThread;
 		Motor *motors;
-		Servo *servos;
 		ObstacleCheckThread *obstCheckThread;
 		Inifile *inifile1;
 		NetworkThread *netThread;

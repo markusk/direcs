@@ -1,7 +1,7 @@
 #include "gui.h"
 
 
-Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, Servo *serv, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
 	mrs1 = m;
@@ -9,7 +9,6 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *
 	plotThread = p;
 	obstCheckThread = o;
 	motors = mot;
-	servos = serv;
 	laserThread = l;
 	cam1 = new CamThread();
 	

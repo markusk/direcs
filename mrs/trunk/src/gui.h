@@ -5,7 +5,6 @@
 #include "ui_gui.h"
 #include "mrs.h"
 #include "motor.h"
-#include "servo.h"
 #include "sensorThread.h"
 #include "plotThread.h"
 #include "obstacleCheckThread.h"
@@ -36,7 +35,6 @@
 // forward declarations because of circular includes!
 class Mrs;
 class Motor;
-class Servo;
 class SensorThread;
 class PlotThread;
 class ObstacleCheckThread;
@@ -52,7 +50,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, Servo *serv, LaserThread *l, QMainWindow *parent = 0);
+		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -366,7 +364,6 @@ class Gui : public QMainWindow
 		ObstacleCheckThread *obstCheckThread;
 		LaserThread *laserThread;
 		Motor *motors;
-		Servo *servos;
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
 		QPixmap cameraPicToSave;
@@ -402,9 +399,6 @@ class Gui : public QMainWindow
 		static const unsigned char SAME             = 3;  /** Motor direction/power "same like before" */
 		static const unsigned char MOTOR1           = 10; /** Motor 1 */
 		static const unsigned char MOTOR2           = 20; /** Motor 2 */
-		
-		static const unsigned char SERVO1           = 10; // Servo 1
-		//static const unsigned char SERVO2           = 20; // Servo 2
 		
 		/**
 		Give the sensors some names

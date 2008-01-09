@@ -1,6 +1,6 @@
 #include "sensorThread.h"
 
-SensorThread::SensorThread(InterfaceAvr *i, Servo *s)
+SensorThread::SensorThread(InterfaceAvr *i)
 {
 	stopped = false;
 	simulationMode = false;
@@ -9,7 +9,6 @@ SensorThread::SensorThread(InterfaceAvr *i, Servo *s)
 	
 	// copy the pointer from the original object
 	interface1 = i;
-	servos = s;
 
 	// Array for storing the measured values from the infrared sensors
 	iRSensorValue[SENSOR1] = 0;
@@ -108,8 +107,6 @@ void SensorThread::run()
 	//bool result = false;
 	int value = 0;
 	
-	//Todo: int servoPosition1 = 12;
-	//Todo: int servoPosition2 = 8;
 	
 	//
 	//  start "threading"...
@@ -123,23 +120,6 @@ void SensorThread::run()
 		
 		if (simulationMode == false)
 		{
-			/* //Todo: Servo positionierung...
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			//+++++++++  begin servo test  +++++++++++++++++++++++++++++++++++++++++++
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			
-			servos->setServoPosition(SERVO1, servoPosition1); // 5 - 16  (12 - 16 für Hindernis VORNE)
-			servoPosition1++;
-			if (servoPosition1 > 16)
-				servoPosition1 = 12;
-			
-			servos->setServoPosition(SERVO2, servoPosition2); // 5 - 16  (8 - 5 für Hindernis VORNE)
-			servoPosition2--;
-			if (servoPosition2 < 5)
-				servoPosition2 = 8;
-			*/
-			
-
 /*
 FIXME: temporarily removed from robot!!
 			
@@ -158,14 +138,9 @@ FIXME: temporarily removed from robot!!
 			//interface1->receiveInt(&value);
 		
 			// store measured values in the sensor values array
-			iRSensorValue[SENSOR1] = value;				// < < < < < < servo array daten !!!
+			iRSensorValue[SENSOR1] = value;
 			//qDebug("received value sensor1: %d", value);
 			value = 0;
-	
-		
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			//+++++++++  end servo test  +++++++++++++++++++++++++++++++++++++++++++++
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 			
 			//------------------------------------------------------

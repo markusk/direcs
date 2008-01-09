@@ -10,7 +10,6 @@
 #include "usb_win.h"
 #endif
 
-#include "servo.h"
 //-------------------------------------------------------------------
 //#include "math.h" // for pow
 #include "interface.h"
@@ -29,7 +28,7 @@ class SensorThread : public QThread
     Q_OBJECT
 
 	public:
-		SensorThread(InterfaceAvr *i, Servo *s);
+		SensorThread(InterfaceAvr *i);
 		~SensorThread();
 		
 		/**
@@ -123,7 +122,6 @@ class SensorThread : public QThread
 	private:
 		//mutable QMutex mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
-		Servo *servos;
 		volatile bool stopped;
 		bool simulationMode;
 		
@@ -189,9 +187,6 @@ class SensorThread : public QThread
 		For example, a measured sensor value for a motor sensor is 100, this multiplied with a conversion factor 29 results in 290 mA.
 		*/
 		static const unsigned char CONVERSIONFACTORMOTORSENSOR = 29;
-		
-		static const unsigned char SERVO1 = 10; // Servo 1
-		static const unsigned char SERVO2 = 20; // Servo 2
 		
 		//
 		// the "serial" commands for the MC
