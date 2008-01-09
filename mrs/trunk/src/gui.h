@@ -10,7 +10,6 @@
 #include "plotThread.h"
 #include "obstacleCheckThread.h"
 #include "camThread.h"
-#include "networkThread.h"
 #include "laserThread.h"
 #include "interface.h"
 //-------------------------------------------------------------------
@@ -41,8 +40,6 @@ class Servo;
 class SensorThread;
 class PlotThread;
 class ObstacleCheckThread;
-//class CamThread;
-class NetworkThread;
 class Interface;
 class Laser;
 
@@ -55,7 +52,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, /*CamThread *ca,*/ Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent = 0);
+		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, Servo *serv, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -367,7 +364,6 @@ class Gui : public QMainWindow
 		SensorThread *sensThread;
 		PlotThread *plotThread;
 		ObstacleCheckThread *obstCheckThread;
-		NetworkThread *netThread;
 		LaserThread *laserThread;
 		Motor *motors;
 		Servo *servos;

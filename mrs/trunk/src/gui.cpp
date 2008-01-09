@@ -1,19 +1,17 @@
 #include "gui.h"
 
 
-Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, /*CamThread *ca,*/ Motor *mot, Servo *serv, NetworkThread *net, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, Servo *serv, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
 	mrs1 = m;
 	sensThread = s;
 	plotThread = p;
 	obstCheckThread = o;
-//	cam1 = ca;
-	cam1 = new CamThread();
 	motors = mot;
 	servos = serv;
-	netThread = net;
 	laserThread = l;
+	cam1 = new CamThread();
 	
 	
 	//-------------------------------------------------------
@@ -115,13 +113,6 @@ Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, /*CamTh
 		appendLog("Camera thread NOT started!");
 	}
 
-	
-	//----------------------------------------------------------------------------
-	// connect networkThread signal to "dataReceived"
-	// (Whenever data were received, the data are shown in the GUI)
-	//----------------------------------------------------------------------------
-	connect(netThread, SIGNAL( dataReceived(QString) ), this, SLOT( appendNetworkLog(QString) ));
-	
 
 	//----------------------------------------------------------------------------
 	// Plot stuff
