@@ -51,11 +51,6 @@ void PlotThread::stop()
 
 void PlotThread::run()
 {
-	//------------------------------------------------------------
-	// Get the values from the motor sensors and plot them
-	//------------------------------------------------------------
-	
-	
 	//
 	//  start "threading"...
 	//

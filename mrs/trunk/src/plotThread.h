@@ -15,6 +15,9 @@
 #include <QThread>
 //-------------------------------------------------------------------
 
+/**
+This class gets power values from the motor sensors and emits them to the GUI.
+*/
 class PlotThread : public QThread
 {
     Q_OBJECT

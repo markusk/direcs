@@ -60,7 +60,10 @@
 
 #include <QThread>
 
-
+/**
+\brief This class is for controling the robot with a joystick.
+It opens a joystick device and emits siglans on joystick movements or when a button is pressed.
+*/
 class Joystick : public QThread
 {
     Q_OBJECT

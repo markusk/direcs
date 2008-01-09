@@ -9,6 +9,9 @@
 //-------------------------------------------------------------------
 
 
+/**
+\brief This class controls connected servos
+*/
 class Servo : public QObject
 {
     Q_OBJECT
