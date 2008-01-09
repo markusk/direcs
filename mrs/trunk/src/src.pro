@@ -59,10 +59,6 @@ win32 {
     HEADERS += usb_win.h \
   win_qextserialport.h
     SOURCES += usb_win.cpp
-    SOURCES -= servo.cpp
-
-    HEADERS -= servo.h
-
 }
 QT += network \
 opengl
