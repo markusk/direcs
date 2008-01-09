@@ -54,7 +54,7 @@ Mrs::Mrs()
 	joystick = new Joystick();
 	
 	
-	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, motors, servos, netThread, laserThread);
+	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, motors, servos, laserThread);
 
 
 	//------------------------------------------------------------------
@@ -328,6 +328,11 @@ Mrs::Mrs()
 	// execute the received remote commands
 	//----------------------------------------------------------------------------
 	connect(netThread, SIGNAL( dataReceived(QString) ), this, SLOT( executeRemoteCommand(QString) ));
+	//----------------------------------------------------------------------------
+	// connect networkThread signal to "dataReceived"
+	// (Whenever data were received, the data are shown in the GUI)
+	//----------------------------------------------------------------------------
+	connect(netThread, SIGNAL( dataReceived(QString) ), gui1, SLOT( appendNetworkLog(QString) ));
 	
 	//----------------------------------------------------------------------------
 	// connect laserThread signal to "dataReceived"
