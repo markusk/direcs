@@ -385,7 +385,7 @@ void Gui::on_btnExit_clicked()
 
 void Gui::on_btnTest_clicked()
 {
-	mrs1->test();
+	emit test();
 }
 
 

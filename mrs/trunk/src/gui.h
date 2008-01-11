@@ -307,6 +307,11 @@ class Gui : public QMainWindow
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
 		void speak(QString text);
+		
+		/**
+		Emits a signal to call the test method in the Mrs class..
+		 */
+		void test();
 
 
 	private slots:

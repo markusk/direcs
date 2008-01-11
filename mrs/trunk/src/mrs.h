@@ -38,11 +38,6 @@ class Mrs : public QObject
 	public:		
 		Mrs();
 		~Mrs();
-
-		/**
-		The method for the test button in the GUI
-		*/
-		void test();
 	
 		/**
 		Returns the status of the main program. True, if the simulationMode ist active.
@@ -127,6 +122,11 @@ class Mrs : public QObject
 		Calls the destructor of this class, after saving settings and some other exit stuff.
 		*/
 		void shutdown();
+		
+		/**
+		The method for the test button in the GUI.
+		 */
+		void test();
 
 
 	signals:
