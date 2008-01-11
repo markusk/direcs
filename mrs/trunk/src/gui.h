@@ -10,7 +10,6 @@
 #include "obstacleCheckThread.h"
 #include "camThread.h"
 #include "laserThread.h"
-#include "interface.h"
 //-------------------------------------------------------------------
 #include "cv.h"
 #include "highgui.h"
@@ -38,7 +37,6 @@ class Motor;
 class SensorThread;
 class PlotThread;
 class ObstacleCheckThread;
-class Interface;
 class Laser;
 
 
