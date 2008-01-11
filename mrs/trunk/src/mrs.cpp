@@ -53,7 +53,7 @@ Mrs::Mrs()
 	joystick = new Joystick();
 	
 	
-	gui1 = new Gui(sensorThread, plotThread, obstCheckThread, motors, laserThread);
+	gui1 = new Gui(sensorThread, plotThread, obstCheckThread, laserThread);
 
 
 	//------------------------------------------------------------------
@@ -121,9 +121,14 @@ Mrs::Mrs()
 	connect(gui1, SIGNAL(shutdown()), this, SLOT(shutdown()));
 	
 	//--------------------------------------------------------------------------
-	// call te test method at the test button
+	// call the test method at the test button
 	//--------------------------------------------------------------------------
 	connect(gui1, SIGNAL(test()), this, SLOT(test()));
+	
+	//--------------------------------------------------------------------------
+	// set the motor speed, when signal comes from Gui
+	//--------------------------------------------------------------------------
+	connect(gui1, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
 	
 	
 	//----------------------------------------------------------------------------
