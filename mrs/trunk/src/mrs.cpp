@@ -53,7 +53,7 @@ Mrs::Mrs()
 	joystick = new Joystick();
 	
 	
-	gui1 = new Gui(this, sensorThread, plotThread, obstCheckThread, motors, laserThread);
+	gui1 = new Gui(sensorThread, plotThread, obstCheckThread, motors, laserThread);
 
 
 	//------------------------------------------------------------------

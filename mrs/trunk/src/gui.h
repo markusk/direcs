@@ -3,7 +3,6 @@
 
 //-------------------------------------------------------------------
 #include "ui_gui.h"
-#include "mrs.h"
 #include "motor.h"
 #include "sensorThread.h"
 #include "plotThread.h"
@@ -32,7 +31,6 @@
 
 
 // forward declarations because of circular includes!
-class Mrs;
 class Motor;
 class SensorThread;
 class PlotThread;
@@ -48,7 +46,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent = 0);
+		Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -371,7 +369,6 @@ class Gui : public QMainWindow
 		qreal calculateLaserYpos();
 		
 		Ui::Gui ui;
-		Mrs *mrs1;
 		CamThread *cam1;
 		SensorThread *sensThread;
 		PlotThread *plotThread;

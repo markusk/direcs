@@ -1,10 +1,9 @@
 #include "gui.h"
 
 
-Gui::Gui(Mrs *m, SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
-	mrs1 = m;
 	sensThread = s;
 	plotThread = p;
 	obstCheckThread = o;
@@ -830,16 +829,6 @@ void Gui::showPreferredDirection(QString direction)
 {
 	ui.lblPreferredDirection->setText(direction);
 }
-
-
-/*
-void Gui::on_ckeckBoxSaveSettings_stateChanged(int state)
-{
-	// save button 
-	//mrs1->saveOnExit = state;
-	//setCheckBoxSaveSettings(state);
-}
-*/
 
 
 int Gui::getSliderMotorSpeed(int motor)
