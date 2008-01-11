@@ -45,7 +45,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent = 0);
+		Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -278,6 +278,13 @@ class Gui : public QMainWindow
 		@param command
 		 */
 		void drive(const unsigned char command);
+		
+		/**
+		Emits the speed of a motor.
+		@param motor is the motor number.
+		@param speed is the speed (0 - 255).
+		*/
+		void setMotorSpeed(int motor, int speed);
 		
 		/**
 		Enables or disables the listening for the robot remote control. This signal is sent from the remote control button.

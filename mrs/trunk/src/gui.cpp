@@ -1,13 +1,12 @@
 #include "gui.h"
 
 
-Gui::Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
 	sensThread = s;
 	plotThread = p;
 	obstCheckThread = o;
-	motors = mot;
 	laserThread = l;
 	cam1 = new CamThread();
 	
@@ -40,7 +39,6 @@ Gui::Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, Motor *mot, Las
 	//ui.progressBarSensor16->raise();
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
-	// TODO: connect to setMotorSpeed !
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
 	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
 	// and vice versa
@@ -197,6 +195,7 @@ Gui::~Gui()
 
 void Gui::closeEvent()
 {
+	//emit shutdown();
 }
 
 
@@ -292,14 +291,14 @@ void Gui::on_btnDrive_clicked()
 void Gui::on_sliderMotor1Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
-	motors->setMotorSpeed(1, ui.sliderMotor1Speed->value());
+	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
 }
 
 
 void Gui::on_sliderMotor2Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
-	motors->setMotorSpeed(2, ui.sliderMotor2Speed->value());
+	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
 }
 
 
