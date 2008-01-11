@@ -21,7 +21,7 @@ void Circuit::initCircuit()
 	if (interface1->sendChar(INIT) == false)
 	{
 		robotIsOn = false;
-		return false;
+		//return false;
 	}
 	else
 	{
@@ -33,12 +33,12 @@ void Circuit::initCircuit()
 		{
 			// everthing's fine :-)
 			robotIsOn = true;
-			return true;
+			//return true;
 		}
 	}
 	
 	robotIsOn = false;
-	return false;
+	//return false;
 }
 
 
