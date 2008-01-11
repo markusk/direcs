@@ -195,7 +195,7 @@ Gui::~Gui()
 
 void Gui::closeEvent()
 {
-	//emit shutdown();
+	emit shutdown(); // FIXME: not called, when not using the exit button. why?
 }
 
 
