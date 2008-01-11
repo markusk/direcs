@@ -30,13 +30,6 @@ class Motor : public QObject
 		void motorControl(unsigned char motor, unsigned char power, unsigned char direction);
 		
 		/**
-		Sets the speed of a motor.
-		@param motor is the motor number.
-		@param speed is the speed (0 - 255).
-		*/
-		void setMotorSpeed(int motor, int speed);
-		
-		/**
 		@return The speed of a motor.
 		@param motor is the motor number.
 		*/
@@ -86,6 +79,15 @@ class Motor : public QObject
 		void flashlight(unsigned char state);
 
 
+	public slots:
+		/**
+		Sets the speed of a motor.
+		@param motor is the motor number.
+		@param speed is the speed (0 - 255).
+		 */
+		void setMotorSpeed(int motor, int speed);
+		
+		
 	private:
 		// FIXME: check the conversion value and make it a const!
 		void calculateMovement();
