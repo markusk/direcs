@@ -23,7 +23,6 @@
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
 //-------------------------------------------------------------------
-#include <QPainter> // for drawing lines (old method)
 #include <QtGui>
 #include <QtOpenGL>
 #include <QGraphicsScene> // for OpenGL (Laser lines)
