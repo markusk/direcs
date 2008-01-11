@@ -272,6 +272,12 @@ class Gui : public QMainWindow
 		void initCircuit();
 		
 		/**
+		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
+		@param command
+		 */
+		void drive(const unsigned char command);
+		
+		/**
 		Enables or disables the listening for the robot remote control. This signal is sent from the remote control button.
 		@param status can be true or false.
 		@sa NetworkThread()

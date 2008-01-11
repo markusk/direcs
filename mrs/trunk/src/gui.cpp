@@ -272,7 +272,7 @@ void Gui::on_btnDrive_clicked()
 		//----------------
 		// start driving
 		//----------------
-		mrs1->drive(START);
+		emit drive(START);
 	}
 	else
 	{
@@ -285,7 +285,7 @@ void Gui::on_btnDrive_clicked()
 		//****************
 		// stop driving
 		//****************
-		mrs1->drive(STOP);
+		emit drive(STOP);
 	}
 }
 
@@ -310,7 +310,7 @@ void Gui::on_btnReset_clicked()
 	emit initCircuit();
 
 	// stop motorTimer
-	mrs1->drive(STOP);
+	emit drive(STOP);
  
 	ui.textEditLog->append("Reseted.");
 
@@ -380,7 +380,6 @@ void Gui::on_btnResetMovement2_clicked()
 void Gui::on_btnExit_clicked()
 {
 	mrs1->~Mrs();
-	//close(); //< < <  with this, the ~Mrs is never called!!
 }
 
 

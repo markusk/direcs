@@ -297,9 +297,17 @@ Mrs::Mrs()
 		gui1->appendLog("Joystick thread NOT started!");
 	}
 
+	
+	//----------------------------------------------------------------------------
 	// let the GUI show messages in the log
+	//----------------------------------------------------------------------------
 	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
-		
+	
+	//----------------------------------------------------------------------------
+	// drive in the direction which was emited
+	//----------------------------------------------------------------------------
+	connect(gui1, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
+	
 	//----------------------------------------------------------------------------
 	// connect sensor signals to "show sensor data"
 	// (Whenever the sensor data are completely read, show the result in the GUI)

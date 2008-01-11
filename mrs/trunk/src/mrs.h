@@ -38,15 +38,6 @@ class Mrs : public QObject
 	public:		
 		Mrs();
 		~Mrs();
-		
-		/**
-		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
-		@param command
-		*/
-		void drive(const unsigned char command);
-
-		//void setMinObstacleDistance(short int value);
-		//void startStopCommandClock(int command);
 
 		/**
 		The method for the test button in the GUI
@@ -70,6 +61,12 @@ class Mrs : public QObject
 
 
 	public slots:
+		/**
+		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
+		@param command
+		 */
+		void drive(const unsigned char command);
+		
 		/**
 		The locialUnit handles the behavior of the robot. This slot is called if an obstacle is detected from the obstacleCheckThread.
 		It lets the robot "react" depending on which sensor made the alarm. The number of alarms are also counted.
