@@ -110,11 +110,15 @@ Mrs::Mrs()
 	//--------------------------------------------------------------------------
 	gui1->appendLog(QString("Current path: %1").arg(inifile1->checkPath()));
 	
-	
 	//--------------------------------------------------------------------------
 	// show a QMessage wth the possibility to exit the main programm, when errors occured!
 	//--------------------------------------------------------------------------
 	connect(interface1, SIGNAL(tooMuchErrors()), this, SLOT(showExitDialog()));
+	
+	//--------------------------------------------------------------------------
+	// shutdown Mrs program on exit button
+	//--------------------------------------------------------------------------
+	connect(gui1, SIGNAL(shutdown()), this, SLOT(shutdown()));
 	
 	
 	//----------------------------------------------------------------------------
@@ -408,15 +412,17 @@ Mrs::Mrs()
 }
 
 
-Mrs::~Mrs()
+void Mrs::shutdown()
 {
-/*
+	// FIXME: not called, when closed via KDE GUI!!
+	
+	/*
 	if (ClientSocket1->Active == true)
 	{
-		ClientSocket1->Close();
-		ClientSocket1->Active = false;
+	ClientSocket1->Close();
+	ClientSocket1->Active = false;
 	}
-*/
+	*/
 
 	// TODO: put this to a saveSetings()
 	//---------------------------------------------------------------
@@ -465,10 +471,10 @@ Mrs::~Mrs()
 	{
 		// ask user if he really wants to exit.
 		if (QMessageBox::question(0,
-									"Leaving program...",
-									"Are you sure?",
-									QMessageBox::Yes | QMessageBox::Default,
-									QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+		    "Leaving program...",
+      "Are you sure?",
+      QMessageBox::Yes | QMessageBox::Default,
+      QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
 		{
 			//---------
 			// if NO
@@ -518,45 +524,45 @@ Mrs::~Mrs()
 	}
 	
 	
-	#ifdef _TTY_POSIX_
+#ifdef _TTY_POSIX_
 	/*
 	//--------------------------------
 	// quit the speakThread
 	//--------------------------------
 	if (speakThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping speak thread...");
+	gui1->appendLog("Stopping speak thread...");
 		
 		// my own stop routine :-)
-		speakThread->stop();
+	speakThread->stop();
 		
 		// slowing thread down
-		speakThread->setPriority(QThread::IdlePriority);
-		speakThread->quit();
+	speakThread->setPriority(QThread::IdlePriority);
+	speakThread->quit();
 		
 		//-------------------------------------------
 		// start measuring time for timeout ckecking
 		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((speakThread->isFinished() == false) && (t.elapsed() <= 2000));
+	QTime t;
+	t.start();
+	do
+	{
+} while ((speakThread->isFinished() == false) && (t.elapsed() <= 2000));
 
-		if (speakThread->isFinished() == true)
-		{
-			gui1->appendLog("Speak thread stopped.");
-		}
-		else
-		{
-			gui1->appendLog("Terminating speak thread because it doesn't answer...");
-			speakThread->terminate();
-			speakThread->wait(1000);
-			gui1->appendLog("Speak thread terminated.");
-		}
-	}
+	if (speakThread->isFinished() == true)
+	{
+	gui1->appendLog("Speak thread stopped.");
+}
+	else
+	{
+	gui1->appendLog("Terminating speak thread because it doesn't answer...");
+	speakThread->terminate();
+	speakThread->wait(1000);
+	gui1->appendLog("Speak thread terminated.");
+}
+}
 	*/
-	#endif
+#endif
 	
 	//--------------------------------
 	// quit the network thread
@@ -715,32 +721,32 @@ Mrs::~Mrs()
 	//qDebug("Starting to stop the supersonic thread NOW!");
 	if (supersonThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping supersonic thread...");
+	gui1->appendLog("Stopping supersonic thread...");
 		// slowing thread down
-		supersonThread->setPriority(QThread::IdlePriority);
-		supersonThread->quit();
+	supersonThread->setPriority(QThread::IdlePriority);
+	supersonThread->quit();
 		
 		//-------------------------------------------
 		// start measuring time for timeout ckecking
 		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((supersonThread->isFinished() == false) && (t.elapsed() <= 2000));
+	QTime t;
+	t.start();
+	do
+	{
+} while ((supersonThread->isFinished() == false) && (t.elapsed() <= 2000));
 
-		if (supersonThread->isFinished() == true)
-		{
-			gui1->appendLog("Supersonic thread stopped.");
-		}
-		else
-		{
-			gui1->appendLog("Terminating supersonic thread because it doesn't answer...");
-			supersonThread->terminate();
-			supersonThread->wait(1000);
-			gui1->appendLog("Supersonic thread terminated.");
-		}
-	}
+	if (supersonThread->isFinished() == true)
+	{
+	gui1->appendLog("Supersonic thread stopped.");
+}
+	else
+	{
+	gui1->appendLog("Terminating supersonic thread because it doesn't answer...");
+	supersonThread->terminate();
+	supersonThread->wait(1000);
+	gui1->appendLog("Supersonic thread terminated.");
+}
+}
 	*/
 	
 	// Todo: CamThread sauber beenden!!
@@ -800,6 +806,15 @@ Mrs::~Mrs()
 
 	// close the gui
 	gui1->close();
+
+
+	this->~Mrs();
+}
+
+
+Mrs::~Mrs()
+{
+	qDebug("destructor called. :-)");
 	
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
@@ -818,11 +833,6 @@ Mrs::~Mrs()
 	delete circuit1;
 	delete interface1;
 	delete gui1;
-
-	//---------------
-	// End program
-	//---------------
-	//exit(0);
 }
 
 

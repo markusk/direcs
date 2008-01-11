@@ -121,6 +121,12 @@ class Mrs : public QObject
 		*/
 		// FIXME: use speakThread instead!!
 		void speak(QString text);
+		
+		/**
+		Ends the programm, after asking "really?".
+		Calls the destructor of this class, after saving settings and some other exit stuff.
+		*/
+		void shutdown();
 
 
 	signals:
