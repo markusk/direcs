@@ -267,6 +267,11 @@ class Gui : public QMainWindow
 
 	signals:
 		/**
+		Exits the whole programm.
+		 */
+		void shutdown();
+		
+		/**
 		Initialize the robots basic circuit.
 		 */
 		void initCircuit();

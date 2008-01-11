@@ -379,7 +379,7 @@ void Gui::on_btnResetMovement2_clicked()
 
 void Gui::on_btnExit_clicked()
 {
-	mrs1->~Mrs();
+	emit shutdown();
 }
 
 
