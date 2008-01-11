@@ -5,7 +5,7 @@
 #include "gui.h"
 //#include "speakThread.h"
 #include "circuit.h"
-#include "interface.h"
+#include "interfaceAvr.h"
 #include "sensorThread.h"
 #include "plotThread.h"
 #include "motor.h"

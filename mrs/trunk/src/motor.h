@@ -2,7 +2,7 @@
 #define MOTOR_H
 
 //-------------------------------------------------------------------
-#include "interface.h"
+#include "interfaceAvr.h"
 //-------------------------------------------------------------------
 #include <QtGui>
 #include <QCoreApplication>
