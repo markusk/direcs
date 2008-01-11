@@ -14,7 +14,7 @@ HEADERS += camThread.h \
            qextserialbase.h \
            qextserialport.h \
            obstacleCheckThread.h \
-           interface.h  \
+           interfaceAvr.h  \
            plotThread.h \
            networkThread.h \
            laserThread.h \
@@ -33,7 +33,7 @@ SOURCES += camThread.cpp \
            mrs.cpp \
            sensorThread.cpp \
            obstacleCheckThread.cpp \
-           interface.cpp  \
+           interfaceAvr.cpp  \
            plotThread.cpp \
            networkThread.cpp \
            laserThread.cpp \
