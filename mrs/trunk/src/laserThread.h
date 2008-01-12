@@ -30,24 +30,33 @@ class LaserThread : public QThread
 		~LaserThread();
 		void stop();
 		virtual void run();
-		float getLaserScannerValue(int angle);
-		float getLaserScannerFlag(int angle);
-		void setLaserScannerFlag(int angle, int flag);
-		int getNumReadings();
+		float getLaserScannerValue(short int laserScanner, int angle);
+		float getLaserScannerFlag(short int laserScanner, int angle);
 		
 		/*!
-		This method sets the "nolaserScannerFlag".
-		@param flag is true, when a Laser Scanner <b>is</b> connected and the CARMEN modules <b>are</b> started.
+		This method sets the a flag for each laser line (angle) which represents a free way, an obstackle etc.
+		@param laserScanner can be LASER1 or LASER2
+		@param angle is the angle in degrees
+		@param flag can be FREEWAY, OBSTACLE, LARGESTFREEWAY or CENTEROFLARGESTFREEWAY.
+		@sa ObstacleCheckThread
 		*/
-		void setLaserScannerFlag(bool flag);
+		void setLaserScannerFlag(short int laserScanner, int angle, int flag);
+		int getNumReadings(short int laserScanner);
 		
 		/*!
-		Returns the state of a connected laser scanner. Also sets the serial port.
-		@param serialPortLaserscannerFront is the port of the front Laser scanner
-		@param serialPortLaserscannerRear is the port of the rear Laser scanner
+		Sets the serial port for a laser scanner (for modified CARMEN module).
+		@param laserScanner can be LASER1 or LASER2
+		@param serialPort is the port of the laser scanner
+		@sa setDevicePort, read_parameters, laser_main.h
+		*/
+		void setSerialPort(short int laserScanner, QString serialPort);
+		
+		/*!
+		Returns the state of a connected laser scanner.
+		@param laserScanner can be LASER1 or LASER2
 		@return true, if connected
 		*/
-		bool isConnected(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear);
+		bool isConnected(short int laserScanner);
 	
 	
 	public slots:
@@ -65,8 +74,10 @@ class LaserThread : public QThread
 	private:
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
-		bool laserScannerIsConnected;
-		int numReadings;
+		bool laserScannerFrontIsConnected;
+		bool laserScannerRearIsConnected;
+		int numReadingsFront;
+		int numReadingsRear;
 		bool simulationMode;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!

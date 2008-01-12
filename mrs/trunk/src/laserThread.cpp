@@ -16,9 +16,11 @@ LaserThread::LaserThread()
 {
 	//QMutexLocker locker(&mutex); // make this class thread-safe
 	stopped = false;
-	laserScannerIsConnected = false;
+	laserScannerFrontIsConnected = false;
+	laserScannerRearIsConnected = false;
 	simulationMode = false;
-	numReadings = 0;
+	numReadingsFront = 0;
+	numReadingsRear = 0;
 
 
 	// initialisation
@@ -35,9 +37,10 @@ LaserThread::LaserThread()
 
 LaserThread::~LaserThread()
 {
-	if (laserScannerIsConnected == true)
+	if (laserScannerFrontIsConnected == true)
 	{
 		// shutdown laser (parameter '0' is not in use)
+		// FIXME: both laser scanners ?!? change 0 to laser scanner number? shuts down ALL active lasers because of uselaser1 and uselaser2 ?
 		carmen_laser_shutdown(0);
 	}
 	
@@ -48,7 +51,8 @@ LaserThread::~LaserThread()
 void LaserThread::stop()
 {
 	stopped = true;
-	numReadings = 0;
+	numReadingsFront = 0;
+	numReadingsRear = 0;
 }
 
 
@@ -58,8 +62,8 @@ void LaserThread::run()
 
 	
 	// check if all 180 beams were read
-	numReadings = 0;
-	
+	numReadingsFront = 0;
+	numReadingsRear = 0;
 	
 	//
 	//  start "threading"...
@@ -71,25 +75,25 @@ void LaserThread::run()
 		msleep(THREADSLEEPTIME);
 		
 		
-		if ( (simulationMode==false) && (laserScannerIsConnected == true) )
+		if ( (simulationMode==false) && (laserScannerFrontIsConnected == true) )
 		{
 			// CARMEN laser module
 			laserValue = carmen_laser_run();
 			
 			// check if all 180 beams were read (in the laser module)
 			// TODO: case for LASER1,...n
-			numReadings = getLaserNumReadings(LASER1);
+			numReadingsFront = getLaserNumReadings(LASER1);
 			
 			// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
 			// TODO: 180 elements vs. const vs. 
-			if (numReadings>=180)
-				numReadings = 179;
+			if (numReadingsFront >= 180)
+				numReadingsFront = 179;
 			
 			// if YES
-			if (numReadings > 0)
+			if (numReadingsFront > 0)
 			{
 				// /get the data from 0° to 180° (left to right)
-				for (int i=0; i<numReadings; i++)
+				for (int i=0; i<numReadingsFront; i++)
 				{
 					// get value from laser
 					// store the value in an array in this thread
@@ -109,7 +113,7 @@ void LaserThread::run()
 			//---------------------------------
 			// S I M U L A T I O N   M O D E
 			//---------------------------------
-			numReadings = 180;
+			numReadingsFront = 180;
 			
 			emit laserDataComplete(&laserScannerValues[0], &laserScannerFlags[0]);
 		}
@@ -118,7 +122,7 @@ void LaserThread::run()
 }
 
 
-float LaserThread::getLaserScannerValue(int angle)
+float LaserThread::getLaserScannerValue(short int laserScanner, int angle)
 {
 	//
 	// These values were NOT converted at any point in this method!
@@ -135,7 +139,7 @@ float LaserThread::getLaserScannerValue(int angle)
 }
 
 
-float LaserThread::getLaserScannerFlag(int angle)
+float LaserThread::getLaserScannerFlag(short int laserScanner, int angle)
 {
 	if ((angle < 0) || (angle > LASERSCANNERARRAYSIZE-1))
 	{
@@ -148,7 +152,7 @@ float LaserThread::getLaserScannerFlag(int angle)
 }
 
 
-void LaserThread::setLaserScannerFlag(int angle, int flag)
+void LaserThread::setLaserScannerFlag(short int laserScanner, int angle, int flag)
 {
 	if ((angle < 0) || (angle > LASERSCANNERARRAYSIZE-1))
 	{
@@ -160,11 +164,20 @@ void LaserThread::setLaserScannerFlag(int angle, int flag)
 }
 
 
-int LaserThread::getNumReadings()
+int LaserThread::getNumReadings(short int laserScanner)
 {
 	// check if all 180 beams were read (in the laser module)
-	// return getLaserNumReadings(); <- changed 04.08.2007 !!
-	return numReadings;
+	switch (laserScanner)
+	{
+		case LASER1:
+			return numReadingsFront;
+			break;
+		case LASER2:
+			return numReadingsRear;
+			break;
+	}
+	
+	return 0;
 }
 
 
@@ -175,7 +188,7 @@ void LaserThread::setSimulationMode(bool status)
 	
 	if (simulationMode == true)
 	{
-		numReadings = 180;
+		numReadingsFront = 180;
 		
 		// fill the array with some nice values
 		laserScannerValues[0]	= 0.25;
@@ -376,25 +389,32 @@ void LaserThread::setSimulationMode(bool status)
 }
 
 
-void LaserThread::setLaserScannerFlag(bool flag)
+bool LaserThread::isConnected(short int laserScanner)
 {
-	laserScannerIsConnected = flag;
+	//-----------------------------------------------
+	// try to start the (former CARMEN) laser module
+	//-----------------------------------------------
+	if (carmen_laser_start(laserScanner) == 0)
+	{
+		switch (laserScanner)
+		{
+			case LASER1:
+				laserScannerFrontIsConnected = true;
+				return true;
+			case LASER2:
+				laserScannerRearIsConnected = true;
+				return true;
+		}
+	}
+	
+	// TODO: what to do with this?
+	stopped = true;
+	return false;
 }
 
 
-bool LaserThread::isConnected(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear)
+void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 {
-	//-----------------------------------------------------
-	// try to start the (former CARMEN) laser module here!
-	//-----------------------------------------------------
-	if ( carmen_laser_start(serialPortLaserscannerFront, serialPortLaserscannerRear) != 0 )
-	{
-		laserScannerIsConnected = false;
-		// stopping laser thread
-		stopped = true;
-		return false;
-	}
-	
-	laserScannerIsConnected = true;
-	return true;
+	// for laser_main:
+	setDevicePort(laserScanner, serialPort);
 }
