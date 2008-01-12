@@ -31,10 +31,14 @@
 sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
 carmen_laser_laser_config_t laser1_config, laser2_config, laser3_config, laser4_config, laser5_config;
 
-int use_laser1 = 1, use_laser2 = 0;
+int use_laser1 = 0, use_laser2 = 0;
 int use_laser3 = 0, use_laser4 = 0;
 int use_laser5 = 0;
 int quit_signal = 0;
+
+//Markus (used in "read_parameters")
+QString laserSerialPort1;
+QString laserSerialPort2;
 
 
 void set_default_parameters(sick_laser_p laser, int laser_num)
@@ -43,7 +47,7 @@ void set_default_parameters(sick_laser_p laser, int laser_num)
 	laser->settings.range_res = CM;
 	laser->settings.range_dist = SICK_RANGE80M;
 	laser->settings.laser_num = laser_num;
-	strcpy(laser->settings.device_name, "/dev/tty0"); // only default! real value set in read_settings!
+	strcpy(laser->settings.device_name, "/dev/tty0"); // only default! real value set in read_parameters!
 	laser->settings.detect_baudrate = TRUE;
 	laser->settings.use_highspeed = FALSE;
 	laser->settings.start_baudrate = 9600;
@@ -57,6 +61,7 @@ void set_default_parameters(sick_laser_p laser, int laser_num)
 	laser->settings.angle_resolution = RES_1_00_DEGREE;
 	laser->settings.laser_flipped = 0;
 	laser->settings.use_remission = 0;
+	//qDebug("set_default_params laser %d OKAY", laser_num);
 }
 
 
@@ -204,21 +209,25 @@ void interpret_params(sick_laser_p laser, char *dev, char *type, double res, cha
 
 
 // Markus Orignal: void read_parameters(int argc, char **argv)
-void read_parameters(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear)
+void read_parameters(short int laserScanner)
 {
 	char *dev1, *dev2, *dev3, *dev4, *dev5;
 	char *str1, *str2, *str3, *str4, *str5;
 	double res1, res2, res3, res4, res5;
 	double fov1, fov2, fov3, fov4, fov5;
 	char *rem1, *rem2, *rem3, *rem4, *rem5;
-	// Markus:
+	
+	// Markus
+	// for QString to char* conversion
 	QByteArray ba;
 	
-	ba = serialPortLaserscannerFront.toLatin1();
+	ba = laserSerialPort1.toLatin1();
 	dev1 = ba.data();
+	qDebug() << "read_parameters(): laser:" << laserScanner << " Name:"<< dev1;
 	
-	ba = serialPortLaserscannerRear.toLatin1();
+	ba = laserSerialPort2.toLatin1();
 	dev2 = ba.data();
+	qDebug() << "read_parameters(): laser:" << laserScanner << " Name:"<< dev2;
 	
 	dev3 = "none";
 	dev4 = "none";
@@ -441,7 +450,7 @@ void  set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t
 
 
 // Markus Orignal: int carmen_laser_start(int argc, char **argv)
-int carmen_laser_start(QString serialPortLaserscannerFront, QString serialPortLaserscannerRear)
+int carmen_laser_start(short int laserScanner)
 {
 	// Markus:
 	int returncode = 0;
@@ -449,52 +458,80 @@ int carmen_laser_start(QString serialPortLaserscannerFront, QString serialPortLa
 	/* initialize laser messages */
 	// Markus ipc_initialize_messages();
 	
-	/* get laser default parameters */
-	set_default_parameters(&laser1, CARMEN_FRONT_LASER_NUM); // okay
-	set_default_parameters(&laser2, CARMEN_REAR_LASER_NUM);
-	set_default_parameters(&laser3, CARMEN_LASER3_NUM);
-	set_default_parameters(&laser4, CARMEN_LASER4_NUM);
-	set_default_parameters(&laser5, CARMEN_LASER5_NUM);
+	switch (laserScanner)
+	{
+		case LASER1:
+			// get laser default parameter
+			set_default_parameters(&laser1, CARMEN_FRONT_LASER_NUM);
+			// read parameters and also sets "user_laser*"
+			read_parameters(LASER1);
+			// start lasers, and start publishing scans
+			if (use_laser1)
+			{
+				set_laser_config_structure(&laser1, &laser1_config);
+				// returns 0, when OKAY
+				return sick_start_laser(&laser1);
+			}
+			break;
+
+		case LASER2:
+			// get laser default parameter
+			set_default_parameters(&laser2, CARMEN_REAR_LASER_NUM);
+			// read parameters and also sets "user_laser*"
+			read_parameters(LASER2);
+			// start lasers, and start publishing scans
+			if (use_laser2)
+			{
+				set_laser_config_structure(&laser2, &laser2_config);
+				// returns 0, when OKAY
+				return sick_start_laser(&laser2);
+			}
+			break;
+
+		case LASER3:
+			// get laser default parameter
+			set_default_parameters(&laser3, CARMEN_LASER3_NUM);
+			// read parameters and also sets "user_laser*"
+			read_parameters(LASER3);
+			// start lasers, and start publishing scans
+			if (use_laser3)
+			{
+				set_laser_config_structure(&laser3, &laser3_config);
+				// returns 0, when OKAY
+				return sick_start_laser(&laser3);
+			}
+			break;
+
+		case LASER4:
+			// get laser default parameter
+			set_default_parameters(&laser4, CARMEN_LASER4_NUM);
+			// read parameters and also sets "user_laser*"
+			read_parameters(LASER4);
+			// start lasers, and start publishing scans
+			if (use_laser4)
+			{
+				set_laser_config_structure(&laser4, &laser4_config);
+				// returns 0, when OKAY
+				return sick_start_laser(&laser4);
+			}
+			break;
+
+		case LASER5:
+			// get laser default parameter
+			set_default_parameters(&laser5, CARMEN_LASER4_NUM);
+			// read parameters and also sets "user_laser*"
+			read_parameters(LASER5);
+			// start lasers, and start publishing scans
+			if (use_laser5)
+			{
+				set_laser_config_structure(&laser5, &laser5_config);
+				// returns 0, when OKAY
+				return sick_start_laser(&laser5);
+			}
+			break;
+	}
+
 	//qDebug("carmen_laser_start, laser->settings.angle_range = %d", laser1.settings.angle_range);
-	
-	// Markus read_parameters(argc, argv);
-	read_parameters(serialPortLaserscannerFront, serialPortLaserscannerRear);
-
-
-	/* start lasers, and start publishing scans */
-	if(use_laser1)
-	{
-		set_laser_config_structure(&laser1, &laser1_config);
-		// Markus Original: sick_start_laser(&laser1);
-		returncode = sick_start_laser(&laser1);
-	}
-
-	if(use_laser2)
-	{
-		set_laser_config_structure(&laser2, &laser2_config);
-		returncode = sick_start_laser(&laser2);
-	}
-
-	if(use_laser3)
-	{
-		set_laser_config_structure(&laser3, &laser3_config);
-		returncode = sick_start_laser(&laser3);
-	}
-
-	if(use_laser4)
-	{
-		set_laser_config_structure(&laser4, &laser4_config);
-		returncode = sick_start_laser(&laser4);
-	}
-
-	if(use_laser5)
-	{
-		set_laser_config_structure(&laser5, &laser5_config);
-		returncode = sick_start_laser(&laser5);
-	}
-
-	// Markus Original: return 0;
-	return returncode;
 }
 
 
@@ -725,6 +762,21 @@ float getLaserDistance(int laser, int angle)
 			laserrange = laser4.range;
 			laserrange[angle] /= 100;
 			return laserrange[angle];
+			break;
+	}
+}
+
+
+void setDevicePort(short int laser, QString serialPort)
+{
+
+	switch (laser)
+	{
+		case LASER1:
+			laserSerialPort1 = serialPort;
+			break;
+		case LASER2:
+			laserSerialPort2 = serialPort;
 			break;
 	}
 }
