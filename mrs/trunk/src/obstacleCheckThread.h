@@ -123,6 +123,13 @@ class ObstacleCheckThread : public QThread
 		
 		// Value if no sensor has a value to react
 		static const short int NONE = 0;
+		
+		// the laser scanners
+		static const short int LASER1 = 1;
+		static const short int LASER2 = 2;
+		static const short int LASER3 = 4;
+		static const short int LASER4 = 8;
+		static const short int LASER5 = 16;
 };
 
 #endif

@@ -230,6 +230,15 @@ class Mrs : public QObject
 		static const int JOYSTICKAXISY = 2;
 		//! Joystick conversion divisor. Converts the joystick axis value to the robot speed.
 		static const int JOYSTICKDIVISOR = 128;
+		
+		/*!
+		For the laserThread
+		*/
+		static const short int LASER1 = 1;
+		static const short int LASER2 = 2;
+		static const short int LASER3 = 4;
+		static const short int LASER4 = 8;
+		static const short int LASER5 = 16;
 };
 
 #endif
