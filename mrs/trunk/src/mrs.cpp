@@ -175,9 +175,9 @@ Mrs::Mrs()
 		
 		splash->showMessage(QObject::tr("Reading settings..."), somewhere, splashColor);
 		
-		//====================
+		//================================================================================================================================================================
 		// read all settings
-		//====================
+		//================================================================================================================================================================
 		readSettings();
 	}
 
@@ -239,6 +239,7 @@ Mrs::Mrs()
 	{
 		if (sensorThread->isRunning() == false)
 		{
+			splash->showMessage(QObject::tr("Starting sensor thread..."), somewhere, splashColor);
 			gui1->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
 			gui1->appendLog("Sensor thread started.");
@@ -258,6 +259,7 @@ Mrs::Mrs()
 	{
 		if (obstCheckThread->isRunning() == false)
 		{
+			splash->showMessage(QObject::tr("Starting obstacle check thread..."), somewhere, splashColor);
 			gui1->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			gui1->appendLog("Obstacle check thread started.");
@@ -278,6 +280,7 @@ Mrs::Mrs()
 	{
 		if (plotThread->isRunning() == false)
 		{
+			splash->showMessage(QObject::tr("Starting plot thread..."), somewhere, splashColor);
 			gui1->appendLog("Starting plot thread...", false);
 			plotThread->start();
 			gui1->appendLog("Plot thread started.");
@@ -301,6 +304,7 @@ Mrs::Mrs()
 		// start the joystick thread
 		if (joystick->isRunning() == false)
 		{
+			splash->showMessage(QObject::tr("Starting joystick thread..."), somewhere, splashColor);
 			gui1->appendLog("Starting joystick thread...", false);
 			joystick->start();
 			gui1->appendLog("Joystick thread started.");
@@ -359,7 +363,7 @@ Mrs::Mrs()
 	// connect laserThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(laserThread, SIGNAL( laserDataComplete(float *, int *) ), gui1, SLOT( refreshLaserView(float *, int *) ));
+	connect(laserThread, SIGNAL( laserDataComplete(float *, int *) ), gui1, SLOT( refreshLaserView(float *, int *) )); // FIXME: put the laserscanner number to this signal?
 	
 	//----------------------------------------------------------------------------
 	// connect joystick signals to "show joystick data"
@@ -383,13 +387,37 @@ Mrs::Mrs()
 
 
 	//---------------------------------------------------------------------
-	// check if laser is connected and than start it
+	// check if laser scanners are connected
 	//---------------------------------------------------------------------
-	splash->showMessage(QObject::tr("Starting laser scanner module..."), somewhere, splashColor);
+	// check FRONT laser
+	splash->showMessage(QObject::tr("Searching front laser..."), somewhere, splashColor);
+	bool scanner1found = laserThread->isConnected(LASER1);
 	
-
-	if (laserThread->isConnected(serialPortLaserscannerFront, serialPortLaserscannerRear))
+	// check REAR laser
+	splash->showMessage(QObject::tr("Searching rear laser..."), somewhere, splashColor);
+	bool scanner2found = laserThread->isConnected(LASER2);
+	
+	if (scanner1found || scanner2found)
 	{
+		if (scanner1found)
+		{
+			gui1->appendLog("Front laser scanner found.");
+		}
+		else
+		{
+			gui1->appendLog("Front laser scanner NOT found.");
+		}
+	
+		if (scanner2found)
+		{
+			gui1->appendLog("Rear laser scanner found.");
+		}
+		else
+		{
+			gui1->appendLog("Rear laser scanner NOT found.");
+		}
+
+		
 		// TODO: nice exit point and error message
 		if (!QGLFormat::hasOpenGL())
 		{
@@ -398,8 +426,10 @@ Mrs::Mrs()
 		}
 		
 		
+		// start the laserThread
 		if (laserThread->isRunning() == false)
 		{
+			splash->showMessage(QObject::tr("Starting Laser thread..."), somewhere, splashColor);
 			gui1->appendLog("Starting Laser thread...", false);
 			laserThread->start();
 			gui1->appendLog("Laser thread started.");
@@ -408,6 +438,7 @@ Mrs::Mrs()
 
 		if (obstCheckThread->isRunning() == false)
 		{
+			splash->showMessage(QObject::tr("Starting obstacle check thread..."), somewhere, splashColor);
 			gui1->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			gui1->appendLog("Obstacle check thread started.");
@@ -417,7 +448,7 @@ Mrs::Mrs()
 	{
 		// turn off laser splash
 		gui1->laserSplash(false);
-		gui1->appendLog("<font color=\"#FF0000\">Laser scanner not found. Thread NOT started!</font>");
+		gui1->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
 }
 
@@ -1161,12 +1192,14 @@ void Mrs::readSettings()
 	
 	if (serialPortLaserscannerFront == "error2")
 	{
+		laserThread->setSerialPort(LASER1, "none");
 		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortLaserscannerFront == "error1")
 		{
+			laserThread->setSerialPort(LASER1, "none");
 			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerFront\" not found in ini-file!</font>");
 		}
 		else
@@ -1174,6 +1207,7 @@ void Mrs::readSettings()
 			//
 			// everything okay
 			//
+			laserThread->setSerialPort(LASER1, serialPortLaserscannerFront);
 			gui1->appendLog(QString("Serial port for front Laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
 		}
 	}
@@ -1185,12 +1219,14 @@ void Mrs::readSettings()
 	
 	if (serialPortLaserscannerRear == "error2")
 	{
+		laserThread->setSerialPort(LASER2, "none");
 		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortLaserscannerRear == "error1")
 		{
+			laserThread->setSerialPort(LASER2, "none");
 			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerRear\" not found in ini-file!</font>");
 		}
 		else
@@ -1198,6 +1234,7 @@ void Mrs::readSettings()
 			//
 			// everything okay
 			//
+			laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
 			gui1->appendLog(QString("Serial port for rear Laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
 		}
 	}
