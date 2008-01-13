@@ -188,14 +188,14 @@ Gui::~Gui()
 	{
 		delete laserLineListFront->takeFirst();
 	}
-	delete laserLineListFront;	
+	delete laserLineListFront;
 	
 	// empty QList
 	while (!laserLineListRear->isEmpty())
 	{
 		delete laserLineListRear->takeFirst();
 	}
-	delete laserLineListFront;	
+	delete laserLineListRear;
 	
 	delete scene;
 }
