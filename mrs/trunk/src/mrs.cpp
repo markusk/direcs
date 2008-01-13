@@ -137,6 +137,26 @@ Mrs::Mrs()
 	//--------------------------------------------------------------------------
 	connect(gui1, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
 	
+	//--------------------------------------------------------------------------
+	// set the robot slot, when signal comes from Gui
+	//--------------------------------------------------------------------------
+	connect(gui1, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	
+	//--------------------------------------------------------------------------
+	// set the straight forward deviation, when signal comes from Gui
+	//--------------------------------------------------------------------------
+	connect(gui1, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
+	
+	//--------------------------------------------------------------------------
+	// set the minimum distance, when signal comes from Gui
+	//--------------------------------------------------------------------------
+	connect(gui1, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
+	
+	//--------------------------------------------------------------------------
+	// set the minimum laser distance, when signal comes from Gui
+	//--------------------------------------------------------------------------
+	connect(gui1, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+	
 	
 	//----------------------------------------------------------------------------
 	// say a text

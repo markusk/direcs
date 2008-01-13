@@ -288,6 +288,29 @@ class Gui : public QMainWindow
 		*/
 		void setMotorSpeed(int motor, int speed);
 		
+		/*!
+		This slot sets the angle, where the robots has to fit thru
+		*/
+		void setRobotSlot(int angle);
+
+		/*!
+		This slot sets the deviation to 90 degrees when the robot drives forward.
+		@param deviation is the angle in degrees.
+		*/
+		void setStraightForwardDeviation(int deviation);
+		
+		/*!
+		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
+		@param distance in centimeters
+		*/
+		void setMinObstacleDistance(int distance);
+		
+		/*!
+		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
+		@param distance in centimeters
+		 */
+		void setMinObstacleDistanceLaser(int distance);
+
 		/**
 		Resets the driven distance to 0.
 		@param sensor is the sensor number.
@@ -329,6 +352,8 @@ class Gui : public QMainWindow
 	private slots:
 		void on_sliderMotor1Speed_sliderReleased();
 		void on_sliderMotor2Speed_sliderReleased();
+		void on_sliderRobotSlot_valueChanged(int);
+		void on_sliderStraightForwardDeviation_valueChanged(int);
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
 		void on_btnDrive_clicked();

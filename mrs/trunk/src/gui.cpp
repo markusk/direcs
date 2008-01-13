@@ -5,7 +5,7 @@ Gui::Gui(PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *par
 {
 	// copy the pointers from the original objects
 	plotThread = p;
-	obstCheckThread = o;	 // needed for interaction with the sliders and for exmample 'setRobotSlot'
+	obstCheckThread = o;
 	laserThread = l;
 	cam1 = new CamThread();
 	
@@ -44,41 +44,21 @@ Gui::Gui(PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *par
 	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
 	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
 	
-	//
-	// set the bot slot
-	//
-	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-	connect(ui.spinBoxRobotSlot, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-	// change the value of the spinBoxRobotSlot when the value of the corresponding slider changes
+	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlot, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxRobotSlot, SIGNAL(valueChanged(int)), ui.sliderRobotSlot, SLOT(setValue(int)));
 	
-	//
-	// set the bot slot tolerance
-	//
-	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
-	connect(ui.spinBoxStraightForwardDeviation, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
-	// change the value of the spinBox when the value of the corrsponding slider changes
+	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.sliderStraightForwardDeviation, SLOT(setValue(int)));
 	
-	//
-	// set the minimum distance (laser scanner)
-	//
-	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
-	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.spinBoxObstacleLaserScanner, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.sliderObstacleLaserScanner, SLOT(setValue(int)));
 	
-	//
-	// set the minimum distance (infrared and ultrasonic sensors)
-	//
-	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
-	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
 	// and vice versa
@@ -306,6 +286,18 @@ void Gui::on_sliderMotor2Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
+}
+
+
+void Gui::on_sliderRobotSlot_valueChanged(int)
+{
+	emit setRobotSlot(ui.sliderRobotSlot->value());
+}
+
+
+void Gui::on_sliderStraightForwardDeviation_valueChanged(int)
+{
+	emit setStraightForwardDeviation(ui.sliderStraightForwardDeviation->value());
 }
 
 
