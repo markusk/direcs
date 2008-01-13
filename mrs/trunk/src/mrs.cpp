@@ -363,7 +363,8 @@ Mrs::Mrs()
 	// connect laserThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(laserThread, SIGNAL( laserDataComplete(float *, int *) ), gui1, SLOT( refreshLaserView(float *, int *) )); // FIXME: put the laserscanner number to this signal?
+	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui1, SLOT( refreshLaserViewFront(float *, int *) ));
+	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui1, SLOT( refreshLaserViewRear(float *, int *) ));
 	
 	//----------------------------------------------------------------------------
 	// connect joystick signals to "show joystick data"
