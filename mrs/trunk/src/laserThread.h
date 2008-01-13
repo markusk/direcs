@@ -67,11 +67,15 @@ class LaserThread : public QThread
 
 
 	signals:
-		/*! Emits a pointer to the array with the 180 laser values (distances) */
-		void laserDataComplete(float *laserScannerValues, int *laserScannerFlags);
+		/*! Emits a pointer to the array with the 180 front laser values (distances) */
+		void laserDataCompleteFront(float *laserScannerValuesFront, int *laserScannerFlagsFront);
+		/*! Emits a pointer to the array with the 180 rear laser values (distances) */
+		void laserDataCompleteRear(float *laserScannerValuesRear, int *laserScannerFlagsRear);
 
 
 	private:
+		void getAndStoreLaserValuesFront();
+		void getAndStoreLaserValuesRear();
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 		bool laserScannerFrontIsConnected;
@@ -94,8 +98,10 @@ class LaserThread : public QThread
 		The first column of this array is the measured distance to an object (the length of the real laser line in meter (m)).
 		The second column is an flag if an obstacle is detected (the distance is to small from the robot to an object)
 		*/
-		QList <float> laserScannerValues;  /** The measured distances from the laser scanner. */
-		QList <int> laserScannerFlags;  /** Some flags for each laser line (like "free way", "obstacle" etc. */
+		QList <float> laserScannerValuesFront;  /** The measured distances from the front laser scanner. */
+		QList <float> laserScannerValuesRear;  /** The measured distances from the rear laser scanner. */
+		QList <int> laserScannerFlagsFront;  /** Some flags for each front laser line (like "free way", "obstacle" etc. */
+		QList <int> laserScannerFlagsRear;  /** Some flags for each rear laser line (like "free way", "obstacle" etc. */
 		
 		/*!
 		The names for addressing the laser scanner array
