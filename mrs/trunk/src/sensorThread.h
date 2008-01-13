@@ -71,12 +71,6 @@ class SensorThread : public QThread
 		int getDrivenDistance(int sensor);
 		
 		/**
-		Resets the driven distance to 0.
-		@param sensor is the sensor number.
-		*/
-		void resetDrivenDistance(int sensor);
-		
-		/**
 		Converts a infrared sensor value to a distance in cm.
 		@param sensorValue is the measured sensor value.
 		@return The distance in cm.
@@ -100,6 +94,12 @@ class SensorThread : public QThread
 		
 	
 	public slots:
+		/**
+		Resets the driven distance to 0.
+		@param sensor is the sensor number.
+		*/
+		void resetDrivenDistance(int sensor);
+		
 		/**
 		This slot enables or disables the simulation mode.
 		In the simulation mode all sensor values are set to a fixed value. No real sensor values are read from the robot, when set to true.
