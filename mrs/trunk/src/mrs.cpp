@@ -119,6 +119,8 @@ Mrs::Mrs()
 	// shutdown Mrs program on exit button
 	//--------------------------------------------------------------------------
 	connect(gui1, SIGNAL(shutdown()), this, SLOT(shutdown()));
+	// FIXME: check, how to make a clean exit, when the window is closed via window menu, not via exit button!
+	//connect(this, SIGNAL(QApplication::lastWindowClosed()), this, SLOT(shutdown()));
 	
 	//--------------------------------------------------------------------------
 	// call the test method at the test button
@@ -129,6 +131,11 @@ Mrs::Mrs()
 	// set the motor speed, when signal comes from Gui
 	//--------------------------------------------------------------------------
 	connect(gui1, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
+	
+	//--------------------------------------------------------------------------
+	// resets the driven distance, when signal comes from Gui
+	//--------------------------------------------------------------------------
+	connect(gui1, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
 	
 	
 	//----------------------------------------------------------------------------
