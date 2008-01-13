@@ -456,6 +456,7 @@ Mrs::Mrs()
 
 void Mrs::shutdown()
 {
+	qDebug("Mrs shutdown...");
 	// FIXME: not called, when closed via KDE GUI!!
 	
 	/*
@@ -512,11 +513,7 @@ void Mrs::shutdown()
 	if (exitDialog == true)
 	{
 		// ask user if he really wants to exit.
-		if (QMessageBox::question(0,
-		    "Leaving program...",
-      "Are you sure?",
-      QMessageBox::Yes | QMessageBox::Default,
-      QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+		if (QMessageBox::question(0, "Leaving program...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
 		{
 			//---------
 			// if NO
@@ -534,7 +531,7 @@ void Mrs::shutdown()
 	//--------------------------------
 	if (laserThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping Laser thread...");
+		gui1->appendLog("Stopping laser thread...");
 		
 		// my own stop routine :-)
 		laserThread->stop();
@@ -558,7 +555,7 @@ void Mrs::shutdown()
 		}
 		else
 		{
-			gui1->appendLog("Terminating Laser thread because it doesn't answer...");
+			gui1->appendLog("Terminating laser thread because it doesn't answer...");
 			laserThread->terminate();
 			laserThread->wait(1000);
 			gui1->appendLog("Laser thread terminated.");
@@ -849,7 +846,7 @@ void Mrs::shutdown()
 	// close the gui
 	gui1->close();
 
-
+	
 	this->~Mrs();
 }
 
