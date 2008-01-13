@@ -6,7 +6,7 @@ Gui::Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, LaserThread *l,
 	// copy the pointers from the original objects
 	sensThread = s;
 	plotThread = p;
-	obstCheckThread = o;
+	obstCheckThread = o;	 // needed for interaction with the sliders and for exmample 'setRobotSlot'
 	laserThread = l;
 	cam1 = new CamThread();
 	
@@ -364,7 +364,7 @@ void Gui::on_btnReset_clicked()
 void Gui::on_btnResetMovement1_clicked()
 {
 	// reset counter
-	sensThread->resetDrivenDistance(MOTORSENSOR1);
+	emit resetDrivenDistance(MOTORSENSOR1);
 	
  	// reset labels
 	ui.labelDrivenDistance1->setText("0 cm");
@@ -375,7 +375,7 @@ void Gui::on_btnResetMovement1_clicked()
 void Gui::on_btnResetMovement2_clicked()
 {
 	// reset counter
-	sensThread->resetDrivenDistance(MOTORSENSOR2);
+	emit resetDrivenDistance(MOTORSENSOR2);
  
 	// reset labels
 	ui.labelDrivenDistance2->setText("0 cm");
