@@ -222,9 +222,14 @@ class Gui : public QMainWindow
 		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
 		
 		/**
-		Refreshes the view of the lines from the laser scanner
+		Refreshes the view of the lines from the front laser scanner.
 		*/
 		void refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags);
+		
+		/**
+		Refreshes the view of the lines from the rear laser scanner.
+		*/
+		void refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags);
 		
 		/**
 		Shows the joystick values when it moves.
@@ -369,9 +374,14 @@ class Gui : public QMainWindow
 		qreal calculateLaserXpos();
 		
 		/**
-		Set a Y position for the laser lines "start point"
+		Set a Y position for the FRONT laser lines "start point"
 		*/
-		qreal calculateLaserYpos();
+		qreal calculateLaserFrontYpos();
+		
+		/**
+		Set a Y position for the REAR laser lines "start point"
+		*/
+		qreal calculateLaserRearYpos();
 		
 		Ui::Gui ui;
 		CamThread *cam1;
@@ -393,7 +403,8 @@ class Gui : public QMainWindow
 		int lastZoom;
 		qreal startScale;
 		qreal laserXPos;
-		qreal laserYPos;
+		qreal laserFrontYPos;
+		qreal laserRearYPos;
 		QGraphicsScene *scene;					/** The QGraphicsScene for showing the laser lines in the GUI */
 		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
 		QList <QGraphicsLineItem*> *laserLineListRear;		/** A pointer to a QList of pointers to the rear laser lines (QGraphicsLineItems) */
