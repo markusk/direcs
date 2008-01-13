@@ -1208,7 +1208,7 @@ void Mrs::readSettings()
 			// everything okay
 			//
 			laserThread->setSerialPort(LASER1, serialPortLaserscannerFront);
-			gui1->appendLog(QString("Serial port for front Laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
+			gui1->appendLog(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
 		}
 	}
 
@@ -1235,7 +1235,7 @@ void Mrs::readSettings()
 			// everything okay
 			//
 			laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
-			gui1->appendLog(QString("Serial port for rear Laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
+			gui1->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
 		}
 	}
 	
