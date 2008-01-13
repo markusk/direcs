@@ -184,11 +184,11 @@ Gui::~Gui()
 */
 
 	// empty QList
-	while (!laserLineList->isEmpty())
+	while (!laserLineListFront->isEmpty())
 	{
-		delete laserLineList->takeFirst();
+		delete laserLineListFront->takeFirst();
 	}
-	delete laserLineList;	
+	delete laserLineListFront;	
 	delete scene;
 }
 
@@ -1091,12 +1091,12 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	qreal x = calculateLaserXpos();
 	qreal y = calculateLaserYpos();
 	
-	for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
+	for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle++)
 	{
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
-		laserLineList->at(i)->setPos(x, y);
+		laserLineListFront->at(i)->setPos(x, y);
 	}
 }
 
@@ -1114,7 +1114,7 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 }
 
 
-void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
+void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
 {
 	static bool showLaserSplash = true;
 	
@@ -1122,7 +1122,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	if (showLaserSplash == true)
 	{
 		// first line is longer than 0 m ! (a values was measured)
-		if (laserLineList->at(0)->line().length() > 0)
+		if (laserLineListFront->at(0)->line().length() > 0)
 		{
 			// laser splash screen OFF
 			showLaserSplash = false;
@@ -1135,7 +1135,7 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 	/*
-	QPen orgPen = laserLineList->at(0)->pen();
+	QPen orgPen = laserLineListFront->at(0)->pen();
 	QBrush orgBrush = orgPen.brush();
 	*/
 
@@ -1144,33 +1144,33 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	//----------------------------------------------------------------------------------------
 	// First: set/change the color of each line, depending on the flag set in the laserThread
 	//----------------------------------------------------------------------------------------
-	for (int i=0; i<laserLineList->size(); i++)
+	for (int i=0; i<laserLineListFront->size(); i++)
 	{
 		// check if there was an obstacle
 		if (laserScannerFlags[i] == OBSTACLE)
 		{
 			// obstacle detected!
 			//orgBrush.setColor(colorLaserObstacle);
-			laserLineList->at(i)->setPen(QPen(colorLaserObstacle));
+			laserLineListFront->at(i)->setPen(QPen(colorLaserObstacle));
 		}
 		else
 		{
 			if (laserScannerFlags[i] == LARGESTFREEWAY)
 			{
 				// l a r g e s t   f r e e   w a y
-				laserLineList->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
+				laserLineListFront->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
 			}
 			else
 			{
 				if (laserScannerFlags[i] == CENTEROFLARGESTFREEWAY)
 				{
 					//  center of free way (only one line)
-					laserLineList->at(i)->setPen(QPen(colorLaserCenterDrivingDirection));
+					laserLineListFront->at(i)->setPen(QPen(colorLaserCenterDrivingDirection));
 				}
 				else
 				{
 					//   n o   o b s t a c l e
-					laserLineList->at(i)->setPen(QPen(colorLaserFreeWay));
+					laserLineListFront->at(i)->setPen(QPen(colorLaserFreeWay));
 				}
 			}
 		}
@@ -1188,28 +1188,28 @@ void Gui::refreshLaserView(float *laserScannerValues, int *laserScannerFlags)
 	*/
 	
 	// /get the data from 180° to 0° (right to left!!)
-	for (int i=0; i<laserLineList->size(); i++)
+	for (int i=0; i<laserLineListFront->size(); i++)
 	{
 		// get value from laser and
 		// draw the lines at every 1°
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
 		
 		
-		laserLineList->at(i)->setLine(0, 0, 0, laserLineLength);
+		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 		/*
-		pos = laserLineList->at(i)->scenePos();
-		line = laserLineList->at(i)->line();
+		pos = laserLineListFront->at(i)->scenePos();
+		line = laserLineListFront->at(i)->line();
 		length = line.length();
 		
 		x = pos.x() - length;
-		laserLineList->at(i)->setLine(0, 0, 0, laserLineLength);
+		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 		*/
 		
 		// set tool tip of the line to the distance
 		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
-		//laserLineList->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
-		laserLineList->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]) );
-//		laserLineList->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
+		//laserLineListFront->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
+		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]) );
+//		laserLineListFront->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
 	}
 
 
@@ -1530,7 +1530,7 @@ void Gui::createLaserScannerObjects()
 	//=======================================================
 	// create the laser line list
 	//=======================================================
-	laserLineList = new QList <QGraphicsLineItem*>();
+	laserLineListFront = new QList <QGraphicsLineItem*>();
 
 	/*
 	//TODO: HIGHRES MODE with 4x180 lines
@@ -1573,7 +1573,7 @@ void Gui::createLaserScannerObjects()
 		line->setZValue(2);
 		
 		// add line to QList
-		laserLineList->append(line);
+		laserLineListFront->append(line);
 		
 		// add line to scene
 		line->setVisible(false);
@@ -1615,38 +1615,38 @@ void Gui::switchToAngleView()
 	QLineF line;
 	
 	
-	//for (int i=0, angle=-90; i<laserLineList->size(); i++, angle++)
-	for (int i=0, angle=90; i<laserLineList->size(); i++, angle--)
+	//for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle++)
+	for (int i=0, angle=90; i<laserLineListFront->size(); i++, angle--)
 	{
 		// reset transform or rotation
-		laserLineList->at(i)->resetTransform();
+		laserLineListFront->at(i)->resetTransform();
 		
 		// set position of each line
-		laserLineList->at(i)->rotate(angle);
+		laserLineListFront->at(i)->rotate(angle);
 		
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
-//		laserLineList->at(i)->setPos(x, y);
+//		laserLineListFront->at(i)->setPos(x, y);
 		
-		line = laserLineList->at(i)->line();
-		laserLineList->at(i)->setPos((x - line.length()), y);
+		line = laserLineListFront->at(i)->line();
+		laserLineListFront->at(i)->setPos((x - line.length()), y);
 	}
 }
 
 
 void Gui::switchToFlatView()
 {
-	//for (int i=0; i<laserLineList->size(); i++)
-	for (int i=laserLineList->size()-1; i>=0; i--)
+	//for (int i=0; i<laserLineListFront->size(); i++)
+	for (int i=laserLineListFront->size()-1; i>=0; i--)
 	{
 		// reset transform or rotation
-		laserLineList->at(i)->resetTransform();
+		laserLineListFront->at(i)->resetTransform();
 		
 		// x = middle of the bot pixmap in the view + half of the number of lines (the middle laser line is on the middle of the graphicsView)
 		// y = set manually
-		//laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) + (laserLineList->size() / 2) - i, 228);
-		laserLineList->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) - (laserLineList->size() / 2) + i, 128);
+		//laserLineListFront->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) + (laserLineListFront->size() / 2) - i, 228);
+		laserLineListFront->at(i)->setPos((qreal)(ui.graphicsViewLaser->width() / 2) - (laserLineListFront->size() / 2) + i, 128);
 	}
 }
 
@@ -1688,7 +1688,7 @@ void Gui::createLaserDistanceObjects()
 	for (float i=0.5; i<=0.5; i+=0.5)
 	{
 		startArcX = ((ui.graphicsViewLaser->width() / 2) - LASERLINELENGTH);
-		startArcY = laserLineList->at(0)->y();
+		startArcY = laserLineListFront->at(0)->y();
 		
 		endArcX = ((ui.graphicsViewLaser->width() / 2) + LASERLINELENGTH);
 		endArcY = startArcY;
@@ -1703,7 +1703,7 @@ void Gui::createLaserDistanceObjects()
 		path.moveTo(0,0);
 		path.arcTo(0, 0, 200, 200, 0, -180);
 */		
-		//path.arcTo( (ui.graphicsViewLaser->width() - LASERLINELENGTH) /*- (i*dimensionLine)*/, ( laserLineList->at(i)->y() /*- (i*dimensionLine)*/), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
+		//path.arcTo( (ui.graphicsViewLaser->width() - LASERLINELENGTH) /*- (i*dimensionLine)*/, ( laserLineListFront->at(i)->y() /*- (i*dimensionLine)*/), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
 
 		//			x,						y,			width,		height,		startAngle, spanAngle
 		//painter->drawArc(ui.lineLaser90->x() - (i*dimensionLine), (newY - (i*dimensionLine)), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
@@ -1820,10 +1820,10 @@ void Gui::laserSplash(bool status)
 		pixmapBot1->setVisible(false);
 		pixmapBot2->setVisible(false);
 			
-		for (int i=laserLineList->size()-1; i>=0; i--)
+		for (int i=laserLineListFront->size()-1; i>=0; i--)
 		{
 				// reset transform or rotation
-			laserLineList->at(i)->setVisible(false);
+			laserLineListFront->at(i)->setVisible(false);
 		}
 	}
 	else
@@ -1833,10 +1833,10 @@ void Gui::laserSplash(bool status)
 		pixmapBot1->setVisible(true);
 		pixmapBot2->setVisible(true);
 			
-		for (int i=laserLineList->size()-1; i>=0; i--)
+		for (int i=laserLineListFront->size()-1; i>=0; i--)
 		{
 				// reset transform or rotation
-			laserLineList->at(i)->setVisible(true);
+			laserLineListFront->at(i)->setVisible(true);
 		}
 	}
 }

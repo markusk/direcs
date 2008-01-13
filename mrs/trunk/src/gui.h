@@ -224,7 +224,7 @@ class Gui : public QMainWindow
 		/**
 		Refreshes the view of the lines from the laser scanner
 		*/
-		void refreshLaserView(float *laserScannerValues, int *laserScannerFlags);
+		void refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags);
 		
 		/**
 		Shows the joystick values when it moves.
@@ -395,8 +395,10 @@ class Gui : public QMainWindow
 		qreal laserXPos;
 		qreal laserYPos;
 		QGraphicsScene *scene;					/** The QGraphicsScene for showing the laser lines in the GUI */
-		QList <QGraphicsLineItem*> *laserLineList;		/** A pointer to a QList of pointers to the laser lines (QGraphicsLineItems) */
-		QList <QGraphicsPathItem*> *laserDistanceLineList;	/** A pointer to a QList of pointers to the shown distances from the laser lines (kind of coordinate system) */
+		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
+		QList <QGraphicsLineItem*> *laserLineListRear;		/** A pointer to a QList of pointers to the rear laser lines (QGraphicsLineItems) */
+		QList <QGraphicsPathItem*> *laserDistanceLineListFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
+		QList <QGraphicsPathItem*> *laserDistanceLineListRear;	/** A pointer to a QList of pointers to the shown distances from the rear laser lines (kind of coordinate system) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QGraphicsPixmapItem *scannerSplash;
