@@ -221,42 +221,84 @@ void read_parameters(short int laserScanner)
 	// for QString to char* conversion
 	QByteArray ba;
 	
-	ba = laserSerialPort1.toLatin1();
-	dev1 = ba.data();
-	qDebug() << "read_parameters(): laser:" << laserScanner << " Name:"<< dev1;
 	
-	ba = laserSerialPort2.toLatin1();
-	dev2 = ba.data();
-	qDebug() << "read_parameters(): laser:" << laserScanner << " Name:"<< dev2;
+	switch (laserScanner)
+	{
+		case LASER1:
+			ba = laserSerialPort1.toLatin1();
+			dev1 = ba.data();
+			//qDebug() << "read_parameters(): laser:" << laserScanner << " Name:"<< dev1;
+			str1 = "PLS";
+			res1 = 1.0;
+			rem1 = "no";
+			fov1 = 180;
+			if(strncmp(dev1, "none", 4) != 0)
+			{
+				use_laser1 = 1;
+				//carmen_param_install_params(argc, argv, laser1_params, sizeof(laser1_params) / sizeof(laser1_params[0]));
+				interpret_params(&laser1, dev1, str1, res1, rem1, fov1);
+			}
+			break;
+		case LASER2:
+			ba = laserSerialPort2.toLatin1();
+			dev2 = ba.data();
+			//qDebug() << "read_parameters(): laser:" << laserScanner << " Name:"<< dev2;
+			str2 = "PLS";
+			res2 = 1.0;
+			rem2 = "no";
+			fov2 = 180;
+			if(strncmp(dev2, "none", 4) != 0)
+			{
+				use_laser2 = 1;
+				//carmen_param_install_params(argc, argv, laser2_params, sizeof(laser2_params) / sizeof(laser2_params[0]));
+				interpret_params(&laser2, dev2, str2, res2, rem2, fov2);
+			}
+			break;
+		case LASER3:
+			dev3 = "none";
+			str3 = "PLS";
+			res3 = 1.0;
+			rem3 = "no";
+			fov3 = 180;
+			if(strncmp(dev3, "none", 4) != 0)
+			{
+				use_laser3 = 1;
+				//carmen_param_install_params(argc, argv, laser3_params, sizeof(laser3_params) / sizeof(laser3_params[0]));
+				interpret_params(&laser3, dev3, str3, res3, rem3, fov3);
+			}
+			break;
+		case LASER4:
+			dev4 = "none";
+			str4 = "PLS";
+			res4 = 1.0;
+			rem4 = "no";
+			fov4 = 180;
+			if(strncmp(dev4, "none", 4) != 0)
+			{
+				use_laser4 = 1;
+				//carmen_param_install_params(argc, argv, laser4_params, sizeof(laser4_params) / sizeof(laser4_params[0]));
+				interpret_params(&laser4, dev4, str4, res4, rem4, fov4);
+			}
+			break;
+		case LASER5:
+			dev5 = "none";
+			str5 = "PLS";
+			res5 = 1.0;
+			rem5 = "no";
+			fov5 = 180;
+			if(strncmp(dev5, "none", 4) != 0)
+			{
+				use_laser5 = 1;
+				//carmen_param_install_params(argc, argv, laser5_params, sizeof(laser5_params) / sizeof(laser5_params[0]));
+				interpret_params(&laser5, dev5, str5, res5, rem5, fov5);
+			}
+			break;
+	}
+
 	
-	dev3 = "none";
-	dev4 = "none";
-	dev5 = "none";
-	str1 = "PLS";
-	str2 = "PLS";
-	str3 = "PLS";
-	str4 = "PLS";
-	str5 = "PLS";
-	res1 = 1.0;
-	res2 = 1.0;
-	res3 = 1.0;
-	res4 = 1.0;
-	res5 = 1.0;
-	rem1 = "no";
-	rem2 = "no";
-	rem3 = "no";
-	rem4 = "no";
-	rem5 = "no";
-	fov1 = 180;
-	fov2 = 180;
-	fov3 = 180;
-	fov4 = 180;
-	fov5 = 180;
-	//qDebug("fov1=%f", fov1);
-	//--------------------------
-
-
+	// TODO: not needed?!?!?
 	// the five possible lasers
+	/*
 	carmen_param_t laser_devs[] = {
 		{"laser", "front_laser_dev", CARMEN_PARAM_STRING, &dev1, 0, NULL},
 		{"laser", "rear_laser_dev", CARMEN_PARAM_STRING, &dev2, 0, NULL},
@@ -303,49 +345,9 @@ void read_parameters(short int laserScanner)
 		{"laser", "laser5_fov", CARMEN_PARAM_DOUBLE, &fov5, 0, NULL},
 		{"laser", "laser5_baud", CARMEN_PARAM_INT, &laser5.settings.set_baudrate, 0, NULL},
 		{"laser", "laser5_flipped", CARMEN_PARAM_INT, &laser5.settings.laser_flipped, 0, NULL}};
-
+*/
 
 	// carmen_param_install_params(argc, argv, laser_devs, sizeof(laser_devs) / sizeof(laser_devs[0]));
-
-	if(strncmp(dev1, "none", 4) != 0)
-	{
-		use_laser1 = 1;
-		// FIXME get and store the parameters somewhere
-		//carmen_param_install_params(argc, argv, laser1_params, sizeof(laser1_params) / sizeof(laser1_params[0]));
-		interpret_params(&laser1, dev1, str1, res1, rem1, fov1);
-	}
-
-	if(strncmp(dev2, "none", 4) != 0)
-	{
-		use_laser2 = 1;
-		// FIXME: get and store the parameters somewhere
-		//carmen_param_install_params(argc, argv, laser2_params, sizeof(laser2_params) / sizeof(laser2_params[0]));
-		interpret_params(&laser2, dev2, str2, res2, rem2, fov2);
-	}
-	
-	if(strncmp(dev3, "none", 4) != 0)
-	{
-		use_laser3 = 1;
-		// FIXME: get and store the parameters somewhere
-		//carmen_param_install_params(argc, argv, laser3_params, sizeof(laser3_params) / sizeof(laser3_params[0]));
-		interpret_params(&laser3, dev3, str3, res3, rem3, fov3);
-	}
-	
-	if(strncmp(dev4, "none", 4) != 0)
-	{
-		use_laser4 = 1;
-		// FIXME: get and store the parameters somewhere
-		//carmen_param_install_params(argc, argv, laser4_params, sizeof(laser4_params) / sizeof(laser4_params[0]));
-		interpret_params(&laser4, dev4, str4, res4, rem4, fov4);
-	}
-	
-	if(strncmp(dev5, "none", 4) != 0)
-	{
-		use_laser5 = 1;
-		// FIXME: get and store the parameters somewhere
-		//carmen_param_install_params(argc, argv, laser5_params, sizeof(laser5_params) / sizeof(laser5_params[0]));
-		interpret_params(&laser5, dev5, str5, res5, rem5, fov5);
-	}
 }
 
 
