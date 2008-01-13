@@ -842,7 +842,6 @@ int sick_connect_device(sick_laser_p laser)
 		return 1;
 	}
 	
-	// TODO: change std output
 	/*
 	fprintf(stderr, "ok\n");
 	fprintf(stderr, "INFO: set port param %6d:%d%c%d ....... ", laser->dev.baudrate, laser->dev.databits, (laser->dev.parity == N ? 'N' : laser->dev.parity == E ? 'E' : 'O'), laser->dev.stopbits);
@@ -1196,9 +1195,9 @@ void sick_handle_laser(sick_laser_p laser)
 void sick_stop_laser(sick_laser_p laser)
 {
   // TODO: change std output
-  fprintf(stderr, "\nINFO: stop LASER continuous mode ....... ");
+  qDebug("INFO: stop LASER continuous mode.......");
   sick_stop_continuous_mode(laser);
-  fprintf(stderr, "ok\n");
+  qDebug("ok");
   close(laser->dev.fd);
 }
 
