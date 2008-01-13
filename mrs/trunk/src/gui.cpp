@@ -1,11 +1,10 @@
 #include "gui.h"
 
 
-Gui::Gui(PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(PlotThread *p, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
 	plotThread = p;
-	obstCheckThread = o;
 	laserThread = l;
 	cam1 = new CamThread();
 	
