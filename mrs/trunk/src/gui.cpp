@@ -1637,7 +1637,7 @@ void Gui::createLaserScannerObjects()
 	// TODO: same as calculate...pos ?
 	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
 	laserFrontYPos = ((int)(ui.graphicsViewLaser->height() / 2)*0.33) - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
-	laserRearYPos  = ((int)(ui.graphicsViewLaser->height() / 2)*0.33);
+	laserRearYPos  = ((int)(ui.graphicsViewLaser->height() / 2)*0.33) - ( (pixmapBot1->pixmap().height()*0.33) / 2 / startScale * lastZoom);
 	
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot1->scale( (1.0 / startScale), (1.0 / startScale));
@@ -1999,7 +1999,13 @@ qreal Gui::calculateLaserFrontYpos()
 qreal Gui::calculateLaserRearYpos()
 {
 	// value for normal drawing (from center to border of control)
-	return laserRearYPos;
+	return laserRearYPos + pixmapBot1->pixmap().height()/startScale*0.33*lastZoom;
+
+	/*
+	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
+	laserFrontYPos = ((int)(ui.graphicsViewLaser->height() / 2)*0.33) - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
+	laserRearYPos  = ((int)(ui.graphicsViewLaser->height() / 2)*0.33) - ( (pixmapBot1->pixmap().height()*0.33) / 2 / startScale * lastZoom);
+	*/
 }
 
 
