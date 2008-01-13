@@ -291,6 +291,12 @@ class Gui : public QMainWindow
 		void setMotorSpeed(int motor, int speed);
 		
 		/**
+		Resets the driven distance to 0.
+		@param sensor is the sensor number.
+		*/
+		void resetDrivenDistance(int sensor);
+		
+		/**
 		Enables or disables the listening for the robot remote control. This signal is sent from the remote control button.
 		@param status can be true or false.
 		@sa NetworkThread()
