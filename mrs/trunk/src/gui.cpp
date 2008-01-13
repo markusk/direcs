@@ -1,10 +1,9 @@
 #include "gui.h"
 
 
-Gui::Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
-	sensThread = s;
 	plotThread = p;
 	obstCheckThread = o;	 // needed for interaction with the sliders and for exmample 'setRobotSlot'
 	laserThread = l;

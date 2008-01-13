@@ -4,7 +4,6 @@
 //-------------------------------------------------------------------
 #include "ui_gui.h"
 #include "motor.h" // FIXME: error with qprinter.h when removing htis line !?!?!
-#include "sensorThread.h"
 #include "plotThread.h"
 #include "obstacleCheckThread.h"
 #include "camThread.h"
@@ -30,7 +29,6 @@
 
 
 // forward declarations because of circular includes!
-class SensorThread;
 class PlotThread;
 class ObstacleCheckThread;
 class Laser;
@@ -44,7 +42,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(SensorThread *s, PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *parent = 0);
+		Gui(PlotThread *p, ObstacleCheckThread *o, LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -360,9 +358,7 @@ class Gui : public QMainWindow
 		void createLaserDistanceObjects();
 		
 		void switchToAngleView();
-		
 		void switchToFlatView();
-
 		
 		/**
 		Draws some help lines / distances / dimensons in the laser scanner view.
@@ -391,7 +387,6 @@ class Gui : public QMainWindow
 		
 		Ui::Gui ui;
 		CamThread *cam1;
-		SensorThread *sensThread;
 		PlotThread *plotThread;
 		ObstacleCheckThread *obstCheckThread;
 		LaserThread *laserThread;
