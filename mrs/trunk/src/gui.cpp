@@ -43,10 +43,12 @@ Gui::Gui(PlotThread *p, LaserThread *l, QMainWindow *parent) : QMainWindow(paren
 	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
 	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
 	
-	// sliderMaximumSpeed
-	// spinBoxMaximumSpeed
-	// sliderMinimumSpeed
-	// spinBoxMinimumSpeed
+	// change the value of a spinBox when the value of the corresponding slider changes
+	connect(ui.sliderMaximumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMaximumSpeed, SLOT(setValue(int)));
+	connect(ui.sliderMinimumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMinimumSpeed, SLOT(setValue(int)));
+	// and vice versa
+	connect(ui.spinBoxMaximumSpeed, SIGNAL(valueChanged(int)), ui.sliderMaximumSpeed, SLOT(setValue(int)));
+	connect(ui.spinBoxMinimumSpeed, SIGNAL(valueChanged(int)), ui.sliderMinimumSpeed, SLOT(setValue(int)));
 	
 	// emit the signal from Gui to obstacleCheckThread via Mrs!
 	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlot(int)));
