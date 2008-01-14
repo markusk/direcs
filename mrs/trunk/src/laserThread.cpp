@@ -232,7 +232,7 @@ void LaserThread::setLaserScannerFlag(short int laserScanner, int angle, int fla
 			break;
 	}
 	
-	return 0;
+	return;
 }
 
 
