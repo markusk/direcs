@@ -1233,7 +1233,7 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 {
 	static bool showLaserSplash = true;
 	
-/*	// TODO: second laser splash
+	// TODO: second laser splash
 	if (showLaserSplash == true)
 	{
 		// first line is longer than 0 m ! (a values was measured)
@@ -1244,7 +1244,7 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 			laserSplash(false);
 		}
 	}
-*/	
+	
 	
 	
 	int laserLineLength = 0;
@@ -2003,6 +2003,9 @@ void Gui::laserSplash(bool status)
 {
 	if (status == true)
 	{
+		//
+		// laser splash ON
+		//
 		scannerSplash->setVisible(true);
 		
 		pixmapBot1->setVisible(false);
@@ -2022,6 +2025,9 @@ void Gui::laserSplash(bool status)
 	}
 	else
 	{
+		//
+		// laser splash OFF
+		//
 		scannerSplash->setVisible(false);
 		
 		pixmapBot1->setVisible(true);
