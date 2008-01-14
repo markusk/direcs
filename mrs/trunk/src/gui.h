@@ -351,8 +351,6 @@ class Gui : public QMainWindow
 	private slots:
 		void on_sliderMotor1Speed_sliderReleased();
 		void on_sliderMotor2Speed_sliderReleased();
-		void on_sliderRobotSlot_valueChanged(int);
-		void on_sliderStraightForwardDeviation_valueChanged(int);
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
 		void on_btnDrive_clicked();

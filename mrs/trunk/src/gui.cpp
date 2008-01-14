@@ -43,21 +43,34 @@ Gui::Gui(PlotThread *p, LaserThread *l, QMainWindow *parent) : QMainWindow(paren
 	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
 	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
 	
+	// sliderMaximumSpeed
+	// spinBoxMaximumSpeed
+	// sliderMinimumSpeed
+	// spinBoxMinimumSpeed
+	
+	// emit the signal from Gui to obstacleCheckThread via Mrs!
+	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlot(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlot, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxRobotSlot, SIGNAL(valueChanged(int)), ui.sliderRobotSlot, SLOT(setValue(int)));
 	
+	// emit the signal from Gui to obstacleCheckThread via Mrs!
+	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), SIGNAL(setStraightForwardDeviation(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.sliderStraightForwardDeviation, SLOT(setValue(int)));
 	
+	// emit the signal from Gui to obstacleCheckThread via Mrs!
+	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), SIGNAL(setMinObstacleDistanceLaser(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.spinBoxObstacleLaserScanner, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.sliderObstacleLaserScanner, SLOT(setValue(int)));
 	
+	// emit the signal from Gui to obstacleCheckThread via Mrs!
+	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), SIGNAL(setMinObstacleDistance(int)));
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
 	// and vice versa
@@ -286,18 +299,6 @@ void Gui::on_sliderMotor2Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
-}
-
-
-void Gui::on_sliderRobotSlot_valueChanged(int)
-{
-	emit setRobotSlot(ui.sliderRobotSlot->value());
-}
-
-
-void Gui::on_sliderStraightForwardDeviation_valueChanged(int)
-{
-	emit setStraightForwardDeviation(ui.sliderStraightForwardDeviation->value());
 }
 
 
