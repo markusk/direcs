@@ -250,6 +250,7 @@ Mrs::Mrs()
 	//-----------------------------------------------------------
 	// start the obstacle check thread
 	//-----------------------------------------------------------
+	/*
 	if (circuit1->isConnected())
 	{
 		if (obstCheckThread->isRunning() == false)
@@ -265,7 +266,7 @@ Mrs::Mrs()
 		// show message
 		gui1->appendLog("Obstacle check thread NOT started!");
 	}
-
+	*/
 
 
 	//-----------------------------------------------------------
@@ -1362,7 +1363,7 @@ void Mrs::readSettings()
 			// set slider to the read value
 			gui1->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
 			// tell it the obstacle check thread
-			obstCheckThread->setMinObstacleDistance(minObstacleDistanceLaserScanner);
+			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
 			// show text
 			gui1->appendLog(QString("Min. obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner));
 			break;
