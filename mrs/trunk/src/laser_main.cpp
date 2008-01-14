@@ -471,8 +471,18 @@ int carmen_laser_start(short int laserScanner)
 			if (use_laser1)
 			{
 				set_laser_config_structure(&laser1, &laser1_config);
-				// returns 0, when OKAY
-				return sick_start_laser(&laser1);
+				
+				// try to connect to the laser
+				if (sick_start_laser(&laser1) == 0)
+				{
+					return 0;
+				}
+				else
+				{
+					// don't use this laser, because of connect error
+					use_laser1 = 0;
+					return 1;
+				}
 			}
 			break;
 
@@ -485,8 +495,18 @@ int carmen_laser_start(short int laserScanner)
 			if (use_laser2)
 			{
 				set_laser_config_structure(&laser2, &laser2_config);
-				// returns 0, when OKAY
-				return sick_start_laser(&laser2);
+				
+				// try to connect to the laser
+				if (sick_start_laser(&laser2) == 0)
+				{
+					return 0;
+				}
+				else
+				{
+					// don't use this laser, because of connect error
+					use_laser2 = 0;
+					return 1;
+				}
 			}
 			break;
 
@@ -499,8 +519,18 @@ int carmen_laser_start(short int laserScanner)
 			if (use_laser3)
 			{
 				set_laser_config_structure(&laser3, &laser3_config);
-				// returns 0, when OKAY
-				return sick_start_laser(&laser3);
+				
+				// try to connect to the laser
+				if (sick_start_laser(&laser3) == 0)
+				{
+					return 0;
+				}
+				else
+				{
+					// don't use this laser, because of connect error
+					use_laser3 = 0;
+					return 1;
+				}
 			}
 			break;
 
@@ -513,8 +543,18 @@ int carmen_laser_start(short int laserScanner)
 			if (use_laser4)
 			{
 				set_laser_config_structure(&laser4, &laser4_config);
-				// returns 0, when OKAY
-				return sick_start_laser(&laser4);
+				
+				// try to connect to the laser
+				if (sick_start_laser(&laser4) == 0)
+				{
+					return 0;
+				}
+				else
+				{
+					// don't use this laser, because of connect error
+					use_laser4 = 0;
+					return 1;
+				}
 			}
 			break;
 
@@ -527,8 +567,18 @@ int carmen_laser_start(short int laserScanner)
 			if (use_laser5)
 			{
 				set_laser_config_structure(&laser5, &laser5_config);
-				// returns 0, when OKAY
-				return sick_start_laser(&laser5);
+				
+				// try to connect to the laser
+				if (sick_start_laser(&laser5) == 0)
+				{
+					return 0;
+				}
+				else
+				{
+					// don't use this laser, because of connect error
+					use_laser5 = 0;
+					return 1;
+				}
 			}
 			break;
 	}
@@ -602,6 +652,7 @@ int carmen_laser_run(void)
 	
 	if(use_laser2)
 	{
+		qDebug("carmen_laser_run: use_laser1=true");
 		sick_handle_laser(&laser2);
 		
 		if (laser2.new_reading)
