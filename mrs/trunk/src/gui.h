@@ -246,10 +246,11 @@ class Gui : public QMainWindow
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
 		
 		/**
-		Shows a graphic in the laser scanner view while searching for the scanner.
+		Shows a graphic in the laser scanner view while searching for a scanner.
 		@param status can be true or false
+		@param laserScanner is the number of the laser scanner and can be LASER1, LASER2...
 		*/
-		void laserSplash(bool status);
+		void laserSplash(bool status, short int laserScanner);
 		
 		/**
 		Shows the preferred driving direction in a lable.
@@ -435,7 +436,8 @@ class Gui : public QMainWindow
 		QList <QGraphicsPathItem*> *laserDistanceLineListRear;	/** A pointer to a QList of pointers to the shown distances from the rear laser lines (kind of coordinate system) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
-		QGraphicsPixmapItem *scannerSplash;
+		QGraphicsPixmapItem *scannerFrontSplash;
+		QGraphicsPixmapItem *scannerRearSplash;
 
 
 		
@@ -485,12 +487,20 @@ class Gui : public QMainWindow
 		static const int LARGESTFREEWAY = 2;
 		static const int CENTEROFLARGESTFREEWAY = 3;
 
-		
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		/**
 		Defines the size of the laserLines[] array
 		This es equal to the number of degrees.
 		See also laserThread.h */
 		//static const unsigned char LASERSCANNERARRAYSIZE = 181;
+		
+		/*!
+		For the laserThread
+		*/
+		static const short int LASER1 = 1;
+		static const short int LASER2 = 2;
+		static const short int LASER3 = 4;
+		static const short int LASER4 = 8;
+		static const short int LASER5 = 16;
 };
 #endif

@@ -146,7 +146,8 @@ Gui::~Gui()
 	
 	
 	delete cam1;
-	delete scannerSplash;
+	delete scannerRearSplash;
+	delete scannerFrontSplash;
 	delete pixmapBot2;
 	delete pixmapBot1;
 	
@@ -1124,20 +1125,24 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 
 void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
 {
-	static bool showLaserSplash = true;
+	/*
+	// FIXME: doesnt work!
+	static bool showLaserSplashFront = true;
 	
 	
-	if (showLaserSplash == true)
+	if (showLaserSplashFront == true)
 	{
 		// first line is longer than 0 m ! (a values was measured)
 		if (laserLineListFront->at(0)->line().length() > 0)
 		{
 			// laser splash screen OFF
-			showLaserSplash = false;
-			laserSplash(false);
+			showLaserSplashFront = false;
+	*/
+			laserSplash(false, LASER1);
+	/*
 		}
 	}
-	
+	*/
 	
 	
 	int laserLineLength = 0;
@@ -1231,20 +1236,23 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 
 void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags)
 {
-	static bool showLaserSplash = true;
+	/*
+	// FIXME: doesnt work!
+	static bool showLaserSplashRear = true;
 	
-	// TODO: second laser splash
-	if (showLaserSplash == true)
+	if (showLaserSplashRear == true)
 	{
 		// first line is longer than 0 m ! (a values was measured)
 		if (laserLineListRear->at(0)->line().length() > 0)
 		{
 			// laser splash screen OFF
-			showLaserSplash = false;
-			laserSplash(false);
+			showLaserSplashRear = false;
+	*/
+			laserSplash(false, LASER2);
+	/*
 		}
 	}
-	
+	*/
 	
 	
 	int laserLineLength = 0;
@@ -1603,11 +1611,23 @@ void Gui::createLaserScannerObjects()
 	// add "searching laser scanner" pic "splash"
 	//=======================================================
 	// add items to the scene
-	scannerSplash = new QGraphicsPixmapItem(QPixmap(":/images/images/sick_bl2.png"));
+	scannerFrontSplash = new QGraphicsPixmapItem(QPixmap(":/images/images/sickfront.png"));
 	// add the pixmap
-	scene->addItem(scannerSplash);
-	// center it
-	scannerSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height() / 2) - 74));
+	scene->addItem(scannerFrontSplash);
+	// center it in the down 1/3
+	scannerFrontSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height()*0.66) - 74));
+	// FIXME:  see refreshLaserView (both). Turning off lasersplash doesn't work
+	scannerFrontSplash->setVisible(false);
+	
+	// add items to the scene
+	scannerRearSplash = new QGraphicsPixmapItem(QPixmap(":/images/images/sickrear.png"));
+	// add the pixmap
+	scene->addItem(scannerRearSplash);
+	// center it in the upper 1/3
+	scannerRearSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height()*0.33) - 74));
+	// FIXME:  see refreshLaserView (both). Turning off lasersplash doesn't work
+	scannerRearSplash->setVisible(false);
+	
 
 	
 	//=======================================================
@@ -1999,50 +2019,69 @@ qreal Gui::calculateLaserRearYpos()
 }
 
 
-void Gui::laserSplash(bool status)
+void Gui::laserSplash(bool status, short int laserScanner)
 {
-	if (status == true)
+	switch (laserScanner)
 	{
-		//
-		// laser splash ON
-		//
-		scannerSplash->setVisible(true);
-		
-		pixmapBot1->setVisible(false);
-		pixmapBot2->setVisible(false);
-			
-		for (int i=laserLineListFront->size()-1; i>=0; i--)
-		{
-			// set unvisible
-			laserLineListFront->at(i)->setVisible(false);
-		}
-			
-		for (int i=laserLineListRear->size()-1; i>=0; i--)
-		{
-			// set unvisible
-			laserLineListRear->at(i)->setVisible(false);
-		}
-	}
-	else
-	{
-		//
-		// laser splash OFF
-		//
-		scannerSplash->setVisible(false);
-		
-		pixmapBot1->setVisible(true);
-		pixmapBot2->setVisible(true);
-			
-		for (int i=laserLineListFront->size()-1; i>=0; i--)
-		{
-			// set visible
-			laserLineListFront->at(i)->setVisible(true);
-		}
-			
-		for (int i=laserLineListRear->size()-1; i>=0; i--)
-		{
-			// set visible
-			laserLineListRear->at(i)->setVisible(true);
-		}
+		case LASER1:
+			if (status == true)
+			{
+				//
+				// laser splash ON
+				//
+				scannerFrontSplash->setVisible(true);
+				pixmapBot1->setVisible(false);
+				pixmapBot2->setVisible(false);
+				for (int i=laserLineListFront->size()-1; i>=0; i--)
+				{
+					// lines unvisible
+					laserLineListFront->at(i)->setVisible(false);
+				}
+			}
+			else
+			{
+				//
+				// laser splash OFF
+				//
+				scannerFrontSplash->setVisible(false);
+				pixmapBot1->setVisible(true);
+				pixmapBot2->setVisible(true);
+				for (int i=laserLineListFront->size()-1; i>=0; i--)
+				{
+					// lines visible
+					laserLineListFront->at(i)->setVisible(true);
+				}
+			}
+			break;
+		case LASER2:
+			if (status == true)
+			{
+				//
+				// laser splash ON
+				//
+				scannerRearSplash->setVisible(true);
+				pixmapBot1->setVisible(false);
+				pixmapBot2->setVisible(false);
+				for (int i=laserLineListRear->size()-1; i>=0; i--)
+				{
+					// lines unvisible
+					laserLineListRear->at(i)->setVisible(false);
+				}
+			}
+			else
+			{
+				//
+				// laser splash OFF
+				//
+				scannerRearSplash->setVisible(false);
+				pixmapBot1->setVisible(true);
+				pixmapBot2->setVisible(true);
+				for (int i=laserLineListRear->size()-1; i>=0; i--)
+				{
+					// lines visible
+					laserLineListRear->at(i)->setVisible(true);
+				}
+			}
+			break;
 	}
 }
