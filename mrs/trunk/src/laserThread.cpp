@@ -486,6 +486,18 @@ bool LaserThread::isConnected(short int laserScanner)
 				return true;
 		}
 	}
+	else
+	{
+		switch (laserScanner)
+		{
+			case LASER1:
+				laserScannerFrontIsConnected = false;
+				return false;
+			case LASER2:
+				laserScannerRearIsConnected = false;
+				return false;
+		}
+	}
 	
 	// TODO: what to do with this?
 	stopped = true;
