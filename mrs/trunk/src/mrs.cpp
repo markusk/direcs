@@ -54,38 +54,7 @@ Mrs::Mrs()
 	
 	gui1 = new Gui(plotThread, laserThread);
 
-
-	//------------------------------------------------------------------
-	// for getting the screen resolution
-	//------------------------------------------------------------------
-	QDesktopWidget *desktop = QApplication::desktop();
-
-	//------------------------------------------------------------------
-	// place gui window at a nice position on the screen
-	//------------------------------------------------------------------
-	/*
-	if (desktop->width() > 1024)
-	{
-	*/
-		// move mainWindow to the center of the screen
-		gui1->move( (desktop->width() - gui1->width())/2, (desktop->height() - gui1->height())/2 );
-
-		// show the main window
-		gui1->show();
-		
-		// delete the splash screen
-		QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
-	/*
-	}
-	else
-	{
-		// resolution too smal for this window. Maximizing...
-		// show the main window
-		gui1->showMaximized();
-	}
-	*/
-
-
+	
 	//------------------------------------------------------------------
 	// nomen est omen
 	//------------------------------------------------------------------
@@ -478,6 +447,37 @@ Mrs::Mrs()
 		gui1->laserSplash(false, LASER2);
 		gui1->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
+	
+	
+	//------------------------------------------------------------------
+	// for getting the screen resolution
+	//------------------------------------------------------------------
+	QDesktopWidget *desktop = QApplication::desktop();
+
+	//------------------------------------------------------------------
+	// place gui window at a nice position on the screen
+	//------------------------------------------------------------------
+	/*
+	if (desktop->width() > 1024)
+	{
+	*/
+		// move mainWindow to the center of the screen
+		gui1->move( (desktop->width() - gui1->width())/2, (desktop->height() - gui1->height())/2 );
+
+		// show the main window
+		gui1->show();
+		
+		// delete the splash screen
+		QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+	/*
+	}
+	else
+	{
+		// resolution too smal for this window. Maximizing...
+		// show the main window
+		gui1->showMaximized();
+	}
+	*/
 }
 
 
