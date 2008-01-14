@@ -474,7 +474,8 @@ Mrs::Mrs()
 	else
 	{
 		// turn off laser splash
-		gui1->laserSplash(false);
+		gui1->laserSplash(false, LASER1);
+		gui1->laserSplash(false, LASER2);
 		gui1->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
 }
