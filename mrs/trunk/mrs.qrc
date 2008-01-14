@@ -11,10 +11,10 @@
         <file>images/memory.png</file>
         <file>images/reload.png</file>
         <file>images/remote.png</file>
-        <file>images/sick_bl2.png</file>
+        <file>images/sickfront.png</file>
+        <file>images/sickrear.png</file>
         <file>images/splash.png</file>
         <file>images/trashcan_empty.png</file>
         <file>images/underFootOne.png</file>
-        <file>images/webcamreceive.png</file>
     </qresource>
 </RCC>
