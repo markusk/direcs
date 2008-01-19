@@ -198,12 +198,12 @@ Mrs::Mrs()
 	//-------------------------------------------------------
 	splash->showMessage(QObject::tr("Searching robot..."), somewhere, splashColor);
 	
-	connect(this, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 	connect(gui1, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 	
-	emit initCircuit();
 	
-	// TODO: what, if the iniCircuit answers too late?! copy slot to a double normal method in Circuit?
+	// init the robots circuit
+	circuit1->initCircuit();
+	
 	if (circuit1->isConnected() == true)
 	{
 		gui1->appendLog("Robot is ON and answers.");
@@ -245,28 +245,6 @@ Mrs::Mrs()
 		// show message
 		gui1->appendLog("Sensor thread NOT started!");
 	}
-
-
-	//-----------------------------------------------------------
-	// start the obstacle check thread
-	//-----------------------------------------------------------
-	/*
-	if (circuit1->isConnected())
-	{
-		if (obstCheckThread->isRunning() == false)
-		{
-			splash->showMessage(QObject::tr("Starting obstacle check thread..."), somewhere, splashColor);
-			gui1->appendLog("Starting obstacle check thread...", false);
-			obstCheckThread->start();
-			gui1->appendLog("Obstacle check thread started.");
-		}
-	}
-	else
-	{
-		// show message
-		gui1->appendLog("Obstacle check thread NOT started!");
-	}
-	*/
 
 
 	//-----------------------------------------------------------
