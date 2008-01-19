@@ -19,12 +19,7 @@ void Circuit::initCircuit()
 	//-------------------------------------------------------
 	// Basic init for all the bits on the robot circuit
 	//-------------------------------------------------------
-	if (interface1->sendChar(INIT) == false)
-	{
-		robotIsOn = false;
-		//return false;
-	}
-	else
+	if (interface1->sendChar(INIT) == true)
 	{
 		// check if the robot answers with "@"
 		char answer = 0;
@@ -33,14 +28,15 @@ void Circuit::initCircuit()
 		if (answer == INITANSWER)
 		{
 			// everthing's fine :-)
+			firstInitDone = true;
 			robotIsOn = true;
-			//return true;
+			return;
 		}
 	}
 	
-	firstInitDone = true;
+	qDebug("Robot is OFF.");
+	firstInitDone = false;
 	robotIsOn = false;
-	//return false;
 }
 
 
