@@ -36,6 +36,7 @@ class Circuit : public QObject
 		static const unsigned char INIT = 250;
 		static const unsigned char INITANSWER = 64;
 		bool robotIsOn;
+		bool firstInitDone;
 };
 
 #endif

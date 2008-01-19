@@ -5,6 +5,7 @@ Circuit::Circuit(InterfaceAvr *i)
 	// copy the pointer from the original object
 	interface1 = i;
 	robotIsOn = false;
+	firstInitDone = false;
 }
 
 
@@ -37,6 +38,7 @@ void Circuit::initCircuit()
 		}
 	}
 	
+	firstInitDone = true;
 	robotIsOn = false;
 	//return false;
 }
@@ -44,5 +46,12 @@ void Circuit::initCircuit()
 
 bool Circuit::isConnected()
 {
+	// if not tried to init hardware, do this!
+	if (firstInitDone == false)
+	{
+		initCircuit();
+		firstInitDone = true;
+	}
+	
 	return robotIsOn;
 }
