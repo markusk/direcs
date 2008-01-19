@@ -652,7 +652,7 @@ int carmen_laser_run(void)
 	
 	if(use_laser2)
 	{
-		qDebug("carmen_laser_run: use_laser1=true");
+		//qDebug("carmen_laser_run: use_laser1=true");
 		sick_handle_laser(&laser2);
 		
 		if (laser2.new_reading)
@@ -666,9 +666,10 @@ int carmen_laser_run(void)
 		}
 		
 		laser2_stalled = (current_time - laser2.timestamp > 1.0);
-		
+		/*
 		if (print_stats)
 			fprintf(stderr, "L2: %s(%.1f%% full) ", laser2_stalled ? "STALLED " : " ", (laser2.buffer_position - laser2.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
+		*/
 	}
 	
 	
