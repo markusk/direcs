@@ -18,23 +18,26 @@ Gui::Gui(PlotThread *p, LaserThread *l, QMainWindow *parent) : QMainWindow(paren
 	// value in cm
 	// set maximum in cm AND raise the widget (make it topmost)!
 	ui.progressBarSensor1->setMaximum(50);
-	ui.progressBarSensor1->raise();
 	ui.progressBarSensor2->setMaximum(50);
-	ui.progressBarSensor2->raise();
 	ui.progressBarSensor3->setMaximum(50);
-	ui.progressBarSensor3->raise();
 	ui.progressBarSensor4->setMaximum(50);
-	ui.progressBarSensor4->raise();
 	ui.progressBarSensor5->setMaximum(50);
-	ui.progressBarSensor5->raise();
 	ui.progressBarSensor6->setMaximum(50);
-	ui.progressBarSensor6->raise();
 	ui.progressBarSensor7->setMaximum(50);
-	ui.progressBarSensor7->raise();
 	ui.progressBarSensor8->setMaximum(50);
-	ui.progressBarSensor8->raise();
 	ui.progressBarSensor16->setMaximum(400); // max. 400 cm ultra sonic sensor !!
-	//ui.progressBarSensor16->raise();
+/*
+infrared Sensors temporarily removed from robot!!
+	ui.progressBarSensor1->raise();
+	ui.progressBarSensor2->raise();
+	ui.progressBarSensor3->raise();
+	ui.progressBarSensor4->raise();
+	ui.progressBarSensor5->raise();
+	ui.progressBarSensor6->raise();
+	ui.progressBarSensor7->raise();
+	ui.progressBarSensor8->raise();
+*/
+
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));

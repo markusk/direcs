@@ -121,7 +121,7 @@ void SensorThread::run()
 		if (simulationMode == false)
 		{
 /*
-FIXME: temporarily removed from robot!!
+infrared Sensors temporarily removed from robot!!
 			
 			//------------------------------------------------------
 			// read value from sensor 1
@@ -160,7 +160,7 @@ FIXME: temporarily removed from robot!!
 			iRSensorValue[SENSOR2] = value;
 			//qDebug("received value sensor2: %d", value);
 			value = 0;
-*/	
+
 			
 			//------------------------------------------------------
 			// read value from sensor 3
@@ -199,8 +199,7 @@ FIXME: temporarily removed from robot!!
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
 			
-/*
-FIXME: temporarily removed from robot!!
+			
 			//------------------------------------------------------
 			// read value from sensor 5
 			//------------------------------------------------------
@@ -218,7 +217,7 @@ FIXME: temporarily removed from robot!!
 			iRSensorValue[SENSOR5] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
-*/
+
 			
 			//------------------------------------------------------
 			// read value from sensor 6
@@ -239,8 +238,7 @@ FIXME: temporarily removed from robot!!
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
 			
-/*
-FIXME: temporarily removed from robot!!
+			
 			//------------------------------------------------------
 			// read value from sensor 7
 			//------------------------------------------------------
@@ -277,6 +275,8 @@ FIXME: temporarily removed from robot!!
 			iRSensorValue[SENSOR8] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
+
+infrared Sensors temporarily removed from robot!!
 */
 	
 			//====================================================================
