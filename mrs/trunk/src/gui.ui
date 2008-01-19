@@ -34,6 +34,11 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
    <property name="text" >
     <string> E&amp;xit</string>
    </property>
@@ -52,6 +57,11 @@
      <width>101</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
    </property>
    <property name="text" >
     <string> &amp;Reset</string>
@@ -72,6 +82,11 @@
      <height>331</height>
     </rect>
    </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
    <property name="title" >
     <string>Network</string>
    </property>
@@ -84,6 +99,11 @@
       <height>301</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
    </widget>
   </widget>
   <widget class="QGroupBox" name="groupBoxLog" >
@@ -94,6 +114,11 @@
      <width>421</width>
      <height>331</height>
     </rect>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
    </property>
    <property name="title" >
     <string>Log</string>
@@ -107,6 +132,11 @@
       <height>301</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
    </widget>
   </widget>
   <widget class="QPushButton" name="btnTest" >
@@ -117,6 +147,11 @@
      <width>101</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
    </property>
    <property name="text" >
     <string> &amp;Test</string>
@@ -136,6 +171,11 @@
      <width>101</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
    </property>
    <property name="text" >
     <string> Re&amp;mote</string>
@@ -158,6 +198,11 @@
      <width>101</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
    </property>
    <property name="text" >
     <string> &amp;Drive</string>
@@ -184,6 +229,11 @@
      <height>211</height>
     </rect>
    </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
    <property name="title" >
     <string>Settings</string>
    </property>
@@ -195,6 +245,11 @@
       <width>46</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -214,6 +269,11 @@
       <width>35</width>
       <height>74</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -249,6 +309,11 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="suffix" >
      <string>°</string>
     </property>
@@ -271,6 +336,11 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="suffix" >
      <string>°</string>
     </property>
@@ -292,6 +362,11 @@
       <width>35</width>
       <height>74</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -327,6 +402,11 @@
       <height>74</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="minimum" >
      <number>1</number>
     </property>
@@ -361,6 +441,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Obstacle alarm Infrared</string>
     </property>
@@ -377,6 +462,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Save settings on exit</string>
     </property>
@@ -389,6 +479,11 @@
       <width>43</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>Current Speed Motor2</string>
@@ -405,6 +500,11 @@
       <width>35</width>
       <height>74</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -440,6 +540,11 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="suffix" >
      <string> cm</string>
     </property>
@@ -464,6 +569,11 @@
       <width>35</width>
       <height>74</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>8</number>
@@ -502,6 +612,11 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Robot Slot</string>
     </property>
@@ -518,6 +633,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Current Speed Motor1</string>
     </property>
@@ -533,6 +653,11 @@
       <width>46</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -552,6 +677,11 @@
       <width>71</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="suffix" >
      <string> cm</string>
@@ -577,6 +707,11 @@
       <width>35</width>
       <height>74</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -618,6 +753,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Obstacle Laser Scanner</string>
     </property>
@@ -634,6 +774,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Straight Forward Deviation</string>
     </property>
@@ -649,6 +794,11 @@
       <width>35</width>
       <height>74</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -684,6 +834,11 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Minimum Speed</string>
     </property>
@@ -699,6 +854,11 @@
       <width>46</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -719,6 +879,11 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Maximum Speed</string>
     </property>
@@ -734,6 +899,11 @@
       <width>35</width>
       <height>74</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -769,6 +939,11 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="minimum" >
      <number>1</number>
     </property>
@@ -789,6 +964,11 @@
      <height>401</height>
     </rect>
    </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
    <property name="title" >
     <string>Motors</string>
    </property>
@@ -801,6 +981,11 @@
       <height>101</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
    </widget>
    <widget class="QLabel" name="textLabel2_6" >
     <property name="geometry" >
@@ -810,6 +995,11 @@
       <width>53</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>Distance:</string>
@@ -824,6 +1014,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Revolutions:</string>
     </property>
@@ -837,6 +1032,11 @@
       <height>26</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Reset</string>
     </property>
@@ -849,6 +1049,11 @@
       <width>61</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>0 cm</string>
@@ -866,6 +1071,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>0 cm</string>
     </property>
@@ -881,6 +1091,11 @@
       <width>71</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>Revolutions:</string>
@@ -902,6 +1117,11 @@
       <disabled/>
      </palette>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="autoFillBackground" >
      <bool>false</bool>
     </property>
@@ -920,6 +1140,11 @@
       <width>75</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>Reset</string>
@@ -940,6 +1165,11 @@
       <inactive/>
       <disabled/>
      </palette>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="autoFillBackground" >
      <bool>false</bool>
@@ -964,7 +1194,7 @@
      </property>
      <property name="font" >
       <font>
-       <family>Sans Serif</family>
+       <family>Verdana</family>
        <pointsize>11</pointsize>
        <weight>75</weight>
        <italic>false</italic>
@@ -993,6 +1223,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Distance:</string>
     </property>
@@ -1012,6 +1247,11 @@
       <inactive/>
       <disabled/>
      </palette>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="autoFillBackground" >
      <bool>false</bool>
@@ -1036,7 +1276,7 @@
      </property>
      <property name="font" >
       <font>
-       <family>Sans Serif</family>
+       <family>Verdana</family>
        <pointsize>11</pointsize>
        <weight>75</weight>
        <italic>false</italic>
@@ -1062,6 +1302,11 @@
       <height>101</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
    </widget>
    <widget class="QFrame" name="framePower2" >
     <property name="geometry" >
@@ -1078,6 +1323,11 @@
       <inactive/>
       <disabled/>
      </palette>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="autoFillBackground" >
      <bool>false</bool>
@@ -1102,7 +1352,7 @@
      </property>
      <property name="font" >
       <font>
-       <family>Sans Serif</family>
+       <family>Verdana</family>
        <pointsize>11</pointsize>
        <weight>75</weight>
        <italic>false</italic>
@@ -1128,6 +1378,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="layoutDirection" >
      <enum>Qt::RightToLeft</enum>
     </property>
@@ -1143,6 +1398,11 @@
       <width>41</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="layoutDirection" >
      <enum>Qt::RightToLeft</enum>
@@ -1165,7 +1425,7 @@
     </property>
     <property name="font" >
      <font>
-      <family>Sans Serif</family>
+      <family>Verdana</family>
       <pointsize>11</pointsize>
       <weight>75</weight>
       <italic>false</italic>
@@ -1194,6 +1454,11 @@
      <height>401</height>
     </rect>
    </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
    <property name="title" >
     <string>Camera</string>
    </property>
@@ -1205,6 +1470,11 @@
       <width>91</width>
       <height>28</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>Save</string>
@@ -1221,6 +1491,11 @@
       <width>81</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>Auto Save</string>
@@ -1242,6 +1517,11 @@
       <disabled/>
      </palette>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="autoFillBackground" >
      <bool>false</bool>
     </property>
@@ -1260,6 +1540,11 @@
        <height>331</height>
       </rect>
      </property>
+     <property name="font" >
+      <font>
+       <family>Verdana</family>
+      </font>
+     </property>
      <property name="cursor" >
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
@@ -1275,6 +1560,11 @@
      <height>961</height>
     </rect>
    </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
    <property name="title" >
     <string>Bot</string>
    </property>
@@ -1286,6 +1576,11 @@
       <width>18</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="textVisible" >
      <bool>true</bool>
@@ -1309,6 +1604,11 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="textVisible" >
      <bool>true</bool>
     </property>
@@ -1330,6 +1630,11 @@
       <width>18</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="textVisible" >
      <bool>true</bool>
@@ -1353,6 +1658,11 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="textVisible" >
      <bool>true</bool>
     </property>
@@ -1374,6 +1684,11 @@
       <width>18</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="textVisible" >
      <bool>true</bool>
@@ -1397,6 +1712,11 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="textVisible" >
      <bool>true</bool>
     </property>
@@ -1419,6 +1739,11 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="textVisible" >
      <bool>true</bool>
     </property>
@@ -1440,6 +1765,11 @@
       <width>20</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="autoFillBackground" >
      <bool>true</bool>
@@ -1468,6 +1798,11 @@
       <width>18</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="textVisible" >
      <bool>true</bool>
@@ -1528,6 +1863,11 @@
       </disabled>
      </palette>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="verticalScrollBarPolicy" >
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
@@ -1550,6 +1890,11 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>1</string>
     </property>
@@ -1562,6 +1907,11 @@
       <width>141</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>1</number>
@@ -1600,6 +1950,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>10</string>
     </property>
@@ -1612,6 +1967,11 @@
       <width>16</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>1</string>
@@ -1629,6 +1989,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>180°</string>
     </property>
@@ -1645,6 +2010,11 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Zoom:</string>
     </property>
@@ -1657,6 +2027,11 @@
       <width>132</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>Largest free area start:</string>
@@ -1671,6 +2046,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Largest free area end:</string>
     </property>
@@ -1684,6 +2064,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Center of free area:</string>
     </property>
@@ -1696,6 +2081,11 @@
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>0 deg</string>
@@ -1713,6 +2103,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>0 deg</string>
     </property>
@@ -1728,6 +2123,11 @@
       <width>45</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>0 deg</string>
@@ -1745,6 +2145,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string>Preferred direction:</string>
     </property>
@@ -1757,6 +2162,11 @@
       <width>60</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string>FORWARD</string>
@@ -1774,6 +2184,11 @@
      <width>101</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
    </property>
    <property name="autoFillBackground" >
     <bool>true</bool>
@@ -1800,6 +2215,11 @@
      <height>211</height>
     </rect>
    </property>
+   <property name="font" >
+    <font>
+     <family>Verdana</family>
+    </font>
+   </property>
    <property name="title" >
     <string>Joystick</string>
    </property>
@@ -1811,6 +2231,11 @@
       <width>160</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>-32767</number>
@@ -1846,6 +2271,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string/>
     </property>
@@ -1864,6 +2294,11 @@
       <width>16</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string/>
@@ -1884,6 +2319,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string/>
     </property>
@@ -1902,6 +2342,11 @@
       <width>16</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string/>
@@ -1922,6 +2367,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string/>
     </property>
@@ -1940,6 +2390,11 @@
       <width>16</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string/>
@@ -1960,6 +2415,11 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
     <property name="text" >
      <string/>
     </property>
@@ -1975,6 +2435,11 @@
       <width>23</width>
       <height>160</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="minimum" >
      <number>-32767</number>
@@ -2012,6 +2477,11 @@
       <width>16</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
     </property>
     <property name="text" >
      <string/>
