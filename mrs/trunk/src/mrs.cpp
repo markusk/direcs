@@ -309,7 +309,7 @@ Mrs::Mrs()
 	//------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
 	//------------------------------------------------------------------
-	connect(obstCheckThread, SIGNAL(obstacleDetected(int)), SLOT(logicalUnit(int)));
+	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), SLOT(logicalUnit(int, QDateTime)));
 	
 	// show the angle where to drive in a GUI label
 	connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui1, SLOT(showLaserFrontAngles(int, int, int)));
@@ -911,7 +911,7 @@ void Mrs::finishSplash()
 }
 
 
-void Mrs::logicalUnit(int sensorAlarm)
+void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 {
 	//Todo: Check if there is only one short "alarm signal" this will be ignored!
 	

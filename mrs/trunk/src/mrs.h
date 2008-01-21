@@ -66,8 +66,9 @@ class Mrs : public QObject
 		The locialUnit handles the behavior of the robot. This slot is called if an obstacle is detected from the obstacleCheckThread.
 		It lets the robot "react" depending on which sensor made the alarm. The number of alarms are also counted.
 		@param sensorAlarm consists of the sum of all infrared and ultrasonic sensor numbers, which had an alarm.
+		@param timestamp is the timestmap when the signal was emitted.
 		*/
-		void logicalUnit(int sensorAlarm);
+		void logicalUnit(int sensorAlarm, QDateTime timestamp);
 		
 		/**
 		Shows the sensor data in a graphical way (progressBars) and as a number in the GUI.

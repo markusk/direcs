@@ -6,6 +6,7 @@
 #include "laserThread.h"
 
 #include <QTimer>
+#include <QDateTime> // for the signal emit with a timestamp
 #include <QThread>
 //-------------------------------------------------------------------
 
@@ -61,7 +62,19 @@ class ObstacleCheckThread : public QThread
 
 
 	signals:
-		void obstacleDetected(int sensors);
+		/**
+		Emits a signal to the logical unit of @sa Mrs.
+		@param sensors consists of the sum of all infrared and ultrasonic sensor numbers, which had an alarm.
+		@param timestamp is the timestmap when the signal was emitted.
+		*/
+		void obstacleDetected(int sensors, QDateTime timestamp);
+		
+		/**
+		Emits a signal to set the angle where the robot can drive through.
+		@param largestFreeAreaStart is the start angle of the largest free area.
+		@param largestFreeAreaEnd is the end angle of the largest free area.
+		@param centerOfFreeWay is the center of the largest free area.
+		*/
 		void newDrivingAngleSet(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
 
 

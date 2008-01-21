@@ -151,7 +151,7 @@ void ObstacleCheckThread::run()
 		//   First  e m i t  of the sensor data
 		//
 		//qDebug("obstacleCheckThread:  emit sensorValue: %d", sensorValue);
-//		emit obstacleDetected(sensorValue);
+//		emit obstacleDetected(sensorValue, QDateTime::currentDateTime());
 		//=======================================================================================================
 	
 		
@@ -306,7 +306,7 @@ void ObstacleCheckThread::run()
 		if (centerOfFreeWay == -1)
 		{
 			// obstacles EVERYWHERE IN FRONT
-			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT);
+			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
 		}
 		else
 		{
@@ -318,21 +318,21 @@ void ObstacleCheckThread::run()
 			   )
 			{
 				// NO obstacle
-				emit obstacleDetected(NONE);
+				emit obstacleDetected(NONE, QDateTime::currentDateTime());
 			}
 			else
 			{
 				if ( (centerOfFreeWay < 90) && (centerOfFreeWay > -1) )
 				{
 					// obstacle LEFT
-					emit obstacleDetected(OBSTACLEFRONTLEFT);
+					emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
 				}
 				else
 				{
 					if (centerOfFreeWay > 90)
 					{
 						// obstacle RIGHT
-						emit obstacleDetected(OBSTACLEFRONTRIGHT);
+						emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
 					}
 				}
 			}
