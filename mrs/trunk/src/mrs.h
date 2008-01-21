@@ -172,6 +172,9 @@ class Mrs : public QObject
 		int mot2Speed;
 		int minimumSpeed;
 		int maximumSpeed;
+		QList <int> obstacleAlarmList;			/** A list of obstacle alarms that occured the last n times. */
+		QList <QDateTime> obstacleAlarmTimestampList;	/** A list of the timestamps of the obstacle alarms that occured. */
+
 
 
 		//! The splash screen time of view in ms

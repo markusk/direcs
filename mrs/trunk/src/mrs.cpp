@@ -306,9 +306,9 @@ Mrs::Mrs()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL(sensorDataComplete()), this, SLOT(showSensorData()));
 	
-	//------------------------------------------------------------------
+	//----------------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
-	//------------------------------------------------------------------
+	//----------------------------------------------------------------------------
 	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), SLOT(logicalUnit(int, QDateTime)));
 	
 	// show the angle where to drive in a GUI label
@@ -913,7 +913,7 @@ void Mrs::finishSplash()
 
 void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 {
-	//Todo: Check if there is only one short "alarm signal" this will be ignored!
+	//TODO (in progress!): Check if there is only one short "alarm signal" this will be ignored (a false alarm)!
 	
 	static int alarmCounter = 0;
 	static short int lastSensorValue = -1; // < the initial value has to be different to ALL SENSOR-constants!!
