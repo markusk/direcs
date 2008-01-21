@@ -831,7 +831,23 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 
 void Gui::showPreferredDirection(QString direction)
 {
-	ui.lblPreferredDirection->setText(direction);
+	if (direction == "FORWARD")
+	{
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/forward.png"));
+		return;
+	}
+	
+	if (direction == "LEFT")
+	{
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
+		return;
+	}
+	
+	if (direction == "RIGHT")
+	{
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
+		return;
+	}
 }
 
 
