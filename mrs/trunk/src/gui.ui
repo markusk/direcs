@@ -2157,9 +2157,9 @@
    <widget class="QLabel" name="lblPreferredDirection" >
     <property name="geometry" >
      <rect>
-      <x>135</x>
+      <x>178</x>
       <y>940</y>
-      <width>60</width>
+      <width>16</width>
       <height>16</height>
      </rect>
     </property>
@@ -2168,11 +2168,11 @@
       <family>Verdana</family>
      </font>
     </property>
-    <property name="text" >
-     <string>FORWARD</string>
+    <property name="pixmap" >
+     <pixmap resource="../mrs.qrc" >:/images/images/forward.png</pixmap>
     </property>
-    <property name="alignment" >
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <property name="scaledContents" >
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
