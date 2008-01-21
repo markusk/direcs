@@ -54,7 +54,7 @@ int carmen_serial_connect(int *dev_fd, char *dev_name);
    *
    * @param dev_fd The file descriptor associated to the serial line.
    * @param baudrate The baud rate to use (e.g. 9600, 19200, etc.).
-   * @param partity The parity to use (e.g. "N" for none).
+   * @param parity The parity to use (e.g. "N" for none).
    **/
 void carmen_serial_configure(int dev_fd, int baudrate, char *parity);
 
@@ -102,7 +102,7 @@ int carmen_serial_close(int dev_fd);
    * this case, the system continues in the standard operational
    * mode. Note: Low latency does not run with cygwin.
    *
-   * @param dev_fd The file descriptor associated to the serial line.
+   * @param fd The file descriptor associated to the serial line.
    * @return 0=successful switched to low latency mode. 0=continue in normal mode.
    **/
 int carmen_serial_set_low_latency(int fd);

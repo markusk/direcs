@@ -80,11 +80,11 @@ class SensorThread : public QThread
 		
 		/**
 		Converts a distance in cm to an infrared sensor value.
-		@param sensorValue is the measured sensor value.
+		@param distance is the distance in cm.
 		@return The sensor value.
 		@sa convertToDistance()
 		*/
-		int convertToSensorValue(int);
+		int convertToSensorValue(int distance);
 		
 		/**
 		@return The measured motor sensor value in milli Ampere (mA).

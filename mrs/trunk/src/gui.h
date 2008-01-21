@@ -131,13 +131,13 @@ class Gui : public QMainWindow
 		
 		/**
 		Sets the slider minimum speed.
-		@param value is the minimum speed of the motors.
+		@param speed is the minimum speed of the motors.
 		*/
 		void setSliderMinimumSpeed(int speed);
 		
 		/**
 		Sets the slider maximum speed.
-		@param value is the maximum speed of the motors.
+		@param speed is the maximum speed of the motors.
 		*/
 		void setSliderMaximumSpeed(int speed);
 		
@@ -211,8 +211,8 @@ class Gui : public QMainWindow
 		/**
 		Append text to the network log in the main window
 		@param text is the text to be displayed.
-		@param CR=true adds a carriage return (CR) to the text, if true (default). This parameter is optional!
-		@param sayIt=true If true, the text is also spoken (default=false). This parameter is optional!
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
 		@sa appendLog()
 		*/
 		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);

@@ -74,13 +74,13 @@ class Joystick : public QThread
 		void stop();
 		virtual void run();
 		
-		/*!
+		/**
 		Sets the joystick port.
 		@param port is the joystick port (e.g. /dev/input/js0)
 		 */
 		void setPort(QString port);
 		
-		/*!
+		/**
 		Returns the state of a connected joystick.
 		@return true, if connected
 		*/
@@ -88,23 +88,23 @@ class Joystick : public QThread
 
 
 	signals:
-		/*!
+		/**
 		Sends a string to the GUI log.
 		@param text is the message to be emitted
 		*/
 		void emitMessage(QString text);
 		
-		/*!
+		/**
 		Emits a signal when an joystick move event occured.
-		@param axisButtonNumber is the number of the joysticks axis
-		@param axisButtonValue is the axis value
+		@param axisNumber is the number of the joysticks axis
+		@param axisValue is the axis value
 		*/
 		void joystickMoved(int axisNumber, int axisValue);
 		
-		/*!
+		/**
 		Emits a signal when an joystick button-pressed event occured.
-		@param axisButtonNumber is the number of the joysticks button
-		@param axisButtonValue is the buttons state (true when button is down)
+		@param axisNumber is the number of the joysticks button
+		@param buttonState is the buttons state (true when button is down)
 		*/
 		void joystickButtonPressed(int axisNumber, bool buttonState);
 		
