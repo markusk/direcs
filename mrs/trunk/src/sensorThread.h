@@ -2,15 +2,6 @@
 #define SENSORTHREAD_H
 
 //-------------------------------------------------------------------
-//POSIX CODE
-#ifdef _TTY_POSIX_
-#include "usb_posix.h"
-//MS WINDOWS CODE
-#else
-#include "usb_win.h"
-#endif
-
-//-------------------------------------------------------------------
 #include "interfaceAvr.h"
 //-------------------------------------------------------------------
 #include <QThread>
