@@ -49,16 +49,12 @@ warn_on \
 qt
 TEMPLATE = app
 unix {
-    HEADERS += usb_posix.h \
-  posix_qextserialport.h \
+    HEADERS += posix_qextserialport.h \
   QtGLContext.h
-    SOURCES += usb_posix.cpp \
-  QtGLContext.cpp
+    SOURCES += QtGLContext.cpp
 }
 win32 {
-    HEADERS += usb_win.h \
-  win_qextserialport.h
-    SOURCES += usb_win.cpp
+    HEADERS += win_qextserialport.h
 }
 QT += network \
 opengl
