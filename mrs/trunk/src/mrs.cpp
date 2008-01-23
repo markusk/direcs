@@ -913,7 +913,7 @@ void Mrs::finishSplash()
 
 void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 {
-	//TODO (in progress!): Check if there is only one short "alarm signal" this will be ignored (a false alarm)!
+	//TODO (in progress!): Check if there is only one short "alarm signal" this false alarm will be ignored!
 	
 	static int alarmCounter = 0;
 	static short int lastSensorValue = -1; // < the initial value has to be different to ALL SENSOR-constants!!
