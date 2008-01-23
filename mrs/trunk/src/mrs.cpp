@@ -947,6 +947,11 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	{
 		emit showPreferredDirection("FORWARD");
 		
+		// TODO: use *one* list and make a "count" in the list?!
+		// clear alarm buffers
+		obstacleAlarmFrontLeftList.clear();
+		obstacleAlarmFrontRightList.clear();
+		
 		if (robotDrives == true)
 		{
 			gui1->appendLog("No obstacle in front of any sensor. :-)");
@@ -971,6 +976,11 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	{
 		emit showPreferredDirection("*NONE*");
 		
+		// TODO: use *one* list and make a "count" in the list?!
+		// clear alarm buffers
+		obstacleAlarmFrontLeftList.clear();
+		obstacleAlarmFrontRightList.clear();
+		
 		if (robotDrives == true)
 		{
 			gui1->appendLog(QString("<b>Obstacle %1 everywhere in front of the robot. Waiting.</b>").arg(alarmCounter));
@@ -993,45 +1003,80 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 	if (sensorAlarm == OBSTACLEFRONTLEFT)
 	{
-		emit showPreferredDirection("RIGHT");
+		//------------------------
+		// check for false alarms
+		//------------------------
+		// TODO: use *one* list and make a "count" in the list?!
+		// increase alarm left buffer
+		obstacleAlarmFrontLeftList.append(sensorAlarm);
+		// clear other alarm buffer
+		obstacleAlarmFrontRightList.clear();
 		
-		if (robotDrives == true)
+		// REAL ALARM!
+		// TODO: use a const / ini-file-value / timestamp !
+		if (obstacleAlarmFrontLeftList.count() >= 2)
 		{
-			gui1->appendLog(QString("<b>Obstacle %1 front left. Turning right.</b>").arg(alarmCounter));
+			emit showPreferredDirection("RIGHT");
 			
-			//----------------
-			// drive right
-			//----------------
-			drive(RIGHT);
-			motors->flashlight(OFF);
+			// clear alarm buffer
+			obstacleAlarmFrontLeftList.clear();
 			
-			// store this sensor alarm value
-			lastSensorValue = sensorAlarm;
-			// reset the alarm counter
-			alarmCounter = 0;
+			if (robotDrives == true)
+			{
+				gui1->appendLog(QString("<b>Obstacle %1 front left. Turning right.</b>").arg(alarmCounter));
+				
+				//----------------
+				// drive right
+				//----------------
+				drive(RIGHT);
+				motors->flashlight(OFF);
+				
+				// store this sensor alarm value
+				lastSensorValue = sensorAlarm;
+				// reset the alarm counter
+				alarmCounter = 0;
+			}
 		}
+		
 		return;
 	}
 
 
 	if (sensorAlarm == OBSTACLEFRONTRIGHT)
 	{
-		emit showPreferredDirection("LEFT");
+		//------------------------
+		// check for false alarms
+		//------------------------
+		// TODO: use *one* list and make a "count" in the list?!
+		// increase alarm right buffer
+		obstacleAlarmFrontRightList.append(sensorAlarm);
+		// clear other buffer
+		obstacleAlarmFrontRightList.clear();
 		
-		if (robotDrives == true)
+		// REAL ALARM!
+		// TODO: use a const / ini-file-value / timestamp !
+		if (obstacleAlarmFrontRightList.count() >= 2)
 		{
-			gui1->appendLog("<b>Obstacle front right. Turning left.</b>");
+			emit showPreferredDirection("LEFT");
 			
-			//----------------
-			// drive left
-			//----------------
-			drive(LEFT);
-			motors->flashlight(OFF);
+			// clear alarm buffer
+			obstacleAlarmFrontRightList.clear();
 			
-			// store this sensor alarm value
-			lastSensorValue = sensorAlarm;
-			// reset the alarm counter
-			alarmCounter = 0;
+			if (robotDrives == true)
+			{
+				gui1->appendLog("<b>Obstacle front right. Turning left.</b>");
+				
+				//----------------
+				// drive left
+				//----------------
+				drive(LEFT);
+				motors->flashlight(OFF);
+				
+				// store this sensor alarm value
+				lastSensorValue = sensorAlarm;
+				// reset the alarm counter
+				alarmCounter = 0;
+			}
 		}
 		return;
 	}
