@@ -180,8 +180,8 @@ class Mrs : public QObject
 		//! The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;
 		
-		static const unsigned char ON  = 1;  //! For motor "ON"
-		static const unsigned char OFF = 0;  //! For motor "OFF"
+		static const bool ON  = true;   /** For motor "ON" */
+		static const bool OFF = false;  /** For motor "OFF" */
 		
 		//! Some driving directions for the robot
 		static const unsigned char FORWARD = 1;
