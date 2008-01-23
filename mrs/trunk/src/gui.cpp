@@ -519,7 +519,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 }
 
 
-void Gui::showAlarm(short int sensor, unsigned char state)
+void Gui::showAlarm(short int sensor, bool state)
 {
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
@@ -721,7 +721,7 @@ void Gui::showAlarm(short int sensor, unsigned char state)
 }
 
 
-void Gui::showMotorStatus(unsigned char motor, unsigned char power, unsigned char direction)
+void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char direction)
 {
 	// show the motor status with the radio buttons
 	switch (motor)

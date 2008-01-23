@@ -70,7 +70,7 @@ class Gui : public QMainWindow
 		@param sensor is the sensor number.
 		@param state can be ON or OFF.
 		*/
-		void showAlarm(short int sensor, unsigned char state);
+		void showAlarm(short int sensor, bool state);
 		
 		/**
 		Shows the status and direction of a motor (ON, OFF, RIGHT, LEFT)
@@ -78,7 +78,7 @@ class Gui : public QMainWindow
 		@param power can be ON or OFF.
 		@param direction can be FORWARD or BACKWARD.
 		*/
-		void showMotorStatus(unsigned char motor, unsigned char power, unsigned char direction);
+		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
 		
 		/**
 		@return The slider value of a motor speed.
@@ -438,9 +438,8 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *scannerRearSplash;
 
 
-		
-		static const unsigned char ON  = 1;  /** For motor "ON" */
-		static const unsigned char OFF = 0;  /** For motor "OFF" */
+		static const bool ON  = true;   /** For motor "ON" */
+		static const bool OFF = false;  /** For motor "OFF" */
 		
 		static const unsigned char START = 5;
 		static const unsigned char STOP  = 6;
