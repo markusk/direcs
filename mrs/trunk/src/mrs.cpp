@@ -1966,7 +1966,7 @@ void Mrs::speak(QString text)
 
 void Mrs::test()
 {
-	static unsigned char toggle = OFF;
+	static bool toggle = OFF;
 	
 	if (toggle == OFF)
 		toggle = ON;
