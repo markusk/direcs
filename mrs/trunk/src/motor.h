@@ -27,7 +27,7 @@ class Motor : public QObject
 		@param power can be ON or OFF.
 		@param direction can be CLOCKWISE or COUNTERCLOCKWISE.
 		*/
-		void motorControl(unsigned char motor, unsigned char power, unsigned char direction);
+		void motorControl(unsigned char motor, bool power, unsigned char direction);
 		
 		/**
 		@return The speed of a motor.
@@ -76,7 +76,7 @@ class Motor : public QObject
 		@param state can be ON or OFF.
 		*/
 		// TODO: put it somewhere else...
-		void flashlight(unsigned char state);
+		void flashlight(bool state);
 
 
 	public slots:
@@ -103,8 +103,8 @@ class Motor : public QObject
 		double drivenDistance1;
 		double drivenDistance2;
 		
-		static const unsigned char ON  = 1;  // For motor "ON"
-		static const unsigned char OFF = 0;  // For motor "OFF"
+		static const bool ON  = true;   /** For motor "ON" */
+		static const bool OFF = false;  /** For motor "OFF" */
 
 		static const unsigned char HIGH = 1;  // For set bit to 1
 		static const unsigned char LOW  = 0;  // For set bit to 0

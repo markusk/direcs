@@ -69,7 +69,7 @@ double Motor::getDrivenDistance2()
 }
 
 
-void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char direction)
+void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
 {
 	//---------------------------------------------------------------------------
 	//
@@ -443,7 +443,7 @@ int Motor::getMotorSpeed(int motor)
 }
 
 
-void Motor::flashlight(unsigned char state)
+void Motor::flashlight(bool state)
 {
 	if (state == ON)
 	{
