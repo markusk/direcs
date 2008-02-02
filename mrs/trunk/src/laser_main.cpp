@@ -782,6 +782,7 @@ int getLaserNumReadings(int laser)
 			return laser4.numvalues;
 			break;
 	}
+	return 0;
 }
 
 
