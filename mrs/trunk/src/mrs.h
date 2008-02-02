@@ -160,6 +160,7 @@ class Mrs : public QObject
 		SensorThread *sensorThread;
 		PlotThread *plotThread;
 		Motor *motors;
+		Servo *servos;
 		ObstacleCheckThread *obstCheckThread;
 		Inifile *inifile1;
 		NetworkThread *netThread;
@@ -230,6 +231,10 @@ class Mrs : public QObject
 		//! The motor sensors
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
+		
+		//! The servos
+		static const unsigned char SERVO1 = 10;
+		static const unsigned char SERVO2 = 20;
 		
 		// TODO: put axis numbers to ini-file
 		//! Joystick axis numbers

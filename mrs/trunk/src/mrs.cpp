@@ -44,6 +44,7 @@ Mrs::Mrs()
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1);
 	motors = new Motor(interface1);
+	servos = new Servo(interface1);
 	sensorThread = new SensorThread(interface1);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
@@ -873,6 +874,7 @@ Mrs::~Mrs()
 	delete plotThread;
 	delete inifile1;
 	delete obstCheckThread;
+	delete servos;
 	delete motors;
 	delete sensorThread;
 	delete circuit1;
@@ -2013,17 +2015,32 @@ void Mrs::test()
 {
 	static bool toggle = OFF;
 	
+	int pos1 = 10; // 10 is toll
+	int pos2 = 8;
+	
 	if (toggle == OFF)
+	{
 		toggle = ON;
+		// servo1 ist der große
+		servos->setServoPosition(SERVO1, pos1);
+		// servo2 ist der kleine
+		servos->setServoPosition(SERVO2, pos1);
+		gui1->appendLog("pos1");
+	}
 	else
+	{
 		toggle = OFF;
+		servos->setServoPosition(SERVO1, pos2);
+		servos->setServoPosition(SERVO2, pos2);
+		gui1->appendLog("pos2");
+	}
 	
 	//motors->flashlight(toggle);
 	
 	#ifdef _TTY_POSIX_
 	// Say some text;
 	QDateTime now = QDateTime::currentDateTime();
-	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+//	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 	#endif
 
 }
