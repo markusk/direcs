@@ -24,7 +24,8 @@ HEADERS += camThread.h \
  laser_main.h \
  param_interface.h \
  joystick.h \
- laser_messages.h
+ laser_messages.h \
+ servo.h
 SOURCES += camThread.cpp \
            circuit.cpp \
            gui.cpp \
@@ -41,7 +42,8 @@ SOURCES += camThread.cpp \
  sick.cpp \
  carmenserial.cpp \
  laser_main.cpp \
- joystick.cpp
+ joystick.cpp \
+ servo.cpp
 RESOURCES = ../mrs.qrc
 DEFINES = _TTY_POSIX_
 CONFIG += debug \
