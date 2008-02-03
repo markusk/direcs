@@ -171,6 +171,7 @@ class Mrs : public QObject
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; //! Stores the robots simulation state
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
+		bool servoTestMode;
 		int mot1Speed;
 		int mot2Speed;
 		int minimumSpeed;

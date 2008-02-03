@@ -56,6 +56,7 @@ Mrs::Mrs()
 	gui1 = new Gui(plotThread, laserThread);
 
 	
+	
 	//------------------------------------------------------------------
 	// nomen est omen
 	//------------------------------------------------------------------
@@ -66,6 +67,7 @@ Mrs::Mrs()
 	mot2Speed = 0;
 	robotSimulationMode = false;
 	robotRemoteMode = false;
+	servoTestMode = false;
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -214,6 +216,14 @@ Mrs::Mrs()
 	{
 		gui1->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 	}
+
+	
+	//-------------------------------------------------------
+	// set the servo positions
+	//-------------------------------------------------------
+	// TODO: read values from ini-file and set to initial values
+	servos->setServoPosition(SERVO1, 10);
+	servos->setServoPosition(SERVO2, 10);
 
 	
 	//-------------------------------------------------------
@@ -1587,6 +1597,9 @@ void Mrs::readSettings()
 
 void Mrs::enableRemoteControlListening(bool status)
 {
+	// store the state gobal to Mrs
+	robotRemoteMode = status;
+
 	if (status == true)
 	{
 		//-----------------------------------------------------------
@@ -1632,7 +1645,7 @@ void Mrs::enableRemoteControlListening(bool status)
 		// NOT stopping joystick thread!
 		// It' still nice to see it in the GUI, when being moved, :-)
 		// So just dosconnect the Signal from the receiver here.
-		// TODO: connect again, when needed!
+		// TODO: connect again, when needed! realy? Solved via global "robotRemoteMode" variable?
 		// FIXME: Object::disconnect: No such signal Mrs::joystickMoved(int,int)
 		//this->disconnect(SIGNAL(joystickMoved(int, int)));
 		//this->disconnect(SIGNAL(joystickButtonPressed(int, bool)));
@@ -1759,6 +1772,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
 			
+			if (servoTestMode == true)
+			{
+				servos->setServoPosition(SERVO1, speed);
+			}
+			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
 			{
@@ -1830,7 +1848,12 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
-				
+			
+			if (servoTestMode == true)
+			{
+				servos->setServoPosition(SERVO2, speed);
+			}
+			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
 			{
@@ -1927,12 +1950,14 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle10 == false)
 				{
 					toggle10=true;
-					gui1->appendLog("<font color=\"#0000FF\">Servo mode ON</front>");
+					servoTestMode = true;
+					gui1->appendLog("<font color=\"#0000FF\">Servo test mode ON</front>");
 				}
 				else
 				{
 					toggle10=false;
-					gui1->appendLog("<font color=\"#0000FF\">Servo mode OFF</front>");
+					servoTestMode = false;
+					gui1->appendLog("<font color=\"#0000FF\">Servo test mode OFF</front>");
 				}
 			}
 			break;
