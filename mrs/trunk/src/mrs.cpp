@@ -1755,6 +1755,8 @@ void Mrs::executeRemoteCommand(QString command)
 void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 {
 	int speed = 0;
+	static unsigned char servo1Pos = 10;
+	static unsigned char servo2Pos = 10;
 	
 	
 	//
@@ -1772,10 +1774,12 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
 			
+			/* TODO: change this to camera motors
 			if (servoTestMode == true)
 			{
 				servos->setServoPosition(SERVO1, speed);
 			}
+			*/
 			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
@@ -1849,10 +1853,12 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
 			
+			/* TODO: change this to camera motors
 			if (servoTestMode == true)
 			{
 				servos->setServoPosition(SERVO2, speed);
 			}
+			*/
 			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
@@ -1908,6 +1914,84 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 			return;
 		}
+	}
+	
+	
+	//
+	// Y axis "buttons"
+	//
+	if (axisNumber == JOYSTICKAXIS2Y)
+	{
+		//------------------
+		// up
+		//------------------
+		if (axisValue > 0)
+		{
+			servo1Pos++;
+			
+			// TODO: put this to ini file
+			if (servo1Pos > 13)
+				servo1Pos = 13;
+		}
+		
+		//------------------
+		// down
+		//------------------
+		if (axisValue < 0)
+		{
+			servo1Pos--;
+			
+			// TODO: put this to ini file
+			if (servo1Pos < 8)
+				servo1Pos = 8;
+		}
+		
+		// only move, when button is pressed - not, when released (=0)
+		if ((servoTestMode == true) && (axisValue != 0))
+		{
+			servos->setServoPosition(SERVO1, servo1Pos);
+			gui1->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
+		}
+		return;
+	}
+	
+	
+	//
+	// X axis "buttons"
+	//
+	if (axisNumber == JOYSTICKAXIS2X)
+	{
+		//------------------
+		// right
+		//------------------
+		if (axisValue > 0)
+		{
+			servo2Pos++;
+			
+			// TODO: put this to ini file
+			if (servo2Pos > 16)
+				servo2Pos = 16;
+		}
+		
+		//------------------
+		// left
+		//------------------
+		if (axisValue < 0)
+		{
+			servo2Pos--;
+			
+			// TODO: put this to ini file
+			if (servo2Pos < 5)
+				servo2Pos = 5;
+		}
+		
+		// only move, when button is pressed - not, when released (=0)
+		if ((servoTestMode == true) && (axisValue != 0))
+		{
+			servos->setServoPosition(SERVO2, servo2Pos);
+			gui1->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
+		}
+		return;
 	}
 }
 

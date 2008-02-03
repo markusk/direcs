@@ -240,8 +240,10 @@ class Mrs : public QObject
 		
 		// TODO: put axis numbers to ini-file
 		//! Joystick axis numbers
-		static const int JOYSTICKAXISX = 3;
 		static const int JOYSTICKAXISY = 2;
+		static const int JOYSTICKAXISX = 3;
+		static const int JOYSTICKAXIS2X = 4;
+		static const int JOYSTICKAXIS2Y = 5;
 		//! Joystick conversion divisor. Converts the joystick axis value to the robot speed.
 		static const int JOYSTICKDIVISOR = 128;
 		
