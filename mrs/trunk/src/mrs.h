@@ -170,14 +170,15 @@ class Mrs : public QObject
 		QString commaSeparator;
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; //! Stores the robots simulation state
+		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
 		int mot1Speed;
 		int mot2Speed;
 		int minimumSpeed;
 		int maximumSpeed;
-		QList <int> obstacleAlarmFrontLeftList;			/** A list of obstacle alarms that occured left the last n times. */
-		QList <int> obstacleAlarmFrontRightList;		/** A list of obstacle alarms that occured right the last n times. */
-		QList <QDateTime> obstacleAlarmLeftTimestampList;	/** A list of the timestamps of the obstacle alarms that left occured. */
-		QList <QDateTime> obstacleAlarmRightTimestampList;	/** A list of the timestamps of the obstacle alarms that right occured. */
+		QList <int> obstacleAlarmFrontLeftList;			//! A list of obstacle alarms that occured left the last n times.
+		QList <int> obstacleAlarmFrontRightList;		//! A list of obstacle alarms that occured right the last n times.
+		QList <QDateTime> obstacleAlarmLeftTimestampList;	//! A list of the timestamps of the obstacle alarms that left occured.
+		QList <QDateTime> obstacleAlarmRightTimestampList;	//! A list of the timestamps of the obstacle alarms that right occured.
 
 
 

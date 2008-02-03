@@ -65,6 +65,7 @@ Mrs::Mrs()
 	mot1Speed = 0;
 	mot2Speed = 0;
 	robotSimulationMode = false;
+	robotRemoteMode = false;
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -1641,98 +1642,99 @@ void Mrs::enableRemoteControlListening(bool status)
 
 void Mrs::executeRemoteCommand(QString command)
 {
-	//---------------------------------------------
-	// this method executes the received commands
-	//--------------------------------------------
-	if (command == "start")
+	// only react, when remote mode is activated in the GUI!
+	if (robotRemoteMode==true)
 	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		drive(START);
-		return;
-	}
+		if (command == "start")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			drive(START);
+			return;
+		}
+		
+		
+		if (command == "forward")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			drive(FORWARD);
+			return;
+		}
+		
+		
+		if (command == "backward")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			drive(BACKWARD);
+			return;
+		}
 	
 	
-	if (command == "forward")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		drive(FORWARD);
-		return;
-	}
+		if (command == "stop")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			drive(STOP);
+			return;
+		}
 	
 	
-	if (command == "backward")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		drive(BACKWARD);
-		return;
-	}
-
-
-	if (command == "stop")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		drive(STOP);
-		return;
-	}
-
-
-	if (command == "left")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		drive(LEFT);
-		return;
-	}
-
-
-	if (command == "right")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		drive(RIGHT);
-		return;
-	}
-
-
-	if (command == "increasespeedmotor1")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		
-		int newSpeed = motors->getMotorSpeed(1) + 1;
-		motors->setMotorSpeed(1, newSpeed);
-		gui1->setSliderMotorSpeed(1, newSpeed);
-		return;
-	}
-
-
-	if (command == "increasespeedmotor2")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		
-		int newSpeed = motors->getMotorSpeed(2) + 1;
-		motors->setMotorSpeed(2, newSpeed);
-		gui1->setSliderMotorSpeed(2, newSpeed);
-		return;
-	}
-
-
-	if (command == "reducespeedmotor1")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		
-		int newSpeed = motors->getMotorSpeed(1) - 1;
-		motors->setMotorSpeed(1, newSpeed);
-		gui1->setSliderMotorSpeed(1, newSpeed);
-		return;
-	}
-
-
-	if (command == "reducespeedmotor2")
-	{
-		gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
-		
-		int newSpeed = motors->getMotorSpeed(2) - 1;
-		motors->setMotorSpeed(2, newSpeed);
-		gui1->setSliderMotorSpeed(2, newSpeed);
-		return;
+		if (command == "left")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			drive(LEFT);
+			return;
+		}
+	
+	
+		if (command == "right")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			drive(RIGHT);
+			return;
+		}
+	
+	
+		if (command == "increasespeedmotor1")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			
+			int newSpeed = motors->getMotorSpeed(1) + 1;
+			motors->setMotorSpeed(1, newSpeed);
+			gui1->setSliderMotorSpeed(1, newSpeed);
+			return;
+		}
+	
+	
+		if (command == "increasespeedmotor2")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			
+			int newSpeed = motors->getMotorSpeed(2) + 1;
+			motors->setMotorSpeed(2, newSpeed);
+			gui1->setSliderMotorSpeed(2, newSpeed);
+			return;
+		}
+	
+	
+		if (command == "reducespeedmotor1")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			
+			int newSpeed = motors->getMotorSpeed(1) - 1;
+			motors->setMotorSpeed(1, newSpeed);
+			gui1->setSliderMotorSpeed(1, newSpeed);
+			return;
+		}
+	
+	
+		if (command == "reducespeedmotor2")
+		{
+			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			
+			int newSpeed = motors->getMotorSpeed(2) - 1;
+			motors->setMotorSpeed(2, newSpeed);
+			gui1->setSliderMotorSpeed(2, newSpeed);
+			return;
+		}
 	}
 }
 
@@ -1754,19 +1756,22 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (axisValue / JOYSTICKDIVISOR);
 			
-			motors->setMotorSpeed(1, speed);
-			motors->setMotorSpeed(2, speed);
-			
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
 			
-			if (robotDrives == false)
+			// only drive, when remote mode is activated in the GUI!
+			if (robotRemoteMode==true)
 			{
-				drive(START);
+				motors->setMotorSpeed(1, speed);
+				motors->setMotorSpeed(2, speed);
+			
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+				
+				drive(BACKWARD);
 			}
-			
-			drive(BACKWARD);
-			
 			return;
 		}
 		
@@ -1777,19 +1782,22 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (-axisValue / JOYSTICKDIVISOR);
 			
-			motors->setMotorSpeed(1, speed);
-			motors->setMotorSpeed(2, speed);
-			
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
 			
-			if (robotDrives == false)
+			// only drive, when remote mode is activated in the GUI!
+			if (robotRemoteMode==true)
 			{
-				drive(START);
-			}
+				motors->setMotorSpeed(1, speed);
+				motors->setMotorSpeed(2, speed);
 			
-			drive(FORWARD);
-			
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+				
+				drive(FORWARD);
+			}	
 			return;
 		}
 		
@@ -1798,8 +1806,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue == 0)
 		{
-			// TODO: WAIT or STOP?
-			drive(WAIT);
+			// only drive, when remote mode is activated in the GUI!
+			if (robotRemoteMode==true)
+			{
+				drive(WAIT);
+			}
 			return;
 		}
 	}
@@ -1817,19 +1828,22 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (axisValue / JOYSTICKDIVISOR);
 			
-			motors->setMotorSpeed(1, speed);
-			motors->setMotorSpeed(2, speed);
-			
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
-			
-			if (robotDrives == false)
+				
+			// only drive, when remote mode is activated in the GUI!
+			if (robotRemoteMode==true)
 			{
-				drive(START);
+				motors->setMotorSpeed(1, speed);
+				motors->setMotorSpeed(2, speed);
+			
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+			
+				drive(RIGHT);
 			}
-			
-			drive(RIGHT);
-			
 			return;
 		}
 		
@@ -1840,19 +1854,22 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (-axisValue / JOYSTICKDIVISOR);
 			
-			motors->setMotorSpeed(1, speed);
-			motors->setMotorSpeed(2, speed);
-			
 			gui1->setSliderMotorSpeed(1, speed);
 			gui1->setSliderMotorSpeed(2, speed);
 			
-			if (robotDrives == false)
+			// only drive, when remote mode is activated in the GUI!
+			if (robotRemoteMode==true)
 			{
-				drive(START);
+				motors->setMotorSpeed(1, speed);
+				motors->setMotorSpeed(2, speed);
+				
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+				
+				drive(LEFT);
 			}
-			
-			drive(LEFT);
-			
 			return;
 		}
 		
@@ -1861,8 +1878,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue == 0)
 		{
-			// TODO: WAIT or STOP?
-			drive(WAIT);
+			// only drive, when remote mode is activated in the GUI!
+			if (robotRemoteMode==true)
+			{
+				drive(WAIT);
+			}
 			return;
 		}
 	}
@@ -1899,21 +1919,27 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 		case 5:
 			break;
 		case 10:
+			//
+			// red button, right side
+			//
 			if (buttonState==true)
 			{
 				if (toggle10 == false)
 				{
 					toggle10=true;
-					gui1->appendLog("<font color=\"#0000FF\">Button 10 ON</front>");
+					gui1->appendLog("<font color=\"#0000FF\">Servo mode ON</front>");
 				}
 				else
 				{
 					toggle10=false;
-					gui1->appendLog("<font color=\"#0000FF\">Button 10 OFF</front>");
+					gui1->appendLog("<font color=\"#0000FF\">Servo mode OFF</front>");
 				}
 			}
 			break;
 		case 11:
+			//
+			// button top, middle
+			//
 			if (buttonState==true)
 			{
 				if (toggle11 == false)
