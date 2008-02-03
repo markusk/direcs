@@ -3,6 +3,9 @@
 # Unterordner relativ zum Projektordner: ./src
 # Das Target ist eine Anwendung:  ../bin/mrs
 
+MOC_DIR = ../tmp
+OBJECTS_DIR = ../tmp
+
 FORMS += gui.ui 
 HEADERS += camThread.h \
            circuit.h \
