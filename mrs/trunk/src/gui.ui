@@ -2337,7 +2337,7 @@
     </property>
     <property name="geometry" >
      <rect>
-      <x>20</x>
+      <x>120</x>
       <y>30</y>
       <width>16</width>
       <height>16</height>
@@ -2473,6 +2473,102 @@
     <property name="geometry" >
      <rect>
       <x>150</x>
+      <y>40</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy4Left" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy5Down" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy5Up" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string/>
+    </property>
+    <property name="autoExclusive" >
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioBtnJoy4Right" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>40</x>
       <y>40</y>
       <width>16</width>
       <height>16</height>
