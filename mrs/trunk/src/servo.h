@@ -28,6 +28,7 @@ class Servo : public QObject
 		static const unsigned char SERVO1 = 10; // Servo 1
 		static const unsigned char SERVO2 = 20; // Servo 2
 
+		//! the command for the microcontroller
 		static const unsigned char SET_SERVO1 = 45;
 		static const unsigned char SET_SERVO2 = 46;
 };
