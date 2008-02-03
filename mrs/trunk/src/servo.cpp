@@ -49,6 +49,8 @@ void Servo::setServoPosition(unsigned char servo, unsigned char position)
 				return;
 			}
 			break;
+		default:
+			qDebug("ERROR: servo number not supportet (setServoPosition(%d) )", servo);
 			break;
 	}
 }
