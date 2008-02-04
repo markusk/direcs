@@ -472,6 +472,13 @@ class Gui : public QMainWindow
 		
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
+
+		// TODO: put axis numbers to ini-file
+		//! Joystick axis numbers
+		static const int JOYSTICKAXISY = 2;
+		static const int JOYSTICKAXISX = 3;
+		static const int JOYSTICKAXIS2X = 4;
+		static const int JOYSTICKAXIS2Y = 5;
 	
 		/** factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels */
 		static const int FITTOFRAMEFACTOR=45;
