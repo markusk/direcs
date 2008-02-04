@@ -222,9 +222,12 @@ Mrs::Mrs()
 	// set the servo positions
 	//-------------------------------------------------------
 	// TODO: read values from ini-file and set to initial values
-	servos->setServoPosition(SERVO1, 10);
-	servos->setServoPosition(SERVO2, 10);
-
+	if (circuit1->isConnected() == true)
+	{
+		servos->setServoPosition(SERVO1, 10);
+		servos->setServoPosition(SERVO2, 10);
+	}
+	
 	
 	//-------------------------------------------------------
 	// set the read motor speed
@@ -1949,7 +1952,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		// only move, when button is pressed - not, when released (=0)
 		if ((servoTestMode == true) && (axisValue != 0))
 		{
-			servos->setServoPosition(SERVO1, servo1Pos);
+			if (circuit1->isConnected() == true)
+			{
+				servos->setServoPosition(SERVO1, servo1Pos);
+			}
 			gui1->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
 		}
 		return;
@@ -1988,7 +1994,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		// only move, when button is pressed - not, when released (=0)
 		if ((servoTestMode == true) && (axisValue != 0))
 		{
-			servos->setServoPosition(SERVO2, servo2Pos);
+			if (circuit1->isConnected() == true)
+			{
+				servos->setServoPosition(SERVO2, servo2Pos);
+			}
 			gui1->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
 		}
 		return;
