@@ -1524,11 +1524,57 @@ void Gui::initializePlots()
 void Gui::showJoystickAxes(int axisNumber, int axisValue)
 {
 	// TODO: put axis numbers to ini-file
-	if (axisNumber == 2)
-		ui.sliderJoystickY->setValue(axisValue);
-	
-	if (axisNumber == 3)
-		ui.sliderJoystickX->setValue(axisValue);
+	switch (axisNumber)
+	{
+		case JOYSTICKAXISX:
+			// X axis
+			ui.sliderJoystickX->setValue(axisValue);
+			break;
+		case JOYSTICKAXISY:
+			// Y axis
+			ui.sliderJoystickY->setValue(axisValue);
+			break;
+		case JOYSTICKAXIS2Y:
+			// Y axis "buttons"
+			// up
+			if (axisValue < 0)
+			{
+				ui.radioBtnJoy5Up->setChecked(true);
+			}
+			
+			// down
+			if (axisValue > 0)
+			{
+				ui.radioBtnJoy5Down->setChecked(true);
+			}
+
+			if (axisValue == 0)
+			{
+				ui.radioBtnJoy5Up->setChecked(false);
+				ui.radioBtnJoy5Down->setChecked(false);
+			}
+			break;
+		case JOYSTICKAXIS2X:
+			// X axis "buttons"
+			// left
+			if (axisValue < 0)
+			{
+				ui.radioBtnJoy4Left->setChecked(true);
+			}
+			
+			// right
+			if (axisValue > 0)
+			{
+				ui.radioBtnJoy4Right->setChecked(true);
+			}
+
+			if (axisValue == 0)
+			{
+				ui.radioBtnJoy4Left->setChecked(false);
+				ui.radioBtnJoy4Right->setChecked(false);
+			}
+			break;
+	}
 }
 
 
