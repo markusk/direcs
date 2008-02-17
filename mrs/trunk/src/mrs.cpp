@@ -68,6 +68,7 @@ Mrs::Mrs()
 	robotSimulationMode = false;
 	robotRemoteMode = false;
 	servoTestMode = false;
+	stepperTestMode = false;
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -1760,6 +1761,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 	int speed = 0;
 	static unsigned char servo1Pos = 10;
 	static unsigned char servo2Pos = 10;
+	static int stepper1Pos = 0; // TODO: fin a init position!
+	static int stepper2Pos = 0; // TODO: fin a init position!
 	
 	
 	//
@@ -1925,39 +1928,82 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	if (axisNumber == JOYSTICKAXIS2Y)
 	{
-		//------------------
-		// up
-		//------------------
-		if (axisValue > 0)
+		if (servoTestMode==true)
 		{
-			servo1Pos++;
-			
-			// TODO: put this to ini file
-			if (servo1Pos > 13)
-				servo1Pos = 13;
-		}
-		
-		//------------------
-		// down
-		//------------------
-		if (axisValue < 0)
-		{
-			servo1Pos--;
-			
-			// TODO: put this to ini file
-			if (servo1Pos < 8)
-				servo1Pos = 8;
-		}
-		
-		// only move, when button is pressed - not, when released (=0)
-		if ((servoTestMode == true) && (axisValue != 0))
-		{
-			if (circuit1->isConnected() == true)
+			//------------------
+			// servo up
+			//------------------
+			if (axisValue > 0)
 			{
-				servos->setServoPosition(SERVO1, servo1Pos);
+				servo1Pos++;
+				
+				// TODO: put this to ini file
+				if (servo1Pos > 13)
+					servo1Pos = 13;
 			}
-			gui1->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
+			
+			//------------------
+			// servo down
+			//------------------
+			if (axisValue < 0)
+			{
+				servo1Pos--;
+				
+				// TODO: put this to ini file
+				if (servo1Pos < 8)
+					servo1Pos = 8;
+			}
+			
+			// only move, when button is pressed - not, when released (=0)
+			if (axisValue != 0)
+			{
+				if (circuit1->isConnected() == true)
+				{
+					servos->setServoPosition(SERVO1, servo1Pos);
+				}
+				gui1->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
+			}
+			return;
 		}
+		
+		if (stepperTestMode==true)
+		{
+			//------------------
+			// stepper up
+			//------------------
+			if (axisValue > 0)
+			{
+				stepper2Pos++;
+				
+				// TODO: put this to ini file
+				if (stepper2Pos > 100)
+					stepper2Pos = 100; // TODO: find end value!
+			}
+			
+			//------------------
+			// stepper down
+			//------------------
+			if (axisValue < 0)
+			{
+				stepper2Pos--;
+				
+				// TODO: put this to ini file
+				if (stepper2Pos < 0)
+					stepper2Pos = 0; // TODO: find end value!
+			}
+			
+			// only move, when button is pressed - not, when released (=0)
+			if (axisValue != 0)
+			{
+				if (circuit1->isConnected() == true)
+				{
+					//motors->setServoPosition(SERVO1, servo1Pos); < < < < < // TODO: !!!! STEPPER !!!!
+				}
+				gui1->appendLog(QString("Stepper 2 set to %1.").arg(stepper2Pos));
+			}
+			return;
+		}
+
 		return;
 	}
 	
@@ -1967,39 +2013,83 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	if (axisNumber == JOYSTICKAXIS2X)
 	{
-		//------------------
-		// right
-		//------------------
-		if (axisValue > 0)
+		if (servoTestMode==true)
 		{
-			servo2Pos++;
-			
-			// TODO: put this to ini file
-			if (servo2Pos > 16)
-				servo2Pos = 16;
-		}
-		
-		//------------------
-		// left
-		//------------------
-		if (axisValue < 0)
-		{
-			servo2Pos--;
-			
-			// TODO: put this to ini file
-			if (servo2Pos < 5)
-				servo2Pos = 5;
-		}
-		
-		// only move, when button is pressed - not, when released (=0)
-		if ((servoTestMode == true) && (axisValue != 0))
-		{
-			if (circuit1->isConnected() == true)
+			//------------------
+			// servo right
+			//------------------
+			if (axisValue > 0)
 			{
-				servos->setServoPosition(SERVO2, servo2Pos);
+				servo2Pos++;
+				
+				// TODO: put this to ini file
+				if (servo2Pos > 16)
+					servo2Pos = 16;
 			}
-			gui1->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
+			
+			//------------------
+			// servo left
+			//------------------
+			if (axisValue < 0)
+			{
+				servo2Pos--;
+				
+				// TODO: put this to ini file
+				if (servo2Pos < 5)
+					servo2Pos = 5;
+			}
+			
+			// only move, when button is pressed - not, when released (=0)
+			if (axisValue != 0)
+			{
+				if (circuit1->isConnected() == true)
+				{
+					servos->setServoPosition(SERVO2, servo2Pos);
+				}
+				gui1->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
+			}
+			return;
 		}
+
+		if (stepperTestMode==true)
+		{
+			//------------------
+			// stepper right
+			//------------------
+			if (axisValue > 0)
+			{
+				stepper1Pos++;
+				
+				// TODO: put this to ini file
+				if (stepper1Pos > 100)
+					stepper1Pos = 100; // TODO: find end value!
+			}
+			
+			//------------------
+			// stepper left
+			//------------------
+			if (axisValue < 0)
+			{
+				stepper1Pos--;
+				
+				// TODO: put this to ini file
+				if (stepper1Pos < 0)
+					stepper1Pos = 0; // TODO: find end value!
+			}
+			
+			// only move, when button is pressed - not, when released (=0)
+			if (axisValue != 0)
+			{
+				if (circuit1->isConnected() == true)
+				{
+					motors->motorControl(STEPPER1, ON, CLOCKWISE);
+					motors->motorControl(STEPPER1, CLOCK, SAME);
+				}
+				gui1->appendLog(QString("Stepper 1 set to %1.").arg(stepper1Pos));
+			}
+			return;
+		}
+		
 		return;
 	}
 }
@@ -2022,17 +2112,17 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 	// TODO: put button numbers to ini-file
 	switch (buttonNumber)
 	{
-		case 0:
+		case 0: // 1 on js
 			break;
-		case 1:
+		case 1: // 2 on js
 			break;
-		case 2:
+		case 2: // 3 on js
 			break;
-		case 3:
+		case 3: // 4 on js
 			break;
-		case 4:
+		case 4: // 5 on js
 			break;
-		case 5:
+		case 5: // 6 on js
 			break;
 		case 10:
 			//
@@ -2063,12 +2153,14 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle11 == false)
 				{
 					toggle11=true;
-					gui1->appendLog("<font color=\"#0000FF\">Button 11 ON</front>");
+					stepperTestMode = true;
+					gui1->appendLog("<font color=\"#0000FF\">Stepper test mode ON</front>");
 				}
 				else
 				{
 					toggle11=false;
-					gui1->appendLog("<font color=\"#0000FF\">Button 11 OFF</front>");
+					stepperTestMode = false;
+					gui1->appendLog("<font color=\"#0000FF\">Stepper test mode OFF</front>");
 				}
 			}
 			break;
