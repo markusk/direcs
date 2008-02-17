@@ -44,6 +44,9 @@ int main(void)
 	// Bit3 = ultrasonic echo (input)
 	//
 	DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC4) | (1 << DDC5) | (1 << DDC6) | (1 << DDC7);
+
+	// switch port A to output (stepper motor)
+	DDRA = 0xff;
 	
 	// switch port L (all PINS) to output
 	DDRL = 0xff;
@@ -65,6 +68,13 @@ int main(void)
 	// turn OFF "power saving mode" for ADC (analof digital converters)!
 	// (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
+
+	// turn all stepper motor bits off
+	PORTA &= ~(1<<PIN0);
+	PORTA &= ~(1<<PIN1);
+	PORTA &= ~(1<<PIN2);
+	PORTA &= ~(1<<PIN3);
+	PORTA &= ~(1<<PIN4);
 	
 	// no interrupts please!
 	cli();
@@ -107,8 +117,8 @@ int main(void)
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 12 * 64 µs = 768 µs ?!?
-	setServoPosition(1, 16); // <- correct position now set in the mrs programm!
-	setServoPosition(2, 5); // <- correct position now set in the mrs programm!
+	setServoPosition(1, 10); // <- correct position now set in the mrs programm!
+	setServoPosition(2, 10); // <- correct position now set in the mrs programm!
 	
 	// start the servo PWM timer
 	startPWMServo();
@@ -157,6 +167,12 @@ int main(void)
 				PORTC |= (1<<PIN0);
 				// flashlight off
 				PORTC &= ~(1<<PIN1);
+				// turn all stepper motor bits off
+				PORTA &= ~(1<<PIN0);
+				PORTA &= ~(1<<PIN1);
+				PORTA &= ~(1<<PIN2);
+				PORTA &= ~(1<<PIN3);
+				PORTA &= ~(1<<PIN4);
 				
 				// "answer" with "@"
 				// this answer is used to see if the robot is "on"
@@ -295,8 +311,6 @@ int main(void)
 
 			//-------------------------------
 			case MOTOR1_OFF:
-				// delete Motor1 PWM bit  <	<	<	<
-				//PORTL &= ~(1<<PIN4);
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
 				// delete Motor1 B bit
@@ -304,8 +318,6 @@ int main(void)
 				break;
 
 			case MOTOR1_CLOCKWISE:
-				// set Motor1 PWM bit	<	<	<	<
-				//PORTL |= (1<<PIN4);
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
 				// set Motor1 B bit
@@ -313,8 +325,6 @@ int main(void)
 				break;
 
 			case MOTOR1_COUNTERCLOCKWISE:
-				// set Motor1 PWM bit	<	<	<	<
-				//PORTL |= (1<<PIN4);
 				// set Motor1 A bit
 				PORTL |= (1<<PIN0);
 				// delete Motor1 B bit
@@ -329,8 +339,6 @@ int main(void)
 
 			//-------------------------------
 			case MOTOR2_OFF:
-				// delete Motor2 PWM bit  <	<	<	<
-				//PORTL &= ~(1<<PIN5);
 				// delete Motor2 A bit
 				PORTL &= ~(1<<PIN2);
 				// delete Motor2 B bit
@@ -338,8 +346,6 @@ int main(void)
 				break;
 
 			case MOTOR2_CLOCKWISE:
-				// set Motor2 PWM bit	<	<	<	<
-				//PORTL |= (1<<PIN5);
 				// delete Motor2 A bit
 				PORTL &= ~(1<<PIN2);
 				// set Motor2 B bit
@@ -347,8 +353,6 @@ int main(void)
 				break;
 
 			case MOTOR2_COUNTERCLOCKWISE:
-				// set Motor2 PWM bit 	<	<	<	<
-				//PORTL |= (1<<PIN5);
 				// set Motor2 A bit
 				PORTL |= (1<<PIN2);
 				// delete Motor2 B bit
@@ -385,6 +389,54 @@ int main(void)
 				PORTC &= ~(1<<PIN1);
 				PORTC |= (1<<PIN0); // < yellow led
 				break;
+
+				//-------------------------------
+				case STEPPER1_OFF:
+					// disable stepper motor 1
+					PORTA &= ~(1<<PIN1);
+					break;
+					
+				case STEPPER2_OFF:
+					// disable stepper motor 2
+					PORTA &= ~(1<<PIN3);
+					break;
+					
+				case STEPPER1_ON:
+					// enable stepper motor 1
+					PORTA |= (1<<PIN1);
+					break;
+					
+				case STEPPER2_ON:
+					// enable stepper motor 2
+					PORTA |= (1<<PIN3);
+					break;
+					
+				case STEPPER1_CLOCKWISE:
+					// set stepper motor 1 to cw 
+					PORTA &= ~(1<<PIN2);
+					break;
+					
+				case STEPPER2_CLOCKWISE:
+					// set stepper motor 2 to cw 
+					PORTA &= ~(1<<PIN4);
+					break;
+					
+				case STEPPER1_COUNTERCLOCKWISE:
+					// set stepper motor 1 to ccw 
+					PORTA |= (1<<PIN2);
+					break;
+					
+				case STEPPER2_COUNTERCLOCKWISE:
+					// set stepper motor 2 to ccw 
+					PORTA |= (1<<PIN4);
+					break;
+					
+				case STEPPER_CLOCK:
+					// set stepper motor clock to high
+					PORTA |= (1<<PIN0);
+					// and then to low 
+					PORTA &= ~(1<<PIN0);
+					break;
 		}
 	} // while (1)
 	
