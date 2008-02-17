@@ -1,10 +1,10 @@
-#include <ultra.h>
+#include "ultra.h"
 
 #ifndef F_CPU
 #define F_CPU 		16000000
 #endif
 
-#include </usr/avr/include/util/delay.h>
+#include <util/delay.h>
 
 
 // Zeit/srf05 Messung, beliebige Pins können gewählt werden

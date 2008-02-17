@@ -8,29 +8,28 @@
 //
 // the "serial" commands for the MC
 //
-#define READ_SENSOR_1		1
-#define READ_SENSOR_2		2
-#define READ_SENSOR_3		3
-#define READ_SENSOR_4		4
-#define READ_SENSOR_5		5
-#define READ_SENSOR_6		6
-#define READ_SENSOR_7		7
-#define READ_SENSOR_8		8
-#define READ_SENSOR_16		16
+#define READ_SENSOR_1			1
+#define READ_SENSOR_2			2
+#define READ_SENSOR_3			3
+#define READ_SENSOR_4			4
+#define READ_SENSOR_5			5
+#define READ_SENSOR_6			6
+#define READ_SENSOR_7			7
+#define READ_SENSOR_8			8
+#define READ_SENSOR_16			16
 
-
-#define	MOTOR1_OFF		20
-#define	MOTOR1_CLOCKWISE	21
+#define	MOTOR1_OFF				20
+#define	MOTOR1_CLOCKWISE		21
 #define	MOTOR1_COUNTERCLOCKWISE	22
-#define	MOTOR2_OFF		23
-#define	MOTOR2_CLOCKWISE	24
+#define	MOTOR2_OFF				23
+#define	MOTOR2_CLOCKWISE		24
 #define	MOTOR2_COUNTERCLOCKWISE	25
 
-#define MOTOR1_SPEED_SET	26
-#define MOTOR2_SPEED_SET	27
+#define MOTOR1_SPEED_SET		26
+#define MOTOR2_SPEED_SET		27
 
-#define READ_MOTOR_SENSOR1	28
-#define READ_MOTOR_SENSOR2	29
+#define READ_MOTOR_SENSOR1		28
+#define READ_MOTOR_SENSOR2		29
 
 #define READ_MOTOR_DISTANCE1	30
 #define READ_MOTOR_DISTANCE2	31
@@ -38,13 +37,23 @@
 #define RESET_MOTOR_DISTANCE1	32
 #define RESET_MOTOR_DISTANCE2	33
 
-#define	FLASHLIGHT_OFF		40
-#define	FLASHLIGHT_ON		41
+#define	FLASHLIGHT_OFF			40
+#define	FLASHLIGHT_ON			41
 
-#define SET_SERVO1		45
-#define SET_SERVO2		46
+#define SET_SERVO1				45
+#define SET_SERVO2				46
 
-#define	INIT			250
+#define	STEPPER_CLOCK				50
+#define	STEPPER1_ON					51
+#define	STEPPER1_OFF				52
+#define	STEPPER1_CLOCKWISE			53
+#define	STEPPER1_COUNTERCLOCKWISE	54
+#define	STEPPER2_ON					55
+#define	STEPPER2_OFF				56
+#define	STEPPER2_CLOCKWISE			57
+#define	STEPPER2_COUNTERCLOCKWISE	58
+
+#define	INIT					250
 
 
 // these numbers represent the Ports of the A/D converter C  !!!
@@ -64,10 +73,9 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <avr/signal.h> // < < < < < < < < < <
 
 #include <stdlib.h> // für utoa und itoa
-#include </usr/avr/include/util/delay.h>
+#include <util/delay.h>
 
 #include "usart.h"
 #include "adconv.h"
