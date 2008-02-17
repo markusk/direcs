@@ -69,7 +69,7 @@ double Motor::getDrivenDistance2()
 }
 
 
-void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
+void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char direction)
 {
 	//---------------------------------------------------------------------------
 	//
@@ -191,6 +191,134 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		
 		return;
 	} // MOTOR2
+	
+	//-------------------------
+	// if stepper motor 1
+	//------------------------
+	if (motor == STEPPER1)
+	{
+		if (power == ON)
+		{
+			// turn on stepper 1
+			if (interface1->sendChar(STEPPER1_ON) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (power == OFF)
+		{
+			// turn off stepper 1
+			if (interface1->sendChar(STEPPER1_OFF) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+
+		if (power == CLOCK)
+		{
+			// make a stepper with every enabled motor
+			if (interface1->sendChar(STEPPER_CLOCK) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == CLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(STEPPER1_CLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == COUNTERCLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(STEPPER1_COUNTERCLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == SAME)
+		{
+			// don't change the direction (motor was only turned on or off)!
+		}
+
+		return;
+		
+	} // STEPPER1
+	
+	//-------------------------
+	// if stepper motor 2
+	//------------------------
+	if (motor == STEPPER2)
+	{
+		if (power == ON)
+		{
+			// turn on stepper 2
+			if (interface1->sendChar(STEPPER2_ON) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (power == OFF)
+		{
+			// turn off stepper 2
+			if (interface1->sendChar(STEPPER2_OFF) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+
+		if (power == CLOCK)
+		{
+			// make a stepper with every enabled motor
+			if (interface1->sendChar(STEPPER_CLOCK) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == CLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(STEPPER2_CLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == COUNTERCLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(STEPPER2_COUNTERCLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == SAME)
+		{
+			// don't change the direction (motor was only turned on or off)!
+		}
+
+		return;
+		
+	} // STEPPER1
 }
 
 

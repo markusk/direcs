@@ -22,12 +22,12 @@ class Motor : public QObject
 		~Motor();
 		
 		/**
-		Controls a motor.
+		Controls a motor (normal and stepper!).
 		@param motor is the motor number.
-		@param power can be ON or OFF.
+		@param power can be ON or OFF ort CLOCK (last, for the stepper motors!).
 		@param direction can be CLOCKWISE or COUNTERCLOCKWISE.
 		*/
-		void motorControl(unsigned char motor, bool power, unsigned char direction);
+		void motorControl(unsigned char motor, unsigned char power, unsigned char direction);
 		
 		/**
 		@return The speed of a motor.
@@ -103,8 +103,9 @@ class Motor : public QObject
 		double drivenDistance1;
 		double drivenDistance2;
 		
-		static const bool ON  = true;   /** For motor "ON" */
-		static const bool OFF = false;  /** For motor "OFF" */
+		static const char ON  = true;   /** For motor "ON" */
+		static const char OFF = false;  /** For motor "OFF" */
+		static const char CLOCK = 1;  /** For stepper motor steps (clock) */
 
 		static const unsigned char HIGH = 1;  // For set bit to 1
 		static const unsigned char LOW  = 0;  // For set bit to 0
@@ -123,6 +124,8 @@ class Motor : public QObject
 		static const unsigned char SAME             = 3;  // Motor direction/power "same like before"
 		static const unsigned char MOTOR1           = 10; // Motor 1
 		static const unsigned char MOTOR2           = 20; // Motor 2
+		static const unsigned char STEPPER1         = 30; // Stepper motor 1
+		static const unsigned char STEPPER2         = 40; // Stepper motor 2
 
 		// The bits for controling the USB-Circuit
 		static const unsigned char MOTOR1A = BIT0;
@@ -131,16 +134,26 @@ class Motor : public QObject
 		static const unsigned char MOTOR2B = BIT3;
 		static const unsigned char MOTORCLOCK = BIT4;
 		
-		// the "serial" commands for the MC -> see "mrs-ser.h" in the microcontroller source code!
-		static const unsigned char MOTOR1_OFF 			= 20;
+		// the "serial" commands for the MC -> see "main.h" in the microcontroller source code( mrs avr)!
+		static const unsigned char MOTOR1_OFF 				= 20;
 		static const unsigned char MOTOR1_CLOCKWISE 		= 21;
 		static const unsigned char MOTOR1_COUNTERCLOCKWISE 	= 22;
-		static const unsigned char MOTOR2_OFF 			= 23;
+		static const unsigned char MOTOR2_OFF 				= 23;
 		static const unsigned char MOTOR2_CLOCKWISE 		= 24;
 		static const unsigned char MOTOR2_COUNTERCLOCKWISE 	= 25;
 
-		static const unsigned char MOTOR1_SPEED_SET		= 26;
-		static const unsigned char MOTOR2_SPEED_SET		= 27;
+		static const unsigned char MOTOR1_SPEED_SET			= 26;
+		static const unsigned char MOTOR2_SPEED_SET			= 27;
+
+		static const unsigned char STEPPER_CLOCK				= 50;
+		static const unsigned char STEPPER1_ON					= 51;
+		static const unsigned char STEPPER1_OFF					= 52;
+		static const unsigned char STEPPER1_CLOCKWISE			= 53;
+		static const unsigned char STEPPER1_COUNTERCLOCKWISE	= 54;
+		static const unsigned char STEPPER2_ON					= 55;
+		static const unsigned char STEPPER2_OFF					= 56;
+		static const unsigned char STEPPER2_CLOCKWISE			= 57;
+		static const unsigned char STEPPER2_COUNTERCLOCKWISE	= 58;
 		
 		static const unsigned char FLASHLIGHT_OFF 		= 40;
 		static const unsigned char FLASHLIGHT_ON 		= 41;
