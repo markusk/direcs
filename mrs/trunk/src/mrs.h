@@ -172,6 +172,7 @@ class Mrs : public QObject
 		bool robotSimulationMode; //! Stores the robots simulation state
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
 		bool servoTestMode;
+		bool stepperTestMode;
 		int mot1Speed;
 		int mot2Speed;
 		int minimumSpeed;
@@ -188,6 +189,7 @@ class Mrs : public QObject
 		
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
+		static const char CLOCK = 1;  /** For stepper motor steps (clock) */
 		
 		//! Some driving directions for the robot
 		static const unsigned char FORWARD = 1;
@@ -229,6 +231,8 @@ class Mrs : public QObject
 		static const unsigned char SAME             = 3;  //! Motor direction/power "same like before"
 		static const unsigned char MOTOR1           = 10; //! Motor 1
 		static const unsigned char MOTOR2           = 20; //! Motor 2
+		static const unsigned char STEPPER1         = 30; // Stepper motor 1
+		static const unsigned char STEPPER2         = 40; // Stepper motor 2
 		
 		//! The motor sensors
 		static const short int MOTORSENSOR1 = 0;
