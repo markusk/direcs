@@ -1973,6 +1973,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
+				if (circuit1->isConnected() == true)
+				{
+					motors->motorControl(STEPPER2, ON, CLOCKWISE);
+				}
 				stepper2Pos++;
 				
 				// TODO: put this to ini file
@@ -1985,6 +1989,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
+				if (circuit1->isConnected() == true)
+				{
+					motors->motorControl(STEPPER2, ON, COUNTERCLOCKWISE);
+				}
 				stepper2Pos--;
 				
 				// TODO: put this to ini file
@@ -1997,7 +2005,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					//motors->setServoPosition(SERVO1, servo1Pos); < < < < < // TODO: !!!! STEPPER !!!!
+					gui1->appendLog("Step...");
+					motors->makeSteps(1);
 				}
 				gui1->appendLog(QString("Stepper 2 set to %1.").arg(stepper2Pos));
 			}
@@ -2058,6 +2067,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
+				motors->motorControl(STEPPER1, ON, CLOCKWISE);
 				stepper1Pos++;
 				
 				// TODO: put this to ini file
@@ -2070,6 +2080,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
+				motors->motorControl(STEPPER1, ON, COUNTERCLOCKWISE);
 				stepper1Pos--;
 				
 				// TODO: put this to ini file
@@ -2082,8 +2093,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					motors->motorControl(STEPPER1, ON, CLOCKWISE);
-					motors->motorControl(STEPPER1, CLOCK, SAME);
+					gui1->appendLog("Step...");
+					motors->makeSteps(1);
 				}
 				gui1->appendLog(QString("Stepper 1 set to %1.").arg(stepper1Pos));
 			}
