@@ -189,7 +189,6 @@ class Mrs : public QObject
 		
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
-		static const char CLOCK = 1;  /** For stepper motor steps (clock) */
 		
 		//! Some driving directions for the robot
 		static const unsigned char FORWARD = 1;
