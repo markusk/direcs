@@ -28,6 +28,8 @@ Motor::Motor(InterfaceAvr *i)
 
 Motor::~Motor()
 {
+	parkStepper(STEPPER1);
+	parkStepper(STEPPER2);
 }
 
 
@@ -69,7 +71,7 @@ double Motor::getDrivenDistance2()
 }
 
 
-void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char direction)
+void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
 {
 	//---------------------------------------------------------------------------
 	//
@@ -203,7 +205,7 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER1_ON) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 		
@@ -213,27 +215,17 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER1_OFF) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 
-		if (power == CLOCK)
-		{
-			// make a stepper with every enabled motor
-			if (interface1->sendChar(STEPPER_CLOCK) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
-		
 		if (direction == CLOCKWISE)
 		{
 			// set the direction
 			if (interface1->sendChar(STEPPER1_CLOCKWISE) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 		
@@ -243,7 +235,7 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER1_COUNTERCLOCKWISE) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 		
@@ -267,7 +259,7 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER2_ON) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 		
@@ -277,7 +269,7 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER2_OFF) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 
@@ -287,7 +279,7 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER_CLOCK) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 		
@@ -297,7 +289,7 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER2_CLOCKWISE) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 		
@@ -307,7 +299,7 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 			if (interface1->sendChar(STEPPER2_COUNTERCLOCKWISE) == false)
 			{
 				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				//return;
 			}
 		}
 		
@@ -318,7 +310,29 @@ void Motor::motorControl(unsigned char motor, unsigned char power, unsigned char
 
 		return;
 		
-	} // STEPPER1
+	} // STEPPER2
+}
+
+
+void Motor::makeSteps(int steps)
+{
+	for (int i=steps; i>=steps; i--)
+	{
+		qDebug("step %d", i);
+
+		if (interface1->sendChar(STEPPER_CLOCK) == false)
+		{
+			//qDebug("ERROR sending to serial port (Motor)");
+		}
+	}
+}
+
+
+void Motor::parkStepper(unsigned char motor)
+{
+	// TODO: park stepper correctly!!
+	motorControl(STEPPER1, OFF, SAME);
+	motorControl(STEPPER2, OFF, SAME);
 }
 
 

@@ -24,10 +24,13 @@ class Motor : public QObject
 		/**
 		Controls a motor (normal and stepper!).
 		@param motor is the motor number.
-		@param power can be ON or OFF ort CLOCK (last, for the stepper motors!).
+		@param power can be ON or OFF.
 		@param direction can be CLOCKWISE or COUNTERCLOCKWISE.
+		
+		@sa makeSteps() for generating steps for stepper motors
 		*/
-		void motorControl(unsigned char motor, unsigned char power, unsigned char direction);
+		void motorControl(unsigned char motor, bool power, unsigned char direction);
+		
 		
 		/**
 		@return The speed of a motor.
@@ -77,6 +80,16 @@ class Motor : public QObject
 		*/
 		// TODO: put it somewhere else...
 		void flashlight(bool state);
+		
+		/**
+		Generates steps for stepper motors.
+		@param steps are the number of steps.
+		*/
+		void makeSteps(int steps);
+
+		/**
+		*/
+		void parkStepper(unsigned char motor); // TODO: park steppers uin a safe position!
 
 
 	public slots:
