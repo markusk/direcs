@@ -48,6 +48,6 @@ bool Circuit::isConnected()
 		initCircuit();
 		firstInitDone = true;
 	}
-	
+
 	return robotIsOn;
 }
