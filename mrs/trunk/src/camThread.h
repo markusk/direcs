@@ -40,9 +40,12 @@ class CamThread : public QThread
 		IplImage *frame;
 		IplImage *imgPtr;
 		CvCapture *capture;
+		CvMemStorage *storage;
+		CvHaarClassifierCascade *cascade;
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
-		
+
+
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
 		// static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
