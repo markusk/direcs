@@ -53,7 +53,7 @@ Mrs::Mrs()
 	netThread = new NetworkThread();
 	joystick = new Joystick();
 	
-	gui1 = new Gui(plotThread, laserThread);
+	gui1 = new Gui(laserThread);
 
 	
 	
@@ -282,6 +282,13 @@ Mrs::Mrs()
 		gui1->appendLog("Plot thread NOT started!");
 	}
 
+	//----------------------------------------------------------------------------
+	// connect plotThread signal to "setPlotData"
+	// (Whenever the plot thread has new data, the data are show in the GUI)
+	//----------------------------------------------------------------------------
+	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui1, SLOT( setPlotData1(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui1, SLOT( setPlotData2(double *, double *, int) ));
+
 	
 	//-----------------------------------------------------------
 	// check if joystick is connected
@@ -305,9 +312,8 @@ Mrs::Mrs()
 		gui1->appendLog("Joystick thread NOT started!");
 	}
 
-	
 	//----------------------------------------------------------------------------
-	// let the GUI show messages in the log
+	// let the GUI show messages in the log (e.g. when special buttons pressed)
 	//----------------------------------------------------------------------------
 	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
 	

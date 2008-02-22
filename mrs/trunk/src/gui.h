@@ -36,7 +36,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(PlotThread *p, LaserThread *l, QMainWindow *parent = 0);
+		Gui(LaserThread *l, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*

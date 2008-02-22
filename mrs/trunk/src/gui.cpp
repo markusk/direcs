@@ -1,10 +1,9 @@
 #include "gui.h"
 
 
-Gui::Gui(PlotThread *p, LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointers from the original objects
-	plotThread = p;
 	laserThread = l;
 	cam1 = new CamThread();
 	
@@ -1516,13 +1515,6 @@ void Gui::initializePlots()
 	col.setAlpha(150);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
-	
-	//----------------------------------------------------------------------------
-	// connect plotThread signal to "setPlotData"
-	// (Whenever the plot thread has new data, the data are show in the GUI)
-	//----------------------------------------------------------------------------
-	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), this, SLOT( setPlotData1(double *, double *, int) ));
-	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), this, SLOT( setPlotData2(double *, double *, int) ));
 }
 
 
