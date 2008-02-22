@@ -117,6 +117,7 @@ unsigned int QtGLContext::NextLargerPowerOfTwo(unsigned int n) {
 	return candidate;
 }
 
+/*
 void QtGLContext::mousePressEvent ( QMouseEvent * event ) 
 {
 	// remember the current mouse position
@@ -183,6 +184,7 @@ void QtGLContext::mouseMoveEvent(QMouseEvent* event)
 	m_exit.setY(-event->pos().y()*scale);
 	this->updateGL();
 }
+*/
 
 void QtGLContext::resizeGL(int w, int h)
 {	

@@ -41,12 +41,13 @@ protected:
 	virtual void resizeGL(int w, int h);
 	virtual void initializeGL();
 
+	/*
 	virtual void mousePressEvent(QMouseEvent* event);
 	virtual void mouseMoveEvent(QMouseEvent* event);
 	virtual void mouseReleaseEvent(QMouseEvent* event);
+	*/
 	// internal draw method
 	void drawTexture(float ul, float ur, float ll, float lr);
-
 	// helper method
 	unsigned int NextLargerPowerOfTwo(unsigned int n);
 
