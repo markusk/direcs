@@ -15,7 +15,7 @@
 
 /*!
 \brief This class gets a live picture from a connected camera.
-This class uses the Open Source Computer Vision Library.
+This class uses the Open Source Computer Vision Library for grabbing the pictures and also for face detection.
 */
 class CamThread : public QThread
 {
