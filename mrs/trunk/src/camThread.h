@@ -44,14 +44,14 @@ class CamThread : public QThread
 		CvHaarClassifierCascade *cascade;
 	    IplImage *gray;
 	    IplImage *small_img;
-		//CvScalar *colors;
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 
-
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
-		// static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
+		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
+	    static const double scale = 1.3;
+	    static const int circleThickness=1;
 };
 
 #endif
