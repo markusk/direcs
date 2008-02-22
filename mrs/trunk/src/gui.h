@@ -8,11 +8,7 @@
 #include "camThread.h"
 #include "laserThread.h"
 //-------------------------------------------------------------------
-#include "cv.h"
-#include "highgui.h"
 #include "QtGLContext.h"
-#include <stdio.h>
-#include <ctype.h>
 //-------------------------------------------------------------------
 #include <qwt_plot_layout.h>
 #include <qwt_plot_curve.h>
