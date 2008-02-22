@@ -42,6 +42,8 @@ class CamThread : public QThread
 		CvCapture *capture;
 		CvMemStorage *storage;
 		CvHaarClassifierCascade *cascade;
+	    IplImage *gray;
+	    IplImage *small_img;
 		//CvScalar *colors;
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;

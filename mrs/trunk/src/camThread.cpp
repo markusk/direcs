@@ -8,24 +8,6 @@ CamThread::CamThread() : QThread()
 	cameraIsOn = false;
 	frame = new IplImage();
 	imgPtr = new IplImage();
-	// for face detection
-	storage = new CvMemStorage();
-	cascade = new CvHaarClassifierCascade();
-	/*
-    colors[0][0] = 
-        {{0,0,255}},
-        {{0,128,255}},
-        {{0,255,255}},
-        {{0,255,0}},
-        {{255,128,0}},
-        {{255,255,0}},
-        {{255,0,0}},
-        {{255,0,255}}
-    };
-    */
-	//----------------------------------------
-	// face detection (start)
-	//----------------------------------------
 
 	
 	// try to capture from the first camera (0)
@@ -60,8 +42,6 @@ CamThread::CamThread() : QThread()
 
 CamThread::~CamThread()
 {
-	delete cascade;
-	delete storage;
 	delete frame;
 }
 
@@ -98,8 +78,8 @@ void CamThread::run()
 			// face detection (start)
 			//----------------------------------------
 		    double scale = 1.3;
-		    IplImage* gray = cvCreateImage( cvSize(imgPtr->width, imgPtr->height), 8, 1 );
-		    IplImage* small_img = cvCreateImage( cvSize( cvRound (imgPtr->width/scale), cvRound (imgPtr->height/scale)), 8, 1 );
+		    gray = cvCreateImage( cvSize(imgPtr->width, imgPtr->height), 8, 1 );
+		    small_img = cvCreateImage( cvSize( cvRound (imgPtr->width/scale), cvRound (imgPtr->height/scale)), 8, 1 );
 		    int i;
 
 		    cvCvtColor( imgPtr, gray, CV_BGR2GRAY );
@@ -129,9 +109,6 @@ void CamThread::run()
 		            cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), 1, 8, 0 );
 		        }
 		    }
-
-		    cvReleaseImage( &gray );
-		    cvReleaseImage( &small_img );
 			//----------------------------------------
 			// face detection (end)
 			//----------------------------------------
@@ -150,7 +127,10 @@ void CamThread::run()
 	
 	if (cameraIsOn == true)
 	{
-		// release capture
+	    cvReleaseImage(&gray);
+	    cvReleaseImage(&small_img);
+
+	    // release capture
 		cvReleaseCapture(&capture);
 	}
 	
