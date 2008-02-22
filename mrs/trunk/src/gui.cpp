@@ -98,6 +98,11 @@ infrared Sensors temporarily removed from robot!!
 			appendLog("Starting cam thread...", false);
 			cam1->start();
 			appendLog("Camera thread started.");
+			
+			//----------------------------------------------------------------------------
+			// (Whenever the state of the face detect check box changes, set the detec mode
+			//----------------------------------------------------------------------------
+			connect(ui.checkBoxFaceDetection , SIGNAL( stateChanged(int) ), cam1, SLOT( enableFaceDetection(int) ));
 		}
 	}
 	else

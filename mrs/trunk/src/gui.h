@@ -336,6 +336,12 @@ class Gui : public QMainWindow
 		*/
 		// TODO: change name to 'state'
 		void simulate(bool status);
+
+		/**
+		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.
+		@param state has to be Qt::Checked to enable the detection. All other states disable.
+		*/
+		void enableFaceDetection(int state);
 	
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.

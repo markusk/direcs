@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1387</width>
-    <height>974</height>
+    <height>972</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -1487,7 +1487,7 @@
     <property name="geometry" >
      <rect>
       <x>110</x>
-      <y>372</y>
+      <y>370</y>
       <width>81</width>
       <height>20</height>
      </rect>
@@ -1549,6 +1549,24 @@
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
     </widget>
+   </widget>
+   <widget class="QCheckBox" name="checkBoxFaceDetection" >
+    <property name="geometry" >
+     <rect>
+      <x>200</x>
+      <y>370</y>
+      <width>101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>Face Detection</string>
+    </property>
    </widget>
   </widget>
   <widget class="QGroupBox" name="groupBoxBot" >
