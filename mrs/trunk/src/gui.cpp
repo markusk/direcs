@@ -1,10 +1,9 @@
 #include "gui.h"
 
 
-Gui::Gui(LaserThread *l, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 {
-	// copy the pointers from the original objects
-	laserThread = l;
+	// create the camera thread object
 	cam1 = new CamThread();
 	
 	
@@ -1004,6 +1003,8 @@ void Gui::saveCamImage(void)
 	
 	// TODO: Seltsame Bildmaße! :-?
 	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.groupBoxCamera->x()+19, ui.groupBoxCamera->y()+19, 474, 353);
+	//cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.frame->x(), ui.frame->y(), 200, 100);
+	// cameraPicToSave = QPixmap::grabWidget(ui.frameCamera); doesnt work
 	
 	//---------------------------------------------------------------------
 	// save image to disk, but not within the same seond (same timestamp)
