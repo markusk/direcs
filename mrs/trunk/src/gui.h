@@ -4,7 +4,6 @@
 //-------------------------------------------------------------------
 #include "ui_gui.h"
 #include "motor.h" // FIXME: error with qprinter.h when removing htis line !?!?!
-#include "plotThread.h"
 #include "camThread.h"
 #include "laserThread.h"
 //-------------------------------------------------------------------
@@ -24,7 +23,6 @@
 
 
 // forward declarations because of circular includes!
-class PlotThread;
 class Laser;
 
 
@@ -411,7 +409,7 @@ class Gui : public QMainWindow
 		
 		Ui::Gui ui;
 		CamThread *cam1;
-		PlotThread *plotThread;
+		//PlotThread *plotThread;
 		LaserThread *laserThread;
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
