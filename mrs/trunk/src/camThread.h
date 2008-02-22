@@ -29,13 +29,23 @@ class CamThread : public QThread
 		void stop();
 		virtual void run();
 
+		
+	public slots:
+		/**
+		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.
+		@param state has to be Qt::Checked to enable the detection. All other states disable.
+		*/ 
+		void enableFaceDetection(int state);
 
+	
 	signals:
 		void camDataComplete(IplImage* frame);
 
 
 	private:
 		bool cameraIsOn;
+		bool faceDetectionIsEnabled;
+		bool faceDetectionWasActive;
 		CvScalar hsv2rgb( float hue );
 		IplImage *frame;
 		IplImage *imgPtr;
@@ -50,7 +60,7 @@ class CamThread : public QThread
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
 		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
-	    static const double scale = 1.3;
+	    static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480. 
 	    static const int circleThickness=1;
 };
 

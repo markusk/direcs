@@ -6,6 +6,8 @@ CamThread::CamThread() : QThread()
 	//QMutexLocker locker(&mutex); // make this class thread-safe
 	stopped = false;
 	cameraIsOn = false;
+	faceDetectionIsEnabled = false;
+	faceDetectionWasActive = false;
 	frame = new IplImage();
 	imgPtr = new IplImage();
 
@@ -84,36 +86,39 @@ void CamThread::run()
 			//----------------------------------------
 			// face detection (start)
 			//----------------------------------------
-		    gray = cvCreateImage( cvSize(imgPtr->width, imgPtr->height), 8, 1 );
-		    small_img = cvCreateImage( cvSize( cvRound (imgPtr->width/scale), cvRound (imgPtr->height/scale)), 8, 1 );
-
-		    cvCvtColor( imgPtr, gray, CV_BGR2GRAY );
-		    cvResize( gray, small_img, CV_INTER_LINEAR );
-		    cvEqualizeHist( small_img, small_img );
-		    cvClearMemStorage( storage );
-
-		    if( cascade )
-		    {
-		    	// detect
-		        faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
-
-		        // draw a circle for each face
-		        for( i = 0; i < (faces ? faces->total : 0); i++ )
-		        {
-		            r = (CvRect*)cvGetSeqElem( faces, i );
-		            center.x = qRound((r->x + r->width*0.5)*scale);
-		            center.y = qRound((r->y + r->height*0.5)*scale);
-		            radius = qRound((r->width + r->height)*0.25*scale);
-		            
-		            // draw circle(s)
-		            // void cvCircle( CvArr* img, CvPoint center, int radius, double color, int thickness=1 );
-		            cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness, 8, 0 );
-		        }
-		    }
-			//----------------------------------------
-			// face detection (end)
-			//----------------------------------------
-			
+			if (faceDetectionIsEnabled)
+			{
+			    gray = cvCreateImage( cvSize(imgPtr->width, imgPtr->height), 8, 1 );
+			    // convert into a smaller image, to make things faster 
+			    small_img = cvCreateImage( cvSize( cvRound (imgPtr->width/scale), cvRound (imgPtr->height/scale)), 8, 1 );
+	
+			    cvCvtColor( imgPtr, gray, CV_BGR2GRAY );
+			    cvResize( gray, small_img, CV_INTER_LINEAR );
+			    cvEqualizeHist( small_img, small_img );
+			    cvClearMemStorage( storage );
+	
+			    if( cascade )
+			    {
+			    	// detect
+			        faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
+	
+			        // draw a circle for each face
+			        for( i = 0; i < (faces ? faces->total : 0); i++ )
+			        {
+			            r = (CvRect*)cvGetSeqElem( faces, i );
+			            center.x = qRound((r->x + r->width*0.5)*scale);
+			            center.y = qRound((r->y + r->height*0.5)*scale);
+			            radius = qRound((r->width + r->height)*0.25*scale);
+			            
+			            // draw circle(s)
+			            // void cvCircle( CvArr* img, CvPoint center, int radius, double color, int thickness=1 );
+			            cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness, 8, 0 );
+			        }
+			    }
+				//----------------------------------------
+				// face detection (end)
+				//----------------------------------------
+			}
 		
 			//====================================================================
 			//  e m i t  Signal (e.g. send image to GUI)
@@ -128,8 +133,11 @@ void CamThread::run()
 	
 	if (cameraIsOn == true)
 	{
-	    cvReleaseImage(&gray);
-	    cvReleaseImage(&small_img);
+		if (faceDetectionWasActive == true)
+		{
+			cvReleaseImage(&gray);
+		    cvReleaseImage(&small_img);
+		}
 
 	    // release capture
 		cvReleaseCapture(&capture);
@@ -142,4 +150,18 @@ void CamThread::run()
 bool CamThread::isConnected(void)
 {
 	return cameraIsOn;
+}
+
+
+void CamThread::enableFaceDetection(int state)
+{
+	if (state == Qt::Checked)
+	{
+		faceDetectionIsEnabled = true;
+		faceDetectionWasActive = true;
+	}
+	else
+	{
+		faceDetectionIsEnabled = false;
+	}
 }
