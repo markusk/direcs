@@ -1993,6 +1993,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	if (axisNumber == JOYSTICKAXIS2Y)
 	{
+		//==================
+		// servo test mode
+		//==================
 		if (servoTestMode==true)
 		{
 			//------------------
@@ -2030,6 +2033,51 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 			return;
 		}
+
+		//==================
+		// camera test mode
+		//==================
+		if (cameraTestMode==true)
+		{
+			//------------------
+			// camera up [tilt]
+			//------------------
+			if (axisValue > 0)
+			{
+				motors->motorControl(MOTOR4, ON, CLOCKWISE);
+				//gui1->appendLog("motor 4 on CW");
+			}
+			
+			//------------------
+			// camera down [tilt]
+			//------------------
+			if (axisValue < 0)
+			{
+				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+				//gui1->appendLog("motor 4 on CCW");
+			}
+			
+			// move, when button is pressed
+			if (axisValue != 0)
+			{
+				if (circuit1->isConnected() == true)
+				{
+					//gui1->appendLog("Tilting Cam...");
+				}
+			}
+			
+			// stop, when button is pressed!
+			if (axisValue == 0)
+			{
+				if (circuit1->isConnected() == true)
+				{
+					//gui1->appendLog("Tilt stop.");
+					motors->motorControl(MOTOR4, OFF, SAME);
+				}
+			}
+			return;
+		} // cam test mode [tilt] 
+
 		return;
 	}
 	
@@ -2078,7 +2126,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				gui1->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
 			}
 			return;
-		}
+		} // servo test mode
 
 		//==================
 		// camera test mode
@@ -2091,7 +2139,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue > 0)
 			{
 				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				gui1->appendLog("motor 3 on CW");
+				//gui1->appendLog("motor 3 on CW");
 			}
 			
 			//------------------
@@ -2100,7 +2148,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue < 0)
 			{
 				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-				gui1->appendLog("motor 3 on CCW");
+				//gui1->appendLog("motor 3 on CCW");
 			}
 			
 			// move, when button is pressed
@@ -2108,7 +2156,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					gui1->appendLog("Panning Cam...");
+					//gui1->appendLog("Panning Cam...");
 				}
 			}
 			
@@ -2117,12 +2165,12 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					gui1->appendLog("Pan stop.");
+					//gui1->appendLog("Pan stop.");
 					motors->motorControl(MOTOR3, OFF, SAME);
 				}
 			}
 			return;
-		}
+		} // cam test mode [pan]
 		
 		return;
 	}
