@@ -58,7 +58,7 @@ void CamThread::run()
 {
     int i=0;
     CvSeq *faces;
-    CvRect *r;
+    CvRect *rectangle;
     CvPoint center;
     int radius;
 
@@ -100,19 +100,22 @@ void CamThread::run()
 			    if( cascade )
 			    {
 			    	// detect
-			        faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
+			    	faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 	
 			        // draw a circle for each face
 			        for( i = 0; i < (faces ? faces->total : 0); i++ )
 			        {
-			            r = (CvRect*)cvGetSeqElem( faces, i );
-			            center.x = qRound((r->x + r->width*0.5)*scale);
-			            center.y = qRound((r->y + r->height*0.5)*scale);
-			            radius = qRound((r->width + r->height)*0.25*scale);
+			        	rectangle = (CvRect*)cvGetSeqElem( faces, i );
+			            center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
+			            center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
+			            radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
 			            
 			            // draw circle(s)
 			            // void cvCircle( CvArr* img, CvPoint center, int radius, double color, int thickness=1 );
-			            cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness, 8, 0 );
+			            if (i==0)
+			            	cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness, 8, 0 );
+			            else
+			            	cvCircle( imgPtr, center, radius, CV_RGB(0, 0, 255), circleThickness, 8, 0 );
 			        }
 			    }
 				//----------------------------------------
