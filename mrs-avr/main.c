@@ -123,9 +123,9 @@ int main(void)
 	// drive motor 2
 	setPWMwidth(2, 100);
 	// camera motor pan
-	setPWMwidth(3, 50);
+	setPWMwidth(3, 20);
 	// camera motor tilt
-	setPWMwidth(4, 50);
+	setPWMwidth(4, 20);
 
 	// start the motor PWM timers
 	startPWM();
@@ -180,22 +180,20 @@ int main(void)
 				if (redLEDtoggle == 0)
 				{
 					redLEDtoggle = 1;
-					// turn on *red* LED
-					PORTD &= ~(1<<PIN5);
+					// yelow LED on (low active!)
+					PORTC &= ~(1<<PIN0);
 				}
 				else
 				{
 					redLEDtoggle = 0;
-					// turn off *red* LED
-					PORTD |= (1<<PIN5);
+					// yelow LED off (low active!)
+					PORTC |= (1<<PIN0);
 				}
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
 				PORTL &= ~(1<<PIN1);
 				PORTL &= ~(1<<PIN2);
 				PORTL &= ~(1<<PIN3);
-				// yelow LED off (low active!)
-				PORTC |= (1<<PIN0);
 				// flashlight off
 				PORTC &= ~(1<<PIN1);
 				// turn all camera motor bits off
