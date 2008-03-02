@@ -315,10 +315,10 @@ void Gui::on_btnReset_clicked()
 	// reset the circuit (motors off etc.)
 	emit initCircuit();
 
-	// stop motorTimer
+	// stop driving
 	emit drive(STOP);
  
-	ui.textEditLog->append("Reseted.");
+	appendLog("Reseted.");
 
 	// reset progressBars
 	ui.progressBarSensor1->setValue(0);
