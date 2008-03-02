@@ -17,6 +17,10 @@ uint8_t rightWheelCounter = 0;
 uint16_t leftDistanceCounter = 0;
 uint16_t rightDistanceCounter = 0;
 
+uint8_t camPanLSwitch = 0;
+uint8_t camPanRSwitch = 0;
+uint8_t camTiltLSwitch = 0;
+uint8_t camTiltRSwitch = 0;
 
 int main(void)
 {
@@ -88,8 +92,11 @@ int main(void)
 	// (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
 
+
+	//-----------------------
 	// no interrupts please!
 	cli();
+	//-----------------------
 	
 	// switch some bits on port J to input
 	//
@@ -97,9 +104,16 @@ int main(void)
 	// Bit4 = Motor 1 Encoder 2
 	// Bit5 = Motor 2 Encoder 1
 	// Bit6 = Motor 2 Encoder 2
-	//
 	DDRJ &= ~((1 << DDJ3) | (1 << DDJ4) | (1 << DDJ5) | (1 << DDJ6));
-	
+
+	// switch some bits on port K to input
+	//
+	// Bit0 = Cam R Tilt Endswitch
+	// Bit1 = Cam L Tilt Endswitch
+	// Bit2 = Cam R Pan Endswitch
+	// Bit3 = Cam L Pan Endswitch
+	DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
+
 	//----------------------------------------------------------------------------
 	// Set the "Pin Change Interrupt Control Register"
 	// -> any change on any enabled PCINT15:8 pin will now cause an interrupt!
@@ -108,6 +122,15 @@ int main(void)
 	// activate the pins which can cause an interrupt
 	// At this time use only the FORWARD sensor to generate an interrupt
 	PCMSK1 =  (1 << PCINT12) /*| (1 << PCINT13) | (1 << PCINT14)*/ | (1 << PCINT15);
+
+	//----------------------------------------------------------------------------
+	// Set the "Pin Change Interrupt Control Register"
+	// -> any change on any enabled PCINT23:16 pin will now cause an interrupt!
+	//----------------------------------------------------------------------------
+	PCICR = (1 << PCIE2);
+	// activate the pins which can cause an interrupt
+	// At this time use only the FORWARD sensor to generate an interrupt
+	PCMSK2 =  (1 << PCINT16) | (1 << PCINT17) | (1 << PCINT18) | (1 << PCINT19);
 	
 	//----------------------------------------------------------------------------
 	// enable global interrupts
@@ -551,9 +574,9 @@ SIGNAL(PCINT1_vect)
 	//static uint8_t value = 0;
 	
 	
-	//
-	// if left wheel moves forward
-	//
+	//----------------------------
+	// if left wheel moves
+	//----------------------------
 	if ( bit_is_set(PINJ,PIN3) )
 	{
 		leftWheelCounter++;
@@ -584,7 +607,9 @@ SIGNAL(PCINT1_vect)
 		}
 	}
 	
-	
+	//----------------------------
+	// if right wheel moves
+	//----------------------------
 	if ( bit_is_set(PINJ,PIN6) )
 	{
 		rightWheelCounter++;
@@ -594,5 +619,69 @@ SIGNAL(PCINT1_vect)
 			rightDistanceCounter++;
 			rightWheelCounter = 0;
 		}
+	}
+}
+
+
+SIGNAL(PCINT2_vect)
+{
+	//----------------------------
+	// if Cam Pan L switch set
+	//----------------------------
+	if ( bit_is_set(PINK,PIN0) )
+	{
+		// MOTOR3_OFF:
+		// delete Motor3 A bit
+		PORTL &= ~(1<<PIN6);
+		// delete Motor3 B bit
+		PORTL &= ~(1<<PIN7);
+
+		camPanLSwitch = 1;
+		camPanRSwitch = 0;
+	}
+	
+	//----------------------------
+	// if Cam Pan R switch set
+	//----------------------------
+	if ( bit_is_set(PINK,PIN1) )
+	{
+		// MOTOR3_OFF:
+		// delete Motor3 A bit
+		PORTL &= ~(1<<PIN6);
+		// delete Motor3 B bit
+		PORTL &= ~(1<<PIN7);
+
+		camPanRSwitch = 1;
+		camPanLSwitch = 0;
+	}
+	
+	//----------------------------
+	// if Cam Tilt L switch set
+	//----------------------------
+	if ( bit_is_set(PINK,PIN2) )
+	{
+		// MOTOR4_OFF:
+		// delete Motor4 A bit
+		PORTD &= ~(1<<PIN6);
+		// delete Motor4 B bit
+		PORTD &= ~(1<<PIN7);
+
+		camTiltLSwitch = 1;
+		camTiltRSwitch = 0;
+	}
+	
+	//----------------------------
+	// if Cam Tilt R switch set
+	//----------------------------
+	if ( bit_is_set(PINK,PIN3) )
+	{
+		// MOTOR4_OFF:
+		// delete Motor4 A bit
+		PORTD &= ~(1<<PIN6);
+		// delete Motor4 B bit
+		PORTD &= ~(1<<PIN7);
+
+		camTiltLSwitch = 0;
+		camTiltRSwitch = 1;
 	}
 }
