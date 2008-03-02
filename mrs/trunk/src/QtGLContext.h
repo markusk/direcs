@@ -23,7 +23,8 @@ public:
 		const int width, 
 		const int height, 
 		const int pixeldepth,
-		const bool flipped = false);
+		const bool flipped = false, // vertical flip!
+		const bool mirrored = true); // horicontal flip!
 
 	// redefines the clipping rectangle for the texture drawing
 	void setZoomRect(float ulX, float ulY, float lrX, float lrY);
@@ -58,8 +59,10 @@ private:
 	unsigned char* m_imgP;
 	// image parameters
 	unsigned int m_width, m_height, m_pixeldepth;
-	// if set to true image will be flipped horizontally
+	// if set to true image will be flipped vertically
     bool         m_flipped;
+	// if set to true image will be flipped horizontally
+    bool         m_mirrored;
 	// width of the texture buffer
 	unsigned int m_texWidth;
 	// height of the texture buffer

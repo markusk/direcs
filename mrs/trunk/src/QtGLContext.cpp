@@ -86,20 +86,37 @@ void QtGLContext::drawTexture(float ulX, float ulY, float lrX, float lrY)
 	glBegin(GL_QUADS);
 	if (m_flipped)
 	{	
-        //flipped
+        //flipped vertically
 		glTexCoord2f(ulX, ulY);    glVertex2f( -1, -1 );
-		glTexCoord2f(ulX, lrY);    glVertex2f( -1, 1 );
-		glTexCoord2f(lrX, lrY);    glVertex2f(  1, 1 );
+		glTexCoord2f(ulX, lrY);    glVertex2f( -1,  1 );
+		glTexCoord2f(lrX, lrY);    glVertex2f(  1,  1 );
 		glTexCoord2f(lrX, ulY);    glVertex2f(  1, -1 );
 	}
 	else
 	{
-		glTexCoord2f(ulX, ulY);    glVertex2f( -1, 1 );
+		glTexCoord2f(ulX, ulY);    glVertex2f( -1,  1 );
 		glTexCoord2f(ulX, lrY);    glVertex2f( -1, -1 );
 		glTexCoord2f(lrX, lrY);    glVertex2f(  1, -1 );
-		glTexCoord2f(lrX, ulY);    glVertex2f(  1, 1 );
+		glTexCoord2f(lrX, ulY);    glVertex2f(  1,  1 );
 	}
-    glEnd();
+
+	if (m_mirrored)
+	{	
+        //flipped horicontally
+		glTexCoord2f(ulX, ulY);    glVertex2f(  1,  1 );
+		glTexCoord2f(ulX, lrY);    glVertex2f(  1, -1 );
+		glTexCoord2f(lrX, lrY);    glVertex2f( -1, -1 );
+		glTexCoord2f(lrX, ulY);    glVertex2f( -1,  1 );
+	}
+	else
+	{
+		glTexCoord2f(ulX, ulY);    glVertex2f( -1,  1 );
+		glTexCoord2f(ulX, lrY);    glVertex2f( -1, -1 );
+		glTexCoord2f(lrX, lrY);    glVertex2f(  1, -1 );
+		glTexCoord2f(lrX, ulY);    glVertex2f(  1,  1 );
+	}
+
+	glEnd();
 	glDisable(GL_TEXTURE_2D);
 
 	glTranslatef(-1.0,1.0,0);
@@ -197,10 +214,12 @@ bool QtGLContext::setImage(
 	const int width, 
 	const int height, 
 	const int pixeldepth, 
-	const bool flipped /*=false*/)
+	const bool flipped,  /*=false*/
+	const bool mirrored) /*=false*/
 {
 	m_imgP = imgP; m_width = width; m_height = height; m_pixeldepth = pixeldepth;
     m_flipped = flipped;
+    m_mirrored = mirrored;
 	this->updateGL();	
 
 	// only 8, 24 and 32 bit images are supported
