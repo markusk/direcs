@@ -20,6 +20,9 @@ uint16_t rightDistanceCounter = 0;
 
 int main(void)
 {
+	uint8_t redLEDtoggle = 0;
+	
+	
 	// stores the serial received command
 	uint16_t value = 0;
 
@@ -44,14 +47,22 @@ int main(void)
 	// Bit3 = ultrasonic echo (input)
 	//
 	DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC4) | (1 << DDC5) | (1 << DDC6) | (1 << DDC7);
+	
+	// switch some bits on port EA to output (*red* onBoard LED)
+	DDRD |= (1 << DDD5);
 
-	// switch port A to output (stepper motor)
-	DDRA = 0xff;
+	// switch some bits on port A to input (camera pan tilt end switches)
+	DDRA &= ~((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3));
 	
-	// switch port L (all PINS) to output
+	// switch port L (all PINS) to output [drive motor]
 	DDRL = 0xff;
+
+	// switch some bits on port D to output [camera motor 2]
+	DDRD = (1 << DDD6) | (1 << DDD7);
+	// switch some bits on port G to output [camera motor pwm]
+	DDRG |= (1<<PIN5);
 	
-	// switch port H (all PINS) to output
+	// switch port H (all PINS) to output [servos]
 	DDRH = 0xff;
 
 	// yelow LED off (low active -> turn bit high!)
@@ -59,23 +70,24 @@ int main(void)
 	// flashlight off
 	PORTC &= ~(1<<PIN1);
 	
-	// turn all motor bits off (except PWM bits)
+	// turn all drive motor bits off (except PWM bits)
 	PORTL &= ~(1<<PIN0);
 	PORTL &= ~(1<<PIN1);
 	PORTL &= ~(1<<PIN2);
 	PORTL &= ~(1<<PIN3);
 	
+	// turn all camera motor 1 [pan] bits off
+	PORTL &= ~(1<<PIN6);
+	PORTL &= ~(1<<PIN7);
+	
+	// turn all camera motor 2 [tilt] bits off
+	PORTD &= ~(1<<PIN6);
+	PORTD &= ~(1<<PIN7);
+	
 	// turn OFF "power saving mode" for ADC (analof digital converters)!
 	// (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
 
-	// turn all stepper motor bits off
-	PORTA &= ~(1<<PIN0);
-	PORTA &= ~(1<<PIN1);
-	PORTA &= ~(1<<PIN2);
-	PORTA &= ~(1<<PIN3);
-	PORTA &= ~(1<<PIN4);
-	
 	// no interrupts please!
 	cli();
 	
@@ -106,10 +118,14 @@ int main(void)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 100 * 64 µs = 6400 µs = 6,4 ms
 	//
-	// motor 1
+	// drive motor 1
 	setPWMwidth(1, 100);
-	// motor 2
+	// drive motor 2
 	setPWMwidth(2, 100);
+	// camera motor pan
+	setPWMwidth(3, 50);
+	// camera motor tilt
+	setPWMwidth(4, 50);
 
 	// start the motor PWM timers
 	startPWM();
@@ -119,6 +135,9 @@ int main(void)
 	// 12 * 64 µs = 768 µs ?!?
 	setServoPosition(1, 10); // <- correct position now set in the mrs programm!
 	setServoPosition(2, 10); // <- correct position now set in the mrs programm!
+	setServoPosition(4, 10); // <- correct position now set in the mrs programm!
+	setServoPosition(5, 10); // <- correct position now set in the mrs programm!
+	setServoPosition(6, 10); // <- correct position now set in the mrs programm!
 	
 	// start the servo PWM timer
 	startPWMServo();
@@ -158,7 +177,19 @@ int main(void)
 		switch (value)
 		{
 			case INIT:
-				// turn all motor bits off (except PWM bits)
+				if (redLEDtoggle == 0)
+				{
+					redLEDtoggle = 1;
+					// turn on *red* LED
+					PORTD &= ~(1<<PIN5);
+				}
+				else
+				{
+					redLEDtoggle = 0;
+					// turn off *red* LED
+					PORTD |= (1<<PIN5);
+				}
+				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
 				PORTL &= ~(1<<PIN1);
 				PORTL &= ~(1<<PIN2);
@@ -167,12 +198,17 @@ int main(void)
 				PORTC |= (1<<PIN0);
 				// flashlight off
 				PORTC &= ~(1<<PIN1);
-				// turn all stepper motor bits off
-				PORTA &= ~(1<<PIN0);
-				PORTA &= ~(1<<PIN1);
-				PORTA &= ~(1<<PIN2);
-				PORTA &= ~(1<<PIN3);
-				PORTA &= ~(1<<PIN4);
+				// turn all camera motor bits off
+				PORTL &= ~(1<<PIN6);
+				PORTL &= ~(1<<PIN7);
+				PORTD &= ~(1<<PIN6);
+				PORTD &= ~(1<<PIN7);
+				// init servo pos. <- correct position now set in the mrs programm!
+				setServoPosition(1, 10);
+				setServoPosition(2, 10);
+				setServoPosition(4, 10);
+				setServoPosition(5, 10);
+				setServoPosition(6, 10);
 				
 				// "answer" with "@"
 				// this answer is used to see if the robot is "on"
@@ -366,6 +402,62 @@ int main(void)
 				break;
 
 			//-------------------------------
+			case MOTOR3_OFF:
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				break;
+
+			case MOTOR3_CLOCKWISE:
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// set Motor3 B bit
+				PORTL |= (1<<PIN7);
+				break;
+
+			case MOTOR3_COUNTERCLOCKWISE:
+				// set Motor3 A bit
+				PORTL |= (1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				break;
+
+			case MOTOR3_SPEED_SET:
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setPWMwidth(3, value);
+				break;
+
+			//-------------------------------
+			case MOTOR4_OFF:
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+				break;
+
+			case MOTOR4_CLOCKWISE:
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				break;
+
+			case MOTOR4_COUNTERCLOCKWISE:
+				// set Motor4 A bit
+				PORTD |= (1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+				break;
+
+			case MOTOR4_SPEED_SET:
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setPWMwidth(4, value);
+				break;
+
+			//-------------------------------
 			case SET_SERVO1:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
@@ -389,54 +481,55 @@ int main(void)
 				PORTC &= ~(1<<PIN1);
 				PORTC |= (1<<PIN0); // < yellow led
 				break;
-
-				//-------------------------------
-				case STEPPER1_OFF:
-					// disable stepper motor 1
-					PORTA &= ~(1<<PIN1);
-					break;
-					
-				case STEPPER2_OFF:
-					// disable stepper motor 2
-					PORTA &= ~(1<<PIN3);
-					break;
-					
-				case STEPPER1_ON:
-					// enable stepper motor 1
-					PORTA |= (1<<PIN1);
-					break;
-					
-				case STEPPER2_ON:
-					// enable stepper motor 2
-					PORTA |= (1<<PIN3);
-					break;
-					
-				case STEPPER1_CLOCKWISE:
-					// set stepper motor 1 to cw 
-					PORTA &= ~(1<<PIN2);
-					break;
-					
-				case STEPPER2_CLOCKWISE:
-					// set stepper motor 2 to cw 
-					PORTA &= ~(1<<PIN4);
-					break;
-					
-				case STEPPER1_COUNTERCLOCKWISE:
-					// set stepper motor 1 to ccw 
-					PORTA |= (1<<PIN2);
-					break;
-					
-				case STEPPER2_COUNTERCLOCKWISE:
-					// set stepper motor 2 to ccw 
-					PORTA |= (1<<PIN4);
-					break;
-					
-				case STEPPER_CLOCK:
-					// set stepper motor clock to high
-					PORTA |= (1<<PIN0);
-					// and then to low 
-					PORTA &= ~(1<<PIN0);
-					break;
+/*
+			//-------------------------------
+			case STEPPER1_OFF:
+				// disable stepper motor 1
+				PORTA &= ~(1<<PIN1);
+				break;
+				
+			case STEPPER2_OFF:
+				// disable stepper motor 2
+				PORTA &= ~(1<<PIN3);
+				break;
+				
+			case STEPPER1_ON:
+				// enable stepper motor 1
+				PORTA |= (1<<PIN1);
+				break;
+				
+			case STEPPER2_ON:
+				// enable stepper motor 2
+				PORTA |= (1<<PIN3);
+				break;
+				
+			case STEPPER1_CLOCKWISE:
+				// set stepper motor 1 to cw 
+				PORTA &= ~(1<<PIN2);
+				break;
+				
+			case STEPPER2_CLOCKWISE:
+				// set stepper motor 2 to cw 
+				PORTA &= ~(1<<PIN4);
+				break;
+				
+			case STEPPER1_COUNTERCLOCKWISE:
+				// set stepper motor 1 to ccw 
+				PORTA |= (1<<PIN2);
+				break;
+				
+			case STEPPER2_COUNTERCLOCKWISE:
+				// set stepper motor 2 to ccw 
+				PORTA |= (1<<PIN4);
+				break;
+				
+			case STEPPER_CLOCK:
+				// set stepper motor clock to high
+				PORTA |= (1<<PIN0);
+				// and then to low 
+				PORTA &= ~(1<<PIN0);
+				break;
+*/
 		}
 	} // while (1)
 	
