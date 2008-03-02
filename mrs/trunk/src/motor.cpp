@@ -28,8 +28,10 @@ Motor::Motor(InterfaceAvr *i)
 
 Motor::~Motor()
 {
+	/*
 	parkStepper(STEPPER1);
 	parkStepper(STEPPER2);
+	*/
 }
 
 
@@ -79,7 +81,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 	//
 	//---------------------------------------------------------------------------
 
-	
+	// TODO: change to 'case' instrcution
 	//-------------------------
 	// if motor 1
 	//------------------------
@@ -193,7 +195,114 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		
 		return;
 	} // MOTOR2
+
 	
+	//-------------------------
+	// if motor 3
+	//------------------------
+	if (motor == MOTOR3)
+	{
+		if (power == ON)
+		{
+			// Motors with gearings don't have to be turned on!
+			// 
+			// (This function is obsolete because of no longer using stepping motors)
+		}
+	
+		if (power == OFF)
+		{
+			// turn off the MOTOR -> break!
+			if (interface1->sendChar(MOTOR3_OFF) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+	
+		if (direction == CLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(MOTOR3_CLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == COUNTERCLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(MOTOR3_COUNTERCLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+			
+		if (direction == SAME)
+		{
+			// don't change the direction (motor was only turned on or off)!
+		}
+
+		return;
+		
+	} // MOTOR3
+
+	
+	//-------------------------
+	// if motor 4
+	//------------------------
+	if (motor == MOTOR4)
+	{
+		if (power == ON)
+		{
+			// Motors with gearings don't have to be turned on!
+			// 
+			// (This function is obsolete because of no longer using stepping motors)
+		}
+	
+		if (power == OFF)
+		{
+			// turn off the MOTOR -> break!
+			if (interface1->sendChar(MOTOR4_OFF) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+	
+		if (direction == CLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(MOTOR4_CLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+		
+		if (direction == COUNTERCLOCKWISE)
+		{
+			// set the direction
+			if (interface1->sendChar(MOTOR4_COUNTERCLOCKWISE) == false)
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+		}
+			
+		if (direction == SAME)
+		{
+			// don't change the direction (motor was only turned on or off)!
+		}
+
+		return;
+		
+	} // MOTOR4
+ 
+ 
+	
+	/*
 	//-------------------------
 	// if stepper motor 1
 	//------------------------
@@ -311,9 +420,11 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		return;
 		
 	} // STEPPER2
+	*/
 }
 
 
+/*
 void Motor::makeSteps(int steps)
 {
 	for (int i=steps; i>=steps; i--)
@@ -330,11 +441,11 @@ void Motor::makeSteps(int steps)
 
 void Motor::parkStepper(unsigned char motor)
 {
-	// TODO: park stepper correctly!!
+	// FIXME: park stepper correctly!! (temporarily not in use)
 	motorControl(STEPPER1, OFF, SAME);
 	motorControl(STEPPER2, OFF, SAME);
 }
-
+*/
 
 void Motor::calculateMovement()
 {

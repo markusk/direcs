@@ -81,16 +81,13 @@ class Motor : public QObject
 		// TODO: put it somewhere else...
 		void flashlight(bool state);
 		
-		/**
+		/*
 		Generates steps for stepper motors.
 		@param steps are the number of steps.
-		*/
 		void makeSteps(int steps);
 
-		/**
+		void parkStepper(unsigned char motor); // FIXME: park steppers uin a safe position!
 		*/
-		void parkStepper(unsigned char motor); // TODO: park steppers uin a safe position!
-
 
 	public slots:
 		/**
@@ -135,10 +132,10 @@ class Motor : public QObject
 		static const unsigned char CLOCKWISE        = 0;  // Motor direction "CLOCKWISE"
 		static const unsigned char COUNTERCLOCKWISE = 1;  // Motor direction "COUNTERCLOCKWISE"
 		static const unsigned char SAME             = 3;  // Motor direction/power "same like before"
-		static const unsigned char MOTOR1           = 10; // Motor 1
-		static const unsigned char MOTOR2           = 20; // Motor 2
-		static const unsigned char STEPPER1         = 30; // Stepper motor 1
-		static const unsigned char STEPPER2         = 40; // Stepper motor 2
+		static const unsigned char MOTOR1           = 10; //! Motor 1 (drive)
+		static const unsigned char MOTOR2           = 20; //! Motor 2 (drive)
+		static const unsigned char MOTOR3           = 30; //! Motor 3 (camera pan)
+		static const unsigned char MOTOR4           = 40; //! Motor 4 (camera pan)
 
 		// The bits for controling the USB-Circuit
 		static const unsigned char MOTOR1A = BIT0;
@@ -158,15 +155,16 @@ class Motor : public QObject
 		static const unsigned char MOTOR1_SPEED_SET			= 26;
 		static const unsigned char MOTOR2_SPEED_SET			= 27;
 
-		static const unsigned char STEPPER_CLOCK				= 50;
-		static const unsigned char STEPPER1_ON					= 51;
-		static const unsigned char STEPPER1_OFF					= 52;
-		static const unsigned char STEPPER1_CLOCKWISE			= 53;
-		static const unsigned char STEPPER1_COUNTERCLOCKWISE	= 54;
-		static const unsigned char STEPPER2_ON					= 55;
-		static const unsigned char STEPPER2_OFF					= 56;
-		static const unsigned char STEPPER2_CLOCKWISE			= 57;
-		static const unsigned char STEPPER2_COUNTERCLOCKWISE	= 58;
+		static const unsigned char MOTOR3_OFF 				= 50;
+		static const unsigned char MOTOR3_CLOCKWISE 		= 51;
+		static const unsigned char MOTOR3_COUNTERCLOCKWISE 	= 52;
+		static const unsigned char MOTOR4_OFF 				= 53;
+		static const unsigned char MOTOR4_CLOCKWISE 		= 54;
+		static const unsigned char MOTOR4_COUNTERCLOCKWISE 	= 55;
+
+		static const unsigned char MOTOR3_SPEED_SET			= 56;
+		static const unsigned char MOTOR4_SPEED_SET			= 57;
+
 		
 		static const unsigned char FLASHLIGHT_OFF 		= 40;
 		static const unsigned char FLASHLIGHT_ON 		= 41;

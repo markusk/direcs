@@ -172,9 +172,11 @@ class Mrs : public QObject
 		bool robotSimulationMode; //! Stores the robots simulation state
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
 		bool servoTestMode;
-		bool stepperTestMode;
+		bool cameraTestMode;
 		int mot1Speed;
 		int mot2Speed;
+		int mot3Speed;
+		int mot4Speed;
 		int minimumSpeed;
 		int maximumSpeed;
 		QList <int> obstacleAlarmFrontLeftList;			//! A list of obstacle alarms that occured left the last n times.
@@ -228,10 +230,10 @@ class Mrs : public QObject
 		static const unsigned char CLOCKWISE        = 0;  //! Motor direction "CLOCKWISE"
 		static const unsigned char COUNTERCLOCKWISE = 1;  //! Motor direction "COUNTERCLOCKWISE"
 		static const unsigned char SAME             = 3;  //! Motor direction/power "same like before"
-		static const unsigned char MOTOR1           = 10; //! Motor 1
-		static const unsigned char MOTOR2           = 20; //! Motor 2
-		static const unsigned char STEPPER1         = 30; // Stepper motor 1
-		static const unsigned char STEPPER2         = 40; // Stepper motor 2
+		static const unsigned char MOTOR1           = 10; //! Motor 1 (drive)
+		static const unsigned char MOTOR2           = 20; //! Motor 2 (drive)
+		static const unsigned char MOTOR3           = 30; //! Motor 3 (camera pan)
+		static const unsigned char MOTOR4           = 40; //! Motor 4 (camera pan)
 		
 		//! The motor sensors
 		static const short int MOTORSENSOR1 = 0;

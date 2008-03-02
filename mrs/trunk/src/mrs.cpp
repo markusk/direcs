@@ -65,10 +65,12 @@ Mrs::Mrs()
 	robotDrives = false;
 	mot1Speed = 0;
 	mot2Speed = 0;
+	mot3Speed = 0;
+	mot4Speed = 0;
 	robotSimulationMode = false;
 	robotRemoteMode = false;
 	servoTestMode = false;
-	stepperTestMode = false;
+	cameraTestMode = false;
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -237,8 +239,9 @@ Mrs::Mrs()
 	{
 		// tell the microcontroller the motor speed
 		motors->setMotorSpeed(1, mot1Speed);
-		// tell the microcontroller the motor speed
 		motors->setMotorSpeed(2, mot2Speed);
+		motors->setMotorSpeed(3, mot3Speed);
+		motors->setMotorSpeed(4, mot4Speed);
 		gui1->appendLog("Motor speed set in microcontroller");
 	}
 
@@ -1548,6 +1551,64 @@ void Mrs::readSettings()
 	
 	//---------------------------------------------------------------------
 	// read setting
+	mot3Speed = inifile1->readSetting("Config", "motor3Speed");
+	
+	switch (mot3Speed)
+	{
+		case -2:
+			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			mot3Speed = 0;
+			break;
+		case -1:
+			gui1->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" not found in ini-file!</font>");
+			mot3Speed = 0;
+			break;
+		default:
+			if (mot3Speed > 254)
+			{
+				gui1->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than 255!! Value set to 255!</font>");
+				mot3Speed = 255;
+			}
+			
+			// set slider to the read value
+			gui1->setSliderMotorSpeed(2, mot3Speed);
+			// show text
+			gui1->appendLog(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
+			break;
+	}
+	
+	
+	//---------------------------------------------------------------------
+	// read setting
+	mot4Speed = inifile1->readSetting("Config", "motor4Speed");
+	
+	switch (mot4Speed)
+	{
+		case -2:
+			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			mot4Speed = 0;
+			break;
+		case -1:
+			gui1->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" not found in ini-file!</font>");
+			mot4Speed = 0;
+			break;
+		default:
+			if (mot4Speed > 254)
+			{
+				gui1->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" is greater than 255!! Value set to 255!</font>");
+				mot4Speed = 255;
+			}
+			
+			// set slider to the read value
+			gui1->setSliderMotorSpeed(2, mot4Speed);
+			// show text
+			gui1->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
+			break;
+	}
+	
+	
+	//---------------------------------------------------------------------
+	// read setting
 	minimumSpeed = inifile1->readSetting("Config", "minimumSpeed");
 	
 	switch (minimumSpeed)
@@ -1767,8 +1828,6 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 	int speed = 0;
 	static unsigned char servo1Pos = 10;
 	static unsigned char servo2Pos = 10;
-	static int stepper1Pos = 0; // TODO: fin a init position!
-	static int stepper2Pos = 0; // TODO: fin a init position!
 	
 	
 	//
@@ -1971,54 +2030,6 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 			return;
 		}
-		
-		if (stepperTestMode==true)
-		{
-			//------------------
-			// stepper up
-			//------------------
-			if (axisValue > 0)
-			{
-				if (circuit1->isConnected() == true)
-				{
-					motors->motorControl(STEPPER2, ON, CLOCKWISE);
-				}
-				stepper2Pos++;
-				
-				// TODO: put this to ini file
-				if (stepper2Pos > 100)
-					stepper2Pos = 100; // TODO: find end value!
-			}
-			
-			//------------------
-			// stepper down
-			//------------------
-			if (axisValue < 0)
-			{
-				if (circuit1->isConnected() == true)
-				{
-					motors->motorControl(STEPPER2, ON, COUNTERCLOCKWISE);
-				}
-				stepper2Pos--;
-				
-				// TODO: put this to ini file
-				if (stepper2Pos < 0)
-					stepper2Pos = 0; // TODO: find end value!
-			}
-			
-			// only move, when button is pressed - not, when released (=0)
-			if (axisValue != 0)
-			{
-				if (circuit1->isConnected() == true)
-				{
-					gui1->appendLog("Step...");
-					motors->makeSteps(1);
-				}
-				gui1->appendLog(QString("Stepper 2 set to %1.").arg(stepper2Pos));
-			}
-			return;
-		}
-
 		return;
 	}
 	
@@ -2028,6 +2039,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	if (axisNumber == JOYSTICKAXIS2X)
 	{
+		//==================
+		// servo test mode
+		//==================
 		if (servoTestMode==true)
 		{
 			//------------------
@@ -2066,43 +2080,46 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			return;
 		}
 
-		if (stepperTestMode==true)
+		//==================
+		// camera test mode
+		//==================
+		if (cameraTestMode==true)
 		{
 			//------------------
-			// stepper right
+			// camera right [pan]
 			//------------------
 			if (axisValue > 0)
 			{
-				motors->motorControl(STEPPER1, ON, CLOCKWISE);
-				stepper1Pos++;
-				
-				// TODO: put this to ini file
-				if (stepper1Pos > 100)
-					stepper1Pos = 100; // TODO: find end value!
+				motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				gui1->appendLog("motor 3 on CW");
 			}
 			
 			//------------------
-			// stepper left
+			// camera left [pan]
 			//------------------
 			if (axisValue < 0)
 			{
-				motors->motorControl(STEPPER1, ON, COUNTERCLOCKWISE);
-				stepper1Pos--;
-				
-				// TODO: put this to ini file
-				if (stepper1Pos < 0)
-					stepper1Pos = 0; // TODO: find end value!
+				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				gui1->appendLog("motor 3 on CCW");
 			}
 			
-			// only move, when button is pressed - not, when released (=0)
+			// move, when button is pressed
 			if (axisValue != 0)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					gui1->appendLog("Step...");
-					motors->makeSteps(1);
+					gui1->appendLog("Panning Cam...");
 				}
-				gui1->appendLog(QString("Stepper 1 set to %1.").arg(stepper1Pos));
+			}
+			
+			// stop, when button is pressed!
+			if (axisValue == 0)
+			{
+				if (circuit1->isConnected() == true)
+				{
+					gui1->appendLog("Pan stop.");
+					motors->motorControl(MOTOR3, OFF, SAME);
+				}
 			}
 			return;
 		}
@@ -2170,14 +2187,14 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle11 == false)
 				{
 					toggle11=true;
-					stepperTestMode = true;
-					gui1->appendLog("<font color=\"#0000FF\">Stepper test mode ON</front>");
+					cameraTestMode = true;
+					gui1->appendLog("<font color=\"#0000FF\">Camera test mode ON</front>");
 				}
 				else
 				{
 					toggle11=false;
-					stepperTestMode = false;
-					gui1->appendLog("<font color=\"#0000FF\">Stepper test mode OFF</front>");
+					cameraTestMode = false;
+					gui1->appendLog("<font color=\"#0000FF\">Camera test mode OFF</front>");
 				}
 			}
 			break;
