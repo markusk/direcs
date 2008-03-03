@@ -984,12 +984,13 @@ void Gui::setCamImage(IplImage* frame)
 	// set image from gl context to frame
 	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
 	
-	
+/*	
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )
 	{
 		saveCamImage();
 	}
+*/
 }
 
 
@@ -1146,6 +1147,16 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 	else
 	{
 		switchToFlatView();
+	}
+}
+
+
+void Gui::on_checkBoxMirror_stateChanged(int state)
+{
+	if (cam1->isRunning() == true)
+	{
+		// QtGL class!!
+		ui.frameCamera->enableMirrorMode(state);
 	}
 }
 

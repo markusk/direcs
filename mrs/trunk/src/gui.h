@@ -358,6 +358,7 @@ class Gui : public QMainWindow
 		void on_btnSimulate_clicked();
 		void on_sliderZoom_valueChanged(int);
 		void on_checkBoxAngleView_stateChanged(int);
+		void on_checkBoxMirror_stateChanged(int);
 		
 		/**
 		Saves the current picture to disk (one time shot).
