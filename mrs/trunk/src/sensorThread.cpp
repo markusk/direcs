@@ -106,6 +106,7 @@ void SensorThread::run()
 {
 	//bool result = false;
 	int value = 0;
+	char cValue = 0;
 	
 	
 	//
@@ -380,6 +381,77 @@ infrared Sensors temporarily removed from robot!!
 			drivenDistance[MOTORSENSOR2] = value;
 			value = 0;
 			
+			
+			//====================================================================
+			
+			
+			//------------------------------------------------------
+			// read value of switch 1 (cam pan L)
+			//------------------------------------------------------
+			if (interface1->sendChar(READ_CONTACT1) == false)
+			{
+				qDebug("ERROR sending to serial port (SensorThread)");
+				return;
+			}
+			
+			// receive the 8 Bit answer from the MC **8 bit**
+			interface1->receiveChar(&cValue);
+			
+			// store measured value
+			contactValue[CONTACT1] = cValue;
+			cValue = 0;
+			
+			
+			//------------------------------------------------------
+			// read value of switch 2 (cam pan R)
+			//------------------------------------------------------
+			if (interface1->sendChar(READ_CONTACT2) == false)
+			{
+				qDebug("ERROR sending to serial port (SensorThread)");
+				return;
+			}
+			
+			// receive the 8 Bit answer from the MC **8 bit**
+			interface1->receiveChar(&cValue);
+			
+			// store measured value
+			contactValue[CONTACT2] = cValue;
+			cValue = 0;
+			
+			
+			//------------------------------------------------------
+			// read value of switch 3 (cam tilt L)
+			//------------------------------------------------------
+			if (interface1->sendChar(READ_CONTACT3) == false)
+			{
+				qDebug("ERROR sending to serial port (SensorThread)");
+				return;
+			}
+			
+			// receive the 8 Bit answer from the MC **8 bit**
+			interface1->receiveChar(&cValue);
+			
+			// store measured value
+			contactValue[CONTACT3] = cValue;
+			cValue = 0;
+			
+			
+			//------------------------------------------------------
+			// read value of switch 4 (cam tilt R)
+			//------------------------------------------------------
+			if (interface1->sendChar(READ_CONTACT4) == false)
+			{
+				qDebug("ERROR sending to serial port (SensorThread)");
+				return;
+			}
+			
+			// receive the 8 Bit answer from the MC **8 bit**
+			interface1->receiveChar(&cValue);
+			
+			// store measured value
+			contactValue[CONTACT4] = cValue;
+			cValue = 0;
+			
 		} // simulation = false
 		
 		//====================================================================
@@ -436,7 +508,8 @@ int SensorThread::getMAmpere(int sensor)
 {
 	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR2))
 	{
-	  return 0;
+		qDebug("ERROR: wrong motor sensor");
+		return 0;
 	}
 	
 	
@@ -449,11 +522,25 @@ int SensorThread::getMAmpere(int sensor)
 }
 
 
+int SensorThread::getContactValue(int contact)
+{
+	if ((contact < CONTACT1) || (contact > CONTACT4))
+	{
+		qDebug("ERROR: wrong contact number");
+		return 0;
+	}
+	
+	// typecasting for convenience!
+	return (int) contactValue[contact];
+}
+
+
 int SensorThread::getIrSensorValue(int sensor)
 {
 	if ((sensor < SENSOR1) || (sensor > SENSOR8))
 	{
-	  return 0;
+		qDebug("ERROR: wrong ir sensor");
+		return 0;
 	}
 	
 	return iRSensorValue[sensor];
@@ -469,7 +556,8 @@ int SensorThread::getDistance(int sensor)
 	
 	if ((sensor < SENSOR1) || (sensor > SENSOR8))
 	{
-	  return 0;
+		qDebug("ERROR: wrong ir sensor");
+		return 0;
 	}
 	
 	// get the stored distance
@@ -515,7 +603,8 @@ int SensorThread::getDrivenDistance(int sensor)
 {
 	if ((sensor < MOTORSENSOR1) || (sensor > DRIVENDISTANCEARRAYSIZE-1))
 	{
-	  return 0;
+		qDebug("ERROR: wrong motor sensor");
+		return 0;
 	}
 	
 	return drivenDistance[sensor];
@@ -526,7 +615,8 @@ void SensorThread::resetDrivenDistance(int sensor)
 {
 	if ((sensor < MOTORSENSOR1) || (sensor > DRIVENDISTANCEARRAYSIZE-1))
 	{
-	  return;
+		qDebug("ERROR: wrong motor sensor");
+		return;
 	}
 	
 	//------------------------------------------------------
@@ -565,7 +655,8 @@ int SensorThread::getUsSensorValue(int sensor)
 	
 	if ((sensor < SENSOR16) || (sensor > SENSOR16))
 	{
-	  return 0;
+		qDebug("ERROR: wrong us sensor");
+		return 0;
 	}
 	
 	switch (sensor)
@@ -587,7 +678,8 @@ int SensorThread::getMotorSensorValue(int sensor)
 	
 	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSORARRAYSIZE-1))
 	{
-	  return 0;
+		qDebug("ERROR: wrong motor sensor");
+		return 0;
 	}
 	
 	

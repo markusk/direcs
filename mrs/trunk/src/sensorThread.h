@@ -83,6 +83,12 @@ class SensorThread : public QThread
 		*/
 		int getMAmpere(int motor);
 		
+		/**
+		@return The 'measured' contact value. 0 if OFF; unequal to 0 if set.
+		@param contact is the contact number.
+		*/
+		int getContactValue(int contact);
+		
 	
 	public slots:
 		/**
@@ -177,6 +183,17 @@ class SensorThread : public QThread
 		For example, a measured sensor value for a motor sensor is 100, this multiplied with a conversion factor 29 results in 290 mA.
 		*/
 		static const unsigned char CONVERSIONFACTORMOTORSENSOR = 29;
+
+		/**
+		 Give the contacts for the pan tilt cam end positions som nice names
+		 */
+		static const unsigned char CONTACT1 = 0;
+		static const unsigned char CONTACT2 = 1;
+		static const unsigned char CONTACT3 = 2;
+		static const unsigned char CONTACT4 = 3;
+
+		static const unsigned char CONTACTARRAYSIZE = 4;
+		char contactValue[CONTACTARRAYSIZE];
 		
 		//
 		// the "serial" commands for the MC
@@ -199,6 +216,11 @@ class SensorThread : public QThread
 		
 		static const short int RESET_MOTOR_DISTANCE1 = 32;
 		static const short int RESET_MOTOR_DISTANCE2 = 33;
+		
+		static const unsigned char READ_CONTACT1 = 70;
+		static const unsigned char READ_CONTACT2 = 71;
+		static const unsigned char READ_CONTACT3 = 72;
+		static const unsigned char READ_CONTACT4 = 73;
 };
 
 #endif
