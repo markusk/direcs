@@ -17,10 +17,10 @@ uint8_t rightWheelCounter = 0;
 uint16_t leftDistanceCounter = 0;
 uint16_t rightDistanceCounter = 0;
 
-uint8_t camPanLSwitch = 0;
-uint8_t camPanRSwitch = 0;
-uint8_t camTiltLSwitch = 0;
-uint8_t camTiltRSwitch = 0;
+//uint8_t camPanLSwitch = 0;
+//uint8_t camPanRSwitch = 0;
+//uint8_t camTiltLSwitch = 0;
+//uint8_t camTiltRSwitch = 0;
 
 int main(void)
 {
@@ -93,10 +93,11 @@ int main(void)
 	PRR0 &= ~(1<<PRADC);
 
 
-	//-----------------------
+	//-------------------------------------------------------------
 	// no interrupts please!
+	// this is *here* for setting the interrupt control registers
+	//-------------------------------------------------------------
 	cli();
-	//-----------------------
 	
 	// switch some bits on port J to input
 	//
@@ -430,18 +431,26 @@ int main(void)
 				PORTL &= ~(1<<PIN7);
 				break;
 
-			case MOTOR3_CLOCKWISE:
-				// delete Motor3 A bit
-				PORTL &= ~(1<<PIN6);
-				// set Motor3 B bit
-				PORTL |= (1<<PIN7);
+			case MOTOR3_CLOCKWISE: // cam pan R
+				// only, when end switch is clear
+				if ( bit_is_clear(PINK,PIN1) )
+				{
+					// delete Motor3 A bit
+					PORTL &= ~(1<<PIN6);
+					// set Motor3 B bit
+					PORTL |= (1<<PIN7);
+				}
 				break;
 
-			case MOTOR3_COUNTERCLOCKWISE:
-				// set Motor3 A bit
-				PORTL |= (1<<PIN6);
-				// delete Motor3 B bit
-				PORTL &= ~(1<<PIN7);
+			case MOTOR3_COUNTERCLOCKWISE: // cam pan L
+				// only, when end switch is clear
+				if ( bit_is_clear(PINK,PIN0) )
+				{
+					// set Motor3 A bit
+					PORTL |= (1<<PIN6);
+					// delete Motor3 B bit
+					PORTL &= ~(1<<PIN7);
+				}
 				break;
 
 			case MOTOR3_SPEED_SET:
@@ -458,18 +467,25 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				break;
 
-			case MOTOR4_CLOCKWISE:
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// set Motor4 B bit
-				PORTD |= (1<<PIN7);
+			case MOTOR4_CLOCKWISE: // cam tilt R
+				// only, when end switch is clear
+				if ( bit_is_clear(PINK,PIN3) )
+				{
+					// delete Motor4 A bit
+					PORTD &= ~(1<<PIN6);
+					// set Motor4 B bit
+					PORTD |= (1<<PIN7);
+				}
 				break;
 
-			case MOTOR4_COUNTERCLOCKWISE:
-				// set Motor4 A bit
-				PORTD |= (1<<PIN6);
-				// delete Motor4 B bit
-				PORTD &= ~(1<<PIN7);
+			case MOTOR4_COUNTERCLOCKWISE: // cam tilt L
+				if ( bit_is_clear(PINK,PIN3) )
+				{
+					// set Motor4 A bit
+					PORTD |= (1<<PIN6);
+					// delete Motor4 B bit
+					PORTD &= ~(1<<PIN7);
+				}
 				break;
 
 			case MOTOR4_SPEED_SET:
@@ -502,6 +518,32 @@ int main(void)
 				PORTC &= ~(1<<PIN1);
 				PORTC |= (1<<PIN0); // < yellow led
 				break;
+
+			//-------------------------------
+			case READ_CONTACT1:
+				// contact cam pan L
+				// send 1 Byte (8 bit!)
+				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
+				break;
+
+			case READ_CONTACT2:
+				// contact cam pan R
+				// send 1 Byte (8 bit!)
+				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN1) );
+				break;
+
+			case READ_CONTACT3:
+				// contact cam tilt L
+				// send 1 Byte (8 bit!)
+				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN2) );
+				break;
+
+			case READ_CONTACT4:
+				// contact cam tilt R
+				// send 1 Byte (8 bit!)
+				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN3) );
+				break;
+
 /*
 			//-------------------------------
 			case STEPPER1_OFF:
@@ -630,14 +672,14 @@ SIGNAL(PCINT2_vect)
 	//----------------------------
 	if ( bit_is_set(PINK,PIN0) )
 	{
-		// MOTOR3_OFF:
-		// delete Motor3 A bit
+		// turn off MOTOR3 pan L bit (A)
 		PORTL &= ~(1<<PIN6);
-		// delete Motor3 B bit
-		PORTL &= ~(1<<PIN7);
 
-		camPanLSwitch = 1;
-		camPanRSwitch = 0;
+//		camPanLSwitch = 1;
+	}
+	else
+	{
+//		camPanLSwitch = 0;
 	}
 	
 	//----------------------------
@@ -645,14 +687,14 @@ SIGNAL(PCINT2_vect)
 	//----------------------------
 	if ( bit_is_set(PINK,PIN1) )
 	{
-		// MOTOR3_OFF:
-		// delete Motor3 A bit
-		PORTL &= ~(1<<PIN6);
-		// delete Motor3 B bit
+		// turn off MOTOR3 pan R bit (B)
 		PORTL &= ~(1<<PIN7);
 
-		camPanRSwitch = 1;
-		camPanLSwitch = 0;
+//		camPanRSwitch = 1;
+	}
+	else
+	{
+//		camPanRSwitch = 0;
 	}
 	
 	//----------------------------
@@ -660,14 +702,14 @@ SIGNAL(PCINT2_vect)
 	//----------------------------
 	if ( bit_is_set(PINK,PIN2) )
 	{
-		// MOTOR4_OFF:
-		// delete Motor4 A bit
+		// turn off MOTOR4 tilt L bit (A)
 		PORTD &= ~(1<<PIN6);
-		// delete Motor4 B bit
-		PORTD &= ~(1<<PIN7);
 
-		camTiltLSwitch = 1;
-		camTiltRSwitch = 0;
+//		camTiltLSwitch = 1;
+	}
+	else
+	{
+//		camTiltLSwitch = 0;
 	}
 	
 	//----------------------------
@@ -675,13 +717,13 @@ SIGNAL(PCINT2_vect)
 	//----------------------------
 	if ( bit_is_set(PINK,PIN3) )
 	{
-		// MOTOR4_OFF:
-		// delete Motor4 A bit
-		PORTD &= ~(1<<PIN6);
-		// delete Motor4 B bit
+		// turn off MOTOR4 tilt R bit (B)
 		PORTD &= ~(1<<PIN7);
 
-		camTiltLSwitch = 0;
-		camTiltRSwitch = 1;
+//		camTiltRSwitch = 1;
+	}
+	else
+	{
+//		camTiltRSwitch = 0;
 	}
 }

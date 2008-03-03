@@ -53,6 +53,11 @@
 #define MOTOR3_SPEED_SET		56
 #define MOTOR4_SPEED_SET		57
 
+#define READ_CONTACT1			70
+#define READ_CONTACT2			71
+#define READ_CONTACT3			72
+#define READ_CONTACT4			73
+
 #define	INIT					250
 
 
