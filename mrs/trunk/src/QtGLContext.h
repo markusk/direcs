@@ -24,7 +24,7 @@ public:
 		const int height, 
 		const int pixeldepth,
 		const bool flipped = false, // vertical flip!
-		const bool mirrored = true); // horicontal flip!
+		const bool mirrored = false); // horicontal flip!
 
 	// redefines the clipping rectangle for the texture drawing
 	void setZoomRect(float ulX, float ulY, float lrX, float lrY);
