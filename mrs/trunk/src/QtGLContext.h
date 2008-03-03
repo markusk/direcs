@@ -11,32 +11,34 @@ class QtGLContext : public QGLWidget
 {
 	Q_OBJECT
 
+	
 public:
 	/// Constructor
 	QtGLContext(QWidget* parent = 0, const QGLWidget* sharedWidget = 0, Qt::WFlags f = 0 );
 	QtGLContext(const QGLFormat &format, QWidget* parent = 0, const QGLWidget* sharedWidget = 0, Qt::WFlags f = 0 );
 	~QtGLContext();
 
-	// set image parameters
-	bool setImage(
-		unsigned char* imgP, 
-		const int width, 
-		const int height, 
-		const int pixeldepth,
-		const bool flipped = false, // vertical flip!
-		const bool mirrored = false); // horicontal flip!
+	// set image parameters																					vertical flip!
+	bool setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped = false);
 
 	// redefines the clipping rectangle for the texture drawing
 	void setZoomRect(float ulX, float ulY, float lrX, float lrY);
 
 	void resetBox() { m_exit.setX(0); m_exit.setY(0); m_entry.setX(0); m_entry.setY(0);}
 
+	/**
+	Enables or disables the mirror mode for the camera. When activated, the camera live image is mirrored horicontally.
+	@param state has to be Qt::Checked to enable the detection. All other states disable.
+	*/ 
+	void enableMirrorMode(int state);
+
+	
 signals:
 	void boxCreated(int x, int y, int x2, int y2);
 	void saveImage();
 
+	
 protected:
-
 	// standard qt methods
 	virtual void paintGL();
 	virtual void resizeGL(int w, int h);
@@ -54,7 +56,6 @@ protected:
 
 
 private:
-	
 	// pointer to the data of the displayed image
 	unsigned char* m_imgP;
 	// image parameters

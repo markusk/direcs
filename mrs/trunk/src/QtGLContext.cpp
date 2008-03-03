@@ -4,6 +4,7 @@
 QtGLContext::QtGLContext(QWidget* parent /*= 0*/, 
 		const QGLWidget* sharedWidget /*= 0*/, Qt::WFlags f /*= 0*/) : QGLWidget(parent, sharedWidget, f), m_imgP(0), m_mousePressed(false)
 {
+    m_mirrored = false;
 }
 
 QtGLContext::~QtGLContext()
@@ -214,12 +215,10 @@ bool QtGLContext::setImage(
 	const int width, 
 	const int height, 
 	const int pixeldepth, 
-	const bool flipped,  /*=false*/
-	const bool mirrored) /*=false*/
+	const bool flipped)  /*=false*/
 {
 	m_imgP = imgP; m_width = width; m_height = height; m_pixeldepth = pixeldepth;
     m_flipped = flipped;
-    m_mirrored = mirrored;
 	this->updateGL();	
 
 	// only 8, 24 and 32 bit images are supported
@@ -279,3 +278,14 @@ bool QtGLContext::setImage(
 }
 
 
+void QtGLContext::enableMirrorMode(int state)
+{
+	if (state == Qt::Checked)
+	{
+		m_mirrored = true;
+	}
+	else
+	{
+		m_mirrored = false;
+	}
+}
