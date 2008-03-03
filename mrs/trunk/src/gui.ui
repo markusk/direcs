@@ -1484,6 +1484,9 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBoxAutoSave" >
+    <property name="enabled" >
+     <bool>false</bool>
+    </property>
     <property name="geometry" >
      <rect>
       <x>110</x>
@@ -1566,6 +1569,24 @@
     </property>
     <property name="text" >
      <string>Face Detection</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBoxMirror" >
+    <property name="geometry" >
+     <rect>
+      <x>310</x>
+      <y>370</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>Mirror</string>
     </property>
    </widget>
   </widget>
