@@ -34,8 +34,15 @@ class CamThread : public QThread
 		/**
 		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.
 		@param state has to be Qt::Checked to enable the detection. All other states disable.
-		*/ 
+		*/
 		void enableFaceDetection(int state);
+		
+		/**
+		Shows a red object in the camera image, when the camera hits the end switches (when panning and tilting).
+		@param position can be TOP, BOTTOM, LEFT, RIGHT
+		@param state can be true or false (for ON and OFF)
+		 */
+		void showContactAlarm(char position, bool state);
 
 	
 	signals:
@@ -52,17 +59,26 @@ class CamThread : public QThread
 		CvCapture *capture;
 		CvMemStorage *storage;
 		CvHaarClassifierCascade *cascade;
-	    IplImage *gray;
-	    IplImage *small_img;
+		IplImage *gray;
+		IplImage *small_img;
+		bool contactAlarmTop;
+		bool contactAlarmBottom;
+		bool contactAlarmLeft;
+		bool contactAlarmRight;
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
 		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
-	    static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480. 
-	    static const int circleThickness=1;
-	    static const int lineThickness=2;
+		static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480.
+		static const int circleThickness=1;
+		static const int lineThickness=16;
+		
+		static const char TOP = 0;
+		static const char BOTTOM = 1;
+		static const char LEFT = 2;
+		static const char RIGHT = 3;
 };
 
 #endif
