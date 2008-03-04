@@ -82,9 +82,10 @@ void QtGLContext::drawTexture(float ulX, float ulY, float lrX, float lrY)
 		break;		
 	}
 
-	glLoadIdentity();					// Reset The Modelview Matrix
-
+	// Reset The Modelview Matrix
+	glLoadIdentity();
 	glBegin(GL_QUADS);
+
 	if (m_flipped)
 	{	
         //flipped vertically
