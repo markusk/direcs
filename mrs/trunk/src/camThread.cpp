@@ -60,6 +60,8 @@ void CamThread::run()
     CvSeq *faces;
     CvRect *rectangle;
     CvPoint center;
+    CvPoint lineStart;
+    CvPoint lineEnd;
     int radius;
 
     
@@ -99,7 +101,7 @@ void CamThread::run()
 	
 			    if( cascade )
 			    {
-			    	// detect
+			    	// detect objects in the image
 			    	faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 	
 			        // draw a circle for each face
@@ -111,18 +113,25 @@ void CamThread::run()
 			            radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
 			            
 			            // draw circle(s)
-			            // void cvCircle( CvArr* img, CvPoint center, int radius, double color, int thickness=1 );
+			            // void cvCircle( CvArr* img, CvPoint center, int radius, CvScalar color, int thickness=1, int line_type=8, int shift=0 );
 			            if (i==0)
-			            	cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness, 8, 0 );
+			            	cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness);
 			            else
-			            	cvCircle( imgPtr, center, radius, CV_RGB(0, 0, 255), circleThickness, 8, 0 );
+			            	cvCircle( imgPtr, center, radius, CV_RGB(0, 0, 255), circleThickness);
 			        }
 			    }
 				//----------------------------------------
 				// face detection (end)
 				//----------------------------------------
 			}
-		
+			
+			// draw a red line for pan tilt
+			lineStart.x=5;
+			lineStart.y=5;
+			lineEnd.x=5;
+			lineEnd.y=110;
+			cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);		
+
 			//====================================================================
 			//  e m i t  Signal (e.g. send image to GUI)
 			//====================================================================

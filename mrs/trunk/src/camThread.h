@@ -62,6 +62,7 @@ class CamThread : public QThread
 		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
 	    static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480. 
 	    static const int circleThickness=1;
+	    static const int lineThickness=2;
 };
 
 #endif
