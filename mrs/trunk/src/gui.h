@@ -4,9 +4,10 @@
 //-------------------------------------------------------------------
 #include "ui_gui.h"
 #include "motor.h" // FIXME: error with qprinter.h when removing htis line !?!?!
-#include "camThread.h"
 //-------------------------------------------------------------------
 #include "QtGLContext.h"
+//-------------------------------------------------------------------
+#include "cv.h" // for type IplImage
 //-------------------------------------------------------------------
 #include <qwt_plot_layout.h>
 #include <qwt_plot_curve.h>
@@ -178,6 +179,19 @@ class Gui : public QMainWindow
 		@sa CamThread()
 		*/
 		void setCamImage(IplImage* frame);
+
+		
+		/* for future needs
+		Shows a xyz in the GUI, when the camera hits the end switches (when panning and tilting).
+		@param position can be TOP, BOTTOM, LEFT, RIGHT
+		@param state can be true or false (for ON and OFF)
+		@sa CamThread::drawContactAlarm()
+		void showContactAlarm(char position, bool state)
+		{
+			// signal will be routed to the cam thread! see constructor!
+		};
+		 */
+		
 		
 		/**
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
@@ -404,7 +418,6 @@ class Gui : public QMainWindow
 		qreal calculateLaserRearYpos();
 		
 		Ui::Gui ui;
-		CamThread *cam1;
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
 		QPixmap cameraPicToSave;

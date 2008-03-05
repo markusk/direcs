@@ -3,10 +3,6 @@
 
 Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 {
-	// create the camera thread object
-	cam1 = new CamThread();
-	
-	
 	//-------------------------------------------------------
 	// startup the GUI
 	//-------------------------------------------------------
@@ -78,37 +74,14 @@ infrared Sensors temporarily removed from robot!!
 	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), ui.sliderObstacle, SLOT(setValue(int)));
-	
-	
-	//----------------------------------------------------------------------------
-	// connect camDataComplete from the cam thread to signal "setCamImage"
-	// (Whenever the image is complete, the image is shown in the GUI)
-	//----------------------------------------------------------------------------
-	connect(cam1, SIGNAL( camDataComplete(IplImage*) ), this, SLOT( setCamImage(IplImage*) ));
-	
-	//-----------------------------------------------------------
-	// check if camera is connected
-	//-----------------------------------------------------------
-	if (cam1->isConnected())
-	{
-		if (cam1->isRunning() == false)
-		{
-			appendLog("Starting cam thread...", false);
-			cam1->start();
-			appendLog("Camera thread started.");
-			
-			//----------------------------------------------------------------------------
-			// (Whenever the state of the face detect check box changes, set the detec mode
-			//----------------------------------------------------------------------------
-			connect(ui.checkBoxFaceDetection , SIGNAL( stateChanged(int) ), cam1, SLOT( enableFaceDetection(int) ));
-		}
-	}
-	else
-	{
-		appendLog("Camera thread NOT started!");
-	}
 
+	
+	//------------------------------------------------------------------------------
+	// Whenever the state of the face detect check box changes, set the detec mode
+	//------------------------------------------------------------------------------
+	connect(ui.checkBoxFaceDetection , SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
 
+	
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
@@ -129,44 +102,6 @@ infrared Sensors temporarily removed from robot!!
 
 Gui::~Gui()
 {
-	//--------------------------------
-	// quit the camThread
-	//--------------------------------
-	if (cam1->isRunning() == true)
-	{
-		appendLog("Stopping camera thread...");
-		
-		// my own stop routine :-)
-		cam1->stop();
-		
-		// slowing thread down
-		cam1->setPriority(QThread::IdlePriority);
-		cam1->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((cam1->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (cam1->isFinished() == true)
-		{
-			appendLog("Camera thread stopped.");
-		}
-		else
-		{
-			appendLog("Terminating camera thread because it doesn't answer...");
-			cam1->terminate();
-			cam1->wait(1000);
-			appendLog("Camera thread terminated.");
-		}
-	}
-	
-	
-	delete cam1;
 	delete scannerRearSplash;
 	delete scannerFrontSplash;
 	delete pixmapBot2;
@@ -1153,11 +1088,8 @@ void Gui::on_checkBoxAngleView_stateChanged(int state)
 
 void Gui::on_checkBoxMirror_stateChanged(int state)
 {
-	if (cam1->isRunning() == true)
-	{
-		// QtGL class!!
-		ui.frameCamera->enableMirrorMode(state);
-	}
+	// QtGL class!!
+	ui.frameCamera->enableMirrorMode(state);
 }
 
 
