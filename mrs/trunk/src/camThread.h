@@ -38,11 +38,12 @@ class CamThread : public QThread
 		void enableFaceDetection(int state);
 		
 		/**
-		Shows a red object in the camera image, when the camera hits the end switches (when panning and tilting).
+		Draws a red object in the camera image, when the camera hits the end switches (when panning and tilting).
 		@param position can be TOP, BOTTOM, LEFT, RIGHT
 		@param state can be true or false (for ON and OFF)
+		@sa Gui::showContactAlarm()
 		 */
-		void showContactAlarm(char position, bool state);
+		void drawContactAlarm(char position, bool state);
 
 	
 	signals:
@@ -75,10 +76,11 @@ class CamThread : public QThread
 		static const int circleThickness=1;
 		static const int lineThickness=16;
 		
-		static const char TOP = 0;
+		// The position for the contact alarm in the camera image
+		static const char TOP    = 0;
 		static const char BOTTOM = 1;
-		static const char LEFT = 2;
-		static const char RIGHT = 3;
+		static const char LEFT   = 2;
+		static const char RIGHT  = 3;
 };
 
 #endif

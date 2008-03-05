@@ -221,7 +221,7 @@ void CamThread::enableFaceDetection(int state)
 }
 
 
-void CamThread::showContactAlarm(char position, bool state)
+void CamThread::drawContactAlarm(char position, bool state)
 {
 	switch (position)
 	{
