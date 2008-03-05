@@ -114,6 +114,12 @@ class SensorThread : public QThread
 		*/
 		void sensorDataComplete();
 
+		/**
+		This signal is emitted when a contact value is read. The result (an alarm) will be displayed immediately in the camera live image.
+		@sa Mrs::showContactAlarm()
+		*/
+		void contactAlarm(char position, bool state);
+
 
 	private:
 		//mutable QMutex mutex; // make this class thread-safe
@@ -191,6 +197,12 @@ class SensorThread : public QThread
 		static const unsigned char CONTACT2 = 1;
 		static const unsigned char CONTACT3 = 2;
 		static const unsigned char CONTACT4 = 3;
+
+		// The position for the contact alarm in the camera image
+		static const char TOP    = 0;
+		static const char BOTTOM = 1;
+		static const char LEFT   = 2;
+		static const char RIGHT  = 3;
 
 		static const unsigned char CONTACTARRAYSIZE = 4;
 		char contactValue[CONTACTARRAYSIZE];

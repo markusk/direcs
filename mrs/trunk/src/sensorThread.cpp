@@ -399,7 +399,15 @@ infrared Sensors temporarily removed from robot!!
 			
 			// store measured value
 			contactValue[CONTACT1] = cValue;
+			
+			// emit 
+			if (cValue == 0)
+				emit contactAlarm(LEFT, false);
+			else
+				emit contactAlarm(LEFT, true);
+
 			cValue = 0;
+
 			
 			
 			//------------------------------------------------------
@@ -416,6 +424,13 @@ infrared Sensors temporarily removed from robot!!
 			
 			// store measured value
 			contactValue[CONTACT2] = cValue;
+			
+			// emit 
+			if (cValue == 0)
+				emit contactAlarm(RIGHT, false);
+			else
+				emit contactAlarm(RIGHT, true);
+
 			cValue = 0;
 			
 			
@@ -433,6 +448,13 @@ infrared Sensors temporarily removed from robot!!
 			
 			// store measured value
 			contactValue[CONTACT3] = cValue;
+			
+			// emit 
+			if (cValue == 0)
+				emit contactAlarm(TOP, false);
+			else
+				emit contactAlarm(TOP, true);
+
 			cValue = 0;
 			
 			
@@ -450,6 +472,13 @@ infrared Sensors temporarily removed from robot!!
 			
 			// store measured value
 			contactValue[CONTACT4] = cValue;
+			
+			// emit 
+			if (cValue == 0)
+				emit contactAlarm(BOTTOM, false);
+			else
+				emit contactAlarm(BOTTOM, true);
+
 			cValue = 0;
 			
 		} // simulation = false
