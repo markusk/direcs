@@ -8,6 +8,7 @@
 #include "interfaceAvr.h"
 #include "sensorThread.h"
 #include "plotThread.h"
+#include "camThread.h"
 #include "motor.h"
 #include "servo.h"
 #include "obstacleCheckThread.h"
@@ -165,6 +166,7 @@ class Mrs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
+		CamThread *cam1;
 		//SpeakThread *speakThread;
 		Joystick *joystick;
 		QString commaSeparator;

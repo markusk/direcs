@@ -51,6 +51,7 @@ Mrs::Mrs()
 	plotThread = new PlotThread(sensorThread);
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
+	cam1 = new CamThread();
 	joystick = new Joystick();
 	
 	gui1 = new Gui();
@@ -332,6 +333,23 @@ Mrs::Mrs()
 	connect(sensorThread, SIGNAL(sensorDataComplete()), this, SLOT(showSensorData()));
 	
 	//----------------------------------------------------------------------------
+	// connect sensor contact signals to "show contact alarm"
+	// (Whenever the an alarm contact was closed, show the result in the cam image)
+	//----------------------------------------------------------------------------
+	connect(sensorThread, SIGNAL(contactAlarm(char, bool)), cam1, SLOT(drawContactAlarm(char, bool)));
+	
+	//----------------------------------------------------------------------------
+	// connect camDataComplete from the cam thread to signal "setCamImage"
+	// (Whenever the image is complete, the image is shown in the GUI)
+	//----------------------------------------------------------------------------
+	connect(cam1, SIGNAL( camDataComplete(IplImage*) ), gui1, SLOT( setCamImage(IplImage*) ));
+
+	//----------------------------------------------------------------------------
+	// enable face detection, when activated in the GUI
+	//----------------------------------------------------------------------------
+	connect(gui1, SIGNAL( enableFaceDetection(int) ), cam1, SLOT( enableFaceDetection(int) ));
+	
+	//----------------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
 	//----------------------------------------------------------------------------
 	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), SLOT(logicalUnit(int, QDateTime)));
@@ -374,7 +392,25 @@ Mrs::Mrs()
 	
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui1, SLOT(showJoystickButtons(int, bool)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
+
 	
+	//-----------------------------------------------------------
+	// check if camera is connected
+	//-----------------------------------------------------------
+	if (cam1->isConnected())
+	{
+		if (cam1->isRunning() == false)
+		{
+			gui1->appendLog("Starting cam thread...", false);
+			cam1->start();
+			gui1->appendLog("Camera thread started.");
+		}
+	}
+	else
+	{
+		gui1->appendLog("Camera thread NOT started!");
+	}
+
 	
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
@@ -556,7 +592,43 @@ void Mrs::shutdown()
 
 	
 	// TODO: a universal quit-threads-method
+	//--------------------------------
+	// quit the camThread
+	//--------------------------------
+	if (cam1->isRunning() == true)
+	{
+		gui1->appendLog("Stopping camera thread...");
+		
+		// my own stop routine :-)
+		cam1->stop();
+		
+		// slowing thread down
+		cam1->setPriority(QThread::IdlePriority);
+		cam1->quit();
+		
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((cam1->isFinished() == false) && (t.elapsed() <= 2000));
 
+		if (cam1->isFinished() == true)
+		{
+			gui1->appendLog("Camera thread stopped.");
+		}
+		else
+		{
+			gui1->appendLog("Terminating camera thread because it doesn't answer...");
+			cam1->terminate();
+			cam1->wait(1000);
+			gui1->appendLog("Camera thread terminated.");
+		}
+	}
+	
+	
 	//--------------------------------
 	// quit the laserThread
 	//--------------------------------
@@ -894,6 +966,7 @@ Mrs::~Mrs()
 	#endif
 	delete laserThread;
 	delete netThread;
+	delete cam1;
 	delete joystick;
 	delete plotThread;
 	delete inifile1;
