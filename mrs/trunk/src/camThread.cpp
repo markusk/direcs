@@ -32,12 +32,13 @@ CamThread::CamThread() : QThread()
 
 	if (cameraIsOn)
 	{
+		//TODO: check path (use variables from mrs)
 		cascade = (CvHaarClassifierCascade*)cvLoad("/home/markus/develop/sourceforge/mrs/trunk/data/haarcascades/haarcascade_frontalface_alt2.xml", 0, 0, 0);
 
 		if(!cascade)
-	    {
-	        qDebug("ERROR: Could not load classifier cascade for face detection!");
-	    }
+		{
+	        	qDebug("ERROR: Could not load classifier cascade for face detection!");
+		}
 		else
 		{
 			storage = cvCreateMemStorage(0);
