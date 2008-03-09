@@ -47,7 +47,8 @@ class CamThread : public QThread
 
 	
 	signals:
-		void camDataComplete(IplImage* frame);
+		// pointer to the cam image, the coordinates to the middle of a detected face and its radius (0, if none).
+		void camDataComplete(IplImage* frame, int faceX, int faceY, int faceRadius);
 
 
 	private:

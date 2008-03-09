@@ -64,12 +64,13 @@ void CamThread::run()
 	CvSeq *faces;
 	CvRect *rectangle;
 	CvPoint center;
-	//CvPoint lineStart;
-	//CvPoint lineEnd;
 	CvPoint rectStart;
 	CvPoint rectEnd;
-	//int radius;
+	int radius;
 	CvFont font;
+	int faceX = 0;
+	int faceY = 0;
+	int faceRadius = 0;
 
 
 	// cvInitFont( CvFont* font, int font_face, double hscale, double vscale, double shear=0, int thickness=1, int line_type=8 );
@@ -114,13 +115,13 @@ void CamThread::run()
 					// detect objects in the image
 					faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 	
-					// draw a circle for each face
+					// draw a rectangle for each face
 					for( i = 0; i < (faces ? faces->total : 0); i++ )
 					{
 						rectangle = (CvRect*)cvGetSeqElem( faces, i );
 						center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
 						center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
-						//radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
+						radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
 						
 						rectStart.x = rectangle->x*scale;
 						rectStart.y = rectangle->y*scale;
@@ -130,14 +131,16 @@ void CamThread::run()
 						// draw rectangles(s)
 						if (i==0)
 						{
+							// for emit signal
+							faceX = center.x;
+							faceY = center.y;
+							faceRadius = radius;
 							// first face in white
-							//cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness);
 							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
 						}
 						else
 						{
 							// other faces darker color
-							//cvCircle( imgPtr, center, radius, CV_RGB(0, 0, 255), circleThickness);
 							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(128, 128, 128));
 						}
 					}
@@ -153,13 +156,6 @@ void CamThread::run()
 			//----------------------------------------
 			if (contactAlarmLeft)
 			{
-				/*
-				lineStart.x = lineThickness;
-				lineStart.y = 1;
-				lineEnd.x = lineThickness;
-				lineEnd.y = imgPtr->height;
-				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
-				*/
 				// TODO: Use GetTextSize!
 				//Retrieves width and height of text string
 				//void cvGetTextSize( const char* text_string, const CvFont* font, CvSize* text_size, int* baseline );
@@ -168,45 +164,24 @@ void CamThread::run()
 			
 			if (contactAlarmRight)
 			{
-				/*
-				lineStart.x = imgPtr->width - lineThickness;
-				lineStart.y = 1;
-				lineEnd.x = imgPtr->width - lineThickness;
-				lineEnd.y = imgPtr->width;
-				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
-				*/
 				cvPutText( imgPtr, "[Stop]", cvPoint(imgPtr->width-100, (imgPtr->height/2)-5), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmTop)
 			{
-				/*
-				lineStart.x = 1;
-				lineStart.y = lineThickness;
-				lineEnd.x = imgPtr->width - lineThickness;
-				lineEnd.y = lineThickness;
-//				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
-				*/
 				cvPutText( imgPtr, "[Stop]", cvPoint((imgPtr->width/2)-50, 30), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmBottom)
 			{
-				/*
-				lineStart.x = lineThickness;
-				lineStart.y = imgPtr->height - lineThickness;
-				lineEnd.x = imgPtr->width - lineThickness;
-				lineEnd.y = imgPtr->height - lineThickness;
-				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
-				*/
 				cvPutText( imgPtr, "[Stop]", cvPoint((imgPtr->width/2)-50, imgPtr->height-10), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			
 			//====================================================================
-			//  e m i t  Signal (e.g. send image to GUI)
+			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
-			emit camDataComplete(imgPtr);
+			emit camDataComplete(imgPtr, faceX, faceY, faceRadius);
 		
 			// let the thread sleep some time
 			//msleep(THREADSLEEPTIME);

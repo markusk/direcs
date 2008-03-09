@@ -342,7 +342,7 @@ Mrs::Mrs()
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
+	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int) ));
 
 	//----------------------------------------------------------------------------
 	// enable face detection, when activated in the GUI
