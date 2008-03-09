@@ -47,7 +47,13 @@ class CamThread : public QThread
 
 	
 	signals:
-		// pointer to the cam image, the coordinates to the middle of a detected face and its radius (0, if none).
+		/**
+		@param *frame is a pointer to the cam image
+		@param faceX is the X coordinate to the middle of a detected face (0, if none)
+		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
+		@param faceRadius is the radius (0, if none)
+		@sa Mrs::faceTracking()
+		*/
 		void camDataComplete(IplImage* frame, int faceX, int faceY, int faceRadius);
 
 
