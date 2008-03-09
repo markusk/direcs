@@ -64,13 +64,23 @@ void CamThread::run()
 	CvSeq *faces;
 	CvRect *rectangle;
 	CvPoint center;
-	CvPoint lineStart;
-	CvPoint lineEnd;
+	//CvPoint lineStart;
+	//CvPoint lineEnd;
 	int radius;
-	//CvFont *font;
+	CvFont font;
 
+
+	/*
+	int linetype=CV_AA; // antialiased
+	CvFont font1;
+
+	cvInitFont( &font1, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 1, linetype);
+	cvPutText( wrap.p_imgIpl, msg.c_str(), 
+	cvPoint(100,50), &font1, cvScalar(255,0,0) );
+	*/
+	
 	// cvInitFont( CvFont* font, int font_face, double hscale, double vscale, double shear=0, int thickness=1, int line_type=8 );
-	// SIGSEV running this line  cvInitFont(font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 1 /* thickness */, 8);
+	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2 /* thickness */);
 
 	//
 	//  start "threading"...
@@ -136,41 +146,55 @@ void CamThread::run()
 			//----------------------------------------
 			// draw end switch alarm into image
 			//----------------------------------------
-			//cvPutText( imgPtr, "Tilt!", lineStart, font, CV_RGB(255, 64, 64) );
 			if (contactAlarmLeft)
 			{
+				/*
 				lineStart.x = lineThickness;
 				lineStart.y = 1;
 				lineEnd.x = lineThickness;
 				lineEnd.y = imgPtr->height;
 				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
+				*/
+				// TODO: Use GetTextSize!
+				//Retrieves width and height of text string
+				//void cvGetTextSize( const char* text_string, const CvFont* font, CvSize* text_size, int* baseline );
+				cvPutText( imgPtr, "[Stop]", cvPoint(5, (imgPtr->height/2)-5), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmRight)
 			{
+				/*
 				lineStart.x = imgPtr->width - lineThickness;
 				lineStart.y = 1;
 				lineEnd.x = imgPtr->width - lineThickness;
 				lineEnd.y = imgPtr->width;
 				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
+				*/
+				cvPutText( imgPtr, "[Stop]", cvPoint(imgPtr->width-100, (imgPtr->height/2)-5), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmTop)
 			{
+				/*
 				lineStart.x = 1;
 				lineStart.y = lineThickness;
 				lineEnd.x = imgPtr->width - lineThickness;
 				lineEnd.y = lineThickness;
-				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
+//				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
+				*/
+				cvPutText( imgPtr, "[Stop]", cvPoint((imgPtr->width/2)-50, 30), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmBottom)
 			{
+				/*
 				lineStart.x = lineThickness;
 				lineStart.y = imgPtr->height - lineThickness;
 				lineEnd.x = imgPtr->width - lineThickness;
 				lineEnd.y = imgPtr->height - lineThickness;
 				cvLine( imgPtr, lineStart, lineEnd, CV_RGB(255, 64, 64), lineThickness);
+				*/
+				cvPutText( imgPtr, "[Stop]", cvPoint((imgPtr->width/2)-50, imgPtr->height-10), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			
