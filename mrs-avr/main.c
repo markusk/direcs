@@ -433,7 +433,7 @@ int main(void)
 
 			case MOTOR3_CLOCKWISE: // cam pan R
 				// only, when end switch is clear
-				if ( bit_is_clear(PINK,PIN1) )
+				if ( bit_is_clear(PINK,PIN2) )
 				{
 					// delete Motor3 A bit
 					PORTL &= ~(1<<PIN6);
@@ -444,7 +444,7 @@ int main(void)
 
 			case MOTOR3_COUNTERCLOCKWISE: // cam pan L
 				// only, when end switch is clear
-				if ( bit_is_clear(PINK,PIN0) )
+				if ( bit_is_clear(PINK,PIN3) )
 				{
 					// set Motor3 A bit
 					PORTL |= (1<<PIN6);
@@ -467,9 +467,9 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				break;
 
-			case MOTOR4_CLOCKWISE: // cam tilt R
+			case MOTOR4_CLOCKWISE: // cam tilt top
 				// only, when end switch is clear
-//				if ( bit_is_clear(PINK,PIN3) )
+				if ( bit_is_clear(PINK,PIN1) )
 				{
 					// delete Motor4 A bit
 					PORTD &= ~(1<<PIN6);
@@ -478,8 +478,8 @@ int main(void)
 				}
 				break;
 
-			case MOTOR4_COUNTERCLOCKWISE: // cam tilt L
-//				if ( bit_is_clear(PINK,PIN3) )
+			case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
+				if ( bit_is_clear(PINK,PIN0) )
 				{
 					// set Motor4 A bit
 					PORTD |= (1<<PIN6);
@@ -673,7 +673,7 @@ SIGNAL(PCINT2_vect)
 	if ( bit_is_set(PINK,PIN0) )
 	{
 		// turn off MOTOR3 pan L bit (A)
-		PORTL &= ~(1<<PIN6);
+//		PORTL &= ~(1<<PIN6);
 
 //		camPanLSwitch = 1;
 	}
@@ -688,7 +688,7 @@ SIGNAL(PCINT2_vect)
 	if ( bit_is_set(PINK,PIN1) )
 	{
 		// turn off MOTOR3 pan R bit (B)
-		PORTL &= ~(1<<PIN7);
+//		PORTL &= ~(1<<PIN7);
 
 //		camPanRSwitch = 1;
 	}
