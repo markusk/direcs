@@ -157,7 +157,7 @@ void CamThread::run()
 			
 			if (contactAlarmTop)
 			{
-				lineStart.x = lineThickness;
+				lineStart.x = 1;
 				lineStart.y = lineThickness;
 				lineEnd.x = imgPtr->width - lineThickness;
 				lineEnd.y = lineThickness;

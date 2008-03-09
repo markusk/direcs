@@ -32,6 +32,13 @@ SensorThread::SensorThread(InterfaceAvr *i)
 		motorSensorValue[i] = 0;
 	}
 
+	// Array for storing the measured contact values
+	// initialisation
+	for (int i=0; i<CONTACTARRAYSIZE; i++)
+	{
+		contactValue[i] = 0;
+	}
+
 
 	// These are the measured values from the AD-Conversion from the IR-Sensors
 	// Add 8 to the index, then you have the distance in centimeters (cm)
@@ -386,7 +393,7 @@ infrared Sensors temporarily removed from robot!!
 			
 			
 			//------------------------------------------------------
-			// read value of switch 1 (cam pan L)
+			// read value of contact 1 (cam pan L)
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT1) == false)
 			{
@@ -402,16 +409,20 @@ infrared Sensors temporarily removed from robot!!
 			
 			// emit 
 			if (cValue == 0)
+			{
 				emit contactAlarm(LEFT, false);
+			}
 			else
+			{
 				emit contactAlarm(LEFT, true);
+			}
 
 			cValue = 0;
 
 			
 			
 			//------------------------------------------------------
-			// read value of switch 2 (cam pan R)
+			// read value of contact 2 (cam pan R)
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT2) == false)
 			{
@@ -427,15 +438,19 @@ infrared Sensors temporarily removed from robot!!
 			
 			// emit 
 			if (cValue == 0)
+			{
 				emit contactAlarm(RIGHT, false);
+			}
 			else
+			{
 				emit contactAlarm(RIGHT, true);
+			}
 
 			cValue = 0;
 			
 			
 			//------------------------------------------------------
-			// read value of switch 3 (cam tilt L)
+			// read value of contact 3 (cam tilt L/TOP)
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT3) == false)
 			{
@@ -451,15 +466,19 @@ infrared Sensors temporarily removed from robot!!
 			
 			// emit 
 			if (cValue == 0)
+			{
 				emit contactAlarm(TOP, false);
+			}
 			else
+			{
 				emit contactAlarm(TOP, true);
+			}
 
 			cValue = 0;
 			
 			
 			//------------------------------------------------------
-			// read value of switch 4 (cam tilt R)
+			// read value of contact 4 (cam tilt R/BOTTOM)
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT4) == false)
 			{
@@ -475,9 +494,13 @@ infrared Sensors temporarily removed from robot!!
 			
 			// emit 
 			if (cValue == 0)
+			{
 				emit contactAlarm(BOTTOM, false);
+			}
 			else
+			{
 				emit contactAlarm(BOTTOM, true);
+			}
 
 			cValue = 0;
 			

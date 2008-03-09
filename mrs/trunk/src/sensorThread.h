@@ -191,7 +191,7 @@ class SensorThread : public QThread
 		static const unsigned char CONVERSIONFACTORMOTORSENSOR = 29;
 
 		/**
-		 Give the contacts for the pan tilt cam end positions som nice names
+		 Give the contacts for the pan tilt cam end positions some nice names
 		 */
 		static const unsigned char CONTACT1 = 0;
 		static const unsigned char CONTACT2 = 1;
@@ -199,10 +199,10 @@ class SensorThread : public QThread
 		static const unsigned char CONTACT4 = 3;
 
 		// The position for the contact alarm in the camera image
-		static const char TOP    = 0;
-		static const char BOTTOM = 1;
-		static const char LEFT   = 2;
-		static const char RIGHT  = 3;
+		static const char LEFT   = 0;
+		static const char RIGHT  = 1;
+		static const char TOP    = 2;
+		static const char BOTTOM = 3;
 
 		static const unsigned char CONTACTARRAYSIZE = 4;
 		char contactValue[CONTACTARRAYSIZE];
