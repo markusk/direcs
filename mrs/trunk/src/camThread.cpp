@@ -66,19 +66,12 @@ void CamThread::run()
 	CvPoint center;
 	//CvPoint lineStart;
 	//CvPoint lineEnd;
-	int radius;
+	CvPoint rectStart;
+	CvPoint rectEnd;
+	//int radius;
 	CvFont font;
 
 
-	/*
-	int linetype=CV_AA; // antialiased
-	CvFont font1;
-
-	cvInitFont( &font1, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 1, linetype);
-	cvPutText( wrap.p_imgIpl, msg.c_str(), 
-	cvPoint(100,50), &font1, cvScalar(255,0,0) );
-	*/
-	
 	// cvInitFont( CvFont* font, int font_face, double hscale, double vscale, double shear=0, int thickness=1, int line_type=8 );
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2 /* thickness */);
 
@@ -127,14 +120,26 @@ void CamThread::run()
 						rectangle = (CvRect*)cvGetSeqElem( faces, i );
 						center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
 						center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
-						radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
+						//radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
+						
+						rectStart.x = rectangle->x*scale;
+						rectStart.y = rectangle->y*scale;
+						rectEnd.x = rectStart.x + rectangle->width*scale;
+						rectEnd.y = rectStart.y + rectangle->height*scale;
 			
-						// draw circle(s)
-						// void cvCircle( CvArr* img, CvPoint center, int radius, CvScalar color, int thickness=1, int line_type=8, int shift=0 );
+						// draw rectangles(s)
 						if (i==0)
-							cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness);
+						{
+							// first face in white
+							//cvCircle( imgPtr, center, radius, CV_RGB(255, 0, 0), circleThickness);
+							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
+						}
 						else
-							cvCircle( imgPtr, center, radius, CV_RGB(0, 0, 255), circleThickness);
+						{
+							// other faces darker color
+							//cvCircle( imgPtr, center, radius, CV_RGB(0, 0, 255), circleThickness);
+							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(128, 128, 128));
+						}
 					}
 				}
 			}
