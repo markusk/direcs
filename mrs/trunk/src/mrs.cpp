@@ -51,10 +51,10 @@ Mrs::Mrs()
 	plotThread = new PlotThread(sensorThread);
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
-	cam1 = new CamThread();
+	camThread = new CamThread();
 	joystick = new Joystick();
 	
-	gui1 = new Gui();
+	gui = new Gui();
 
 	
 	
@@ -84,7 +84,7 @@ Mrs::Mrs()
 	//--------------------------------------------------------------------------
 	// Check for the current programm path 
 	//--------------------------------------------------------------------------
-	gui1->appendLog(QString("Current path: %1").arg(inifile1->checkPath()));
+	gui->appendLog(QString("Current path: %1").arg(inifile1->checkPath()));
 	
 	//--------------------------------------------------------------------------
 	// show a QMessage wth the possibility to exit the main programm, when errors occured!
@@ -94,44 +94,44 @@ Mrs::Mrs()
 	//--------------------------------------------------------------------------
 	// shutdown Mrs program on exit button
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(shutdown()), this, SLOT(shutdown()));
+	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
 	// FIXME: check, how to make a clean exit, when the window is closed via window menu, not via exit button!
 	//connect(this, SIGNAL(QApplication::lastWindowClosed()), this, SLOT(shutdown()));
 	
 	//--------------------------------------------------------------------------
 	// call the test method at the test button
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(test()), this, SLOT(test()));
+	connect(gui, SIGNAL(test()), this, SLOT(test()));
 	
 	//--------------------------------------------------------------------------
 	// set the motor speed, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
+	connect(gui, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
 	
 	//--------------------------------------------------------------------------
 	// resets the driven distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
+	connect(gui, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
 	
 	//--------------------------------------------------------------------------
 	// set the robot slot, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	connect(gui, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 	
 	//--------------------------------------------------------------------------
 	// set the straight forward deviation, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
+	connect(gui, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
 	
 	//--------------------------------------------------------------------------
 	// set the minimum distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
+	connect(gui, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
 	
 	//--------------------------------------------------------------------------
 	// set the minimum laser distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui1, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+	connect(gui, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
 	
 	
 	//----------------------------------------------------------------------------
@@ -140,8 +140,8 @@ Mrs::Mrs()
 	#ifdef _TTY_POSIX_
 	// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
 	//connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-	//connect(gui1, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-	connect(gui1, SIGNAL( speak(QString) ), this, SLOT( speak(QString) ));
+	//connect(gui, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+	connect(gui, SIGNAL( speak(QString) ), this, SLOT( speak(QString) ));
 	
 	//----------------------------------------------------------------------------
 	// Initialize the speech engine festival
@@ -154,9 +154,9 @@ Mrs::Mrs()
 	/*
 	if (speakThread->isRunning() == false)
 	{
-		gui1->appendLog("Starting speak thread...", false);
+		gui->appendLog("Starting speak thread...", false);
 		speakThread->start();
-		gui1->appendLog("Speak thread started.");
+		gui->appendLog("Speak thread started.");
 	}
 	*/
 	#endif
@@ -169,12 +169,12 @@ Mrs::Mrs()
 	if (inifile1->checkFiles() == false)
 	{
 		// file not found-Msg
-		gui1->appendLog(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
+		gui->appendLog(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
 	}
 	else
 	{
 		// file found-Msg
-		gui1->appendLog(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
+		gui->appendLog(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 		
 		splash->showMessage(QObject::tr("Reading settings..."), somewhere, splashColor);
 		
@@ -188,15 +188,15 @@ Mrs::Mrs()
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
-	gui1->appendLog("Opening serial port for microcontroller communication...");
+	gui->appendLog("Opening serial port for microcontroller communication...");
 	
 	if (interface1->openComPort(serialPortMicrocontroller) == true)
 	{
-		gui1->appendLog("Serial port opened.");
+		gui->appendLog("Serial port opened.");
 	}
 	else
 	{
-		gui1->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
+		gui->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
 	}
 	
 	
@@ -206,7 +206,7 @@ Mrs::Mrs()
 	//-------------------------------------------------------
 	splash->showMessage(QObject::tr("Searching robot..."), somewhere, splashColor);
 	
-	connect(gui1, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+	connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 	
 	
 	// init the robots circuit
@@ -214,11 +214,11 @@ Mrs::Mrs()
 	
 	if (circuit1->isConnected() == true)
 	{
-		gui1->appendLog("Robot is ON and answers.");
+		gui->appendLog("Robot is ON and answers.");
 	}
 	else
 	{
-		gui1->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+		gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 	}
 
 	
@@ -243,7 +243,7 @@ Mrs::Mrs()
 		motors->setMotorSpeed(2, mot2Speed);
 		motors->setMotorSpeed(3, mot3Speed);
 		motors->setMotorSpeed(4, mot4Speed);
-		gui1->appendLog("Motor speed set in microcontroller");
+		gui->appendLog("Motor speed set in microcontroller");
 	}
 
 	
@@ -255,15 +255,15 @@ Mrs::Mrs()
 		if (sensorThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting sensor thread..."), somewhere, splashColor);
-			gui1->appendLog("Starting sensor thread...", false);
+			gui->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
-			gui1->appendLog("Sensor thread started.");
+			gui->appendLog("Sensor thread started.");
 		}
 	}
 	else
 	{
 		// show message
-		gui1->appendLog("Sensor thread NOT started!");
+		gui->appendLog("Sensor thread NOT started!");
 	}
 
 
@@ -275,30 +275,30 @@ Mrs::Mrs()
 		if (plotThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting plot thread..."), somewhere, splashColor);
-			gui1->appendLog("Starting plot thread...", false);
+			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
-			gui1->appendLog("Plot thread started.");
+			gui->appendLog("Plot thread started.");
 		}
 	}
 	else
 	{
 		// show message
-		gui1->appendLog("Plot thread NOT started!");
+		gui->appendLog("Plot thread NOT started!");
 	}
 
 	//----------------------------------------------------------------------------
 	// connect plotThread signal to "setPlotData"
 	// (Whenever the plot thread has new data, the data are show in the GUI)
 	//----------------------------------------------------------------------------
-	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui1, SLOT( setPlotData1(double *, double *, int) ));
-	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui1, SLOT( setPlotData2(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
 
 	
 	//-----------------------------------------------------------
 	// check if joystick is connected
 	//-----------------------------------------------------------
 	// let the GUI show messages in the log
-	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
+	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
 	
 	if (joystick->isConnected())
 	{
@@ -306,25 +306,25 @@ Mrs::Mrs()
 		if (joystick->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting joystick thread..."), somewhere, splashColor);
-			gui1->appendLog("Starting joystick thread...", false);
+			gui->appendLog("Starting joystick thread...", false);
 			joystick->start();
-			gui1->appendLog("Joystick thread started.");
+			gui->appendLog("Joystick thread started.");
 		}
 	}
 	else
 	{
-		gui1->appendLog("Joystick thread NOT started!");
+		gui->appendLog("Joystick thread NOT started!");
 	}
 
 	//----------------------------------------------------------------------------
 	// let the GUI show messages in the log (e.g. when special buttons pressed)
 	//----------------------------------------------------------------------------
-	connect(joystick, SIGNAL(emitMessage(QString)), gui1, SLOT(appendLog(QString)));
+	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
 	
 	//----------------------------------------------------------------------------
 	// drive in the direction which was emited
 	//----------------------------------------------------------------------------
-	connect(gui1, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
+	connect(gui, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
 	
 	//----------------------------------------------------------------------------
 	// connect sensor signals to "show sensor data"
@@ -336,18 +336,18 @@ Mrs::Mrs()
 	// connect sensor contact signals to "show contact alarm"
 	// (Whenever the an alarm contact was closed, show the result in the cam image)
 	//----------------------------------------------------------------------------
-	connect(sensorThread, SIGNAL(contactAlarm(char, bool)), cam1, SLOT(drawContactAlarm(char, bool)));
+	connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
 	
 	//----------------------------------------------------------------------------
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(cam1, SIGNAL( camDataComplete(IplImage*) ), gui1, SLOT( setCamImage(IplImage*) ));
+	connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
 
 	//----------------------------------------------------------------------------
 	// enable face detection, when activated in the GUI
 	//----------------------------------------------------------------------------
-	connect(gui1, SIGNAL( enableFaceDetection(int) ), cam1, SLOT( enableFaceDetection(int) ));
+	connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
 	
 	//----------------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
@@ -355,16 +355,16 @@ Mrs::Mrs()
 	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), SLOT(logicalUnit(int, QDateTime)));
 	
 	// show the angle where to drive in a GUI label
-	connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui1, SLOT(showLaserFrontAngles(int, int, int)));
+	connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui, SLOT(showLaserFrontAngles(int, int, int)));
 	
 	// show the preferred driving direction in a GUI label
-	connect(this, SIGNAL(showPreferredDirection(QString)), gui1, SLOT(showPreferredDirection(QString)));
+	connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
 	
 	//----------------------------------------------------------------------------
 	// connect remote control button from gui to remote control method here
 	// (Whenever the button is pushed, enable the network remote control)
 	//----------------------------------------------------------------------------
-	connect(gui1, SIGNAL( enableRemoteControlListening(bool) ), this, SLOT( enableRemoteControlListening(bool) ));
+	connect(gui, SIGNAL( enableRemoteControlListening(bool) ), this, SLOT( enableRemoteControlListening(bool) ));
 	
 	//----------------------------------------------------------------------------
 	// execute the received remote commands
@@ -374,41 +374,41 @@ Mrs::Mrs()
 	// connect networkThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(netThread, SIGNAL( dataReceived(QString) ), gui1, SLOT( appendNetworkLog(QString) ));
+	connect(netThread, SIGNAL( dataReceived(QString) ), gui, SLOT( appendNetworkLog(QString) ));
 	
 	//----------------------------------------------------------------------------
 	// connect laserThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui1, SLOT( refreshLaserViewFront(float *, int *) ));
-	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui1, SLOT( refreshLaserViewRear(float *, int *) ));
+	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
+	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
 	
 	//----------------------------------------------------------------------------
 	// connect joystick signals to "show joystick data"
 	// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
 	//----------------------------------------------------------------------------
-	connect(joystick, SIGNAL(joystickMoved(int, int)), gui1, SLOT(showJoystickAxes(int, int)));
+	connect(joystick, SIGNAL(joystickMoved(int, int)), gui, SLOT(showJoystickAxes(int, int)));
 	connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
 	
-	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui1, SLOT(showJoystickButtons(int, bool)));
+	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui, SLOT(showJoystickButtons(int, bool)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 	
 	//-----------------------------------------------------------
 	// check if camera is connected
 	//-----------------------------------------------------------
-	if (cam1->isConnected())
+	if (camThread->isConnected())
 	{
-		if (cam1->isRunning() == false)
+		if (camThread->isRunning() == false)
 		{
-			gui1->appendLog("Starting cam thread...", false);
-			cam1->start();
-			gui1->appendLog("Camera thread started.");
+			gui->appendLog("Starting cam thread...", false);
+			camThread->start();
+			gui->appendLog("Camera thread started.");
 		}
 	}
 	else
 	{
-		gui1->appendLog("Camera thread NOT started!");
+		gui->appendLog("Camera thread NOT started!");
 	}
 
 	
@@ -416,10 +416,10 @@ Mrs::Mrs()
 	// connect simulation button from gui to activate the simulation mode
 	// (sets the mrs an the threads to simulation mode)
 	//----------------------------------------------------------------------------
-	connect(gui1, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
-	connect(gui1, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
-	connect(gui1, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
-	connect(gui1, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
+	connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
+	connect(gui, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
+	connect(gui, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
+	connect(gui, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
 
 
 	//---------------------------------------------------------------------
@@ -437,20 +437,20 @@ Mrs::Mrs()
 	{
 		if (scanner1found)
 		{
-			gui1->appendLog("Front laser scanner found.");
+			gui->appendLog("Front laser scanner found.");
 		}
 		else
 		{
-			gui1->appendLog("Front laser scanner NOT found.");
+			gui->appendLog("Front laser scanner NOT found.");
 		}
 	
 		if (scanner2found)
 		{
-			gui1->appendLog("Rear laser scanner found.");
+			gui->appendLog("Rear laser scanner found.");
 		}
 		else
 		{
-			gui1->appendLog("Rear laser scanner NOT found.");
+			gui->appendLog("Rear laser scanner NOT found.");
 		}
 
 		
@@ -466,26 +466,26 @@ Mrs::Mrs()
 		if (laserThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting Laser thread..."), somewhere, splashColor);
-			gui1->appendLog("Starting Laser thread...", false);
+			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
-			gui1->appendLog("Laser thread started.");
+			gui->appendLog("Laser thread started.");
 		}
 		
 
 		if (obstCheckThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting obstacle check thread..."), somewhere, splashColor);
-			gui1->appendLog("Starting obstacle check thread...", false);
+			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
-			gui1->appendLog("Obstacle check thread started.");
+			gui->appendLog("Obstacle check thread started.");
 		}
 	}
 	else
 	{
 		// turn off laser splash
-		gui1->laserSplash(false, LASER1);
-		gui1->laserSplash(false, LASER2);
-		gui1->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
+		gui->laserSplash(false, LASER1);
+		gui->laserSplash(false, LASER2);
+		gui->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
 	
 	
@@ -502,10 +502,10 @@ Mrs::Mrs()
 	{
 	*/
 		// move mainWindow to the center of the screen
-		gui1->move( (desktop->width() - gui1->width())/2, (desktop->height() - gui1->height())/2 );
+		gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
 
 		// show the main window
-		gui1->show();
+		gui->show();
 		
 		// delete the splash screen
 		QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
@@ -515,7 +515,7 @@ Mrs::Mrs()
 	{
 		// resolution too smal for this window. Maximizing...
 		// show the main window
-		gui1->showMaximized();
+		gui->showMaximized();
 	}
 	*/
 }
@@ -538,22 +538,22 @@ void Mrs::shutdown()
 	//---------------------------------------------------------------
 	// save changes to ini-file (if check box is checked!)
 	//---------------------------------------------------------------
-	if (gui1->getCheckBoxSaveSettings()== Qt::Checked)
+	if (gui->getCheckBoxSaveSettings()== Qt::Checked)
 	{
-		gui1->appendLog("Writing settings...");
+		gui->appendLog("Writing settings...");
 
 		// save gui slider values
-		inifile1->writeSetting("Config", "motor1Speed", gui1->getSliderMotorSpeed(1));
-		inifile1->writeSetting("Config", "motor2Speed", gui1->getSliderMotorSpeed(2));
-		inifile1->writeSetting("Config", "minimumSpeed", gui1->getSliderMinimumSpeed());
-		inifile1->writeSetting("Config", "maximumSpeed", gui1->getSliderMaximumSpeed());
-		inifile1->writeSetting("Config", "minObstacleDistance", gui1->getSliderObstacleValue());
-		inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", gui1->getSliderObstacleLaserScannerValue());
-		inifile1->writeSetting("Config", "robotSlot", gui1->getSliderRobotSlotValue());
-		inifile1->writeSetting("Config", "straightForwardDeviation", gui1->getSliderStraightForwardDeviationValue());
+		inifile1->writeSetting("Config", "motor1Speed", gui->getSliderMotorSpeed(1));
+		inifile1->writeSetting("Config", "motor2Speed", gui->getSliderMotorSpeed(2));
+		inifile1->writeSetting("Config", "minimumSpeed", gui->getSliderMinimumSpeed());
+		inifile1->writeSetting("Config", "maximumSpeed", gui->getSliderMaximumSpeed());
+		inifile1->writeSetting("Config", "minObstacleDistance", gui->getSliderObstacleValue());
+		inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", gui->getSliderObstacleLaserScannerValue());
+		inifile1->writeSetting("Config", "robotSlot", gui->getSliderRobotSlotValue());
+		inifile1->writeSetting("Config", "straightForwardDeviation", gui->getSliderStraightForwardDeviationValue());
 
 		// save check box status
-		inifile1->writeSetting("Config", "saveOnExit", gui1->getCheckBoxSaveSettings());
+		inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
 
 		// Later...
 		//
@@ -564,7 +564,7 @@ void Mrs::shutdown()
 		inifile1->sync();
 
 		//QMessageBox::information(0, "mrs", "Settings written. :-)", QMessageBox::Ok);
-		gui1->appendLog("Settings written.");
+		gui->appendLog("Settings written.");
 	}
 	else
 	{
@@ -572,7 +572,7 @@ void Mrs::shutdown()
 		// "Save the setting, that no settings shoud be saved"
 		//
 		// save check box status
-		inifile1->writeSetting("Config", "saveOnExit", gui1->getCheckBoxSaveSettings());
+		inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
 	}
 
 
@@ -595,16 +595,16 @@ void Mrs::shutdown()
 	//--------------------------------
 	// quit the camThread
 	//--------------------------------
-	if (cam1->isRunning() == true)
+	if (camThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping camera thread...");
+		gui->appendLog("Stopping camera thread...");
 		
 		// my own stop routine :-)
-		cam1->stop();
+		camThread->stop();
 		
 		// slowing thread down
-		cam1->setPriority(QThread::IdlePriority);
-		cam1->quit();
+		camThread->setPriority(QThread::IdlePriority);
+		camThread->quit();
 		
 		//-------------------------------------------
 		// start measuring time for timeout ckecking
@@ -613,18 +613,18 @@ void Mrs::shutdown()
 		t.start();
 		do
 		{
-		} while ((cam1->isFinished() == false) && (t.elapsed() <= 2000));
+		} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
 
-		if (cam1->isFinished() == true)
+		if (camThread->isFinished() == true)
 		{
-			gui1->appendLog("Camera thread stopped.");
+			gui->appendLog("Camera thread stopped.");
 		}
 		else
 		{
-			gui1->appendLog("Terminating camera thread because it doesn't answer...");
-			cam1->terminate();
-			cam1->wait(1000);
-			gui1->appendLog("Camera thread terminated.");
+			gui->appendLog("Terminating camera thread because it doesn't answer...");
+			camThread->terminate();
+			camThread->wait(1000);
+			gui->appendLog("Camera thread terminated.");
 		}
 	}
 	
@@ -634,7 +634,7 @@ void Mrs::shutdown()
 	//--------------------------------
 	if (laserThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping laser thread...");
+		gui->appendLog("Stopping laser thread...");
 		
 		// my own stop routine :-)
 		laserThread->stop();
@@ -654,14 +654,14 @@ void Mrs::shutdown()
 
 		if (laserThread->isFinished() == true)
 		{
-			gui1->appendLog("Laser thread stopped.");
+			gui->appendLog("Laser thread stopped.");
 		}
 		else
 		{
-			gui1->appendLog("Terminating laser thread because it doesn't answer...");
+			gui->appendLog("Terminating laser thread because it doesn't answer...");
 			laserThread->terminate();
 			laserThread->wait(1000);
-			gui1->appendLog("Laser thread terminated.");
+			gui->appendLog("Laser thread terminated.");
 		}
 	}
 	
@@ -673,7 +673,7 @@ void Mrs::shutdown()
 	//--------------------------------
 	if (speakThread->isRunning() == true)
 	{
-	gui1->appendLog("Stopping speak thread...");
+	gui->appendLog("Stopping speak thread...");
 		
 		// my own stop routine :-)
 	speakThread->stop();
@@ -693,14 +693,14 @@ void Mrs::shutdown()
 
 	if (speakThread->isFinished() == true)
 	{
-	gui1->appendLog("Speak thread stopped.");
+	gui->appendLog("Speak thread stopped.");
 }
 	else
 	{
-	gui1->appendLog("Terminating speak thread because it doesn't answer...");
+	gui->appendLog("Terminating speak thread because it doesn't answer...");
 	speakThread->terminate();
 	speakThread->wait(1000);
-	gui1->appendLog("Speak thread terminated.");
+	gui->appendLog("Speak thread terminated.");
 }
 }
 	*/
@@ -711,7 +711,7 @@ void Mrs::shutdown()
 	//--------------------------------
 	if (netThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping network thread...");
+		gui->appendLog("Stopping network thread...");
 		
 		// my own stop routine :-)
 		netThread->stop();
@@ -731,14 +731,14 @@ void Mrs::shutdown()
 
 		if (netThread->isFinished() == true)
 		{
-			gui1->appendLog("Network thread stopped.");
+			gui->appendLog("Network thread stopped.");
 		}
 		else
 		{
-			gui1->appendLog("Terminating network thread because it doesn't answer...");
+			gui->appendLog("Terminating network thread because it doesn't answer...");
 			netThread->terminate();
 			netThread->wait(1000);
-			gui1->appendLog("Network thread terminated.");
+			gui->appendLog("Network thread terminated.");
 		}
 	}
 
@@ -748,7 +748,7 @@ void Mrs::shutdown()
 	//--------------------------------
 	if (joystick->isRunning() == true)
 	{
-		gui1->appendLog("Stopping joystick thread...");
+		gui->appendLog("Stopping joystick thread...");
 		
 		// my own stop routine :-)
 		joystick->stop();
@@ -768,14 +768,14 @@ void Mrs::shutdown()
 
 		if (joystick->isFinished() == true)
 		{
-			gui1->appendLog("Joystick thread stopped.");
+			gui->appendLog("Joystick thread stopped.");
 		}
 		else
 		{
-			gui1->appendLog("Terminating joystick thread because it doesn't answer...");
+			gui->appendLog("Terminating joystick thread because it doesn't answer...");
 			joystick->terminate();
 			joystick->wait(1000);
-			gui1->appendLog("Joystick thread terminated.");
+			gui->appendLog("Joystick thread terminated.");
 		}
 	}
 
@@ -785,7 +785,7 @@ void Mrs::shutdown()
 	//--------------------------------
 	if (plotThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping Plot thread...");
+		gui->appendLog("Stopping Plot thread...");
 		
 		// my own stop routine :-)
 		plotThread->stop();
@@ -805,14 +805,14 @@ void Mrs::shutdown()
 
 		if (plotThread->isFinished() == true)
 		{
-			gui1->appendLog("Plot thread stopped.");
+			gui->appendLog("Plot thread stopped.");
 		}
 		else
 		{
-			gui1->appendLog("Terminating Plot thread because it doesn't answer...");
+			gui->appendLog("Terminating Plot thread because it doesn't answer...");
 			plotThread->terminate();
 			plotThread->wait(1000);
-			gui1->appendLog("Plot thread terminated.");
+			gui->appendLog("Plot thread terminated.");
 		}
 	}
 
@@ -824,7 +824,7 @@ void Mrs::shutdown()
 	//qDebug("Starting to stop the obstacle check thread NOW!");
 	if (obstCheckThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping obstacle check thread...");
+		gui->appendLog("Stopping obstacle check thread...");
 		
 		// my own stop routine :-)
 		obstCheckThread->stop();
@@ -844,14 +844,14 @@ void Mrs::shutdown()
 
 		if (obstCheckThread->isFinished() == true)
 		{
-			gui1->appendLog("Obstacle check thread stopped.");
+			gui->appendLog("Obstacle check thread stopped.");
 		}
 		else
 		{
-			gui1->appendLog("Terminating obstacle check thread because it doesn't answer...");
+			gui->appendLog("Terminating obstacle check thread because it doesn't answer...");
 			obstCheckThread->terminate();
 			obstCheckThread->wait(1000);
-			gui1->appendLog("Obstacle check thread terminated.");
+			gui->appendLog("Obstacle check thread terminated.");
 		}
 	}
 
@@ -863,7 +863,7 @@ void Mrs::shutdown()
 	//qDebug("Starting to stop the supersonic thread NOW!");
 	if (supersonThread->isRunning() == true)
 	{
-	gui1->appendLog("Stopping supersonic thread...");
+	gui->appendLog("Stopping supersonic thread...");
 		// slowing thread down
 	supersonThread->setPriority(QThread::IdlePriority);
 	supersonThread->quit();
@@ -879,14 +879,14 @@ void Mrs::shutdown()
 
 	if (supersonThread->isFinished() == true)
 	{
-	gui1->appendLog("Supersonic thread stopped.");
+	gui->appendLog("Supersonic thread stopped.");
 }
 	else
 	{
-	gui1->appendLog("Terminating supersonic thread because it doesn't answer...");
+	gui->appendLog("Terminating supersonic thread because it doesn't answer...");
 	supersonThread->terminate();
 	supersonThread->wait(1000);
-	gui1->appendLog("Supersonic thread terminated.");
+	gui->appendLog("Supersonic thread terminated.");
 }
 }
 	*/
@@ -899,7 +899,7 @@ void Mrs::shutdown()
 	//qDebug("Starting to stop the sensor thread NOW!");
 	if (sensorThread->isRunning() == true)
 	{
-		gui1->appendLog("Stopping sensor thread...");
+		gui->appendLog("Stopping sensor thread...");
 		
 		// my own stop routine :-)
 		sensorThread->stop();
@@ -919,14 +919,14 @@ void Mrs::shutdown()
 
 		if (sensorThread->isFinished() == true)
 		{
-			gui1->appendLog("Sensor thread stopped.");
+			gui->appendLog("Sensor thread stopped.");
 		}
 		else
 		{
-			gui1->appendLog("Terminating sensor thread because it doesn't answer...");
+			gui->appendLog("Terminating sensor thread because it doesn't answer...");
 			sensorThread->terminate();
 			sensorThread->wait(1000);
-			gui1->appendLog("Sensor thread terminated.");
+			gui->appendLog("Sensor thread terminated.");
 		}
 	}
 
@@ -934,7 +934,7 @@ void Mrs::shutdown()
 	//-------------------------------------------------------
 	// Last init for the robots circuits
 	//-------------------------------------------------------
-	gui1->appendLog("Last circuit init...");
+	gui->appendLog("Last circuit init...");
 	if (circuit1->isConnected())
 	{
 		emit initCircuit();
@@ -943,11 +943,11 @@ void Mrs::shutdown()
 	//-----------------------------
 	// close serial port to mc
 	//-----------------------------
-	gui1->appendLog("Closing serial port to microcontroller...");
+	gui->appendLog("Closing serial port to microcontroller...");
 	interface1->closeComPort();
 
 	// close the gui
-	gui1->close();
+	gui->close();
 
 	
 	this->~Mrs();
@@ -956,7 +956,7 @@ void Mrs::shutdown()
 
 Mrs::~Mrs()
 {
-	qDebug("destructor called. :-)");
+	qDebug("Bye.");
 	
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
@@ -966,7 +966,7 @@ Mrs::~Mrs()
 	#endif
 	delete laserThread;
 	delete netThread;
-	delete cam1;
+	delete camThread;
 	delete joystick;
 	delete plotThread;
 	delete inifile1;
@@ -976,13 +976,13 @@ Mrs::~Mrs()
 	delete sensorThread;
 	delete circuit1;
 	delete interface1;
-	delete gui1;
+	delete gui;
 }
 
 
 void Mrs::showExitDialog()
 {
-		gui1->appendLog("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
+		gui->appendLog("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
 		
 		/*
 		// ask user if he really wants to exit.
@@ -1006,7 +1006,7 @@ void Mrs::showExitDialog()
 
 void Mrs::finishSplash()
 {
-	splash->finish(gui1);
+	splash->finish(gui);
 }
 
 
@@ -1019,15 +1019,15 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 
 	// first switch all (old) sensor alarms OFF
-	gui1->showAlarm(SENSOR1, OFF);
-	gui1->showAlarm(SENSOR2, OFF);
-	gui1->showAlarm(SENSOR3, OFF);
-	gui1->showAlarm(SENSOR4, OFF);
-	gui1->showAlarm(SENSOR5, OFF);
-	gui1->showAlarm(SENSOR6, OFF);
-	gui1->showAlarm(SENSOR7, OFF);
-	gui1->showAlarm(SENSOR8, OFF);
-	gui1->showAlarm(SENSOR16, OFF);
+	gui->showAlarm(SENSOR1, OFF);
+	gui->showAlarm(SENSOR2, OFF);
+	gui->showAlarm(SENSOR3, OFF);
+	gui->showAlarm(SENSOR4, OFF);
+	gui->showAlarm(SENSOR5, OFF);
+	gui->showAlarm(SENSOR6, OFF);
+	gui->showAlarm(SENSOR7, OFF);
+	gui->showAlarm(SENSOR8, OFF);
+	gui->showAlarm(SENSOR16, OFF);
 	
 	
 	// if all sensor values are the same like the last, do nothing!
@@ -1053,8 +1053,8 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 		
 		if (robotDrives == true)
 		{
-			gui1->appendLog("No obstacle in front of any sensor. :-)");
-			gui1->appendLog("Driving forward...");
+			gui->appendLog("No obstacle in front of any sensor. :-)");
+			gui->appendLog("Driving forward...");
 			
 			//----------------
 			// drive forward
@@ -1082,7 +1082,7 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 		
 		if (robotDrives == true)
 		{
-			gui1->appendLog(QString("<b>Obstacle %1 everywhere in front of the robot. Waiting.</b>").arg(alarmCounter));
+			gui->appendLog(QString("<b>Obstacle %1 everywhere in front of the robot. Waiting.</b>").arg(alarmCounter));
 			
 			//----------------
 			// drive WAIT
@@ -1122,7 +1122,7 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 			
 			if (robotDrives == true)
 			{
-				gui1->appendLog(QString("<b>Obstacle %1 front left. Turning right.</b>").arg(alarmCounter));
+				gui->appendLog(QString("<b>Obstacle %1 front left. Turning right.</b>").arg(alarmCounter));
 				
 				//----------------
 				// drive right
@@ -1163,7 +1163,7 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 			
 			if (robotDrives == true)
 			{
-				gui1->appendLog("<b>Obstacle front right. Turning left.</b>");
+				gui->appendLog("<b>Obstacle front right. Turning left.</b>");
 				
 				//----------------
 				// drive left
@@ -1187,36 +1187,36 @@ void Mrs::showSensorData()
 	//----------------------------------------
 	// show sensor values with progress bars
 	//----------------------------------------
-	gui1->showDistanceGraphical(SENSOR1, sensorThread->getDistance(SENSOR1));
-	gui1->showDistanceGraphical(SENSOR2, sensorThread->getDistance(SENSOR2));
-	gui1->showDistanceGraphical(SENSOR3, sensorThread->getDistance(SENSOR3));
-	gui1->showDistanceGraphical(SENSOR4, sensorThread->getDistance(SENSOR4));
-	gui1->showDistanceGraphical(SENSOR5, sensorThread->getDistance(SENSOR5));
-	gui1->showDistanceGraphical(SENSOR6, sensorThread->getDistance(SENSOR6));
-	gui1->showDistanceGraphical(SENSOR7, sensorThread->getDistance(SENSOR7));
-	gui1->showDistanceGraphical(SENSOR8, sensorThread->getDistance(SENSOR8));
-	gui1->showDistanceGraphical(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
+	gui->showDistanceGraphical(SENSOR1, sensorThread->getDistance(SENSOR1));
+	gui->showDistanceGraphical(SENSOR2, sensorThread->getDistance(SENSOR2));
+	gui->showDistanceGraphical(SENSOR3, sensorThread->getDistance(SENSOR3));
+	gui->showDistanceGraphical(SENSOR4, sensorThread->getDistance(SENSOR4));
+	gui->showDistanceGraphical(SENSOR5, sensorThread->getDistance(SENSOR5));
+	gui->showDistanceGraphical(SENSOR6, sensorThread->getDistance(SENSOR6));
+	gui->showDistanceGraphical(SENSOR7, sensorThread->getDistance(SENSOR7));
+	gui->showDistanceGraphical(SENSOR8, sensorThread->getDistance(SENSOR8));
+	gui->showDistanceGraphical(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
 	
 	/*
 	//-------------------------------------------------------
 	// show distance value in a text label (in centimeters!)
 	//-------------------------------------------------------
-	gui1->showDistance(SENSOR1, sensorThread->getDistance(SENSOR1));
-	gui1->showDistance(SENSOR2, sensorThread->getDistance(SENSOR2));
-	gui1->showDistance(SENSOR3, sensorThread->getDistance(SENSOR3));
-	gui1->showDistance(SENSOR4, sensorThread->getDistance(SENSOR4));
-	gui1->showDistance(SENSOR5, sensorThread->getDistance(SENSOR5));
-	gui1->showDistance(SENSOR6, sensorThread->getDistance(SENSOR6));
-	gui1->showDistance(SENSOR7, sensorThread->getDistance(SENSOR7));
-	gui1->showDistance(SENSOR8, sensorThread->getDistance(SENSOR8));
-	gui1->showDistance(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
+	gui->showDistance(SENSOR1, sensorThread->getDistance(SENSOR1));
+	gui->showDistance(SENSOR2, sensorThread->getDistance(SENSOR2));
+	gui->showDistance(SENSOR3, sensorThread->getDistance(SENSOR3));
+	gui->showDistance(SENSOR4, sensorThread->getDistance(SENSOR4));
+	gui->showDistance(SENSOR5, sensorThread->getDistance(SENSOR5));
+	gui->showDistance(SENSOR6, sensorThread->getDistance(SENSOR6));
+	gui->showDistance(SENSOR7, sensorThread->getDistance(SENSOR7));
+	gui->showDistance(SENSOR8, sensorThread->getDistance(SENSOR8));
+	gui->showDistance(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
 	*/
 	
 	//--------------------------------------------------------------
 	// show driven distance value in a text label (in centimeters!)
 	//--------------------------------------------------------------
-	gui1->showDrivenDistance(MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1));
-	gui1->showDrivenDistance(MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2));
+	gui->showDrivenDistance(MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1));
+	gui->showDrivenDistance(MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2));
 }
 
 
@@ -1225,29 +1225,29 @@ void Mrs::drive(const unsigned char command)
 	switch (command)
 	{
 		case FORWARD:
-			gui1->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui1->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			return;
 			break;
 		case BACKWARD:
-			gui1->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			gui1->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			return;
 			break;
 		case LEFT:
-			gui1->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			gui1->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			return;
 			break;
 		case RIGHT:
-			gui1->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui1->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			return;
@@ -1256,10 +1256,10 @@ void Mrs::drive(const unsigned char command)
 			if (circuit1->isConnected())
 			{
 				robotDrives = true;
-				gui1->appendLog("Starting to drive forward...");
+				gui->appendLog("Starting to drive forward...");
 				// set the motors to "drive FORWARD"
-				gui1->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-				gui1->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
 
 				motors->motorControl(MOTOR1, ON, CLOCKWISE);
 				motors->motorControl(MOTOR2, ON, CLOCKWISE);
@@ -1267,14 +1267,14 @@ void Mrs::drive(const unsigned char command)
 			else
 			{
 				// show message
-				gui1->appendLog("<font color=\"#FF0000\">Robot is OFF!</font>");
+				gui->appendLog("<font color=\"#FF0000\">Robot is OFF!</font>");
 				robotDrives = false;
 			}
 			return;
 			break;
 		case WAIT:
-			gui1->showMotorStatus(MOTOR1, OFF, SAME);
-			gui1->showMotorStatus(MOTOR2, OFF, SAME);
+			gui->showMotorStatus(MOTOR1, OFF, SAME);
+			gui->showMotorStatus(MOTOR2, OFF, SAME);
 			// turning motors off
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
@@ -1285,8 +1285,8 @@ void Mrs::drive(const unsigned char command)
 			return;
 			break;
 		case STOP:
-			gui1->showMotorStatus(MOTOR1, OFF, SAME);
-			gui1->showMotorStatus(MOTOR2, OFF, SAME);
+			gui->showMotorStatus(MOTOR1, OFF, SAME);
+			gui->showMotorStatus(MOTOR2, OFF, SAME);
 			// turning motors off
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
@@ -1307,7 +1307,7 @@ void Mrs::readSettings()
 	//---------------------------------------------------------------------
 	// get the programm settings and set the items on the gui (sliders...)
 	//---------------------------------------------------------------------
-	gui1->appendLog("Reading settings...");
+	gui->appendLog("Reading settings...");
 
 
 	//---------------------------------------------------------------------
@@ -1316,20 +1316,20 @@ void Mrs::readSettings()
 	
 	if (serialPortMicrocontroller == "error2")
 	{
-		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortMicrocontroller == "error1")
 		{
-			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPortMicrocontroller\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"serialPortMicrocontroller\" not found in ini-file!</font>");
 		}
 		else
 		{
 			//
 			// everything okay
 			//
-			gui1->appendLog(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
+			gui->appendLog(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
 		}
 	}
 
@@ -1341,14 +1341,14 @@ void Mrs::readSettings()
 	if (serialPortLaserscannerFront == "error2")
 	{
 		laserThread->setSerialPort(LASER1, "none");
-		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortLaserscannerFront == "error1")
 		{
 			laserThread->setSerialPort(LASER1, "none");
-			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerFront\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerFront\" not found in ini-file!</font>");
 		}
 		else
 		{
@@ -1356,7 +1356,7 @@ void Mrs::readSettings()
 			// everything okay
 			//
 			laserThread->setSerialPort(LASER1, serialPortLaserscannerFront);
-			gui1->appendLog(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
+			gui->appendLog(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
 		}
 	}
 
@@ -1368,14 +1368,14 @@ void Mrs::readSettings()
 	if (serialPortLaserscannerRear == "error2")
 	{
 		laserThread->setSerialPort(LASER2, "none");
-		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortLaserscannerRear == "error1")
 		{
 			laserThread->setSerialPort(LASER2, "none");
-			gui1->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerRear\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerRear\" not found in ini-file!</font>");
 		}
 		else
 		{
@@ -1383,7 +1383,7 @@ void Mrs::readSettings()
 			// everything okay
 			//
 			laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
-			gui1->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
+			gui->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
 		}
 	}
 	
@@ -1393,17 +1393,17 @@ void Mrs::readSettings()
 	switch (inifile1->readSetting("Config", "noHardwareErrorMessages"))
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"noHardwareErrorMessages\"not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"noHardwareErrorMessages\"not found in ini-file!</font>");
 			break;
 		case 0:
 			noHardwareErrorMessages = false;
 			break;
 		case 1:
 			noHardwareErrorMessages = true;
-			gui1->appendLog("<font color=\"#808080\">Suppressing hardware error messages (see ini-file)</font>");
+			gui->appendLog("<font color=\"#808080\">Suppressing hardware error messages (see ini-file)</font>");
 			break;
 	}
 
@@ -1412,18 +1412,18 @@ void Mrs::readSettings()
 	switch (inifile1->readSetting("Config", "saveOnExit"))
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"saveOnExit\"not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"saveOnExit\"not found in ini-file!</font>");
 			break;
 		case Qt::Unchecked:
 			// uncheck checkbox
-			gui1->setCheckBoxSaveSettings(Qt::Unchecked);
+			gui->setCheckBoxSaveSettings(Qt::Unchecked);
 			break;
 		case Qt::Checked:
 			// set checkbox
-			gui1->setCheckBoxSaveSettings(Qt::Checked);
+			gui->setCheckBoxSaveSettings(Qt::Checked);
 			break;
 	}
 
@@ -1432,10 +1432,10 @@ void Mrs::readSettings()
 	switch (inifile1->readSetting("Config", "exitDialog"))
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"exitDialog\"not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"exitDialog\"not found in ini-file!</font>");
 			break;
 		case 0:
 			exitDialog = false;
@@ -1453,18 +1453,18 @@ void Mrs::readSettings()
 	switch (minObstacleDistance)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
 			break;
 		default:
 			// set slider to the read value
-			gui1->setSliderObstacleValue(minObstacleDistance);
+			gui->setSliderObstacleValue(minObstacleDistance);
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstacleDistance);
 			// show text
-			gui1->appendLog(QString("Min. obstacle distance set to <b>%1 cm</b>.").arg(minObstacleDistance));
+			gui->appendLog(QString("Min. obstacle distance set to <b>%1 cm</b>.").arg(minObstacleDistance));
 			break;
 	}
 
@@ -1476,18 +1476,18 @@ void Mrs::readSettings()
 	switch (minObstacleDistanceLaserScanner)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
 			break;
 		default:
 			// set slider to the read value
-			gui1->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
+			gui->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
 			// tell it the obstacle check thread
 			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
 			// show text
-			gui1->appendLog(QString("Min. obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner));
+			gui->appendLog(QString("Min. obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner));
 			break;
 	}
 
@@ -1499,18 +1499,18 @@ void Mrs::readSettings()
 	switch (robotSlot)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
 			break;
 		default:
 			// set slider to the read value
-			gui1->setSliderRobotSlot(robotSlot);
+			gui->setSliderRobotSlot(robotSlot);
 			// tell it the obstacle check thread
 			obstCheckThread->setRobotSlot(robotSlot);
 			// show text
-			gui1->appendLog(QString("Robot slot set to <b>%1 deg.</b>").arg(robotSlot));
+			gui->appendLog(QString("Robot slot set to <b>%1 deg.</b>").arg(robotSlot));
 			break;
 	}
 
@@ -1522,18 +1522,18 @@ void Mrs::readSettings()
 	switch (straightForwardDeviation)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
 			break;
 		default:
 			// set slider to the read value
-			gui1->setSliderStraightForwardDeviation(straightForwardDeviation);
+			gui->setSliderStraightForwardDeviation(straightForwardDeviation);
 			// tell it the obstacle check thread
 			obstCheckThread->setStraightForwardDeviation(straightForwardDeviation);
 			// show text
-			gui1->appendLog(QString("Straight forward deviation set to <b>%1 deg.</b>").arg(straightForwardDeviation));
+			gui->appendLog(QString("Straight forward deviation set to <b>%1 deg.</b>").arg(straightForwardDeviation));
 			break;
 	}
 
@@ -1544,13 +1544,13 @@ void Mrs::readSettings()
 	
 	if (joystickPort == "error2")
 	{
-		gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (joystickPort == "error1")
 		{
-			gui1->appendLog("<font color=\"#FF0000\">Value \"joystickPort\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"joystickPort\" not found in ini-file!</font>");
 		}
 		else
 		{
@@ -1559,7 +1559,7 @@ void Mrs::readSettings()
 			//
 			// tell the  obstacle check thread the distance
 			joystick->setPort(joystickPort);
-			gui1->appendLog(QString("Joystick port set to <b>%1</b>.").arg(joystickPort));
+			gui->appendLog(QString("Joystick port set to <b>%1</b>.").arg(joystickPort));
 		}
 	}
 	
@@ -1571,24 +1571,24 @@ void Mrs::readSettings()
 	switch (mot1Speed)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot1Speed = 0;
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"motor1Speed\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"motor1Speed\" not found in ini-file!</font>");
 			mot1Speed = 0;
 			break;
 		default:
 			if (mot1Speed > 254)
 			{
-				gui1->appendLog("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than 255!! Value set to 255!</font>");
+				gui->appendLog("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than 255!! Value set to 255!</font>");
 				mot1Speed = 255;
 			}
 			
 			// set slider to the read value
-			gui1->setSliderMotorSpeed(1, mot1Speed);
+			gui->setSliderMotorSpeed(1, mot1Speed);
 			// show text
-			gui1->appendLog(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
+			gui->appendLog(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
 			break;
 	}
 	
@@ -1600,24 +1600,24 @@ void Mrs::readSettings()
 	switch (mot2Speed)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot2Speed = 0;
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"motor2Speed\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"motor2Speed\" not found in ini-file!</font>");
 			mot2Speed = 0;
 			break;
 		default:
 			if (mot2Speed > 254)
 			{
-				gui1->appendLog("<font color=\"#FF0000\">Value \"motor2Speed\" is greater than 255!! Value set to 255!</font>");
+				gui->appendLog("<font color=\"#FF0000\">Value \"motor2Speed\" is greater than 255!! Value set to 255!</font>");
 				mot2Speed = 255;
 			}
 			
 			// set slider to the read value
-			gui1->setSliderMotorSpeed(2, mot2Speed);
+			gui->setSliderMotorSpeed(2, mot2Speed);
 			// show text
-			gui1->appendLog(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
+			gui->appendLog(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
 	}
 	
@@ -1629,24 +1629,24 @@ void Mrs::readSettings()
 	switch (mot3Speed)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot3Speed = 0;
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" not found in ini-file!</font>");
 			mot3Speed = 0;
 			break;
 		default:
 			if (mot3Speed > 254)
 			{
-				gui1->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than 255!! Value set to 255!</font>");
+				gui->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than 255!! Value set to 255!</font>");
 				mot3Speed = 255;
 			}
 			
 			// set slider to the read value
-			gui1->setSliderMotorSpeed(2, mot3Speed);
+			gui->setSliderMotorSpeed(2, mot3Speed);
 			// show text
-			gui1->appendLog(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
+			gui->appendLog(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
 			break;
 	}
 	
@@ -1658,24 +1658,24 @@ void Mrs::readSettings()
 	switch (mot4Speed)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot4Speed = 0;
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" not found in ini-file!</font>");
 			mot4Speed = 0;
 			break;
 		default:
 			if (mot4Speed > 254)
 			{
-				gui1->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" is greater than 255!! Value set to 255!</font>");
+				gui->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" is greater than 255!! Value set to 255!</font>");
 				mot4Speed = 255;
 			}
 			
 			// set slider to the read value
-			gui1->setSliderMotorSpeed(2, mot4Speed);
+			gui->setSliderMotorSpeed(2, mot4Speed);
 			// show text
-			gui1->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
+			gui->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
 	}
 	
@@ -1687,24 +1687,24 @@ void Mrs::readSettings()
 	switch (minimumSpeed)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			minimumSpeed = 0;
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" not found in ini-file!</font>");
 			minimumSpeed = 0;
 			break;
 		default:
 			if (minimumSpeed > 254)
 			{
-				gui1->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than 255!! Value set to 255!</font>");
+				gui->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than 255!! Value set to 255!</font>");
 				minimumSpeed = 255;
 			}
 			
 			// set slider to the read value
-			gui1->setSliderMinimumSpeed(minimumSpeed);
+			gui->setSliderMinimumSpeed(minimumSpeed);
 			// show text
-			gui1->appendLog(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
+			gui->appendLog(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
 			break;
 	}
 	
@@ -1716,24 +1716,24 @@ void Mrs::readSettings()
 	switch (maximumSpeed)
 	{
 		case -2:
-			gui1->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			maximumSpeed = 0;
 			break;
 		case -1:
-			gui1->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" not found in ini-file!</font>");
 			maximumSpeed = 0;
 			break;
 		default:
 			if (maximumSpeed > 254)
 			{
-				gui1->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than 255!! Value set to 255!</font>");
+				gui->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than 255!! Value set to 255!</font>");
 				maximumSpeed = 255;
 			}
 			
 			// set slider to the read value
-			gui1->setSliderMaximumSpeed(maximumSpeed);
+			gui->setSliderMaximumSpeed(maximumSpeed);
 			// show text
-			gui1->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
+			gui->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
 	}
 }
@@ -1751,9 +1751,9 @@ void Mrs::enableRemoteControlListening(bool status)
 		//-----------------------------------------------------------
 		if (netThread->isRunning() == false)
 		{
-			gui1->appendLog("Starting network thread...", false);
+			gui->appendLog("Starting network thread...", false);
 			netThread->start();
-			gui1->appendLog("Network thread started.");
+			gui->appendLog("Network thread started.");
 		}
 		
 		
@@ -1765,14 +1765,14 @@ void Mrs::enableRemoteControlListening(bool status)
 			// start the joystick thread
 			if (joystick->isRunning() == false)
 			{
-				gui1->appendLog("Starting joystick thread...", false);
+				gui->appendLog("Starting joystick thread...", false);
 				joystick->start();
-				gui1->appendLog("Joystick thread started.");
+				gui->appendLog("Joystick thread started.");
 			}
 		}
 		else
 		{
-			gui1->appendLog("Joystick thread NOT started!");
+			gui->appendLog("Joystick thread NOT started!");
 		}
 
 	}
@@ -1780,9 +1780,9 @@ void Mrs::enableRemoteControlListening(bool status)
 	{
 		if (netThread->isRunning() == true)
 		{
-			gui1->appendLog("Stopping network thread...", false);
+			gui->appendLog("Stopping network thread...", false);
 			netThread->stop();
-			gui1->appendLog("Network thread stopped.");
+			gui->appendLog("Network thread stopped.");
 		}
 		
 		//
@@ -1804,7 +1804,7 @@ void Mrs::executeRemoteCommand(QString command)
 	{
 		if (command == "start")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(START);
 			return;
 		}
@@ -1812,7 +1812,7 @@ void Mrs::executeRemoteCommand(QString command)
 		
 		if (command == "forward")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(FORWARD);
 			return;
 		}
@@ -1820,7 +1820,7 @@ void Mrs::executeRemoteCommand(QString command)
 		
 		if (command == "backward")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(BACKWARD);
 			return;
 		}
@@ -1828,7 +1828,7 @@ void Mrs::executeRemoteCommand(QString command)
 	
 		if (command == "stop")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(STOP);
 			return;
 		}
@@ -1836,7 +1836,7 @@ void Mrs::executeRemoteCommand(QString command)
 	
 		if (command == "left")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(LEFT);
 			return;
 		}
@@ -1844,7 +1844,7 @@ void Mrs::executeRemoteCommand(QString command)
 	
 		if (command == "right")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(RIGHT);
 			return;
 		}
@@ -1852,44 +1852,44 @@ void Mrs::executeRemoteCommand(QString command)
 	
 		if (command == "increasespeedmotor1")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			
 			int newSpeed = motors->getMotorSpeed(1) + 1;
 			motors->setMotorSpeed(1, newSpeed);
-			gui1->setSliderMotorSpeed(1, newSpeed);
+			gui->setSliderMotorSpeed(1, newSpeed);
 			return;
 		}
 	
 	
 		if (command == "increasespeedmotor2")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			
 			int newSpeed = motors->getMotorSpeed(2) + 1;
 			motors->setMotorSpeed(2, newSpeed);
-			gui1->setSliderMotorSpeed(2, newSpeed);
+			gui->setSliderMotorSpeed(2, newSpeed);
 			return;
 		}
 	
 	
 		if (command == "reducespeedmotor1")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			
 			int newSpeed = motors->getMotorSpeed(1) - 1;
 			motors->setMotorSpeed(1, newSpeed);
-			gui1->setSliderMotorSpeed(1, newSpeed);
+			gui->setSliderMotorSpeed(1, newSpeed);
 			return;
 		}
 	
 	
 		if (command == "reducespeedmotor2")
 		{
-			gui1->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			
 			int newSpeed = motors->getMotorSpeed(2) - 1;
 			motors->setMotorSpeed(2, newSpeed);
-			gui1->setSliderMotorSpeed(2, newSpeed);
+			gui->setSliderMotorSpeed(2, newSpeed);
 			return;
 		}
 	}
@@ -1915,8 +1915,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (axisValue / JOYSTICKDIVISOR);
 			
-			gui1->setSliderMotorSpeed(1, speed);
-			gui1->setSliderMotorSpeed(2, speed);
+			gui->setSliderMotorSpeed(1, speed);
+			gui->setSliderMotorSpeed(2, speed);
 			
 			/* TODO: change this to camera motors
 			if (servoTestMode == true)
@@ -1948,8 +1948,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (-axisValue / JOYSTICKDIVISOR);
 			
-			gui1->setSliderMotorSpeed(1, speed);
-			gui1->setSliderMotorSpeed(2, speed);
+			gui->setSliderMotorSpeed(1, speed);
+			gui->setSliderMotorSpeed(2, speed);
 			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
@@ -1994,8 +1994,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (axisValue / JOYSTICKDIVISOR);
 			
-			gui1->setSliderMotorSpeed(1, speed);
-			gui1->setSliderMotorSpeed(2, speed);
+			gui->setSliderMotorSpeed(1, speed);
+			gui->setSliderMotorSpeed(2, speed);
 			
 			/* TODO: change this to camera motors
 			if (servoTestMode == true)
@@ -2027,8 +2027,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			speed = (-axisValue / JOYSTICKDIVISOR);
 			
-			gui1->setSliderMotorSpeed(1, speed);
-			gui1->setSliderMotorSpeed(2, speed);
+			gui->setSliderMotorSpeed(1, speed);
+			gui->setSliderMotorSpeed(2, speed);
 			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
@@ -2102,7 +2102,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				{
 					servos->setServoPosition(SERVO1, servo1Pos);
 				}
-				gui1->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
+				gui->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
 			}
 			return;
 		}
@@ -2118,7 +2118,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue > 0)
 			{
 				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-				//gui1->appendLog("motor 4 on CW");
+				//gui->appendLog("motor 4 on CW");
 			}
 			
 			//------------------
@@ -2127,7 +2127,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue < 0)
 			{
 				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-				//gui1->appendLog("motor 4 on CCW");
+				//gui->appendLog("motor 4 on CCW");
 			}
 			
 			// move, when button is pressed
@@ -2135,7 +2135,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					//gui1->appendLog("Tilting Cam...");
+					//gui->appendLog("Tilting Cam...");
 				}
 			}
 			
@@ -2144,7 +2144,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					//gui1->appendLog("Tilt stop.");
+					//gui->appendLog("Tilt stop.");
 					motors->motorControl(MOTOR4, OFF, SAME);
 				}
 			}
@@ -2196,7 +2196,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				{
 					servos->setServoPosition(SERVO2, servo2Pos);
 				}
-				gui1->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
+				gui->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
 			}
 			return;
 		} // servo test mode
@@ -2212,7 +2212,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue > 0)
 			{
 				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				//gui1->appendLog("motor 3 on CW");
+				//gui->appendLog("motor 3 on CW");
 			}
 			
 			//------------------
@@ -2221,7 +2221,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue < 0)
 			{
 				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-				//gui1->appendLog("motor 3 on CCW");
+				//gui->appendLog("motor 3 on CCW");
 			}
 			
 			// move, when button is pressed
@@ -2229,7 +2229,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					//gui1->appendLog("Panning Cam...");
+					//gui->appendLog("Panning Cam...");
 				}
 			}
 			
@@ -2238,7 +2238,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					//gui1->appendLog("Pan stop.");
+					//gui->appendLog("Pan stop.");
 					motors->motorControl(MOTOR3, OFF, SAME);
 				}
 			}
@@ -2289,13 +2289,13 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					toggle10=true;
 					servoTestMode = true;
-					gui1->appendLog("<font color=\"#0000FF\">Servo test mode ON</front>");
+					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON</front>");
 				}
 				else
 				{
 					toggle10=false;
 					servoTestMode = false;
-					gui1->appendLog("<font color=\"#0000FF\">Servo test mode OFF</front>");
+					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF</front>");
 				}
 			}
 			break;
@@ -2309,13 +2309,13 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					toggle11=true;
 					cameraTestMode = true;
-					gui1->appendLog("<font color=\"#0000FF\">Camera test mode ON</front>");
+					gui->appendLog("<font color=\"#0000FF\">Camera test mode ON</front>");
 				}
 				else
 				{
 					toggle11=false;
 					cameraTestMode = false;
-					gui1->appendLog("<font color=\"#0000FF\">Camera test mode OFF</front>");
+					gui->appendLog("<font color=\"#0000FF\">Camera test mode OFF</front>");
 				}
 			}
 			break;
@@ -2335,39 +2335,39 @@ void Mrs::setSimulationMode(bool status)
 	
 	if (status == true)
 	{
-		gui1->appendLog("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
+		gui->appendLog("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
 	
 		if (laserThread->isRunning() == false)
 		{
-			gui1->appendLog("Starting Laser thread...", false);
+			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
-			gui1->appendLog("Laser thread started.");
+			gui->appendLog("Laser thread started.");
 		}
 		
 		if (sensorThread->isRunning() == false)
 		{
-			gui1->appendLog("Starting Sensor thread...", false);
+			gui->appendLog("Starting Sensor thread...", false);
 			sensorThread->start();
-			gui1->appendLog("Sensor thread started.");
+			gui->appendLog("Sensor thread started.");
 		}
 		
 		if (plotThread->isRunning() == false)
 		{
-			gui1->appendLog("Starting plot thread...", false);
+			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
-			gui1->appendLog("Plot thread started.");
+			gui->appendLog("Plot thread started.");
 		}
 		
 		if (obstCheckThread->isRunning() == false)
 		{
-			gui1->appendLog("Starting obstacle check thread...", false);
+			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
-			gui1->appendLog("Obstacle check thread started.");
+			gui->appendLog("Obstacle check thread started.");
 		}
 	}
 	else
 	{
-		gui1->appendLog("<font color=\"#0000FF\">Simulation mode disabled.</font>");
+		gui->appendLog("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
 }
 
@@ -2416,14 +2416,14 @@ void Mrs::test()
 		servos->setServoPosition(SERVO1, pos1);
 		// servo2 ist der kleine
 		servos->setServoPosition(SERVO2, pos1);
-		gui1->appendLog("pos1");
+		gui->appendLog("pos1");
 	}
 	else
 	{
 		toggle = OFF;
 		servos->setServoPosition(SERVO1, pos2);
 		servos->setServoPosition(SERVO2, pos2);
-		gui1->appendLog("pos2");
+		gui->appendLog("pos2");
 	}
 	
 	//motors->flashlight(toggle);

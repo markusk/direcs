@@ -155,7 +155,7 @@ class Mrs : public QObject
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
-		Gui *gui1;
+		Gui *gui;
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
 		SensorThread *sensorThread;
@@ -166,7 +166,7 @@ class Mrs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-		CamThread *cam1;
+		CamThread *camThread;
 		//SpeakThread *speakThread;
 		Joystick *joystick;
 		QString commaSeparator;
