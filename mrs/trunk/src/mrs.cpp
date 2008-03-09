@@ -342,8 +342,18 @@ Mrs::Mrs()
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int) ));
+	connect(camThread, SIGNAL(camDataComplete(IplImage*, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int) ));
+	
+	//----------------------------------------------------------------------------
+	// connect camDataComplete from the cam thread to the faceTracking unit
+	//----------------------------------------------------------------------------
+	connect(camThread, SIGNAL(camDataComplete(IplImage*, int, int, int) ), SLOT( faceTracking(IplImage*, int, int, int) ));
 
+	//----------------------------------------------------------------------------
+	// show the face track direction in the gui
+	//----------------------------------------------------------------------------
+	connect(this, SIGNAL(showFaceTrackdDirection(QString)), SLOT(showFaceTrackdDirection(QString)));
+	
 	//----------------------------------------------------------------------------
 	// enable face detection, when activated in the GUI
 	//----------------------------------------------------------------------------
@@ -354,10 +364,14 @@ Mrs::Mrs()
 	//----------------------------------------------------------------------------
 	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), SLOT(logicalUnit(int, QDateTime)));
 	
+	//----------------------------------------------------------------------------
 	// show the angle where to drive in a GUI label
+	//----------------------------------------------------------------------------
 	connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui, SLOT(showLaserFrontAngles(int, int, int)));
 	
+	//----------------------------------------------------------------------------
 	// show the preferred driving direction in a GUI label
+	//----------------------------------------------------------------------------
 	connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
 	
 	//----------------------------------------------------------------------------
@@ -1179,6 +1193,16 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 		}
 		return;
 	}
+}
+
+
+void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
+{
+	emit showFaceTrackdDirection("NONE");
+	emit showFaceTrackdDirection("UP");
+	emit showFaceTrackdDirection("DOWN");
+	emit showFaceTrackdDirection("LEFT");
+	emit showFaceTrackdDirection("RIGHT");
 }
 
 

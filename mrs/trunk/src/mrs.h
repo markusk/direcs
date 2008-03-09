@@ -73,6 +73,12 @@ class Mrs : public QObject
 		void logicalUnit(int sensorAlarm, QDateTime timestamp);
 		
 		/**
+		This method moves the camera and the robots eyes in the direction of a detected face.
+		@sa camThread::camDataComplete()
+		 */
+		void faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius);
+		
+		/**
 		Shows the sensor data in a graphical way (progressBars) and as a number in the GUI.
 		This slot is called from the Signal sensorDataComplete from the sensorThread.
 		*/
@@ -133,7 +139,16 @@ class Mrs : public QObject
 
 
 	signals:
+		/**
+		Shows the preferred driving direction of the robot in the GUI
+		@sa logicalUnit()
+		*/
 		void showPreferredDirection(QString direction);
+		
+		/**
+		Shows the face tracking direction in a lable.
+		 */
+		void showFaceTrackdDirection(QString direction);
 	
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.
@@ -185,7 +200,6 @@ class Mrs : public QObject
 		QList <int> obstacleAlarmFrontRightList;		//! A list of obstacle alarms that occured right the last n times.
 		QList <QDateTime> obstacleAlarmLeftTimestampList;	//! A list of the timestamps of the obstacle alarms that left occured.
 		QList <QDateTime> obstacleAlarmRightTimestampList;	//! A list of the timestamps of the obstacle alarms that right occured.
-
 
 
 		//! The splash screen time of view in ms
