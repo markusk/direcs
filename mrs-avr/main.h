@@ -72,8 +72,8 @@
 #define SENSOR7			6  // ADC6
 #define SENSOR8			7  // ADC7
 
-#define SENSORMOTOR1		38 // ADC14
-#define SENSORMOTOR2		39 // ADC15
+#define SENSORMOTOR1	38 // ADC14
+#define SENSORMOTOR2	39 // ADC15
 
 
 #include <avr/io.h>

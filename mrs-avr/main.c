@@ -469,7 +469,7 @@ int main(void)
 
 			case MOTOR4_CLOCKWISE: // cam tilt R
 				// only, when end switch is clear
-				if ( bit_is_clear(PINK,PIN3) )
+//				if ( bit_is_clear(PINK,PIN3) )
 				{
 					// delete Motor4 A bit
 					PORTD &= ~(1<<PIN6);
@@ -479,7 +479,7 @@ int main(void)
 				break;
 
 			case MOTOR4_COUNTERCLOCKWISE: // cam tilt L
-				if ( bit_is_clear(PINK,PIN3) )
+//				if ( bit_is_clear(PINK,PIN3) )
 				{
 					// set Motor4 A bit
 					PORTD |= (1<<PIN6);
@@ -521,27 +521,27 @@ int main(void)
 
 			//-------------------------------
 			case READ_CONTACT1:
-				// contact cam pan L
+				// contact cam tilt R/BOTTOM
 				// send 1 Byte (8 bit!)
-				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
+				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN3) );
 				break;
 
 			case READ_CONTACT2:
+				// contact cam tilt L/TOP
+				// send 1 Byte (8 bit!)
+				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN2) );
+				break;
+
+			case READ_CONTACT3:
 				// contact cam pan R
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN1) );
 				break;
 
-			case READ_CONTACT3:
-				// contact cam tilt L
-				// send 1 Byte (8 bit!)
-				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN2) );
-				break;
-
 			case READ_CONTACT4:
-				// contact cam tilt R
+				// contact cam pan L
 				// send 1 Byte (8 bit!)
-				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN3) );
+				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
 				break;
 
 /*
@@ -698,12 +698,12 @@ SIGNAL(PCINT2_vect)
 	}
 	
 	//----------------------------
-	// if Cam Tilt L switch set
+	// if Cam Tilt L/TOP switch set
 	//----------------------------
 	if ( bit_is_set(PINK,PIN2) )
 	{
 		// turn off MOTOR4 tilt L bit (A)
-		PORTD &= ~(1<<PIN6);
+//		PORTD &= ~(1<<PIN6);
 
 //		camTiltLSwitch = 1;
 	}
@@ -713,12 +713,12 @@ SIGNAL(PCINT2_vect)
 	}
 	
 	//----------------------------
-	// if Cam Tilt R switch set
+	// if Cam Tilt R/BOTTOM switch set
 	//----------------------------
 	if ( bit_is_set(PINK,PIN3) )
 	{
 		// turn off MOTOR4 tilt R bit (B)
-		PORTD &= ~(1<<PIN7);
+//		PORTD &= ~(1<<PIN7);
 
 //		camTiltRSwitch = 1;
 	}
