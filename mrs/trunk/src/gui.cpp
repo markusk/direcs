@@ -919,6 +919,11 @@ void Gui::setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// set image from gl context to frame
 	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
 	
+	// show coordinates of the first detected face
+	ui.lblFaceX->setNum(faceX);
+	ui.lblFaceY->setNum(faceY);
+	ui.lblFaceRadius->setNum(faceRadius);
+
 /*	
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )
@@ -1090,6 +1095,20 @@ void Gui::on_checkBoxMirror_stateChanged(int state)
 {
 	// QtGL class!!
 	ui.frameCamera->enableMirrorMode(state);
+}
+
+
+void Gui::on_checkBoxFaceDetection_stateChanged(int state)
+{
+	// en/disable face tracking checkbox
+	if (state == Qt::Checked)
+	{
+		ui.checkBoxFaceTracking->setEnabled(true);
+	}
+	else
+	{
+		ui.checkBoxFaceTracking->setEnabled(false);
+	}
 }
 
 
