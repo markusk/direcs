@@ -789,6 +789,40 @@ void Gui::showPreferredDirection(QString direction)
 }
 
 
+void Gui::showFaceTrackdDirection(QString direction)
+{
+	if (direction == "UP")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/forward.png"));
+		return;
+	}
+	
+	if (direction == "DOWN")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/backward.png"));
+		return;
+	}
+	
+	if (direction == "LEFT")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/left.png"));
+		return;
+	}
+	
+	if (direction == "RIGHT")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/right.png"));
+		return;
+	}
+	
+	if (direction == "NONE")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+		return;
+	}
+}
+
+
 int Gui::getSliderMotorSpeed(int motor)
 {
 	switch (motor)

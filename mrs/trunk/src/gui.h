@@ -261,9 +261,15 @@ class Gui : public QMainWindow
 		
 		/**
 		Shows the preferred driving direction in a lable.
-		@param direction can be FORWARD, BACKWARD...
+		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
 		*/
 		void showPreferredDirection(QString direction);
+		
+		/**
+		Shows the face tracking direction in a lable.
+		@param direction can be UP, DOWN, LEFT, RIGHT or NONE
+		 */
+		void showFaceTrackdDirection(QString direction);
 
 
 	protected:
