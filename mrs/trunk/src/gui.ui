@@ -1648,7 +1648,7 @@
      <rect>
       <x>360</x>
       <y>363</y>
-      <width>41</width>
+      <width>31</width>
       <height>12</height>
      </rect>
     </property>
@@ -1666,7 +1666,7 @@
      <rect>
       <x>360</x>
       <y>385</y>
-      <width>41</width>
+      <width>31</width>
       <height>12</height>
      </rect>
     </property>
@@ -1684,7 +1684,7 @@
      <rect>
       <x>360</x>
       <y>374</y>
-      <width>41</width>
+      <width>31</width>
       <height>12</height>
      </rect>
     </property>
@@ -1716,6 +1716,45 @@
     </property>
     <property name="text" >
      <string>Face Tracking</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblFaceTrackTo" >
+    <property name="geometry" >
+     <rect>
+      <x>450</x>
+      <y>360</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="pixmap" >
+     <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
+    </property>
+    <property name="scaledContents" >
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="textLabel2_11" >
+    <property name="geometry" >
+     <rect>
+      <x>400</x>
+      <y>363</y>
+      <width>45</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>Track to:</string>
     </property>
    </widget>
   </widget>
