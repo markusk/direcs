@@ -176,9 +176,13 @@ class Gui : public QMainWindow
 		
 		/**
 		Shows the new picture from the cam (live). This slot is called from the camera thread.
+		@param frame
+		@param faceX
+		@param faceY
+		@param faceRadius
 		@sa CamThread()
 		*/
-		void setCamImage(IplImage* frame);
+		void setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius);
 
 		
 		/* for future needs

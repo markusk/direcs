@@ -913,7 +913,7 @@ void Gui::on_btnSavePicture_clicked()
 }
 
 
-void Gui::setCamImage(IplImage* frame)
+void Gui::setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius)
 {
 	
 	// set image from gl context to frame
