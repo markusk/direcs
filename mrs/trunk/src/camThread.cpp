@@ -115,37 +115,54 @@ void CamThread::run()
 				{
 					// detect objects in the image
 					faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
-	
-					// draw a rectangle for each face
-					for( i = 0; i < (faces ? faces->total : 0); i++ )
+					
+					if (faces == 0)
 					{
-						rectangle = (CvRect*)cvGetSeqElem( faces, i );
-						center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
-						center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
-						radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
-						
-						rectStart.x = rectangle->x*scale;
-						rectStart.y = rectangle->y*scale;
-						rectEnd.x = rectStart.x + rectangle->width*scale;
-						rectEnd.y = rectStart.y + rectangle->height*scale;
-			
-						// draw rectangles(s)
-						if (i==0)
+						// for emit signal
+						faceX = 0;
+						faceY = 0;
+						faceRadius = 0;
+					}
+					else
+					{
+						// draw a rectangle for each face
+						for( i = 0; i < (faces ? faces->total : 0); i++ )
 						{
-							// for emit signal
-							faceX = center.x;
-							faceY = center.y;
-							faceRadius = radius;
-							// first face in white
-							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
-						}
-						else
-						{
-							// other faces darker color
-							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(128, 128, 128));
+							rectangle = (CvRect*)cvGetSeqElem( faces, i );
+							center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
+							center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
+							radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
+							
+							rectStart.x = rectangle->x*scale;
+							rectStart.y = rectangle->y*scale;
+							rectEnd.x = rectStart.x + rectangle->width*scale;
+							rectEnd.y = rectStart.y + rectangle->height*scale;
+				
+							// draw rectangles(s)
+							if (i==0)
+							{
+								// for emit signal
+								faceX = center.x;
+								faceY = center.y;
+								faceRadius = radius;
+								// first face in white
+								cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
+							}
+							else
+							{
+								// other faces darker color
+								cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(128, 128, 128));
+							}
 						}
 					}
 				}
+			}
+			else
+			{
+				// face detection disabled
+				faceX = 0;
+				faceY = 0;
+				faceRadius = 0;
 			}
 			//----------------------------------------
 			// face detection (end)
