@@ -355,6 +355,12 @@ class Gui : public QMainWindow
 		@param state has to be Qt::Checked to enable the detection. All other states disable.
 		*/
 		void enableFaceDetection(int state);
+
+		/**
+		Enables or disables the face tracking. When activated, a face will be tracked by the camera.
+		@param state has to be Qt::Checked to enable the detection. All other states disable.
+		*/
+		void enableFaceTracking(int state);
 	
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.

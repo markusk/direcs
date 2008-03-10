@@ -76,10 +76,15 @@ infrared Sensors temporarily removed from robot!!
 	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), ui.sliderObstacle, SLOT(setValue(int)));
 
 	
-	//------------------------------------------------------------------------------
-	// Whenever the state of the face detect check box changes, set the detec mode
-	//------------------------------------------------------------------------------
-	connect(ui.checkBoxFaceDetection , SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
+	//----------------------------------------------------------------------------------
+	// Whenever the state of the face detect check box changes, set the detection mode
+	//----------------------------------------------------------------------------------
+	connect(ui.checkBoxFaceDetection, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
+
+	//----------------------------------------------------------------------------------
+	// Whenever the state of the face tracking check box changes, set the tracking mode
+	//----------------------------------------------------------------------------------
+	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
 
 	
 	//----------------------------------------------------------------------------
@@ -1159,7 +1164,7 @@ void Gui::on_checkBoxMirror_stateChanged(int state)
 
 void Gui::on_checkBoxFaceDetection_stateChanged(int state)
 {
-	// en/disable face tracking checkbox
+	// en/disable face *tracking* checkbox
 	if (state == Qt::Checked)
 	{
 		ui.checkBoxFaceTracking->setEnabled(true);
@@ -1176,7 +1181,7 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 	//
 	// This slot is only for changing the label!
 	// Not for enabling face detection!
-	// This is done via signal slot connect in Mrs()
+	// This is done via signal slot!
 	//
 	
 	// change face tracking direction icon to middle
