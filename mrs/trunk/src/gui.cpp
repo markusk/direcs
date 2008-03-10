@@ -777,29 +777,54 @@ void Gui::showPreferredDirection(QString direction)
 	
 	if (direction == "LEFT")
 	{
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
+		// other direction image, because different view in the gui!
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
 		return;
 	}
 	
 	if (direction == "RIGHT")
 	{
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
+		// other direction image, because different view in the gui!
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
 		return;
 	}
 }
 
-
-void Gui::showFaceTrackdDirection(QString direction)
+void Gui::showFaceTrackDirection(QString direction)
 {
 	if (direction == "UP")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/backward.png"));
+		return;
+	}
+	
+	if (direction == "UPLEFT")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upleft.png"));
+		return;
+	}
+	
+	if (direction == "UPRIGHT")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upright.png"));
+		return;
+	}
+		
+	if (direction == "DOWN")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/forward.png"));
 		return;
 	}
 	
-	if (direction == "DOWN")
+	if (direction == "DOWNLEFT")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/backward.png"));
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downleft.png"));
+		return;
+	}
+	
+	if (direction == "DOWNRIGHT")
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downright.png"));
 		return;
 	}
 	
@@ -1142,6 +1167,22 @@ void Gui::on_checkBoxFaceDetection_stateChanged(int state)
 	else
 	{
 		ui.checkBoxFaceTracking->setEnabled(false);
+	}
+}
+
+
+void Gui::on_checkBoxFaceTracking_stateChanged(int state)
+{
+	//
+	// This slot is only for changing the label!
+	// Not for enabling face detection!
+	// This is done via signal slot connect in Mrs()
+	//
+	
+	// change face tracking direction icon to middle
+	if (state == Qt::Unchecked)
+	{
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
 	}
 }
 

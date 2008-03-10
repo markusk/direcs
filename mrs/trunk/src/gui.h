@@ -269,7 +269,7 @@ class Gui : public QMainWindow
 		Shows the face tracking direction in a lable.
 		@param direction can be UP, DOWN, LEFT, RIGHT or NONE
 		 */
-		void showFaceTrackdDirection(QString direction);
+		void showFaceTrackDirection(QString direction);
 
 
 	protected:
@@ -384,6 +384,7 @@ class Gui : public QMainWindow
 		void on_checkBoxAngleView_stateChanged(int);
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
+		void on_checkBoxFaceTracking_stateChanged(int);
 		
 		/**
 		Saves the current picture to disk (one time shot).
