@@ -19,10 +19,11 @@ Motor::Motor(InterfaceAvr *i)
 	drivenDistance1 = 0;
 	drivenDistance2 = 0;
 
-	// Initialize the motor speed
+	// Initialize the motor speed (not to fast, before reading the real values from a file!)
 	motor1Speed = 20;
-	// Initialize the motor speed
 	motor2Speed = 20;
+	motor3Speed = 10;
+	motor4Speed = 10;
 }
 
 
@@ -676,7 +677,47 @@ void Motor::setMotorSpeed(int motor, int speed)
 				return;
 			}
 			break;
-	}
+	
+		case 3:
+			// store the speed
+			motor3Speed = speed;
+			// send the command to the microcontroller (MOTOR 3)
+			if (interface1->sendChar(MOTOR3_SPEED_SET) == true)
+			{
+				// send the value to the microcontroller
+				if (interface1->sendChar(speed) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+			else	
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+			break;
+			
+		case 4:
+			// store the speed
+			motor4Speed = speed;
+			// send the command to the microcontroller (MOTOR 4)
+			if (interface1->sendChar(MOTOR4_SPEED_SET) == true)
+			{
+				// send the value to the microcontroller
+				if (interface1->sendChar(speed) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+			else	
+			{
+				//qDebug("ERROR sending to serial port (Motor)");
+				return;
+			}
+			break;
+	} // switch
 }
 
 

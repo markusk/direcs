@@ -105,6 +105,8 @@ class Motor : public QObject
 		InterfaceAvr *interface1;
 		int motor1Speed;
 		int motor2Speed;
+		int motor3Speed;
+		int motor4Speed;
 
 		//unsigned int steps1;
 		//unsigned int steps2;
