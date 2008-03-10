@@ -25,6 +25,16 @@ class CamThread : public QThread
 		CamThread();
 		~CamThread();
 		bool isConnected(void);
+
+		/*
+		Returns the image height of the camera. Retrieved in the constructor!
+		*/
+		int imageHeight();
+
+		/*
+		Returns the image width of the camera. Retrieved in the constructor!
+		*/
+		int imageWidth();
 		
 		void stop();
 		virtual void run();
@@ -64,6 +74,8 @@ class CamThread : public QThread
 		CvScalar hsv2rgb( float hue );
 		IplImage *frame;
 		IplImage *imgPtr;
+		int width;
+		int height;
 		CvCapture *capture;
 		CvMemStorage *storage;
 		CvHaarClassifierCascade *cascade;

@@ -16,22 +16,37 @@ CamThread::CamThread() : QThread()
 	contactAlarmRight = false;
 
 	
+	//------------------------------------------
 	// try to capture from the first camera (0)
+	//------------------------------------------
 	capture = cvCaptureFromCAM(0);
 	
 	if (!capture)
 	{
 		qDebug("INFO: could not initialize capturing from /dev/video0. No camera connected?");
 		cameraIsOn = false;
+		width=0;
+		height=0;
 		stopped = true;
+		
 	}
 	else
 	{
 		cameraIsOn = true;
-	}
 
-	if (cameraIsOn)
-	{
+		//--------------------------------------------
+		// retrieve image (camera) size and store it!
+		//--------------------------------------------
+		imgPtr = cvRetrieveFrame(capture);
+
+		// get width and height
+		width = imgPtr->width;
+		height = imgPtr->height;
+
+
+		//--------------------------------------------
+		// 
+		//--------------------------------------------
 		//TODO: check path (use variables from mrs)
 		cascade = (CvHaarClassifierCascade*)cvLoad("/home/markus/develop/sourceforge/mrs/trunk/data/haarcascades/haarcascade_frontalface_alt2.xml", 0, 0, 0);
 
@@ -69,13 +84,16 @@ void CamThread::run()
 	CvPoint rectEnd;
 	int radius;
 	CvFont font;
+	//CvFont fontSmall;
 	int faceX = 0;
 	int faceY = 0;
 	int faceRadius = 0;
+	QString text;
 
 
 	// cvInitFont( CvFont* font, int font_face, double hscale, double vscale, double shear=0, int thickness=1, int line_type=8 );
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2 /* thickness */);
+	//cvInitFont(&fontSmall, CV_FONT_HERSHEY_PLAIN, 0.2, 0.2, 0, 1 /* thickness */);
 
 	//
 	//  start "threading"...
@@ -97,6 +115,10 @@ void CamThread::run()
 			// retrieve image
 			imgPtr = cvRetrieveFrame(capture);
 
+			// put image size information to top left
+			//text = QString("%1x%2").arg(width).arg(height);
+			//cvPutText( imgPtr, text.toAscii(), cvPoint(20, 20), &font, CV_RGB(64, 64, 255) );
+			
 			//----------------------------------------
 			// face detection (start)
 			//----------------------------------------
@@ -260,4 +282,16 @@ void CamThread::drawContactAlarm(char position, bool state)
 			contactAlarmRight = state;
 			break;
 	}
+}
+
+
+int CamThread::imageWidth()
+{
+	return width;
+}
+
+
+int CamThread::imageHeight()
+{
+	return height;
 }
