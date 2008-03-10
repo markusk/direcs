@@ -1220,11 +1220,15 @@ void Mrs::enableFaceTracking(int state)
 void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 {
 	// TODO: put values to consts or ini
-	// TODO: check values for other resolutions. use image-size as param for this method? < < < < <
+	int xLevelRight = (camThread->imageWidth()  / 2) + faceRadius;
+	int xLevelLeft  = (camThread->imageWidth()  / 2) - faceRadius;
+	int yLevelUp    = (camThread->imageHeight() / 2) - faceRadius;
+	int yLevelDown  = (camThread->imageHeight() / 2) + faceRadius;
 
-	// track nowhere (middle)
-	// (faceRadius = 0 -> no faces detected
-	if ( (faceRadius==0) || ((faceX > 80) && ((faceX < 90)) && (faceY > 55) && (faceY < 75) ) )
+	
+	// track nowhere (face is in the middle) or faceRadius is 0 -> no faces detected
+//	if ( (faceRadius==0) || ((faceX > 80) && ((faceX < 90)) && (faceY > 55) && (faceY < 75) ) )
+	if ( (faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
@@ -1236,29 +1240,32 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	}
 	
 	// track left
-	if ( (faceX < 80) && (faceY > 55) && (faceY < 75) )
+	//if ( (faceX < 80) && (faceY > 55) && (faceY < 75) )
+	if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 		}
 		emit showFaceTrackDirection("LEFT");
 		return;
 	}
 	
 	// track right
-	if ( (faceX > 80) && (faceY > 55) && (faceY < 75) )
+	//if ( (faceX > 80) && (faceY > 55) && (faceY < 75) )
+	if ( (faceX > xLevelRight) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 		}
 		emit showFaceTrackDirection("RIGHT");
 		return;
 	}
 	
 	// track up
-	if ( (faceX > 80) && (faceX < 90) && (faceY < 55) )
+	//if ( (faceX > 80) && (faceX < 90) && (faceY < 55) )
+	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY < yLevelUp) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
@@ -1270,7 +1277,8 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	}
 	
 	// track up left
-	if ( (faceX < 90) && (faceY < 55) )
+	//if ( (faceX < 90) && (faceY < 55) )
+	if ( (faceX < xLevelLeft) && (faceY < yLevelUp) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
@@ -1282,7 +1290,8 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	}
 	
 	// track up right
-	if ( (faceX > 80) && (faceY < 55) )
+	//if ( (faceX > 80) && (faceY < 55) )
+	if ( (faceX > xLevelLeft) && (faceY < yLevelUp) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
@@ -1294,7 +1303,8 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	}
 	
 	// track down
-	if ( (faceX > 80) && (faceX < 90) && (faceY > 65) )
+	//if ( (faceX > 80) && (faceX < 90) && (faceY > 65) )
+	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY > yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
@@ -1306,7 +1316,8 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	}
 	
 	// track down left
-	if ( (faceX < 90) && (faceY > 55) )
+	//if ( (faceX < 90) && (faceY > 55) )
+	if ( (faceX < xLevelLeft) && (faceY > yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
@@ -1318,7 +1329,8 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	}
 	
 	// track down right
-	if ( (faceX > 80) && (faceY > 55) )
+	//if ( (faceX > 80) && (faceY > 55) )
+	if ( (faceX > xLevelRight) && (faceY > yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
