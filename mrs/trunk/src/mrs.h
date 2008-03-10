@@ -77,6 +77,12 @@ class Mrs : public QObject
 		@sa camThread::camDataComplete()
 		 */
 		void faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius);
+
+		/**
+		Enables or disables the face tracking. When activated, a face will be tracked by the camera.
+		@param state has to be Qt::Checked to enable the detection. All other states disable.
+		*/
+		void enableFaceTracking(int state);
 		
 		/**
 		Shows the sensor data in a graphical way (progressBars) and as a number in the GUI.
@@ -190,6 +196,7 @@ class Mrs : public QObject
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
 		bool servoTestMode;
 		bool cameraTestMode;
+		bool faceTrackingIsEnabled;
 		int mot1Speed;
 		int mot2Speed;
 		int mot3Speed;

@@ -72,6 +72,7 @@ Mrs::Mrs()
 	robotRemoteMode = false;
 	servoTestMode = false;
 	cameraTestMode = false;
+	faceTrackingIsEnabled = false;
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -348,16 +349,21 @@ Mrs::Mrs()
 	// connect camDataComplete from the cam thread to the faceTracking unit
 	//----------------------------------------------------------------------------
 	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int) ), SLOT( faceTracking(IplImage*, int, int, int) ));
-
-	//----------------------------------------------------------------------------
-	// show the face track direction in the gui
-	//----------------------------------------------------------------------------
-	connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
 	
 	//----------------------------------------------------------------------------
 	// enable face detection, when activated in the GUI
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
+	
+	//----------------------------------------------------------------------------
+	// enable face tracking, when activated in the GUI
+	//----------------------------------------------------------------------------
+	connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
+
+	//----------------------------------------------------------------------------
+	// show the face track direction in the gui
+	//----------------------------------------------------------------------------
+	connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
 	
 	//----------------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
@@ -1196,10 +1202,21 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 }
 
 
+void Mrs::enableFaceTracking(int state)
+{
+	if (state == Qt::Checked)
+	{
+		faceTrackingIsEnabled = true;
+	}
+	else
+	{
+		faceTrackingIsEnabled = false;
+	}
+}
+
+
 void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 {
-	// x<80 x>90
-	// y<30 =60 >88
 	// TODO: put values to consts or ini
 	// TODO: check values for other resolutions. use image-size as param for this method?
 
@@ -1207,6 +1224,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// (faceRadius = 0 -> no faces detected
 	if ( (faceRadius==0) || ((faceX > 80) && ((faceX < 90)) && (faceY > 55) && (faceY < 75) ) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
+		}
 		emit showFaceTrackDirection("NONE");
 		return;
 	}
@@ -1214,6 +1236,10 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track left
 	if ( (faceX < 80) && (faceY > 55) && (faceY < 75) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+		}
 		emit showFaceTrackDirection("LEFT");
 		return;
 	}
@@ -1221,6 +1247,10 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track right
 	if ( (faceX > 80) && (faceY > 55) && (faceY < 75) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+		}
 		emit showFaceTrackDirection("RIGHT");
 		return;
 	}
@@ -1228,6 +1258,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track up
 	if ( (faceX > 80) && (faceX < 90) && (faceY < 55) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
+		}
 		emit showFaceTrackDirection("UP");
 		return;
 	}
@@ -1235,6 +1270,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track up left
 	if ( (faceX < 90) && (faceY < 55) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
+		}
 		emit showFaceTrackDirection("UPLEFT");
 		return;
 	}
@@ -1242,6 +1282,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track up right
 	if ( (faceX > 80) && (faceY < 55) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
+		}
 		emit showFaceTrackDirection("UPRIGHT");
 		return;
 	}
@@ -1249,6 +1294,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track down
 	if ( (faceX > 80) && (faceX < 90) && (faceY > 65) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
+		}
 		emit showFaceTrackDirection("DOWN");
 		return;
 	}
@@ -1256,6 +1306,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track down left
 	if ( (faceX < 90) && (faceY > 55) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
+		}
 		emit showFaceTrackDirection("DOWNLEFT");
 		return;
 	}
@@ -1263,6 +1318,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	// track down right
 	if ( (faceX > 80) && (faceY > 55) )
 	{
+		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		{
+			motors->motorControl(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
+		}
 		emit showFaceTrackDirection("DOWNRIGHT");
 		return;
 	}
