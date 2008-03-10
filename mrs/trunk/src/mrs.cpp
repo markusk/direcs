@@ -421,9 +421,11 @@ Mrs::Mrs()
 	{
 		if (camThread->isRunning() == false)
 		{
-			gui->appendLog("Starting cam thread...", false);
+			gui->appendLog("Starting camera thread...", false);
 			camThread->start();
 			gui->appendLog("Camera thread started.");
+			if (camThread->isConnected())
+				gui->appendLog(QString("Camera resolution is %1x%2.").arg(camThread->imageWidth()).arg(camThread->imageHeight()));
 		}
 	}
 	else
@@ -1218,7 +1220,7 @@ void Mrs::enableFaceTracking(int state)
 void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 {
 	// TODO: put values to consts or ini
-	// TODO: check values for other resolutions. use image-size as param for this method?
+	// TODO: check values for other resolutions. use image-size as param for this method? < < < < <
 
 	// track nowhere (middle)
 	// (faceRadius = 0 -> no faces detected
