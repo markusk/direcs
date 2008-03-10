@@ -762,6 +762,12 @@ void SensorThread::setSimulationMode(bool status)
 		
 		motorSensorValue[MOTORSENSOR1] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 		motorSensorValue[MOTORSENSOR2] = (int)800/CONVERSIONFACTORMOTORSENSOR;
+		
+		// initialisation
+		for (int i=0; i<CONTACTARRAYSIZE; i++)
+		{
+			contactValue[i] = 0;
+		}
 	}
 	else
 	{
@@ -786,5 +792,10 @@ void SensorThread::setSimulationMode(bool status)
 			motorSensorValue[i] = 0;
 		}
 	
+		// initialisation
+		for (int i=0; i<CONTACTARRAYSIZE; i++)
+		{
+			contactValue[i] = 0;
+		}
 	}
 }
