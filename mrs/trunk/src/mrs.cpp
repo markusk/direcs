@@ -342,17 +342,17 @@ Mrs::Mrs()
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL(camDataComplete(IplImage*, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int) ));
+	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int) ));
 	
 	//----------------------------------------------------------------------------
 	// connect camDataComplete from the cam thread to the faceTracking unit
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL(camDataComplete(IplImage*, int, int, int) ), SLOT( faceTracking(IplImage*, int, int, int) ));
+	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int) ), SLOT( faceTracking(IplImage*, int, int, int) ));
 
 	//----------------------------------------------------------------------------
 	// show the face track direction in the gui
 	//----------------------------------------------------------------------------
-	connect(this, SIGNAL(showFaceTrackdDirection(QString)), SLOT(showFaceTrackdDirection(QString)));
+	connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
 	
 	//----------------------------------------------------------------------------
 	// enable face detection, when activated in the GUI
@@ -1198,11 +1198,74 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 {
-	emit showFaceTrackdDirection("NONE");
-	emit showFaceTrackdDirection("UP");
-	emit showFaceTrackdDirection("DOWN");
-	emit showFaceTrackdDirection("LEFT");
-	emit showFaceTrackdDirection("RIGHT");
+	// x<80 x>90
+	// y<30 =60 >88
+	// TODO: put values to consts or ini
+	// TODO: check values for other resolutions. use image-size as param for this method?
+
+	// track nowhere (middle)
+	// (faceRadius = 0 -> no faces detected
+	if ( (faceRadius==0) || ((faceX > 80) && ((faceX < 90)) && (faceY > 55) && (faceY < 75) ) )
+	{
+		emit showFaceTrackDirection("NONE");
+		return;
+	}
+	
+	// track left
+	if ( (faceX < 80) && (faceY > 55) && (faceY < 75) )
+	{
+		emit showFaceTrackDirection("LEFT");
+		return;
+	}
+	
+	// track right
+	if ( (faceX > 80) && (faceY > 55) && (faceY < 75) )
+	{
+		emit showFaceTrackDirection("RIGHT");
+		return;
+	}
+	
+	// track up
+	if ( (faceX > 80) && (faceX < 90) && (faceY < 55) )
+	{
+		emit showFaceTrackDirection("UP");
+		return;
+	}
+	
+	// track up left
+	if ( (faceX < 90) && (faceY < 55) )
+	{
+		emit showFaceTrackDirection("UPLEFT");
+		return;
+	}
+	
+	// track up right
+	if ( (faceX > 80) && (faceY < 55) )
+	{
+		emit showFaceTrackDirection("UPRIGHT");
+		return;
+	}
+	
+	// track down
+	if ( (faceX > 80) && (faceX < 90) && (faceY > 65) )
+	{
+		emit showFaceTrackDirection("DOWN");
+		return;
+	}
+	
+	// track down left
+	if ( (faceX < 90) && (faceY > 55) )
+	{
+		emit showFaceTrackDirection("DOWNLEFT");
+		return;
+	}
+	
+	// track down right
+	if ( (faceX > 80) && (faceY > 55) )
+	{
+		emit showFaceTrackDirection("DOWNRIGHT");
+		return;
+	}
 }
 
 

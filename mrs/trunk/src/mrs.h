@@ -148,7 +148,7 @@ class Mrs : public QObject
 		/**
 		Shows the face tracking direction in a lable.
 		 */
-		void showFaceTrackdDirection(QString direction);
+		void showFaceTrackDirection(QString direction);
 	
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.
