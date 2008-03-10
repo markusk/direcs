@@ -1227,7 +1227,6 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 
 	
 	// track nowhere (face is in the middle) or faceRadius is 0 -> no faces detected
-//	if ( (faceRadius==0) || ((faceX > 80) && ((faceX < 90)) && (faceY > 55) && (faceY < 75) ) )
 	if ( (faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
@@ -1240,102 +1239,96 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	}
 	
 	// track left
-	//if ( (faceX < 80) && (faceY > 55) && (faceY < 75) )
 	if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, OFF, SAME);
 		}
 		emit showFaceTrackDirection("LEFT");
 		return;
 	}
 	
 	// track right
-	//if ( (faceX > 80) && (faceY > 55) && (faceY < 75) )
 	if ( (faceX > xLevelRight) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR4, OFF, SAME);
 		}
 		emit showFaceTrackDirection("RIGHT");
 		return;
 	}
 	
 	// track up
-	//if ( (faceX > 80) && (faceX < 90) && (faceY < 55) )
 	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY < yLevelUp) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
 			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
+			motors->motorControl(MOTOR4, ON, CLOCKWISE);
 		}
 		emit showFaceTrackDirection("UP");
 		return;
 	}
 	
 	// track up left
-	//if ( (faceX < 90) && (faceY < 55) )
 	if ( (faceX < xLevelLeft) && (faceY < yLevelUp) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
+			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, ON, CLOCKWISE);
 		}
 		emit showFaceTrackDirection("UPLEFT");
 		return;
 	}
 	
 	// track up right
-	//if ( (faceX > 80) && (faceY < 55) )
 	if ( (faceX > xLevelLeft) && (faceY < yLevelUp) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
+			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR4, ON, CLOCKWISE);
 		}
 		emit showFaceTrackDirection("UPRIGHT");
 		return;
 	}
 	
 	// track down
-	//if ( (faceX > 80) && (faceX < 90) && (faceY > 65) )
 	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY > yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
 			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
+			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 		}
 		emit showFaceTrackDirection("DOWN");
 		return;
 	}
 	
 	// track down left
-	//if ( (faceX < 90) && (faceY > 55) )
 	if ( (faceX < xLevelLeft) && (faceY > yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
+			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 		}
 		emit showFaceTrackDirection("DOWNLEFT");
 		return;
 	}
 	
 	// track down right
-	//if ( (faceX > 80) && (faceY > 55) )
 	if ( (faceX > xLevelRight) && (faceY > yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
+			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 		}
 		emit showFaceTrackDirection("DOWNRIGHT");
 		return;
@@ -1805,7 +1798,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMotorSpeed(2, mot3Speed);
+			gui->setSliderMotorSpeed(3, mot3Speed);
 			// show text
 			gui->appendLog(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
 			break;
@@ -1834,7 +1827,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMotorSpeed(2, mot4Speed);
+			gui->setSliderMotorSpeed(4, mot4Speed);
 			// show text
 			gui->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
