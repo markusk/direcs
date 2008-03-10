@@ -138,7 +138,8 @@ void CamThread::run()
 					// detect objects in the image
 					faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 					
-					if (faces == 0)
+					// when *no* faces detected
+					if (faces->total == 0)
 					{
 						// for emit signal
 						faceX = 0;
