@@ -17,7 +17,7 @@ Servo::~Servo()
 }
 
 
-void Servo::setServoPosition(unsigned char servo, unsigned char position)
+void Servo::moveServo(unsigned char servo, unsigned char position)
 {
 	switch (servo)
 	{
@@ -51,6 +51,26 @@ void Servo::setServoPosition(unsigned char servo, unsigned char position)
 			break;
 		default:
 			qDebug("ERROR: servo number not supportet (setServoPosition(%d) )", servo);
+			break;
+	}
+}
+
+
+void Servo::setServoPosition(int servo, unsigned char type, unsigned char position)
+{
+	switch (type)
+	{
+		case SVSTART:
+			servoStartPosition[servo] = position;
+			return;
+			break;
+		case SVEND:
+			servoEndPosition[servo] = position;
+			return;
+			break;
+		case SVDEFAULT:
+			servoDefaultPosition[servo] = position;
+			return;
 			break;
 	}
 }
