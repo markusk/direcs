@@ -229,8 +229,8 @@ Mrs::Mrs()
 	// TODO: read values from ini-file and set to initial values
 	if (circuit1->isConnected() == true)
 	{
-		servos->setServoPosition(SERVO1, 10);
-		servos->setServoPosition(SERVO2, 10);
+		servos->moveServo(SERVO1, 10);
+		servos->moveServo(SERVO2, 10);
 	}
 	
 	
@@ -1487,7 +1487,6 @@ void Mrs::readSettings()
 		}
 	}
 
-
 	//---------------------------------------------------------------------
 	// read setting
 	serialPortLaserscannerFront = inifile1->readString("Config", "serialPortLaserscannerFront");
@@ -1514,7 +1513,6 @@ void Mrs::readSettings()
 		}
 	}
 
-
 	//---------------------------------------------------------------------
 	// read setting
 	serialPortLaserscannerRear = inifile1->readString("Config", "serialPortLaserscannerRear");
@@ -1540,7 +1538,6 @@ void Mrs::readSettings()
 			gui->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
 		}
 	}
-	
 	
 	//---------------------------------------------------------------------
 	// read setting / and error handling
@@ -1599,7 +1596,6 @@ void Mrs::readSettings()
 			break;
 	}
 
-
 	//---------------------------------------------------------------------
 	// read setting
 	int minObstacleDistance = inifile1->readSetting("Config", "minObstacleDistance");
@@ -1621,7 +1617,6 @@ void Mrs::readSettings()
 			gui->appendLog(QString("Min. obstacle distance set to <b>%1 cm</b>.").arg(minObstacleDistance));
 			break;
 	}
-
 
 	//---------------------------------------------------------------------
 	// read setting
@@ -1645,7 +1640,6 @@ void Mrs::readSettings()
 			break;
 	}
 
-
 	//---------------------------------------------------------------------
 	// read setting
 	int robotSlot = inifile1->readSetting("Config", "robotSlot");
@@ -1668,7 +1662,6 @@ void Mrs::readSettings()
 			break;
 	}
 
-
 	//---------------------------------------------------------------------
 	// read setting
 	int straightForwardDeviation = inifile1->readSetting("Config", "straightForwardDeviation");
@@ -1690,7 +1683,6 @@ void Mrs::readSettings()
 			gui->appendLog(QString("Straight forward deviation set to <b>%1 deg.</b>").arg(straightForwardDeviation));
 			break;
 	}
-
 
 	//---------------------------------------------------------------------
 	// read setting
@@ -1716,7 +1708,6 @@ void Mrs::readSettings()
 			gui->appendLog(QString("Joystick port set to <b>%1</b>.").arg(joystickPort));
 		}
 	}
-	
 	
 	//---------------------------------------------------------------------
 	// read setting
@@ -1746,7 +1737,6 @@ void Mrs::readSettings()
 			break;
 	}
 	
-	
 	//---------------------------------------------------------------------
 	// read setting
 	mot2Speed = inifile1->readSetting("Config", "motor2Speed");
@@ -1774,7 +1764,6 @@ void Mrs::readSettings()
 			gui->appendLog(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
 	}
-	
 	
 	//---------------------------------------------------------------------
 	// read setting
@@ -1804,7 +1793,6 @@ void Mrs::readSettings()
 			break;
 	}
 	
-	
 	//---------------------------------------------------------------------
 	// read setting
 	mot4Speed = inifile1->readSetting("Config", "motor4Speed");
@@ -1832,7 +1820,6 @@ void Mrs::readSettings()
 			gui->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
 	}
-	
 	
 	//---------------------------------------------------------------------
 	// read setting
@@ -1862,7 +1849,6 @@ void Mrs::readSettings()
 			break;
 	}
 	
-	
 	//---------------------------------------------------------------------
 	// read setting
 	maximumSpeed = inifile1->readSetting("Config", "maximumSpeed");
@@ -1889,6 +1875,103 @@ void Mrs::readSettings()
 			// show text
 			gui->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
+	}
+	
+	//---------------------------------------------------------------------
+	// read servo START settings
+	for (int servo=1; servo<=NUMBEROFSERVOS; servo++)
+	{
+		QString settingName = QString("servo%1").arg(servo).append("StartPos");
+		int settingValue = inifile1->readSetting("Config", settingName);
+		
+		switch (settingValue)
+		{
+			case -2:
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				settingValue = 0;
+				break;
+			case -1:
+				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > 254)
+				{
+					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					settingValue = 255;
+				}
+	
+				// store the servo values
+				servos->setServoPosition(servo-1, SVSTART, settingValue);
+		
+				// show text
+				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
+	}
+	//---------------------------------------------------------------------
+	// read servo END settings
+	for (int servo=1; servo<=NUMBEROFSERVOS; servo++)
+	{
+		QString settingName = QString("servo%1").arg(servo).append("EndPos");
+		int settingValue = inifile1->readSetting("Config", settingName);
+		
+		switch (settingValue)
+		{
+			case -2:
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				settingValue = 0;
+				break;
+			case -1:
+				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > 254)
+				{
+					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					settingValue = 255;
+				}
+	
+				// store the servo values
+				servos->setServoPosition(servo-1, SVEND, settingValue);
+		
+				// show text
+				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
+	}
+	//---------------------------------------------------------------------
+	// read servo DEFAULT settings
+	for (int servo=1; servo<=NUMBEROFSERVOS; servo++)
+	{
+		QString settingName = QString("servo%1").arg(servo).append("DefaultPos");
+		int settingValue = inifile1->readSetting("Config", settingName);
+		
+		switch (settingValue)
+		{
+			case -2:
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				settingValue = 0;
+				break;
+			case -1:
+				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > 254)
+				{
+					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					settingValue = 255;
+				}
+	
+				// store the servo values
+				servos->setServoPosition(servo-1, SVDEFAULT, settingValue);
+		
+				// show text
+				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
 	}
 }
 
@@ -2254,7 +2337,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					servos->setServoPosition(SERVO1, servo1Pos);
+					servos->moveServo(SERVO1, servo1Pos);
 				}
 				gui->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
 			}
@@ -2348,7 +2431,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					servos->setServoPosition(SERVO2, servo2Pos);
+					servos->moveServo(SERVO2, servo2Pos);
 				}
 				gui->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
 			}
@@ -2567,16 +2650,16 @@ void Mrs::test()
 	{
 		toggle = ON;
 		// servo1 ist der große
-		servos->setServoPosition(SERVO1, pos1);
+		servos->moveServo(SERVO1, pos1);
 		// servo2 ist der kleine
-		servos->setServoPosition(SERVO2, pos1);
+		servos->moveServo(SERVO2, pos1);
 		gui->appendLog("pos1");
 	}
 	else
 	{
 		toggle = OFF;
-		servos->setServoPosition(SERVO1, pos2);
-		servos->setServoPosition(SERVO2, pos2);
+		servos->moveServo(SERVO1, pos2);
+		servos->moveServo(SERVO2, pos2);
 		gui->appendLog("pos2");
 	}
 	

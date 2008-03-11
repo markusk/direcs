@@ -263,8 +263,14 @@ class Mrs : public QObject
 		static const short int MOTORSENSOR2 = 1;
 		
 		//! The servos
+		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in servo.h !!!
 		static const unsigned char SERVO1 = 10;
 		static const unsigned char SERVO2 = 20;
+		
+		//! the possible servo data
+		static const unsigned char SVSTART   = 0;
+		static const unsigned char SVEND     = 1;
+		static const unsigned char SVDEFAULT = 2;
 		
 		// TODO: put axis numbers to ini-file
 		//! Joystick axis numbers
