@@ -507,6 +507,34 @@ int main(void)
 				setServoPosition(2, value);
 				break;
 
+
+			case SET_SERVO3;
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setServoPosition(3, value);
+				break;
+
+
+			case SET_SERVO4:
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setServoPosition(4, value);
+				break;
+
+
+			case SET_SERVO5:
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setServoPosition(5, value);
+				break;
+
+
+			case SET_SERVO6:
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setServoPosition(6, value);
+				break;
+
 			//-------------------------------
 			case FLASHLIGHT_ON:
 				// set flashlight bit
