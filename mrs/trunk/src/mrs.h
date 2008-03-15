@@ -264,8 +264,13 @@ class Mrs : public QObject
 		
 		//! The servos
 		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in servo.h !!!
-		static const unsigned char SERVO1 = 10;
-		static const unsigned char SERVO2 = 20;
+		//! the servo numbers
+		static const unsigned char SERVO1 = 1;
+		static const unsigned char SERVO2 = 2;
+		static const unsigned char SERVO3 = 3;
+		static const unsigned char SERVO4 = 4;
+		static const unsigned char SERVO5 = 5;
+		static const unsigned char SERVO6 = 6;
 		
 		//! the possible servo data
 		static const unsigned char SVSTART   = 0;
