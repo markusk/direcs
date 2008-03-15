@@ -40,8 +40,12 @@
 #define	FLASHLIGHT_OFF			40
 #define	FLASHLIGHT_ON			41
 
-#define SET_SERVO1				45
-#define SET_SERVO2				46
+#define SET_SERVO1				42
+#define SET_SERVO2				43
+#define SET_SERVO3				44
+#define SET_SERVO4				45
+#define SET_SERVO5				46
+#define SET_SERVO6				47
 
 #define MOTOR3_OFF 				50
 #define MOTOR3_CLOCKWISE 		51
