@@ -18,7 +18,7 @@ public:
 	QtGLContext(const QGLFormat &format, QWidget* parent = 0, const QGLWidget* sharedWidget = 0, Qt::WFlags f = 0 );
 	~QtGLContext();
 
-	// set image parameters																					vertical flip!
+	// set image parameters											vertical flip!
 	bool setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped = false);
 
 	// redefines the clipping rectangle for the texture drawing
