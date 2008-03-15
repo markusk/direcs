@@ -2155,13 +2155,6 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			gui->setSliderMotorSpeed(1, speed);
 			gui->setSliderMotorSpeed(2, speed);
 			
-			/* TODO: change this to camera motors
-			if (servoTestMode == true)
-			{
-				servos->setServoPosition(SERVO1, speed);
-			}
-			*/
-			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
 			{
@@ -2233,13 +2226,6 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			
 			gui->setSliderMotorSpeed(1, speed);
 			gui->setSliderMotorSpeed(2, speed);
-			
-			/* TODO: change this to camera motors
-			if (servoTestMode == true)
-			{
-				servos->setServoPosition(SERVO2, speed);
-			}
-			*/
 			
 			// only drive, when remote mode is activated in the GUI!
 			if (robotRemoteMode==true)
