@@ -134,6 +134,11 @@ Mrs::Mrs()
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
 	
+	//--------------------------------------------------------------------------
+	// let the GUI show servo messages in the log
+	//--------------------------------------------------------------------------
+	connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+	
 	
 	//----------------------------------------------------------------------------
 	// say a text
@@ -224,17 +229,6 @@ Mrs::Mrs()
 
 	
 	//-------------------------------------------------------
-	// set the servo positions
-	//-------------------------------------------------------
-	// TODO: read values from ini-file and set to initial values
-	if (circuit1->isConnected() == true)
-	{
-		servos->moveServo(SERVO1, 10);
-		servos->moveServo(SERVO2, 10);
-	}
-	
-	
-	//-------------------------------------------------------
 	// set the read motor speed
 	//-------------------------------------------------------
 	if (circuit1->isConnected())
@@ -245,6 +239,16 @@ Mrs::Mrs()
 		motors->setMotorSpeed(3, mot3Speed);
 		motors->setMotorSpeed(4, mot4Speed);
 		gui->appendLog("Motor speed set in microcontroller");
+	}
+	
+	
+	//-------------------------------------------------------
+	// move all servos in their default positions
+	//-------------------------------------------------------
+	if (circuit1->isConnected())
+	{
+		servos->init();
+		gui->appendLog("Servos moved to default positions");
 	}
 
 	
@@ -2295,27 +2299,19 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		if (servoTestMode==true)
 		{
 			//------------------
-			// servo up
+			// servo down (servo2)
 			//------------------
 			if (axisValue > 0)
 			{
-				servo1Pos++;
-				
-				// TODO: put this to ini file
-				if (servo1Pos > 13)
-					servo1Pos = 13;
+				servo2Pos--;
 			}
 			
 			//------------------
-			// servo down
+			// servo up (servo2)
 			//------------------
 			if (axisValue < 0)
 			{
-				servo1Pos--;
-				
-				// TODO: put this to ini file
-				if (servo1Pos < 8)
-					servo1Pos = 8;
+				servo2Pos++;
 			}
 			
 			// only move, when button is pressed - not, when released (=0)
@@ -2323,9 +2319,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					servos->moveServo(SERVO1, servo1Pos);
+					servos->moveServo(SERVO2, servo2Pos);
 				}
-				gui->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
+				gui->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
 			}
 			return;
 		}
@@ -2393,11 +2389,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				servo2Pos++;
-				
-				// TODO: put this to ini file
-				if (servo2Pos > 16)
-					servo2Pos = 16;
+				servo1Pos++;
 			}
 			
 			//------------------
@@ -2405,11 +2397,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				servo2Pos--;
-				
-				// TODO: put this to ini file
-				if (servo2Pos < 5)
-					servo2Pos = 5;
+				servo1Pos--;
 			}
 			
 			// only move, when button is pressed - not, when released (=0)
@@ -2417,9 +2405,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					servos->moveServo(SERVO2, servo2Pos);
+					servos->moveServo(SERVO1, servo1Pos);
 				}
-				gui->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
+				gui->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
 			}
 			return;
 		} // servo test mode
