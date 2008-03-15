@@ -507,8 +507,7 @@ int main(void)
 				setServoPosition(2, value);
 				break;
 
-
-			case SET_SERVO3;
+			case SET_SERVO3:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(3, value);
