@@ -10,9 +10,10 @@ Servo::Servo(InterfaceAvr *i)
 	// init arrays
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
-		servoStartPosition[servo] = 11;
+		servoStartPosition[servo] = 1;
 		servoDefaultPosition[servo] = 11;
-		servoEndPosition[servo] = 11;
+		servoEndPosition[servo] = 255;
+		servoPosition[servo] = servoDefaultPosition[servo];
 	}
 }
 
@@ -24,14 +25,19 @@ Servo::~Servo()
 
 void Servo::moveServo(unsigned char servo, unsigned char position)
 {
+	//qDebug("moveServo%d to position %d. Start=%d / Default=%d / End=%d", servo, position, servoStartPosition[servo], servoDefaultPosition[servo], servoEndPosition[servo]);
+
 	// *don't* move servo to a position out of the allowed range!!
 	if ( (position < servoStartPosition[servo]) || (position > servoEndPosition[servo]) )
 	{
-		emit message(QString("<b><font color=\"#FF0000\">Servo %1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
+		emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
 		return;
 	}
 
-
+	// store the newservo position
+	servoPosition[servo] = position;
+	
+	
 	switch (servo)
 	{
 		case SERVO1:
@@ -141,6 +147,10 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 			servoDefaultPosition[servo] = position;
 			return;
 			break;
+		case SVCURRENT:
+			servoPosition[servo] = position;
+			return;
+			break;
 	}
 }
 
@@ -149,6 +159,18 @@ void Servo::init(void)
 {
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
-		moveServo(servo+1, servoDefaultPosition[servo]);
+		moveServo(servo, servoDefaultPosition[servo]);
 	}
+}
+
+
+unsigned char Servo::getServoPosition(int servo)
+{
+	if ( (servo < SERVO1) || (servo > (NUMBEROFSERVOS-1)) )
+	{
+		emit message(QString("<b><font color=\"#FF0000\">Servo%1 out of allowed range! (getServoPosition)</font>").arg(servo+1));
+		return 0;
+	}
+	
+	return servoPosition[servo];
 }
