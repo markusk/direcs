@@ -255,6 +255,9 @@ void Gui::on_btnReset_clicked()
 	// reset the circuit (motors off etc.)
 	emit initCircuit();
 
+	// reset the servos
+	emit initServos();
+
 	// stop driving
 	emit drive(STOP);
  

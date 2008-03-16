@@ -283,9 +283,14 @@ class Gui : public QMainWindow
 		void shutdown();
 		
 		/**
-		Initialize the robots basic circuit.
+		Initializes the robots basic circuit.
 		 */
 		void initCircuit();
+		
+		/**
+		Initializes the servos.
+		 */
+		void initServos();
 		
 		/**
 		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
