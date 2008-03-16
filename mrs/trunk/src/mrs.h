@@ -195,6 +195,7 @@ class Mrs : public QObject
 		bool robotSimulationMode; //! Stores the robots simulation state
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
 		bool servoTestMode;
+		int currentTestServo;
 		bool cameraTestMode;
 		bool faceTrackingIsEnabled;
 		int mot1Speed;
@@ -265,17 +266,18 @@ class Mrs : public QObject
 		//! The servos
 		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in servo.h !!!
 		//! the servo numbers
-		static const unsigned char SERVO1 = 1;
-		static const unsigned char SERVO2 = 2;
-		static const unsigned char SERVO3 = 3;
-		static const unsigned char SERVO4 = 4;
-		static const unsigned char SERVO5 = 5;
-		static const unsigned char SERVO6 = 6;
+		static const unsigned char SERVO1 = 0;
+		static const unsigned char SERVO2 = 1;
+		static const unsigned char SERVO3 = 2;
+		static const unsigned char SERVO4 = 3;
+		static const unsigned char SERVO5 = 4;
+		static const unsigned char SERVO6 = 5;
 		
 		//! the possible servo data
 		static const unsigned char SVSTART   = 0;
 		static const unsigned char SVEND     = 1;
 		static const unsigned char SVDEFAULT = 2;
+		static const unsigned char SVCURRENT = 3;
 		
 		// TODO: put axis numbers to ini-file
 		//! Joystick axis numbers

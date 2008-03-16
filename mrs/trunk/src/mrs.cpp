@@ -71,6 +71,7 @@ Mrs::Mrs()
 	robotSimulationMode = false;
 	robotRemoteMode = false;
 	servoTestMode = false;
+	currentTestServo = SERVO1;
 	cameraTestMode = false;
 	faceTrackingIsEnabled = false;
 	
@@ -212,7 +213,9 @@ Mrs::Mrs()
 	//-------------------------------------------------------
 	splash->showMessage(QObject::tr("Searching robot..."), somewhere, splashColor);
 	
+	// init the circuit & Co. when hitting the button in the GUI
 	connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+	connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 	
 	
 	// init the robots circuit
@@ -1883,9 +1886,9 @@ void Mrs::readSettings()
 	
 	//---------------------------------------------------------------------
 	// read servo START settings
-	for (int servo=1; servo<=NUMBEROFSERVOS; servo++)
+	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
-		QString settingName = QString("servo%1").arg(servo).append("StartPos");
+		QString settingName = QString("servo%1").arg(servo+1).append("StartPos");
 		int settingValue = inifile1->readSetting("Config", settingName);
 		
 		switch (settingValue)
@@ -1906,7 +1909,7 @@ void Mrs::readSettings()
 				}
 	
 				// store the servo values
-				servos->setServoPosition(servo-1, SVSTART, settingValue);
+				servos->setServoPosition(servo, SVSTART, settingValue);
 		
 				// show text
 				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -1915,9 +1918,9 @@ void Mrs::readSettings()
 	}
 	//---------------------------------------------------------------------
 	// read servo END settings
-	for (int servo=1; servo<=NUMBEROFSERVOS; servo++)
+	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
-		QString settingName = QString("servo%1").arg(servo).append("EndPos");
+		QString settingName = QString("servo%1").arg(servo+1).append("EndPos");
 		int settingValue = inifile1->readSetting("Config", settingName);
 		
 		switch (settingValue)
@@ -1938,7 +1941,7 @@ void Mrs::readSettings()
 				}
 	
 				// store the servo values
-				servos->setServoPosition(servo-1, SVEND, settingValue);
+				servos->setServoPosition(servo, SVEND, settingValue);
 		
 				// show text
 				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -1947,9 +1950,9 @@ void Mrs::readSettings()
 	}
 	//---------------------------------------------------------------------
 	// read servo DEFAULT settings
-	for (int servo=1; servo<=NUMBEROFSERVOS; servo++)
+	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
-		QString settingName = QString("servo%1").arg(servo).append("DefaultPos");
+		QString settingName = QString("servo%1").arg(servo+1).append("DefaultPos");
 		int settingValue = inifile1->readSetting("Config", settingName);
 		
 		switch (settingValue)
@@ -1970,7 +1973,7 @@ void Mrs::readSettings()
 				}
 	
 				// store the servo values
-				servos->setServoPosition(servo-1, SVDEFAULT, settingValue);
+				servos->setServoPosition(servo, SVDEFAULT, settingValue);
 		
 				// show text
 				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -2140,9 +2143,14 @@ void Mrs::executeRemoteCommand(QString command)
 void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 {
 	int speed = 0;
+	/*
 	static unsigned char servo1Pos = 10;
 	static unsigned char servo2Pos = 10;
-	
+	static unsigned char servo3Pos = 10;
+	static unsigned char servo4Pos = 10;
+	static unsigned char servo5Pos = 10;
+	static unsigned char servo6Pos = 10;
+	*/
 	
 	//
 	// Y axis
@@ -2303,7 +2311,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				servo2Pos--;
+				// --
+				int wert = servos->getServoPosition(currentTestServo);
+				servos->setServoPosition( currentTestServo, SVCURRENT, wert-1 );
 			}
 			
 			//------------------
@@ -2311,7 +2321,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				servo2Pos++;
+				// ++
+				int wert = servos->getServoPosition(currentTestServo);
+				servos->setServoPosition( currentTestServo, SVCURRENT, wert+1 );
+				//servos->setServoPosition( currentTestServo, SVCURRENT, (servos->getServoPosition(currentTestServo))+1 );
 			}
 			
 			// only move, when button is pressed - not, when released (=0)
@@ -2319,9 +2332,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					servos->moveServo(SERVO2, servo2Pos);
+					servos->moveServo(currentTestServo, servos->getServoPosition(currentTestServo));
 				}
-				gui->appendLog(QString("Servo 2 set to %1.").arg(servo2Pos));
+				gui->appendLog(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(servos->getServoPosition(currentTestServo)));
 			}
 			return;
 		}
@@ -2389,7 +2402,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				servo1Pos++;
+//				servo1Pos++;
 			}
 			
 			//------------------
@@ -2397,7 +2410,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				servo1Pos--;
+//				servo1Pos--;
 			}
 			
 			// only move, when button is pressed - not, when released (=0)
@@ -2405,9 +2418,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (circuit1->isConnected() == true)
 				{
-					servos->moveServo(SERVO1, servo1Pos);
+//					servos->moveServo(SERVO1, servo1Pos);
 				}
-				gui->appendLog(QString("Servo 1 set to %1.").arg(servo1Pos));
+//				gui->appendLog(QString("Servo 1 moved to %1.").arg(servo1Pos));
 			}
 			return;
 		} // servo test mode
@@ -2490,6 +2503,28 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			break;
 		case 5: // 6 on js
 			break;
+		case 6: // 7 on js
+			// left front button
+			if (buttonState==true)
+			{
+				// servo test mode
+				if (servoTestMode==true)
+				{
+					gui->appendLog(QString("Servo %1 selected.").arg((--currentTestServo)+1));
+				}
+			}
+			break;
+		case 7: // 8 on js
+			// right front button
+			if (buttonState==true)
+			{
+				// servo test mode
+				if (servoTestMode==true)
+				{
+					gui->appendLog(QString("Servo %1 selected.").arg((++currentTestServo)+1));
+				}
+			}
+			break;
 		case 10:
 			//
 			// red button, right side
@@ -2501,6 +2536,7 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 					toggle10=true;
 					servoTestMode = true;
 					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON</front>");
+					gui->appendLog(QString("Servo %1 selected.").arg(currentTestServo+1));
 				}
 				else
 				{
