@@ -53,6 +53,8 @@ Mrs::Mrs()
 	netThread = new NetworkThread();
 	camThread = new CamThread();
 	joystick = new Joystick();
+	head = new Head(servos);
+	
 	
 	gui = new Gui();
 
@@ -419,6 +421,11 @@ Mrs::Mrs()
 	
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui, SLOT(showJoystickButtons(int, bool)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
+
+	//----------------------------------------------------------------------------
+	// this is for the robots head
+	//----------------------------------------------------------------------------
+	connect(this, SIGNAL( look(QString)), head, SLOT( look(QString) ));
 
 	
 	//-----------------------------------------------------------
@@ -2659,18 +2666,12 @@ void Mrs::test()
 	if (toggle == OFF)
 	{
 		toggle = ON;
-		// servo1 ist der große
-		servos->moveServo(SERVO1, pos1);
-		// servo2 ist der kleine
-		servos->moveServo(SERVO2, pos1);
-		gui->appendLog("pos1");
+		emit look("LEFT");
 	}
 	else
 	{
 		toggle = OFF;
-		servos->moveServo(SERVO1, pos2);
-		servos->moveServo(SERVO2, pos2);
-		gui->appendLog("pos2");
+		emit look("RIGHT");
 	}
 	
 	//motors->flashlight(toggle);

@@ -16,6 +16,7 @@
 #include "networkThread.h"
 #include "laserThread.h"
 #include "joystick.h"
+#include "head.h"
 //-------------------------------------------------------------------
 #include <festival.h> // FIXME: instead of speakThread-include!
 #include <QtGui>
@@ -157,6 +158,11 @@ class Mrs : public QObject
 		void showFaceTrackDirection(QString direction);
 	
 		/**
+		This is for the robots head.
+		*/
+		void look(QString direction);
+		
+		/**
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
 		//void speak(QString text);
@@ -190,6 +196,7 @@ class Mrs : public QObject
 		CamThread *camThread;
 		//SpeakThread *speakThread;
 		Joystick *joystick;
+		Head *head;
 		QString commaSeparator;
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; //! Stores the robots simulation state
