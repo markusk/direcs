@@ -68,6 +68,8 @@ int main(void)
 	
 	// switch port H (all PINS) to output [servos]
 	DDRH = 0xff;
+	// switch some bits on port E to output [2 more servos]
+	DDRE = (1 << DDE3) | (1 << DDE4);
 
 	// yelow LED off (low active -> turn bit high!)
 	PORTC |= (1<<PIN0);
@@ -157,11 +159,12 @@ int main(void)
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 12 * 64 µs = 768 µs ?!?
-	setServoPosition(1, 10); // <- correct position now set in the mrs programm!
-	setServoPosition(2, 10); // <- correct position now set in the mrs programm!
-	setServoPosition(4, 10); // <- correct position now set in the mrs programm!
-	setServoPosition(5, 10); // <- correct position now set in the mrs programm!
-	setServoPosition(6, 10); // <- correct position now set in the mrs programm!
+	setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+	setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+	setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+	setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+	setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 	
 	// start the servo PWM timer
 	startPWMServo();
@@ -170,16 +173,17 @@ int main(void)
 	UsartInit();
 
 
-/*
+
 	//---------------------------------------------------------
 	// T E S T
 	//---------------------------------------------------------
+/*
 	while(1)
 	{
 
-		for (uint8_t n=255; n>0; n--)
+		for (value=8; value<20; value++)
 		{
-			setPWMwidthServo(n);
+			setServoPosition(4, value);
 			_delay_ms(255);
 			_delay_ms(255);
 			_delay_ms(255);
@@ -570,7 +574,6 @@ int main(void)
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
 				break;
-
 /*
 			//-------------------------------
 			case STEPPER1_OFF:
@@ -622,6 +625,7 @@ int main(void)
 */
 		}
 	} // while (1)
+
 	
 	// this line is never reached!
 	return 0;
