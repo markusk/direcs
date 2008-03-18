@@ -26,11 +26,12 @@ class Servo : public QObject
 		void setServoPosition(int servo, unsigned char type, unsigned char position);
 		
 		/**
-		Returns the current servo position.
+		Returns the servo start, end, default or current position.
 		@param servo is the servo number.
+		@param type can be SVSTART, SVEND, SVDEFAULT or SVCURRENT=default
 		@return the servo position (0 - 255)
 		 */
-		unsigned char getServoPosition(int servo);
+		unsigned char getServoPosition(int servo, unsigned char type=SVCURRENT);
 
 
 	public slots:

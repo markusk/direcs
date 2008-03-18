@@ -164,7 +164,7 @@ void Servo::init(void)
 }
 
 
-unsigned char Servo::getServoPosition(int servo)
+unsigned char Servo::getServoPosition(int servo, unsigned char type)
 {
 	if ( (servo < SERVO1) || (servo > (NUMBEROFSERVOS-1)) )
 	{
@@ -172,5 +172,23 @@ unsigned char Servo::getServoPosition(int servo)
 		return 0;
 	}
 	
-	return servoPosition[servo];
+
+	switch (type)
+	{
+		case SVSTART:
+			return servoStartPosition[servo];
+			break;
+		case SVEND:
+			return servoEndPosition[servo];
+			break;
+		case SVDEFAULT:
+			return servoDefaultPosition[servo];
+			break;
+		case SVCURRENT:
+			return servoPosition[servo];
+			break;
+	}
+
+	// this line is never reached
+	return 0;
 }
