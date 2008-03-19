@@ -4,7 +4,7 @@
 #include <avr/io.h>
 
 void setServoPosition(uint8_t servo, uint16_t value);
-void startPWMServo(void);
-void stopPWMServo(void);
+void startPWMServo(uint8_t servo);
+void stopPWMServo(uint8_t servo);
 
 #endif
