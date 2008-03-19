@@ -2,9 +2,11 @@
 
 Servo::Servo(InterfaceAvr *i)
 {
-	//------------------------------------------------------------------
-	// copy the pointer from the original usb object
-	//------------------------------------------------------------------
+	stopped = false;
+	
+	QMutexLocker locker(&mutex); // make this class thread-safe
+	
+	// copy the pointer from the original object
 	interface1 = i;
 
 	// init arrays
@@ -20,6 +22,29 @@ Servo::Servo(InterfaceAvr *i)
 
 Servo::~Servo()
 {
+}
+
+
+void Servo::stop()
+{
+	stopped = true;
+}
+
+void Servo::run()
+{
+	//
+	//  start "threading"...
+	//
+	while (!stopped)
+	{
+		// let the thread sleep some time
+		// for having more time for the other threads
+		msleep(THREADSLEEPTIME);
+		
+		// do something
+		// ...
+	}
+	stopped = false;
 }
 
 

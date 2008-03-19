@@ -4,12 +4,16 @@
 //-------------------------------------------------------------------
 #include "interfaceAvr.h"
 //-------------------------------------------------------------------
+#include <QThread>
+//-------------------------------------------------------------------
 
 
 /**
 \brief This class controls connected servos
+
+It has to be a thread because of communicating at the same time with the microcontroller via the class @saInterface() !
 */
-class Servo : public QObject
+class Servo : public QThread
 {
     Q_OBJECT
 
@@ -18,9 +22,19 @@ class Servo : public QObject
 		~Servo();
 		
 		/**
+		Stops the thread.
+		*/
+		void stop();
+		
+		/**
+		Starts the thread.
+		*/
+		virtual void run();
+		
+		/**
 		Sets the servos maximum start, end and its default position.
 		@param servo is the servo number.
-		@param type can be SVSTART, SVEND, SVDEFAULT or SVCURRENT
+		@param type can be SVMIN, SVMAX, SVSTART, SVEND, SVDEFAULT or SVCURRENT
 		@param position is the position (0 - 255).
 		 */
 		void setServoPosition(int servo, unsigned char type, unsigned char position);
@@ -28,7 +42,7 @@ class Servo : public QObject
 		/**
 		Returns the servo start, end, default or current position.
 		@param servo is the servo number.
-		@param type can be SVSTART, SVEND, SVDEFAULT or SVCURRENT=default
+		@param type can be SVMIN, SVMAX, SVSTART, SVEND, SVDEFAULT or SVCURRENT=default
 		@return the servo position (0 - 255)
 		 */
 		unsigned char getServoPosition(int servo, unsigned char type=SVCURRENT);
@@ -56,12 +70,20 @@ class Servo : public QObject
 
 
 	private:
+		mutable QMutex mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
+		volatile bool stopped;
+		
+		// Every thread sleeps some time, for having a bit more time fo the other threads!
+		// Time in milliseconds
+		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
 		
 		//! defines the size of the servo[] arrays.
 		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in mrs.h !!!
 		int servoStartPosition[NUMBEROFSERVOS];
 		int servoEndPosition[NUMBEROFSERVOS];
+		int servoMinPosition[NUMBEROFSERVOS];
+		int servoMaxPosition[NUMBEROFSERVOS];
 		int servoDefaultPosition[NUMBEROFSERVOS];
 		int servoPosition[NUMBEROFSERVOS]; //! the current position of the servo!
 		
@@ -70,6 +92,8 @@ class Servo : public QObject
 		static const unsigned char SVEND     = 1;
 		static const unsigned char SVDEFAULT = 2;
 		static const unsigned char SVCURRENT = 3;
+		static const unsigned char SVMIN     = 4;
+		static const unsigned char SVMAX     = 5;
 		
 		//! the servo numbers
 		static const unsigned char SERVO1 = 0;
