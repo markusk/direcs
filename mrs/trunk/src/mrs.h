@@ -159,6 +159,7 @@ class Mrs : public QObject
 	
 		/**
 		This is for the robots head.
+		@param direction where to look can be LEFT, RIGHT...
 		*/
 		void look(QString direction);
 		
@@ -285,6 +286,8 @@ class Mrs : public QObject
 		static const unsigned char SVEND     = 1;
 		static const unsigned char SVDEFAULT = 2;
 		static const unsigned char SVCURRENT = 3;
+		static const unsigned char SVMIN     = 4;
+		static const unsigned char SVMAX     = 5;
 		
 		// TODO: put axis numbers to ini-file
 		//! Joystick axis numbers

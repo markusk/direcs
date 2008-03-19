@@ -266,8 +266,9 @@ Mrs::Mrs()
 		{
 			splash->showMessage(QObject::tr("Starting sensor thread..."), somewhere, splashColor);
 			gui->appendLog("Starting sensor thread...", false);
-			sensorThread->start();
-			gui->appendLog("Sensor thread started.");
+//			sensorThread->start();
+//			gui->appendLog("Sensor thread started.");
+			gui->appendLog("Sensor thread ****NOT*** started.");
 		}
 	}
 	else
