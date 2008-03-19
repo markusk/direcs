@@ -69,7 +69,7 @@ int main(void)
 	// switch port H (all PINS) to output [servos]
 	DDRH = 0xff;
 	// switch some bits on port E to output [2 more servos]
-	DDRE = (1 << DDE3) | (1 << DDE4);
+	DDRE |= (1 << DDE3) | (1 << DDE4);
 
 	// yelow LED off (low active -> turn bit high!)
 	PORTC |= (1<<PIN0);
@@ -167,7 +167,12 @@ int main(void)
 	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 	
 	// start the servo PWM timer
-	startPWMServo();
+	startPWMServo(1);
+	startPWMServo(2);
+	startPWMServo(3);
+	startPWMServo(4);
+	startPWMServo(5);
+	startPWMServo(6);
 
 	// initialize USART (serial port)
 	UsartInit();
@@ -229,12 +234,12 @@ int main(void)
 				PORTL &= ~(1<<PIN7);
 				PORTD &= ~(1<<PIN6);
 				PORTD &= ~(1<<PIN7);
-				// init servo pos. <- correct position now set in the mrs programm!
-				setServoPosition(1, 10);
-				setServoPosition(2, 10);
-				setServoPosition(4, 10);
-				setServoPosition(5, 10);
-				setServoPosition(6, 10);
+				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+				setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+				setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+				setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+				setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 				
 				// "answer" with "@"
 				// this answer is used to see if the robot is "on"
