@@ -51,30 +51,71 @@ void Head::eye(unsigned char whichEye, QString direction)
 		return;
 	}
 	
+	// move servo in the middle of "middle" - "start/end position"
 	if (direction == "LEFT")
 	{
 		if (whichEye==LEFTEYE)
 		{
-			servos->moveServo(SERVO4, servos->getServoPosition(SERVO4, SVSTART));
+			int value = (((servos->getServoPosition(SERVO4, SVDEFAULT) - servos->getServoPosition(SERVO4, SVSTART)) / 2) + servos->getServoPosition(SERVO4, SVDEFAULT)); 
+			qDebug("Left eye, servo4 left=%d", value);
+			servos->moveServo( SERVO4, value );
+			return;
 		}
 
 		if (whichEye==RIGHTEYE)
 		{
-			servos->moveServo(SERVO1, servos->getServoPosition(SERVO1, SVSTART));
+			int value = (((servos->getServoPosition(SERVO1, SVDEFAULT) - servos->getServoPosition(SERVO1, SVSTART)) / 2) + servos->getServoPosition(SERVO1, SVDEFAULT));
+			qDebug("Right eye, servo4 left=%d", value);
+			servos->moveServo( SERVO1, value );
+			return;
+		}
+	}
+	
+	// move servo to its maximum end position
+	if (direction == "LEFTMAX")
+	{
+		if (whichEye==LEFTEYE)
+		{
+			servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVSTART) );
+		}
+
+		if (whichEye==RIGHTEYE)
+		{
+			servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVSTART) );
 		}
 		return;
 	}
 	
+	// move servo in the middle of "middle" - "start/end position"
 	if (direction == "RIGHT")
 	{
 		if (whichEye==LEFTEYE)
 		{
-			servos->moveServo(SERVO4, servos->getServoPosition(SERVO4, SVEND));
+			int value = (servos->getServoPosition(SERVO4, SVEND) - ((servos->getServoPosition(SERVO4, SVEND) - servos->getServoPosition(SERVO4, SVDEFAULT)) / 2) );
+			qDebug("Left eye, servo4 right=%d", value);
+			servos->moveServo( SERVO4, value);
 		}
 
 		if (whichEye==RIGHTEYE)
 		{
-			servos->moveServo(SERVO1, servos->getServoPosition(SERVO1, SVEND));
+			int value = (servos->getServoPosition(SERVO1, SVEND) - ((servos->getServoPosition(SERVO1, SVEND) - servos->getServoPosition(SERVO1, SVDEFAULT)) / 2) ); 
+			qDebug("Right eye, servo4 right=%d", value);
+			servos->moveServo( SERVO1, value);
+		}
+		return;
+	}
+	
+	// move servo to its maximum end position
+	if (direction == "RIGHTMAX")
+	{
+		if (whichEye==LEFTEYE)
+		{
+			servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVEND) );
+		}
+
+		if (whichEye==RIGHTEYE)
+		{
+			servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVEND) );
 		}
 		return;
 	}
@@ -137,95 +178,4 @@ void Head::look(QString direction)
 	{
 		return;
 	}
-}
-
-
-void Head::resetMovementCounter(short int motor)
-{
-	switch (motor)
-	{
-		case MOTOR1:
-		{
-			// Initialize the motor step counters
-			//steps1 = 0;
-		 
-			// Initialize the motor revolutions counters
-			revolutions1 = 0;
-		 
-			// Initialize the distance to next objects in front of the robot
-			drivenDistance1 = 0;
-			return;
-			break;
-		}
-		case MOTOR2:
-		{
-			// Initialize the motor step counters
-			//steps2 = 0;
-		 
-			// Initialize the motor revolutions counters
-			revolutions2 = 0;
-		 
-			// Initialize the distance to next objects in front of the robot
-			drivenDistance2 = 0;
-			return;
-			break;
-		}
-	}
-}
-
-
-void Head::setMotorSpeed(int motor, int speed)
-{
-	if (speed < 0)
-	{
-		speed = 0;
-	}
-	
-	if (speed > 255)
-	{
-		speed = 255;
-	}
-	
-	switch(motor)
-	{
-		case 1:
-			// store the speed
-			motor1Speed = speed;
-			// send the command to the microcontroller (MOTOR 1)
-			break;
-			
-		case 2:
-			// store the speed
-			motor2Speed = speed;
-			// send the command to the microcontroller (MOTOR 2)
-			break;
-	
-		case 3:
-			// store the speed
-			motor3Speed = speed;
-			// send the command to the microcontroller (MOTOR 3)
-			break;
-			
-		case 4:
-			// store the speed
-			motor4Speed = speed;
-			// send the command to the microcontroller (MOTOR 4)
-			break;
-	} // switch
-}
-
-
-int Head::getMotorSpeed(int motor)
-{
-	switch (motor)
-	{
-		case 1:
-			return motor1Speed;
-			break;
-		case 2:
-			return motor2Speed;
-			break;
-	}
-	
-	return -1;
 }
