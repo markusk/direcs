@@ -5,6 +5,7 @@
 #include "interfaceAvr.h"
 //-------------------------------------------------------------------
 #include <QThread>
+#include <QMutex>
 //-------------------------------------------------------------------
 
 
@@ -18,7 +19,7 @@ class Servo : public QThread
     Q_OBJECT
 
 	public:
-		Servo(InterfaceAvr *i);
+		Servo(InterfaceAvr *i, QMutex *m);
 		~Servo();
 		
 		/**
@@ -70,7 +71,7 @@ class Servo : public QThread
 
 
 	private:
-		mutable QMutex mutex; // make this class thread-safe
+		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
 		

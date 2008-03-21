@@ -5,6 +5,7 @@
 #include "interfaceAvr.h"
 //-------------------------------------------------------------------
 #include <QThread>
+#include <QMutex>
 //-------------------------------------------------------------------
 
 /**
@@ -18,7 +19,7 @@ class SensorThread : public QThread
     Q_OBJECT
 
 	public:
-		SensorThread(InterfaceAvr *i);
+		SensorThread(InterfaceAvr *i, QMutex *m);
 		~SensorThread();
 		
 		/**
@@ -122,7 +123,7 @@ class SensorThread : public QThread
 
 
 	private:
-		//mutable QMutex mutex; // make this class thread-safe
+		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
 		bool simulationMode;

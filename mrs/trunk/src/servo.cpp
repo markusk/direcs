@@ -1,13 +1,12 @@
 #include "servo.h"
 
-Servo::Servo(InterfaceAvr *i)
+Servo::Servo(InterfaceAvr *i, QMutex *m)
 {
 	stopped = false;
 	
-	QMutexLocker locker(&mutex); // make this class thread-safe
-	
 	// copy the pointer from the original object
 	interface1 = i;
+	mutex = m;
 
 	// init arrays
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -62,6 +61,8 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 	// store the newservo position
 	servoPosition[servo] = position;
 	
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
 	
 	switch (servo)
 	{
@@ -153,6 +154,9 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 			emit message(QString("<b><font color=\"#FF0000\">ERROR: Servo number %1 not supportet (moveServo)</font>").arg(servo));
 			break;
 	}
+	
+	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+	mutex->unlock();
 }
 
 

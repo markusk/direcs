@@ -1,14 +1,13 @@
 #include "sensorThread.h"
 
-SensorThread::SensorThread(InterfaceAvr *i)
+SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 {
 	stopped = false;
 	simulationMode = false;
 	
-	//QMutexLocker locker(&mutex); // make this class thread-safe
-	
 	// copy the pointer from the original object
 	interface1 = i;
+	mutex = m;
 
 	// Array for storing the measured values from the infrared sensors
 	iRSensorValue[SENSOR1] = 0;
@@ -128,6 +127,10 @@ void SensorThread::run()
 		
 		if (simulationMode == false)
 		{
+
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
+			
 /*
 infrared Sensors temporarily removed from robot!!
 			
@@ -504,6 +507,9 @@ infrared Sensors temporarily removed from robot!!
 
 			cValue = 0;
 			
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
+
 		} // simulation = false
 		
 		//====================================================================
@@ -670,6 +676,9 @@ void SensorThread::resetDrivenDistance(int sensor)
 		qDebug("ERROR: wrong motor sensor");
 		return;
 	}
+
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
 	
 	//------------------------------------------------------
 	// reset 
@@ -691,6 +700,10 @@ void SensorThread::resetDrivenDistance(int sensor)
 			}
 			break;
 	}
+
+	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+	mutex->unlock();
+
 }
 
 
