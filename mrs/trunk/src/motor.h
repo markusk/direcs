@@ -6,6 +6,7 @@
 //-------------------------------------------------------------------
 #include <QtGui>
 #include <QCoreApplication>
+#include <QMutex>
 //-------------------------------------------------------------------
 
 /**
@@ -18,7 +19,7 @@ class Motor : public QObject
     Q_OBJECT
 
 	public:
-		Motor(InterfaceAvr *i);
+		Motor(InterfaceAvr *i, QMutex *m);
 		~Motor();
 		
 		/**
@@ -102,6 +103,7 @@ class Motor : public QObject
 		// FIXME: check the conversion value and make it a const!
 		void calculateMovement();
 
+		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		int motor1Speed;
 		int motor2Speed;

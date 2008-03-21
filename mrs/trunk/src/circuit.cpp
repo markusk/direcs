@@ -1,9 +1,11 @@
 #include "circuit.h"
 
-Circuit::Circuit(InterfaceAvr *i)
+Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 {
 	// copy the pointer from the original object
 	interface1 = i;
+	mutex = m;
+
 	robotIsOn = false;
 	firstInitDone = false;
 }

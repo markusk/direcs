@@ -3,6 +3,7 @@
 
 //-------------------------------------------------------------------
 #include "interfaceAvr.h"
+#include <QMutex>
 //-------------------------------------------------------------------
 
 /**
@@ -15,7 +16,7 @@ class Circuit : public QObject
 	Q_OBJECT
 
 	public:
-		Circuit(InterfaceAvr *i);
+		Circuit(InterfaceAvr *i, QMutex *m);
 		~Circuit();
 		
 		/**
@@ -32,6 +33,7 @@ class Circuit : public QObject
 
 
 	private:
+		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		static const unsigned char INIT = 250;
 		static const unsigned char INITANSWER = 64;

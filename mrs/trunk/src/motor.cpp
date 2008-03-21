@@ -1,11 +1,10 @@
 #include "motor.h"
 
-Motor::Motor(InterfaceAvr *i)
+Motor::Motor(InterfaceAvr *i, QMutex *m)
 {
-	//------------------------------------------------------------------
-	// copy the pointer from the original usb object
-	//------------------------------------------------------------------
+	// copy the pointer from the original object
 	interface1 = i;
+	mutex = m;
 
 	// Initialize the motor step counters
 	//steps1 = 0;

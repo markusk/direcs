@@ -43,8 +43,8 @@ Mrs::Mrs()
 	#endif
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
-	circuit1 = new Circuit(interface1);
-	motors = new Motor(interface1);
+	circuit1 = new Circuit(interface1, mutex);
+	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
 	laserThread = new LaserThread();
