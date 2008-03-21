@@ -139,13 +139,19 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_1) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
 			
 			// receive the 16 Bit answer from the MC
 			if (interface1->receiveInt(&value) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
 				stop(); // Fixme: Does this work?!?
+			}
 			//interface1->receiveInt(&value);
 		
 			// store measured values in the sensor values array
@@ -159,6 +165,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_2) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -178,6 +186,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_3) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -197,6 +207,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_4) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -216,6 +228,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_5) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -235,6 +249,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_6) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -255,6 +271,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_7) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -274,6 +292,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_8) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -298,6 +318,8 @@ infrared Sensors temporarily removed from robot!!
 			//---------------------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_16) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -320,6 +342,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_MOTOR_SENSOR1) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -339,6 +363,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_MOTOR_SENSOR2) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -361,6 +387,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_MOTOR_DISTANCE1) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -379,6 +407,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_MOTOR_DISTANCE2) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -400,6 +430,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT1) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -429,6 +461,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT2) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -457,6 +491,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT3) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -485,6 +521,8 @@ infrared Sensors temporarily removed from robot!!
 			//------------------------------------------------------
 			if (interface1->sendChar(READ_CONTACT4) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -507,7 +545,7 @@ infrared Sensors temporarily removed from robot!!
 
 			cValue = 0;
 			
-			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			// Unlock the mutex.
 			mutex->unlock();
 
 		} // simulation = false
@@ -688,6 +726,8 @@ void SensorThread::resetDrivenDistance(int sensor)
 		case MOTORSENSOR1:
 			if (interface1->sendChar(RESET_MOTOR_DISTANCE1) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}
@@ -695,6 +735,8 @@ void SensorThread::resetDrivenDistance(int sensor)
 		case MOTORSENSOR2:
 			if (interface1->sendChar(RESET_MOTOR_DISTANCE2) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (SensorThread)");
 				return;
 			}

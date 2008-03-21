@@ -75,12 +75,9 @@ double Motor::getDrivenDistance2()
 
 void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
 {
-	//---------------------------------------------------------------------------
-	//
-	// This method turn on/off the motors and switches them to clockwise or ccw.
-	//
-	//---------------------------------------------------------------------------
-
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
+	
 	// TODO: change to 'case' instrcution
 	//-------------------------
 	// if motor 1
@@ -99,6 +96,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// turn off the MOTOR -> break!
 			if (interface1->sendChar(MOTOR1_OFF) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -109,6 +108,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR1_CLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -119,6 +120,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR1_COUNTERCLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -129,6 +132,9 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// don't change the direction (motor was only turned on or off)!
 		}
 
+		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		mutex->unlock();
+		
 		return;
 		
 	} // MOTOR1
@@ -151,6 +157,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR2_OFF) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -172,6 +180,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR2_CLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -183,6 +193,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR2_COUNTERCLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -192,6 +204,9 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		{
 			// don't change the direction (motor was only turned on or off)!
 		}
+		
+		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		mutex->unlock();
 		
 		return;
 	} // MOTOR2
@@ -214,6 +229,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// turn off the MOTOR -> break!
 			if (interface1->sendChar(MOTOR3_OFF) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -224,6 +241,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR3_CLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -234,6 +253,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR3_COUNTERCLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -244,6 +265,9 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// don't change the direction (motor was only turned on or off)!
 		}
 
+		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		mutex->unlock();
+		
 		return;
 		
 	} // MOTOR3
@@ -266,6 +290,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// turn off the MOTOR -> break!
 			if (interface1->sendChar(MOTOR4_OFF) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -276,6 +302,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR4_CLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -286,6 +314,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// set the direction
 			if (interface1->sendChar(MOTOR4_COUNTERCLOCKWISE) == false)
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -295,6 +325,9 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		{
 			// don't change the direction (motor was only turned on or off)!
 		}
+
+		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		mutex->unlock();
 
 		return;
 		
@@ -353,7 +386,10 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// don't change the direction (motor was only turned on or off)!
 		}
 
-		return;
+	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+	mutex->unlock();
+	
+	return;
 		
 	} // STEPPER1
 	
@@ -416,6 +452,9 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		{
 			// don't change the direction (motor was only turned on or off)!
 		}
+	
+		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		mutex->unlock();
 
 		return;
 		
@@ -431,10 +470,17 @@ void Motor::makeSteps(int steps)
 	{
 		qDebug("step %d", i);
 
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+		
 		if (interface1->sendChar(STEPPER_CLOCK) == false)
 		{
 			//qDebug("ERROR sending to serial port (Motor)");
 		}
+		
+		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		mutex->unlock();
+		
 	}
 }
 
@@ -635,23 +681,30 @@ void Motor::setMotorSpeed(int motor, int speed)
 		speed = 255;
 	}
 	
+	
 	switch(motor)
 	{
 		case 1:
 			// store the speed
 			motor1Speed = speed;
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// send the command to the microcontroller (MOTOR 1)
 			if (interface1->sendChar(MOTOR1_SPEED_SET) == true)
 			{
 				// send the value to the microcontroller
 				if (interface1->sendChar(speed) == false)
 				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
 					//qDebug("ERROR sending to serial port (Motor)");
 					return;
 				}
 			}
 			else	
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -660,18 +713,24 @@ void Motor::setMotorSpeed(int motor, int speed)
 		case 2:
 			// store the speed
 			motor2Speed = speed;
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// send the command to the microcontroller (MOTOR 2)
 			if (interface1->sendChar(MOTOR2_SPEED_SET) == true)
 			{
 				// send the value to the microcontroller
 				if (interface1->sendChar(speed) == false)
 				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
 					//qDebug("ERROR sending to serial port (Motor)");
 					return;
 				}
 			}
 			else	
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -680,18 +739,24 @@ void Motor::setMotorSpeed(int motor, int speed)
 		case 3:
 			// store the speed
 			motor3Speed = speed;
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// send the command to the microcontroller (MOTOR 3)
 			if (interface1->sendChar(MOTOR3_SPEED_SET) == true)
 			{
 				// send the value to the microcontroller
 				if (interface1->sendChar(speed) == false)
 				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
 					//qDebug("ERROR sending to serial port (Motor)");
 					return;
 				}
 			}
 			else	
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -700,18 +765,24 @@ void Motor::setMotorSpeed(int motor, int speed)
 		case 4:
 			// store the speed
 			motor4Speed = speed;
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// send the command to the microcontroller (MOTOR 4)
 			if (interface1->sendChar(MOTOR4_SPEED_SET) == true)
 			{
 				// send the value to the microcontroller
 				if (interface1->sendChar(speed) == false)
 				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
 					//qDebug("ERROR sending to serial port (Motor)");
 					return;
 				}
 			}
 			else	
 			{
+				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				mutex->unlock();
 				//qDebug("ERROR sending to serial port (Motor)");
 				return;
 			}
@@ -740,8 +811,13 @@ void Motor::flashlight(bool state)
 {
 	if (state == ON)
 	{
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+		
 		if (interface1->sendChar(FLASHLIGHT_ON) == false)
 		{
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
 			//qDebug("ERROR sending to serial port (Motor)");
 			return;
 		}
@@ -750,6 +826,8 @@ void Motor::flashlight(bool state)
 	{
 		if (interface1->sendChar(FLASHLIGHT_OFF) == false)
 		{
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
 			//qDebug("ERROR sending to serial port (Motor)");
 			return;
 		}

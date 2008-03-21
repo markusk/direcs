@@ -61,102 +61,144 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 	// store the newservo position
 	servoPosition[servo] = position;
 	
-	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-	mutex->lock();
-	
 	switch (servo)
 	{
 		case SERVO1:
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// which servo
 			if (interface1->sendChar(SET_SERVO1) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
 			// the position
 			if (interface1->sendChar(position) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
+			// Unlock the mutex.
+			mutex->unlock();
 			break;
 		case SERVO2:
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// which servo
 			if (interface1->sendChar(SET_SERVO2) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
 			// the position
 			if (interface1->sendChar(position) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
+			// Unlock the mutex.
+			mutex->unlock();
 			break;
 		case SERVO3:
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// which servo
 			if (interface1->sendChar(SET_SERVO3) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
 			// the position
 			if (interface1->sendChar(position) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
+			// Unlock the mutex.
+			mutex->unlock();
 			break;
 		case SERVO4:
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// which servo
 			if (interface1->sendChar(SET_SERVO4) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
 			// the position
 			if (interface1->sendChar(position) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
+			// Unlock the mutex.
+			mutex->unlock();
 			break;
 		case SERVO5:
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// which servo
 			if (interface1->sendChar(SET_SERVO5) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
 			// the position
 			if (interface1->sendChar(position) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
+			// Unlock the mutex.
+			mutex->unlock();
 			break;
 		case SERVO6:
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
 			// which servo
 			if (interface1->sendChar(SET_SERVO6) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
 			// the position
 			if (interface1->sendChar(position) == false)
 			{
+				// Unlock the mutex.
+				mutex->unlock();
 				qDebug("ERROR sending to serial port (Servo)");
 				return;
 			}
+			// Unlock the mutex.
+			mutex->unlock();
 			break;
 		default:
 			emit message(QString("<b><font color=\"#FF0000\">ERROR: Servo number %1 not supportet (moveServo)</font>").arg(servo));
 			break;
 	}
-	
-	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-	mutex->unlock();
 }
 
 
