@@ -18,6 +18,9 @@ Circuit::~Circuit()
 
 void Circuit::initCircuit()
 {
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
+	
 	//-------------------------------------------------------
 	// Basic init for all the bits on the robot circuit
 	//-------------------------------------------------------
@@ -27,6 +30,9 @@ void Circuit::initCircuit()
 		char answer = 0;
 		interface1->receiveChar(&answer);
 		
+		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		mutex->unlock();
+		
 		if (answer == INITANSWER)
 		{
 			// everthing's fine :-)
@@ -35,6 +41,9 @@ void Circuit::initCircuit()
 			return;
 		}
 	}
+	
+	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+	mutex->unlock();
 	
 	qDebug("Robot is OFF.");
 	firstInitDone = false;
