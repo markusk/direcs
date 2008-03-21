@@ -41,11 +41,12 @@ Mrs::Mrs()
 	#ifdef _TTY_POSIX_
 	//speakThread = new SpeakThread();
 	#endif
+	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1);
 	motors = new Motor(interface1);
-	servos = new Servo(interface1);
-	sensorThread = new SensorThread(interface1);
+	sensorThread = new SensorThread(interface1, mutex);
+	servos = new Servo(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
 	plotThread = new PlotThread(sensorThread);
@@ -266,9 +267,9 @@ Mrs::Mrs()
 		{
 			splash->showMessage(QObject::tr("Starting sensor thread..."), somewhere, splashColor);
 			gui->appendLog("Starting sensor thread...", false);
-//			sensorThread->start();
-//			gui->appendLog("Sensor thread started.");
-			gui->appendLog("Sensor thread ****NOT*** started.");
+			sensorThread->start();
+			gui->appendLog("Sensor thread started.");
+//			gui->appendLog("Sensor thread ****NOT*** started.");
 		}
 	}
 	else

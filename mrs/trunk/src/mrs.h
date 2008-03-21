@@ -21,6 +21,7 @@
 #include <festival.h> // FIXME: instead of speakThread-include!
 #include <QtGui>
 #include <QSplashScreen>
+#include <QMutex>
 //-------------------------------------------------------------------
 
 //-------------------------------------------------------------------
@@ -180,9 +181,8 @@ class Mrs : public QObject
 		*/
 		void readSettings();
 		
-		QString serialPortMicrocontroller;
-		QString serialPortLaserscannerFront;
-		QString serialPortLaserscannerRear;
+		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
+
 		Gui *gui;
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
@@ -198,6 +198,10 @@ class Mrs : public QObject
 		//SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
+
+		QString serialPortMicrocontroller;
+		QString serialPortLaserscannerFront;
+		QString serialPortLaserscannerRear;
 		QString commaSeparator;
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; //! Stores the robots simulation state
