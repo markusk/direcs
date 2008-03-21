@@ -57,7 +57,7 @@ void Head::eye(unsigned char whichEye, QString direction)
 		if (whichEye==LEFTEYE)
 		{
 			int value = (((servos->getServoPosition(SERVO4, SVDEFAULT) - servos->getServoPosition(SERVO4, SVSTART)) / 2) + servos->getServoPosition(SERVO4, SVDEFAULT)); 
-			qDebug("Left eye, servo4 left=%d", value);
+			//qDebug("Left eye, servo4 left=%d", value);
 			servos->moveServo( SERVO4, value );
 			return;
 		}
@@ -65,7 +65,7 @@ void Head::eye(unsigned char whichEye, QString direction)
 		if (whichEye==RIGHTEYE)
 		{
 			int value = (((servos->getServoPosition(SERVO1, SVDEFAULT) - servos->getServoPosition(SERVO1, SVSTART)) / 2) + servos->getServoPosition(SERVO1, SVDEFAULT));
-			qDebug("Right eye, servo4 left=%d", value);
+			//qDebug("Right eye, servo4 left=%d", value);
 			servos->moveServo( SERVO1, value );
 			return;
 		}
@@ -92,14 +92,14 @@ void Head::eye(unsigned char whichEye, QString direction)
 		if (whichEye==LEFTEYE)
 		{
 			int value = (servos->getServoPosition(SERVO4, SVEND) - ((servos->getServoPosition(SERVO4, SVEND) - servos->getServoPosition(SERVO4, SVDEFAULT)) / 2) );
-			qDebug("Left eye, servo4 right=%d", value);
+			//qDebug("Left eye, servo4 right=%d", value);
 			servos->moveServo( SERVO4, value);
 		}
 
 		if (whichEye==RIGHTEYE)
 		{
 			int value = (servos->getServoPosition(SERVO1, SVEND) - ((servos->getServoPosition(SERVO1, SVEND) - servos->getServoPosition(SERVO1, SVDEFAULT)) / 2) ); 
-			qDebug("Right eye, servo4 right=%d", value);
+			//qDebug("Right eye, servo4 right=%d", value);
 			servos->moveServo( SERVO1, value);
 		}
 		return;
