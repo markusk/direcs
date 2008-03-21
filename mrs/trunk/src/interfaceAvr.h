@@ -50,7 +50,7 @@ class InterfaceAvr : public QObject
 		bool receiveChar(char *character);
 		
 		/**
-		Receives a integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).
+		Receives an integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).
 		@param *value
 		@return true on access or false if an error occured.
 		*/
