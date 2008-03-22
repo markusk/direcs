@@ -214,6 +214,14 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 			servoEndPosition[servo] = position;
 			return;
 			break;
+		case SVMIN:
+			servoMinPosition[servo] = position;
+			return;
+			break;
+		case SVMAX:
+			servoMaxPosition[servo] = position;
+			return;
+			break;
 		case SVDEFAULT:
 			servoDefaultPosition[servo] = position;
 			return;
@@ -252,6 +260,12 @@ unsigned char Servo::getServoPosition(int servo, unsigned char type)
 			break;
 		case SVEND:
 			return servoEndPosition[servo];
+			break;
+		case SVMIN:
+			return servoMinPosition[servo];
+			break;
+		case SVMAX:
+			return servoMaxPosition[servo];
 			break;
 		case SVDEFAULT:
 			return servoDefaultPosition[servo];
