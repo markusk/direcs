@@ -12,8 +12,10 @@ Servo::Servo(InterfaceAvr *i, QMutex *m)
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
 		servoStartPosition[servo] = 1;
-		servoDefaultPosition[servo] = 11;
-		servoEndPosition[servo] = 255;
+		servoMinPosition[servo] = 10;
+		servoDefaultPosition[servo] = 19;
+		servoEndPosition[servo] = 30;
+		servoMaxPosition[servo] = 255;
 		servoPosition[servo] = servoDefaultPosition[servo];
 	}
 }
@@ -52,9 +54,9 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 	//qDebug("moveServo%d to position %d. Start=%d / Default=%d / End=%d", servo, position, servoStartPosition[servo], servoDefaultPosition[servo], servoEndPosition[servo]);
 
 	// *don't* move servo to a position out of the allowed range!!
-	if ( (position < servoStartPosition[servo]) || (position > servoEndPosition[servo]) )
+	if ( (position < servoMinPosition[servo]) || (position > servoMaxPosition[servo]) )
 	{
-		emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
+		//emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
 		return;
 	}
 
@@ -227,6 +229,20 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 			return;
 			break;
 		case SVCURRENT:
+			// converting SERVO5 value, because of reverse fixing on the robot!
+			if (servo==SERVO5)
+			{
+			}
+
+			// only within the allowd ranges!
+			if (position < servoMinPosition[servo])
+			{
+				position = servoMinPosition[servo];
+			}
+			if (position > servoMaxPosition[servo])
+			{
+				position = servoMaxPosition[servo];
+			}
 			servoPosition[servo] = position;
 			return;
 			break;

@@ -87,6 +87,7 @@ class Servo : public QThread
 		int servoMaxPosition[NUMBEROFSERVOS];
 		int servoDefaultPosition[NUMBEROFSERVOS];
 		int servoPosition[NUMBEROFSERVOS]; //! the current position of the servo!
+		//int servoPositionConvHelper[NUMBEROFSERVOS]; //! a conversion helper, if the servo is fixed the other way round!
 		
 		//! the possible servo data
 		static const unsigned char SVSTART   = 0;
