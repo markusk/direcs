@@ -78,7 +78,7 @@ void Head::look(QString direction)
 		return;
 	}
 	
-	if (direction == "NONE")
+	if (direction == "FORWARD")
 	{
 		eye(LEFTEYE, direction);
 		eye(RIGHTEYE, direction);
@@ -256,12 +256,12 @@ void Head::eye(unsigned char whichEye, QString direction)
 	// move servo to the start or end position (*not* to the min or max posisiotns!)
 	if (direction == "RIGHT")
 	{
-		qDebug("right");
+		//qDebug("right");
 		if (whichEye==LEFTEYE)
 		{
 			// right
 			servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVEND) );
-			qDebug("left eye right");
+			//qDebug("left eye right");
 			return;
 		}
 
@@ -269,7 +269,7 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// right
 			servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVEND) );
-			qDebug("right eye right");
+			//qDebug("right eye right");
 			return;
 		}
 		return;
@@ -292,7 +292,7 @@ void Head::eye(unsigned char whichEye, QString direction)
 		return;
 	}
 	
-	if (direction == "NONE")
+	if (direction == "FORWARD")
 	{
 		servos->init();
 		return;
