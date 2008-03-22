@@ -1244,8 +1244,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("FORWARD");
+			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
+			*/
 		}
 		emit showFaceTrackDirection("NONE");
 		return;
@@ -1256,8 +1259,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("LEFT");
+			/*
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, OFF, SAME);
+			*/
 		}
 		emit showFaceTrackDirection("LEFT");
 		return;
@@ -1268,8 +1274,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("RIGHT");
+			/*
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, OFF, SAME);
+			*/
 		}
 		emit showFaceTrackDirection("RIGHT");
 		return;
@@ -1280,8 +1289,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("UP");
+			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			*/
 		}
 		emit showFaceTrackDirection("UP");
 		return;
@@ -1292,8 +1304,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("UPLEFT");
+			/*
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			*/
 		}
 		emit showFaceTrackDirection("UPLEFT");
 		return;
@@ -1304,8 +1319,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("UPRIGHT");
+			/*
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			*/
 		}
 		emit showFaceTrackDirection("UPRIGHT");
 		return;
@@ -1316,8 +1334,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("DOWN");
+			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+			*/
 		}
 		emit showFaceTrackDirection("DOWN");
 		return;
@@ -1328,8 +1349,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("DOWNLEFT");
+			/*
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+			*/
 		}
 		emit showFaceTrackDirection("DOWNLEFT");
 		return;
@@ -1340,8 +1364,11 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
+			emit look("DOWNRIGHT");
+			/*
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+			*/
 		}
 		emit showFaceTrackDirection("DOWNRIGHT");
 		return;
@@ -2212,17 +2239,14 @@ void Mrs::executeRemoteCommand(QString command)
 
 void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 {
-	//int speed = 0;
-	
-	
 	//
 	// Y axis
 	//
 	if (axisNumber == JOYSTICKAXISY)
 	{
-		//------------------
-		// DRIVE backward
-		//------------------
+		//------
+		// down
+		//------
 		if (axisValue > 0)
 		{
 			//========================================================
@@ -2231,8 +2255,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//========================================================
 			if (robotRemoteMode==true)
 			{
+				//
+				// DRIVE backward
+				//
 				//speed = (axisValue / JOYSTICKDIVISOR);
-				
 				gui->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				gui->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				
@@ -2246,12 +2272,29 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				
 				drive(BACKWARD);
 			}
+			
+			//==================
+			// eye test mode
+			//==================
+			if (eyeTestMode==true)
+			{
+				// eyes down
+				servos->setServoPosition( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				servos->setServoPosition( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				
+				if (circuit1->isConnected() == true)
+				{
+					servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
+					servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
+				}
+			}
+		
 			return;
 		}
 		
-		//------------------
-		// DRIVE forward
-		//------------------
+		//----
+		// up
+		//----
 		if (axisValue < 0)
 		{
 			//========================================================
@@ -2260,8 +2303,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//========================================================
 			if (robotRemoteMode==true)
 			{
+				//
+				// DRIVE forward
+				//
 				//speed = (-axisValue / JOYSTICKDIVISOR);
-				
 				gui->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				gui->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				
@@ -2274,7 +2319,26 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				}
 				
 				drive(FORWARD);
-			}	
+			}
+			
+			//==================
+			// eye test mode
+			//==================
+			if (eyeTestMode==true)
+			{
+				// eyes down
+				// left eye
+				servos->setServoPosition( SERVO2, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				// right eye
+				servos->setServoPosition( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				
+				if (circuit1->isConnected() == true)
+				{
+					servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
+					servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
+				}
+			}
+			
 			return;
 		}
 		
