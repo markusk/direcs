@@ -88,6 +88,8 @@ void CamThread::run()
 	int faceX = 0;
 	int faceY = 0;
 	int faceRadius = 0;
+	static int lastFaceX = 0;
+	static int lastFaceY = 0;
 	QString text;
 
 
@@ -122,70 +124,72 @@ void CamThread::run()
 			//----------------------------------------
 			// face detection (start)
 			//----------------------------------------
-			if (faceDetectionIsEnabled)
+			
+			// reset old values
+			faceX = 0;
+			faceY = 0;
+			faceRadius = 0;
+			
+			// classifier cascade loaded in the constructor
+			if ( (faceDetectionIsEnabled) && (cascade) )
 			{
+				// create a blank gray scale image with same size
 				gray = cvCreateImage( cvSize(imgPtr->width, imgPtr->height), 8, 1 );
-				// convert into a smaller image, to make things faster 
+				// create a blank small image with the same size
 				small_img = cvCreateImage( cvSize( cvRound (imgPtr->width/scale), cvRound (imgPtr->height/scale)), 8, 1 );
-	
+				// convert to gray
 				cvCvtColor( imgPtr, gray, CV_BGR2GRAY );
+				// resize the gray image, to the size of the small_img (to make things faster)
 				cvResize( gray, small_img, CV_INTER_LINEAR );
 				cvEqualizeHist( small_img, small_img );
 				cvClearMemStorage( storage );
 	
-				if( cascade )
-				{
-					// detect objects in the image
-					faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
-					
-					// when *no* faces detected
-					if (faces->total == 0)
-					{
-						// for emit signal
-						faceX = 0;
-						faceY = 0;
-						faceRadius = 0;
-					}
-					else
-					{
-						// draw a rectangle for each face
-						for( i = 0; i < (faces ? faces->total : 0); i++ )
-						{
-							rectangle = (CvRect*)cvGetSeqElem( faces, i );
-							center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
-							center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
-							radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
-							
-							rectStart.x = rectangle->x*scale;
-							rectStart.y = rectangle->y*scale;
-							rectEnd.x = rectStart.x + rectangle->width*scale;
-							rectEnd.y = rectStart.y + rectangle->height*scale;
+				// detect objects in the image
+				faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 				
-							// draw rectangles(s)
-							if (i==0)
-							{
-								// for emit signal
-								faceX = center.x;
-								faceY = center.y;
-								faceRadius = radius;
-								// first face in white
-								cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
-							}
-							else
-							{
-								// other faces darker color
-								cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(128, 128, 128));
-							}
+				// when *no* faces detected
+				if (faces->total == 0)
+				{
+					// for emit signal
+					faceX = 0;
+					faceY = 0;
+					faceRadius = 0;
+				}
+				else
+				{
+					//if (faceX )
+					//if ( (faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) )
+					
+					// draw a rectangle for each face
+					for( i = 0; i < (faces ? faces->total : 0); i++ )
+					{
+						rectangle = (CvRect*)cvGetSeqElem( faces, i );
+						center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
+						center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
+						radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
+						
+						rectStart.x = rectangle->x*scale;
+						rectStart.y = rectangle->y*scale;
+						rectEnd.x = rectStart.x + rectangle->width*scale;
+						rectEnd.y = rectStart.y + rectangle->height*scale;
+			
+						// draw rectangles(s)
+						if (i==0)
+						{
+							// for emit signal
+							faceX = center.x;
+							faceY = center.y;
+							faceRadius = radius;
+							// first face in white
+							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
+						}
+						else
+						{
+							// other faces darker color
+							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(198, 198, 198));
 						}
 					}
 				}
-			}
-			else
-			{
-				// face detection disabled
-				faceX = 0;
-				faceY = 0;
-				faceRadius = 0;
 			}
 			//----------------------------------------
 			// face detection (end)
