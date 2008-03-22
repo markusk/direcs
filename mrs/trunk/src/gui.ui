@@ -1570,6 +1570,9 @@
     <property name="text" >
      <string>Face Detection</string>
     </property>
+    <property name="checked" >
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QCheckBox" name="checkBoxMirror" >
     <property name="geometry" >
@@ -1698,9 +1701,6 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBoxFaceTracking" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
     <property name="geometry" >
      <rect>
       <x>110</x>
@@ -1755,6 +1755,78 @@
     </property>
     <property name="text" >
      <string>Track to:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="textLabel2_12" >
+    <property name="geometry" >
+     <rect>
+      <x>400</x>
+      <y>376</y>
+      <width>68</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>Last face X:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblLastFaceX" >
+    <property name="geometry" >
+     <rect>
+      <x>470</x>
+      <y>376</y>
+      <width>21</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblLastFaceY" >
+    <property name="geometry" >
+     <rect>
+      <x>470</x>
+      <y>387</y>
+      <width>21</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="textLabel2_13" >
+    <property name="geometry" >
+     <rect>
+      <x>400</x>
+      <y>387</y>
+      <width>66</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>Last face Y:</string>
     </property>
    </widget>
   </widget>
