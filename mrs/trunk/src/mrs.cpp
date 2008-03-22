@@ -351,12 +351,12 @@ Mrs::Mrs()
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int) ));
+	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int, int, int) ));
 	
 	//----------------------------------------------------------------------------
 	// connect camDataComplete from the cam thread to the faceTracking unit
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int) ), SLOT( faceTracking(IplImage*, int, int, int) ));
+	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int, int, int) ), SLOT( faceTracking(IplImage*, int, int, int) ));
 	
 	//----------------------------------------------------------------------------
 	// enable face detection, when activated in the GUI
@@ -1945,10 +1945,12 @@ void Mrs::readSettings()
 				servos->setServoPosition(servo, SVSTART, settingValue);
 		
 				// show text
-				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
+	gui->appendLog("Servo start settings read and set.");
+
 	//---------------------------------------------------------------------
 	// read servo END settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -1977,10 +1979,11 @@ void Mrs::readSettings()
 				servos->setServoPosition(servo, SVEND, settingValue);
 		
 				// show text
-				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
+	gui->appendLog("Servo end settings read and set.");
 	//---------------------------------------------------------------------
 	// read servo MIN settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -2009,10 +2012,11 @@ void Mrs::readSettings()
 				servos->setServoPosition(servo, SVMIN, settingValue);
 		
 				// show text
-				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
+	gui->appendLog("Servo min. settings read and set.");
 	//---------------------------------------------------------------------
 	// read servo MAX settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -2041,10 +2045,11 @@ void Mrs::readSettings()
 				servos->setServoPosition(servo, SVMAX, settingValue);
 		
 				// show text
-				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
+	gui->appendLog("Servo max. settings read and set.");
 	//---------------------------------------------------------------------
 	// read servo DEFAULT settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -2073,10 +2078,11 @@ void Mrs::readSettings()
 				servos->setServoPosition(servo, SVDEFAULT, settingValue);
 		
 				// show text
-				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
+	gui->appendLog("Servo default settings read and set.");
 }
 
 
