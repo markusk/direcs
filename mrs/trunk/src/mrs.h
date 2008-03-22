@@ -207,6 +207,7 @@ class Mrs : public QObject
 		bool robotSimulationMode; //! Stores the robots simulation state
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
 		bool servoTestMode;
+		bool eyeTestMode;
 		int currentTestServo;
 		bool cameraTestMode;
 		bool faceTrackingIsEnabled;

@@ -74,6 +74,7 @@ Mrs::Mrs()
 	robotSimulationMode = false;
 	robotRemoteMode = false;
 	servoTestMode = false;
+	eyeTestMode = false;
 	currentTestServo = SERVO1;
 	cameraTestMode = false;
 	faceTrackingIsEnabled = false;
@@ -268,9 +269,9 @@ Mrs::Mrs()
 		{
 			splash->showMessage(QObject::tr("Starting sensor thread..."), somewhere, splashColor);
 			gui->appendLog("Starting sensor thread...", false);
-//			sensorThread->start();
-//			gui->appendLog("Sensor thread started.");
-			gui->appendLog("Sensor thread ****NOT*** started.");
+			sensorThread->start();
+			gui->appendLog("Sensor thread started.");
+			//gui->appendLog("Sensor thread ****NOT*** started.");
 		}
 	}
 	else
@@ -2217,14 +2218,7 @@ void Mrs::executeRemoteCommand(QString command)
 void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 {
 	int speed = 0;
-	/*
-	static unsigned char servo1Pos = 10;
-	static unsigned char servo2Pos = 10;
-	static unsigned char servo3Pos = 10;
-	static unsigned char servo4Pos = 10;
-	static unsigned char servo5Pos = 10;
-	static unsigned char servo6Pos = 10;
-	*/
+	
 	
 	//
 	// Y axis
@@ -2456,7 +2450,35 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 			return;
 		} // cam test mode [tilt] 
-
+		
+		//==================
+		// eye test mode
+		//==================
+		if (eyeTestMode==true)
+		{
+			//------------------
+			// eyes down
+			//------------------
+			if (axisValue > 0)
+			{
+				emit look("DOWN");
+			}
+			
+			//------------------
+			// eyes up
+			//------------------
+			if (axisValue < 0)
+			{
+				emit look("UP");
+			}
+			
+			// TODO: works not properly, when deleted:
+			if (axisValue == 0)
+			{
+				emit look("FORWARD");
+			}
+		}
+		
 		return;
 	}
 	
@@ -2543,6 +2565,34 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			return;
 		} // cam test mode [pan]
 		
+		//==================
+		// eye test mode
+		//==================
+		if (eyeTestMode==true)
+		{
+			//------------------
+			// eyes right
+			//------------------
+			if (axisValue > 0)
+			{
+				emit look("RIGHT");
+			}
+			
+			//------------------
+			// eyes left
+			//------------------
+			if (axisValue < 0)
+			{
+				emit look("LEFT");
+			}
+			
+			// TODO: works not properly, when deleted:
+			if (axisValue == 0)
+			{
+				emit look("FORWARD");
+			}
+		}
+		
 		return;
 	}
 }
@@ -2550,9 +2600,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 
 void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 {
-	/*
 	static bool toggle0 = false;
 	static bool toggle1 = false;
+	/*
 	static bool toggle2 = false;
 	static bool toggle3 = false;
 	static bool toggle4 = false;
@@ -2566,6 +2616,21 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 	switch (buttonNumber)
 	{
 		case 0: // 1 on js
+			if (buttonState==true)
+			{
+				if (toggle1 == false)
+				{
+					toggle1=true;
+					eyeTestMode=true;
+					gui->appendLog("<font color=\"#0000FF\">Eye test mode enabled.</front>");
+				}
+				else
+				{
+					toggle1=false;
+					eyeTestMode=false;
+					gui->appendLog("<font color=\"#0000FF\">Eye test mode disabled.</front>");
+				}
+			}
 			break;
 		case 1: // 2 on js
 			break;
@@ -2609,14 +2674,14 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					toggle10=true;
 					servoTestMode = true;
-					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON</front>");
+					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON.</front>");
 					gui->appendLog(QString("Servo %1 selected.").arg(currentTestServo+1));
 				}
 				else
 				{
 					toggle10=false;
 					servoTestMode = false;
-					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF</front>");
+					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF.</front>");
 				}
 			}
 			break;
@@ -2630,13 +2695,13 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					toggle11=true;
 					cameraTestMode = true;
-					gui->appendLog("<font color=\"#0000FF\">Camera test mode ON</front>");
+					gui->appendLog("<font color=\"#0000FF\">Camera test mode ON.</front>");
 				}
 				else
 				{
 					toggle11=false;
 					cameraTestMode = false;
-					gui->appendLog("<font color=\"#0000FF\">Camera test mode OFF</front>");
+					gui->appendLog("<font color=\"#0000FF\">Camera test mode OFF.</front>");
 				}
 			}
 			break;
@@ -2725,11 +2790,11 @@ void Mrs::speak(QString text)
 
 void Mrs::test()
 {
-	static bool toggle = OFF;
+//	static bool toggle = OFF;
 	
-	int pos1 = 10; // 10 is toll
-	int pos2 = 8;
+	static int counter = 3;
 	
+	/*
 	if (toggle == OFF)
 	{
 		toggle = ON;
@@ -2740,6 +2805,7 @@ void Mrs::test()
 		toggle = OFF;
 		emit look("RIGHT");
 	}
+	*/
 	
 	//motors->flashlight(toggle);
 	

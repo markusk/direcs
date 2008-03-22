@@ -1623,8 +1623,8 @@ void Gui::showJoystickAxes(int axisNumber, int axisValue)
 
 void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
 {
-	/*
 	static bool toggle0 = false;
+	/*
 	static bool toggle1 = false;
 	static bool toggle2 = false;
 	static bool toggle3 = false;
@@ -1639,7 +1639,18 @@ void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
 	switch (buttonNumber)
 	{
 		case 0:
-			ui.radioBtnJoy0->setChecked(buttonState);
+			if (buttonState==true)
+			{
+				if (toggle0 == false)
+				{
+					toggle0=true;
+				}
+				else
+				{
+					toggle0=false;
+				}
+			}
+			ui.radioBtnJoy0->setChecked(toggle0);
 			break;
 		case 1:
 			ui.radioBtnJoy1->setChecked(buttonState);
