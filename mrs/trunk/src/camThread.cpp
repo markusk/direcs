@@ -134,17 +134,19 @@ void CamThread::run()
 			if ( (faceDetectionIsEnabled) && (cascade) )
 			{
 				// create a blank gray scale image with same size
-				gray = cvCreateImage( cvSize(imgPtr->width, imgPtr->height), 8, 1 );
+				//gray = cvCreateImage( cvSize(imgPtr->width, imgPtr->height), 8, 1 );
+				gray = cvCreateImage( cvSize(width, height), 8, 1 );
 				// create a blank small image with the same size
-				small_img = cvCreateImage( cvSize( cvRound (imgPtr->width/scale), cvRound (imgPtr->height/scale)), 8, 1 );
-				// convert to gray
+				//small_img = cvCreateImage( cvSize( cvRound (imgPtr->width/scale), cvRound (imgPtr->height/scale)), 8, 1 );
+				small_img = cvCreateImage( cvSize( cvRound(width/scale), cvRound(height/scale)), 8, 1 );
+				// converts from BGR2 to to gray
 				cvCvtColor( imgPtr, gray, CV_BGR2GRAY );
 				// resize the gray image, to the size of the small_img (to make things faster)
 				cvResize( gray, small_img, CV_INTER_LINEAR );
 				cvEqualizeHist( small_img, small_img );
 				cvClearMemStorage( storage );
 	
-				// detect objects in the image
+				// detect objects in the gray image
 				faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 				
 				// when *no* faces detected
@@ -157,9 +159,6 @@ void CamThread::run()
 				}
 				else
 				{
-					//if (faceX )
-					//if ( (faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) )
-					
 					// draw a rectangle for each face
 					for( i = 0; i < (faces ? faces->total : 0); i++ )
 					{
