@@ -231,6 +231,7 @@ void Servo::init(void)
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
 		moveServo(servo, servoDefaultPosition[servo]);
+		//emit message(QString("Init servo%1 to def-pos: %2").arg(servo+1).arg(servoDefaultPosition[servo]));
 	}
 }
 
