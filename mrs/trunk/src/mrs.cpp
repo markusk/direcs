@@ -311,7 +311,7 @@ Mrs::Mrs()
 	//-----------------------------------------------------------
 	// check if joystick is connected
 	//-----------------------------------------------------------
-	// let the GUI show messages in the log
+	// let the GUI show messages in the log (e.g. when special buttons pressed)
 	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
 	
 	if (joystick->isConnected())
@@ -330,11 +330,6 @@ Mrs::Mrs()
 		gui->appendLog("Joystick thread NOT started!");
 	}
 
-	//----------------------------------------------------------------------------
-	// let the GUI show messages in the log (e.g. when special buttons pressed)
-	//----------------------------------------------------------------------------
-	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
-	
 	//----------------------------------------------------------------------------
 	// drive in the direction which was emited
 	//----------------------------------------------------------------------------
@@ -2230,14 +2225,17 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue > 0)
 		{
-			speed = (axisValue / JOYSTICKDIVISOR);
-			
-			gui->setSliderMotorSpeed(1, speed);
-			gui->setSliderMotorSpeed(2, speed);
-			
+			//========================================================
+			// robot remote mode
 			// only drive, when remote mode is activated in the GUI!
+			//========================================================
 			if (robotRemoteMode==true)
 			{
+				speed = (axisValue / JOYSTICKDIVISOR);
+				
+				gui->setSliderMotorSpeed(1, speed);
+				gui->setSliderMotorSpeed(2, speed);
+				
 				motors->setMotorSpeed(1, speed);
 				motors->setMotorSpeed(2, speed);
 			
@@ -2256,14 +2254,17 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue < 0)
 		{
-			speed = (-axisValue / JOYSTICKDIVISOR);
-			
-			gui->setSliderMotorSpeed(1, speed);
-			gui->setSliderMotorSpeed(2, speed);
-			
+			//========================================================
+			// robot remote mode
 			// only drive, when remote mode is activated in the GUI!
+			//========================================================
 			if (robotRemoteMode==true)
 			{
+				speed = (-axisValue / JOYSTICKDIVISOR);
+				
+				gui->setSliderMotorSpeed(1, speed);
+				gui->setSliderMotorSpeed(2, speed);
+				
 				motors->setMotorSpeed(1, speed);
 				motors->setMotorSpeed(2, speed);
 			
@@ -2302,14 +2303,17 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue > 0)
 		{
-			speed = (axisValue / JOYSTICKDIVISOR);
-			
-			gui->setSliderMotorSpeed(1, speed);
-			gui->setSliderMotorSpeed(2, speed);
-			
+			//========================================================
+			// robot remote mode
 			// only drive, when remote mode is activated in the GUI!
+			//========================================================
 			if (robotRemoteMode==true)
 			{
+				speed = (axisValue / JOYSTICKDIVISOR);
+				
+				gui->setSliderMotorSpeed(1, speed);
+				gui->setSliderMotorSpeed(2, speed);
+				
 				motors->setMotorSpeed(1, speed);
 				motors->setMotorSpeed(2, speed);
 			
@@ -2328,14 +2332,17 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue < 0)
 		{
-			speed = (-axisValue / JOYSTICKDIVISOR);
-			
-			gui->setSliderMotorSpeed(1, speed);
-			gui->setSliderMotorSpeed(2, speed);
-			
+			//========================================================
+			// robot remote mode
 			// only drive, when remote mode is activated in the GUI!
+			//========================================================
 			if (robotRemoteMode==true)
 			{
+				speed = (-axisValue / JOYSTICKDIVISOR);
+				
+				gui->setSliderMotorSpeed(1, speed);
+				gui->setSliderMotorSpeed(2, speed);
+				
 				motors->setMotorSpeed(1, speed);
 				motors->setMotorSpeed(2, speed);
 				
