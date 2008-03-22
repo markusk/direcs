@@ -30,11 +30,10 @@ void Circuit::initCircuit()
 		char answer = 0;
 		interface1->receiveChar(&answer);
 		
-		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-		mutex->unlock();
-		
 		if (answer == INITANSWER)
 		{
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
 			// everthing's fine :-)
 			firstInitDone = true;
 			robotIsOn = true;
