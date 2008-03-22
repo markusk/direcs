@@ -6,7 +6,7 @@ CamThread::CamThread() : QThread()
 	//QMutexLocker locker(&mutex); // make this class thread-safe
 	stopped = false;
 	cameraIsOn = false;
-	faceDetectionIsEnabled = false;
+	faceDetectionIsEnabled = true;
 	faceDetectionWasActive = false;
 	frame = new IplImage();
 	imgPtr = new IplImage();
@@ -102,6 +102,7 @@ void CamThread::run()
 	int faceRadius = 0;
 	static int lastFaceX = 0;
 	static int lastFaceY = 0;
+	static int faceDetecter = 0;
 	QString text;
 
 
@@ -164,37 +165,78 @@ void CamThread::run()
 					faceX = 0;
 					faceY = 0;
 					faceRadius = 0;
+					faceDetecter = 0;
 				}
 				else
 				{
+					// put image size information to top left
+					text = QString("%1").arg(faces->total);
+					cvPutText( imgPtr, text.toAscii(), cvPoint(20, 25), &font, CV_RGB(64, 64, 255) );
 					// draw a rectangle for each face
-					for( i = 0; i < (faces ? faces->total : 0); i++ )
+					//for( i = 0; i < (faces ? faces->total : 0); i++ )
+					for( i = 0; i < faces->total; i++ )
 					{
+						// the rect around a face
 						rectangle = (CvRect*)cvGetSeqElem( faces, i );
+						
+						// center and radius of the face
 						center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
 						center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
 						radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
 						
-						rectStart.x = rectangle->x*scale;
-						rectStart.y = rectangle->y*scale;
-						rectEnd.x = rectStart.x + rectangle->width*scale;
-						rectEnd.y = rectStart.y + rectangle->height*scale;
-			
-						// draw rectangles(s)
-						if (i==0)
+						//
+						// first check, if the actual detected face is the same face (it is in the same area)
+						//
+						/*
+						if ( (center.x > lastFaceX - 10) && ((center.x < lastFaceX + 10)) && (center.y > lastFaceY - 10) && (center.y < lastFaceY + 10)  )
 						{
-							// for emit signal
-							faceX = center.x;
-							faceY = center.y;
-							faceRadius = radius;
-							// first face in white
-							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
+							// face detected again! :-)
+							faceDetecter++;
+						*/
+							// store the new coordinates of the actual (same) face
+							lastFaceX = center.x;
+							lastFaceY = center.y;
+						/*
+							// face detected more 2 times
+							if (faceDetecter > 2)
+							{
+								faceDetecter = 0;
+						*/
+								// the rect coordinates
+								rectStart.x = rectangle->x*scale;
+								rectStart.y = rectangle->y*scale;
+								rectEnd.x = rectStart.x + rectangle->width*scale;
+								rectEnd.y = rectStart.y + rectangle->height*scale;
+						/*
+								// draw rectangles(s)
+								if (i==0)
+								{
+						*/
+						
+									// for emit signal
+									faceX = center.x;
+									faceY = center.y;
+									faceRadius = radius;
+									// first face in white
+									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
+								/*
+								}
+								else
+								{
+									// other faces darker color
+									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(198, 198, 198));
+								}
+								*/
+		/*
+							}
 						}
 						else
 						{
-							// other faces darker color
-							cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(198, 198, 198));
+							// *not* the same face :-(
+							// reset the counter
+							faceDetecter = 0;
 						}
+		*/
 					}
 				}
 			}
@@ -233,7 +275,7 @@ void CamThread::run()
 			//====================================================================
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
-			emit camDataComplete(imgPtr, faceX, faceY, faceRadius);
+			emit camDataComplete(imgPtr, faceX, faceY, faceRadius, lastFaceX, lastFaceY);
 		
 			// let the thread sleep some time
 			//msleep(THREADSLEEPTIME);

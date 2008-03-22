@@ -182,7 +182,7 @@ class Gui : public QMainWindow
 		@param faceRadius
 		@sa CamThread()
 		*/
-		void setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius);
+		void setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 
 		
 		/* for future needs

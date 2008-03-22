@@ -64,7 +64,7 @@ class CamThread : public QThread
 		@param faceRadius is the radius (0, if none)
 		@sa Mrs::faceTracking()
 		*/
-		void camDataComplete(IplImage* frame, int faceX, int faceY, int faceRadius);
+		void camDataComplete(IplImage* frame, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 
 
 	private:

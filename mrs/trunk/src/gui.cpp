@@ -980,7 +980,7 @@ void Gui::on_btnSavePicture_clicked()
 }
 
 
-void Gui::setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius)
+void Gui::setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY)
 {
 	
 	// set image from gl context to frame
@@ -990,6 +990,9 @@ void Gui::setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius)
 	ui.lblFaceX->setNum(faceX);
 	ui.lblFaceY->setNum(faceY);
 	ui.lblFaceRadius->setNum(faceRadius);
+	
+	ui.lblLastFaceX->setNum(lastFaceX);
+	ui.lblLastFaceY->setNum(lastFaceY);
 
 /*	
 	// save pic, when ckecked in GUI
