@@ -2212,7 +2212,7 @@ void Mrs::executeRemoteCommand(QString command)
 
 void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 {
-	int speed = 0;
+	//int speed = 0;
 	
 	
 	//
@@ -2231,13 +2231,13 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//========================================================
 			if (robotRemoteMode==true)
 			{
-				speed = (axisValue / JOYSTICKDIVISOR);
+				//speed = (axisValue / JOYSTICKDIVISOR);
 				
-				gui->setSliderMotorSpeed(1, speed);
-				gui->setSliderMotorSpeed(2, speed);
+				gui->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+				gui->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				
-				motors->setMotorSpeed(1, speed);
-				motors->setMotorSpeed(2, speed);
+				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 			
 				if (robotDrives == false)
 				{
@@ -2260,13 +2260,13 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//========================================================
 			if (robotRemoteMode==true)
 			{
-				speed = (-axisValue / JOYSTICKDIVISOR);
+				//speed = (-axisValue / JOYSTICKDIVISOR);
 				
-				gui->setSliderMotorSpeed(1, speed);
-				gui->setSliderMotorSpeed(2, speed);
+				gui->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+				gui->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				
-				motors->setMotorSpeed(1, speed);
-				motors->setMotorSpeed(2, speed);
+				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 			
 				if (robotDrives == false)
 				{
@@ -2298,9 +2298,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	if (axisNumber == JOYSTICKAXISX) 
 	{
-		//------------------
-		// DRIVE right
-		//------------------
+		//-------
+		// right
+		//-------
 		if (axisValue > 0)
 		{
 			//========================================================
@@ -2309,13 +2309,15 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//========================================================
 			if (robotRemoteMode==true)
 			{
-				speed = (axisValue / JOYSTICKDIVISOR);
+				//
+				// DRIVE RIGHT
+				//
+				//speed = (axisValue / JOYSTICKDIVISOR);
+				gui->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+				gui->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				
-				gui->setSliderMotorSpeed(1, speed);
-				gui->setSliderMotorSpeed(2, speed);
-				
-				motors->setMotorSpeed(1, speed);
-				motors->setMotorSpeed(2, speed);
+				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 			
 				if (robotDrives == false)
 				{
@@ -2327,9 +2329,9 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			return;
 		}
 		
-		//------------------
-		// DRIVE left
-		//------------------
+		//------
+		// left
+		//------
 		if (axisValue < 0)
 		{
 			//========================================================
@@ -2338,13 +2340,15 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//========================================================
 			if (robotRemoteMode==true)
 			{
-				speed = (-axisValue / JOYSTICKDIVISOR);
+				//
+				// DRIVE left
+				//
+				//speed = (-axisValue / JOYSTICKDIVISOR);
+				gui->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+				gui->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				
-				gui->setSliderMotorSpeed(1, speed);
-				gui->setSliderMotorSpeed(2, speed);
-				
-				motors->setMotorSpeed(1, speed);
-				motors->setMotorSpeed(2, speed);
+				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				
 				if (robotDrives == false)
 				{
