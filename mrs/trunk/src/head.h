@@ -39,6 +39,8 @@ class Head : public QObject
 		static const unsigned char SVEND     = 1;
 		static const unsigned char SVDEFAULT = 2;
 		static const unsigned char SVCURRENT = 3;
+		static const unsigned char SVMIN     = 4;
+		static const unsigned char SVMAX     = 5;
 		
 		//! the servo numbers
 		static const unsigned char SERVO1 = 0;
