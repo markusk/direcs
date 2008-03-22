@@ -1959,6 +1959,70 @@ void Mrs::readSettings()
 		}
 	}
 	//---------------------------------------------------------------------
+	// read servo MIN settings
+	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
+	{
+		QString settingName = QString("servo%1").arg(servo+1).append("MinPos");
+		int settingValue = inifile1->readSetting("Config", settingName);
+		
+		switch (settingValue)
+		{
+			case -2:
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				settingValue = 0;
+				break;
+			case -1:
+				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > 254)
+				{
+					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					settingValue = 255;
+				}
+	
+				// store the servo values
+				servos->setServoPosition(servo, SVMIN, settingValue);
+		
+				// show text
+				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
+	}
+	//---------------------------------------------------------------------
+	// read servo MAX settings
+	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
+	{
+		QString settingName = QString("servo%1").arg(servo+1).append("MaxPos");
+		int settingValue = inifile1->readSetting("Config", settingName);
+		
+		switch (settingValue)
+		{
+			case -2:
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				settingValue = 0;
+				break;
+			case -1:
+				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > 254)
+				{
+					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					settingValue = 255;
+				}
+	
+				// store the servo values
+				servos->setServoPosition(servo, SVMAX, settingValue);
+		
+				// show text
+				gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
+	}
+	//---------------------------------------------------------------------
 	// read servo DEFAULT settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
