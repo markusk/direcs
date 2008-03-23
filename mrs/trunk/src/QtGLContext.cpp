@@ -64,22 +64,18 @@ void QtGLContext::drawTexture(float ulX, float ulY, float lrX, float lrY)
 {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, m_texNameGL);
-	switch (m_pixeldepth) 
+	
+	switch (m_pixeldepth)
 	{
-	case 8: glTexSubImage2D ( GL_TEXTURE_2D, 0, m_texWidth-m_width, m_texHeight-m_height, 
-				m_width, m_height, GL_LUMINANCE, 
-				GL_UNSIGNED_BYTE, m_imgP);
-		break;
-	case 24:
-		glTexSubImage2D ( GL_TEXTURE_2D, 0, m_texWidth-m_width, m_texHeight-m_height,  
-			m_width, m_height, GL_BGR_EXT,  
-			GL_UNSIGNED_BYTE, m_imgP);
-		break;
-	case 32:
-		glTexSubImage2D ( GL_TEXTURE_2D, 0, m_texWidth-m_width, m_texHeight-m_height,  
-			m_width, m_height, GL_BGRA_EXT,  
-			GL_UNSIGNED_BYTE, m_imgP);
-		break;		
+		case 8:
+			glTexSubImage2D ( GL_TEXTURE_2D, 0, m_texWidth-m_width, m_texHeight-m_height, m_width, m_height, GL_LUMINANCE, GL_UNSIGNED_BYTE, m_imgP);
+			break;
+		case 24:
+			glTexSubImage2D ( GL_TEXTURE_2D, 0, m_texWidth-m_width, m_texHeight-m_height, m_width, m_height, GL_BGR_EXT, GL_UNSIGNED_BYTE, m_imgP);
+			break;
+		case 32:
+			glTexSubImage2D ( GL_TEXTURE_2D, 0, m_texWidth-m_width, m_texHeight-m_height, m_width, m_height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, m_imgP);
+			break;
 	}
 
 	// Reset The Modelview Matrix
@@ -211,26 +207,30 @@ void QtGLContext::resizeGL(int w, int h)
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 }
 
-bool QtGLContext::setImage(
-	unsigned char* imgP, 
-	const int width, 
-	const int height, 
-	const int pixeldepth, 
-	const bool flipped)  /*=false*/
+bool QtGLContext::setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped)  /*=false*/
 {
-	m_imgP = imgP; m_width = width; m_height = height; m_pixeldepth = pixeldepth;
+	m_imgP = imgP;
+	m_width = width;
+	m_height = height;
+	m_pixeldepth = pixeldepth;
     m_flipped = flipped;
-	this->updateGL();	
+	
+	this->updateGL();
 
 	// only 8, 24 and 32 bit images are supported
 	if (!imgP || (pixeldepth!=8 && pixeldepth!=24 && pixeldepth!=32))
 		return false;
-	glEnable(GL_TEXTURE_2D);					// Enable Texture Mapping
+	
+	// Enable Texture Mapping
+	glEnable(GL_TEXTURE_2D);
+	
 	// calculate texture size
 	m_texWidth  = NextLargerPowerOfTwo(m_width);
 	m_texHeight = NextLargerPowerOfTwo(m_height);
+	
 	// create texture memory
 	unsigned char* textureGL = new GLubyte[m_texHeight*m_texWidth* (pixeldepth>>3)];
+	
 	// calculate texture coordinates for image
 	m_texUpperLeftX = float (m_texWidth-m_width) / (float) (m_texWidth);
 	m_texUpperLeftY = float (m_texHeight-m_height) / (float) (m_texHeight);
@@ -253,24 +253,27 @@ bool QtGLContext::setImage(
 	// and coloring to your texture. If you do not want lighting and coloring to effect 
 	// your texture and you would like to display the texture unchanged when coloring 
 	// is applied replace GL_MODULATE with GL_DECAL
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
 	//glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, _texWidth, _texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, img->data());
-	switch(m_pixeldepth) {
-	case 8:
-		glTexImage2D(GL_TEXTURE_2D, 0,  GL_LUMINANCE, m_texWidth, m_texHeight, 0,  GL_LUMINANCE, GL_UNSIGNED_BYTE,textureGL); 
-		break;
-	case 24:
-		glTexImage2D(GL_TEXTURE_2D, 0,  GL_RGB, m_texWidth,m_texHeight, 0,  GL_RGB, GL_UNSIGNED_BYTE, textureGL); 
-		break;
-	case 32:
-		glTexImage2D(GL_TEXTURE_2D, 0,  GL_RGBA, m_texWidth,m_texHeight, 0,  GL_RGBA, GL_UNSIGNED_BYTE, textureGL); 
-		break;	
-	default:
-		glDisable(GL_TEXTURE_2D);
-		delete[] textureGL;
-		return false;
+	switch(m_pixeldepth)
+	{
+		case 8:
+			glTexImage2D(GL_TEXTURE_2D, 0,  GL_LUMINANCE, m_texWidth, m_texHeight, 0,  GL_LUMINANCE, GL_UNSIGNED_BYTE,textureGL); 
+			break;
+		case 24:
+			glTexImage2D(GL_TEXTURE_2D, 0,  GL_RGB, m_texWidth,m_texHeight, 0,  GL_RGB, GL_UNSIGNED_BYTE, textureGL); 
+			break;
+		case 32:
+			glTexImage2D(GL_TEXTURE_2D, 0,  GL_RGBA, m_texWidth,m_texHeight, 0,  GL_RGBA, GL_UNSIGNED_BYTE, textureGL); 
+			break;	
+		default:
+			glDisable(GL_TEXTURE_2D);
+			delete[] textureGL;
+			return false;
 	}
+	
 	glDisable(GL_TEXTURE_2D);
 	//glFlush();
 	delete[] textureGL;
