@@ -90,25 +90,24 @@ void CamThread::run()
 {
 	int i=0;
 	CvSeq *faces;
-	CvRect *rectangle;
-	CvPoint center;
+	CvRect *faceRectangle;
+	CvPoint faceCenter;
 	CvPoint rectStart;
 	CvPoint rectEnd;
-	int radius;
-	CvFont font;
-	//CvFont fontSmall;
 	int faceX = 0;
 	int faceY = 0;
 	int faceRadius = 0;
 	static int lastFaceX = 0;
 	static int lastFaceY = 0;
 	static int faceDetecter = 0;
+	CvFont font;
+	//CvFont fontSmall;
 	QString text;
 
 
 	// cvInitFont( CvFont* font, int font_face, double hscale, double vscale, double shear=0, int thickness=1, int line_type=8 );
-	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2 /* thickness */);
-	//cvInitFont(&fontSmall, CV_FONT_HERSHEY_PLAIN, 0.2, 0.2, 0, 1 /* thickness */);
+	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2);
+	//cvInitFont(&fontSmall, CV_FONT_HERSHEY_PLAIN, 0.2, 0.2, 0, 1);
 
 	//
 	//  start "threading"...
@@ -134,11 +133,12 @@ void CamThread::run()
 			//text = QString("%1x%2").arg(width).arg(height);
 			//cvPutText( imgPtr, text.toAscii(), cvPoint(20, 20), &font, CV_RGB(64, 64, 255) );
 			
+			
 			//----------------------------------------
-			// face detection (start)
+			// face detection
 			//----------------------------------------
 			
-			// reset old values
+			// reset actual values for new detection
 			faceX = 0;
 			faceY = 0;
 			faceRadius = 0;
@@ -158,76 +158,72 @@ void CamThread::run()
 				// detect objects in the gray image
 				faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 				
-				// when *no* faces detected
-				if (faces->total == 0)
+				if (faces->total > 0)
 				{
-					// for emit signal
-					faceX = 0;
-					faceY = 0;
-					faceRadius = 0;
-					faceDetecter = 0;
-				}
-				else
-				{
-					// put image size information to top left
-					text = QString("%1").arg(faces->total);
-					cvPutText( imgPtr, text.toAscii(), cvPoint(20, 25), &font, CV_RGB(64, 64, 255) );
-					// draw a rectangle for each face
-					//for( i = 0; i < (faces ? faces->total : 0); i++ )
-					for( i = 0; i < faces->total; i++ )
+					// put some information to top left
+					//text = QString("Faces: %1 / Counter: %2").arg(faces->total).arg(faceDetecter);
+					//cvPutText( imgPtr, text.toAscii(), cvPoint(20, 25), &font, CV_RGB(64, 64, 255) );
+					
+					// draw a faceRectangle for each face
+					// ORIGINAL for(i=0; i < faces->total; i++)  // < < < < < < < < < < < < < < < < < < < < < < < < < <
+					for(i=0; i < 1; i++)
 					{
 						// the rect around a face
-						rectangle = (CvRect*)cvGetSeqElem( faces, i );
+						faceRectangle = (CvRect*) cvGetSeqElem(faces, i);
 						
 						// center and radius of the face
-						center.x = qRound((rectangle->x + rectangle->width*0.5)*scale);
-						center.y = qRound((rectangle->y + rectangle->height*0.5)*scale);
-						radius = qRound((rectangle->width + rectangle->height)*0.25*scale);
+						faceCenter.x = qRound((faceRectangle->x + faceRectangle->width*0.5)*scale);
+						faceCenter.y = qRound((faceRectangle->y + faceRectangle->height*0.5)*scale);
+						faceRadius = qRound((faceRectangle->width + faceRectangle->height)*0.25*scale);
 						
-						//
 						// first check, if the actual detected face is the same face (it is in the same area)
-						//
-						/*
-						if ( (center.x > lastFaceX - 10) && ((center.x < lastFaceX + 10)) && (center.y > lastFaceY - 10) && (center.y < lastFaceY + 10)  )
+						if 	(
+							 	// TODO: set pixel range/area to a percent basis of img size and/or radius
+								( (faceCenter.x > lastFaceX - 50) && ((faceCenter.x < lastFaceX + 50)) && (faceCenter.y > lastFaceY - 50) && (faceCenter.y < lastFaceY + 50)  ) ||
+								( (faceCenter.x == lastFaceX) && (faceCenter.y == lastFaceY) ) ||
+								( (lastFaceY==0) && (lastFaceX==0) ) // <- only first time
+							)
 						{
 							// face detected again! :-)
 							faceDetecter++;
-						*/
+							
 							// store the new coordinates of the actual (same) face
-							lastFaceX = center.x;
-							lastFaceY = center.y;
-						/*
+							//lastFaceX = faceCenter.x;
+							//lastFaceY = faceCenter.y;
+							
 							// face detected more 2 times
 							if (faceDetecter > 2)
 							{
 								faceDetecter = 0;
-						*/
+							
+								// set the lastFace to actual :-)
+								lastFaceX = faceCenter.x;
+								lastFaceY = faceCenter.y;
+								
 								// the rect coordinates
-								rectStart.x = rectangle->x*scale;
-								rectStart.y = rectangle->y*scale;
-								rectEnd.x = rectStart.x + rectangle->width*scale;
-								rectEnd.y = rectStart.y + rectangle->height*scale;
+								rectStart.x = faceRectangle->x*scale;
+								rectStart.y = faceRectangle->y*scale;
+								rectEnd.x = rectStart.x + faceRectangle->width*scale;
+								rectEnd.y = rectStart.y + faceRectangle->height*scale;
 						/*
 								// draw rectangles(s)
 								if (i==0)
 								{
 						*/
 						
-									// for emit signal
-									faceX = center.x;
-									faceY = center.y;
-									faceRadius = radius;
-									// first face in white
-									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
-								/*
+									// for emit signal TODO: why different emit variables. why not faceCenter.x and y?!?
+									faceX = faceCenter.x;
+									faceY = faceCenter.y;
+									// first face in red
+									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 64, 64));
+						/*
 								}
 								else
 								{
-									// other faces darker color
-									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(198, 198, 198));
+									// other faces in an other color
+									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
 								}
-								*/
-		/*
+						*/
 							}
 						}
 						else
@@ -236,17 +232,25 @@ void CamThread::run()
 							// reset the counter
 							faceDetecter = 0;
 						}
-		*/
-					}
+					} // for each detected face
+				} // face detected
+				else
+				{
+					//--------------------------
+					// *no* faces detected
+					//--------------------------
+					faceX = 0;
+					faceY = 0;
+					faceRadius = 0;
+					lastFaceX = 0;
+					lastFaceY = 0;
+					//faceDetecter = 0;
 				}
-			}
-			//----------------------------------------
-			// face detection (end)
-			//----------------------------------------
+			} // detection enabled
 			
 			
 			//----------------------------------------
-			// draw end switch alarm into image
+			// draw 'end contact' alarm into image
 			//----------------------------------------
 			if (contactAlarmLeft)
 			{
