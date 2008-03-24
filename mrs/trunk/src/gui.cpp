@@ -983,6 +983,8 @@ void Gui::on_btnSavePicture_clicked()
 void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY)
 {
 	// show coordinates of the first detected face
+	ui.lblFaces->setNum(faces);
+	
 	ui.lblFaceX->setNum(faceX);
 	ui.lblFaceY->setNum(faceY);
 	ui.lblFaceRadius->setNum(faceRadius);

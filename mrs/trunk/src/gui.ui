@@ -1483,27 +1483,6 @@
      <iconset resource="../mrs.qrc" >:/images/images/hdd.png</iconset>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBoxAutoSave" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
-    <property name="geometry" >
-     <rect>
-      <x>220</x>
-      <y>380</y>
-      <width>81</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font" >
-     <font>
-      <family>Verdana</family>
-     </font>
-    </property>
-    <property name="text" >
-     <string>Auto Save</string>
-    </property>
-   </widget>
    <widget class="QFrame" name="frame" >
     <property name="geometry" >
      <rect>
@@ -1547,9 +1526,6 @@
       <font>
        <family>Verdana</family>
       </font>
-     </property>
-     <property name="cursor" >
-      <cursorShape>PointingHandCursor</cursorShape>
      </property>
     </widget>
    </widget>
@@ -1721,8 +1697,8 @@
    <widget class="QLabel" name="lblFaceTrackTo" >
     <property name="geometry" >
      <rect>
-      <x>450</x>
-      <y>360</y>
+      <x>270</x>
+      <y>382</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -1742,8 +1718,8 @@
    <widget class="QLabel" name="textLabel2_11" >
     <property name="geometry" >
      <rect>
-      <x>400</x>
-      <y>363</y>
+      <x>220</x>
+      <y>384</y>
       <width>45</width>
       <height>12</height>
      </rect>
@@ -1761,7 +1737,7 @@
     <property name="geometry" >
      <rect>
       <x>400</x>
-      <y>376</y>
+      <y>374</y>
       <width>68</width>
       <height>12</height>
      </rect>
@@ -1779,7 +1755,7 @@
     <property name="geometry" >
      <rect>
       <x>470</x>
-      <y>376</y>
+      <y>374</y>
       <width>21</width>
       <height>12</height>
      </rect>
@@ -1797,7 +1773,7 @@
     <property name="geometry" >
      <rect>
       <x>470</x>
-      <y>387</y>
+      <y>385</y>
       <width>21</width>
       <height>12</height>
      </rect>
@@ -1815,7 +1791,7 @@
     <property name="geometry" >
      <rect>
       <x>400</x>
-      <y>387</y>
+      <y>385</y>
       <width>66</width>
       <height>12</height>
      </rect>
@@ -1827,6 +1803,42 @@
     </property>
     <property name="text" >
      <string>Last face Y:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="textLabel2_14" >
+    <property name="geometry" >
+     <rect>
+      <x>400</x>
+      <y>363</y>
+      <width>41</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>Faces:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblFaces" >
+    <property name="geometry" >
+     <rect>
+      <x>470</x>
+      <y>363</y>
+      <width>21</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="font" >
+     <font>
+      <family>Verdana</family>
+     </font>
+    </property>
+    <property name="text" >
+     <string>0</string>
     </property>
    </widget>
   </widget>
