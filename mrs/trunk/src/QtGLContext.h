@@ -84,6 +84,8 @@ private:
 	// box parameters (for mouse dragging)
 	QPoint m_entry, m_exit;	
 	bool m_mousePressed;
+	// Markus:
+	unsigned char* textureGL;
 
 };
 

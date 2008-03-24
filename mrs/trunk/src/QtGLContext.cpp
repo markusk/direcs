@@ -13,6 +13,7 @@ QtGLContext::QtGLContext(QWidget* parent /*= 0*/, const QGLWidget* sharedWidget 
 
 QtGLContext::~QtGLContext()
 {
+	delete[] textureGL;
 	glDeleteTextures(1, &m_texNameGL);
 }
 
@@ -233,6 +234,7 @@ bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=f
 	// Enable Texture Mapping
 	glEnable(GL_TEXTURE_2D);
 	
+/*
 	// calculate texture size
 	m_texWidth  = NextLargerPowerOfTwo(m_width);
 	m_texHeight = NextLargerPowerOfTwo(m_height);
@@ -245,7 +247,8 @@ bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=f
 	m_texUpperLeftY = float (m_texHeight-m_height) / (float) (m_texHeight);
 	m_texLowerRightX = 1.0; // (float) (_texWidth) / (float) _height;
 	m_texLowerRightY = 1.0; // (float) (_texHeight) / (float) _width;
-
+*/
+	
 	// tell OpenGL which texture "id" we will be working with.:
 	glBindTexture(GL_TEXTURE_2D, m_texNameGL);
 	// tell OpenGL that the pixel data which is going to be passed to it is aligned in byte order:
@@ -253,9 +256,9 @@ bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=f
 
 	// set the various parameters for the current OpenGL texture:
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	// tell OpenGL how the texture will act when it is rendered into a scene:
 	// The GL_MODULATE attribute allows you to apply effects such as lighting 
@@ -279,13 +282,12 @@ bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=f
 			break;	
 		default:
 			glDisable(GL_TEXTURE_2D);
-			delete[] textureGL;
+			//delete[] textureGL;
 			return false;
 	}
 	
 	glDisable(GL_TEXTURE_2D);
-	//glFlush();
-	delete[] textureGL;
+	//delete[] textureGL;
 	resetBox();
  	return true;
 }
@@ -306,7 +308,30 @@ void QtGLContext::enableMirrorMode(int state)
 
 void QtGLContext::setImageData(const int width, const int height, const int pixeldepth)
 {
+	static bool firstInit = true;
+	
+	
 	m_width = width;
 	m_height = height;
 	m_pixeldepth = pixeldepth;
+	
+	
+	// only the first time
+	if (firstInit)
+	{
+		firstInit=false;
+		
+		// calculate texture size
+		m_texWidth  = NextLargerPowerOfTwo(m_width);
+		m_texHeight = NextLargerPowerOfTwo(m_height);
+		
+		// create texture memory -> put to constructor!
+		textureGL = new GLubyte[m_texHeight*m_texWidth* (m_pixeldepth>>3)];
+		
+		// calculate texture coordinates for image
+		m_texUpperLeftX = float (m_texWidth-m_width) / (float) (m_texWidth);
+		m_texUpperLeftY = float (m_texHeight-m_height) / (float) (m_texHeight);
+		m_texLowerRightX = 1.0; // (float) (_texWidth) / (float) _height;
+		m_texLowerRightY = 1.0; // (float) (_texHeight) / (float) _width;
+	}
 }
