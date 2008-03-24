@@ -978,14 +978,10 @@ void Gui::on_btnSavePicture_clicked()
 	saveCamImage();
 	appendLog("Picture saved");
 }
+	
 
-
-void Gui::setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY)
+void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY)
 {
-	
-	// set image from gl context to frame
-	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
-	
 	// show coordinates of the first detected face
 	ui.lblFaceX->setNum(faceX);
 	ui.lblFaceY->setNum(faceY);
@@ -993,7 +989,15 @@ void Gui::setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius, int
 	
 	ui.lblLastFaceX->setNum(lastFaceX);
 	ui.lblLastFaceY->setNum(lastFaceY);
+}
 
+
+void Gui::setCamImage(IplImage* frame)
+{
+	
+	// set image from gl context to frame
+	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
+	
 /*	
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )

@@ -175,27 +175,20 @@ class Gui : public QMainWindow
 		*/
 		
 		/**
-		Shows the new picture from the cam (live). This slot is called from the camera thread.
+		Shows the new picture from the cam (live).
 		@param frame
-		@param faceX
-		@param faceY
-		@param faceRadius
-		@sa CamThread()
+		@sa CamThread::camDataComplete()
 		*/
-		void setCamImage(IplImage* frame, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
-
+		void setCamImage(IplImage* frame);
 		
-		/* for future needs
-		Shows a xyz in the GUI, when the camera hits the end switches (when panning and tilting).
-		@param position can be TOP, BOTTOM, LEFT, RIGHT
-		@param state can be true or false (for ON and OFF)
-		@sa CamThread::drawContactAlarm()
-		void showContactAlarm(char position, bool state)
-		{
-			// signal will be routed to the cam thread! see constructor!
-		};
-		 */
-		
+		/**
+		Show some face track data in the GUI.
+		@param faces is the number of detected faces
+		@param faceX is the X coordinate to the middle of a detected face (0, if none)
+		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
+		@param faceRadius is the radius (0, if none)
+		*/
+		void showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 		
 		/**
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
