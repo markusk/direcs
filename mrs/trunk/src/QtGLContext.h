@@ -27,7 +27,7 @@ public:
 	//! redefines the clipping rectangle for the texture drawing
 	void setZoomRect(float ulX, float ulY, float lrX, float lrY);
 
-	void resetBox() { m_exit.setX(0); m_exit.setY(0); m_entry.setX(0); m_entry.setY(0);}
+	//void resetBox() { m_exit.setX(0); m_exit.setY(0); m_entry.setX(0); m_entry.setY(0);}
 
 	/**
 	Enables or disables the mirror mode for the camera. When activated, the camera live image is mirrored horicontally.
@@ -84,7 +84,7 @@ private:
 	// box parameters (for mouse dragging)
 	QPoint m_entry, m_exit;	
 	bool m_mousePressed;
-	// Markus:
+	// "the image" (texture)
 	unsigned char* textureGL;
 
 };

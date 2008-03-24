@@ -234,20 +234,10 @@ bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=f
 	// Enable Texture Mapping
 	glEnable(GL_TEXTURE_2D);
 	
-/*
 	// calculate texture size
-	m_texWidth  = NextLargerPowerOfTwo(m_width);
-	m_texHeight = NextLargerPowerOfTwo(m_height);
-	
 	// create texture memory -> put to constructor!
-	unsigned char* textureGL = new GLubyte[m_texHeight*m_texWidth* (m_pixeldepth>>3)];
-	
 	// calculate texture coordinates for image
-	m_texUpperLeftX = float (m_texWidth-m_width) / (float) (m_texWidth);
-	m_texUpperLeftY = float (m_texHeight-m_height) / (float) (m_texHeight);
-	m_texLowerRightX = 1.0; // (float) (_texWidth) / (float) _height;
-	m_texLowerRightY = 1.0; // (float) (_texHeight) / (float) _width;
-*/
+	// -> now in setImageData
 	
 	// tell OpenGL which texture "id" we will be working with.:
 	glBindTexture(GL_TEXTURE_2D, m_texNameGL);
@@ -268,11 +258,10 @@ bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=f
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
-	//glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, _texWidth, _texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, img->data());
 	switch(m_pixeldepth)
 	{
 		case 8:
-			glTexImage2D(GL_TEXTURE_2D, 0,  GL_LUMINANCE, m_texWidth, m_texHeight, 0,  GL_LUMINANCE, GL_UNSIGNED_BYTE,textureGL); 
+			glTexImage2D(GL_TEXTURE_2D, 0,  GL_LUMINANCE, m_texWidth, m_texHeight, 0,  GL_LUMINANCE, GL_UNSIGNED_BYTE, textureGL); 
 			break;
 		case 24:
 			glTexImage2D(GL_TEXTURE_2D, 0,  GL_RGB, m_texWidth,m_texHeight, 0,  GL_RGB, GL_UNSIGNED_BYTE, textureGL); 
@@ -282,13 +271,11 @@ bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=f
 			break;	
 		default:
 			glDisable(GL_TEXTURE_2D);
-			//delete[] textureGL;
 			return false;
 	}
 	
 	glDisable(GL_TEXTURE_2D);
-	//delete[] textureGL;
-	resetBox();
+	//resetBox();
  	return true;
 }
 
@@ -309,12 +296,11 @@ void QtGLContext::enableMirrorMode(int state)
 void QtGLContext::setImageData(const int width, const int height, const int pixeldepth)
 {
 	static bool firstInit = true;
-	
-	
+
+
 	m_width = width;
 	m_height = height;
 	m_pixeldepth = pixeldepth;
-	
 	
 	// only the first time
 	if (firstInit)
