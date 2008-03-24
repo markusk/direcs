@@ -441,8 +441,8 @@ Mrs::Mrs()
 			if (camThread->isConnected())
 			{
 				gui->appendLog(QString("Camera resolution is %1x%2.").arg(camThread->imageWidth()).arg(camThread->imageHeight()));
-				// tell the gui the image size
-				gui->setCamImageData(camThread->imageWidth(), camThread->imageHeight());
+				// tell the gui the image size and depth
+				gui->setCamImageData(camThread->imageWidth(), camThread->imageHeight(), camThread->imagePixelDepth());
 			}
 		}
 	}

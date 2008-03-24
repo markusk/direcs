@@ -302,9 +302,9 @@ void QtGLContext::enableMirrorMode(int state)
 }
 
 
-void QtGLContext::setImageData(const int width, const int height/*, const int pixeldepth*/)
+void QtGLContext::setImageData(const int width, const int height, const int pixeldepth)
 {
 	m_width = width;
 	m_height = height;
-	//m_pixeldepth = pixeldepth;
+	m_pixeldepth = pixeldepth;
 }

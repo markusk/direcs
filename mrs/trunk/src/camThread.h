@@ -35,6 +35,11 @@ class CamThread : public QThread
 		Returns the image width of the camera. Retrieved in the constructor!
 		*/
 		int imageWidth();
+
+		/**
+		Returns the image pixel depth of the camera. Retrieved in the constructor!
+		*/
+		int imagePixelDepth();
 		
 		void stop();
 		virtual void run();
@@ -82,7 +87,7 @@ class CamThread : public QThread
 		IplImage *imgPtr;
 		int width;
 		int height;
-		//int depth;
+		int pixeldepth;
 		CvCapture *capture;
 		CvMemStorage *storage;
 		CvHaarClassifierCascade *cascade;

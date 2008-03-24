@@ -25,7 +25,7 @@ CamThread::CamThread() : QThread()
 		qDebug("INFO: could not initialize capturing from /dev/video0. No camera connected?");
 		width=0;
 		height=0;
-		//depth = 0;
+		pixeldepth = 0;
 		cameraIsOn = false;
 		stopped = true;
 		
@@ -42,7 +42,7 @@ CamThread::CamThread() : QThread()
 		// get width and height & Co.
 		width = imgPtr->width;
 		height = imgPtr->height;
-		//depth = imgPtr->depth;
+		pixeldepth = (imgPtr->nChannels * imgPtr->depth);
 
 		//-----------------------------------------------------
 		// Load trained cascade of haar classifers from file.
@@ -362,4 +362,10 @@ int CamThread::imageWidth()
 int CamThread::imageHeight()
 {
 	return height;
+}
+
+
+int CamThread::imagePixelDepth()
+{
+	return pixeldepth;
 }

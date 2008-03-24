@@ -163,7 +163,7 @@ class Gui : public QMainWindow
 		/**
 		tell the OpenGLContext the image data
 		*/
-		void setCamImageData(int width, int height);
+		void setCamImageData(int width, int height, int pixeldepth);
 
 
 	
