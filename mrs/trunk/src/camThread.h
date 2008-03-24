@@ -82,6 +82,7 @@ class CamThread : public QThread
 		IplImage *imgPtr;
 		int width;
 		int height;
+		//int depth;
 		CvCapture *capture;
 		CvMemStorage *storage;
 		CvHaarClassifierCascade *cascade;

@@ -995,8 +995,9 @@ void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int
 void Gui::setCamImage(IplImage* frame)
 {
 	
-	// set image from gl context to frame
-	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, frame->nChannels * frame->depth);
+	// set image from OpenGL context to Qt frame!
+	ui.frameCamera->setImage((unsigned char*)frame->imageData, frame->width, frame->height, (frame->nChannels * frame->depth) );
+	//ui.frameCamera->setImage((unsigned char*)frame->imageData);
 	
 /*	
 	// save pic, when ckecked in GUI
