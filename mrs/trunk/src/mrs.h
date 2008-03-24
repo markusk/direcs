@@ -75,10 +75,10 @@ class Mrs : public QObject
 		void logicalUnit(int sensorAlarm, QDateTime timestamp);
 		
 		/**
-		This method moves the camera and the robots eyes in the direction of a detected face.
-		@sa camThread::camDataComplete()
+		This method moves the camera and/or the robots eyes in the direction of a detected face.
+		@sa camThread::faceDetected()
 		 */
-		void faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius);
+		void faceTracking(int faces, int faceX, int faceY, int faceRadius);
 
 		/**
 		Enables or disables the face tracking. When activated, a face will be tracked by the camera.

@@ -351,12 +351,13 @@ Mrs::Mrs()
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int, int, int) ), gui, SLOT( setCamImage(IplImage*, int, int, int, int, int) ));
+	connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
 	
-	//----------------------------------------------------------------------------
-	// connect camDataComplete from the cam thread to the faceTracking unit
-	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*, int, int, int, int, int) ), SLOT( faceTracking(IplImage*, int, int, int) ));
+	//--------------------------------------------------------------------------------------------------------
+	// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
+	//--------------------------------------------------------------------------------------------------------
+	connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
+	connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
 	
 	//----------------------------------------------------------------------------
 	// enable face detection, when activated in the GUI
@@ -376,7 +377,7 @@ Mrs::Mrs()
 	//----------------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
 	//----------------------------------------------------------------------------
-	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), SLOT(logicalUnit(int, QDateTime)));
+	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), this, SLOT(logicalUnit(int, QDateTime)));
 	
 	//----------------------------------------------------------------------------
 	// show the angle where to drive in a GUI label
@@ -561,6 +562,7 @@ void Mrs::shutdown()
 	qDebug("Mrs shutdown...");
 	
 	// just 4 fun
+	head->look("NORMAL");
 	head->look("DOWN");
 
 	
@@ -1235,7 +1237,7 @@ void Mrs::enableFaceTracking(int state)
 }
 
 
-void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
+void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
 	// TODO: put values to consts or ini
 	int xLevelRight = (camThread->imageWidth()  / 2) + faceRadius;
@@ -1245,18 +1247,22 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 
 	
 	// track nowhere (face is in the middle) or faceRadius is 0 -> no faces detected
-	if ( (faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) )
+	if (
+			(faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) ||
+			(faceRadius == 0)
+	   )
 	{
+		//head->look("FORWARD");
+		//head->look("NORMAL");
+		emit showFaceTrackDirection("NONE");
+		
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			head->look("FORWARD");
-			//head->look("NORMAL");
 			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
 			*/
 		}
-		emit showFaceTrackDirection("NONE");
 		return;
 	}
 	
