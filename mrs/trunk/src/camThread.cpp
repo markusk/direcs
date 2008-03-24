@@ -43,9 +43,10 @@ CamThread::CamThread() : QThread()
 		height = imgPtr->height;
 
 
-		//--------------------------------------------
-		// 
-		//--------------------------------------------
+		//-----------------------------------------------------
+		// Load trained cascade of haar classifers from file.
+		// For fast object detection
+		//-----------------------------------------------------
 		//TODO: check path (use variables from mrs)
 		cascade = (CvHaarClassifierCascade*)cvLoad("/home/markus/develop/sourceforge/mrs/trunk/data/haarcascades/haarcascade_frontalface_alt2.xml", 0, 0, 0);
 
@@ -164,8 +165,7 @@ void CamThread::run()
 					//cvPutText( imgPtr, text.toAscii(), cvPoint(20, 25), &font, CV_RGB(64, 64, 255) );
 					
 					// draw a faceRectangle for each face
-					// ORIGINAL for(i=0; i < faces->total; i++)  // < < < < < < < < < < < < < < < < < < < < < < < < < <
-					for(i=0; i < 1; i++)
+					for(i=0; i < faces->total; i++)
 					{
 						// the rect around a face
 						faceRectangle = (CvRect*) cvGetSeqElem(faces, i);
@@ -175,6 +175,7 @@ void CamThread::run()
 						faceCenter.y = qRound((faceRectangle->y + faceRectangle->height*0.5)*scale);
 						faceRadius = qRound((faceRectangle->width + faceRectangle->height)*0.25*scale);
 						
+/*
 						// first check, if the actual detected face is the same face (it is in the same area)
 						if 	(
 							 	// TODO: set pixel range/area to a percent basis of img size and/or radius
@@ -198,31 +199,30 @@ void CamThread::run()
 								// set the lastFace to actual :-)
 								lastFaceX = faceCenter.x;
 								lastFaceY = faceCenter.y;
-								
+*/								
 								// the rect coordinates
 								rectStart.x = faceRectangle->x*scale;
 								rectStart.y = faceRectangle->y*scale;
 								rectEnd.x = rectStart.x + faceRectangle->width*scale;
 								rectEnd.y = rectStart.y + faceRectangle->height*scale;
-						/*
+								
 								// draw rectangles(s)
+/*
 								if (i==0)
 								{
-						*/
-						
+*/
 									// for emit signal TODO: why different emit variables. why not faceCenter.x and y?!?
 									faceX = faceCenter.x;
 									faceY = faceCenter.y;
-									// first face in red
-									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 64, 64));
-						/*
+									// first face in white
+									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
+/*
 								}
 								else
 								{
 									// other faces in an other color
 									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
 								}
-						*/
 							}
 						}
 						else
@@ -231,6 +231,7 @@ void CamThread::run()
 							// reset the counter
 							faceDetecter = 0;
 						}
+*/
 					} // for each detected face
 				} // face detected
 				else
@@ -245,6 +246,10 @@ void CamThread::run()
 					lastFaceY = 0;
 					//faceDetecter = 0;
 				}
+			
+				// show data in the gui and analyse the face data
+				emit faceDetected(faces->total, faceX, faceY, faceRadius, lastFaceX, lastFaceY);
+				
 			} // detection enabled
 			
 			
@@ -278,7 +283,7 @@ void CamThread::run()
 			//====================================================================
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
-			emit camDataComplete(imgPtr, faceX, faceY, faceRadius, lastFaceX, lastFaceY);
+			emit camDataComplete(imgPtr);
 		
 			// let the thread sleep some time
 			//msleep(THREADSLEEPTIME);
