@@ -6,22 +6,25 @@
 #include <QtGui/QMouseEvent>
 
 /** An individual OPENGL context class */
-
 class QtGLContext : public QGLWidget
 {
 	Q_OBJECT
 
 	
 public:
-	/// Constructor
+	//! Constructor
 	QtGLContext(QWidget* parent = 0, const QGLWidget* sharedWidget = 0, Qt::WFlags f = 0 );
 	QtGLContext(const QGLFormat &format, QWidget* parent = 0, const QGLWidget* sharedWidget = 0, Qt::WFlags f = 0 );
 	~QtGLContext();
 
-	// set image parameters											vertical flip!
+	//! set image parameters 'flipped' is a vertical flip!
 	bool setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped = false);
+	//bool setImage(unsigned char* imgP, const bool flipped = false);
+	
+	// set the image data (for not doing this at every setImage call!)
+	//void setImageData(const int width, const int height, const int pixeldepth);
 
-	// redefines the clipping rectangle for the texture drawing
+	//! redefines the clipping rectangle for the texture drawing
 	void setZoomRect(float ulX, float ulY, float lrX, float lrY);
 
 	void resetBox() { m_exit.setX(0); m_exit.setY(0); m_entry.setX(0); m_entry.setY(0);}
@@ -49,28 +52,34 @@ protected:
 	virtual void mouseMoveEvent(QMouseEvent* event);
 	virtual void mouseReleaseEvent(QMouseEvent* event);
 	*/
-	// internal draw method
+	/**
+	draws the texture sub image on the screen
+	@param ulX is the upper left x coordinate
+	@param ulY is the upper left y coordinate
+	@param lrX is the lower right x coordinate
+	@param lrY is the lower right y coordinate
+	*/
 	void drawTexture(float ul, float ur, float ll, float lr);
-	// helper method
+	//! helper method
 	unsigned int NextLargerPowerOfTwo(unsigned int n);
 
 
 private:
-	// pointer to the data of the displayed image
+	//! pointer to the data of the displayed image
 	unsigned char* m_imgP;
-	// image parameters
+	//! image parameters
 	unsigned int m_width, m_height, m_pixeldepth;
-	// if set to true image will be flipped vertically
+	//! if set to true image will be flipped vertically
     bool         m_flipped;
-	// if set to true image will be flipped horizontally
+	//! if set to true image will be flipped horizontally
     bool         m_mirrored;
-	// width of the texture buffer
+	//! width of the texture buffer
 	unsigned int m_texWidth;
-	// height of the texture buffer
+	//! height of the texture buffer
 	unsigned int m_texHeight;
-	// texture identifier
+	//! texture identifier
 	unsigned int m_texNameGL;
-	// clipping rectangle for texture
+	//! clipping rectangle for texture
 	float m_texUpperLeftX, m_texUpperLeftY, m_texLowerRightX, m_texLowerRightY;
 	// box parameters (for mouse dragging)
 	QPoint m_entry, m_exit;	

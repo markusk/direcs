@@ -23,9 +23,10 @@ CamThread::CamThread() : QThread()
 	if (!capture)
 	{
 		qDebug("INFO: could not initialize capturing from /dev/video0. No camera connected?");
-		cameraIsOn = false;
 		width=0;
 		height=0;
+		//depth = 0;
+		cameraIsOn = false;
 		stopped = true;
 		
 	}
@@ -38,10 +39,10 @@ CamThread::CamThread() : QThread()
 		//--------------------------------------------
 		imgPtr = cvRetrieveFrame(capture);
 
-		// get width and height
+		// get width and height & Co.
 		width = imgPtr->width;
 		height = imgPtr->height;
-
+		//depth = imgPtr->depth;
 
 		//-----------------------------------------------------
 		// Load trained cascade of haar classifers from file.
@@ -61,7 +62,7 @@ CamThread::CamThread() : QThread()
 			
 			
 			//-----------------------------
-			// for later face detection
+			// for later face detection:
 			//-----------------------------
 			
 			// create a blank gray scale image with same size
@@ -103,6 +104,8 @@ void CamThread::run()
 	CvFont font;
 	//CvFont fontSmall;
 	QString text;
+	// test: show picture with OpenCv -> see also emit at the buttom of this method!
+	//cvNamedWindow( "result", 1 );
 
 
 	// cvInitFont( CvFont* font, int font_face, double hscale, double vscale, double shear=0, int thickness=1, int line_type=8 );
@@ -148,7 +151,7 @@ void CamThread::run()
 			{
 				// converts from BGR2 to to gray
 				cvCvtColor( imgPtr, gray, CV_BGR2GRAY );
-				// resize the gray image, to the size of the small_img (to make things faster)
+				// resize the gray image, to the size of the small_img (faster!)
 				cvResize( gray, small_img, CV_INTER_LINEAR );
 				cvEqualizeHist( small_img, small_img );
 				
@@ -261,24 +264,26 @@ void CamThread::run()
 				// TODO: Use GetTextSize!
 				//Retrieves width and height of text string
 				//void cvGetTextSize( const char* text_string, const CvFont* font, CvSize* text_size, int* baseline );
-				cvPutText( imgPtr, "[Stop]", cvPoint(5, (imgPtr->height/2)-5), &font, CV_RGB(255, 64, 64) );
+				cvPutText( imgPtr, "[Stop]", cvPoint(5, (height/2)-5), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmRight)
 			{
-				cvPutText( imgPtr, "[Stop]", cvPoint(imgPtr->width-100, (imgPtr->height/2)-5), &font, CV_RGB(255, 64, 64) );
+				cvPutText( imgPtr, "[Stop]", cvPoint(width-100, (height/2)-5), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmTop)
 			{
-				cvPutText( imgPtr, "[Stop]", cvPoint((imgPtr->width/2)-50, 30), &font, CV_RGB(255, 64, 64) );
+				cvPutText( imgPtr, "[Stop]", cvPoint((width/2)-50, 30), &font, CV_RGB(255, 64, 64) );
 			}
 			
 			if (contactAlarmBottom)
 			{
-				cvPutText( imgPtr, "[Stop]", cvPoint((imgPtr->width/2)-50, imgPtr->height-10), &font, CV_RGB(255, 64, 64) );
+				cvPutText( imgPtr, "[Stop]", cvPoint((width/2)-50, height-10), &font, CV_RGB(255, 64, 64) );
 			}
 			
+			// test: show picture with OpenCv
+			//cvShowImage( "result", imgPtr );
 			
 			//====================================================================
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
@@ -287,8 +292,9 @@ void CamThread::run()
 		
 			// let the thread sleep some time
 			//msleep(THREADSLEEPTIME);
-		}
-	}
+			
+		} // cameraIsOn
+	} // while !stopped
 	
 	
 	if (cameraIsOn == true)

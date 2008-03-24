@@ -1,21 +1,22 @@
 #include "QtGLContext.h"
 #include <QMessageBox>
 
-QtGLContext::QtGLContext(QWidget* parent /*= 0*/, 
-		const QGLWidget* sharedWidget /*= 0*/, Qt::WFlags f /*= 0*/) : QGLWidget(parent, sharedWidget, f), m_imgP(0), m_mousePressed(false)
+QtGLContext::QtGLContext(QWidget* parent /*= 0*/, const QGLWidget* sharedWidget /*= 0*/, Qt::WFlags f /*= 0*/) : QGLWidget(parent, sharedWidget, f), m_imgP(0), m_mousePressed(false)
 {
     m_mirrored = false;
 }
+
 
 QtGLContext::~QtGLContext()
 {
 	glDeleteTextures(1, &m_texNameGL);
 }
 
+
 void QtGLContext::initializeGL()
 {
 	// INIT
-		// Let OpenGL clear to black
+	// Let OpenGL clear to black
 	glColor3f(0.0,0.0,0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -35,11 +36,15 @@ void QtGLContext::paintGL()
  {
 	// PAINT
 	glColor3f(1.0,1.0,1.0);
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		
-	if (!m_imgP)	return;
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	if (!m_imgP)
+		return;
+	
 	glDisable(GL_DEPTH_TEST);
 	drawTexture(m_texUpperLeftX, m_texUpperLeftY, m_texLowerRightX, m_texLowerRightY);
-	glEnable(GL_DEPTH_TEST);	
+	glEnable(GL_DEPTH_TEST);
+	
 	if (!m_exit.isNull())
 	{
 		glBegin(GL_LINE_STRIP);
@@ -49,17 +54,10 @@ void QtGLContext::paintGL()
 		glVertex2f(m_exit.x(), m_entry.y());
 		glVertex2f(m_entry.x(), m_entry.y());
 		glEnd();
-	}	
+	}
 }
 
 
- /**
-draws the texture sub image on the screen
-@param ulX is the upper left x coordinate
-@param ulY is the upper left y coordinate
-@param lrX is the lower right x coordinate
-@param lrY is the lower right y coordinate
-*/
 void QtGLContext::drawTexture(float ulX, float ulY, float lrX, float lrY)
 {
 	glEnable(GL_TEXTURE_2D);
@@ -132,6 +130,7 @@ unsigned int QtGLContext::NextLargerPowerOfTwo(unsigned int n) {
 	return candidate;
 }
 
+
 /*
 void QtGLContext::mousePressEvent ( QMouseEvent * event ) 
 {
@@ -148,6 +147,7 @@ void QtGLContext::mousePressEvent ( QMouseEvent * event )
 	
 	emit saveImage();
 }
+
 
 void QtGLContext::mouseReleaseEvent(QMouseEvent* event)
 {
@@ -201,24 +201,27 @@ void QtGLContext::mouseMoveEvent(QMouseEvent* event)
 }
 */
 
+
 void QtGLContext::resizeGL(int w, int h)
 {	
 	// RESIZE
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 }
 
-bool QtGLContext::setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped)  /*=false*/
+
+//bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=false*/
+bool QtGLContext::setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped)  /*flipped=false*/
 {
 	m_imgP = imgP;
 	m_width = width;
 	m_height = height;
 	m_pixeldepth = pixeldepth;
     m_flipped = flipped;
-	
+
 	this->updateGL();
 
 	// only 8, 24 and 32 bit images are supported
-	if (!imgP || (pixeldepth!=8 && pixeldepth!=24 && pixeldepth!=32))
+	if (!imgP || (m_pixeldepth!=8 && m_pixeldepth!=24 && m_pixeldepth!=32))
 		return false;
 	
 	// Enable Texture Mapping
@@ -229,7 +232,7 @@ bool QtGLContext::setImage(unsigned char* imgP, const int width, const int heigh
 	m_texHeight = NextLargerPowerOfTwo(m_height);
 	
 	// create texture memory
-	unsigned char* textureGL = new GLubyte[m_texHeight*m_texWidth* (pixeldepth>>3)];
+	unsigned char* textureGL = new GLubyte[m_texHeight*m_texWidth* (m_pixeldepth>>3)];
 	
 	// calculate texture coordinates for image
 	m_texUpperLeftX = float (m_texWidth-m_width) / (float) (m_texWidth);
@@ -293,3 +296,12 @@ void QtGLContext::enableMirrorMode(int state)
 		m_mirrored = false;
 	}
 }
+
+/*
+void QtGLContext::setImageData(const int width, const int height, const int pixeldepth)
+{
+	m_width = width;
+	m_height = height;
+	m_pixeldepth = pixeldepth;
+}
+*/
