@@ -424,7 +424,7 @@ Mrs::Mrs()
 	//----------------------------------------------------------------------------
 	// this is for the robots head
 	//----------------------------------------------------------------------------
-	connect(this, SIGNAL( look(QString)), head, SLOT( look(QString) ));
+	// connect(this, SIGNAL( look(QString)), head, SLOT( look(QString) )); not longer in use. using direct call head->look() !!
 
 	
 	//-----------------------------------------------------------
@@ -559,6 +559,11 @@ Mrs::Mrs()
 void Mrs::shutdown()
 {
 	qDebug("Mrs shutdown...");
+	
+	// just 4 fun
+	head->look("DOWN");
+
+	
 	// FIXME: not called, when closed via KDE GUI!!
 	
 	/*
@@ -1244,7 +1249,8 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("FORWARD");
+			head->look("FORWARD");
+			//head->look("NORMAL");
 			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
@@ -1254,12 +1260,17 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 		return;
 	}
 	
+	
+	// face detected :-)
+	//head->look("CURIOUS");
+
+	
 	// track left
 	if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("LEFT");
+			head->look("LEFT");
 			/*
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, OFF, SAME);
@@ -1274,7 +1285,7 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("RIGHT");
+			head->look("RIGHT");
 			/*
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, OFF, SAME);
@@ -1289,7 +1300,7 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("UP");
+			head->look("UP");
 			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
@@ -1304,7 +1315,7 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("UPLEFT");
+			head->look("UPLEFT");
 			/*
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
@@ -1319,7 +1330,7 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("UPRIGHT");
+			head->look("UPRIGHT");
 			/*
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
@@ -1334,7 +1345,7 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("DOWN");
+			head->look("DOWN");
 			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
@@ -1349,7 +1360,7 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("DOWNLEFT");
+			head->look("DOWNLEFT");
 			/*
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
@@ -1364,7 +1375,7 @@ void Mrs::faceTracking(IplImage* frame, int faceX, int faceY, int faceRadius)
 	{
 		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
 		{
-			emit look("DOWNRIGHT");
+			head->look("DOWNRIGHT");
 			/*
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
@@ -2542,7 +2553,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				emit look("DOWN");
+				head->look("DOWN");
+				head->look("CURIOUS");
 			}
 			
 			//------------------
@@ -2550,13 +2562,12 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				emit look("UP");
+				head->look("UP");
+				head->look("ANGRY");
 			}
 			
-			// TODO: works not properly, when deleted:
 			if (axisValue == 0)
 			{
-				emit look("FORWARD");
 			}
 		}
 		
@@ -2656,7 +2667,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				emit look("RIGHT");
+				head->look("RIGHT");
 			}
 			
 			//------------------
@@ -2664,13 +2675,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				emit look("LEFT");
+				head->look("LEFT");
 			}
 			
-			// TODO: works not properly, when deleted:
 			if (axisValue == 0)
 			{
-				emit look("FORWARD");
 			}
 		}
 		
@@ -2709,6 +2718,8 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					toggle1=false;
 					eyeTestMode=false;
+					head->look("FORWARD");
+					head->look("NORMAL");
 					gui->appendLog("<font color=\"#0000FF\">Eye test mode disabled.</front>");
 				}
 			}
@@ -2879,12 +2890,12 @@ void Mrs::test()
 	if (toggle == OFF)
 	{
 		toggle = ON;
-		emit look("LEFT");
+		head->look("LEFT");
 	}
 	else
 	{
 		toggle = OFF;
-		emit look("RIGHT");
+		head->look("RIGHT");
 	}
 	*/
 	
