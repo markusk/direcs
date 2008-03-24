@@ -84,6 +84,27 @@ void Head::look(QString direction)
 		eye(RIGHTEYE, direction);
 		return;
 	}
+	
+	if (direction == "NORMAL")
+	{
+		eyebrow(LEFTBROW, direction);
+		eyebrow(RIGHTBROW, direction);
+		return;
+	}
+	
+	if (direction == "CURIOUS")
+	{
+		eyebrow(LEFTBROW, "UP");
+		eyebrow(RIGHTBROW, "UP");
+		return;
+	}
+	
+	if (direction == "ANGRY")
+	{
+		eyebrow(LEFTBROW, "DOWN");
+		eyebrow(RIGHTBROW, "DOWN");
+		return;
+	}
 }
 
 
@@ -96,6 +117,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// up
 			servos->moveServo( SERVO2, servos->getServoPosition(SERVO2, SVEND) );
+			// default
+			servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVDEFAULT) );
 			return;
 		}
 
@@ -103,6 +126,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// up
 			servos->moveServo( SERVO5, servos->getServoPosition(SERVO5, SVSTART) );
+			// default
+			servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVDEFAULT) );
 			return;
 		}
 		return;
@@ -159,6 +184,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// down
 			servos->moveServo( SERVO2, servos->getServoPosition(SERVO2, SVSTART) );
+			// default
+			servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVDEFAULT) );
 			return;
 		}
 
@@ -166,6 +193,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// down
 			servos->moveServo( SERVO5, servos->getServoPosition(SERVO5, SVEND) );
+			// default
+			servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVDEFAULT) );
 			return;
 		}
 		return;
@@ -222,6 +251,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// left
 			servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVSTART) );
+			// default
+			servos->moveServo( SERVO2, servos->getServoPosition(SERVO2, SVDEFAULT) );
 			return;
 		}
 
@@ -229,6 +260,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// left
 			servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVSTART) );
+			// default
+			servos->moveServo( SERVO5, servos->getServoPosition(SERVO5, SVDEFAULT) );
 			return;
 		}
 		return;
@@ -261,7 +294,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// right
 			servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVEND) );
-			//qDebug("left eye right");
+			// default
+			servos->moveServo( SERVO2, servos->getServoPosition(SERVO2, SVDEFAULT) );
 			return;
 		}
 
@@ -269,7 +303,8 @@ void Head::eye(unsigned char whichEye, QString direction)
 		{
 			// right
 			servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVEND) );
-			//qDebug("right eye right");
+			// default
+			servos->moveServo( SERVO5, servos->getServoPosition(SERVO5, SVDEFAULT) );
 			return;
 		}
 		return;
@@ -294,7 +329,68 @@ void Head::eye(unsigned char whichEye, QString direction)
 	
 	if (direction == "FORWARD")
 	{
-		servos->init();
+		servos->moveServo( SERVO1, servos->getServoPosition(SERVO1, SVDEFAULT) );
+		servos->moveServo( SERVO2, servos->getServoPosition(SERVO2, SVDEFAULT) );
+		servos->moveServo( SERVO4, servos->getServoPosition(SERVO4, SVDEFAULT) );
+		servos->moveServo( SERVO5, servos->getServoPosition(SERVO5, SVDEFAULT) );
+		return;
+	}
+}
+
+
+void Head::eyebrow(unsigned char whichBrow, QString direction)
+{
+	if (direction == "NORMAL")
+	{
+		if (whichBrow==LEFTBROW)
+		{
+			// default pos
+			servos->moveServo( SERVO3, servos->getServoPosition(SERVO3, SVDEFAULT) );
+			return;
+		}
+
+		if (whichBrow==RIGHTBROW)
+		{
+			// default pos
+			servos->moveServo( SERVO6, servos->getServoPosition(SERVO6, SVDEFAULT) );
+			return;
+		}
+		return;
+	}
+
+	if (direction == "UP")
+	{
+		if (whichBrow==LEFTBROW)
+		{
+			// inside up
+			servos->moveServo( SERVO3, servos->getServoPosition(SERVO3, SVEND) );
+			return;
+		}
+
+		if (whichBrow==RIGHTBROW)
+		{
+			// inside up
+			servos->moveServo( SERVO6, servos->getServoPosition(SERVO6, SVSTART) );
+			return;
+		}
+		return;
+	}
+	
+	if (direction == "DOWN")
+	{
+		if (whichBrow==LEFTBROW)
+		{
+			// inside down
+			servos->moveServo( SERVO3, servos->getServoPosition(SERVO3, SVSTART) );
+			return;
+		}
+
+		if (whichBrow==RIGHTBROW)
+		{
+			// inside down
+			servos->moveServo( SERVO6, servos->getServoPosition(SERVO6, SVEND) );
+			return;
+		}
 		return;
 	}
 }
