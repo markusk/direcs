@@ -159,11 +159,11 @@ int main(void)
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 12 * 64 µs = 768 µs ?!?
-	setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-	setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+	setServoPosition(1, 19); // <- exact position now in the mrs.ini!
+	setServoPosition(2, 13); // <- exact position now in the mrs.ini!
 	setServoPosition(3, 23); // <- exact position now in the mrs.ini!
 	setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-	setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+	setServoPosition(5, 24); // <- exact position now in the mrs.ini!
 	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 	
 	// start the servo PWM timer
