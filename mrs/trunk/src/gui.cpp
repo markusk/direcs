@@ -992,6 +992,13 @@ void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int
 }
 
 
+void Gui::setCamImageData(int width, int height)
+{
+	// tell the OpenGLContext the image data
+	ui.frameCamera->setImageData(width, height);
+}
+
+
 void Gui::setCamImage(IplImage* frame)
 {
 	

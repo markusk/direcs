@@ -159,6 +159,12 @@ class Gui : public QMainWindow
 		Checks or unckecks the SaveSettings checkbox, depending on the value read from the ini-file.
 		*/
 		void setCheckBoxSaveSettings(Qt::CheckState state);
+		
+		/**
+		tell the OpenGLContext the image data
+		*/
+		void setCamImageData(int width, int height);
+
 
 	
 	public slots:
