@@ -21,18 +21,23 @@ class Head : public QObject
 
 	public slots:
 		/**
-		@param direction where to look can be LEFT, RIGHT...
+		@param direction where to look can be LEFT, RIGHT... or CURIOUS, NORMAL...
 		*/ 
 		void look(QString direction);
 		
 		
 	private:
 		void eye(unsigned char whichEye, QString direction);
+		void eyebrow(unsigned char whichBrow, QString direction);
 		Servo *servos;
 
 		//! the possible eyes
 		static const unsigned char LEFTEYE  = 1;
 		static const unsigned char RIGHTEYE = 2;
+
+		//! the possible eyebrows
+		static const unsigned char LEFTBROW  = 1;
+		static const unsigned char RIGHTBROW = 2;
 
 		//! the possible servo data
 		static const unsigned char SVSTART   = 0;
