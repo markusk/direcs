@@ -21,8 +21,8 @@ public:
 	bool setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped = false);
 	//bool setImage(unsigned char* imgP, const bool flipped = false);
 	
-	// set the image data (for not doing this at every setImage call!)
-	//void setImageData(const int width, const int height, const int pixeldepth);
+	//! set the image data (for not doing this at every setImage call!)
+	void setImageData(const int width, const int height/*, const int pixeldepth*/);
 
 	//! redefines the clipping rectangle for the texture drawing
 	void setZoomRect(float ulX, float ulY, float lrX, float lrY);

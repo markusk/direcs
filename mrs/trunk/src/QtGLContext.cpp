@@ -3,7 +3,11 @@
 
 QtGLContext::QtGLContext(QWidget* parent /*= 0*/, const QGLWidget* sharedWidget /*= 0*/, Qt::WFlags f /*= 0*/) : QGLWidget(parent, sharedWidget, f), m_imgP(0), m_mousePressed(false)
 {
-    m_mirrored = false;
+    // first init
+	m_mirrored = false;
+	m_width = 0;
+	m_height = 0;
+	m_pixeldepth = 0;
 }
 
 
@@ -231,7 +235,7 @@ bool QtGLContext::setImage(unsigned char* imgP, const int width, const int heigh
 	m_texWidth  = NextLargerPowerOfTwo(m_width);
 	m_texHeight = NextLargerPowerOfTwo(m_height);
 	
-	// create texture memory
+	// create texture memory -> put to constructor!
 	unsigned char* textureGL = new GLubyte[m_texHeight*m_texWidth* (m_pixeldepth>>3)];
 	
 	// calculate texture coordinates for image
@@ -297,11 +301,10 @@ void QtGLContext::enableMirrorMode(int state)
 	}
 }
 
-/*
-void QtGLContext::setImageData(const int width, const int height, const int pixeldepth)
+
+void QtGLContext::setImageData(const int width, const int height/*, const int pixeldepth*/)
 {
 	m_width = width;
 	m_height = height;
-	m_pixeldepth = pixeldepth;
+	//m_pixeldepth = pixeldepth;
 }
-*/
