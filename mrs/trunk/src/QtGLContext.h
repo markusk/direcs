@@ -18,8 +18,8 @@ public:
 	~QtGLContext();
 
 	//! set image parameters 'flipped' is a vertical flip!
-	bool setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped = false);
-	//bool setImage(unsigned char* imgP, const bool flipped = false);
+	//bool setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped = false);
+	bool setImage(unsigned char* imgP, const bool flipped = false);
 	
 	//! set the image data (for not doing this at every setImage call!)
 	void setImageData(const int width, const int height, const int pixeldepth);

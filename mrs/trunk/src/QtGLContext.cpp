@@ -213,13 +213,15 @@ void QtGLContext::resizeGL(int w, int h)
 }
 
 
-//bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=false*/
-bool QtGLContext::setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped)  /*flipped=false*/
+bool QtGLContext::setImage(unsigned char* imgP, const bool flipped)  /*flipped=false*/
+//bool QtGLContext::setImage(unsigned char* imgP, const int width, const int height, const int pixeldepth, const bool flipped)  /*flipped=false*/
 {
 	m_imgP = imgP;
+	/*
 	m_width = width;
 	m_height = height;
 	m_pixeldepth = pixeldepth;
+	*/
     m_flipped = flipped;
 
 	this->updateGL();
