@@ -32,7 +32,7 @@ void Circuit::initCircuit()
 		
 		if (answer == INITANSWER)
 		{
-			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			// Unlock the mutex
 			mutex->unlock();
 			// everthing's fine :-)
 			firstInitDone = true;
@@ -41,12 +41,12 @@ void Circuit::initCircuit()
 		}
 	}
 	
-	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+	// Unlock the mutex.
 	mutex->unlock();
 	
-	qDebug("Robot is OFF.");
-	firstInitDone = false;
+	firstInitDone = true;
 	robotIsOn = false;
+	qDebug("Robot is OFF.");
 }
 
 
