@@ -3,7 +3,6 @@
 NetworkThread::NetworkThread()
 {
 	stopped = false;
-	//QMutexLocker locker(&mutex); // make this class thread-safe
 	
 	udpSocket = new QUdpSocket(this);
 	udpSocket->bind(PORT);

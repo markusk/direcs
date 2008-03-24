@@ -3,7 +3,6 @@
 
 CamThread::CamThread() : QThread()
 {
-	//QMutexLocker locker(&mutex); // make this class thread-safe
 	stopped = false;
 	cameraIsOn = false;
 	faceDetectionIsEnabled = true;

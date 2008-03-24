@@ -14,7 +14,6 @@
 
 LaserThread::LaserThread()
 {
-	//QMutexLocker locker(&mutex); // make this class thread-safe
 	stopped = false;
 	laserScannerFrontIsConnected = false;
 	laserScannerRearIsConnected = false;
@@ -45,8 +44,6 @@ LaserThread::~LaserThread()
 		// shuts down ALL lasers (managed internaly in laser_main.cpp)!
 		carmen_laser_shutdown(0);
 	}
-	
-	//QMutexLocker locker(&mutex); // make this class thread-safe
 }
 
 

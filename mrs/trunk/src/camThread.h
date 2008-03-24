@@ -26,12 +26,12 @@ class CamThread : public QThread
 		~CamThread();
 		bool isConnected(void);
 
-		/*
+		/**
 		Returns the image height of the camera. Retrieved in the constructor!
 		*/
 		int imageHeight();
 
-		/*
+		/**
 		Returns the image width of the camera. Retrieved in the constructor!
 		*/
 		int imageWidth();
@@ -85,7 +85,6 @@ class CamThread : public QThread
 		bool contactAlarmBottom;
 		bool contactAlarmLeft;
 		bool contactAlarmRight;
-		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 
 		// Every thread sleeps some time, for having a bit more time for the other threads!
