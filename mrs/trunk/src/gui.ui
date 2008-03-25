@@ -1527,6 +1527,33 @@
        <family>Verdana</family>
       </font>
      </property>
+     <widget class="QGraphicsView" name="graphicsViewCamera" >
+      <property name="geometry" >
+       <rect>
+        <x>380</x>
+        <y>230</y>
+        <width>94</width>
+        <height>94</height>
+       </rect>
+      </property>
+      <property name="font" >
+       <font>
+        <family>Verdana</family>
+       </font>
+      </property>
+      <property name="verticalScrollBarPolicy" >
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy" >
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="alignment" >
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="renderHints" >
+       <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing</set>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QCheckBox" name="checkBoxFaceDetection" >

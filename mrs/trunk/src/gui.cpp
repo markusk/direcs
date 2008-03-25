@@ -138,6 +138,7 @@ Gui::~Gui()
 	delete laserLineListRear;
 	
 	delete scene;
+	delete cameraScene;
 }
 
 
@@ -1118,6 +1119,20 @@ void Gui::on_btnSimulate_clicked()
 
 void Gui::on_sliderZoom_valueChanged(int value)
 {
+	// TODO: use something like this:
+	/* class View : public QGraphicsView
+	{
+		Q_OBJECT
+			...
+		public slots:
+		void zoomIn() { scale(1.2, 1.2); }
+		void zoomOut() { scale(1 / 1.2, 1 / 1.2); }
+		void rotateLeft() { rotate(-10); }
+		void rotateRight() { rotate(10); }
+		...
+	};
+	*/
+	
 	// show the value in a label
 	ui.labelLaserTop->setText(tr("%1").arg(value));
 
@@ -1729,6 +1744,23 @@ void Gui::createLaserScannerObjects()
 	colorLaserPreferredDrivingDirection = QColor(7, 68, 30, 150); // green
 	colorLaserCenterDrivingDirection = Qt::green;
 	colorGraphicsSceneBackground = Qt::black;
+	
+	
+	
+	QColor myColor = Qt::transparent;
+	cameraScene = new QGraphicsScene();
+	cameraScene->setBackgroundBrush(myColor);
+	cameraScene->setSceneRect(0, 0, ui.graphicsViewCamera->width(), ui.graphicsViewLaser->height());
+	// set scene to the GUI
+	ui.graphicsViewCamera->setScene(cameraScene);
+	
+	//ui.graphicsViewCamera->setStyleSheet("background: transparent");
+	ui.graphicsViewCamera->setWindowOpacity(0.5);
+			
+	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
+	ui.graphicsViewCamera->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+	
+	
 	
 	// the scene for the laser scanner lines
 	scene = new QGraphicsScene();
