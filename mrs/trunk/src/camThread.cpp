@@ -7,7 +7,7 @@ CamThread::CamThread() : QThread()
 	cameraIsOn = false;
 	faceDetectionIsEnabled = true;
 	faceDetectionWasActive = false;
-	frame = new IplImage();
+	//frame = new IplImage();
 	imgPtr = new IplImage();
 	contactAlarmTop = false;
 	contactAlarmBottom = false;
@@ -77,7 +77,10 @@ CamThread::CamThread() : QThread()
 
 CamThread::~CamThread()
 {
-	delete frame;
+	//delete frame;
+	
+	// FIXME: delete SIGSEV!
+	//delete imgPtr;
 }
 
 

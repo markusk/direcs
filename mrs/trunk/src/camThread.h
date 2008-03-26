@@ -63,10 +63,10 @@ class CamThread : public QThread
 	
 	signals:
 		/**
-		@param *frame is a pointer to the camera image
+		@param *imgPtr is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
-		void camDataComplete(IplImage* frame);
+		void camDataComplete(IplImage* imgPtr);
 
 		/**
 		TODO: text text text
@@ -83,7 +83,7 @@ class CamThread : public QThread
 		bool faceDetectionIsEnabled;
 		bool faceDetectionWasActive;
 		CvScalar hsv2rgb( float hue );
-		IplImage *frame;
+		//IplImage *frame;
 		IplImage *imgPtr;
 		int width;
 		int height;
