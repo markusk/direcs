@@ -566,9 +566,11 @@ void Mrs::shutdown()
 	qDebug("Mrs shutdown...");
 	
 	// just 4 fun
-	head->look("NORMAL");
-	head->look("DOWN");
-
+	if (circuit1->isConnected())
+	{
+		head->look("NORMAL");
+		head->look("DOWN");
+	}
 	
 	// FIXME: not called, when closed via KDE GUI!!
 	
