@@ -13,7 +13,7 @@ QtGLContext::QtGLContext(QWidget* parent /*= 0*/, const QGLWidget* sharedWidget 
 
 QtGLContext::~QtGLContext()
 {
-	delete[] textureGL;
+	//delete[] textureGL;
 	glDeleteTextures(1, &m_texNameGL);
 }
 
