@@ -31,7 +31,7 @@
      <x>580</x>
      <y>0</y>
      <width>491</width>
-     <height>411</height>
+     <height>431</height>
     </rect>
    </property>
    <property name="windowTitle" >
@@ -42,7 +42,7 @@
      <property name="geometry" >
       <rect>
        <x>0</x>
-       <y>10</y>
+       <y>0</y>
        <width>482</width>
        <height>332</height>
       </rect>
@@ -159,24 +159,6 @@
       <string>0</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblFaceRadius" >
-     <property name="geometry" >
-      <rect>
-       <x>350</x>
-       <y>375</y>
-       <width>31</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="font" >
-      <font>
-       <family>Verdana</family>
-      </font>
-     </property>
-     <property name="text" >
-      <string>0</string>
-     </property>
-    </widget>
     <widget class="QCheckBox" name="checkBoxMirror" >
      <property name="geometry" >
       <rect>
@@ -193,24 +175,6 @@
      </property>
      <property name="text" >
       <string>Mirror</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="textLabel2_9" >
-     <property name="geometry" >
-      <rect>
-       <x>300</x>
-       <y>364</y>
-       <width>41</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="font" >
-      <font>
-       <family>Verdana</family>
-      </font>
-     </property>
-     <property name="text" >
-      <string>Face Y:</string>
      </property>
     </widget>
     <widget class="QLabel" name="lblFaceTrackTo" >
@@ -232,24 +196,6 @@
      </property>
      <property name="scaledContents" >
       <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="textLabel2_10" >
-     <property name="geometry" >
-      <rect>
-       <x>300</x>
-       <y>375</y>
-       <width>41</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="font" >
-      <font>
-       <family>Verdana</family>
-      </font>
-     </property>
-     <property name="text" >
-      <string>Radius:</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBoxFaceDetection" >
@@ -345,24 +291,6 @@
       <string>Track to:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblFaceX" >
-     <property name="geometry" >
-      <rect>
-       <x>350</x>
-       <y>353</y>
-       <width>31</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="font" >
-      <font>
-       <family>Verdana</family>
-      </font>
-     </property>
-     <property name="text" >
-      <string>0</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="lblLastFaceY" >
      <property name="geometry" >
       <rect>
@@ -381,41 +309,89 @@
       <string>0</string>
      </property>
     </widget>
-    <widget class="QLabel" name="textLabel2_8" >
+    <widget class="QWidget" name="layoutWidget" >
      <property name="geometry" >
       <rect>
-       <x>300</x>
-       <y>353</y>
-       <width>41</width>
-       <height>12</height>
+       <x>290</x>
+       <y>340</y>
+       <width>81</width>
+       <height>66</height>
       </rect>
      </property>
-     <property name="font" >
-      <font>
-       <family>Verdana</family>
-      </font>
-     </property>
-     <property name="text" >
-      <string>Face X:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblFaceY" >
-     <property name="geometry" >
-      <rect>
-       <x>350</x>
-       <y>364</y>
-       <width>31</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="font" >
-      <font>
-       <family>Verdana</family>
-      </font>
-     </property>
-     <property name="text" >
-      <string>0</string>
-     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="textLabel2_8" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Face X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QLabel" name="lblFaceX" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QLabel" name="textLabel2_9" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Face Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="QLabel" name="lblFaceY" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="QLabel" name="textLabel2_10" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Radius:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" >
+       <widget class="QLabel" name="lblFaceRadius" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -423,8 +399,8 @@
    <property name="geometry" >
     <rect>
      <x>1120</x>
-     <y>440</y>
-     <width>187</width>
+     <y>430</y>
+     <width>191</width>
      <height>191</height>
     </rect>
    </property>
@@ -800,8 +776,8 @@
   <widget class="QDockWidget" name="dockWidgetSettings" >
    <property name="geometry" >
     <rect>
-     <x>570</x>
-     <y>410</y>
+     <x>560</x>
+     <y>430</y>
      <width>548</width>
      <height>221</height>
     </rect>
@@ -810,7 +786,7 @@
     <string>Settings</string>
    </property>
    <widget class="QWidget" name="dockWidgetContents_5" >
-    <widget class="QWidget" name="" >
+    <widget class="QWidget" name="layoutWidget" >
      <property name="geometry" >
       <rect>
        <x>10</x>
@@ -1720,142 +1696,6 @@
       <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing</set>
      </property>
     </widget>
-    <widget class="QWidget" name="" >
-     <property name="geometry" >
-      <rect>
-       <x>11</x>
-       <y>821</y>
-       <width>236</width>
-       <height>130</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label18_4" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="text" >
-           <string>Largest free area start:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="lblLaserFrontFreeStart" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="text" >
-           <string>0 deg</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label18_5" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="text" >
-           <string>Largest free area end:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="lblLaserFrontFreeEnd" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="text" >
-           <string>0 deg</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label18_6" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="text" >
-           <string>Center of free area:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="lblLaserFrontFreeCenter" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="text" >
-           <string>0 deg</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label18_7" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="text" >
-           <string>Preferred direction:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="lblPreferredDirection" >
-          <property name="font" >
-           <font>
-            <family>Verdana</family>
-           </font>
-          </property>
-          <property name="pixmap" >
-           <pixmap resource="../mrs.qrc" >:/images/images/forward.png</pixmap>
-          </property>
-          <property name="scaledContents" >
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
     <widget class="QProgressBar" name="progressBarSensor16" >
      <property name="geometry" >
       <rect>
@@ -1889,7 +1729,7 @@
       <string>%v</string>
      </property>
     </widget>
-    <widget class="QWidget" name="" >
+    <widget class="QWidget" name="layoutWidget" >
      <property name="geometry" >
       <rect>
        <x>290</x>
@@ -1997,6 +1837,162 @@
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="layoutWidget" >
+     <property name="geometry" >
+      <rect>
+       <x>12</x>
+       <y>822</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QLabel" name="label18_4" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Largest free area start:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblLaserFrontFreeStart" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>0 deg</string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget" >
+     <property name="geometry" >
+      <rect>
+       <x>12</x>
+       <y>848</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QLabel" name="label18_5" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Largest free area end:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblLaserFrontFreeEnd" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>0 deg</string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget" >
+     <property name="geometry" >
+      <rect>
+       <x>12</x>
+       <y>874</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QLabel" name="label18_6" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Center of free area:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblLaserFrontFreeCenter" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="text" >
+         <string>0 deg</string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="label18_7" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>910</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font" >
+      <font>
+       <family>Verdana</family>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Preferred direction:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblPreferredDirection" >
+     <property name="geometry" >
+      <rect>
+       <x>180</x>
+       <y>910</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font" >
+      <font>
+       <family>Verdana</family>
+      </font>
+     </property>
+     <property name="pixmap" >
+      <pixmap resource="../mrs.qrc" >:/images/images/forward.png</pixmap>
+     </property>
+     <property name="scaledContents" >
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockWidgetMotors" >
@@ -2027,22 +2023,7 @@
       </font>
      </property>
     </widget>
-    <widget class="QwtPlot" name="qwtPlotCurrent2" >
-     <property name="geometry" >
-      <rect>
-       <x>10</x>
-       <y>300</y>
-       <width>221</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="font" >
-      <font>
-       <family>Verdana</family>
-      </font>
-     </property>
-    </widget>
-    <widget class="QWidget" name="" >
+    <widget class="QWidget" name="layoutWidget" >
      <property name="geometry" >
       <rect>
        <x>20</x>
@@ -2203,7 +2184,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="" >
+    <widget class="QWidget" name="layoutWidget" >
      <property name="geometry" >
       <rect>
        <x>20</x>
@@ -2364,15 +2345,30 @@
       </item>
      </layout>
     </widget>
+    <widget class="QwtPlot" name="qwtPlotCurrent2" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>300</y>
+       <width>221</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="font" >
+      <font>
+       <family>Verdana</family>
+      </font>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QSplitter" name="splitter" >
    <property name="geometry" >
     <rect>
      <x>570</x>
-     <y>640</y>
+     <y>650</y>
      <width>631</width>
-     <height>331</height>
+     <height>311</height>
     </rect>
    </property>
    <property name="orientation" >
@@ -2389,7 +2385,7 @@
         <x>0</x>
         <y>0</y>
         <width>421</width>
-        <height>301</height>
+        <height>291</height>
        </rect>
       </property>
       <property name="font" >
@@ -2411,7 +2407,7 @@
         <x>0</x>
         <y>0</y>
         <width>191</width>
-        <height>301</height>
+        <height>291</height>
        </rect>
       </property>
       <property name="font" >
@@ -2423,13 +2419,13 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QWidget" name="" >
+  <widget class="QWidget" name="layoutWidget" >
    <property name="geometry" >
     <rect>
      <x>1210</x>
-     <y>640</y>
+     <y>650</y>
      <width>104</width>
-     <height>321</height>
+     <height>311</height>
     </rect>
    </property>
    <layout class="QGridLayout" >

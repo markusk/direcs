@@ -281,17 +281,17 @@ void Gui::on_btnReset_clicked()
 	// set labels back in default position
 	ui.lblPower1->setText("OFF");
 	ui.lblPower1->setEnabled(false);
-	ui.framePower1->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.lblPower2->setText("OFF");
 	ui.lblPower2->setEnabled(false);
-	ui.framePower2->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.lblPower2->setPalette(QPalette(QColor(255, 255, 255)));
 	
 	ui.lblDirection1->setText("FORWARD");
 	ui.lblDirection1->setEnabled(false);
-	ui.frameDirection1->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.lblDirection2->setText("FORWARD");
 	ui.lblDirection2->setEnabled(false);
-	ui.frameDirection2->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 
 	
 	
@@ -683,18 +683,18 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case ON:
 					//ui.lblPower1->setText("ON");
 					ui.lblPower1->setEnabled(true);
-					ui.framePower1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblPower1->setPalette(QPalette(QColor(64, 255, 64)));
 					
 					ui.lblDirection1->setEnabled(true);
-					ui.frameDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
 					break;
 				case OFF:
 					//ui.lblPower1->setText("OFF");
 					ui.lblPower1->setEnabled(false);
-					ui.framePower1->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
 					
 					ui.lblDirection1->setEnabled(false);
-					ui.frameDirection1->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
 				case SAME:
 					break;
@@ -705,13 +705,13 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case CLOCKWISE:
 					ui.lblDirection1->setText("FORWARD");
 					ui.lblDirection1->setEnabled(true);
-					ui.frameDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
 					return;
 					break;
 				case COUNTERCLOCKWISE:
 					ui.lblDirection1->setText("BACKWARD");
 					ui.lblDirection1->setEnabled(true);
-					ui.frameDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
 					return;
 					break;
 				case SAME:
@@ -729,18 +729,18 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case ON:
 					//ui.lblPower2->setText("ON");
 					ui.lblPower2->setEnabled(true);
-					ui.framePower2->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblPower2->setPalette(QPalette(QColor(64, 255, 64)));
 					
 					ui.lblDirection1->setEnabled(true);
-					ui.frameDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
 					break;
 				case OFF:
 					//ui.lblPower2->setText("OFF");
 					ui.lblPower2->setEnabled(false);
-					ui.framePower2->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.lblPower2->setPalette(QPalette(QColor(255, 255, 255)));
 					
 					ui.lblDirection2->setEnabled(false);
-					ui.frameDirection2->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
 				case SAME:
 					break;
@@ -751,13 +751,13 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case CLOCKWISE:
 					ui.lblDirection2->setText("FORWARD");
 					ui.lblDirection2->setEnabled(true);
-					ui.frameDirection2->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection2->setPalette(QPalette(QColor(64, 255, 64)));
 					return;
 					break;
 				case COUNTERCLOCKWISE:
 					ui.lblDirection2->setText("BACKWARD");
 					ui.lblDirection2->setEnabled(true);
-					ui.frameDirection2->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection2->setPalette(QPalette(QColor(64, 255, 64)));
 					return;
 					break;
 				case SAME:
