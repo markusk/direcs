@@ -1,12 +1,14 @@
 <RCC>
     <qresource prefix="/images" >
+        <file>images/backward.png</file>
         <file>images/black.png</file>
         <file>images/bot_from_above.png</file>
         <file>images/bot_from_above_TOP2.png</file>
+        <file>images/downleft.png</file>
+        <file>images/downright.png</file>
         <file>images/eraser.png</file>
         <file>images/exit.png</file>
         <file>images/forward.png</file>
-        <file>images/backward.png</file>
         <file>images/gear.png</file>
         <file>images/hdd.png</file>
         <file>images/kmplot.png</file>
@@ -21,9 +23,7 @@
         <file>images/splash.png</file>
         <file>images/trashcan_empty.png</file>
         <file>images/underFootOne.png</file>
-        <file>images/upright.png</file>
-        <file>images/downright.png</file>
-        <file>images/downleft.png</file>
         <file>images/upleft.png</file>
+        <file>images/upright.png</file>
     </qresource>
 </RCC>
