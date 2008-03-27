@@ -154,24 +154,6 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBoxSettings" >
-   <property name="geometry" >
-    <rect>
-     <x>640</x>
-     <y>420</y>
-     <width>521</width>
-     <height>211</height>
-    </rect>
-   </property>
-   <property name="font" >
-    <font>
-     <family>Verdana</family>
-    </font>
-   </property>
-   <property name="title" >
-    <string>Settings</string>
-   </property>
-  </widget>
   <widget class="QGroupBox" name="groupBoxMotor" >
    <property name="geometry" >
     <rect>
@@ -665,8 +647,8 @@
   <widget class="QGroupBox" name="groupBoxBot" >
    <property name="geometry" >
     <rect>
-     <x>10</x>
-     <y>670</y>
+     <x>0</x>
+     <y>0</y>
      <width>621</width>
      <height>961</height>
     </rect>
@@ -1321,7 +1303,7 @@
    <property name="geometry" >
     <rect>
      <x>640</x>
-     <y>10</y>
+     <y>0</y>
      <width>491</width>
      <height>411</height>
     </rect>
@@ -2152,10 +2134,10 @@
   <widget class="QDockWidget" name="dockWidgetSettings" >
    <property name="geometry" >
     <rect>
-     <x>20</x>
-     <y>90</y>
-     <width>571</width>
-     <height>371</height>
+     <x>640</x>
+     <y>410</y>
+     <width>531</width>
+     <height>221</height>
     </rect>
    </property>
    <property name="windowTitle" >
@@ -2324,7 +2306,7 @@
              </font>
             </property>
             <property name="text" >
-             <string>Minimum Speed</string>
+             <string>Minimum Speed Motors</string>
             </property>
             <property name="wordWrap" >
              <bool>true</bool>
@@ -2394,7 +2376,7 @@
              </font>
             </property>
             <property name="text" >
-             <string>Maximum Speed</string>
+             <string>Maximum Speed Motors</string>
             </property>
             <property name="wordWrap" >
              <bool>true</bool>
@@ -2625,7 +2607,7 @@
              </font>
             </property>
             <property name="text" >
-             <string>Robot Slot</string>
+             <string>Robot Slot (Angle)</string>
             </property>
             <property name="wordWrap" >
              <bool>true</bool>
