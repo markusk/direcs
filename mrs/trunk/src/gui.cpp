@@ -138,7 +138,7 @@ Gui::~Gui()
 	delete laserLineListRear;
 	
 	delete scene;
-	delete cameraScene;
+	//delete cameraScene;
 }
 
 
@@ -253,6 +253,8 @@ void Gui::on_sliderMotor2Speed_sliderReleased()
 
 void Gui::on_btnReset_clicked()
 {
+	// TODO: check, if robot is OFF !!!!
+	
 	// reset the circuit (motors off etc.)
 	emit initCircuit();
 
@@ -1028,7 +1030,7 @@ void Gui::saveCamImage(void)
 	
 	
 	// TODO: Seltsame Bildmaße! :-?
-	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.groupBoxCamera->x()+19, ui.groupBoxCamera->y()+19, 474, 353);
+	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.dockWidgetCamera->x()+19, ui.dockWidgetCamera->y()+19, 474, 353);
 	//cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.frame->x(), ui.frame->y(), 200, 100);
 	// cameraPicToSave = QPixmap::grabWidget(ui.frameCamera); doesnt work
 	
@@ -1746,7 +1748,7 @@ void Gui::createLaserScannerObjects()
 	colorGraphicsSceneBackground = Qt::black;
 	
 	
-	
+/*	
 	QColor myColor = Qt::transparent;
 	cameraScene = new QGraphicsScene();
 	cameraScene->setBackgroundBrush(myColor);
@@ -1759,7 +1761,7 @@ void Gui::createLaserScannerObjects()
 			
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
 	ui.graphicsViewCamera->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
-	
+	*/
 	
 	
 	// the scene for the laser scanner lines
