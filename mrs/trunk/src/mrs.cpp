@@ -2831,32 +2831,38 @@ void Mrs::setSimulationMode(bool status)
 		{
 			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
-			gui->appendLog("Laser thread started.");
+			gui->appendLog("Started.");
 		}
 		
 		if (sensorThread->isRunning() == false)
 		{
 			gui->appendLog("Starting Sensor thread...", false);
 			sensorThread->start();
-			gui->appendLog("Sensor thread started.");
+			gui->appendLog("Started.");
 		}
 		
 		if (plotThread->isRunning() == false)
 		{
 			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
-			gui->appendLog("Plot thread started.");
+			gui->appendLog("Started.");
 		}
 		
 		if (obstCheckThread->isRunning() == false)
 		{
 			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
-			gui->appendLog("Obstacle check thread started.");
+			gui->appendLog("Started.");
 		}
 	}
 	else
 	{
+		// if robot is OFF stop all threads which read from the circuit!
+		if (circuit1->isConnected() == false)
+		{
+			sensorThread->stop();
+			gui->appendLog("Sensor thread stopped.");
+		}
 		gui->appendLog("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
 }
