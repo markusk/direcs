@@ -31,6 +31,15 @@ infrared Sensors temporarily removed from robot!!
 	ui.progressBarSensor7->raise();
 	ui.progressBarSensor8->raise();
 */
+// TODO: infrared Sensors temporarily removed from robot!!
+	ui.progressBarSensor1->setVisible(false);
+	ui.progressBarSensor2->setVisible(false);
+	ui.progressBarSensor3->setVisible(false);
+	ui.progressBarSensor4->setVisible(false);
+	ui.progressBarSensor5->setVisible(false);
+	ui.progressBarSensor6->setVisible(false);
+	ui.progressBarSensor7->setVisible(false);
+	ui.progressBarSensor8->setVisible(false);
 
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
