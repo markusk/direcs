@@ -4,7 +4,7 @@
 # Das Target ist eine Anwendung: ../bin/mrs
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
-FORMS += gui.ui
+FORMS += mainWindow.ui
 HEADERS += head.h \
     camThread.h \
     circuit.h \
