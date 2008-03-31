@@ -1,11 +1,11 @@
 <ui version="4.0" >
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1672</width>
+    <width>1307</width>
     <height>972</height>
    </rect>
   </property>
@@ -29,7 +29,7 @@
      </rect>
     </property>
     <property name="windowTitle" >
-     <string>Robothello</string>
+     <string>Robot</string>
     </property>
     <widget class="QWidget" name="dockWidgetContents_6" >
      <widget class="QSplitter" name="splitter" >
@@ -87,12 +87,6 @@
          <family>Verdana</family>
         </font>
        </property>
-       <property name="verticalScrollBarPolicy" >
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="horizontalScrollBarPolicy" >
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
        <property name="alignment" >
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
@@ -100,7 +94,7 @@
         <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing</set>
        </property>
       </widget>
-      <widget class="QWidget" name="" >
+      <widget class="QWidget" name="layoutWidget" >
        <layout class="QHBoxLayout" >
         <item>
          <layout class="QVBoxLayout" >
@@ -496,7 +490,7 @@
                 <string>Save</string>
                </property>
                <property name="icon" >
-                <iconset/>
+                <iconset resource="../mrs.qrc" >:/images/images/hdd.png</iconset>
                </property>
               </widget>
              </item>
@@ -2213,7 +2207,7 @@
         <string> &amp;Drive</string>
        </property>
        <property name="icon" >
-        <iconset/>
+        <iconset resource="../mrs.qrc" >:/images/images/underFootOne.png</iconset>
        </property>
        <property name="shortcut" >
         <string>Alt+D</string>
@@ -2237,7 +2231,7 @@
         <string> &amp;Reset</string>
        </property>
        <property name="icon" >
-        <iconset/>
+        <iconset resource="../mrs.qrc" >:/images/images/eraser.png</iconset>
        </property>
        <property name="shortcut" >
         <string>Alt+R</string>
@@ -2255,7 +2249,7 @@
         <string> Re&amp;mote</string>
        </property>
        <property name="icon" >
-        <iconset/>
+        <iconset resource="../mrs.qrc" >:/images/images/remote.png</iconset>
        </property>
        <property name="shortcut" >
         <string>Alt+M</string>
@@ -2276,7 +2270,7 @@
         <string> &amp;Test</string>
        </property>
        <property name="icon" >
-        <iconset/>
+        <iconset resource="../mrs.qrc" >:/images/images/memory.png</iconset>
        </property>
        <property name="shortcut" >
         <string>Alt+T</string>
@@ -2297,7 +2291,7 @@
         <string> S&amp;imulate</string>
        </property>
        <property name="icon" >
-        <iconset/>
+        <iconset resource="../mrs.qrc" >:/images/images/kmplot.png</iconset>
        </property>
        <property name="shortcut" >
         <string>Alt+I</string>
@@ -2318,7 +2312,7 @@
         <string> E&amp;xit</string>
        </property>
        <property name="icon" >
-        <iconset/>
+        <iconset resource="../mrs.qrc" >:/images/images/exit.png</iconset>
        </property>
        <property name="shortcut" >
         <string>Alt+X</string>
@@ -2549,7 +2543,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1672</width>
+     <width>1307</width>
      <height>29</height>
     </rect>
    </property>
