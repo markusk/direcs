@@ -111,6 +111,9 @@ infrared Sensors temporarily removed from robot!!
 	
 	// zoom into the laser lines by factor 3
 	ui.sliderZoom->setValue(5);
+	
+	// TODO: which values for which resolutions!?
+	ui.splitLaserView->setSizes(QList<int>() << 900 << 100);
 }
 
 
