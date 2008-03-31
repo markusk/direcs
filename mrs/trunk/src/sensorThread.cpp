@@ -141,7 +141,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s1 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -167,7 +167,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s2 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -188,7 +188,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s3 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -209,7 +209,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s4 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -230,7 +230,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s5 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -251,7 +251,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s6 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -273,7 +273,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s7 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -294,7 +294,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s8 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -320,7 +320,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR s16 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -344,7 +344,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR m1 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -365,7 +365,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR m2 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -389,7 +389,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR md1 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -409,7 +409,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR md2 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -432,7 +432,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR c1 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -463,7 +463,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR c2 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -493,7 +493,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR c3 sending to serial port (SensorThread)");
 				return;
 			}
 			
@@ -523,7 +523,7 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
+				qDebug("ERROR c4 sending to serial port (SensorThread)");
 				return;
 			}
 			
