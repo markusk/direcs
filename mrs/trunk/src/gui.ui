@@ -84,7 +84,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="" >
+    <widget class="QWidget" name="layoutWidget" >
      <property name="geometry" >
       <rect>
        <x>0</x>
@@ -1931,7 +1931,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="" >
+    <widget class="QWidget" name="layoutWidget" >
      <property name="geometry" >
       <rect>
        <x>10</x>
@@ -2352,63 +2352,6 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QSplitter" name="splitter" >
-   <property name="geometry" >
-    <rect>
-     <x>570</x>
-     <y>650</y>
-     <width>631</width>
-     <height>311</height>
-    </rect>
-   </property>
-   <property name="orientation" >
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <widget class="QDockWidget" name="dockWidgetLog" >
-    <property name="windowTitle" >
-     <string>Log</string>
-    </property>
-    <widget class="QWidget" name="dockWidgetContents_2" >
-     <widget class="QTextEdit" name="textEditLog" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>421</width>
-        <height>291</height>
-       </rect>
-      </property>
-      <property name="font" >
-       <font>
-        <family>Verdana</family>
-       </font>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QDockWidget" name="dockWidgetNetwork" >
-    <property name="windowTitle" >
-     <string>Network</string>
-    </property>
-    <widget class="QWidget" name="dockWidgetContents_3" >
-     <widget class="QTextEdit" name="textEditNetworkLog" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>191</width>
-        <height>291</height>
-       </rect>
-      </property>
-      <property name="font" >
-       <font>
-        <family>Verdana</family>
-       </font>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-  </widget>
   <widget class="QWidget" name="layoutWidget" >
    <property name="geometry" >
     <rect>
@@ -2543,6 +2486,74 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QWidget" name="" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>2</width>
+     <height>2</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" />
+  </widget>
+  <widget class="QSplitter" name="splitter" >
+   <property name="geometry" >
+    <rect>
+     <x>570</x>
+     <y>650</y>
+     <width>621</width>
+     <height>311</height>
+    </rect>
+   </property>
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <widget class="QDockWidget" name="dockWidgetLog" >
+    <property name="windowTitle" >
+     <string>Log</string>
+    </property>
+    <widget class="QWidget" name="dockWidgetContents_2" >
+     <widget class="QTextEdit" name="textEditLog" >
+      <property name="geometry" >
+       <rect>
+        <x>-30</x>
+        <y>0</y>
+        <width>361</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="font" >
+       <font>
+        <family>Verdana</family>
+       </font>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QDockWidget" name="dockWidgetNetwork" >
+    <property name="windowTitle" >
+     <string>Network</string>
+    </property>
+    <widget class="QWidget" name="dockWidgetContents_3" >
+     <widget class="QTextEdit" name="textEditNetworkLog" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>231</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="font" >
+       <font>
+        <family>Verdana</family>
+       </font>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
