@@ -2,7 +2,7 @@
 #define GUI_H
 
 //-------------------------------------------------------------------
-#include "ui_gui.h"
+#include "ui_mainWindow.h"
 #include "motor.h" // FIXME: error with qprinter.h when removing htis line !?!?!
 //-------------------------------------------------------------------
 #include "QtGLContext.h"
@@ -439,7 +439,7 @@ class Gui : public QMainWindow
 		*/
 		qreal calculateLaserRearYpos();
 		
-		Ui::Gui ui;
+		Ui::mainWindow ui;
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
 		QPixmap cameraPicToSave;
