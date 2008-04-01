@@ -99,10 +99,9 @@ Mrs::Mrs()
 	
 	//--------------------------------------------------------------------------
 	// shutdown Mrs program on exit button
+	// shutdown is also called, when the gui is closed
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
-	// FIXME: check, how to make a clean exit, when the window is closed via window menu, not via exit button!
-	//connect(this, SIGNAL(QApplication::lastWindowClosed()), this, SLOT(shutdown()));
 	
 	//--------------------------------------------------------------------------
 	// call the test method at the test button
