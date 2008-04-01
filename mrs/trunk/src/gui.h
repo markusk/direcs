@@ -272,7 +272,7 @@ class Gui : public QMainWindow
 
 
 	protected:
-		void closeEvent();
+		void closeEvent(QCloseEvent *event);
 
 
 	signals:
@@ -375,6 +375,20 @@ class Gui : public QMainWindow
 		Emits a signal to call the test method in the Mrs class..
 		 */
 		void test();
+
+
+	protected slots:
+		/**
+		Action if a menu item is clicked
+		*/
+		void on_actionExit_activated();
+		void on_actionLaser_View_activated();
+		void on_actionCamera_activated();
+		void on_actionMotors_activated();
+		void on_actionSettings_activated();
+		void on_actionLog_activated();
+		void on_actionNetwork_Log_activated();
+		void on_actionJoystick_activated();
 
 
 	private slots:

@@ -11,6 +11,7 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	// TODO: make a const of this init values! see also sensorThread
 	// value in cm
 	// set maximum in cm AND raise the widget (make it topmost)!
+	/*
 	ui.progressBarSensor1->setMaximum(50);
 	ui.progressBarSensor2->setMaximum(50);
 	ui.progressBarSensor3->setMaximum(50);
@@ -19,6 +20,7 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	ui.progressBarSensor6->setMaximum(50);
 	ui.progressBarSensor7->setMaximum(50);
 	ui.progressBarSensor8->setMaximum(50);
+	*/
 	ui.progressBarSensor16->setMaximum(400); // max. 400 cm ultra sonic sensor !!
 /*
 infrared Sensors temporarily removed from robot!!
@@ -31,16 +33,6 @@ infrared Sensors temporarily removed from robot!!
 	ui.progressBarSensor7->raise();
 	ui.progressBarSensor8->raise();
 */
-// TODO: infrared Sensors temporarily removed from robot!!
-	ui.progressBarSensor1->setVisible(false);
-	ui.progressBarSensor2->setVisible(false);
-	ui.progressBarSensor3->setVisible(false);
-	ui.progressBarSensor4->setVisible(false);
-	ui.progressBarSensor5->setVisible(false);
-	ui.progressBarSensor6->setVisible(false);
-	ui.progressBarSensor7->setVisible(false);
-	ui.progressBarSensor8->setVisible(false);
-
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
@@ -112,8 +104,17 @@ infrared Sensors temporarily removed from robot!!
 	// zoom into the laser lines by factor 3
 	ui.sliderZoom->setValue(5);
 	
+	//--------------
+	// window init
+	//--------------
 	// TODO: which values for which resolutions!?
 	ui.splitLaserView->setSizes(QList<int>() << 900 << 100);
+	// make dockLaserView wider
+	//ui.dockLaserView->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
+	//ui.centralWidget->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
+	//ui.centralWidget->resize(400, ui.dockLaserView->height());
+	ui.dockSettings->hide();
+	ui.dockNetworkLog->hide();
 }
 
 
@@ -154,9 +155,10 @@ Gui::~Gui()
 }
 
 
-void Gui::closeEvent()
+void Gui::closeEvent(QCloseEvent *event)
 {
-	emit shutdown(); // FIXME: not called, when not using the exit button. why?
+	//qDebug("closeEvent");
+	emit shutdown();
 }
 
 
@@ -279,6 +281,7 @@ void Gui::on_btnReset_clicked()
 	appendLog("Reseted.");
 
 	// reset progressBars
+	/*
 	ui.progressBarSensor1->setValue(0);
 	ui.progressBarSensor2->setValue(0);
 	ui.progressBarSensor3->setValue(0);
@@ -287,6 +290,7 @@ void Gui::on_btnReset_clicked()
 	ui.progressBarSensor6->setValue(0);
 	ui.progressBarSensor7->setValue(0);
 	ui.progressBarSensor8->setValue(0);
+	*/
 	ui.progressBarSensor16->setValue(0);
 	//ui.btnExecuteScript->setText("Execute s&cript");
 
@@ -353,7 +357,104 @@ void Gui::on_btnTest_clicked()
 }
 
 
-/*		
+void Gui::on_actionExit_activated()
+{
+	emit shutdown();
+}
+
+
+void Gui::on_actionLaser_View_activated()
+{
+	if (ui.dockLaserView->isVisible())
+	{
+		ui.dockLaserView->hide();
+	}
+	else
+	{
+		ui.dockLaserView->show();
+	}
+}
+
+
+void Gui::on_actionCamera_activated()
+{
+	if (ui.dockCamera->isVisible())
+	{
+		ui.dockCamera->hide();
+	}
+	else
+	{
+		ui.dockCamera->show();
+	}
+}
+
+
+void Gui::on_actionMotors_activated()
+{
+	if (ui.dockMotors->isVisible())
+	{
+		ui.dockMotors->hide();
+	}
+	else
+	{
+		ui.dockMotors->show();
+	}
+}
+
+
+void Gui::on_actionSettings_activated()
+{
+	if (ui.dockSettings->isVisible())
+	{
+		ui.dockSettings->hide();
+	}
+	else
+	{
+		ui.dockSettings->show();
+	}
+}
+
+
+void Gui::on_actionLog_activated()
+{
+	if (ui.dockLog->isVisible())
+	{
+		ui.dockLog->hide();
+	}
+	else
+	{
+		ui.dockLog->show();
+	}
+}
+
+
+void Gui::on_actionNetwork_Log_activated()
+{
+	if (ui.dockNetworkLog->isVisible())
+	{
+		ui.dockNetworkLog->hide();
+	}
+	else
+	{
+		ui.dockNetworkLog->show();
+	}
+}
+
+
+void Gui::on_actionJoystick_activated()
+{
+	if (ui.dockJoystick->isVisible())
+	{
+		ui.dockJoystick->hide();
+	}
+	else
+	{
+		ui.dockJoystick->show();
+	}
+}
+
+
+/*
 void Gui::showDistance(int sensor, int distance)
 {
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
@@ -416,6 +517,7 @@ void Gui::showDistanceGraphical(int sensor, int distance)
 
 	switch (sensor)
 	{
+		/*
 		case SENSOR1:
 			ui.progressBarSensor1->setValue(distance);
 			return;
@@ -448,6 +550,7 @@ void Gui::showDistanceGraphical(int sensor, int distance)
 			ui.progressBarSensor8->setValue(distance);
 			return;
 			break;
+		*/
 		case SENSOR16:
 			ui.progressBarSensor16->setValue(distance);
 			return;
@@ -491,6 +594,7 @@ void Gui::showAlarm(short int sensor, bool state)
 
 	switch (sensor)
 	{
+		/*
 		case SENSOR1:
 			if (state == ON)
 			{
@@ -659,6 +763,7 @@ void Gui::showAlarm(short int sensor, bool state)
 			}
 			return;
 			break;
+		*/
 		case SENSOR16:
 			if (state == ON)
 			{
@@ -1042,7 +1147,7 @@ void Gui::saveCamImage(void)
 	
 	
 	// TODO: Seltsame Bildmaße! :-?
-	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.dockWidgetCamera->x()+19, ui.dockWidgetCamera->y()+19, 474, 353);
+	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.dockCamera->x()+19, ui.dockCamera->y()+19, 474, 353);
 	//cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.frame->x(), ui.frame->y(), 200, 100);
 	// cameraPicToSave = QPixmap::grabWidget(ui.frameCamera); doesnt work
 	
