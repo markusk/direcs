@@ -2898,6 +2898,11 @@ void Mrs::speak(QString text)
 	// convert QString to EST_String (defined in EST_String.h)
 	EST_String textForFestival (text.toAscii());
 	
+	// file: ~/.festivalrc
+	// (Parameter.set 'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $SR $FILE")
+	// (Parameter.set 'Audio_Method 'Audio_Command)
+	// for speaking while audio is already in use!
+	//
 	// say the cleaned text
 	festival_say_text(textForFestival);
 	#endif
@@ -2928,7 +2933,7 @@ void Mrs::test()
 	#ifdef _TTY_POSIX_
 	// Say some text;
 	QDateTime now = QDateTime::currentDateTime();
-//	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 	#endif
 
 }

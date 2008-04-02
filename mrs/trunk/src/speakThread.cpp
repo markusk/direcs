@@ -25,7 +25,6 @@ SpeakThread::SpeakThread()
 	//      1 = we want the festival init files loaded
 	// 500000 = default scheme heap size
 	qDebug("festival initialized");
-	// FIXME: check, if /dev/dsp is openable (e.g. when in use (amarok))
 	festival_initialize(1, 500000);
 	#endif
 }
@@ -58,9 +57,13 @@ void SpeakThread::run()
 		{
 			#ifdef _TTY_POSIX_
 			// say the text
-			// FIXME: check, if /dev/dsp is openable (e.g. when in use (amarok))
 			qDebug("Speaking...");
 			// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
+			// file: ~/.festivalrc
+			// (Parameter.set 'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $SR $FILE")
+			// (Parameter.set 'Audio_Method 'Audio_Command)
+			// for speaking while audio is already in use!
+			//
 			festival_say_text(textForFestival);
 			#endif
 			speaking=false;
