@@ -479,7 +479,9 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *scannerFrontSplash;
 		QGraphicsPixmapItem *scannerRearSplash;
 
-
+		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
+		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */
+		
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
 		

@@ -12,16 +12,16 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	// value in cm
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
-	ui.progressBarSensor1->setMaximum(50);
-	ui.progressBarSensor2->setMaximum(50);
-	ui.progressBarSensor3->setMaximum(50);
-	ui.progressBarSensor4->setMaximum(50);
-	ui.progressBarSensor5->setMaximum(50);
-	ui.progressBarSensor6->setMaximum(50);
-	ui.progressBarSensor7->setMaximum(50);
-	ui.progressBarSensor8->setMaximum(50);
+	ui.progressBarSensor1->setMaximum(SENSORPROGRESSBARMAXIR);
+	ui.progressBarSensor2->setMaximum(SENSORPROGRESSBARMAXIR);
+	ui.progressBarSensor3->setMaximum(SENSORPROGRESSBARMAXIR);
+	ui.progressBarSensor4->setMaximum(SENSORPROGRESSBARMAXIR);
+	ui.progressBarSensor5->setMaximum(SENSORPROGRESSBARMAXIR);
+	ui.progressBarSensor6->setMaximum(SENSORPROGRESSBARMAXIR);
+	ui.progressBarSensor7->setMaximum(SENSORPROGRESSBARMAXIR);
+	ui.progressBarSensor8->setMaximum(SENSORPROGRESSBARMAXIR);
 	*/
-	ui.progressBarSensor16->setMaximum(400); // max. 400 cm ultra sonic sensor !!
+	ui.progressBarSensor16->setMaximum(SENSORPROGRESSBARMAXUS);
 /*
 infrared Sensors temporarily removed from robot!!
 	ui.progressBarSensor1->raise();
