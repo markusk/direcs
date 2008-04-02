@@ -44,30 +44,18 @@ class Motor : public QObject
 		//unsigned int getSteps2();
 		
 		/**
-		@return The revolutions made of a motor1 (stored in the microcontroller till power off).
+		@param motor is the motor number.
+		@return The revolutions made of a motor (stored in the microcontroller till power off).
 		*/
 		// TODO: change to one method?!?
-		unsigned int getRevolutions1();
+		unsigned int getRevolutions(unsigned char motor);
 		
 		/**
-		@return The revolutions made of a motor2 (stored in the microcontroller till power off).
+		Returns the driven distance, if the motor is a stepper motor!
+		@param motor is the motor number.
+		@return The driven distance in cm made of wheel1 or 2.
 		*/
-		// TODO: change to one method?!?
-		unsigned int getRevolutions2();
-		
-		/**
-		@return The driven distance in cm made of wheel1.
-		*/
-		// TODO: change to one method?!?
-		// FIXME: check the conversion value and make it a const!
-		double getDrivenDistance1();
-		
-		/**
-		@return The driven distance in cm made of wheel2.
-		*/
-		// TODO: change to one method?!?
-		// FIXME: check the conversion value and make it a const!
-		double getDrivenDistance2();
+		double getDrivenDistance(unsigned char motor);
 		
 		/**
 		Resets the stored driven distances and made revolutions in this class and in the microcontroller.

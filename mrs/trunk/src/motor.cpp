@@ -49,27 +49,31 @@ unsigned int Motor::getSteps2()
 */
 
 
-unsigned int Motor::getRevolutions1()
+unsigned int Motor::getRevolutions(unsigned char motor)
 {
-	return revolutions1;
+	switch (motor)
+	{
+		case MOTOR1:
+			return revolutions1;
+			break;
+		case MOTOR2:
+			return revolutions2;
+			break;
+	}
 }
 
 
-unsigned int Motor::getRevolutions2()
+double Motor::getDrivenDistance(unsigned char motor)
 {
-	return revolutions2;
-}
-
-
-double Motor::getDrivenDistance1()
-{
-	return drivenDistance1;
-}
-
-
-double Motor::getDrivenDistance2()
-{
-	return drivenDistance2;
+	switch (motor)
+	{
+		case MOTOR1:
+			return drivenDistance1;
+			break;
+		case MOTOR2:
+			return drivenDistance2;
+			break;
+	}
 }
 
 
@@ -518,6 +522,7 @@ void Motor::calculateMovement()
 		//  Wheel circumference = PI*d = PI*66 mm = 207,345 mm
 		//  Distance per step: 207,345 mm / 200 steps = 1,036725 mm = 0,1036725 cm
 		//
+		// TODO: check the conversion value and make it a const!
 		drivenDistance1 += 0.1036725;
 		
 		//
@@ -568,6 +573,7 @@ void Motor::calculateMovement()
 		//  Wheel circumference = PI*d = PI*66 mm = 207,345 mm
 		//  Distance per step: 207,345 mm / 200 steps = 1,036725 mm = 0,1036725 cm
 		//
+		// TODO: check the conversion value and make it a const!
 		drivenDistance2 += 0.1036725;
 		
 		//
