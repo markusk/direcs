@@ -1986,13 +1986,11 @@ void Gui::createLaserScannerObjects()
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 		
 		// FIXME doest not work: Make a thicker line to fil the gaps
-		/*
 		// set line color and position
 		QPen pen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
 		pen.setWidth(3);
 		//pen.setColor(colorLaserFreeWay);
 		line->setPen(pen);
-		*/
 		
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
@@ -2022,13 +2020,11 @@ void Gui::createLaserScannerObjects()
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 		
 		// FIXME doest not work: Make a thicker line to fil the gaps
-		/*
 		// set line color and position
 		QPen pen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
 		pen.setWidth(3);
 		//pen.setColor(colorLaserFreeWay);
 		line->setPen(pen);
-		*/
 		
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
