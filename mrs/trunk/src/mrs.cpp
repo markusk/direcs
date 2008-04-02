@@ -562,442 +562,449 @@ Mrs::Mrs()
 
 void Mrs::shutdown()
 {
-	qDebug("Mrs shutdown...");
+	static bool shutdownStarted = false;
 	
-	// just 4 fun
-	if (circuit1->isConnected())
-	{
-		head->look("NORMAL");
-		head->look("DOWN");
-	}
 	
-	// FIXME: not called, when closed via KDE GUI!!
+	// this is to execute this slot only one time!
+	if (shutdownStarted==false)
+	{
+		shutdownStarted = true;
 	
-	/*
-	if (ClientSocket1->Active == true)
-	{
-	ClientSocket1->Close();
-	ClientSocket1->Active = false;
-	}
-	*/
-
-	// TODO: put this to a saveSetings()
-	//---------------------------------------------------------------
-	// save changes to ini-file (if check box is checked!)
-	//---------------------------------------------------------------
-	if (gui->getCheckBoxSaveSettings()== Qt::Checked)
-	{
-		gui->appendLog("Writing settings...");
-
-		// save gui slider values
-		inifile1->writeSetting("Config", "motor1Speed", gui->getSliderMotorSpeed(1));
-		inifile1->writeSetting("Config", "motor2Speed", gui->getSliderMotorSpeed(2));
-		inifile1->writeSetting("Config", "minimumSpeed", gui->getSliderMinimumSpeed());
-		inifile1->writeSetting("Config", "maximumSpeed", gui->getSliderMaximumSpeed());
-		inifile1->writeSetting("Config", "minObstacleDistance", gui->getSliderObstacleValue());
-		inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", gui->getSliderObstacleLaserScannerValue());
-		inifile1->writeSetting("Config", "robotSlot", gui->getSliderRobotSlotValue());
-		inifile1->writeSetting("Config", "straightForwardDeviation", gui->getSliderStraightForwardDeviationValue());
-
-		// save check box status
-		inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
-
-		// Later...
-		//
-		//noHardwareErrorMessages 
-		//exitDialog 
-
-		// force writing *immediately*
-		inifile1->sync();
-
-		//QMessageBox::information(0, "mrs", "Settings written. :-)", QMessageBox::Ok);
-		gui->appendLog("Settings written.");
-	}
-	else
-	{
-		// THIS SETTING HAS TO BE SAVED ALWAYS!
-		// "Save the setting, that no settings shoud be saved"
-		//
-		// save check box status
-		inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
-	}
-
-
-	// show dialog if set in ini-file
-	if (exitDialog == true)
-	{
-		// ask user if he really wants to exit.
-		if (QMessageBox::question(0, "Leaving program...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+		qDebug("Mrs shutdown...");
+	
+		// just 4 fun
+		if (circuit1->isConnected())
 		{
-			//---------
-			// if NO
-			//---------
-			// don't leave! :-)
-			return;
+			head->look("NORMAL");
+			head->look("DOWN");
 		}
-	}
-
+		
+		/*
+		if (ClientSocket1->Active == true)
+		{
+		ClientSocket1->Close();
+		ClientSocket1->Active = false;
+		}
+		*/
 	
-	// TODO: a universal quit-threads-method
-	//--------------------------------
-	// quit the camThread
-	//--------------------------------
-	if (camThread->isRunning() == true)
-	{
-		gui->appendLog("Stopping camera thread...");
+		// TODO: put this to a saveSetings()
+		//---------------------------------------------------------------
+		// save changes to ini-file (if check box is checked!)
+		//---------------------------------------------------------------
+		if (gui->getCheckBoxSaveSettings()== Qt::Checked)
+		{
+			gui->appendLog("Writing settings...");
+	
+			// save gui slider values
+			inifile1->writeSetting("Config", "motor1Speed", gui->getSliderMotorSpeed(1));
+			inifile1->writeSetting("Config", "motor2Speed", gui->getSliderMotorSpeed(2));
+			inifile1->writeSetting("Config", "minimumSpeed", gui->getSliderMinimumSpeed());
+			inifile1->writeSetting("Config", "maximumSpeed", gui->getSliderMaximumSpeed());
+			inifile1->writeSetting("Config", "minObstacleDistance", gui->getSliderObstacleValue());
+			inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", gui->getSliderObstacleLaserScannerValue());
+			inifile1->writeSetting("Config", "robotSlot", gui->getSliderRobotSlotValue());
+			inifile1->writeSetting("Config", "straightForwardDeviation", gui->getSliderStraightForwardDeviationValue());
+	
+			// save check box status
+			inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
+	
+			// Later...
+			//
+			//noHardwareErrorMessages 
+			//exitDialog 
+	
+			// force writing *immediately*
+			inifile1->sync();
+	
+			//QMessageBox::information(0, "mrs", "Settings written. :-)", QMessageBox::Ok);
+			gui->appendLog("Settings written.");
+		}
+		else
+		{
+			// THIS SETTING HAS TO BE SAVED ALWAYS!
+			// "Save the setting, that no settings shoud be saved"
+			//
+			// save check box status
+			inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
+		}
+	
+	
+		// show dialog if set in ini-file
+		if (exitDialog == true)
+		{
+			// ask user if he really wants to exit.
+			if (QMessageBox::question(0, "Leaving program...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+			{
+				//---------
+				// if NO
+				//---------
+				// don't leave! :-)
+				return;
+			}
+		}
+	
 		
-		// my own stop routine :-)
-		camThread->stop();
+		// TODO: a universal quit-threads-method
+		//--------------------------------
+		// quit the camThread
+		//--------------------------------
+		if (camThread->isRunning() == true)
+		{
+			gui->appendLog("Stopping camera thread...");
+			
+			// my own stop routine :-)
+			camThread->stop();
+			
+			// slowing thread down
+			camThread->setPriority(QThread::IdlePriority);
+			camThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (camThread->isFinished() == true)
+			{
+				gui->appendLog("Camera thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating camera thread because it doesn't answer...");
+				camThread->terminate();
+				camThread->wait(1000);
+				gui->appendLog("Camera thread terminated.");
+			}
+		}
 		
-		// slowing thread down
-		camThread->setPriority(QThread::IdlePriority);
-		camThread->quit();
 		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
+		//--------------------------------
+		// quit the laserThread
+		//--------------------------------
+		if (laserThread->isRunning() == true)
+		{
+			gui->appendLog("Stopping laser thread...");
+			
+			// my own stop routine :-)
+			laserThread->stop();
+			
+			// slowing thread down
+			laserThread->setPriority(QThread::IdlePriority);
+			laserThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((laserThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (laserThread->isFinished() == true)
+			{
+				gui->appendLog("Laser thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating laser thread because it doesn't answer...");
+				laserThread->terminate();
+				laserThread->wait(1000);
+				gui->appendLog("Laser thread terminated.");
+			}
+		}
+		
+		
+	#ifdef _TTY_POSIX_
+		/*
+		//--------------------------------
+		// quit the speakThread
+		//--------------------------------
+		if (speakThread->isRunning() == true)
+		{
+		gui->appendLog("Stopping speak thread...");
+			
+			// my own stop routine :-)
+		speakThread->stop();
+			
+			// slowing thread down
+		speakThread->setPriority(QThread::IdlePriority);
+		speakThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
 		QTime t;
 		t.start();
 		do
 		{
-		} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (camThread->isFinished() == true)
+	} while ((speakThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+		if (speakThread->isFinished() == true)
 		{
-			gui->appendLog("Camera thread stopped.");
-		}
+		gui->appendLog("Speak thread stopped.");
+	}
 		else
 		{
-			gui->appendLog("Terminating camera thread because it doesn't answer...");
-			camThread->terminate();
-			camThread->wait(1000);
-			gui->appendLog("Camera thread terminated.");
-		}
+		gui->appendLog("Terminating speak thread because it doesn't answer...");
+		speakThread->terminate();
+		speakThread->wait(1000);
+		gui->appendLog("Speak thread terminated.");
 	}
+	}
+		*/
+	#endif
+		
+		//--------------------------------
+		// quit the network thread
+		//--------------------------------
+		if (netThread->isRunning() == true)
+		{
+			gui->appendLog("Stopping network thread...");
+			
+			// my own stop routine :-)
+			netThread->stop();
+			
+			// slowing thread down
+			netThread->setPriority(QThread::IdlePriority);
+			netThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((netThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (netThread->isFinished() == true)
+			{
+				gui->appendLog("Network thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating network thread because it doesn't answer...");
+				netThread->terminate();
+				netThread->wait(1000);
+				gui->appendLog("Network thread terminated.");
+			}
+		}
+	
+		
+		//--------------------------------
+		// quit the joystick thread
+		//--------------------------------
+		if (joystick->isRunning() == true)
+		{
+			gui->appendLog("Stopping joystick thread...");
+			
+			// my own stop routine :-)
+			joystick->stop();
+			
+			// slowing thread down
+			joystick->setPriority(QThread::IdlePriority);
+			joystick->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((joystick->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (joystick->isFinished() == true)
+			{
+				gui->appendLog("Joystick thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating joystick thread because it doesn't answer...");
+				joystick->terminate();
+				joystick->wait(1000);
+				gui->appendLog("Joystick thread terminated.");
+			}
+		}
+	
+		
+		//--------------------------------
+		// quit the plotThread
+		//--------------------------------
+		if (plotThread->isRunning() == true)
+		{
+			gui->appendLog("Stopping Plot thread...");
+			
+			// my own stop routine :-)
+			plotThread->stop();
+			
+			// slowing thread down
+			plotThread->setPriority(QThread::IdlePriority);
+			plotThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((plotThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (plotThread->isFinished() == true)
+			{
+				gui->appendLog("Plot thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating Plot thread because it doesn't answer...");
+				plotThread->terminate();
+				plotThread->wait(1000);
+				gui->appendLog("Plot thread terminated.");
+			}
+		}
 	
 	
-	//--------------------------------
-	// quit the laserThread
-	//--------------------------------
-	if (laserThread->isRunning() == true)
-	{
-		gui->appendLog("Stopping laser thread...");
-		
-		// my own stop routine :-)
-		laserThread->stop();
-		
-		// slowing thread down
-		laserThread->setPriority(QThread::IdlePriority);
-		laserThread->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
+	
+		//--------------------------------
+		// quit the obstacle check thread
+		//--------------------------------
+		//qDebug("Starting to stop the obstacle check thread NOW!");
+		if (obstCheckThread->isRunning() == true)
+		{
+			gui->appendLog("Stopping obstacle check thread...");
+			
+			// my own stop routine :-)
+			obstCheckThread->stop();
+			
+			// slowing thread down
+			obstCheckThread->setPriority(QThread::IdlePriority);
+			obstCheckThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((obstCheckThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (obstCheckThread->isFinished() == true)
+			{
+				gui->appendLog("Obstacle check thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating obstacle check thread because it doesn't answer...");
+				obstCheckThread->terminate();
+				obstCheckThread->wait(1000);
+				gui->appendLog("Obstacle check thread terminated.");
+			}
+		}
+	
+	
+		/*
+		//-----------------------------
+		// quit the supersonic thread
+		//-----------------------------
+		//qDebug("Starting to stop the supersonic thread NOW!");
+		if (supersonThread->isRunning() == true)
+		{
+		gui->appendLog("Stopping supersonic thread...");
+			// slowing thread down
+		supersonThread->setPriority(QThread::IdlePriority);
+		supersonThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
 		QTime t;
 		t.start();
 		do
 		{
-		} while ((laserThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (laserThread->isFinished() == true)
+	} while ((supersonThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+		if (supersonThread->isFinished() == true)
 		{
-			gui->appendLog("Laser thread stopped.");
-		}
+		gui->appendLog("Supersonic thread stopped.");
+	}
 		else
 		{
-			gui->appendLog("Terminating laser thread because it doesn't answer...");
-			laserThread->terminate();
-			laserThread->wait(1000);
-			gui->appendLog("Laser thread terminated.");
-		}
+		gui->appendLog("Terminating supersonic thread because it doesn't answer...");
+		supersonThread->terminate();
+		supersonThread->wait(1000);
+		gui->appendLog("Supersonic thread terminated.");
 	}
+	}
+		*/
+		
+		// Todo: CamThread sauber beenden!!
+	
+		//--------------------------
+		// quit the sensor thread
+		//--------------------------
+		//qDebug("Starting to stop the sensor thread NOW!");
+		if (sensorThread->isRunning() == true)
+		{
+			gui->appendLog("Stopping sensor thread...");
+			
+			// my own stop routine :-)
+			sensorThread->stop();
+			
+			// slowing thread down
+			sensorThread->setPriority(QThread::IdlePriority);
+			sensorThread->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((sensorThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (sensorThread->isFinished() == true)
+			{
+				gui->appendLog("Sensor thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating sensor thread because it doesn't answer...");
+				sensorThread->terminate();
+				sensorThread->wait(1000);
+				gui->appendLog("Sensor thread terminated.");
+			}
+		}
 	
 	
-#ifdef _TTY_POSIX_
-	/*
-	//--------------------------------
-	// quit the speakThread
-	//--------------------------------
-	if (speakThread->isRunning() == true)
-	{
-	gui->appendLog("Stopping speak thread...");
-		
-		// my own stop routine :-)
-	speakThread->stop();
-		
-		// slowing thread down
-	speakThread->setPriority(QThread::IdlePriority);
-	speakThread->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-	QTime t;
-	t.start();
-	do
-	{
-} while ((speakThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-	if (speakThread->isFinished() == true)
-	{
-	gui->appendLog("Speak thread stopped.");
-}
-	else
-	{
-	gui->appendLog("Terminating speak thread because it doesn't answer...");
-	speakThread->terminate();
-	speakThread->wait(1000);
-	gui->appendLog("Speak thread terminated.");
-}
-}
-	*/
-#endif
+		//-------------------------------------------------------
+		// Last init for the robots circuits
+		//-------------------------------------------------------
+		gui->appendLog("Last circuit init...");
+		if (circuit1->isConnected())
+		{
+			circuit1->initCircuit();
+		}
 	
-	//--------------------------------
-	// quit the network thread
-	//--------------------------------
-	if (netThread->isRunning() == true)
-	{
-		gui->appendLog("Stopping network thread...");
-		
-		// my own stop routine :-)
-		netThread->stop();
-		
-		// slowing thread down
-		netThread->setPriority(QThread::IdlePriority);
-		netThread->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((netThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (netThread->isFinished() == true)
-		{
-			gui->appendLog("Network thread stopped.");
-		}
-		else
-		{
-			gui->appendLog("Terminating network thread because it doesn't answer...");
-			netThread->terminate();
-			netThread->wait(1000);
-			gui->appendLog("Network thread terminated.");
-		}
-	}
-
+		//-----------------------------
+		// close serial port to mc
+		//-----------------------------
+		gui->appendLog("Closing serial port to microcontroller...");
+		interface1->closeComPort();
 	
-	//--------------------------------
-	// quit the joystick thread
-	//--------------------------------
-	if (joystick->isRunning() == true)
-	{
-		gui->appendLog("Stopping joystick thread...");
-		
-		// my own stop routine :-)
-		joystick->stop();
-		
-		// slowing thread down
-		joystick->setPriority(QThread::IdlePriority);
-		joystick->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((joystick->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (joystick->isFinished() == true)
-		{
-			gui->appendLog("Joystick thread stopped.");
-		}
-		else
-		{
-			gui->appendLog("Terminating joystick thread because it doesn't answer...");
-			joystick->terminate();
-			joystick->wait(1000);
-			gui->appendLog("Joystick thread terminated.");
-		}
-	}
-
+		// close the gui
+		gui->close();
 	
-	//--------------------------------
-	// quit the plotThread
-	//--------------------------------
-	if (plotThread->isRunning() == true)
-	{
-		gui->appendLog("Stopping Plot thread...");
 		
-		// my own stop routine :-)
-		plotThread->stop();
-		
-		// slowing thread down
-		plotThread->setPriority(QThread::IdlePriority);
-		plotThread->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((plotThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (plotThread->isFinished() == true)
-		{
-			gui->appendLog("Plot thread stopped.");
-		}
-		else
-		{
-			gui->appendLog("Terminating Plot thread because it doesn't answer...");
-			plotThread->terminate();
-			plotThread->wait(1000);
-			gui->appendLog("Plot thread terminated.");
-		}
+		this->~Mrs();
 	}
-
-
-
-	//--------------------------------
-	// quit the obstacle check thread
-	//--------------------------------
-	//qDebug("Starting to stop the obstacle check thread NOW!");
-	if (obstCheckThread->isRunning() == true)
-	{
-		gui->appendLog("Stopping obstacle check thread...");
-		
-		// my own stop routine :-)
-		obstCheckThread->stop();
-		
-		// slowing thread down
-		obstCheckThread->setPriority(QThread::IdlePriority);
-		obstCheckThread->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((obstCheckThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (obstCheckThread->isFinished() == true)
-		{
-			gui->appendLog("Obstacle check thread stopped.");
-		}
-		else
-		{
-			gui->appendLog("Terminating obstacle check thread because it doesn't answer...");
-			obstCheckThread->terminate();
-			obstCheckThread->wait(1000);
-			gui->appendLog("Obstacle check thread terminated.");
-		}
-	}
-
-
-	/*
-	//-----------------------------
-	// quit the supersonic thread
-	//-----------------------------
-	//qDebug("Starting to stop the supersonic thread NOW!");
-	if (supersonThread->isRunning() == true)
-	{
-	gui->appendLog("Stopping supersonic thread...");
-		// slowing thread down
-	supersonThread->setPriority(QThread::IdlePriority);
-	supersonThread->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-	QTime t;
-	t.start();
-	do
-	{
-} while ((supersonThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-	if (supersonThread->isFinished() == true)
-	{
-	gui->appendLog("Supersonic thread stopped.");
-}
-	else
-	{
-	gui->appendLog("Terminating supersonic thread because it doesn't answer...");
-	supersonThread->terminate();
-	supersonThread->wait(1000);
-	gui->appendLog("Supersonic thread terminated.");
-}
-}
-	*/
-	
-	// Todo: CamThread sauber beenden!!
-
-	//--------------------------
-	// quit the sensor thread
-	//--------------------------
-	//qDebug("Starting to stop the sensor thread NOW!");
-	if (sensorThread->isRunning() == true)
-	{
-		gui->appendLog("Stopping sensor thread...");
-		
-		// my own stop routine :-)
-		sensorThread->stop();
-		
-		// slowing thread down
-		sensorThread->setPriority(QThread::IdlePriority);
-		sensorThread->quit();
-		
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((sensorThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (sensorThread->isFinished() == true)
-		{
-			gui->appendLog("Sensor thread stopped.");
-		}
-		else
-		{
-			gui->appendLog("Terminating sensor thread because it doesn't answer...");
-			sensorThread->terminate();
-			sensorThread->wait(1000);
-			gui->appendLog("Sensor thread terminated.");
-		}
-	}
-
-
-	//-------------------------------------------------------
-	// Last init for the robots circuits
-	//-------------------------------------------------------
-	gui->appendLog("Last circuit init...");
-	if (circuit1->isConnected())
-	{
-		emit initCircuit();
-	}
-
-	//-----------------------------
-	// close serial port to mc
-	//-----------------------------
-	gui->appendLog("Closing serial port to microcontroller...");
-	interface1->closeComPort();
-
-	// close the gui
-	gui->close();
-
-	
-	this->~Mrs();
 }
 
 
