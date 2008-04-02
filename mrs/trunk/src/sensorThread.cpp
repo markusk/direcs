@@ -150,7 +150,6 @@ infrared Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				stop(); // Fixme: Does this work?!?
 			}
 			//interface1->receiveInt(&value);
 		
