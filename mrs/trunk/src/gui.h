@@ -3,11 +3,9 @@
 
 //-------------------------------------------------------------------
 #include "ui_mainWindow.h"
-#include "motor.h" // FIXME: error with qprinter.h when removing htis line !?!?!
-//-------------------------------------------------------------------
 #include "QtGLContext.h"
 //-------------------------------------------------------------------
-#include "cv.h" // for type IplImage
+#include "cv.h" // for type IplImage (camThread)
 //-------------------------------------------------------------------
 #include <qwt_plot_layout.h>
 #include <qwt_plot_curve.h>
