@@ -162,6 +162,18 @@ void Gui::closeEvent(QCloseEvent *event)
 }
 
 
+void Gui::on_btnExit_clicked()
+{
+	emit shutdown();
+}
+
+
+void Gui::on_actionExit_activated()
+{
+	emit shutdown();
+}
+
+
 /*
 void Gui::appLog(QString text)
 {
@@ -345,21 +357,9 @@ void Gui::on_btnResetMovement2_clicked()
 }
 
 
-void Gui::on_btnExit_clicked()
-{
-	emit shutdown();
-}
-
-
 void Gui::on_btnTest_clicked()
 {
 	emit test();
-}
-
-
-void Gui::on_actionExit_activated()
-{
-	emit shutdown();
 }
 
 
