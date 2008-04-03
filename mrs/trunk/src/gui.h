@@ -201,6 +201,13 @@ class Gui : public QMainWindow
 		void disableFaceDetection();
 		
 		/**
+		Enables/Disables some controls in the GUI if the robot, depending on the robots state.
+		@param state can be ON or OFF
+		@sa CameraThread::robotState()
+		 */
+		void setRobotControls(bool state);
+		
+		/**
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
@@ -458,6 +465,7 @@ class Gui : public QMainWindow
 		qreal calculateLaserRearYpos();
 		
 		Ui::mainWindow ui;
+		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
 		QPixmap cameraPicToSave;

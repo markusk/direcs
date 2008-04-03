@@ -3,13 +3,13 @@
 
 Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 {
+	robotIsOn = false;
+	
 	//-------------------------------------------------------
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
 
-	// TODO: make a const of this init values! see also sensorThread
-	// value in cm
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
 	ui.progressBarSensor1->setMaximum(SENSORPROGRESSBARMAXIR);
@@ -171,6 +171,19 @@ void Gui::on_btnExit_clicked()
 void Gui::on_actionExit_activated()
 {
 	emit shutdown();
+}
+
+
+void Gui::setRobotControls(bool state)
+{
+	// store the state
+	robotIsOn = state;
+	
+	// set the controls
+	ui.btnDrive->setEnabled(state);
+	ui.btnReset->setEnabled(state);
+	ui.btnResetMovement1->setEnabled(state);
+	ui.btnResetMovement2->setEnabled(state);
 }
 
 
@@ -1221,7 +1234,10 @@ void Gui::on_btnEnableRemote_clicked()
 	}
 	else
 	{
-		ui.btnDrive->setEnabled(true);
+		if (robotIsOn)
+		{
+			ui.btnDrive->setEnabled(true);
+		}
 		emit enableRemoteControlListening(false);
 	}
 }
