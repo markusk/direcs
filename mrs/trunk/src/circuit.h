@@ -31,6 +31,13 @@ class Circuit : public QObject
 		 */
 		void initCircuit();
 
+	signals:
+		/**
+		This signal emits the robot (circuit) state to all connected slots, to tell them if the robot is ON or OFF
+		@param state can be ON or OFF
+		*/
+		void robotState(bool state);
+
 
 	private:
 		mutable QMutex *mutex; // make this class thread-safe
@@ -39,6 +46,9 @@ class Circuit : public QObject
 		static const unsigned char INITANSWER = 64;
 		bool robotIsOn;
 		bool firstInitDone;
+		
+		static const bool ON  = true;
+		static const bool OFF = false;
 };
 
 #endif

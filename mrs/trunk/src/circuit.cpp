@@ -30,13 +30,14 @@ void Circuit::initCircuit()
 		char answer = 0;
 		interface1->receiveChar(&answer);
 		
+		// everthing's fine :-)
 		if (answer == INITANSWER)
 		{
 			// Unlock the mutex
 			mutex->unlock();
-			// everthing's fine :-)
 			firstInitDone = true;
 			robotIsOn = true;
+			emit robotState(true);
 			return;
 		}
 	}
@@ -47,6 +48,7 @@ void Circuit::initCircuit()
 	firstInitDone = true;
 	robotIsOn = false;
 	qDebug("Robot is OFF.");
+	emit robotState(false);
 }
 
 
