@@ -442,6 +442,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 	
 			break;
 */
+	}
 }
 
 
