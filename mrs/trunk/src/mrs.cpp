@@ -571,9 +571,12 @@ void Mrs::shutdown()
 	// this is to execute this slot only one time!
 	if (shutdownStarted==false)
 	{
-		shutdownStarted = true;
-	
 		qDebug("Mrs shutdown...");
+		
+		shutdownStarted = true;
+
+		splash->show();
+		splash->showMessage(QObject::tr("Shutting down..."), somewhere, splashColor);
 	
 		// just 4 fun
 		if (circuit1->isConnected())
