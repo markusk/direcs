@@ -1114,6 +1114,14 @@ void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int
 }
 
 
+void Gui::disableFaceDetection()
+{
+	appendLog("Face detection disabled!");
+	ui.checkBoxFaceDetection->setEnabled(false);
+	ui.checkBoxFaceTracking->setEnabled(false);
+}
+
+
 void Gui::setCamImageData(int width, int height, int pixeldepth)
 {
 	// tell the OpenGLContext the image data
