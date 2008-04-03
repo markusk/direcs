@@ -33,7 +33,7 @@ class LaserThread : public QThread
 		float getLaserScannerValue(short int laserScanner, int angle);
 		float getLaserScannerFlag(short int laserScanner, int angle);
 		
-		/*!
+		/**
 		This method sets the a flag for each laser line (angle) which represents a free way, an obstackle etc.
 		@param laserScanner can be LASER1 or LASER2
 		@param angle is the angle in degrees
@@ -41,9 +41,11 @@ class LaserThread : public QThread
 		@sa ObstacleCheckThread
 		*/
 		void setLaserScannerFlag(short int laserScanner, int angle, int flag);
+		
+		
 		int getNumReadings(short int laserScanner);
 		
-		/*!
+		/**
 		Sets the serial port for a laser scanner (for modified CARMEN module).
 		@param laserScanner can be LASER1 or LASER2
 		@param serialPort is the port of the laser scanner
@@ -51,7 +53,7 @@ class LaserThread : public QThread
 		*/
 		void setSerialPort(short int laserScanner, QString serialPort);
 		
-		/*!
+		/**
 		Returns the state of a connected laser scanner.
 		@param laserScanner can be LASER1 or LASER2
 		@return true, if connected
@@ -60,16 +62,16 @@ class LaserThread : public QThread
 	
 	
 	public slots:
-		/*!
+		/**
 		This slot enables or disables the simulation mode.
 		*/
 		void setSimulationMode(bool status);
 
 
 	signals:
-		/*! Emits a pointer to the array with the 180 front laser values (distances) */
+		/** Emits a pointer to the array with the 180 front laser values (distances) */
 		void laserDataCompleteFront(float *laserScannerValuesFront, int *laserScannerFlagsFront);
-		/*! Emits a pointer to the array with the 180 rear laser values (distances) */
+		/** Emits a pointer to the array with the 180 rear laser values (distances) */
 		void laserDataCompleteRear(float *laserScannerValuesRear, int *laserScannerFlagsRear);
 
 
@@ -88,13 +90,13 @@ class LaserThread : public QThread
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 150; // Default: 150 ms
 		
-		/*!
+		/**
 		Defines the size of the laserScannerValue[] array
 		This es equal to the number of degrees.
 		*/
 		static const unsigned char LASERSCANNERARRAYSIZE = 180;
 		
-		/*!
+		/**
 		The first column of this array is the measured distance to an object (the length of the real laser line in meter (m)).
 		The second column is an flag if an obstacle is detected (the distance is to small from the robot to an object)
 		*/
@@ -103,13 +105,13 @@ class LaserThread : public QThread
 		QList <int> laserScannerFlagsFront;  /** Some flags for each front laser line (like "free way", "obstacle" etc. */
 		QList <int> laserScannerFlagsRear;  /** Some flags for each rear laser line (like "free way", "obstacle" etc. */
 		
-		/*!
+		/**
 		The names for addressing the laser scanner array
 		*/
 		static const unsigned char DISTANCE = 0;
 		static const unsigned char FLAG = 1;
 		
-		/*!
+		/**
 		For the integrated CARMEN laser module
 		*/
 		static const short int LASER1 = 1;
