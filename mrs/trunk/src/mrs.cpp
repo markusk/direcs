@@ -1,10 +1,6 @@
 #include "mrs.h"
 
 
-QSplashScreen *splash;
-Qt::Alignment somewhere = Qt::AlignHCenter | Qt::AlignBottom;
-QColor splashColor = Qt::red;
-
 int main(int argc, char *argv[])
 {
 	
@@ -12,20 +8,29 @@ int main(int argc, char *argv[])
 	Q_INIT_RESOURCE(mrs);
 
 	QApplication app(argc, argv);
+	
+	QPixmap pixmap(":/images/images/splash.png");
+	QSplashScreen splash(pixmap);
 
+	// create Mrs class object
+	Mrs m(&splash);
+	
 	//----------------------
 	// the splash screen
 	//----------------------
-	splash = new QSplashScreen();
-	splash->setPixmap(QPixmap(":/images/images/splash.png"));
-	splash->show();
-	splash->showMessage(QObject::tr("Loading config file..."), somewhere, splashColor);
+	splash.show();
+	splash.showMessage(QObject::tr("Loading config file..."), Mrs::splashPosition, Mrs::splashColor);
 	
-	// create Mrs class object
-	Mrs *m = new Mrs();
+	// start mrs
+	m.init();
 	
 	return app.exec();
 }
+
+
+const Qt::Alignment Mrs::splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
+
+const QColor Mrs::splashColor = Qt::red;
 
 
 /*!
@@ -33,7 +38,7 @@ int main(int argc, char *argv[])
 
 All objects are created here. This method also starts the GUI.
 */
-Mrs::Mrs()
+Mrs::Mrs(QSplashScreen *splash)
 {
 	//------------------------------------------------------------------
 	// create the objects
@@ -41,6 +46,9 @@ Mrs::Mrs()
 	#ifdef _TTY_POSIX_
 	//speakThread = new SpeakThread();
 	#endif
+	
+	this->splash = splash;
+	
 	mutex = new QMutex();
 	gui = new Gui();
 	interface1 = new InterfaceAvr();
@@ -56,11 +64,11 @@ Mrs::Mrs()
 	camThread = new CamThread();
 	joystick = new Joystick();
 	head = new Head(servos);
-	
-	
-	//------------------------------------------------------------------
-	// nomen est omen
-	//------------------------------------------------------------------
+}
+
+
+void Mrs::init()
+{
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 	robotIsOn = false;
@@ -196,7 +204,7 @@ Mrs::Mrs()
 		// file found-Msg
 		gui->appendLog(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 		
-		splash->showMessage(QObject::tr("Reading settings..."), somewhere, splashColor);
+		splash->showMessage(QObject::tr("Reading settings..."), splashPosition, splashColor);
 		
 		//================================================================================================================================================================
 		// read all settings
@@ -224,7 +232,7 @@ Mrs::Mrs()
 	// Basic init for all the bits on the robot circuit
 	// AND check, if the robot is "on" (it answers correct)
 	//-------------------------------------------------------
-	splash->showMessage(QObject::tr("Searching robot..."), somewhere, splashColor);
+	splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
 	
 	// init the circuit & Co. when hitting the button in the GUI
 	connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
@@ -274,7 +282,7 @@ Mrs::Mrs()
 		//-----------------------------------------------------------
 		if (sensorThread->isRunning() == false)
 		{
-			splash->showMessage(QObject::tr("Starting sensor thread..."), somewhere, splashColor);
+			splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
 			gui->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
 			gui->appendLog("Sensor thread started.");
@@ -286,7 +294,7 @@ Mrs::Mrs()
 		//-----------------------------------------------------------
 		if (plotThread->isRunning() == false)
 		{
-			splash->showMessage(QObject::tr("Starting plot thread..."), somewhere, splashColor);
+			splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
 			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
 			gui->appendLog("Plot thread started.");
@@ -298,7 +306,7 @@ Mrs::Mrs()
 		// start the joystick thread
 		if (joystick->isRunning() == false)
 		{
-			splash->showMessage(QObject::tr("Starting joystick thread..."), somewhere, splashColor);
+			splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
 			gui->appendLog("Starting joystick thread...", false);
 			joystick->start();
 			gui->appendLog("Joystick thread started.");
@@ -449,11 +457,11 @@ Mrs::Mrs()
 	// check if laser scanners are connected
 	//---------------------------------------------------------------------
 	// check FRONT laser
-	splash->showMessage(QObject::tr("Searching front laser..."), somewhere, splashColor);
+	splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
 	bool scanner1found = laserThread->isConnected(LASER1);
 	
 	// check REAR laser
-	splash->showMessage(QObject::tr("Searching rear laser..."), somewhere, splashColor);
+	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
 	bool scanner2found = laserThread->isConnected(LASER2);
 	
 	if (scanner1found || scanner2found)
@@ -488,7 +496,7 @@ Mrs::Mrs()
 		// start the laserThread
 		if (laserThread->isRunning() == false)
 		{
-			splash->showMessage(QObject::tr("Starting Laser thread..."), somewhere, splashColor);
+			splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
 			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
 			gui->appendLog("Laser thread started.");
@@ -497,7 +505,7 @@ Mrs::Mrs()
 
 		if (obstCheckThread->isRunning() == false)
 		{
-			splash->showMessage(QObject::tr("Starting obstacle check thread..."), somewhere, splashColor);
+			splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
 			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			gui->appendLog("Obstacle check thread started.");
@@ -527,9 +535,6 @@ Mrs::Mrs()
 		// move mainWindow to the center of the screen
 		gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
 
-		// show the main window
-		gui->show();
-		
 		// delete the splash screen
 		QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 	/*
@@ -541,23 +546,18 @@ Mrs::Mrs()
 		gui->showMaximized();
 	}
 	*/
+
+	// show the gui
+	gui->show();
 }
 
 
 void Mrs::shutdown()
 {
-	static bool shutdownStarted = false;
-	
-	
-	// this is to execute this slot only one time!
-	if (shutdownStarted==false)
-	{
 		qDebug("Mrs shutdown...");
-		
-		shutdownStarted = true;
 
 		splash->show();
-		splash->showMessage(QObject::tr("Shutting down..."), somewhere, splashColor);
+		splash->showMessage(QObject::tr("Shutting down..."), splashPosition, splashColor);
 	
 		// just 4 fun
 		if (robotIsOn)
@@ -974,13 +974,6 @@ void Mrs::shutdown()
 		//-----------------------------
 		gui->appendLog("Closing serial port to microcontroller...");
 		interface1->closeComPort();
-	
-		// close the gui
-		gui->close();
-	
-		
-		this->~Mrs();
-	}
 }
 
 

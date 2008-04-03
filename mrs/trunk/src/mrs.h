@@ -40,8 +40,14 @@ class Mrs : public QObject
 
 
 	public:		
-		Mrs();
+		Mrs(QSplashScreen *splash);
 		~Mrs();
+		static const Qt::Alignment splashPosition;
+		static const QColor splashColor;
+		
+		/**
+		*/
+		void init();
 	
 		/**
 		Returns the status of the main program. True, if the simulationMode ist active.
@@ -205,6 +211,7 @@ class Mrs : public QObject
 		Joystick *joystick;
 		Head *head;
 
+		QSplashScreen *splash;
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
