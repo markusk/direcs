@@ -6,6 +6,7 @@
 #include <QtGui> // for QMessage
 #include <QTime>
 #include <QString>
+#include <QtDebug> // for a more convenient use of qDebug
 //-------------------------------------------------------------------
 #include "cv.h"
 #include "highgui.h"
@@ -24,7 +25,20 @@ class CamThread : public QThread
 	public:
 		CamThread();
 		~CamThread();
+		
+		/**
+		*/
+		void init();
+
+		/**
+		*/
 		bool isConnected(void);
+		
+		/**
+		Sets the path and filename to the haar classifier cascade.
+		@param haarClassifierCascade is the whole filename
+		 */
+		void setCascadePath(QString haarClassifierCascade);
 
 		/**
 		Returns the image height of the camera. Retrieved in the constructor!
@@ -55,7 +69,7 @@ class CamThread : public QThread
 		/**
 		Draws a red object in the camera image, when the camera hits the end switches (when panning and tilting).
 		@param position can be TOP, BOTTOM, LEFT, RIGHT
-		@param state can be true or false (for ON and OFF)
+		@param state can be true or false (for ON and OFF)disableFaceDetection
 		@sa Gui::showContactAlarm()
 		 */
 		void drawContactAlarm(char position, bool state);
@@ -67,6 +81,12 @@ class CamThread : public QThread
 		@sa Gui::setCamImage()
 		*/
 		void camDataComplete(IplImage* imgPtr);
+		
+		/**
+		Disables checkBoxes in the GUI
+		*/
+		void disableFaceDetection();
+
 
 		/**
 		TODO: text text text
@@ -79,9 +99,11 @@ class CamThread : public QThread
 
 
 	private:
+		bool initDone;
 		bool cameraIsOn;
 		bool faceDetectionIsEnabled;
 		bool faceDetectionWasActive;
+		QString haarClassifierCascadeFilename;
 		CvScalar hsv2rgb( float hue );
 		//IplImage *frame;
 		IplImage *imgPtr;

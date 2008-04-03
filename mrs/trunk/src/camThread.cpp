@@ -4,9 +4,11 @@
 CamThread::CamThread() : QThread()
 {
 	stopped = false;
+	initDone = false;;
 	cameraIsOn = false;
 	faceDetectionIsEnabled = true;
 	faceDetectionWasActive = false;
+	haarClassifierCascadeFilename = "none";
 	//frame = new IplImage();
 	imgPtr = new IplImage();
 	contactAlarmTop = false;
@@ -18,6 +20,7 @@ CamThread::CamThread() : QThread()
 	//------------------------------------------
 	// try to capture from the first camera (0)
 	//------------------------------------------
+	// TODO: put filenam to ini file
 	capture = cvCaptureFromCAM(0);
 	
 	if (!capture)
@@ -43,34 +46,6 @@ CamThread::CamThread() : QThread()
 		width = imgPtr->width;
 		height = imgPtr->height;
 		pixeldepth = (imgPtr->nChannels * imgPtr->depth);
-
-		//-----------------------------------------------------
-		// Load trained cascade of haar classifers from file.
-		// For fast object detection
-		//-----------------------------------------------------
-		//TODO: check path (use variables from mrs)
-		cascade = (CvHaarClassifierCascade*)cvLoad("/home/markus/develop/sourceforge/mrs/trunk/data/haarcascades/haarcascade_frontalface_alt2.xml", 0, 0, 0);
-
-		if(!cascade)
-		{
-	        	qDebug("ERROR: Could not load classifier cascade for face detection!");
-		}
-		else
-		{
-			// creates an empty memory storage
-			storage = cvCreateMemStorage(0);
-			
-			
-			//-----------------------------
-			// for later face detection:
-			//-----------------------------
-			
-			// create a blank gray scale image with same size
-			gray = cvCreateImage( cvSize(width, height), 8, 1 );
-			
-			// create a blank small image with the same size
-			small_img = cvCreateImage( cvSize( cvRound(width/scale), cvRound(height/scale)), 8, 1 );
-		}
 	}
 }
 
@@ -115,6 +90,14 @@ void CamThread::run()
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2);
 	//cvInitFont(&fontSmall, CV_FONT_HERSHEY_PLAIN, 0.2, 0.2, 0, 1);
 
+	
+	if (initDone==false)
+	{
+		// first load haar classifier cascade etc. ...
+		init();
+	}
+	
+	
 	//
 	//  start "threading"...
 	//
@@ -352,6 +335,60 @@ void CamThread::drawContactAlarm(char position, bool state)
 		case RIGHT:
 			contactAlarmRight = state;
 			break;
+	}
+}
+
+
+void CamThread::setCascadePath(QString haarClassifierCascade)
+{
+	if (haarClassifierCascade == "none")
+	{
+		faceDetectionIsEnabled = false;
+		// disable checkBoxes in the GUI
+		emit disableFaceDetection();
+	}
+	
+	
+	haarClassifierCascadeFilename = haarClassifierCascade;
+}
+
+
+void CamThread::init()
+{
+	if ( (cameraIsOn == true) && (initDone == false) )
+	{
+		// do only *one* init!
+		initDone = true;
+	
+		//-----------------------------------------------------
+		// Load trained cascade of haar classifers from file.
+		// For fast object detection
+		//-----------------------------------------------------
+		cascade = (CvHaarClassifierCascade*)cvLoad(haarClassifierCascadeFilename.toAscii(), 0, 0, 0);
+		
+		if(!cascade)
+		{
+			qDebug() << "ERROR: Could not load classifier cascade for face detection!";
+			faceDetectionIsEnabled = false;
+			// disable checkBoxes in the GUI
+			emit disableFaceDetection();
+		}
+		else
+		{
+			// creates an empty memory storage
+			storage = cvCreateMemStorage(0);
+			
+			
+			//-----------------------------
+			// for later face detection:
+			//-----------------------------
+			
+			// create a blank gray scale image with same size
+			gray = cvCreateImage( cvSize(width, height), 8, 1 );
+			
+			// create a blank small image with the same size
+			small_img = cvCreateImage( cvSize( cvRound(width/scale), cvRound(height/scale)), 8, 1 );
+		}
 	}
 }
 
