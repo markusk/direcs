@@ -147,6 +147,9 @@ void CamThread::run()
 				// detect objects in the gray image
 				faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0, cvSize(30, 30) );
 				
+				//-----------------
+				// faces detected
+				//-----------------
 				if (faces->total > 0)
 				{
 					// put some information to top left
