@@ -47,7 +47,6 @@ class Motor : public QObject
 		@param motor is the motor number.
 		@return The revolutions made of a motor (stored in the microcontroller till power off).
 		*/
-		// TODO: change to one method?!?
 		unsigned int getRevolutions(unsigned char motor);
 		
 		/**
@@ -75,7 +74,7 @@ class Motor : public QObject
 		@param steps are the number of steps.
 		void makeSteps(int steps);
 
-		void parkStepper(unsigned char motor); // FIXME: park steppers uin a safe position!
+		void parkStepper(unsigned char motor);
 		*/
 
 	public slots:
