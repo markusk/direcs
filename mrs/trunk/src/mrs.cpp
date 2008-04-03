@@ -42,6 +42,7 @@ Mrs::Mrs()
 	//speakThread = new SpeakThread();
 	#endif
 	mutex = new QMutex();
+	gui = new Gui();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
 	motors = new Motor(interface1, mutex);
@@ -55,10 +56,6 @@ Mrs::Mrs()
 	camThread = new CamThread();
 	joystick = new Joystick();
 	head = new Head(servos);
-	
-	
-	gui = new Gui();
-
 	
 	
 	//------------------------------------------------------------------
@@ -142,6 +139,12 @@ Mrs::Mrs()
 	// let the GUI show servo messages in the log
 	//--------------------------------------------------------------------------
 	connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+	
+	//-------------------------------------------------------------------------------------
+	// disable face detection in the GUI, on error with loading haar cascade in CamThread
+	// Must be before readSettings!
+	//-------------------------------------------------------------------------------------
+	connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() ));
 	
 	
 	//----------------------------------------------------------------------------
@@ -1605,6 +1608,38 @@ void Mrs::readSettings()
 			//
 			laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
 			gui->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
+		}
+	}
+
+	//---------------------------------------------------------------------
+	// read setting
+	QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
+	
+	if (haarClassifierCascade == "error2")
+	{
+		camThread->setCascadePath("none");
+		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+	}
+	else
+	{
+		if (haarClassifierCascade == "error1")
+		{
+			camThread->setCascadePath("none");
+			gui->appendLog("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
+		}
+		else
+		{
+			//
+			// everything okay
+			//
+			// prepend program path to cascade path!
+			//haarClassifierCascade.prepend("/");
+			//haarClassifierCascade.prepend(inifile1->checkPath());
+			
+			// set it in the cam thread
+			camThread->setCascadePath(haarClassifierCascade);
+			
+			gui->appendLog(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
 		}
 	}
 	
