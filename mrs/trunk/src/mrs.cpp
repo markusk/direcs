@@ -565,20 +565,18 @@ void Mrs::shutdown()
 			head->look("NORMAL");
 			head->look("DOWN");
 		}
-		
-		/*
-		if (ClientSocket1->Active == true)
-		{
-		ClientSocket1->Close();
-		ClientSocket1->Active = false;
-		}
-		*/
 	
-		// TODO: put this to a saveSetings()
 		//---------------------------------------------------------------
 		// save changes to ini-file (if check box is checked!)
 		//---------------------------------------------------------------
-		if (gui->getCheckBoxSaveSettings()== Qt::Checked)
+		// THIS SETTING HAS TO BE SAVED ALWAYS!
+		// "Save the setting, that no settings shoud be saved"
+		//
+		// save check box status
+		inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
+
+
+		if (gui->getCheckBoxSaveSettings() == Qt::Checked)
 		{
 			gui->appendLog("Writing settings...");
 	
@@ -605,14 +603,6 @@ void Mrs::shutdown()
 	
 			//QMessageBox::information(0, "mrs", "Settings written. :-)", QMessageBox::Ok);
 			gui->appendLog("Settings written.");
-		}
-		else
-		{
-			// THIS SETTING HAS TO BE SAVED ALWAYS!
-			// "Save the setting, that no settings shoud be saved"
-			//
-			// save check box status
-			inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
 		}
 	
 	
