@@ -234,7 +234,7 @@ Mrs::Mrs()
 	// init the robots circuit
 	circuit1->initCircuit();
 	
-	if (circuit1->isConnected() == true)
+	if (robotIsOn)
 	{
 		gui->appendLog("Robot is ON and answers.");
 	}
@@ -996,7 +996,8 @@ void Mrs::shutdown()
 			}
 		}
 	
-	
+/*
+		removed for still "head looking down"!!	
 		//-------------------------------------------------------
 		// Last init for the robots circuits
 		//-------------------------------------------------------
@@ -1005,7 +1006,7 @@ void Mrs::shutdown()
 		{
 			circuit1->initCircuit();
 		}
-	
+*/
 		//-----------------------------
 		// close serial port to mc
 		//-----------------------------
