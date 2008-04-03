@@ -230,50 +230,48 @@ Mrs::Mrs()
 	connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 	connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 	
+	//----------------------------------------------------------------------------
+	// connect plotThread signal to "setPlotData"
+	// (Whenever the plot thread has new data, the data are show in the GUI)
+	//----------------------------------------------------------------------------
+	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
 	
+	//----------------------------------------------------------------------------
+	// let the GUI show messages in the log (e.g. when special buttons pressed)
+	//----------------------------------------------------------------------------
+	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
+
+
+	//==========================================
 	// init the robots circuit
+	//==========================================
 	circuit1->initCircuit();
-	
+
+
 	if (robotIsOn)
 	{
 		gui->appendLog("Robot is ON and answers.");
-	}
-	else
-	{
-		gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-	}
-
-	
-	//-------------------------------------------------------
-	// set the read motor speed
-	//-------------------------------------------------------
-	if (circuit1->isConnected())
-	{
-		// tell the microcontroller the motor speed
+		
+		//-------------------------------------------------------
+		// set the read motor speed
+		//-------------------------------------------------------
 		motors->setMotorSpeed(1, mot1Speed);
 		motors->setMotorSpeed(2, mot2Speed);
 		motors->setMotorSpeed(3, mot3Speed);
 		motors->setMotorSpeed(4, mot4Speed);
 		gui->appendLog("Motor speed set in microcontroller");
-	}
 	
-	
-	//-------------------------------------------------------
-	// move all servos in their default positions
-	//-------------------------------------------------------
-	if (circuit1->isConnected())
-	{
+		//-------------------------------------------------------
+		// move all servos in their default positions
+		//-------------------------------------------------------
 		servos->init();
 		gui->appendLog("Servos moved to default positions");
 		//gui->appendLog("Servos **NOT** moved to default positions");
-	}
-
 	
-	//-----------------------------------------------------------
-	// start the sensor thread ("clock" for reading the sensors)
-	//-----------------------------------------------------------
-	if (circuit1->isConnected())
-	{
+		//-----------------------------------------------------------
+		// start the sensor thread ("clock" for reading the sensors)
+		//-----------------------------------------------------------
 		if (sensorThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting sensor thread..."), somewhere, splashColor);
@@ -282,19 +280,10 @@ Mrs::Mrs()
 			gui->appendLog("Sensor thread started.");
 			//gui->appendLog("Sensor thread ****NOT*** started.");
 		}
-	}
-	else
-	{
-		// show message
-		gui->appendLog("Sensor thread NOT started!");
-	}
-
-
-	//-----------------------------------------------------------
-	// start the plot thread ("clock" for plotting the curves)
-	//-----------------------------------------------------------
-	if (circuit1->isConnected())
-	{
+	
+		//-----------------------------------------------------------
+		// start the plot thread ("clock" for plotting the curves)
+		//-----------------------------------------------------------
 		if (plotThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting plot thread..."), somewhere, splashColor);
@@ -302,29 +291,10 @@ Mrs::Mrs()
 			plotThread->start();
 			gui->appendLog("Plot thread started.");
 		}
-	}
-	else
-	{
-		// show message
-		gui->appendLog("Plot thread NOT started!");
-	}
-
-	//----------------------------------------------------------------------------
-	// connect plotThread signal to "setPlotData"
-	// (Whenever the plot thread has new data, the data are show in the GUI)
-	//----------------------------------------------------------------------------
-	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
-	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
-
 	
-	//-----------------------------------------------------------
-	// check if joystick is connected
-	//-----------------------------------------------------------
-	// let the GUI show messages in the log (e.g. when special buttons pressed)
-	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
-	
-	if (joystick->isConnected())
-	{
+		//-----------------------------------------------------------
+		// check if joystick is connected
+		//-----------------------------------------------------------
 		// start the joystick thread
 		if (joystick->isRunning() == false)
 		{
@@ -336,8 +306,12 @@ Mrs::Mrs()
 	}
 	else
 	{
+		gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+		gui->appendLog("Sensor thread NOT started!");
+		gui->appendLog("Plot thread NOT started!");
 		gui->appendLog("Joystick thread NOT started!");
 	}
+
 
 	//----------------------------------------------------------------------------
 	// drive in the direction which was emited
@@ -544,7 +518,7 @@ Mrs::Mrs()
 	QDesktopWidget *desktop = QApplication::desktop();
 
 	//------------------------------------------------------------------
-	// place gui window at a nice position on the screen
+	// TODO: place gui window at a nice position on the screen
 	//------------------------------------------------------------------
 	/*
 	if (desktop->width() > 1024)
@@ -586,7 +560,7 @@ void Mrs::shutdown()
 		splash->showMessage(QObject::tr("Shutting down..."), somewhere, splashColor);
 	
 		// just 4 fun
-		if (circuit1->isConnected())
+		if (robotIsOn)
 		{
 			head->look("NORMAL");
 			head->look("DOWN");
@@ -1002,7 +976,7 @@ void Mrs::shutdown()
 		// Last init for the robots circuits
 		//-------------------------------------------------------
 		gui->appendLog("Last circuit init...");
-		if (circuit1->isConnected())
+		if (robotIsOn)
 		{
 			circuit1->initCircuit();
 		}
@@ -1282,7 +1256,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 		//head->look("NORMAL");
 		emit showFaceTrackDirection("NONE");
 		
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
@@ -1300,7 +1274,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track left
 	if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("LEFT");
 			/*
@@ -1315,7 +1289,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track right
 	if ( (faceX > xLevelRight) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("RIGHT");
 			/*
@@ -1330,7 +1304,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track up
 	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY < yLevelUp) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("UP");
 			/*
@@ -1345,7 +1319,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track up left
 	if ( (faceX < xLevelLeft) && (faceY < yLevelUp) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("UPLEFT");
 			/*
@@ -1360,7 +1334,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track up right
 	if ( (faceX > xLevelLeft) && (faceY < yLevelUp) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("UPRIGHT");
 			/*
@@ -1375,7 +1349,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track down
 	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY > yLevelDown) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("DOWN");
 			/*
@@ -1390,7 +1364,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track down left
 	if ( (faceX < xLevelLeft) && (faceY > yLevelDown) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("DOWNLEFT");
 			/*
@@ -1405,7 +1379,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track down right
 	if ( (faceX > xLevelRight) && (faceY > yLevelDown) )
 	{
-		if ( circuit1->isConnected() && (faceTrackingIsEnabled) )
+		if ( robotIsOn && (faceTrackingIsEnabled) )
 		{
 			head->look("DOWNRIGHT");
 			/*
@@ -1490,7 +1464,7 @@ void Mrs::drive(const unsigned char command)
 			return;
 			break;
 		case START:
-			if (circuit1->isConnected())
+			if (robotIsOn)
 			{
 				robotDrives = true;
 				gui->appendLog("Starting to drive forward...");
@@ -2363,7 +2337,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->setServoPosition( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
 				servos->setServoPosition( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
 				
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 					servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 					servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
@@ -2413,7 +2387,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				// right eye
 				servos->setServoPosition( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 				
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 					servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 					servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
@@ -2554,7 +2528,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 					servos->moveServo(currentTestServo, servos->getServoPosition(currentTestServo));
 				}
@@ -2589,7 +2563,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			// move, when button is pressed
 			if (axisValue != 0)
 			{
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 					//gui->appendLog("Tilting Cam...");
 				}
@@ -2598,7 +2572,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			// stop, when button is pressed!
 			if (axisValue == 0)
 			{
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 					//gui->appendLog("Tilt stop.");
 					motors->motorControl(MOTOR4, OFF, SAME);
@@ -2668,7 +2642,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 //					servos->moveServo(SERVO1, servo1Pos);
 				}
@@ -2703,7 +2677,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			// move, when button is pressed
 			if (axisValue != 0)
 			{
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 					//gui->appendLog("Panning Cam...");
 				}
@@ -2712,7 +2686,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			// stop, when button is pressed!
 			if (axisValue == 0)
 			{
-				if (circuit1->isConnected() == true)
+				if (robotIsOn)
 				{
 					//gui->appendLog("Pan stop.");
 					motors->motorControl(MOTOR3, OFF, SAME);
@@ -2910,7 +2884,7 @@ void Mrs::setSimulationMode(bool status)
 	else
 	{
 		// if robot is OFF stop all threads which read from the circuit!
-		if (circuit1->isConnected() == false)
+		if (robotIsOn == false)
 		{
 			sensorThread->stop();
 			gui->appendLog("Sensor thread stopped.");
