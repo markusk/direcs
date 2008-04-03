@@ -793,9 +793,9 @@ int SensorThread::getMotorSensorValue(int sensor)
 }
 
 
-void SensorThread::setSimulationMode(bool status)
+void SensorThread::setSimulationMode(bool state)
 {
-	simulationMode = status;
+	simulationMode = state;
 	
 	// fill array with some nice values
 	if (simulationMode == true)

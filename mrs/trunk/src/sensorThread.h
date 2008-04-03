@@ -104,8 +104,7 @@ class SensorThread : public QThread
 		@param status can be true or false.
 		@sa Gui::simulate()
 		*/
-		// TODO:: change status to state
-		void setSimulationMode(bool status);
+		void setSimulationMode(bool state);
 
 
 	signals:
