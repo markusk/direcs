@@ -82,388 +82,366 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 	mutex->lock();
 	
-	// TODO: change to 'case' instrcution
-	//-------------------------
-	// if motor 1
-	//------------------------
-	if (motor == MOTOR1)
+	switch (motor)
 	{
-		if (power == ON)
-		{
-			// Motors with gearings don't have to be turned on!
-			// 
-			// (This function is obsolete because of no longer using stepping motors)
-		}
-	
-		if (power == OFF)
-		{
-			// turn off the MOTOR -> break!
-			if (interface1->sendChar(MOTOR1_OFF) == false)
+		//-------------------------
+		// Motor 1
+		//-------------------------
+		case MOTOR1:
+			if (power == ON)
 			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				// Motors with gearings don't have to be turned on!
+				// 
+				// (This function is obsolete because of no longer using stepping motors)
 			}
-		}
-	
-		if (direction == CLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR1_CLOCKWISE) == false)
+			else
 			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				// turn off the MOTOR -> break!
+				if (interface1->sendChar(MOTOR1_OFF) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
 			}
-		}
+	
+			if (direction == CLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(MOTOR1_CLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
 		
-		if (direction == COUNTERCLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR1_COUNTERCLOCKWISE) == false)
+			if (direction == COUNTERCLOCKWISE)
 			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				// set the direction
+				if (interface1->sendChar(MOTOR1_COUNTERCLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
 			}
-		}
+				
+			if (direction == SAME)
+			{
+				// don't change the direction (motor was only turned on or off)!
+			}
+	
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
+		
+			break;
+ 
+
+		//-------------------------
+		// Motor 2
+		//-------------------------
+		case MOTOR2:
+			if (power == ON)
+			{
+				// Motors with gearings don't have to be turned on!
+				// 
+				// (This function is obsolete because of no longer using stepping motors)
+			}
+			else	
+			{
+				// set the direction
+				if (interface1->sendChar(MOTOR2_OFF) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+	
+			//
+			//   A T T E N T I O N :
+			//
+			//   Because of the right-left reversed mounting of one of the motors
+			//   the control-logic for CLOCKWISE and COUNTERCLOCKWISE could be used 
+			//   reversed in this method. And only in this method!
+			//   Because of this reversed logic the commands could swapped here!
+			//   (counterclockwise = clockwise and vice versa)
+			//   THIS HAS ONLY TO BE DONE, WHEN THE MOTORS ARE WIRED EXACTLY THE SAME!
+			//   black = minus	red = plus	->	on both motors identically!
+			//
+			if (direction == CLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(MOTOR2_CLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
 			
-		if (direction == SAME)
-		{
-			// don't change the direction (motor was only turned on or off)!
-		}
-
-		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-		mutex->unlock();
-		
-		return;
-		
-	} // MOTOR1
- 
- 
-	//-------------------------
-	// If motor 2
-	//-------------------------
-	if (motor == MOTOR2)
-	{
-		if (power == ON)
-		{
-			// Motors with gearings don't have to be turned on!
-			// 
-			// (This function is obsolete because of no longer using stepping motors)
-		}
-	
-		if (power == OFF)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR2_OFF) == false)
+			if (direction == COUNTERCLOCKWISE)
 			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				// set the direction
+				// set the direction
+				if (interface1->sendChar(MOTOR2_COUNTERCLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
 			}
-		}
-	
-		//
-		//   A T T E N T I O N :
-		//
-		//   Because of the right-left reversed mounting of one of the motors
-		//   the control-logic for CLOCKWISE and COUNTERCLOCKWISE could be used 
-		//   reversed in this method. And only in this method!
-		//   Because of this reversed logic the commands could swapped here!
-		//   (counterclockwise = clockwise and vice versa)
-		//   THIS HAS ONLY TO BE DONE, WHEN THE MOTORS ARE WIRED EXACTLY THE SAME!
-		//   black = minus	red = plus	->	on both motors identically!
-		//
-		if (direction == CLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR2_CLOCKWISE) == false)
-			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
-		
-		if (direction == COUNTERCLOCKWISE)
-		{
-			// set the direction
-			// set the direction
-			if (interface1->sendChar(MOTOR2_COUNTERCLOCKWISE) == false)
-			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
-		
-		if (direction == SAME)
-		{
-			// don't change the direction (motor was only turned on or off)!
-		}
-		
-		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-		mutex->unlock();
-		
-		return;
-	} // MOTOR2
-
-	
-	//-------------------------
-	// if motor 3
-	//------------------------
-	if (motor == MOTOR3)
-	{
-		if (power == ON)
-		{
-			// Motors with gearings don't have to be turned on!
-			// 
-			// (This function is obsolete because of no longer using stepping motors)
-		}
-	
-		if (power == OFF)
-		{
-			// turn off the MOTOR -> break!
-			if (interface1->sendChar(MOTOR3_OFF) == false)
-			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
-	
-		if (direction == CLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR3_CLOCKWISE) == false)
-			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
-		
-		if (direction == COUNTERCLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR3_COUNTERCLOCKWISE) == false)
-			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
 			
-		if (direction == SAME)
-		{
-			// don't change the direction (motor was only turned on or off)!
-		}
-
-		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-		mutex->unlock();
-		
-		return;
-		
-	} // MOTOR3
-
-	
-	//-------------------------
-	// if motor 4
-	//------------------------
-	if (motor == MOTOR4)
-	{
-		if (power == ON)
-		{
-			// Motors with gearings don't have to be turned on!
-			// 
-			// (This function is obsolete because of no longer using stepping motors)
-		}
-	
-		if (power == OFF)
-		{
-			// turn off the MOTOR -> break!
-			if (interface1->sendChar(MOTOR4_OFF) == false)
+			if (direction == SAME)
 			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				// don't change the direction (motor was only turned on or off)!
 			}
-		}
-	
-		if (direction == CLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR4_CLOCKWISE) == false)
-			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
-		
-		if (direction == COUNTERCLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(MOTOR4_COUNTERCLOCKWISE) == false)
-			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
-			}
-		}
 			
-		if (direction == SAME)
-		{
-			// don't change the direction (motor was only turned on or off)!
-		}
-
-		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-		mutex->unlock();
-
-		return;
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
 		
-	} // MOTOR4
- 
- 
+			break;
+
+
+		//-------------------------
+		// Motor 3
+		//------------------------
+		case MOTOR3:
+			if (power == ON)
+			{
+				// Motors with gearings don't have to be turned on!
+				// 
+				// (This function is obsolete because of no longer using stepping motors)
+			}
+			else
+			{
+				// turn off the MOTOR -> break!
+				if (interface1->sendChar(MOTOR3_OFF) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+		
+			if (direction == CLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(MOTOR3_CLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+			
+			if (direction == COUNTERCLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(MOTOR3_COUNTERCLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+				
+			if (direction == SAME)
+			{
+				// don't change the direction (motor was only turned on or off)!
+			}
 	
-	/*
-	//-------------------------
-	// if stepper motor 1
-	//------------------------
-	if (motor == STEPPER1)
-	{
-		if (power == ON)
-		{
-			// turn on stepper 1
-			if (interface1->sendChar(STEPPER1_ON) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
-			}
-		}
-		
-		if (power == OFF)
-		{
-			// turn off stepper 1
-			if (interface1->sendChar(STEPPER1_OFF) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
-			}
-		}
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
+			
+			break;
 
-		if (direction == CLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(STEPPER1_CLOCKWISE) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
-			}
-		}
-		
-		if (direction == COUNTERCLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(STEPPER1_COUNTERCLOCKWISE) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
-			}
-		}
-		
-		if (direction == SAME)
-		{
-			// don't change the direction (motor was only turned on or off)!
-		}
 
-	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-	mutex->unlock();
+		//-------------------------
+		// Motor 4
+		//------------------------
+		case MOTOR4:
+			if (power == ON)
+			{
+				// Motors with gearings don't have to be turned on!
+				// 
+				// (This function is obsolete because of no longer using stepping motors)
+			}
+			else
+			{
+				// turn off the MOTOR -> break!
+				if (interface1->sendChar(MOTOR4_OFF) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+		
+			if (direction == CLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(MOTOR4_CLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+			
+			if (direction == COUNTERCLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(MOTOR4_COUNTERCLOCKWISE) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+			}
+				
+			if (direction == SAME)
+			{
+				// don't change the direction (motor was only turned on or off)!
+			}
 	
-	return;
-		
-	} // STEPPER1
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
 	
-	//-------------------------
-	// if stepper motor 2
-	//------------------------
-	if (motor == STEPPER2)
-	{
-		if (power == ON)
-		{
-			// turn on stepper 2
-			if (interface1->sendChar(STEPPER2_ON) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
-			}
-		}
-		
-		if (power == OFF)
-		{
-			// turn off stepper 2
-			if (interface1->sendChar(STEPPER2_OFF) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
-			}
-		}
+			break;
 
-		if (power == CLOCK)
-		{
-			// make a stepper with every enabled motor
-			if (interface1->sendChar(STEPPER_CLOCK) == false)
+
+/*
+		//-------------------------
+		// stepper 1
+		//------------------------
+		case STEPPER1:
+			if (power == ON)
 			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
+				// turn on stepper 1
+				if (interface1->sendChar(STEPPER1_ON) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
 			}
-		}
-		
-		if (direction == CLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(STEPPER2_CLOCKWISE) == false)
+			else
 			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
+				// turn off stepper 1
+				if (interface1->sendChar(STEPPER1_OFF) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
 			}
-		}
-		
-		if (direction == COUNTERCLOCKWISE)
-		{
-			// set the direction
-			if (interface1->sendChar(STEPPER2_COUNTERCLOCKWISE) == false)
-			{
-				//qDebug("ERROR sending to serial port (Motor)");
-				//return;
-			}
-		}
-		
-		if (direction == SAME)
-		{
-			// don't change the direction (motor was only turned on or off)!
-		}
 	
-		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-		mutex->unlock();
-
-		return;
+			if (direction == CLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(STEPPER1_CLOCKWISE) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
+			}
+			
+			if (direction == COUNTERCLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(STEPPER1_COUNTERCLOCKWISE) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
+			}
+			
+			if (direction == SAME)
+			{
+				// don't change the direction (motor was only turned on or off)!
+			}
+	
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
 		
-	} // STEPPER2
-	*/
+			break;
+
+
+		//-------------------------
+		// stepper 2
+		//------------------------
+		case STEPPER2:
+			if (power == ON)
+			{
+				// turn on stepper 2
+				if (interface1->sendChar(STEPPER2_ON) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
+			}
+			else
+			{
+				// turn off stepper 2
+				if (interface1->sendChar(STEPPER2_OFF) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
+			}
+	
+			if (power == CLOCK)
+			{
+				// make a stepper with every enabled motor
+				if (interface1->sendChar(STEPPER_CLOCK) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
+			}
+			
+			if (direction == CLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(STEPPER2_CLOCKWISE) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
+			}
+			
+			if (direction == COUNTERCLOCKWISE)
+			{
+				// set the direction
+				if (interface1->sendChar(STEPPER2_COUNTERCLOCKWISE) == false)
+				{
+					//qDebug("ERROR sending to serial port (Motor)");
+					//return;
+				}
+			}
+			
+			if (direction == SAME)
+			{
+				// don't change the direction (motor was only turned on or off)!
+			}
+		
+			// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+			mutex->unlock();
+	
+			break;
+*/
 }
 
 
