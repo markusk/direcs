@@ -157,6 +157,10 @@ Gui::~Gui()
 
 void Gui::closeEvent(QCloseEvent *event)
 {
+	// no compiler warning "unused"
+	Q_UNUSED(event);
+	
+	
 	//qDebug("closeEvent");
 	emit shutdown();
 }
@@ -164,13 +168,13 @@ void Gui::closeEvent(QCloseEvent *event)
 
 void Gui::on_btnExit_clicked()
 {
-	emit shutdown();
+	close();
 }
 
 
 void Gui::on_actionExit_activated()
 {
-	emit shutdown();
+	close();
 }
 
 
