@@ -346,24 +346,22 @@ class Gui : public QMainWindow
 		
 		/**
 		Enables or disables the listening for the robot remote control. This signal is sent from the remote control button.
-		@param status can be true or false.
+		@param state can be true or false.
 		@sa NetworkThread()
 		*/
-		// TODO: change name to 'state'
-		void enableRemoteControlListening(bool status);
+		void enableRemoteControlListening(bool state);
 	
 		/**
 		Enables or disables the robots simulation mode.
 		This signal is sent from the simulation button and received from all threads which deliver real signals from the bot.
 		Once the signal is received, the slots switches to simulation mode.
-		@param status can be true or false.
+		@param state can be true or false.
 		@sa Mrs::setSimulationMode()
 		@sa SensorThread::setSimulationMode()
 		@sa LaserThread::setSimulationMode()
 		@sa ObstackeCheckThread::setSimulationMode()
 		*/
-		// TODO: change name to 'state'
-		void simulate(bool status);
+		void simulate(bool state);
 
 		/**
 		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.

@@ -2135,12 +2135,12 @@ void Mrs::readSettings()
 }
 
 
-void Mrs::enableRemoteControlListening(bool status)
+void Mrs::enableRemoteControlListening(bool state)
 {
 	// store the state gobal to Mrs
-	robotRemoteMode = status;
+	robotRemoteMode = state;
 
-	if (status == true)
+	if (state == true)
 	{
 		//-----------------------------------------------------------
 		// start the network thread (getting commands via network)
