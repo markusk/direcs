@@ -931,8 +931,6 @@ void Mrs::shutdown()
 	}
 		*/
 		
-		// Todo: CamThread sauber beenden!!
-	
 		//--------------------------
 		// quit the sensor thread
 		//--------------------------
