@@ -63,6 +63,7 @@ Mrs::Mrs()
 	//------------------------------------------------------------------
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
+	robotIsOn = false;
 	robotDrives = false;
 	mot1Speed = 0;
 	mot2Speed = 0;
@@ -93,6 +94,12 @@ Mrs::Mrs()
 	// show a QMessage wth the possibility to exit the main programm, when errors occured!
 	//--------------------------------------------------------------------------
 	connect(interface1, SIGNAL(tooMuchErrors()), this, SLOT(showExitDialog()));
+	
+	//--------------------------------------------------------------------------
+	// let some classes know the robots state
+	//--------------------------------------------------------------------------
+	connect(circuit1, SIGNAL( robotState(bool) ), this, SLOT( setRobotState(bool) ));
+	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 	
 	//--------------------------------------------------------------------------
 	// shutdown Mrs program on exit button
@@ -2909,6 +2916,12 @@ void Mrs::setSimulationMode(bool status)
 		}
 		gui->appendLog("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
+}
+
+
+void Mrs::setRobotState(bool state)
+{
+	robotIsOn = state;
 }
 
 

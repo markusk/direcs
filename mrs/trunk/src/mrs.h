@@ -128,6 +128,12 @@ class Mrs : public QObject
 		void finishSplash();
 		
 		/**
+		This slot sets (stores) the robots (circuits) state within this class.
+		@param state can be ON or OFF
+		 */
+		void setRobotState(bool state);
+		
+		/**
 		Speaks a text with festival. All HTML-Code in the parameter (text) is also removed internally).
 		@param text is the text to speak.
 		*/
@@ -203,6 +209,7 @@ class Mrs : public QObject
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
 		QString commaSeparator;
+		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; //! Stores the robots simulation state
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
