@@ -96,10 +96,6 @@ class LaserThread : public QThread
 		*/
 		static const unsigned char LASERSCANNERARRAYSIZE = 180;
 		
-		/**
-		The first column of this array is the measured distance to an object (the length of the real laser line in meter (m)).
-		The second column is an flag if an obstacle is detected (the distance is to small from the robot to an object)
-		*/
 		QList <float> laserScannerValuesFront;  /** The measured distances from the front laser scanner. */
 		QList <float> laserScannerValuesRear;  /** The measured distances from the rear laser scanner. */
 		QList <int> laserScannerFlagsFront;  /** Some flags for each front laser line (like "free way", "obstacle" etc. */
