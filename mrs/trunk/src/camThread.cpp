@@ -9,51 +9,17 @@ CamThread::CamThread() : QThread()
 	faceDetectionIsEnabled = true;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
-	//frame = new IplImage();
+	cameraDevice = -2; // -2, because of -1 is the default device!
 	imgPtr = new IplImage();
 	contactAlarmTop = false;
 	contactAlarmBottom = false;
 	contactAlarmLeft = false;
 	contactAlarmRight = false;
-
-	
-	//------------------------------------------
-	// try to capture from the first camera (0)
-	//------------------------------------------
-	// TODO: put filenam to ini file
-	capture = cvCaptureFromCAM(0);
-	
-	if (!capture)
-	{
-		qDebug("INFO: could not initialize capturing from /dev/video0. No camera connected?");
-		width=0;
-		height=0;
-		pixeldepth = 0;
-		cameraIsOn = false;
-		stopped = true;
-		
-	}
-	else
-	{
-		cameraIsOn = true;
-
-		//--------------------------------------------
-		// retrieve image (camera) size and store it!
-		//--------------------------------------------
-		imgPtr = cvRetrieveFrame(capture);
-
-		// get width and height & Co.
-		width = imgPtr->width;
-		height = imgPtr->height;
-		pixeldepth = (imgPtr->nChannels * imgPtr->depth);
-	}
 }
 
 
 CamThread::~CamThread()
 {
-	//delete frame;
-	
 	// FIXME: delete SIGSEV!
 	//delete imgPtr;
 }
@@ -356,12 +322,58 @@ void CamThread::setCascadePath(QString haarClassifierCascade)
 }
 
 
+void CamThread::setCameraDevice(int device)
+{
+	cameraDevice = device;
+	
+	// on error
+	if (cameraDevice == -2)
+	{
+		stopped = true;
+		initDone = true;
+		cameraIsOn = false;
+	}
+}
+
+
 void CamThread::init()
 {
-	if ( (cameraIsOn == true) && (initDone == false) )
+	//if ( (cameraIsOn == true) && (initDone == false) )
+	if (initDone == false)
 	{
 		// do only *one* init!
 		initDone = true;
+
+		//-----------------
+		// try to capture
+		//-----------------
+		capture = cvCaptureFromCAM(cameraDevice);
+		
+		if (!capture)
+		{
+			qDebug("INFO: could not initialize capturing from /dev/video%d. No camera connected?", cameraDevice);
+			width=0;
+			height=0;
+			pixeldepth = 0;
+			cameraIsOn = false;
+			stopped = true;
+			// disable camera controls in the GUI
+			emit disableCamera();
+			return;
+		}
+		
+		cameraIsOn = true;
+	
+		//--------------------------------------------------
+		// retrieve an image ang get the size and store it!
+		//--------------------------------------------------
+		imgPtr = cvRetrieveFrame(capture);
+	
+		// get width and height & Co.
+		width = imgPtr->width;
+		height = imgPtr->height;
+		pixeldepth = (imgPtr->nChannels * imgPtr->depth);
+		
 	
 		//-----------------------------------------------------
 		// Load trained cascade of haar classifers from file.
@@ -378,13 +390,11 @@ void CamThread::init()
 		}
 		else
 		{
-			// creates an empty memory storage
-			storage = cvCreateMemStorage(0);
-			
-			
 			//-----------------------------
 			// for later face detection:
 			//-----------------------------
+			// creates an empty memory storage
+			storage = cvCreateMemStorage(0);
 			
 			// create a blank gray scale image with same size
 			gray = cvCreateImage( cvSize(width, height), 8, 1 );
