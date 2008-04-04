@@ -1139,6 +1139,14 @@ void Gui::disableFaceDetection()
 }
 
 
+void Gui::disableCamera()
+{
+	appendLog("Camera disabled!");
+	ui.dockCamera->setEnabled(false);
+	ui.dockCamera->hide();
+}
+
+
 void Gui::setCamImageData(int width, int height, int pixeldepth)
 {
 	// tell the OpenGLContext the image data

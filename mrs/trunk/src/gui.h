@@ -195,6 +195,12 @@ class Gui : public QMainWindow
 		void showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 		
 		/**
+		Disables camera controls in the GUI.
+		@sa CameraThread::setCameraDevice()
+		 */
+		void disableCamera();
+		
+		/**
 		Disables face detection checkBoxes in the GUI.
 		@sa CameraThread::setCascadePath()
 		 */
