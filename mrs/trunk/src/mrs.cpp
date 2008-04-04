@@ -161,6 +161,12 @@ void Mrs::init()
 	//-------------------------------------------------------------------------------------
 	connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() ));
 	
+	//-------------------------------------------------------------------------------------
+	// disable camera controls in the GUI, on error opeing the camera in the CamThread
+	// Must be before readSettings!
+	//-------------------------------------------------------------------------------------
+	connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() ));
+	
 	
 	//----------------------------------------------------------------------------
 	// say a text
@@ -1579,35 +1585,65 @@ void Mrs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
+	int cameraDevice = inifile1->readSetting("Config", "cameraDevice");
 	
-	if (haarClassifierCascade == "error2")
+	if (cameraDevice == -2)
 	{
-		camThread->setCascadePath("none");
+		camThread->setCameraDevice(-2);
 		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
-		if (haarClassifierCascade == "error1")
+		if (cameraDevice == -1)
 		{
-			camThread->setCascadePath("none");
-			gui->appendLog("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
+			camThread->setCameraDevice(-2);
+			gui->appendLog("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
 		}
 		else
 		{
 			//
 			// everything okay
 			//
-			// prepend program path to cascade path!
-			//haarClassifierCascade.prepend("/");
-			//haarClassifierCascade.prepend(inifile1->checkPath());
-			
 			// set it in the cam thread
-			camThread->setCascadePath(haarClassifierCascade);
+			camThread->setCameraDevice(cameraDevice);
 			
-			gui->appendLog(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
+			gui->appendLog(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
+
+
+			//---------------------------------------------------------------------
+			// read setting
+			QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
+	
+			if (haarClassifierCascade == "error2")
+			{
+				camThread->setCascadePath("none");
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			}
+			else
+			{
+				if (haarClassifierCascade == "error1")
+				{
+					camThread->setCascadePath("none");
+					gui->appendLog("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
+				}
+				else
+				{
+					//
+					// everything okay
+					//
+					// set it in the cam thread
+					camThread->setCascadePath(haarClassifierCascade);
+					gui->appendLog(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
+					
+					// initialise the cam
+					camThread->init();
+					gui->appendLog("Camera initialised.");
+				}
+			}
+			//---------------------------------------------------------------------
 		}
 	}
+
 	
 	//---------------------------------------------------------------------
 	// read setting / and error handling
