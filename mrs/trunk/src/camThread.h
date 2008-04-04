@@ -39,6 +39,12 @@ class CamThread : public QThread
 		@param haarClassifierCascade is the whole filename
 		 */
 		void setCascadePath(QString haarClassifierCascade);
+		
+		/**
+		Sets the camera device.
+		@param device is an integer value! 0 for the first vide device (e.g. /dev/video0). -2 if an error occured.
+		 */
+		void setCameraDevice(int device);
 
 		/**
 		Returns the image height of the camera. Retrieved in the constructor!
@@ -86,6 +92,11 @@ class CamThread : public QThread
 		Disables checkBoxes in the GUI
 		*/
 		void disableFaceDetection();
+		
+		/**
+		Disables camera controls in the GUI
+		 */
+		void disableCamera();
 
 
 		/**
@@ -103,9 +114,9 @@ class CamThread : public QThread
 		bool cameraIsOn;
 		bool faceDetectionIsEnabled;
 		bool faceDetectionWasActive;
+		int cameraDevice;
 		QString haarClassifierCascadeFilename;
 		CvScalar hsv2rgb( float hue );
-		//IplImage *frame;
 		IplImage *imgPtr;
 		int width;
 		int height;
