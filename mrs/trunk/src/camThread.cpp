@@ -9,12 +9,15 @@ CamThread::CamThread() : QThread()
 	faceDetectionIsEnabled = true;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
-	cameraDevice = -2; // -2, because of -1 is the default device!
+	cameraDevice = -2; // -2, because of -1 is a default device!
 	imgPtr = new IplImage();
 	contactAlarmTop = false;
 	contactAlarmBottom = false;
 	contactAlarmLeft = false;
 	contactAlarmRight = false;
+
+	// size and init the vector
+	detectedFaces.resize(FACEARRAYSIZE);
 }
 
 
@@ -44,7 +47,8 @@ void CamThread::run()
 	int faceRadius = 0;
 	static int lastFaceX = 0;
 	static int lastFaceY = 0;
-	static int faceDetecter = 0;
+	QTime timestamp;
+	int counter = FACEARRAYSIZE - 1;
 	CvFont font;
 	//CvFont fontSmall;
 	QString text;
@@ -56,14 +60,18 @@ void CamThread::run()
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2);
 	//cvInitFont(&fontSmall, CV_FONT_HERSHEY_PLAIN, 0.2, 0.2, 0, 1);
 
-	
+
 	if (initDone==false)
 	{
 		// first load haar classifier cascade etc. ...
 		init();
 	}
-	
-	
+
+
+	// create a vector with n elements an initialise it with zeroes
+	//QVector <KOORD_T> detectedFaces(FACEARRAYSIZE);
+
+
 	//
 	//  start "threading"...
 	//
@@ -92,13 +100,28 @@ void CamThread::run()
 			//----------------------------------------
 			// face detection
 			//----------------------------------------
+	
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			if (counter > 0)
+			{
+				// get the actual date and time
+				timestamp = QTime::currentTime();
+			
+				// store the acutal second
+				detectedFaces[counter].x = timestamp.second();
+				//qDebug("vector.x 0=%d", detectedFaces.at(0).x);
+				
+				counter--;
+			}
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			
 			
 			// reset actual values for new detection
 			faceX = 0;
 			faceY = 0;
 			faceRadius = 0;
 			
-			// classifier cascade loaded in the constructor
+			// classifier cascade loaded in the init method
 			if ( (faceDetectionIsEnabled) && (cascade) )
 			{
 				// converts from BGR2 to to gray
@@ -116,10 +139,12 @@ void CamThread::run()
 				//-----------------
 				// faces detected
 				//-----------------
-				if (faces->total > 0)
+				if (faces->total >= 0)
 				{
+					
+					
 					// put some information to top left
-					//text = QString("Faces: %1 / Counter: %2").arg(faces->total).arg(faceDetecter);
+					//text = QString("Faces: %1").arg(faces->total);
 					//cvPutText( imgPtr, text.toAscii(), cvPoint(20, 25), &font, CV_RGB(64, 64, 255) );
 					
 					// draw a faceRectangle for each face
@@ -141,22 +166,6 @@ void CamThread::run()
 								( (faceCenter.x == lastFaceX) && (faceCenter.y == lastFaceY) ) ||
 								( (lastFaceY==0) && (lastFaceX==0) ) // <- only first time
 							)
-						{
-							// face detected again! :-)
-							faceDetecter++;
-							
-							// store the new coordinates of the actual (same) face
-							//lastFaceX = faceCenter.x;
-							//lastFaceY = faceCenter.y;
-							
-							// face detected more 2 times
-							if (faceDetecter > 2)
-							{
-								faceDetecter = 0;
-							
-								// set the lastFace to actual :-)
-								lastFaceX = faceCenter.x;
-								lastFaceY = faceCenter.y;
 */								
 								// the rect coordinates
 								rectStart.x = faceRectangle->x*scale;
@@ -165,31 +174,11 @@ void CamThread::run()
 								rectEnd.y = rectStart.y + faceRectangle->height*scale;
 								
 								// draw rectangles(s)
-/*
-								if (i==0)
-								{
-*/
-									// for emit signal TODO: why different emit variables. why not faceCenter.x and y?!?
-									faceX = faceCenter.x;
-									faceY = faceCenter.y;
-									// first face in white
-									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
-/*
-								}
-								else
-								{
-									// other faces in an other color
-									cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 255, 255));
-								}
-							}
-						}
-						else
-						{
-							// *not* the same face :-(
-							// reset the counter
-							faceDetecter = 0;
-						}
-*/
+								// for emit signal TODO: why different emit variables. why not faceCenter.x and y?!?
+								faceX = faceCenter.x;
+								faceY = faceCenter.y;
+								// first face in red
+								cvRectangle(imgPtr, rectStart, rectEnd, CV_RGB(255, 128, 128));
 					} // for each detected face
 				} // face detected
 				else
@@ -202,7 +191,6 @@ void CamThread::run()
 					faceRadius = 0;
 					lastFaceX = 0;
 					lastFaceY = 0;
-					//faceDetecter = 0;
 				}
 			
 				// show data in the gui and analyse the face data
@@ -421,4 +409,14 @@ int CamThread::imageHeight()
 int CamThread::imagePixelDepth()
 {
 	return pixeldepth;
+}
+
+
+void CamThread::test()
+{
+	qDebug("test okay. size=%d", detectedFaces.size());
+	for (int i = 0; i < detectedFaces.size(); ++i)
+	{
+		qDebug("second%d = %d", i, detectedFaces.at(i).x);
+	}
 }

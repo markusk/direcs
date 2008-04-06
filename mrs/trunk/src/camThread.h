@@ -14,6 +14,15 @@
 #include <ctype.h>
 //-------------------------------------------------------------------
 
+typedef struct
+{
+	int x;
+	int y;
+	int radius;
+	int rank;
+} KOORD_T;
+
+
 /*!
 \brief This class gets a live picture from a connected camera.
 This class uses the Open Source Computer Vision Library for grabbing the pictures and also for face detection.
@@ -79,6 +88,11 @@ class CamThread : public QThread
 		@sa Gui::showContactAlarm()
 		 */
 		void drawContactAlarm(char position, bool state);
+		
+		/**
+		*/
+		void test();
+
 
 	
 	signals:
@@ -114,6 +128,7 @@ class CamThread : public QThread
 		bool cameraIsOn;
 		bool faceDetectionIsEnabled;
 		bool faceDetectionWasActive;
+		QVector <KOORD_T> detectedFaces; /** the coordinates of the last n detected faces */
 		int cameraDevice;
 		QString haarClassifierCascadeFilename;
 		CvScalar hsv2rgb( float hue );
@@ -131,10 +146,11 @@ class CamThread : public QThread
 		bool contactAlarmLeft;
 		bool contactAlarmRight;
 		volatile bool stopped;
-
+		
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
 		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
+		
 		static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480.
 		
 		// The position for the contact alarm in the camera image
@@ -142,6 +158,8 @@ class CamThread : public QThread
 		static const char RIGHT  = 1;
 		static const char TOP    = 2;
 		static const char BOTTOM = 3;
+		
+		static const int FACEARRAYSIZE = 24;
 };
 
 #endif
