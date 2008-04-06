@@ -281,7 +281,6 @@ void Mrs::init()
 		//-------------------------------------------------------
 		servos->init();
 		gui->appendLog("Servos moved to default positions");
-		//gui->appendLog("Servos **NOT** moved to default positions");
 	
 		//-----------------------------------------------------------
 		// start the sensor thread ("clock" for reading the sensors)
@@ -292,7 +291,6 @@ void Mrs::init()
 			gui->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
 			gui->appendLog("Sensor thread started.");
-			//gui->appendLog("Sensor thread ****NOT*** started.");
 		}
 	
 		//-----------------------------------------------------------
@@ -418,11 +416,6 @@ void Mrs::init()
 	
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui, SLOT(showJoystickButtons(int, bool)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
-
-	//----------------------------------------------------------------------------
-	// this is for the robots head
-	//----------------------------------------------------------------------------
-	// connect(this, SIGNAL( look(QString)), head, SLOT( look(QString) )); not longer in use. using direct call head->look() !!
 
 	
 	//-----------------------------------------------------------
@@ -555,6 +548,9 @@ void Mrs::init()
 
 	// show the gui
 	gui->show();
+	
+	// one time init for the laser view
+	gui->initLaserView();
 }
 
 
@@ -2745,7 +2741,6 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 
 void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 {
-	static bool toggle0 = false;
 	static bool toggle1 = false;
 	/*
 	static bool toggle2 = false;
@@ -2956,7 +2951,6 @@ void Mrs::test()
 {
 //	static bool toggle = OFF;
 	
-	static int counter = 3;
 	
 	/*
 	if (toggle == OFF)
