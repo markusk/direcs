@@ -163,8 +163,12 @@ class Gui : public QMainWindow
 		*/
 		void setCamImageData(int width, int height, int pixeldepth);
 
+		/**
+		Initialise the laser view (find the middle of the now fresh shown control etc.)
+		*/
+		void initLaserView();
 
-	
+
 	public slots:
 		/**
 		Appends text to the main log in the main window.
@@ -420,7 +424,6 @@ class Gui : public QMainWindow
 		void on_btnEnableRemote_clicked();
 		void on_btnSimulate_clicked();
 		void on_sliderZoom_valueChanged(int);
-		void on_checkBoxAngleView_stateChanged(int);
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);
@@ -440,13 +443,15 @@ class Gui : public QMainWindow
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
 		
-		void switchToAngleView();
-		void switchToFlatView();
+		/**
+		Moves the laser lines to their correct x and y positions
+		*/
+		void setLaserLinesPositions();
 		
 		/**
 		Draws some help lines / distances / dimensons in the laser scanner view.
 		*/
-		void drawLaserDistances(bool flatView);
+		void drawLaserDistances();
 		
 		/**
 		Sets the bot picture to a nice position in the laser scanner view.
