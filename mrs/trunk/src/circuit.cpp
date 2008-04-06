@@ -47,7 +47,7 @@ void Circuit::initCircuit()
 	
 	firstInitDone = true;
 	robotIsOn = false;
-	qDebug("Robot is OFF.");
+	qDebug("INFO: Robot is OFF.");
 	emit robotState(false);
 }
 
