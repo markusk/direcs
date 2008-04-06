@@ -60,6 +60,8 @@ unsigned int Motor::getRevolutions(unsigned char motor)
 			return revolutions2;
 			break;
 	}
+	
+	return 0;
 }
 
 
@@ -74,6 +76,8 @@ double Motor::getDrivenDistance(unsigned char motor)
 			return drivenDistance2;
 			break;
 	}
+	
+	return 0;
 }
 
 
