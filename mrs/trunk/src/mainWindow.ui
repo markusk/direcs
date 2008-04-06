@@ -1943,6 +1943,12 @@
     <property name="title" >
      <string>&amp;File</string>
     </property>
+    <addaction name="actionDrive" />
+    <addaction name="actionReset" />
+    <addaction name="actionRemote" />
+    <addaction name="actionTest" />
+    <addaction name="actionSimulate" />
+    <addaction name="separator" />
     <addaction name="actionExit" />
    </widget>
    <widget class="QMenu" name="menuView" >
@@ -2345,21 +2351,6 @@
              </property>
             </spacer>
            </item>
-           <item>
-            <widget class="QCheckBox" name="checkBoxAngleView" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>180°</string>
-             </property>
-             <property name="checked" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
          <item>
@@ -2447,6 +2438,46 @@
    </property>
    <property name="text" >
     <string>Network Log</string>
+   </property>
+  </action>
+  <action name="actionDrive" >
+   <property name="icon" >
+    <iconset resource="../mrs.qrc" >:/images/images/underFootOne.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Drive</string>
+   </property>
+  </action>
+  <action name="actionReset" >
+   <property name="icon" >
+    <iconset resource="../mrs.qrc" >:/images/images/eraser.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Reset</string>
+   </property>
+  </action>
+  <action name="actionRemote" >
+   <property name="icon" >
+    <iconset resource="../mrs.qrc" >:/images/images/kwifimanager.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Remote</string>
+   </property>
+  </action>
+  <action name="actionTest" >
+   <property name="icon" >
+    <iconset resource="../mrs.qrc" >:/images/images/memory.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Test</string>
+   </property>
+  </action>
+  <action name="actionSimulate" >
+   <property name="icon" >
+    <iconset resource="../mrs.qrc" >:/images/images/kmplot.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Simulate</string>
    </property>
   </action>
  </widget>
