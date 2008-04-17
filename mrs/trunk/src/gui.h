@@ -583,6 +583,6 @@ class Gui : public QMainWindow
 		// Instead of 0,0 ?!?
 		static const int LASERDISTANCESTARTX = -50;
 		static const int LASERDISTANCESTARTY = -134;
-		static const int LASERDISTANCEDISTANCE = 10;
+		static const int LASERDISTANCEDISTANCE = 20;
 };
 #endif
