@@ -1299,10 +1299,23 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// store the actual scale
 	lastZoom = value;
 	
-	// position the bot
-	drawBotPicture();
 	
+	//------------------------------
+	// set the position of the bot
+	//------------------------------
+	// recalculate the middle position of the bot pixmap!
+	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
+	
+	// horizontal center
+	pixmapBot1->setPos(laserXPos, laserFrontYPos);
+	pixmapBot2->setPos(laserXPos, laserFrontYPos);
+	
+	appendLog(QString("sliderZoomValueChanged...bot x pos()=%1").arg(pixmapBot1->x()));
+	
+	
+	//------------------------------------------------
 	// change the y position of the laser lines, too
+	//------------------------------------------------
 	qreal x = calculateLaserXpos();
 	qreal y = calculateLaserFrontYpos();
 	
@@ -1314,7 +1327,10 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		laserLineListFront->at(i)->setPos(x, y);
 	}
 	
+	
+	//------------------------------------------------
 	// change the y position of the laser lines, too
+	//------------------------------------------------
 	y = calculateLaserRearYpos();
 	
 	for (int i=0, angle=-90; i<laserLineListRear->size(); i++, angle++)
@@ -2063,17 +2079,6 @@ void Gui::createLaserDistanceObjects()
 }
 
 
-void Gui::drawBotPicture()
-{
-	// recalculate the middle position of the bot pixmap!
-	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
-	
-	// horizontal center
-	pixmapBot1->setPos(laserXPos, laserFrontYPos);
-	pixmapBot2->setPos(laserXPos, laserFrontYPos);
-}
-
-
 qreal Gui::calculateLaserXpos()
 {
 	// value for normal drawing (from center to border of control)
@@ -2152,18 +2157,17 @@ void Gui::setLaserLinesPositions()
 
 void Gui::setLaserDistancesPositions()
 {
-	// for getting nice x and y position
-	qreal x = 0;
-	qreal y = 0;
-	QRectF rect;
-	//qreal width = 0;
-
-
 	//==================================================
 	// move the distance lines to their x and y positions
 	//==================================================
-	x = LASERDISTANCESTARTX + calculateLaserXpos();
-	y = LASERDISTANCESTARTY + calculateLaserFrontYpos();
+	qreal xBot = pixmapBot1->x();
+	
+	qreal x = /*LASERDISTANCESTARTX +*/ calculateLaserXpos();
+	qreal y = LASERDISTANCESTARTY + calculateLaserFrontYpos();
+	
+	appendLog("<b>setLaserDistancesPositions:");
+	appendLog(QString("calculateLaserXpos()=%1").arg(x));
+	appendLog(QString("bot x pos()=%1</b>").arg(xBot));
 	
 	//--------------
 	// FRONT distances
