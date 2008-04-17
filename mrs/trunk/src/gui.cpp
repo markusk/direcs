@@ -1281,7 +1281,7 @@ void Gui::on_btnSimulate_clicked()
 
 void Gui::on_sliderZoom_valueChanged(int value)
 {
-	// show the value in a label
+	// show the zoom value in a label
 	ui.labelLaserTop->setText(tr("%1").arg(value));
 
 	
@@ -1310,13 +1310,13 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//appendLog(QString("<b>sliderZoomValueChanged...bot y pos()=%1</b>").arg(pixmapBot1->y()));
 	
 	
-	//------------------------------------------------
-	// change the y position of the laser lines, too
-	//------------------------------------------------
+	//-----------------------------------------------------
+	// change the x and y position of the laser lines, too
+	//-----------------------------------------------------
 	qreal x = calculateLaserXpos();
 	qreal y = calculateLaserFrontYpos();
 	
-	for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle++)
+	for (int i=0; i<laserLineListFront->size(); i++)
 	{
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
@@ -1330,12 +1330,26 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------------------------
 	y = calculateLaserRearYpos();
 	
-	for (int i=0, angle=-90; i<laserLineListRear->size(); i++, angle++)
+	for (int i=0; i<laserLineListRear->size(); i++)
 	{
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
 		laserLineListRear->at(i)->setPos(x, y);
+	}
+	
+
+	//-------------------------------------------------------------
+	// change the x and  position of the laser distance lines, too
+	//-------------------------------------------------------------
+	for (int i=0; i<laserDistanceLineListFront->size(); i++)
+	{
+		// recalculate the new middle position of the bot pixmap!
+		y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2);
+		
+		// x = unchanged!
+		// y = set manually
+		laserDistanceLineListFront->at(i)->setPos(laserDistanceLineListFront->at(i)->x(), y);
 	}
 }
 
@@ -1463,7 +1477,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		// get value from laser and
 		// draw the lines at every 1°
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
-		
 		
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 		
@@ -2159,6 +2172,14 @@ void Gui::setLaserDistancesPositions()
 	{
 		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
 	}
+	
+/*
+	// get value from laser and
+	// draw the lines at every 1°
+	laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
+	
+	laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
+*/
 }
 
 
