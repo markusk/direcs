@@ -2181,11 +2181,8 @@ void Gui::setLaserDistancesPositions()
 		// y = set manually
 		rect = laserDistanceLineListFront->at(i)->rect();
 		
-		//line = laserLineListFront->at(i)->line();
-		//laserLineListFront->at(i)->setPos((x - line.length()), y);
 		qreal newX = x - (rect.width() / 2) - xCoord -  ((i+1)*LASERDISTANCEDISTANCE);
-		appendLog(QString("newX=%1, rectX=%2, y=%3").arg(newX).arg(rect.x()).arg(y));
-//		laserDistanceLineListFront->at(i)->setPos(newX, y);
+		laserDistanceLineListFront->at(i)->setPos(newX, y);
 	}
 }
 
