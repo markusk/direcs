@@ -1309,8 +1309,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// horizontal center
 	pixmapBot1->setPos(laserXPos, laserFrontYPos);
 	pixmapBot2->setPos(laserXPos, laserFrontYPos);
-	
-	appendLog(QString("sliderZoomValueChanged...bot x pos()=%1").arg(pixmapBot1->x()));
+	//appendLog(QString("<b>sliderZoomValueChanged...bot y pos()=%1</b>").arg(pixmapBot1->y()));
 	
 	
 	//------------------------------------------------
@@ -2027,7 +2026,7 @@ void Gui::createLaserDistanceObjects()
 	int newY = 0;
 	qreal x = 0;
 	qreal y = 0;
-	int size = 200; // TODO: which arc size?
+	int startSize = 200; // TODO: which arc size?
 	
 	
 	// set colors
@@ -2058,13 +2057,13 @@ void Gui::createLaserDistanceObjects()
 		x = calculateLaserXpos() + 100; // TODO: value?!?!!!
 		
 		// create semi circle along the created path
-		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(x, y, size + sizeIncrement, size + sizeIncrement);
+		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(x, y, startSize + sizeIncrement, startSize + sizeIncrement);
 		//appendLog(QString("creation x=%1, y=%2").arg(x).arg(y));
 
 		// set the start angle of the circle
-		semiCircle->setStartAngle(180*16);
+//		semiCircle->setStartAngle(180*16);
 		// set the span angle of the circle
-		semiCircle->setSpanAngle(180*16);
+//		semiCircle->setSpanAngle(180*16);
 		
 		// set semiCircle color and position
 		semiCircle->setPen(QPen(colorHelpLine));
@@ -2091,14 +2090,14 @@ qreal Gui::calculateLaserXpos()
 qreal Gui::calculateLaserFrontYpos()
 {
 	// value for normal drawing (from center to border of control)
-	return laserFrontYPos + pixmapBot1->pixmap().height()/startScale*0.66*lastZoom;
+	return (pixmapBot1->pixmap().height()/startScale*0.66*lastZoom) + laserFrontYPos;
 }
 
 
 qreal Gui::calculateLaserRearYpos()
 {
 	// value for normal drawing (from center to border of control)
-	return laserRearYPos + pixmapBot1->pixmap().height()/startScale*0.33*lastZoom;
+	return (pixmapBot1->pixmap().height()/startScale*0.33*lastZoom) + laserRearYPos;
 }
 
 
@@ -2162,21 +2161,18 @@ void Gui::setLaserDistancesPositions()
 	//==================================================
 	// move the distance lines to their x and y positions
 	//==================================================
-	qreal xBot = pixmapBot1->x();
+	// in the middle of the front of bot, minus a half circle
+	qreal x = /*LASERDISTANCESTARTX +*/ calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
+	qreal y = /*LASERDISTANCESTARTY +*/ calculateLaserFrontYpos();
 	
-	qreal x = /*LASERDISTANCESTARTX +*/ calculateLaserXpos();
-	qreal y = LASERDISTANCESTARTY + calculateLaserFrontYpos();
-	
-	appendLog("<b>setLaserDistancesPositions:");
-	appendLog(QString("calculateLaserXpos()=%1").arg(x));
-	appendLog(QString("bot x pos()=%1</b>").arg(xBot));
+	appendLog(QString("<b>setLaserDistancesPositions...distance y pos()=%1</b>").arg(y));
 	
 	//--------------
 	// FRONT distances
 	//--------------
 	for (int i=0, xCoord=x; i<laserDistanceLineListFront->size(); i++, xCoord-=LASERDISTANCEDISTANCE)
 	{
-		laserDistanceLineListFront->at(i)->setPos( (x - (laserDistanceLineListFront->at(i)->rect().width() / 2) - xCoord -  ((i+1)*LASERDISTANCEDISTANCE)), y);
+		laserDistanceLineListFront->at(i)->setPos( (x - /*(laserDistanceLineListFront->at(i)->rect().width() / 2) - xCoord - */ ((i+1)*LASERDISTANCEDISTANCE/2)), y-((i+1)*LASERDISTANCEDISTANCE/2) );
 	}
 }
 
