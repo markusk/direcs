@@ -574,10 +574,7 @@ class Gui : public QMainWindow
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
 		
-		// Start x,yposition within the laser view
-		// Instead of 0,0 ?!?
-		static const int LASERDISTANCESTARTX = 0;//-50;
-		static const int LASERDISTANCESTARTY = 0;//-134;
+		//! Distances between the lines to show the laser distances
 		static const int LASERDISTANCEDISTANCE = 20;
 };
 #endif
