@@ -1481,10 +1481,7 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 		
 		// set tool tip of the line to the distance
-		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
-		//laserLineListFront->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
-		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]) );
-//		laserLineListFront->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
+		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 	}
 
 
