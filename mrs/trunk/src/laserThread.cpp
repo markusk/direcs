@@ -121,9 +121,8 @@ void LaserThread::getAndStoreLaserValuesFront()
 	numReadingsFront = getLaserNumReadings(LASER1);
 	
 	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
-	// TODO: 180 elements vs. const vs. 
-	if (numReadingsFront >= 180)
-		numReadingsFront = 179; // FIXME: = 180 ?
+	if (numReadingsFront > LASERSCANNERARRAYSIZE)
+		numReadingsFront = LASERSCANNERARRAYSIZE;
 	
 	// if YES
 	if (numReadingsFront > 0)
@@ -145,9 +144,8 @@ void LaserThread::getAndStoreLaserValuesRear()
 	numReadingsRear = getLaserNumReadings(LASER2);
 	
 	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
-	// TODO: 180 elements vs. const vs. 
-	if (numReadingsRear >= 180)
-		numReadingsRear = 179; // FIXME: = 180 ?
+	if (numReadingsRear > LASERSCANNERARRAYSIZE)
+		numReadingsRear = LASERSCANNERARRAYSIZE;
 	
 	// if YES
 	if (numReadingsRear > 0)
@@ -257,13 +255,14 @@ void LaserThread::setSimulationMode(bool status)
 	
 	if (simulationMode == true)
 	{
-		numReadingsFront = 180;
-		numReadingsRear = 180;
+		numReadingsFront = LASERSCANNERARRAYSIZE;
+		numReadingsRear = LASERSCANNERARRAYSIZE;
 		
 		// fill with values from 1 to 180 cm
 		for (float i=0; i<LASERSCANNERARRAYSIZE; i++)
 		{
 			laserScannerValuesFront[i] = 0.18;//(i+1) / 100;
+			laserScannerValuesRear[i] = 0.18;//(i+1) / 100;
 		}
 /*
 		// fill the array with some nice values
