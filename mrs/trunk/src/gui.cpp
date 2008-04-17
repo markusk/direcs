@@ -1383,8 +1383,10 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 void Gui::initLaserView()
 {
 	setLaserLinesPositions();
-	setLaserDistancesPositions();
 	on_sliderZoom_valueChanged(lastZoom);
+	
+	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
+	setLaserDistancesPositions();
 }
 
 
