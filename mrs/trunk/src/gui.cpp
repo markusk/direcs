@@ -2031,7 +2031,6 @@ void Gui::createLaserScannerObjects()
 void Gui::createLaserDistanceObjects()
 {
 	QString dimensionText;
-	int startSize = 20; // TODO: which arc size?
 	
 	
 	// set colors
@@ -2057,7 +2056,7 @@ void Gui::createLaserDistanceObjects()
 	{
 		// create semi circles
 		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 1,1 here.
-		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(1, 1, startSize + (i*LASERDISTANCEDISTANCE), startSize + (i*LASERDISTANCEDISTANCE));
+		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(1, 1, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
 
 		// set the start angle of the circle
 		semiCircle->setStartAngle(180*16);

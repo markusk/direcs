@@ -576,7 +576,9 @@ class Gui : public QMainWindow
 		
 		//! Number of distance semi circles
 		static const int LASERDISTANCECIRCLES = 20;
-		//! Distances between the lines to show the laser distances
+		//! the size (diameter) of the first (innerst) circle in pixels
+		static const int LASERDISTANCEFIRSTCIRCLE = 80;
+		//! Distances between the lines to show the laser distances in pixels
 		static const int LASERDISTANCEDISTANCE = 60;
 };
 #endif
