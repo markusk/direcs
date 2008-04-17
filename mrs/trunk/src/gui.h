@@ -547,8 +547,18 @@ class Gui : public QMainWindow
 		static const int JOYSTICKAXIS2X = 4;
 		static const int JOYSTICKAXIS2Y = 5;
 	
-		/** factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels */
-		static const int FITTOFRAMEFACTOR=45;
+		/**
+		Factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels at a default zoom level of 5 !!
+		Example:
+		
+		laservalue = 0.18 cm
+		fit factir = 45
+		zoom level = 5
+		
+		0.18 x 45 x 5 = 40.5 Pixel -> 41 Pixel is the length of the laser line in the GUI
+		*/
+		static const int FITTOFRAMEFACTOR = 45;
+		static const int STARTZOOMLEVEL = 5;
 		
 		
 		// the tags for the laser lines
