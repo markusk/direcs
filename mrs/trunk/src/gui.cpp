@@ -1339,24 +1339,57 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	}
 	
 	
-/*
+
 	//-------------------------------------------------------------
 	// change the y position of the laser distance lines, too
 	//-------------------------------------------------------------
+	/*
+	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
+	x = calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
+	y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
+
+	// FRONT distances
+	for (int i=0; i<laserDistanceLineListFront->size(); i++)
+	{
+		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
+	}
+	*/
+	
+	/*
+	circle 0
+	LASERDISTANCEFIRSTCIRCLE = 82 = width
+	LASERDISTANCEDISTANCE = 60
+	FITTOFRAMEFACTOR = 45
+	STARTZOOMLEVEL = 5
+	value = zoomLevelSlider (5)
+	*/
+	
+	//y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
+	appendLog(QString("calculateLaserFrontYpos()=%1").arg(calculateLaserFrontYpos())  );
+	
 	for (int i=0; i<laserDistanceLineListFront->size(); i++)
 	{
 		// recalculate the new middle position of the bot pixmap!
 		// x = unchanged!
 		// y = set manually
 		y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2);
+		//appendLog(QString("y=%1").arg(y) );
 		
 		int newSize = LASERDISTANCEFIRSTCIRCLE;
 		int actHeight = laserDistanceLineListFront->at(i)->rect().width();
 		
 		// Set the item's rectangle to the rectangle defined by (x, y) and the given width and height
-		laserDistanceLineListFront->at(i)->setRect(laserDistanceLineListFront->at(i)->x(), y, actHeight, actHeight);
+		//laserDistanceLineListFront->at(i)->setRect(laserDistanceLineListFront->at(i)->x(), y, actHeight, actHeight);
+		
+		// okay: laserDistanceLineListFront->at(i)->setPos(laserDistanceLineListFront->at(i)->x(), y);
+		x = laserDistanceLineListFront->at(i)->x();
+		laserDistanceLineListFront->at(i)->setPos(x, y);
 	}
-*/
+	
+	appendLog( QString("circle 0 width=%1").arg( laserDistanceLineListFront->at(5)->rect().width() ) );
+	
+	appendLog( QString("circle 0 x=%1").arg( laserDistanceLineListFront->at(5)->x() ) );
+	appendLog( QString("circle 0 y=%1").arg( laserDistanceLineListFront->at(5)->y() ) );
 }
 
 
@@ -1457,13 +1490,9 @@ void Gui::initLaserView()
 	on_sliderZoom_valueChanged(lastZoom);
 	
 	
-	//-------------------------------------------------------------------------------
-	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
-	//-------------------------------------------------------------------------------
-	// formerly: setLaserDistancesPositions();
-	
 	//====================================================
 	// move the distance lines to their x and y positions
+	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
 	//====================================================
 	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
 	x = calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
@@ -1473,20 +1502,8 @@ void Gui::initLaserView()
 	//-----------------
 	// FRONT distances
 	//-----------------
-	/*
-	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
-	
-	
-	// get value from laser and
-	// draw the lines at every 1°
-	laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
-	
-	laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
-	*/
-	
 	for (int i=0; i<laserDistanceLineListFront->size(); i++)
 	{
-		// okay: laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
 		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
 	}
 }
