@@ -552,14 +552,13 @@ class Gui : public QMainWindow
 		Example:
 		
 		laservalue = 0.18 cm
-		fit factir = 45
+		fit factor = 45
 		zoom level = 5
 		
 		0.18 x 45 x 5 = 40.5 Pixel -> 41 Pixel is the length of the laser line in the GUI
 		*/
 		static const int FITTOFRAMEFACTOR = 45;
 		static const int STARTZOOMLEVEL = 5;
-		
 		
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
