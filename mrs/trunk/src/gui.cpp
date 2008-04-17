@@ -126,15 +126,13 @@ Gui::~Gui()
 	delete pixmapBot1;
 	
 	
-	/*
-	TODO: empty list
 	// empty QList
-	while (!laserDistanceLineList->isEmpty())
+	while (!laserDistanceLineListFront->isEmpty())
 	{
-		delete laserDistanceLineList->takeFirst();
+		delete laserDistanceLineListFront->takeFirst();
 	}
-	delete laserDistanceLineList;
-*/
+	delete laserDistanceLineListFront;
+
 
 	// empty QList
 	while (!laserLineListFront->isEmpty())
@@ -2020,7 +2018,7 @@ void Gui::createLaserScannerObjects()
 void Gui::createLaserDistanceObjects()
 {
 	QString dimensionText;
-	int startSize = 200; // TODO: which arc size?
+	int startSize = 20; // TODO: which arc size?
 	
 	
 	// set colors
@@ -2041,14 +2039,11 @@ void Gui::createLaserDistanceObjects()
 	//--------------------------------------------------------------
 	laserDistanceLineListFront = new QList <QGraphicsEllipseItem*>();
 
-	
 	// create and add twelve semi circles
-	//for (int i=0, yCoord=0; i<laserDistanceLineListFront->size(); i++, yCoord+=LASERDISTANCEDISTANCE)
-	for (int i=0, sizeIncrement=0; i<12; i++, sizeIncrement+=LASERDISTANCEDISTANCE)
+	for (int i=0; i<LASERDISTANCECIRCLES; i++)
 	{
 		// create semi circles
-		// position doesn't matter, because of moving circles in setLaserDistancePosition() !
-		// so we just take 1,1
+		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 1,1 here.
 		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(1, 1, startSize + (i*LASERDISTANCEDISTANCE), startSize + (i*LASERDISTANCEDISTANCE));
 
 		// set the start angle of the circle
@@ -2059,8 +2054,8 @@ void Gui::createLaserDistanceObjects()
 		// set semiCircle color and position
 		semiCircle->setPen(QPen(colorHelpLine));
 		
-		// setting to an upper level
-		semiCircle->setZValue(4);
+		// setting to the lowest layer level
+		semiCircle->setZValue(0);
 		
 		// add semiCircle to QList
 		laserDistanceLineListFront->append(semiCircle);
