@@ -449,6 +449,11 @@ class Gui : public QMainWindow
 		void setLaserLinesPositions();
 		
 		/**
+		Moves the laser line distances to their correct x and y positions
+		 */
+		void setLaserDistancesPositions();
+		
+		/**
 		Draws some help lines / distances / dimensons in the laser scanner view.
 		*/
 		void drawLaserDistances();
@@ -495,7 +500,7 @@ class Gui : public QMainWindow
 		//QGraphicsScene *cameraScene;						/** The QGraphicsScene for drawing "over" the camera image */
 		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
 		QList <QGraphicsLineItem*> *laserLineListRear;		/** A pointer to a QList of pointers to the rear laser lines (QGraphicsLineItems) */
-		QList <QGraphicsPathItem*> *laserDistanceLineListFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
+		QList <QGraphicsEllipseItem*> *laserDistanceLineListFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
 		QList <QGraphicsPathItem*> *laserDistanceLineListRear;	/** A pointer to a QList of pointers to the shown distances from the rear laser lines (kind of coordinate system) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
@@ -573,5 +578,11 @@ class Gui : public QMainWindow
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+		
+		// Start x,yposition within the laser view
+		// Instead of 0,0 ?!?
+		static const int LASERDISTANCESTARTX = -50;
+		static const int LASERDISTANCESTARTY = -134;
+		static const int LASERDISTANCEDISTANCE = 10;
 };
 #endif
