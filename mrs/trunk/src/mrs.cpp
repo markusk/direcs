@@ -523,7 +523,7 @@ void Mrs::init()
 	//------------------------------------------------------------------
 	// for getting the screen resolution
 	//------------------------------------------------------------------
-	QDesktopWidget *desktop = QApplication::desktop();
+	//QDesktopWidget *desktop = QApplication::desktop();
 
 	//------------------------------------------------------------------
 	// place gui window at a nice position on the screen
