@@ -1242,7 +1242,7 @@
    <widget class="QDockWidget" name="dockNetworkLog" >
     <property name="geometry" >
      <rect>
-      <x>380</x>
+      <x>400</x>
       <y>680</y>
       <width>181</width>
       <height>241</height>
@@ -1274,8 +1274,8 @@
      <rect>
       <x>10</x>
       <y>680</y>
-      <width>361</width>
-      <height>221</height>
+      <width>391</width>
+      <height>241</height>
      </rect>
     </property>
     <property name="windowTitle" >
@@ -1287,8 +1287,8 @@
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>341</width>
-        <height>191</height>
+        <width>371</width>
+        <height>211</height>
        </rect>
       </property>
       <property name="font" >
@@ -1936,7 +1936,7 @@
      <x>0</x>
      <y>0</y>
      <width>1307</width>
-     <height>29</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
