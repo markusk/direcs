@@ -549,7 +549,6 @@ class Gui : public QMainWindow
 	
 		/** factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels */
 		static const int FITTOFRAMEFACTOR=45;
-		static const int LASERLINELENGTH=278;
 		
 		
 		// the tags for the laser lines
@@ -577,7 +576,7 @@ class Gui : public QMainWindow
 		//! Number of distance semi circles
 		static const int LASERDISTANCECIRCLES = 20;
 		//! the size (diameter) of the first (innerst) circle in pixels
-		static const int LASERDISTANCEFIRSTCIRCLE = 80;
+		static const int LASERDISTANCEFIRSTCIRCLE = 82;
 		//! Distances between the lines to show the laser distances in pixels
 		static const int LASERDISTANCEDISTANCE = 60;
 };
