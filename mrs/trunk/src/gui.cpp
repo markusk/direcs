@@ -1917,7 +1917,6 @@ void Gui::createLaserScannerObjects()
 	pixmapBot1->setVisible(false);
 	scene->addItem(pixmapBot1);
 	
-	// FIXME doesn't work
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot1->setZValue(1);
 	
@@ -1951,7 +1950,7 @@ void Gui::createLaserScannerObjects()
 		// set position of each line
 		line->rotate(i);
 		
-		// FIXME doesn't work?!
+		// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 		line->setZValue(2);
 		
 		// add line to QList
@@ -1985,7 +1984,7 @@ void Gui::createLaserScannerObjects()
 		// set position of each line
 		line->rotate(i);
 		
-		// FIXME doesn't work?!
+		// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 		line->setZValue(2);
 		
 		// add line to QList
@@ -2013,8 +2012,6 @@ void Gui::createLaserScannerObjects()
 	pixmapBot2->setVisible(false);
 	scene->addItem(pixmapBot2);
 
-	
-	// FIXME doesn't work
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot2->setZValue(3);
 }
@@ -2062,7 +2059,7 @@ void Gui::createLaserDistanceObjects()
 		// set semiCircle color and position
 		semiCircle->setPen(QPen(colorHelpLine));
 		
-		// FIXME doesn't work?!
+		// setting to an upper level
 		semiCircle->setZValue(4);
 		
 		// add semiCircle to QList
