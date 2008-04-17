@@ -100,8 +100,8 @@ infrared Sensors temporarily removed from robot!!
 	
 	createLaserDistanceObjects();
 	
-	// zoom into the laser lines by factor 3
-	ui.sliderZoom->setValue(5);
+	// zoom into the laser lines by default factor
+	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 
 
 	//--------------
@@ -1338,19 +1338,25 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		laserLineListRear->at(i)->setPos(x, y);
 	}
 	
-
+	
+/*
 	//-------------------------------------------------------------
-	// change the x and  position of the laser distance lines, too
+	// change the y position of the laser distance lines, too
 	//-------------------------------------------------------------
 	for (int i=0; i<laserDistanceLineListFront->size(); i++)
 	{
 		// recalculate the new middle position of the bot pixmap!
-		y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2);
-		
 		// x = unchanged!
 		// y = set manually
-		laserDistanceLineListFront->at(i)->setPos(laserDistanceLineListFront->at(i)->x(), y);
+		y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2);
+		
+		int newSize = LASERDISTANCEFIRSTCIRCLE;
+		int actHeight = laserDistanceLineListFront->at(i)->rect().width();
+		
+		// Set the item's rectangle to the rectangle defined by (x, y) and the given width and height
+		laserDistanceLineListFront->at(i)->setRect(laserDistanceLineListFront->at(i)->x(), y, actHeight, actHeight);
 	}
+*/
 }
 
 
@@ -1393,11 +1399,96 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 
 void Gui::initLaserView()
 {
-	setLaserLinesPositions();
+	// for getting nice x and y position
+	qreal x = 0;
+	qreal y = 0;
+	//QLineF line;
+	
+
+	//==================================================
+	// move the laser lines to their x and y positions
+	//==================================================
+	x = calculateLaserXpos();
+	y = calculateLaserFrontYpos();
+	
+	//--------------
+	// FRONT laser
+	//--------------
+	for (int i=0, angle=90; i<laserLineListFront->size(); i++, angle--)
+	{
+		// reset transform or rotation
+		laserLineListFront->at(i)->resetTransform();
+		
+		// set position of each line
+		laserLineListFront->at(i)->rotate(angle);
+		
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		//line = laserLineListFront->at(i)->line();
+		laserLineListFront->at(i)->setPos((x - laserLineListFront->at(i)->line().length()), y);
+	}
+	
+	x = calculateLaserXpos();
+	y = calculateLaserRearYpos();
+
+	//--------------
+	// REAR laser
+	//--------------
+	for (int i=0, angle=-90; i<laserLineListRear->size(); i++, angle--)
+	{
+		// reset transform or rotation
+		laserLineListRear->at(i)->resetTransform();
+		
+		// set position of each line
+		laserLineListRear->at(i)->rotate(angle);
+		
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		//line = laserLineListRear->at(i)->line();
+		laserLineListRear->at(i)->setPos((x - laserLineListRear->at(i)->line().length()), y);
+	}
+	
+	
+	//==================================================
+	//
+	//==================================================
 	on_sliderZoom_valueChanged(lastZoom);
 	
+	
+	//-------------------------------------------------------------------------------
 	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
-	setLaserDistancesPositions();
+	//-------------------------------------------------------------------------------
+	// formerly: setLaserDistancesPositions();
+	
+	//====================================================
+	// move the distance lines to their x and y positions
+	//====================================================
+	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
+	x = calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
+	y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
+	
+	
+	//-----------------
+	// FRONT distances
+	//-----------------
+	/*
+	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
+	
+	
+	// get value from laser and
+	// draw the lines at every 1°
+	laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
+	
+	laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
+	*/
+	
+	for (int i=0; i<laserDistanceLineListFront->size(); i++)
+	{
+		// okay: laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
+		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
+	}
 }
 
 
@@ -1679,7 +1770,7 @@ void Gui::initializePlots()
 	QColor col = Qt::red;
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
 	// TODO: remove alpha value
-	col.setAlpha(150);
+	//col.setAlpha(150);
 	curve1.setPen(QPen(col));
 	curve1.setBrush(col);
 	
@@ -1702,7 +1793,7 @@ void Gui::initializePlots()
 	col = Qt::blue;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	// TODO: remove alpha value
-	col.setAlpha(150);
+	//col.setAlpha(150);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
 }
@@ -2098,84 +2189,11 @@ qreal Gui::calculateLaserRearYpos()
 
 void Gui::setLaserLinesPositions()
 {
-	// for getting nice x and y position
-	qreal x = 0;
-	qreal y = 0;
-	QLineF line;
-	
-
-	//==================================================
-	// move the laser lines to their x and y positions
-	//==================================================
-	x = calculateLaserXpos();
-	y = calculateLaserFrontYpos();
-	
-	//--------------
-	// FRONT laser
-	//--------------
-	for (int i=0, angle=90; i<laserLineListFront->size(); i++, angle--)
-	{
-		// reset transform or rotation
-		laserLineListFront->at(i)->resetTransform();
-		
-		// set position of each line
-		laserLineListFront->at(i)->rotate(angle);
-		
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-		line = laserLineListFront->at(i)->line();
-		laserLineListFront->at(i)->setPos((x - line.length()), y);
-	}
-	
-	x = calculateLaserXpos();
-	y = calculateLaserRearYpos();
-
-	//--------------
-	// REAR laser
-	//--------------
-	for (int i=0, angle=-90; i<laserLineListRear->size(); i++, angle--)
-	{
-		// reset transform or rotation
-		laserLineListRear->at(i)->resetTransform();
-		
-		// set position of each line
-		laserLineListRear->at(i)->rotate(angle);
-		
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-		line = laserLineListRear->at(i)->line();
-		laserLineListRear->at(i)->setPos((x - line.length()), y);
-	}
 }
 
 
 void Gui::setLaserDistancesPositions()
 {
-	//==================================================
-	// move the distance lines to their x and y positions
-	//==================================================
-	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
-	qreal x = calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
-	qreal y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
-	
-	
-	//--------------
-	// FRONT distances
-	//--------------
-	for (int i=0, xCoord=x; i<laserDistanceLineListFront->size(); i++, xCoord-=LASERDISTANCEDISTANCE)
-	{
-		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
-	}
-	
-/*
-	// get value from laser and
-	// draw the lines at every 1°
-	laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
-	
-	laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
-*/
 }
 
 
@@ -2194,7 +2212,7 @@ void Gui::laserSplash(bool status, short int laserScanner)
 				pixmapBot2->setVisible(false);
 				for (int i=laserLineListFront->size()-1; i>=0; i--)
 				{
-					// lines unvisible
+					// lines invisible
 					laserLineListFront->at(i)->setVisible(false);
 				}
 			}
@@ -2224,7 +2242,7 @@ void Gui::laserSplash(bool status, short int laserScanner)
 				pixmapBot2->setVisible(false);
 				for (int i=laserLineListRear->size()-1; i>=0; i--)
 				{
-					// lines unvisible
+					// lines invisible
 					laserLineListRear->at(i)->setVisible(false);
 				}
 			}
