@@ -459,11 +459,6 @@ class Gui : public QMainWindow
 		void drawLaserDistances();
 		
 		/**
-		Sets the bot picture to a nice position in the laser scanner view.
-		*/
-		void drawBotPicture();
-		
-		/**
 		Set a X position for the laser lines "start point"
 		*/
 		qreal calculateLaserXpos();
@@ -581,7 +576,7 @@ class Gui : public QMainWindow
 		
 		// Start x,yposition within the laser view
 		// Instead of 0,0 ?!?
-		static const int LASERDISTANCESTARTX = -50;
+		static const int LASERDISTANCESTARTX = -10;//-50;
 		static const int LASERDISTANCESTARTY = -134;
 		static const int LASERDISTANCEDISTANCE = 20;
 };
