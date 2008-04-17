@@ -257,14 +257,14 @@ void LaserThread::setSimulationMode(bool status)
 	{
 		numReadingsFront = LASERSCANNERARRAYSIZE;
 		numReadingsRear = LASERSCANNERARRAYSIZE;
-		
+/*		
 		// fill with values from 1 to 180 cm
 		for (float i=0; i<LASERSCANNERARRAYSIZE; i++)
 		{
 			laserScannerValuesFront[i] = 0.18;//(i+1) / 100;
 			laserScannerValuesRear[i] = 0.18;//(i+1) / 100;
 		}
-/*
+*/
 		// fill the array with some nice values
 		laserScannerValuesFront[0]	= 0.25;		laserScannerValuesRear[0]	= 0.25;
 		laserScannerValuesFront[1]	= 0.25;		laserScannerValuesRear[1]	= 0.25;
@@ -446,7 +446,7 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValuesFront[177]	= 0.1;		laserScannerValuesRear[177]	= 0.1;
 		laserScannerValuesFront[178]	= 0.1;		laserScannerValuesRear[178]	= 0.1;
 		laserScannerValuesFront[179]	= 0.1;		laserScannerValuesRear[179]	= 0.1;
-*/
+
 		// for refreshing the gui (deleting simulated laser lines)
 		emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
 		emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
