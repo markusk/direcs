@@ -98,7 +98,7 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	createLaserScannerObjects();
 	
-	//createLaserDistanceObjects();
+	createLaserDistanceObjects();
 	
 	// zoom into the laser lines by factor 3
 	ui.sliderZoom->setValue(5);
@@ -284,6 +284,12 @@ void Gui::on_sliderMotor1Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
+	
+	//int value = ui.sliderMotor1Speed->value();
+	
+	//laserDistanceLineListFront->at(0)->setStartAngle(ui.sliderMotor1Speed->value() * 16);
+	//laserDistanceLineListFront->at(0)->setPos(value, value);
+	//appendLog(QString("x,y=%1").arg(value));
 }
 
 
@@ -291,6 +297,9 @@ void Gui::on_sliderMotor2Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
+	
+	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor2Speed->value() * 16);
+	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor2Speed->value()));
 }
 
 
@@ -1358,6 +1367,7 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 void Gui::initLaserView()
 {
 	setLaserLinesPositions();
+	setLaserDistancesPositions();
 	on_sliderZoom_valueChanged(lastZoom);
 }
 
@@ -1432,13 +1442,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
-	/*
-	QLineF line;
-	QPointF pos;
-	qreal x = 0;
-	int length = 0;
-	*/
-	
 	// /get the data from 180° to 0° (right to left!!)
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
@@ -1448,14 +1451,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		
 		
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
-		/*
-		pos = laserLineListFront->at(i)->scenePos();
-		line = laserLineListFront->at(i)->line();
-		length = line.length();
-		
-		x = pos.x() - length;
-		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
-		*/
 		
 		// set tool tip of the line to the distance
 		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
@@ -1495,10 +1490,6 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 	
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
-	/*
-	QPen orgPen = laserLineListFront->at(0)->pen();
-	QBrush orgBrush = orgPen.brush();
-	*/
 
 	//----------------------------------------------------------------------------------------
 	// Change the laser lines (color and length)
@@ -1541,13 +1532,6 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
-	/*
-	QLineF line;
-	QPointF pos;
-	qreal x = 0;
-	int length = 0;
-	*/
-	
 	// /get the data from 180° to 0° (right to left!!)
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
@@ -1557,14 +1541,6 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 		
 		
 		laserLineListRear->at(i)->setLine(0, 0, 0, laserLineLength);
-		/*
-		pos = laserLineListRear->at(i)->scenePos();
-		line = laserLineListRear->at(i)->line();
-		length = line.length();
-		
-		x = pos.x() - length;
-		laserLineListRear->at(i)->setLine(0, 0, 0, laserLineLength);
-		*/
 		
 		// set tool tip of the line to the distance
 		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
@@ -1677,6 +1653,7 @@ void Gui::initializePlots()
 	
 	QColor col = Qt::red;
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// TODO: remove alpha value
 	col.setAlpha(150);
 	curve1.setPen(QPen(col));
 	curve1.setBrush(col);
@@ -1699,6 +1676,7 @@ void Gui::initializePlots()
 	
 	col = Qt::blue;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// TODO: remove alpha value
 	col.setAlpha(150);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
@@ -1850,7 +1828,7 @@ void Gui::createLaserScannerObjects()
 	// set some nice colors for some widgets
 	colorLaserObstacle =  QColor(255, 50, 50); // light red
 	colorLaserFreeWay = Qt::darkRed;
-	colorLaserPreferredDrivingDirection = QColor(7, 68, 30, 150); // green
+	colorLaserPreferredDrivingDirection = QColor(7, 68, 30); // green
 	colorLaserCenterDrivingDirection = Qt::green;
 	colorGraphicsSceneBackground = Qt::black;
 	
@@ -2027,19 +2005,16 @@ void Gui::createLaserScannerObjects()
 
 void Gui::createLaserDistanceObjects()
 {
-	/*
 	QString dimensionText;
-	int dimensionLine = 0;
 	int newY = 0;
-	qreal startArcX = 0;
-	qreal startArcY = 0;
-	qreal endArcX = 0;
-	qreal endArcY = 0;
+	qreal x = 0;
+	qreal y = 0;
+	int size = 200; // TODO: which arc size?
 	
 	
 	// set colors
-	colorHelpLine = Qt::white;
-	colorHelpLineText = Qt::white;
+	colorHelpLine = Qt::gray;
+	colorHelpLineText = Qt::gray;
 	
 	
 	//--------------------------------------------------------------
@@ -2048,115 +2023,43 @@ void Gui::createLaserDistanceObjects()
 	// store the current scale to fit the lines into the window
 	lastZoom = ui.sliderZoom->value();
 	// set the y-position of the line/text
-	dimensionLine = (FITTOFRAMEFACTOR*lastZoom);
+	//dimensionLine = (FITTOFRAMEFACTOR*lastZoom);
 	newY = ui.graphicsViewLaser->height();
-	
 	
 	//--------------------------------------------------------------
 	// create the laser line distances
 	//--------------------------------------------------------------
-	laserDistanceLineList = new QList <QGraphicsPathItem*>();
+	laserDistanceLineListFront = new QList <QGraphicsEllipseItem*>();
+
+	y = calculateLaserFrontYpos() + 0;
 	
 	// create and add twelve semi circles
-//	for (float i=0.5; i<=6; i+=0.5)
-	for (float i=0.5; i<=0.5; i+=0.5)
+	//for (int i=0, yCoord=0; i<laserDistanceLineListFront->size(); i++, yCoord+=LASERDISTANCEDISTANCE)
+	for (int i=0, sizeIncrement=0; i<12; i++, sizeIncrement+=LASERDISTANCEDISTANCE)
 	{
-		startArcX = ((ui.graphicsViewLaser->width() / 2) - LASERLINELENGTH);
-		startArcY = laserLineListFront->at(0)->y();
+		x = calculateLaserXpos();
 		
-		endArcX = ((ui.graphicsViewLaser->width() / 2) + LASERLINELENGTH);
-		endArcY = startArcY;
-		
-		// first create a path
-//		QPainterPath path(QPointF(startArcX, startArcY));
-		QPainterPath path(QPointF(200, 200));
-
-		// void QPainterPath::arcTo ( qreal x, qreal y, qreal width, qreal height, qreal startAngle, qreal sweepLength )
-//		path.arcTo(endArcX, endArcY, (LASERLINELENGTH + LASERLINELENGTH), LASERLINELENGTH, 0, 180);
-		//path.arcTo((LASERLINELENGTH + LASERLINELENGTH), 0, (LASERLINELENGTH + LASERLINELENGTH), LASERLINELENGTH, 0, -180);
-		path.moveTo(0,0);
-		path.arcTo(0, 0, 200, 200, 0, -180);
-*/		
-		//path.arcTo( (ui.graphicsViewLaser->width() - LASERLINELENGTH) /*- (i*dimensionLine)*/, ( laserLineListFront->at(i)->y() /*- (i*dimensionLine)*/), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
-
-		//			x,						y,			width,		height,		startAngle, spanAngle
-		//painter->drawArc(ui.lineLaser90->x() - (i*dimensionLine), (newY - (i*dimensionLine)), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
-/*
-
 		// create semi circle along the created path
-		QGraphicsPathItem *semiCircle = new QGraphicsPathItem(path);
+		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(x, y, size + sizeIncrement, size + sizeIncrement);
+		appendLog(QString("creation x=%1, y=%2").arg(x).arg(y));
 
+		// set the start angle of the circle
+//		semiCircle->setStartAngle(180*16);
+		// set the span angle of the circle
+//		semiCircle->setSpanAngle(180*16);
 		
 		// set semiCircle color and position
 		semiCircle->setPen(QPen(colorHelpLine));
-		
- 		// FIXME: does not work. no line visible :-(
-		//set color and width
-		//semiCircle->setPen(QPen(QBrush(colorHelpLine), 3));
-
-		
-		// set position of each semiCircle
-		// TODO
-		
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-		//semiCircle->setPos((qreal)(ui.graphicsViewLaser->width()/2), 228);
 		
 		// FIXME doesn't work?!
 		semiCircle->setZValue(4);
 		
 		// add semiCircle to QList
-		laserDistanceLineList->append(semiCircle);
+		laserDistanceLineListFront->append(semiCircle);
 		
 		// add semiCircle to scene
 		scene->addItem(semiCircle);
 	}
-
-
-	
-	
-	//
-	// draw the arcs !!!
-	//
-	// translate the matrix
-	// "-6" is the correction value to put it on the horizontal middle of the vertival 90° line!
-	// FIXME: !!check where to positionate!!
-	//painter->translate(ui.groupBoxLaserScanner->x()+ui.lineLaser0->x()-12, ui.graphicsViewLaser->y()+ui.lineLaser90->y()-20);
-	
-	
-	// 0.5 meter to 6 meter (step 0.5 meter)
-	for (float i=0.5; i<=6; i+=0.5)
-	{
-		//if (i==1)
-		//			x,						y,			width,		height,		startAngle, spanAngle
-		painter->drawArc(ui.lineLaser90->x() - (i*dimensionLine), (newY - (i*dimensionLine)), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
-	}
-	
-	
-	// new origin at the vertical "lineLaser90" in the GUI
-	painter->resetTransform();
-	
-	// translate the matrix
-	// "-6" is the correction value to put it on the horizontal middle of the vertival 90° line!
-	painter->translate(ui.groupBoxLaserScanner->x() - 6 + ui.lineLaser90->x(), ui.groupBoxLaserScanner->y());
-	
-	// choose a nice pen color
-	painter->setPen(colorHelpLineText);
-	
-	//-------------
-	// 360° view
-	//-------------
-	// 0.5 meter to 6 meter (step 0.5 meter)
-	for (float i=0.5; i<=6; i+=0.5)
-	{
-		//dimensionText = tr("--- %1 m").arg(i);
-		dimensionText = tr("  %1 m").arg(i);
-		// y-4 Pixel for putting it ON the higher than the later following arcs
-		painter->drawText(1, (newY - (i*dimensionLine))-6, dimensionText.toAscii());
-		//ui.lblScale1->move(5, (i*dimensionLine));
-	}
-*/
 }
 
 
@@ -2198,7 +2101,7 @@ void Gui::setLaserLinesPositions()
 	qreal x = 0;
 	qreal y = 0;
 	QLineF line;
-
+	
 
 	//==================================================
 	// move the laser lines to their x and y positions
@@ -2243,6 +2146,46 @@ void Gui::setLaserLinesPositions()
 		// y = set manually
 		line = laserLineListRear->at(i)->line();
 		laserLineListRear->at(i)->setPos((x - line.length()), y);
+	}
+}
+
+
+void Gui::setLaserDistancesPositions()
+{
+	// for getting nice x and y position
+	qreal x = 0;
+	qreal y = 0;
+	QRectF rect;
+	//qreal width = 0;
+
+
+	//==================================================
+	// move the distance lines to their x and y positions
+	//==================================================
+	x = LASERDISTANCESTARTX + calculateLaserXpos();
+	y = LASERDISTANCESTARTY + calculateLaserFrontYpos();
+	
+	//--------------
+	// FRONT distances
+	//--------------
+	for (int i=0, xCoord=x; i<laserDistanceLineListFront->size(); i++, xCoord-=LASERDISTANCEDISTANCE)
+	{
+		// reset transform or rotation
+		//laserDistanceLineListFront->at(i)->resetTransform();
+		
+		// set position of each line
+		//laserDistanceLineListFront->at(i)->rotate(angle);
+		
+		// horizontal center:
+		// x = middle of the bot pixmap in the view
+		// y = set manually
+		rect = laserDistanceLineListFront->at(i)->rect();
+		
+		//line = laserLineListFront->at(i)->line();
+		//laserLineListFront->at(i)->setPos((x - line.length()), y);
+		qreal newX = x - (rect.width() / 2) - xCoord -  ((i+1)*LASERDISTANCEDISTANCE);
+		appendLog(QString("newX=%1, rectX=%2, y=%3").arg(newX).arg(rect.x()).arg(y));
+//		laserDistanceLineListFront->at(i)->setPos(newX, y);
 	}
 }
 
