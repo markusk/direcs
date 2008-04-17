@@ -2023,9 +2023,6 @@ void Gui::createLaserScannerObjects()
 void Gui::createLaserDistanceObjects()
 {
 	QString dimensionText;
-	int newY = 0;
-	qreal x = 0;
-	qreal y = 0;
 	int startSize = 200; // TODO: which arc size?
 	
 	
@@ -2041,24 +2038,21 @@ void Gui::createLaserDistanceObjects()
 	lastZoom = ui.sliderZoom->value();
 	// set the y-position of the line/text
 	//dimensionLine = (FITTOFRAMEFACTOR*lastZoom);
-	newY = ui.graphicsViewLaser->height();
 	
 	//--------------------------------------------------------------
 	// create the laser line distances
 	//--------------------------------------------------------------
 	laserDistanceLineListFront = new QList <QGraphicsEllipseItem*>();
 
-	y = calculateLaserFrontYpos() + 100; // TODO: value?!?!!!
 	
 	// create and add twelve semi circles
 	//for (int i=0, yCoord=0; i<laserDistanceLineListFront->size(); i++, yCoord+=LASERDISTANCEDISTANCE)
 	for (int i=0, sizeIncrement=0; i<12; i++, sizeIncrement+=LASERDISTANCEDISTANCE)
 	{
-		x = calculateLaserXpos() + 100; // TODO: value?!?!!!
-		
-		// create semi circle along the created path
-		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(x, y, startSize + sizeIncrement, startSize + sizeIncrement);
-		//appendLog(QString("creation x=%1, y=%2").arg(x).arg(y));
+		// create semi circles
+		// position doesn't matter, because of moving circles in setLaserDistancePosition() !
+		// so we just take 1,1
+		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(1, 1, startSize + (i*LASERDISTANCEDISTANCE), startSize + (i*LASERDISTANCEDISTANCE));
 
 		// set the start angle of the circle
 //		semiCircle->setStartAngle(180*16);
@@ -2172,7 +2166,7 @@ void Gui::setLaserDistancesPositions()
 	//--------------
 	for (int i=0, xCoord=x; i<laserDistanceLineListFront->size(); i++, xCoord-=LASERDISTANCEDISTANCE)
 	{
-		laserDistanceLineListFront->at(i)->setPos( (x - /*(laserDistanceLineListFront->at(i)->rect().width() / 2) - xCoord - */ ((i+1)*LASERDISTANCEDISTANCE/2)), y-((i+1)*LASERDISTANCEDISTANCE/2) );
+		laserDistanceLineListFront->at(i)->setPos( (x - /*(laserDistanceLineListFront->at(i)->rect().width() / 2) - xCoord - */ (i*LASERDISTANCEDISTANCE)), y-((i+1)*LASERDISTANCEDISTANCE/2) );
 	}
 }
 
