@@ -2055,9 +2055,9 @@ void Gui::createLaserDistanceObjects()
 		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(1, 1, startSize + (i*LASERDISTANCEDISTANCE), startSize + (i*LASERDISTANCEDISTANCE));
 
 		// set the start angle of the circle
-//		semiCircle->setStartAngle(180*16);
+		semiCircle->setStartAngle(180*16);
 		// set the span angle of the circle
-//		semiCircle->setSpanAngle(180*16);
+		semiCircle->setSpanAngle(180*16);
 		
 		// set semiCircle color and position
 		semiCircle->setPen(QPen(colorHelpLine));
@@ -2155,18 +2155,17 @@ void Gui::setLaserDistancesPositions()
 	//==================================================
 	// move the distance lines to their x and y positions
 	//==================================================
-	// in the middle of the front of bot, minus a half circle
-	qreal x = /*LASERDISTANCESTARTX +*/ calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
-	qreal y = /*LASERDISTANCESTARTY +*/ calculateLaserFrontYpos();
+	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
+	qreal x = calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
+	qreal y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
 	
-	appendLog(QString("<b>setLaserDistancesPositions...distance y pos()=%1</b>").arg(y));
 	
 	//--------------
 	// FRONT distances
 	//--------------
 	for (int i=0, xCoord=x; i<laserDistanceLineListFront->size(); i++, xCoord-=LASERDISTANCEDISTANCE)
 	{
-		laserDistanceLineListFront->at(i)->setPos( (x - /*(laserDistanceLineListFront->at(i)->rect().width() / 2) - xCoord - */ (i*LASERDISTANCEDISTANCE)), y-((i+1)*LASERDISTANCEDISTANCE/2) );
+		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
 	}
 }
 
