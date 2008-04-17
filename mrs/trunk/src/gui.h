@@ -574,7 +574,9 @@ class Gui : public QMainWindow
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
 		
+		//! Number of distance semi circles
+		static const int LASERDISTANCECIRCLES = 20;
 		//! Distances between the lines to show the laser distances
-		static const int LASERDISTANCEDISTANCE = 20;
+		static const int LASERDISTANCEDISTANCE = 60;
 };
 #endif
