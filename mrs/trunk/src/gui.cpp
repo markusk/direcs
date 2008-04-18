@@ -1356,7 +1356,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// okay: y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2); // <- okay
 		//x = calculateLaserXpos() - (newSize / 2) - (i*LASERDISTANCEDISTANCE);
 		// TODO: y value not perfect
-		y = calculateLaserFrontYpos() - (LASERDISTANCEFIRSTCIRCLE/2);
+		y = calculateLaserFrontYpos();// - (LASERDISTANCEFIRSTCIRCLE/2);
 		// TODO: x value
 		x = 1;
 		//y = 1;
@@ -1570,12 +1570,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		// set tool tip of the line to the distance
 		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 	}
-
-
-	//------------------------------------------------------
-	// Third: draw some help lines / distances / dimensons
-	//------------------------------------------------------
-	drawLaserDistances();
 }
 
 
@@ -1659,273 +1653,6 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 		//laserLineListRear->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
 		laserLineListRear->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]) );
 //		laserLineListRear->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
-	}
-
-
-	//------------------------------------------------------
-	// Third: draw some help lines / distances / dimensons
-	//------------------------------------------------------
-	//drawLaserDistances(); rear !
-}
-
-
-void Gui::drawLaserDistances()
-{
-/*
-	static bool firstDraw = true;
-	QString dimensionText;
-	int dimensionLine = 0;
-
-	// reduce drawing actions to the laser group box!!!
-	//painter.setClipRect(ui.groupBoxLaserScanner->x(), ui.groupBoxLaserScanner->y()+10, ui.groupBoxLaserScanner->width()-50, ui.groupBoxLaserScanner->height()-10, Qt::ReplaceClip);
-
-	
-	//------------------------------------------------
-	// if the scale changed during this and the last call
-	// or it is the first time for this
-	// draw some help lines / distances / dimensons
-	//------------------------------------------------
-//	if ( (lastZoom != ui.sliderZoom->value()) || (firstDraw == true) )
-	// FixMe: Draw only on changes to the scale.
-	if (true)
-	{
-		firstDraw = false;
-		// store the current scale to fit the lines into the window
-		lastZoom = ui.sliderZoom->value();
-		
-		
-		// set the y-position of the line/text
-		dimensionLine = (FITTOFRAMEFACTOR*lastZoom);
-		int newY = ui.groupBoxLaserScanner->height();
-		
-		// draw!
-		//
-		// draw the arcs !!!
-		//
-		// translate the matrix
-		// "-6" is the correction value to put it on the horizontal middle of the vertival 90° line!
-		painter->resetTransform();
-		painter->translate(ui.groupBoxLaserScanner->x()+ui.lineLaser0->x()-12, ui.groupBoxLaserScanner->y()+ui.lineLaser90->y()-20);
-		
-		// choose a nice pen color
-		painter->setPen(colorHelpLine);
-		
-		// 0.5 meter to 6 meter (step 0.5 meter)
-		for (float i=0.5; i<=6; i+=0.5)
-		{
-			//if (i==1)
-			//			x,						y,			width,		height,		startAngle, spanAngle
-			painter->drawArc(ui.lineLaser90->x() - (i*dimensionLine), (newY - (i*dimensionLine)), (i*dimensionLine)*2, (i*dimensionLine)*2, 0, 2880);
-		}
-		
-		
-		// new origin at the vertical "lineLaser90" in the GUI
-		painter->resetTransform();
-		
-		// translate the matrix
-		// "-6" is the correction value to put it on the horizontal middle of the vertival 90° line!
-		painter->translate(ui.groupBoxLaserScanner->x() - 6 + ui.lineLaser90->x(), ui.groupBoxLaserScanner->y());
-		
-		// choose a nice pen color
-		painter->setPen(colorHelpLineText);
-		
-		//-------------
-		// 360° view
-		//-------------
-		// 0.5 meter to 6 meter (step 0.5 meter)
-		for (float i=0.5; i<=6; i+=0.5)
-		{
-			//dimensionText = tr("--- %1 m").arg(i);
-			dimensionText = tr("  %1 m").arg(i);
-			// y-4 Pixel for putting it ON the higher than the later following arcs
-			painter->drawText(1, (newY - (i*dimensionLine))-6, dimensionText.toAscii());
-			//ui.lblScale1->move(5, (i*dimensionLine));
-		}
-	}
-*/
-}
-
-
-void Gui::initializePlots()
-{
-	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 1
-	//--------------------------------------
-	//ui.qwtPlotCurrent1->setTitle("Motor 1");
-
-	// Set axis titles
-	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
-
-	// Set axis scale (instead of using autoscale, which is default)
-	// time
-	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
-	// Ampere (1000 mA, Step 200)
-	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-	
-	QColor col = Qt::red;
-	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
-	// TODO: remove alpha value
-	//col.setAlpha(150);
-	curve1.setPen(QPen(col));
-	curve1.setBrush(col);
-	
-	
-	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 2
-	//--------------------------------------
-	//ui.qwtPlotCurrent2->setTitle("Motor 2");
-
-	// Set axis titles
-	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
-
-	// Set axis scale (instead of using autoscale, which is default)
-	// time
-	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
-	// Ampere (1000 mA, Step 200)
-	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-	
-	col = Qt::blue;
-	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
-	// TODO: remove alpha value
-	//col.setAlpha(150);
-	curve2.setPen(QPen(col));
-	curve2.setBrush(col);
-}
-
-
-void Gui::showJoystickAxes(int axisNumber, int axisValue)
-{
-	// TODO: put axis numbers to ini-file
-	switch (axisNumber)
-	{
-		case JOYSTICKAXISX:
-			// X axis
-			ui.sliderJoystickX->setValue(axisValue);
-			break;
-		case JOYSTICKAXISY:
-			// Y axis
-			ui.sliderJoystickY->setValue(axisValue);
-			break;
-		case JOYSTICKAXIS2Y:
-			// Y axis "buttons"
-			// up
-			if (axisValue < 0)
-			{
-				ui.radioBtnJoy5Up->setChecked(true);
-			}
-			
-			// down
-			if (axisValue > 0)
-			{
-				ui.radioBtnJoy5Down->setChecked(true);
-			}
-
-			if (axisValue == 0)
-			{
-				ui.radioBtnJoy5Up->setChecked(false);
-				ui.radioBtnJoy5Down->setChecked(false);
-			}
-			break;
-		case JOYSTICKAXIS2X:
-			// X axis "buttons"
-			// left
-			if (axisValue < 0)
-			{
-				ui.radioBtnJoy4Left->setChecked(true);
-			}
-			
-			// right
-			if (axisValue > 0)
-			{
-				ui.radioBtnJoy4Right->setChecked(true);
-			}
-
-			if (axisValue == 0)
-			{
-				ui.radioBtnJoy4Left->setChecked(false);
-				ui.radioBtnJoy4Right->setChecked(false);
-			}
-			break;
-	}
-}
-
-
-void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
-{
-	static bool toggle0 = false;
-	/*
-	static bool toggle1 = false;
-	static bool toggle2 = false;
-	static bool toggle3 = false;
-	static bool toggle4 = false;
-	static bool toggle5 = false;
-	*/
-	static bool toggle10 = false;
-	static bool toggle11 = false;
-	
-	
-	// TODO: put button numbers to ini-file
-	switch (buttonNumber)
-	{
-		case 0:
-			if (buttonState==true)
-			{
-				if (toggle0 == false)
-				{
-					toggle0=true;
-				}
-				else
-				{
-					toggle0=false;
-				}
-			}
-			ui.radioBtnJoy0->setChecked(toggle0);
-			break;
-		case 1:
-			ui.radioBtnJoy1->setChecked(buttonState);
-			break;
-		case 2:
-			ui.radioBtnJoy2->setChecked(buttonState);
-			break;
-		case 3:
-			ui.radioBtnJoy3->setChecked(buttonState);
-			break;
-		case 4:
-			ui.radioBtnJoy4->setChecked(buttonState);
-			break;
-		case 5:
-			ui.radioBtnJoy5->setChecked(buttonState);
-			break;
-		case 10:
-			if (buttonState==true)
-			{
-				if (toggle10 == false)
-				{
-					toggle10=true;
-				}
-				else
-				{
-					toggle10=false;
-				}
-			}
-			ui.radioBtnJoy10->setChecked(toggle10);
-			break;
-		case 11:
-			if (buttonState==true)
-			{
-				if (toggle11 == false)
-				{
-					toggle11=true;
-				}
-				else
-				{
-					toggle11=false;
-				}
-			}
-			ui.radioBtnJoy11->setChecked(toggle10);
-			break;
 	}
 }
 
@@ -2183,16 +1910,6 @@ qreal Gui::calculateLaserRearYpos()
 }
 
 
-void Gui::setLaserLinesPositions()
-{
-}
-
-
-void Gui::setLaserDistancesPositions()
-{
-}
-
-
 void Gui::laserSplash(bool status, short int laserScanner)
 {
 	switch (laserScanner)
@@ -2256,6 +1973,190 @@ void Gui::laserSplash(bool status, short int laserScanner)
 					laserLineListRear->at(i)->setVisible(true);
 				}
 			}
+			break;
+	}
+}
+
+
+void Gui::initializePlots()
+{
+	//--------------------------------------
+	// plot curve "MOTOR CURRENT" 1
+	//--------------------------------------
+	//ui.qwtPlotCurrent1->setTitle("Motor 1");
+
+	// Set axis titles
+	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// time
+	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// Ampere (1000 mA, Step 200)
+	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
+	
+	QColor col = Qt::red;
+	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// TODO: remove alpha value
+	//col.setAlpha(150);
+	curve1.setPen(QPen(col));
+	curve1.setBrush(col);
+	
+	
+	//--------------------------------------
+	// plot curve "MOTOR CURRENT" 2
+	//--------------------------------------
+	//ui.qwtPlotCurrent2->setTitle("Motor 2");
+
+	// Set axis titles
+	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// time
+	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// Ampere (1000 mA, Step 200)
+	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
+	
+	col = Qt::blue;
+	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// TODO: remove alpha value
+	//col.setAlpha(150);
+	curve2.setPen(QPen(col));
+	curve2.setBrush(col);
+}
+
+
+void Gui::showJoystickAxes(int axisNumber, int axisValue)
+{
+	// TODO: put axis numbers to ini-file
+	switch (axisNumber)
+	{
+		case JOYSTICKAXISX:
+			// X axis
+			ui.sliderJoystickX->setValue(axisValue);
+			break;
+		case JOYSTICKAXISY:
+			// Y axis
+			ui.sliderJoystickY->setValue(axisValue);
+			break;
+		case JOYSTICKAXIS2Y:
+			// Y axis "buttons"
+			// up
+			if (axisValue < 0)
+			{
+				ui.radioBtnJoy5Up->setChecked(true);
+			}
+			
+			// down
+			if (axisValue > 0)
+			{
+				ui.radioBtnJoy5Down->setChecked(true);
+			}
+
+			if (axisValue == 0)
+			{
+				ui.radioBtnJoy5Up->setChecked(false);
+				ui.radioBtnJoy5Down->setChecked(false);
+			}
+			break;
+		case JOYSTICKAXIS2X:
+			// X axis "buttons"
+			// left
+			if (axisValue < 0)
+			{
+				ui.radioBtnJoy4Left->setChecked(true);
+			}
+			
+			// right
+			if (axisValue > 0)
+			{
+				ui.radioBtnJoy4Right->setChecked(true);
+			}
+
+			if (axisValue == 0)
+			{
+				ui.radioBtnJoy4Left->setChecked(false);
+				ui.radioBtnJoy4Right->setChecked(false);
+			}
+			break;
+	}
+}
+
+
+void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
+{
+	static bool toggle0 = false;
+	/*
+	static bool toggle1 = false;
+	static bool toggle2 = false;
+	static bool toggle3 = false;
+	static bool toggle4 = false;
+	static bool toggle5 = false;
+	*/
+	static bool toggle10 = false;
+	static bool toggle11 = false;
+	
+	
+	// TODO: put button numbers to ini-file
+	switch (buttonNumber)
+	{
+		case 0:
+			if (buttonState==true)
+			{
+				if (toggle0 == false)
+				{
+					toggle0=true;
+				}
+				else
+				{
+					toggle0=false;
+				}
+			}
+			ui.radioBtnJoy0->setChecked(toggle0);
+			break;
+		case 1:
+			ui.radioBtnJoy1->setChecked(buttonState);
+			break;
+		case 2:
+			ui.radioBtnJoy2->setChecked(buttonState);
+			break;
+		case 3:
+			ui.radioBtnJoy3->setChecked(buttonState);
+			break;
+		case 4:
+			ui.radioBtnJoy4->setChecked(buttonState);
+			break;
+		case 5:
+			ui.radioBtnJoy5->setChecked(buttonState);
+			break;
+		case 10:
+			if (buttonState==true)
+			{
+				if (toggle10 == false)
+				{
+					toggle10=true;
+				}
+				else
+				{
+					toggle10=false;
+				}
+			}
+			ui.radioBtnJoy10->setChecked(toggle10);
+			break;
+		case 11:
+			if (buttonState==true)
+			{
+				if (toggle11 == false)
+				{
+					toggle11=true;
+				}
+				else
+				{
+					toggle11=false;
+				}
+			}
+			ui.radioBtnJoy11->setChecked(toggle10);
 			break;
 	}
 }

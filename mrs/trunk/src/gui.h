@@ -444,21 +444,6 @@ class Gui : public QMainWindow
 		void createLaserDistanceObjects();
 		
 		/**
-		Moves the laser lines to their correct x and y positions
-		*/
-		void setLaserLinesPositions();
-		
-		/**
-		Moves the laser line distances to their correct x and y positions
-		 */
-		void setLaserDistancesPositions();
-		
-		/**
-		Draws some help lines / distances / dimensons in the laser scanner view.
-		*/
-		void drawLaserDistances();
-		
-		/**
 		Set a X position for the laser lines "start point"
 		*/
 		qreal calculateLaserXpos();
