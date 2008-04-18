@@ -560,6 +560,13 @@ class Gui : public QMainWindow
 		static const int FITTOFRAMEFACTOR = 45;
 		static const int STARTZOOMLEVEL = 5;
 		
+		//! Number of distance semi circles
+		static const int LASERDISTANCECIRCLES = 20;
+		//! the size (diameter) of the first (innerst) circle in pixels
+		static const int LASERDISTANCEFIRSTCIRCLE = 82;
+		//! Distances between the lines to show the laser distances in pixels
+		static const int LASERDISTANCEDISTANCE = 60;
+		
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
@@ -581,12 +588,5 @@ class Gui : public QMainWindow
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
-		
-		//! Number of distance semi circles
-		static const int LASERDISTANCECIRCLES = 20;
-		//! the size (diameter) of the first (innerst) circle in pixels
-		static const int LASERDISTANCEFIRSTCIRCLE = 82;
-		//! Distances between the lines to show the laser distances in pixels
-		static const int LASERDISTANCEDISTANCE = 60;
 };
 #endif
