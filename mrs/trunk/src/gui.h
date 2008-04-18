@@ -561,7 +561,7 @@ class Gui : public QMainWindow
 		static const int STARTZOOMLEVEL = 5;
 		
 		//! Number of distance semi circles
-		static const int LASERDISTANCECIRCLES = 20;
+		static const int LASERDISTANCECIRCLES = 27;
 		//! the size (diameter) of the first (innerst) circle in pixels
 		static const int LASERDISTANCEFIRSTCIRCLE = 82;
 		//! Distances between the lines to show the laser distances in pixels
