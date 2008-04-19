@@ -1315,6 +1315,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// change the x and y position of the laser lines, too
 	//-----------------------------------------------------
 	x = calculateLaserXpos();
+	//appendLog(QString("front laser calculateLaserXpos()=%1").arg(x));
 	y = calculateLaserFrontYpos();
 	
 	for (int i=0; i<laserLineListFront->size(); i++)
@@ -1330,6 +1331,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// change the y position of the laser lines, too
 	//------------------------------------------------
 	y = calculateLaserRearYpos();
+	//appendLog(QString("rear laser calculateLaserXpos()=%1").arg(x));
 	
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
@@ -1354,16 +1356,26 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// y = set manually
 		// x = laserDistanceLineListFront->at(i)->x(); // <- okay
 		// okay: y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2); // <- okay
-		//x = calculateLaserXpos() - (newSize / 2) - (i*LASERDISTANCEDISTANCE);
-		// TODO: y value not perfect
-		y = calculateLaserFrontYpos();// - (LASERDISTANCEFIRSTCIRCLE/2);
+		x = - (newSize / 2);// - (i*LASERDISTANCEDISTANCE);
+		
+		QRectF rect = laserDistanceLineListFront->at(i)->rect();
+		
+		appendLog(QString("VORHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
+		
 		// TODO: x value
-		x = 1;
+		//x = 1;
+		// TODO: y value not perfect
+		y = calculateLaserFrontYpos();// (newSize / 2);
 		//y = 1;
 		
 		// Set the item's rectangle to the rectangle defined by (x, y) and the given width and height
 		//laserDistanceLineListFront->at(i)->setPos(x, y);
-		laserDistanceLineListFront->at(i)->setRect(x, y, newSize, newSize);
+		laserDistanceLineListFront->at(i)->setRect(QRectF(x, y, newSize, newSize));
+ 		
+		rect = laserDistanceLineListFront->at(i)->rect();
+ 		appendLog(QString("NACHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
+		//laserDistanceLineListFront->at(i)->setRect(x, y, newSize, newSize);
+ 		appendLog("--------------------------------------");
 	}
 }
 
@@ -1866,13 +1878,13 @@ void Gui::createLaserDistanceObjects()
 	for (int i=0; i<LASERDISTANCECIRCLES; i++)
 	{
 		// create semi circles
-		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 1,1 here.
-		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(1, 1, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
+		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 0,0 here.
+		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(0, 0, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
 
 		// set the start angle of the circle
-		semiCircle->setStartAngle(180*16);
+//		semiCircle->setStartAngle(180*16);
 		// set the span angle of the circle
-		semiCircle->setSpanAngle(180*16);
+//		semiCircle->setSpanAngle(180*16);
 		
 		// set semiCircle color and position
 		semiCircle->setPen(QPen(colorHelpLine));
