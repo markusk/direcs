@@ -1351,11 +1351,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// value is the zoomSlider value
 		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
 		
-		// recalculate the new position!
-		// TODO: x value
-		// x = laserDistanceLineListFront->at(i)->x(); // <- okay
-		// okay: y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2); // <- okay
-		x = calculateLaserXpos();// - (newSize / 2);// - (i*LASERDISTANCEDISTANCE);
+		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
+		x = calculateLaserXpos() - (newSize / 2);
 		
 		//QRectF rect = laserDistanceLineListFront->at(i)->rect();
 		//appendLog(QString("VORHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
