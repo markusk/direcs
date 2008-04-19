@@ -673,7 +673,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 	
 	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 	mutex->lock();
-	
+	// TODO: create a slot whichs sets and stores the robots on off state wihtin this class!
 	switch(motor)
 	{
 		case 1:
