@@ -1353,21 +1353,11 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
 		x = calculateLaserXpos() - (newSize / 2);
-		
-		//QRectF rect = laserDistanceLineListFront->at(i)->rect();
-		//appendLog(QString("VORHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
-		
-		// TODO: y value not perfect
-		y = calculateLaserFrontYpos() + (newSize / 2);
+		y = calculateLaserFrontYpos() - (newSize / 2);
 		
 		// Set the item's rectangle to the rectangle defined by (x, y) and the given width and height
-		//laserDistanceLineListFront->at(i)->setRect(QRectF(x, y, newSize, newSize));
 		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
 		laserDistanceLineListFront->at(i)->setPos(x, y);
- 		
-		//rect = laserDistanceLineListFront->at(i)->rect();
- 		//appendLog(QString("NACHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
- 		//appendLog("--------------------------------------");
 	}
 }
 
@@ -1874,9 +1864,9 @@ void Gui::createLaserDistanceObjects()
 		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(0, 0, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
 
 		// set the start angle of the circle
-//		semiCircle->setStartAngle(180*16);
+		semiCircle->setStartAngle(180*16);
 		// set the span angle of the circle
-//		semiCircle->setSpanAngle(180*16);
+		semiCircle->setSpanAngle(180*16);
 		
 		// set semiCircle color and position
 		semiCircle->setPen(QPen(colorHelpLine));
