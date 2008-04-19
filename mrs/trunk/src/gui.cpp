@@ -279,11 +279,11 @@ void Gui::on_sliderMotor1Speed_sliderReleased()
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
 	
-	//int value = ui.sliderMotor1Speed->value();
+	int value = ui.sliderMotor1Speed->value();
 	
 	//laserDistanceLineListFront->at(0)->setStartAngle(ui.sliderMotor1Speed->value() * 16);
-	//laserDistanceLineListFront->at(0)->setPos(value, value);
-	//appendLog(QString("x,y=%1").arg(value));
+	laserDistanceLineListFront->at(0)->setPos(value, value);
+	appendLog(QString("x,y=%1").arg(value));
 }
 
 
@@ -1351,31 +1351,26 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// value is the zoomSlider value
 		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
 		
-		// recalculate the new middle position of the bot pixmap!
-		// x = unchanged!
-		// y = set manually
+		// recalculate the new position!
+		// TODO: x value
 		// x = laserDistanceLineListFront->at(i)->x(); // <- okay
 		// okay: y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(i)->rect().height() / 2); // <- okay
-		x = - (newSize / 2);// - (i*LASERDISTANCEDISTANCE);
+		x = calculateLaserXpos();// - (newSize / 2);// - (i*LASERDISTANCEDISTANCE);
 		
-		QRectF rect = laserDistanceLineListFront->at(i)->rect();
+		//QRectF rect = laserDistanceLineListFront->at(i)->rect();
+		//appendLog(QString("VORHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
 		
-		appendLog(QString("VORHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
-		
-		// TODO: x value
-		//x = 1;
 		// TODO: y value not perfect
-		y = calculateLaserFrontYpos();// (newSize / 2);
-		//y = 1;
+		y = calculateLaserFrontYpos() + (newSize / 2);
 		
 		// Set the item's rectangle to the rectangle defined by (x, y) and the given width and height
-		//laserDistanceLineListFront->at(i)->setPos(x, y);
-		laserDistanceLineListFront->at(i)->setRect(QRectF(x, y, newSize, newSize));
+		//laserDistanceLineListFront->at(i)->setRect(QRectF(x, y, newSize, newSize));
+		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
+		laserDistanceLineListFront->at(i)->setPos(x, y);
  		
-		rect = laserDistanceLineListFront->at(i)->rect();
- 		appendLog(QString("NACHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
-		//laserDistanceLineListFront->at(i)->setRect(x, y, newSize, newSize);
- 		appendLog("--------------------------------------");
+		//rect = laserDistanceLineListFront->at(i)->rect();
+ 		//appendLog(QString("NACHER: rect x=%1 / rect y=%2 / rect widht=%3").arg(rect.x()).arg(rect.y()).arg(rect.width()));
+ 		//appendLog("--------------------------------------");
 	}
 }
 
