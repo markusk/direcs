@@ -240,7 +240,9 @@ void Mrs::init()
 	// AND check, if the robot is "on" (it answers correct)
 	//-------------------------------------------------------
 	splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
-	
+	// for refreshing the splash...
+	QApplication::processEvents();
+
 	// init the circuit & Co. when hitting the button in the GUI
 	connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 	connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
@@ -289,6 +291,9 @@ void Mrs::init()
 		if (sensorThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+			
 			gui->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
 			gui->appendLog("Sensor thread started.");
@@ -300,6 +305,9 @@ void Mrs::init()
 		if (plotThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+			
 			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
 			gui->appendLog("Plot thread started.");
@@ -312,6 +320,9 @@ void Mrs::init()
 		if (joystick->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+			
 			gui->appendLog("Starting joystick thread...", false);
 			joystick->start();
 			gui->appendLog("Joystick thread started.");
@@ -458,10 +469,16 @@ void Mrs::init()
 	//---------------------------------------------------------------------
 	// check FRONT laser
 	splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
+	// for refreshing the splash...
+	QApplication::processEvents();
+	
 	bool scanner1found = laserThread->isConnected(LASER1);
 	
 	// check REAR laser
 	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
+	// for refreshing the splash...
+	QApplication::processEvents();
+	
 	bool scanner2found = laserThread->isConnected(LASER2);
 	
 	if (scanner1found || scanner2found)
@@ -497,6 +514,8 @@ void Mrs::init()
 		if (laserThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
 			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
 			gui->appendLog("Laser thread started.");
@@ -506,6 +525,8 @@ void Mrs::init()
 		if (obstCheckThread->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
 			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			gui->appendLog("Obstacle check thread started.");
@@ -564,6 +585,8 @@ void Mrs::shutdown()
 
 		splash->show();
 		splash->showMessage(QObject::tr("Shutting down..."), splashPosition, splashColor);
+		// for refreshing the splash...
+		QApplication::processEvents();
 	
 		// just 4 fun
 		if (robotIsOn)
@@ -585,6 +608,9 @@ void Mrs::shutdown()
 		if (gui->getCheckBoxSaveSettings() == Qt::Checked)
 		{
 			gui->appendLog("Writing settings...");
+			splash->showMessage(QObject::tr("Writing settings..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
 	
 			// save gui slider values
 			inifile1->writeSetting("Config", "motor1Speed", gui->getSliderMotorSpeed(1));
