@@ -183,6 +183,12 @@
                  </item>
                  <item>
                   <widget class="QLabel" name="lblFaceTrackTo" >
+                   <property name="sizePolicy" >
+                    <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="font" >
                     <font>
                      <family>Verdana</family>
@@ -1955,6 +1961,7 @@
     <property name="title" >
      <string>&amp;View</string>
     </property>
+    <addaction name="actionAll" />
     <addaction name="actionLaser_View" />
     <addaction name="actionCamera" />
     <addaction name="actionMotors" />
@@ -2478,6 +2485,14 @@
    </property>
    <property name="text" >
     <string>Simulate</string>
+   </property>
+  </action>
+  <action name="actionAll" >
+   <property name="icon" >
+    <iconset resource="../mrs.qrc" >:/images/images/kpersonalizer.png</iconset>
+   </property>
+   <property name="text" >
+    <string>All</string>
    </property>
   </action>
  </widget>
