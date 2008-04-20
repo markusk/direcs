@@ -195,7 +195,7 @@
                     </font>
                    </property>
                    <property name="pixmap" >
-                    <pixmap/>
+                    <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
                    </property>
                    <property name="scaledContents" >
                     <bool>true</bool>
@@ -1215,13 +1215,13 @@
         <bool>true</bool>
        </property>
        <property name="text" >
-        <string> S&amp;imulate</string>
+        <string>&amp;Simulate</string>
        </property>
        <property name="icon" >
         <iconset resource="../mrs.qrc" >:/images/images/kmplot.png</iconset>
        </property>
        <property name="shortcut" >
-        <string>Alt+I</string>
+        <string>Alt+S</string>
        </property>
        <property name="checkable" >
         <bool>true</bool>
@@ -1236,7 +1236,7 @@
         </font>
        </property>
        <property name="text" >
-        <string> Exit</string>
+        <string> E&amp;xit</string>
        </property>
        <property name="icon" >
         <iconset resource="../mrs.qrc" >:/images/images/exit.png</iconset>
@@ -2006,9 +2006,6 @@
       <property name="renderHints" >
        <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing</set>
       </property>
-      <property name="dragMode" >
-       <enum>QGraphicsView::ScrollHandDrag</enum>
-      </property>
      </widget>
      <widget class="QWidget" name="layoutWidget" >
       <layout class="QHBoxLayout" >
@@ -2136,13 +2133,19 @@
            </item>
            <item>
             <widget class="QLabel" name="lblPreferredDirection" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font" >
               <font>
                <family>Verdana</family>
               </font>
              </property>
              <property name="pixmap" >
-              <pixmap/>
+              <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
              </property>
              <property name="scaledContents" >
               <bool>true</bool>
