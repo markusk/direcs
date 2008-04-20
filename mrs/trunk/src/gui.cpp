@@ -1291,16 +1291,16 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// (the laser lines are rescaled automatically by in the slot)
 	pixmapBot1->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
 	pixmapBot2->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
-//	pixmapBot1->setVisible(false); // FIXME: just testing!!
-//	pixmapBot2->setVisible(false); // FIXME: just testing!!
 	
 	// scale to the actual slider value
 	pixmapBot1->scale(value, value);
 	pixmapBot2->scale(value, value);
 	
-	// store the actual scale
+	//--------------------------
+	// store the current scale
+	// ('lastZoom' is also used in calculateLaserFrontYpos!!)
+	//--------------------------
 	lastZoom = value;
-	
 	
 	//------------------------------
 	// set the position of the bot
@@ -1318,7 +1318,6 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// change the x and y position of the laser lines
 	//-----------------------------------------------------
 	x = calculateLaserXpos();
-	//appendLog(QString("front laser calculateLaserXpos()=%1").arg(x));
 	y = calculateLaserFrontYpos();
 	
 	for (int i=0; i<laserLineListFront->size(); i++)
@@ -1334,7 +1333,6 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// change the y position of the laser lines
 	//------------------------------------------------
 	y = calculateLaserRearYpos();
-	//appendLog(QString("rear laser calculateLaserXpos()=%1").arg(x));
 	
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
@@ -1346,8 +1344,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	
 	
 	//-------------------------------------------------------------
-	// change the y position of the laser distance lines
-	// change the y position of the laser distance text
+	// change the y position of the laser distance lines and text
 	//-------------------------------------------------------------
 	for (int i=0; i<laserDistanceLineListFront->size(); i++)
 	{
@@ -1367,7 +1364,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		// recalculate the new text position
 		x = calculateLaserXpos();
-		y = calculateLaserFrontYpos()  + (newSize/2);
+		y = calculateLaserFrontYpos() + (newSize/2);
 		
 		// set the text position!
 		laserDistanceTextFront->at(i)->setPos(x, y);
