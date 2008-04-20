@@ -815,7 +815,7 @@ void SensorThread::setSimulationMode(bool state)
 		usSensorValue[0] = 28;
 		
 		motorSensorValue[MOTORSENSOR1] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
-		motorSensorValue[MOTORSENSOR2] = (int)800/CONVERSIONFACTORMOTORSENSOR;
+		motorSensorValue[MOTORSENSOR2] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 		
 		// initialisation
 		for (int i=0; i<CONTACTARRAYSIZE; i++)
