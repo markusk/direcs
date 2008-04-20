@@ -1280,9 +1280,10 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	qreal x = 0;
 	qreal y = 0;
 	qreal newSize = 0;
-	
-		
-		// show the zoom value in a label
+	QString text;
+
+
+	// show the zoom value in a label
 	ui.labelLaserTop->setText(tr("%1").arg(value));
 
 	
@@ -1290,6 +1291,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// (the laser lines are rescaled automatically by in the slot)
 	pixmapBot1->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
 	pixmapBot2->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
+//	pixmapBot1->setVisible(false); // FIXME: just testing!!
+//	pixmapBot2->setVisible(false); // FIXME: just testing!!
 	
 	// scale to the actual slider value
 	pixmapBot1->scale(value, value);
@@ -1312,7 +1315,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	
 	
 	//-----------------------------------------------------
-	// change the x and y position of the laser lines, too
+	// change the x and y position of the laser lines
 	//-----------------------------------------------------
 	x = calculateLaserXpos();
 	//appendLog(QString("front laser calculateLaserXpos()=%1").arg(x));
@@ -1328,7 +1331,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	
 	
 	//------------------------------------------------
-	// change the y position of the laser lines, too
+	// change the y position of the laser lines
 	//------------------------------------------------
 	y = calculateLaserRearYpos();
 	//appendLog(QString("rear laser calculateLaserXpos()=%1").arg(x));
@@ -1343,7 +1346,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	
 	
 	//-------------------------------------------------------------
-	// change the y position of the laser distance lines, too
+	// change the y position of the laser distance lines
+	// change the y position of the laser distance text
 	//-------------------------------------------------------------
 	for (int i=0; i<laserDistanceLineListFront->size(); i++)
 	{
@@ -1355,15 +1359,24 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		x = calculateLaserXpos() - (newSize / 2);
 		y = calculateLaserFrontYpos() - (newSize / 2);
 		
-		// Set the item's rectangle to the rectangle defined by (x, y) and the given width and height
+		// change the width and height
 		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
+		// set the circle position!
 		laserDistanceLineListFront->at(i)->setPos(x, y);
+		
+		
+		// recalculate the new text position
+		x = calculateLaserXpos();
+		y = calculateLaserFrontYpos()  + (newSize/2);
+		
+		// set the text position!
+		laserDistanceTextFront->at(i)->setPos(x, y);
+		
+		// set the text
+		text = QString("%1").arg(newSize/(FITTOFRAMEFACTOR*value*2));
+		// only show 2 digits after the ','
+		laserDistanceTextFront->at(i)->setText(text.left(text.indexOf(".") + 3) + "m");
 	}
-
-
-	//-------------------------------------------------------------
-	// change the y position of the laser distance text
-	//-------------------------------------------------------------
 }
 
 
@@ -1840,9 +1853,6 @@ void Gui::createLaserScannerObjects()
 
 void Gui::createLaserDistanceObjects()
 {
-	QString dimensionText;
-	
-	
 	// set colors
 	colorHelpLine = Qt::gray;
 	colorHelpLineText = Qt::gray;
@@ -1861,8 +1871,8 @@ void Gui::createLaserDistanceObjects()
 		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 0,0 here.
 		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(0, 0, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
 		
-		// create a text
-		QGraphicsSimpleTextItem *text = new QGraphicsSimpleTextItem("hello");
+		// create an (empty) text
+		QGraphicsSimpleTextItem *text = new QGraphicsSimpleTextItem();
 
 		// set the start angle of the circle
 		semiCircle->setStartAngle(180*16);
@@ -1875,9 +1885,9 @@ void Gui::createLaserDistanceObjects()
 		// set text color
 		text->setBrush(QBrush(colorHelpLine));
 		
-		// setting to the lowest layer level
-		semiCircle->setZValue(0);
-		text->setZValue(0);
+		// setting to the highest layer level
+		semiCircle->setZValue(4);
+		text->setZValue(4);
 		
 		// add semiCircle to QList
 		laserDistanceLineListFront->append(semiCircle);
