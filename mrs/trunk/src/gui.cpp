@@ -1521,10 +1521,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 	
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
-	/*
-	QPen orgPen = laserLineListFront->at(0)->pen();
-	QBrush orgBrush = orgPen.brush();
-	*/
 
 	//----------------------------------------------------------------------------------------
 	// Change the laser lines (color and length)
@@ -1768,15 +1764,11 @@ void Gui::createLaserScannerObjects()
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 		
-		// FIXME doest not work: Make a thicker line to fil the gaps
-		// set line color and position
-		QPen pen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
-		pen.setWidth(3);
-		//pen.setColor(colorLaserFreeWay);
-		line->setPen(pen);
-		
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
+		
+		// FIXME doest not work: line->setPen(QPen(colorLaserFreeWay, 3));
+		line->setPen(QPen(colorLaserFreeWay));
 		
 		// set position of each line
 		line->rotate(i);
@@ -1802,12 +1794,8 @@ void Gui::createLaserScannerObjects()
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 		
-		// FIXME doest not work: Make a thicker line to fil the gaps
-		// set line color and position
-		QPen pen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
-		pen.setWidth(3);
-		//pen.setColor(colorLaserFreeWay);
-		line->setPen(pen);
+		// FIXME doest not work: line->setPen(QPen(colorLaserFreeWay, 3));
+		line->setPen(QPen(colorLaserFreeWay));
 		
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
