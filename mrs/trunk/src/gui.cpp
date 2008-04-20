@@ -1359,6 +1359,11 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
 		laserDistanceLineListFront->at(i)->setPos(x, y);
 	}
+
+
+	//-------------------------------------------------------------
+	// change the y position of the laser distance text
+	//-------------------------------------------------------------
 }
 
 
@@ -1844,41 +1849,45 @@ void Gui::createLaserDistanceObjects()
 	
 	
 	//--------------------------------------------------------------
-	// scaling
-	//--------------------------------------------------------------
-	// store the current scale to fit the lines into the window
-	lastZoom = ui.sliderZoom->value();
-	// set the y-position of the line/text
-	//dimensionLine = (FITTOFRAMEFACTOR*lastZoom);
-	
-	//--------------------------------------------------------------
-	// create the laser line distances
+	// create the laser line distances with text
 	//--------------------------------------------------------------
 	laserDistanceLineListFront = new QList <QGraphicsEllipseItem*>();
+	laserDistanceTextFront = new QList <QGraphicsSimpleTextItem*>();
 
-	// create and add twelve semi circles
+	// create and add twelve semi circles and text
 	for (int i=0; i<LASERDISTANCECIRCLES; i++)
 	{
 		// create semi circles
 		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 0,0 here.
 		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(0, 0, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
+		
+		// create a text
+		QGraphicsSimpleTextItem *text = new QGraphicsSimpleTextItem("hello");
 
 		// set the start angle of the circle
 		semiCircle->setStartAngle(180*16);
 		// set the span angle of the circle
 		semiCircle->setSpanAngle(180*16);
 		
-		// set semiCircle color and position
+		// set semiCircle color
 		semiCircle->setPen(QPen(colorHelpLine));
+		
+		// set text color
+		text->setBrush(QBrush(colorHelpLine));
 		
 		// setting to the lowest layer level
 		semiCircle->setZValue(0);
+		text->setZValue(0);
 		
 		// add semiCircle to QList
 		laserDistanceLineListFront->append(semiCircle);
+		laserDistanceTextFront->append(text);
 		
 		// add semiCircle to scene
 		scene->addItem(semiCircle);
+		
+		// add text to scene
+		scene->addItem(text);
 	}
 }
 
@@ -1989,10 +1998,8 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
-	QColor col = Qt::red;
+	QColor col = QColor(255, 64, 64);
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
-	// TODO: remove alpha value
-	//col.setAlpha(150);
 	curve1.setPen(QPen(col));
 	curve1.setBrush(col);
 	
@@ -2012,10 +2019,8 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
-	col = Qt::blue;
+	col = QColor(64, 64, 255);
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
-	// TODO: remove alpha value
-	//col.setAlpha(150);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
 }
