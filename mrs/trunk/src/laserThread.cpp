@@ -257,14 +257,14 @@ void LaserThread::setSimulationMode(bool status)
 	{
 		numReadingsFront = LASERSCANNERARRAYSIZE;
 		numReadingsRear = LASERSCANNERARRAYSIZE;
-		
+/*		
 		// fill with values from 1 to 180 cm
 		for (float i=0; i<LASERSCANNERARRAYSIZE; i++)
 		{
 			laserScannerValuesFront[i] = 0.18;//(i+1) / 100;
 			laserScannerValuesRear[i] = 0.18;//(i+1) / 100;
 		}
-/*
+*/
 		// fill the array with some nice values
 		laserScannerValuesFront[0]	= 0.25;		laserScannerValuesRear[0]	= 0.25;
 		laserScannerValuesFront[1]	= 0.25;		laserScannerValuesRear[1]	= 0.25;
@@ -279,14 +279,14 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValuesFront[10]	= 1.5;		laserScannerValuesRear[10]	= 0.25;
 		laserScannerValuesFront[11]	= 1.5;		laserScannerValuesRear[11]	= 0.25;
 		laserScannerValuesFront[12]	= 1.5;		laserScannerValuesRear[12]	= 1.5;
-		laserScannerValuesFront[13]	= 1.5;		laserScannerValuesRear[13]	= 1.5;;
-		laserScannerValuesFront[14]	= 1.5;;		laserScannerValuesRear[14]	= 1.5;
-		laserScannerValuesFront[15]	= 1.5;;		laserScannerValuesRear[15]	= 1.5;
-		laserScannerValuesFront[16]	= 1.5;;		laserScannerValuesRear[16]	= 1.5;
-		laserScannerValuesFront[17]	= 1.5;;		laserScannerValuesRear[17]	= 1.5;
-		laserScannerValuesFront[18]	= 1.5;;		laserScannerValuesRear[18]	= 1.5;
-		laserScannerValuesFront[19]	= 1.5;;		laserScannerValuesRear[19]	= 1.5;
-		laserScannerValuesFront[20]	= 2.0;;		laserScannerValuesRear[20]	= 2.0;
+		laserScannerValuesFront[13]	= 1.5;		laserScannerValuesRear[13]	= 1.5;
+		laserScannerValuesFront[14]	= 1.5;		laserScannerValuesRear[14]	= 1.5;
+		laserScannerValuesFront[15]	= 1.5;		laserScannerValuesRear[15]	= 1.5;
+		laserScannerValuesFront[16]	= 1.5;		laserScannerValuesRear[16]	= 1.5;
+		laserScannerValuesFront[17]	= 1.5;		laserScannerValuesRear[17]	= 1.5;
+		laserScannerValuesFront[18]	= 1.5;		laserScannerValuesRear[18]	= 1.5;
+		laserScannerValuesFront[19]	= 1.5;		laserScannerValuesRear[19]	= 1.5;
+		laserScannerValuesFront[20]	= 2.0;		laserScannerValuesRear[20]	= 2.0;
 		laserScannerValuesFront[21]	= 2.0;		laserScannerValuesRear[21]	= 2.0;
 		laserScannerValuesFront[22]	= 2.0;		laserScannerValuesRear[22]	= 2.0;
 		laserScannerValuesFront[23]	= 2.0;		laserScannerValuesRear[23]	= 2.0;
@@ -353,9 +353,9 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValuesFront[84]	= 5.0;		laserScannerValuesRear[84]	= 5.0;
 		laserScannerValuesFront[85]	= 5.0;		laserScannerValuesRear[85]	= 5.0;
 		laserScannerValuesFront[86]	= 9.0;		laserScannerValuesRear[86]	= 9.0;
-		laserScannerValuesFront[87]	= 9.0;		laserScannerValuesRear[87]	= 20.0;
-		laserScannerValuesFront[88]	= 20.0;		laserScannerValuesRear[88]	= 20.0;
-		laserScannerValuesFront[89]	= 20.0;		laserScannerValuesRear[89]	= 20.0;
+		laserScannerValuesFront[87]	= 9.0;		laserScannerValuesRear[87]	= 9.0;
+		laserScannerValuesFront[88]	= 16.2;		laserScannerValuesRear[88]	= 16.2;
+		laserScannerValuesFront[89]	= 16.2;		laserScannerValuesRear[89]	= 16.2;
 		laserScannerValuesFront[90]	= 9.0;		laserScannerValuesRear[90]	= 9.0;
 		laserScannerValuesFront[91]	= 2.5;		laserScannerValuesRear[91]	= 2.5;
 		laserScannerValuesFront[92]	= 2.5;		laserScannerValuesRear[92]	= 2.5;
@@ -436,17 +436,17 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValuesFront[167]	= 4.0;		laserScannerValuesRear[167]	= 4.0;
 		laserScannerValuesFront[168]	= 4.0;		laserScannerValuesRear[168]	= 4.0;
 		laserScannerValuesFront[169]	= 4.0;		laserScannerValuesRear[169]	= 4.0;
-		laserScannerValuesFront[170]	= 0.1;		laserScannerValuesRear[170]	= 0.1;
-		laserScannerValuesFront[171]	= 0.1;		laserScannerValuesRear[171]	= 0.1;
-		laserScannerValuesFront[172]	= 0.1;		laserScannerValuesRear[172]	= 0.1;
-		laserScannerValuesFront[173]	= 0.1;		laserScannerValuesRear[173]	= 0.1;
-		laserScannerValuesFront[174]	= 0.1;		laserScannerValuesRear[174]	= 0.1;
-		laserScannerValuesFront[175]	= 0.1;		laserScannerValuesRear[175]	= 0.1;
-		laserScannerValuesFront[176]	= 0.1;		laserScannerValuesRear[176]	= 0.1;
-		laserScannerValuesFront[177]	= 0.1;		laserScannerValuesRear[177]	= 0.1;
-		laserScannerValuesFront[178]	= 0.1;		laserScannerValuesRear[178]	= 0.1;
-		laserScannerValuesFront[179]	= 0.1;		laserScannerValuesRear[179]	= 0.1;
-*/
+		laserScannerValuesFront[170]	= 0.18;		laserScannerValuesRear[170]	= 0.18;
+		laserScannerValuesFront[171]	= 0.18;		laserScannerValuesRear[171]	= 0.18;
+		laserScannerValuesFront[172]	= 0.18;		laserScannerValuesRear[172]	= 0.18;
+		laserScannerValuesFront[173]	= 0.18;		laserScannerValuesRear[173]	= 0.18;
+		laserScannerValuesFront[174]	= 0.18;		laserScannerValuesRear[174]	= 0.18;
+		laserScannerValuesFront[175]	= 0.18;		laserScannerValuesRear[175]	= 0.18;
+		laserScannerValuesFront[176]	= 0.18;		laserScannerValuesRear[176]	= 0.18;
+		laserScannerValuesFront[177]	= 0.18;		laserScannerValuesRear[177]	= 0.18;
+		laserScannerValuesFront[178]	= 0.18;		laserScannerValuesRear[178]	= 0.18;
+		laserScannerValuesFront[179]	= 0.18;		laserScannerValuesRear[179]	= 0.18;
+
 		// for refreshing the gui (deleting simulated laser lines)
 		emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
 		emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
