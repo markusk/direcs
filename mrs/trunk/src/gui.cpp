@@ -123,12 +123,18 @@ Gui::~Gui()
 	
 	
 	// empty QList
+	while (!laserDistanceTextFront->isEmpty())
+	{
+		delete laserDistanceTextFront->takeFirst();
+	}
+	delete laserDistanceTextFront;
+	
+	// empty QList
 	while (!laserDistanceLineListFront->isEmpty())
 	{
 		delete laserDistanceLineListFront->takeFirst();
 	}
 	delete laserDistanceLineListFront;
-
 
 	// empty QList
 	while (!laserLineListFront->isEmpty())
