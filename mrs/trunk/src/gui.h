@@ -401,6 +401,7 @@ class Gui : public QMainWindow
 		Action if a menu item is clicked
 		*/
 		void on_actionExit_activated();
+		void on_actionAll_activated();
 		void on_actionLaser_View_activated();
 		void on_actionCamera_activated();
 		void on_actionMotors_activated();
@@ -424,6 +425,7 @@ class Gui : public QMainWindow
 		void on_btnEnableRemote_clicked();
 		void on_btnSimulate_clicked();
 		void on_sliderZoom_valueChanged(int);
+		//void on_dockLaserView_resizeEvent(QResizeEvent * event); how? TODO: call sliderZoomValueChanged / setzoomSlider value!
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);

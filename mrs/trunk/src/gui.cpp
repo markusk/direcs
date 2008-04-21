@@ -87,6 +87,8 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
 
+
+
 	
 	//----------------------------------------------------------------------------
 	// Plot stuff
@@ -386,6 +388,18 @@ void Gui::on_btnResetMovement2_clicked()
 void Gui::on_btnTest_clicked()
 {
 	emit test();
+}
+
+
+void Gui::on_actionAll_activated()
+{
+	ui.dockLaserView->show();
+	ui.dockCamera->show();
+	ui.dockMotors->show();
+	ui.dockSettings->show();
+	ui.dockLog->show();
+	ui.dockNetworkLog->show();
+	ui.dockJoystick->show();
 }
 
 
