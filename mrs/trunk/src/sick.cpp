@@ -34,8 +34,8 @@
 extern void shutdown_laser(int x);
 /*****  DIRK WAS HERE - END ******/
 
-/* fancy serial functions */
 
+/* fancy serial functions */
 int iParity(parity_t par)
 {
   if(par == N)
@@ -51,6 +51,7 @@ int iSoftControl(int flowcontrol)
   else
     return(IXOFF);
 }
+
 
 int cDataSize(int numbits)
 {
@@ -73,6 +74,7 @@ int cDataSize(int numbits)
   }
 }
 
+
 int cStopSize(int numbits)
 {
   if(numbits == 2)
@@ -81,6 +83,7 @@ int cStopSize(int numbits)
     return(0);
 }
 
+
 int cFlowControl(int flowcontrol)
 {
   if(flowcontrol)
@@ -88,6 +91,7 @@ int cFlowControl(int flowcontrol)
   else
     return(CLOCAL);
 }
+
 
 int cParity(parity_t par)
 {
@@ -100,6 +104,7 @@ int cParity(parity_t par)
   else
     return(0);
 }
+
 
 int cBaudrate(int baudrate)
 {
@@ -151,6 +156,7 @@ int cBaudrate(int baudrate)
   }
 }
 
+
 void sick_set_serial_params(sick_laser_p laser)
 {
   struct termios  ctio;
@@ -170,10 +176,9 @@ void sick_set_serial_params(sick_laser_p laser)
   tcsetattr(laser->dev.fd, TCSANOW, &ctio);
 }
 
-/*****  DIRK WAS HERE - START ******/
 
-int
-kernel_minimum_version( int a, int b, int c )
+/*****  DIRK WAS HERE - START ******/
+int kernel_minimum_version( int a, int b, int c )
 {
   struct utsname        uts;
   int                   ca, cb, cc; 
@@ -185,6 +190,7 @@ kernel_minimum_version( int a, int b, int c )
     return(FALSE);
   }
 }
+
 
 void sick_set_baudrate(sick_laser_p laser, int brate)
 {
@@ -236,21 +242,25 @@ void sick_set_baudrate(sick_laser_p laser, int brate)
   tcsetattr(laser->dev.fd, TCSANOW, &ctio);
 }
 
-/*****  DIRK WAS HERE - END ******/
 
 int sick_serial_connect(sick_laser_p laser)
 {
-  if((laser->dev.fd = open(laser->dev.ttyport, O_RDWR | O_NOCTTY, 0)) < 0)
-    return(-1);
-  #ifdef CARMEN_LASER_LOW_LATENCY
-  carmen_serial_set_low_latency(laser->dev.fd);
-  #endif
-  sick_set_serial_params(laser);
-  return(laser->dev.fd);
+	if((laser->dev.fd = open(laser->dev.ttyport, O_RDWR | O_NOCTTY, 0)) < 0)
+	{
+		return(-1);
+	}
+	
+	#ifdef CARMEN_LASER_LOW_LATENCY
+	carmen_serial_set_low_latency(laser->dev.fd);
+	#endif
+	
+	sick_set_serial_params(laser);
+	
+	return(laser->dev.fd);
 }
 
-/* sick_compute_checksum - Compute the CRC checksum of a segment of data. */
 
+/* sick_compute_checksum - Compute the CRC checksum of a segment of data. */
 static int sick_compute_checksum(unsigned char *CommData, int uLen)
 {
   unsigned char abData[2] = {0, 0}, uCrc16[2] = {0, 0};
@@ -366,8 +376,7 @@ int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout)
 }
 
 
-int sick_write_command(sick_laser_p laser, unsigned char command,
-		       unsigned char *argument, int arg_length)
+int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length)
 {
   unsigned char buffer[MAX_COMMAND_SIZE];
   int pos = 0, i, check, length, loop, answer = 0, counter = 0;
@@ -443,6 +452,7 @@ int sick_write_command(sick_laser_p laser, unsigned char command,
   return answer;
 }
 
+
 void sick_request_status(sick_laser_p laser)
 {
   sick_write_command(laser, 0x31, NULL, 0);
@@ -454,6 +464,7 @@ void sick_request_sensor(sick_laser_p laser)
 
   sick_write_command(laser, 0x30, args, 2);
 }
+
 
 int sick_set_laser_baudrate(sick_laser_p laser, int brate)
 {
@@ -472,6 +483,7 @@ int sick_set_laser_baudrate(sick_laser_p laser, int brate)
   return (result == ACK);
 }
 
+
 int sick_set_config_mode(sick_laser_p laser)
 {
   unsigned char data[MAX_COMMAND_SIZE], args[MAX_COMMAND_SIZE];
@@ -487,6 +499,7 @@ int sick_set_config_mode(sick_laser_p laser)
   else
     return(FALSE);
 }
+
 
 int sick_set_lms_resolution(sick_laser_p laser)
 {
@@ -517,6 +530,7 @@ int sick_set_lms_resolution(sick_laser_p laser)
   return(result == ACK);
 }
 
+
 int sick_request_lms_config(sick_laser_p laser)
 {
   int result;
@@ -536,6 +550,7 @@ int sick_set_lms_config(sick_laser_p laser, unsigned char *data, int len)
   else
     return(FALSE);
 }
+
 
 int sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int length)
 {
@@ -609,6 +624,7 @@ int sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int length)
   return(TRUE);
 }
 
+
 int sick_set_lms_range(sick_laser_p laser)
 {
   int l = 0;
@@ -622,6 +638,7 @@ int sick_set_lms_range(sick_laser_p laser)
   else
     return(FALSE);
 }
+
 
 void sick_start_continuous_mode(sick_laser_p laser)
 {
@@ -641,6 +658,7 @@ void sick_start_continuous_mode(sick_laser_p laser)
   } while(result != ACK);
 }
 
+
 void sick_stop_continuous_mode(sick_laser_p laser)
 {
   unsigned char args[1] = {0x25};
@@ -650,6 +668,7 @@ void sick_stop_continuous_mode(sick_laser_p laser)
     result = sick_write_command(laser, 0x20, args, 1);
   } while(result != ACK);
 }
+
 
 // *** REI - START *** //
 void sick_start_continuous_remission_part_mode(sick_laser_p laser)
@@ -683,62 +702,92 @@ void sick_start_continuous_remission_part_mode(sick_laser_p laser)
 /* sick_test_baudrate - Test a combination of baudrate and parity 
    of the laser. */
 
+
 int sick_testBaudrate(sick_laser_p laser, int brate)
 {
-  unsigned char data[BUFFER_SIZE], ReqLaser[2] = {5, 180};
-  int response;
+	unsigned char data[BUFFER_SIZE], ReqLaser[2] = {5, 180};
+	int response;
+	
+	// start Markus: time measure added
+	double start_time = 0;
+	double elapsed_time = 0;
+	
+	// get time
+	start_time = carmen_get_time();
+	//qDebug("\nstart time: %f seks", start_time);
+	// end Markus
 
-  sick_set_baudrate(laser, brate);
-  
-  response = sick_write_command(laser, 0x30, ReqLaser, 2);
-  if(response == NAK) {
-    fprintf(stderr, "Error : Could not send command to laser.\n");
-    return FALSE;
-  }
-  if(sick_read_data(laser, data, MAX_TIME_FOR_TESTING_BAUDRATE))
-    return TRUE;
-  return FALSE;
+
+	sick_set_baudrate(laser, brate);
+	elapsed_time = (carmen_get_time() - start_time);
+	qDebug("elapsed time till here: %f seks", elapsed_time);
+	
+	response = sick_write_command(laser, 0x30, ReqLaser, 2);
+	if(response == NAK)
+	{
+		fprintf(stderr, "Error : Could not send command to laser.\n");
+		return FALSE;
+	}
+	
+	if(sick_read_data(laser, data, MAX_TIME_FOR_TESTING_BAUDRATE))
+	{
+		return TRUE;
+	}
+	
+	return FALSE;
 }
+
 
 int sick_detect_baudrate(sick_laser_p laser)
 {
-  fprintf(stderr, "INFO: detect connected baudrate: ...... 9600\n");
-  if(sick_testBaudrate(laser, 9600)) {
-    fprintf(stderr, "\n");
-    return(9600);
-  } 
-  else {
-    fprintf(stderr, "\rINFO: detect connected baudrate: ...... 19200\n");
-    if(sick_testBaudrate(laser, 19200)) {
-      fprintf(stderr, "\n");
-      return(19200);
-    } 
-    else {
-      fprintf(stderr, "\rINFO: detect connected baudrate: ...... 38400\n");
-      if(sick_testBaudrate(laser, 38400)) {
-	fprintf(stderr, "\n");
-	return(38400);
-      } 
-      else {
-	if(laser->settings.use_highspeed) {
-	  fprintf(stderr, "\rINFO: detect connected baudrate: ...... 500000\n");
-	  if(sick_testBaudrate(laser, 500000)) {
-	    fprintf(stderr, "\n");
-	    return(500000);
-	  } 
-	  else {
-	    fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");
-	    return(0);
-	  }
-	} 
-	else {
-	  fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");	  
-	  return(0);
+	fprintf(stderr, "INFO: detect connected baudrate: ...... 9600\n");
+	if(sick_testBaudrate(laser, 9600))
+	{
+		fprintf(stderr, "\n");
+		return(9600);
 	}
-      }
-    }
-  }
+	else
+	{
+		fprintf(stderr, "\rINFO: detect connected baudrate: ...... 19200\n");
+		if(sick_testBaudrate(laser, 19200))
+		{
+			fprintf(stderr, "\n");
+			return(19200);
+		}
+		else
+		{
+			fprintf(stderr, "\rINFO: detect connected baudrate: ...... 38400\n");
+			if(sick_testBaudrate(laser, 38400))
+			{
+				fprintf(stderr, "\n");
+				return(38400);
+			}
+			else
+			{
+				if(laser->settings.use_highspeed)
+				{
+					fprintf(stderr, "\rINFO: detect connected baudrate: ...... 500000\n");
+					if(sick_testBaudrate(laser, 500000))
+					{
+						fprintf(stderr, "\n");
+						return(500000);
+					}
+					else
+					{
+						fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");
+						return(0);
+					}
+				}
+				else
+				{
+					fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");	  
+					return(0);
+				}
+			}
+		}
+	}
 }
+
 
 int sick_check_baudrate(sick_laser_p laser, int brate)
 {
@@ -1069,6 +1118,7 @@ static void sick_process_packet_distance(sick_laser_p laser, unsigned char *pack
   }
 }
 
+
 // *** REI - START *** //
 static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet)
 {
@@ -1116,6 +1166,7 @@ static void sick_process_packet_remission(sick_laser_p laser, unsigned char *pac
   }
 }
 
+
 static void sick_process_packet(sick_laser_p laser, unsigned char *packet)
 {
   if(laser->settings.use_remission == 1)
@@ -1124,9 +1175,9 @@ static void sick_process_packet(sick_laser_p laser, unsigned char *packet)
 }
 // *** REI - END *** //
 
+
 /* sick_handle_laser - Process any data that is available from the 
    laser. Attempt to detect valid packets in the data. */
-
 void sick_handle_laser(sick_laser_p laser)
 {
   int bytes_available, bytes_read;
@@ -1191,6 +1242,7 @@ void sick_handle_laser(sick_laser_p laser)
     laser->processed_mark = 0;
   } 
 }
+
 
 void sick_stop_laser(sick_laser_p laser)
 {
