@@ -91,8 +91,10 @@ void Joystick::run()
 		if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event))
 		{
 			emit emitMessage("Error reading joystick device!");
-			stopped = true;
-			return;
+			//stopped = true;
+			//return;
+			//
+			// try further!
 		}
 
 		switch(js.type & ~JS_EVENT_INIT)
