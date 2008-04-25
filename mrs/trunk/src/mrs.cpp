@@ -33,11 +33,6 @@ const Qt::Alignment Mrs::splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 const QColor Mrs::splashColor = Qt::red;
 
 
-/*!
-\brief The main class of the whole robot programm
-
-All objects are created here. This method also starts the GUI.
-*/
 Mrs::Mrs(QSplashScreen *splash)
 {
 	//------------------------------------------------------------------
@@ -312,30 +307,29 @@ void Mrs::init()
 			plotThread->start();
 			gui->appendLog("Plot thread started.");
 		}
-	
-		//-----------------------------------------------------------
-		// check if joystick is connected
-		//-----------------------------------------------------------
-		// start the joystick thread
-		if (joystick->isRunning() == false)
-		{
-			splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
-			
-			gui->appendLog("Starting joystick thread...", false);
-			joystick->start();
-			gui->appendLog("Joystick thread started.");
-		}
 	}
 	else
 	{
 		gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 		gui->appendLog("Sensor thread NOT started!");
 		gui->appendLog("Plot thread NOT started!");
-		gui->appendLog("Joystick thread NOT started!");
 	}
 
+
+	//-----------------------------------------------------------
+	// check if a joystick is connected
+	//-----------------------------------------------------------
+	// start the joystick thread
+	if (joystick->isRunning() == false)
+	{
+		splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
+		// for refreshing the splash...
+		QApplication::processEvents();
+		
+		gui->appendLog("Starting joystick thread...", false);
+		joystick->start();
+		gui->appendLog("Joystick thread started.");
+	}
 
 	//----------------------------------------------------------------------------
 	// drive in the direction which was emited
@@ -2848,12 +2842,16 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 					servoTestMode = true;
 					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON.</front>");
 					gui->appendLog(QString("Servo %1 selected.").arg(currentTestServo+1));
+					// TODO: timing problem, when emitting speak signal.
+					// restults in "Error reading joystick device!"
+					emit speak("Servo test mode");
 				}
 				else
 				{
 					toggle10=false;
 					servoTestMode = false;
 					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF.</front>");
+					emit speak("Test mode off");
 				}
 			}
 			break;
