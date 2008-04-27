@@ -105,6 +105,9 @@ infrared Sensors temporarily removed from robot!!
 	//--------------
 	// window init
 	//--------------
+	// activate mouse tracking
+	ui.dockLaserView->setMouseTracking(true);
+	
 	// TODO: which values for which resolutions!?
 	ui.splitLaserView->setSizes(QList<int>() << 900 << 100);
 	// make dockLaserView wider
@@ -1315,6 +1318,15 @@ void Gui::on_btnSimulate_clicked()
 		ui.btnSimulate->setPalette(QApplication::palette());
 		emit simulate(false);
 	}
+}
+
+
+void Gui::mousePressEvent(QMouseEvent* event)
+{
+	int x = event->x();
+	int y = event->y();
+	
+	appendLog(QString("mouse button pressed at %1, %2.").arg(x).arg(y));
 }
 
 
