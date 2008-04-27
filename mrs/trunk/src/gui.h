@@ -549,6 +549,10 @@ class Gui : public QMainWindow
 		static const int FITTOFRAMEFACTOR = 45;
 		static const int STARTZOOMLEVEL = 5;
 		
+		//! the initial Y position of the laser lines and the robot image in the GUI
+		static const int INITIALLASERYPOSFRONT = 100;
+		static const int INITIALLASERYPOSREAR  = 90;
+		
 		//! Number of distance semi circles
 		static const int LASERDISTANCECIRCLES = 27;
 		//! the size (diameter) of the first (innerst) circle in pixels

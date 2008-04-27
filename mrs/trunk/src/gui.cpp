@@ -1694,8 +1694,8 @@ void Gui::createLaserScannerObjects()
 {
 	// the start position for the pos. calculation
 	laserXPos = 0;
-	laserFrontYPos = 0;
-	laserRearYPos = 0;
+	laserFrontYPos = INITIALLASERYPOSFRONT;
+	laserRearYPos  = INITIALLASERYPOSREAR;
 	
 	// set some nice colors for some widgets
 	colorLaserObstacle =  QColor(255, 50, 50); // light red
