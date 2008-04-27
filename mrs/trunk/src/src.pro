@@ -27,7 +27,8 @@ HEADERS += head.h \
     param_interface.h \
     joystick.h \
     laser_messages.h \
-    servo.h
+    servo.h \
+ heartbeat.h
 SOURCES += head.cpp \
     camThread.cpp \
     circuit.cpp \
@@ -46,19 +47,20 @@ SOURCES += head.cpp \
     carmenserial.cpp \
     laser_main.cpp \
     joystick.cpp \
-    servo.cpp
+    servo.cpp \
+ heartbeat.cpp
 RESOURCES = ../mrs.qrc
 DEFINES = _TTY_POSIX_
 CONFIG += debug \
     warn_on \
     qt
 TEMPLATE = app
-unix { 
+unix {
     HEADERS += posix_qextserialport.h \
         QtGLContext.h
     SOURCES += QtGLContext.cpp
 }
-win32:HEADERS += win_qextserialport.h
+win32 : HEADERS += win_qextserialport.h
 QT += network \
     opengl
 DESTDIR = .
