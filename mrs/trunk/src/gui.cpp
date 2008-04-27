@@ -145,6 +145,21 @@ Gui::~Gui()
 	}
 	delete laserLineListFront;
 	
+	
+	// empty QList
+	while (!laserDistanceTextRear->isEmpty())
+	{
+		delete laserDistanceTextRear->takeFirst();
+	}
+	delete laserDistanceTextRear;
+	
+	// empty QList
+	while (!laserDistanceLineListRear->isEmpty())
+	{
+		delete laserDistanceLineListRear->takeFirst();
+	}
+	delete laserDistanceLineListRear;
+	
 	// empty QList
 	while (!laserLineListRear->isEmpty())
 	{
@@ -287,11 +302,11 @@ void Gui::on_sliderMotor1Speed_sliderReleased()
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
 	
-	int value = ui.sliderMotor1Speed->value();
+	//int value = ui.sliderMotor1Speed->value();
 	
 	//laserDistanceLineListFront->at(0)->setStartAngle(ui.sliderMotor1Speed->value() * 16);
-	laserDistanceLineListFront->at(0)->setPos(value, value);
-	appendLog(QString("x,y=%1").arg(value));
+	//laserDistanceLineListFront->at(0)->setPos(value, value);
+	//appendLog(QString("x,y=%1").arg(value));
 }
 
 
@@ -1342,9 +1357,9 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//appendLog(QString("<b>sliderZoomValueChanged...bot y pos()=%1</b>").arg(pixmapBot1->y()));
 	
 	
-	//-----------------------------------------------------
-	// change the x and y position of the laser lines
-	//-----------------------------------------------------
+	//------------------------------------------------------
+	// change the x and y position of the FRONT laser lines
+	//------------------------------------------------------
 	x = calculateLaserXpos();
 	y = calculateLaserFrontYpos();
 	
@@ -1358,7 +1373,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	
 	
 	//------------------------------------------------
-	// change the y position of the laser lines
+	// change the y position of the REAR laser lines
 	//------------------------------------------------
 	y = calculateLaserRearYpos();
 	
@@ -1371,9 +1386,9 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	}
 	
 	
-	//-------------------------------------------------------------
-	// change the y position of the laser distance lines and text
-	//-------------------------------------------------------------
+	//------------------------------------------------------------------
+	// change the y position of the FRONT laser distance lines and text
+	//------------------------------------------------------------------
 	for (int i=0; i<laserDistanceLineListFront->size(); i++)
 	{
 		// (LASERDISTANCEFIRSTCIRCLE/STARTZOOMLEVEL) is the 'factor'
@@ -1401,6 +1416,39 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		text = QString("%1").arg(newSize/(FITTOFRAMEFACTOR*value*2));
 		// only show 2 digits after the ','
 		laserDistanceTextFront->at(i)->setText(text.left(text.indexOf(".") + 3) + "m");
+	}
+	
+	
+	//------------------------------------------------------------------
+	// change the y position of the REAR laser distance lines and text
+	//------------------------------------------------------------------
+	for (int i=0; i<laserDistanceLineListRear->size(); i++)
+	{
+		// (LASERDISTANCEFIRSTCIRCLE/STARTZOOMLEVEL) is the 'factor'
+		// value is the zoomSlider value
+		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
+		
+		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
+		x = calculateLaserXpos() - (newSize / 2);
+		y = calculateLaserRearYpos() - (newSize / 2);
+		
+		// change the width and height
+		laserDistanceLineListRear->at(i)->setRect(0, 0, newSize, newSize);
+		// set the circle position!
+		laserDistanceLineListRear->at(i)->setPos(x, y);
+		
+		
+		// recalculate the new text position
+		x = calculateLaserXpos();
+		y = calculateLaserRearYpos() - (newSize/2);
+		
+		// set the text position!
+		laserDistanceTextRear->at(i)->setPos(x, y);
+		
+		// set the text
+		text = QString("%1").arg(newSize/(FITTOFRAMEFACTOR*value*2));
+		// only show 2 digits after the ','
+		laserDistanceTextRear->at(i)->setText(text.left(text.indexOf(".") + 3) + "m");
 	}
 }
 
@@ -1502,14 +1550,13 @@ void Gui::initLaserView()
 	on_sliderZoom_valueChanged(lastZoom);
 	
 	
-	//====================================================
-	// move the distance lines to their x and y positions
+	//=============================================================================
+	// move the FRONT distance lines to their x and y positions
 	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
-	//====================================================
+	//=============================================================================
 	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
 	x = calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
 	y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
-	
 	
 	//-----------------
 	// FRONT distances
@@ -1517,6 +1564,23 @@ void Gui::initLaserView()
 	for (int i=0; i<laserDistanceLineListFront->size(); i++)
 	{
 		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
+	}
+	
+	
+	//=============================================================================
+	// move the REAR distance lines to their x and y positions
+	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
+	//=============================================================================
+	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
+	x = calculateLaserXpos() - (laserDistanceLineListRear->at(0)->rect().width() / 2);
+	y = calculateLaserFrontYpos() - (laserDistanceLineListRear->at(0)->rect().height() / 2);
+	
+	//-----------------
+	// REAR distances
+	//-----------------
+	for (int i=0; i<laserDistanceLineListRear->size(); i++)
+	{
+		laserDistanceLineListRear->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
 	}
 	
 	
@@ -1872,7 +1936,7 @@ void Gui::createLaserDistanceObjects()
 	
 	
 	//--------------------------------------------------------------
-	// create the laser line distances with text
+	// create the FRONT laser line distances with text
 	//--------------------------------------------------------------
 	laserDistanceLineListFront = new QList <QGraphicsEllipseItem*>();
 	laserDistanceTextFront = new QList <QGraphicsSimpleTextItem*>();
@@ -1905,6 +1969,49 @@ void Gui::createLaserDistanceObjects()
 		// add semiCircle to QList
 		laserDistanceLineListFront->append(semiCircle);
 		laserDistanceTextFront->append(text);
+		
+		// add semiCircle to scene
+		scene->addItem(semiCircle);
+		
+		// add text to scene
+		scene->addItem(text);
+	}
+	
+	
+	//--------------------------------------------------------------
+	// create the REAR laser line distances with text
+	//--------------------------------------------------------------
+	laserDistanceLineListRear = new QList <QGraphicsEllipseItem*>();
+	laserDistanceTextRear = new QList <QGraphicsSimpleTextItem*>();
+
+	// create and add twelve semi circles and text
+	for (int i=0; i<LASERDISTANCECIRCLES; i++)
+	{
+		// create semi circles
+		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 0,0 here.
+		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(0, 0, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
+		
+		// create an (empty) text
+		QGraphicsSimpleTextItem *text = new QGraphicsSimpleTextItem();
+
+		// set the start angle of the circle
+		semiCircle->setStartAngle(0);
+		// set the span angle of the circle
+		semiCircle->setSpanAngle(180*16);
+		
+		// set semiCircle color
+		semiCircle->setPen(QPen(colorHelpLine));
+		
+		// set text color
+		text->setBrush(QBrush(colorHelpLine));
+		
+		// setting to the highest layer level
+		semiCircle->setZValue(4);
+		text->setZValue(4);
+		
+		// add semiCircle to QList
+		laserDistanceLineListRear->append(semiCircle);
+		laserDistanceTextRear->append(text);
 		
 		// add semiCircle to scene
 		scene->addItem(semiCircle);
