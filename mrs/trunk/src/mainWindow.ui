@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1672</width>
-    <height>972</height>
+    <width>1392</width>
+    <height>976</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -1944,8 +1944,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1672</width>
-     <height>29</height>
+     <width>1392</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -2004,11 +2004,17 @@
           <family>Verdana</family>
          </font>
         </property>
+        <property name="mouseTracking" >
+         <bool>true</bool>
+        </property>
         <property name="alignment" >
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
         </property>
         <property name="renderHints" >
          <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing</set>
+        </property>
+        <property name="dragMode" >
+         <enum>QGraphicsView::ScrollHandDrag</enum>
         </property>
        </widget>
        <widget class="QWidget" name="layoutWidget" >
