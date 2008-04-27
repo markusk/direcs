@@ -9,7 +9,7 @@
     <x>0</x>
     <y>0</y>
     <width>312</width>
-    <height>502</height>
+    <height>529</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -21,7 +21,7 @@
   <property name="maximumSize" >
    <size>
     <width>312</width>
-    <height>502</height>
+    <height>529</height>
    </size>
   </property>
   <property name="contextMenuPolicy" >
@@ -67,7 +67,7 @@
      <x>10</x>
      <y>275</y>
      <width>291</width>
-     <height>71</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="title" >
@@ -76,9 +76,9 @@
    <widget class="QLabel" name="label_2" >
     <property name="geometry" >
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>251</width>
+      <x>10</x>
+      <y>20</y>
+      <width>160</width>
       <height>58</height>
      </rect>
     </property>
@@ -92,9 +92,31 @@
      <string/>
     </property>
     <property name="pixmap" >
-     <pixmap resource="../mrs.qrc" >:/images/images/carmen-logo-tiny.png</pixmap>
+     <pixmap resource="../mrs.qrc" >:/images/images/carmen-logo-trans.png</pixmap>
     </property>
     <property name="scaledContents" >
+     <bool>true</bool>
+    </property>
+    <property name="alignment" >
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>179</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>&lt;a href="http://carmen.sourceforge.net/">http://carmen.sourceforge.net/&lt;/a></string>
+    </property>
+    <property name="textFormat" >
+     <enum>Qt::RichText</enum>
+    </property>
+    <property name="openExternalLinks" >
      <bool>true</bool>
     </property>
    </widget>
@@ -103,7 +125,7 @@
    <property name="geometry" >
     <rect>
      <x>10</x>
-     <y>355</y>
+     <y>390</y>
      <width>291</width>
      <height>66</height>
     </rect>
@@ -268,9 +290,9 @@
   <widget class="QWidget" name="layoutWidget" >
    <property name="geometry" >
     <rect>
-     <x>75</x>
-     <y>460</y>
-     <width>163</width>
+     <x>70</x>
+     <y>490</y>
+     <width>171</width>
      <height>29</height>
     </rect>
    </property>
@@ -294,10 +316,10 @@
   <widget class="QLabel" name="label_12" >
    <property name="geometry" >
     <rect>
-     <x>15</x>
-     <y>430</y>
-     <width>281</width>
-     <height>16</height>
+     <x>10</x>
+     <y>460</y>
+     <width>291</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text" >
