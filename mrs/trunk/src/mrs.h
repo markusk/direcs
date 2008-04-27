@@ -25,10 +25,6 @@
 #include <QMutex>
 //-------------------------------------------------------------------
 
-//-------------------------------------------------------------------
-// forward declarations because of circular includes!
-class Gui;
-//-------------------------------------------------------------------
 
 /**
 \brief The main class of the whole robot programm.
