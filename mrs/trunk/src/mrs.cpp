@@ -48,6 +48,7 @@ Mrs::Mrs(QSplashScreen *splash)
 	gui = new Gui();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
+	heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
@@ -102,6 +103,7 @@ void Mrs::init()
 	// let some classes know the robots state
 	//--------------------------------------------------------------------------
 	connect(circuit1, SIGNAL( robotState(bool) ), this, SLOT( setRobotState(bool) ));
+	connect(circuit1, SIGNAL( robotState(bool) ), heartbeat, SLOT( setRobotState(bool) ));
 	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 	
 	//--------------------------------------------------------------------------
@@ -281,7 +283,21 @@ void Mrs::init()
 		gui->appendLog("Servos moved to default positions");
 	
 		//-----------------------------------------------------------
-		// start the sensor thread ("clock" for reading the sensors)
+		// start the heartbeat thread
+		//-----------------------------------------------------------
+		if (heartbeat->isRunning() == false)
+		{
+			splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+			
+			gui->appendLog("Starting heartbeat thread...", false);
+			heartbeat->start();
+			gui->appendLog("Heartbeat thread started.");
+		}
+	
+		//-----------------------------------------------------------
+		// start the sensor thread for reading the sensors)
 		//-----------------------------------------------------------
 		if (sensorThread->isRunning() == false)
 		{
@@ -311,6 +327,7 @@ void Mrs::init()
 	else
 	{
 		gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+		gui->appendLog("Heartbeat thread NOT started!");
 		gui->appendLog("Sensor thread NOT started!");
 		gui->appendLog("Plot thread NOT started!");
 	}
@@ -984,6 +1001,42 @@ void Mrs::shutdown()
 			}
 		}
 	
+		
+		//--------------------------
+		// quit the heartbeat thread
+		//--------------------------
+		if (heartbeat->isRunning() == true)
+		{
+			gui->appendLog("Stopping heartbeat thread...");
+			
+			// my own stop routine :-)
+			heartbeat->stop();
+			
+			// slowing thread down
+			heartbeat->setPriority(QThread::IdlePriority);
+			heartbeat->quit();
+			
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((heartbeat->isFinished() == false) && (t.elapsed() <= 2000));
+	
+			if (heartbeat->isFinished() == true)
+			{
+				gui->appendLog("Heartbeat thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating heartbeat thread because it doesn't answer...");
+				heartbeat->terminate();
+				heartbeat->wait(1000);
+				gui->appendLog("Heartbeat thread terminated.");
+			}
+		}
 /*
 		removed for still "head looking down"!!	
 		//-------------------------------------------------------
@@ -1023,6 +1076,7 @@ Mrs::~Mrs()
 	delete servos;
 	delete motors;
 	delete sensorThread;
+	delete heartbeat;
 	delete circuit1;
 	delete interface1;
 	delete gui;

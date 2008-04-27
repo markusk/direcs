@@ -6,6 +6,7 @@
 //#include "speakThread.h"
 #include "circuit.h"
 #include "interfaceAvr.h"
+#include "heartbeat.h"
 #include "sensorThread.h"
 #include "plotThread.h"
 #include "camThread.h"
@@ -198,6 +199,7 @@ class Mrs : public QObject
 		Gui *gui;
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
+		Heartbeat *heartbeat;
 		SensorThread *sensorThread;
 		PlotThread *plotThread;
 		Motor *motors;
