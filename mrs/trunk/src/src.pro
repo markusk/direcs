@@ -4,7 +4,8 @@
 # Das Target ist eine Anwendung: ../bin/mrs
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
-FORMS += mainWindow.ui
+FORMS += mainWindow.ui \
+ aboutDialog.ui
 HEADERS += head.h \
     camThread.h \
     circuit.h \
@@ -28,7 +29,8 @@ HEADERS += head.h \
     joystick.h \
     laser_messages.h \
     servo.h \
- heartbeat.h
+ heartbeat.h \
+ aboutDialog.h
 SOURCES += head.cpp \
     camThread.cpp \
     circuit.cpp \
@@ -48,7 +50,8 @@ SOURCES += head.cpp \
     laser_main.cpp \
     joystick.cpp \
     servo.cpp \
- heartbeat.cpp
+ heartbeat.cpp \
+ aboutDialog.cpp
 RESOURCES = ../mrs.qrc
 DEFINES = _TTY_POSIX_
 CONFIG += debug \
