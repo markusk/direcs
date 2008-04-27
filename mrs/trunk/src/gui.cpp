@@ -494,6 +494,14 @@ void Gui::on_actionJoystick_activated()
 }
 
 
+void Gui::on_actionAbout_activated()
+{
+	// show about dialog
+	AboutDialog about(this);
+	about.exec();
+}
+
+
 /*
 void Gui::showDistance(int sensor, int distance)
 {

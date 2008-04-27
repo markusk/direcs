@@ -3,7 +3,7 @@
 
 //-------------------------------------------------------------------
 #include "ui_mainWindow.h"
-#include "QtGLContext.h"
+#include "aboutDialog.h"
 //-------------------------------------------------------------------
 #include "cv.h" // for type IplImage (camThread)
 //-------------------------------------------------------------------
@@ -14,6 +14,7 @@
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
 //-------------------------------------------------------------------
+#include "QtGLContext.h"
 #include <QtGui>
 #include <QtOpenGL>
 #include <QGraphicsScene> // for OpenGL (Laser lines)
@@ -401,7 +402,6 @@ class Gui : public QMainWindow
 		Action if a menu item is clicked
 		*/
 		void on_actionExit_activated();
-		void on_actionAll_activated();
 		void on_actionLaser_View_activated();
 		void on_actionCamera_activated();
 		void on_actionMotors_activated();
@@ -409,6 +409,8 @@ class Gui : public QMainWindow
 		void on_actionLog_activated();
 		void on_actionNetwork_Log_activated();
 		void on_actionJoystick_activated();
+		void on_actionAll_activated();
+		void on_actionAbout_activated();
 
 
 	private slots:
