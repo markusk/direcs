@@ -1767,10 +1767,13 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 
 void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	QPointF pos = mouseEvent->scenePos();
-	//QPointF y = mouseEvent->pos()->y();
+	qreal diff = laserFrontYPos - laserRearYPos;
 	
-	appendLog(QString("mouse button in scene at %1, %2.").arg(pos.x()).arg(pos.y()));
+	laserFrontYPos = mouseEvent->scenePos().y();
+	laserRearYPos = laserFrontYPos - diff;
+	
+	// refresh laserView
+	on_sliderZoom_valueChanged(ui.sliderZoom->value());
 }
 
 
