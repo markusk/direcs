@@ -30,7 +30,8 @@ HEADERS += head.h \
     laser_messages.h \
     servo.h \
  heartbeat.h \
- aboutDialog.h
+ aboutDialog.h \
+ laserScene.h
 SOURCES += head.cpp \
     camThread.cpp \
     circuit.cpp \
@@ -51,7 +52,8 @@ SOURCES += head.cpp \
     joystick.cpp \
     servo.cpp \
  heartbeat.cpp \
- aboutDialog.cpp
+ aboutDialog.cpp \
+ laserScene.cpp
 RESOURCES = ../mrs.qrc
 DEFINES = _TTY_POSIX_
 CONFIG += debug \
