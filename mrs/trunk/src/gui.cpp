@@ -75,7 +75,6 @@ infrared Sensors temporarily removed from robot!!
 	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), ui.sliderObstacle, SLOT(setValue(int)));
-
 	
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face detect check box changes, set the detection mode
@@ -86,9 +85,6 @@ infrared Sensors temporarily removed from robot!!
 	// Whenever the state of the face tracking check box changes, set the tracking mode
 	//----------------------------------------------------------------------------------
 	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
-
-
-
 	
 	//----------------------------------------------------------------------------
 	// Plot stuff
@@ -99,15 +95,16 @@ infrared Sensors temporarily removed from robot!!
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
 	createLaserScannerObjects();
-	
 	createLaserDistanceObjects();
+
+	//----------------------------------------------------------------------------------
+	// get the mouse position, when the robot position is to be changed
+	//----------------------------------------------------------------------------------
+	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	
 	//--------------
 	// window init
 	//--------------
-	// activate mouse tracking
-	ui.dockLaserView->setMouseTracking(true);
-	
 	// TODO: which values for which resolutions!?
 	ui.splitLaserView->setSizes(QList<int>() << 900 << 100);
 	// make dockLaserView wider
@@ -1323,10 +1320,12 @@ void Gui::on_btnSimulate_clicked()
 
 void Gui::mousePressEvent(QMouseEvent* event)
 {
+	/*
 	int x = event->x();
 	int y = event->y();
 	
 	appendLog(QString("mouse button pressed at %1, %2.").arg(x).arg(y));
+	*/
 }
 
 
@@ -1766,6 +1765,15 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 }
 
 
+void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	QPointF pos = mouseEvent->scenePos();
+	//QPointF y = mouseEvent->pos()->y();
+	
+	appendLog(QString("mouse button in scene at %1, %2.").arg(pos.x()).arg(pos.y()));
+}
+
+
 void Gui::createLaserScannerObjects()
 {
 	// the start position for the pos. calculation
@@ -1781,8 +1789,9 @@ void Gui::createLaserScannerObjects()
 	colorGraphicsSceneBackground = Qt::black;
 	
 	
-	// the scene for the laser scanner lines
-	scene = new QGraphicsScene();
+	// the graphicsScene for the laser scanner
+//	scene = new QGraphicsScene();
+	scene = new LaserScene();
 	
 	// set some colors
 	scene->setBackgroundBrush(colorGraphicsSceneBackground);

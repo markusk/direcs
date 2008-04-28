@@ -4,6 +4,7 @@
 //-------------------------------------------------------------------
 #include "ui_mainWindow.h"
 #include "aboutDialog.h"
+#include "laserScene.h"
 //-------------------------------------------------------------------
 #include "cv.h" // for type IplImage (camThread)
 //-------------------------------------------------------------------
@@ -254,6 +255,11 @@ class Gui : public QMainWindow
 		Refreshes the view of the lines from the rear laser scanner.
 		*/
 		void refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags);
+		
+		/**
+		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
+		*/
+		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
 		
 		/**
 		Shows the joystick values when it moves.
