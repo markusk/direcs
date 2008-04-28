@@ -115,6 +115,15 @@ void LaserScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 }
 
 
+void LaserScene::wheelEvent(QGraphicsSceneWheelEvent* wheelEvent)
+{
+	//wheelEvent->accept();
+	emit wheelZoom(wheelEvent);
+	
+	//QGraphicsScene::wheelEvent(wheelEvent);
+}
+
+
 void LaserScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
 /*

@@ -101,6 +101,7 @@ infrared Sensors temporarily removed from robot!!
 	// get the mouse position, when the robot position is to be changed
 	//----------------------------------------------------------------------------------
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
+	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
 	
 	//--------------
 	// window init
@@ -1774,6 +1775,25 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 	
 	// refresh laserView
 	on_sliderZoom_valueChanged(ui.sliderZoom->value());
+}
+
+
+void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
+{
+	int zoomValue = ui.sliderZoom->value();
+	
+	
+	if (wheelEvent->delta() > 0)
+	{
+		zoomValue++;
+	}
+	else
+	{
+		zoomValue--;
+	}
+	
+	// refresh laserView (set zoom slider)
+	ui.sliderZoom->setValue(zoomValue);
 }
 
 

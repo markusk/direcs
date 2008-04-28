@@ -262,6 +262,11 @@ class Gui : public QMainWindow
 		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
 		
 		/**
+		Zoom into the graphicsView/scene, if the mouse wheel was used.
+		*/
+		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
+		
+		/**
 		Shows the joystick values when it moves.
 		*/
 		void showJoystickAxes(int axisNumber, int axisValue);
