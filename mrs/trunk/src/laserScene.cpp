@@ -12,9 +12,10 @@ LaserScene::~LaserScene()
 
 void LaserScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	// only one emit!
+	// no other emits while keep the button pressed!
 	//mouseEvent->accept();
 	emit robotPositionChanged(mouseEvent);
-	//return;
 	
 	//QGraphicsScene::mousePressEvent(mouseEvent);
 }

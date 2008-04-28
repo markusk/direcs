@@ -40,14 +40,12 @@ class LaserScene : public QGraphicsScene
 		void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
 	
 		/**
-		Reimplementation of QGraphicsScene::contextMenuEvent().<br>
-		We override this method to create a context menu when user right-clicks on an item.
+		Reimplementation of QGraphicsScene::contextMenuEvent().
 		*/
 		void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
 	
 		/**
-		Reimplementation of QGraphicsScene::keyPressEvent().<br>
-		We override this method to react to scene-related keyboard actions.
+		Reimplementation of QGraphicsScene::keyPressEvent().
 		*/
 		void keyPressEvent(QKeyEvent* keyEvent);
 };
