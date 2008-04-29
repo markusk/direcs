@@ -1352,13 +1352,14 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------
 	// recalculate the middle position of the bot pixmap!
 	x = calculateLaserXpos() -  ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
+	y = laserFrontYPos - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
 	//laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
 	// add the new position, if the bot was moved with the mouse during runtime
 	//laserXPos += newLaserXPos;
 	
 	// horizontal center
-	pixmapBot1->setPos(x, laserFrontYPos);
-	pixmapBot2->setPos(x, laserFrontYPos);
+	pixmapBot1->setPos(x, y);
+	pixmapBot2->setPos(x, y);
 	//appendLog(QString("<b>sliderZoomValueChanged...bot y pos()=%1</b>").arg(pixmapBot1->y()));
 	
 	
