@@ -305,7 +305,7 @@ class Gui : public QMainWindow
 
 
 	protected:
-				void closeEvent(QCloseEvent *event);
+		void closeEvent(QCloseEvent *event);
 
 
 	signals:
@@ -458,16 +458,6 @@ class Gui : public QMainWindow
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
 		
-		/**
-		Set a Y position for the FRONT laser lines "start point"
-		*/
-		qreal calculateLaserFrontYpos();
-		
-		/**
-		Set a Y position for the REAR laser lines "start point"
-		*/
-		qreal calculateLaserRearYpos();
-		
 		Ui::mainWindow ui;
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		QwtPlotCurve curve1;
@@ -484,8 +474,7 @@ class Gui : public QMainWindow
 		int lastZoom;
 		qreal startScale;
 		qreal laserXPos;
-		qreal newLaserXPos;
-		qreal newLaserYPos;
+		qreal laserYPos;
 		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
 		//QGraphicsScene *cameraScene;						/** The QGraphicsScene for drawing "over" the camera image */
 		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
