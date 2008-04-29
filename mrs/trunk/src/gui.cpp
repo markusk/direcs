@@ -1320,17 +1320,6 @@ void Gui::on_btnSimulate_clicked()
 }
 
 
-void Gui::mousePressEvent(QMouseEvent* event)
-{
-	/*
-	int x = event->x();
-	int y = event->y();
-	
-	appendLog(QString("mouse button pressed at %1, %2.").arg(x).arg(y));
-	*/
-}
-
-
 void Gui::on_sliderZoom_valueChanged(int value)
 {
 	qreal x = 0;
