@@ -23,15 +23,16 @@ void LaserScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void LaserScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	/*
+	// dragging !
 	if (mouseEvent->buttons() & Qt::LeftButton)
 	{
 		// Notify the gui about position update
+		qDebug("dragging...");
 		emit robotPositionChanged(mouseEvent);
+		mouseEvent->accept();
 	}
 
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
-	*/
 }
 
 void LaserScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
