@@ -1353,7 +1353,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------
 	// recalculate the middle position of the bot pixmap!
 	x = newLaserXPos -  ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
-	y = laserFrontYPos - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
+	y = newLaserYPos - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
 	//laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
 	
 	// horizontal center
@@ -1500,17 +1500,20 @@ void Gui::initLaserView()
 	// for getting nice x and y position
 	qreal x = 0;
 	qreal y = 0;
-	//QLineF line;
-	
-	// init laser x pos at startup!
-	newLaserXPos = (ui.graphicsViewLaser->width() / 2);
-	// init laser y pos at startup!
+
 
 	//==================================================
 	// move the laser lines to their x and y positions
 	//==================================================
+	
+	// init the reference spot pos at startup!
+	// (horicontal and vertical middle of the view)
+	newLaserXPos = (ui.graphicsViewLaser->width()  / 2);
+	newLaserYPos = (ui.graphicsViewLaser->height() / 2);
+	
+	// init laser y pos at startup!
 	x = newLaserXPos;
-	y = calculateLaserFrontYpos();
+	y = newLaserYPos + INITIALLASERYPOSFRONT;
 	
 	//--------------
 	// FRONT laser
@@ -1520,19 +1523,16 @@ void Gui::initLaserView()
 		// reset transform or rotation
 		laserLineListFront->at(i)->resetTransform();
 		
-		// set position of each line
+		// rotate every line by one degree
 		laserLineListFront->at(i)->rotate(angle);
 		
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-		//line = laserLineListFront->at(i)->line();
+		// set position of each line
 		laserLineListFront->at(i)->setPos((x - laserLineListFront->at(i)->line().length()), y);
 	}
 	
-	x = newLaserXPos;
-	y = calculateLaserRearYpos();
-
+	
+	y = newLaserYPos + INITIALLASERYPOSREAR;
+	
 	//--------------
 	// REAR laser
 	//--------------
@@ -1541,20 +1541,17 @@ void Gui::initLaserView()
 		// reset transform or rotation
 		laserLineListRear->at(i)->resetTransform();
 		
-		// set position of each line
+		// rotate every line by one degree
 		laserLineListRear->at(i)->rotate(angle);
 		
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-		//line = laserLineListRear->at(i)->line();
+		// set position of each line
 		laserLineListRear->at(i)->setPos((x - laserLineListRear->at(i)->line().length()), y);
 	}
 	
 	
-	//==================================================
-	//
-	//==================================================
+	//==========================================================
+	// refresh the view with the actual zoom (after gui came up)
+	//==========================================================
 	on_sliderZoom_valueChanged(lastZoom);
 	
 	
