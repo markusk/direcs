@@ -15,7 +15,7 @@ void LaserScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	// only one emit!
 	// no other emits while keep the button pressed!
 	//mouseEvent->accept();
-	emit robotPositionChanged(mouseEvent);
+	//emit robotPositionChanged(mouseEvent);
 	
 	//QGraphicsScene::mousePressEvent(mouseEvent);
 }
@@ -23,94 +23,22 @@ void LaserScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void LaserScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	if(mouseEvent->buttons() & Qt::LeftButton)
+	/*
+	if (mouseEvent->buttons() & Qt::LeftButton)
 	{
 		// Notify the gui about position update
 		emit robotPositionChanged(mouseEvent);
 	}
 
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
+	*/
 }
 
 void LaserScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-/*
-	if (m_NewLink != NULL) {
-		if(m_NewNodeType == BeamNode) {
-			BeamNodeItem* beamNode = dynamic_cast<BeamNodeItem*>(itemAt(mouseEvent->scenePos()));
-			if(beamNode!=NULL) {
-				ComponentLinkItem* beamLink = new ComponentLinkItem(
-						BeamLink,
-       						m_NewLinkNode,
-						beamNode);
-				
-				// Connect link to me for position update notifications
-				connect(this, SIGNAL(componentPositionChanged()),
-					beamLink, SLOT(nodePositionChanged()));
-				
-				// Connect me to link for general update notifications
-				connect(beamLink, SIGNAL(linkModified()),
-					this, SLOT(sceneItemChanged()));
 
-				// Add link to scene
-				addItem(beamLink);
-
-				// Add link to parent components' inventory
-				ComponentItem* startComponent = dynamic_cast<ComponentItem*>(m_NewLinkNode->parentItem());
-				ComponentItem* endComponent = dynamic_cast<ComponentItem*>(beamNode->parentItem());
-				startComponent->addComponentLinkItem(beamLink);
-				endComponent->addComponentLinkItem(beamLink);
-
-				// Configure link
-				beamLink->setStartComponentID(startComponent->Component()->InstanceID());
-				beamLink->setEndComponentID(endComponent->Component()->InstanceID());
-
-				// Notify others that we got a new link
-				emit sceneItemModified();
-			}
-
-		}
-		else if(m_NewNodeType == ControlNode) {
-			ControlNodeItem* controlNode = dynamic_cast<ControlNodeItem*>(itemAt(mouseEvent->scenePos()));
-			if(controlNode!=NULL) {
-				ComponentLinkItem* controlLink = new ComponentLinkItem(
-						ControlLink,
-						m_NewLinkNode,
-						controlNode);
-
-				// Connect link to me for position update notifications
-				connect(this, SIGNAL(componentPositionChanged()),
-					controlLink, SLOT(nodePositionChanged()));
-				
-				// Connect me to link for general update notifications
-				connect(controlLink, SIGNAL(linkModified()),
-					this, SLOT(sceneItemChanged()));
-
-				// Add link to scene
-				addItem(controlLink);
-
-				// Add link to parent components' inventory
-				ComponentItem* startComponent = dynamic_cast<ComponentItem*>(m_NewLinkNode->parentItem());
-				ComponentItem* endComponent = dynamic_cast<ComponentItem*>(controlNode->parentItem());
-				startComponent->addComponentLinkItem(controlLink);
-				endComponent->addComponentLinkItem(controlLink);
-
-				// Configure link
-				controlLink->setStartComponentID(startComponent->Component()->InstanceID());
-				controlLink->setEndComponentID(endComponent->Component()->InstanceID());
-
-				// Notify others that we got a new link
-				emit sceneItemModified();
-			}
-		}
-		
-		removeItem(m_NewLink);
-		delete m_NewLink;
-		m_NewLink = NULL;
-		m_NewNodeType = None;
-	}
-
-*/
+	emit robotPositionChanged(mouseEvent);
+	
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
