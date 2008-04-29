@@ -1366,7 +1366,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// change the x and y position of the FRONT laser lines
 	//------------------------------------------------------
 	x = newLaserXPos;
-	y = calculateLaserFrontYpos();
+	y = newLaserYPos;
 	
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
@@ -1380,7 +1380,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------------------------
 	// change the y position of the REAR laser lines
 	//------------------------------------------------
-	y = calculateLaserRearYpos();
+	x = newLaserXPos;
+	y = newLaserYPos;
 	
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
@@ -1402,7 +1403,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
 		x = newLaserXPos - (newSize / 2);
-		y = calculateLaserFrontYpos() - (newSize / 2);
+		y = newLaserYPos - (newSize / 2);
 		
 		// change the width and height
 		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
@@ -1412,7 +1413,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		// recalculate the new text position
 		x = newLaserXPos;
-		y = calculateLaserFrontYpos() + (newSize/2);
+		y = newLaserYPos + (newSize/2);
 		
 		// set the text position!
 		laserDistanceTextFront->at(i)->setPos(x, y);
@@ -1435,7 +1436,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
 		x = newLaserXPos - (newSize / 2);
-		y = calculateLaserRearYpos() - (newSize / 2);
+		y = newLaserYPos - (newSize / 2);
 		
 		// change the width and height
 		laserDistanceLineListRear->at(i)->setRect(0, 0, newSize, newSize);
@@ -1445,7 +1446,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		// recalculate the new text position
 		x = newLaserXPos;
-		y = calculateLaserRearYpos() - (newSize/2);
+		y = newLaserYPos - (newSize/2);
 		
 		// set the text position!
 		laserDistanceTextRear->at(i)->setPos(x, y);
@@ -1561,7 +1562,7 @@ void Gui::initLaserView()
 	//=============================================================================
 	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
 	x = newLaserXPos - (laserDistanceLineListFront->at(0)->rect().width() / 2);
-	y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
+	y = newLaserYPos - (laserDistanceLineListFront->at(0)->rect().height() / 2);
 	
 	//-----------------
 	// FRONT distances
@@ -1761,11 +1762,11 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 
 void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	qreal diff = laserFrontYPos - laserRearYPos;
+	//qreal diff = laserFrontYPos - laserRearYPos;
 	
 	// new y pos
-	laserFrontYPos = mouseEvent->scenePos().y();
-	laserRearYPos = laserFrontYPos - diff;
+	newLaserYPos = mouseEvent->scenePos().y();
+	//laserRearYPos = laserFrontYPos - diff;
 	
 	// new x pos
 	newLaserXPos = mouseEvent->scenePos().x();
@@ -1797,9 +1798,10 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 void Gui::createLaserScannerObjects()
 {
 	// the start position for the pos. calculation
-	laserXPos = 0;
-	laserFrontYPos = INITIALLASERYPOSFRONT;
-	laserRearYPos  = INITIALLASERYPOSREAR;
+	newLaserXPos = 0;
+	newLaserYPos = 0;
+	//laserFrontYPos = INITIALLASERYPOSFRONT;
+	//laserRearYPos  = INITIALLASERYPOSREAR;
 	
 	// set some nice colors for some widgets
 	colorLaserObstacle =  QColor(255, 50, 50); // light red
@@ -1810,7 +1812,6 @@ void Gui::createLaserScannerObjects()
 	
 	
 	// the graphicsScene for the laser scanner
-//	scene = new QGraphicsScene();
 	scene = new LaserScene();
 	
 	// set some colors
@@ -1859,19 +1860,15 @@ void Gui::createLaserScannerObjects()
 	lastZoom = ui.sliderZoom->value();
 	
 	//--------------------------------------------------------------
-	// calculate a nice y position in the view
+	// set the start scale
 	//--------------------------------------------------------------
 	startScale = 10;
-	
-	laserXPos = newLaserXPos;
-	laserFrontYPos = calculateLaserFrontYpos();
-	laserRearYPos  = calculateLaserRearYpos();
 	
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot1->scale( (1.0 / startScale), (1.0 / startScale));
 	
 	// horizontal center
-	pixmapBot1->setPos(laserXPos, laserFrontYPos);
+	pixmapBot1->setPos(newLaserXPos, newLaserYPos);
 	
 	// add the pixmap (invisible)
 	pixmapBot1->setVisible(false);
@@ -1958,7 +1955,7 @@ void Gui::createLaserScannerObjects()
 	pixmapBot2->scale( (1.0 / startScale), (1.0 / startScale));
 	
 	// horizontal center
-	pixmapBot2->setPos(laserXPos, laserFrontYPos);
+	pixmapBot2->setPos(newLaserXPos, newLaserYPos);
 	
 	// add the pixmap (invisible)
 	pixmapBot2->setVisible(false);
@@ -2066,14 +2063,14 @@ void Gui::createLaserDistanceObjects()
 qreal Gui::calculateLaserFrontYpos()
 {
 	// value for normal drawing (from center to border of control)
-	return (pixmapBot1->pixmap().height()/startScale*0.66*lastZoom) + laserFrontYPos;
+	//return (pixmapBot1->pixmap().height()/startScale*0.66*lastZoom) + laserFrontYPos;
 }
 
 
 qreal Gui::calculateLaserRearYpos()
 {
 	// value for normal drawing (from center to border of control)
-	return (pixmapBot1->pixmap().height()/startScale*0.33*lastZoom) + laserRearYPos;
+	//return (pixmapBot1->pixmap().height()/startScale*0.33*lastZoom) + laserRearYPos;
 }
 
 

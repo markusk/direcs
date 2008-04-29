@@ -484,8 +484,6 @@ class Gui : public QMainWindow
 		int lastZoom;
 		qreal startScale;
 		qreal laserXPos;
-		qreal laserFrontYPos;
-		qreal laserRearYPos;
 		qreal newLaserXPos;
 		qreal newLaserYPos;
 		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
@@ -561,7 +559,7 @@ class Gui : public QMainWindow
 		
 		//! the initial Y position of the laser lines and the robot image in the GUI
 		static const int INITIALLASERYPOSFRONT = 100;
-		static const int INITIALLASERYPOSREAR  = 90;
+		static const int INITIALLASERYPOSREAR  = 100;
 		
 		//! Number of distance semi circles
 		static const int LASERDISTANCECIRCLES = 27;
