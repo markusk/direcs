@@ -5,7 +5,8 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 {
 	robotIsOn = false;
 	newLaserXPos = 0; // correct value is set in the initLaserView()
-
+	newLaserYPos = 0; // correct value is set in the initLaserView()
+		
 	//-------------------------------------------------------
 	// startup the GUI
 	//-------------------------------------------------------
@@ -1351,11 +1352,9 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// set the position of the bot
 	//------------------------------
 	// recalculate the middle position of the bot pixmap!
-	x = calculateLaserXpos() -  ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
+	x = newLaserXPos -  ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
 	y = laserFrontYPos - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
 	//laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
-	// add the new position, if the bot was moved with the mouse during runtime
-	//laserXPos += newLaserXPos;
 	
 	// horizontal center
 	pixmapBot1->setPos(x, y);
@@ -1366,7 +1365,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------------------------------
 	// change the x and y position of the FRONT laser lines
 	//------------------------------------------------------
-	x = calculateLaserXpos();
+	x = newLaserXPos;
 	y = calculateLaserFrontYpos();
 	
 	for (int i=0; i<laserLineListFront->size(); i++)
@@ -1402,7 +1401,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
 		
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
-		x = calculateLaserXpos() - (newSize / 2);
+		x = newLaserXPos - (newSize / 2);
 		y = calculateLaserFrontYpos() - (newSize / 2);
 		
 		// change the width and height
@@ -1412,7 +1411,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		
 		// recalculate the new text position
-		x = calculateLaserXpos();
+		x = newLaserXPos;
 		y = calculateLaserFrontYpos() + (newSize/2);
 		
 		// set the text position!
@@ -1435,7 +1434,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
 		
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
-		x = calculateLaserXpos() - (newSize / 2);
+		x = newLaserXPos - (newSize / 2);
 		y = calculateLaserRearYpos() - (newSize / 2);
 		
 		// change the width and height
@@ -1445,7 +1444,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		
 		
 		// recalculate the new text position
-		x = calculateLaserXpos();
+		x = newLaserXPos;
 		y = calculateLaserRearYpos() - (newSize/2);
 		
 		// set the text position!
@@ -1505,11 +1504,12 @@ void Gui::initLaserView()
 	
 	// init laser x pos at startup!
 	newLaserXPos = (ui.graphicsViewLaser->width() / 2);
+	// init laser y pos at startup!
 
 	//==================================================
 	// move the laser lines to their x and y positions
 	//==================================================
-	x = calculateLaserXpos();
+	x = newLaserXPos;
 	y = calculateLaserFrontYpos();
 	
 	//--------------
@@ -1530,7 +1530,7 @@ void Gui::initLaserView()
 		laserLineListFront->at(i)->setPos((x - laserLineListFront->at(i)->line().length()), y);
 	}
 	
-	x = calculateLaserXpos();
+	x = newLaserXPos;
 	y = calculateLaserRearYpos();
 
 	//--------------
@@ -1563,7 +1563,7 @@ void Gui::initLaserView()
 	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
 	//=============================================================================
 	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
-	x = calculateLaserXpos() - (laserDistanceLineListFront->at(0)->rect().width() / 2);
+	x = newLaserXPos - (laserDistanceLineListFront->at(0)->rect().width() / 2);
 	y = calculateLaserFrontYpos() - (laserDistanceLineListFront->at(0)->rect().height() / 2);
 	
 	//-----------------
@@ -1580,7 +1580,7 @@ void Gui::initLaserView()
 	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
 	//=============================================================================
 	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
-	x = calculateLaserXpos() - (laserDistanceLineListRear->at(0)->rect().width() / 2);
+	x = newLaserXPos - (laserDistanceLineListRear->at(0)->rect().width() / 2);
 	y = calculateLaserFrontYpos() - (laserDistanceLineListRear->at(0)->rect().height() / 2);
 	
 	//-----------------
@@ -1866,7 +1866,7 @@ void Gui::createLaserScannerObjects()
 	//--------------------------------------------------------------
 	startScale = 10;
 	
-	laserXPos = calculateLaserXpos();
+	laserXPos = newLaserXPos;
 	laserFrontYPos = calculateLaserFrontYpos();
 	laserRearYPos  = calculateLaserRearYpos();
 	
@@ -2063,15 +2063,6 @@ void Gui::createLaserDistanceObjects()
 		// add text to scene
 		scene->addItem(text);
 	}
-}
-
-
-qreal Gui::calculateLaserXpos()
-{
-	// value for normal drawing (from center to border of control)
-	// add the new position, if the bot was moved with the mouse during runtime
-	//return (ui.graphicsViewLaser->width() / 2);
-	return newLaserXPos;
 }
 
 

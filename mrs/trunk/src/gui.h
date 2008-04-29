@@ -459,11 +459,6 @@ class Gui : public QMainWindow
 		void createLaserDistanceObjects();
 		
 		/**
-		Set a X position for the laser lines "start point"
-		*/
-		qreal calculateLaserXpos();
-		
-		/**
 		Set a Y position for the FRONT laser lines "start point"
 		*/
 		qreal calculateLaserFrontYpos();
@@ -492,6 +487,7 @@ class Gui : public QMainWindow
 		qreal laserFrontYPos;
 		qreal laserRearYPos;
 		qreal newLaserXPos;
+		qreal newLaserYPos;
 		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
 		//QGraphicsScene *cameraScene;						/** The QGraphicsScene for drawing "over" the camera image */
 		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
