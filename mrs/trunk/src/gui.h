@@ -494,6 +494,7 @@ class Gui : public QMainWindow
 		qreal laserXPos;
 		qreal laserFrontYPos;
 		qreal laserRearYPos;
+		qreal newLaserXPos;
 		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
 		//QGraphicsScene *cameraScene;						/** The QGraphicsScene for drawing "over" the camera image */
 		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */

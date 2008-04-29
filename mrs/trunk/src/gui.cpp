@@ -4,7 +4,8 @@
 Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 {
 	robotIsOn = false;
-	
+	newLaserXPos = 0; // correct value is set in the initLaserView()
+
 	//-------------------------------------------------------
 	// startup the GUI
 	//-------------------------------------------------------
@@ -1361,11 +1362,14 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// set the position of the bot
 	//------------------------------
 	// recalculate the middle position of the bot pixmap!
-	laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom) ;
+	x = calculateLaserXpos() -  ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
+	//laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
+	// add the new position, if the bot was moved with the mouse during runtime
+	//laserXPos += newLaserXPos;
 	
 	// horizontal center
-	pixmapBot1->setPos(laserXPos, laserFrontYPos);
-	pixmapBot2->setPos(laserXPos, laserFrontYPos);
+	pixmapBot1->setPos(x, laserFrontYPos);
+	pixmapBot2->setPos(x, laserFrontYPos);
 	//appendLog(QString("<b>sliderZoomValueChanged...bot y pos()=%1</b>").arg(pixmapBot1->y()));
 	
 	
@@ -1509,6 +1513,8 @@ void Gui::initLaserView()
 	qreal y = 0;
 	//QLineF line;
 	
+	// init laser x pos at startup!
+	newLaserXPos = (ui.graphicsViewLaser->width() / 2);
 
 	//==================================================
 	// move the laser lines to their x and y positions
@@ -1770,8 +1776,12 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	qreal diff = laserFrontYPos - laserRearYPos;
 	
+	// new y pos
 	laserFrontYPos = mouseEvent->scenePos().y();
 	laserRearYPos = laserFrontYPos - diff;
+	
+	// new x pos
+	newLaserXPos = mouseEvent->scenePos().x();
 	
 	// refresh laserView
 	on_sliderZoom_valueChanged(ui.sliderZoom->value());
@@ -2069,7 +2079,9 @@ void Gui::createLaserDistanceObjects()
 qreal Gui::calculateLaserXpos()
 {
 	// value for normal drawing (from center to border of control)
-	return ui.graphicsViewLaser->width() / 2;
+	// add the new position, if the bot was moved with the mouse during runtime
+	//return (ui.graphicsViewLaser->width() / 2);
+	return newLaserXPos;
 }
 
 
