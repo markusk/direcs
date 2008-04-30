@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>1392</width>
-    <height>976</height>
+    <height>972</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -1945,7 +1945,7 @@
      <x>0</x>
      <y>0</y>
      <width>1392</width>
-     <height>26</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -2009,9 +2009,6 @@
         </property>
         <property name="alignment" >
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-        </property>
-        <property name="renderHints" >
-         <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing</set>
         </property>
         <property name="dragMode" >
          <enum>QGraphicsView::ScrollHandDrag</enum>
