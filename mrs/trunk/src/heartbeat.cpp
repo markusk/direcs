@@ -15,8 +15,6 @@ Heartbeat::Heartbeat(InterfaceAvr *i, QMutex *m) : QThread()
 
 Heartbeat::~Heartbeat()
 {
-	// FIXME: delete SIGSEV!
-	//delete imgPtr;
 }
 
 
