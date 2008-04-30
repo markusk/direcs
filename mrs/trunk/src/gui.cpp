@@ -1819,7 +1819,7 @@ void Gui::createLaserScannerObjects()
 	
 	// turn off moving of scene, when objects extend the scene
 	// (set scene rect to size of GUI element)
-	scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());
+	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());
 	
 	// set scene to the GUI
 	ui.graphicsViewLaser->setScene(scene);
