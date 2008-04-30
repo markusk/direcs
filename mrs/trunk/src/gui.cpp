@@ -1817,9 +1817,9 @@ void Gui::createLaserScannerObjects()
 	// set some colors
 	scene->setBackgroundBrush(colorGraphicsSceneBackground);
 	
-	// turn off moving of scene, when objects extend the scene
-	// (set scene rect to size of GUI element)
-	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());
+	// turn off moving of scene, when objects extend the scene									-> DISABLED to enable dragging the robot in the laserView!!
+	// (set scene rect to size of GUI element)													-> DISABLED to enable dragging the robot in the laserView!!
+	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());	-> DISABLED to enable dragging the robot in the laserView!!
 	
 	// set scene to the GUI
 	ui.graphicsViewLaser->setScene(scene);
