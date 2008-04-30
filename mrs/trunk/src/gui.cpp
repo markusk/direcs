@@ -1878,9 +1878,9 @@ void Gui::createLaserScannerObjects()
 	pixmapBot1->setZValue(1);
 	
 	
-	//=======================================================
+	//=====================================================
 	// create the laser line lists
-	//=======================================================
+	//=====================================================
 	laserLineListFront = new QList <QGraphicsLineItem*>();
 	laserLineListRear = new QList <QGraphicsLineItem*>();
 
