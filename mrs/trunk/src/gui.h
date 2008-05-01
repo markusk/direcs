@@ -415,7 +415,8 @@ class Gui : public QMainWindow
 		void on_actionExit_activated();
 		void on_actionLaser_View_activated();
 		void on_actionCamera_activated();
-		void on_actionMotors_activated();
+		void on_actionOdometrie_activated();
+		void on_actionPower_activated();
 		void on_actionSettings_activated();
 		void on_actionLog_activated();
 		void on_actionNetwork_Log_activated();

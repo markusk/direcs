@@ -404,7 +404,8 @@ void Gui::on_actionAll_activated()
 {
 	ui.dockLaserView->show();
 	ui.dockCamera->show();
-	ui.dockMotors->show();
+	ui.dockOdometrie->show();
+	ui.dockPower->show();
 	ui.dockSettings->show();
 	ui.dockLog->show();
 	ui.dockNetworkLog->show();
@@ -438,15 +439,28 @@ void Gui::on_actionCamera_activated()
 }
 
 
-void Gui::on_actionMotors_activated()
+void Gui::on_actionOdometrie_activated()
 {
-	if (ui.dockMotors->isVisible())
+	if (ui.dockOdometrie->isVisible())
 	{
-		ui.dockMotors->hide();
+		ui.dockOdometrie->hide();
 	}
 	else
 	{
-		ui.dockMotors->show();
+		ui.dockOdometrie->show();
+	}
+}
+
+
+void Gui::on_actionPower_activated()
+{
+	if (ui.dockPower->isVisible())
+	{
+		ui.dockPower->hide();
+	}
+	else
+	{
+		ui.dockPower->show();
 	}
 }
 
@@ -1498,7 +1512,7 @@ void Gui::initLaserView()
 	// window init
 	//--------------
 	// TODO: which values for which resolutions!?
-	ui.splitLaserView->setSizes(QList<int>() << 1000 << 100);
+	//ui.splitLaserView->setSizes(QList<int>() << 1000 << 100);
 	// make dockLaserView wider
 	//ui.dockLaserView->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
 	//ui.centralWidget->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
@@ -2135,7 +2149,7 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
-	//ui.qwtPlotCurrent1->setTitle("Motor 1");
+	ui.qwtPlotCurrent1->setTitle("Motor 1");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2156,7 +2170,7 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 2
 	//--------------------------------------
-	//ui.qwtPlotCurrent2->setTitle("Motor 2");
+	ui.qwtPlotCurrent2->setTitle("Motor 2");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
