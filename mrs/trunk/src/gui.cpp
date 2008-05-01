@@ -105,15 +105,6 @@ infrared Sensors temporarily removed from robot!!
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
 	
-	//--------------
-	// window init
-	//--------------
-	// TODO: which values for which resolutions!?
-	ui.splitLaserView->setSizes(QList<int>() << 900 << 100);
-	// make dockLaserView wider
-	//ui.dockLaserView->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
-	//ui.centralWidget->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
-	//ui.centralWidget->resize(400, ui.dockLaserView->height());
 	ui.dockSettings->hide();
 	ui.dockNetworkLog->hide();
 }
@@ -1502,7 +1493,18 @@ void Gui::initLaserView()
 	qreal x = 0;
 	qreal y = 0;
 
+	
+	//--------------
+	// window init
+	//--------------
+	// TODO: which values for which resolutions!?
+	ui.splitLaserView->setSizes(QList<int>() << 1000 << 100);
+	// make dockLaserView wider
+	//ui.dockLaserView->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
+	//ui.centralWidget->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
+	//ui.centralWidget->resize(400, ui.dockLaserView->height());
 
+	
 	//==================================================
 	// move the laser lines to their x and y positions
 	//==================================================
