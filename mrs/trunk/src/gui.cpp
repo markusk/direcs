@@ -36,6 +36,14 @@ infrared Sensors temporarily removed from robot!!
 	ui.progressBarSensor8->raise();
 */
 	
+	/*
+	// "fill" the battery power labels (autofill is true)
+	ui.lblBatteryPower1->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.lblBatteryPower2->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.lblBatteryPower3->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.lblBatteryPower4->setPalette(QPalette(QColor(255, 255, 255)));
+	*/
+	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
 	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
@@ -2153,7 +2161,7 @@ void Gui::initializePlots()
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -2174,7 +2182,7 @@ void Gui::initializePlots()
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
