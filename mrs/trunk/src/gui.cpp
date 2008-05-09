@@ -2194,6 +2194,48 @@ void Gui::initializePlots()
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
+	
+	
+	//--------------------------------------
+	// plot curve "MOTOR CURRENT" 3
+	//--------------------------------------
+	ui.qwtPlotCurrent3->setTitle("Motor 3");
+
+	// Set axis titles
+	//ui.qwtPlotCurrent3->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	ui.qwtPlotCurrent3->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// time
+	ui.qwtPlotCurrent3->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// Ampere (1000 mA, Step 200)
+	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
+	
+	col = QColor(64, 64, 255);
+	curve3.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curve3.setPen(QPen(col));
+	curve3.setBrush(col);
+	
+	
+	//--------------------------------------
+	// plot curve "MOTOR CURRENT" 4
+	//--------------------------------------
+	ui.qwtPlotCurrent4->setTitle("Motor 4");
+
+	// Set axis titles
+	//ui.qwtPlotCurrent4->setAxisTitle(QwtPlot::xBottom, "Time/s");
+	ui.qwtPlotCurrent4->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// time
+	ui.qwtPlotCurrent4->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// Ampere (1000 mA, Step 200)
+	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
+	
+	col = QColor(64, 64, 255);
+	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curve4.setPen(QPen(col));
+	curve4.setBrush(col);
 }
 
 

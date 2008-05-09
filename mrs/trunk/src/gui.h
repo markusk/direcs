@@ -463,6 +463,8 @@ class Gui : public QMainWindow
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
+		QwtPlotCurve curve3;
+		QwtPlotCurve curve4;
 		QPixmap cameraPicToSave;
 		QColor colorLaserObstacle;
 		QColor colorLaserFreeWay;
