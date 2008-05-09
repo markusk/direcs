@@ -238,6 +238,24 @@ class Gui : public QMainWindow
 		void setPlotData2(double *xval, double *yval, int size);
 		
 		/**
+		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
+		void setPlotData3(double *xval, double *yval, int size);
+		
+		/**
+		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
+		void setPlotData4(double *xval, double *yval, int size);
+		
+		/**
 		Append text to the network log in the main window
 		@param text is the text to be displayed.
 		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!

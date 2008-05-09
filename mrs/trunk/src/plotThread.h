@@ -32,6 +32,8 @@ class PlotThread : public QThread
 	signals:
 		void plotDataComplete1(double *xval1, double *yval1, int size);
 		void plotDataComplete2(double *xval2, double *yval2, int size);
+		void plotDataComplete3(double *xval3, double *yval3, int size);
+		void plotDataComplete4(double *xval4, double *yval4, int size);
 
 
 	private:
@@ -48,13 +50,20 @@ class PlotThread : public QThread
 		double xval1[SIZE];
 		double yval1[SIZE];
 		//====================================
-		// array holding the plot values
 		double xval2[SIZE];
 		double yval2[SIZE];
+		//====================================
+		double xval3[SIZE];
+		double yval3[SIZE];
+		//====================================
+		double xval4[SIZE];
+		double yval4[SIZE];
 		//====================================
 		
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
+		static const short int MOTORSENSOR3 = 3;
+		static const short int MOTORSENSOR4 = 4;
 };
 
 #endif

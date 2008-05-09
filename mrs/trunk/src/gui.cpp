@@ -1300,6 +1300,40 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 }
 
 
+void Gui::setPlotData3(double *xval, double *yval, int size)
+{
+	//---------------
+	// curve3
+	//---------------
+	
+	// set curve with data
+	curve3.setData(xval, yval, size);
+	
+	// attach data to curve
+	curve3.attach(ui.qwtPlotCurrent3);
+	
+	// after changing the values, replot the curve
+	ui.qwtPlotCurrent3->replot();
+}
+
+
+void Gui::setPlotData4(double *xval, double *yval, int size)
+{
+	//---------------
+	// curve4
+	//---------------
+	
+	// set curve with data
+	curve4.setData(xval, yval, size);
+	
+	// attach data to curve
+	curve4.attach(ui.qwtPlotCurrent4);
+	
+	// after changing the values, replot the curve
+	ui.qwtPlotCurrent4->replot();
+}
+
+
 void Gui::on_btnEnableRemote_clicked()
 {
 	// if remote control is enabled, disable some controls in the GUI
