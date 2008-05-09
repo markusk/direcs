@@ -113,8 +113,8 @@ infrared Sensors temporarily removed from robot!!
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
 	
-	ui.dockSettings->hide();
-	ui.dockNetworkLog->hide();
+	//ui.dockSettings->hide();
+	//ui.dockNetworkLog->hide();
 }
 
 
