@@ -2119,346 +2119,191 @@
        <height>633</height>
       </rect>
      </property>
-     <widget class="QGraphicsView" name="graphicsViewLaser" >
+     <widget class="QWidget" name="" >
       <property name="geometry" >
        <rect>
         <x>9</x>
         <y>9</y>
-        <width>541</width>
-        <height>192</height>
+        <width>543</width>
+        <height>718</height>
        </rect>
       </property>
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font" >
-       <font>
-        <family>Verdana</family>
-       </font>
-      </property>
-      <property name="mouseTracking" >
-       <bool>true</bool>
-      </property>
-      <property name="statusTip" >
-       <string>Robot can be dragged with the mouse!</string>
-      </property>
-      <property name="alignment" >
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <property name="dragMode" >
-       <enum>QGraphicsView::ScrollHandDrag</enum>
-      </property>
-     </widget>
-     <widget class="QWidget" name="layoutWidget" >
-      <property name="geometry" >
-       <rect>
-        <x>9</x>
-        <y>207</y>
-        <width>541</width>
-        <height>144</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" >
+      <layout class="QVBoxLayout" name="verticalLayout_4" >
        <item>
-        <layout class="QVBoxLayout" >
-         <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <widget class="QLabel" name="label18_4" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>Largest free area start:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblLaserFrontFreeStart" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>0 deg</string>
-             </property>
-             <property name="alignment" >
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <widget class="QLabel" name="label18_5" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>Largest free area end:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblLaserFrontFreeEnd" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>0 deg</string>
-             </property>
-             <property name="alignment" >
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <widget class="QLabel" name="label18_6" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>Center of free area:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblLaserFrontFreeCenter" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>0 deg</string>
-             </property>
-             <property name="alignment" >
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <widget class="QLabel" name="label18_7" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text" >
-              <string>Preferred direction:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblPreferredDirection" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="pixmap" >
-              <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
-             </property>
-             <property name="scaledContents" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>20</width>
-             <height>16</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QGraphicsView" name="graphicsViewLaser" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="MinimumExpanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>0</width>
+           <height>500</height>
+          </size>
+         </property>
+         <property name="font" >
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="mouseTracking" >
+          <bool>true</bool>
+         </property>
+         <property name="statusTip" >
+          <string>Robot can be dragged with the mouse!</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="dragMode" >
+          <enum>QGraphicsView::ScrollHandDrag</enum>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" >
+        <layout class="QHBoxLayout" >
          <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>91</width>
-               <height>41</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QProgressBar" name="progressBarSensor16" >
-             <property name="font" >
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="autoFillBackground" >
-              <bool>true</bool>
-             </property>
-             <property name="textVisible" >
-              <bool>false</bool>
-             </property>
-             <property name="orientation" >
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="invertedAppearance" >
-              <bool>true</bool>
-             </property>
-             <property name="textDirection" >
-              <enum>QProgressBar::BottomToTop</enum>
-             </property>
-             <property name="format" >
-              <string>%v</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>51</width>
-               <height>41</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>20</width>
-             <height>41</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" >
-         <item>
-          <widget class="QSlider" name="sliderZoom" >
-           <property name="font" >
-            <font>
-             <family>Verdana</family>
-            </font>
-           </property>
-           <property name="minimum" >
-            <number>1</number>
-           </property>
-           <property name="maximum" >
-            <number>10</number>
-           </property>
-           <property name="pageStep" >
-            <number>1</number>
-           </property>
-           <property name="value" >
-            <number>1</number>
-           </property>
-           <property name="sliderPosition" >
-            <number>1</number>
-           </property>
-           <property name="tracking" >
-            <bool>false</bool>
-           </property>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickPosition" >
-            <enum>QSlider::TicksAbove</enum>
-           </property>
-           <property name="tickInterval" >
-            <number>1</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" >
+          <layout class="QVBoxLayout" >
            <item>
             <layout class="QHBoxLayout" >
              <item>
-              <widget class="QLabel" name="label_33" >
+              <widget class="QLabel" name="label18_4" >
                <property name="font" >
                 <font>
                  <family>Verdana</family>
                 </font>
                </property>
                <property name="text" >
-                <string>Zoom:</string>
+                <string>Largest free area start:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelLaserTop" >
+              <widget class="QLabel" name="lblLaserFrontFreeStart" >
                <property name="font" >
                 <font>
                  <family>Verdana</family>
                 </font>
                </property>
                <property name="text" >
-                <string>1</string>
+                <string>0 deg</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="label18_5" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Largest free area end:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblLaserFrontFreeEnd" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>0 deg</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="label18_6" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Center of free area:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblLaserFrontFreeCenter" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>0 deg</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="label18_7" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Preferred direction:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblPreferredDirection" >
+               <property name="sizePolicy" >
+                <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="pixmap" >
+                <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
+               </property>
+               <property name="scaledContents" >
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2467,12 +2312,12 @@
            <item>
             <spacer>
              <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0" >
               <size>
-               <width>41</width>
-               <height>22</height>
+               <width>20</width>
+               <height>16</height>
               </size>
              </property>
             </spacer>
@@ -2480,17 +2325,176 @@
           </layout>
          </item>
          <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>159</width>
-             <height>51</height>
-            </size>
-           </property>
-          </spacer>
+          <layout class="QVBoxLayout" >
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>91</width>
+                 <height>41</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QProgressBar" name="progressBarSensor16" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="autoFillBackground" >
+                <bool>true</bool>
+               </property>
+               <property name="textVisible" >
+                <bool>false</bool>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="invertedAppearance" >
+                <bool>true</bool>
+               </property>
+               <property name="textDirection" >
+                <enum>QProgressBar::BottomToTop</enum>
+               </property>
+               <property name="format" >
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>51</width>
+                 <height>41</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>20</width>
+               <height>41</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" >
+           <item>
+            <widget class="QSlider" name="sliderZoom" >
+             <property name="font" >
+              <font>
+               <family>Verdana</family>
+              </font>
+             </property>
+             <property name="minimum" >
+              <number>1</number>
+             </property>
+             <property name="maximum" >
+              <number>10</number>
+             </property>
+             <property name="pageStep" >
+              <number>1</number>
+             </property>
+             <property name="value" >
+              <number>1</number>
+             </property>
+             <property name="sliderPosition" >
+              <number>1</number>
+             </property>
+             <property name="tracking" >
+              <bool>false</bool>
+             </property>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition" >
+              <enum>QSlider::TicksAbove</enum>
+             </property>
+             <property name="tickInterval" >
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QLabel" name="label_33" >
+                 <property name="font" >
+                  <font>
+                   <family>Verdana</family>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>Zoom:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="labelLaserTop" >
+                 <property name="font" >
+                  <font>
+                   <family>Verdana</family>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>1</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>41</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>159</width>
+               <height>51</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>

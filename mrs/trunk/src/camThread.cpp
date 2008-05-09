@@ -92,11 +92,6 @@ void CamThread::run()
 			// retrieve image
 			imgPtr = cvRetrieveFrame(capture);
 
-			// put image size information to top left
-			//text = QString("%1x%2").arg(width).arg(height);
-			//cvPutText( imgPtr, text.toAscii(), cvPoint(20, 20), &font, CV_RGB(64, 64, 255) );
-			
-			
 			//----------------------------------------
 			// face detection
 			//----------------------------------------
@@ -231,7 +226,9 @@ void CamThread::run()
 			//====================================================================
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
-			emit camDataComplete(imgPtr);
+			//cvSaveImage("/tmp/test.PNG", imgPtr);
+			//emit camDataComplete(imgPtr);
+
 			// TODO: cvSaveImage -> /tmp -> load pixmap -> gui  oder  void cvConvertImage( const CvArr* src, CvArr* dst, int flags=0 );
 		
 			// let the thread sleep some time
@@ -336,6 +333,7 @@ void CamThread::init()
 		//-----------------
 		// try to capture
 		//-----------------
+		qDebug("INFO: Initialising cam at /dev/video%d...", cameraDevice);
 		capture = cvCaptureFromCAM(cameraDevice);
 		
 		if (!capture)
