@@ -78,6 +78,7 @@ void Mrs::init()
 	servoTestMode = false;
 	eyeTestMode = false;
 	currentTestServo = SERVO1;
+	dontUseCamera = false;
 	cameraTestMode = false;
 	faceTrackingIsEnabled = false;
 	
@@ -448,6 +449,11 @@ void Mrs::init()
 	{
 		if (camThread->isRunning() == false)
 		{
+			// check REAR laser
+			splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+			
 			gui->appendLog("Starting camera thread...", false);
 			camThread->start();
 			gui->appendLog("Camera thread started.");
@@ -1659,65 +1665,86 @@ void Mrs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	int cameraDevice = inifile1->readSetting("Config", "cameraDevice");
-	
-	if (cameraDevice == -2)
+	switch (inifile1->readSetting("Config", "dontUseCamera"))
 	{
-		camThread->setCameraDevice(-2);
-		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		case -2:
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			break;
+		case -1:
+			gui->appendLog("<font color=\"#FF0000\">Value \"dontUseCamera\"not found in ini-file!</font>");
+			break;
+		case 0:
+			dontUseCamera = false;
+			break;
+		case 1:
+			dontUseCamera = true;
+			gui->appendLog("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
+			break;
 	}
-	else
+
+	if (!dontUseCamera)
 	{
-		if (cameraDevice == -1)
+		//---------------------------------------------------------------------
+		// read setting
+		int cameraDevice = inifile1->readSetting("Config", "cameraDevice");
+		
+		if (cameraDevice == -2)
 		{
 			camThread->setCameraDevice(-2);
-			gui->appendLog("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 		}
 		else
 		{
-			//
-			// everything okay
-			//
-			// set it in the cam thread
-			camThread->setCameraDevice(cameraDevice);
-			
-			gui->appendLog(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
-
-
-			//---------------------------------------------------------------------
-			// read setting
-			QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
-	
-			if (haarClassifierCascade == "error2")
+			if (cameraDevice == -1)
 			{
-				camThread->setCascadePath("none");
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				camThread->setCameraDevice(-2);
+				gui->appendLog("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
 			}
 			else
 			{
-				if (haarClassifierCascade == "error1")
+				//
+				// everything okay
+				//
+				// set it in the cam thread
+				camThread->setCameraDevice(cameraDevice);
+				
+				gui->appendLog(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
+	
+	
+				//---------------------------------------------------------------------
+				// read setting
+				QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
+		
+				if (haarClassifierCascade == "error2")
 				{
 					camThread->setCascadePath("none");
-					gui->appendLog("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
+					gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 				}
 				else
 				{
-					//
-					// everything okay
-					//
-					// set it in the cam thread
-					camThread->setCascadePath(haarClassifierCascade);
-					gui->appendLog(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
-					
-					// initialise the cam
-					camThread->init();
-					gui->appendLog("Camera initialised.");
+					if (haarClassifierCascade == "error1")
+					{
+						camThread->setCascadePath("none");
+						gui->appendLog("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
+					}
+					else
+					{
+						//
+						// everything okay
+						//
+						// set it in the cam thread
+						camThread->setCascadePath(haarClassifierCascade);
+						gui->appendLog(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
+						
+						// initialise the cam
+						camThread->init();
+						gui->appendLog("Camera initialised.");
+					}
 				}
+				//---------------------------------------------------------------------
 			}
-			//---------------------------------------------------------------------
 		}
-	}
-
+	} // dont use camera!
 	
 	//---------------------------------------------------------------------
 	// read setting / and error handling
