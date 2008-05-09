@@ -1678,6 +1678,11 @@ void Mrs::readSettings()
 			break;
 		case 1:
 			dontUseCamera = true;
+			
+			// turning "off" camera
+			camThread->setCameraDevice(-2);
+			gui->disableCamera();
+			
 			gui->appendLog("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
 			break;
 	}
