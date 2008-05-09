@@ -232,6 +232,7 @@ void CamThread::run()
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
 			emit camDataComplete(imgPtr);
+			// TODO: cvSaveImage -> /tmp -> load pixmap -> gui  oder  void cvConvertImage( const CvArr* src, CvArr* dst, int flags=0 );
 		
 			// let the thread sleep some time
 			//msleep(THREADSLEEPTIME);
