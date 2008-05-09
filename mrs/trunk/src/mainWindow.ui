@@ -2125,18 +2125,15 @@
         <x>9</x>
         <y>9</y>
         <width>543</width>
-        <height>718</height>
+        <height>621</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" >
+       <property name="sizeConstraint" >
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
        <item>
         <widget class="QGraphicsView" name="graphicsViewLaser" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Preferred" hsizetype="MinimumExpanding" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
          <property name="minimumSize" >
           <size>
            <width>0</width>
