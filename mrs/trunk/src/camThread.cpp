@@ -6,7 +6,7 @@ CamThread::CamThread() : QThread()
 	stopped = false;
 	initDone = false;;
 	cameraIsOn = false;
-	faceDetectionIsEnabled = true;
+	faceDetectionIsEnabled = false;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
 	cameraDevice = -2; // -2, because of -1 is a default device!
