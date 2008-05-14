@@ -22,6 +22,17 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	
 	robotSlot = 1;
 	straightForwardDeviation = 0;
+	
+	//
+	// init
+	//
+	// TODO: change this 180 to a const or something else
+	for (int angle=0; angle<180; angle++)
+	{
+		// delete the "obstacle flag" -> free way at the actual angle
+		laserThread->setLaserScannerFlag(LASER1, angle, FREEWAY);
+		laserThread->setLaserScannerFlag(LASER2, angle, FREEWAY);
+	}
 }
 
 
@@ -199,9 +210,10 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
+		// TODO: change this 180 to a const or something else
 		for (int angle=0; angle<180; angle++)
 		{
-			// check only lines with no obstacles!
+			// check only lines with no obstacles (FREEWAY)!
 			if (laserThread->getLaserScannerFlag(LASER1, angle) == FREEWAY)
 			{
 				// If this is the FIRST angle AND the next angle is "free"
@@ -222,18 +234,23 @@ void ObstacleCheckThread::run()
 				}
 				
 				// If current angle has "free" sight (no obstacles)
-				// AND next angle is NOT free, set this one as "end"
+				// AND next angle is NOT free
 				// AND the angle before current is free
 				// AND angle robot slot is wide enough
-				//
-				// THEN set the current angle to "free area end"
+				// OR
+				// this is the last free angle (179)
+				// and the end has not been set till here (still -1)
+				// THEN set the current angle as "free area end"
 				//
 				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area end"!)
 				//
 				// FIXME: 1 degree for robot slot ist still free, when current angle is 2 deg.
 				// FIXME: why -1 ?!? But works so far!
 				//
-				if ( (laserThread->getLaserScannerFlag(LASER1, angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(LASER1, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1) )
+				if (
+					((laserThread->getLaserScannerFlag(LASER1, angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(LASER1, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
+					((angle == 179) && (actualFreeAreaEnd == -1))
+				   )
 				{
 					// store current free area end
 					actualFreeAreaEnd = angle;
@@ -249,6 +266,7 @@ void ObstacleCheckThread::run()
 				}
 			}
 		}
+		
 		
 		
 		//------------------------------------------------------------
