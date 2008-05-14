@@ -2193,11 +2193,11 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1");
+	ui.qwtPlotCurrent1->setTitle("Motor 1 (mA)");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -2205,7 +2205,7 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
-	QColor col = QColor(255, 64, 64);
+	QColor col = QColor(64, 64, 255);
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve1.setPen(QPen(col));
 	curve1.setBrush(col);
@@ -2214,11 +2214,11 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 2
 	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 2");
+	ui.qwtPlotCurrent2->setTitle("Motor 2 (mA)");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -2235,11 +2235,11 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3
 	//--------------------------------------
-	ui.qwtPlotCurrent3->setTitle("Motor 3");
+	ui.qwtPlotCurrent3->setTitle("Motor 3 (mA)");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent3->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent3->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent3->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -2256,11 +2256,11 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 4
 	//--------------------------------------
-	ui.qwtPlotCurrent4->setTitle("Motor 4");
+	ui.qwtPlotCurrent4->setTitle("Motor 4 (mA)");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent4->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent4->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent4->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
