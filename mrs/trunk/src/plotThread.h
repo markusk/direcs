@@ -62,8 +62,8 @@ class PlotThread : public QThread
 		
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
-		static const short int MOTORSENSOR3 = 3;
-		static const short int MOTORSENSOR4 = 4;
+		static const short int MOTORSENSOR3 = 2;
+		static const short int MOTORSENSOR4 = 3;
 };
 
 #endif

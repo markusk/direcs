@@ -101,8 +101,7 @@ void PlotThread::run()
 		
 		// get a motor sensor value
 		// the last value (second 60) is the latest (the read value)!
-		//yval3[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR3);
-		yval3[SIZE-1] = 0; // TODO: implement 3rd sensor!
+		yval3[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR3);
 
 		//--------------
 		//  e m i t
@@ -122,8 +121,7 @@ void PlotThread::run()
 		
 		// get a motor sensor value
 		// the last value (second 60) is the latest (the read value)!
-		//yval4[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR3);
-		yval4[SIZE-1] = 0; // TODO: implement 4th sensor!
+		yval4[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR4);
 
 		//--------------
 		//  e m i t
