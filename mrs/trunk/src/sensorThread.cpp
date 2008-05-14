@@ -601,9 +601,9 @@ int SensorThread::convertToSensorValue(int distance)
 
 int SensorThread::getMAmpere(int sensor)
 {
-	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR2))
+	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR4))
 	{
-		qDebug("ERROR: wrong motor sensor");
+		qDebug("ERROR sensorThread, getMAmpere: wrong motor sensor");
 		return 0;
 	}
 	
@@ -621,7 +621,7 @@ int SensorThread::getContactValue(int contact)
 {
 	if ((contact < CONTACT1) || (contact > CONTACT4))
 	{
-		qDebug("ERROR: wrong contact number");
+		qDebug("ERROR sensorThread, getContactValue: wrong contact number");
 		return 0;
 	}
 	

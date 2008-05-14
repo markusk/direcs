@@ -169,17 +169,17 @@ class SensorThread : public QThread
 		static const unsigned char USSENSORARRAYSIZE = 1;
 		int usSensorValue[USSENSORARRAYSIZE];
 		
-		static const short int MOTORSENSOR1 = 0;
-		static const short int MOTORSENSOR2 = 1;
-		static const short int MOTORSENSOR3 = 2;
-		static const short int MOTORSENSOR4 = 3;
-		
 		/**
 		Defines the size of the motorSensorValue[] array
 		This es equal to the number of motor sensors.
 		*/
-		static const unsigned char MOTORSENSORARRAYSIZE = 2;
+		static const unsigned char MOTORSENSORARRAYSIZE = 4;
 		int motorSensorValue[MOTORSENSORARRAYSIZE];
+		
+		static const short int MOTORSENSOR1 = 0;
+		static const short int MOTORSENSOR2 = 1;
+		static const short int MOTORSENSOR3 = 2;
+		static const short int MOTORSENSOR4 = 3;
 		
 		// defines the size of the drivenDistance[] array
 		// This es equal to the number of motors!
