@@ -1220,7 +1220,7 @@ void Gui::setCamImageData(int width, int height, int pixeldepth)
 void Gui::setCamImage(IplImage* frame)
 {
 	// set image from OpenGL context to Qt frame!
-//	ui.frameCamera->setImage((unsigned char*)frame->imageData);
+	ui.frameCamera->setImage((unsigned char*)frame->imageData);
 	
 	//QPixmap pixmap = QPixmap("/tmp/test.PNG");
 	//ui.lblCamera->setPixmap(pixmap);

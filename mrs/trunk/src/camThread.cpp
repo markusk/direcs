@@ -227,7 +227,7 @@ void CamThread::run()
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
 			//cvSaveImage("/tmp/test.PNG", imgPtr);
-			//emit camDataComplete(imgPtr);
+			emit camDataComplete(imgPtr);
 
 			// TODO: cvSaveImage -> /tmp -> load pixmap -> gui  oder  void cvConvertImage( const CvArr* src, CvArr* dst, int flags=0 );
 		
