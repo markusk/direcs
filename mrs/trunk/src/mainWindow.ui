@@ -676,7 +676,7 @@
       <x>569</x>
       <y>1</y>
       <width>407</width>
-      <height>459</height>
+      <height>461</height>
      </rect>
     </property>
     <property name="sizePolicy" >
@@ -697,7 +697,7 @@
        <x>0</x>
        <y>20</y>
        <width>407</width>
-       <height>439</height>
+       <height>441</height>
       </rect>
      </property>
      <widget class="QFrame" name="frame" >
@@ -770,7 +770,7 @@
         <x>10</x>
         <y>310</y>
         <width>381</width>
-        <height>111</height>
+        <height>146</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_10" >
@@ -1162,28 +1162,15 @@
            </item>
           </layout>
          </item>
-         <item row="1" column="0" >
+         <item row="1" column="1" >
           <spacer name="verticalSpacer_3" >
            <property name="orientation" >
             <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0" >
             <size>
-             <width>72</width>
-             <height>28</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2" >
-          <spacer name="verticalSpacer_4" >
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>72</width>
-             <height>28</height>
+             <width>20</width>
+             <height>40</height>
             </size>
            </property>
           </spacer>
@@ -1260,6 +1247,9 @@
                   <strikeout>false</strikeout>
                  </font>
                 </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
                 <property name="frameShape" >
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -1295,6 +1285,9 @@
                   <underline>false</underline>
                   <strikeout>false</strikeout>
                  </font>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
                 </property>
                 <property name="frameShape" >
                  <enum>QFrame::StyledPanel</enum>
@@ -1419,6 +1412,9 @@
                   <strikeout>false</strikeout>
                  </font>
                 </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
                 <property name="frameShape" >
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -1448,6 +1444,9 @@
                   <underline>false</underline>
                   <strikeout>false</strikeout>
                  </font>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
                 </property>
                 <property name="frameShape" >
                  <enum>QFrame::StyledPanel</enum>
@@ -1989,7 +1988,7 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="0" >
+          <item row="2" column="0" >
            <layout class="QVBoxLayout" >
             <item>
              <layout class="QHBoxLayout" >
@@ -2040,7 +2039,7 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="1" >
+          <item row="2" column="1" >
            <layout class="QVBoxLayout" >
             <item>
              <layout class="QHBoxLayout" >
@@ -2090,6 +2089,19 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item row="1" column="0" >
+           <spacer name="verticalSpacer" >
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -3252,13 +3264,15 @@
      <string>&amp;View</string>
     </property>
     <addaction name="actionAll" />
-    <addaction name="actionLaser_View" />
+    <addaction name="separator" />
     <addaction name="actionCamera" />
-    <addaction name="actionOdometrie" />
-    <addaction name="actionPower" />
+    <addaction name="actionJoystick" />
+    <addaction name="actionLaser_View" />
     <addaction name="actionLog" />
     <addaction name="actionNetwork_Log" />
-    <addaction name="actionJoystick" />
+    <addaction name="actionOdometrie" />
+    <addaction name="actionPower" />
+    <addaction name="separator" />
     <addaction name="actionSettings" />
    </widget>
    <widget class="QMenu" name="menuHelp" >
