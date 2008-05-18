@@ -6,11 +6,22 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	robotIsOn = false;
 	laserXPos = 0; // correct value is set in the initLaserView()
 	laserYPos = 0; // correct value is set in the initLaserView()
-		
+	
+	// define some nice green and red colors
+	labelFillColorGreen = QColor(64, 255, 64);
+	labelFillColorRed   = QColor(255, 64, 64);
+	labelFillColorBlue  = QColor(64, 64, 255);
+	
 	//-------------------------------------------------------
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
+
+	// set battery power labels to green :-)
+	ui.lblBatteryPower1->setPalette(QPalette(labelFillColorGreen));
+	ui.lblBatteryPower2->setPalette(QPalette(labelFillColorGreen));
+	ui.lblBatteryPower3->setPalette(QPalette(labelFillColorGreen));
+	ui.lblBatteryPower4->setPalette(QPalette(labelFillColorGreen));
 
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
@@ -352,10 +363,10 @@ void Gui::on_btnReset_clicked()
 	//ui.btnExecuteScript->setText("Execute s&cript");
 
 	// set labels back in default position
-	ui.lblPower1->setText("OFF");
+	//ui.lblPower1->setText("OFF");
 	ui.lblPower1->setEnabled(false);
 	ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.lblPower2->setText("OFF");
+	//ui.lblPower2->setText("OFF");
 	ui.lblPower2->setEnabled(false);
 	ui.lblPower2->setPalette(QPalette(QColor(255, 255, 255)));
 	
@@ -678,11 +689,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic1->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic1->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm1->setEnabled(true);
-				//ui.frameSensorAlarm1->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm1->setPalette(QPalette(labelFillColorRed));
 				// red progressBar background
-				ui.progressBarSensor1->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor1->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -699,11 +710,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic2->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic2->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm2->setEnabled(true);
-				//ui.frameSensorAlarm2->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm2->setPalette(QPalette(labelFillColorRed));
 				// red progressBar background
-				ui.progressBarSensor2->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor2->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -720,11 +731,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic3->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic3->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm3->setEnabled(true);
-				//ui.frameSensorAlarm3->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm3->setPalette(QPalette(labelFillColorRed));
 				// red progressBar background
-				ui.progressBarSensor3->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor3->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -741,11 +752,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic4->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic4->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm4->setEnabled(true);
-				//ui.frameSensorAlarm4->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm4->setPalette(QPalette(labelFillColorRed));
 				// red progressBar background
-				ui.progressBarSensor4->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor4->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -762,11 +773,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic5->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic5->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm5->setEnabled(true);
-				//ui.frameSensorAlarm5->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm5->setPalette(QPalette(labelFillColorRed));
 				// red progressBar background
-				ui.progressBarSensor5->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor5->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -783,11 +794,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic6->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic6->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm6->setEnabled(true);
-				//ui.frameSensorAlarm6->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm6->setPalette(QPalette(labelFillColorRed));
 				// red progressBar background
-				ui.progressBarSensor6->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor6->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -804,11 +815,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic7->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic7->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm7->setEnabled(true);
-				//ui.frameSensorAlarm7->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm7->setPalette(QPalette(labelFillColorRed));
 				// red progressBar background
-				ui.progressBarSensor7->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor7->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -825,11 +836,11 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic8->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic8->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm8->setEnabled(true);
-				//ui.frameSensorAlarm8->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm8->setPalette(QPalette(labelFillColorRed));
 				// red progressBot background
-				ui.progressBarSensor8->setPalette(QPalette(QColor(255, 64, 64)));
+				ui.progressBarSensor8->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -847,10 +858,10 @@ void Gui::showAlarm(short int sensor, bool state)
 			if (state == ON)
 			{
 				// change sensor-pixmap color to red     [blue = 0, 70, 213]
-				//ui.labelSensorPic16->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.labelSensorPic16->setPalette(QPalette(labelFillColorRed));
 				//ui.labelSensorAlarm16->setEnabled(true);
-				//ui.frameSensorAlarm16->setPalette(QPalette(QColor(255, 64, 64)));
-				ui.progressBarSensor16->setPalette(QPalette(QColor(255, 64, 64)));
+				//ui.frameSensorAlarm16->setPalette(QPalette(labelFillColorRed));
+				ui.progressBarSensor16->setPalette(QPalette(labelFillColorRed));
 			}
 			else
 			{
@@ -879,10 +890,10 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case ON:
 					//ui.lblPower1->setText("ON");
 					ui.lblPower1->setEnabled(true);
-					ui.lblPower1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblPower1->setPalette(QPalette(labelFillColorGreen));
 					
 					ui.lblDirection1->setEnabled(true);
-					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
 					//ui.lblPower1->setText("OFF");
@@ -901,13 +912,13 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case CLOCKWISE:
 					ui.lblDirection1->setText("FORWARD");
 					ui.lblDirection1->setEnabled(true);
-					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					return;
 					break;
 				case COUNTERCLOCKWISE:
 					ui.lblDirection1->setText("BACKWARD");
 					ui.lblDirection1->setEnabled(true);
-					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					return;
 					break;
 				case SAME:
@@ -925,10 +936,10 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case ON:
 					//ui.lblPower2->setText("ON");
 					ui.lblPower2->setEnabled(true);
-					ui.lblPower2->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblPower2->setPalette(QPalette(labelFillColorGreen));
 					
 					ui.lblDirection1->setEnabled(true);
-					ui.lblDirection1->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
 					//ui.lblPower2->setText("OFF");
@@ -947,13 +958,13 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case CLOCKWISE:
 					ui.lblDirection2->setText("FORWARD");
 					ui.lblDirection2->setEnabled(true);
-					ui.lblDirection2->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
 					return;
 					break;
 				case COUNTERCLOCKWISE:
 					ui.lblDirection2->setText("BACKWARD");
 					ui.lblDirection2->setEnabled(true);
-					ui.lblDirection2->setPalette(QPalette(QColor(64, 255, 64)));
+					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
 					return;
 					break;
 				case SAME:
@@ -1358,7 +1369,7 @@ void Gui::on_btnSimulate_clicked()
 	if (ui.btnSimulate->isChecked())
 	{
 		// nice red button background
-		ui.btnSimulate->setPalette(QPalette(QColor(255, 64, 64)));
+		ui.btnSimulate->setPalette(QPalette(labelFillColorRed));
 		emit simulate(true);
 	}
 	else
@@ -2205,7 +2216,7 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
-	QColor col = QColor(64, 64, 255);
+	QColor col = labelFillColorBlue;
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve1.setPen(QPen(col));
 	curve1.setBrush(col);
@@ -2226,7 +2237,7 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
-	col = QColor(64, 64, 255);
+	col = labelFillColorBlue;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
@@ -2247,7 +2258,7 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
-	col = QColor(64, 64, 255);
+	col = labelFillColorBlue;
 	curve3.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve3.setPen(QPen(col));
 	curve3.setBrush(col);
@@ -2268,7 +2279,7 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 	
-	col = QColor(64, 64, 255);
+	col = labelFillColorBlue;
 	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve4.setPen(QPen(col));
 	curve4.setBrush(col);

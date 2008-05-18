@@ -484,6 +484,9 @@ class Gui : public QMainWindow
 		QwtPlotCurve curve3;
 		QwtPlotCurve curve4;
 		QPixmap cameraPicToSave;
+		QColor labelFillColorRed;
+		QColor labelFillColorGreen;
+		QColor labelFillColorBlue;
 		QColor colorLaserObstacle;
 		QColor colorLaserFreeWay;
 		QColor colorLaserPreferredDrivingDirection;
