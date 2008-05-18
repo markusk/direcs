@@ -126,7 +126,7 @@
    <widget class="QDockWidget" name="dockJoystick" >
     <property name="geometry" >
      <rect>
-      <x>1080</x>
+      <x>1100</x>
       <y>660</y>
       <width>151</width>
       <height>161</height>
@@ -512,7 +512,7 @@
    <widget class="QDockWidget" name="dockWidget" >
     <property name="geometry" >
      <rect>
-      <x>1240</x>
+      <x>1260</x>
       <y>660</y>
       <width>131</width>
       <height>237</height>
@@ -706,7 +706,7 @@
         <x>11</x>
         <y>1</y>
         <width>381</width>
-        <height>251</height>
+        <height>301</height>
        </rect>
       </property>
       <property name="sizePolicy" >
@@ -747,8 +747,8 @@
         <rect>
          <x>1</x>
          <y>1</y>
-         <width>320</width>
-         <height>240</height>
+         <width>379</width>
+         <height>299</height>
         </rect>
        </property>
        <property name="sizePolicy" >
@@ -768,9 +768,9 @@
       <property name="geometry" >
        <rect>
         <x>10</x>
-        <y>260</y>
+        <y>310</y>
         <width>381</width>
-        <height>161</height>
+        <height>111</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_10" >
@@ -2119,7 +2119,7 @@
        <height>633</height>
       </rect>
      </property>
-     <widget class="QWidget" name="" >
+     <widget class="QWidget" name="layoutWidget" >
       <property name="geometry" >
        <rect>
         <x>9</x>
@@ -3136,7 +3136,7 @@
      <rect>
       <x>570</x>
       <y>658</y>
-      <width>311</width>
+      <width>321</width>
       <height>241</height>
      </rect>
     </property>
@@ -3154,7 +3154,7 @@
       <rect>
        <x>0</x>
        <y>20</y>
-       <width>311</width>
+       <width>321</width>
        <height>221</height>
       </rect>
      </property>
@@ -3163,7 +3163,7 @@
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>291</width>
+        <width>311</width>
         <height>211</height>
        </rect>
       </property>
@@ -3184,7 +3184,7 @@
    <widget class="QDockWidget" name="dockNetworkLog" >
     <property name="geometry" >
      <rect>
-      <x>880</x>
+      <x>900</x>
       <y>660</y>
       <width>191</width>
       <height>241</height>
@@ -3213,7 +3213,7 @@
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>171</width>
+        <width>181</width>
         <height>211</height>
        </rect>
       </property>
