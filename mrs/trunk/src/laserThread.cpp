@@ -38,6 +38,7 @@ LaserThread::LaserThread()
 
 LaserThread::~LaserThread()
 {
+	// laserScannerFrontIsConnected is set in the isConnected method!
 	if (laserScannerFrontIsConnected || laserScannerRearIsConnected)
 	{
 		// shutdown laser (parameter '0' is not in use)
