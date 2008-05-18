@@ -81,6 +81,8 @@ void Mrs::init()
 	dontUseCamera = false;
 	cameraTestMode = false;
 	faceTrackingIsEnabled = false;
+	laserScanner1Found = false;
+	laserScanner2Found = false;
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -285,9 +287,11 @@ void Mrs::init()
 		servos->init();
 		gui->appendLog("Servos moved to default positions");
 	
+		// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 		//-----------------------------------------------------------
 		// start the heartbeat thread
 		//-----------------------------------------------------------
+		/*
 		if (heartbeat->isRunning() == false)
 		{
 			splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
@@ -298,6 +302,7 @@ void Mrs::init()
 			heartbeat->start();
 			gui->appendLog("Heartbeat thread started.");
 		}
+		*/
 	
 		//-----------------------------------------------------------
 		// start the sensor thread for reading the sensors)
@@ -491,18 +496,18 @@ void Mrs::init()
 	// for refreshing the splash...
 	QApplication::processEvents();
 	
-	bool scanner1found = laserThread->isConnected(LASER1);
+	laserScanner1Found = laserThread->isConnected(LASER1);
 	
 	// check REAR laser
 	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
 	
-	bool scanner2found = laserThread->isConnected(LASER2);
+	laserScanner2Found = laserThread->isConnected(LASER2);
 	
-	if (scanner1found || scanner2found)
+	if (laserScanner1Found || laserScanner2Found)
 	{
-		if (scanner1found)
+		if (laserScanner1Found)
 		{
 			gui->appendLog("Front laser scanner found.");
 		}
@@ -511,7 +516,7 @@ void Mrs::init()
 			gui->appendLog("Front laser scanner NOT found.");
 		}
 	
-		if (scanner2found)
+		if (laserScanner2Found)
 		{
 			gui->appendLog("Rear laser scanner found.");
 		}
@@ -747,45 +752,45 @@ void Mrs::shutdown()
 		}
 		
 		
-	#ifdef _TTY_POSIX_
 		/*
+		#ifdef _TTY_POSIX_
 		//--------------------------------
 		// quit the speakThread
 		//--------------------------------
 		if (speakThread->isRunning() == true)
 		{
-		gui->appendLog("Stopping speak thread...");
-			
-			// my own stop routine :-)
-		speakThread->stop();
-			
-			// slowing thread down
-		speakThread->setPriority(QThread::IdlePriority);
-		speakThread->quit();
-			
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-	} while ((speakThread->isFinished() == false) && (t.elapsed() <= 2000));
-	
-		if (speakThread->isFinished() == true)
-		{
-		gui->appendLog("Speak thread stopped.");
-	}
-		else
-		{
-		gui->appendLog("Terminating speak thread because it doesn't answer...");
-		speakThread->terminate();
-		speakThread->wait(1000);
-		gui->appendLog("Speak thread terminated.");
-	}
-	}
+			gui->appendLog("Stopping speak thread...");
+				
+				// my own stop routine :-)
+			speakThread->stop();
+				
+				// slowing thread down
+			speakThread->setPriority(QThread::IdlePriority);
+			speakThread->quit();
+				
+				//-------------------------------------------
+				// start measuring time for timeout ckecking
+				//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((speakThread->isFinished() == false) && (t.elapsed() <= 2000));
+		
+			if (speakThread->isFinished() == true)
+			{
+				gui->appendLog("Speak thread stopped.");
+			}
+			else
+			{
+				gui->appendLog("Terminating speak thread because it doesn't answer...");
+				speakThread->terminate();
+				speakThread->wait(1000);
+				gui->appendLog("Speak thread terminated.");
+			}
+		}
+		#endif
 		*/
-	#endif
 		
 		//--------------------------------
 		// quit the network thread
@@ -935,43 +940,8 @@ void Mrs::shutdown()
 				gui->appendLog("Obstacle check thread terminated.");
 			}
 		}
-	
-	
-		/*
-		//-----------------------------
-		// quit the supersonic thread
-		//-----------------------------
-		//qDebug("Starting to stop the supersonic thread NOW!");
-		if (supersonThread->isRunning() == true)
-		{
-		gui->appendLog("Stopping supersonic thread...");
-			// slowing thread down
-		supersonThread->setPriority(QThread::IdlePriority);
-		supersonThread->quit();
-			
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-	} while ((supersonThread->isFinished() == false) && (t.elapsed() <= 2000));
-	
-		if (supersonThread->isFinished() == true)
-		{
-		gui->appendLog("Supersonic thread stopped.");
-	}
-		else
-		{
-		gui->appendLog("Terminating supersonic thread because it doesn't answer...");
-		supersonThread->terminate();
-		supersonThread->wait(1000);
-		gui->appendLog("Supersonic thread terminated.");
-	}
-	}
-		*/
-		
+
+
 		//--------------------------
 		// quit the sensor thread
 		//--------------------------
