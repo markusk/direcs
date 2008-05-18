@@ -119,7 +119,8 @@ void Mrs::init()
 	// call (a) test method(s) when clicking the test button
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
-	connect(gui, SIGNAL(test()), camThread, SLOT(test()));
+	// currently not in use:
+	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
 	
 	//--------------------------------------------------------------------------
 	// set the motor speed, when signal comes from Gui
@@ -3056,7 +3057,7 @@ void Mrs::test()
 	#ifdef _TTY_POSIX_
 	// Say some text;
 	QDateTime now = QDateTime::currentDateTime();
-//	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 	#endif
 
 }
