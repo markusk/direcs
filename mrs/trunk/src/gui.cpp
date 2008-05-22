@@ -54,7 +54,8 @@ infrared Sensors temporarily removed from robot!!
 	ui.lblBatteryPower3->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.lblBatteryPower4->setPalette(QPalette(QColor(255, 255, 255)));
 	*/
-	
+/*
+	FIXME: change to dialogue class!	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
 	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
@@ -96,7 +97,7 @@ infrared Sensors temporarily removed from robot!!
 	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), ui.sliderObstacle, SLOT(setValue(int)));
-	
+*/	
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face detect check box changes, set the detection mode
 	//----------------------------------------------------------------------------------
@@ -196,12 +197,6 @@ void Gui::closeEvent(QCloseEvent *event)
 }
 
 
-void Gui::on_btnExit_clicked()
-{
-	close();
-}
-
-
 void Gui::on_actionExit_activated()
 {
 	close();
@@ -214,8 +209,8 @@ void Gui::setRobotControls(bool state)
 	robotIsOn = state;
 	
 	// set the controls
-	ui.btnDrive->setEnabled(state);
-	ui.btnReset->setEnabled(state);
+	ui.actionDrive->setEnabled(state);
+	ui.actionReset->setEnabled(state);
 	ui.btnResetMovement1->setEnabled(state);
 	ui.btnResetMovement2->setEnabled(state);
 }
@@ -276,7 +271,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 }
 
 
-void Gui::on_btnDrive_clicked()
+void Gui::on_actionDrive_activated()
 {
 	static bool toggle = false;
 	
@@ -287,7 +282,8 @@ void Gui::on_btnDrive_clicked()
 		toggle = true;
 
 		// change text of "drive button"
-		ui.btnDrive->setText(" Stop &driving");
+		// TODO: set tooltip
+		//ui.btnDrive->setText(" Stop &driving");
 
 		//----------------
 		// start driving
@@ -300,7 +296,8 @@ void Gui::on_btnDrive_clicked()
 		appendLog("Stop driving...");
 
 		// change text of "drive button"
-		ui.btnDrive->setText(" &Drive");
+		// TODO: set tooltip
+		//ui.btnDrive->setText(" &Drive");
 
 		//****************
 		// stop driving
@@ -310,30 +307,7 @@ void Gui::on_btnDrive_clicked()
 }
 
 
-void Gui::on_sliderMotor1Speed_sliderReleased()
-{
-	// no auto connect in constructor, because this slot has no "value" parameter!
-	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
-	
-	//int value = ui.sliderMotor1Speed->value();
-	
-	//laserDistanceLineListFront->at(0)->setStartAngle(ui.sliderMotor1Speed->value() * 16);
-	//laserDistanceLineListFront->at(0)->setPos(value, value);
-	//appendLog(QString("x,y=%1").arg(value));
-}
-
-
-void Gui::on_sliderMotor2Speed_sliderReleased()
-{
-	// no auto connect in constructor, because this slot has no "value" parameter!
-	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
-	
-	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor2Speed->value() * 16);
-	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor2Speed->value()));
-}
-
-
-void Gui::on_btnReset_clicked()
+void Gui::on_actionReset_activated()
 {
 	// TODO: check, if robot is OFF !!!!
 	
@@ -381,11 +355,14 @@ void Gui::on_btnReset_clicked()
 	//ui.btnExecuteScript->setEnabled(true);
 
 	// reactivate sliders & Co.
+/*
+	FIXME: change call to new classes
 	ui.sliderMotor1Speed->setEnabled(true);
 	ui.spinBoxMotor1Speed->setEnabled(true);
 	
 	ui.sliderMotor2Speed->setEnabled(true);
 	ui.spinBoxMotor2Speed->setEnabled(true);
+*/
 }
 
 
@@ -411,7 +388,7 @@ void Gui::on_btnResetMovement2_clicked()
 }
 
 
-void Gui::on_btnTest_clicked()
+void Gui::on_actionTest_activated()
 {
 	emit test();
 }
@@ -419,27 +396,12 @@ void Gui::on_btnTest_clicked()
 
 void Gui::on_actionAll_activated()
 {
-	ui.dockLaserView->show();
 	ui.dockCamera->show();
 	ui.dockOdometrie->show();
 	ui.dockPower->show();
-	ui.dockSettings->show();
+	// FIXME: change to dialogue ui.dockSettings->show();
 	ui.dockLog->show();
-	ui.dockNetworkLog->show();
-	ui.dockJoystick->show();
-}
-
-
-void Gui::on_actionLaser_View_activated()
-{
-	if (ui.dockLaserView->isVisible())
-	{
-		ui.dockLaserView->hide();
-	}
-	else
-	{
-		ui.dockLaserView->show();
-	}
+	// FIXME: change to dialogue ui.dockJoystick->show();
 }
 
 
@@ -484,6 +446,7 @@ void Gui::on_actionPower_activated()
 
 void Gui::on_actionSettings_activated()
 {
+	/* FIXME: show dialogue
 	if (ui.dockSettings->isVisible())
 	{
 		ui.dockSettings->hide();
@@ -492,6 +455,7 @@ void Gui::on_actionSettings_activated()
 	{
 		ui.dockSettings->show();
 	}
+	*/
 }
 
 
@@ -508,21 +472,9 @@ void Gui::on_actionLog_activated()
 }
 
 
-void Gui::on_actionNetwork_Log_activated()
-{
-	if (ui.dockNetworkLog->isVisible())
-	{
-		ui.dockNetworkLog->hide();
-	}
-	else
-	{
-		ui.dockNetworkLog->show();
-	}
-}
-
-
 void Gui::on_actionJoystick_activated()
 {
+	/* FIXME: show dialogue
 	if (ui.dockJoystick->isVisible())
 	{
 		ui.dockJoystick->hide();
@@ -531,6 +483,7 @@ void Gui::on_actionJoystick_activated()
 	{
 		ui.dockJoystick->show();
 	}
+*/
 }
 
 
@@ -1063,7 +1016,7 @@ void Gui::showFaceTrackDirection(QString direction)
 	}
 }
 
-
+/* FIXME: put into dialogue class
 int Gui::getSliderMotorSpeed(int motor)
 {
 	switch (motor)
@@ -1139,6 +1092,29 @@ void Gui::setSliderMotorSpeed(int motor, int value)
 }
 
 
+void Gui::on_sliderMotor1Speed_sliderReleased()
+{
+	// no auto connect in constructor, because this slot has no "value" parameter!
+	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
+	
+	//int value = ui.sliderMotor1Speed->value();
+	
+	//laserDistanceLineListFront->at(0)->setStartAngle(ui.sliderMotor1Speed->value() * 16);
+	//laserDistanceLineListFront->at(0)->setPos(value, value);
+	//appendLog(QString("x,y=%1").arg(value));
+}
+
+
+void Gui::on_sliderMotor2Speed_sliderReleased()
+{
+	// no auto connect in constructor, because this slot has no "value" parameter!
+	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
+	
+	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor2Speed->value() * 16);
+	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor2Speed->value()));
+}
+
+
 void Gui::setSliderMinimumSpeed(int speed)
 {
 	ui.sliderMinimumSpeed->setValue(speed);
@@ -1179,7 +1155,7 @@ void Gui::setCheckBoxSaveSettings(Qt::CheckState state)
 {
 	ui.checkBoxSaveSettings->setCheckState(state);
 }
-
+*/
 
 void Gui::on_btnSavePicture_clicked()
 {
@@ -1344,37 +1320,37 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 }
 
 
-void Gui::on_btnEnableRemote_clicked()
+void Gui::on_actionRemote_activated()
 {
 	// if remote control is enabled, disable some controls in the GUI
-	if (ui.btnEnableRemote->isChecked())
+	if (ui.actionRemote->isChecked())
 	{
-		ui.btnDrive->setEnabled(false);
+		ui.actionDrive->setEnabled(false);
 		emit enableRemoteControlListening(true);
 	}
 	else
 	{
 		if (robotIsOn)
 		{
-			ui.btnDrive->setEnabled(true);
+			ui.actionDrive->setEnabled(true);
 		}
 		emit enableRemoteControlListening(false);
 	}
 }
 
 
-void Gui::on_btnSimulate_clicked()
+void Gui::on_actionSimulate_activated()
 {
-	if (ui.btnSimulate->isChecked())
+	if (ui.actionSimulate->isChecked())
 	{
 		// nice red button background
-		ui.btnSimulate->setPalette(QPalette(labelFillColorRed));
+		// FIXME: how to change a color of a button?  ui.actionSimulate->setPalette(QPalette(labelFillColorRed));
 		emit simulate(true);
 	}
 	else
 	{
 		// set back to default color!!
-		ui.btnSimulate->setPalette(QApplication::palette());
+		// FIXME: how to change a color of a button?  ui.actionSimulate->setPalette(QApplication::palette());
 		emit simulate(false);
 	}
 }
@@ -2287,6 +2263,8 @@ void Gui::initializePlots()
 
 void Gui::showJoystickAxes(int axisNumber, int axisValue)
 {
+	/*
+	FIXME: put into joystick class
 	// TODO: put axis numbers to ini-file
 	switch (axisNumber)
 	{
@@ -2339,19 +2317,22 @@ void Gui::showJoystickAxes(int axisNumber, int axisValue)
 			}
 			break;
 	}
+	*/
 }
 
 
 void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
 {
+/* FIXME: put into joystick class!!
+	
 	static bool toggle0 = false;
-	/*
-	static bool toggle1 = false;
-	static bool toggle2 = false;
-	static bool toggle3 = false;
-	static bool toggle4 = false;
-	static bool toggle5 = false;
-	*/
+	
+	//static bool toggle1 = false;
+	//static bool toggle2 = false;
+	//static bool toggle3 = false;
+	//static bool toggle4 = false;
+	//static bool toggle5 = false;
+	
 	static bool toggle10 = false;
 	static bool toggle11 = false;
 	
@@ -2417,4 +2398,5 @@ void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
 			ui.radioBtnJoy11->setChecked(toggle10);
 			break;
 	}
+*/
 }

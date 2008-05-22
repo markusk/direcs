@@ -117,7 +117,7 @@ class Gui : public QMainWindow
 		@param motor is the motor number.
 		@param value is the speed of the motor.
 		*/
-		void setSliderMotorSpeed(int motor, int value);
+		// FIXME: void setSliderMotorSpeed(int motor, int value);
 		
 		/**
 		Sets the slider minimum speed.
@@ -429,36 +429,35 @@ class Gui : public QMainWindow
 
 	protected slots:
 		/**
-		Action if a menu item is clicked
+		Action if a menu item or a toolbar button is clicked
 		*/
 		void on_actionExit_activated();
-		void on_actionLaser_View_activated();
 		void on_actionCamera_activated();
 		void on_actionOdometrie_activated();
 		void on_actionPower_activated();
 		void on_actionSettings_activated();
 		void on_actionLog_activated();
-		void on_actionNetwork_Log_activated();
 		void on_actionJoystick_activated();
 		void on_actionAll_activated();
 		void on_actionAbout_activated();
+		void on_actionDrive_activated();
+		void on_actionReset_activated();
+		void on_actionTest_activated();
+		void on_actionRemote_activated();
+		void on_actionSimulate_activated();
 
 
 	private slots:
+		/*
+		FIXME: put to new class
 		void on_sliderMotor1Speed_sliderReleased();
 		void on_sliderMotor2Speed_sliderReleased();
+		*/
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
-		void on_btnDrive_clicked();
-		void on_btnReset_clicked();
-		void on_btnExit_clicked();
-		void on_btnTest_clicked();
 		//void on_ckeckBoxSaveSettings_stateChanged(int state);
 		void on_btnSavePicture_clicked();
-		void on_btnEnableRemote_clicked();
-		void on_btnSimulate_clicked();
 		void on_sliderZoom_valueChanged(int);
-		//void on_dockLaserView_resizeEvent(QResizeEvent * event); how? TODO: call sliderZoomValueChanged / setzoomSlider value!
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);
