@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1378</width>
-    <height>962</height>
+    <width>1392</width>
+    <height>976</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -26,9 +26,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>68</y>
-     <width>1378</width>
-     <height>872</height>
+     <y>65</y>
+     <width>1392</width>
+     <height>892</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5" >
@@ -57,8 +57,8 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>404</width>
-         <height>588</height>
+         <width>423</width>
+         <height>583</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_6" >
@@ -873,8 +873,8 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>404</width>
-         <height>212</height>
+         <width>423</width>
+         <height>237</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_4" >
@@ -928,8 +928,8 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>942</width>
-         <height>200</height>
+         <width>937</width>
+         <height>225</height>
         </rect>
        </property>
        <widget class="QWidget" name="layoutWidget" >
@@ -1000,8 +1000,8 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>403</width>
-         <height>281</height>
+         <width>423</width>
+         <height>278</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_7" >
@@ -1162,8 +1162,8 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>403</width>
-         <height>281</height>
+         <width>423</width>
+         <height>279</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2" >
@@ -1814,8 +1814,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1378</width>
-     <height>29</height>
+     <width>1392</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -1840,7 +1840,6 @@
     <addaction name="actionJoystick" />
     <addaction name="actionLaser_View" />
     <addaction name="actionLog" />
-    <addaction name="actionNetwork_Log" />
     <addaction name="actionOdometrie" />
     <addaction name="actionPower" />
     <addaction name="separator" />
@@ -1860,9 +1859,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>940</y>
-     <width>1378</width>
-     <height>22</height>
+     <y>957</y>
+     <width>1392</width>
+     <height>19</height>
     </rect>
    </property>
   </widget>
@@ -1870,8 +1869,8 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>29</y>
-     <width>1378</width>
+     <y>26</y>
+     <width>1392</width>
      <height>39</height>
     </rect>
    </property>
