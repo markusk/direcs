@@ -434,6 +434,10 @@ void CamThread::test()
 
 QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
 {
+	//
+	// stolen from: http://www.qtcentre.org/forum/f-qt-programming-2/t-mfc-program-in-qt-10779.html
+	//
+	
     uchar *qImageBuffer = NULL;
     int width = iplImage->width;
  
@@ -464,12 +468,12 @@ QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
  
             // OpenCV image is stored with 3 byte color pixels (3 channels).
         //  We convert it to a 32 bit depth QImage.
-            
- 
+
+
             qImageBuffer = (uchar *) malloc(width*height*4*sizeof(uchar));
             uchar *QImagePtr = qImageBuffer;
             const uchar *iplImagePtr = (const uchar *) iplImage->imageData;
- 
+
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                 // We cannot help but copy manually.
@@ -495,21 +499,30 @@ QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
  
         }
  
-        QImage *qImage;
-        QImage qImag;
-            if (iplImage->nChannels == 1) {
-            QRgb *colorTable = new QRgb[256];
+		QImage *qImage;
+		QImage qImag;
+/*
+		//
+		// not necessary! :-)
+		//
+		if (iplImage->nChannels == 1)
+		{
+			QRgb *colorTable = new QRgb[256];
  
-            for (int i = 0; i < 256; i++)
-                colorTable[i] = qRgb(i, i, i);
-            qImage = new QImage(qImageBuffer, width, height, QImage::Format_RGB32);
-            QImage qImag(qImageBuffer, width, height, QImage::Format_RGB32 );
+			for (int i = 0; i < 256; i++)
+				colorTable[i] = qRgb(i, i, i);
+
+			qImage = new QImage(qImageBuffer, width, height, QImage::Format_RGB32);
+			QImage qImag(qImageBuffer, width, height, QImage::Format_RGB32 );
  
-            } else {
-            qImage = new QImage(qImageBuffer, width, height, QImage::Format_RGB32);
-            QImage qImag(qImageBuffer, width, height, QImage::Format_RGB32 );
-            }
-    
+		}
+		else
+		{
+*/
+			qImage = new QImage(qImageBuffer, width, height, QImage::Format_RGB32);
+/*
+			QImage qImag(qImageBuffer, width, height, QImage::Format_RGB32 );
+		}
+*/
         return qImage;
-    
 }
