@@ -363,10 +363,8 @@ void Gui::on_btnReset_clicked()
 	//ui.btnExecuteScript->setText("Execute s&cript");
 
 	// set labels back in default position
-	//ui.lblPower1->setText("OFF");
 	ui.lblPower1->setEnabled(false);
 	ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
-	//ui.lblPower2->setText("OFF");
 	ui.lblPower2->setEnabled(false);
 	ui.lblPower2->setPalette(QPalette(QColor(255, 255, 255)));
 	
