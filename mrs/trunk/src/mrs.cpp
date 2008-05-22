@@ -2824,6 +2824,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 
 void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 {
+	static bool toggle0 = false;
 	static bool toggle1 = false;
 	/*
 	static bool toggle2 = false;
@@ -2841,15 +2842,15 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 		case 0: // 1 on js
 			if (buttonState==true)
 			{
-				if (toggle1 == false)
+				if (toggle0 == false)
 				{
-					toggle1=true;
+					toggle0=true;
 					eyeTestMode=true;
 					gui->appendLog("<font color=\"#0000FF\">Eye test mode enabled.</front>");
 				}
 				else
 				{
-					toggle1=false;
+					toggle0=false;
 					eyeTestMode=false;
 					head->look("FORWARD");
 					head->look("NORMAL");
@@ -2858,6 +2859,26 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			}
 			break;
 		case 1: // 2 on js
+			if (buttonState==true)
+			{
+				if (toggle1 == false)
+				{
+					toggle1=true;
+					servoTestMode = true;
+					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON.</front>");
+					gui->appendLog(QString("Servo %1 selected.").arg(currentTestServo+1));
+					// TODO: timing problem, when emitting speak signal.
+					// restults in "Error reading joystick device!"
+					emit speak("Servo test mode");
+				}
+				else
+				{
+					toggle1=false;
+					servoTestMode = false;
+					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF.</front>");
+					emit speak("Test mode off");
+				}
+			}
 			break;
 		case 2: // 3 on js
 			break;
@@ -2898,19 +2919,18 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle10 == false)
 				{
 					toggle10=true;
-					servoTestMode = true;
-					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON.</front>");
-					gui->appendLog(QString("Servo %1 selected.").arg(currentTestServo+1));
+					//servoTestMode = true;
+					gui->appendLog("<font color=\"#0000FF\">Test drive mode ON.</front>");
 					// TODO: timing problem, when emitting speak signal.
 					// restults in "Error reading joystick device!"
-					emit speak("Servo test mode");
+					emit speak("Test drive mode");
 				}
 				else
 				{
 					toggle10=false;
-					servoTestMode = false;
-					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF.</front>");
-					emit speak("Test mode off");
+					//servoTestMode = false;
+					gui->appendLog("<font color=\"#0000FF\">Test drive mode OFF.</front>");
+					emit speak("Test drive mode off.");
 				}
 			}
 			break;
