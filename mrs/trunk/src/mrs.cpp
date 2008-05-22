@@ -629,10 +629,11 @@ void Mrs::shutdown()
 		// "Save the setting, that no settings shoud be saved"
 		//
 		// save check box status
-		inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
+//FIXME:		inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
 
 
-		if (gui->getCheckBoxSaveSettings() == Qt::Checked)
+//FIXME:		if (gui->getCheckBoxSaveSettings() == Qt::Checked)
+		if (0) // FIXME <-
 		{
 			gui->appendLog("Writing settings...");
 			splash->showMessage(QObject::tr("Writing settings..."), splashPosition, splashColor);
@@ -640,6 +641,7 @@ void Mrs::shutdown()
 			QApplication::processEvents();
 	
 			// save gui slider values
+			/* FIXME: use new dialog class
 			inifile1->writeSetting("Config", "motor1Speed", gui->getSliderMotorSpeed(1));
 			inifile1->writeSetting("Config", "motor2Speed", gui->getSliderMotorSpeed(2));
 			inifile1->writeSetting("Config", "minimumSpeed", gui->getSliderMinimumSpeed());
@@ -651,7 +653,7 @@ void Mrs::shutdown()
 	
 			// save check box status
 			inifile1->writeSetting("Config", "saveOnExit", gui->getCheckBoxSaveSettings());
-	
+*/	
 			// Later...
 			//
 			//noHardwareErrorMessages 
@@ -1757,11 +1759,11 @@ void Mrs::readSettings()
 			break;
 		case Qt::Unchecked:
 			// uncheck checkbox
-			gui->setCheckBoxSaveSettings(Qt::Unchecked);
+//FIXME:			gui->setCheckBoxSaveSettings(Qt::Unchecked);
 			break;
 		case Qt::Checked:
 			// set checkbox
-			gui->setCheckBoxSaveSettings(Qt::Checked);
+//FIXME:			gui->setCheckBoxSaveSettings(Qt::Checked);
 			break;
 	}
 
@@ -1797,7 +1799,7 @@ void Mrs::readSettings()
 			break;
 		default:
 			// set slider to the read value
-			gui->setSliderObstacleValue(minObstacleDistance);
+//FIXME:			gui->setSliderObstacleValue(minObstacleDistance);
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstacleDistance);
 			// show text
@@ -1819,7 +1821,7 @@ void Mrs::readSettings()
 			break;
 		default:
 			// set slider to the read value
-			gui->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
+//FIXME:			gui->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
 			// tell it the obstacle check thread
 			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
 			// show text
@@ -1841,7 +1843,7 @@ void Mrs::readSettings()
 			break;
 		default:
 			// set slider to the read value
-			gui->setSliderRobotSlot(robotSlot);
+//FIXME:			gui->setSliderRobotSlot(robotSlot);
 			// tell it the obstacle check thread
 			obstCheckThread->setRobotSlot(robotSlot);
 			// show text
@@ -1863,7 +1865,7 @@ void Mrs::readSettings()
 			break;
 		default:
 			// set slider to the read value
-			gui->setSliderStraightForwardDeviation(straightForwardDeviation);
+//FIXME:			gui->setSliderStraightForwardDeviation(straightForwardDeviation);
 			// tell it the obstacle check thread
 			obstCheckThread->setStraightForwardDeviation(straightForwardDeviation);
 			// show text
@@ -1918,7 +1920,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMotorSpeed(1, mot1Speed);
+//FIXME:			gui->setSliderMotorSpeed(1, mot1Speed);
 			// show text
 			gui->appendLog(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
 			break;
@@ -1946,7 +1948,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMotorSpeed(2, mot2Speed);
+//FIXME:			gui->setSliderMotorSpeed(2, mot2Speed);
 			// show text
 			gui->appendLog(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
@@ -1974,7 +1976,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMotorSpeed(3, mot3Speed);
+//FIXME:			gui->setSliderMotorSpeed(3, mot3Speed);
 			// show text
 			gui->appendLog(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
 			break;
@@ -2002,7 +2004,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMotorSpeed(4, mot4Speed);
+//FIXME:			gui->setSliderMotorSpeed(4, mot4Speed);
 			// show text
 			gui->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
@@ -2030,7 +2032,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMinimumSpeed(minimumSpeed);
+//FIXME:			gui->setSliderMinimumSpeed(minimumSpeed);
 			// show text
 			gui->appendLog(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
 			break;
@@ -2058,7 +2060,7 @@ void Mrs::readSettings()
 			}
 			
 			// set slider to the read value
-			gui->setSliderMaximumSpeed(maximumSpeed);
+//FIXME:			gui->setSliderMaximumSpeed(maximumSpeed);
 			// show text
 			gui->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
@@ -2321,7 +2323,7 @@ void Mrs::executeRemoteCommand(QString command)
 			
 			int newSpeed = motors->getMotorSpeed(1) + 1;
 			motors->setMotorSpeed(1, newSpeed);
-			gui->setSliderMotorSpeed(1, newSpeed);
+//FIXME:			gui->setSliderMotorSpeed(1, newSpeed);
 			return;
 		}
 	
@@ -2332,7 +2334,7 @@ void Mrs::executeRemoteCommand(QString command)
 			
 			int newSpeed = motors->getMotorSpeed(2) + 1;
 			motors->setMotorSpeed(2, newSpeed);
-			gui->setSliderMotorSpeed(2, newSpeed);
+//FIXME:			gui->setSliderMotorSpeed(2, newSpeed);
 			return;
 		}
 	
@@ -2343,7 +2345,7 @@ void Mrs::executeRemoteCommand(QString command)
 			
 			int newSpeed = motors->getMotorSpeed(1) - 1;
 			motors->setMotorSpeed(1, newSpeed);
-			gui->setSliderMotorSpeed(1, newSpeed);
+//FIXME:			gui->setSliderMotorSpeed(1, newSpeed);
 			return;
 		}
 	
@@ -2354,7 +2356,7 @@ void Mrs::executeRemoteCommand(QString command)
 			
 			int newSpeed = motors->getMotorSpeed(2) - 1;
 			motors->setMotorSpeed(2, newSpeed);
-			gui->setSliderMotorSpeed(2, newSpeed);
+//FIXME:			gui->setSliderMotorSpeed(2, newSpeed);
 			return;
 		}
 	}
@@ -2383,8 +2385,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE backward
 				//
 				//speed = (axisValue / JOYSTICKDIVISOR);
-				gui->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
-				gui->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				
 				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
@@ -2431,8 +2433,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE forward
 				//
 				//speed = (-axisValue / JOYSTICKDIVISOR);
-				gui->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-				gui->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				
 				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
@@ -2504,8 +2506,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE RIGHT
 				//
 				//speed = (axisValue / JOYSTICKDIVISOR);
-				gui->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
-				gui->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				
 				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
@@ -2535,8 +2537,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE left
 				//
 				//speed = (-axisValue / JOYSTICKDIVISOR);
-				gui->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-				gui->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+//FIXME:				gui->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				
 				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
