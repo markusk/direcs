@@ -189,7 +189,8 @@ class Gui : public QMainWindow
 		@param frame
 		@sa CamThread::camDataComplete()
 		*/
-		void setCamImage(IplImage* frame);
+		//void setCamImage(IplImage* frame);
+		void setCamImage(QImage* image);
 		
 		/**
 		Show some face track data in the GUI.
@@ -511,6 +512,8 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot2;
 		QGraphicsPixmapItem *scannerFrontSplash;
 		QGraphicsPixmapItem *scannerRearSplash;
+		QPixmap pixmap; // for IplImageToQImage()
+
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */

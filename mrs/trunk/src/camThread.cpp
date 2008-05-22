@@ -227,7 +227,18 @@ void CamThread::run()
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
 			//cvSaveImage("/tmp/test.PNG", imgPtr);
-			emit camDataComplete(imgPtr);
+			
+			//QImage *imageVid;
+			//IplImage* frame = cvQueryFrame( capture );
+			//imageVId = IplImageToQImage(frame);
+			// convert into QImage
+			qimage = IplImageToQImage(imgPtr);
+			// convert into QPixmap
+			//pixmap = fromImage(qimage);
+ 
+			//cvReleaseImage(&iplCurrentImage);
+			//emit camDataComplete(imgPtr);
+			emit camDataComplete(qimage);
 
 			// TODO: cvSaveImage -> /tmp -> load pixmap -> gui  oder  void cvConvertImage( const CvArr* src, CvArr* dst, int flags=0 );
 		
@@ -418,4 +429,87 @@ void CamThread::test()
 	{
 		qDebug("second%d = %d", i, detectedFaces.at(i).x);
 	}
+}
+
+
+QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
+{
+    uchar *qImageBuffer = NULL;
+    int width = iplImage->width;
+ 
+ 
+    int widthStep = iplImage->widthStep;
+    int height = iplImage->height;
+ 
+    switch (iplImage->depth) {
+        case IPL_DEPTH_8U:
+                
+        if (iplImage->nChannels == 1) {
+ 
+        // OpenCV image is stored with one byte grey pixel. We convert it
+        //  to an 8 bit depth QImage.
+        
+        qImageBuffer = (uchar *) malloc(width*height*sizeof(uchar));
+        uchar *QImagePtr = qImageBuffer;
+        const uchar *iplImagePtr = (const uchar *) iplImage->imageData;
+ 
+        for (int y = 0; y < height; y++) {
+        // Copy line by line
+            memcpy(QImagePtr, iplImagePtr, width);
+            QImagePtr += width;
+            iplImagePtr += widthStep;
+        }
+ 
+        } else if (iplImage->nChannels == 3) {
+ 
+            // OpenCV image is stored with 3 byte color pixels (3 channels).
+        //  We convert it to a 32 bit depth QImage.
+            
+ 
+            qImageBuffer = (uchar *) malloc(width*height*4*sizeof(uchar));
+            uchar *QImagePtr = qImageBuffer;
+            const uchar *iplImagePtr = (const uchar *) iplImage->imageData;
+ 
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                // We cannot help but copy manually.
+                    QImagePtr[0] = iplImagePtr[0];
+                    QImagePtr[1] = iplImagePtr[1];
+                    QImagePtr[2] = iplImagePtr[2];
+                    QImagePtr[3] = 0;
+                    QImagePtr += 4;
+                    iplImagePtr += 3;
+                }
+ 
+            iplImagePtr += widthStep-3*width;
+            }
+ 
+            } else {
+                qDebug("IplImageToQImage: image format is not supported : depth=8U and %d channels\n", iplImage->nChannels);
+ 
+            }
+ 
+            break;
+        default:
+            qDebug("IplImageToQImage: image format is not supported : depth=%d and %d channels\n", iplImage->depth, iplImage->nChannels);
+ 
+        }
+ 
+        QImage *qImage;
+        QImage qImag;
+            if (iplImage->nChannels == 1) {
+            QRgb *colorTable = new QRgb[256];
+ 
+            for (int i = 0; i < 256; i++)
+                colorTable[i] = qRgb(i, i, i);
+            qImage = new QImage(qImageBuffer, width, height, QImage::Format_RGB32);
+            QImage qImag(qImageBuffer, width, height, QImage::Format_RGB32 );
+ 
+            } else {
+            qImage = new QImage(qImageBuffer, width, height, QImage::Format_RGB32);
+            QImage qImag(qImageBuffer, width, height, QImage::Format_RGB32 );
+            }
+    
+        return qImage;
+    
 }

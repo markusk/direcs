@@ -379,7 +379,8 @@ void Mrs::init()
 	// connect camDataComplete from the cam thread to signal "setCamImage"
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
+//	connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
+	connect(camThread, SIGNAL( camDataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
 	
 	//--------------------------------------------------------------------------------------------------------
 	// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)

@@ -700,70 +700,6 @@
        <height>441</height>
       </rect>
      </property>
-     <widget class="QFrame" name="frame" >
-      <property name="geometry" >
-       <rect>
-        <x>11</x>
-        <y>1</y>
-        <width>381</width>
-        <height>301</height>
-       </rect>
-      </property>
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize" >
-       <size>
-        <width>320</width>
-        <height>240</height>
-       </size>
-      </property>
-      <property name="palette" >
-       <palette>
-        <active/>
-        <inactive/>
-        <disabled/>
-       </palette>
-      </property>
-      <property name="font" >
-       <font>
-        <family>Verdana</family>
-       </font>
-      </property>
-      <property name="autoFillBackground" >
-       <bool>false</bool>
-      </property>
-      <property name="frameShape" >
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow" >
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <widget class="QtGLContext" native="1" name="frameCamera" >
-       <property name="geometry" >
-        <rect>
-         <x>1</x>
-         <y>1</y>
-         <width>379</width>
-         <height>299</height>
-        </rect>
-       </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font" >
-        <font>
-         <family>Verdana</family>
-        </font>
-       </property>
-      </widget>
-     </widget>
      <widget class="QWidget" name="layoutWidget" >
       <property name="geometry" >
        <rect>
@@ -1178,6 +1114,83 @@
         </layout>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="lblCamera" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>271</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QtGLContext" native="1" name="frameCamera" >
+      <property name="geometry" >
+       <rect>
+        <x>170</x>
+        <y>0</y>
+        <width>379</width>
+        <height>299</height>
+       </rect>
+      </property>
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font" >
+       <font>
+        <family>Verdana</family>
+       </font>
+      </property>
+      <widget class="QFrame" name="frame" >
+       <property name="geometry" >
+        <rect>
+         <x>20</x>
+         <y>0</y>
+         <width>381</width>
+         <height>301</height>
+        </rect>
+       </property>
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize" >
+        <size>
+         <width>320</width>
+         <height>240</height>
+        </size>
+       </property>
+       <property name="palette" >
+        <palette>
+         <active/>
+         <inactive/>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="font" >
+        <font>
+         <family>Verdana</family>
+        </font>
+       </property>
+       <property name="autoFillBackground" >
+        <bool>false</bool>
+       </property>
+       <property name="frameShape" >
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow" >
+        <enum>QFrame::Sunken</enum>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
