@@ -32,7 +32,7 @@ HEADERS += head.h \
  heartbeat.h \
  aboutDialog.h \
  laserScene.h
-SOURCES += head.cpp \
+ SOURCES += head.cpp \
     camThread.cpp \
     circuit.cpp \
     gui.cpp \

@@ -100,8 +100,8 @@ class CamThread : public QThread
 		@param *imgPtr is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
-		//void camDataComplete(IplImage* imgPtr);
-		void camDataComplete(QImage* image);
+		void camDataComplete(IplImage* imgPtr);
+		//void camDataComplete(QImage* image);
 		
 		/**
 		Disables checkBoxes in the GUI
@@ -136,7 +136,15 @@ class CamThread : public QThread
 		QString haarClassifierCascadeFilename;
 		CvScalar hsv2rgb( float hue );
 		IplImage *imgPtr;
+		/* ----------
 		QImage *qimage; // for IplImageToQImage()
+		IplImage* tchannel0;
+		IplImage* tchannel1;
+		IplImage* tchannel2;
+		IplImage* tchannel3;
+		int bytesPerLine;
+		IplImage *imgPtrDest;
+		----------- */
 		int width;
 		int height;
 		int pixeldepth;

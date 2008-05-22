@@ -55,7 +55,7 @@ void CamThread::run()
 	// test: show picture with OpenCv -> see also emit at the buttom of this method!
 	//cvNamedWindow( "result", 1 );
 
-
+	
 	// cvInitFont( CvFont* font, int font_face, double hscale, double vscale, double shear=0, int thickness=1, int line_type=8 );
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.0, 1.0, 0, 2);
 	//cvInitFont(&fontSmall, CV_FONT_HERSHEY_PLAIN, 0.2, 0.2, 0, 1);
@@ -226,22 +226,16 @@ void CamThread::run()
 			//====================================================================
 			//  e m i t  Signal (e.g. send image and face0 coordinates to GUI)
 			//====================================================================
-			//cvSaveImage("/tmp/test.PNG", imgPtr);
+			// convert into QImage ->  v e r y  s l o w   :-(
+			//qimage = IplImageToQImage(imgPtr);
 			
-			//QImage *imageVid;
-			//IplImage* frame = cvQueryFrame( capture );
-			//imageVId = IplImageToQImage(frame);
-			// convert into QImage
-			qimage = IplImageToQImage(imgPtr);
-			// convert into QPixmap
-			//pixmap = fromImage(qimage);
- 
-			//cvReleaseImage(&iplCurrentImage);
-			//emit camDataComplete(imgPtr);
-			emit camDataComplete(qimage);
-
 			// TODO: cvSaveImage -> /tmp -> load pixmap -> gui  oder  void cvConvertImage( const CvArr* src, CvArr* dst, int flags=0 );
-		
+			
+			// emit the iplImage to the GUI
+			emit camDataComplete(imgPtr);
+			
+			//emit camDataComplete(qimage);
+
 			// let the thread sleep some time
 			//msleep(THREADSLEEPTIME);
 			
@@ -335,7 +329,6 @@ void CamThread::setCameraDevice(int device)
 
 void CamThread::init()
 {
-	//if ( (cameraIsOn == true) && (initDone == false) )
 	if (initDone == false)
 	{
 		// do only *one* init!

@@ -189,8 +189,8 @@ class Gui : public QMainWindow
 		@param frame
 		@sa CamThread::camDataComplete()
 		*/
-		//void setCamImage(IplImage* frame);
-		void setCamImage(QImage* image);
+		void setCamImage(IplImage* frame);
+		//void setCamImage(QImage* image);
 		
 		/**
 		Show some face track data in the GUI.
