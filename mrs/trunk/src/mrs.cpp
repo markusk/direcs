@@ -76,6 +76,7 @@ void Mrs::init()
 	robotSimulationMode = false;
 	robotRemoteMode = false;
 	servoTestMode = false;
+	testDriveMode = false;
 	eyeTestMode = false;
 	currentTestServo = SERVO1;
 	dontUseCamera = false;
@@ -2247,26 +2248,6 @@ void Mrs::enableRemoteControlListening(bool state)
 			netThread->start();
 			gui->appendLog("Network thread started.");
 		}
-		
-		
-		//-----------------------------------------------------------
-		// check if joystick is connected
-		//-----------------------------------------------------------
-		if (joystick->isConnected())
-		{
-			// start the joystick thread
-			if (joystick->isRunning() == false)
-			{
-				gui->appendLog("Starting joystick thread...", false);
-				joystick->start();
-				gui->appendLog("Joystick thread started.");
-			}
-		}
-		else
-		{
-			gui->appendLog("Joystick thread NOT started!");
-		}
-
 	}
 	else
 	{
@@ -2276,15 +2257,6 @@ void Mrs::enableRemoteControlListening(bool state)
 			netThread->stop();
 			gui->appendLog("Network thread stopped.");
 		}
-		
-		//
-		// NOT stopping joystick thread!
-		// It' still nice to see it in the GUI, when being moved, :-)
-		// So just dosconnect the Signal from the receiver here.
-		// TODO: connect again, when needed! realy? Solved via global "robotRemoteMode" variable?
-		// FIXME: Object::disconnect: No such signal Mrs::joystickMoved(int,int)
-		//this->disconnect(SIGNAL(joystickMoved(int, int)));
-		//this->disconnect(SIGNAL(joystickButtonPressed(int, bool)));
 	}
 }
 
@@ -2400,11 +2372,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------
 		if (axisValue > 0)
 		{
-			//========================================================
-			// robot remote mode
-			// only drive, when remote mode is activated in the GUI!
-			//========================================================
-			if (robotRemoteMode==true)
+			//=========================================================
+			// robot test drive mode
+			// only drive, when activated and controlled via joystick!
+			//=========================================================
+			if (testDriveMode)
 			{
 				//
 				// DRIVE backward
@@ -2448,11 +2420,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//----
 		if (axisValue < 0)
 		{
-			//========================================================
-			// robot remote mode
-			// only drive, when remote mode is activated in the GUI!
-			//========================================================
-			if (robotRemoteMode==true)
+			//=========================================================
+			// robot test drive mode
+			// only drive, when activated and controlled via joystick!
+			//=========================================================
+			if (testDriveMode)
 			{
 				//
 				// DRIVE forward
@@ -2498,8 +2470,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue == 0)
 		{
-			// only drive, when remote mode is activated in the GUI!
-			if (robotRemoteMode==true)
+			//=========================================================
+			// robot test drive mode
+			// only drive, when activated and controlled via joystick!
+			//=========================================================
+			if (testDriveMode)
 			{
 				drive(WAIT);
 			}
@@ -2518,11 +2493,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//-------
 		if (axisValue > 0)
 		{
-			//========================================================
-			// robot remote mode
-			// only drive, when remote mode is activated in the GUI!
-			//========================================================
-			if (robotRemoteMode==true)
+			//=========================================================
+			// robot test drive mode
+			// only drive, when activated and controlled via joystick!
+			//=========================================================
+			if (testDriveMode)
 			{
 				//
 				// DRIVE RIGHT
@@ -2549,11 +2524,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------
 		if (axisValue < 0)
 		{
-			//========================================================
-			// robot remote mode
-			// only drive, when remote mode is activated in the GUI!
-			//========================================================
-			if (robotRemoteMode==true)
+			//=========================================================
+			// robot test drive mode
+			// only drive, when activated and controlled via joystick!
+			//=========================================================
+			if (testDriveMode)
 			{
 				//
 				// DRIVE left
@@ -2580,8 +2555,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------
 		if (axisValue == 0)
 		{
-			// only drive, when remote mode is activated in the GUI!
-			if (robotRemoteMode==true)
+			//=========================================================
+			// robot test drive mode
+			// only drive, when activated and controlled via joystick!
+			//=========================================================
+			if (testDriveMode)
 			{
 				drive(WAIT);
 			}
@@ -2918,8 +2896,8 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle10 == false)
 				{
-					toggle10=true;
-					//servoTestMode = true;
+					toggle10 = true;
+					testDriveMode = true;
 					gui->appendLog("<font color=\"#0000FF\">Test drive mode ON.</front>");
 					// TODO: timing problem, when emitting speak signal.
 					// restults in "Error reading joystick device!"
@@ -2927,8 +2905,8 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				}
 				else
 				{
-					toggle10=false;
-					//servoTestMode = false;
+					toggle10 = false;
+					testDriveMode = false;
 					gui->appendLog("<font color=\"#0000FF\">Test drive mode OFF.</front>");
 					emit speak("Test drive mode off.");
 				}
@@ -2942,13 +2920,13 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle11 == false)
 				{
-					toggle11=true;
+					toggle11 = true;
 					cameraTestMode = true;
 					gui->appendLog("<font color=\"#0000FF\">Camera test mode ON.</front>");
 				}
 				else
 				{
-					toggle11=false;
+					toggle11 = false;
 					cameraTestMode = false;
 					gui->appendLog("<font color=\"#0000FF\">Camera test mode OFF.</front>");
 				}

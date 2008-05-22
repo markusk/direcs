@@ -218,9 +218,10 @@ class Mrs : public QObject
 		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; //! Stores the robots simulation state
 		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
-		bool dontUseCamera; //! if a camera is connected, but should not be used (just for testing)
+		bool dontUseCamera; //! if a camera is connected, but should not be used (just for testing, for a faster program start)
 		bool laserScanner1Found;
 		bool laserScanner2Found;
+		bool testDriveMode; //! is enabled, when the robot is controlled via joystick
 		bool servoTestMode;
 		bool eyeTestMode;
 		int currentTestServo;
