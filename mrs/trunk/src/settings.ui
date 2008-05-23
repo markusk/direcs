@@ -1,11 +1,11 @@
 <ui version="4.0" >
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog" >
+ <class>settingsDialog</class>
+ <widget class="QDialog" name="settingsDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
+    <width>561</width>
     <height>221</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>511</width>
+     <width>540</width>
      <height>201</height>
     </rect>
    </property>
