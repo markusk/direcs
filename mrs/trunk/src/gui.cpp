@@ -19,6 +19,7 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 
 	// set battery power labels to green :-)
 	ui.lblBatteryPower1->setPalette(QPalette(labelFillColorGreen));
+	//ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
 	ui.lblBatteryPower2->setPalette(QPalette(labelFillColorGreen));
 	ui.lblBatteryPower3->setPalette(QPalette(labelFillColorGreen));
 	ui.lblBatteryPower4->setPalette(QPalette(labelFillColorGreen));
@@ -446,6 +447,10 @@ void Gui::on_actionPower_activated()
 
 void Gui::on_actionSettings_activated()
 {
+	// show settings dialog
+	SettingsDialog settings(this);
+	settings.exec();
+	
 	/* FIXME: show dialogue
 	if (ui.dockSettings->isVisible())
 	{
@@ -474,6 +479,10 @@ void Gui::on_actionLog_activated()
 
 void Gui::on_actionJoystick_activated()
 {
+	// show action dialog
+	JoystickDialog joystick(this);
+	joystick.exec();
+
 	/* FIXME: show dialogue
 	if (ui.dockJoystick->isVisible())
 	{
@@ -2179,7 +2188,7 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1 (mA)");
+	ui.qwtPlotCurrent1->setTitle("Motor 1");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2200,7 +2209,7 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 2
 	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 2 (mA)");
+	ui.qwtPlotCurrent2->setTitle("Motor 2");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2221,7 +2230,7 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3
 	//--------------------------------------
-	ui.qwtPlotCurrent3->setTitle("Motor 3 (mA)");
+	ui.qwtPlotCurrent3->setTitle("Motor 3");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent3->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2242,7 +2251,7 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 4
 	//--------------------------------------
-	ui.qwtPlotCurrent4->setTitle("Motor 4 (mA)");
+	ui.qwtPlotCurrent4->setTitle("Motor 4");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent4->setAxisTitle(QwtPlot::xBottom, "Time/s");
