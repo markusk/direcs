@@ -4,6 +4,8 @@
 //-------------------------------------------------------------------
 #include "ui_mainWindow.h"
 #include "aboutDialog.h"
+#include "joystickDialog.h"
+#include "settingsDialog.h"
 #include "laserScene.h"
 //-------------------------------------------------------------------
 #include "cv.h" // for type IplImage (camThread)
@@ -570,7 +572,7 @@ class Gui : public QMainWindow
 		0.18 x 45 x 5 = 40.5 Pixel -> 41 Pixel is the length of the laser line in the GUI
 		*/
 		static const int FITTOFRAMEFACTOR = 45;
-		static const int STARTZOOMLEVEL = 5;
+		static const int STARTZOOMLEVEL = 3;
 		
 		//! the initial Y position of the laser lines and the robot image in the GUI
 		static const int INITIALLASERYPOSFRONT = 100;
