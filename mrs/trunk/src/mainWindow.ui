@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>1392</width>
-    <height>976</height>
+    <height>972</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -26,478 +26,14 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>65</y>
+     <y>69</y>
      <width>1392</width>
-     <height>892</height>
+     <height>880</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5" >
     <item row="0" column="0" >
      <layout class="QHBoxLayout" name="horizontalLayout_3" />
-    </item>
-    <item rowspan="2" row="1" column="1" >
-     <widget class="QDockWidget" name="dockCamera" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="features" >
-       <set>QDockWidget::AllDockWidgetFeatures</set>
-      </property>
-      <property name="allowedAreas" >
-       <set>Qt::LeftDockWidgetArea</set>
-      </property>
-      <property name="windowTitle" >
-       <string>Camera</string>
-      </property>
-      <widget class="QWidget" name="dockWidgetContents" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>423</width>
-         <height>583</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_6" >
-        <item row="0" column="0" >
-         <widget class="QSplitter" name="splitter_2" >
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
-          </property>
-          <widget class="QtGLContext" native="1" name="frameCamera" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize" >
-            <size>
-             <width>240</width>
-             <height>320</height>
-            </size>
-           </property>
-           <property name="font" >
-            <font>
-             <family>Verdana</family>
-            </font>
-           </property>
-          </widget>
-          <widget class="QWidget" name="layoutWidget" >
-           <layout class="QHBoxLayout" name="horizontalLayout_10" >
-            <item>
-             <layout class="QVBoxLayout" >
-              <item>
-               <widget class="QPushButton" name="btnSavePicture" >
-                <property name="font" >
-                 <font>
-                  <family>Verdana</family>
-                 </font>
-                </property>
-                <property name="text" >
-                 <string>Save</string>
-                </property>
-                <property name="icon" >
-                 <iconset resource="../mrs.qrc" >
-                  <normaloff>:/images/images/hdd.png</normaloff>:/images/images/hdd.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_2" >
-                <property name="orientation" >
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0" >
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QGridLayout" name="gridLayout_3" >
-              <item row="0" column="0" >
-               <layout class="QVBoxLayout" name="verticalLayout" >
-                <item>
-                 <widget class="QCheckBox" name="checkBoxFaceDetection" >
-                  <property name="font" >
-                   <font>
-                    <family>Verdana</family>
-                   </font>
-                  </property>
-                  <property name="text" >
-                   <string>Face Detection</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBoxFaceTracking" >
-                  <property name="font" >
-                   <font>
-                    <family>Verdana</family>
-                   </font>
-                  </property>
-                  <property name="text" >
-                   <string>Face Tracking</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_4" >
-                  <item>
-                   <widget class="QLabel" name="textLabel2_8" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>Face X:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="lblFaceX" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_8" >
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_5" >
-                  <item>
-                   <widget class="QLabel" name="textLabel2_9" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>Face Y:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="lblFaceY" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_11" >
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_6" >
-                  <item>
-                   <widget class="QLabel" name="textLabel2_10" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>Radius:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="lblFaceRadius" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_12" >
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="1" >
-               <spacer name="horizontalSpacer" >
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0" >
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="2" >
-               <layout class="QVBoxLayout" name="verticalLayout_3" >
-                <item>
-                 <widget class="QCheckBox" name="checkBoxMirror" >
-                  <property name="font" >
-                   <font>
-                    <family>Verdana</family>
-                   </font>
-                  </property>
-                  <property name="text" >
-                   <string>Mirror</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout" >
-                  <item>
-                   <widget class="QLabel" name="textLabel2_11" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>Track to:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="lblFaceTrackTo" >
-                    <property name="sizePolicy" >
-                     <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="pixmap" >
-                     <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
-                    </property>
-                    <property name="scaledContents" >
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_6" >
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8" >
-                  <item>
-                   <widget class="QLabel" name="textLabel2_12" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>Last face X:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="lblLastFaceX" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_7" >
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_9" >
-                  <item>
-                   <widget class="QLabel" name="textLabel2_13" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>Last face Y:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="lblLastFaceY" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_10" >
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_7" >
-                  <item>
-                   <widget class="QLabel" name="textLabel2_14" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>Faces:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="lblFaces" >
-                    <property name="font" >
-                     <font>
-                      <family>Verdana</family>
-                     </font>
-                    </property>
-                    <property name="text" >
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_9" >
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="1" >
-               <spacer name="verticalSpacer_3" >
-                <property name="orientation" >
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0" >
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
     </item>
     <item rowspan="3" row="1" column="2" >
      <widget class="QSplitter" name="splitter" >
@@ -872,9 +408,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>20</y>
-         <width>423</width>
-         <height>237</height>
+         <y>21</y>
+         <width>408</width>
+         <height>219</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_4" >
@@ -886,7 +422,7 @@
           <widget class="QTextEdit" name="textEditLog" >
            <property name="minimumSize" >
             <size>
-             <width>0</width>
+             <width>390</width>
              <height>0</height>
             </size>
            </property>
@@ -927,9 +463,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>20</y>
-         <width>937</width>
-         <height>225</height>
+         <y>21</y>
+         <width>952</width>
+         <height>207</height>
         </rect>
        </property>
        <widget class="QWidget" name="layoutWidget" >
@@ -937,8 +473,8 @@
          <rect>
           <x>10</x>
           <y>0</y>
-          <width>781</width>
-          <height>161</height>
+          <width>921</width>
+          <height>201</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2" >
@@ -999,14 +535,17 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>20</y>
-         <width>423</width>
-         <height>278</height>
+         <y>21</y>
+         <width>396</width>
+         <height>280</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_7" >
         <item row="0" column="0" >
-         <widget class="QGroupBox" name="groupBox" >
+         <widget class="QGroupBox" name="groupBoxBattery1" >
+          <property name="autoFillBackground" >
+           <bool>true</bool>
+          </property>
           <property name="title" >
            <string>Battery 1</string>
           </property>
@@ -1041,7 +580,10 @@
          </widget>
         </item>
         <item row="0" column="1" >
-         <widget class="QGroupBox" name="groupBox_2" >
+         <widget class="QGroupBox" name="groupBoxBattery2" >
+          <property name="autoFillBackground" >
+           <bool>true</bool>
+          </property>
           <property name="title" >
            <string>Battery 2</string>
           </property>
@@ -1076,7 +618,10 @@
          </widget>
         </item>
         <item row="1" column="0" >
-         <widget class="QGroupBox" name="groupBox_3" >
+         <widget class="QGroupBox" name="groupBoxBattery3" >
+          <property name="autoFillBackground" >
+           <bool>true</bool>
+          </property>
           <property name="title" >
            <string>Battery 3</string>
           </property>
@@ -1111,7 +656,10 @@
          </widget>
         </item>
         <item row="1" column="1" >
-         <widget class="QGroupBox" name="groupBox_4" >
+         <widget class="QGroupBox" name="groupBoxBattery4" >
+          <property name="autoFillBackground" >
+           <bool>true</bool>
+          </property>
           <property name="title" >
            <string>Battery 4</string>
           </property>
@@ -1161,9 +709,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>20</y>
-         <width>423</width>
-         <height>279</height>
+         <y>21</y>
+         <width>396</width>
+         <height>280</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2" >
@@ -1807,6 +1355,510 @@
       </widget>
      </widget>
     </item>
+    <item rowspan="2" row="1" column="1" >
+     <widget class="QDockWidget" name="dockCamera" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="features" >
+       <set>QDockWidget::AllDockWidgetFeatures</set>
+      </property>
+      <property name="allowedAreas" >
+       <set>Qt::LeftDockWidgetArea</set>
+      </property>
+      <property name="windowTitle" >
+       <string>Camera</string>
+      </property>
+      <widget class="QWidget" name="dockWidgetContents" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>21</y>
+         <width>408</width>
+         <height>587</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_6" >
+        <item row="0" column="0" >
+         <widget class="QSplitter" name="splitter_2" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QtGLContext" native="1" name="frameCamera" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize" >
+            <size>
+             <width>240</width>
+             <height>320</height>
+            </size>
+           </property>
+           <property name="palette" >
+            <palette>
+             <active>
+              <colorrole role="Window" >
+               <brush brushstyle="SolidPattern" >
+                <color alpha="255" >
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Window" >
+               <brush brushstyle="SolidPattern" >
+                <color alpha="255" >
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="Window" >
+               <brush brushstyle="SolidPattern" >
+                <color alpha="255" >
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <property name="font" >
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="autoFillBackground" >
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QWidget" name="layoutWidget" >
+           <layout class="QHBoxLayout" name="horizontalLayout_10" >
+            <item>
+             <layout class="QVBoxLayout" >
+              <item>
+               <widget class="QPushButton" name="btnSavePicture" >
+                <property name="font" >
+                 <font>
+                  <family>Verdana</family>
+                 </font>
+                </property>
+                <property name="text" >
+                 <string>Save</string>
+                </property>
+                <property name="icon" >
+                 <iconset resource="../mrs.qrc" >
+                  <normaloff>:/images/images/hdd.png</normaloff>:/images/images/hdd.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_2" >
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_3" >
+              <item row="0" column="0" >
+               <layout class="QVBoxLayout" name="verticalLayout" >
+                <item>
+                 <widget class="QCheckBox" name="checkBoxFaceDetection" >
+                  <property name="font" >
+                   <font>
+                    <family>Verdana</family>
+                   </font>
+                  </property>
+                  <property name="text" >
+                   <string>Face Detection</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="checkBoxFaceTracking" >
+                  <property name="font" >
+                   <font>
+                    <family>Verdana</family>
+                   </font>
+                  </property>
+                  <property name="text" >
+                   <string>Face Tracking</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4" >
+                  <item>
+                   <widget class="QLabel" name="textLabel2_8" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>Face X:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblFaceX" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_8" >
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5" >
+                  <item>
+                   <widget class="QLabel" name="textLabel2_9" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>Face Y:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblFaceY" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_11" >
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6" >
+                  <item>
+                   <widget class="QLabel" name="textLabel2_10" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>Radius:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblFaceRadius" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_12" >
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="1" >
+               <spacer name="horizontalSpacer" >
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="0" column="2" >
+               <layout class="QVBoxLayout" name="verticalLayout_3" >
+                <item>
+                 <widget class="QCheckBox" name="checkBoxMirror" >
+                  <property name="font" >
+                   <font>
+                    <family>Verdana</family>
+                   </font>
+                  </property>
+                  <property name="text" >
+                   <string>Mirror</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout" >
+                  <item>
+                   <widget class="QLabel" name="textLabel2_11" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>Track to:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblFaceTrackTo" >
+                    <property name="sizePolicy" >
+                     <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="pixmap" >
+                     <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
+                    </property>
+                    <property name="scaledContents" >
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_6" >
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_8" >
+                  <item>
+                   <widget class="QLabel" name="textLabel2_12" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>Last face X:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblLastFaceX" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_7" >
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_9" >
+                  <item>
+                   <widget class="QLabel" name="textLabel2_13" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>Last face Y:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblLastFaceY" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_10" >
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_7" >
+                  <item>
+                   <widget class="QLabel" name="textLabel2_14" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>Faces:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lblFaces" >
+                    <property name="font" >
+                     <font>
+                      <family>Verdana</family>
+                     </font>
+                    </property>
+                    <property name="text" >
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_9" >
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="1" >
+               <spacer name="verticalSpacer_3" >
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar" >
@@ -1815,7 +1867,7 @@
      <x>0</x>
      <y>0</y>
      <width>1392</width>
-     <height>26</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -1859,9 +1911,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>957</y>
+     <y>949</y>
      <width>1392</width>
-     <height>19</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
@@ -1869,7 +1921,7 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>26</y>
+     <y>30</y>
      <width>1392</width>
      <height>39</height>
     </rect>
