@@ -5,7 +5,9 @@
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
 FORMS += mainWindow.ui \
- aboutDialog.ui
+ aboutDialog.ui \
+ joystickDialog.ui \
+ settingsDialog.ui
 HEADERS += head.h \
     camThread.h \
     circuit.h \
@@ -31,8 +33,10 @@ HEADERS += head.h \
     servo.h \
  heartbeat.h \
  aboutDialog.h \
- laserScene.h
- SOURCES += head.cpp \
+ laserScene.h \
+ joystickDialog.h \
+ settingsDialog.h
+SOURCES += head.cpp \
     camThread.cpp \
     circuit.cpp \
     gui.cpp \
@@ -53,7 +57,9 @@ HEADERS += head.h \
     servo.cpp \
  heartbeat.cpp \
  aboutDialog.cpp \
- laserScene.cpp
+ laserScene.cpp \
+ joystickDialog.cpp \
+ settingsDialog.cpp
 RESOURCES = ../mrs.qrc
 DEFINES = _TTY_POSIX_
 CONFIG += debug \
