@@ -6,7 +6,6 @@
 
 #include "ui_settingsDialog.h"
 
-
 /**
 Dialog for showing the current settings or to let them change / interact with the main window.
 */
@@ -15,7 +14,134 @@ class SettingsDialog : public QDialog
 	Q_OBJECT
 	
 	public:
-		SettingsDialog(QWidget* parent = 0, Qt::WFlags fl = 0);
+		SettingsDialog(QWidget* parent = 0);
+		
+		/**
+		@return The slider value of a motor speed.
+		@param motor is the motor number.
+		*/
+		int getSliderMotorSpeed(int motor);
+		
+		/**
+		@return The slider value of the minimum speed.
+		*/
+		int getSliderMinimumSpeed(void);
+		
+		/**
+		@return The slider value of the maximum speed.
+		*/
+		int getSliderMaximumSpeed(void);
+		
+		/**
+		@return The slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
+		*/
+		int getSliderObstacleValue();
+		
+		/**
+		@return The slider value of an obstacle distance for the laser scanner (when a alarm should be released).
+		*/
+		int getSliderObstacleLaserScannerValue();
+		
+		/**
+		@return The angle to which the robot has to fit between.
+		*/
+		int getSliderRobotSlotValue();
+		
+		/**
+		@return The slider value of the deviation to drive forward (deviation to 90 degrees).
+		*/
+		int getSliderStraightForwardDeviationValue();
+		
+		/**
+		@return The state of a Qt checkBox.
+		*/
+		Qt::CheckState getCheckBoxSaveSettings();
+		//Qt::CheckState getCheckBoxAutoSave();
+		
+		/**
+		Sets the slider MotorSpeed.
+		@param motor is the motor number.
+		@param value is the speed of the motor.
+		*/
+		void setSliderMotorSpeed(int motor, int value);
+		
+		/**
+		Sets the slider minimum speed.
+		@param speed is the minimum speed of the motors.
+		*/
+		void setSliderMinimumSpeed(int speed);
+		
+		/**
+		Sets the slider maximum speed.
+		@param speed is the maximum speed of the motors.
+		*/
+		void setSliderMaximumSpeed(int speed);
+		
+		/**
+		Sets the slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
+		@param value is distance in cm.
+		*/
+		void setSliderObstacleValue(int value);
+		
+		/**
+		Sets the slider value of an obstacle distance for the laser scanner (when a alarm should be released).
+		@param value is distance in cm.
+		*/
+		void setSliderObstacleLaserScannerValue(int value);
+		
+		/**
+		Sets the slider value of the robot slot, where it has to fit through.
+		@param angle is the minimum angle in degrees.
+		*/
+		void setSliderRobotSlot(int angle);
+		
+		/**
+		Sets the slider value of the deviation to drive forward (deviation to 90 degrees).
+		@param angle is the maximum angle in degrees.
+		*/
+		void setSliderStraightForwardDeviation(int angle);
+		
+		/**
+		Checks or unckecks the SaveSettings checkbox, depending on the value read from the ini-file.
+		*/
+		void setCheckBoxSaveSettings(Qt::CheckState state);
+
+
+	signals:
+		/**
+		Emits the speed of a motor.
+		@param motor is the motor number.
+		@param speed is the speed (0 - 255).
+		*/
+		void setMotorSpeed(int motor, int speed);
+		
+		/**
+		This slot sets the angle, where the robots has to fit thru
+		*/
+		void setRobotSlot(int angle);
+		
+		/**
+		This slot sets the deviation to 90 degrees when the robot drives forward.
+		@param deviation is the angle in degrees.
+		*/
+		void setStraightForwardDeviation(int deviation);
+		
+		/**
+		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
+		@param distance in centimeters
+		*/
+		void setMinObstacleDistance(int distance);
+		
+		/**
+		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
+		@param distance in centimeters
+		 */
+		void setMinObstacleDistanceLaser(int distance);
+
+	
+	private slots:
+		void on_sliderMotor1Speed_sliderReleased();
+		void on_sliderMotor2Speed_sliderReleased();
 
 
 	protected slots:
@@ -23,6 +149,7 @@ class SettingsDialog : public QDialog
 		Event handler for the "About Qt" button.
 		*/
 		//void on_btnAboutQt_clicked(bool checked);
+		
 		
 	private:
 		Ui::settingsDialog ui;

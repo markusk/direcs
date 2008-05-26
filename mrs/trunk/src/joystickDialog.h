@@ -15,7 +15,7 @@ class JoystickDialog : public QDialog
 	Q_OBJECT
 	
 	public:
-		JoystickDialog(QWidget* parent = 0, Qt::WFlags fl = 0);
+		JoystickDialog(QWidget* parent = 0/*, Qt::WFlags fl = 0*/);
 
 
 	protected slots:

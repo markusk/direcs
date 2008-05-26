@@ -3,6 +3,8 @@
 
 //-------------------------------------------------------------------
 #include "gui.h"
+#include "joystickDialog.h"
+#include "settingsDialog.h"
 //#include "speakThread.h"
 #include "circuit.h"
 #include "interfaceAvr.h"
@@ -193,6 +195,8 @@ class Mrs : public QObject
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		Gui *gui;
+		SettingsDialog *settingsDialog; //! The settings dialog
+		JoystickDialog *joystickDialog; //! The joystick dialog/view
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
 		Heartbeat *heartbeat;
@@ -235,8 +239,8 @@ class Mrs : public QObject
 		int maximumSpeed;
 		QList <int> obstacleAlarmFrontLeftList;			//! A list of obstacle alarms that occured left the last n times.
 		QList <int> obstacleAlarmFrontRightList;		//! A list of obstacle alarms that occured right the last n times.
-		QList <QDateTime> obstacleAlarmLeftTimestampList;	//! A list of the timestamps of the obstacle alarms that left occured.
-		QList <QDateTime> obstacleAlarmRightTimestampList;	//! A list of the timestamps of the obstacle alarms that right occured.
+		//QList <QDateTime> obstacleAlarmLeftTimestampList;	//! A list of the timestamps of the obstacle alarms that left occured.
+		//QList <QDateTime> obstacleAlarmRightTimestampList;	//! A list of the timestamps of the obstacle alarms that right occured.
 
 
 		//! The splash screen time of view in ms

@@ -3,9 +3,9 @@
 
 //-------------------------------------------------------------------
 #include "ui_mainWindow.h"
-#include "aboutDialog.h"
 #include "joystickDialog.h"
 #include "settingsDialog.h"
+#include "aboutDialog.h"
 #include "laserScene.h"
 //-------------------------------------------------------------------
 #include "cv.h" // for type IplImage (camThread)
@@ -32,7 +32,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(QMainWindow *parent = 0);
+		Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent = 0);
 		~Gui();
 	
 		/*
@@ -350,36 +350,6 @@ class Gui : public QMainWindow
 		@param command
 		 */
 		void drive(const unsigned char command);
-		
-		/**
-		Emits the speed of a motor.
-		@param motor is the motor number.
-		@param speed is the speed (0 - 255).
-		*/
-		void setMotorSpeed(int motor, int speed);
-		
-		/*!
-		This slot sets the angle, where the robots has to fit thru
-		*/
-		void setRobotSlot(int angle);
-
-		/*!
-		This slot sets the deviation to 90 degrees when the robot drives forward.
-		@param deviation is the angle in degrees.
-		*/
-		void setStraightForwardDeviation(int deviation);
-		
-		/*!
-		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
-		@param distance in centimeters
-		*/
-		void setMinObstacleDistance(int distance);
-		
-		/*!
-		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
-		@param distance in centimeters
-		 */
-		void setMinObstacleDistanceLaser(int distance);
 
 		/**
 		Resets the driven distance to 0.
@@ -450,11 +420,6 @@ class Gui : public QMainWindow
 
 
 	private slots:
-		/*
-		FIXME: put to new class
-		void on_sliderMotor1Speed_sliderReleased();
-		void on_sliderMotor2Speed_sliderReleased();
-		*/
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
 		//void on_ckeckBoxSaveSettings_stateChanged(int state);
@@ -480,6 +445,8 @@ class Gui : public QMainWindow
 		void createLaserDistanceObjects();
 		
 		Ui::mainWindow ui;
+		SettingsDialog *settingsDialog; // just a pointer to the object created in the mrs class!
+		JoystickDialog *joystickDialog; // just a pointer to the object created in the mrs class!
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
@@ -598,7 +565,7 @@ class Gui : public QMainWindow
 		See also laserThread.h */
 		//static const unsigned char LASERSCANNERARRAYSIZE = 181;
 		
-		/*!
+		/**
 		For the laserThread
 		*/
 		static const short int LASER1 = 1;

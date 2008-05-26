@@ -26,9 +26,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>69</y>
+     <y>68</y>
      <width>1392</width>
-     <height>880</height>
+     <height>882</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5" >
@@ -408,9 +408,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>21</y>
-         <width>408</width>
-         <height>219</height>
+         <y>20</y>
+         <width>411</width>
+         <height>222</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_4" >
@@ -463,9 +463,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>21</y>
-         <width>952</width>
-         <height>207</height>
+         <y>20</y>
+         <width>949</width>
+         <height>210</height>
         </rect>
        </property>
        <widget class="QWidget" name="layoutWidget" >
@@ -535,9 +535,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>21</y>
-         <width>396</width>
-         <height>280</height>
+         <y>20</y>
+         <width>410</width>
+         <height>281</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_7" >
@@ -709,9 +709,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>21</y>
-         <width>396</width>
-         <height>280</height>
+         <y>20</y>
+         <width>410</width>
+         <height>281</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2" >
@@ -1376,9 +1376,9 @@
        <property name="geometry" >
         <rect>
          <x>0</x>
-         <y>21</y>
-         <width>408</width>
-         <height>587</height>
+         <y>20</y>
+         <width>411</width>
+         <height>588</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_6" >
@@ -1867,7 +1867,7 @@
      <x>0</x>
      <y>0</y>
      <width>1392</width>
-     <height>30</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -1890,7 +1890,6 @@
     <addaction name="separator" />
     <addaction name="actionCamera" />
     <addaction name="actionJoystick" />
-    <addaction name="actionLaser_View" />
     <addaction name="actionLog" />
     <addaction name="actionOdometrie" />
     <addaction name="actionPower" />
@@ -1911,9 +1910,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>949</y>
+     <y>950</y>
      <width>1392</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -1921,7 +1920,7 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>30</y>
+     <y>29</y>
      <width>1392</width>
      <height>39</height>
     </rect>
@@ -1941,6 +1940,17 @@
    <addaction name="actionRemote" />
    <addaction name="actionTest" />
    <addaction name="actionSimulate" />
+   <addaction name="separator" />
+   <addaction name="actionCamera" />
+   <addaction name="actionJoystick" />
+   <addaction name="actionLog" />
+   <addaction name="actionOdometrie" />
+   <addaction name="actionPower" />
+   <addaction name="actionAll" />
+   <addaction name="actionSettings" />
+   <addaction name="separator" />
+   <addaction name="actionAbout" />
+   <addaction name="separator" />
    <addaction name="actionExit" />
   </widget>
   <action name="actionExit" >
@@ -2038,6 +2048,9 @@
    <property name="text" >
     <string>Reset</string>
    </property>
+   <property name="shortcut" >
+    <string>Alt+R</string>
+   </property>
   </action>
   <action name="actionRemote" >
    <property name="checkable" >
@@ -2082,6 +2095,9 @@
    </property>
    <property name="text" >
     <string>All</string>
+   </property>
+   <property name="shortcut" >
+    <string>Alt+A</string>
    </property>
   </action>
   <action name="actionAbout" >

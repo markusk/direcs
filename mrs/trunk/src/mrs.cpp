@@ -45,7 +45,10 @@ Mrs::Mrs(QSplashScreen *splash)
 	this->splash = splash;
 	
 	mutex = new QMutex();
-	gui = new Gui();
+	
+	settingsDialog = new SettingsDialog(); // FIXME: Qt::Dialog style does not work!
+	joystickDialog = new JoystickDialog(); // FIXME: Qt::Dialog style does not work!
+	gui = new Gui(settingsDialog, joystickDialog);
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
 	heartbeat = new Heartbeat(interface1, mutex);
@@ -122,36 +125,36 @@ void Mrs::init()
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
 	// currently not in use:
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
-	
-	//--------------------------------------------------------------------------
-	// set the motor speed, when signal comes from Gui
-	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
-	
+
 	//--------------------------------------------------------------------------
 	// resets the driven distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
 	
 	//--------------------------------------------------------------------------
+	// set the motor speed, when signal comes from Gui
+	//--------------------------------------------------------------------------
+	connect(settingsDialog, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
+	
+	//--------------------------------------------------------------------------
 	// set the robot slot, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	connect(settingsDialog, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 	
 	//--------------------------------------------------------------------------
 	// set the straight forward deviation, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
+	connect(settingsDialog, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
 	
 	//--------------------------------------------------------------------------
 	// set the minimum distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
+	connect(settingsDialog, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
 	
 	//--------------------------------------------------------------------------
 	// set the minimum laser distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+	connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
 	
 	//--------------------------------------------------------------------------
 	// let the GUI show servo messages in the log
@@ -569,8 +572,16 @@ void Mrs::init()
 	
 	
 	//------------------------------------------------------------------
+	// hide some dialogues
+	//------------------------------------------------------------------
+	settingsDialog->hide();
+	joystickDialog->hide();
+	
+	
+	//------------------------------------------------------------------
 	// for getting the screen resolution
 	//------------------------------------------------------------------
+	
 	//QDesktopWidget *desktop = QApplication::desktop();
 
 	//------------------------------------------------------------------
@@ -1062,6 +1073,8 @@ Mrs::~Mrs()
 	delete heartbeat;
 	delete circuit1;
 	delete interface1;
+	delete joystickDialog;
+	delete settingsDialog;
 	delete gui;
 }
 

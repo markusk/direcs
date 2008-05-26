@@ -1,6 +1,6 @@
 #include "joystickDialog.h"
 
-JoystickDialog::JoystickDialog(QWidget* parent, Qt::WFlags fl) : QDialog(parent, fl)
+JoystickDialog::JoystickDialog(QWidget* parent) : QDialog(parent)
 {
 	ui.setupUi(this);
 }

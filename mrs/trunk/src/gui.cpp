@@ -1,8 +1,12 @@
 #include "gui.h"
 
 
-Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent) : QMainWindow(parent)
 {
+	// copy the pointer from the original SensorThread object
+	settingsDialog = s;
+	joystickDialog = j;
+	
 	robotIsOn = false;
 	laserXPos = 0; // correct value is set in the initLaserView()
 	laserYPos = 0; // correct value is set in the initLaserView()
@@ -16,7 +20,7 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
-
+	
 	// set battery power labels to green :-)
 	ui.lblBatteryPower1->setPalette(QPalette(labelFillColorGreen));
 	//ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
@@ -55,50 +59,11 @@ infrared Sensors temporarily removed from robot!!
 	ui.lblBatteryPower3->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.lblBatteryPower4->setPalette(QPalette(QColor(255, 255, 255)));
 	*/
-/*
-	FIXME: change to dialogue class!	
-	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
-	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
-	// and vice versa
-	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
-	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
 	
-	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderMaximumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMaximumSpeed, SLOT(setValue(int)));
-	connect(ui.sliderMinimumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMinimumSpeed, SLOT(setValue(int)));
-	// and vice versa
-	connect(ui.spinBoxMaximumSpeed, SIGNAL(valueChanged(int)), ui.sliderMaximumSpeed, SLOT(setValue(int)));
-	connect(ui.spinBoxMinimumSpeed, SIGNAL(valueChanged(int)), ui.sliderMinimumSpeed, SLOT(setValue(int)));
+	//----------------------------------------------------------------------------------
+	// connecting...
+	//----------------------------------------------------------------------------------
 	
-	// emit the signal from Gui to obstacleCheckThread via Mrs!
-	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlot(int)));
-	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlot, SLOT(setValue(int)));
-	// and vice versa
-	connect(ui.spinBoxRobotSlot, SIGNAL(valueChanged(int)), ui.sliderRobotSlot, SLOT(setValue(int)));
-	
-	// emit the signal from Gui to obstacleCheckThread via Mrs!
-	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), SIGNAL(setStraightForwardDeviation(int)));
-	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
-	// and vice versa
-	connect(ui.spinBoxStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.sliderStraightForwardDeviation, SLOT(setValue(int)));
-	
-	// emit the signal from Gui to obstacleCheckThread via Mrs!
-	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), SIGNAL(setMinObstacleDistanceLaser(int)));
-	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.spinBoxObstacleLaserScanner, SLOT(setValue(int)));
-	// and vice versa
-	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.sliderObstacleLaserScanner, SLOT(setValue(int)));
-	
-	// emit the signal from Gui to obstacleCheckThread via Mrs!
-	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), SIGNAL(setMinObstacleDistance(int)));
-	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
-	// and vice versa
-	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), ui.sliderObstacle, SLOT(setValue(int)));
-*/	
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face detect check box changes, set the detection mode
 	//----------------------------------------------------------------------------------
@@ -125,9 +90,6 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
-	
-	//ui.dockSettings->hide();
-	//ui.dockNetworkLog->hide();
 }
 
 
@@ -447,20 +409,14 @@ void Gui::on_actionPower_activated()
 
 void Gui::on_actionSettings_activated()
 {
-	// show settings dialog
-	SettingsDialog settings(this);
-	settings.exec();
-	
-	/* FIXME: show dialogue
-	if (ui.dockSettings->isVisible())
+	if (settingsDialog->isVisible())
 	{
-		ui.dockSettings->hide();
+		settingsDialog->hide();
 	}
 	else
 	{
-		ui.dockSettings->show();
+		settingsDialog->show();
 	}
-	*/
 }
 
 
@@ -479,20 +435,14 @@ void Gui::on_actionLog_activated()
 
 void Gui::on_actionJoystick_activated()
 {
-	// show action dialog
-	JoystickDialog joystick(this);
-	joystick.exec();
-
-	/* FIXME: show dialogue
-	if (ui.dockJoystick->isVisible())
+	if (joystickDialog->isVisible())
 	{
-		ui.dockJoystick->hide();
+		joystickDialog->hide();
 	}
 	else
 	{
-		ui.dockJoystick->show();
+		joystickDialog->show();
 	}
-*/
 }
 
 
@@ -1025,146 +975,6 @@ void Gui::showFaceTrackDirection(QString direction)
 	}
 }
 
-/* FIXME: put into dialogue class
-int Gui::getSliderMotorSpeed(int motor)
-{
-	switch (motor)
-	{
-		case 1:
-			return ui.sliderMotor1Speed->value();
-			break;
-		case 2:
-			return ui.sliderMotor2Speed->value();
-			break;
-	}
-	
-	
-	return -1;
-}
-
-
-int Gui::getSliderMinimumSpeed(void)
-{
-	return ui.sliderMinimumSpeed->value();
-}
-
-
-int Gui::getSliderMaximumSpeed(void)
-{
-	return ui.sliderMaximumSpeed->value();
-}
-
-
-int Gui::getSliderObstacleValue()
-{
-	return ui.sliderObstacle->value();
-}
-
-
-int Gui::getSliderObstacleLaserScannerValue()
-{
-	return ui.sliderObstacleLaserScanner->value();
-}
-
-
-int Gui::getSliderRobotSlotValue()
-{
-	return ui.sliderRobotSlot->value();
-}
-
-
-int Gui::getSliderStraightForwardDeviationValue()
-{
-	return ui.sliderStraightForwardDeviation->value();
-}
-
-
-Qt::CheckState Gui::getCheckBoxSaveSettings()
-{
-	return ui.checkBoxSaveSettings->checkState();
-}
-
-
-void Gui::setSliderMotorSpeed(int motor, int value)
-{
-	switch (motor)
-	{
-		case 1:
-			ui.sliderMotor1Speed->setValue(value);
-			ui.spinBoxMotor1Speed->setValue(value);
-			break;
-		case 2:
-			ui.sliderMotor2Speed->setValue(value);
-			ui.spinBoxMotor2Speed->setValue(value);
-			break;
-	}
-}
-
-
-void Gui::on_sliderMotor1Speed_sliderReleased()
-{
-	// no auto connect in constructor, because this slot has no "value" parameter!
-	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
-	
-	//int value = ui.sliderMotor1Speed->value();
-	
-	//laserDistanceLineListFront->at(0)->setStartAngle(ui.sliderMotor1Speed->value() * 16);
-	//laserDistanceLineListFront->at(0)->setPos(value, value);
-	//appendLog(QString("x,y=%1").arg(value));
-}
-
-
-void Gui::on_sliderMotor2Speed_sliderReleased()
-{
-	// no auto connect in constructor, because this slot has no "value" parameter!
-	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
-	
-	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor2Speed->value() * 16);
-	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor2Speed->value()));
-}
-
-
-void Gui::setSliderMinimumSpeed(int speed)
-{
-	ui.sliderMinimumSpeed->setValue(speed);
-}
-
-
-void Gui::setSliderMaximumSpeed(int speed)
-{
-	ui.sliderMaximumSpeed->setValue(speed);
-}
-
-
-void Gui::setSliderObstacleValue(int value)
-{
-	ui.sliderObstacle->setValue(value);
-}
-
-
-void Gui::setSliderObstacleLaserScannerValue(int value)
-{
-	ui.sliderObstacleLaserScanner->setValue(value);
-}
-
-
-void Gui::setSliderRobotSlot(int angle)
-{
-	ui.sliderRobotSlot->setValue(angle);
-}
-
-
-void Gui::setSliderStraightForwardDeviation(int angle)
-{
-	ui.sliderStraightForwardDeviation->setValue(angle);
-}
-
-
-void Gui::setCheckBoxSaveSettings(Qt::CheckState state)
-{
-	ui.checkBoxSaveSettings->setCheckState(state);
-}
-*/
 
 void Gui::on_btnSavePicture_clicked()
 {
