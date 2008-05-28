@@ -1,3 +1,23 @@
+/*************************************************************************
+ *   Copyright (C) 2008 by Markus Knapp                                  *
+ *   mrs @ direcs.de                                                     *
+ *                                                                       *
+ *   This file is part of mrs.                                           *
+ *                                                                       *
+ *   mrs is free software: you can redistribute it and/or modify it      *
+ *   under the terms of the GNU General Public License as published      *
+ *   by the Free Software Foundation, version 3 of the License.          *
+ *                                                                       *
+ *   mrs is distributed in the hope that it will be useful,              *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
+ *   GNU General Public License for more details.                        *
+ *                                                                       *
+ *   You should have received a copy of the GNU General Public License   *
+ *   along with mrs. If not, see <http://www.gnu.org/licenses/>.         *
+ *                                                                       *
+ *************************************************************************/
+
 #ifndef GUI_H
 #define GUI_H
 
@@ -71,96 +91,6 @@ class Gui : public QMainWindow
 		@param direction can be FORWARD or BACKWARD.
 		*/
 		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
-		
-		/**
-		@return The slider value of a motor speed.
-		@param motor is the motor number.
-		*/
-		int getSliderMotorSpeed(int motor);
-		
-		/**
-		@return The slider value of the minimum speed.
-		*/
-		int getSliderMinimumSpeed(void);
-		
-		/**
-		@return The slider value of the maximum speed.
-		*/
-		int getSliderMaximumSpeed(void);
-		
-		/**
-		@return The slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
-		*/
-		int getSliderObstacleValue();
-		
-		/**
-		@return The slider value of an obstacle distance for the laser scanner (when a alarm should be released).
-		*/
-		int getSliderObstacleLaserScannerValue();
-		
-		/**
-		@return The angle to which the robot has to fit between.
-		*/
-		int getSliderRobotSlotValue();
-		
-		/**
-		@return The slider value of the deviation to drive forward (deviation to 90 degrees).
-		*/
-		int getSliderStraightForwardDeviationValue();
-		
-		/**
-		@return The state of a Qt checkBox.
-		*/
-		Qt::CheckState getCheckBoxSaveSettings();
-		//Qt::CheckState getCheckBoxAutoSave();
-		
-		/**
-		Sets the slider MotorSpeed.
-		@param motor is the motor number.
-		@param value is the speed of the motor.
-		*/
-		// FIXME: void setSliderMotorSpeed(int motor, int value);
-		
-		/**
-		Sets the slider minimum speed.
-		@param speed is the minimum speed of the motors.
-		*/
-		void setSliderMinimumSpeed(int speed);
-		
-		/**
-		Sets the slider maximum speed.
-		@param speed is the maximum speed of the motors.
-		*/
-		void setSliderMaximumSpeed(int speed);
-		
-		/**
-		Sets the slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
-		@param value is distance in cm.
-		*/
-		void setSliderObstacleValue(int value);
-		
-		/**
-		Sets the slider value of an obstacle distance for the laser scanner (when a alarm should be released).
-		@param value is distance in cm.
-		*/
-		void setSliderObstacleLaserScannerValue(int value);
-		
-		/**
-		Sets the slider value of the robot slot, where it has to fit through.
-		@param angle is the minimum angle in degrees.
-		*/
-		void setSliderRobotSlot(int angle);
-		
-		/**
-		Sets the slider value of the deviation to drive forward (deviation to 90 degrees).
-		@param angle is the maximum angle in degrees.
-		*/
-		void setSliderStraightForwardDeviation(int angle);
-		
-		/**
-		Checks or unckecks the SaveSettings checkbox, depending on the value read from the ini-file.
-		*/
-		void setCheckBoxSaveSettings(Qt::CheckState state);
 		
 		/**
 		tell the OpenGLContext the image data
