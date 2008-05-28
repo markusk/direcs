@@ -4,8 +4,8 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = mrs.kdevelop
-PROJECT_NUMBER         = 0.619
-OUTPUT_DIRECTORY       = /home/markus/develop/sourceforge/mrs/trunk/doc
+PROJECT_NUMBER         = 0.747
+OUTPUT_DIRECTORY       = /home/markus/develop/mrs/mrs/trunk/doc
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 USE_WINDOWS_ENCODING   = NO
@@ -82,7 +82,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /home/markus/develop/sourceforge/mrs/trunk
+INPUT                  = /home/markus/develop/mrs/mrs/trunk
 FILE_PATTERNS          = *.c \
                          *.cc \
                          *.cxx \
@@ -130,7 +130,7 @@ FILE_PATTERNS          = *.c \
                          *.xpm \
                          *.dox
 RECURSIVE              = YES
-EXCLUDE                = /home/markus/develop/sourceforge/mrs/trunk/src/not_in_use
+EXCLUDE                = 
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *.moc \
                          moc*.* \
