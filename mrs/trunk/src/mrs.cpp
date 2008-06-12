@@ -1131,11 +1131,9 @@ void Mrs::finishSplash()
 
 void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 {
-	Q_UNUSED(timestamp); // TODO: still needed?
+	//Q_UNUSED(timestamp);
 	
-	//TODO (in progress!): Check if there is only one short "alarm signal" this false alarm will be ignored!
-	
-	static int alarmCounter = 0;
+	//static int alarmCounter = 0;
 	static short int lastSensorValue = -1; // < the initial value has to be different to ALL SENSOR-constants!!
 
 
@@ -1156,105 +1154,75 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	{
 		// store this sensor alarm value
 		lastSensorValue = sensorAlarm;
-		alarmCounter++;
-		
-		// FIXME: check this method in general !! < < < < < < < <
+		//alarmCounter++;
 		return;
 	}
 
 
 	if (sensorAlarm == NONE)
 	{
+		// show new driving direction in the GUI
 		emit showPreferredDirection("FORWARD");
 		
-		// TODO: use *one* list and make a "count" in the list?!
 		// clear alarm buffers
 		obstacleAlarmFrontLeftList.clear();
 		obstacleAlarmFrontRightList.clear();
+	
+		// store this sensor alarm value
+		lastSensorValue = sensorAlarm;
+		// reset the alarm counter
+		//alarmCounter = 0;
 		
-		if (robotDrives == true)
+		if (robotDrives)
 		{
-			gui->appendLog("No obstacle in front of any sensor. :-)");
-			gui->appendLog("Driving forward...");
+			//gui->appendLog("No obstacle in front of any sensor. :-)");
+			//gui->appendLog("Driving forward...");
 			
 			//----------------
 			// drive forward
 			//----------------
 			drive(FORWARD);
 			motors->flashlight(OFF);
-			
-			// store this sensor alarm value
-			lastSensorValue = sensorAlarm;
-			// reset the alarm counter
-			alarmCounter = 0;
 		}
-		return;
-	}
-
-
-	if (sensorAlarm == OBSTACLESEVERYWHEREINFRONT)
-	{
-		emit showPreferredDirection("*NONE*");
 		
-		// TODO: use *one* list and make a "count" in the list?!
-		// clear alarm buffers
-		obstacleAlarmFrontLeftList.clear();
-		obstacleAlarmFrontRightList.clear();
-		
-		if (robotDrives == true)
-		{
-			gui->appendLog(QString("<b>Obstacle %1 everywhere in front of the robot. Waiting.</b>").arg(alarmCounter));
-			
-			//----------------
-			// drive WAIT
-			//----------------
-			drive(WAIT);
-			motors->flashlight(ON);
-			emit speak("I think, I need some help!");
-			
-			// store this sensor alarm value
-			lastSensorValue = sensorAlarm;
-			// reset the alarm counter
-			alarmCounter = 0;
-		}
 		return;
 	}
 
 
 	if (sensorAlarm == OBSTACLEFRONTLEFT)
 	{
-		//------------------------
-		// check for false alarms
-		//------------------------
-		// TODO: use *one* list and make a "count" in the list?!
-		// increase alarm left buffer
-		obstacleAlarmFrontLeftList.append(sensorAlarm);
-		// clear other alarm buffer
-		obstacleAlarmFrontRightList.clear();
+		// increase "alarm left" buffer
+		obstacleAlarmFrontLeftList.append(timestamp);
 		
-		// REAL ALARM!
-		// TODO: use a const / ini-file-value / timestamp !
-		if (obstacleAlarmFrontLeftList.count() >= 2)
+		// delete the oldest "alarm right" from alarm list
+		if (!obstacleAlarmFrontRightList.isEmpty())
 		{
+			obstacleAlarmFrontRightList.removeFirst();
+		}
+		
+		// check if this is a real or false alarm
+		if (obstacleAlarmFrontLeftList.count() > MAXFALSEALARMS)
+		{
+			// show new driving direction in the GUI
 			emit showPreferredDirection("RIGHT");
 			
 			// clear alarm buffer
 			obstacleAlarmFrontLeftList.clear();
 			
-			if (robotDrives == true)
+			// store this sensor alarm value
+			lastSensorValue = sensorAlarm;
+			// reset the alarm counter
+			//alarmCounter = 0;
+		
+			if (robotDrives)
 			{
-				gui->appendLog(QString("<b>Obstacle %1 front left. Turning right.</b>").arg(alarmCounter));
+				gui->appendLog("<b>Obstacle front left. Turning right.</b>");
 				
 				//----------------
 				// drive right
 				//----------------
 				drive(RIGHT);
 				motors->flashlight(OFF);
-				
-				// store this sensor alarm value
-				lastSensorValue = sensorAlarm;
-				// reset the alarm counter
-				alarmCounter = 0;
 			}
 		}
 		
@@ -1264,25 +1232,30 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 	if (sensorAlarm == OBSTACLEFRONTRIGHT)
 	{
-		//------------------------
-		// check for false alarms
-		//------------------------
-		// TODO: use *one* list and make a "count" in the list?!
-		// increase alarm right buffer
-		obstacleAlarmFrontRightList.append(sensorAlarm);
-		// clear other buffer
-		obstacleAlarmFrontRightList.clear();
+		// increase "alarm right" buffer
+		obstacleAlarmFrontRightList.append(timestamp);
 		
-		// REAL ALARM!
-		// TODO: use a const / ini-file-value / timestamp !
-		if (obstacleAlarmFrontRightList.count() >= 2)
+		// delete the oldest "alarm left" from alarm list
+		if (!obstacleAlarmFrontLeftList.isEmpty())
 		{
+			obstacleAlarmFrontLeftList.removeFirst();
+		}
+		
+		// check if this is a real or false alarm
+		if (obstacleAlarmFrontRightList.count() > MAXFALSEALARMS)
+		{
+			// show new driving direction in the GUI
 			emit showPreferredDirection("LEFT");
 			
 			// clear alarm buffer
 			obstacleAlarmFrontRightList.clear();
 			
-			if (robotDrives == true)
+			// store this sensor alarm value
+			lastSensorValue = sensorAlarm;
+			// reset the alarm counter
+			//alarmCounter = 0;
+		
+			if (robotDrives)
 			{
 				gui->appendLog("<b>Obstacle front right. Turning left.</b>");
 				
@@ -1291,13 +1264,40 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 				//----------------
 				drive(LEFT);
 				motors->flashlight(OFF);
-				
-				// store this sensor alarm value
-				lastSensorValue = sensorAlarm;
-				// reset the alarm counter
-				alarmCounter = 0;
 			}
 		}
+		
+		return;
+	}
+
+
+
+	if (sensorAlarm == OBSTACLESEVERYWHEREINFRONT)
+	{
+		// show driving direction in the GUI
+		emit showPreferredDirection("*NONE*");
+		
+		// clear alarm buffers
+		obstacleAlarmFrontLeftList.clear();
+		obstacleAlarmFrontRightList.clear();
+	
+		// store this sensor alarm value
+		lastSensorValue = sensorAlarm;
+		// reset the alarm counter
+		//alarmCounter = 0;
+
+		if (robotDrives)
+		{
+			gui->appendLog("<b>Obstacles everywhere in front of the robot. Waiting.</b>");
+			
+			//----------------
+			// drive WAIT
+			//----------------
+			drive(WAIT);
+			motors->flashlight(ON);
+			emit speak("I think, I need some help!");
+		}
+		
 		return;
 	}
 }
