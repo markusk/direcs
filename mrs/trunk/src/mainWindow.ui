@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>1554</width>
-    <height>1010</height>
+    <height>972</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -28,7 +28,7 @@
      <x>0</x>
      <y>68</y>
      <width>1554</width>
-     <height>920</height>
+     <height>882</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5" >
@@ -407,7 +407,7 @@
          <x>0</x>
          <y>20</y>
          <width>1034</width>
-         <height>256</height>
+         <height>218</height>
         </rect>
        </property>
        <widget class="QWidget" name="layoutWidget" >
@@ -1821,7 +1821,7 @@
          <x>0</x>
          <y>20</y>
          <width>496</width>
-         <height>268</height>
+         <height>230</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_4" >
@@ -1857,12 +1857,6 @@
      </widget>
     </item>
    </layout>
-   <zorder>splitter</zorder>
-   <zorder>dockPower</zorder>
-   <zorder>dockWidget_2</zorder>
-   <zorder>dockOdometrie</zorder>
-   <zorder>dockCamera</zorder>
-   <zorder>dockLog</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar" >
    <property name="geometry" >
@@ -1913,7 +1907,7 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>988</y>
+     <y>950</y>
      <width>1554</width>
      <height>22</height>
     </rect>

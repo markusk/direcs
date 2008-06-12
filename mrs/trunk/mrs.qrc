@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/images" >
-        <file>images/backward.png</file>
+        <file>images/down.png</file>
         <file>images/black.png</file>
         <file>images/bot_from_above.png</file>
         <file>images/bot_from_above_TOP2.png</file>
@@ -11,7 +11,7 @@
         <file>images/energy.png</file>
         <file>images/eraser.png</file>
         <file>images/exit.png</file>
-        <file>images/forward.png</file>
+        <file>images/up.png</file>
         <file>images/gear.png</file>
         <file>images/hdd.png</file>
         <file>images/help.png</file>

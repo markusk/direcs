@@ -919,7 +919,7 @@ void Gui::showPreferredDirection(QString direction)
 {
 	if (direction == "FORWARD")
 	{
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/forward.png"));
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
 		return;
 	}
 	
@@ -940,7 +940,7 @@ void Gui::showFaceTrackDirection(QString direction)
 {
 	if (direction == "UP")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/forward.png"));
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/up.png"));
 		return;
 	}
 	
@@ -958,7 +958,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		
 	if (direction == "DOWN")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/backward.png"));
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/down.png"));
 		return;
 	}
 	
@@ -1066,10 +1066,9 @@ void Gui::saveCamImage(void)
 	static QDateTime timestamp;
 	
 	
-	// TODO: Seltsame Bildmaße! :-?
-	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.dockCamera->x()+19, ui.dockCamera->y()+19, 474, 353);
-	//cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.frame->x(), ui.frame->y(), 200, 100);
-	// cameraPicToSave = QPixmap::grabWidget(ui.frameCamera); doesnt work
+	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.dockCamera->x()+ui.frameCamera->x()+9, ui.dockCamera->y()+ui.frameCamera->y()+95, ui.frameCamera->width(), ui.frameCamera->height());
+	//cameraPicToSave = QPixmap::grabWidget(ui.frameCamera); //doesnt work
+	//cameraPicToSave = QPixmap::grabWidget(ui.dockCamera); //doesnt work
 	
 	//---------------------------------------------------------------------
 	// save image to disk, but not within the same seond (same timestamp)
@@ -1400,27 +1399,9 @@ void Gui::initLaserView()
 	y = laserYPos + INITIALLASERYPOSFRONT;
 	
 	//--------------
-	// FRONT laser
-	//--------------
-	for (int i=0, angle=90; i<laserLineListFront->size(); i++, angle--)
-	{
-		// reset transform or rotation
-		laserLineListFront->at(i)->resetTransform();
-		
-		// rotate every line by one degree
-		laserLineListFront->at(i)->rotate(angle);
-		
-		// set position of each line
-		laserLineListFront->at(i)->setPos((x - laserLineListFront->at(i)->line().length()), y);
-	}
-	
-	
-	y = laserYPos + INITIALLASERYPOSREAR;
-	
-	//--------------
 	// REAR laser
 	//--------------
-	for (int i=0, angle=-90; i<laserLineListRear->size(); i++, angle--)
+	for (int i=0, angle=90; i<laserLineListRear->size(); i++, angle--)
 	{
 		// reset transform or rotation
 		laserLineListRear->at(i)->resetTransform();
@@ -1430,6 +1411,24 @@ void Gui::initLaserView()
 		
 		// set position of each line
 		laserLineListRear->at(i)->setPos((x - laserLineListRear->at(i)->line().length()), y);
+	}
+	
+	
+	y = laserYPos + INITIALLASERYPOSREAR;
+	
+	//--------------
+	// FRONT laser
+	//--------------
+	for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle--)
+	{
+		// reset transform or rotation
+		laserLineListFront->at(i)->resetTransform();
+		
+		// rotate every line by one degree
+		laserLineListFront->at(i)->rotate(angle);
+		
+		// set position of each line
+		laserLineListFront->at(i)->setPos((x - laserLineListFront->at(i)->line().length()), y);
 	}
 	
 	
