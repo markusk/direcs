@@ -51,9 +51,6 @@ class LaserThread : public QThread
 		*/
 		void setLaserScannerFlag(short int laserScanner, int angle, int flag);
 		
-		
-		int getNumReadings(short int laserScanner);
-		
 		/**
 		Sets the serial port for a laser scanner (for modified CARMEN module).
 		@param laserScanner can be LASER1 or LASER2
