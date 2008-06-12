@@ -375,7 +375,165 @@ void ObstacleCheckThread::run()
 				}
 			}
 		}
-	}
+		
+		
+		
+		//================================= START LASER 2 =========================================
+		//================================= START LASER 2 =========================================
+		//================================= START LASER 2 =========================================
+		
+		//---------------------------------------------------------
+		// LASER SCANNER DATA ANALYSIS - STEP I
+		//---------------------------------------------------------
+		// If obstacle in front of the laser scanner,
+		// set a flag at the corresponding angles
+		//---------------------------------------------------------
+		// TODO: change this 180 to a const or something else
+		for (int angle=0; angle<180; angle++)
+		{
+			// if obstacle detected
+			if ( ((int) (laserThread->getLaserScannerValue(LASER2, angle)*100)) < minObstacleDistanceLaserScanner)
+			{
+				//-----------------------------
+				// set the "obstacle flag"
+				//-----------------------------
+				laserThread->setLaserScannerFlag(LASER2, angle, OBSTACLE);
+			}
+			else
+			{
+				//-------------------------------------------------------------
+				// delete the "obstacle flag" -> free way at the actual angle
+				//-------------------------------------------------------------
+				laserThread->setLaserScannerFlag(LASER2, angle, FREEWAY);
+			}
+		}
+
+
+		//---------------------------------------------------------
+		// LASER SCANNER DATA ANALYSIS - STEP II
+		//---------------------------------------------------------
+		// Find the widest free range of angles within the data.
+		// Set a flag at the corresponding angles.
+		//---------------------------------------------------------
+		actualFreeAreaStart = -1;
+		actualFreeAreaEnd   = -1;
+
+		largestFreeAreaStart = -1;
+		largestFreeAreaEnd   = -1;
+
+		centerOfFreeWay = -1;
+	
+		//--------------------------------------------------------------------------------
+		// First find the largest free area (the one, with the widest "free sight" angle)
+		//--------------------------------------------------------------------------------
+		// TODO: change this 180 to a const or something else
+		for (int angle=0; angle<180; angle++)
+		{
+			// check only lines with no obstacles (FREEWAY)!
+			if (laserThread->getLaserScannerFlag(LASER2, angle) == FREEWAY)
+			{
+				// If this is the FIRST angle AND the next angle is "free"
+				// OR
+				// If current angle has "free" sight (no obstacles) AND next angle is free AND the angle before current is NOT free,
+				// THEN set the current angle to "free area start"
+				//
+				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area start"!)
+				//
+				if (
+					((laserThread->getLaserScannerFlag(LASER2, angle+1) == FREEWAY) && (angle == 0)) ||
+					((laserThread->getLaserScannerFlag(LASER2, angle+1) == FREEWAY) && (laserThread->getLaserScannerFlag(LASER2, angle-1) == OBSTACLE))
+				   )
+				{
+					// store current free area beginning
+					actualFreeAreaStart = angle;
+					//qDebug("angle=%d / actualFreeAreaStart=%d", angle, actualFreeAreaStart);
+				}
+				
+				// If current angle has "free" sight (no obstacles)
+				// AND next angle is NOT free
+				// AND the angle before current is free
+				// AND angle robot slot is wide enough
+				// OR
+				// this is the last free angle (179)
+				// and the end has not been set till here (still -1)
+				// THEN set the current angle as "free area end"
+				//
+				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area end"!)
+				//
+				// FIXME: 1 degree for robot slot ist still free, when current angle is 2 deg.
+				// FIXME: why -1 ?!? But works so far!
+				//
+				if (
+					((laserThread->getLaserScannerFlag(LASER2, angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(LASER2, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
+					((angle == 179) && (actualFreeAreaEnd == -1))
+				   )
+				{
+					// store current free area end
+					actualFreeAreaEnd = angle;
+					
+					// if current free area is larger than the last, store it
+					// AND the robot fits through this angle!
+					if ( (largestFreeAreaEnd - largestFreeAreaStart) < (actualFreeAreaEnd - actualFreeAreaStart) )
+					{
+						// store the current free area as largest
+						largestFreeAreaStart = actualFreeAreaStart;
+						largestFreeAreaEnd = actualFreeAreaEnd;
+					}
+				}
+			}
+		}
+		
+		
+		
+		//------------------------------------------------------------
+		// Then tag the *largest* free area, if multiple were found
+		// (to show it in the GUI and to know, where to drive)
+		// The old flags were set to new values above in this code!
+		//------------------------------------------------------------
+		if (largestFreeAreaEnd != -1)
+		{
+			for (int angle=largestFreeAreaStart; angle<=largestFreeAreaEnd; angle++)
+			{
+				laserThread->setLaserScannerFlag(LASER2, angle, LARGESTFREEWAY);
+			}
+		}
+		else
+		{
+			// only *one* large free area found (actual area), so tag this one
+			if (actualFreeAreaEnd != -1)
+			{
+				for (int angle=actualFreeAreaStart; angle<=actualFreeAreaEnd; angle++)
+				{
+					laserThread->setLaserScannerFlag(LASER2, angle, LARGESTFREEWAY);
+				}
+			}
+		}
+	
+		
+		//----------------------------------------------------------------------------
+		// LASER SCANNER DATA ANALYSIS - STEP III
+		//----------------------------------------------------------------------------
+		// Find the center of the largest free area for the robot
+		//----------------------------------------------------------------------------
+		
+		// free area found  :-)
+		if (largestFreeAreaEnd != -1)
+		{
+			// find the center of the largest free area
+			centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
+			
+			// set flag to "light green"
+			laserThread->setLaserScannerFlag(LASER2, centerOfFreeWay, CENTEROFLARGESTFREEWAY);
+		}
+		else
+		{
+		}
+
+		//================================= END LASER 2 =========================================
+		//================================= END LASER 2 =========================================
+		//================================= END LASER 2 =========================================
+		
+	} // while
 	
 	stopped = false;
 }
