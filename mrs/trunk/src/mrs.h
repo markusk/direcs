@@ -257,8 +257,8 @@ class Mrs : public QObject
 		int mot4Speed;
 		int minimumSpeed;
 		int maximumSpeed;
-		QList <int> obstacleAlarmFrontLeftList;			//! A list of obstacle alarms that occured left the last n times.
-		QList <int> obstacleAlarmFrontRightList;		//! A list of obstacle alarms that occured right the last n times.
+		QList <QDateTime> obstacleAlarmFrontLeftList;			//! A list of obstacle alarms that occured left the last n times.
+		QList <QDateTime> obstacleAlarmFrontRightList;		//! A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	//! A list of the timestamps of the obstacle alarms that left occured.
 		//QList <QDateTime> obstacleAlarmRightTimestampList;	//! A list of the timestamps of the obstacle alarms that right occured.
 
@@ -303,6 +303,8 @@ class Mrs : public QObject
 		static const short int OBSTACLEFRONTLEFT = 512;
 		static const short int OBSTACLEFRONTRIGHT = 1024;
 		static const short int OBSTACLESEVERYWHEREINFRONT = 2048;
+		
+		static const short int MAXFALSEALARMS = 2; //! number of false alarms which are allowed in the logical unit
 		
 		static const unsigned char CLOCKWISE        = 0;  //! Motor direction "CLOCKWISE"
 		static const unsigned char COUNTERCLOCKWISE = 1;  //! Motor direction "COUNTERCLOCKWISE"
