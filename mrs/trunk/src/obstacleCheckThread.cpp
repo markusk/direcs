@@ -337,7 +337,7 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP IV
 		//----------------------------------------------------------------------------
-		// Emit the result
+		// Emit the result for the GUI
 		//----------------------------------------------------------------------------
 		emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWay);
 
