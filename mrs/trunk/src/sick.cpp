@@ -701,18 +701,18 @@ int sick_testBaudrate(sick_laser_p laser, int brate)
 	int response;
 	
 	// start Markus: time measure added
-	double start_time = 0;
-	double elapsed_time = 0;
+//	double start_time = 0;
+//	double elapsed_time = 0;
 	
 	// get time
-	start_time = carmen_get_time();
+//	start_time = carmen_get_time();
 	//qDebug("\nstart time: %f seks", start_time);
 	// end Markus
 
 
 	sick_set_baudrate(laser, brate);
-	elapsed_time = (carmen_get_time() - start_time);
-	qDebug("elapsed time till here: %f seks", elapsed_time);
+//	elapsed_time = (carmen_get_time() - start_time);
+//	qDebug("elapsed time till here: %f seks", elapsed_time);
 	
 	response = sick_write_command(laser, 0x30, ReqLaser, 2);
 	if(response == NAK)
