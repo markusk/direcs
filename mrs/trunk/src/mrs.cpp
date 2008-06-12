@@ -105,8 +105,8 @@ void Mrs::init()
 	dontUseCamera = false;
 	cameraTestMode = false;
 	faceTrackingIsEnabled = false;
-	laserScanner1Found = false;
-	laserScanner2Found = false;
+	laserScannerFrontFound = false;
+	laserScannerRearFound = false;
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -522,18 +522,18 @@ void Mrs::init()
 	// for refreshing the splash...
 	QApplication::processEvents();
 	
-	laserScanner1Found = laserThread->isConnected(LASER1);
+	laserScannerFrontFound = laserThread->isConnected(LASER1);
 	
 	// check REAR laser
 	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
 	
-	laserScanner2Found = laserThread->isConnected(LASER2);
+	laserScannerRearFound = laserThread->isConnected(LASER2);
 	
-	if (laserScanner1Found || laserScanner2Found)
+	if (laserScannerFrontFound || laserScannerRearFound)
 	{
-		if (laserScanner1Found)
+		if (laserScannerFrontFound)
 		{
 			gui->appendLog("Front laser scanner found.");
 		}
@@ -541,8 +541,8 @@ void Mrs::init()
 		{
 			gui->appendLog("Front laser scanner NOT found.");
 		}
-	
-		if (laserScanner2Found)
+		
+		if (laserScannerRearFound)
 		{
 			gui->appendLog("Rear laser scanner found.");
 		}
@@ -551,7 +551,6 @@ void Mrs::init()
 			gui->appendLog("Rear laser scanner NOT found.");
 		}
 
-		
 		// TODO: nice exit point and error message
 		if (!QGLFormat::hasOpenGL())
 		{
@@ -1515,17 +1514,17 @@ void Mrs::drive(const unsigned char command)
 	switch (command)
 	{
 		case FORWARD:
-			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
-			return;
-			break;
-		case BACKWARD:
 			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
+			return;
+			break;
+		case BACKWARD:
+			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			return;
 			break;
 		case LEFT:

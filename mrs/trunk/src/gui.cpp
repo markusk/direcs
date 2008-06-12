@@ -840,13 +840,13 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.lblDirection1->setText("FORWARD");
+					ui.lblDirection1->setText("BACKWARD");
 					ui.lblDirection1->setEnabled(true);
 					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					return;
 					break;
 				case COUNTERCLOCKWISE:
-					ui.lblDirection1->setText("BACKWARD");
+					ui.lblDirection1->setText("FORWARD");
 					ui.lblDirection1->setEnabled(true);
 					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					return;
@@ -886,13 +886,13 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.lblDirection2->setText("FORWARD");
+					ui.lblDirection2->setText("BACKWARD");
 					ui.lblDirection2->setEnabled(true);
 					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
 					return;
 					break;
 				case COUNTERCLOCKWISE:
-					ui.lblDirection2->setText("BACKWARD");
+					ui.lblDirection2->setText("FORWARD");
 					ui.lblDirection2->setEnabled(true);
 					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
 					return;
@@ -925,15 +925,13 @@ void Gui::showPreferredDirection(QString direction)
 	
 	if (direction == "LEFT")
 	{
-		// other direction image, because different view in the gui!
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
 		return;
 	}
 	
 	if (direction == "RIGHT")
 	{
-		// other direction image, because different view in the gui!
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
 		return;
 	}
 }
@@ -942,7 +940,7 @@ void Gui::showFaceTrackDirection(QString direction)
 {
 	if (direction == "UP")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/backward.png"));
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/forward.png"));
 		return;
 	}
 	
@@ -960,7 +958,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		
 	if (direction == "DOWN")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/forward.png"));
+		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/backward.png"));
 		return;
 	}
 	

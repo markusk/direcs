@@ -103,12 +103,12 @@ void LaserThread::run()
 			switch (laserValue)
 			{
 				case LASER1:
-					getAndStoreLaserValuesFront();
-					emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
-					break;
-				case LASER2:
 					getAndStoreLaserValuesRear();
 					emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
+					break;
+				case LASER2:
+					getAndStoreLaserValuesFront();
+					emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
 					break;
 				case (LASER1+LASER2):
 					getAndStoreLaserValuesFront();
@@ -139,7 +139,7 @@ void LaserThread::run()
 void LaserThread::getAndStoreLaserValuesFront()
 {
 	// check if all 180 beams were read (in the laser module)
-	numReadingsFront = getLaserNumReadings(LASER1);
+	numReadingsFront = getLaserNumReadings(LASER2);
 	
 	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
 	if (numReadingsFront > LASERSCANNERARRAYSIZE)
@@ -153,7 +153,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 		{
 			// get value from laser
 			// store the value in an array in this thread
-			laserScannerValuesFront[angle] = getLaserDistance(LASER1, angle);
+			laserScannerValuesFront[angle] = getLaserDistance(LASER2, angle);
 		}
 	}
 }
@@ -162,7 +162,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 void LaserThread::getAndStoreLaserValuesRear()
 {
 	// check if all 180 beams were read (in the laser module)
-	numReadingsRear = getLaserNumReadings(LASER2);
+	numReadingsRear = getLaserNumReadings(LASER1);
 	
 	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
 	if (numReadingsRear > LASERSCANNERARRAYSIZE)
@@ -176,7 +176,7 @@ void LaserThread::getAndStoreLaserValuesRear()
 		{
 			// get value from laser
 			// store the value in an array in this thread
-			laserScannerValuesRear[angle] = getLaserDistance(LASER2, angle);
+			laserScannerValuesRear[angle] = getLaserDistance(LASER1, angle);
 		}
 	}
 }
@@ -219,10 +219,10 @@ float LaserThread::getLaserScannerFlag(short int laserScanner, int angle)
 	switch(laserScanner)
 	{
 		case LASER1:
-			return laserScannerFlagsFront.at(angle);
+			return laserScannerFlagsRear.at(angle);
 			break;
 		case LASER2:
-			return laserScannerFlagsRear.at(angle);
+			return laserScannerFlagsFront.at(angle);
 			break;
 	}
 	
@@ -241,10 +241,10 @@ void LaserThread::setLaserScannerFlag(short int laserScanner, int angle, int fla
 	switch(laserScanner)
 	{
 		case LASER1:
-			laserScannerFlagsFront[angle] = flag;
+			laserScannerFlagsRear[angle] = flag;
 			break;
 		case LASER2:
-			laserScannerFlagsRear[angle] = flag;
+			laserScannerFlagsFront[angle] = flag;
 			break;
 	}
 	
@@ -258,10 +258,10 @@ int LaserThread::getNumReadings(short int laserScanner)
 	switch (laserScanner)
 	{
 		case LASER1:
-			return numReadingsFront;
+			return numReadingsRear;
 			break;
 		case LASER2:
-			return numReadingsRear;
+			return numReadingsFront;
 			break;
 	}
 	
@@ -501,11 +501,11 @@ bool LaserThread::isConnected(short int laserScanner)
 	{
 		switch (laserScanner)
 		{
-			case LASER1:
-				laserScannerFrontIsConnected = true;
-				return true;
 			case LASER2:
 				laserScannerRearIsConnected = true;
+				return true;
+			case LASER1:
+				laserScannerFrontIsConnected = true;
 				return true;
 		}
 	}
@@ -513,11 +513,11 @@ bool LaserThread::isConnected(short int laserScanner)
 	{
 		switch (laserScanner)
 		{
-			case LASER1:
-				laserScannerFrontIsConnected = false;
-				return false;
 			case LASER2:
 				laserScannerRearIsConnected = false;
+				return false;
+			case LASER1:
+				laserScannerFrontIsConnected = false;
 				return false;
 		}
 	}
