@@ -1,0 +1,15 @@
+# This line was appended by Markus
+# for using the gcc-cris compiler for the foax board !
+# Cross Compiling! :-)
+# export PATH=/usr/local/cris/bin:$PATH
+
+
+# for using the arm-gcc compiler for the nslu2 !
+# Cross Compiling! :-)
+# http://kegel.com/crosstool/current/doc/crosstool-howto.html
+#
+export PATH=/home/markus/develop/nslu2/crosstool_debian/gcc-3.4.5-glibc-2.3.6/arm-linux/bin:$PATH
+
+
+# QT for Embedded Linux
+export PATH=/usr/local/Trolltech/QtEmbedded-4.4.1-arm/bin:$PATH
