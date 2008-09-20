@@ -4,8 +4,6 @@
 #define F_CPU 		16000000
 #endif
 
-#include <util/delay.h>
-
 
 // Zeit/srf05 Messung, beliebige Pins können gewählt werden
 

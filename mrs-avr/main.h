@@ -81,10 +81,15 @@
 
 
 #include <avr/io.h>
+//#include <avr/interrupt.h> // (no longer needed since avr-libc 1.4)
+// #include <signal.h> ERROR?
+
+#include <inttypes.h>
 #include <avr/interrupt.h>
+#include <avr/signal.h>
 
 #include <stdlib.h> // für utoa und itoa
-#include <util/delay.h>
+#include <avr/delay.h>
 
 #include "usart.h"
 #include "adconv.h"

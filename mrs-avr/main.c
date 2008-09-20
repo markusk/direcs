@@ -5,7 +5,7 @@
 #define F_CPU 		16000000
 #endif
 
-#include </usr/avr/include/util/delay.h>
+//#include "/usr/local/avr/include/avr/delay.h"
 
 
 uint8_t leftWheelCounter = 0;
@@ -628,6 +628,23 @@ int main(void)
 				PORTA &= ~(1<<PIN0);
 				break;
 */
+			default:
+				//
+				// red 'traffic' LED
+				//
+				if (redLEDtoggle == 0)
+				{
+					redLEDtoggle = 1;
+					// yelow LED on (low active!)
+					PORTC &= ~(1<<PIN0);
+				}
+				else
+				{
+					redLEDtoggle = 0;
+					// yelow LED off (low active!)
+					PORTC |= (1<<PIN0);
+				}
+				break;
 		}
 	} // while (1)
 
