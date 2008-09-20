@@ -5,9 +5,11 @@ int main(int argc, char *argv[])
 {
 	unsigned char c = 250; // INIT
 	int amount = 0;
+	unsigned char text[] = {'h','e','l','l','o','@'};
 	
 	
 	printf("\nOpening serial port...");
+/*
 	int dev_fd = open_port();
 	if (dev_fd == -1)
 		return -1;
@@ -43,7 +45,26 @@ int main(int argc, char *argv[])
 	while ( read_port(dev_fd, &c, 1) < 1 )
 	{
 	}
+*/
+	// send speech string
+	printf("\n");
+	c = 0;
+	int n=0;
+	for (n=0; c != '@'; n++)
+//	for (n=0; n<4; n++)
+	{
+		c = text[n];
+		printf("text[%d]=%c\n", n, c);
+/*
+		write_port(dev_fd, &c, 1);
+		while ( read_port(dev_fd, &c, 1) < 1 )
+		{
+		}
+*/
+		c = text[n];
+	}
 
+/*
 	c = 'H';
 	write_port(dev_fd, &c, 1);
 	while ( read_port(dev_fd, &c, 1) < 1 )
@@ -74,7 +95,8 @@ int main(int argc, char *argv[])
 	{
 	}
 
-	c = 0x00;
+
+	c = 0x00; // end of transmit. start speaking!
 	write_port(dev_fd, &c, 1);
 	while ( read_port(dev_fd, &c, 1) < 1 )
 	{
@@ -85,6 +107,7 @@ int main(int argc, char *argv[])
 	printf("Closing serial port...");
 	close_port(dev_fd);
 	printf("Closed.\n\n");
+*/
 	
 	return 0;
 }
