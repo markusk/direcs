@@ -6,7 +6,7 @@
 #include <termios.h> /* POSIX terminal control definitions */
 //#include <linux/delay.h>
 //#include <asm/delay.h>
-#include "/usr/src/linux-headers-2.6.25-2-686/include/asm-x86/delay.h"
+//#include "/usr/src/linux-headers-2.6.25-2-686/include/asm-x86/delay.h"
 
 static const unsigned char FLASHLIGHT_OFF 	= 40;
 static const unsigned char FLASHLIGHT_ON 	= 41;
