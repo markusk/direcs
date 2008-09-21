@@ -19,6 +19,16 @@ int main(int argc, char *argv[])
 	configure_port(dev_fd);
 	printf("Configured.\n");
 	
+	
+	printf("Sending '0x00'...");
+	c = 0x00; // end of transmit. start speaking!
+	write_port(dev_fd, &c, 1);
+	while ( read_port(dev_fd, &c, 1) < 1 )
+	{
+	}
+	printf("Sent.\n");
+
+	
 	printf("Sending commands...");
 
 	c = 0x80; // 'speak' command
@@ -187,11 +197,13 @@ void configure_port(int dev_fd)
 	* Disabling Hardware Flow Control (Also called CRTSCTS)
 	*/
 	options.c_cflag &= ~CRTSCTS;
+//        options.c_iflag&=(~(IXON|IXOFF|IXANY)); // new from   posix_qextserialport.cpp   !!
 	
 	/*
 	* SET the new options for the port...
 	*/
 	tcsetattr(dev_fd, TCSANOW, &options);
+//	tcsetattr(dev_fd, TCSAFLUSH, &options);
 
 	// FLUSH
 	fcntl(dev_fd, F_SETFL, 0);
