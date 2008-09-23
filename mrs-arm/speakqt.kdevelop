@@ -2,7 +2,7 @@
 <kdevelop>
   <general>
     <author>Markus Knapp</author>
-    <email>m@familie-knapp.de</email>
+    <email>mrs@direcs.de</email>
     <version>0.1</version>
     <projectmanagement>KDevTrollProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
@@ -13,8 +13,9 @@
     <projectname>speakqt</projectname>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description/>
-    <defaultencoding/>
+    <description></description>
+    <defaultencoding></defaultencoding>
+    <versioncontrol/>
   </general>
   <kdevfileview>
     <groups>
@@ -65,7 +66,7 @@
       <includePaths>.;</includePaths>
     </codecompletion>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -119,16 +120,16 @@
   </kdevdoctreeview>
   <kdevdebugger>
     <general>
-      <dbgshell/>
+      <dbgshell></dbgshell>
       <breakpoints/>
       <programargs/>
       <gdbpath>/usr/bin/gdb</gdbpath>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
       <raiseGDBOnStart>false</raiseGDBOnStart>
     </general>
     <display>
@@ -140,10 +141,10 @@
   </kdevdebugger>
   <kdevtrollproject>
     <run>
-      <mainprogram>/home/markus/develop/mrs/mrs-arm/bin/speakqt</mainprogram>
-      <programargs/>
+      <mainprogram>/home/markus/develop/mrs/mrs-arm/bin/speak</mainprogram>
+      <programargs></programargs>
       <directoryradio>executable</directoryradio>
-      <globaldebugarguments/>
+      <globaldebugarguments></globaldebugarguments>
       <globalcwd>/home/markus/develop/mrs/mrs-arm/bin/</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <terminal>false</terminal>
@@ -151,16 +152,25 @@
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
       <envvars/>
+      <runarguments>
+        <speakqt/>
+      </runarguments>
+      <cwd>
+        <speakqt>/home/markus/develop/mrs/mrs-arm</speakqt>
+      </cwd>
+      <debugarguments>
+        <speakqt/>
+      </debugarguments>
     </run>
     <general>
-      <activedir>src</activedir>
+      <activedir></activedir>
     </general>
     <make>
       <abortonerror>true</abortonerror>
-      <runmultiplejobs>false</runmultiplejobs>
-      <numberofjobs>1</numberofjobs>
+      <runmultiplejobs>true</runmultiplejobs>
+      <numberofjobs>2</numberofjobs>
       <dontact>false</dontact>
-      <makebin/>
+      <makebin></makebin>
       <prio>0</prio>
       <envvars/>
     </make>
@@ -177,18 +187,19 @@
     <openfiles/>
   </workspace>
   <kdevfilecreate>
+    <filetypes/>
     <useglobaltypes>
       <type ext="ui" />
+      <type ext="qrc" />
       <type ext="cpp" />
       <type ext="h" />
       <type ext="ts" />
-      <type ext="qrc" />
     </useglobaltypes>
   </kdevfilecreate>
   <kdevdocumentation>
     <projectdoc>
       <docsystem>Doxygen-Dokumentation</docsystem>
-      <docurl>speakqt.tag</docurl>
+      <docurl>speak.tag</docurl>
       <usermanualurl/>
     </projectdoc>
   </kdevdocumentation>
@@ -213,4 +224,9 @@
       <implementationsuffix>.cpp</implementationsuffix>
     </filetemplates>
   </cppsupportpart>
+  <ctagspart>
+    <customArguments/>
+    <customTagfilePath>/home/markus/develop/mrs/mrs-arm/tags</customTagfilePath>
+    <activeTagsFiles/>
+  </ctagspart>
 </kdevelop>

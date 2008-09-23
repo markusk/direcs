@@ -9,8 +9,12 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#include <QApplication>
+#ifndef MAIN_H
+#define MAIN_H
+
+//#include <QApplication>
 #include <QCoreApplication>
 #include <qextserialport.h>
-#include "speak.h";
-#include "gui.h"
+#include "speak.h"
+
+#endif

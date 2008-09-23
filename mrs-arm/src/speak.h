@@ -1,3 +1,6 @@
+#ifndef SPEAK_H
+#define SPEAK_H
+
 #include <stdio.h>   /* Standard input/output definitions */
 #include <string.h>  /* String function definitions */
 #include <unistd.h>  /* UNIX standard function definitions */
@@ -17,3 +20,5 @@ void configure_port(int dev_fd);
 int  read_port(int dev_fd, unsigned char *buf, int nChars);
 int  write_port(int dev_fd, unsigned char *c, int nChars);
 void close_port(int dev_fd);
+
+#endif
