@@ -17,4 +17,7 @@
 #include <qextserialport.h>
 #include "speak.h"
 
+void receiveMsg();
+
+
 #endif
