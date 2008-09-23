@@ -1,10 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="1" >
+ <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs-arm/src/main.cpp" >
-   <View0 Encoding="" line="30" Type="Source" />
+   <View0 Encoding="" line="27" Type="Source" />
   </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs-arm/src/speak.h" >
+   <View0 Encoding="" line="19" Type="Source" />
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs-arm/src/main.h" >
+   <View0 Encoding="" line="16" Type="Source" />
+  </Doc2>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>

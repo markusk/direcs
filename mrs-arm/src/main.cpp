@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Markus Knapp   *
- *   m@familie-knapp.de   *
+ *   Copyright (C) 2008 by Markus Knapp                                    *
+ *   mrs@direcs.de                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,14 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-
-
-#include <QCoreApplication>
+#include "main.h"
 
 int main(int argc, char *argv[])
 {
-      QCoreApplication app(argc, argv);
-      qDebug("Speak with Qt 4!");
-      return 0;
+	int exec;
+
+	QApplication app(argc, argv);
+	qDebug("Speak with Qt 4!");
+
+	MainWindow mainWindow(APP_TITLE);
+	mainWindow.show();
+	exec = app.exec();
+	return exec;
 }
 
