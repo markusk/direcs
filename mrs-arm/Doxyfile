@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = speakqt
+PROJECT_NAME           = mrs-arm
 PROJECT_NUMBER         = 0.1
 OUTPUT_DIRECTORY       = 
 CREATE_SUBDIRS         = NO
@@ -50,8 +50,8 @@ TYPEDEF_HIDES_STRUCT   = NO
 #---------------------------------------------------------------------------
 # Build related configuration options
 #---------------------------------------------------------------------------
-EXTRACT_ALL            = YES
-EXTRACT_PRIVATE        = YES
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
 EXTRACT_STATIC         = NO
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = NO
@@ -66,7 +66,7 @@ HIDE_SCOPE_NAMES       = NO
 SHOW_INCLUDE_FILES     = YES
 INLINE_INFO            = YES
 SORT_MEMBER_DOCS       = YES
-SORT_BRIEF_DOCS        = YES
+SORT_BRIEF_DOCS        = NO
 SORT_GROUP_NAMES       = NO
 SORT_BY_SCOPE_NAME     = NO
 GENERATE_TODOLIST      = YES
@@ -76,7 +76,7 @@ GENERATE_DEPRECATEDLIST= YES
 ENABLED_SECTIONS       = 
 MAX_INITIALIZER_LINES  = 30
 SHOW_USED_FILES        = YES
-SHOW_DIRECTORIES       = YES
+SHOW_DIRECTORIES       = NO
 SHOW_FILES             = YES
 SHOW_NAMESPACES        = YES
 FILE_VERSION_FILTER    = 
@@ -154,7 +154,7 @@ FILE_PATTERNS          = *.c \
                          *.dox
 RECURSIVE              = yes
 EXCLUDE                = 
-EXCLUDE_SYMLINKS       = YES
+EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = 
 EXCLUDE_SYMBOLS        = 
 EXAMPLE_PATH           = 
@@ -172,13 +172,13 @@ INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
 REFERENCED_BY_RELATION = NO
 REFERENCES_RELATION    = NO
-REFERENCES_LINK_SOURCE = NO
+REFERENCES_LINK_SOURCE = YES
 USE_HTAGS              = NO
 VERBATIM_HEADERS       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the alphabetical class index
 #---------------------------------------------------------------------------
-ALPHABETICAL_INDEX     = YES
+ALPHABETICAL_INDEX     = NO
 COLS_IN_ALPHA_INDEX    = 5
 IGNORE_PREFIX          = 
 #---------------------------------------------------------------------------
@@ -209,7 +209,7 @@ FORMULA_FONTSIZE       = 10
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-GENERATE_LATEX         = NO
+GENERATE_LATEX         = YES
 LATEX_OUTPUT           = latex
 LATEX_CMD_NAME         = latex
 MAKEINDEX_CMD_NAME     = makeindex
@@ -217,8 +217,8 @@ COMPACT_LATEX          = NO
 PAPER_TYPE             = a4wide
 EXTRA_PACKAGES         = 
 LATEX_HEADER           = 
-PDF_HYPERLINKS         = NO
-USE_PDFLATEX           = NO
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
 LATEX_BATCHMODE        = NO
 LATEX_HIDE_INDICES     = NO
 #---------------------------------------------------------------------------
@@ -272,7 +272,7 @@ SKIP_FUNCTION_MACROS   = YES
 # Configuration::additions related to external references   
 #---------------------------------------------------------------------------
 TAGFILES               = 
-GENERATE_TAGFILE       = speakqt.tag
+GENERATE_TAGFILE       = mrs-arm.tag
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
 PERL_PATH              = /usr/bin/perl
@@ -282,7 +282,7 @@ PERL_PATH              = /usr/bin/perl
 CLASS_DIAGRAMS         = YES
 MSCGEN_PATH            = 
 HIDE_UNDOC_RELATIONS   = YES
-HAVE_DOT               = YES
+HAVE_DOT               = NO
 DOT_FONTNAME           = FreeSans
 DOT_FONTPATH           = 
 CLASS_GRAPH            = YES
@@ -292,8 +292,8 @@ UML_LOOK               = NO
 TEMPLATE_RELATIONS     = NO
 INCLUDE_GRAPH          = YES
 INCLUDED_BY_GRAPH      = YES
-CALL_GRAPH             = YES
-CALLER_GRAPH           = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
 GRAPHICAL_HIERARCHY    = YES
 DIRECTORY_GRAPH        = YES
 DOT_IMAGE_FORMAT       = png
@@ -301,7 +301,7 @@ DOT_PATH               =
 DOTFILE_DIRS           = 
 DOT_GRAPH_MAX_NODES    = 50
 MAX_DOT_GRAPH_DEPTH    = 1000
-DOT_TRANSPARENT        = NO
+DOT_TRANSPARENT        = YES
 DOT_MULTI_TARGETS      = NO
 GENERATE_LEGEND        = YES
 DOT_CLEANUP            = YES

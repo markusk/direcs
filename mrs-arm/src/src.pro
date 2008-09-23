@@ -1,4 +1,4 @@
-SOURCES += speak.cpp
+SOURCES += mrs-arm.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -13,9 +13,9 @@ win32 {    DEFINES = _TTY_WIN_ QWT_DLL QT_DLL
 
 }
 
-HEADERS += speak.h \
+HEADERS += mrs-arm.h \
 	qextserialport.h \
  qextserialbase.h
 
 QT -= gui
-TARGET = ../bin/speak
+TARGET = ../bin/mrs-arm
