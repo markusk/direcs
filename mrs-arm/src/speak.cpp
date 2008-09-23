@@ -35,19 +35,20 @@ int main(int argc, char *argv[])
 
 Speak::Speak()
 {
-	QString text = "Hello Markus";
+	serialPort = "/dev/ttyUSB0";
+	textToSpeak = "Hello Markus";
 	char c = 0;
 	int i = 0;
 
 
 	// modify the port settings
 	// these settings are set, when the port is opened
-	port = new QextSerialPort("/dev/ttyUSB0");
-	port->setBaudRate(BAUD38400);   
+	port = new QextSerialPort(serialPort);
+	port->setBaudRate(BAUD38400);
 	port->setFlowControl(FLOW_OFF);
-	port->setParity(PAR_NONE);    
-	port->setDataBits(DATA_8);   
-	port->setStopBits(STOP_2);    
+	port->setParity(PAR_NONE);
+	port->setDataBits(DATA_8);
+	port->setStopBits(STOP_2);
 	qDebug("isOpen : %d", port->isOpen());
 	
 	// Open port
@@ -55,7 +56,7 @@ Speak::Speak()
 	if (port->open(QIODevice::ReadWrite) != true)
 	{
 		qDebug("\nError opening serial port!\n\n");
-		exit(-1);
+		QCoreApplication::exit(-1);
 	}
 	qDebug("is open: %d\n", port->isOpen());
 
@@ -65,25 +66,21 @@ Speak::Speak()
 	// 'speak' command
 	c = 0x80;
 	i = port->write(&c, 1);
-	//qDebug("%d byte transmitted: %d", i, c);
 	receiveMsg();
 
 	// full volume (0 to 7)
 	c = 0x00;
 	i = port->write(&c, 1);
-	//qDebug("%d byte transmitted: %d", i, c);
 	receiveMsg();
 
 	// speed pitch (0 to 7 (7 is the lowest))
 	c = 0x07;
 	i = port->write(&c, 1);
-	//qDebug("%d byte transmitted: %d", i, c);
 	receiveMsg();
 
 	// speed speed (0 to 7)
 	c = 0x02;
 	i = port->write(&c, 1);
-	//qDebug("%d byte transmitted: %d", i, c);
 	receiveMsg();
 	qDebug("Sent\n");
 	
@@ -91,11 +88,10 @@ Speak::Speak()
 	// sending string here ! ! !
 	//
 	qDebug("Sending text...");
-	for (int n=0; n < text.length() ;n++)
+	for (int n=0; n < textToSpeak.length() ;n++)
 	{
 		// get one character from the string to say
-		const char *  t = text.mid(n,1).toLatin1();
-		//qDebug("c=%d\n", *t);
+		const char *  t = textToSpeak.mid(n,1).toLatin1();
 		c = *t;
 		i = port->write(&c, 1);
 		receiveMsg();
@@ -116,7 +112,8 @@ Speak::Speak()
 	
 	qDebug("is open: %d\n", port->isOpen());
 
-	exit(0);
+	// clean exit
+	QCoreApplication::exit(0);
 }
 
 
@@ -135,11 +132,12 @@ void Speak::receiveMsg()
 	numBytes = port->bytesAvailable();
 	if(numBytes > 0) 
 	{
-		if(numBytes > 1024) numBytes = 1024;
+		if(numBytes > 1024)
+			numBytes = 1024;
 	
 		int i = port->read(buff, numBytes);
 		buff[i] = '\0';
-		QString msg = buff;
+		//QString msg = buff;
 	
 		//qDebug("bytes available: %d\n", numBytes);
 		//qDebug("received: %d\n", i);

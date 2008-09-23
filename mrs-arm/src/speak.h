@@ -43,6 +43,8 @@ class Speak : public QObject
 	private:
 		void receiveMsg();
 		QextSerialPort *port;
+		QString textToSpeak;
+		QString serialPort;
 		static const unsigned char FLASHLIGHT_OFF 	= 40;
 		static const unsigned char FLASHLIGHT_ON 	= 41;
 };
