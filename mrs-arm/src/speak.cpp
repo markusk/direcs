@@ -17,30 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-//#include <QApplication>
 #include <QCoreApplication>
 #include <qextserialport.h>
 #include "speak.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
+	QCoreApplication app(argc, argv);
  
-	// create MrsRemote class object
+	// create Speak class object
 	Speak *s = new Speak();
+	Q_UNUSED (s);
 
 	return app.exec();
 }
 
 
-void Speak::Speak()
+Speak::Speak()
 {
-	unsigned char text[] = {'H','e','l','l','o',' ','M','a','r','k','u','s','@'};
-	unsigned char c = 250; // INIT
+	QString text = "Hello Markus";
+	char c = 0;
 	int i = 0;
 
 
-	//modify the port settings on your own
+	// modify the port settings
+	// these settings are set, when the port is opened
 	port = new QextSerialPort("/dev/ttyUSB0");
 	port->setBaudRate(BAUD38400);   
 	port->setFlowControl(FLOW_OFF);
@@ -51,52 +52,73 @@ void Speak::Speak()
 	
 	// Open port
 	qDebug("Opening port...");
-	port->open(QIODevice::ReadWrite);
+	if (port->open(QIODevice::ReadWrite) != true)
+	{
+		qDebug("\nError opening serial port!\n\n");
+		return;
+	}
 	qDebug("is open: %d\n", port->isOpen());
 
 
-	printf("Sending commands...");
+	qDebug("Sending commands...");
 
-	c = 0x80; // 'speak' command
+	// 'speak' command
+	c = 0x80;
 	i = port->write(&c, 1);
-	qDebug("%d byte transmitted: %d", i, c);
-	
-	// now waitung for ACK!!
+	//qDebug("%d byte transmitted: %d", i, c);
 	receiveMsg();
-	while ( read_port(dev_fd, &c, 1) < 1 )
-	{
-	}
 
-	c = 0x00; // full volume (0 to 7)
-	write_port(dev_fd, &c, 1);
-	while ( read_port(dev_fd, &c, 1) < 1 )
-	{
-	}
+	// full volume (0 to 7)
+	c = 0x00;
+	i = port->write(&c, 1);
+	//qDebug("%d byte transmitted: %d", i, c);
+	receiveMsg();
 
-	c = 0x07; // speed pitch (0 to 7 (7 is the lowest))
-	write_port(dev_fd, &c, 1);
-	while ( read_port(dev_fd, &c, 1) < 1 )
-	{
-	}
+	// speed pitch (0 to 7 (7 is the lowest))
+	c = 0x07;
+	i = port->write(&c, 1);
+	//qDebug("%d byte transmitted: %d", i, c);
+	receiveMsg();
 
-	c = 0x02; // speed speed (0 to 7)
-	write_port(dev_fd, &c, 1);
-	while ( read_port(dev_fd, &c, 1) < 1 )
+	// speed speed (0 to 7)
+	c = 0x02;
+	i = port->write(&c, 1);
+	//qDebug("%d byte transmitted: %d", i, c);
+	receiveMsg();
+	qDebug("Sent\n");
+	
+	//
+	// sending string here ! ! !
+	//
+	qDebug("Sending text...");
+	for (int n=0; n < text.length() ;n++)
 	{
+		// get one character from the string to say
+		const char *  t = text.mid(n,1).toLatin1();
+		//qDebug("c=%d\n", *t);
+		c = *t;
+		i = port->write(&c, 1);
+		receiveMsg();
 	}
-
+	qDebug("Sent.\n");
 	
 	
-	if (port->isOpen() > 0)
-	{
-		qDebug("Closing port...");
-		port->close();
-	}
-	qDebug("is open: %d", port->isOpen());
+	// end of transmit. start speaking!
+	c = 0x00;
+	i = port->write(&c, 1);
+	//qDebug("%d byte transmitted: %d", i, c);
+	receiveMsg();
+	
+	
+	qDebug("Closing port...");
+	port->close();
+	qDebug("Closed\n");
+	
+	qDebug("is open: %d\n", port->isOpen());
 }
 
 
-void Speak::~Speak()
+Speak::~Speak()
 {
 	delete port;
 	port = NULL;
@@ -117,11 +139,7 @@ void Speak::receiveMsg()
 		buff[i] = '\0';
 		QString msg = buff;
 	
-		received_msg->append(msg);
-		received_msg->ensureCursorVisible();
-		qDebug("bytes available: %d\n", numBytes);
-		qDebug("received: %d\n", i);
+		//qDebug("bytes available: %d\n", numBytes);
+		//qDebug("received: %d\n", i);
 	}
 }
-
-

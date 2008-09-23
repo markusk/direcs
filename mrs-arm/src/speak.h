@@ -1,12 +1,27 @@
+/***************************************************************************
+ *   Copyright (C) 2008 by Markus Knapp                                    *
+ *   mrs@direcs.de                                                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
 #ifndef SPEAK_H
 #define SPEAK_H
 
-#include <stdio.h>   /* Standard input/output definitions */
-#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <fcntl.h>   /* File control definitions */
-#include <errno.h>   /* Error number definitions */
-#include <termios.h> /* POSIX terminal control definitions */
+// The QCoreApplication class provides an event loop for console Qt applications
+#include <QCoreApplication>
 
 
 class QextSerialPort;
@@ -26,6 +41,7 @@ class Speak : public QObject
 
 
 	private:
+		void receiveMsg();
 		QextSerialPort *port;
 		static const unsigned char FLASHLIGHT_OFF 	= 40;
 		static const unsigned char FLASHLIGHT_ON 	= 41;
