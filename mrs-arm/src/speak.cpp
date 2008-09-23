@@ -55,7 +55,7 @@ Speak::Speak()
 	if (port->open(QIODevice::ReadWrite) != true)
 	{
 		qDebug("\nError opening serial port!\n\n");
-		return;
+		exit(-1);
 	}
 	qDebug("is open: %d\n", port->isOpen());
 
@@ -115,6 +115,8 @@ Speak::Speak()
 	qDebug("Closed\n");
 	
 	qDebug("is open: %d\n", port->isOpen());
+
+	exit(0);
 }
 
 
