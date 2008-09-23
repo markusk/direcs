@@ -1,5 +1,4 @@
-SOURCES += main.cpp \
-	speak.cpp
+SOURCES += speak.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -8,15 +7,14 @@ LIBS += -lqextserialport
 
 unix {    DEFINES = _TTY_POSIX_
     HEADERS += posix_qextserialport.h
+}
+
+win32 {    DEFINES = _TTY_WIN_ QWT_DLL QT_DLL
 
 }
 
-win32 : DEFINES = _TTY_WIN_ QWT_DLL QT_DLL
-
-
 HEADERS += speak.h \
-	main.h \
- qextserialport.h \
+	qextserialport.h \
  qextserialbase.h
 
 QT -= gui

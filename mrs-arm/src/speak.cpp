@@ -1,147 +1,127 @@
+/***************************************************************************
+ *   Copyright (C) 2008 by Markus Knapp                                    *
+ *   mrs@direcs.de                                                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+//#include <QApplication>
+#include <QCoreApplication>
+#include <qextserialport.h>
 #include "speak.h"
 
-int open_port(void)
+int main(int argc, char *argv[])
 {
-	/*
-	Returns the file descriptor on success or -1 on error.
-	*/
-	int fd; /* File descriptor for the port */
+	QApplication app(argc, argv);
+ 
+	// create MrsRemote class object
+	Speak *s = new Speak();
+
+	return app.exec();
+}
 
 
-	/*
-	The O_NOCTTY flag tells UNIX that this program doesn't want to be the "controlling terminal" for that port.
-	If you don't specify this then any input (such as keyboard abort signals and so forth) will affect your process.
-	Programs like getty(1M/8) use this feature when starting the login process, but normally a user program does not want this behavior.
+void Speak::Speak()
+{
+	unsigned char text[] = {'H','e','l','l','o',' ','M','a','r','k','u','s','@'};
+	unsigned char c = 250; // INIT
+	int i = 0;
+
+
+	//modify the port settings on your own
+	port = new QextSerialPort("/dev/ttyUSB0");
+	port->setBaudRate(BAUD38400);   
+	port->setFlowControl(FLOW_OFF);
+	port->setParity(PAR_NONE);    
+	port->setDataBits(DATA_8);   
+	port->setStopBits(STOP_2);    
+	qDebug("isOpen : %d", port->isOpen());
 	
-	The O_NDELAY flag tells UNIX that this program doesn't care what state the DCD signal line is in -
-	whether the other end of the port is up and running.
-	If you do not specify this flag, your process will be put to sleep until the DCD signal line is the space voltage.
-	*/
-	fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY);
+	// Open port
+	qDebug("Opening port...");
+	port->open(QIODevice::ReadWrite);
+	qDebug("is open: %d\n", port->isOpen());
+
+
+	printf("Sending commands...");
+
+	c = 0x80; // 'speak' command
+	i = port->write(&c, 1);
+	qDebug("%d byte transmitted: %d", i, c);
 	
-	if (fd == -1)
+	// now waitung for ACK!!
+	receiveMsg();
+	while ( read_port(dev_fd, &c, 1) < 1 )
 	{
-		/*
-		* Could not open the port.
-		*/
-		printf("\nopen_port: Unable to open /dev/ttyUSB0\n");
 	}
-	else
+
+	c = 0x00; // full volume (0 to 7)
+	write_port(dev_fd, &c, 1);
+	while ( read_port(dev_fd, &c, 1) < 1 )
 	{
-		fcntl(fd, F_SETFL, 0);
 	}
 
-	return (fd);
-}
-
-
-void configure_port(int dev_fd)
-{
-	struct termios options;
-	
-	/*
-	* GET the current options for the port...
-	*/
-	tcgetattr(dev_fd, &options);
-	
-	/*
-	* Setting the baud rate. 38400 BAUD !!
-	*/
-	cfsetispeed(&options, B38400);
-	cfsetospeed(&options, B38400);
-	
-	/*
-	* Enable the receiver and set local mode...
-	*/
-	options.c_cflag |= (CLOCAL | CREAD);
-
-	/*
-	* Setting the Character Size
-	*/
-	options.c_cflag &= ~CSIZE; /* Mask the character size bits */
-	options.c_cflag |= CS8;    /* Select 8 data bits */
-
-	/*
-	* Setting Parity Checking
-	*/
-	// No parity (8N2)
-	options.c_cflag &= ~PARENB;
-	// options.c_cflags &= ~CSTOPB // 1 stop bit
-	options.c_cflag |= CSTOPB; // 2 STOP BITS !
-	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
-
-	/*
-	* Disabling Hardware Flow Control (Also called CRTSCTS)
-	*/
-	options.c_cflag &= ~CRTSCTS;
-//        options.c_iflag&=(~(IXON|IXOFF|IXANY)); // new from   posix_qextserialport.cpp   !!
-	
-	/*
-	* SET the new options for the port...
-	*/
-	tcsetattr(dev_fd, TCSANOW, &options);
-//	tcsetattr(dev_fd, TCSAFLUSH, &options);
-
-	// FLUSH
-	fcntl(dev_fd, F_SETFL, 0);
-}
-
-
-int read_port(int dev_fd, unsigned char *buf, int nChars)
-{
-	int amountRead = 0, bytes_read = 0;
-	/*
-	Reading Data from the Port
-	Reading data from a port is a little trickier.
-	When you operate the port in raw data mode,
-	each read system call will return the number of characters that are actually available in the serial input buffers.
-	If no characters are available, the call will block (wait) until characters come in, an interval timer expires, or an error occurs.
-	The read function can be made to return immediately by doing the following.
-	*/
-	//fcntl(dev_fd, F_SETFL, FNDELAY);
-
-	/*
-	The FNDELAY option causes the read function to return 0 if no characters are available on the port.
-	To restore normal (blocking) behavior, call fcntl() without the FNDELAY option.
-	This is also used after opening a serial port with the O_NDELAY option.
-	*/
-	//fcntl(dev_fd, F_SETFL, 0);
-	
-	// read!
-	return read(dev_fd, buf, nChars);
-}
-
-
-int write_port(int dev_fd, unsigned char *c, int nChars)
-{
-	/*
-	Writing Data to the Port
-	Writing data to the port is easy - just use the write(2) system call to send data it.
-	The write function returns the number of bytes sent or -1 if an error occurred.
-	Usually the only error you'll run into is EIO when a MODEM or data link drops the Data Carrier Detect (DCD) line.
-	This condition will persist until you close the port.int write_port(void)
-	*/
-	int n = write(dev_fd, c, 1);
-	
-	if (n < 0)
+	c = 0x07; // speed pitch (0 to 7 (7 is the lowest))
+	write_port(dev_fd, &c, 1);
+	while ( read_port(dev_fd, &c, 1) < 1 )
 	{
-		// error
-		fputs("\nwrite() of n bytes failed!\n", stderr);
 	}
-	else
+
+	c = 0x02; // speed speed (0 to 7)
+	write_port(dev_fd, &c, 1);
+	while ( read_port(dev_fd, &c, 1) < 1 )
 	{
-		//printf("%d byte(s) written.\n", n);
 	}
+
 	
-	return n;
+	
+	if (port->isOpen() > 0)
+	{
+		qDebug("Closing port...");
+		port->close();
+	}
+	qDebug("is open: %d", port->isOpen());
 }
 
 
-void close_port(int dev_fd)
+void Speak::~Speak()
 {
-	/*
-	To close the serial port, just use the close system call.
-	*/
-	close(dev_fd);
+	delete port;
+	port = NULL;
 }
+
+
+void Speak::receiveMsg()
+{
+	char buff[1024];
+	int numBytes;
+ 
+	numBytes = port->bytesAvailable();
+	if(numBytes > 0) 
+	{
+		if(numBytes > 1024) numBytes = 1024;
+	
+		int i = port->read(buff, numBytes);
+		buff[i] = '\0';
+		QString msg = buff;
+	
+		received_msg->append(msg);
+		received_msg->ensureCursorVisible();
+		qDebug("bytes available: %d\n", numBytes);
+		qDebug("received: %d\n", i);
+	}
+}
+
+
