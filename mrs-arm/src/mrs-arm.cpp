@@ -25,9 +25,13 @@ int main(int argc, char *argv[])
  
 	// create mrs-arm class object
 	Mrsarm *s = new Mrsarm();
-	Q_UNUSED (s);
+	//Q_UNUSED (s);
+	
+	s->speak("All systems activated.");
 
-	return app.exec();
+	delete s;
+	//return app.exec();
+	return 0;
 }
 
 
@@ -41,10 +45,6 @@ Mrsarm::Mrsarm()
 		qDebug("\nError opening serial port!\n\n");
 		return;
 	}
-	
-	speak("All systems activated.");
-	
-	QCoreApplication::exit(0);
 }
 
 
@@ -54,6 +54,7 @@ Mrsarm::~Mrsarm()
 	
 	delete port;
 	port = NULL;
+	qDebug("Everything's clean now! :-");
 }
 
 
@@ -122,13 +123,13 @@ bool Mrsarm::openSerialPort()
 	port->setParity(PAR_NONE);
 	port->setDataBits(DATA_8);
 	port->setStopBits(STOP_2);
-	qDebug("isOpen : %d", port->isOpen());
+	//qDebug("isOpen : %d", port->isOpen());
 	
 	// Open port
 	qDebug("Opening port...");
 	
 	return port->open(QIODevice::ReadWrite);
-	qDebug("is open: %d\n", port->isOpen());
+	//qDebug("is open: %d\n", port->isOpen());
 }
 
 
@@ -141,7 +142,7 @@ void Mrsarm::closeSerialPort()
 		qDebug("Closed\n");
 	}
 		
-	qDebug("is open: %d\n", port->isOpen());
+	//qDebug("is open: %d\n", port->isOpen());
 }
 
 
