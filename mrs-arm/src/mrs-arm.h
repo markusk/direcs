@@ -20,7 +20,7 @@
 #ifndef MRSARM_H
 #define MRSARM_H
 
-#include <QCoreApplication> // The QCoreApplication class provides an event loop for console Qt applications
+//#include <QCoreApplication> // The QCoreApplication class provides an event loop for console Qt applications
 #include <qextserialport.h>
 
 

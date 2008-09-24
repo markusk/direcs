@@ -21,14 +21,24 @@
 
 int main(int argc, char *argv[])
 {
-	QCoreApplication app(argc, argv);
- 
+	//QCoreApplication app(argc, argv);
+	
 	// create mrs-arm class object
 	Mrsarm *s = new Mrsarm();
-	//Q_UNUSED (s);
 	
-	s->speak("All systems activated.");
+	
+	if (argc <= 1)
+	{
+		s->speak("All systems activated.");
+	}
+	else
+	{
+		//QString text = QString::fromLocal8Bit(argv[1]);
+		// speak argument 1  (0 is the application name with path!)
+		s->speak(QString::fromLocal8Bit(argv[1]));
+	}
 
+	
 	delete s;
 	//return app.exec();
 	return 0;
@@ -123,6 +133,7 @@ bool Mrsarm::openSerialPort()
 	port->setParity(PAR_NONE);
 	port->setDataBits(DATA_8);
 	port->setStopBits(STOP_2);
+	port->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
 	//qDebug("isOpen : %d", port->isOpen());
 	
 	// Open port
