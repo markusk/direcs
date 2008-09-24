@@ -20,8 +20,8 @@
 #ifndef MRSARM_H
 #define MRSARM_H
 
-// The QCoreApplication class provides an event loop for console Qt applications
-#include <QCoreApplication>
+#include <QCoreApplication> // The QCoreApplication class provides an event loop for console Qt applications
+#include <qextserialport.h>
 
 
 class QextSerialPort;
@@ -35,16 +35,19 @@ class Mrsarm : public QObject
 	public:
 		Mrsarm();
 		~Mrsarm();
+		void speak(QString textToSpeak, char volume=0, char pitch=7, char speed=2); /// volume 0-7 (0 is loudest)  pitch 0-7 (0 is highest)  speed 0-7 (0 is slowest)
 		
 //	public slots:
 //		void sendNetworkCommand(QString command);
 
 
 	private:
-		void receiveMsg();
-		QextSerialPort *port;
-		QString textToSpeak;
+		bool openSerialPort();
+		void closeSerialPort();
+		void receiveSerialMsg();
+		
 		QString serialPort;
+		QextSerialPort *port;
 		static const unsigned char FLASHLIGHT_OFF 	= 40;
 		static const unsigned char FLASHLIGHT_ON 	= 41;
 };

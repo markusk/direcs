@@ -17,8 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <QCoreApplication>
-#include <qextserialport.h>
 #include "mrs-arm.h"
 
 int main(int argc, char *argv[])
@@ -36,13 +34,88 @@ int main(int argc, char *argv[])
 Mrsarm::Mrsarm()
 {
 	serialPort = "/dev/ttyUSB0";
-	textToSpeak = "Hello Markus";
+
+
+	if (!openSerialPort())
+	{
+		qDebug("\nError opening serial port!\n\n");
+		return;
+	}
+	
+	speak("All systems activated.");
+	
+	QCoreApplication::exit(0);
+}
+
+
+Mrsarm::~Mrsarm()
+{
+	closeSerialPort();
+	
+	delete port;
+	port = NULL;
+}
+
+
+void Mrsarm::speak(QString textToSpeak, char volume, char pitch, char speed)
+{
 	char c = 0;
-	int i = 0;
 
 
-	// modify the port settings
-	// these settings are set, when the port is opened
+	qDebug("Sending commands...");
+
+	// 'speak' command
+	c = 0x80;
+	if (port->write(&c, 1) == -1)
+	{
+		// ERROR!
+		qDebug("\nError writing to serial port!\n");
+		return;
+	}
+	receiveSerialMsg();
+
+	
+	// full volume (0 to 7)
+	c = volume;
+	port->write(&c, 1);
+	receiveSerialMsg();
+
+	// speed pitch (0 to 7 (7 is the lowest))
+	c = pitch;
+	port->write(&c, 1);
+	receiveSerialMsg();
+
+	// speed speed (0 to 7)
+	c = speed;
+	port->write(&c, 1);
+	receiveSerialMsg();
+	qDebug("Sent");
+	
+
+	qDebug("Sending ASCII text to speak...");
+	for (int n=0; n < textToSpeak.length() ;n++)
+	{
+		// get one character from the string to say
+		const char *  t = textToSpeak.mid(n,1).toLatin1();
+		c = *t;
+		port->write(&c, 1);
+		receiveSerialMsg();
+	}
+	qDebug("Sent.");
+	
+	
+	// end of transmit. start mrs-arming!
+	c = 0x00;
+	port->write(&c, 1);
+	//qDebug("%d byte transmitted: %d", i, c);
+	receiveSerialMsg();
+	qDebug("Spoken.");
+}
+
+
+bool Mrsarm::openSerialPort()
+{
+	// modify the serial port settings
 	port = new QextSerialPort(serialPort);
 	port->setBaudRate(BAUD38400);
 	port->setFlowControl(FLOW_OFF);
@@ -53,78 +126,26 @@ Mrsarm::Mrsarm()
 	
 	// Open port
 	qDebug("Opening port...");
-	if (port->open(QIODevice::ReadWrite) != true)
-	{
-		qDebug("\nError opening serial port!\n\n");
-		QCoreApplication::exit(-1);
-	}
+	
+	return port->open(QIODevice::ReadWrite);
 	qDebug("is open: %d\n", port->isOpen());
-
-
-	qDebug("Sending commands...");
-
-	// 'mrs-arm' command
-	c = 0x80;
-	i = port->write(&c, 1);
-	receiveMsg();
-
-	// full volume (0 to 7)
-	c = 0x00;
-	i = port->write(&c, 1);
-	receiveMsg();
-
-	// speed pitch (0 to 7 (7 is the lowest))
-	c = 0x07;
-	i = port->write(&c, 1);
-	receiveMsg();
-
-	// speed speed (0 to 7)
-	c = 0x02;
-	i = port->write(&c, 1);
-	receiveMsg();
-	qDebug("Sent\n");
-	
-	//
-	// sending string here ! ! !
-	//
-	qDebug("Sending text...");
-	for (int n=0; n < textToSpeak.length() ;n++)
-	{
-		// get one character from the string to say
-		const char *  t = textToSpeak.mid(n,1).toLatin1();
-		c = *t;
-		i = port->write(&c, 1);
-		receiveMsg();
-	}
-	qDebug("Sent.\n");
-	
-	
-	// end of transmit. start mrs-arming!
-	c = 0x00;
-	i = port->write(&c, 1);
-	//qDebug("%d byte transmitted: %d", i, c);
-	receiveMsg();
-	
-	
-	qDebug("Closing port...");
-	port->close();
-	qDebug("Closed\n");
-	
-	qDebug("is open: %d\n", port->isOpen());
-
-	// clean exit
-	QCoreApplication::exit(0);
 }
 
 
-Mrsarm::~Mrsarm()
+void Mrsarm::closeSerialPort()
 {
-	delete port;
-	port = NULL;
+	if (port->isOpen() != 0)
+	{
+		qDebug("Closing port...");
+		port->close();
+		qDebug("Closed\n");
+	}
+		
+	qDebug("is open: %d\n", port->isOpen());
 }
 
 
-void Mrsarm::receiveMsg()
+void Mrsarm::receiveSerialMsg()
 {
 	char buff[1024];
 	int numBytes;
