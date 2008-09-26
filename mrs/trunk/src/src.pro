@@ -85,20 +85,23 @@ INCLUDEPATH += /usr/include/atk-1.0/ \
     /usr/include/gtk-2.0/ \
     /usr/include/speech_tools \
     /usr/include/festival \
-    /usr/local/qwt/include \
+    /usr/include/qwt-qt4 \
     /usr/local/include/opencv
-LIBS += -L/usr/local/qwt/lib/ \
-    -L/usr/local/lib \
-    -L/usr/lib/festival/ \
-    -L/usr/lib/speech_tools/ \
-    -lFestival \
-    -lestools \
-    -lestbase \
-    -leststring \
-    -ltermcap \
-    -lesd \
-    -lqextserialport \
-    -lqwt \
-    -lcv \
-    -lhighgui
 TARGET = ../bin/mrs
+CONFIG -= release
+
+LIBS += -L/usr/lib/ \
+  -L/usr/local/lib \
+  -L/usr/lib/festival/ \
+  -L/usr/lib/speech_tools/ \
+  -lFestival \
+  -lestools \
+  -lestbase \
+  -leststring \
+  -ltermcap \
+  -lesd \
+  -lqextserialport \
+  -lqwt-qt4 \
+  -lcv \
+  -lhighgui
+
