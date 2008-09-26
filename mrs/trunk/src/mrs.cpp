@@ -244,33 +244,6 @@ void Mrs::init()
 		readSettings();
 	}
 
-
-	//-------------------------------------------------------
-	// Open serial port for microcontroller communication
-	//-------------------------------------------------------
-	gui->appendLog("Opening serial port for microcontroller communication...");
-	
-	if (interface1->openComPort(serialPortMicrocontroller) == true)
-	{
-		gui->appendLog("Serial port opened.");
-	}
-	else
-	{
-		gui->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
-	}
-	
-	
-	//-------------------------------------------------------
-	// Basic init for all the bits on the robot circuit
-	// AND check, if the robot is "on" (it answers correct)
-	//-------------------------------------------------------
-	splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
-	// for refreshing the splash...
-	QApplication::processEvents();
-
-	// init the circuit & Co. when hitting the button in the GUI
-	connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
-	connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 	
 	//----------------------------------------------------------------------------
 	// connect plotThread signal to "setPlotData"
@@ -286,11 +259,42 @@ void Mrs::init()
 	//----------------------------------------------------------------------------
 	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
 
+	
+	//-------------------------------------------------------
+	// Open serial port for microcontroller communication
+	//-------------------------------------------------------
+	gui->appendLog("Opening serial port for microcontroller communication...");
+	
+	if (interface1->openComPort(serialPortMicrocontroller) == false)
+	{
+		qDebug() << "Error opening serial port" << serialPortMicrocontroller;
+		gui->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
+		
+		// no serial port, no robot :-(
+		robotIsOn = false;
+	}
+	else
+	{
+		gui->appendLog("Serial port opened.");
+	
 
-	//==========================================
-	// init the robots circuit
-	//==========================================
-	circuit1->initCircuit();
+		//-------------------------------------------------------
+		// Basic init for all the bits on the robot circuit
+		// AND check, if the robot is "on" (it answers correct)
+		//-------------------------------------------------------
+		splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
+		// for refreshing the splash...
+		QApplication::processEvents();
+	
+		// init the circuit & Co. when hitting the button in the GUI
+		connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+		connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
+	
+		//==========================================
+		// init the robots circuit
+		//==========================================
+		circuit1->initCircuit();
+	}
 
 
 	if (robotIsOn)

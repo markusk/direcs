@@ -44,12 +44,15 @@ bool InterfaceAvr::openComPort(QString comPort)
 	serialPort->setDataBits(DATA_8);
 	serialPort->setStopBits(STOP_1);
 	serialPort->setParity(PAR_NONE);
-	serialPort->setFlowControl(FLOW_OFF);
 	
 	if (serialPort->open() == false)
 	{
 		return false;
 	}
+	
+	// Due to a bug in posix_qextserialport.h setting of flow control HAS to be AFTER opening an port!
+	// If not, a memory access error occurs!
+	serialPort->setFlowControl(FLOW_OFF);
 	
 	// Flushes all pending I/O to the serial port.
 	serialPort->flush();
