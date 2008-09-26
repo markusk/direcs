@@ -42,6 +42,7 @@
 #include "head.h"
 //-------------------------------------------------------------------
 #include <festival.h> // FIXME: instead of speakThread-include!
+#include <QtDebug>
 #include <QtGui>
 #include <QSplashScreen>
 #include <QMutex>
