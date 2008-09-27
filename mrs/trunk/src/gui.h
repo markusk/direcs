@@ -27,18 +27,19 @@
 #include "aboutDialog.h"
 #include "laserScene.h"
 //-------------------------------------------------------------------
-#include <qwt_plot_layout.h>
-#include <qwt_plot_curve.h>
-#include <qwt_scale_draw.h>
-#include <qwt_scale_widget.h>
-#include <qwt_legend.h>
-#include <qwt_legend_item.h>
-//-------------------------------------------------------------------
 #include <QtGui>
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	#include "ui_mainWindow.h"
 	#include "cv.h" // for type IplImage (camThread)
+	//-------------------------------------------------------------------
+	#include <qwt_plot_layout.h>
+	#include <qwt_plot_curve.h>
+	#include <qwt_scale_draw.h>
+	#include <qwt_scale_widget.h>
+	#include <qwt_legend.h>
+	#include <qwt_legend_item.h>
+	//-------------------------------------------------------------------
 	#include "QtGLContext.h"
 	#include <QtOpenGL>
 #else
@@ -399,10 +400,12 @@ class Gui : public QMainWindow
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the mrs class!
 		JoystickDialog *joystickDialog; // just a pointer to the object created in the mrs class!
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
 		QwtPlotCurve curve3;
 		QwtPlotCurve curve4;
+		#endif
 		QPixmap cameraPicToSave;
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;

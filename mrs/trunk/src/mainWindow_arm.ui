@@ -419,48 +419,7 @@
           <height>201</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2" >
-         <item>
-          <widget class="QwtPlot" name="qwtPlotCurrent1" >
-           <property name="font" >
-            <font>
-             <family>Verdana</family>
-            </font>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QwtPlot" name="qwtPlotCurrent2" >
-           <property name="font" >
-            <font>
-             <family>Verdana</family>
-            </font>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QwtPlot" name="qwtPlotCurrent3" >
-           <property name="font" >
-            <font>
-             <family>Verdana</family>
-            </font>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QwtPlot" name="qwtPlotCurrent4" >
-           <property name="font" >
-            <font>
-             <family>Verdana</family>
-            </font>
-           </property>
-          </widget>
-         </item>
-        </layout>
-        <zorder>qwtPlotCurrent2</zorder>
-        <zorder>qwtPlotCurrent3</zorder>
-        <zorder>qwtPlotCurrent4</zorder>
-        <zorder>qwtPlotCurrent1</zorder>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" />
        </widget>
       </widget>
      </widget>
@@ -2116,13 +2075,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QwtPlot</class>
-   <extends>QFrame</extends>
-   <header>qwt_plot.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../mrs.qrc" />
  </resources>

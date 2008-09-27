@@ -99,11 +99,13 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	initializePlots();
 	
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
 	createLaserScannerObjects();
 	createLaserDistanceObjects();
+	#endif
 
 	//----------------------------------------------------------------------------------
 	// get the mouse position, when the robot position is to be changed
@@ -1094,6 +1096,7 @@ void Gui::saveCamImage(void)
 
 void Gui::setPlotData1(double *xval, double *yval, int size)
 {
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//---------------
 	// curve1
 	//---------------
@@ -1106,11 +1109,13 @@ void Gui::setPlotData1(double *xval, double *yval, int size)
 	
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot();
+	#endif
 }
 
 
 void Gui::setPlotData2(double *xval, double *yval, int size)
 {
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//---------------
 	// curve2
 	//---------------
@@ -1123,11 +1128,13 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 	
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();
+	#endif
 }
 
 
 void Gui::setPlotData3(double *xval, double *yval, int size)
 {
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//---------------
 	// curve3
 	//---------------
@@ -1140,11 +1147,13 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 	
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent3->replot();
+	#endif
 }
 
 
 void Gui::setPlotData4(double *xval, double *yval, int size)
 {
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//---------------
 	// curve4
 	//---------------
@@ -1157,6 +1166,7 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 	
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent4->replot();
+	#endif
 }
 
 
@@ -2033,6 +2043,7 @@ void Gui::laserSplash(bool status, short int laserScanner)
 
 void Gui::initializePlots()
 {
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
@@ -2115,6 +2126,7 @@ void Gui::initializePlots()
 	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve4.setPen(QPen(col));
 	curve4.setBrush(col);
+	#endif
 }
 
 
