@@ -39,11 +39,11 @@
   </kdevastyle>
   <kdevbookmarks>
    <bookmarks>
-    <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
-     <mark line="1213" />
-    </bookmark>
     <bookmark url="/home/markus/develop/subversion/applications/mrs/trunk/src/sick.c" >
      <mark line="44" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
+     <mark line="1213" />
     </bookmark>
     <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/heartbeat.cpp" >
      <mark line="78" />
