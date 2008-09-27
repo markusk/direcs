@@ -15,4 +15,4 @@ export PATH=/home/markus/develop/nslu2/crosstool_debian/gcc-3.4.5-glibc-2.3.6/ar
 export PATH=/usr/local/Trolltech/QtEmbedded-4.4.1-arm/bin:$PATH
 
 # for usage in qmake pro files!
-export DESTPLATFORM=ARM
+export DESTPLATFORM=arm
