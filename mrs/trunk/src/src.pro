@@ -85,21 +85,36 @@ unix {
 	HEADERS +=	posix_qextserialport.h \
 			QtGLContext.h
 	SOURCES +=	QtGLContext.cpp
+	FORMS +=	mainWindow.ui
 	DEFINES =	_TTY_POSIX_
+	QT +=		network \
+			opengl
 }
 
 win32 {
 	HEADERS +=	win_qextserialport.h
+	FORMS +=	mainWindow.ui
 	DEFINES =	_TTY_WIN_ QWT_DLL QT_DLL
+	QT +=		network \
+			opengl
 }
 
 arm {
-	message("Processing arm specific scope...")
+	message("Processing additional ARM specific scope...")
 	HEADERS -=	camThread.h \
-			speakThread.h
-	SOURCES +=	camThread.cpp \
-			speakThread.cpp
-	INCLUDEPATH +=	/usr/include/qwt-qt4
+			speakThread.h \
+			QtGLContext.h
+	SOURCES -=	camThread.cpp \
+			speakThread.cpp \
+			QtGLContext.cpp
+	INCLUDEPATH -=	/usr/include/atk-1.0/ \
+			/usr/lib/gtk-2.0/include/ \
+			/usr/include/pango-1.0/ \
+			/usr/include/cairo/ \
+			/usr/include/gtk-2.0/ \
+			/usr/include/speech_tools \
+			/usr/include/festival \
+			/usr/local/include/opencv
 	LIBS -= 	-L/usr/lib/festival/ \
 			-L/usr/lib/speech_tools/ \
 			-lFestival \
@@ -109,17 +124,17 @@ arm {
 			-lesd \
 			-lcv \
 			-lhighgui
-	DEFINES += _TTY_POSIX_ _ARM_
+	FORMS -=	mainWindow.ui
+	FORMS +=	mainWindow_arm.ui
+	DEFINES += _ARM_
+	QT -=		opengl
 }
 
-QT += network \
-    opengl
 DESTDIR = .
 TARGET = ../bin/mrs
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
-FORMS += mainWindow.ui \
-	aboutDialog.ui \
+FORMS += aboutDialog.ui \
 	joystickDialog.ui \
 	settingsDialog.ui
 RESOURCES = ../mrs.qrc

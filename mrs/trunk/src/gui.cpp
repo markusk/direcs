@@ -1031,14 +1031,17 @@ void Gui::disableCamera()
 }
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::setCamImageData(int width, int height, int pixeldepth)
 {
 	// tell the OpenGLContext the image data
 	ui.frameCamera->setImageData(width, height, pixeldepth);
 	appendLog("Camera image width, height and pixel depth set.");
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 //void Gui::setCamImage(QImage* image)
 void Gui::setCamImage(IplImage* frame)
 {
@@ -1056,6 +1059,7 @@ void Gui::setCamImage(IplImage* frame)
 	}
 */
 }
+#endif
 
 
 void Gui::saveCamImage(void)
@@ -1332,8 +1336,10 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 void Gui::on_checkBoxMirror_stateChanged(int state)
 {
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	// QtGL class!!
 	ui.frameCamera->enableMirrorMode(state);
+	#endif
 }
 
 
@@ -1366,7 +1372,7 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 	}
 }
 
-
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::initLaserView()
 {
 	// for getting nice x and y position
@@ -1475,8 +1481,10 @@ void Gui::initLaserView()
 	// zoom into the laser lines by default factor
 	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
 {
 	/*
@@ -1556,8 +1564,10 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 	}
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags)
 {
 	/*
@@ -1640,8 +1650,10 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 //		laserLineListRear->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
 	}
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	//qreal diff = laserFrontYPos - laserRearYPos;
@@ -1656,8 +1668,10 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 	// refresh laserView
 	on_sliderZoom_valueChanged(ui.sliderZoom->value());
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 {
 	int zoomValue = ui.sliderZoom->value();
@@ -1675,8 +1689,10 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 	// refresh laserView (set zoom slider)
 	ui.sliderZoom->setValue(zoomValue);
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::createLaserScannerObjects()
 {
 	// the start position for the pos. calculation
@@ -1846,8 +1862,10 @@ void Gui::createLaserScannerObjects()
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot2->setZValue(3);
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::createLaserDistanceObjects()
 {
 	// set colors
@@ -1940,8 +1958,10 @@ void Gui::createLaserDistanceObjects()
 		scene->addItem(text);
 	}
 }
+#endif
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::laserSplash(bool status, short int laserScanner)
 {
 	switch (laserScanner)
@@ -2008,6 +2028,7 @@ void Gui::laserSplash(bool status, short int laserScanner)
 			break;
 	}
 }
+#endif
 
 
 void Gui::initializePlots()

@@ -80,7 +80,9 @@ Mrs::Mrs(QSplashScreen *splash)
 	plotThread = new PlotThread(sensorThread);
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	camThread = new CamThread();
+	#endif
 	joystick = new Joystick();
 	head = new Head(servos);
 }
@@ -144,8 +146,10 @@ void Mrs::init()
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
 	// currently not in use:
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
-
+	#endif
+	
 	//--------------------------------------------------------------------------
 	// resets the driven distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
@@ -181,6 +185,7 @@ void Mrs::init()
 	//--------------------------------------------------------------------------
 	connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 	
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//-------------------------------------------------------------------------------------
 	// disable face detection in the GUI, on error with loading haar cascade in CamThread
 	// Must be before readSettings!
@@ -192,6 +197,7 @@ void Mrs::init()
 	// Must be before readSettings!
 	//-------------------------------------------------------------------------------------
 	connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() ));
+	#endif
 	
 	
 	//----------------------------------------------------------------------------
@@ -203,12 +209,14 @@ void Mrs::init()
 	//connect(gui, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
 	connect(gui, SIGNAL( speak(QString) ), this, SLOT( speak(QString) ));
 	
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// Initialize the speech engine festival
 	//----------------------------------------------------------------------------
 	//      1 = we want the festival init files loaded
 	// 500000 = default scheme heap size
 	festival_initialize(1, 500000);
+	#endif
 	
 	// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
 	/*
@@ -396,6 +404,7 @@ void Mrs::init()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL(sensorDataComplete()), this, SLOT(showSensorData()));
 	
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// connect sensor contact signals to "show contact alarm"
 	// (Whenever the an alarm contact was closed, show the result in the cam image)
@@ -429,6 +438,7 @@ void Mrs::init()
 	// show the face track direction in the gui
 	//----------------------------------------------------------------------------
 	connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
+	#endif
 	
 	//----------------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
@@ -479,6 +489,7 @@ void Mrs::init()
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 	
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//-----------------------------------------------------------
 	// check if camera is connected
 	//-----------------------------------------------------------
@@ -506,6 +517,7 @@ void Mrs::init()
 	{
 		gui->appendLog("Camera thread NOT started!");
 	}
+	#endif
 
 	
 	//----------------------------------------------------------------------------
@@ -555,12 +567,14 @@ void Mrs::init()
 			gui->appendLog("Rear laser scanner NOT found.");
 		}
 
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		// TODO: nice exit point and error message
 		if (!QGLFormat::hasOpenGL())
 		{
 			qDebug() << "This system has no OpenGL support" << endl;
 			showExitDialog();
 		}
+		#endif
 		
 		
 		// start the laserThread
@@ -587,9 +601,11 @@ void Mrs::init()
 	}
 	else
 	{
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		// turn off laser splash
 		gui->laserSplash(false, LASER1);
 		gui->laserSplash(false, LASER2);
+		#endif
 		gui->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
 	
@@ -634,9 +650,11 @@ void Mrs::init()
 	/*
 	}
 	*/
-	
+
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	// one time init for the laser view
 	gui->initLaserView();
+	#endif
 }
 
 
@@ -717,6 +735,7 @@ void Mrs::shutdown()
 	
 		
 		// TODO: a universal quit-threads-method
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		//--------------------------------
 		// quit the camThread
 		//--------------------------------
@@ -752,6 +771,7 @@ void Mrs::shutdown()
 				gui->appendLog("Camera thread terminated.");
 			}
 		}
+		#endif
 		
 		
 		//--------------------------------
@@ -1085,7 +1105,9 @@ Mrs::~Mrs()
 	#endif
 	delete laserThread;
 	delete netThread;
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	delete camThread;
+	#endif
 	delete joystick;
 	delete plotThread;
 	delete inifile1;
@@ -1321,6 +1343,7 @@ void Mrs::enableFaceTracking(int state)
 
 void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	// TODO: put values to consts or ini
 	int xLevelRight = (camThread->imageWidth()  / 2) + faceRadius;
 	int xLevelLeft  = (camThread->imageWidth()  / 2) - faceRadius;
@@ -1472,6 +1495,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 		emit showFaceTrackDirection("DOWNRIGHT");
 		return;
 	}
+	#endif
 }
 
 
@@ -1694,14 +1718,17 @@ void Mrs::readSettings()
 		case 1:
 			dontUseCamera = true;
 			
+			#ifndef _ARM_ // only include on _non_ ARM environments!
 			// turning "off" camera
 			camThread->setCameraDevice(-2);
+			#endif
 			gui->disableCamera();
 			
 			gui->appendLog("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
 			break;
 	}
 
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!dontUseCamera)
 	{
 		//---------------------------------------------------------------------
@@ -1765,6 +1792,7 @@ void Mrs::readSettings()
 			}
 		}
 	} // dont use camera!
+	#endif
 	
 	//---------------------------------------------------------------------
 	// read setting / and error handling
@@ -3059,6 +3087,7 @@ void Mrs::speak(QString text)
 	} while (text.contains(">"));
 	// till the last HTML ">" is found
 	
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	// convert QString to EST_String (defined in EST_String.h)
 	EST_String textForFestival (text.toAscii());
 	
@@ -3069,6 +3098,7 @@ void Mrs::speak(QString text)
 	//
 	// say the cleaned text
 	festival_say_text(textForFestival);
+	#endif
 	#endif
 }
 

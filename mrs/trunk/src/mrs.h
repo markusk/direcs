@@ -25,13 +25,11 @@
 #include "gui.h"
 #include "joystickDialog.h"
 #include "settingsDialog.h"
-//#include "speakThread.h"
 #include "circuit.h"
 #include "interfaceAvr.h"
 #include "heartbeat.h"
 #include "sensorThread.h"
 #include "plotThread.h"
-#include "camThread.h"
 #include "motor.h"
 #include "servo.h"
 #include "obstacleCheckThread.h"
@@ -41,7 +39,11 @@
 #include "joystick.h"
 #include "head.h"
 //-------------------------------------------------------------------
-#include <festival.h> // FIXME: instead of speakThread-include!
+#ifndef _ARM_ // only include on _non_ ARM environments!
+	#include "camThread.h"
+	#include <festival.h> // FIXME: instead of speakThread-include!
+	//#include "speakThread.h"
+#endif
 #include <QtDebug>
 #include <QtGui>
 #include <QSplashScreen>
@@ -229,7 +231,9 @@ class Mrs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		CamThread *camThread;
+#endif
 		//SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;

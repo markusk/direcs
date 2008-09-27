@@ -22,13 +22,10 @@
 #define GUI_H
 
 //-------------------------------------------------------------------
-#include "ui_mainWindow.h"
 #include "joystickDialog.h"
 #include "settingsDialog.h"
 #include "aboutDialog.h"
 #include "laserScene.h"
-//-------------------------------------------------------------------
-#include "cv.h" // for type IplImage (camThread)
 //-------------------------------------------------------------------
 #include <qwt_plot_layout.h>
 #include <qwt_plot_curve.h>
@@ -37,9 +34,17 @@
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
 //-------------------------------------------------------------------
-#include "QtGLContext.h"
 #include <QtGui>
-#include <QtOpenGL>
+
+#ifndef _ARM_ // only include on _non_ ARM environments!
+	#include "ui_mainWindow.h"
+	#include "cv.h" // for type IplImage (camThread)
+	#include "QtGLContext.h"
+	#include <QtOpenGL>
+#else
+	#include "ui_mainWindow_arm.h"
+#endif
+
 #include <QGraphicsScene> // for OpenGL (Laser lines)
 //-------------------------------------------------------------------
 
@@ -92,15 +97,19 @@ class Gui : public QMainWindow
 		*/
 		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
 		
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		tell the OpenGLContext the image data
 		*/
 		void setCamImageData(int width, int height, int pixeldepth);
+#endif
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Initialise the laser view (find the middle of the now fresh shown control etc.)
 		*/
 		void initLaserView();
+#endif
 
 
 	public slots:
@@ -116,6 +125,7 @@ class Gui : public QMainWindow
 		static void appLog(QString text);
 		*/
 		
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Shows the new picture from the cam (live).
 		@param frame
@@ -123,6 +133,7 @@ class Gui : public QMainWindow
 		*/
 		void setCamImage(IplImage* frame);
 		//void setCamImage(QImage* image);
+#endif
 		
 		/**
 		Show some face track data in the GUI.
@@ -197,25 +208,33 @@ class Gui : public QMainWindow
 		*/
 		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
 		
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/
 		void refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags);
+#endif
 		
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Refreshes the view of the lines from the rear laser scanner.
 		*/
 		void refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags);
+#endif
 		
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
 		*/
 		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
+#endif
 		
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Zoom into the graphicsView/scene, if the mouse wheel was used.
 		*/
 		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
+#endif
 		
 		/**
 		Shows the joystick values when it moves.
@@ -235,12 +254,14 @@ class Gui : public QMainWindow
 		*/
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
 		
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Shows a graphic in the laser scanner view while searching for a scanner.
 		@param status can be true or false
 		@param laserScanner is the number of the laser scanner and can be LASER1, LASER2...
 		*/
 		void laserSplash(bool status, short int laserScanner);
+#endif
 		
 		/**
 		Shows the preferred driving direction in a lable.
