@@ -1,7 +1,7 @@
-# Diese Datei wurde mit dem qmake-Manager von KDevelop erstellt.
-# -------------------------------------------
-# Unterordner relativ zum Projektordner: ./src
-# Das Target ist eine Anwendung: ../bin/mrs
+destplatform = $$(DESTPLATFORM)
+!isEmpty ( destplatform ) message("Destination platform will be:" $$destplatform)
+!isEmpty ( destplatform ) CONFIG += $$destplatform
+
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
 FORMS += mainWindow.ui \
@@ -105,3 +105,9 @@ LIBS += -L/usr/lib/ \
   -lcv \
   -lhighgui
 
+arm {
+	message("Processing arm specific scope...")
+	# HEADERS -= 
+	# SORUCES -= 
+	# DEFINES += USE_MY_STUFF QT_DLL
+}
