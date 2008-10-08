@@ -16,16 +16,26 @@ Gui::Gui(MrsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	speedMotor1 = ui.spinBoxSpeed1->value();
 	speedMotor2 = ui.spinBoxSpeed2->value();
 	
-	
 	view = new QWebView(ui.widgetWeb);
 	view->load(QUrl("http://nslu:8000/"));
+	//view->load(QUrl("http://nslu/"));
 	view->show();
+	
+	/*
+	media = new MediaObject(ui.widgetWeb);
+	vwidget = new VideoWidget(ui.widgetWeb);
+	Phonon::createPath(media, vwidget)
+	media->enqueue("/home/markus/media/mp3/Classic/klaus badelt - pirates of the caribbean - 15 - he's a pirate.mp3");
+	*/
 }
 
 
 Gui::~Gui()
 {
 	delete view;
+	//delete media;
+	//delete vwidget;
+	
 	delete mrsremote1;
 }
 

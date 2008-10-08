@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'gui.ui'
 **
-** Created: Thu Oct 2 12:16:43 2008
+** Created: Thu Oct 2 13:38:13 2008
 **      by: Qt User Interface Compiler version 4.4.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -45,14 +45,13 @@ public:
     QPushButton *btnExit;
     QLabel *lblLink;
     QGroupBox *groupBoxWeb;
-    QPushButton *btnTest_2;
     QWidget *widgetWeb;
 
     void setupUi(QWidget *Gui)
     {
     if (Gui->objectName().isEmpty())
         Gui->setObjectName(QString::fromUtf8("Gui"));
-    Gui->resize(831, 572);
+    Gui->resize(1151, 751);
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     sizePolicy.setHorizontalStretch(0);
     sizePolicy.setVerticalStretch(0);
@@ -64,7 +63,7 @@ public:
     Gui->setLayoutDirection(Qt::LeftToRight);
     groupBoxControl = new QGroupBox(Gui);
     groupBoxControl->setObjectName(QString::fromUtf8("groupBoxControl"));
-    groupBoxControl->setGeometry(QRect(10, 0, 411, 411));
+    groupBoxControl->setGeometry(QRect(10, 10, 411, 411));
     btnBackward = new QPushButton(groupBoxControl);
     btnBackward->setObjectName(QString::fromUtf8("btnBackward"));
     btnBackward->setGeometry(QRect(150, 280, 111, 111));
@@ -121,7 +120,7 @@ public:
     spinBoxSpeed2->setValue(23);
     groupBoxNetwork = new QGroupBox(Gui);
     groupBoxNetwork->setObjectName(QString::fromUtf8("groupBoxNetwork"));
-    groupBoxNetwork->setGeometry(QRect(10, 420, 411, 111));
+    groupBoxNetwork->setGeometry(QRect(10, 430, 411, 111));
     label_4 = new QLabel(groupBoxNetwork);
     label_4->setObjectName(QString::fromUtf8("label_4"));
     label_4->setGeometry(QRect(10, 20, 41, 16));
@@ -134,7 +133,7 @@ public:
     btnTest->setGeometry(QRect(10, 70, 81, 21));
     groupBoxLog = new QGroupBox(Gui);
     groupBoxLog->setObjectName(QString::fromUtf8("groupBoxLog"));
-    groupBoxLog->setGeometry(QRect(430, 360, 391, 171));
+    groupBoxLog->setGeometry(QRect(10, 550, 411, 171));
     textEdit1 = new QTextEdit(groupBoxLog);
     textEdit1->setObjectName(QString::fromUtf8("textEdit1"));
     textEdit1->setGeometry(QRect(10, 20, 371, 111));
@@ -143,26 +142,23 @@ public:
     btnClear->setGeometry(QRect(10, 140, 91, 21));
     btnExit = new QPushButton(Gui);
     btnExit->setObjectName(QString::fromUtf8("btnExit"));
-    btnExit->setGeometry(QRect(740, 540, 81, 26));
+    btnExit->setGeometry(QRect(1060, 710, 81, 26));
     QIcon icon5;
     icon5.addPixmap(QPixmap(QString::fromUtf8(":/images/images/exit.png")), QIcon::Normal, QIcon::Off);
     btnExit->setIcon(icon5);
     lblLink = new QLabel(Gui);
     lblLink->setObjectName(QString::fromUtf8("lblLink"));
-    lblLink->setGeometry(QRect(10, 550, 83, 16));
+    lblLink->setGeometry(QRect(10, 730, 83, 16));
     lblLink->setCursor(QCursor(Qt::PointingHandCursor));
     lblLink->setTextFormat(Qt::RichText);
     lblLink->setOpenExternalLinks(true);
     lblLink->setTextInteractionFlags(Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse);
     groupBoxWeb = new QGroupBox(Gui);
     groupBoxWeb->setObjectName(QString::fromUtf8("groupBoxWeb"));
-    groupBoxWeb->setGeometry(QRect(430, 0, 391, 351));
-    btnTest_2 = new QPushButton(groupBoxWeb);
-    btnTest_2->setObjectName(QString::fromUtf8("btnTest_2"));
-    btnTest_2->setGeometry(QRect(10, 320, 91, 21));
+    groupBoxWeb->setGeometry(QRect(440, 10, 701, 531));
     widgetWeb = new QWidget(groupBoxWeb);
     widgetWeb->setObjectName(QString::fromUtf8("widgetWeb"));
-    widgetWeb->setGeometry(QRect(20, 20, 361, 261));
+    widgetWeb->setGeometry(QRect(10, 20, 681, 501));
 
     retranslateUi(Gui);
 
@@ -191,8 +187,6 @@ public:
     btnExit->setShortcut(QApplication::translate("Gui", "Alt+X", 0, QApplication::UnicodeUTF8));
     lblLink->setText(QApplication::translate("Gui", "www.direcs.de", 0, QApplication::UnicodeUTF8));
     groupBoxWeb->setTitle(QApplication::translate("Gui", "Web", 0, QApplication::UnicodeUTF8));
-    btnTest_2->setText(QApplication::translate("Gui", "Te&st", 0, QApplication::UnicodeUTF8));
-    btnTest_2->setShortcut(QApplication::translate("Gui", "Alt+S", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(Gui);
     } // retranslateUi
 

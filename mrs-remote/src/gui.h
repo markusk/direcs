@@ -17,8 +17,13 @@
 #include "mrs-remote.h"
 #include <QtGui>
 #include <QWebView>
+/*
+#include <Phonon/Global>
+#include <Phonon/MediaObject>
+#include <Phonon/Path>
+#include <Phonon/AudioOutput>
 //-------------------------------------------------------------------
-
+*/
 
 // forward declarations because of circular includes!
 class MrsRemote;
@@ -59,6 +64,8 @@ class Gui : public QMainWindow
 		Ui::Gui ui;
 		MrsRemote *mrsremote1;
 		QWebView *view;
+		//MediaObject *media;
+		//VideoWidget *vwidget;
 		bool robotDrives;
 		int speedMotor1;
 		int speedMotor2;
