@@ -15,7 +15,8 @@ qt
 DEFINES = warn_on \
 qt
 TEMPLATE = app
-QT += network
+QT += network \
+      webkit
 
 INCLUDEPATH += /home/markus/develop/subversion/applications/mrs-remote/src
 

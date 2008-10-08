@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>842</width>
+    <width>831</width>
     <height>572</height>
    </rect>
   </property>
@@ -20,7 +20,8 @@
    <string>mrs remote</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../mrs-remote.qrc" >:/images/images/underFootOne.png</iconset>
+   <iconset resource="../mrs-remote.qrc" >
+    <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
   </property>
   <property name="layoutDirection" >
    <enum>Qt::LeftToRight</enum>
@@ -47,7 +48,8 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >:/images/images/down.png</iconset>
+     <iconset resource="../mrs-remote.qrc" >
+      <normaloff>:/images/images/down.png</normaloff>:/images/images/down.png</iconset>
     </property>
     <property name="iconSize" >
      <size>
@@ -69,7 +71,8 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >:/images/images/back.png</iconset>
+     <iconset resource="../mrs-remote.qrc" >
+      <normaloff>:/images/images/back.png</normaloff>:/images/images/back.png</iconset>
     </property>
     <property name="iconSize" >
      <size>
@@ -91,7 +94,8 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >:/images/images/forward.png</iconset>
+     <iconset resource="../mrs-remote.qrc" >
+      <normaloff>:/images/images/forward.png</normaloff>:/images/images/forward.png</iconset>
     </property>
     <property name="iconSize" >
      <size>
@@ -119,7 +123,8 @@
      <string/>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >:/images/images/underFootOne.png</iconset>
+     <iconset resource="../mrs-remote.qrc" >
+      <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
     </property>
     <property name="iconSize" >
      <size>
@@ -147,7 +152,8 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >:/images/images/up.png</iconset>
+     <iconset resource="../mrs-remote.qrc" >
+      <normaloff>:/images/images/up.png</normaloff>:/images/images/up.png</iconset>
     </property>
     <property name="iconSize" >
      <size>
@@ -275,10 +281,10 @@
   <widget class="QGroupBox" name="groupBoxLog" >
    <property name="geometry" >
     <rect>
-     <x>440</x>
-     <y>0</y>
+     <x>430</x>
+     <y>360</y>
      <width>391</width>
-     <height>531</height>
+     <height>171</height>
     </rect>
    </property>
    <property name="title" >
@@ -290,7 +296,7 @@
       <x>10</x>
       <y>20</y>
       <width>371</width>
-      <height>471</height>
+      <height>111</height>
      </rect>
     </property>
    </widget>
@@ -298,7 +304,7 @@
     <property name="geometry" >
      <rect>
       <x>10</x>
-      <y>500</y>
+      <y>140</y>
       <width>91</width>
       <height>21</height>
      </rect>
@@ -314,7 +320,7 @@
   <widget class="QPushButton" name="btnExit" >
    <property name="geometry" >
     <rect>
-     <x>750</x>
+     <x>740</x>
      <y>540</y>
      <width>81</width>
      <height>26</height>
@@ -324,7 +330,8 @@
     <string>E&amp;xit</string>
    </property>
    <property name="icon" >
-    <iconset resource="../mrs-remote.qrc" >:/images/images/exit.png</iconset>
+    <iconset resource="../mrs-remote.qrc" >
+     <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
    </property>
    <property name="shortcut" >
     <string>Alt+X</string>
@@ -352,8 +359,47 @@
     <bool>true</bool>
    </property>
    <property name="textInteractionFlags" >
-    <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::NoTextInteraction</set>
+    <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBoxWeb" >
+   <property name="geometry" >
+    <rect>
+     <x>430</x>
+     <y>0</y>
+     <width>391</width>
+     <height>351</height>
+    </rect>
+   </property>
+   <property name="title" >
+    <string>Web</string>
+   </property>
+   <widget class="QPushButton" name="btnTest_2" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>320</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Te&amp;st</string>
+    </property>
+    <property name="shortcut" >
+     <string>Alt+S</string>
+    </property>
+   </widget>
+   <widget class="QWidget" native="1" name="widgetWeb" >
+    <property name="geometry" >
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>361</width>
+      <height>261</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <tabstops>

@@ -15,11 +15,17 @@ Gui::Gui(MrsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	// get the motor speed from the GUI
 	speedMotor1 = ui.spinBoxSpeed1->value();
 	speedMotor2 = ui.spinBoxSpeed2->value();
+	
+	
+	view = new QWebView(ui.widgetWeb);
+	view->load(QUrl("http://nslu:8000/"));
+	view->show();
 }
 
 
 Gui::~Gui()
 {
+	delete view;
 	delete mrsremote1;
 }
 

@@ -16,6 +16,7 @@
 #include "ui_gui.h"
 #include "mrs-remote.h"
 #include <QtGui>
+#include <QWebView>
 //-------------------------------------------------------------------
 
 
@@ -57,6 +58,7 @@ class Gui : public QMainWindow
 	private:
 		Ui::Gui ui;
 		MrsRemote *mrsremote1;
+		QWebView *view;
 		bool robotDrives;
 		int speedMotor1;
 		int speedMotor2;
