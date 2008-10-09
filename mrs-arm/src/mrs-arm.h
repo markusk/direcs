@@ -36,6 +36,7 @@ class Mrsarm : public QObject
 		Mrsarm();
 		~Mrsarm();
 		void speak(QString textToSpeak, char volume=0, char pitch=7, char speed=2); /// volume 0-7 (0 is loudest)  pitch 0-7 (0 is highest)  speed 0-7 (0 is slowest)
+		void test(int value);
 		
 //	public slots:
 //		void sendNetworkCommand(QString command);

@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	// create mrs-arm class object
 	Mrsarm *s = new Mrsarm();
 	
-	
+/*
 	if (argc <= 1)
 	{
 		s->speak("All systems activated.");
@@ -36,7 +36,25 @@ int main(int argc, char *argv[])
 		//QString text = QString::fromLocal8Bit(argv[1]);
 		// speak argument 1  (0 is the application name with path!)
 		s->speak(QString::fromLocal8Bit(argv[1]));
+		
 	}
+*/
+
+
+	char c = 0;
+
+	if (argc <= 1)
+	{
+		qDebug("Give me one value as parameter!");
+	}
+	else
+	{
+		QString value = QString::fromLocal8Bit(argv[1]);
+		s->test(value.toInt());
+	}
+
+	
+//	s->test(41); // works fine!
 
 	
 	delete s;
@@ -65,6 +83,22 @@ Mrsarm::~Mrsarm()
 	delete port;
 	port = NULL;
 	qDebug("Everything's clean now! :-");
+}
+
+
+void Mrsarm::test(int value)
+{
+	char c = value;
+	
+	qDebug("Sending command %d...", c);
+
+	if (port->write(&c, 1) == -1)
+	{
+		// ERROR!
+		qDebug("\nError writing to serial port!\n");
+		return;
+	}
+	//receiveSerialMsg();
 }
 
 
@@ -126,6 +160,7 @@ void Mrsarm::speak(QString textToSpeak, char volume, char pitch, char speed)
 
 bool Mrsarm::openSerialPort()
 {
+/*	
 	// modify the serial port settings
 	port = new QextSerialPort(serialPort);
 	port->setBaudRate(BAUD38400);
@@ -135,7 +170,17 @@ bool Mrsarm::openSerialPort()
 	port->setStopBits(STOP_2);
 	port->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
 	//qDebug("isOpen : %d", port->isOpen());
-	
+*/
+	// modify the serial port settings
+	port = new QextSerialPort(serialPort);
+	port->setBaudRate(BAUD9600);
+	port->setFlowControl(FLOW_OFF);
+	port->setParity(PAR_NONE);
+	port->setDataBits(DATA_8);
+	port->setStopBits(STOP_1);
+	port->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
+	//qDebug("isOpen : %d", port->isOpen());
+
 	// Open port
 	qDebug("Opening port...");
 	
