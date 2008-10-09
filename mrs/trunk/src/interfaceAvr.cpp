@@ -43,7 +43,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 		return false;
 	}
 	*/
-	
+
 	//-------------------------------------------------------
 	// open a serial port ("COM1" for example on Windows)
 	// using qextserialport
@@ -57,19 +57,19 @@ bool InterfaceAvr::openComPort(QString comPort)
 	serialPort->setDataBits(DATA_8);
 	serialPort->setStopBits(STOP_1);
 	//serialPort->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
-	
-	
+
+
 //	return serialPort->open(QIODevice::ReadWrite);
-	
+
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
 		qDebug("What the...");
 		return false;
 	}
-	
+
 	// Flushes all pending I/O to the serial port.
 	//serialPort->flush();
-	
+
 	return true;
 }
 
@@ -83,16 +83,16 @@ void InterfaceAvr::closeComPort()
 bool InterfaceAvr::sendChar(char character)
 {
 	static int receiveErrorCounter = 0;
-	
+
 	//------------------------------------------
-	// send one byte to serial port 
+	// send one byte to serial port
 	//------------------------------------------
-//	if (serialPort->putChar(character) == false)
-	if (serialPort->write(&character, 1) == -1)
-	{	
+	if (serialPort->putChar(character) == false)
+//	if (serialPort->write(&character, 1) == -1)
+	{
 		receiveErrorCounter++;
 		//qDebug("%d. ERROR sendChar to serial port (sendChar, InterfaceAvr)", receiveErrorCounter);
-	
+
 		//
 		// MASSIVE COMMUNICATION ERROR!
 		//
@@ -101,11 +101,11 @@ bool InterfaceAvr::sendChar(char character)
 			receiveErrorCounter = 0;
 			emit tooMuchErrors();
 		}
-		
+
 		return false;
 	}
-	
-	
+
+
 	return true;
 }
 
@@ -122,8 +122,8 @@ bool InterfaceAvr::receiveInt(int *value)
 	char character = 0;
 	int intValue = 0;
 	int helpValue = 0;
-	
-	
+
+
 	//-----------------
 	// receive MS-Byte
 	//-----------------
@@ -131,7 +131,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	{
 		receiveErrorCounter++;
 		//qDebug("%d. ERROR receiving from serial port (receiveInt, InterfaceAvr)", receiveErrorCounter);
-	
+
 		//
 		// MASSIVE COMMUNICATION ERROR!
 		//
@@ -140,19 +140,19 @@ bool InterfaceAvr::receiveInt(int *value)
 			receiveErrorCounter = 0;
 			emit tooMuchErrors();
 		}
-		
+
 		value = 0;
 		return false;
 	}
-	
+
 	// reset error counter
 	receiveErrorCounter = 0;
 
-	
+
 	// bit shifting
 	intValue = (character << 8);
 
-	
+
 	//-----------------
 	// receive LS-Byte
 	//-----------------
@@ -172,13 +172,13 @@ bool InterfaceAvr::receiveInt(int *value)
 	{
 		helpValue = character;
 	}
-	
-	
+
+
 	// this is the 16 Bit result
 	intValue += helpValue;
-	
+
 	// "return" the value
 	*value = intValue;
-	
+
 	return true;
 }
