@@ -1569,6 +1569,20 @@ void Mrs::drive(const unsigned char command)
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			return;
 			break;
+		case TURNLEFT:
+			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
+			return;
+			break;
+		case TURNRIGHT:
+			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
+			return;
+			break;
 		case START:
 			if (robotIsOn)
 			{

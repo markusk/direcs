@@ -39,11 +39,12 @@
 #include "joystick.h"
 #include "head.h"
 //-------------------------------------------------------------------
-#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifndef _ARM_ // only include in _non_ ARM environments!
 	#include "camThread.h"
 	#include <festival.h> // FIXME: instead of speakThread-include!
 	//#include "speakThread.h"
 #endif
+//-------------------------------------------------------------------
 #include <QtDebug>
 #include <QtGui>
 #include <QSplashScreen>
@@ -89,7 +90,7 @@ class Mrs : public QObject
 
 	public slots:
 		/**
-		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
+		Instructs the robot to drive FORWARD, BACKWARD, LEFT, RIGHT, TURNLEFT and TURNRIGHT. The commands START, STOP or WAIT are also possible.
 		@param command
 		 */
 		void drive(const unsigned char command);
@@ -231,7 +232,7 @@ class Mrs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifndef _ARM_ // only include in _non_ ARM environments!
 		CamThread *camThread;
 #endif
 		//SpeakThread *speakThread;
@@ -275,13 +276,19 @@ class Mrs : public QObject
 		static const bool OFF = false;  /** For motor "OFF" */
 		
 		//! Some driving directions for the robot
-		static const unsigned char FORWARD = 1;
-		static const unsigned char BACKWARD = 2;
-		static const unsigned char LEFT = 3;
-		static const unsigned char RIGHT = 4;
-		static const unsigned char START = 5;
-		static const unsigned char STOP = 6;
-		static const unsigned char WAIT = 7;
+		static const unsigned char FORWARD		= 1;
+		static const unsigned char BACKWARD		= 2;
+		static const unsigned char LEFT			= 3;
+		static const unsigned char RIGHT		= 4;
+		static const unsigned char TURNLEFT		= 5;
+		static const unsigned char TURNRIGHT	= 6;
+		static const unsigned char START		= 7;
+		static const unsigned char STOP			= 8;
+		static const unsigned char WAIT			= 9;
+		// static const unsigned char DIAGONAL_FORWARD_LEFT
+		// static const unsigned char DIAGONAL_FORWARD_RIGHT
+		// static const unsigned char DIAGONAL_BACKWARD_LEFT
+		// static const unsigned char DIAGONAL_BACKWARD_RIGHT
 		
 		/**
 		Give the sensors some names

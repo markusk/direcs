@@ -1,6 +1,6 @@
 destplatform = $$(DESTPLATFORM)
-!isEmpty ( destplatform ) message("Destination platform will be:" $$destplatform)
-!isEmpty ( destplatform ) CONFIG += $$destplatform
+!isEmpty( destplatform ) message("Destination platform will be:" $$destplatform)
+!isEmpty( destplatform )CONFIG += $$destplatform
 
 HEADERS +=	head.h \
 		camThread.h \
@@ -66,47 +66,62 @@ INCLUDEPATH +=	/usr/include/atk-1.0/ \
 		/usr/include/festival \
 		/usr/include/qwt-qt4 \
 		/usr/local/include/opencv
-LIBS += 	-L/usr/lib/ \
-		-L/usr/local/lib \
-		-L/usr/lib/festival/ \
-		-L/usr/lib/speech_tools/ \
-		-lFestival \
-		-lestools \
-		-lestbase \
-		-leststring \
-		-lesd \
-		-lqextserialport \
-		-lqwt-qt4 \
-		-lcv \
-		-lhighgui
 
 unix {
-	HEADERS +=	posix_qextserialport.h \
+    HEADERS +=	posix_qextserialport.h \
 			QtGLContext.h
-	SOURCES +=	QtGLContext.cpp
-	FORMS +=	mainWindow.ui
-	DEFINES =	_TTY_POSIX_
-	QT +=		network \
+    SOURCES +=	QtGLContext.cpp
+    FORMS +=	mainWindow.ui
+    DEFINES =	_TTY_POSIX_
+    QT +=		network \
 			opengl
+    INCLUDEPATH += /usr/include/atk-1.0/ \
+  /usr/lib/gtk-2.0/include/ \
+  /usr/lib/glib-2.0/include/ \
+  /usr/lib/glib/include/ \
+  /usr/include/glib-2.0/ \
+  /usr/include/pango-1.0/ \
+  /usr/include/cairo/ \
+  /usr/include/gtk-2.0/ \
+  /usr/include/speech_tools \
+  /usr/include/festival \
+  /usr/include/qwt-qt4 \
+  /usr/local/include/opencv
+
+    LIBS += -L/usr/lib \
+  -L/usr/local/lib \
+  -L/usr/lib/festival \
+  -L/usr/lib/speech_tools \
+  -lestools \
+  -lestbase \
+  -leststring \
+  -lesd \
+  -lFestival \
+  -ltermcap \
+  -lqextserialport \
+  -lqwt-qt4 \
+  -lcv \
+  -lhighgui
+
 }
 
 win32 {
-	HEADERS +=	win_qextserialport.h
-	FORMS +=	mainWindow.ui
-	DEFINES =	_TTY_WIN_ QWT_DLL QT_DLL
-	QT +=		network \
+    HEADERS +=	win_qextserialport.h
+    FORMS +=	mainWindow.ui
+    DEFINES =	_TTY_WIN_ QWT_DLL QT_DLL
+    QT +=		network \
 			opengl
 }
 
 arm {
-	message("Processing additional ARM specific scope...")
-	HEADERS -=	camThread.h \
+    message("Processing additional ARM specific scope...")
+    HEADERS -=	camThread.h \
 			speakThread.h \
 			QtGLContext.h
-	SOURCES -=	camThread.cpp \
+    SOURCES -=	camThread.cpp \
 			speakThread.cpp \
 			QtGLContext.cpp
-	INCLUDEPATH -=	/usr/include/atk-1.0/ \
+    INCLUDEPATH -=	/usr/include/atk-1.0/ \
 			/usr/lib/gtk-2.0/include/ \
 			/usr/include/pango-1.0/ \
 			/usr/include/cairo/ \
@@ -114,7 +129,7 @@ arm {
 			/usr/include/speech_tools \
 			/usr/include/festival \
 			/usr/local/include/opencv
-	LIBS -=		-L/usr/lib/ \
+    LIBS -=		-L/usr/lib/ \
 			-L/usr/local/lib \
  			-L/usr/lib/festival/ \
 			-L/usr/lib/speech_tools/ \
@@ -126,11 +141,11 @@ arm {
 			-lqwt-qt4 \
 			-lcv \
 			-lhighgui
-	FORMS -=	mainWindow.ui
-	FORMS +=	mainWindow_arm.ui
-	DEFINES += _ARM_
-	QT -=		opengl
-	QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib -L/home/markus/develop/qextserialport-arm/build
+    FORMS -=	mainWindow.ui
+    FORMS +=	mainWindow_arm.ui
+    DEFINES += _ARM_
+    QT -=		opengl
+    QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib -L/home/markus/develop/qextserialport-arm/build
 }
 
 DESTDIR = .
@@ -145,3 +160,19 @@ CONFIG += debug \
     warn_on \
     qt
 TEMPLATE = app
+CONFIG -= release
+
+LIBS += -L/usr/lib \
+  -L/usr/local/lib \
+  -L/usr/lib/festival \
+  -L/usr/lib/speech_tools \
+  -lestools \
+  -lestbase \
+  -leststring \
+  -lesd \
+  -lFestival \
+  -lqextserialport \
+  -lqwt-qt4 \
+  -lcv \
+  -lhighgui
+
