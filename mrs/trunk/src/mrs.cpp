@@ -71,7 +71,7 @@ Mrs::Mrs(QSplashScreen *splash)
 	gui = new Gui(settingsDialog, joystickDialog);
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
-	heartbeat = new Heartbeat(interface1, mutex);
+//	heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
@@ -132,7 +132,7 @@ void Mrs::init()
 	// let some classes know the robots state
 	//--------------------------------------------------------------------------
 	connect(circuit1, SIGNAL( robotState(bool) ), this, SLOT( setRobotState(bool) ));
-	connect(circuit1, SIGNAL( robotState(bool) ), heartbeat, SLOT( setRobotState(bool) ));
+//	connect(circuit1, SIGNAL( robotState(bool) ), heartbeat, SLOT( setRobotState(bool) ));
 	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 	
 	//--------------------------------------------------------------------------
@@ -145,8 +145,8 @@ void Mrs::init()
 	// call (a) test method(s) when clicking the test button
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
-	// currently not in use:
 	#ifndef _ARM_ // only include on _non_ ARM environments!
+	// currently not in use:
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
 	#endif
 	
@@ -277,6 +277,10 @@ void Mrs::init()
 	{
 		qDebug() << "Error opening serial port" << serialPortMicrocontroller;
 		gui->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
+		
+		// show a warning dialog!
+		QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+		msgbox.exec();
 		
 		// no serial port, no robot :-(
 		robotIsOn = false;
@@ -471,12 +475,14 @@ void Mrs::init()
 	//----------------------------------------------------------------------------
 	connect(netThread, SIGNAL( dataReceived(QString) ), gui, SLOT( appendNetworkLog(QString) ));
 	
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// connect laserThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
 	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
 	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
+	#endif
 	
 	//----------------------------------------------------------------------------
 	// connect joystick signals to "show joystick data"
@@ -489,7 +495,7 @@ void Mrs::init()
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 	
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//-----------------------------------------------------------
 	// check if camera is connected
 	//-----------------------------------------------------------
@@ -1039,8 +1045,9 @@ void Mrs::shutdown()
 		}
 	
 		
+		/*
 		//--------------------------
-		// quit the heartbeat thread
+		// TODO: quit the heartbeat thread
 		//--------------------------
 		if (heartbeat->isRunning() == true)
 		{
@@ -1074,6 +1081,7 @@ void Mrs::shutdown()
 				gui->appendLog("Heartbeat thread terminated.");
 			}
 		}
+		*/
 /*
 		removed for still "head looking down"!!	
 		//-------------------------------------------------------
@@ -1115,7 +1123,7 @@ Mrs::~Mrs()
 	delete servos;
 	delete motors;
 	delete sensorThread;
-	delete heartbeat;
+	// TODO: delete heartbeat;
 	delete circuit1;
 	delete interface1;
 	delete joystickDialog;

@@ -27,7 +27,7 @@
 #include "settingsDialog.h"
 #include "circuit.h"
 #include "interfaceAvr.h"
-#include "heartbeat.h"
+//#include "heartbeat.h"
 #include "sensorThread.h"
 #include "plotThread.h"
 #include "motor.h"
@@ -223,7 +223,7 @@ class Mrs : public QObject
 		JoystickDialog *joystickDialog; //! The joystick dialog/view
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
-		Heartbeat *heartbeat;
+		// TODO: Heartbeat *heartbeat;
 		SensorThread *sensorThread;
 		PlotThread *plotThread;
 		Motor *motors;

@@ -23,7 +23,7 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new QextSerialPort();
+	serialPort = new QextSerialPort("/dev/ttyUSB0"); // < < < < < <
 }
 
 
@@ -35,36 +35,43 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
+	/*
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
 		qDebug("Serial port file not found!");
 		return false;
 	}
-	
+	*/
 	
 	//-------------------------------------------------------
 	// open a serial port ("COM1" for example on Windows)
 	// using qextserialport
 	//-------------------------------------------------------
-	serialPort->setPortName(comPort);
-	serialPort->setBaudRate(BAUD9600); // < < < < different to camera comunication (BAUD115200) in cam.cpp
+//	serialPort->setPortName(comPort);
+	serialPort->setBaudRate(BAUD9600);
+	// Due to a bug in posix_qextserialport.h setting of flow control HAS to be AFTER opening an port!?!?!??
+	// If not, a memory access error occurs!
+	serialPort->setFlowControl(FLOW_OFF);
+	serialPort->setParity(PAR_NONE);
 	serialPort->setDataBits(DATA_8);
 	serialPort->setStopBits(STOP_1);
-	serialPort->setParity(PAR_NONE);
+	serialPort->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
 	
-	if (serialPort->open() == false)
+	
+//	return serialPort->open(QIODevice::ReadWrite);
+	
+	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
 		qDebug("What the...");
 		return false;
 	}
-	
-	// Due to a bug in posix_qextserialport.h setting of flow control HAS to be AFTER opening an port!
-	// If not, a memory access error occurs!
-	serialPort->setFlowControl(FLOW_OFF);
-	
+	else
+	{
+		qDebug("TRUE!");
+	}
 	// Flushes all pending I/O to the serial port.
-	serialPort->flush();
+	//serialPort->flush();
 	
 	return true;
 }
@@ -83,7 +90,8 @@ bool InterfaceAvr::sendChar(char character)
 	//------------------------------------------
 	// send one byte to serial port 
 	//------------------------------------------
-	if (serialPort->putChar(character) == false)
+//	if (serialPort->putChar(character) == false)
+	if (serialPort->write(&character, 1) == -1)
 	{	
 		receiveErrorCounter++;
 		//qDebug("%d. ERROR sendChar to serial port (sendChar, InterfaceAvr)", receiveErrorCounter);
