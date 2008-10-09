@@ -55,6 +55,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	
 	if (serialPort->open() == false)
 	{
+		qDebug("What the...");
 		return false;
 	}
 	
