@@ -56,7 +56,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	serialPort->setParity(PAR_NONE);
 	serialPort->setDataBits(DATA_8);
 	serialPort->setStopBits(STOP_1);
-	serialPort->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
+	//serialPort->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
 	
 	
 //	return serialPort->open(QIODevice::ReadWrite);
@@ -66,10 +66,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 		qDebug("What the...");
 		return false;
 	}
-	else
-	{
-		qDebug("TRUE!");
-	}
+	
 	// Flushes all pending I/O to the serial port.
 	//serialPort->flush();
 	
