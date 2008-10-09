@@ -327,8 +327,6 @@ infrared Sensors temporarily removed from robot!!
 			value = 0;
 
 infrared Sensors temporarily removed from robot!!
-*/
-	
 			//====================================================================
 	
 		
@@ -352,6 +350,9 @@ infrared Sensors temporarily removed from robot!!
 			//qDebug("received value sensor5: %d", value);
 			value = 0;
 			
+ultrasonic Sensors temporarily removed from robot!!
+*/
+	
 			
 			//====================================================================
 			

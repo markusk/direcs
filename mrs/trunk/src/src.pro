@@ -25,7 +25,6 @@ HEADERS +=	head.h \
 		joystick.h \
 		laser_messages.h \
 		servo.h \
-		heartbeat.h \
 		aboutDialog.h \
 		laserScene.h \
 		joystickDialog.h \
@@ -49,7 +48,6 @@ SOURCES +=	head.cpp \
 		laser_main.cpp \
 		joystick.cpp \
 		servo.cpp \
-		heartbeat.cpp \
 		aboutDialog.cpp \
 		laserScene.cpp \
 		joystickDialog.cpp \
