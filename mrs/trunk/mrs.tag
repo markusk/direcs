@@ -854,10 +854,8 @@
     <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
     <includes id="circuit_8h" name="circuit.h" local="yes" imported="no">circuit.h</includes>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
-    <includes id="heartbeat_8h" name="heartbeat.h" local="yes" imported="no">heartbeat.h</includes>
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
     <includes id="plotThread_8h" name="plotThread.h" local="yes" imported="no">plotThread.h</includes>
-    <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
     <includes id="motor_8h" name="motor.h" local="yes" imported="no">motor.h</includes>
     <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
     <includes id="obstacleCheckThread_8h" name="obstacleCheckThread.h" local="yes" imported="no">obstacleCheckThread.h</includes>
@@ -866,6 +864,7 @@
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
     <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
     <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
+    <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
     <class kind="class">Mrs</class>
   </compound>
   <compound kind="file">
@@ -5200,13 +5199,6 @@
       <arglist>(short int laserScanner, int angle)</arglist>
     </member>
     <member kind="function">
-      <type>int</type>
-      <name>getNumReadings</name>
-      <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a408c135ef7e6384c0d5ee2169090c40</anchor>
-      <arglist>(short int laserScanner)</arglist>
-    </member>
-    <member kind="function">
       <type>bool</type>
       <name>isConnected</name>
       <anchorfile>classLaserThread.html</anchorfile>
@@ -6125,13 +6117,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>Heartbeat *</type>
-      <name>heartbeat</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>233c5d9ecdacb7c6c0657e03054d3944</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>Inifile *</type>
       <name>inifile1</name>
       <anchorfile>classMrs.html</anchorfile>
@@ -6161,16 +6146,16 @@
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
-      <name>laserScanner1Found</name>
+      <name>laserScannerFrontFound</name>
       <anchorfile>classMrs.html</anchorfile>
-      <anchor>ca4793a1070d11b1221c3f051653de2c</anchor>
+      <anchor>3dfd57467ed969214590cbdf0df002c1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
-      <name>laserScanner2Found</name>
+      <name>laserScannerRearFound</name>
       <anchorfile>classMrs.html</anchorfile>
-      <anchor>650e9b4d825c2c6801171dbe461b1231</anchor>
+      <anchor>cfd9b5eea1049c035fb1cd27c4b00977</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -6244,17 +6229,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QList&lt; int &gt;</type>
+      <type>QList&lt; QDateTime &gt;</type>
       <name>obstacleAlarmFrontLeftList</name>
       <anchorfile>classMrs.html</anchorfile>
-      <anchor>4f5fdf975adbab3a2022786d94fbf3b6</anchor>
+      <anchor>bd11ea742e8536ac4a51728eeafe38c4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QList&lt; int &gt;</type>
+      <type>QList&lt; QDateTime &gt;</type>
       <name>obstacleAlarmFrontRightList</name>
       <anchorfile>classMrs.html</anchorfile>
-      <anchor>831ae320600ef5c90b60306fb2315c2b</anchor>
+      <anchor>d8f1b7c2a597e7bff0e674d151223a4d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -6465,6 +6450,13 @@
       <name>LEFT</name>
       <anchorfile>classMrs.html</anchorfile>
       <anchor>cd4e30e3ff13f40f27b7cb077fc314ab</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>MAXFALSEALARMS</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>aa814ec1835f7dc12c2198b3f4f4358d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6738,6 +6730,20 @@
       <name>SVSTART</name>
       <anchorfile>classMrs.html</anchorfile>
       <anchor>b48cdc184669a6b96d2629b10543a2f4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>TURNLEFT</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>298b613a8a4fe2ac1dc7620ba829d7e7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>TURNRIGHT</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>bb099b48272b80bdcddc1c70a939ca53</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">

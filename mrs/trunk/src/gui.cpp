@@ -99,19 +99,19 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	initializePlots();
 	
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
 	createLaserScannerObjects();
 	createLaserDistanceObjects();
-	#endif
 
 	//----------------------------------------------------------------------------------
 	// get the mouse position, when the robot position is to be changed
 	//----------------------------------------------------------------------------------
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
+	#endif
 }
 
 
@@ -1702,7 +1702,7 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 #endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifndef _ARM_ // only include in _non_ ARM environments!
 void Gui::createLaserScannerObjects()
 {
 	// the start position for the pos. calculation
