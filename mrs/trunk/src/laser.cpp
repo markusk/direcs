@@ -1601,7 +1601,7 @@ int Laser::sick_detect_baudrate(sick_laser_p laser)
 	//emitMessage( QString("Servo%1 position %2 out of allowed range (%3-%4)!").arg(servo+1) );
 	
 	//fprintf(stderr, "INFO: detect connected baudrate: ...... 9600\n");
-	emit(message("Connecting to Laser scanner with 9600 bps..."));
+	emit(message(QString("Connecting to Laser scanner %1 with 9600 bps...").arg(laser->settings.device_name)));
 	if(sick_testBaudrate(laser, 9600))
 	{
 		//fprintf(stderr, "\n");
@@ -1610,7 +1610,7 @@ int Laser::sick_detect_baudrate(sick_laser_p laser)
 	else
 	{
 		//fprintf(stderr, "\rINFO: detect connected baudrate: ...... 19200\n");
-		emit(message("Connecting to Laser scanner with 19200 bps..."));
+		emit(message(QString("Connecting to Laser scanner %1 with 19200 bps...").arg(laser->settings.device_name)));
 		if(sick_testBaudrate(laser, 19200))
 		{
 			//fprintf(stderr, "\n");
@@ -1619,7 +1619,7 @@ int Laser::sick_detect_baudrate(sick_laser_p laser)
 		else
 		{
 			//fprintf(stderr, "\rINFO: detect connected baudrate: ...... 38400\n");
-			emit(message("Connecting to Laser scanner with 38400 bps..."));
+			emit(message(QString("Connecting to Laser scanner %1 with 38400 bps...").arg(laser->settings.device_name)));
 			if(sick_testBaudrate(laser, 38400))
 			{
 				//fprintf(stderr, "\n");
@@ -1630,7 +1630,7 @@ int Laser::sick_detect_baudrate(sick_laser_p laser)
 				if(laser->settings.use_highspeed)
 				{
 					//fprintf(stderr, "\rINFO: detect connected baudrate: ...... 500000\n");
-					emit(message("Connecting to Laser scanner with 500000 bps..."));
+					emit(message(QString("Connecting to Laser scanner %1 with 500000 bps...").arg(laser->settings.device_name)));
 					if(sick_testBaudrate(laser, 500000))
 					{
 						//fprintf(stderr, "\n");
@@ -1638,15 +1638,15 @@ int Laser::sick_detect_baudrate(sick_laser_p laser)
 					}
 					else
 					{
-					// TODO: send this to GUI log
-						fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");
+						//fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");
+						emit(message(QString("Conntection to Laser scanner %1 FAILED!").arg(laser->settings.device_name)));
 						return(0);
 					}
 				}
 				else
 				{
-					// TODO: send this to GUI log
-					fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");	  
+					//fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");	  
+					emit(message(QString("Conntection to Laser scanner %1 FAILED!").arg(laser->settings.device_name)));
 					return(0);
 				}
 			}
