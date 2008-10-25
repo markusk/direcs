@@ -161,55 +161,58 @@ class Sick : public QObject
 		typedef enum { CM, MM, DM } range_res_t;
 		typedef enum { SICK_RANGE80M, SICK_RANGE160M, SICK_RANGE320M, SICK_REMISSION_NORM, SICK_REMISSION_DIRECT } range_dist_t;
 		typedef enum { N, E, O } parity_t;
-		typedef struct {
-		int                fd;
-		laser_model_t      type;
-		char               *ttyport;
-		int                baudrate;
-		parity_t           parity;
-		unsigned char      passwd[8];
-		int                databits;
-		int                stopbits;
-		int                hwf;
-		int                swf;
-		int                laser_num;
+		typedef struct
+		{
+			int                fd;
+			laser_model_t      type;
+			char               *ttyport;
+			int                baudrate;
+			parity_t           parity;
+			unsigned char      passwd[8];
+			int                databits;
+			int                stopbits;
+			int                hwf;
+			int                swf;
+			int                laser_num;
 		} laser_device_t, *laser_device_p;
 		
-		typedef struct {
-		char device_name[MAX_NAME_LENGTH];
-		laser_model_t type;
-		range_res_t range_res;
-		range_dist_t range_dist;
-		unsigned char password[8];
-		int laser_num;
-		int detect_baudrate, use_highspeed;
-		int start_baudrate, set_baudrate;
-		int databits, stopbits;
-		parity_t parity;
-		int swf, hwf;
-		int angle_range, angle_resolution;
-		int use_remission;
-		int rem_values;
-		int num_values;
-		int laser_flipped;
+		typedef struct
+		{
+			char device_name[MAX_NAME_LENGTH];
+			laser_model_t type;
+			range_res_t range_res;
+			range_dist_t range_dist;
+			unsigned char password[8];
+			int laser_num;
+			int detect_baudrate, use_highspeed;
+			int start_baudrate, set_baudrate;
+			int databits, stopbits;
+			parity_t parity;
+			int swf, hwf;
+			int angle_range, angle_resolution;
+			int use_remission;
+			int rem_values;
+			int num_values;
+			int laser_flipped;
 		} laser_settings_t;
 
-		typedef struct {
-		laser_settings_t settings;
-		laser_device_t dev;
-		
-		int numvalues;
-		double *range;
-		int *glare, *wfv, *sfv;
-		// *** REI - START ***
-		double *remission;
-		int remvalues;
-		// *** REI - END *** //
-		unsigned char *buffer;
-		long int buffer_position, processed_mark, packet_offset, packet_length;
-		int new_reading;
-		double timestamp;
-		double packet_timestamp;
+		typedef struct
+		{
+			laser_settings_t settings;
+			laser_device_t dev;
+			
+			int numvalues;
+			double *range;
+			int *glare, *wfv, *sfv;
+			// *** REI - START ***
+			double *remission;
+			int remvalues;
+			// *** REI - END *** //
+			unsigned char *buffer;
+			long int buffer_position, processed_mark, packet_offset, packet_length;
+			int new_reading;
+			double timestamp;
+			double packet_timestamp;
 		} sick_laser_t, *sick_laser_p;
 		
 		int  sick_start_laser(sick_laser_p laser);
