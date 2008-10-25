@@ -18,7 +18,7 @@
  *                                                                       *
  *************************************************************************/
 
-#include "laser_main.h"
+#include "laser.h"
 
 Laser::Laser()
 {
@@ -28,6 +28,14 @@ Laser::Laser()
 	use_laser4 = 0;
 	use_laser5 = 0;
 	quit_signal = 0;
+	
+	sick = new Sick();
+}
+
+
+Laser::~Laser()
+{
+	delete sick;
 }
 
 
@@ -464,7 +472,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 				set_laser_config_structure(&laser1, &laser1_config);
 				
 				// try to connect to the laser
-				if (sick_start_laser(&laser1) == 0)
+				if (sick->sick_start_laser(&laser1) == 0)
 				{
 					return 0;
 				}
@@ -488,7 +496,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 				set_laser_config_structure(&laser2, &laser2_config);
 				
 				// try to connect to the laser
-				if (sick_start_laser(&laser2) == 0)
+				if (sick->sick_start_laser(&laser2) == 0)
 				{
 					return 0;
 				}
@@ -512,7 +520,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 				set_laser_config_structure(&laser3, &laser3_config);
 				
 				// try to connect to the laser
-				if (sick_start_laser(&laser3) == 0)
+				if (sick->sick_start_laser(&laser3) == 0)
 				{
 					return 0;
 				}
@@ -536,7 +544,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 				set_laser_config_structure(&laser4, &laser4_config);
 				
 				// try to connect to the laser
-				if (sick_start_laser(&laser4) == 0)
+				if (sick->sick_start_laser(&laser4) == 0)
 				{
 					return 0;
 				}
@@ -580,16 +588,20 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 void Laser::carmen_laser_shutdown(int signo __attribute__ ((unused)))
 {
-  if(use_laser1)
-    sick_stop_laser(&laser1);
-  if(use_laser2)
-    sick_stop_laser(&laser2);
-  if(use_laser3)
-    sick_stop_laser(&laser3);
-  if(use_laser4)
-    sick_stop_laser(&laser4);
-  if(use_laser5)
-    sick_stop_laser(&laser5);
+	if(use_laser1)
+		sick->sick_stop_laser(&laser1);
+
+	if(use_laser2)
+		sick->sick_stop_laser(&laser2);
+
+	if(use_laser3)
+		sick->sick_stop_laser(&laser3);
+
+	if(use_laser4)
+		sick->sick_stop_laser(&laser4);
+
+	if(use_laser5)
+		sick->sick_stop_laser(&laser5);
 }
 
 
@@ -607,17 +619,17 @@ int Laser::carmen_laser_run(void)
 	
 	if (first)
 	{
-		last_update = carmen_get_time();
+		last_update = sick->carmen_get_time();
 		first = 0;
 	}
 	
-	current_time = carmen_get_time();
+	current_time = sick->carmen_get_time();
 	print_stats = (current_time - last_update > 1.0);
 
 	
 	if (use_laser1)
 	{
-		sick_handle_laser(&laser1);
+		sick->sick_handle_laser(&laser1);
 		
 		if (laser1.new_reading)
 		{
@@ -644,7 +656,7 @@ int Laser::carmen_laser_run(void)
 	if(use_laser2)
 	{
 		//qDebug("carmen_laser_run: use_laser1=true");
-		sick_handle_laser(&laser2);
+		sick->sick_handle_laser(&laser2);
 		
 		if (laser2.new_reading)
 		{
@@ -666,7 +678,7 @@ int Laser::carmen_laser_run(void)
 	
 	if( use_laser3)
 	{
-		sick_handle_laser(&laser3);
+		sick->sick_handle_laser(&laser3);
 		
 		if (laser3.new_reading)
 		{
@@ -687,7 +699,7 @@ int Laser::carmen_laser_run(void)
 	
 	if (use_laser4)
 	{
-		sick_handle_laser(&laser4);
+		sick->sick_handle_laser(&laser4);
 		
 		if (laser4.new_reading)
 		{
@@ -708,7 +720,7 @@ int Laser::carmen_laser_run(void)
 	
 	if (use_laser5)
 	{
-		sick_handle_laser(&laser5);
+		sick->sick_handle_laser(&laser5);
 		
 		if(laser5.new_reading)
 		{
