@@ -23,7 +23,8 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new QextSerialPort("/dev/ttyUSB0"); // < < < < < <
+	//serialPort = new QextSerialPort("/dev/ttyUSB0"); // < < < < < <
+	serialPort = new QextSerialPort();
 }
 
 
@@ -35,14 +36,13 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-	/*
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
 		qDebug("Serial port file not found!");
 		return false;
 	}
-	*/
+
 
 	//-------------------------------------------------------
 	// open a serial port ("COM1" for example on Windows)
