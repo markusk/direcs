@@ -2,7 +2,7 @@
 <kdevelop>
   <general>
     <author>Markus Knapp</author>
-    <email/>
+    <email></email>
     <version>0.747</version>
     <projectmanagement>KDevTrollProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
@@ -12,10 +12,10 @@
     <ignoreparts/>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description/>
+    <description></description>
     <versioncontrol/>
     <projectname>mrs</projectname>
-    <defaultencoding/>
+    <defaultencoding></defaultencoding>
   </general>
   <kdevfileview>
     <groups>
@@ -73,12 +73,12 @@
   </kdevdoctreeview>
   <kdevdebugger>
     <general>
-      <dbgshell/>
+      <dbgshell></dbgshell>
       <programargs/>
-      <gdbpath/>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <gdbpath></gdbpath>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
@@ -93,13 +93,13 @@
   <kdevtrollproject>
     <run>
       <mainprogram>/home/markus/develop/mrs/mrs/trunk/bin/mrs</mainprogram>
-      <programargs/>
+      <programargs></programargs>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
-      <globaldebugarguments/>
+      <globaldebugarguments></globaldebugarguments>
       <globalcwd>/home/markus/develop/mrs/mrs/trunk/bin</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
@@ -124,7 +124,6 @@
       <makebin>make</makebin>
       <prio>0</prio>
       <envvars>
-        <envvar value="arm" name="DESTPLATFORM" />
         <envvar value="/usr/share/qt4/bin:$PATH" name="PATH" />
       </envvars>
       <runmultiplejobs>true</runmultiplejobs>
@@ -199,7 +198,7 @@
       <resolveIncludePathsUsingMakeExperimental>false</resolveIncludePathsUsingMakeExperimental>
     </codecompletion>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -229,7 +228,7 @@
     </filetemplates>
   </cppsupportpart>
   <ctagspart>
-    <customArguments/>
+    <customArguments></customArguments>
     <customTagfilePath>/home/markus/develop/subversion/applications/mrs/trunk/tags</customTagfilePath>
     <activeTagsFiles/>
   </ctagspart>

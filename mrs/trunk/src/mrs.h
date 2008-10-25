@@ -39,7 +39,7 @@
 #include "joystick.h"
 #include "head.h"
 //-------------------------------------------------------------------
-#ifndef _ARM_ // only include in _non_ ARM environments!
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV and festival are not available for Windows (and does not make sense for ARM)
 	#include "camThread.h"
 	#include <festival.h> // FIXME: instead of speakThread-include!
 	//#include "speakThread.h"
@@ -232,7 +232,7 @@ class Mrs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-#ifndef _ARM_ // only include in _non_ ARM environments!
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		CamThread *camThread;
 #endif
 		//SpeakThread *speakThread;

@@ -29,9 +29,12 @@
 //-------------------------------------------------------------------
 #include <QtGui>
 
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+	#include "cv.h" // for type IplImage (camThread)
+#endif
+
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	#include "ui_mainWindow.h"
-	#include "cv.h" // for type IplImage (camThread)
 	//-------------------------------------------------------------------
 	#include <qwt_plot_layout.h>
 	#include <qwt_plot_curve.h>
@@ -98,7 +101,7 @@ class Gui : public QMainWindow
 		*/
 		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
 		
-#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		/**
 		tell the OpenGLContext the image data
 		*/
@@ -126,7 +129,7 @@ class Gui : public QMainWindow
 		static void appLog(QString text);
 		*/
 		
-#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		/**
 		Shows the new picture from the cam (live).
 		@param frame
