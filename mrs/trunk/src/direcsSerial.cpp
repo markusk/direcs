@@ -250,7 +250,7 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	
 	setRTS(fd);
 	#ifdef _DGUX_SOURCE
-	serial_sethwf(fd, hwf); // where'this method in the Original CARMEN modeuls hidden?
+	serial_sethwf(fd, hwf); // where'this method in the Original code??
 	#endif
 	#endif
 }
@@ -389,7 +389,7 @@ int DirecsSerial::setLowLatency(int fd)
 	
 	if (result)
 	{
-		/*     carmen_warn("libcarmenserial: Cannot get the serial attributes for low latency serial mode.\n Switching to normal mode\n"); */
+		qDebug("Cannot get the serial attributes for low latency serial mode.\n Switching to normal mode");
 		return result;
 	}
 	else
@@ -399,7 +399,7 @@ int DirecsSerial::setLowLatency(int fd)
 		ioctl(fd, TIOCSSERIAL, &serial); 
 		if (result)
 		{
-			/*       carmen_warn("libcarmenserial: Cannot activeate low latency mode\nSwitching to normal mode\n"); */
+			qDebug("Cannot activeate low latency mode\nSwitching to normal mode");
 			return result;
 		}
 	}

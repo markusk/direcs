@@ -18,10 +18,6 @@
  *                                                                       *
  *************************************************************************/
 
-/**
-Library to read data from and write data to the serial line.
-*/
-
 
 #ifndef DIRECS_SERIAL_H
 #define DIRECS_SERIAL_H
@@ -53,6 +49,9 @@ Library to read data from and write data to the serial line.
 #include <QDebug>
 
 
+/**
+Class to read data from and write data to the serial port.
+*/
 class DirecsSerial : public QObject
 {
     Q_OBJECT
@@ -62,7 +61,7 @@ class DirecsSerial : public QObject
 		~DirecsSerial();
 	
 		/**
-		Open a connection to the serial line 
+		Open a connection to the serial line
 		
 		@param *dev_fd returns the file descriptor associated to the serial line
 		@param dev_name the name of the serial device, e.g. /dev/ttyS0
