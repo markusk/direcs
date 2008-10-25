@@ -152,6 +152,11 @@ class Mrs : public QObject
 		void setSimulationMode(bool status);
 		
 		/**
+		Shows a text on the current splash screen.
+		*/
+		void showSplashMessage(QString text);
+		
+		/**
 		Finishes the splash screen and displays the main window.
 		*/
 		void finishSplash();
@@ -219,8 +224,8 @@ class Mrs : public QObject
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		Gui *gui;
-		SettingsDialog *settingsDialog; //! The settings dialog
-		JoystickDialog *joystickDialog; //! The joystick dialog/view
+		SettingsDialog *settingsDialog; /// The settings dialog
+		JoystickDialog *joystickDialog; /// The joystick dialog/view
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
 		// TODO: Heartbeat *heartbeat;
@@ -244,14 +249,14 @@ class Mrs : public QObject
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
 		QString commaSeparator;
-		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
-		bool robotDrives; //! Stores the robots driving state. TRUE, when the robot drives.
-		bool robotSimulationMode; //! Stores the robots simulation state
-		bool robotRemoteMode; //! Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
-		bool dontUseCamera; //! if a camera is connected, but should not be used (just for testing, for a faster program start)
+		bool robotIsOn; /// Stores the robots (circuits) state.ON or OFF
+		bool robotDrives; /// Stores the robots driving state. TRUE, when the robot drives.
+		bool robotSimulationMode; /// Stores the robots simulation state
+		bool robotRemoteMode; /// Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
+		bool dontUseCamera; /// if a camera is connected, but should not be used (just for testing, for a faster program start)
 		bool laserScannerFrontFound;
 		bool laserScannerRearFound;
-		bool testDriveMode; //! is enabled, when the robot is controlled via joystick
+		bool testDriveMode; /// is enabled, when the robot is controlled via joystick
 		bool servoTestMode;
 		bool eyeTestMode;
 		int currentTestServo;
@@ -263,19 +268,19 @@ class Mrs : public QObject
 		int mot4Speed;
 		int minimumSpeed;
 		int maximumSpeed;
-		QList <QDateTime> obstacleAlarmFrontLeftList;			//! A list of obstacle alarms that occured left the last n times.
-		QList <QDateTime> obstacleAlarmFrontRightList;		//! A list of obstacle alarms that occured right the last n times.
-		//QList <QDateTime> obstacleAlarmLeftTimestampList;	//! A list of the timestamps of the obstacle alarms that left occured.
-		//QList <QDateTime> obstacleAlarmRightTimestampList;	//! A list of the timestamps of the obstacle alarms that right occured.
+		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
+		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
+		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
+		//QList <QDateTime> obstacleAlarmRightTimestampList;	/// A list of the timestamps of the obstacle alarms that right occured.
 
 
-		//! The splash screen time of view in ms
+		/// The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;
 		
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
 		
-		//! Some driving directions for the robot
+		/// Some driving directions for the robot
 		static const unsigned char FORWARD		= 1;
 		static const unsigned char BACKWARD		= 2;
 		static const unsigned char LEFT			= 3;
@@ -304,11 +309,11 @@ class Mrs : public QObject
 		static const short int SENSOR7 = 64;
 		static const short int SENSOR8 = 128;
 		
-		//! The ultrasonic sensor
+		////The ultrasonic sensor
 		// TODO: make these values nicer
 		static const short int SENSOR16 = 256;
 		
-		//! Value, if no sensor has a value to react
+		/// Value, if no sensor has a value to react
 		static const short int NONE = 0;
 		
 		// TODO: make these values nicer
@@ -316,23 +321,23 @@ class Mrs : public QObject
 		static const short int OBSTACLEFRONTRIGHT = 1024;
 		static const short int OBSTACLESEVERYWHEREINFRONT = 2048;
 		
-		static const short int MAXFALSEALARMS = 2; //! number of false alarms which are allowed in the logical unit
+		static const short int MAXFALSEALARMS = 2; /// number of false alarms which are allowed in the logical unit
 		
-		static const unsigned char CLOCKWISE        = 0;  //! Motor direction "CLOCKWISE"
-		static const unsigned char COUNTERCLOCKWISE = 1;  //! Motor direction "COUNTERCLOCKWISE"
-		static const unsigned char SAME             = 3;  //! Motor direction/power "same like before"
-		static const unsigned char MOTOR1           = 10; //! Motor 1 (drive)
-		static const unsigned char MOTOR2           = 20; //! Motor 2 (drive)
-		static const unsigned char MOTOR3           = 30; //! Motor 3 (camera pan)
-		static const unsigned char MOTOR4           = 40; //! Motor 4 (camera pan)
+		static const unsigned char CLOCKWISE        = 0;  /// Motor direction "CLOCKWISE"
+		static const unsigned char COUNTERCLOCKWISE = 1;  /// Motor direction "COUNTERCLOCKWISE"
+		static const unsigned char SAME             = 3;  /// Motor direction/power "same like before"
+		static const unsigned char MOTOR1           = 10; /// Motor 1 (drive)
+		static const unsigned char MOTOR2           = 20; /// Motor 2 (drive)
+		static const unsigned char MOTOR3           = 30; /// Motor 3 (camera pan)
+		static const unsigned char MOTOR4           = 40; /// Motor 4 (camera pan)
 		
-		//! The motor sensors
+		/// The motor sensors
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 		
-		//! The servos
+		/// The servos
 		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in servo.h !!!
-		//! the servo numbers
+		/// the servo numbers
 		static const unsigned char SERVO1 = 0;
 		static const unsigned char SERVO2 = 1;
 		static const unsigned char SERVO3 = 2;
@@ -340,7 +345,7 @@ class Mrs : public QObject
 		static const unsigned char SERVO5 = 4;
 		static const unsigned char SERVO6 = 5;
 		
-		//! the possible servo data
+		/// the possible servo data
 		static const unsigned char SVSTART   = 0;
 		static const unsigned char SVEND     = 1;
 		static const unsigned char SVDEFAULT = 2;
@@ -349,15 +354,15 @@ class Mrs : public QObject
 		static const unsigned char SVMAX     = 5;
 		
 		// TODO: put axis numbers to ini-file
-		//! Joystick axis numbers
+		/// Joystick axis numbers
 		static const int JOYSTICKAXISY = 2;
 		static const int JOYSTICKAXISX = 3;
 		static const int JOYSTICKAXIS2X = 4;
 		static const int JOYSTICKAXIS2Y = 5;
-		//! Joystick conversion divisor. Converts the joystick axis value to the robot speed.
+		/// Joystick conversion divisor. Converts the joystick axis value to the robot speed.
 		static const int JOYSTICKDIVISOR = 128;
 		
-		/*!
+		/**
 		For the laserThread
 		*/
 		static const short int LASER1 = 1;

@@ -185,6 +185,11 @@ void Mrs::init()
 	//--------------------------------------------------------------------------
 	connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 	
+	//--------------------------------------------------------------------------
+	// let the splash screen show laser init messages
+	//--------------------------------------------------------------------------
+	connect(laserThread, SIGNAL(message(QString)), this, SLOT(showSplashMessage(QString)));
+	
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//-------------------------------------------------------------------------------------
 	// disable face detection in the GUI, on error with loading haar cascade in CamThread
@@ -1153,6 +1158,14 @@ void Mrs::showExitDialog()
 		//Todo: Is is the correct method to call the destrucotr, to end the program?!?
 		QApplication::exit();
 		*/
+}
+
+
+void Mrs::showSplashMessage(QString text)
+{
+	splash->showMessage(text, splashPosition, splashColor);
+	// for refreshing the splash...
+	QApplication::processEvents();
 }
 
 
@@ -3143,13 +3156,13 @@ void Mrs::test()
 		//head->look("RIGHT");
 	}
 	
-	motors->flashlight(toggle);
+	//motors->flashlight(toggle);
 	
-/*
+
 	#ifdef _TTY_POSIX_
 	// Say some text;
 	QDateTime now = QDateTime::currentDateTime();
 	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 	#endif
-*/
+
 }
