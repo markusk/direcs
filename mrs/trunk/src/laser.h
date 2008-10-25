@@ -213,16 +213,16 @@ class Laser : public QObject
 		} carmen_laser_laser_config_t;
 		
 		// vorher **global** in laser_main.cpp!
-		sick_laser_t laser1; // defined in sick.h
-		sick_laser_t laser2;
-		sick_laser_t laser3;
-		sick_laser_t laser4;
-		sick_laser_t laser5;
-		carmen_laser_laser_config_t laser1_config;
-		carmen_laser_laser_config_t laser2_config;
-		carmen_laser_laser_config_t laser3_config;
-		carmen_laser_laser_config_t laser4_config;
-		carmen_laser_laser_config_t laser5_config;
+		sick_laser_t *laser1; // defined in sick.h
+		sick_laser_t *laser2;
+		sick_laser_t *laser3;
+		sick_laser_t *laser4;
+		sick_laser_t *laser5;
+		carmen_laser_laser_config_t *laser1_config;
+		carmen_laser_laser_config_t *laser2_config;
+		carmen_laser_laser_config_t *laser3_config;
+		carmen_laser_laser_config_t *laser4_config;
+		carmen_laser_laser_config_t *laser5_config;
 		
 		int use_laser1;
 		int use_laser2;

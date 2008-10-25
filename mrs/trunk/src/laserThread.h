@@ -55,7 +55,7 @@ class LaserThread : public QThread
 		Sets the serial port for a laser scanner (for modified CARMEN module).
 		@param laserScanner can be LASER1 or LASER2
 		@param serialPort is the port of the laser scanner
-		@sa setDevicePort, read_parameters, laser_main.h
+		@sa setDevicePort, read_parameters, laser.h
 		*/
 		void setSerialPort(short int laserScanner, QString serialPort);
 		

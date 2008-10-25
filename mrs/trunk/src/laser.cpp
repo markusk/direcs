@@ -29,12 +29,36 @@ Laser::Laser()
 	use_laser5 = 0;
 	quit_signal = 0;
 	
+	laser1 = new sick_laser_t;
+	laser2 = new sick_laser_t;
+	laser3 = new sick_laser_t;
+	laser4 = new sick_laser_t;
+	laser5 = new sick_laser_t;
+		
+	laser1_config = new carmen_laser_laser_config_t;
+	laser2_config = new carmen_laser_laser_config_t;
+	laser3_config = new carmen_laser_laser_config_t;
+	laser4_config = new carmen_laser_laser_config_t;
+	laser5_config = new carmen_laser_laser_config_t;
+	
 	sick = new Sick();
 }
 
 
 Laser::~Laser()
 {
+	delete laser1_config;
+	delete laser2_config;
+	delete laser3_config;
+	delete laser4_config;
+	delete laser5_config;
+	
+	delete laser1;
+	delete laser2;
+	delete laser3;
+	delete laser4;
+	delete laser5;
+	
 	delete sick;
 }
 
@@ -235,7 +259,7 @@ void Laser::read_parameters(short int laserScanner)
 			{
 				use_laser1 = 1;
 				//carmen_param_install_params(argc, argv, laser1_params, sizeof(laser1_params) / sizeof(laser1_params[0]));
-				interpret_params(&laser1, dev1, str1, res1, rem1, fov1);
+				interpret_params(laser1, dev1, str1, res1, rem1, fov1);
 			}
 			break;
 		case LASER2:
@@ -250,7 +274,7 @@ void Laser::read_parameters(short int laserScanner)
 			{
 				use_laser2 = 1;
 				//carmen_param_install_params(argc, argv, laser2_params, sizeof(laser2_params) / sizeof(laser2_params[0]));
-				interpret_params(&laser2, dev2, str2, res2, rem2, fov2);
+				interpret_params(laser2, dev2, str2, res2, rem2, fov2);
 			}
 			break;
 		case LASER3:
@@ -263,7 +287,7 @@ void Laser::read_parameters(short int laserScanner)
 			{
 				use_laser3 = 1;
 				//carmen_param_install_params(argc, argv, laser3_params, sizeof(laser3_params) / sizeof(laser3_params[0]));
-				interpret_params(&laser3, dev3, str3, res3, rem3, fov3);
+				interpret_params(laser3, dev3, str3, res3, rem3, fov3);
 			}
 			break;
 		case LASER4:
@@ -276,7 +300,7 @@ void Laser::read_parameters(short int laserScanner)
 			{
 				use_laser4 = 1;
 				//carmen_param_install_params(argc, argv, laser4_params, sizeof(laser4_params) / sizeof(laser4_params[0]));
-				interpret_params(&laser4, dev4, str4, res4, rem4, fov4);
+				interpret_params(laser4, dev4, str4, res4, rem4, fov4);
 			}
 			break;
 		case LASER5:
@@ -289,7 +313,7 @@ void Laser::read_parameters(short int laserScanner)
 			{
 				use_laser5 = 1;
 				//carmen_param_install_params(argc, argv, laser5_params, sizeof(laser5_params) / sizeof(laser5_params[0]));
-				interpret_params(&laser5, dev5, str5, res5, rem5, fov5);
+				interpret_params(laser5, dev5, str5, res5, rem5, fov5);
 			}
 			break;
 	}
@@ -310,7 +334,9 @@ void Laser::read_parameters(short int laserScanner)
 		{"laser", "front_laser_resolution", CARMEN_PARAM_DOUBLE, &res1, 0, NULL},
 		{"laser", "front_laser_use_remission", CARMEN_PARAM_STRING, &rem1, 0, NULL},
 		{"laser", "front_laser_fov", CARMEN_PARAM_DOUBLE,  &fov1, 0, NULL},
-		{"laser", "front_laser_baud", CARMEN_PARAM_INT, &laser1.settings.set_baudrate, 0, NULL},
+		{"laser", "front_laser_baud", CARMEN_PARAM_INT, &
+	
+	settings.set_baudrate, 0, NULL},
 		{"laser", "front_laser_flipped", CARMEN_PARAM_INT, &laser1.settings.laser_flipped, 0, NULL}};
 
 	carmen_param_t laser2_params[] = {
@@ -463,16 +489,16 @@ int Laser::carmen_laser_start(short int laserScanner)
 	{
 		case LASER1:
 			// get laser default parameter
-			set_default_parameters(&laser1, CARMEN_FRONT_LASER_NUM);
+			set_default_parameters(laser1, CARMEN_FRONT_LASER_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER1);
 			// start lasers, and start publishing scans
 			if (use_laser1)
 			{
-				set_laser_config_structure(&laser1, &laser1_config);
+				set_laser_config_structure(laser1, laser1_config);
 				
 				// try to connect to the laser
-				if (sick->sick_start_laser(&laser1) == 0)
+				if (sick->sick_start_laser(laser1) == 0)
 				{
 					return 0;
 				}
@@ -487,16 +513,16 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER2:
 			// get laser default parameter
-			set_default_parameters(&laser2, CARMEN_REAR_LASER_NUM);
+			set_default_parameters(laser2, CARMEN_REAR_LASER_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER2);
 			// start lasers, and start publishing scans
 			if (use_laser2)
 			{
-				set_laser_config_structure(&laser2, &laser2_config);
+				set_laser_config_structure(laser2, laser2_config);
 				
 				// try to connect to the laser
-				if (sick->sick_start_laser(&laser2) == 0)
+				if (sick->sick_start_laser(laser2) == 0)
 				{
 					return 0;
 				}
@@ -511,16 +537,16 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER3:
 			// get laser default parameter
-			set_default_parameters(&laser3, CARMEN_LASER3_NUM);
+			set_default_parameters(laser3, CARMEN_LASER3_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER3);
 			// start lasers, and start publishing scans
 			if (use_laser3)
 			{
-				set_laser_config_structure(&laser3, &laser3_config);
+				set_laser_config_structure(laser3, laser3_config);
 				
 				// try to connect to the laser
-				if (sick->sick_start_laser(&laser3) == 0)
+				if (sick->sick_start_laser(laser3) == 0)
 				{
 					return 0;
 				}
@@ -535,16 +561,16 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER4:
 			// get laser default parameter
-			set_default_parameters(&laser4, CARMEN_LASER4_NUM);
+			set_default_parameters(laser4, CARMEN_LASER4_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER4);
 			// start lasers, and start publishing scans
 			if (use_laser4)
 			{
-				set_laser_config_structure(&laser4, &laser4_config);
+				set_laser_config_structure(laser4, laser4_config);
 				
 				// try to connect to the laser
-				if (sick->sick_start_laser(&laser4) == 0)
+				if (sick->sick_start_laser(laser4) == 0)
 				{
 					return 0;
 				}
@@ -559,16 +585,16 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER5:
 			// get laser default parameter
-			set_default_parameters(&laser5, CARMEN_LASER4_NUM);
+			set_default_parameters(laser5, CARMEN_LASER4_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER5);
 			// start lasers, and start publishing scans
 			if (use_laser5)
 			{
-				set_laser_config_structure(&laser5, &laser5_config);
+				set_laser_config_structure(laser5, laser5_config);
 				
 				// try to connect to the laser
-				if (sick_start_laser(&laser5) == 0)
+				if (sick->sick_start_laser(laser5) == 0)
 				{
 					return 0;
 				}
@@ -629,9 +655,9 @@ int Laser::carmen_laser_run(void)
 	
 	if (use_laser1)
 	{
-		sick->sick_handle_laser(&laser1);
+		sick->sick_handle_laser(laser1);
 		
-		if (laser1.new_reading)
+		if (laser1->new_reading)
 		{
 			// Markus Original:
 			//publish_laser_message(&laser1, &laser1_config);
@@ -641,7 +667,7 @@ int Laser::carmen_laser_run(void)
 			laserValue += LASER1;
 		}
 		
-		laser1_stalled = (current_time - laser1.timestamp > 1.0);
+		laser1_stalled = (current_time - laser1->timestamp > 1.0);
 		//**
 		//fprintf(stderr, "time: %.1f",current_time - laser1.timestamp);
 		//**
@@ -656,9 +682,9 @@ int Laser::carmen_laser_run(void)
 	if(use_laser2)
 	{
 		//qDebug("carmen_laser_run: use_laser1=true");
-		sick->sick_handle_laser(&laser2);
+		sick->sick_handle_laser(laser2);
 		
-		if (laser2.new_reading)
+		if (laser2->new_reading)
 		{
 			// Markus Original:
 			//publish_laser_message(&laser2, &laser2_config);
@@ -668,7 +694,7 @@ int Laser::carmen_laser_run(void)
 			laserValue += LASER2;
 		}
 		
-		laser2_stalled = (current_time - laser2.timestamp > 1.0);
+		laser2_stalled = (current_time - laser2->timestamp > 1.0);
 		/*
 		if (print_stats)
 			fprintf(stderr, "L2: %s(%.1f%% full) ", laser2_stalled ? "STALLED " : " ", (laser2.buffer_position - laser2.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
@@ -678,9 +704,9 @@ int Laser::carmen_laser_run(void)
 	
 	if( use_laser3)
 	{
-		sick->sick_handle_laser(&laser3);
+		sick->sick_handle_laser(laser3);
 		
-		if (laser3.new_reading)
+		if (laser3->new_reading)
 		{
 			// Markus Original:
 			//publish_laser_message(&laser3, &laser3_config);
@@ -690,18 +716,20 @@ int Laser::carmen_laser_run(void)
 			laserValue += LASER3;
 		}
 		
-		laser3_stalled = (current_time - laser3.timestamp > 1.0);
+		laser3_stalled = (current_time - laser3->timestamp > 1.0);
 		
+		/*
 		if (print_stats)
-			fprintf(stderr, "L3: %s(%.1f%% full) ", laser3_stalled ? "STALLED " : " ", laser3.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
+			fprintf(stderr, "L3: %s(%.1f%% full) ", laser3_stalled ? "STALLED " : " ", laser3->buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
+		*/
 	}
 	
 	
 	if (use_laser4)
 	{
-		sick->sick_handle_laser(&laser4);
+		sick->sick_handle_laser(laser4);
 		
-		if (laser4.new_reading)
+		if (laser4->new_reading)
 		{
 			// Markus Original:
 			//publish_laser_message(&laser4, &laser4_config);
@@ -711,18 +739,20 @@ int Laser::carmen_laser_run(void)
 			laserValue += LASER4;
 		}
 		
-		laser4_stalled = (current_time - laser4.timestamp > 1.0);
+		laser4_stalled = (current_time - laser4->timestamp > 1.0);
 
+		/*
 		if(print_stats)
 			fprintf(stderr, "L4: %s(%.1f%% full) ", laser4_stalled ? "STALLED " : " ", laser4.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
+		*/
 	}
 	
 	
 	if (use_laser5)
 	{
-		sick->sick_handle_laser(&laser5);
+		sick->sick_handle_laser(laser5);
 		
-		if(laser5.new_reading)
+		if(laser5->new_reading)
 		{
 			// Markus Original:
 			//publish_laser_message(&laser5, &laser5_config);
@@ -732,10 +762,12 @@ int Laser::carmen_laser_run(void)
 			laserValue += LASER5;
 		}
 		
-		laser5_stalled = (current_time - laser5.timestamp > 1.0);
+		laser5_stalled = (current_time - laser5->timestamp > 1.0);
 		
+		/*
 		if(print_stats)
 			fprintf(stderr, "L5: %s(%.1f%% full) ", laser5_stalled ? "STALLED " : " ", laser5.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
+		*/
 	}
 	
 	/* Markus Original:
@@ -773,16 +805,19 @@ int Laser::getLaserNumReadings(int laser)
 	switch (laser)
 	{
 		case LASER1:
-			return laser1.numvalues;
+			return laser1->numvalues;
 			break;
 		case LASER2:
-			return laser2.numvalues;
+			return laser2->numvalues;
 			break;
 		case LASER3:
-			return laser3.numvalues;
+			return laser3->numvalues;
 			break;
 		case LASER4:
-			return laser4.numvalues;
+			return laser4->numvalues;
+			break;
+		case LASER5:
+			return laser5->numvalues;
 			break;
 	}
 	return 0;
@@ -798,26 +833,32 @@ float Laser::getLaserDistance(int laser, int angle)
 	switch (laser)
 	{
 		case LASER1:
-			numreadings = laser1.numvalues;
-			laserrange = laser1.range;
+			numreadings = laser1->numvalues;
+			laserrange = laser1->range;
 			laserrange[angle] /= 100;
 			return laserrange[angle];
 			break;
 		case LASER2:
-			numreadings = laser2.numvalues;
-			laserrange = laser2.range;
+			numreadings = laser2->numvalues;
+			laserrange = laser2->range;
 			laserrange[angle] /= 100;
 			return laserrange[angle];
 			break;
 		case LASER3:
-			numreadings = laser3.numvalues;
-			laserrange = laser3.range;
+			numreadings = laser3->numvalues;
+			laserrange = laser3->range;
 			laserrange[angle] /= 100;
 			return laserrange[angle];
 			break;
 		case LASER4:
-			numreadings = laser4.numvalues;
-			laserrange = laser4.range;
+			numreadings = laser4->numvalues;
+			laserrange = laser4->range;
+			laserrange[angle] /= 100;
+			return laserrange[angle];
+			break;
+		case LASER5:
+			numreadings = laser5->numvalues;
+			laserrange = laser5->range;
 			laserrange[angle] /= 100;
 			return laserrange[angle];
 			break;
