@@ -80,7 +80,7 @@ Mrs::Mrs(QSplashScreen *splash)
 	plotThread = new PlotThread(sensorThread);
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	camThread = new CamThread();
 	#endif
 	joystick = new Joystick();
@@ -145,7 +145,7 @@ void Mrs::init()
 	// call (a) test method(s) when clicking the test button
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	// currently not in use:
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
 	#endif
@@ -185,7 +185,7 @@ void Mrs::init()
 	//--------------------------------------------------------------------------
 	connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 	
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//-------------------------------------------------------------------------------------
 	// disable face detection in the GUI, on error with loading haar cascade in CamThread
 	// Must be before readSettings!
@@ -408,7 +408,7 @@ void Mrs::init()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL(sensorDataComplete()), this, SLOT(showSensorData()));
 	
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//----------------------------------------------------------------------------
 	// connect sensor contact signals to "show contact alarm"
 	// (Whenever the an alarm contact was closed, show the result in the cam image)
@@ -495,7 +495,7 @@ void Mrs::init()
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 	
-	#ifndef _ARM_ // only include in _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//-----------------------------------------------------------
 	// check if camera is connected
 	//-----------------------------------------------------------
@@ -741,7 +741,7 @@ void Mrs::shutdown()
 	
 		
 		// TODO: a universal quit-threads-method
-		#ifndef _ARM_ // only include on _non_ ARM environments!
+		#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		//--------------------------------
 		// quit the camThread
 		//--------------------------------
@@ -1113,7 +1113,7 @@ Mrs::~Mrs()
 	#endif
 	delete laserThread;
 	delete netThread;
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	delete camThread;
 	#endif
 	delete joystick;
@@ -1351,7 +1351,9 @@ void Mrs::enableFaceTracking(int state)
 
 void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+	Q_UNUSED (faces) // not in use, at the moment
+			
 	// TODO: put values to consts or ini
 	int xLevelRight = (camThread->imageWidth()  / 2) + faceRadius;
 	int xLevelLeft  = (camThread->imageWidth()  / 2) - faceRadius;
@@ -1740,7 +1742,7 @@ void Mrs::readSettings()
 		case 1:
 			dontUseCamera = true;
 			
-			#ifndef _ARM_ // only include on _non_ ARM environments!
+			#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 			// turning "off" camera
 			camThread->setCameraDevice(-2);
 			#endif
@@ -1750,7 +1752,7 @@ void Mrs::readSettings()
 			break;
 	}
 
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	if (!dontUseCamera)
 	{
 		//---------------------------------------------------------------------

@@ -27,8 +27,18 @@ extern void shutdown_laser(int x);
 /*****  DIRK WAS HERE - END ******/
 
 
+Sick::Sick()
+{
+}
+
+
+Sick::Sick()
+{
+}
+
+
 /* fancy serial functions */
-int iParity(parity_t par)
+int Sick::iParity(parity_t par)
 {
   if(par == N)
     return(IGNPAR);
@@ -36,7 +46,7 @@ int iParity(parity_t par)
     return(INPCK);
 }
 
-int iSoftControl(int flowcontrol)
+int Sick::iSoftControl(int flowcontrol)
 {
   if(flowcontrol)
     return(IXON);
@@ -45,7 +55,7 @@ int iSoftControl(int flowcontrol)
 }
 
 
-int cDataSize(int numbits)
+int Sick::cDataSize(int numbits)
 {
   switch(numbits) {
   case 5:
@@ -67,7 +77,7 @@ int cDataSize(int numbits)
 }
 
 
-int cStopSize(int numbits)
+int Sick::cStopSize(int numbits)
 {
   if(numbits == 2)
     return(CSTOPB);
@@ -76,7 +86,7 @@ int cStopSize(int numbits)
 }
 
 
-int cFlowControl(int flowcontrol)
+int Sick::cFlowControl(int flowcontrol)
 {
   if(flowcontrol)
     return(CRTSCTS);
@@ -85,7 +95,7 @@ int cFlowControl(int flowcontrol)
 }
 
 
-int cParity(parity_t par)
+int Sick::cParity(parity_t par)
 {
   if(par != N) {
     if(par == O)
@@ -98,7 +108,7 @@ int cParity(parity_t par)
 }
 
 
-int cBaudrate(int baudrate)
+int Sick::cBaudrate(int baudrate)
 {
   switch(baudrate) {
   case 0:
@@ -149,7 +159,7 @@ int cBaudrate(int baudrate)
 }
 
 
-void sick_set_serial_params(sick_laser_p laser)
+void Sick::sick_set_serial_params(sick_laser_p laser)
 {
   struct termios  ctio;
   
@@ -170,7 +180,7 @@ void sick_set_serial_params(sick_laser_p laser)
 
 
 /*****  DIRK WAS HERE - START ******/
-int kernel_minimum_version( int a, int b, int c )
+int Sick::kernel_minimum_version( int a, int b, int c )
 {
   struct utsname        uts;
   int                   ca, cb, cc; 
@@ -184,7 +194,7 @@ int kernel_minimum_version( int a, int b, int c )
 }
 
 
-void sick_set_baudrate(sick_laser_p laser, int brate)
+void Sick::sick_set_baudrate(sick_laser_p laser, int brate)
 {
   struct termios  ctio;
 
@@ -235,7 +245,7 @@ void sick_set_baudrate(sick_laser_p laser, int brate)
 }
 
 
-int sick_serial_connect(sick_laser_p laser)
+int Sick::sick_serial_connect(sick_laser_p laser)
 {
 	if((laser->dev.fd = open(laser->dev.ttyport, O_RDWR | O_NOCTTY, 0)) < 0)
 	{
@@ -253,7 +263,7 @@ int sick_serial_connect(sick_laser_p laser)
 
 
 /* sick_compute_checksum - Compute the CRC checksum of a segment of data. */
-static int sick_compute_checksum(unsigned char *CommData, int uLen)
+static int Sick::sick_compute_checksum(unsigned char *CommData, int uLen)
 {
   unsigned char abData[2] = {0, 0}, uCrc16[2] = {0, 0};
   
@@ -281,7 +291,7 @@ static int sick_compute_checksum(unsigned char *CommData, int uLen)
 }
 
 
-int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout)
+int Sick::sick_read_data(sick_laser_p laser, unsigned char *data, double timeout)
 {
 	static int val, i, j, l, pos, chk1, chk2;
 	double start_time;
@@ -368,7 +378,7 @@ int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout)
 }
 
 
-int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length)
+int Sick::sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length)
 {
   unsigned char buffer[MAX_COMMAND_SIZE];
   int pos = 0, i, check, length, loop, answer = 0, counter = 0;
@@ -445,12 +455,12 @@ int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char 
 }
 
 
-void sick_request_status(sick_laser_p laser)
+void Sick::sick_request_status(sick_laser_p laser)
 {
   sick_write_command(laser, 0x31, NULL, 0);
 }
 
-void sick_request_sensor(sick_laser_p laser)
+void Sick::sick_request_sensor(sick_laser_p laser)
 {
   static unsigned char args[2] = {0x05, 0xb4};
 
@@ -458,7 +468,7 @@ void sick_request_sensor(sick_laser_p laser)
 }
 
 
-int sick_set_laser_baudrate(sick_laser_p laser, int brate)
+int Sick::sick_set_laser_baudrate(sick_laser_p laser, int brate)
 {
   unsigned char args[1];
   int result;
@@ -476,7 +486,7 @@ int sick_set_laser_baudrate(sick_laser_p laser, int brate)
 }
 
 
-int sick_set_config_mode(sick_laser_p laser)
+int Sick::sick_set_config_mode(sick_laser_p laser)
 {
   unsigned char data[MAX_COMMAND_SIZE], args[MAX_COMMAND_SIZE];
   int i, result;
@@ -493,7 +503,7 @@ int sick_set_config_mode(sick_laser_p laser)
 }
 
 
-int sick_set_lms_resolution(sick_laser_p laser)
+int Sick::sick_set_lms_resolution(sick_laser_p laser)
 {
   unsigned char args[4];
   int result;
@@ -523,7 +533,7 @@ int sick_set_lms_resolution(sick_laser_p laser)
 }
 
 
-int sick_request_lms_config(sick_laser_p laser)
+int Sick::sick_request_lms_config(sick_laser_p laser)
 {
   int result;
   
@@ -544,7 +554,7 @@ int sick_set_lms_config(sick_laser_p laser, unsigned char *data, int len)
 }
 
 
-int sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int length)
+int Sick::sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int length)
 {
   int check, i;
   unsigned char data[32];
@@ -617,7 +627,7 @@ int sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int length)
 }
 
 
-int sick_set_lms_range(sick_laser_p laser)
+int Sick::sick_set_lms_range(sick_laser_p laser)
 {
   int l = 0;
   unsigned char data[BUFFER_SIZE];
@@ -632,7 +642,7 @@ int sick_set_lms_range(sick_laser_p laser)
 }
 
 
-void sick_start_continuous_mode(sick_laser_p laser)
+void Sick::sick_start_continuous_mode(sick_laser_p laser)
 {
   unsigned char lmsarg[1] = {0x24}, pls180arg[1] = {0x20};
   unsigned char pls360arg[1] = {0x24};
@@ -651,7 +661,7 @@ void sick_start_continuous_mode(sick_laser_p laser)
 }
 
 
-void sick_stop_continuous_mode(sick_laser_p laser)
+void Sick::sick_stop_continuous_mode(sick_laser_p laser)
 {
   unsigned char args[1] = {0x25};
   int result;
@@ -663,7 +673,7 @@ void sick_stop_continuous_mode(sick_laser_p laser)
 
 
 // *** REI - START *** //
-void sick_start_continuous_remission_part_mode(sick_laser_p laser)
+void Sick::sick_start_continuous_remission_part_mode(sick_laser_p laser)
 {
   unsigned char lmsarg[7] = {0x2b, 1,0,0,0,0,0}, pls180arg[1] = {0x20};
   unsigned char pls360arg[1] = {0x24};
@@ -695,7 +705,7 @@ void sick_start_continuous_remission_part_mode(sick_laser_p laser)
    of the laser. */
 
 
-int sick_testBaudrate(sick_laser_p laser, int brate)
+int Sick::sick_testBaudrate(sick_laser_p laser, int brate)
 {
 	unsigned char data[BUFFER_SIZE], ReqLaser[2] = {5, 180};
 	int response;
@@ -730,7 +740,7 @@ int sick_testBaudrate(sick_laser_p laser, int brate)
 }
 
 
-int sick_detect_baudrate(sick_laser_p laser)
+int Sick::sick_detect_baudrate(sick_laser_p laser)
 {
 	fprintf(stderr, "INFO: detect connected baudrate: ...... 9600\n");
 	if(sick_testBaudrate(laser, 9600))
@@ -781,7 +791,7 @@ int sick_detect_baudrate(sick_laser_p laser)
 }
 
 
-int sick_check_baudrate(sick_laser_p laser, int brate)
+int Sick::sick_check_baudrate(sick_laser_p laser, int brate)
 {
   fprintf(stderr, "check baudrate:\n");
   fprintf(stderr, "    %d ... ", brate);
@@ -796,7 +806,7 @@ int sick_check_baudrate(sick_laser_p laser, int brate)
 }
 
 
-void sick_install_settings(sick_laser_p laser)
+void Sick::sick_install_settings(sick_laser_p laser)
 {
 	laser->dev.type = laser->settings.type;
 	laser->dev.baudrate = laser->settings.start_baudrate;
@@ -816,7 +826,7 @@ void sick_install_settings(sick_laser_p laser)
 }
 
 
-void sick_allocate_laser(sick_laser_p laser)
+void Sick::sick_allocate_laser(sick_laser_p laser)
 {
 	int i;
 	
@@ -869,7 +879,7 @@ void sick_allocate_laser(sick_laser_p laser)
 }
 
 
-int sick_connect_device(sick_laser_p laser)
+int Sick::sick_connect_device(sick_laser_p laser)
 {
 	sick_install_settings(laser);
 	sick_allocate_laser(laser);
@@ -897,7 +907,7 @@ int sick_connect_device(sick_laser_p laser)
 /**
 Establish the serial connection to the laser and set the laser in the wanted mode(s).
 */
-int sick_start_laser(sick_laser_p laser)
+int Sick::sick_start_laser(sick_laser_p laser)
 {
 	int brate = 0;
 
@@ -1030,8 +1040,7 @@ int sick_start_laser(sick_laser_p laser)
 /** sick_valid_packet - This function returns 1 if a valid packet is
    detected in a chunk of data.  An offset and packet length are 
    returned. */
-int sick_valid_packet(unsigned char *data, long size,
-		      long *offset, long *len)
+int Sick::sick_valid_packet(unsigned char *data, long size, long *offset, long *len)
 {
   int i, check, packet_size = 0, theo_size = 0;
 
@@ -1073,7 +1082,7 @@ int sick_valid_packet(unsigned char *data, long size,
 
 /** sick_process_packet - Interpret packets received from the laser.  If
    the packets contain laser data, expand the data into a useful form. */
-static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet)
+static void Sick::sick_process_packet_distance(sick_laser_p laser, unsigned char *packet)
 {
   int i = 0, LoB = 0, HiB = 0, bit14, bit15, numMeasurements;
   float conversion = 1.0;
@@ -1112,7 +1121,7 @@ static void sick_process_packet_distance(sick_laser_p laser, unsigned char *pack
 
 
 // *** REI - START *** //
-static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet)
+static void Sick::sick_process_packet_remission(sick_laser_p laser, unsigned char *packet)
 {
   int i = 0, LoB = 0, HiB = 0, bit14, bit15, numMeasurements;
   int parts, mstart, mend;
@@ -1159,7 +1168,7 @@ static void sick_process_packet_remission(sick_laser_p laser, unsigned char *pac
 }
 
 
-static void sick_process_packet(sick_laser_p laser, unsigned char *packet)
+static void Sick::sick_process_packet(sick_laser_p laser, unsigned char *packet)
 {
   if(laser->settings.use_remission == 1)
 	sick_process_packet_remission(laser, packet);
@@ -1170,7 +1179,7 @@ static void sick_process_packet(sick_laser_p laser, unsigned char *packet)
 
 /* sick_handle_laser - Process any data that is available from the 
    laser. Attempt to detect valid packets in the data. */
-void sick_handle_laser(sick_laser_p laser)
+void Sick::sick_handle_laser(sick_laser_p laser)
 {
   int bytes_available, bytes_read;
   int leftover;
@@ -1236,7 +1245,7 @@ void sick_handle_laser(sick_laser_p laser)
 }
 
 
-void sick_stop_laser(sick_laser_p laser)
+void Sick::sick_stop_laser(sick_laser_p laser)
 {
   // TODO: change std output
   qDebug("INFO: stop LASER continuous mode.......");
@@ -1247,7 +1256,7 @@ void sick_stop_laser(sick_laser_p laser)
 
 
 // from global.c:
-double carmen_get_time(void)
+double Sick::carmen_get_time(void)
 {
 	struct timeval tv;
 	double t;

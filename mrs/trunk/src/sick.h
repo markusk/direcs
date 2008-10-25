@@ -18,7 +18,6 @@
  *                                                                       *
  *************************************************************************/
 
-
 #ifndef CARMEN_SICK_H
 #define CARMEN_SICK_H
 
@@ -146,79 +145,114 @@
 #define CBREAK                           64
 #endif
 
+/**
+\brief Handles the access to the sick laser scanners.
 
-typedef enum { PLS, LMS } laser_model_t;
-typedef enum { CM, MM, DM } range_res_t;
-typedef enum { SICK_RANGE80M, SICK_RANGE160M, SICK_RANGE320M, SICK_REMISSION_NORM, SICK_REMISSION_DIRECT } range_dist_t;
-typedef enum { N, E, O } parity_t;
+This class handles the access to the sick laser scanners.
+*/
+class Sick : public QObject
+{
+    Q_OBJECT
+	
+	public:
+		Sick();
+		~Sick();
+		typedef enum { PLS, LMS } laser_model_t;
+		typedef enum { CM, MM, DM } range_res_t;
+		typedef enum { SICK_RANGE80M, SICK_RANGE160M, SICK_RANGE320M, SICK_REMISSION_NORM, SICK_REMISSION_DIRECT } range_dist_t;
+		typedef enum { N, E, O } parity_t;
+		typedef struct {
+		int                fd;
+		laser_model_t      type;
+		char               *ttyport;
+		int                baudrate;
+		parity_t           parity;
+		unsigned char      passwd[8];
+		int                databits;
+		int                stopbits;
+		int                hwf;
+		int                swf;
+		int                laser_num;
+		} laser_device_t, *laser_device_p;
+		
+		typedef struct {
+		char device_name[MAX_NAME_LENGTH];
+		laser_model_t type;
+		range_res_t range_res;
+		range_dist_t range_dist;
+		unsigned char password[8];
+		int laser_num;
+		int detect_baudrate, use_highspeed;
+		int start_baudrate, set_baudrate;
+		int databits, stopbits;
+		parity_t parity;
+		int swf, hwf;
+		int angle_range, angle_resolution;
+		int use_remission;
+		int rem_values;
+		int num_values;
+		int laser_flipped;
+		} laser_settings_t;
 
-
-typedef struct {
-  int                fd;
-  laser_model_t      type;
-  char               *ttyport;
-  int                baudrate;
-  parity_t           parity;
-  unsigned char      passwd[8];
-  int                databits;
-  int                stopbits;
-  int                hwf;
-  int                swf;
-  int                laser_num;
-} laser_device_t, *laser_device_p;
-
-
-typedef struct {
-  char device_name[MAX_NAME_LENGTH];
-  laser_model_t type;
-  range_res_t range_res;
-  range_dist_t range_dist;
-  unsigned char password[8];
-  int laser_num;
-  int detect_baudrate, use_highspeed;
-  int start_baudrate, set_baudrate;
-  int databits, stopbits;
-  parity_t parity;
-  int swf, hwf;
-  int angle_range, angle_resolution;
-  int use_remission;
-  int rem_values;
-  int num_values;
-  int laser_flipped;
-} laser_settings_t;
-
-
-typedef struct {
-  laser_settings_t settings;
-  laser_device_t dev;
-
-  int numvalues;
-  double *range;
-  int *glare, *wfv, *sfv;
-// *** REI - START *** //
-  double *remission;
-  int remvalues;
-// *** REI - END *** //
-  unsigned char *buffer;
-  long int buffer_position, processed_mark, packet_offset, packet_length;
-  int new_reading;
-  double timestamp;
-  double packet_timestamp;
-} sick_laser_t, *sick_laser_p;
-
-
-//
-// declarations
-//
-int  sick_start_laser(sick_laser_p laser);
-void sick_stop_laser(sick_laser_p laser);
-void sick_handle_laser(sick_laser_p laser);
-
-int sick_connect_device(sick_laser_p laser);
-
-
-// from global.c:
-double carmen_get_time(void);
-
+		typedef struct {
+		laser_settings_t settings;
+		laser_device_t dev;
+		
+		int numvalues;
+		double *range;
+		int *glare, *wfv, *sfv;
+		// *** REI - START ***
+		double *remission;
+		int remvalues;
+		// *** REI - END *** //
+		unsigned char *buffer;
+		long int buffer_position, processed_mark, packet_offset, packet_length;
+		int new_reading;
+		double timestamp;
+		double packet_timestamp;
+		} sick_laser_t, *sick_laser_p;
+		
+		int  sick_start_laser(sick_laser_p laser);
+		void sick_stop_laser(sick_laser_p laser);
+		void sick_handle_laser(sick_laser_p laser);
+		int sick_connect_device(sick_laser_p laser);
+		double carmen_get_time(void); // from global.c
+		
+	private:
+		int iParity(parity_t par);
+		int iSoftControl(int flowcontrol);
+		int cDataSize(int numbits);
+		int cStopSize(int numbits);
+		int cFlowControl(int flowcontrol);
+		int cParity(parity_t par);
+		int cBaudrate(int baudrate);
+		void sick_set_serial_params(sick_laser_p laser);
+		int kernel_minimum_version( int a, int b, int c );
+		void sick_set_baudrate(sick_laser_p laser, int brate);
+		int sick_serial_connect(sick_laser_p laser);
+		static int sick_compute_checksum(unsigned char *CommData, int uLen);
+		int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout);
+		int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length);
+		void sick_request_status(sick_laser_p laser);
+		void sick_request_sensor(sick_laser_p laser);
+		int sick_set_laser_baudrate(sick_laser_p laser, int brate);
+		int sick_set_config_mode(sick_laser_p laser);
+		int sick_set_lms_resolution(sick_laser_p laser);
+		int sick_request_lms_config(sick_laser_p laser);
+		int sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int length);
+		int sick_set_lms_range(sick_laser_p laser);
+		void sick_start_continuous_mode(sick_laser_p laser);
+		void sick_stop_continuous_mode(sick_laser_p laser);
+		void sick_start_continuous_remission_part_mode(sick_laser_p laser);
+		int sick_testBaudrate(sick_laser_p laser, int brate);
+		int sick_detect_baudrate(sick_laser_p laser);
+		int sick_check_baudrate(sick_laser_p laser, int brate);
+		void sick_install_settings(sick_laser_p laser);
+		void sick_allocate_laser(sick_laser_p laser);
+		int sick_valid_packet(unsigned char *data, long size, long *offset, long *len);
+		static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
+		static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
+		static void sick_process_packet(sick_laser_p laser, unsigned char *packet);
+}
 
 #endif
