@@ -189,6 +189,72 @@
     <class kind="class">Circuit</class>
   </compound>
   <compound kind="file">
+    <name>qrc_mrs.cpp</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/debug/</path>
+    <filename>debug_2qrc__mrs_8cpp</filename>
+    <member kind="function">
+      <type></type>
+      <name>Q_CONSTRUCTOR_FUNCTION</name>
+      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
+      <anchor>784ede001d04b31b614a6db16f0f7cf3</anchor>
+      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_mrs)) int QT_MANGLE_NAMESPACE(qCleanupResources_mrs)()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
+      <name>qInitResources_mrs</name>
+      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
+      <anchor>b55aae3c149e0c206a95d32a9576422a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_BEGIN_NAMESPACE bool</type>
+      <name>qRegisterResourceData</name>
+      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
+      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>qUnregisterResourceData</name>
+      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
+      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>qrc_mrs.cpp</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
+    <filename>qrc__mrs_8cpp</filename>
+    <member kind="function">
+      <type></type>
+      <name>Q_CONSTRUCTOR_FUNCTION</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>784ede001d04b31b614a6db16f0f7cf3</anchor>
+      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_mrs)) int QT_MANGLE_NAMESPACE(qCleanupResources_mrs)()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
+      <name>qInitResources_mrs</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>b55aae3c149e0c206a95d32a9576422a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_BEGIN_NAMESPACE bool</type>
+      <name>qRegisterResourceData</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>qUnregisterResourceData</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>gui.cpp</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>gui_8cpp</filename>
@@ -288,325 +354,455 @@
     <class kind="class">JoystickDialog</class>
   </compound>
   <compound kind="file">
-    <name>laser_main.cpp</name>
+    <name>laser.cpp</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
-    <filename>laser__main_8cpp</filename>
-    <includes id="laser__main_8h" name="laser_main.h" local="yes" imported="no">laser_main.h</includes>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_laser_run</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>579804f22317c981c69d89ac5ae6d073</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_laser_shutdown</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>c68fc7def0ebc520761f4abd947e2f8e</anchor>
-      <arglist>(int signo __attribute__((unused)))</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_laser_start</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>128de68f067d6b64c615fea4ad512c23</anchor>
-      <arglist>(short int laserScanner)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>check_parameter_settings</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>7c47d98087a9da4c6e03a90290fa20de</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>float</type>
-      <name>getLaserDistance</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>c5eef2fc918c4bc4fb4986a4f83ddd67</anchor>
-      <arglist>(int laser, int angle)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>getLaserNumReadings</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>dd9d33e8152263e8957a39ebf87c39b0</anchor>
-      <arglist>(int laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>interpret_params</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>d9cae1f7f21f5c49e067561aa4d69a38</anchor>
-      <arglist>(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>read_parameters</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>c82408dda1cfa4043aad3b766e115a68</anchor>
-      <arglist>(short int laserScanner)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>set_default_parameters</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>2e97511c1ee18058bb50ce45e8dc8b48</anchor>
-      <arglist>(sick_laser_p laser, int laser_num)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>set_laser_config_structure</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>14ea4039b51d0e3949122cc0dd81d8b1</anchor>
-      <arglist>(sick_laser_p laser, carmen_laser_laser_config_t *config)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setDevicePort</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>85ff16a78dd86b6982379c82601bcf1e</anchor>
-      <arglist>(short int laser, QString serialPort)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>shutdown_laser</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>a7166e8d0bbdf1abbf37fd954a2d6fdb</anchor>
-      <arglist>(int x)</arglist>
-    </member>
-    <member kind="variable">
-      <type>sick_laser_t</type>
-      <name>laser1</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>7394940c7e22f1f661c8d5ff376c7504</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>carmen_laser_laser_config_t</type>
-      <name>laser1_config</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>7355de2b68f429b412fdb0fcaf7d0c85</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>sick_laser_t</type>
-      <name>laser2</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>f878506cbfd4593438df0e189244662a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>carmen_laser_laser_config_t</type>
-      <name>laser2_config</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>e2204d6a6a5ab59e6e94d060d68d5942</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>sick_laser_t</type>
-      <name>laser3</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>60dec8f931582d45182076ae29250129</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>carmen_laser_laser_config_t</type>
-      <name>laser3_config</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>3d626bddfe14f9cf8192821e95f91cf2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>sick_laser_t</type>
-      <name>laser4</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>6b7453a1e4248dbe31a64d14c2edc696</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>carmen_laser_laser_config_t</type>
-      <name>laser4_config</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>6bed6943bdbb9be34ab7b9074d2922ef</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>sick_laser_t</type>
-      <name>laser5</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>21bf3d32d4f2a2ff840b77f574cffda3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>carmen_laser_laser_config_t</type>
-      <name>laser5_config</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>b14a2d112866b2f052ce75671b3eadff</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>QString</type>
-      <name>laserSerialPort1</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>9c7ab26f8cf399a4c7d7f736985f9394</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>QString</type>
-      <name>laserSerialPort2</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>945487d83efb8fc67bf802526d5862ac</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>quit_signal</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>9fb5fa91e75f81eaf202d61700390dbb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>use_laser1</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>c6b542107e3512a5aca2c0cc13ccdddf</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>use_laser2</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>5f5e550b223ee966ed6f0cfcd76cd369</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>use_laser3</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>c26b0a905f065a6a61579f94cf18ad91</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>use_laser4</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>c3b66c99184c75a59efb7f33648de5b6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>use_laser5</name>
-      <anchorfile>laser__main_8cpp.html</anchorfile>
-      <anchor>e9ae28e5a2594f26cc4590f915852218</anchor>
-      <arglist></arglist>
-    </member>
+    <filename>laser_8cpp</filename>
+    <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
   </compound>
   <compound kind="file">
-    <name>laser_main.h</name>
+    <name>laser.h</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
-    <filename>laser__main_8h</filename>
-    <includes id="sick_8h" name="sick.h" local="yes" imported="no">sick.h</includes>
-    <includes id="laser__messages_8h" name="laser_messages.h" local="yes" imported="no">laser_messages.h</includes>
-    <includes id="param__interface_8h" name="param_interface.h" local="yes" imported="no">param_interface.h</includes>
+    <filename>laser_8h</filename>
+    <includes id="carmenserial_8h" name="carmenserial.h" local="yes" imported="no">carmenserial.h</includes>
+    <class kind="class">Laser</class>
+    <class kind="struct">Laser::carmen_laser_laser_config_t</class>
+    <class kind="struct">Laser::carmen_param_t</class>
+    <class kind="struct">Laser::laser_device_t</class>
+    <class kind="struct">Laser::laser_settings_t</class>
+    <class kind="struct">Laser::sick_laser_t</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>ACK</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>6f6489887e08bff4887d0bc5dcf214d8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>BUFFER_SIZE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>6b20d41d6252e9871430c242cb1a56e7</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="define">
       <type>#define</type>
       <name>CARMEN_FRONT_LASER_NUM</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
+      <anchorfile>laser_8h.html</anchorfile>
       <anchor>b0e399ec74edc2465e6fb70b8cfb62c0</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>CARMEN_LASER3_NUM</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
+      <anchorfile>laser_8h.html</anchorfile>
       <anchor>6e7d9cb8c65647c957e9a0840a9f515d</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>CARMEN_LASER4_NUM</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
+      <anchorfile>laser_8h.html</anchorfile>
       <anchor>474099b2ff4c21254a836f79ae0ae3a2</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>CARMEN_LASER5_NUM</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
+      <anchorfile>laser_8h.html</anchorfile>
       <anchor>e845db817573e08d21687740e3563838</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>CARMEN_LASER_ALIVE_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>d4df17211ad572fd588f1cfdc1e6d290</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_ALIVE_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>3dea48b5501f07763c627ac02ae142d0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_FRONTLASER_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>63748ffae7b8228b38df07ffd81d4dba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_FRONTLASER_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>8b70a1d079928af1a0b27f7e5cd3d2fd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER1_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>57e11ba327e982b1b7e5dd9f7ca21786</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER1_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>f66323a3a0e0bc415656effdc3c49395</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER2_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>196466e829f2ed02b2e2d6109d46c792</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER2_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>4c0bc67dcafe960b3433b80beeb6d5cd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER3_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>c98b5a16b3aefa2b69ef1e2a29fb42d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER3_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>d66da7bffc042ecce2a1549e88b1456f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER4_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>2633270f451119e118b24206e4f1a8c0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER4_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>3e0c4b2190b4ebfe8dbfcba1263b38dd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER5_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>cc58501e46d511e0bc7ccf7080ce7921</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER5_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>c3f4bb56ec494ff5c47bd5014cf0da68</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LASER_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>3b91859b8ef01783fe1e0bd99a2aa7d4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_LOW_LATENCY</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>59d4cd110942db278fd7e76c4dbfd9cd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_REARLASER_FMT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>bdf6c13128ed27d174ef6c3f12065028</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_REARLASER_NAME</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>8c2c53fdb527de3bdad81fedd35ca65a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CARMEN_LASER_USE_SELECT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>c5b5f9795e6ff7e29533ceb3adcc1b7f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>CARMEN_REAR_LASER_NUM</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
+      <anchorfile>laser_8h.html</anchorfile>
       <anchor>f5b4fd4696ac588026ec8a0547b977df</anchor>
       <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>double</type>
-      <name>carmen_degrees_to_radians</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>33a1f57c7ce5205eb49395f0c2bf62d1</anchor>
-      <arglist>(double theta)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>CBREAK</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>cd5bddee635eadaa90cb5eae04c7d251</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_laser_run</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>579804f22317c981c69d89ac5ae6d073</anchor>
-      <arglist>(void)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>CRC16_GEN_POL</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>087c979734116b73cd94fd4f73abdeab</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_laser_shutdown</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>e6551f72066adba5686a7a1f9fa58c26</anchor>
-      <arglist>(int x)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>CRC16_GEN_POL0</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>d14020cd74f4d9c6ea05ceb5e4aadce9</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_laser_start</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>128de68f067d6b64c615fea4ad512c23</anchor>
-      <arglist>(short int laserScanner)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>CRC16_GEN_POL1</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>5ac17411b79307731c39bb5fbcf4f926</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>double</type>
-      <name>carmen_radians_to_degrees</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>e34f83ac9eeeabbfe91a92791a965442</anchor>
-      <arglist>(double theta)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>DLE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>dd7018db64fb17dd1e4664b4494be0ee</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>float</type>
-      <name>getLaserDistance</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>c5eef2fc918c4bc4fb4986a4f83ddd67</anchor>
-      <arglist>(int laser, int angle)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>FALSE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a93f0eb578d23995850d61f7d61c55c1</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>int</type>
-      <name>getLaserNumReadings</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>dd9d33e8152263e8957a39ebf87c39b0</anchor>
-      <arglist>(int laser)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>INI</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>b3d6f7cc7deaab046f7412f5b52b25f7</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setDevicePort</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>85ff16a78dd86b6982379c82601bcf1e</anchor>
-      <arglist>(short int laser, QString serialPort)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>LASER_BUFFER_SIZE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>fa8b0f191cda4acad112c52bab164664</anchor>
+      <arglist></arglist>
     </member>
-    <member kind="function">
-      <type>void</type>
-      <name>shutdown_laser</name>
-      <anchorfile>laser__main_8h.html</anchorfile>
-      <anchor>a7166e8d0bbdf1abbf37fd954a2d6fdb</anchor>
-      <arglist>(int x)</arglist>
+    <member kind="define">
+      <type>#define</type>
+      <name>LID</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>59358fb1dba36cd01d0a501e73529a2c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LMS_PASSWORD</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>856336d040b00743dc99649dbc2d5b68</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>M_PI</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>e71449b1cc6e6250b91f539153a7a0d3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_COMMAND_SIZE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>b95c4556ea9e5b815392d36c3d7b2ec0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_NAME_LENGTH</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>0c397a708cec89c74029582574516b30</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_ACK</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>045fc4fee1a761d49aff6570c3e69a59</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_ANSWER</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>6a92aaaaa6c06fdfaca57596164ee5c5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_CLEAR</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>7717d12f94bff795035f5a45b7eba4e4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_CONFIG</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>5ff4a2b00c83dd024502a78bf011fdad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_DATA</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>8d1e0eac8071cb4278d1f532b34d97c0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_GETTING_CONF</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>1ed04d6b28f58358699b20ce9039caa7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_SENSOR_DATA</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>8d832170b04f16fbcebd20289108c660</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_TIME_FOR_TESTING_BAUDRATE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a300b8487be50d891e669485d1b8e36f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAXDOUBLE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>ce724a9256f4e65b352465e5feb24a21</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAXFLOAT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>5e9e29217f6ec61105a4520ec5942225</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>NAK</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>7ff3e502ffb5d509612c6c6741de45cc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>PLS_PASSWORD</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>7772a0e1d97c97b635af4e4d53c26a87</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RAW</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>8cbc8c74f4ed0a3d6a415c8d37630e6b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RES_0_25_DEGREE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>9585676c9f7e5f9dcd9e22919d9fca87</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RES_0_50_DEGREE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>dca115212a39974c0d037a0d1681e97f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RES_1_00_DEGREE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>7ea14bcea192e028e4eacb6719e5094a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>STX</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>acd744a917e61146ec8b7175b4761683</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>TIO</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a8c9953b722874371f3ba39c08658fdf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>TIOCGETP</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>48cdfd4dc0eadfd6694466b21b232929</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>TIOCSETP</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>9f4aefaeb94c4c17ead72493c9786394</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>TRUE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a8cecfc5c5c054d2875c03e77b7be15d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>UKN</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>cab34ad4a1eef1ea50c1424981fa52ae</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>va_copy</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>b1bc77186597ff91cc8ee54e7a56c23d</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -816,7 +1012,7 @@
     <name>laserThread.h</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>laserThread_8h</filename>
-    <includes id="laser__main_8h" name="laser_main.h" local="yes" imported="no">laser_main.h</includes>
+    <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
     <class kind="class">LaserThread</class>
   </compound>
   <compound kind="file">
@@ -864,7 +1060,6 @@
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
     <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
     <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
-    <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
     <class kind="class">Mrs</class>
   </compound>
   <compound kind="file">
@@ -897,7 +1092,6 @@
     <name>param_interface.h</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>param__interface_8h</filename>
-    <class kind="struct">carmen_param_t</class>
     <member kind="define">
       <type>#define</type>
       <name>CARMEN_PARAM_DIR</name>
@@ -928,13 +1122,6 @@
     </member>
     <member kind="define">
       <type>#define</type>
-      <name>carmen_param_handle_error</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>ae4377f77a7abf3cb18ca233c3f7c54b</anchor>
-      <arglist>(error, usage, progname)</arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
       <name>CARMEN_PARAM_INT</name>
       <anchorfile>param__interface_8h.html</anchorfile>
       <anchor>65761656ba88692aa7d928889f24f918</anchor>
@@ -953,258 +1140,6 @@
       <anchorfile>param__interface_8h.html</anchorfile>
       <anchor>ed95486c0e6beec0bd42f24094b871d7</anchor>
       <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>void(*</type>
-      <name>carmen_param_change_handler_t</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>70e2da521b5ca7833c8167042adcef60</anchor>
-      <arglist>)(char *module, char *variable, char *value)</arglist>
-    </member>
-    <member kind="typedef">
-      <type>struct carmen_param_t *</type>
-      <name>carmen_param_p</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>f956e38e55b7981a7f722719a585dc51</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>char</type>
-      <name>carmen_param_type_t</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>9ddcf993c688fd6e7f6f4bf9f19129ae</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_allow_unfound_variables</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>6e41918c19891cddb3a11574940a4892</anchor>
-      <arglist>(int new_value)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_are_unfound_variables_allowed</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>2cf1e38389cab1f37ccae662ac0a0bb8</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_check_unhandled_commandline_args</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>2f1129e3340a8757c2bb28376b51b1e6</anchor>
-      <arglist>(int argc, char *argv[])</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_check_version</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>76c377f0f31d69e217212c2980ec384a</anchor>
-      <arglist>(char *prog_name)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_all</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>4b87ab17bd22c166339d8606a252a4d0</anchor>
-      <arglist>(char *module, char ***variables, char ***values, int **expert, int *list_length)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_double</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>993228c09ce559bc0aed204e1d8aa540</anchor>
-      <arglist>(char *variable, double *return_value, int *expert)</arglist>
-    </member>
-    <member kind="function">
-      <type>char *</type>
-      <name>carmen_param_get_error</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>21f09959d582f0ca5bdcc5cc25cb6c38</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_filename</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>bccca79bf82aac8b56ba2afce1b4c2a7</anchor>
-      <arglist>(char *variable, char **return_value, int *expert)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_int</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>f39a4611245b8b647fd83a6328304ad6</anchor>
-      <arglist>(char *variable, int *return_value, int *expert)</arglist>
-    </member>
-    <member kind="function">
-      <type>char *</type>
-      <name>carmen_param_get_module</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>be6da8aeaecce6a130fd71e45e4f2e92</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_modules</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>2bbd02d191244040f8361aea00148642</anchor>
-      <arglist>(char ***modules, int *num_modules)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_onoff</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>e0e3fcf0255e21cb993e72af644ff94b</anchor>
-      <arglist>(char *variable, int *return_value, int *expert)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_paramserver_host</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>78dc26760b882e91a7b4db059dc8c3fc</anchor>
-      <arglist>(char **hostname)</arglist>
-    </member>
-    <member kind="function">
-      <type>char *</type>
-      <name>carmen_param_get_robot</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>468efe079c86aa5b89d84cfb703b9d4e</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_get_string</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>a9be38fe3c51c7f27e8838ad25dc1181</anchor>
-      <arglist>(char *variable, char **return_value, int *expert)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_install_params</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>5087616bb0c8b29a8a677b1659fc6098</anchor>
-      <arglist>(int argc, char *argv[], carmen_param_p param_list, int num_items)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_load_paramfile</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>97b87a327b12755859c6274551f72c0e</anchor>
-      <arglist>(char *filename, char *param_set)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_send_reread</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>6c3c77c0a4cd1167e541c50c3c53b1d6</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_set_double</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>d80bfd7f676be4f7fcd2acd2dd6ce5fd</anchor>
-      <arglist>(char *variable, double new_value, double *return_value)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_set_filename</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>b8cab65ab2d8b8041cf3e34b6641c850</anchor>
-      <arglist>(char *variable, char *new_value, char **return_value)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_set_int</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>ce8759298bfa27deb7bf238f75d089f6</anchor>
-      <arglist>(char *variable, int new_value, int *return_value)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_set_module</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>6471b2c214afcccf2a77254f30107755</anchor>
-      <arglist>(char *new_module_name)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_set_onoff</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>a7c206fd8a944a350e355c745494725b</anchor>
-      <arglist>(char *variable, int new_value, int *return_value)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_set_string</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>734024c5e63c5fb219b1a79bb5d05357</anchor>
-      <arglist>(char *variable, char *new_value, char **return_value)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_set_usage_line</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>e6f535073fe89c25a9307e701e4c3d6c</anchor>
-      <arglist>(char *fmt,...)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>carmen_param_set_variable</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>40a8090a04c34e1bf79b3f908d3caa62</anchor>
-      <arglist>(char *variable, char *new_value, char **return_value)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_subscribe_dir</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>310d7c8f6e938371f23bd5213f7a6fc9</anchor>
-      <arglist>(char *module, char *variable, char **variable_address, carmen_param_change_handler_t handler)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_subscribe_double</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>1fec7d99465cd708b05b8b5be46f761d</anchor>
-      <arglist>(char *module, char *variable, double *variable_address, carmen_param_change_handler_t handler)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_subscribe_file</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>6a173f4f2ad4a70fc7d3fc79990a79f3</anchor>
-      <arglist>(char *module, char *variable, char **variable_address, carmen_param_change_handler_t handler)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_subscribe_int</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>39fda7c661153204e8ce03257f12bef9</anchor>
-      <arglist>(char *module, char *variable, int *variable_address, carmen_param_change_handler_t handler)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_subscribe_onoff</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>74dd47b67bc12517b199826b0a45ef20</anchor>
-      <arglist>(char *module, char *variable, int *variable_address, carmen_param_change_handler_t handler)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_subscribe_string</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>6cd832c8dea3d64668ed0b65540a5d19</anchor>
-      <arglist>(char *module, char *variable, char **variable_address, carmen_param_change_handler_t handler)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>carmen_param_usage</name>
-      <anchorfile>param__interface_8h.html</anchorfile>
-      <anchor>6be46e1d426c072565728d73606a291f</anchor>
-      <arglist>(char *progname, carmen_param_p param_list, int num_items, char *fmt,...)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -1787,39 +1722,6 @@
     </member>
   </compound>
   <compound kind="file">
-    <name>qrc_mrs.cpp</name>
-    <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
-    <filename>qrc__mrs_8cpp</filename>
-    <member kind="function">
-      <type></type>
-      <name>Q_CONSTRUCTOR_FUNCTION</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>784ede001d04b31b614a6db16f0f7cf3</anchor>
-      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_mrs)) int QT_MANGLE_NAMESPACE(qCleanupResources_mrs)()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
-      <name>qInitResources_mrs</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>b55aae3c149e0c206a95d32a9576422a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_BEGIN_NAMESPACE bool</type>
-      <name>qRegisterResourceData</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>qUnregisterResourceData</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>QtGLContext.cpp</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>QtGLContext_8cpp</filename>
@@ -1874,274 +1776,16 @@
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>sick_8cpp</filename>
     <includes id="sick_8h" name="sick.h" local="yes" imported="no">sick.h</includes>
-    <member kind="function">
-      <type>double</type>
-      <name>carmen_get_time</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>169b2f0d20ff1caea6cd20a96978f769</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>cBaudrate</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>8fd04f88e714c3b6bf1c919ee87a3d0f</anchor>
-      <arglist>(int baudrate)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>cDataSize</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>e065e67a55e0d97b26ff78dcebb251ea</anchor>
-      <arglist>(int numbits)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>cFlowControl</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>448701e3f7da3fd2380cfa71f5487687</anchor>
-      <arglist>(int flowcontrol)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>cParity</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>53fc82d6e4209513b42a7213ff8060d1</anchor>
-      <arglist>(parity_t par)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>cStopSize</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>59dc156aa11e54d12281f65205d51393</anchor>
-      <arglist>(int numbits)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>iParity</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>d13108aa60ddfd79a95280f37c3e7072</anchor>
-      <arglist>(parity_t par)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>iSoftControl</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>ad8d08affa42f2aa1d78f8ea2599f989</anchor>
-      <arglist>(int flowcontrol)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>kernel_minimum_version</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>2b1167e3d16e673aca082a33a6635a8c</anchor>
-      <arglist>(int a, int b, int c)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>shutdown_laser</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>a7166e8d0bbdf1abbf37fd954a2d6fdb</anchor>
-      <arglist>(int x)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_allocate_laser</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>2226630521c0f1f0237ca86abfe50cef</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_check_baudrate</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>78c8f8112a565b743d7af6e5245caa4c</anchor>
-      <arglist>(sick_laser_p laser, int brate)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_connect_device</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>e9d0988f86deb12f1c3e182829cdb97b</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_detect_baudrate</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>f10ca37c78f4f416d70e8ed15eb1dd6a</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_handle_laser</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>15193f7f50b3e6e8c9ed6cd528cf7935</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_install_settings</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>acbb3d211d10ce661e823070ded019e1</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_parse_conf_data</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>00a7185241f39820cd9859c94a0a2032</anchor>
-      <arglist>(sick_laser_p laser, unsigned char *buf, int length)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_read_data</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>ea834f59d3ae74765e3c0b32acf7a8e7</anchor>
-      <arglist>(sick_laser_p laser, unsigned char *data, double timeout)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_request_lms_config</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>2bbeff287864e5a12af73972c93000ef</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_request_sensor</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>54e2f07d33026df0510cc391508da720</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_request_status</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>158cac074fd52527c5b683c015b476a4</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_serial_connect</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>e2f1121210a343aa50dec54ec4f598cd</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_set_baudrate</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>ae041781325376ff20c31a74f4f943a4</anchor>
-      <arglist>(sick_laser_p laser, int brate)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_set_config_mode</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>efe5bb8bd552d5112a3c6303794b683e</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_set_laser_baudrate</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>cb00b3c93450611354e3c59519f9a359</anchor>
-      <arglist>(sick_laser_p laser, int brate)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_set_lms_config</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>961e2a085e089e9adb5b659371a90cab</anchor>
-      <arglist>(sick_laser_p laser, unsigned char *data, int len)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_set_lms_range</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>650914d3f5ef0f2cdb06ef573f5c910e</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_set_lms_resolution</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>dc8ace99627b14a98752e2117f1916d2</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_set_serial_params</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>39c9338a475c80cfaea96c25cd05f363</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_start_continuous_mode</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>7ed5ebf0750d6d0b0885c9de88dea0e2</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_start_continuous_remission_part_mode</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>4b66efbcc090b5e10109dfba608d61b6</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_start_laser</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>e57ea324cbf268f90b7aeff7e8ab515f</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_stop_continuous_mode</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>831c29947ced8804b06e7f621291094a</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_stop_laser</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>22bdfa8f6b4ad0075473f838698c715d</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_testBaudrate</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>c197ec746b7b981c8a9c17ebac2e3146</anchor>
-      <arglist>(sick_laser_p laser, int brate)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_valid_packet</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>d9fe592584cb637066d44a7b26816e69</anchor>
-      <arglist>(unsigned char *data, long size, long *offset, long *len)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_write_command</name>
-      <anchorfile>sick_8cpp.html</anchorfile>
-      <anchor>ca3f20381a30059ba593762c2cb46111</anchor>
-      <arglist>(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length)</arglist>
-    </member>
   </compound>
   <compound kind="file">
     <name>sick.h</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>sick_8h</filename>
     <includes id="carmenserial_8h" name="carmenserial.h" local="yes" imported="no">carmenserial.h</includes>
-    <class kind="struct">laser_device_t</class>
-    <class kind="struct">laser_settings_t</class>
-    <class kind="struct">sick_laser_t</class>
+    <class kind="class">Sick</class>
+    <class kind="struct">Sick::laser_device_t</class>
+    <class kind="struct">Sick::laser_settings_t</class>
+    <class kind="struct">Sick::sick_laser_t</class>
     <member kind="define">
       <type>#define</type>
       <name>ACK</name>
@@ -2421,157 +2065,6 @@
       <anchorfile>sick_8h.html</anchorfile>
       <anchor>b1bc77186597ff91cc8ee54e7a56c23d</anchor>
       <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>struct laser_device_t *</type>
-      <name>laser_device_p</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>e82a4587b7d51b47703134765d2c4d9b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>struct sick_laser_t *</type>
-      <name>sick_laser_p</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>73e3d54550d82446e80568e3dce756d8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>laser_model_t</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>c20b7bd66071422d59f9304bc7a28d1c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PLS</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>c20b7bd66071422d59f9304bc7a28d1cb5cba5a75c4814e67c9eee4dc84877a8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>LMS</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>c20b7bd66071422d59f9304bc7a28d1c8dcd554f50c053b9aa9b175caa59497f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>parity_t</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>8c9f47bdc80c9f4db63b7bf8b1ad5290</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>N</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>8c9f47bdc80c9f4db63b7bf8b1ad52902c63acbe79d9f41ba6bb7766e9c37702</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>E</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>8c9f47bdc80c9f4db63b7bf8b1ad5290b199e021998d49b1f09338d8b9b18ecb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>O</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>8c9f47bdc80c9f4db63b7bf8b1ad5290f4b8b7698dfedf5562a7db2bdb07010a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>range_dist_t</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>5849629b36fe65fbd7d5b41531894842</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE80M</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>5849629b36fe65fbd7d5b41531894842b7c7c62474b722568c46a33171bac054</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE160M</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>5849629b36fe65fbd7d5b4153189484263fa6e60736a90bf86ce6044366f7dd3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE320M</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>5849629b36fe65fbd7d5b4153189484280f6eec040a6dbde4e5c4bd0ca61ac72</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_REMISSION_NORM</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>5849629b36fe65fbd7d5b41531894842148447e20f23e362735ec3a09c421558</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_REMISSION_DIRECT</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>5849629b36fe65fbd7d5b41531894842aa2b736f31415becf3f59ff6603342da</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>range_res_t</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>7ef7b1da108afad3a5f5cd2f05a0e470</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>CM</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>7ef7b1da108afad3a5f5cd2f05a0e470e256357c69514a4c50b9a9c857dbe7f4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>MM</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>7ef7b1da108afad3a5f5cd2f05a0e470519a4a8945cef24205e65dbbc404da73</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DM</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>7ef7b1da108afad3a5f5cd2f05a0e470999a690381b7476ed2263b21c0dcdadc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type>double</type>
-      <name>carmen_get_time</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>169b2f0d20ff1caea6cd20a96978f769</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_connect_device</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>e9d0988f86deb12f1c3e182829cdb97b</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_handle_laser</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>15193f7f50b3e6e8c9ed6cd528cf7935</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>sick_start_laser</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>e57ea324cbf268f90b7aeff7e8ab515f</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sick_stop_laser</name>
-      <anchorfile>sick_8h.html</anchorfile>
-      <anchor>22bdfa8f6b4ad0075473f838698c715d</anchor>
-      <arglist>(sick_laser_p laser)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3057,52 +2550,6 @@
       <arglist></arglist>
     </member>
   </compound>
-  <compound kind="struct">
-    <name>carmen_param_t</name>
-    <filename>structcarmen__param__t.html</filename>
-    <member kind="variable">
-      <type>carmen_param_change_handler_t</type>
-      <name>handler</name>
-      <anchorfile>structcarmen__param__t.html</anchorfile>
-      <anchor>98e5a7c84ab1f32ac71f17c9040e128a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>char *</type>
-      <name>module</name>
-      <anchorfile>structcarmen__param__t.html</anchorfile>
-      <anchor>ea65e30d6bc85cb236b4b66904536e1f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>subscribe</name>
-      <anchorfile>structcarmen__param__t.html</anchorfile>
-      <anchor>7a5e836866be629c033159b855c4f2bd</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>carmen_param_type_t</type>
-      <name>type</name>
-      <anchorfile>structcarmen__param__t.html</anchorfile>
-      <anchor>cd179e7e236b1485583d85420c66329a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>void *</type>
-      <name>user_variable</name>
-      <anchorfile>structcarmen__param__t.html</anchorfile>
-      <anchor>0c851fc14cb5e9454ab7f84b42f9bcd2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>char *</type>
-      <name>variable</name>
-      <anchorfile>structcarmen__param__t.html</anchorfile>
-      <anchor>e251f7b78de44481dde5640c81268440</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
   <compound kind="class">
     <name>Circuit</name>
     <filename>classCircuit.html</filename>
@@ -3249,13 +2696,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>fb229f99efac2e5a33733f3d29db5c3f</anchor>
       <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>setCamImage</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>17a330f17a38776f7b68d23b96e82bfe</anchor>
-      <arglist>(IplImage *frame)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -3438,13 +2878,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>02bbcdef63bb227bfbde2f01b54b79bd</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setCamImageData</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>e72a1ab8522c3deb3b60f3d54aff5c0c</anchor>
-      <arglist>(int width, int height, int pixeldepth)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -4854,235 +4287,1223 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="class">
+    <name>Laser</name>
+    <filename>classLaser.html</filename>
+    <member kind="enumeration">
+      <name>carmen_laser_laser_type_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>8aa90f0de7c49a8a50339fb91de371cd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_LMS</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>8aa90f0de7c49a8a50339fb91de371cd4f90cb30f0984f934e9695defa288f2b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_PLS</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>8aa90f0de7c49a8a50339fb91de371cd6d23e92190b30ecec657580b8a68e61c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>HOKUYO_URG</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>8aa90f0de7c49a8a50339fb91de371cd35aea8ccef3938da61e44cb33743413b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SIMULATED_LASER</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>8aa90f0de7c49a8a50339fb91de371cdfbaec63751401d1a2d888a1494be7e3d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>UMKNOWN_PROXIMITY_SENSOR</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>8aa90f0de7c49a8a50339fb91de371cd4c0afe52eaa77fb0f1badd67cf3cec20</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>carmen_laser_remission_type_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9923297666c5886b4d119030d7a9ec52</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>REMISSION_NONE</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9923297666c5886b4d119030d7a9ec52e26eba6b0c9110817ac2c6368b61c4fd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>REMISSION_DIRECT</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9923297666c5886b4d119030d7a9ec520910ce85e22bb5871a34dd0da2de62fa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>REMISSION_NORMALIZED</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9923297666c5886b4d119030d7a9ec528929fa5f7efb1d9f16182c4fcaa54a08</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>void(*</type>
+      <name>carmen_param_change_handler_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>69a4363d50d8bf9b0d936ed055705d69</anchor>
+      <arglist>)(char *module, char *variable, char *value)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>struct Laser::carmen_param_t *</type>
+      <name>carmen_param_p</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>a378a51e86e3103b1f9210e57eae00df</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>char</type>
+      <name>carmen_param_type_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>fce32f7e0ae3501145539b173fa89b11</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>struct Laser::laser_device_t *</type>
+      <name>laser_device_p</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>c6564d2e70587f9cab8042f3dfa2c83c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>laser_model_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>135cd55fa9a98a47e2aaf6904eb2dd29</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>PLS</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>135cd55fa9a98a47e2aaf6904eb2dd296e8a2a257b9860a43687eadb40569bd1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LMS</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>135cd55fa9a98a47e2aaf6904eb2dd29ed77b942cc9bf09ff3606dee888c2486</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>parity_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>N</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5b3f008b6955f4b34e9352275164cc8ef</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>E</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5001f6d014fe14e47df0be513e183b22c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>O</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5b604a80f21f483f1579017d06971d3eb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_dist_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE80M</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc447f9dc259106199bfeb344afefc8abbb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE160M</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc4415393916e35abc009e5b614b6dc5442</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE320M</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc46ba34162e98a9c694d004dfff55e6659</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_NORM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc49cdb36323e3cbfee5fcdf1951a385e9c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_DIRECT</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc4c7efa2d17320cd0f1024312327536969</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_res_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>CM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84ae7b456af2eab49babcdba7a6ab0883f0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>MM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84a8ba4e17b490d6a9c1f06e57be0d4ddd1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>DM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84a3b5576383d00567eb3c3143005a89c19</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>struct Laser::sick_laser_t *</type>
+      <name>sick_laser_p</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>73831719ba5723cf3e0b9d6a4c75081a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>8dd5eb94c0d5139e81039560de6d5862</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>carmen_degrees_to_radians</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>c2a1feb96a167c6bc72ff9621267bce2</anchor>
+      <arglist>(double theta)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>carmen_get_time</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>18312ec16d4b951a3a80b1fcc641efe0</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>carmen_laser_run</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9db6bbd8e90d2898eb1a5e9183dc263a</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>carmen_laser_shutdown</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>1ee3ab27404b5cf4252f93875955b995</anchor>
+      <arglist>(int x)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>carmen_laser_start</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>5cad9f3eba8139470014a132d734e67b</anchor>
+      <arglist>(short int laserScanner)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>carmen_radians_to_degrees</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>3c03a353fe6bf0560d8ad0c04663bcd5</anchor>
+      <arglist>(double theta)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>check_parameter_settings</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>6b3db6a696db0f1b85aa12f331a98f94</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>float</type>
+      <name>getLaserDistance</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>fcd5a4d0bca3efc18e3e26efd06df75b</anchor>
+      <arglist>(int laser, int angle)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getLaserNumReadings</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>fa5939eb25e314d4717534264cf86c8c</anchor>
+      <arglist>(int laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>interpret_params</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>c883ed7a94c824d446f36571d79fca42</anchor>
+      <arglist>(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Laser</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>68465e89283dffcc29a37e94693c6f87</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>read_parameters</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>99c1e6518dce2b1288bf3af719883056</anchor>
+      <arglist>(short int laserScanner)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_default_parameters</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>5a38436387a96fea894caf6babbdd061</anchor>
+      <arglist>(sick_laser_p laser, int laser_num)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_laser_config_structure</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>262596b97002ac2a466a8661854ddab6</anchor>
+      <arglist>(sick_laser_p laser, carmen_laser_laser_config_t *config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setDevicePort</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>e51d056402b07d14292aa377f260cc1d</anchor>
+      <arglist>(short int laser, QString serialPort)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>shutdown_laser</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>788d9a9794261caad5016ff694e814f1</anchor>
+      <arglist>(int x)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>sick_connect_device</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>6250da8352df38a6ab0aa492756c836f</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>sick_handle_laser</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>756331c503b14d1415413b3c7641111e</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>sick_start_laser</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>738b20d3d12af2448b820bb27a820469</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>sick_stop_laser</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>629a8653bcbdc75259b6a138e21b6d21</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~Laser</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>a9baee5ed9775426e0b1d563c4687711</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>sick_laser_t *</type>
+      <name>laser1</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>ee695a765eda03fa2787895147cd2167</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_laser_laser_config_t *</type>
+      <name>laser1_config</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>029ec2362aefd1e795e19b29871c2714</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>sick_laser_t *</type>
+      <name>laser2</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>7cf7c57793bf1954a5eb972d3a2b9511</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_laser_laser_config_t *</type>
+      <name>laser2_config</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>be358fce6fe3f198ab713dcf62855141</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>sick_laser_t *</type>
+      <name>laser3</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>5b216d95268a753b1ec682366dc4d766</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_laser_laser_config_t *</type>
+      <name>laser3_config</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>ad0f9ad4effce495bb0b86cab124a437</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>sick_laser_t *</type>
+      <name>laser4</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>e6f8e9dd7d3d780d0baf4477757eede3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_laser_laser_config_t *</type>
+      <name>laser4_config</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>db4d735daf2525ad81c0e72ab18f0c61</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>sick_laser_t *</type>
+      <name>laser5</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>f39064e0bca6369482c2aa07f3a8b383</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_laser_laser_config_t *</type>
+      <name>laser5_config</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>3c9a4af0a3283acbce4307cd975f693e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>QString</type>
+      <name>laserSerialPort1</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>4fbe9fbbb11db17effb55c6ab080ad70</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>QString</type>
+      <name>laserSerialPort2</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9937d45cbe40730b97614c6c0ae8ba5b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>quit_signal</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>0e6b9cf922f140ca231603279db6b14f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>use_laser1</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>5db03486d45fcc081da890a6c5ce2735</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>use_laser2</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>a333ce68bc47958c3731cee35b250683</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>use_laser3</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>3e6fd7918513fe83ae6d475c648b70be</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>use_laser4</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>ec9fd38d897871fc9c76362e499d546c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>use_laser5</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b07634aa686a9312e67dbf7dbbed61f4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const short int</type>
+      <name>LASER1</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>7e47c42dcd22280d8c1e1009344cce52</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const short int</type>
+      <name>LASER2</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>66de414fe7b1f3b348360f42e71e39a8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const short int</type>
+      <name>LASER3</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>67bf97fed195ff94536c646db3dc6bf1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const short int</type>
+      <name>LASER4</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>61612ed272e7367ffc954c43456f0131</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const short int</type>
+      <name>LASER5</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>090727b1d36eba93f4a71d5945ac505d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cBaudrate</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>cc066129fa7ba4d03fc3bb53ea372b4d</anchor>
+      <arglist>(int baudrate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cDataSize</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>7e3b6753bd05072b5b0e049ed20e7472</anchor>
+      <arglist>(int numbits)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cFlowControl</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>4657b8c42c3b25125cb2417613cda69e</anchor>
+      <arglist>(int flowcontrol)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cParity</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>4e3c251b696e1ab55eb2657008eb8bcc</anchor>
+      <arglist>(parity_t par)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cStopSize</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>3cc4825111918f760e9027917fa2fd58</anchor>
+      <arglist>(int numbits)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>iParity</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>78fc34635bb5e575b32c6cbb14b08524</anchor>
+      <arglist>(parity_t par)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>iSoftControl</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>42925c588f9fc5aa04d0966c171eab45</anchor>
+      <arglist>(int flowcontrol)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>kernel_minimum_version</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>6a528c7a13b100662fcb9ff2847b52ad</anchor>
+      <arglist>(int a, int b, int c)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_allocate_laser</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>633f8ddb9faeb95cb34467772ff1d996</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_check_baudrate</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>c2f366be9c19a82e487dea1bc57982a3</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_compute_checksum</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b82b597431c46dc0d155df844cb21566</anchor>
+      <arglist>(unsigned char *CommData, int uLen)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_detect_baudrate</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>a78345ab08561ba435f0af1381d2abb6</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_install_settings</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>47db5638337da600946229e207a885f6</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_parse_conf_data</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>bf2ee14f8056f950ae9bf8a62efb6ec3</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *buf, int length)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_process_packet</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>08378758e4c68b3dad1a52bbfcd04eec</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *packet)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_process_packet_distance</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2c84150b39fcbeeed75b0b295ec9e38e</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *packet)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_process_packet_remission</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>fd179371ea10adce3e93b739a88c2f2e</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *packet)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_read_data</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>cb79dc7443116502e721a4844e7fda0e</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *data, double timeout)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_request_lms_config</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>81004f08977393cc20045b9891eb465f</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_request_sensor</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>77136ad1cdace0fd2ce7eb9d41f90dc7</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_request_status</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>19cc1714a92c16d9a1eae12cf5fa9321</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_serial_connect</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>843868c43a4c357744c56cb2f0ca52d5</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_set_baudrate</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>3bd5f209b12b07c132672a9504dd119c</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_config_mode</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>82504ff1c1b04da7724bc78ee921e4eb</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_laser_baudrate</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2c26d9c71177088ac02dadb920c6b6bb</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_lms_config</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>542d9389f58ef92f360399cc33db254b</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *data, int len)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_lms_range</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>cafe7c6c466346ddb64970123402f04a</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_lms_resolution</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>a3a213154217d572bb3ac4f9e652282c</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_set_serial_params</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>750729442dd735bf84078ad5297a0218</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_start_continuous_mode</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2816fd95948c0fafa7e87e569e6a3dc8</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_start_continuous_remission_part_mode</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>621592b062e7c1c0c7092e789337dd49</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_stop_continuous_mode</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>4bd9c925a3d8c72595ca5adbc8a9d75b</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_testBaudrate</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>da8ebfda535959f9f0dc2ff62c0d6cc7</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_valid_packet</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>c07e2a201094a94b6a5d280a27d345e0</anchor>
+      <arglist>(unsigned char *data, long size, long *offset, long *len)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_write_command</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>d319f08c1ae532d82286342d0a65fba6</anchor>
+      <arglist>(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length)</arglist>
+    </member>
+    <class kind="struct">Laser::carmen_laser_laser_config_t</class>
+    <class kind="struct">Laser::carmen_param_t</class>
+    <class kind="struct">Laser::laser_device_t</class>
+    <class kind="struct">Laser::laser_settings_t</class>
+    <class kind="struct">Laser::sick_laser_t</class>
+  </compound>
   <compound kind="struct">
-    <name>laser_device_t</name>
-    <filename>structlaser__device__t.html</filename>
+    <name>Laser::carmen_laser_laser_config_t</name>
+    <filename>structLaser_1_1carmen__laser__laser__config__t.html</filename>
+    <member kind="variable">
+      <type>double</type>
+      <name>accuracy</name>
+      <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
+      <anchor>decafcd73353d88206a2dc57809012e1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>angular_resolution</name>
+      <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
+      <anchor>1cc966e2bc39aea42dbf118f7529ed93</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>fov</name>
+      <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
+      <anchor>e87a675a8180a70c71d60ad38c72d1db</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_laser_laser_type_t</type>
+      <name>laser_type</name>
+      <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
+      <anchor>dd8562057ed2998c2dae12ad05bb32dd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>maximum_range</name>
+      <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
+      <anchor>f90c6d5e1238c09b085a93bb91056cb3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_laser_remission_type_t</type>
+      <name>remission_mode</name>
+      <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
+      <anchor>6077e8e767b0919574957d4e16ef5011</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>start_angle</name>
+      <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
+      <anchor>54df8ed82aeadcc9f5eef62e79a5b948</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>Laser::carmen_param_t</name>
+    <filename>structLaser_1_1carmen__param__t.html</filename>
+    <member kind="variable">
+      <type>carmen_param_change_handler_t</type>
+      <name>handler</name>
+      <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
+      <anchor>042cd81dd0ead9d10b81ee5174fb6e84</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>char *</type>
+      <name>module</name>
+      <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
+      <anchor>2ab22a4680e2c10728e710f6f2b2e77f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>subscribe</name>
+      <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
+      <anchor>dfa010e5943d24d2e89f468b70823e5d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>carmen_param_type_t</type>
+      <name>type</name>
+      <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
+      <anchor>baedac59ebaa892139f528e1da6b7399</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>user_variable</name>
+      <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
+      <anchor>c4ddbc011df1580dbd83f07b6812df26</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>char *</type>
+      <name>variable</name>
+      <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
+      <anchor>d5ba062ece4877c2e9e82ecb925b7dda</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>Laser::laser_device_t</name>
+    <filename>structLaser_1_1laser__device__t.html</filename>
     <member kind="variable">
       <type>int</type>
       <name>baudrate</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>fba2431db21ba44bdb5964fba7cabaf5</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>6c85c0a546ad4a561b23fd8d14c608ff</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>a88d29f069583137f407d19c8318a5c6</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>af4bd26ff2e4a2af297f05b80374865a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>fd</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>eae5070926bf7142121fa1b962854860</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>28e2cc9802a9c7bfef5fa2ef5625c0e6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>42182adfa96b1d0702ecdf00aae52b86</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>83fcd4a10203529f1783124767e1d235</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>138a0562a8a539497c4925a68a67330e</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>f2ff814e20252eafe08dbe04e1a49efa</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>a2bd193424dd3445ee503a9f611e0575</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>5d434f9559221d08376d5a946eb9b421</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>passwd</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>ba0173be4d8de132d4a5f584ccf301c8</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>2f71a68c600aed1d1d7665400511af9f</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>070df0047628093971a84a143c0e8385</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>bb5e8282e89a9f5d43984e7299816580</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>7d435351141e97090f048ba534de2bdd</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>4690aaf25bad16bcf079082ca8e056ec</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>ttyport</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>52be36c4d75973dc7db9c7afefaf1bc5</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>4afb944e353704dd9d5dba7dd2c19662</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
-      <anchorfile>structlaser__device__t.html</anchorfile>
-      <anchor>fe5008b0c15e85f227a93423c1f5fd74</anchor>
+      <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
+      <anchor>64a85304f51def43f9a34d5a7240a2bf</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>laser_settings_t</name>
-    <filename>structlaser__settings__t.html</filename>
+    <name>Laser::laser_settings_t</name>
+    <filename>structLaser_1_1laser__settings__t.html</filename>
     <member kind="variable">
       <type>int</type>
       <name>angle_range</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>eb987d9eef68be9368cafb9b8a260f14</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>4cdb48b4b37f1050aaa02a6d70bb5498</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>angle_resolution</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>7e81f3a1c18af109752689d7ef0ec24f</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>d5646ebf319039e43b1f6144a78ab9ed</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>caf01d407a2dc24d56999d7fc3e81060</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>7fe002df0bc7b2d21004ea8cd7c861fb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>detect_baudrate</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>5fe66662562606d2c52796c67641db5a</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>be7c8c5d45f42ad5c822cee991366450</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char</type>
       <name>device_name</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>ed20f4ef56c89968de1e11b106167732</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>5c90e15fc62b350c63d98683ed7de99c</anchor>
       <arglist>[MAX_NAME_LENGTH]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>59d4bc1c2999e0bd650c98d3f50e8b80</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>45c85766324352c5484d1ab82dd20f08</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_flipped</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>84fb9bfc364541de6c9f4648b9ad656b</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>c5c7ede7dc464ad6eb3a6b62a1d9e2dd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>65ec312ba97a3350c60b5f67f43c25e2</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>3c0998b7e8520893a9fe391c1aa62566</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>num_values</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>b90d23be8894674ae7c8c0dfada3fbfa</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>dc4849e3638b9ae21734194a18cd9008</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>adccc43c208cd65b73d306abfe7b6860</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>7cd4073d0927388ff8c04cd17bbcd1bf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>password</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>44549f1469de01db8655ea975dabffca</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>64d6334065907917695f999285569203</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>range_dist_t</type>
       <name>range_dist</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>46ceec5a40ba34d540ec6d753f5d9ef1</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>10c2b727440b9a9a445fb28ced929cf8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>range_res_t</type>
       <name>range_res</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>10978b9e3788dbf42b301e84eb4d83e6</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>85adcb9c1a6c85a63535831873531675</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>rem_values</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>dac701b1f1e4235afc7eb68dd3e8e440</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>c98fa14aee455a17ef997fc73ae8ebb9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>set_baudrate</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>09f6455d5b181cb2bf0a112776d9bb49</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>739128bb2cf1413fa21dde1873681121</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>start_baudrate</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>3f8280cfe69a7207f898b24c5525b21d</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>e3254e815e8be19459ab7ead29ddd873</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>dbf5b8edebcf8771d6a5d0fec1fb0352</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>2e259c94866c6d2b9d49f9d0f1de2eab</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>48b353463af703b92a901911f832b9be</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>7d39862a98072a871b3ddff60491b8ca</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>6ed0a092f7656dfddd28c8357a2763bf</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>7e907cfee9dfcbd9cff3100f6845ed95</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_highspeed</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>fa23d653b9e239e18c5942c98adb36d3</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>a4f6098882595ab81a75a9e97713ab02</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_remission</name>
-      <anchorfile>structlaser__settings__t.html</anchorfile>
-      <anchor>7f38685432ff954ca429825cd96d9005</anchor>
+      <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
+      <anchor>ed592a94b54ebf7c11f730770c8472d2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>Laser::sick_laser_t</name>
+    <filename>structLaser_1_1sick__laser__t.html</filename>
+    <member kind="variable">
+      <type>unsigned char *</type>
+      <name>buffer</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>d2a02c892c0496d643513e6e8124c218</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>long int</type>
+      <name>buffer_position</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>9f467588946e22c3786d444a17749f97</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>laser_device_t</type>
+      <name>dev</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>ddd60dc0f654ad8cd89348758ccdf514</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int *</type>
+      <name>glare</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>b50c044968d74b14d7ba20cfa3888f0b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>new_reading</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>2251ee6d8d1bfb428424c776f14bd693</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>numvalues</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>c6f68488d1f6672c38b4d83ea4e07bd5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>long int</type>
+      <name>packet_length</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>ca3fbde473796912671c2970755fd97a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>long int</type>
+      <name>packet_offset</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>8ea57b85f12def3813b0dc4acdcce260</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>packet_timestamp</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>43d03db8c2146d36329487597fe2288a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>long int</type>
+      <name>processed_mark</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>e05b5456190954bbf2d8bedb0ca3cbd0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double *</type>
+      <name>range</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>c5530054d023d1efca4398fc75ea40fa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double *</type>
+      <name>remission</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>dce871107d143c142dd1bbf88f556a79</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>remvalues</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>565ea6bc4c68fcb6957de5b3d6916b0d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>laser_settings_t</type>
+      <name>settings</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>557df5af30d0bc9e87af9f9696585aca</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int *</type>
+      <name>sfv</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>4c8838d091f65e89f3b1997d641122b7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>timestamp</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>13eec7a3e5252159787bf35ab2b765bc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int *</type>
+      <name>wfv</name>
+      <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
+      <anchor>4887aef594faa1bb3e24637a88821f83</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -5184,6 +5605,13 @@
       <anchor>618e1e825d8aab62f86c62db8bff2554</anchor>
       <arglist>(float *laserScannerValuesRear, int *laserScannerFlagsRear)</arglist>
     </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>76c20204a9753c29216150fda24a50a5</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
     <member kind="function">
       <type>float</type>
       <name>getLaserScannerFlag</name>
@@ -5260,6 +5688,13 @@
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>363315362a9ec36b299db17020d3264e</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Laser *</type>
+      <name>laser</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>7b0cb8b1046abcf73544fbf564a0fde3</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>QList&lt; int &gt;</type>
@@ -5936,6 +6371,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>showSplashMessage</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>cf13fed17c3fde96480bbc71a8ae377b</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>shutdown</name>
       <anchorfile>classMrs.html</anchorfile>
       <anchor>7da5a966bf956e7f042f9d48fb1be833</anchor>
@@ -6051,13 +6493,6 @@
       <name>cameraTestMode</name>
       <anchorfile>classMrs.html</anchorfile>
       <anchor>4dc9b8619c278510cef8adf16059e2be</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>CamThread *</type>
-      <name>camThread</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>dcdd6da50f4be2db5eb80bd921722777</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -9084,126 +9519,775 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="class">
+    <name>Sick</name>
+    <filename>classSick.html</filename>
+    <member kind="typedef">
+      <type>struct Sick::laser_device_t *</type>
+      <name>laser_device_p</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>0ce6358c4737a6ab58c1fd314c1f0808</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>laser_model_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>771de876d0da63e53f132d0294b39a9e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>PLS</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>771de876d0da63e53f132d0294b39a9e048f3e8a1ee8ac3496393555c813c813</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LMS</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>771de876d0da63e53f132d0294b39a9e01c22c16299c90926432d7dec75ff226</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>parity_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f18</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>N</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f1895da8eb6df88e6547ef1ba0e7e072cbc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>E</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f1846ca6549ee7de6a9212aad6e19701938</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>O</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f180b86f4a7638ca6dccdcb43a4b7199fad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_dist_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE80M</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a400aa86de69b0ecd323bcad7ce2ac6026</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE160M</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4ec28d478485c3dc1465018a7c1479c60</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE320M</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4dfb50827dfb8e1f3a6d413f4aa7974aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_NORM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a485af65dff6e4a98660459284ca7d5954</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_DIRECT</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4d9bb70e80a53a0db7dbc05758ab27270</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_res_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b372</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>CM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b37236638a3e59c744af827ae4e757c18bb3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>MM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b37295b9da7cc2930dda9fc0900140765326</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>DM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b372b5e118cdd66db381ad662d92ad4a5c9a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>struct Sick::sick_laser_t *</type>
+      <name>sick_laser_p</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>79aaf8a9eda793b5ef6431ea63ba5ad7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>carmen_get_time</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>040feac538a782edcd44ab0f83b26b5f</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Sick</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>996846ca12dc4002f96ee6bb9d94af58</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>sick_connect_device</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>962074289bfd5c12fc83b53577afb5bc</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>sick_handle_laser</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>c935c27f1ac5ac466cca9190d0dd82ce</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>sick_start_laser</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>86b986ac167e94adb309ceb38a016c08</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>sick_stop_laser</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>9c6fd71d1e580fc2268e613a4f65cf6d</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~Sick</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>8622fd12468be73ee3b9902728801ae7</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cBaudrate</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>284ffaddaaa1cd0847cb4a66019dbfb7</anchor>
+      <arglist>(int baudrate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cDataSize</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>58898ea5b81794b52e567d6ceed446b6</anchor>
+      <arglist>(int numbits)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cFlowControl</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6322f89dafd630d596e3afdfc8aeefa1</anchor>
+      <arglist>(int flowcontrol)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cParity</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>eba878d881c0b895156d4d84447d09ac</anchor>
+      <arglist>(parity_t par)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>cStopSize</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>eb502477999da88b0f402871bcc6ac8e</anchor>
+      <arglist>(int numbits)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>iParity</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>11004c0f776824fe63132d8aa22f3e8d</anchor>
+      <arglist>(parity_t par)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>iSoftControl</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>7ff51d314c25f1d2b0c723505a544a9a</anchor>
+      <arglist>(int flowcontrol)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>kernel_minimum_version</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>a4dbbb25bb63e81c046b157328477acc</anchor>
+      <arglist>(int a, int b, int c)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_allocate_laser</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>da353f85c911dc7161d4761ec239bf7a</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_check_baudrate</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>60cd3498864698d39157d523e1806416</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_compute_checksum</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>1974e3eeda57e456e2e6187df007a22f</anchor>
+      <arglist>(unsigned char *CommData, int uLen)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_detect_baudrate</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>ca9f7cda9045fb16197c084b282f5738</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_install_settings</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>a70ceb1f828fb3d0fa3a4caae4a7a04b</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_parse_conf_data</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>2ea5ce76204e7a8f366f2d1031f724a2</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *buf, int length)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_process_packet</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>0b940e21f9688f979c4a5c53177b0d4b</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *packet)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_process_packet_distance</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6b889dff3a60e79a5f5c88d88dd3eda5</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *packet)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_process_packet_remission</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>096ba06aa363325e400092c2261c4ad2</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *packet)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_read_data</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>aa2c9231550c5884121fa7201c14a5cf</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *data, double timeout)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_request_lms_config</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>3a327a9380d8e15ee0df5d0a229ec414</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_request_sensor</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>b17447a744af6ed648897f5b66810d06</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_request_status</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>5edce3ccf749b99dec012e3cbbec2438</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_serial_connect</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>a0302a194a2f747e95fe5e9f6fef4ced</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_set_baudrate</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>b110107c984fab1358e5366ca3c43566</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_config_mode</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>a63e21cdc68a6736ff21da1f833bc550</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_laser_baudrate</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>b3fbf9d9953800456940a27fe3c85749</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_lms_config</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>ce29933561dbb0ee7e8768d629311968</anchor>
+      <arglist>(sick_laser_p laser, unsigned char *data, int len)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_lms_range</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6fa94e5e47f1edd8577b0af925d6a364</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_set_lms_resolution</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>8f53aa80c87a2428bcab650f3e510126</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_set_serial_params</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>401d3e8c5c7fa8fceccd57000529766e</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_start_continuous_mode</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6b89a2a4dadd32aec45bbd13e9be7237</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_start_continuous_remission_part_mode</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>a8e5e3b26112f0ae58d9e36840818cc4</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>sick_stop_continuous_mode</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>7174c25fe0569e149c3ff3ef3143dc15</anchor>
+      <arglist>(sick_laser_p laser)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_testBaudrate</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>8fd5bcb9a19c7e25765067f644d1ccbd</anchor>
+      <arglist>(sick_laser_p laser, int brate)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_valid_packet</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>d10d83717a8312414248c14051fb9ce2</anchor>
+      <arglist>(unsigned char *data, long size, long *offset, long *len)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>sick_write_command</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>24e6e691db068d1d1d4e5272b51ee1a7</anchor>
+      <arglist>(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length)</arglist>
+    </member>
+    <class kind="struct">Sick::laser_device_t</class>
+    <class kind="struct">Sick::laser_settings_t</class>
+    <class kind="struct">Sick::sick_laser_t</class>
+  </compound>
   <compound kind="struct">
-    <name>sick_laser_t</name>
-    <filename>structsick__laser__t.html</filename>
+    <name>Sick::laser_device_t</name>
+    <filename>structSick_1_1laser__device__t.html</filename>
+    <member kind="variable">
+      <type>int</type>
+      <name>baudrate</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>4b580a3a107470ac37c4e812a39c957c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>databits</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>94a279c248b82515fd84791e4713b697</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>fd</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>05845f4f0677698520df3192bf437a45</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>hwf</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>dab4b73e5bfd998d8cc9adda1676e8c6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>laser_num</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>35123c861b61892961cac9077389a89b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>parity_t</type>
+      <name>parity</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>060d9402aa097f14ac3a12dcf882e352</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned char</type>
+      <name>passwd</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>1bbfb0e417c5a1fdd399edd2157ca16e</anchor>
+      <arglist>[8]</arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>stopbits</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>cbd1e5206636fa5dd12525bfad935bc8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>swf</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>84c04ff5aca52cd76dfc826735d6a409</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>char *</type>
+      <name>ttyport</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>a85790c247aafb424eeb12da7837e2e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>laser_model_t</type>
+      <name>type</name>
+      <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
+      <anchor>ff179d9a506a67801e0cdfa33b4e6089</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>Sick::laser_settings_t</name>
+    <filename>structSick_1_1laser__settings__t.html</filename>
+    <member kind="variable">
+      <type>int</type>
+      <name>angle_range</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>6baffed381662e5059af6911913f2937</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>angle_resolution</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>2b962d0f659bd6174f21026f18ce41a7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>databits</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>18199cbf76320f8ff900fdb7ad602913</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>detect_baudrate</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>d1586e8d9d11d26769d14cc4caff0f1b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>char</type>
+      <name>device_name</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>dc9afc783eca1b863a96bf44e70960bd</anchor>
+      <arglist>[MAX_NAME_LENGTH]</arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>hwf</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>2112d759e912b9c273ba21b2762e5f10</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>laser_flipped</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>b6eecb11d64db14d050b1be3ef54e201</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>laser_num</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>5b1e710fc5e6c2d47cbde24b9bb23176</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>num_values</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>8c805cc0fa4b425d0ff3bb5083157c58</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>parity_t</type>
+      <name>parity</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>dd172321d6ad972d3890e3914a106ae3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned char</type>
+      <name>password</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>0113cac6703dfb515c0c26443ddc47ea</anchor>
+      <arglist>[8]</arglist>
+    </member>
+    <member kind="variable">
+      <type>range_dist_t</type>
+      <name>range_dist</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>8a17d8bdaab08a4e6e23c4edf40bddb5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>range_res_t</type>
+      <name>range_res</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>841a9065d1e0bd6e4bb9fb92a2c96430</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>rem_values</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>d320242434d1419c3f484c891b3c3ef8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>set_baudrate</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>42be8d00e36cfd0bdca5f43b619b56ac</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>start_baudrate</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>7c2d81566e96a673e8a4da11bdd4040e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>stopbits</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>608af2d778c7f311f763e37bc1cf361c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>swf</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>923276dd1fbefbbafa27fb54b5503d61</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>laser_model_t</type>
+      <name>type</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>0963947564d8bbfd35a1531fb43ce000</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>use_highspeed</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>97caf14e33ad8ef86ab3ff260342f512</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>use_remission</name>
+      <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
+      <anchor>a1aaf8caeb8291b88b56a414ef181a39</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>Sick::sick_laser_t</name>
+    <filename>structSick_1_1sick__laser__t.html</filename>
     <member kind="variable">
       <type>unsigned char *</type>
       <name>buffer</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>bfc5f86a78c10574d02d4e46b289f0fe</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>95abc3090d32e0b5fb914ce798bb21c8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>buffer_position</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>9acab26665207eba2cddd5384f8f0c8c</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>aa8c2cf3580c71fdbf188ffa0002f4b4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_device_t</type>
       <name>dev</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>5281934a6d7e6c26a74ea3c2010836c3</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>263666c67fc70e3686c135c58a72a5b4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>glare</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>1b68b604667bcfb1d0c6961a53246a3a</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>c33d4f51cb0ec411c6224127c224e55c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>new_reading</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>17616de42e91dc308cf895b4d3b419c1</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>66867b3646d9d67be3fc078fc9ed70ff</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>numvalues</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>eec2066ed178f7498ec2e823d4bd9855</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>ac84c2f4404782782b282187f7c322eb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_length</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>e0884d50a40bbd35002a681e17266f10</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>692791bc1abd610da08323cbc569856f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_offset</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>18f8647072dd79125a04e63f74aeb8b5</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>924bb37dcb08814030c470335b5eed2c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>packet_timestamp</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>335123f98e83bfc8787ffa4ead8bdac8</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>04e90ffc47d355837b2f2e7a5e483eda</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>processed_mark</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>d7558c72fa8ecfb4860e8a9a51804ee3</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>f369b0fb038b46c5be254613a5c8a032</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>range</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>f996d6ba958bb16cb343603013b8b1f7</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>d550817c9a877dc1eae50e72b6c63b85</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>remission</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>4bce98b35d85479db5a7de1201909516</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>4d86aff0cf49596132a9e174b65dab89</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>remvalues</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>999262f2e5b93677305d145ce60b6451</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>cd50c52b5a373a528da2af1683db8457</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_settings_t</type>
       <name>settings</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>05022a56830253affb18bb187ec17ac2</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>5c7cf830b3cf1aa2ace39c7171c15b1a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>sfv</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>ad006bb240a6a7e38fef4aa4fe0e0583</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>40437128edf0d8028e252c9d65141b6c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>timestamp</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>e990095ed9ae65a63dc33c107dc10323</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>911d53573e6df92cf8c916a568400479</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>wfv</name>
-      <anchorfile>structsick__laser__t.html</anchorfile>
-      <anchor>4a55c36c0522b5d309c9021fb1b4db85</anchor>
+      <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
+      <anchor>2815f6726712ec0da39a0058d5f5b72b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -9497,21 +10581,22 @@
     </member>
   </compound>
   <compound kind="dir">
-    <name>/home/markus/develop/mrs/mrs/</name>
+    <name>mrs/trunk/src/debug/</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/debug/</path>
+    <filename>dir_b7e3a7e3d699ab853204c539c83d079a.html</filename>
+    <file>qrc_mrs.cpp</file>
+  </compound>
+  <compound kind="dir">
+    <name>mrs/</name>
     <path>/home/markus/develop/mrs/mrs/</path>
     <filename>dir_888f1a24b07b8718275397a16edc9252.html</filename>
-    <dir>/home/markus/develop/mrs/mrs/trunk/</dir>
+    <dir>mrs/trunk/</dir>
   </compound>
   <compound kind="dir">
-    <name>/home/markus/develop/mrs/</name>
-    <path>/home/markus/develop/mrs/</path>
-    <filename>dir_20ec99836b7c11db194f0e90693901f0.html</filename>
-    <dir>/home/markus/develop/mrs/mrs/</dir>
-  </compound>
-  <compound kind="dir">
-    <name>/home/markus/develop/mrs/mrs/trunk/src/</name>
+    <name>mrs/trunk/src/</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>dir_31bb2ffc3ea2c3c0101206aa95f93310.html</filename>
+    <dir>mrs/trunk/src/debug/</dir>
     <file>aboutDialog.cpp</file>
     <file>aboutDialog.h</file>
     <file>camThread.cpp</file>
@@ -9534,8 +10619,8 @@
     <file>joystick.h</file>
     <file>joystickDialog.cpp</file>
     <file>joystickDialog.h</file>
-    <file>laser_main.cpp</file>
-    <file>laser_main.h</file>
+    <file>laser.cpp</file>
+    <file>laser.h</file>
     <file>laser_messages.h</file>
     <file>laserScene.cpp</file>
     <file>laserScene.h</file>
@@ -9571,9 +10656,9 @@
     <file>win_qextserialport.h</file>
   </compound>
   <compound kind="dir">
-    <name>/home/markus/develop/mrs/mrs/trunk/</name>
+    <name>mrs/trunk/</name>
     <path>/home/markus/develop/mrs/mrs/trunk/</path>
     <filename>dir_e9a18e227c2249476d6947fae9d5ad7e.html</filename>
-    <dir>/home/markus/develop/mrs/mrs/trunk/src/</dir>
+    <dir>mrs/trunk/src/</dir>
   </compound>
 </tagfile>

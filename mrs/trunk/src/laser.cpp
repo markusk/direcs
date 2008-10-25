@@ -40,11 +40,15 @@ Laser::Laser()
 	laser3_config = new carmen_laser_laser_config_t;
 	laser4_config = new carmen_laser_laser_config_t;
 	laser5_config = new carmen_laser_laser_config_t;
+	
+	serialPort = new DirecsSerial();
 }
 
 
 Laser::~Laser()
 {
+	delete serialPort;
+	
 	delete laser1_config;
 	delete laser2_config;
 	delete laser3_config;
@@ -1001,7 +1005,7 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 	}
 	
 	#ifdef CARMEN_LASER_LOW_LATENCY
-	carmen_serial_set_low_latency(laser->dev.fd);
+	serialPort->setLowLatency(laser->dev.fd);
 	#endif
 	
 	sick_set_serial_params(laser);
@@ -1068,7 +1072,7 @@ int Laser::sick_read_data(sick_laser_p laser, unsigned char *data, double timeou
 	while(carmen_get_time() - start_time < timeout)
 	{
 	#endif
-		val = carmen_serial_numChars(laser->dev.fd);
+		val = serialPort->numChars(laser->dev.fd);
 		
 		if(val > 0)
 		{
@@ -1157,7 +1161,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 	check = sick_compute_checksum(buffer, length + 4);
 	buffer[pos++] = check & 0x00ff;
 	buffer[pos++] = check / 256;
-	carmen_serial_writen(laser->dev.fd, buffer, pos);
+	serialPort->writePort(laser->dev.fd, buffer, pos);
 	
 	/* wait for acknowledgement */
 	loop = 1;
@@ -1169,7 +1173,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 	while(loop) {
 	#endif
 		counter++;
-		val = carmen_serial_numChars(laser->dev.fd);
+		val = serialPort->numChars(laser->dev.fd);
 		if(val > 0) {
 		read(laser->dev.fd, &buffer, val);
 		switch(buffer[0]) {
@@ -1241,7 +1245,7 @@ int Laser::sick_set_config_mode(sick_laser_p laser)
 	for(i = 0; i < 8; i++)
 		args[i + 1] = (unsigned char)laser->dev.passwd[i];
 	args[0] = 0x00;
-	carmen_serial_ClearInputBuffer(laser->dev.fd);
+	serialPort->clearInputBuffer(laser->dev.fd);
 	result = sick_write_command(laser, 0x20, args, 9);
 	if(result == ACK)
 		return(sick_read_data(laser, data, MAX_TIME_FOR_CONFIG));
@@ -1873,12 +1877,11 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 	select(laser->dev.fd+1, &read_set, NULL, NULL, &timer);
 	#endif
 	/* read what is available in the buffer */
-	bytes_available = carmen_serial_numChars(laser->dev.fd);
+	bytes_available = serialPort->numChars(laser->dev.fd);
 	if(bytes_available > LASER_BUFFER_SIZE - laser->buffer_position){
 		bytes_available = LASER_BUFFER_SIZE - laser->buffer_position;
 	}
-	bytes_read = carmen_serial_readn(laser->dev.fd, laser->buffer +
-					laser->buffer_position, bytes_available);
+	bytes_read = serialPort->readPort(laser->dev.fd, laser->buffer + laser->buffer_position, bytes_available);
 	
 	/* process at most one laser reading */
 	if(bytes_read > 0) {

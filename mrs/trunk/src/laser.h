@@ -18,10 +18,10 @@
  *                                                                       *
  *************************************************************************/
 
-#ifndef CARMEN_LASER_MAIN_H
-#define CARMEN_LASER_MAIN_H
+#ifndef LASER_H
+#define LASER_H
 
-#include "carmenserial.h"
+#include "direcsSerial.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -429,6 +429,8 @@ class Laser : public QObject
 		void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
 		void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
 		void sick_process_packet(sick_laser_p laser, unsigned char *packet);
+		
+		DirecsSerial *serialPort;
 };
 
 #endif
