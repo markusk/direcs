@@ -350,8 +350,17 @@ class Laser : public QObject
 		void interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov);
 		void check_parameter_settings(sick_laser_p laser);
 		void set_default_parameters(sick_laser_p laser, int laser_num);
+		
+		/**
+		Establish the serial connection to the laser and set the laser in the wanted mode(s).
+		*/
 		int  sick_start_laser(sick_laser_p laser);
+		
 		void sick_stop_laser(sick_laser_p laser);
+		
+		/**
+		Process any data that is available from the laser. Attempt to detect valid packets in the data.
+		*/
 		void sick_handle_laser(sick_laser_p laser);
 		int sick_connect_device(sick_laser_p laser);
 		double carmen_get_time(void);
@@ -377,8 +386,12 @@ class Laser : public QObject
 		int kernel_minimum_version( int a, int b, int c );
 		void sick_set_baudrate(sick_laser_p laser, int brate);
 		int sick_serial_connect(sick_laser_p laser);
-		// OLD: static int sick_compute_checksum(unsigned char *CommData, int uLen);
+		
+		/**
+		Compute the CRC checksum of a segment of data.
+		*/
 		int sick_compute_checksum(unsigned char *CommData, int uLen);
+		
 		int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout);
 		int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length);
 		void sick_request_status(sick_laser_p laser);
@@ -393,15 +406,26 @@ class Laser : public QObject
 		void sick_start_continuous_mode(sick_laser_p laser);
 		void sick_stop_continuous_mode(sick_laser_p laser);
 		void sick_start_continuous_remission_part_mode(sick_laser_p laser);
+		
+		/**
+		Test a combination of baudrate and parity of the laser.
+		*/
 		int sick_testBaudrate(sick_laser_p laser, int brate);
+		
 		int sick_detect_baudrate(sick_laser_p laser);
 		int sick_check_baudrate(sick_laser_p laser, int brate);
 		void sick_install_settings(sick_laser_p laser);
 		void sick_allocate_laser(sick_laser_p laser);
+		
+		/**
+		This function returns 1 if a valid packet is detected in a chunk of data.
+		@return An offset and packet length
+		*/
 		int sick_valid_packet(unsigned char *data, long size, long *offset, long *len);
-		// OLD: static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
-		// OLD: static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
-		// OLD: static void sick_process_packet(sick_laser_p laser, unsigned char *packet);
+		
+		/**
+		Interpret packets received from the laser.  If the packets contain laser data, expand the data into a useful form.
+		*/
 		void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
 		void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
 		void sick_process_packet(sick_laser_p laser, unsigned char *packet);
