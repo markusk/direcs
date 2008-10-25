@@ -75,10 +75,15 @@ class LaserThread : public QThread
 
 
 	signals:
-		/** Emits a pointer to the array with the 180 front laser values (distances) */
+		/// Emits a pointer to the array with the 180 front laser values (distances)
 		void laserDataCompleteFront(float *laserScannerValuesFront, int *laserScannerFlagsFront);
-		/** Emits a pointer to the array with the 180 rear laser values (distances) */
+		/// Emits a pointer to the array with the 180 rear laser values (distances)
 		void laserDataCompleteRear(float *laserScannerValuesRear, int *laserScannerFlagsRear);
+		/**
+		Emits a info messge to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		*/
+		void message(QString text);
 
 
 	private:
@@ -104,10 +109,10 @@ class LaserThread : public QThread
 		*/
 		static const unsigned char LASERSCANNERARRAYSIZE = 180;
 		
-		QList <float> laserScannerValuesFront;  /** The measured distances from the front laser scanner. */
-		QList <float> laserScannerValuesRear;  /** The measured distances from the rear laser scanner. */
-		QList <int> laserScannerFlagsFront;  /** Some flags for each front laser line (like "free way", "obstacle" etc. */
-		QList <int> laserScannerFlagsRear;  /** Some flags for each rear laser line (like "free way", "obstacle" etc. */
+		QList <float> laserScannerValuesFront;  /// The measured distances from the front laser scanner.
+		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
+		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.
+		QList <int> laserScannerFlagsRear;  /// Some flags for each rear laser line (like "free way", "obstacle" etc.
 		
 		/**
 		The names for addressing the laser scanner array

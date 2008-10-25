@@ -45,6 +45,12 @@ LaserThread::LaserThread()
 	
 	
 	laser = new Laser();
+	
+	//--------------------------------------------------------------------------
+	// let the splash screen from the mrs clas show laser init messages
+	// (connect the signal from the laser class to the signal from this class)
+	//--------------------------------------------------------------------------
+	connect(laser, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
@@ -54,7 +60,7 @@ LaserThread::~LaserThread()
 	if (laserScannerFrontIsConnected || laserScannerRearIsConnected)
 	{
 		// shutdown laser (parameter '0' is not in use)
-		// shuts down ALL lasers (managed internaly in laser_main.cpp)!
+		// shuts down ALL lasers (managed internaly in laser.cpp)!
 		laser->carmen_laser_shutdown(0);
 	}
 	
@@ -508,6 +514,6 @@ bool LaserThread::isConnected(short int laserScanner)
 
 void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 {
-	// for laser_main:
+	// for laser.cpp:
 	laser->setDevicePort(laserScanner, serialPort);
 }
