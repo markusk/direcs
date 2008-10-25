@@ -21,7 +21,6 @@ HEADERS +=	head.h \
 		sick.h \
 		carmenserial.h \
 		laser.h \
-		param_interface.h \
 		joystick.h \
 		servo.h \
 		aboutDialog.h \

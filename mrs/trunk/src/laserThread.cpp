@@ -42,6 +42,9 @@ LaserThread::LaserThread()
 		laserScannerFlagsFront.append(0);
 		laserScannerFlagsRear.append(0);
 	}
+	
+	
+	laser = new Laser();
 }
 
 
@@ -52,8 +55,11 @@ LaserThread::~LaserThread()
 	{
 		// shutdown laser (parameter '0' is not in use)
 		// shuts down ALL lasers (managed internaly in laser_main.cpp)!
-		carmen_laser_shutdown(0);
+		laser->carmen_laser_shutdown(0);
 	}
+	
+	
+	delete laser;
 }
 
 
@@ -87,7 +93,7 @@ void LaserThread::run()
 		{
 			// CARMEN laser module
 			// asks ALL lasers (managed internaly in laser_main.cpp)!
-			laserValue = carmen_laser_run();
+			laserValue = laser->carmen_laser_run();
 			
 			switch (laserValue)
 			{
@@ -128,7 +134,7 @@ void LaserThread::run()
 void LaserThread::getAndStoreLaserValuesFront()
 {
 	// check if all 180 beams were read (in the laser module)
-	numReadingsFront = getLaserNumReadings(LASER1);
+	numReadingsFront = laser->getLaserNumReadings(LASER1);
 	
 	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
 	if (numReadingsFront > LASERSCANNERARRAYSIZE)
@@ -142,7 +148,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 		{
 			// get value from laser
 			// store the value in an array in this thread
-			laserScannerValuesFront[angle] = getLaserDistance(LASER1, angle);
+			laserScannerValuesFront[angle] = laser->getLaserDistance(LASER1, angle);
 		}
 	}
 }
@@ -151,7 +157,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 void LaserThread::getAndStoreLaserValuesRear()
 {
 	// check if all 180 beams were read (in the laser module)
-	numReadingsRear = getLaserNumReadings(LASER2);
+	numReadingsRear = laser->getLaserNumReadings(LASER2);
 	
 	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
 	if (numReadingsRear > LASERSCANNERARRAYSIZE)
@@ -165,7 +171,7 @@ void LaserThread::getAndStoreLaserValuesRear()
 		{
 			// get value from laser
 			// store the value in an array in this thread
-			laserScannerValuesRear[angle] = getLaserDistance(LASER2, angle);
+			laserScannerValuesRear[angle] = laser->getLaserDistance(LASER2, angle);
 		}
 	}
 }
@@ -469,7 +475,7 @@ bool LaserThread::isConnected(short int laserScanner)
 	//-----------------------------------------------
 	// try to start the (former CARMEN) laser module
 	//-----------------------------------------------
-	if (carmen_laser_start(laserScanner) == 0)
+	if (laser->carmen_laser_start(laserScanner) == 0)
 	{
 		switch (laserScanner)
 		{
@@ -503,5 +509,5 @@ bool LaserThread::isConnected(short int laserScanner)
 void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 {
 	// for laser_main:
-	setDevicePort(laserScanner, serialPort);
+	laser->setDevicePort(laserScanner, serialPort);
 }

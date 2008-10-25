@@ -18,24 +18,23 @@
  *                                                                       *
  *************************************************************************/
 
-#include <QtGlobal>
 #include "sick.h"
 
 
-/*****  DIRK WAS HERE - START ******/
-extern void shutdown_laser(int x);
-/*****  DIRK WAS HERE - END ******/
+// *****  DIRK WAS HERE - START ******
+// Markus: extern void shutdown_laser(int x);
+// *****  DIRK WAS HERE - END ******
 
-
+/*
 Sick::Sick()
 {
 }
 
 
-Sick::Sick()
+Sick::~Sick()
 {
 }
-
+*/
 
 /* fancy serial functions */
 int Sick::iParity(parity_t par)
@@ -263,7 +262,8 @@ int Sick::sick_serial_connect(sick_laser_p laser)
 
 
 /* sick_compute_checksum - Compute the CRC checksum of a segment of data. */
-static int Sick::sick_compute_checksum(unsigned char *CommData, int uLen)
+// Markus static int Sick::sick_compute_checksum(unsigned char *CommData, int uLen)
+int Sick::sick_compute_checksum(unsigned char *CommData, int uLen)
 {
   unsigned char abData[2] = {0, 0}, uCrc16[2] = {0, 0};
   
@@ -541,7 +541,7 @@ int Sick::sick_request_lms_config(sick_laser_p laser)
   return(result == ACK);
 }
 
-int sick_set_lms_config(sick_laser_p laser, unsigned char *data, int len)
+int Sick::sick_set_lms_config(sick_laser_p laser, unsigned char *data, int len)
 {
   int result;
 
@@ -955,14 +955,18 @@ int Sick::sick_start_laser(sick_laser_p laser)
 	{
 		// TODO: change std output
 		//fprintf(stderr, "INFO: set LASER in config-mode ........ ");
-		while(!sick_set_config_mode(laser));
+		while(!sick_set_config_mode(laser))
+		{
+		};
 		
 		/*
 		fprintf(stderr, "ok\n");
 		fprintf(stderr, "INFO: set LASER baudrate to %6d .... ", laser->settings.set_baudrate);
 		*/
 		
-		while(!sick_set_laser_baudrate(laser, laser->settings.set_baudrate));
+		while(!sick_set_laser_baudrate(laser, laser->settings.set_baudrate))
+		{
+		};
 		
 		sick_set_baudrate(laser, laser->settings.set_baudrate);
 		//fprintf(stderr, "ok\n");
@@ -978,13 +982,17 @@ int Sick::sick_start_laser(sick_laser_p laser)
 		fprintf(stderr, "INFO: angle resolution ................ %1.2f\n", (laser->settings.angle_resolution == RES_1_00_DEGREE ? 1.0 : laser->settings.angle_resolution == RES_0_50_DEGREE ? 0.5 : 0.25));
 		fprintf(stderr, "INFO: set LASER mode .................. ");
 		*/
-		while(!sick_set_lms_resolution(laser));
+		while(!sick_set_lms_resolution(laser))
+		{
+		};
 		
 		//fprintf(stderr, "ok\n");
 		usleep(100000);
 		
 		//fprintf(stderr, "INFO: get LMS configuration ........... ");
-		while(!sick_set_lms_range(laser));
+		while(!sick_set_lms_range(laser))
+		{
+		};
 		
 		//fprintf(stderr, "ok\n");
 	}
@@ -1082,7 +1090,8 @@ int Sick::sick_valid_packet(unsigned char *data, long size, long *offset, long *
 
 /** sick_process_packet - Interpret packets received from the laser.  If
    the packets contain laser data, expand the data into a useful form. */
-static void Sick::sick_process_packet_distance(sick_laser_p laser, unsigned char *packet)
+// Markus static void Sick::sick_process_packet_distance(sick_laser_p laser, unsigned char *packet)
+void Sick::sick_process_packet_distance(sick_laser_p laser, unsigned char *packet)
 {
   int i = 0, LoB = 0, HiB = 0, bit14, bit15, numMeasurements;
   float conversion = 1.0;
@@ -1121,7 +1130,8 @@ static void Sick::sick_process_packet_distance(sick_laser_p laser, unsigned char
 
 
 // *** REI - START *** //
-static void Sick::sick_process_packet_remission(sick_laser_p laser, unsigned char *packet)
+// Markus static void Sick::sick_process_packet_remission(sick_laser_p laser, unsigned char *packet)
+void Sick::sick_process_packet_remission(sick_laser_p laser, unsigned char *packet)
 {
   int i = 0, LoB = 0, HiB = 0, bit14, bit15, numMeasurements;
   int parts, mstart, mend;
@@ -1168,7 +1178,8 @@ static void Sick::sick_process_packet_remission(sick_laser_p laser, unsigned cha
 }
 
 
-static void Sick::sick_process_packet(sick_laser_p laser, unsigned char *packet)
+// Markus static void Sick::sick_process_packet(sick_laser_p laser, unsigned char *packet)
+void Sick::sick_process_packet(sick_laser_p laser, unsigned char *packet)
 {
   if(laser->settings.use_remission == 1)
 	sick_process_packet_remission(laser, packet);

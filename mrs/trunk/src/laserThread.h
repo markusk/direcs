@@ -92,6 +92,8 @@ class LaserThread : public QThread
 		int numReadingsRear;
 		bool simulationMode;
 		
+		Laser *laser;
+		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 150; // Default: 150 ms

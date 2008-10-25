@@ -21,8 +21,6 @@
 #ifndef CARMEN_SICK_H
 #define CARMEN_SICK_H
 
-#include <QtGlobal>
-
 // FROM carmen/carmen.h:
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +28,7 @@
 
 #ifndef va_copy
 #define va_copy __va_copy
-#endif 
+#endif
 
 #include <unistd.h>
 #include <ctype.h>
@@ -70,7 +68,7 @@
 #endif
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846  /* pi */
+#define M_PI 3.14159265358979323846  // pi
 #endif
 
 // FROM rflex-io.c:
@@ -93,13 +91,13 @@
 #include <sys/types.h>
 #include <sys/select.h>
 
-/*****  DIRK WAS HERE - START ******/
+// *****  DIRK WAS HERE - START ******
 #include <sys/utsname.h>
 #if !defined(CYGWIN) && !defined(__APPLE__)
 #include <linux/serial.h>
 #include <linux/version.h>
 #endif
-/*****  DIRK WAS HERE - END ******/
+// ****  DIRK WAS HERE - END ******
 
 
 
@@ -114,6 +112,7 @@
 
 #define BUFFER_SIZE                      16000
 #define MAX_COMMAND_SIZE                 8196
+
 #define MAX_NAME_LENGTH                  256
 
 #define MAX_TIME_FOR_CLEAR               0.2
@@ -145,22 +144,28 @@
 #define CBREAK                           64
 #endif
 
-/**
-\brief Handles the access to the sick laser scanners.
+#include <QtGlobal>
+#include <QString>
+#include <QDebug>
 
-This class handles the access to the sick laser scanners.
+
+/*
+	TODO;doxygenize me!
 */
+
 class Sick : public QObject
 {
     Q_OBJECT
-	
+
 	public:
 		Sick();
 		~Sick();
+		
 		typedef enum { PLS, LMS } laser_model_t;
 		typedef enum { CM, MM, DM } range_res_t;
 		typedef enum { SICK_RANGE80M, SICK_RANGE160M, SICK_RANGE320M, SICK_REMISSION_NORM, SICK_REMISSION_DIRECT } range_dist_t;
 		typedef enum { N, E, O } parity_t;
+		
 		typedef struct
 		{
 			int                fd;
@@ -220,7 +225,8 @@ class Sick : public QObject
 		void sick_handle_laser(sick_laser_p laser);
 		int sick_connect_device(sick_laser_p laser);
 		double carmen_get_time(void); // from global.c
-		
+
+
 	private:
 		int iParity(parity_t par);
 		int iSoftControl(int flowcontrol);
@@ -233,7 +239,8 @@ class Sick : public QObject
 		int kernel_minimum_version( int a, int b, int c );
 		void sick_set_baudrate(sick_laser_p laser, int brate);
 		int sick_serial_connect(sick_laser_p laser);
-		static int sick_compute_checksum(unsigned char *CommData, int uLen);
+		// MArkus static int sick_compute_checksum(unsigned char *CommData, int uLen);
+		int sick_compute_checksum(unsigned char *CommData, int uLen);
 		int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout);
 		int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length);
 		void sick_request_status(sick_laser_p laser);
@@ -242,6 +249,7 @@ class Sick : public QObject
 		int sick_set_config_mode(sick_laser_p laser);
 		int sick_set_lms_resolution(sick_laser_p laser);
 		int sick_request_lms_config(sick_laser_p laser);
+		int sick_set_lms_config(sick_laser_p laser, unsigned char *data, int len);
 		int sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int length);
 		int sick_set_lms_range(sick_laser_p laser);
 		void sick_start_continuous_mode(sick_laser_p laser);
@@ -253,9 +261,12 @@ class Sick : public QObject
 		void sick_install_settings(sick_laser_p laser);
 		void sick_allocate_laser(sick_laser_p laser);
 		int sick_valid_packet(unsigned char *data, long size, long *offset, long *len);
-		static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
-		static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
-		static void sick_process_packet(sick_laser_p laser, unsigned char *packet);
-}
+		//static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
+		//static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
+		//static void sick_process_packet(sick_laser_p laser, unsigned char *packet);
+		void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
+		void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
+		void sick_process_packet(sick_laser_p laser, unsigned char *packet);
+};
 
 #endif
