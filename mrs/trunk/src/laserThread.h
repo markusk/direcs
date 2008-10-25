@@ -22,7 +22,7 @@
 #define LASERTHREAD_H
 
 //-------------------------------------------------------------------
-#include "laser_main.h" // modified CARMEN module
+#include "laser.h" // modified CARMEN module
 #include <QThread>
 //-------------------------------------------------------------------
 

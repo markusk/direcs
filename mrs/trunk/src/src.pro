@@ -20,10 +20,9 @@ HEADERS +=	head.h \
 		speakThread.h \
 		sick.h \
 		carmenserial.h \
-		laser_main.h \
+		laser.h \
 		param_interface.h \
 		joystick.h \
-		laser_messages.h \
 		servo.h \
 		aboutDialog.h \
 		laserScene.h \
@@ -45,7 +44,7 @@ SOURCES +=	head.cpp \
 		speakThread.cpp \
 		sick.cpp \
 		carmenserial.cpp \
-		laser_main.cpp \
+		laser.cpp \
 		joystick.cpp \
 		servo.cpp \
 		aboutDialog.cpp \

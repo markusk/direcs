@@ -20,20 +20,18 @@
 
 #include "laser_main.h"
 
-sick_laser_t laser1, laser2, laser3, laser4, laser5; // defined in sick.h
-carmen_laser_laser_config_t laser1_config, laser2_config, laser3_config, laser4_config, laser5_config;
-
-int use_laser1 = 0, use_laser2 = 0;
-int use_laser3 = 0, use_laser4 = 0;
-int use_laser5 = 0;
-int quit_signal = 0;
-
-//Markus (used in "read_parameters")
-QString laserSerialPort1;
-QString laserSerialPort2;
+Laser::Laser()
+{
+	use_laser1 = 0;
+	use_laser2 = 0;
+	use_laser3 = 0;
+	use_laser4 = 0;
+	use_laser5 = 0;
+	quit_signal = 0;
+}
 
 
-void set_default_parameters(sick_laser_p laser, int laser_num)
+void Laser::set_default_parameters(sick_laser_p laser, int laser_num)
 {
 	laser->settings.type = LMS;
 	laser->settings.range_res = CM;
@@ -57,7 +55,7 @@ void set_default_parameters(sick_laser_p laser, int laser_num)
 }
 
 
-void check_parameter_settings(sick_laser_p laser)
+void Laser::check_parameter_settings(sick_laser_p laser)
 {
   /*********************** TYPE CHECKING **************************/
   if(laser->settings.type == PLS) {
@@ -150,7 +148,8 @@ void check_parameter_settings(sick_laser_p laser)
   /* remission values - stop */
 }
 
-void interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov)
+
+void Laser::interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov)
 {
 	strcpy(laser->settings.device_name, dev);
 	
@@ -201,7 +200,7 @@ void interpret_params(sick_laser_p laser, char *dev, char *type, double res, cha
 
 
 // Markus Orignal: void read_parameters(int argc, char **argv)
-void read_parameters(short int laserScanner)
+void Laser::read_parameters(short int laserScanner)
 {
 	char *dev1, *dev2, *dev3, *dev4, *dev5;
 	char *str1, *str2, *str3, *str4, *str5;
@@ -343,7 +342,7 @@ void read_parameters(short int laserScanner)
 }
 
 
-void  set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t* config)
+void  Laser::set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t* config)
 {
 
   if (laser->settings.type == LMS) {
@@ -444,7 +443,7 @@ void  set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t
 
 
 // Markus Orignal: int carmen_laser_start(int argc, char **argv)
-int carmen_laser_start(short int laserScanner)
+int Laser::carmen_laser_start(short int laserScanner)
 {
 	// Markus:
 	int returncode = 0;
@@ -579,7 +578,7 @@ int carmen_laser_start(short int laserScanner)
 }
 
 
-void carmen_laser_shutdown(int signo __attribute__ ((unused)))
+void Laser::carmen_laser_shutdown(int signo __attribute__ ((unused)))
 {
   if(use_laser1)
     sick_stop_laser(&laser1);
@@ -594,7 +593,7 @@ void carmen_laser_shutdown(int signo __attribute__ ((unused)))
 }
 
 
-int carmen_laser_run(void)
+int Laser::carmen_laser_run(void)
 {
 	static int first = 1;
 	static double last_update;
@@ -750,14 +749,14 @@ int carmen_laser_run(void)
 }
 
 
-void shutdown_laser(int x)
+void Laser::shutdown_laser(int x)
 {
   carmen_laser_shutdown(x);
   exit(-1);
 }
 
 
-int getLaserNumReadings(int laser)
+int Laser::getLaserNumReadings(int laser)
 {
 	switch (laser)
 	{
@@ -778,7 +777,7 @@ int getLaserNumReadings(int laser)
 }
 
 
-float getLaserDistance(int laser, int angle)
+float Laser::getLaserDistance(int laser, int angle)
 {
 	int numreadings;
 	double *laserrange = NULL;
@@ -814,7 +813,7 @@ float getLaserDistance(int laser, int angle)
 }
 
 
-void setDevicePort(short int laser, QString serialPort)
+void Laser::setDevicePort(short int laser, QString serialPort)
 {
 
 	switch (laser)
@@ -826,4 +825,16 @@ void setDevicePort(short int laser, QString serialPort)
 			laserSerialPort2 = serialPort;
 			break;
 	}
+}
+
+
+// FROM global.h (and than from laser_main, now laser.h):
+double Laser::carmen_radians_to_degrees(double theta)
+{
+  return (theta * 180.0 / M_PI);
+}
+
+double Laser::carmen_degrees_to_radians(double theta)
+{
+  return (theta * M_PI / 180.0);
 }
