@@ -18,7 +18,6 @@ HEADERS +=	head.h \
 		networkThread.h \
 		laserThread.h \
 		speakThread.h \
-		sick.h \
 		carmenserial.h \
 		laser.h \
 		joystick.h \
@@ -41,7 +40,6 @@ SOURCES +=	head.cpp \
 		networkThread.cpp \
 		laserThread.cpp \
 		speakThread.cpp \
-		sick.cpp \
 		carmenserial.cpp \
 		laser.cpp \
 		joystick.cpp \
