@@ -1598,46 +1598,54 @@ int Laser::sick_testBaudrate(sick_laser_p laser, int brate)
 
 int Laser::sick_detect_baudrate(sick_laser_p laser)
 {
-	fprintf(stderr, "INFO: detect connected baudrate: ...... 9600\n");
+	//emitMessage( QString("Servo%1 position %2 out of allowed range (%3-%4)!").arg(servo+1) );
+	
+	//fprintf(stderr, "INFO: detect connected baudrate: ...... 9600\n");
+	emit(message("Connecting to Laser scanner with 9600 bps..."));
 	if(sick_testBaudrate(laser, 9600))
 	{
-		fprintf(stderr, "\n");
+		//fprintf(stderr, "\n");
 		return(9600);
 	}
 	else
 	{
-		fprintf(stderr, "\rINFO: detect connected baudrate: ...... 19200\n");
+		//fprintf(stderr, "\rINFO: detect connected baudrate: ...... 19200\n");
+		emit(message("Connecting to Laser scanner with 19200 bps..."));
 		if(sick_testBaudrate(laser, 19200))
 		{
-			fprintf(stderr, "\n");
+			//fprintf(stderr, "\n");
 			return(19200);
 		}
 		else
 		{
-			fprintf(stderr, "\rINFO: detect connected baudrate: ...... 38400\n");
+			//fprintf(stderr, "\rINFO: detect connected baudrate: ...... 38400\n");
+			emit(message("Connecting to Laser scanner with 38400 bps..."));
 			if(sick_testBaudrate(laser, 38400))
 			{
-				fprintf(stderr, "\n");
+				//fprintf(stderr, "\n");
 				return(38400);
 			}
 			else
 			{
 				if(laser->settings.use_highspeed)
 				{
-					fprintf(stderr, "\rINFO: detect connected baudrate: ...... 500000\n");
+					//fprintf(stderr, "\rINFO: detect connected baudrate: ...... 500000\n");
+					emit(message("Connecting to Laser scanner with 500000 bps..."));
 					if(sick_testBaudrate(laser, 500000))
 					{
-						fprintf(stderr, "\n");
+						//fprintf(stderr, "\n");
 						return(500000);
 					}
 					else
 					{
+					// TODO: send this to GUI log
 						fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");
 						return(0);
 					}
 				}
 				else
 				{
+					// TODO: send this to GUI log
 					fprintf(stderr, "\rINFO: detect connected baudrate: ...... failed\n");	  
 					return(0);
 				}

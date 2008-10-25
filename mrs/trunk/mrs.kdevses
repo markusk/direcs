@@ -1,22 +1,19 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="5" >
+ <DocsAndViews NumberOfDocuments="4" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laser.h" >
    <View0 Encoding="" line="31" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laser.cpp" >
-   <View0 Encoding="" line="897" Type="Source" />
+   <View0 Encoding="" line="58" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/gui.h" >
-   <View0 Encoding="" line="402" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/inifile.h" >
+   <View0 Encoding="" line="81" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
-   <View0 Encoding="" line="23" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/interfaceAvr.cpp" >
+   <View0 Encoding="" line="45" Type="Source" />
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.cpp" >
-   <View0 Encoding="" line="55" Type="Source" />
-  </Doc4>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -33,11 +30,11 @@
   </kdevastyle>
   <kdevbookmarks>
    <bookmarks>
-    <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
-     <mark line="1227" />
-    </bookmark>
     <bookmark url="/home/markus/develop/subversion/applications/mrs/trunk/src/sick.c" >
      <mark line="44" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
+     <mark line="1227" />
     </bookmark>
     <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/heartbeat.cpp" >
      <mark line="44" />

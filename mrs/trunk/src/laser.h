@@ -21,16 +21,62 @@
 #ifndef CARMEN_LASER_MAIN_H
 #define CARMEN_LASER_MAIN_H
 
+#include "carmenserial.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <QtGlobal>
-#include <QString>
-#include <QDebug>
+#include <stdarg.h>
+#include <termios.h>
+#include <fcntl.h>
+#include <sys/signal.h>
+#include <sys/time.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <ctype.h>
+#include <signal.h>
+#include <math.h>
+#include <time.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <limits.h>
+#include <float.h>
+#include <sys/types.h>
+#include <sys/select.h>
+#include <sys/utsname.h>
+
+#if !defined(CYGWIN) && !defined(__APPLE__)
+#include <linux/serial.h>
+#include <linux/version.h>
+#endif
+
+#ifdef CYGWIN
+#include <sys/socket.h>
+#endif
+
+#ifndef va_copy
+#define va_copy __va_copy
+#endif
+
+#ifdef __USE_BSD
+#undef __USE_BSD
+#include <string.h>
+#define __USE_BSD
+#else
+#include <string.h>
+#endif
 
 
-// from laser.h:
+#ifndef MAXDOUBLE
+#define MAXDOUBLE DBL_MAX
+#endif
+#ifndef MAXFLOAT
+#define MAXFLOAT FLT_MAX
+#endif
+
 #define     CARMEN_FRONT_LASER_NUM       0
 #define     CARMEN_REAR_LASER_NUM        1
 #define     CARMEN_LASER3_NUM            2
@@ -38,27 +84,26 @@
 #define     CARMEN_LASER5_NUM            4
 
 
-// from laser_messages.h
 /**
  * Definition of the messages for the module laser.
  *
  * This file specifies the messages for this modules used to transmit
  * data via ipc to other modules.
  **/
-/** all raw laser messages have the same format **/
+/// all raw laser messages have the same format
 #define      CARMEN_LASER_LASER_FMT       "{int,{int,double,double,double,double,double,int},int,<float:3>,int,<float:5>,double,string}"
 
 #define      CARMEN_LASER_FRONTLASER_NAME "carmen_laser_frontlaser"
 #define      CARMEN_LASER_FRONTLASER_FMT  CARMEN_LASER_LASER_FMT
 
-/** Note that laser1 is the same as frontlaser **/
+/// Note that laser1 is the same as frontlaser
 #define      CARMEN_LASER_LASER1_NAME     CARMEN_LASER_FRONTLASER_NAME
 #define      CARMEN_LASER_LASER1_FMT      CARMEN_LASER_FRONTLASER_FMT
 
 #define      CARMEN_LASER_REARLASER_NAME  "carmen_laser_rearlaser"
 #define      CARMEN_LASER_REARLASER_FMT   CARMEN_LASER_LASER_FMT
 
-/** Note that laser2 is the same as reartlaser **/
+/// Note that laser2 is the same as reartlaser
 #define      CARMEN_LASER_LASER2_NAME     CARMEN_LASER_REARLASER_NAME
 #define      CARMEN_LASER_LASER2_FMT      CARMEN_LASER_REARLASER_FMT
 
@@ -74,48 +119,6 @@
 #define      CARMEN_LASER_ALIVE_NAME            "carmen_laser_alive"
 #define      CARMEN_LASER_ALIVE_FMT             "{int,int,int,int,int}"
 
-
-
-//--- vorher in sick.h:
-// FROM carmen/carmen.h:
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
-#ifndef va_copy
-#define va_copy __va_copy
-#endif
-
-#include <unistd.h>
-#include <ctype.h>
-#ifdef __USE_BSD
-#undef __USE_BSD
-#include <string.h>
-#define __USE_BSD
-#else
-#include <string.h>
-#endif
-#include <signal.h>
-#include <math.h>
-#include <time.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef CYGWIN
-#include <sys/socket.h>
-#endif
-#include <errno.h>
-#include <limits.h>
-#include <float.h>
-#ifndef MAXDOUBLE
-#define MAXDOUBLE DBL_MAX
-#endif
-#ifndef MAXFLOAT
-#define MAXFLOAT FLT_MAX
-#endif
-
-
-// FROM global.h:
 #ifndef TRUE
 #define TRUE 1
 #endif
@@ -127,35 +130,8 @@
 #define M_PI 3.14159265358979323846  // pi
 #endif
 
-// FROM rflex-io.c:
-#include <termios.h>
-#include <fcntl.h>
-#include <sys/signal.h>
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#ifdef CYGWIN
-#include <sys/socket.h>
-#endif
-// - - - - - - - - - - - - -
-
 #define CARMEN_LASER_USE_SELECT 1
 #define CARMEN_LASER_LOW_LATENCY 1
-
-
-#include "carmenserial.h"
-
-#include <sys/types.h>
-#include <sys/select.h>
-
-// *****  DIRK WAS HERE - START ******
-#include <sys/utsname.h>
-#if !defined(CYGWIN) && !defined(__APPLE__)
-#include <linux/serial.h>
-#include <linux/version.h>
-#endif
-// ****  DIRK WAS HERE - END ******
-
-
 
 #define LASER_BUFFER_SIZE                100000
 
@@ -203,7 +179,6 @@
 #include <QtGlobal>
 #include <QString>
 #include <QDebug>
-//---
 
 
 class Laser : public QObject
@@ -214,40 +189,39 @@ class Laser : public QObject
 		Laser();
 		~Laser();
 		
-		static const short int LASER1 = 1;	///	For the mrs laserThread
-		static const short int LASER2 = 2;	///	For the mrs laserThread
-		static const short int LASER3 = 4;	///	For the mrs laserThread
-		static const short int LASER4 = 8;	///	For the mrs laserThread
-		static const short int LASER5 = 16;	///	For the mrs laserThread
+		static const short int LASER1 = 1;	/// For the mrs laserThread
+		static const short int LASER2 = 2;	/// For the mrs laserThread
+		static const short int LASER3 = 4;	/// For the mrs laserThread
+		static const short int LASER4 = 8;	/// For the mrs laserThread
+		static const short int LASER5 = 16;	/// For the mrs laserThread
 		
-		// FROM param_interface.h:
+		/**
+		This data structure is used by carmen_param_install_params and
+		carmen_param_usage to load and report the usage of a large number of
+		parameters.
+		*/
 		typedef char carmen_param_type_t;
-		// This data structure is used by carmen_param_install_params and
-		//    carmen_param_usage to load and report the usage of a large number of
-		//    parameters.
 
 		typedef void (*carmen_param_change_handler_t)(char *module, char *variable, char *value);
 		
 		typedef struct
 		{
-			char *module;	// <The module name of this parameter
-			char *variable;	// <The variable name to be loaded.
-			carmen_param_type_t type;	// <Type should match user_variable:
-										// e.g., CARMEN_PARAM_INT if the local
-										// variable storage is an integer.
-			void *user_variable;	// <A pointer to the local variable
-									// storage.
-			int subscribe;	// <If the param_daemon publishes a
-							// change to this variable value (because
-							// someone has changed the variable
-							// value, should the local value be
-							// updated? 1 for yes, 0 for no.
-			carmen_param_change_handler_t handler;	// <Declare a handler if the
-													// param_daemon publishes a change to
-													// this variable's value.
+			char *module;							/// The module name of this parameter
+			char *variable;							/// The variable name to be loaded.
+			carmen_param_type_t type;				/// Type should match user_variable:
+													/// e.g., CARMEN_PARAM_INT if the local
+													/// variable storage is an integer.
+			void *user_variable;					/// A pointer to the local variable storage.
+			int subscribe;							/// If the param_daemon publishes a
+													/// change to this variable value (because
+													/// someone has changed the variable
+													/// value, should the local value be
+													/// updated? 1 for yes, 0 for no.
+			carmen_param_change_handler_t handler;	/// Declare a handler if the
+													/// param_daemon publishes a change to
+													/// this variable's value.
 		} carmen_param_t, *carmen_param_p;
 
-		// * * * * *
 		typedef enum { PLS, LMS } laser_model_t;
 		typedef enum { CM, MM, DM } range_res_t;
 		typedef enum { SICK_RANGE80M, SICK_RANGE160M, SICK_RANGE320M, SICK_REMISSION_NORM, SICK_REMISSION_DIRECT } range_dist_t;
@@ -296,20 +270,18 @@ class Laser : public QObject
 			int numvalues;
 			double *range;
 			int *glare, *wfv, *sfv;
-			// *** REI - START ***
 			double *remission;
 			int remvalues;
-			// *** REI - END *** //
 			unsigned char *buffer;
 			long int buffer_position, processed_mark, packet_offset, packet_length;
 			int new_reading;
 			double timestamp;
 			double packet_timestamp;
 		} sick_laser_t, *sick_laser_p;
-		// * * * * *
 		
-		// FROM laser_messages.h:
-		/** defined the type of laser that is used **/
+		/**
+		defines the type of laser that is used
+		*/
 		typedef enum
 		{
 			SICK_LMS = 0,
@@ -319,7 +291,9 @@ class Laser : public QObject
 			UMKNOWN_PROXIMITY_SENSOR = 99
 		} carmen_laser_laser_type_t;
 		
-		/** Possible remission values **/
+		/**
+		Possible remission values
+		*/
 		typedef enum
 		{
 			REMISSION_NONE       = 0,
@@ -327,16 +301,18 @@ class Laser : public QObject
 			REMISSION_NORMALIZED = 2
 		} carmen_laser_remission_type_t;
 		
-		/** The configuration of the laser  **/
+		/**
+		The configuration of the laser
+		*/
 		typedef struct
 		{
-			carmen_laser_laser_type_t laser_type;   /**< what kind of laser is this **/
-			double start_angle;                     /**< angle of the first beam relative to the center of the laser **/
-			double fov;                             /**< field of view of the laser **/
-			double angular_resolution;              /**< angular resolution of the laser **/
-			double maximum_range;                   /**< the maximum valid range of a measurement  **/
-			double accuracy;                        /**< error in the range measurements **/
-			carmen_laser_remission_type_t remission_mode;  /** if and what kind of remission values are used */
+			carmen_laser_laser_type_t laser_type;			/// what kind of laser is this
+			double start_angle;								/// angle of the first beam relative to the center of the laser
+			double fov;										/// field of view of the laser
+			double angular_resolution;						/// angular resolution of the laser
+			double maximum_range;							/// the maximum valid range of a measurement
+			double accuracy;								/// error in the range measurements
+			carmen_laser_remission_type_t remission_mode;	/// if and what kind of remission values are used
 		} carmen_laser_laser_config_t;
 		
 		// vorher **global** in laser_main.cpp!
@@ -358,7 +334,6 @@ class Laser : public QObject
 		int use_laser5;
 		int quit_signal;
 		
-		//Markus (used in "read_parameters")
 		QString laserSerialPort1;
 		QString laserSerialPort2;
 		int carmen_laser_start(short int laserScanner);
@@ -375,14 +350,19 @@ class Laser : public QObject
 		void interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov);
 		void check_parameter_settings(sick_laser_p laser);
 		void set_default_parameters(sick_laser_p laser, int laser_num);
-		
-		//---- vorher in sick.h:
 		int  sick_start_laser(sick_laser_p laser);
 		void sick_stop_laser(sick_laser_p laser);
 		void sick_handle_laser(sick_laser_p laser);
 		int sick_connect_device(sick_laser_p laser);
-		double carmen_get_time(void); // from global.c
-		//----
+		double carmen_get_time(void);
+
+
+	signals:
+		/**
+		Emits a info messge to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		*/
+		void message(QString text);
 
 
 	private:
@@ -397,7 +377,7 @@ class Laser : public QObject
 		int kernel_minimum_version( int a, int b, int c );
 		void sick_set_baudrate(sick_laser_p laser, int brate);
 		int sick_serial_connect(sick_laser_p laser);
-		// MArkus static int sick_compute_checksum(unsigned char *CommData, int uLen);
+		// OLD: static int sick_compute_checksum(unsigned char *CommData, int uLen);
 		int sick_compute_checksum(unsigned char *CommData, int uLen);
 		int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout);
 		int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length);
@@ -419,9 +399,9 @@ class Laser : public QObject
 		void sick_install_settings(sick_laser_p laser);
 		void sick_allocate_laser(sick_laser_p laser);
 		int sick_valid_packet(unsigned char *data, long size, long *offset, long *len);
-		//static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
-		//static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
-		//static void sick_process_packet(sick_laser_p laser, unsigned char *packet);
+		// OLD: static void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
+		// OLD: static void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
+		// OLD: static void sick_process_packet(sick_laser_p laser, unsigned char *packet);
 		void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
 		void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
 		void sick_process_packet(sick_laser_p laser, unsigned char *packet);
