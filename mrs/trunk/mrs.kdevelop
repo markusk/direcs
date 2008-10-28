@@ -124,6 +124,7 @@
       <makebin>make</makebin>
       <prio>0</prio>
       <envvars>
+        <envvar value="arm" name="DESTPLATFORM" />
         <envvar value="/usr/share/qt4/bin:$PATH" name="PATH" />
       </envvars>
       <runmultiplejobs>true</runmultiplejobs>
