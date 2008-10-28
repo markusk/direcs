@@ -3,10 +3,10 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="2" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs-arm/src/mrs-arm.cpp" >
-   <View0 Encoding="" line="56" Type="Source" />
+   <View0 Encoding="" line="74" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs-arm/src/mrs-arm.h" >
-   <View0 Encoding="" line="31" Type="Source" />
+   <View0 Encoding="" line="28" Type="Source" />
   </Doc1>
  </DocsAndViews>
  <pluginList>

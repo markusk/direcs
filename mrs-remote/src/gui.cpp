@@ -17,8 +17,8 @@ Gui::Gui(MrsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	speedMotor2 = ui.spinBoxSpeed2->value();
 	
 	view = new QWebView(ui.widgetWeb);
-	view->load(QUrl("http://nslu:8000/"));
-	//view->load(QUrl("http://nslu/"));
+	//view->load(QUrl("http://mrs:8000/"));
+	view->load(QUrl("http://mrs/"));
 	view->show();
 	
 	/*

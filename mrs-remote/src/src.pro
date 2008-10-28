@@ -16,12 +16,11 @@ DEFINES = warn_on \
 qt
 TEMPLATE = app
 QT += network \
-      webkit \
-      phonon
+      webkit
 
 INCLUDEPATH += /home/markus/develop/subversion/applications/mrs-remote/src \
 		/usr/include/KDE
 
-LIBS += -L/usr/local/lib -lphonon
+LIBS += -L/usr/local/lib
 
 RESOURCES += ../mrs-remote.qrc
