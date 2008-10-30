@@ -170,3 +170,4 @@ LIBS += -L/usr/lib \
   -lcv \
   -lhighgui
 
+QMAKE_CXXFLAGS = -Wno-parentheses
