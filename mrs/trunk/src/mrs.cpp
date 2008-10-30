@@ -104,7 +104,7 @@ void Mrs::init()
 	testDriveMode = false;
 	eyeTestMode = false;
 	currentTestServo = SERVO1;
-	dontUseCamera = false;
+    useCamera = false;
 	cameraTestMode = false;
 	faceTrackingIsEnabled = false;
 	laserScannerFrontFound = false;
@@ -508,7 +508,6 @@ void Mrs::init()
 	{
 		if (camThread->isRunning() == false)
 		{
-			// check REAR laser
 			splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
@@ -1741,32 +1740,30 @@ void Mrs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	switch (inifile1->readSetting("Config", "dontUseCamera"))
+    switch (inifile1->readSetting("Config", "useCamera"))
 	{
 		case -2:
 			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"dontUseCamera\"not found in ini-file!</font>");
+            gui->appendLog("<font color=\"#FF0000\">Value \"useCamera\"not found in ini-file!</font>");
 			break;
 		case 0:
-			dontUseCamera = false;
-			break;
+            useCamera = false;
+            #ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+            // turning "off" camera
+            camThread->setCameraDevice(-2);
+            #endif
+            gui->disableCamera();
+            gui->appendLog("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
+            break;
 		case 1:
-			dontUseCamera = true;
-			
-			#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-			// turning "off" camera
-			camThread->setCameraDevice(-2);
-			#endif
-			gui->disableCamera();
-			
-			gui->appendLog("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
+            useCamera = true;
 			break;
 	}
 
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-	if (!dontUseCamera)
+    if (useCamera)
 	{
 		//---------------------------------------------------------------------
 		// read setting
