@@ -22,12 +22,16 @@
 #define INTERFACEAVR_H
 
 //-------------------------------------------------------------------
-#include "qextserialport.h"
+#ifdef _TTY_POSIX_
+ #include "direcsSerial.h" // On unix systems use my own serial port class
+#else
+ #include "qextserialport.h"
+ class QextSerialPort; // forward declarations because of circular includes!
+#endif
+
+#include <QFile>
 #include <QObject>
 //-------------------------------------------------------------------
-
-// forward declarations because of circular includes!
-class QextSerialPort;
 
 
 /**
@@ -85,7 +89,12 @@ class InterfaceAvr : public QObject
 		void tooMuchErrors();
 
 	private:
+#ifdef _TTY_POSIX_
+		DirecsSerial *serialPort;
+		int dev_fd;
+#else
 		QextSerialPort *serialPort;
+#endif
 };
 
 #endif

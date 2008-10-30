@@ -23,8 +23,13 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
+#ifdef _TTY_POSIX_
+	serialPort = new DirecsSerial();
+	dev_fd = NULL;
+#else
 	//serialPort = new QextSerialPort("/dev/ttyUSB0"); // < < < < < <
 	serialPort = new QextSerialPort();
+#endif
 }
 
 
@@ -44,11 +49,20 @@ bool InterfaceAvr::openComPort(QString comPort)
 	}
 
 
-	//-------------------------------------------------------
-	// open a serial port ("COM1" for example on Windows)
-	// using qextserialport
-	//-------------------------------------------------------
-//	serialPort->setPortName(comPort);
+#ifdef _TTY_POSIX_
+	// for QString to char* conversion
+	QByteArray ba = comPort.toLatin1();
+	
+	// TODO: set BAUDRATE etc. as parameter
+	if (serialPort->openPort(&dev_fd, ba.data()) == -1)
+	{
+		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
+		return false;
+	}
+
+    return true;
+#else
+	// open a serial port ("COM1" for example on Windows) using qextserialport
 	serialPort->setBaudRate(BAUD9600);
 	// Due to a bug in posix_qextserialport.h setting of flow control HAS to be AFTER opening an port!?!?!??
 	// If not, a memory access error occurs!
@@ -56,14 +70,10 @@ bool InterfaceAvr::openComPort(QString comPort)
 	serialPort->setParity(PAR_NONE);
 	serialPort->setDataBits(DATA_8);
 	serialPort->setStopBits(STOP_1);
-	//serialPort->setTimeout(0, 100); // setting time out to 0 seconds and 100 millliseconds
-
-
-//	return serialPort->open(QIODevice::ReadWrite);
 
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
-		qDebug("What the...");
+		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
 		return false;
 	}
 
@@ -71,12 +81,18 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//serialPort->flush();
 
 	return true;
+#endif
 }
 
 
 void InterfaceAvr::closeComPort()
 {
+#ifdef _TTY_POSIX_
+	// TODO: no pointer for device parameter?
+	serialPort->closePort(dev_fd);
+#else
 	serialPort->close();
+#endif
 }
 
 
@@ -84,27 +100,31 @@ bool InterfaceAvr::sendChar(char character)
 {
 	static int receiveErrorCounter = 0;
 
-	//------------------------------------------
+
 	// send one byte to serial port
-	//------------------------------------------
+#ifdef _TTY_POSIX_
+	unsigned char *c;
+    int i = character;
+    *c = i;
+	//int           writePort(int dev_fd, unsigned char *buf, int nChars);
+	if (serialPort->writePort(dev_fd, c, 1) == -1)
+#else
+	// FIXME: which one was Original?!??
 	if (serialPort->putChar(character) == false)
 //	if (serialPort->write(&character, 1) == -1)
+#endif
 	{
 		receiveErrorCounter++;
 		//qDebug("%d. ERROR sendChar to serial port (sendChar, InterfaceAvr)", receiveErrorCounter);
 
-		//
 		// MASSIVE COMMUNICATION ERROR!
-		//
 		if (receiveErrorCounter >= 4)
 		{
 			receiveErrorCounter = 0;
 			emit tooMuchErrors();
 		}
-
 		return false;
 	}
-
 
 	return true;
 }
@@ -112,7 +132,15 @@ bool InterfaceAvr::sendChar(char character)
 
 bool InterfaceAvr::receiveChar(char *character)
 {
-	return serialPort->getChar(character);
+#ifdef _TTY_POSIX_
+    unsigned char *c;
+    int i = *character;
+    *c = i;
+    // int             readPort(int dev_fd, unsigned char *buf, int nChars);
+    return serialPort->readPort(dev_fd, c, 1);
+#else
+    return serialPort->getChar(character);
+#endif
 }
 
 
