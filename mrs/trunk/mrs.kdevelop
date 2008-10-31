@@ -105,13 +105,13 @@
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
       <runarguments>
-        <mrs/>
+        <mrs></mrs>
       </runarguments>
       <cwd>
         <mrs>/home/markus/develop/mrs/mrs/trunk</mrs>
       </cwd>
       <debugarguments>
-        <mrs/>
+        <mrs></mrs>
       </debugarguments>
     </run>
     <general>
