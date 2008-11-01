@@ -3153,13 +3153,13 @@ void Mrs::test()
 		//head->look("RIGHT");
 	}
 	
-	//motors->flashlight(toggle);
+	motors->flashlight(toggle);
 	
 
 	#ifdef _TTY_POSIX_
 	// Say some text;
 	QDateTime now = QDateTime::currentDateTime();
-	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+//	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 	#endif
 
 }
