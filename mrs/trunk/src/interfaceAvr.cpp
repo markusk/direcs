@@ -53,7 +53,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// for QString to char* conversion
 	QByteArray ba = comPort.toLatin1();
 	
-	// TODO: set BAUDRATE etc. as parameter
+	// TODO: set BAUDRATE etc. as parameter / serialPort->setParms  / serialPort->configurePort
 	if (serialPort->openPort(&dev_fd, ba.data()) == -1)
 	{
 		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
@@ -103,13 +103,29 @@ bool InterfaceAvr::sendChar(char character)
 
 	// send one byte to serial port
 #ifdef _TTY_POSIX_
-	unsigned char *c;
-    int i = character;
-    *c = i;
-	//int           writePort(int dev_fd, unsigned char *buf, int nChars);
-	if (serialPort->writePort(dev_fd, c, 1) == -1)
+	//--------------------------------------------------
+	// convert from signed char to unsigned int
+	//--------------------------------------------------
+	int helpValue = 0;
+	int intValue = 0;
+	unsigned char c = intValue;
+	
+	if (character < 0)
+	{
+		helpValue = ( 127 & character ) + 128;
+	}
+	else
+	{
+		helpValue = character;
+	}
+	// this is the 16 Bit result
+	intValue += helpValue;
+	//--------------------------------------------------
+	
+	
+	if (serialPort->writePort(dev_fd, &c, 1) == -1)
 #else
-	// FIXME: which one was Original?!??
+	// FIXME: which one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
 //	if (serialPort->write(&character, 1) == -1)
 #endif
@@ -133,11 +149,28 @@ bool InterfaceAvr::sendChar(char character)
 bool InterfaceAvr::receiveChar(char *character)
 {
 #ifdef _TTY_POSIX_
-    unsigned char *c;
-    int i = *character;
-    *c = i;
+	//--------------------------------------------------
+	// convert from signed char to unsigned int
+	//--------------------------------------------------
+	int helpValue = 0;
+	int intValue = 0;
+	unsigned char c = intValue;
+	
+	if (character < 0)
+	{
+		helpValue = ( 127 & *character ) + 128;
+	}
+	else
+	{
+		helpValue = *character;
+	}
+	// this is the 16 Bit result
+	intValue += helpValue;
+	//--------------------------------------------------
+	
+	
     // int             readPort(int dev_fd, unsigned char *buf, int nChars);
-    return serialPort->readPort(dev_fd, c, 1);
+    return serialPort->readPort(dev_fd, &c, 1);
 #else
     return serialPort->getChar(character);
 #endif
@@ -191,7 +224,9 @@ bool InterfaceAvr::receiveInt(int *value)
 		return false;
 	}
 
+	//--------------------------------------------------
 	// convert from signed char to unsigned int
+	//--------------------------------------------------
 	if (character < 0)
 	{
 		helpValue = ( 127 & character ) + 128;
@@ -204,6 +239,7 @@ bool InterfaceAvr::receiveInt(int *value)
 
 	// this is the 16 Bit result
 	intValue += helpValue;
+	//--------------------------------------------------
 
 	// "return" the value
 	*value = intValue;
