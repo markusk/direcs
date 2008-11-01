@@ -1630,7 +1630,7 @@ int Laser::sick_connect_device(sick_laser_p laser)
 	
 	if(laser->dev.fd == -1)
 	{
-		fprintf(stderr, "failed!\n");
+		emit(message(QString("Connting Laser Scanner to %1...failed!").arg(laser->dev.ttyport)));
 		return 1;
 	}
 	
