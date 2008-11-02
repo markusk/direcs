@@ -60,11 +60,17 @@ bool InterfaceAvr::openComPort(QString comPort)
 		return false;
 	}
 
+	// Configuring the serial port with 9600, 
+	//         setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf, int stopb = 0)
+	serialPort->setParms(dev_fd, "9600", N, "8", 0, 0, 1);
+	
+	
     return true;
 #else
 	// open a serial port ("COM1" for example on Windows) using qextserialport
 	serialPort->setBaudRate(BAUD9600);
-	// Due to a bug in posix_qextserialport.h setting of flow control HAS to be AFTER opening an port!?!?!??
+	
+	// Setting of flow control HAS to be AFTER opening an port!
 	// If not, a memory access error occurs!
 	serialPort->setFlowControl(FLOW_OFF);
 	serialPort->setParity(PAR_NONE);
