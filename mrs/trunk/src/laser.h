@@ -23,29 +23,27 @@
 
 #include "direcsSerial.h"
 
+#include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <float.h>
+#include <limits.h>
+#include <math.h>
+#include <signal.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
-#include <stdarg.h>
 #include <termios.h>
-#include <fcntl.h>
-#include <sys/signal.h>
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <ctype.h>
-#include <signal.h>
-#include <math.h>
 #include <time.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <sys/select.h>
+#include <sys/signal.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <limits.h>
-#include <float.h>
 #include <sys/types.h>
-#include <sys/select.h>
 #include <sys/utsname.h>
 
 #if !defined(CYGWIN) && !defined(__APPLE__)
