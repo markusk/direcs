@@ -22,18 +22,19 @@
 #ifndef DIRECS_SERIAL_H
 #define DIRECS_SERIAL_H
 
+#include <errno.h>
+#include <fcntl.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <string.h>
 #include <termios.h>
 #include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <sys/ioctl.h>
+#include <sys/stat.h>
 #include <sys/time.h>
+
 
 #ifdef CYGWIN
 #include <sys/socket.h>
@@ -69,6 +70,10 @@ class DirecsSerial : public QObject
 		**/
 		int openPort(int *dev_fd, char *dev_name); // serial_connect
 		
+		/**
+		for test reasons... :-)
+		*/
+		bool openAtmelPort(int *dev_fd, char *dev_name);
 		
 		/**
 		Sets the parameters for (a connected) serial line.
@@ -145,11 +150,9 @@ class DirecsSerial : public QObject
 		@return 0=successful switched to low latency mode. 0=continue in normal mode.
 		**/
 		int setLowLatency(int fd);
-		
-		
+
+
 	private:
-		typedef enum { N, E, O } parity_t;
-		
 		/**
 		Set RTS
 		*/

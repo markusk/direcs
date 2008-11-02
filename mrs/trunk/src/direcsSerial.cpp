@@ -70,6 +70,73 @@ int DirecsSerial::openPort(int *dev_fd, char *dev_name)
 }
 
 
+bool DirecsSerial::openAtmelPort(int *dev_fd, char *dev_name)
+{
+	struct termios options;
+	*dev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NDELAY);
+	
+	if (*dev_fd < 0)
+	{
+		/*
+		* Could not open the port.
+		*/
+		qDebug("open_port: Unable to open %1", dev_name);
+		return false;
+	}
+	else
+	{
+		fcntl(*dev_fd, F_SETFL, 0);
+	}
+	
+	
+	/*
+	* GET the current options for the port...
+	*/
+	tcgetattr(*dev_fd, &options);
+	
+	/*
+	* Setting the baud rate.
+	*/
+	cfsetispeed(&options, B9600);
+	cfsetospeed(&options, B9600);
+	
+	/*
+	* Enable the receiver and set local mode...
+	*/
+	options.c_cflag |= (CLOCAL | CREAD);
+
+	/*
+	* Setting the Character Size
+	*/
+	options.c_cflag &= ~CSIZE; /* Mask the character size bits */
+	options.c_cflag |= CS8;    /* Select 8 data bits */
+
+	/*
+	* Setting Parity Checking
+	*/
+	// No parity (8N1)
+	options.c_cflag &= ~PARENB;
+	options.c_cflag &= ~CSTOPB;
+	options.c_cflag &= ~CSIZE;
+	options.c_cflag |= CS8;
+
+	/*
+	* Disabling Hardware Flow Control (Also called CRTSCTS)
+	*/
+	options.c_cflag &= ~CRTSCTS;
+	
+	/*
+	* SET the new options for the port...
+	*/
+	tcsetattr(*dev_fd, TCSANOW, &options);
+
+	// FLUSH
+	fcntl(*dev_fd, F_SETFL, 0);
+	
+	return true;
+}
+
+
 #if (defined(TIOCM_RTS) && defined(TIOCMODG)) || defined(_COHERENT)
 void DirecsSerial::setRTS(int fd)
 #else
@@ -89,7 +156,7 @@ void DirecsSerial::setRTS(int fd  __attribute__ ((unused)))
 }
 
 
-void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf, char *stopb)
+void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf, int stopb)
 {
 	int spd = -1;
 	int newbaud = 0;

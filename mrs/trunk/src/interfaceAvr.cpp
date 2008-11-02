@@ -48,24 +48,23 @@ bool InterfaceAvr::openComPort(QString comPort)
 		return false;
 	}
 
-
 #ifdef _TTY_POSIX_
 	// for QString to char* conversion
 	QByteArray ba = comPort.toLatin1();
-	
-	// TODO: set BAUDRATE etc. as parameter / serialPort->setParms  / serialPort->configurePort
+
+/*
 	if (serialPort->openPort(&dev_fd, ba.data()) == -1)
 	{
 		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
 		return false;
 	}
 
-	// Configuring the serial port with 9600, 
-	//         setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf, int stopb = 0)
-	serialPort->setParms(dev_fd, "9600", N, "8", 0, 0, 1);
-	
-	
-    return true;
+	// Configuring the serial port with 9600, 8N1, no flow control (0, 0)
+	serialPort->setParms(dev_fd, "9600", "N", "8", 0, 0, 1);
+*/
+
+	// FIXME: test!!!!!!
+	return serialPort->openAtmelPort(&dev_fd, ba.data());
 #else
 	// open a serial port ("COM1" for example on Windows) using qextserialport
 	serialPort->setBaudRate(BAUD9600);
