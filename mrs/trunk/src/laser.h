@@ -362,7 +362,9 @@ class Laser : public QObject
 		Process any data that is available from the laser. Attempt to detect valid packets in the data.
 		*/
 		void sick_handle_laser(sick_laser_p laser);
+		
 		int sick_connect_device(sick_laser_p laser);
+		
 		double carmen_get_time(void);
 
 
@@ -413,8 +415,11 @@ class Laser : public QObject
 		int sick_testBaudrate(sick_laser_p laser, int brate);
 		
 		int sick_detect_baudrate(sick_laser_p laser);
+		
 		int sick_check_baudrate(sick_laser_p laser, int brate);
+		
 		void sick_install_settings(sick_laser_p laser);
+		
 		void sick_allocate_laser(sick_laser_p laser);
 		
 		/**
@@ -427,7 +432,9 @@ class Laser : public QObject
 		Interpret packets received from the laser.  If the packets contain laser data, expand the data into a useful form.
 		*/
 		void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
+		
 		void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
+		
 		void sick_process_packet(sick_laser_p laser, unsigned char *packet);
 		
 		DirecsSerial *serialPort;

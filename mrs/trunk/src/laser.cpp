@@ -766,7 +766,7 @@ float Laser::getLaserDistance(int laser, int angle)
 
 void Laser::setDevicePort(short int laser, QString serialPort)
 {
-
+	// TODO: add support for laser 3 to 5
 	switch (laser)
 	{
 		case LASER1:
