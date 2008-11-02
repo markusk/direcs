@@ -66,6 +66,12 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// FIXME: test!!!!!!
 	return serialPort->openAtmelPort(&dev_fd, ba.data());
 #else
+	if (serialPort->open(QIODevice::ReadWrite) == false)
+	{
+		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
+		return false;
+	}
+
 	// open a serial port ("COM1" for example on Windows) using qextserialport
 	serialPort->setBaudRate(BAUD9600);
 	
@@ -75,13 +81,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	serialPort->setParity(PAR_NONE);
 	serialPort->setDataBits(DATA_8);
 	serialPort->setStopBits(STOP_1);
-
-	if (serialPort->open(QIODevice::ReadWrite) == false)
-	{
-		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
-		return false;
-	}
-
+	
 	// Flushes all pending I/O to the serial port.
 	//serialPort->flush();
 

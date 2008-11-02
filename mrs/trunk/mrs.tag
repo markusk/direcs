@@ -2559,6 +2559,13 @@
       <arglist>(int dev_fd)</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>openAtmelPort</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>ac989241b318ee83978ec3fa9e4eff5b</anchor>
+      <arglist>(int *dev_fd, char *dev_name)</arglist>
+    </member>
+    <member kind="function">
       <type>int</type>
       <name>openPort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
@@ -2580,6 +2587,13 @@
       <arglist>(int fd)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>setParms</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>9f9a006f1604d4e671feff6c3bc0292b</anchor>
+      <arglist>(int fd, char *baudr, char *par, char *bits, int hwf, int swf, int stopb=0)</arglist>
+    </member>
+    <member kind="function">
       <type>int</type>
       <name>writePort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
@@ -2592,13 +2606,6 @@
       <anchorfile>classDirecsSerial.html</anchorfile>
       <anchor>dd59642ee3375a50aac0432eb623b827</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>void</type>
-      <name>setParms</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>ce0f3ee0a45318106a6e79eee073d928</anchor>
-      <arglist>(int fd, char *baudr, char *par, char *bits, int hwf, int swf)</arglist>
     </member>
     <member kind="function" protection="private">
       <type>void</type>
@@ -6488,13 +6495,6 @@
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
-      <name>dontUseCamera</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>ae5ddb2b1eda79624a33fba9776d4a39</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
       <name>eyeTestMode</name>
       <anchorfile>classMrs.html</anchorfile>
       <anchor>e33469e0f66020cf90fcdfaa26b412a5</anchor>
@@ -6750,6 +6750,13 @@
       <name>testDriveMode</name>
       <anchorfile>classMrs.html</anchorfile>
       <anchor>6f12177e670e807798f172cca4332743</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>useCamera</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>8d0881d154deb7b962d9b5b7721b491a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
