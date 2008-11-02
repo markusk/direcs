@@ -122,6 +122,18 @@ class DirecsSerial : public QObject
 		@return The results reported by close.
 		**/
 		int closePort(int dev_fd);
+
+		/**
+		Sets the serial port parameters
+		@param fd The file descriptor associated to the serial port.
+		@param *baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
+		@param *par The parity bit can be 'E', 'M', 'S' or 'O'.
+		@param *bits The data bits can be '5', '6', '7', '8', 'M' or 'S'.
+		@param hwf The flow control
+		@param swf The flow control
+		@param stopb The stop bits (default=0). This parameter is optional!
+		*/
+		void setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf, int stopb = 0);
 		
 		/**
 		Avtivates the low latency mode for the serial line.
@@ -134,7 +146,10 @@ class DirecsSerial : public QObject
 		**/
 		int setLowLatency(int fd);
 		
+		
 	private:
+		typedef enum { N, E, O } parity_t;
+		
 		/**
 		Set RTS
 		*/
@@ -143,10 +158,6 @@ class DirecsSerial : public QObject
 		#else
 		void setRTS(int fd  __attribute__ ((unused)));
 		#endif
-
-		/**
-		*/
-		void setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf);
 };
 
 #endif

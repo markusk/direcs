@@ -41,17 +41,30 @@ int DirecsSerial::openPort(int *dev_fd, char *dev_name)
 		fprintf(stderr,"Serial I/O Error:  Could not open port %s\n", dev_name);
 		return -1;
 	}
+	
+	//--------------------------------------------------
+	// configuring the serial port.
+	// these settings can be changed with setParms() !
+	//--------------------------------------------------
+	
+	// get the current options for the port
 	tcgetattr(*dev_fd, &newtio);
+	
+	// setting the baud rate
 	cfsetispeed(&newtio, BAUDRATE);
 	cfsetospeed(&newtio, BAUDRATE);
+	
 	newtio.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
 	newtio.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON | IXOFF);
 	newtio.c_cflag &= ~(CSIZE | PARENB | PARODD);
-	newtio.c_cflag |= (CS8);       
+	
+	newtio.c_cflag |= (CS8); // 8 Bit
 	newtio.c_oflag &= ~(OPOST);
-	newtio.c_cc[VTIME] = 1;      
-	newtio.c_cc[VMIN] = 0;       
+	newtio.c_cc[VTIME] = 1;
+	newtio.c_cc[VMIN] = 0;
+	// flush
 	tcflush(*dev_fd, TCIFLUSH);
+	// set the options now
 	tcsetattr(*dev_fd, TCSANOW, &newtio);
 	return 0;
 }
@@ -76,7 +89,7 @@ void DirecsSerial::setRTS(int fd  __attribute__ ((unused)))
 }
 
 
-void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf)
+void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf, char *stopb)
 {
 	int spd = -1;
 	int newbaud = 0;
@@ -89,9 +102,12 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	ioctl(fd, TIOCGETP, &tty);
 	#endif
 	
+	
 	/* We generate mark and space parity ourself. */
 	if(bit == '7' && (par[0] == 'M' || par[0] == 'S'))
 		bit = '8';
+
+
 	/* Check if 'baudr' is really a number */
 	if((newbaud = (atol(baudr) / 100)) == 0 && baudr[0] != '0')
 		newbaud = -1;
@@ -155,15 +171,19 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	}
 	
 	#if defined (_BSD43) && !defined(_POSIX)
-	if(spd != -1) tty.sg_ispeed = tty.sg_ospeed = spd;
+	if(spd != -1)
+		tty.sg_ispeed = tty.sg_ospeed = spd;
+	
 	/* Number of bits is ignored */
 	tty.sg_flags = RAW | TANDEM;
-	if(par[0] == 'E')
+	
+	if(par[0] == 'E') // even
 		tty.sg_flags |= EVENP;
-	else if(par[0] == 'O')
+	else if(par[0] == 'O') // odd
 		tty.sg_flags |= ODDP;
 	else
-		tty.sg_flags |= PASS8 | ANYP;
+		tty.sg_flags |= PASS8 | ANYP; //
+	
 	ioctl(fd, TIOCSETP, &tty);
 	#ifdef TIOCSDTR
 	/* FIXME: huh? - MvS */
@@ -187,7 +207,9 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 		cfsetospeed(&tty, (speed_t)spd);
 		cfsetispeed(&tty, (speed_t)spd);
 	}
-	
+
+
+	/* The data bits */
 	switch (bit)
 	{
 		case '5':
@@ -207,8 +229,7 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	
 	/* Set into raw, no echo mode */
 	#if !defined(_DGUX_SOURCE)
-	tty.c_iflag &= ~(IGNBRK | IGNCR | INLCR | ICRNL | // IUCLC | 
-			IXANY | IXON | IXOFF | INPCK | ISTRIP);
+	tty.c_iflag &= ~(IGNBRK | IGNCR | INLCR | ICRNL | /* IUCLC | */ IXANY | IXON | IXOFF | INPCK | ISTRIP);
 	tty.c_iflag |= (BRKINT | IGNPAR);
 	tty.c_oflag &= ~OPOST;
 	tty.c_lflag = ~(ICANON | ISIG | ECHO | ECHONL | ECHOE | ECHOK | IEXTEN);
@@ -223,34 +244,58 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	tty.c_cc[VTIME] = 5;
 	
 	/* Flow control. */
-	if(hwf) {
+	if(hwf)
+	{
+		// enable Hardware flow control
 		tty.c_cflag |= CRTSCTS;
 		tty.c_cflag &= ~CLOCAL;
 	}
-	else {
+	else
+	{
+		// disable Hardware flow control
 		tty.c_cflag &= ~CRTSCTS;
 		tty.c_cflag |= CLOCAL;
 	}
 	
-	if(swf) {
+	if(swf)
+	{
+		// Enable software flow control (outgoing and incoming)
 		tty.c_iflag |= (IXON | IXOFF);
 	}
-	else {
+	else
+	{
+		// Disable software flow control (outgoing and incoming)
 		tty.c_iflag &= ~(IXON | IXOFF);
 	}
 	
-	tty.c_cflag &= ~(PARENB | PARODD);
+	// set the PARITY
+	tty.c_cflag &= ~(PARENB | PARODD); // delete parity bit and odd bit, so we have PARITY=N here
 	
 	if(par[0] == 'E')
-		tty.c_cflag |= PARENB;
+		tty.c_cflag |= PARENB; // Parity=EVEN
 	else if(par[0] == 'O')
-		tty.c_cflag |= PARODD;
+		tty.c_cflag |= PARODD; // Parity=ODD
 	
+
+
+	/* The stop bit */
+	switch (stopb)
+	{
+		case 0:
+			tty.c_cflag |= CSTOPB;
+			break;
+		case 1:
+			tty.c_cflag &= ~CSTOPB; // deleting the bis is setitng it to 1 STOP BIT ?!??
+			break;
+	}
+	
+	
+	/* Set the new settings for the serial port NOW! */
 	tcsetattr(fd, TCSANOW, &tty);
 	
 	setRTS(fd);
 	#ifdef _DGUX_SOURCE
-	serial_sethwf(fd, hwf); // where'this method in the Original code??
+	serial_sethwf(fd, hwf);
 	#endif
 	#endif
 }
