@@ -72,10 +72,14 @@ int DirecsSerial::openPort(int *dev_fd, char *dev_name)
 
 bool DirecsSerial::openAtmelPort(int *dev_fd, char *dev_name)
 {
-	struct termios options;
+	//--------------------------------------------------
+	// This is now original code from test/serial.c !
+	//--------------------------------------------------
+	// open_port
+	//--------------------------------------------------
 	*dev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NDELAY);
 	
-	if (*dev_fd < 0)
+	if (*dev_fd == -1)
 	{
 		/*
 		* Could not open the port.
@@ -88,6 +92,11 @@ bool DirecsSerial::openAtmelPort(int *dev_fd, char *dev_name)
 		fcntl(*dev_fd, F_SETFL, 0);
 	}
 	
+	
+	//--------------------------------------------------
+	// configure_port
+	//--------------------------------------------------
+	struct termios options;	
 	
 	/*
 	* GET the current options for the port...
@@ -449,6 +458,34 @@ int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 		}
 	}
 	return 0;
+}
+
+
+int DirecsSerial::writeAtmelPort(int dev_fd, unsigned char *c, int nChars)
+{
+	//--------------------------------------------------
+	// This is now original code from test/serial.c !
+	//--------------------------------------------------
+	/*
+	Writing Data to the Port
+	Writing data to the port is easy - just use the write(2) system call to send data it.
+	The write function returns the number of bytes sent or -1 if an error occurred.
+	Usually the only error you'll run into is EIO when a MODEM or data link drops the Data Carrier Detect (DCD) line.
+	This condition will persist until you close the port.int write_port(void)
+	*/
+	int n = write(dev_fd, c, 1);
+	
+	if (n < 0)
+	{
+		// error
+		fputs("write() of n bytes failed!\n", stderr);
+	}
+	else
+	{
+		printf("%d byte(s) written.\n", n);
+	}
+	
+	return n;
 }
 
 

@@ -111,6 +111,11 @@ class DirecsSerial : public QObject
 		int writePort(int dev_fd, unsigned char *buf, int nChars);
 		
 		/**
+		for test reasons... :-)
+		*/
+		int writeAtmelPort(int dev_fd, unsigned char *c, int nChars);
+
+		/**
 		Reads data from the serial line
 		
 		@param dev_fd The file descriptor associated to the serial line.

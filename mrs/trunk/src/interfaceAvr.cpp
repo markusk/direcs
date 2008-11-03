@@ -27,7 +27,6 @@ InterfaceAvr::InterfaceAvr()
 	serialPort = new DirecsSerial();
 	dev_fd = NULL;
 #else
-	//serialPort = new QextSerialPort("/dev/ttyUSB0"); // < < < < < <
 	serialPort = new QextSerialPort();
 #endif
 }
@@ -41,18 +40,20 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
+#ifdef _TTY_POSIX_
+	// for QString to char* conversion
+	QByteArray ba = comPort.toLatin1();
+
+
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
 		qDebug("Serial port file not found!");
 		return false;
 	}
+	
 
-#ifdef _TTY_POSIX_
-	// for QString to char* conversion
-	QByteArray ba = comPort.toLatin1();
-
-/*
+	/*
 	if (serialPort->openPort(&dev_fd, ba.data()) == -1)
 	{
 		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
@@ -61,10 +62,12 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 	// Configuring the serial port with 9600, 8N1, no flow control (0, 0)
 	serialPort->setParms(dev_fd, "9600", "N", "8", 0, 0, 1);
-*/
+	*/
 
 	// FIXME: test!!!!!!
 	return serialPort->openAtmelPort(&dev_fd, ba.data());
+	
+	
 #else
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
@@ -127,8 +130,10 @@ bool InterfaceAvr::sendChar(char character)
 	intValue += helpValue;
 	//--------------------------------------------------
 	
-	
+/*	
 	if (serialPort->writePort(dev_fd, &c, 1) == -1)
+*/
+	
 #else
 	// FIXME: which one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
