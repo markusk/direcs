@@ -519,6 +519,35 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
+int DirecsSerial::readAtmelPort(int dev_fd, unsigned char *buf, int nChars)
+{
+	//--------------------------------------------------
+	// This is now original code from test/serial.c !
+	//--------------------------------------------------
+	int amountRead = 0, bytes_read = 0;
+	
+	
+	/*
+	Reading Data from the Port
+	Reading data from a port is a little trickier.
+	When you operate the port in raw data mode, each read system call will return the number of characters that are actually available in the serial input buffers.
+	If no characters are available, the call will block (wait) until characters come in, an interval timer expires, or an error occurs.
+	The read function can be made to return immediately by doing the following.
+	*/
+	fcntl(dev_fd, F_SETFL, FNDELAY);
+
+	/*
+	The FNDELAY option causes the read function to return 0 if no characters are available on the port.
+	To restore normal (blocking) behavior, call fcntl() without the FNDELAY option.
+	This is also used after opening a serial port with the O_NDELAY option.
+	*/
+	fcntl(dev_fd, F_SETFL, 0);
+	
+	// read!
+	amountRead = read(dev_fd, buf, nChars);
+}
+
+
 int DirecsSerial::closePort(int dev_fd)
 {
   return close(dev_fd);

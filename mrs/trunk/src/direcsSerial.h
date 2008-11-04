@@ -126,6 +126,11 @@ class DirecsSerial : public QObject
 		int readPort(int dev_fd, unsigned char *buf, int nChars);
 		
 		/**
+		for test reasons... :-)
+		 */
+		int readAtmelPort(int dev_fd, unsigned char *buf, int nChars);
+		
+		/**
 		Closes the file descriptior.
 		
 		@param dev_fd The file descriptor associated to the serial line.

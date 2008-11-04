@@ -179,10 +179,14 @@ bool InterfaceAvr::receiveChar(char *character)
 	//--------------------------------------------------
 	
 	
-    // int             readPort(int dev_fd, unsigned char *buf, int nChars);
-    return serialPort->readPort(dev_fd, &c, 1);
+	// direcsSerial code, when using Linux
+	//return serialPort->readPort(dev_fd, &c, 1);
+	
+	// my new test code
+	return serialPort->readAtmelPort(dev_fd, &c, 1);
 #else
-    return serialPort->getChar(character);
+	// QextSerialPort code, when using Windows
+	return serialPort->getChar(character);
 #endif
 }
 

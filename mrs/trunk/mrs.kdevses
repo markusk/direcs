@@ -1,12 +1,12 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="7" >
+ <DocsAndViews NumberOfDocuments="6" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/interfaceAvr.h" >
-   <View0 Encoding="" line="91" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/interfaceAvr.cpp" >
-   <View0 Encoding="" line="135" Type="Source" />
+   <View0 Encoding="" line="183" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laser.cpp" >
    <View0 Encoding="" Type="Source" />
@@ -15,14 +15,11 @@
    <View0 Encoding="" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.h" >
-   <View0 Encoding="" line="116" Type="Source" />
+   <View0 Encoding="" line="130" Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.cpp" >
-   <View0 Encoding="" line="465" Type="Source" />
+   <View0 Encoding="" line="521" Type="Source" />
   </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.cpp" >
-   <View0 Encoding="" line="312" Type="Source" />
-  </Doc6>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -39,11 +36,11 @@
   </kdevastyle>
   <kdevbookmarks>
    <bookmarks>
-    <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
-     <mark line="1227" />
-    </bookmark>
     <bookmark url="/home/markus/develop/subversion/applications/mrs/trunk/src/sick.c" >
      <mark line="44" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
+     <mark line="1227" />
     </bookmark>
     <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/heartbeat.cpp" >
      <mark line="44" />
@@ -53,6 +50,7 @@
      <mark line="710" />
     </bookmark>
     <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/interfaceAvr.cpp" >
+     <mark line="185" />
      <mark line="67" />
     </bookmark>
     <bookmark url="/home/markus/develop/subversion/applications/mrs/trunk/src/sensorThread.cpp" >
