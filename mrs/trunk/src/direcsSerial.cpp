@@ -482,7 +482,7 @@ int DirecsSerial::writeAtmelPort(int dev_fd, unsigned char *c, int nChars)
 	}
 	else
 	{
-		printf("%d byte(s) written.\n", n);
+		//printf("%d byte(s) written.\n", n);
 	}
 	
 	return n;
