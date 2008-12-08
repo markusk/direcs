@@ -18,10 +18,10 @@
 #define READ_SENSOR_8			8
 #define READ_SENSOR_16			16
 
-#define	MOTOR1_OFF				20
+#define	MOTOR1_OFF			20
 #define	MOTOR1_CLOCKWISE		21
 #define	MOTOR1_COUNTERCLOCKWISE	22
-#define	MOTOR2_OFF				23
+#define	MOTOR2_OFF			23
 #define	MOTOR2_CLOCKWISE		24
 #define	MOTOR2_COUNTERCLOCKWISE	25
 
@@ -31,38 +31,38 @@
 #define READ_MOTOR_SENSOR1		28
 #define READ_MOTOR_SENSOR2		29
 
-#define READ_MOTOR_DISTANCE1	30
-#define READ_MOTOR_DISTANCE2	31
+#define READ_MOTOR_DISTANCE1		30
+#define READ_MOTOR_DISTANCE2		31
 
-#define RESET_MOTOR_DISTANCE1	32
-#define RESET_MOTOR_DISTANCE2	33
+#define RESET_MOTOR_DISTANCE1		32
+#define RESET_MOTOR_DISTANCE2		33
 
 #define	FLASHLIGHT_OFF			40
 #define	FLASHLIGHT_ON			41
 
-#define SET_SERVO1				42
-#define SET_SERVO2				43
-#define SET_SERVO3				44
-#define SET_SERVO4				45
-#define SET_SERVO5				46
-#define SET_SERVO6				47
+#define SET_SERVO1			42
+#define SET_SERVO2			43
+#define SET_SERVO3			44
+#define SET_SERVO4			45
+#define SET_SERVO5			46
+#define SET_SERVO6			47
 
-#define MOTOR3_OFF 				50
+#define MOTOR3_OFF 			50
 #define MOTOR3_CLOCKWISE 		51
 #define MOTOR3_COUNTERCLOCKWISE 52
-#define MOTOR4_OFF 				53
+#define MOTOR4_OFF 			53
 #define MOTOR4_CLOCKWISE 		54
 #define MOTOR4_COUNTERCLOCKWISE 55
 
 #define MOTOR3_SPEED_SET		56
 #define MOTOR4_SPEED_SET		57
 
+#define	INIT				64
+
 #define READ_CONTACT1			70
 #define READ_CONTACT2			71
 #define READ_CONTACT3			72
 #define READ_CONTACT4			73
-
-#define	INIT					250
 
 
 // these numbers represent the Ports of the A/D converter C  !!!

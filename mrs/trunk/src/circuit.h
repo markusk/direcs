@@ -62,7 +62,7 @@ class Circuit : public QObject
 	private:
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
-		static const unsigned char INIT = 250;
+		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
 		bool robotIsOn;
 		bool firstInitDone;

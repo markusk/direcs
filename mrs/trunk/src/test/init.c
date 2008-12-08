@@ -3,7 +3,7 @@
 
 int main(int argc, char *argv[])
 {
-	unsigned char c = 250; // INIT
+	unsigned char c = 64; // INIT
 	
 	
 	printf("\nOpening serial port...");

@@ -8,7 +8,7 @@
 
 static const unsigned char FLASHLIGHT_OFF 	= 40;
 static const unsigned char FLASHLIGHT_ON 	= 41;
-static const unsigned char INIT 		= 250;
+static const unsigned char INIT 		= 64;
 static const unsigned char INITANSWER 		= 64;
 
 

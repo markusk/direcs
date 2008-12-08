@@ -11,26 +11,7 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-<buildTargets>
-<target name="Qt Release Build" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>make</buildCommand>
-<buildArguments></buildArguments>
-<buildTarget>release</buildTarget>
-<stopOnError>false</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-<runAllBuilders>true</runAllBuilders>
-</target>
-<target name="Qt Debug Build" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>make</buildCommand>
-<buildArguments></buildArguments>
-<buildTarget>debug</buildTarget>
-<stopOnError>false</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-<runAllBuilders>true</runAllBuilders>
-</target>
-</buildTargets>
-</storageModule>
+
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 <storageModule moduleId="scannerConfiguration">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
@@ -140,6 +121,27 @@
 <path value=""/>
 </doc-comment-owner>
 </storageModule>
+
+<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+<buildTargets>
+<target name="Qt Release Build" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>make</buildCommand>
+<buildArguments></buildArguments>
+<buildTarget>release</buildTarget>
+<stopOnError>false</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+<runAllBuilders>true</runAllBuilders>
+</target>
+<target name="Qt Debug Build" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>make</buildCommand>
+<buildArguments></buildArguments>
+<buildTarget>debug</buildTarget>
+<stopOnError>false</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+<runAllBuilders>true</runAllBuilders>
+</target>
+</buildTargets>
+</storageModule>
 <storageModule moduleId="org.eclipse.cdt.core.pathentry">
 <pathentry base-path="/usr/include/qt4" include="" kind="inc" path="" system="true"/>
 <pathentry base-path="/usr/include/qt4" include="QtNetwork" kind="inc" path="" system="true"/>
@@ -154,6 +156,7 @@
 <pathentry base-path="/usr/include/qt4" include="QtAssistant" kind="inc" path="" system="true"/>
 <pathentry base-path="/usr/include/qt4" include="QtUiTools" kind="inc" path="" system="true"/>
 <pathentry base-path="/usr/include/qt4" include="QtCore" kind="inc" path="" system="true"/>
+<pathentry base-path="/usr/include/qt4" include="phonon" kind="inc" path="" system="true"/>
 <pathentry base-path="/usr/include/qt4" include="QtSql" kind="inc" path="" system="true"/>
 <pathentry base-path="/usr/include/qt4" include="QtHelp" kind="inc" path="" system="true"/>
 <pathentry base-path="/usr/include/qt4" include="QtOpenGL" kind="inc" path="" system="true"/>

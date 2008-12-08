@@ -66,7 +66,7 @@
   <variable>buildconfiguration-debug-buildstep0</variable>
   <valuemap type="QVariantMap" >
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-wMPMcH0bzT,guid=8345b389fd43a4c802eba7de490b2756</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-vppU9pihBw,guid=6d3b3505d2b67939e705a63e493d03f8</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -85,11 +85,11 @@
     <value type="QString" >PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games</value>
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:/tmp/.ICE-unix/3420</value>
+    <value type="QString" >SESSION_MANAGER=local/pcmarkus:/tmp/.ICE-unix/3302</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=1</value>
-    <value type="QString" >SSH_AGENT_PID=3368</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-XQvraF3327/agent.3327</value>
+    <value type="QString" >SSH_AGENT_PID=3250</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-YNHJQJ3209/agent.3209</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >XCURSOR_THEME=default</value>
     <value type="QString" >XDM_MANAGED=/var/run/xdmctl/xdmctl-:0,maysd,mayfn,sched,rsvd,method=classic</value>
@@ -115,7 +115,7 @@
   <variable>buildconfiguration-debug-buildstep1</variable>
   <valuemap type="QVariantMap" >
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-wMPMcH0bzT,guid=8345b389fd43a4c802eba7de490b2756</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-vppU9pihBw,guid=6d3b3505d2b67939e705a63e493d03f8</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -134,11 +134,11 @@
     <value type="QString" >PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games</value>
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:/tmp/.ICE-unix/3420</value>
+    <value type="QString" >SESSION_MANAGER=local/pcmarkus:/tmp/.ICE-unix/3302</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=1</value>
-    <value type="QString" >SSH_AGENT_PID=3368</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-XQvraF3327/agent.3327</value>
+    <value type="QString" >SSH_AGENT_PID=3250</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-YNHJQJ3209/agent.3209</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >XCURSOR_THEME=default</value>
     <value type="QString" >XDM_MANAGED=/var/run/xdmctl/xdmctl-:0,maysd,mayfn,sched,rsvd,method=classic</value>
