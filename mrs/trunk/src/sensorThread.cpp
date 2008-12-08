@@ -132,7 +132,7 @@ void SensorThread::run()
 {
 	//bool result = false;
 	int value = 0;
-	char cValue = 0;
+	unsigned char cValue = 0;
 	
 	
 	//

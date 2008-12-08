@@ -64,14 +64,14 @@ class InterfaceAvr : public QObject
 		@param character
 		@return true on access or false if an error occured.
 		*/
-		bool sendChar(char character);
+		bool sendChar(unsigned char character);
 		
 		/**
 		Receives a character from the serial port/device.
 		@param character
 		@return true on access or false if an error occured.
 		*/
-		bool receiveChar(char *character);
+		bool receiveChar(unsigned char *character);
 		
 		/**
 		Receives an integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).

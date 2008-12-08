@@ -47,7 +47,7 @@ void Circuit::initCircuit()
 	if (interface1->sendChar(INIT) == true)
 	{
 		// check if the robot answers with "@"
-		char answer = 0;
+		unsigned char answer = 0;
 		interface1->receiveChar(&answer);
 		
 		// everthing's fine :-)
