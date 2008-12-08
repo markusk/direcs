@@ -41,39 +41,6 @@
   <compound kind="file">
     <name>qrc_mrs.cpp</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/debug/</path>
-    <filename>debug_2qrc__mrs_8cpp</filename>
-    <member kind="function">
-      <type></type>
-      <name>Q_CONSTRUCTOR_FUNCTION</name>
-      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
-      <anchor>784ede001d04b31b614a6db16f0f7cf3</anchor>
-      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_mrs)) int QT_MANGLE_NAMESPACE(qCleanupResources_mrs)()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
-      <name>qInitResources_mrs</name>
-      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
-      <anchor>b55aae3c149e0c206a95d32a9576422a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_BEGIN_NAMESPACE bool</type>
-      <name>qRegisterResourceData</name>
-      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
-      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>qUnregisterResourceData</name>
-      <anchorfile>debug_2qrc__mrs_8cpp.html</anchorfile>
-      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>qrc_mrs.cpp</name>
-    <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>qrc__mrs_8cpp</filename>
     <member kind="function">
       <type></type>
@@ -1955,6 +1922,182 @@
     <class kind="class">SpeakThread</class>
   </compound>
   <compound kind="file">
+    <name>init.c</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/test/</path>
+    <filename>init_8c</filename>
+    <includes id="init_8h" name="init.h" local="yes" imported="no">init.h</includes>
+    <member kind="function">
+      <type>void</type>
+      <name>close_port</name>
+      <anchorfile>init_8c.html</anchorfile>
+      <anchor>5edf0658b56baf7a9153d54a186bf5a1</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>configure_port</name>
+      <anchorfile>init_8c.html</anchorfile>
+      <anchor>977468785da22d1990f29f5c31deaed2</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>main</name>
+      <anchorfile>init_8c.html</anchorfile>
+      <anchor>0ddf1224851353fc92bfbff6f499fa97</anchor>
+      <arglist>(int argc, char *argv[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>open_port</name>
+      <anchorfile>init_8c.html</anchorfile>
+      <anchor>0f6c661829d74ed8dc7a5256e6ce7f8a</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>read_port</name>
+      <anchorfile>init_8c.html</anchorfile>
+      <anchor>c5df554e72e11957395dc349ab359ed7</anchor>
+      <arglist>(int dev_fd, unsigned char *buf, int nChars)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>write_port</name>
+      <anchorfile>init_8c.html</anchorfile>
+      <anchor>211f88b55f7484c2a908fd67e99c0d70</anchor>
+      <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>init.h</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/test/</path>
+    <filename>init_8h</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>close_port</name>
+      <anchorfile>init_8h.html</anchorfile>
+      <anchor>5edf0658b56baf7a9153d54a186bf5a1</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>configure_port</name>
+      <anchorfile>init_8h.html</anchorfile>
+      <anchor>977468785da22d1990f29f5c31deaed2</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>open_port</name>
+      <anchorfile>init_8h.html</anchorfile>
+      <anchor>0f6c661829d74ed8dc7a5256e6ce7f8a</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>read_port</name>
+      <anchorfile>init_8h.html</anchorfile>
+      <anchor>c5df554e72e11957395dc349ab359ed7</anchor>
+      <arglist>(int dev_fd, unsigned char *buf, int nChars)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>write_port</name>
+      <anchorfile>init_8h.html</anchorfile>
+      <anchor>211f88b55f7484c2a908fd67e99c0d70</anchor>
+      <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>serial.c</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/test/</path>
+    <filename>serial_8c</filename>
+    <includes id="serial_8h" name="serial.h" local="yes" imported="no">serial.h</includes>
+    <member kind="function">
+      <type>void</type>
+      <name>close_port</name>
+      <anchorfile>serial_8c.html</anchorfile>
+      <anchor>5edf0658b56baf7a9153d54a186bf5a1</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>configure_port</name>
+      <anchorfile>serial_8c.html</anchorfile>
+      <anchor>977468785da22d1990f29f5c31deaed2</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>main</name>
+      <anchorfile>serial_8c.html</anchorfile>
+      <anchor>0ddf1224851353fc92bfbff6f499fa97</anchor>
+      <arglist>(int argc, char *argv[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>open_port</name>
+      <anchorfile>serial_8c.html</anchorfile>
+      <anchor>0f6c661829d74ed8dc7a5256e6ce7f8a</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>read_port</name>
+      <anchorfile>serial_8c.html</anchorfile>
+      <anchor>c5df554e72e11957395dc349ab359ed7</anchor>
+      <arglist>(int dev_fd, unsigned char *buf, int nChars)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>write_port</name>
+      <anchorfile>serial_8c.html</anchorfile>
+      <anchor>211f88b55f7484c2a908fd67e99c0d70</anchor>
+      <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>serial.h</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/test/</path>
+    <filename>serial_8h</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>close_port</name>
+      <anchorfile>serial_8h.html</anchorfile>
+      <anchor>5edf0658b56baf7a9153d54a186bf5a1</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>configure_port</name>
+      <anchorfile>serial_8h.html</anchorfile>
+      <anchor>977468785da22d1990f29f5c31deaed2</anchor>
+      <arglist>(int dev_fd)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>open_port</name>
+      <anchorfile>serial_8h.html</anchorfile>
+      <anchor>0f6c661829d74ed8dc7a5256e6ce7f8a</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>read_port</name>
+      <anchorfile>serial_8h.html</anchorfile>
+      <anchor>c5df554e72e11957395dc349ab359ed7</anchor>
+      <arglist>(int dev_fd, unsigned char *buf, int nChars)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>write_port</name>
+      <anchorfile>serial_8h.html</anchorfile>
+      <anchor>211f88b55f7484c2a908fd67e99c0d70</anchor>
+      <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>win_qextserialport.h</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>win__qextserialport_8h</filename>
@@ -2592,6 +2735,13 @@
       <anchorfile>classDirecsSerial.html</anchorfile>
       <anchor>9f9a006f1604d4e671feff6c3bc0292b</anchor>
       <arglist>(int fd, char *baudr, char *par, char *bits, int hwf, int swf, int stopb=0)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>writeAtmelPort</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>093fcf3303c5e3fb9ea0cbd340a4ed6c</anchor>
+      <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -10574,6 +10724,7 @@
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>dir_31bb2ffc3ea2c3c0101206aa95f93310.html</filename>
     <dir>mrs/trunk/src/debug/</dir>
+    <dir>mrs/trunk/src/test/</dir>
     <file>aboutDialog.cpp</file>
     <file>aboutDialog.h</file>
     <file>camThread.cpp</file>
@@ -10617,7 +10768,6 @@
     <file>posix_qextserialport.h</file>
     <file>qextserialbase.h</file>
     <file>qextserialport.h</file>
-    <file>qrc_mrs.cpp</file>
     <file>QtGLContext.cpp</file>
     <file>QtGLContext.h</file>
     <file>sensorThread.cpp</file>
@@ -10631,6 +10781,15 @@
     <file>speakThread.cpp</file>
     <file>speakThread.h</file>
     <file>win_qextserialport.h</file>
+  </compound>
+  <compound kind="dir">
+    <name>mrs/trunk/src/test/</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/test/</path>
+    <filename>dir_203680f9e210a7a44d345026eb9a3e77.html</filename>
+    <file>init.c</file>
+    <file>init.h</file>
+    <file>serial.c</file>
+    <file>serial.h</file>
   </compound>
   <compound kind="dir">
     <name>mrs/trunk/</name>
