@@ -1,0 +1,18 @@
+The manual way
+~~~~~~~~~~~~~~
+
+avr-gcc FILENAME.c -c -o FILENAME.o -Os -g -mmcu=atmega2560
+avr-gcc FILENAME.o -o FILENAME.elf -mmcu=atmega2560
+avr-objcopy -j .text -j .data -O ihex FILENAME.elf FILENAME.hex
+avrdude -p m64 -c stk200 -e -U flash:w:FILENAME.hex
+
+
+
+The easy way
+~~~~~~~~~~~~
+
+# compile, link...
+make
+
+# flash
+make program
