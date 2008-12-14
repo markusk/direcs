@@ -68,7 +68,7 @@ void Circuit::initCircuit()
 	qDebug("INFO: Robot is OFF.");
 	firstInitDone = true;
 	robotIsOn = false;
-	emit robotState(false);
+	emit robotState(false); // TODO: ROBOT PROBLEM WIRH SERIAL PORT?????
 }
 
 

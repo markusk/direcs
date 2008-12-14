@@ -1,22 +1,28 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="5" >
+ <DocsAndViews NumberOfDocuments="7" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.h" >
    <View0 Encoding="" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="548" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.cpp" >
-   <View0 Encoding="" line="386" Type="Source" />
+   <View0 Encoding="" line="782" Type="Source" />
   </Doc2>
   <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/circuit.cpp" >
    <View0 Encoding="" line="70" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
-   <View0 Encoding="" line="305" Type="Source" />
+   <View0 Encoding="" line="42" Type="Source" />
   </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.h" >
+   <View0 Encoding="" Type="Source" />
+  </Doc5>
+  <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/gui.h" >
+   <View0 Encoding="" Type="Source" />
+  </Doc6>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -24,18 +30,6 @@
     <breakpoint0 location="/home/markus/develop/mrs/mrs/trunk/src/sick.cpp:876" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint0>
-    <breakpoint1 location="/home/markus/develop/mrs/mrs/trunk/src/mrs.cpp:1568" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
-     <tracedExpressions/>
-    </breakpoint1>
-    <breakpoint2 location="/home/markus/develop/mrs/mrs/trunk/src/mrs.cpp:1622" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
-     <tracedExpressions/>
-    </breakpoint2>
-    <breakpoint3 location="/home/markus/develop/mrs/mrs/trunk/src/mrs.cpp:1675" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
-     <tracedExpressions/>
-    </breakpoint3>
-    <breakpoint4 location="/home/markus/develop/mrs/mrs/trunk/src/mrs.cpp:1630" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
-     <tracedExpressions/>
-    </breakpoint4>
    </breakpointList>
    <showInternalCommands value="0" />
   </kdevdebugger>
