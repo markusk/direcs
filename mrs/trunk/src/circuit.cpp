@@ -40,7 +40,7 @@ void Circuit::initCircuit()
 {
 	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 	mutex->lock();
-	
+
 	//-------------------------------------------------------
 	// Basic init for all the bits on the robot circuit
 	//-------------------------------------------------------
@@ -49,7 +49,7 @@ void Circuit::initCircuit()
 		// check if the robot answers with "@"
 		unsigned char answer = 0;
 		interface1->receiveChar(&answer);
-		
+
 		// everthing's fine :-)
 		if (answer == INITANSWER)
 		{
@@ -61,13 +61,13 @@ void Circuit::initCircuit()
 			return;
 		}
 	}
-	
+
 	// Unlock the mutex.
 	mutex->unlock();
-	
+
+	qDebug("INFO: Robot is OFF.");
 	firstInitDone = true;
 	robotIsOn = false;
-	qDebug("INFO: Robot is OFF.");
 	emit robotState(false);
 }
 
