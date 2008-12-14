@@ -375,25 +375,56 @@ void Gui::on_btnResetMovement2_clicked()
 
 void Gui::on_btnMotor1_clicked()
 {
-	appendLog("motor 1 an");
+	if (ui.btnMotor1->isChecked())
+	{
+		if (ui.radioBtnMotor1FW->isChecked())
+			emit drive(MOTOR1FW);
+		else
+			emit drive(MOTOR1BW);
+	}
+	else
+	{
+			emit drive(MOTOR1OFF);
+	}
 }
 
 
 void Gui::on_btnMotor2_clicked()
 {
-	appendLog("motor 2 an");
+	if (ui.btnMotor1->isChecked())
+	{
+		appendLog("motor 2 an");
+	}
+	else
+	{
+		appendLog("motor 2 aus");
+	}
 }
 
 
 void Gui::on_btnMotor3_clicked()
 {
-	appendLog("motor 3 an");
+	if (ui.btnMotor1->isChecked())
+	{
+		appendLog("motor 3 an");
+	}
+	else
+	{
+		appendLog("motor 3 aus");
+	}
 }
 
 
 void Gui::on_btnMotor4_clicked()
 {
-	appendLog("motor 4 an");
+	if (ui.btnMotor1->isChecked())
+	{
+		appendLog("motor 4 an");
+	}
+	else
+	{
+		appendLog("motor 4 aus");
+	}
 }
 
 

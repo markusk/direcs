@@ -280,7 +280,7 @@ class Mrs : public QObject
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
 		
-		/// Some driving directions for the robot
+		/// Some driving directions for the robot. @sa drive() [Slot]
 		static const unsigned char FORWARD		= 1;
 		static const unsigned char BACKWARD		= 2;
 		static const unsigned char LEFT			= 3;
@@ -294,6 +294,9 @@ class Mrs : public QObject
 		// static const unsigned char DIAGONAL_FORWARD_RIGHT
 		// static const unsigned char DIAGONAL_BACKWARD_LEFT
 		// static const unsigned char DIAGONAL_BACKWARD_RIGHT
+		static const unsigned char MOTOR1FW		= 10;
+		static const unsigned char MOTOR1BW		= 11;
+		static const unsigned char MOTOR1OFF	= 12;
 		
 		/**
 		Give the sensors some names

@@ -1575,20 +1575,17 @@ void Mrs::drive(const unsigned char command)
 {
 	switch (command)
 	{
+		// TODO: Support for all 4 motors here!
 		case FORWARD:
 			gui->appendLog("FORWARD");
 			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			/*
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
-			*/
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
-			/*
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
-			*/
 			return;
 			break;
 		case BACKWARD:
@@ -1643,17 +1640,13 @@ void Mrs::drive(const unsigned char command)
 				gui->appendLog("START");
 				// set the motors to "drive FORWARD"
 				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-				/*
 				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
 				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
-				*/
 				motors->motorControl(MOTOR1, ON, CLOCKWISE);
-				/*
 				motors->motorControl(MOTOR2, ON, CLOCKWISE);
 				motors->motorControl(MOTOR3, ON, CLOCKWISE);
 				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-				*/
 			}
 			else
 			{
@@ -1698,6 +1691,27 @@ void Mrs::drive(const unsigned char command)
 			robotDrives = false;
 			return;
 			break;
+		case MOTOR1FW: // for the test widget in the GUI!!
+			if (robotIsOn)
+			{
+				gui->appendLog("Motor 1 forward");
+				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+				motors->motorControl(MOTOR1, ON, CLOCKWISE);
+			}
+		case MOTOR1BW: // for the test widget in the GUI!!
+			if (robotIsOn)
+			{
+				gui->appendLog("Motor 1 backward");
+				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
+			}
+		case MOTOR1OFF: // for the test widget in the GUI!!
+			if (robotIsOn)
+			{
+				gui->appendLog("Motor 1 OFF");
+				gui->showMotorStatus(MOTOR1, OFF, SAME);
+				motors->motorControl(MOTOR1, OFF, SAME);
+			}
 	}
 }
 
