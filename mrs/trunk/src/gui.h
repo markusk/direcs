@@ -63,14 +63,14 @@ class Gui : public QMainWindow
 	public:
 		Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent = 0);
 		~Gui();
-	
+
 		/*
 		Shows a sensor distance in centimeters (cm) in a text label.
 		@param sensor is the sensor number.
 		@param distance is the distance in cm.
 		void showDistance(int sensor, int distance);
 		*/
-	
+
 		/**
 		Shows a sensor distance in a progress bar.
 		@param sensor is the sensor number.
@@ -78,21 +78,21 @@ class Gui : public QMainWindow
 		@sa SensorThread::convertToSensorValue(), SensorThread::convertToDistance()
 		*/
 		void showDistanceGraphical(int sensor, int distance);
-		
+
 		/**
 		Shows the driven distance in a text label.
 		@param sensor is the sensor number.
 		@param distance is the distance in cm.
 		*/
 		void showDrivenDistance(int sensor, int distance);
-		
+
 		/**
 		Shows a sensor alarm (turns progressBars red, text in bold etc.)
 		@param sensor is the sensor number.
 		@param state can be ON or OFF.
 		*/
 		void showAlarm(short int sensor, bool state);
-		
+
 		/**
 		Shows the status and direction of a motor (ON, OFF, RIGHT, LEFT)
 		@param motor is the motor number.
@@ -100,7 +100,7 @@ class Gui : public QMainWindow
 		@param direction can be FORWARD or BACKWARD.
 		*/
 		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
-		
+
 #ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		/**
 		tell the OpenGLContext the image data
@@ -128,7 +128,7 @@ class Gui : public QMainWindow
 		// just a quick and dirty wrapper static method for old CARMEN standard C code!
 		static void appLog(QString text);
 		*/
-		
+
 #ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		/**
 		Shows the new picture from the cam (live).
@@ -138,7 +138,7 @@ class Gui : public QMainWindow
 		void setCamImage(IplImage* frame);
 		//void setCamImage(QImage* image);
 #endif
-		
+
 		/**
 		Show some face track data in the GUI.
 		@param faces is the number of detected faces
@@ -147,26 +147,26 @@ class Gui : public QMainWindow
 		@param faceRadius is the radius (0, if none)
 		*/
 		void showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
-		
+
 		/**
 		Disables camera controls in the GUI.
 		@sa CameraThread::setCameraDevice()
 		 */
 		void disableCamera();
-		
+
 		/**
 		Disables face detection checkBoxes in the GUI.
 		@sa CameraThread::setCascadePath()
 		 */
 		void disableFaceDetection();
-		
+
 		/**
 		Enables/Disables some controls in the GUI if the robot, depending on the robots state.
 		@param state can be ON or OFF
 		@sa CameraThread::robotState()
 		 */
 		void setRobotControls(bool state);
-		
+
 		/**
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -175,7 +175,7 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData1(double *xval, double *yval, int size);
-		
+
 		/**
 		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -184,7 +184,7 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData2(double *xval, double *yval, int size);
-		
+
 		/**
 		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -193,7 +193,7 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData3(double *xval, double *yval, int size);
-		
+
 		/**
 		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -202,7 +202,7 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData4(double *xval, double *yval, int size);
-		
+
 		/**
 		Append text to the network log in the main window
 		@param text is the text to be displayed.
@@ -211,45 +211,45 @@ class Gui : public QMainWindow
 		@sa appendLog()
 		*/
 		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
-		
+
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/
 		void refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags);
 #endif
-		
+
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Refreshes the view of the lines from the rear laser scanner.
 		*/
 		void refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags);
 #endif
-		
+
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
 		*/
 		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
 #endif
-		
+
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Zoom into the graphicsView/scene, if the mouse wheel was used.
 		*/
 		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
 #endif
-		
+
 		/**
 		Shows the joystick values when it moves.
 		*/
 		void showJoystickAxes(int axisNumber, int axisValue);
-		
+
 		/**
 		Shows the joystick button states when pressed.
 		*/
 		void showJoystickButtons(int buttonNumber, bool buttonState);
-		
+
 		/**
 		Shows the angles of the free area where to drive in lables.
 		@param largestFreeAreaStart
@@ -257,7 +257,7 @@ class Gui : public QMainWindow
 		@param centerOfFreeWay
 		*/
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
-		
+
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		/**
 		Shows a graphic in the laser scanner view while searching for a scanner.
@@ -266,13 +266,13 @@ class Gui : public QMainWindow
 		*/
 		void laserSplash(bool status, short int laserScanner);
 #endif
-		
+
 		/**
 		Shows the preferred driving direction in a lable.
 		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
 		*/
 		void showPreferredDirection(QString direction);
-		
+
 		/**
 		Shows the face tracking direction in a lable.
 		@param direction can be UP, DOWN, LEFT, RIGHT or NONE
@@ -289,17 +289,17 @@ class Gui : public QMainWindow
 		Exits the whole programm.
 		 */
 		void shutdown();
-		
+
 		/**
 		Initializes the robots basic circuit.
 		 */
 		void initCircuit();
-		
+
 		/**
 		Initializes the servos.
 		 */
 		void initServos();
-		
+
 		/**
 		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
 		@param command
@@ -311,14 +311,14 @@ class Gui : public QMainWindow
 		@param sensor is the sensor number.
 		*/
 		void resetDrivenDistance(int sensor);
-		
+
 		/**
 		Enables or disables the listening for the robot remote control. This signal is sent from the remote control button.
 		@param state can be true or false.
 		@sa NetworkThread()
 		*/
 		void enableRemoteControlListening(bool state);
-	
+
 		/**
 		Enables or disables the robots simulation mode.
 		This signal is sent from the simulation button and received from all threads which deliver real signals from the bot.
@@ -342,12 +342,12 @@ class Gui : public QMainWindow
 		@param state has to be Qt::Checked to enable the detection. All other states disable.
 		*/
 		void enableFaceTracking(int state);
-	
+
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
 		void speak(QString text);
-		
+
 		/**
 		Emits a signal to call the test method in the Mrs class..
 		 */
@@ -383,7 +383,11 @@ class Gui : public QMainWindow
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);
-		
+		void on_btnMotor1_clicked();
+		void on_btnMotor2_clicked();
+		void on_btnMotor3_clicked();
+		void on_btnMotor4_clicked();
+
 		/**
 		Saves the current picture to disk (one time shot).
 		*/
@@ -392,13 +396,13 @@ class Gui : public QMainWindow
 
 	private:
 		void initializePlots();
-		
+
 		/**
 		Creates all objects, lines, scene, view etc.
 		*/
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
-		
+
 		Ui::mainWindow ui;
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the mrs class!
 		JoystickDialog *joystickDialog; // just a pointer to the object created in the mrs class!
@@ -442,22 +446,22 @@ class Gui : public QMainWindow
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */
-		
+
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
-		
+
 		static const unsigned char START = 7; //! For button signal "start driving"
 		static const unsigned char STOP  = 8; //! For button signal "stop driving"
-		
+
 		static const unsigned char CLOCKWISE        = 0;  /** Motor direction "CLOCKWISE" */
 		static const unsigned char COUNTERCLOCKWISE = 1;  /** Motor direction "COUNTERCLOCKWISE" */
 		static const unsigned char SAME             = 3;  /** Motor direction/power "same like before" */
 		static const unsigned char MOTOR1           = 10; /** Motor 1 */
 		static const unsigned char MOTOR2           = 20; /** Motor 2 */
-		
+
 		/**
 		Give the sensors some names
-		
+
 		DONT CHANGE THIS NUMBERS!
 		THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!
 		*/
@@ -469,12 +473,12 @@ class Gui : public QMainWindow
 		static const short int SENSOR6 = 32;
 		static const short int SENSOR7 = 64;
 		static const short int SENSOR8 = 128;
-		
+
 		/** ultrasonic sensor */
 		static const short int SENSOR16 = 256;
 		/** Value if no sensor has a value to react */
 		static const short int NONE = 0;
-		
+
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 
@@ -484,31 +488,31 @@ class Gui : public QMainWindow
 		static const int JOYSTICKAXISX = 3;
 		static const int JOYSTICKAXIS2X = 4;
 		static const int JOYSTICKAXIS2Y = 5;
-	
+
 		/**
 		Factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels at a default zoom level of 5 !!
 		Example:
-		
+
 		laservalue = 0.18 cm
 		fit factor = 45
 		zoom level = 5
-		
+
 		0.18 x 45 x 5 = 40.5 Pixel -> 41 Pixel is the length of the laser line in the GUI
 		*/
 		static const int FITTOFRAMEFACTOR = 45;
 		static const int STARTZOOMLEVEL = 3;
-		
+
 		//! the initial Y position of the laser lines and the robot image in the GUI
 		static const int INITIALLASERYPOSFRONT = 100;
 		static const int INITIALLASERYPOSREAR  = 100;
-		
+
 		//! Number of distance semi circles
 		static const int LASERDISTANCECIRCLES = 27;
 		//! the size (diameter) of the first (innerst) circle in pixels
 		static const int LASERDISTANCEFIRSTCIRCLE = 82;
 		//! Distances between the lines to show the laser distances in pixels
 		static const int LASERDISTANCEDISTANCE = 60;
-		
+
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
@@ -521,7 +525,7 @@ class Gui : public QMainWindow
 		This es equal to the number of degrees.
 		See also laserThread.h */
 		//static const unsigned char LASERSCANNERARRAYSIZE = 181;
-		
+
 		/**
 		For the laserThread
 		*/

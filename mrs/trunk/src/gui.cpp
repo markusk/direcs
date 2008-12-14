@@ -26,27 +26,27 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent) : QMainWindo
 	// copy the pointer from the original SensorThread object
 	settingsDialog = s;
 	joystickDialog = j;
-	
+
 	robotIsOn = false;
 	laserXPos = 0; // correct value is set in the initLaserView()
 	laserYPos = 0; // correct value is set in the initLaserView()
-	
+
 	// define some nice green and red colors
 	labelFillColorGreen = QColor(64, 255, 64);
 	labelFillColorRed   = QColor(255, 64, 64);
 	labelFillColorBlue  = QColor(64, 64, 255);
-	
+
 	//-------------------------------------------------------
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
-	
+
 	// set battery power labels to green :-)
 	ui.lblBatteryPower1->setPalette(QPalette(labelFillColorGreen));
 	//ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
 	ui.lblBatteryPower2->setPalette(QPalette(labelFillColorGreen));
-	ui.lblBatteryPower3->setPalette(QPalette(labelFillColorGreen));
-	ui.lblBatteryPower4->setPalette(QPalette(labelFillColorGreen));
+	//ui.lblBatteryPower3->setPalette(QPalette(labelFillColorGreen));
+	//ui.lblBatteryPower4->setPalette(QPalette(labelFillColorGreen));
 
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
@@ -71,7 +71,7 @@ infrared Sensors temporarily removed from robot!!
 	ui.progressBarSensor7->raise();
 	ui.progressBarSensor8->raise();
 */
-	
+
 	/*
 	// "fill" the battery power labels (autofill is true)
 	ui.lblBatteryPower1->setPalette(QPalette(QColor(255, 255, 255)));
@@ -79,11 +79,11 @@ infrared Sensors temporarily removed from robot!!
 	ui.lblBatteryPower3->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.lblBatteryPower4->setPalette(QPalette(QColor(255, 255, 255)));
 	*/
-	
+
 	//----------------------------------------------------------------------------------
 	// connecting...
 	//----------------------------------------------------------------------------------
-	
+
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face detect check box changes, set the detection mode
 	//----------------------------------------------------------------------------------
@@ -93,12 +93,12 @@ infrared Sensors temporarily removed from robot!!
 	// Whenever the state of the face tracking check box changes, set the tracking mode
 	//----------------------------------------------------------------------------------
 	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
-	
+
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
 	initializePlots();
-	
+
 	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
@@ -121,15 +121,15 @@ Gui::~Gui()
 	delete scannerFrontSplash;
 	delete pixmapBot2;
 	delete pixmapBot1;
-	
-	
+
+
 	// empty QList
 	while (!laserDistanceTextFront->isEmpty())
 	{
 		delete laserDistanceTextFront->takeFirst();
 	}
 	delete laserDistanceTextFront;
-	
+
 	// empty QList
 	while (!laserDistanceLineListFront->isEmpty())
 	{
@@ -143,29 +143,29 @@ Gui::~Gui()
 		delete laserLineListFront->takeFirst();
 	}
 	delete laserLineListFront;
-	
-	
+
+
 	// empty QList
 	while (!laserDistanceTextRear->isEmpty())
 	{
 		delete laserDistanceTextRear->takeFirst();
 	}
 	delete laserDistanceTextRear;
-	
+
 	// empty QList
 	while (!laserDistanceLineListRear->isEmpty())
 	{
 		delete laserDistanceLineListRear->takeFirst();
 	}
 	delete laserDistanceLineListRear;
-	
+
 	// empty QList
 	while (!laserLineListRear->isEmpty())
 	{
 		delete laserLineListRear->takeFirst();
 	}
 	delete laserLineListRear;
-	
+
 	delete scene;
 	//delete cameraScene;
 }
@@ -175,8 +175,8 @@ void Gui::closeEvent(QCloseEvent *event)
 {
 	// no compiler warning "unused"
 	Q_UNUSED(event);
-	
-	
+
+
 	//qDebug("closeEvent");
 	emit shutdown();
 }
@@ -192,7 +192,7 @@ void Gui::setRobotControls(bool state)
 {
 	// store the state
 	robotIsOn = state;
-	
+
 	// set the controls
 	ui.actionDrive->setEnabled(state);
 	ui.actionReset->setEnabled(state);
@@ -220,7 +220,7 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 		// insert a line break
 		ui.textEditLog->insertHtml("<br>");
 	}
-	
+
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditLog->ensureCursorVisible();
 
@@ -243,7 +243,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 		// insert a line break
 		ui.textEditNetworkLog->insertHtml("<br>");
 	}
-	
+
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditNetworkLog->ensureCursorVisible();
 
@@ -259,8 +259,8 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 void Gui::on_actionDrive_activated()
 {
 	static bool toggle = false;
-	
-	
+
+
 	if (toggle == false)
 	{
 		appendLog("Start driving...");
@@ -295,7 +295,7 @@ void Gui::on_actionDrive_activated()
 void Gui::on_actionReset_activated()
 {
 	// TODO: check, if robot is OFF !!!!
-	
+
 	// reset the circuit (motors off etc.)
 	emit initCircuit();
 
@@ -304,7 +304,7 @@ void Gui::on_actionReset_activated()
 
 	// stop driving
 	emit drive(STOP);
- 
+
 	appendLog("Reseted.");
 
 	// reset progressBars
@@ -326,7 +326,7 @@ void Gui::on_actionReset_activated()
 	ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.lblPower2->setEnabled(false);
 	ui.lblPower2->setPalette(QPalette(QColor(255, 255, 255)));
-	
+
 	ui.lblDirection1->setText("FORWARD");
 	ui.lblDirection1->setEnabled(false);
 	ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
@@ -334,8 +334,8 @@ void Gui::on_actionReset_activated()
 	ui.lblDirection2->setEnabled(false);
 	ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 
-	
-	
+
+
 	// reactivate buttons
 	//ui.btnExecuteScript->setEnabled(true);
 
@@ -344,7 +344,7 @@ void Gui::on_actionReset_activated()
 	FIXME: change call to new classes
 	ui.sliderMotor1Speed->setEnabled(true);
 	ui.spinBoxMotor1Speed->setEnabled(true);
-	
+
 	ui.sliderMotor2Speed->setEnabled(true);
 	ui.spinBoxMotor2Speed->setEnabled(true);
 */
@@ -355,7 +355,7 @@ void Gui::on_btnResetMovement1_clicked()
 {
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR1);
-	
+
  	// reset labels
 	ui.labelDrivenDistance1->setText("0 cm");
  	ui.labelRevolutions1->setText("0");
@@ -366,10 +366,34 @@ void Gui::on_btnResetMovement2_clicked()
 {
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR2);
- 
+
 	// reset labels
 	ui.labelDrivenDistance2->setText("0 cm");
 	ui.labelRevolutions2->setText("0");
+}
+
+
+void Gui::on_btnMotor1_clicked()
+{
+	appendLog("motor 1 an");
+}
+
+
+void Gui::on_btnMotor2_clicked()
+{
+	appendLog("motor 2 an");
+}
+
+
+void Gui::on_btnMotor3_clicked()
+{
+	appendLog("motor 3 an");
+}
+
+
+void Gui::on_btnMotor4_clicked()
+{
+	appendLog("motor 4 an");
 }
 
 
@@ -823,7 +847,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					//ui.lblPower1->setText("ON");
 					ui.lblPower1->setEnabled(true);
 					ui.lblPower1->setPalette(QPalette(labelFillColorGreen));
-					
+
 					ui.lblDirection1->setEnabled(true);
 					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
@@ -831,7 +855,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					//ui.lblPower1->setText("OFF");
 					ui.lblPower1->setEnabled(false);
 					ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
-					
+
 					ui.lblDirection1->setEnabled(false);
 					ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
@@ -859,7 +883,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			}
 			return;
 			break;
-			
+
 		//-------------
 		case MOTOR2:
 		//-------------
@@ -869,7 +893,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					//ui.lblPower2->setText("ON");
 					ui.lblPower2->setEnabled(true);
 					ui.lblPower2->setPalette(QPalette(labelFillColorGreen));
-					
+
 					ui.lblDirection1->setEnabled(true);
 					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
@@ -877,7 +901,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					//ui.lblPower2->setText("OFF");
 					ui.lblPower2->setEnabled(false);
 					ui.lblPower2->setPalette(QPalette(QColor(255, 255, 255)));
-					
+
 					ui.lblDirection2->setEnabled(false);
 					ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
@@ -924,13 +948,13 @@ void Gui::showPreferredDirection(QString direction)
 		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
 		return;
 	}
-	
+
 	if (direction == "LEFT")
 	{
 		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
 		return;
 	}
-	
+
 	if (direction == "RIGHT")
 	{
 		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
@@ -945,49 +969,49 @@ void Gui::showFaceTrackDirection(QString direction)
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/up.png"));
 		return;
 	}
-	
+
 	if (direction == "UPLEFT")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upleft.png"));
 		return;
 	}
-	
+
 	if (direction == "UPRIGHT")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upright.png"));
 		return;
 	}
-		
+
 	if (direction == "DOWN")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/down.png"));
 		return;
 	}
-	
+
 	if (direction == "DOWNLEFT")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downleft.png"));
 		return;
 	}
-	
+
 	if (direction == "DOWNRIGHT")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downright.png"));
 		return;
 	}
-	
+
 	if (direction == "LEFT")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/left.png"));
 		return;
 	}
-	
+
 	if (direction == "RIGHT")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/right.png"));
 		return;
 	}
-	
+
 	if (direction == "NONE")
 	{
 		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
@@ -1001,17 +1025,17 @@ void Gui::on_btnSavePicture_clicked()
 	saveCamImage();
 	appendLog("Picture saved");
 }
-	
+
 
 void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY)
 {
 	// show coordinates of the first detected face
 	ui.lblFaces->setNum(faces);
-	
+
 	ui.lblFaceX->setNum(faceX);
 	ui.lblFaceY->setNum(faceY);
 	ui.lblFaceRadius->setNum(faceRadius);
-	
+
 	ui.lblLastFaceX->setNum(lastFaceX);
 	ui.lblLastFaceY->setNum(lastFaceY);
 }
@@ -1049,11 +1073,11 @@ void Gui::setCamImage(IplImage* frame)
 {
 	// set image from OpenGL context to Qt frame!
 	ui.frameCamera->setImage((unsigned char*)frame->imageData);
-	
+
 	// try it with qimage instead of iplImage...
 	//ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
-	
-/*	
+
+/*
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )
 	{
@@ -1070,12 +1094,12 @@ void Gui::saveCamImage(void)
 	// grab cam pic from Qt-GUI
 	//---------------------------
 	static QDateTime timestamp;
-	
-	
+
+
 	cameraPicToSave = QPixmap::grabWindow(QWidget::winId(), ui.dockCamera->x()+ui.frameCamera->x()+9, ui.dockCamera->y()+ui.frameCamera->y()+95, ui.frameCamera->width(), ui.frameCamera->height());
 	//cameraPicToSave = QPixmap::grabWidget(ui.frameCamera); //doesnt work
 	//cameraPicToSave = QPixmap::grabWidget(ui.dockCamera); //doesnt work
-	
+
 	//---------------------------------------------------------------------
 	// save image to disk, but not within the same seond (same timestamp)
 	//---------------------------------------------------------------------
@@ -1086,7 +1110,7 @@ void Gui::saveCamImage(void)
 		timestamp = QDateTime::currentDateTime();
 		QString filename = timestamp.toString("yyyy-MM-dd_hh-mm-ss");
 		filename += ".png";
-		
+
 		// save
 		cameraPicToSave.save(filename.toAscii(), "PNG");
 		//appendLog(tr("Picture \"%1\" saved.").arg(filename));
@@ -1100,13 +1124,13 @@ void Gui::setPlotData1(double *xval, double *yval, int size)
 	//---------------
 	// curve1
 	//---------------
-	
+
 	// set curve with data
 	curve1.setData(xval, yval, size);
-	
+
 	// attach data to curve
 	curve1.attach(ui.qwtPlotCurrent1);
-	
+
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot();
 	#endif
@@ -1119,13 +1143,13 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 	//---------------
 	// curve2
 	//---------------
-	
+
 	// set curve with data
 	curve2.setData(xval, yval, size);
-	
+
 	// attach data to curve
 	curve2.attach(ui.qwtPlotCurrent2);
-	
+
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();
 	#endif
@@ -1138,13 +1162,13 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 	//---------------
 	// curve3
 	//---------------
-	
+
 	// set curve with data
 	curve3.setData(xval, yval, size);
-	
+
 	// attach data to curve
 	curve3.attach(ui.qwtPlotCurrent3);
-	
+
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent3->replot();
 	#endif
@@ -1157,13 +1181,13 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 	//---------------
 	// curve4
 	//---------------
-	
+
 	// set curve with data
 	curve4.setData(xval, yval, size);
-	
+
 	// attach data to curve
 	curve4.attach(ui.qwtPlotCurrent4);
-	
+
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent4->replot();
 	#endif
@@ -1217,22 +1241,22 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// show the zoom value in a label
 	ui.labelLaserTop->setText(tr("%1").arg(value));
 
-	
+
 	// rescale the robot pixmap to the last scale
 	// (the laser lines are rescaled automatically by in the slot)
 	pixmapBot1->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
 	pixmapBot2->scale( (1 / (qreal)lastZoom), (1 / (qreal)lastZoom) );
-	
+
 	// scale to the actual slider value
 	pixmapBot1->scale(value, value);
 	pixmapBot2->scale(value, value);
-	
+
 	//--------------------------
 	// store the current scale
 	// ('lastZoom' is also used in calculateLaserFrontYpos!!)
 	//--------------------------
 	lastZoom = value;
-	
+
 	//------------------------------
 	// set the position of the bot
 	//------------------------------
@@ -1240,19 +1264,19 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	x = laserXPos -  ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
 	y = laserYPos - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
 	//laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
-	
+
 	// horizontal center
 	pixmapBot1->setPos(x, y);
 	pixmapBot2->setPos(x, y);
 	//appendLog(QString("<b>sliderZoomValueChanged...bot y pos()=%1</b>").arg(pixmapBot1->y()));
-	
-	
+
+
 	//------------------------------------------------------
 	// change the x and y position of the FRONT laser lines
 	//------------------------------------------------------
 	x = laserXPos;
 	y = laserYPos;
-	
+
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
 		// horizontal center:
@@ -1260,14 +1284,14 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// y = set manually
 		laserLineListFront->at(i)->setPos(x, y);
 	}
-	
-	
+
+
 	//------------------------------------------------
 	// change the y position of the REAR laser lines
 	//------------------------------------------------
 	x = laserXPos;
 	y = laserYPos;
-	
+
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
 		// horizontal center:
@@ -1275,8 +1299,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// y = set manually
 		laserLineListRear->at(i)->setPos(x, y);
 	}
-	
-	
+
+
 	//------------------------------------------------------------------
 	// change the y position of the FRONT laser distance lines and text
 	//------------------------------------------------------------------
@@ -1285,31 +1309,31 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// (LASERDISTANCEFIRSTCIRCLE/STARTZOOMLEVEL) is the 'factor'
 		// value is the zoomSlider value
 		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
-		
+
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
 		x = laserXPos - (newSize / 2);
 		y = laserYPos - (newSize / 2);
-		
+
 		// change the width and height
 		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
 		// set the circle position!
 		laserDistanceLineListFront->at(i)->setPos(x, y);
-		
-		
+
+
 		// recalculate the new text position
 		x = laserXPos;
 		y = laserYPos + (newSize/2);
-		
+
 		// set the text position!
 		laserDistanceTextFront->at(i)->setPos(x, y);
-		
+
 		// set the text
 		text = QString("%1").arg(newSize/(FITTOFRAMEFACTOR*value*2));
 		// only show 2 digits after the ','
 		laserDistanceTextFront->at(i)->setText(text.left(text.indexOf(".") + 3) + "m");
 	}
-	
-	
+
+
 	//------------------------------------------------------------------
 	// change the y position of the REAR laser distance lines and text
 	//------------------------------------------------------------------
@@ -1318,24 +1342,24 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// (LASERDISTANCEFIRSTCIRCLE/STARTZOOMLEVEL) is the 'factor'
 		// value is the zoomSlider value
 		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
-		
+
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
 		x = laserXPos - (newSize / 2);
 		y = laserYPos - (newSize / 2);
-		
+
 		// change the width and height
 		laserDistanceLineListRear->at(i)->setRect(0, 0, newSize, newSize);
 		// set the circle position!
 		laserDistanceLineListRear->at(i)->setPos(x, y);
-		
-		
+
+
 		// recalculate the new text position
 		x = laserXPos;
 		y = laserYPos - (newSize/2);
-		
+
 		// set the text position!
 		laserDistanceTextRear->at(i)->setPos(x, y);
-		
+
 		// set the text
 		text = QString("%1").arg(newSize/(FITTOFRAMEFACTOR*value*2));
 		// only show 2 digits after the ','
@@ -1374,7 +1398,7 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 	// Not for enabling face detection!
 	// This is done via signal slot!
 	//
-	
+
 	// change face tracking direction icon to middle
 	if (state == Qt::Unchecked)
 	{
@@ -1389,7 +1413,7 @@ void Gui::initLaserView()
 	qreal x = 0;
 	qreal y = 0;
 
-	
+
 	//--------------
 	// window init
 	//--------------
@@ -1400,20 +1424,20 @@ void Gui::initLaserView()
 	//ui.centralWidget->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
 	//ui.centralWidget->resize(400, ui.dockLaserView->height());
 
-	
+
 	//==================================================
 	// move the laser lines to their x and y positions
 	//==================================================
-	
+
 	// init the reference spot pos at startup!
 	// (horicontal and vertical middle of the view)
 	laserXPos = (ui.graphicsViewLaser->width()  / 2);
 	laserYPos = (ui.graphicsViewLaser->height() / 2);
-	
+
 	// init laser y pos at startup!
 	x = laserXPos;
 	y = laserYPos + INITIALLASERYPOSFRONT;
-	
+
 	//--------------
 	// REAR laser
 	//--------------
@@ -1421,17 +1445,17 @@ void Gui::initLaserView()
 	{
 		// reset transform or rotation
 		laserLineListRear->at(i)->resetTransform();
-		
+
 		// rotate every line by one degree
 		laserLineListRear->at(i)->rotate(angle);
-		
+
 		// set position of each line
 		laserLineListRear->at(i)->setPos((x - laserLineListRear->at(i)->line().length()), y);
 	}
-	
-	
+
+
 	y = laserYPos + INITIALLASERYPOSREAR;
-	
+
 	//--------------
 	// FRONT laser
 	//--------------
@@ -1439,21 +1463,21 @@ void Gui::initLaserView()
 	{
 		// reset transform or rotation
 		laserLineListFront->at(i)->resetTransform();
-		
+
 		// rotate every line by one degree
 		laserLineListFront->at(i)->rotate(angle);
-		
+
 		// set position of each line
 		laserLineListFront->at(i)->setPos((x - laserLineListFront->at(i)->line().length()), y);
 	}
-	
-	
+
+
 	//==========================================================
 	// refresh the view with the actual zoom (after gui came up)
 	//==========================================================
 	on_sliderZoom_valueChanged(lastZoom);
-	
-	
+
+
 	//=============================================================================
 	// move the FRONT distance lines to their x and y positions
 	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
@@ -1461,7 +1485,7 @@ void Gui::initLaserView()
 	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
 	x = laserXPos - (laserDistanceLineListFront->at(0)->rect().width() / 2);
 	y = laserYPos - (laserDistanceLineListFront->at(0)->rect().height() / 2);
-	
+
 	//-----------------
 	// FRONT distances
 	//-----------------
@@ -1469,8 +1493,8 @@ void Gui::initLaserView()
 	{
 		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
 	}
-	
-	
+
+
 	//=============================================================================
 	// move the REAR distance lines to their x and y positions
 	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
@@ -1478,7 +1502,7 @@ void Gui::initLaserView()
 	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
 	x = laserXPos - (laserDistanceLineListRear->at(0)->rect().width() / 2);
 	y = laserYPos - (laserDistanceLineListRear->at(0)->rect().height() / 2);
-	
+
 	//-----------------
 	// REAR distances
 	//-----------------
@@ -1486,8 +1510,8 @@ void Gui::initLaserView()
 	{
 		laserDistanceLineListRear->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
 	}
-	
-	
+
+
 	// zoom into the laser lines by default factor
 	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 }
@@ -1500,8 +1524,8 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 	/*
 	// FIXME: doesnt work!
 	static bool showLaserSplashFront = true;
-	
-	
+
+
 	if (showLaserSplashFront == true)
 	{
 		// first line is longer than 0 m ! (a values was measured)
@@ -1515,8 +1539,8 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		}
 	}
 	*/
-	
-	
+
+
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 
@@ -1556,8 +1580,8 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			}
 		}
 	}
-	
-	
+
+
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
@@ -1567,9 +1591,9 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		// get value from laser and
 		// draw the lines at every 1°
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
-		
+
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
-		
+
 		// set tool tip of the line to the distance
 		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 	}
@@ -1583,7 +1607,7 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 	/*
 	// FIXME: doesnt work!
 	static bool showLaserSplashRear = true;
-	
+
 	if (showLaserSplashRear == true)
 	{
 		// first line is longer than 0 m ! (a values was measured)
@@ -1597,8 +1621,8 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 		}
 	}
 	*/
-	
-	
+
+
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 
@@ -1638,8 +1662,8 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 			}
 		}
 	}
-	
-	
+
+
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
@@ -1649,10 +1673,10 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 		// get value from laser and
 		// draw the lines at every 1°
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
-		
-		
+
+
 		laserLineListRear->at(i)->setLine(0, 0, 0, laserLineLength);
-		
+
 		// set tool tip of the line to the distance
 		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
 		//laserLineListRear->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
@@ -1667,14 +1691,14 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	//qreal diff = laserFrontYPos - laserRearYPos;
-	
+
 	// new y pos
 	laserYPos = mouseEvent->scenePos().y();
 	//laserRearYPos = laserFrontYPos - diff;
-	
+
 	// new x pos
 	laserXPos = mouseEvent->scenePos().x();
-	
+
 	// refresh laserView
 	on_sliderZoom_valueChanged(ui.sliderZoom->value());
 }
@@ -1685,8 +1709,8 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 {
 	int zoomValue = ui.sliderZoom->value();
-	
-	
+
+
 	if (wheelEvent->delta() > 0)
 	{
 		zoomValue++;
@@ -1695,7 +1719,7 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 	{
 		zoomValue--;
 	}
-	
+
 	// refresh laserView (set zoom slider)
 	ui.sliderZoom->setValue(zoomValue);
 }
@@ -1710,28 +1734,28 @@ void Gui::createLaserScannerObjects()
 	laserYPos = 0;
 	//laserFrontYPos = INITIALLASERYPOSFRONT;
 	//laserRearYPos  = INITIALLASERYPOSREAR;
-	
+
 	// set some nice colors for some widgets
 	colorLaserObstacle =  QColor(255, 50, 50); // light red
 	colorLaserFreeWay = Qt::darkRed;
 	colorLaserPreferredDrivingDirection = QColor(7, 68, 30); // green
 	colorLaserCenterDrivingDirection = Qt::green;
 	colorGraphicsSceneBackground = Qt::black;
-	
-	
+
+
 	// the graphicsScene for the laser scanner
 	scene = new LaserScene();
-	
+
 	// set some colors
 	scene->setBackgroundBrush(colorGraphicsSceneBackground);
-	
+
 	// turn off moving of scene, when objects extend the scene									-> DISABLED to enable dragging the robot in the laserView!!
 	// (set scene rect to size of GUI element)													-> DISABLED to enable dragging the robot in the laserView!!
 	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());	-> DISABLED to enable dragging the robot in the laserView!!
-	
+
 	// set scene to the GUI
 	ui.graphicsViewLaser->setScene(scene);
-	
+
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
 	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 
@@ -1746,7 +1770,7 @@ void Gui::createLaserScannerObjects()
 	scannerFrontSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height()*0.66) - 74));
 	// FIXME:  see refreshLaserView (both). Turning off lasersplash doesn't work
 	scannerFrontSplash->setVisible(false);
-	
+
 	// add items to the scene
 	scannerRearSplash = new QGraphicsPixmapItem(QPixmap(":/images/images/sickrear.png"));
 	// add the pixmap
@@ -1755,44 +1779,44 @@ void Gui::createLaserScannerObjects()
 	scannerRearSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height()*0.33) - 74));
 	// FIXME:  see refreshLaserView (both). Turning off lasersplash doesn't work
 	scannerRearSplash->setVisible(false);
-	
 
-	
+
+
 	//=======================================================
 	// add robot picture1
 	//=======================================================
 	// add items to the scene
 	pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
-	
+
 	// init the scale for the laser line / distances drawing stuff
 	lastZoom = ui.sliderZoom->value();
-	
+
 	//--------------------------------------------------------------
 	// set the start scale
 	//--------------------------------------------------------------
 	startScale = 10;
-	
+
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot1->scale( (1.0 / startScale), (1.0 / startScale));
-	
+
 	// horizontal center
 	pixmapBot1->setPos(laserXPos, laserYPos);
-	
+
 	// add the pixmap (invisible)
 	pixmapBot1->setVisible(false);
 	scene->addItem(pixmapBot1);
-	
+
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot1->setZValue(1);
-	
-	
+
+
 	//=====================================================
 	// create the laser line lists
 	//=====================================================
 	laserLineListFront = new QList <QGraphicsLineItem*>();
 	laserLineListRear = new QList <QGraphicsLineItem*>();
 
-	
+
 	//-------------------------------------
 	// create the FRONT laser line list
 	//-------------------------------------
@@ -1801,28 +1825,28 @@ void Gui::createLaserScannerObjects()
 	for (int i=-90; i<90; i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
-		
+
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
-		
+
 		// FIXME doest not work: line->setPen(QPen(colorLaserFreeWay, 3));
 		line->setPen(QPen(colorLaserFreeWay));
-		
+
 		// set position of each line
 		line->rotate(i);
-		
+
 		// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 		line->setZValue(2);
-		
+
 		// add line to QList
 		laserLineListFront->append(line);
-		
+
 		// add line to scene
 		line->setVisible(false);
 		scene->addItem(line);
 	}
-	
-	
+
+
 	//-------------------------------------
 	// create the REAR laser line list
 	//-------------------------------------
@@ -1831,22 +1855,22 @@ void Gui::createLaserScannerObjects()
 	for (int i=90; i>-90; i--)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
-		
+
 		// FIXME doest not work: line->setPen(QPen(colorLaserFreeWay, 3));
 		line->setPen(QPen(colorLaserFreeWay));
-		
+
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
-		
+
 		// set position of each line
 		line->rotate(i);
-		
+
 		// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 		line->setZValue(2);
-		
+
 		// add line to QList
 		laserLineListRear->append(line);
-		
+
 		// add line to scene
 		line->setVisible(false);
 		scene->addItem(line);
@@ -1858,13 +1882,13 @@ void Gui::createLaserScannerObjects()
 	//=======================================================
 	// add items to the scene
 	pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
-	
+
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot2->scale( (1.0 / startScale), (1.0 / startScale));
-	
+
 	// horizontal center
 	pixmapBot2->setPos(laserXPos, laserYPos);
-	
+
 	// add the pixmap (invisible)
 	pixmapBot2->setVisible(false);
 	scene->addItem(pixmapBot2);
@@ -1881,8 +1905,8 @@ void Gui::createLaserDistanceObjects()
 	// set colors
 	colorHelpLine = Qt::gray;
 	colorHelpLineText = Qt::gray;
-	
-	
+
+
 	//--------------------------------------------------------------
 	// create the FRONT laser line distances with text
 	//--------------------------------------------------------------
@@ -1895,7 +1919,7 @@ void Gui::createLaserDistanceObjects()
 		// create semi circles
 		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 0,0 here.
 		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(0, 0, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
-		
+
 		// create an (empty) text
 		QGraphicsSimpleTextItem *text = new QGraphicsSimpleTextItem();
 
@@ -1903,29 +1927,29 @@ void Gui::createLaserDistanceObjects()
 		semiCircle->setStartAngle(180*16);
 		// set the span angle of the circle
 		semiCircle->setSpanAngle(180*16);
-		
+
 		// set semiCircle color
 		semiCircle->setPen(QPen(colorHelpLine));
-		
+
 		// set text color
 		text->setBrush(QBrush(colorHelpLine));
-		
+
 		// setting to the highest layer level
 		semiCircle->setZValue(4);
 		text->setZValue(4);
-		
+
 		// add semiCircle to QList
 		laserDistanceLineListFront->append(semiCircle);
 		laserDistanceTextFront->append(text);
-		
+
 		// add semiCircle to scene
 		scene->addItem(semiCircle);
-		
+
 		// add text to scene
 		scene->addItem(text);
 	}
-	
-	
+
+
 	//--------------------------------------------------------------
 	// create the REAR laser line distances with text
 	//--------------------------------------------------------------
@@ -1938,7 +1962,7 @@ void Gui::createLaserDistanceObjects()
 		// create semi circles
 		// position doesn't matter, because of moving circles in setLaserDistancePosition()! So we just take 0,0 here.
 		QGraphicsEllipseItem *semiCircle = new QGraphicsEllipseItem(0, 0, LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE), LASERDISTANCEFIRSTCIRCLE + (i*LASERDISTANCEDISTANCE));
-		
+
 		// create an (empty) text
 		QGraphicsSimpleTextItem *text = new QGraphicsSimpleTextItem();
 
@@ -1946,24 +1970,24 @@ void Gui::createLaserDistanceObjects()
 		semiCircle->setStartAngle(0);
 		// set the span angle of the circle
 		semiCircle->setSpanAngle(180*16);
-		
+
 		// set semiCircle color
 		semiCircle->setPen(QPen(colorHelpLine));
-		
+
 		// set text color
 		text->setBrush(QBrush(colorHelpLine));
-		
+
 		// setting to the highest layer level
 		semiCircle->setZValue(4);
 		text->setZValue(4);
-		
+
 		// add semiCircle to QList
 		laserDistanceLineListRear->append(semiCircle);
 		laserDistanceTextRear->append(text);
-		
+
 		// add semiCircle to scene
 		scene->addItem(semiCircle);
-		
+
 		// add text to scene
 		scene->addItem(text);
 	}
@@ -2058,13 +2082,13 @@ void Gui::initializePlots()
 	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-	
+
 	QColor col = labelFillColorBlue;
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve1.setPen(QPen(col));
 	curve1.setBrush(col);
-	
-	
+
+
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 2
 	//--------------------------------------
@@ -2079,13 +2103,13 @@ void Gui::initializePlots()
 	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-	
+
 	col = labelFillColorBlue;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
-	
-	
+
+
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3
 	//--------------------------------------
@@ -2100,13 +2124,13 @@ void Gui::initializePlots()
 	ui.qwtPlotCurrent3->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-	
+
 	col = labelFillColorBlue;
 	curve3.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve3.setPen(QPen(col));
 	curve3.setBrush(col);
-	
-	
+
+
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 4
 	//--------------------------------------
@@ -2121,7 +2145,7 @@ void Gui::initializePlots()
 	ui.qwtPlotCurrent4->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-	
+
 	col = labelFillColorBlue;
 	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve4.setPen(QPen(col));
@@ -2152,7 +2176,7 @@ void Gui::showJoystickAxes(int axisNumber, int axisValue)
 			{
 				ui.radioBtnJoy5Up->setChecked(true);
 			}
-			
+
 			// down
 			if (axisValue > 0)
 			{
@@ -2172,7 +2196,7 @@ void Gui::showJoystickAxes(int axisNumber, int axisValue)
 			{
 				ui.radioBtnJoy4Left->setChecked(true);
 			}
-			
+
 			// right
 			if (axisValue > 0)
 			{
@@ -2193,19 +2217,19 @@ void Gui::showJoystickAxes(int axisNumber, int axisValue)
 void Gui::showJoystickButtons(int buttonNumber, bool buttonState)
 {
 /* FIXME: put into joystick class!!
-	
+
 	static bool toggle0 = false;
-	
+
 	//static bool toggle1 = false;
 	//static bool toggle2 = false;
 	//static bool toggle3 = false;
 	//static bool toggle4 = false;
 	//static bool toggle5 = false;
-	
+
 	static bool toggle10 = false;
 	static bool toggle11 = false;
-	
-	
+
+
 	// TODO: put button numbers to ini-file
 	switch (buttonNumber)
 	{
