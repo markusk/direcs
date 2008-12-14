@@ -25,7 +25,7 @@ InterfaceAvr::InterfaceAvr()
 	// creating the serial port object
 #ifdef _TTY_POSIX_
 	serialPort = new DirecsSerial();
-	dev_fd = NULL;
+	//dev_fd = NULL;
 #else
 	serialPort = new QextSerialPort();
 #endif
@@ -68,7 +68,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	qDebug("Opening with direcsSerial->openAtmelPort...");
 	// serial port config also done in openAtmelPort!
 	
-	return serialPort->openAtmelPort(&dev_fd, ba.data());
+	return serialPort->openAtmelPort(ba.data());
 	
 	
 #else
@@ -99,8 +99,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 void InterfaceAvr::closeComPort()
 {
 #ifdef _TTY_POSIX_
-	// TODO: no pointer for device parameter?
-	serialPort->closePort(dev_fd);
+	serialPort->closePort();
 #else
 	serialPort->close();
 #endif
@@ -135,7 +134,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	*/
 	//qDebug("Sending char with direcsSerial...");
 	// send one byte to the serial port
-	if (serialPort->writeAtmelPort(dev_fd, &character, 1) <= 0)
+	if (serialPort->writeAtmelPort(&character, 1) <= 0)
 #else
 	// FIXME: which line one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
@@ -181,7 +180,8 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	intValue += helpValue;
 	//--------------------------------------------------
 	*/
-	return serialPort->readPort(dev_fd, character, 1);
+	//qDebug("Receiving char with direcsSerial...");
+	return serialPort->readAtmelPort(character, 1);
 #else
 	// QextSerialPort code, when using Windows
 	return serialPort->getChar(character);

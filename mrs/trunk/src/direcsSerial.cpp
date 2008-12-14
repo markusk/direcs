@@ -23,6 +23,7 @@
 
 DirecsSerial::DirecsSerial()
 {
+	dev_fd = 0; // the file descriptor !!
 }
 
 
@@ -31,13 +32,13 @@ DirecsSerial::~DirecsSerial()
 }
 
 
-int DirecsSerial::openPort(int *dev_fd, char *dev_name)
+int DirecsSerial::openPort(int dev_fd, char *dev_name)
 {
 	int BAUDRATE = B9600;
 	struct termios newtio;
 	
-	*dev_fd = open(dev_name, O_RDWR | O_SYNC | O_NOCTTY, 0);
-	if(*dev_fd < 0) {
+	dev_fd = open(dev_name, O_RDWR | O_SYNC | O_NOCTTY, 0);
+	if(dev_fd < 0) {
 		fprintf(stderr,"Serial I/O Error:  Could not open port %s\n", dev_name);
 		return -1;
 	}
@@ -48,7 +49,7 @@ int DirecsSerial::openPort(int *dev_fd, char *dev_name)
 	//--------------------------------------------------
 	
 	// get the current options for the port
-	tcgetattr(*dev_fd, &newtio);
+	tcgetattr(dev_fd, &newtio);
 	
 	// setting the baud rate
 	cfsetispeed(&newtio, BAUDRATE);
@@ -63,23 +64,31 @@ int DirecsSerial::openPort(int *dev_fd, char *dev_name)
 	newtio.c_cc[VTIME] = 1;
 	newtio.c_cc[VMIN] = 0;
 	// flush
-	tcflush(*dev_fd, TCIFLUSH);
+	tcflush(dev_fd, TCIFLUSH);
 	// set the options now
-	tcsetattr(*dev_fd, TCSANOW, &newtio);
+	tcsetattr(dev_fd, TCSANOW, &newtio);
 	return 0;
 }
 
 
-bool DirecsSerial::openAtmelPort(int *dev_fd, char *dev_name)
+//bool DirecsSerial::openAtmelPort(int dev_fd, char *dev_name)
+bool DirecsSerial::openAtmelPort(char *dev_name)
 {
 	//--------------------------------------------------
 	// This is now original code from test/serial.c !
 	//--------------------------------------------------
-	// open_port
-	//--------------------------------------------------
-	*dev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NDELAY);
 	
-	if (*dev_fd == -1)
+	/*
+	The O_NOCTTY flag tells UNIX that this program doesn't want to be the "controlling terminal" for that port.
+	If you don't specify this then any input (such as keyboard abort signals and so forth) will affect your process.
+	Programs like getty(1M/8) use this feature when starting the login process, but normally a user program does not want this behavior.
+	
+	The O_NDELAY flag tells UNIX that this program doesn't care what state the DCD signal line is in - whether the other end of the port is up and running.
+	If you do not specify this flag, your process will be put to sleep until the DCD signal line is the space voltage.
+	*/
+	dev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NDELAY);
+	
+	if (dev_fd == -1)
 	{
 		/*
 		* Could not open the port.
@@ -89,7 +98,7 @@ bool DirecsSerial::openAtmelPort(int *dev_fd, char *dev_name)
 	}
 	else
 	{
-		fcntl(*dev_fd, F_SETFL, 0);
+		fcntl(dev_fd, F_SETFL, 0);
 	}
 	
 	
@@ -101,7 +110,7 @@ bool DirecsSerial::openAtmelPort(int *dev_fd, char *dev_name)
 	/*
 	* GET the current options for the port...
 	*/
-	tcgetattr(*dev_fd, &options);
+	tcgetattr(dev_fd, &options);
 	
 	/*
 	* Setting the baud rate.
@@ -137,10 +146,10 @@ bool DirecsSerial::openAtmelPort(int *dev_fd, char *dev_name)
 	/*
 	* SET the new options for the port...
 	*/
-	tcsetattr(*dev_fd, TCSANOW, &options);
+	tcsetattr(dev_fd, TCSANOW, &options);
 
 	// FLUSH
-	fcntl(*dev_fd, F_SETFL, 0);
+	fcntl(dev_fd, F_SETFL, 0);
 	
 	return true;
 }
@@ -461,7 +470,8 @@ int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
-int DirecsSerial::writeAtmelPort(int dev_fd, unsigned char *c, int nChars)
+//int DirecsSerial::writeAtmelPort(int dev_fd, unsigned char *c, int nChars)
+int DirecsSerial::writeAtmelPort(unsigned char *c, int nChars)
 {
 	//--------------------------------------------------
 	// This is now original code from test/serial.c !
@@ -519,7 +529,8 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
-int DirecsSerial::readAtmelPort(int dev_fd, unsigned char *buf, int nChars)
+//int DirecsSerial::readAtmelPort(int dev_fd, unsigned char *buf, int nChars)
+int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 {
 	//--------------------------------------------------
 	// This is now original code from test/serial.c !
@@ -548,7 +559,8 @@ int DirecsSerial::readAtmelPort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
-int DirecsSerial::closePort(int dev_fd)
+//int DirecsSerial::closePort(int dev_fd)
+int DirecsSerial::closePort()
 {
   return close(dev_fd);
 }

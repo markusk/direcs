@@ -13,13 +13,13 @@ int main(int argc, char *argv[])
 	configure_port(dev_fd);
 	printf("Configured.\n");
 	
-	printf("Sending command...");
+	printf("Sending command INIT...\n");
 	write_port(dev_fd, &c, 1);
 	printf("Sent.\n");
 	
-	printf("Reading bytes...\n");
+	printf("Reading ANSWER...\n");
 	int i= read_port(dev_fd, &c, 1);
-	printf("%d byte read:%c\n:-)\n", i, c);
+	printf("%d byte read. Answer is:%c\n", i, c);
 	
 	printf("Closing serial port...");
 	close_port(dev_fd);

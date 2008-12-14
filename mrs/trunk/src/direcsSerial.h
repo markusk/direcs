@@ -64,16 +64,16 @@ class DirecsSerial : public QObject
 		/**
 		Open a connection to the serial line
 		
-		@param *dev_fd returns the file descriptor associated to the serial line
+		@param dev_fd returns the file descriptor associated to the serial line
 		@param dev_name the name of the serial device, e.g. /dev/ttyS0
 		@return 0 if everything is fine, -1 in case of an error.
 		**/
-		int openPort(int *dev_fd, char *dev_name); // serial_connect
+		int openPort(int dev_fd, char *dev_name); // serial_connect
 		
 		/**
 		for test reasons... :-)
 		*/
-		bool openAtmelPort(int *dev_fd, char *dev_name);
+		bool openAtmelPort(char *dev_name);
 		
 		/**
 		Sets the parameters for (a connected) serial line.
@@ -87,7 +87,7 @@ class DirecsSerial : public QObject
 		/**
 		Returns the number of availabe bytes
 		
-		@param *dev_fd returns the file descriptor associated to the serial line
+		@param dev_fd returns the file descriptor associated to the serial line
 		@return number of available bytes or -1 in case of an error.
 		**/
 		long numChars(int dev_fd);
@@ -113,7 +113,7 @@ class DirecsSerial : public QObject
 		/**
 		for test reasons... :-)
 		*/
-		int writeAtmelPort(int dev_fd, unsigned char *c, int nChars);
+		int writeAtmelPort(unsigned char *c, int nChars);
 
 		/**
 		Reads data from the serial line
@@ -128,7 +128,7 @@ class DirecsSerial : public QObject
 		/**
 		for test reasons... :-)
 		 */
-		int readAtmelPort(int dev_fd, unsigned char *buf, int nChars);
+		int readAtmelPort(unsigned char *buf, int nChars);
 		
 		/**
 		Closes the file descriptior.
@@ -136,7 +136,7 @@ class DirecsSerial : public QObject
 		@param dev_fd The file descriptor associated to the serial line.
 		@return The results reported by close.
 		**/
-		int closePort(int dev_fd);
+		int closePort();
 
 		/**
 		Sets the serial port parameters
@@ -171,6 +171,8 @@ class DirecsSerial : public QObject
 		#else
 		void setRTS(int fd  __attribute__ ((unused)));
 		#endif
+		
+		int dev_fd; //! the file descriptor of the serial port
 };
 
 #endif
