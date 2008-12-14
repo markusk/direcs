@@ -56,14 +56,14 @@ int main(void)
 	DDRD |= (1 << DDD5);
 
 	// switch some bits on port A to input (camera pan tilt end switches)
-	DDRA &= ~((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3));
+	//DDRA &= ~((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3));
 	
-	// switch port L (all PINS) to output [drive motor]
+	// switch port L (all PINS) to output [drive motor 1 to 3]
 	DDRL = 0xff;
 
-	// switch some bits on port D to output [camera motor 2]
+	// switch some bits on port D to output [motor 4]
 	DDRD = (1 << DDD6) | (1 << DDD7);
-	// switch some bits on port G to output [camera motor pwm]
+	// switch some bits on port G to output [motor 4 pwm]
 	DDRG |= (1<<PIN5);
 	
 	// switch port H (all PINS) to output [servos]
@@ -77,16 +77,16 @@ int main(void)
 	PORTC &= ~(1<<PIN1);
 	
 	// turn all drive motor bits off (except PWM bits)
+	// motor 1
 	PORTL &= ~(1<<PIN0);
 	PORTL &= ~(1<<PIN1);
+	// motor 2
 	PORTL &= ~(1<<PIN2);
 	PORTL &= ~(1<<PIN3);
-	
-	// turn all camera motor 1 [pan] bits off
+	// motor 3
 	PORTL &= ~(1<<PIN6);
 	PORTL &= ~(1<<PIN7);
-	
-	// turn all camera motor 2 [tilt] bits off
+	// motor 4
 	PORTD &= ~(1<<PIN6);
 	PORTD &= ~(1<<PIN7);
 	
@@ -115,7 +115,7 @@ int main(void)
 	// Bit1 = Cam L Tilt Endswitch
 	// Bit2 = Cam R Pan Endswitch
 	// Bit3 = Cam L Pan Endswitch
-	DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
+	//DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
 
 	//----------------------------------------------------------------------------
 	// Set the "Pin Change Interrupt Control Register"
@@ -140,7 +140,7 @@ int main(void)
 	//----------------------------------------------------------------------------
 	sei();
 	
-	// initialize the PWM timer (with compare value 100)
+	// initialize the PWM timer (with compare value 100)  [this is the motor speed!]
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 100 * 64 µs = 6400 µs = 6,4 ms
 	//
@@ -148,14 +148,15 @@ int main(void)
 	setPWMwidth(1, 100);
 	// drive motor 2
 	setPWMwidth(2, 100);
-	// camera motor pan
-	setPWMwidth(3, 20);
-	// camera motor tilt
-	setPWMwidth(4, 20);
+	// drive motor 3
+	setPWMwidth(3, 100);
+	// drive motor 4
+	setPWMwidth(4, 100);
 
 	// start the motor PWM timers
 	startPWM();
 	
+	/*
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 12 * 64 µs = 768 µs ?!?
@@ -173,6 +174,7 @@ int main(void)
 	startPWMServo(4);
 	startPWMServo(5);
 	startPWMServo(6);
+	*/
 
 	// initialize USART (serial port)
 	UsartInit();
@@ -227,21 +229,21 @@ int main(void)
 				PORTL &= ~(1<<PIN1);
 				PORTL &= ~(1<<PIN2);
 				PORTL &= ~(1<<PIN3);
-				// flashlight off
-				PORTC &= ~(1<<PIN1);
-				// turn all camera motor bits off
 				PORTL &= ~(1<<PIN6);
 				PORTL &= ~(1<<PIN7);
 				PORTD &= ~(1<<PIN6);
 				PORTD &= ~(1<<PIN7);
+				// flashlight off
+				PORTC &= ~(1<<PIN1);
+				/*
 				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
 				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
 				setServoPosition(3, 23); // <- exact position now in the mrs.ini!
 				setServoPosition(4, 19); // <- exact position now in the mrs.ini!
 				setServoPosition(5, 19); // <- exact position now in the mrs.ini!
 				setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-				
-				// "answer" with "@"
+				*/
+				// "answer" with "@" [Ascii Dezimal @ = 64]
 				// this answer is used to see if the robot is "on"
 				UsartTransmit( (uint8_t)(64) );
 				break;
@@ -720,6 +722,7 @@ SIGNAL(PCINT1_vect)
 
 SIGNAL(PCINT2_vect)
 {
+/*
 	//----------------------------
 	// if Cam Pan L switch set
 	//----------------------------
@@ -779,4 +782,5 @@ SIGNAL(PCINT2_vect)
 	{
 //		camTiltRSwitch = 0;
 	}
+*/
 }
