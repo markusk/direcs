@@ -446,8 +446,8 @@ class Gui : public QMainWindow
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
 		
-		static const unsigned char START = 5;
-		static const unsigned char STOP  = 6;
+		static const unsigned char START = 7; //! For button signal "start driving"
+		static const unsigned char STOP  = 8; //! For button signal "stop driving"
 		
 		static const unsigned char CLOCKWISE        = 0;  /** Motor direction "CLOCKWISE" */
 		static const unsigned char COUNTERCLOCKWISE = 1;  /** Motor direction "COUNTERCLOCKWISE" */
