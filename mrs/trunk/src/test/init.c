@@ -3,7 +3,9 @@
 
 int main(int argc, char *argv[])
 {
-	unsigned char c = 64; // INIT
+//	unsigned char c = 64; // INIT
+	unsigned char c = 40; // flashlight off
+//	unsigned char c = 41; // flashlight on
 	
 	
 	printf("\nOpening serial port...");
