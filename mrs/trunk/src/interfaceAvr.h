@@ -91,7 +91,6 @@ class InterfaceAvr : public QObject
 	private:
 #ifdef _TTY_POSIX_
 		DirecsSerial *serialPort;
-		//int dev_fd;
 #else
 		QextSerialPort *serialPort;
 #endif

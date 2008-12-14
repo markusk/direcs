@@ -25,7 +25,6 @@ InterfaceAvr::InterfaceAvr()
 	// creating the serial port object
 #ifdef _TTY_POSIX_
 	serialPort = new DirecsSerial();
-	//dev_fd = NULL;
 #else
 	serialPort = new QextSerialPort();
 #endif
@@ -53,21 +52,9 @@ bool InterfaceAvr::openComPort(QString comPort)
 	}
 	
 
-	/*
-	if (serialPort->openPort(&dev_fd, ba.data()) == -1)
-	{
-		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
-		return false;
-	}
+	//qDebug("Opening with direcsSerial->openAtmelPort...");
 
-	// Configuring the serial port with 9600, 8N1, no flow control (0, 0)
-	serialPort->setParms(dev_fd, "9600", "N", "8", 0, 0, 1);
-	*/
-
-	// FIXME: test!!!!!!
-	qDebug("Opening with direcsSerial->openAtmelPort...");
 	// serial port config also done in openAtmelPort!
-	
 	return serialPort->openAtmelPort(ba.data());
 	
 	
@@ -112,27 +99,8 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 
 #ifdef _TTY_POSIX_
-	/*
-	//--------------------------------------------------
-	// convert from signed char to unsigned int
-	//--------------------------------------------------
-	int helpValue = 0;
-	int intValue = 0;
-	unsigned char c = intValue;
-	
-	if (character < 0)
-	{
-		helpValue = ( 127 & character ) + 128;
-	}
-	else
-	{
-		helpValue = character;
-	}
-	// this is the 16 Bit result
-	intValue += helpValue;
-	//--------------------------------------------------
-	*/
 	//qDebug("Sending char with direcsSerial...");
+
 	// send one byte to the serial port
 	if (serialPort->writeAtmelPort(&character, 1) <= 0)
 #else
@@ -160,26 +128,6 @@ bool InterfaceAvr::sendChar(unsigned char character)
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
 #ifdef _TTY_POSIX_
-	/*
-	//--------------------------------------------------
-	// convert from signed char to unsigned int
-	//--------------------------------------------------
-	int helpValue = 0;
-	int intValue = 0;
-	unsigned char c = intValue;
-	
-	if (character < 0)
-	{
-		helpValue = ( 127 & *character ) + 128;
-	}
-	else
-	{
-		helpValue = *character;
-	}
-	// this is the 16 Bit result
-	intValue += helpValue;
-	//--------------------------------------------------
-	*/
 	//qDebug("Receiving char with direcsSerial...");
 	return serialPort->readAtmelPort(character, 1);
 #else
@@ -236,30 +184,9 @@ bool InterfaceAvr::receiveInt(int *value)
 		return false;
 	}
 
-	// FIXME: still needed conversion frim singed to unsigned?!??
-	/*
-	//--------------------------------------------------
-	// convert from signed char to unsigned int
-	//--------------------------------------------------
-	if (character < 0)
-	{
-		helpValue = ( 127 & character ) + 128;
-	}
-	else
-	{
-		helpValue = character;
-	}
-
-
-	// this is the 16 Bit result
-	intValue += helpValue;
-	//--------------------------------------------------
 	
-	// "return" the value
-	*value = intValue;
-	*/
-	
-	// FIXME too!
+	// build the int value
+	// (add the LS-Byte to the MS-Byte)
 	*value = (intValue + character);
 
 	return true;
