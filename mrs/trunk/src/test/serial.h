@@ -5,6 +5,7 @@
 #include <errno.h>   /* Error number definitions */
 #include <termios.h> /* POSIX terminal control definitions */
 
+#include <unistd.h>
 
 static const unsigned char FLASHLIGHT_OFF 	= 40;
 static const unsigned char FLASHLIGHT_ON 	= 41;

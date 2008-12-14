@@ -4,9 +4,18 @@
 int main(int argc, char *argv[])
 {
 	unsigned char c = INIT;
+	int sleepSeconds = 1;
+	int dev_fd = 0;
 	
 	printf("\nOpening serial port...");
-	int dev_fd = open_port();
+	dev_fd = open_port();
+	
+	if (dev_fd < 0)
+	{
+		printf("ERROR!\n");
+		return -1;
+	}
+	
 	printf("Opened.\n");
 
 	printf("Configuring serial port...");
@@ -14,12 +23,34 @@ int main(int argc, char *argv[])
 	printf("Configured.\n");
 	
 	printf("Sending command INIT...\n");
-	write_port(dev_fd, &c, 1);
-	printf("Sent.\n");
+	if (write_port(dev_fd, &c, 1) > 0)
+	{
+		printf("Sent.\n");
+	}
+	else
+	{
+		printf("\nERROR!.\n");
+		return -1;
+	}
 	
 	printf("Reading ANSWER...\n");
 	int i= read_port(dev_fd, &c, 1);
 	printf("%d byte read. Answer is:%c\n", i, c);
+	
+	
+	c = FLASHLIGHT_ON;
+	printf("Sending command %d...\n", c);
+	write_port(dev_fd, &c, 1);
+	printf("Sent.\n");
+	
+	printf("Sleeping %d seconds...\n", sleepSeconds);
+	sleep(sleepSeconds);
+	
+	c = FLASHLIGHT_OFF;
+	printf("Sending command %d...\n", c);
+	write_port(dev_fd, &c, 1);
+	printf("Sent.\n");
+	
 	
 	printf("Closing serial port...");
 	close_port(dev_fd);
@@ -52,7 +83,7 @@ int open_port(void)
 		/*
 		* Could not open the port.
 		*/
-		printf("open_port: Unable to open /dev/ttyUSB0\n");
+		printf("\nopen_port: Unable to open /dev/ttyUSB0\n");
 	}
 	else
 	{
