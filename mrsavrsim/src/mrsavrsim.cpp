@@ -71,11 +71,54 @@ void Mrsavrsim::simulateRobot()
 	
 	if (toggle)
 	{
-		textEdit->append("Robot Simulation startet...");
+		//-------------------------
+		// start the sim thread
+		//-------------------------
+		if (simThread->isRunning() == false)
+		{
+			textEdit->append("Starting robot simulation...");
+			simThread->start();
+			textEdit->append("Robot simulation succesfuly startet.");
+		}
 	}
 	else
 	{
-		textEdit->append("Robot Simulation stopped.");
+		//--------------------------
+		// quit the sim thread
+		//--------------------------
+		//qDebug("Starting to stop the sim thread NOW!");
+		if (simThread->isRunning() == true)
+		{
+			textEdit->append("Stopping simulation thread...");
+
+			// my own stop routine :-)
+			simThread->stop();
+
+			// slowing thread down
+			simThread->setPriority(QThread::IdlePriority);
+			simThread->quit();
+
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((simThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+			if (simThread->isFinished() == true)
+			{
+				textEdit->append("Robot simulation stopped.");
+			}
+			else
+			{
+				textEdit->append("Terminating simulation thread because it doesn't answer...");
+				simThread->terminate();
+				simThread->wait(1000);
+				textEdit->append("Robot simulation terminated.");
+			}
+		}
 	}
 }
 
@@ -136,9 +179,9 @@ void Mrsavrsim::documentWasModified()
 
 void Mrsavrsim::createActions()
 {
-	simBot = new QAction(QIcon(":/underFootOne.png"), tr("Simulate &Robot"), this);
+	simBot = new QAction(QIcon(":/underFootOne.png"), tr("Simulate &Robot (Ctrl+R)"), this);
 	simBot->setShortcut(tr("Ctrl+R"));
-	simBot->setStatusTip(tr("Start the robot simulation mode"));
+	simBot->setStatusTip(tr("Start the robot simulation mode (Ctrl+R)"));
 	connect(simBot, SIGNAL(triggered()), this, SLOT(simulateRobot()));
 
 	newAct = new QAction(QIcon(":/filenew.xpm"), tr("&New"), this);
