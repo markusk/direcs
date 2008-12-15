@@ -63,11 +63,20 @@ void Mrsavrsim::closeEvent(QCloseEvent *event)
 
 void Mrsavrsim::simulateRobot()
 {
-      if (maybeSave())
-      {
-            textEdit->append("Robot Simulation startet...\n");
-            setCurrentFile("");
-      }
+	static bool toggle = false;
+	
+	
+	toggle = !toggle;
+	setCurrentFile("");
+	
+	if (toggle)
+	{
+		textEdit->append("Robot Simulation startet...");
+	}
+	else
+	{
+		textEdit->append("Robot Simulation stopped.");
+	}
 }
 
 
