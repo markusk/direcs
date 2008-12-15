@@ -65,6 +65,8 @@ void SimThread::run()
 /*
 infrared Sensors temporarily removed from robot!!
 			
+			// TODO: open, init and close serial port
+			
 			//------------------------------------------------------
 			// read value from sensor 1
 			//------------------------------------------------------
