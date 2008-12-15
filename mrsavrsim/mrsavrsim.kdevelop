@@ -144,13 +144,13 @@
       <programargs></programargs>
       <directoryradio>executable</directoryradio>
       <runarguments>
-        <mrsavrsim/>
+        <mrsavrsim></mrsavrsim>
       </runarguments>
       <cwd>
         <mrsavrsim>/home/markus/develop/mrs/mrsavrsim</mrsavrsim>
       </cwd>
       <debugarguments>
-        <mrsavrsim/>
+        <mrsavrsim></mrsavrsim>
       </debugarguments>
       <globaldebugarguments></globaldebugarguments>
       <globalcwd>/home/markus/develop/mrs/mrsavrsim</globalcwd>
@@ -162,12 +162,12 @@
       <envvars/>
     </run>
     <general>
-      <activedir></activedir>
+      <activedir>src</activedir>
     </general>
     <make>
       <abortonerror>true</abortonerror>
-      <runmultiplejobs>false</runmultiplejobs>
-      <numberofjobs>1</numberofjobs>
+      <runmultiplejobs>true</runmultiplejobs>
+      <numberofjobs>2</numberofjobs>
       <dontact>false</dontact>
       <makebin></makebin>
       <prio>0</prio>

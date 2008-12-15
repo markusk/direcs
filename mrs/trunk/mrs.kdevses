@@ -6,22 +6,22 @@
    <View0 Encoding="" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.cpp" >
-   <View0 Encoding="" line="548" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.cpp" >
-   <View0 Encoding="" line="782" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc2>
   <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/circuit.cpp" >
-   <View0 Encoding="" line="70" Type="Source" />
+   <View0 Encoding="" line="40" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/gui.cpp" >
-   <View0 Encoding="" line="42" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.h" >
    <View0 Encoding="" Type="Source" />
   </Doc5>
   <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/gui.h" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc6>
  </DocsAndViews>
  <pluginList>

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Markus Knapp   *
+ *   Copyright (C) 2008/home/markus/develop/mrs/mrs/trunk/src by Markus Knapp   *
  *      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,34 +20,37 @@
 
 
 #include <QtGui>
-#include "mrsavrsim.h"
-
 #include <QTextEdit>
 #include <QTextStream>
 #include <QCloseEvent>
 #include <QFileDialog>
 
+#include "mrsavrsim.h"
 
-mrsavrsim::mrsavrsim()
+
+Mrsavrsim::Mrsavrsim()
 {
-      textEdit = new QTextEdit;
-      setCentralWidget(textEdit);
-      
-      createActions();
-      createMenus();
-      createToolBars();
-      createStatusBar();
-      
-      readSettings();
-      
-      connect(textEdit->document(), SIGNAL(contentsChanged()),
-            this, SLOT(documentWasModified()));
-      
-      setCurrentFile("");
+	textEdit = new QTextEdit;
+	setCentralWidget(textEdit);
+	
+	mutex = new QMutex();
+	interface1 = new InterfaceAvr();
+	simThread = new SimThread(interface1, mutex);
+	
+	createActions();
+	createMenus();
+	createToolBars();
+	createStatusBar();
+	
+	readSettings();
+	
+	connect(textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(documentWasModified()));
+	
+	setCurrentFile("");
 }
 
 
-void mrsavrsim::closeEvent(QCloseEvent *event)
+void Mrsavrsim::closeEvent(QCloseEvent *event)
 {
       if (maybeSave()) {
             writeSettings();
@@ -58,7 +61,7 @@ void mrsavrsim::closeEvent(QCloseEvent *event)
 }
 
 
-void mrsavrsim::simulateRobot()
+void Mrsavrsim::simulateRobot()
 {
       if (maybeSave())
       {
@@ -68,7 +71,7 @@ void mrsavrsim::simulateRobot()
 }
 
 
-void mrsavrsim::newFile()
+void Mrsavrsim::newFile()
 {
 	if (maybeSave()) {
 		textEdit->clear();
@@ -77,7 +80,7 @@ void mrsavrsim::newFile()
 }
 
 
-void mrsavrsim::open()
+void Mrsavrsim::open()
 {
       if (maybeSave()) {
             QString fileName = QFileDialog::getOpenFileName(this);
@@ -87,7 +90,7 @@ void mrsavrsim::open()
 }
 
 
-bool mrsavrsim::save()
+bool Mrsavrsim::save()
 {
       if (curFile.isEmpty()) {
             return saveAs();
@@ -97,7 +100,7 @@ bool mrsavrsim::save()
 }
 
 
-bool mrsavrsim::saveAs()
+bool Mrsavrsim::saveAs()
 {
       QString fileName = QFileDialog::getSaveFileName(this);
       if (fileName.isEmpty())
@@ -107,7 +110,7 @@ bool mrsavrsim::saveAs()
 }
 
 
-void mrsavrsim::about()
+void Mrsavrsim::about()
 {
       QMessageBox::about(this, tr("About Application"),
             tr("The <b>Application</b> example demonstrates how to "
@@ -116,13 +119,13 @@ void mrsavrsim::about()
 }
 
 
-void mrsavrsim::documentWasModified()
+void Mrsavrsim::documentWasModified()
 {
       setWindowModified(true);
 }
 
 
-void mrsavrsim::createActions()
+void Mrsavrsim::createActions()
 {
 	simBot = new QAction(QIcon(":/underFootOne.png"), tr("Simulate &Robot"), this);
 	simBot->setShortcut(tr("Ctrl+R"));
@@ -183,7 +186,7 @@ void mrsavrsim::createActions()
 }
 
 
-void mrsavrsim::createMenus()
+void Mrsavrsim::createMenus()
 {
       fileMenu = menuBar()->addMenu(tr("&File"));
       fileMenu->addAction(simBot);
@@ -207,7 +210,7 @@ void mrsavrsim::createMenus()
 }
 
 
-void mrsavrsim::createToolBars()
+void Mrsavrsim::createToolBars()
 {
       fileToolBar = addToolBar(tr("File"));
       fileToolBar->addAction(simBot);
@@ -222,13 +225,13 @@ void mrsavrsim::createToolBars()
 }
 
 
-void mrsavrsim::createStatusBar()
+void Mrsavrsim::createStatusBar()
 {
       statusBar()->showMessage(tr("Ready"));
 }
 
 
-void mrsavrsim::readSettings()
+void Mrsavrsim::readSettings()
 {
 	QSettings settings("direcs", "mrsavrsim");
 	QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
@@ -238,7 +241,7 @@ void mrsavrsim::readSettings()
 }
 
 
-void mrsavrsim::writeSettings()
+void Mrsavrsim::writeSettings()
 {
 	QSettings settings("direcs", "mrsavrsim");
 	settings.setValue("pos", pos());
@@ -246,7 +249,7 @@ void mrsavrsim::writeSettings()
 }
 
 
-bool mrsavrsim::maybeSave()
+bool Mrsavrsim::maybeSave()
 {
       if (textEdit->document()->isModified()) {
             int ret = QMessageBox::warning(this, tr("Application"),
@@ -264,7 +267,7 @@ bool mrsavrsim::maybeSave()
 }
 
 
-void mrsavrsim::loadFile(const QString &fileName)
+void Mrsavrsim::loadFile(const QString &fileName)
 {
       QFile file(fileName);
       if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -285,7 +288,7 @@ void mrsavrsim::loadFile(const QString &fileName)
 }
 
 
-bool mrsavrsim::saveFile(const QString &fileName)
+bool Mrsavrsim::saveFile(const QString &fileName)
 {
       QFile file(fileName);
       if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -307,7 +310,7 @@ bool mrsavrsim::saveFile(const QString &fileName)
 }
 
 
-void mrsavrsim::setCurrentFile(const QString &fileName)
+void Mrsavrsim::setCurrentFile(const QString &fileName)
 {
       curFile = fileName;
       textEdit->document()->setModified(false);
@@ -323,14 +326,14 @@ void mrsavrsim::setCurrentFile(const QString &fileName)
 }
 
 
-QString mrsavrsim::strippedName(const QString &fullFileName)
+QString Mrsavrsim::strippedName(const QString &fullFileName)
 {
       return QFileInfo(fullFileName).fileName();
 }
 
 
-mrsavrsim::~mrsavrsim()
+Mrsavrsim::~Mrsavrsim()
 {
-
+	delete simThread;
+	delete interface1;
 }
-

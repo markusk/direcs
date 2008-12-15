@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
       Q_INIT_RESOURCE(application);
       QApplication app(argc, argv);
-      mrsavrsim * mw = new mrsavrsim();
+      Mrsavrsim * mw = new Mrsavrsim();
       mw->show();
       return app.exec();
 }

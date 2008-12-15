@@ -24,64 +24,70 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
-#include "direcsSerial.h"
+#include <QMutex>
+#include "interfaceAvr.h"
+#include "simThread.h"
 
 class QAction;
 class QMenu;
 class QTextEdit;
 
-class mrsavrsim:public QMainWindow
+class Mrsavrsim:public QMainWindow
 {
       Q_OBJECT
-
-public:
-      mrsavrsim();
-      ~mrsavrsim();
-
-protected:
-      void closeEvent(QCloseEvent *event);
-
-private slots:
-      void newFile();
-      void simulateRobot();
-      void open();
-      bool save();
-      bool saveAs();
-      void about();
-      void documentWasModified();
-
-private:
-      void createActions();
-      void createMenus();
-      void createToolBars();
-      void createStatusBar();
-      void readSettings();
-      void writeSettings();
-      bool maybeSave();
-      void loadFile(const QString &fileName);
-      bool saveFile(const QString &fileName);
-      void setCurrentFile(const QString &fileName);
-      QString strippedName(const QString &fullFileName);
-
-      QTextEdit *textEdit;
-      QString curFile;
-
-      QMenu *fileMenu;
-      QMenu *editMenu;
-      QMenu *helpMenu;
-      QToolBar *fileToolBar;
-      QToolBar *editToolBar;
-      QAction *simBot;
-      QAction *newAct;
-      QAction *openAct;
-      QAction *saveAct;
-      QAction *saveAsAct;
-      QAction *exitAct;
-      QAction *cutAct;
-      QAction *copyAct;
-      QAction *pasteAct;
-      QAction *aboutAct;
-      QAction *aboutQtAct;
+	
+	public:
+		Mrsavrsim();
+		~Mrsavrsim();
+	
+	protected:
+		void closeEvent(QCloseEvent *event);
+	
+	private slots:
+		void newFile();
+		void simulateRobot();
+		void open();
+		bool save();
+		bool saveAs();
+		void about();
+		void documentWasModified();
+	
+	private:
+		void createActions();
+		void createMenus();
+		void createToolBars();
+		void createStatusBar();
+		void readSettings();
+		void writeSettings();
+		bool maybeSave();
+		void loadFile(const QString &fileName);
+		bool saveFile(const QString &fileName);
+		void setCurrentFile(const QString &fileName);
+		QString strippedName(const QString &fullFileName);
+		
+		QTextEdit *textEdit;
+		QString curFile;
+		
+		QMenu *fileMenu;
+		QMenu *editMenu;
+		QMenu *helpMenu;
+		QToolBar *fileToolBar;
+		QToolBar *editToolBar;
+		QAction *simBot;
+		QAction *newAct;
+		QAction *openAct;
+		QAction *saveAct;
+		QAction *saveAsAct;
+		QAction *exitAct;
+		QAction *cutAct;
+		QAction *copyAct;
+		QAction *pasteAct;
+		QAction *aboutAct;
+		QAction *aboutQtAct;
+		
+		mutable QMutex *mutex; // make the threads thread-safe (e.g. simThread)
+		InterfaceAvr *interface1;
+		SimThread *simThread;
 };
 
 #endif
