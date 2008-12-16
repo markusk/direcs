@@ -51,7 +51,7 @@ Mrsavrsim::Mrsavrsim()
 	// display messages from the simThread in the GUI
 	connect(simThread, SIGNAL(message(QString)), this, SLOT(message(QString)));
 	
-	serialPortMicrocontroller = "/dev/ttyLaserscannerRear";
+	serialPortMicrocontroller = "/dev/ttyLaserScannerRear"; // this is the serial "receiver"
 	
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
@@ -102,7 +102,7 @@ void Mrsavrsim::simulateRobot()
 		{
 			textEdit->append("Starting robot simulation...");
 			simThread->start();
-			textEdit->append("Robot simulation succesfuly startet.");
+			textEdit->append("Robot simulation succesfuly started.");
 		}
 	}
 	else
