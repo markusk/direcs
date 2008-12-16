@@ -70,21 +70,20 @@ void SimThread::run()
 		if (interface1->receiveChar(&character) == false)
 		{
 			// wait...
+			//emit ("waiting for char...");
 		}
-		
-// FIXME: what now?
 		
 		// Unlock the mutex.
 		mutex->unlock();
 		
 		// convert to int (for switch/case)
 		value = character;
-		qDebug("char received");
+		//qDebug("char received");
 		
 		switch (value)
 		{
 			case INIT:
-				emit message("INIT");
+				emit message("INIT:");
 				if (redLEDtoggle == 0)
 				{
 					redLEDtoggle = 1;
@@ -102,8 +101,10 @@ void SimThread::run()
 				emit message("Flashlight OFF");
 				// "answer" with "@" [Ascii Dezimal @ = 64]
 				// this answer is used to see if the robot is "on"
-				//UsartTransmit( (uint8_t)(64) ); // TODO: answer with a @  !!
-				break;
+				if (interface1->sendChar(INIT) == true)
+					emit message("Answer @ sent.");
+				else
+					emit message("ERROR sending answer!");
 /*			
 			//-------------------------------
 			case READ_SENSOR_1:
