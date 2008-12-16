@@ -140,6 +140,7 @@ class SimThread : public QThread
 		mutable QMutex *mutex; // make this class thread-safe
 		volatile bool stopped;
 		bool simulationMode;
+		unsigned char character;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

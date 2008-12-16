@@ -81,8 +81,14 @@ void SimThread::run()
 		// waiting "endlessly" for serial data...
 		// react on the received command
 		//--------------------------------
-		value = UsartReceive(); // TODO: wait for serial command here!
+		if (interface1->receiveChar(&character) == false)
+		{
+			// wait...
+		}
 		
+		// convert to int (for switch/case)
+		value = character;
+		qDebug("char received");
 		
 		switch (value)
 		{
