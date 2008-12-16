@@ -28,6 +28,11 @@ SimThread::SimThread(InterfaceAvr *i, QMutex *m)
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
+	
+	// init
+	character = 0;
+	value = 0;
+	redLEDtoggle = false;
 }
 
 
@@ -58,25 +63,6 @@ void SimThread::run()
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 			
-/*
-		//------------------------------------------------------
-		// read value from sensor 1
-		//------------------------------------------------------
-		if (interface1->sendChar(READ_SENSOR_1) == false)
-		{
-			// Unlock the mutex.
-			mutex->unlock();
-			qDebug("ERROR s1 sending to serial port (SimThread)");
-			return;
-		}
-		
-		// receive the 16 Bit answer from the MC
-		if (interface1->receiveInt(&value) == false)
-		{
-			// Unlock the mutex.
-			mutex->unlock();
-		}
-*/
 		//-----------------------------------------
 		// waiting "endlessly" for serial data...
 		// react on the received command
@@ -86,6 +72,11 @@ void SimThread::run()
 			// wait...
 		}
 		
+// FIXME: what now?
+		
+		// Unlock the mutex.
+		mutex->unlock();
+		
 		// convert to int (for switch/case)
 		value = character;
 		qDebug("char received");
@@ -93,42 +84,27 @@ void SimThread::run()
 		switch (value)
 		{
 			case INIT:
+				emit message("INIT");
 				if (redLEDtoggle == 0)
 				{
 					redLEDtoggle = 1;
-					// yelow LED on (low active!)
-					PORTC &= ~(1<<PIN0);
+					emit message("Yelow LED on");
 				}
 				else
 				{
 					redLEDtoggle = 0;
 					// yelow LED off (low active!)
-					PORTC |= (1<<PIN0);
+					emit message("Yelow LED off");
 				}
 				// turn all drive motor bits off (except PWM bits)
-				PORTL &= ~(1<<PIN0);
-				PORTL &= ~(1<<PIN1);
-				PORTL &= ~(1<<PIN2);
-				PORTL &= ~(1<<PIN3);
-				PORTL &= ~(1<<PIN6);
-				PORTL &= ~(1<<PIN7);
-				PORTD &= ~(1<<PIN6);
-				PORTD &= ~(1<<PIN7);
+				emit message("All motors OFF");
 				// flashlight off
-				PORTC &= ~(1<<PIN1);
-				/*
-				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-				setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-				setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-				setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-				setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-				*/
+				emit message("Flashlight OFF");
 				// "answer" with "@" [Ascii Dezimal @ = 64]
 				// this answer is used to see if the robot is "on"
-					UsartTransmit( (uint8_t)(64) );
-					break;
-			
+				//UsartTransmit( (uint8_t)(64) ); // TODO: answer with a @  !!
+				break;
+/*			
 			//-------------------------------
 			case READ_SENSOR_1:
 				// read value from the analog digital converter (ADC)
@@ -480,7 +456,8 @@ void SimThread::run()
 					PORTC |= (1<<PIN0);
 				}
 				break;
-			} // switch
+*/
+		} // switch
 	
 	
 			// Unlock the mutex.

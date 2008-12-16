@@ -48,7 +48,9 @@ Mrsavrsim::Mrsavrsim()
 	
 	setCurrentFile("");
 
-
+	// display messages from the simThread in the GUI
+	connect(simThread, SIGNAL(message(QString)), this, SLOT(message(QString)));
+	
 	serialPortMicrocontroller = "/dev/ttyLaserscannerRear";
 	
 	//-------------------------------------------------------
@@ -403,6 +405,12 @@ void Mrsavrsim::setCurrentFile(const QString &fileName)
 QString Mrsavrsim::strippedName(const QString &fullFileName)
 {
       return QFileInfo(fullFileName).fileName();
+}
+
+
+void Mrsavrsim::message(QString message)
+{
+	textEdit->append(message);
 }
 
 

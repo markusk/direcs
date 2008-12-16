@@ -43,6 +43,9 @@ class Mrsavrsim:public QMainWindow
 	protected:
 		void closeEvent(QCloseEvent *event);
 	
+	public slots:	
+		void message(QString message); /// Takes a message and displays it in the GUI
+	
 	private slots:
 		void newFile();
 		void simulateRobot();

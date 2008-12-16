@@ -133,6 +133,7 @@ class SimThread : public QThread
 		@sa Mrs::showSensorData()
 		*/
 		void sensorDataComplete();
+		void message(QString message);
 
 
 	private:
@@ -140,7 +141,10 @@ class SimThread : public QThread
 		mutable QMutex *mutex; // make this class thread-safe
 		volatile bool stopped;
 		bool simulationMode;
+		
 		unsigned char character;
+		int value;
+		bool redLEDtoggle;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
