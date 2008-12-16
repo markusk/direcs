@@ -488,11 +488,11 @@ int DirecsSerial::writeAtmelPort(unsigned char *c, int nChars)
 	if (n < 0)
 	{
 		// error
-		fputs("write() of n bytes failed!\n", stderr);
+		qDebug("write() of n bytes failed!\n", stderr);
 	}
 	else
 	{
-		//printf("%d byte(s) written.\n", n);
+		qDebug("%d byte(s) written", n);
 	}
 	
 	return n;
