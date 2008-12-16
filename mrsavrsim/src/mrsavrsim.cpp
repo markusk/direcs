@@ -408,6 +408,13 @@ QString Mrsavrsim::strippedName(const QString &fullFileName)
 
 Mrsavrsim::~Mrsavrsim()
 {
+	//-----------------------------
+	// close serial port
+	//-----------------------------
+	textEdit->append("Closing serial port...");
+	interface1->closeComPort();
+	qDebug("Bye.");
+	
 	delete simThread;
 	delete interface1;
 }
