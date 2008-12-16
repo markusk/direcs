@@ -88,6 +88,8 @@ class Mrsavrsim:public QMainWindow
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. simThread)
 		InterfaceAvr *interface1;
 		SimThread *simThread;
+		
+		QString serialPortMicrocontroller;
 };
 
 #endif

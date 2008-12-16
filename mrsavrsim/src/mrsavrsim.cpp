@@ -47,6 +47,28 @@ Mrsavrsim::Mrsavrsim()
 	connect(textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(documentWasModified()));
 	
 	setCurrentFile("");
+
+
+	serialPortMicrocontroller = "/dev/ttyLaserscannerRear";
+	
+	//-------------------------------------------------------
+	// Open serial port for microcontroller communication
+	//-------------------------------------------------------
+	textEdit->append(QString("Opening serial port '%1' for microcontroller communication...").arg(serialPortMicrocontroller));
+	
+	if (interface1->openComPort(serialPortMicrocontroller) == false)
+	{
+		qDebug() << "Error opening serial port" << serialPortMicrocontroller;
+		textEdit->append(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
+
+		// show a warning dialog!
+		//QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+		//msgbox.exec();
+	}
+	else
+	{
+		textEdit->append("Serial port opened.");
+	}
 }
 
 
