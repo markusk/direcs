@@ -70,31 +70,7 @@ Mrsavrsim::Mrsavrsim()
 	else
 	{
 		textEdit->append("Serial port opened.");
-	}
-}
-
-
-void Mrsavrsim::closeEvent(QCloseEvent *event)
-{
-      if (maybeSave()) {
-            writeSettings();
-            event->accept();
-      } else {
-            event->ignore();
-      }
-}
-
-
-void Mrsavrsim::simulateRobot()
-{
-	static bool toggle = false;
-	
-	
-	toggle = !toggle;
-	setCurrentFile("");
-	
-	if (toggle)
-	{
+		
 		//-------------------------
 		// start the sim thread
 		//-------------------------
@@ -105,44 +81,71 @@ void Mrsavrsim::simulateRobot()
 			textEdit->append("Robot simulation succesfuly started.");
 		}
 	}
-	else
+}
+
+
+/*
+void Mrsavrsim::closeEvent(QCloseEvent *event)
+{
+      if (maybeSave()) {
+            writeSettings();
+            event->accept();
+      } else {
+            event->ignore();
+      }
+}
+*/
+
+
+void Mrsavrsim::simulateRobot()
+{
+	setCurrentFile("");
+	
+	
+	if (simThread->isRunning())
 	{
 		//--------------------------
 		// quit the sim thread
 		//--------------------------
 		//qDebug("Starting to stop the sim thread NOW!");
-		if (simThread->isRunning() == true)
+		textEdit->append("Stopping simulation thread...");
+
+		// my own stop routine :-)
+		simThread->stop();
+
+		// slowing thread down
+		simThread->setPriority(QThread::IdlePriority);
+		simThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
 		{
-			textEdit->append("Stopping simulation thread...");
+		} while ((simThread->isFinished() == false) && (t.elapsed() <= 2000));
 
-			// my own stop routine :-)
-			simThread->stop();
-
-			// slowing thread down
-			simThread->setPriority(QThread::IdlePriority);
-			simThread->quit();
-
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-			QTime t;
-			t.start();
-			do
-			{
-			} while ((simThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-			if (simThread->isFinished() == true)
-			{
-				textEdit->append("Robot simulation stopped.");
-			}
-			else
-			{
-				textEdit->append("Terminating simulation thread because it doesn't answer...");
-				simThread->terminate();
-				simThread->wait(1000);
-				textEdit->append("Robot simulation terminated.");
-			}
+		if (simThread->isFinished() == true)
+		{
+			textEdit->append("Robot simulation stopped.");
 		}
+		else
+		{
+			textEdit->append("Terminating simulation thread because it doesn't answer...");
+			simThread->terminate();
+			simThread->wait(1000);
+			textEdit->append("Robot simulation terminated.");
+		}
+	}
+	else
+	{
+		//-------------------------
+		// start the sim thread
+		//-------------------------
+		textEdit->append("Starting robot simulation...");
+		simThread->start();
+		textEdit->append("Robot simulation succesfuly started.");
 	}
 }
 
@@ -408,6 +411,62 @@ QString Mrsavrsim::strippedName(const QString &fullFileName)
 }
 
 
+void Mrsavrsim::closeEvent(QCloseEvent *event)
+{
+	// no compiler warning "unused"
+	Q_UNUSED(event);
+
+
+	qDebug("closeEvent");
+	
+	qDebug("Shutting down...");
+	
+	if (simThread->isRunning())
+	{
+		//--------------------------
+		// quit the sim thread
+		//--------------------------
+		//qDebug("Starting to stop the sim thread NOW!");
+		textEdit->append("Stopping simulation thread...");
+
+		// my own stop routine :-)
+		simThread->stop();
+
+		// slowing thread down
+		simThread->setPriority(QThread::IdlePriority);
+		simThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((simThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (simThread->isFinished() == true)
+		{
+			textEdit->append("Robot simulation stopped.");
+		}
+		else
+		{
+			textEdit->append("Terminating simulation thread because it doesn't answer...");
+			simThread->terminate();
+			simThread->wait(1000);
+			textEdit->append("Robot simulation terminated.");
+		}
+	}
+	
+	
+	//-----------------------------
+	// close serial port
+	//-----------------------------
+	textEdit->append("Closing serial port...");
+	interface1->closeComPort();
+}
+
+
 void Mrsavrsim::message(QString message)
 {
 	textEdit->append(message);
@@ -416,11 +475,6 @@ void Mrsavrsim::message(QString message)
 
 Mrsavrsim::~Mrsavrsim()
 {
-	//-----------------------------
-	// close serial port
-	//-----------------------------
-	textEdit->append("Closing serial port...");
-	interface1->closeComPort();
 	qDebug("Bye.");
 	
 	delete simThread;
