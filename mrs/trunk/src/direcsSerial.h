@@ -68,7 +68,7 @@ class DirecsSerial : public QObject
 		@param dev_name the name of the serial device, e.g. /dev/ttyS0
 		@return 0 if everything is fine, -1 in case of an error.
 		**/
-		int openPort(int dev_fd, char *dev_name); // serial_connect
+//		int openPort(int dev_fd, char *dev_name); // serial_connect
 		
 		/**
 		for test reasons... :-)

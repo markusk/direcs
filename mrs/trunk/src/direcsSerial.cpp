@@ -31,7 +31,7 @@ DirecsSerial::~DirecsSerial()
 {
 }
 
-
+/*
 int DirecsSerial::openPort(int dev_fd, char *dev_name)
 {
 	int BAUDRATE = B9600;
@@ -69,7 +69,7 @@ int DirecsSerial::openPort(int dev_fd, char *dev_name)
 	tcsetattr(dev_fd, TCSANOW, &newtio);
 	return 0;
 }
-
+*/
 
 //bool DirecsSerial::openAtmelPort(int dev_fd, char *dev_name)
 bool DirecsSerial::openAtmelPort(char *dev_name)
@@ -579,7 +579,7 @@ int DirecsSerial::setLowLatency(int fd)
 	
 	if (result)
 	{
-		qDebug("Cannot get the serial attributes for low latency serial mode.\n Switching to normal mode");
+		qDebug("Cannot get the serial attributes for low latency serial mode. Switching to normal mode");
 		return result;
 	}
 	else
@@ -589,7 +589,7 @@ int DirecsSerial::setLowLatency(int fd)
 		ioctl(fd, TIOCSSERIAL, &serial); 
 		if (result)
 		{
-			qDebug("Cannot activeate low latency mode\nSwitching to normal mode");
+			qDebug("Cannot activeate low latency mode. Switching to normal mode");
 			return result;
 		}
 	}

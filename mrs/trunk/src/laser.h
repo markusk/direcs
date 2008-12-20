@@ -227,7 +227,7 @@ class Laser : public QObject
 		
 		typedef struct
 		{
-			int                fd;
+			int                fd; // this is the file descriptor
 			laser_model_t      type;
 			char               *ttyport;
 			int                baudrate;
