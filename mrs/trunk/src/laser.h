@@ -385,6 +385,11 @@ class Laser : public QObject
 		void sick_set_serial_params(sick_laser_p laser);
 		int kernel_minimum_version( int a, int b, int c );
 		void sick_set_baudrate(sick_laser_p laser, int brate);
+		
+		/**
+		This method opens the serial port of the laser scanner, sets the serial port parameters and tries to set the latency mode, if defined
+		@return the file descriptor of the opend serial port
+		*/
 		int sick_serial_connect(sick_laser_p laser);
 		
 		/**

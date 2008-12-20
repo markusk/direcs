@@ -1625,12 +1625,12 @@ int Laser::sick_connect_device(sick_laser_p laser)
 	sick_install_settings(laser);
 	sick_allocate_laser(laser);
 	
-	emit(message(QString("Connting Laser Scanner to %1...").arg(laser->dev.ttyport)));
+	emit(message(QString("Connecting Laser Scanner to %1...").arg(laser->dev.ttyport)));
 	sick_serial_connect(laser);
 	
 	if(laser->dev.fd == -1)
 	{
-		emit(message(QString("Connting Laser Scanner to %1...failed!").arg(laser->dev.ttyport)));
+		emit(message(QString("Connecting Laser Scanner to %1...failed!").arg(laser->dev.ttyport)));
 		return 1;
 	}
 	

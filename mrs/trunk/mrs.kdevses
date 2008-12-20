@@ -1,34 +1,28 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="9" >
+ <DocsAndViews NumberOfDocuments="7" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.h" >
    <View0 Encoding="" line="70" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.cpp" >
-   <View0 Encoding="" line="34" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="40" Type="Source" />
   </Doc2>
   <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/circuit.cpp" >
    <View0 Encoding="" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/mrs.h" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laser.cpp" >
-   <View0 Encoding="" line="37" Type="Source" />
+   <View0 Encoding="" line="1010" Type="Source" />
   </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laserThread.cpp" >
-   <View0 Encoding="" line="517" Type="Source" />
+  <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laser.h" >
+   <View0 Encoding="" line="389" Type="Source" />
   </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laserThread.h" >
-   <View0 Encoding="" line="100" Type="Source" />
-  </Doc7>
-  <Doc8 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/laser.h" >
-   <View0 Encoding="" line="223" Type="Source" />
-  </Doc8>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -39,6 +33,9 @@
     <breakpoint1 location="/home/markus/develop/mrs/mrs/trunk/src/direcsSerial.cpp:504" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint1>
+    <breakpoint2 location="/home/markus/develop/mrs/mrs/trunk/src/laser.cpp:32" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+     <tracedExpressions/>
+    </breakpoint2>
    </breakpointList>
    <showInternalCommands value="0" />
   </kdevdebugger>
