@@ -55,8 +55,11 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//qDebug("Opening with direcsSerial->openAtmelPort...");
 
 	// serial port config also done in openAtmelPort!
-	return serialPort->openAtmelPort(ba.data());
-	
+	//	return serialPort->openAtmelPort(ba.data()); // FIXME: this is the old branch!
+	if (serialPort->openPort( ba.data() ) != -1) //FIXME: This is the new branch
+		return true;
+	else
+		return false;
 	
 #else
 	if (serialPort->open(QIODevice::ReadWrite) == false)

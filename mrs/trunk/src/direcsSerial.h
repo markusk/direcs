@@ -69,6 +69,7 @@ class DirecsSerial : public QObject
 		@return 0 if everything is fine, -1 in case of an error.
 		**/
 //		int openPort(int dev_fd, char *dev_name); // serial_connect
+		int openPort(char *dev_name); // FIXME: this is the new branch, where to open the port like in laser.cpps sick_serial_connect !
 		
 		/**
 		for test reasons... :-)

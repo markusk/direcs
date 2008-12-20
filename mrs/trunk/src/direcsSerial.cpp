@@ -31,6 +31,41 @@ DirecsSerial::~DirecsSerial()
 {
 }
 
+
+int DirecsSerial::openPort(char *dev_name) // FIXME: this is the new branch, where to open the port like in laser.cpps sick_serial_connect !
+{
+	if ((dev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0)) < 0)
+	{
+		return (-1);
+	}
+	
+	/*
+	#ifdef CARMEN_LASER_LOW_LATENCY
+		serialPort->setLowLatency(laser->dev.fd);
+	#endif
+	*/
+	
+
+	// Contents of sick_set_serial_params(laser) placed here:
+	struct termios  ctio;
+		
+	tcgetattr(dev_fd, &ctio); /* save current port settings */
+	ctio.c_iflag = iSoftControl(laser->dev.swf) | IGNPAR;
+	ctio.c_oflag = 0;
+	//                   |  SW flow control  |  Parity 0  |  8 Databits  |  1 StopBit
+	ctio.c_cflag = CREAD |  CLOCAL           |  0         |  CS8         |  1;
+	ctio.c_lflag = 0;
+	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
+	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
+	cfsetispeed(&ctio, (speed_t) B9600;
+	cfsetospeed(&ctio, (speed_t) B9600;
+	tcflush(dev_fd, TCIFLUSH);
+	tcsetattr(dev_fd, TCSANOW, &ctio);
+	
+	return (dev_fd);
+}
+
+
 /*
 int DirecsSerial::openPort(int dev_fd, char *dev_name)
 {
