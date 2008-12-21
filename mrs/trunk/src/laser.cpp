@@ -1625,12 +1625,12 @@ int Laser::sick_connect_device(sick_laser_p laser)
 	sick_install_settings(laser);
 	sick_allocate_laser(laser);
 	
-	emit(message(QString("Connting Laser Scanner to %1...").arg(laser->dev.ttyport)));
+	emit(message(QString("Connecting Laser Scanner to %1...").arg(laser->dev.ttyport)));
 	sick_serial_connect(laser);
 	
 	if(laser->dev.fd == -1)
 	{
-		emit(message(QString("Connting Laser Scanner to %1...failed!").arg(laser->dev.ttyport)));
+		emit(message(QString("Connecting Laser Scanner to %1...failed!").arg(laser->dev.ttyport)));
 		return 1;
 	}
 	
@@ -1878,50 +1878,58 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 	#endif
 	/* read what is available in the buffer */
 	bytes_available = serialPort->numChars(laser->dev.fd);
-	if(bytes_available > LASER_BUFFER_SIZE - laser->buffer_position){
+	
+	if (bytes_available > LASER_BUFFER_SIZE - laser->buffer_position)
+	{
 		bytes_available = LASER_BUFFER_SIZE - laser->buffer_position;
 	}
+	
 	bytes_read = serialPort->readPort(laser->dev.fd, laser->buffer + laser->buffer_position, bytes_available);
 	
 	/* process at most one laser reading */
-	if(bytes_read > 0) {
-		if (laser->packet_timestamp<0.){
-		laser->packet_timestamp=carmen_get_time();
+	if(bytes_read > 0)
+	{
+		if (laser->packet_timestamp<0.)
+		{
+			laser->packet_timestamp=carmen_get_time();
 		}
+		
 		laser->buffer_position += bytes_read;
-		if(sick_valid_packet(laser->buffer + laser->processed_mark,
-				laser->buffer_position - laser->processed_mark,
-				&(laser->packet_offset), &(laser->packet_length))) {
-		laser->timestamp=laser->packet_timestamp;
-		sick_process_packet(laser, laser->buffer + laser->processed_mark +
-				laser->packet_offset + 4);
-		laser->packet_timestamp=-1.;
+		
+		if(sick_valid_packet(laser->buffer + laser->processed_mark, laser->buffer_position - laser->processed_mark, &(laser->packet_offset), &(laser->packet_length)))
+		{
+			laser->timestamp=laser->packet_timestamp;
+			sick_process_packet(laser, laser->buffer + laser->processed_mark + laser->packet_offset + 4);
+			laser->packet_timestamp=-1.;
 	
-		leftover = laser->buffer_position - laser->processed_mark - 
-			laser->packet_length;
-		laser->processed_mark += laser->packet_offset + laser->packet_length;
-		//PACKET_DROPPING
-		while (leftover>laser->packet_length) {
-			laser->processed_mark +=laser->packet_length;
-			leftover-=laser->packet_length;
-			// TODO: change std output
-			// fprintf(stderr,"D");
-		}
-		if(leftover == 0) {
-			laser->buffer_position = 0;
-			laser->processed_mark = 0;
-		}
+			leftover = laser->buffer_position - laser->processed_mark - laser->packet_length;
+			laser->processed_mark += laser->packet_offset + laser->packet_length;
+		
+			//PACKET_DROPPING
+			while (leftover>laser->packet_length)
+			{
+				laser->processed_mark +=laser->packet_length;
+				leftover-=laser->packet_length;
+				// TODO: change std output
+				// fprintf(stderr,"D");
+			}
+		
+			if(leftover == 0)
+			{
+				laser->buffer_position = 0;
+				laser->processed_mark = 0;
+			}
 		}
 	}
 	
 	
 	/* shift everything forward in the buffer, if necessary */
-	if(laser->buffer_position > LASER_BUFFER_SIZE / 2) {
-		memmove(laser->buffer, laser->buffer + laser->processed_mark,
-			laser->buffer_position - laser->processed_mark);
+	if(laser->buffer_position > LASER_BUFFER_SIZE / 2)
+	{
+		memmove(laser->buffer, laser->buffer + laser->processed_mark, laser->buffer_position - laser->processed_mark);
 		laser->buffer_position = laser->buffer_position - laser->processed_mark;
 		laser->processed_mark = 0;
-	} 
+	}
 }
 
 

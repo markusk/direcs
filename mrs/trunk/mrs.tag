@@ -39,39 +39,6 @@
     <class kind="class">Circuit</class>
   </compound>
   <compound kind="file">
-    <name>qrc_mrs.cpp</name>
-    <path>/home/markus/develop/mrs/mrs/trunk/src/debug/</path>
-    <filename>qrc__mrs_8cpp</filename>
-    <member kind="function">
-      <type></type>
-      <name>Q_CONSTRUCTOR_FUNCTION</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>784ede001d04b31b614a6db16f0f7cf3</anchor>
-      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_mrs)) int QT_MANGLE_NAMESPACE(qCleanupResources_mrs)()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
-      <name>qInitResources_mrs</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>b55aae3c149e0c206a95d32a9576422a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_BEGIN_NAMESPACE bool</type>
-      <name>qRegisterResourceData</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>qUnregisterResourceData</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>direcsSerial.cpp</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>direcsSerial_8cpp</filename>
@@ -1565,6 +1532,39 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>qrc_mrs.cpp</name>
+    <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
+    <filename>qrc__mrs_8cpp</filename>
+    <member kind="function">
+      <type></type>
+      <name>Q_CONSTRUCTOR_FUNCTION</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>784ede001d04b31b614a6db16f0f7cf3</anchor>
+      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_mrs)) int QT_MANGLE_NAMESPACE(qCleanupResources_mrs)()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
+      <name>qInitResources_mrs</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>b55aae3c149e0c206a95d32a9576422a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_BEGIN_NAMESPACE bool</type>
+      <name>qRegisterResourceData</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>qUnregisterResourceData</name>
+      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>QtGLContext.cpp</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>QtGLContext_8cpp</filename>
@@ -2677,8 +2677,8 @@
       <type>int</type>
       <name>closePort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>9207657d633e387dd5dc39caf5ed531a</anchor>
-      <arglist>(int dev_fd)</arglist>
+      <anchor>4e14ccd1236192ddc3d50505a86cea6d</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -2705,15 +2705,22 @@
       <type>bool</type>
       <name>openAtmelPort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>ac989241b318ee83978ec3fa9e4eff5b</anchor>
-      <arglist>(int *dev_fd, char *dev_name)</arglist>
+      <anchor>71d56a70d13dfee3847288a40f38f73a</anchor>
+      <arglist>(char *dev_name)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
       <name>openPort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>5b74d145e1a487dbe1e9cdbf5364502f</anchor>
-      <arglist>(int *dev_fd, char *dev_name)</arglist>
+      <anchor>e5dfbe3ccdac9a100464e6d3cca866ea</anchor>
+      <arglist>(int dev_fd, char *dev_name)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>readAtmelPort</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>72878aa61a2c92cf0558807c61e32116</anchor>
+      <arglist>(unsigned char *buf, int nChars)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -2740,8 +2747,8 @@
       <type>int</type>
       <name>writeAtmelPort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>093fcf3303c5e3fb9ea0cbd340a4ed6c</anchor>
-      <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
+      <anchor>db7755e3d0394640748e0f8f71928b65</anchor>
+      <arglist>(unsigned char *c, int nChars)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -2763,6 +2770,13 @@
       <anchorfile>classDirecsSerial.html</anchorfile>
       <anchor>39985474030619f18b5e88edb6739ef8</anchor>
       <arglist>(int fd __attribute__((unused)))</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>dev_fd</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>0df7352f68aad0bc7c78db25570df90c</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -3138,6 +3152,34 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>d977f0b2050bdfd4e8181b8772482df9</anchor>
       <arglist>(QCloseEvent *event)</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>on_btnMotor1_clicked</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>92d49101672080dd39e01cbe7d39e8ea</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>on_btnMotor2_clicked</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>8b16c5d53201b9b1bc2a9b2eff7198e3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>on_btnMotor3_clicked</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>15d88e0194aa5c4c66368768d5df2017</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>on_btnMotor4_clicked</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>6021e13e1414f5db79571700a09fdd24</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="slot" protection="private">
       <type>void</type>
@@ -3613,6 +3655,27 @@
       <name>MOTOR1</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>3ba1f9d883d744c1582274d47772cafc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1BW</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>c5f92a308ccafd371778a2dc1a14bc00</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1FW</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>7a10c6f251987f205c26fd0e06d4e038</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1OFF</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>4a2963c36935ab5b66d6e05269ff488b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4153,8 +4216,8 @@
       <type>bool</type>
       <name>receiveChar</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>2e5ce2e0ac51ee52c46aef54215710fb</anchor>
-      <arglist>(char *character)</arglist>
+      <anchor>2c96dad63e7ac544967c4b1e6283ddb8</anchor>
+      <arglist>(unsigned char *character)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -4167,8 +4230,8 @@
       <type>bool</type>
       <name>sendChar</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>239d759eb6f6e89c1f1ec02d3563ffbb</anchor>
-      <arglist>(char character)</arglist>
+      <anchor>b65e275f6616bba685a7df2b19e2eb0e</anchor>
+      <arglist>(unsigned char character)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -7026,6 +7089,27 @@
       <name>MOTOR1</name>
       <anchorfile>classMrs.html</anchorfile>
       <anchor>250bb4aa8b1beacaaa1f62d86de8d8c7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1BW</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>9595d322c027c850b01e339d16d73823</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1FW</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>b8309b0429b462c67af1f141eb703a74</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1OFF</name>
+      <anchorfile>classMrs.html</anchorfile>
+      <anchor>7599a10d84918366d22ec8ec761a92c5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -10708,12 +10792,6 @@
     </member>
   </compound>
   <compound kind="dir">
-    <name>mrs/trunk/src/debug/</name>
-    <path>/home/markus/develop/mrs/mrs/trunk/src/debug/</path>
-    <filename>dir_b7e3a7e3d699ab853204c539c83d079a.html</filename>
-    <file>qrc_mrs.cpp</file>
-  </compound>
-  <compound kind="dir">
     <name>mrs/</name>
     <path>/home/markus/develop/mrs/mrs/</path>
     <filename>dir_888f1a24b07b8718275397a16edc9252.html</filename>
@@ -10723,7 +10801,6 @@
     <name>mrs/trunk/src/</name>
     <path>/home/markus/develop/mrs/mrs/trunk/src/</path>
     <filename>dir_31bb2ffc3ea2c3c0101206aa95f93310.html</filename>
-    <dir>mrs/trunk/src/debug/</dir>
     <dir>mrs/trunk/src/test/</dir>
     <file>aboutDialog.cpp</file>
     <file>aboutDialog.h</file>
@@ -10768,6 +10845,7 @@
     <file>posix_qextserialport.h</file>
     <file>qextserialbase.h</file>
     <file>qextserialport.h</file>
+    <file>qrc_mrs.cpp</file>
     <file>QtGLContext.cpp</file>
     <file>QtGLContext.h</file>
     <file>sensorThread.cpp</file>

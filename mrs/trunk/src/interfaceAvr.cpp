@@ -52,11 +52,11 @@ bool InterfaceAvr::openComPort(QString comPort)
 	}
 	
 
-	//qDebug("Opening with direcsSerial->openAtmelPort...");
-
 	// serial port config also done in openAtmelPort!
-	return serialPort->openAtmelPort(ba.data());
-	
+	if (serialPort->openAtmelPort( ba.data() ) != -1)
+		return true;
+	else
+		return false;
 	
 #else
 	if (serialPort->open(QIODevice::ReadWrite) == false)
@@ -86,7 +86,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 void InterfaceAvr::closeComPort()
 {
 #ifdef _TTY_POSIX_
-	serialPort->closePort();
+	serialPort->closeAtmelPort();
 #else
 	serialPort->close();
 #endif
@@ -128,8 +128,8 @@ bool InterfaceAvr::sendChar(unsigned char character)
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
 #ifdef _TTY_POSIX_
-	//qDebug("Receiving char with direcsSerial...");
-	return serialPort->readAtmelPort(character, 1);
+	// reading one char
+	return serialPort->readAtmelPort(character, 1); // TODO: check, how many chars are availabe ( numChars() )
 #else
 	// QextSerialPort code, when using Windows
 	return serialPort->getChar(character);

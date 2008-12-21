@@ -62,18 +62,12 @@ class DirecsSerial : public QObject
 		~DirecsSerial();
 	
 		/**
-		Open a connection to the serial line
+		Open a connection to the serial line. This method is only used for the atmel serial port! *Not* for the laser scanners!
 		
-		@param dev_fd returns the file descriptor associated to the serial line
-		@param dev_name the name of the serial device, e.g. /dev/ttyS0
-		@return 0 if everything is fine, -1 in case of an error.
+		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
+		@return the file descriptor if everything is fine, -1 in case of an error.
 		**/
-		int openPort(int dev_fd, char *dev_name); // serial_connect
-		
-		/**
-		for test reasons... :-)
-		*/
-		bool openAtmelPort(char *dev_name);
+		int openAtmelPort(char *dev_name);
 		
 		/**
 		Sets the parameters for (a connected) serial line.
@@ -114,7 +108,7 @@ class DirecsSerial : public QObject
 		for test reasons... :-)
 		*/
 		int writeAtmelPort(unsigned char *c, int nChars);
-
+		
 		/**
 		Reads data from the serial line
 		
@@ -125,19 +119,21 @@ class DirecsSerial : public QObject
 		**/
 		int readPort(int dev_fd, unsigned char *buf, int nChars);
 		
+		
 		/**
 		for test reasons... :-)
 		 */
 		int readAtmelPort(unsigned char *buf, int nChars);
 		
-		/**
-		Closes the file descriptior.
 		
-		@param dev_fd The file descriptor associated to the serial line.
-		@return The results reported by close.
+		/**
+		Closes the serial port.
+		
+		@return the results reported by close.
 		**/
-		int closePort();
-
+		int closeAtmelPort();
+		
+		
 		/**
 		Sets the serial port parameters
 		@param fd The file descriptor associated to the serial port.
