@@ -131,6 +131,9 @@ class DirecsSerial : public QObject
 		 */
 		int readAtmelPort(unsigned char *buf, int nChars);
 		
+		/// Test branch:
+		int readPortSick(unsigned char *buf, int nChars);
+		
 		/**
 		Closes the file descriptior.
 		

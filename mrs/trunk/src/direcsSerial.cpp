@@ -50,15 +50,15 @@ int DirecsSerial::openPort(char *dev_name) // FIXME: this is the new branch, whe
 	struct termios  ctio;
 		
 	tcgetattr(dev_fd, &ctio); /* save current port settings */
-	ctio.c_iflag = iSoftControl(laser->dev.swf) | IGNPAR;
+	ctio.c_iflag = IXON | IGNPAR; // TODO: IXON oder IXOFF ?!?? < < < <
 	ctio.c_oflag = 0;
 	//                   |  SW flow control  |  Parity 0  |  8 Databits  |  1 StopBit
 	ctio.c_cflag = CREAD |  CLOCAL           |  0         |  CS8         |  1;
 	ctio.c_lflag = 0;
 	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
 	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
-	cfsetispeed(&ctio, (speed_t) B9600;
-	cfsetospeed(&ctio, (speed_t) B9600;
+	cfsetispeed(&ctio, (speed_t) B9600);
+	cfsetospeed(&ctio, (speed_t) B9600);
 	tcflush(dev_fd, TCIFLUSH);
 	tcsetattr(dev_fd, TCSANOW, &ctio);
 	
@@ -523,14 +523,50 @@ int DirecsSerial::writeAtmelPort(unsigned char *c, int nChars)
 	if (n < 0)
 	{
 		// error
-		fputs("write() of n bytes failed!\n", stderr);
+		qDebug("write() of n bytes failed!\n", stderr);
 	}
 	else
 	{
-		//printf("%d byte(s) written.\n", n);
+		//qDebug("%1 byte(s) written.", n);
 	}
 	
 	return n;
+}
+
+
+
+
+// FIXME make my own readPort   o r    do a numBytes availble in interfaceAvfr !!
+int DirecsSerial::readPortSick(unsigned char *buf, int nChars)
+{
+	//
+	// Code from readPort !!
+	//
+	int amountRead = 0, bytes_read = 0;
+	struct timeval t;
+	fd_set set;
+	int err;
+	
+	while(nChars > 0)
+	{
+		t.tv_sec = 0;
+		t.tv_usec = READ_TIMEOUT;
+		FD_ZERO(&set);
+		FD_SET(dev_fd, &set);
+		err = select(dev_fd + 1, &set, NULL, NULL, &t);
+		if(err == 0)
+			return -2;
+	
+		amountRead = read(dev_fd, buf, nChars);
+		if(amountRead < 0 && errno != EWOULDBLOCK)
+			return -1;
+		else if(amountRead > 0) {
+			bytes_read += amountRead;
+			nChars -= amountRead;
+			buf += amountRead;
+		}
+	}
+	return bytes_read;
 }
 
 

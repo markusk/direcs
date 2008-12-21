@@ -132,7 +132,8 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 {
 #ifdef _TTY_POSIX_
 	//qDebug("Receiving char with direcsSerial...");
-	return serialPort->readAtmelPort(character, 1);
+	//return serialPort->readAtmelPort(character, 1);
+	return serialPort->readPortSick(character, 1); // FIXME: This is the new branch. Using readPort instead of readAtmelPort
 #else
 	// QextSerialPort code, when using Windows
 	return serialPort->getChar(character);
