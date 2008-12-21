@@ -319,7 +319,7 @@ void Mrs::init()
 
 	if (robotIsOn)
 	{
-		gui->appendLog("Robot is ON and answers.");
+		gui->appendLog("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 
 		//-------------------------------------------------------
 		// set the read motor speed
