@@ -32,14 +32,17 @@ DirecsSerial::~DirecsSerial()
 }
 
 
-int DirecsSerial::openPort(char *dev_name) // FIXME: this is the new branch, where to open the port like in laser.cpps sick_serial_connect !
+int DirecsSerial::openAtmelPort(char *dev_name)
 {
+	// This method is only used for the atmel serial port!
+	// *Not* for the laser scanners!
 	if ((dev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0)) < 0)
 	{
 		return (-1);
 	}
 	
 	/*
+	Original code in sick_serial_conect:
 	#ifdef CARMEN_LASER_LOW_LATENCY
 		serialPort->setLowLatency(laser->dev.fd);
 	#endif
@@ -63,130 +66,6 @@ int DirecsSerial::openPort(char *dev_name) // FIXME: this is the new branch, whe
 	tcsetattr(dev_fd, TCSANOW, &ctio);
 	
 	return (dev_fd);
-}
-
-
-/*
-int DirecsSerial::openPort(int dev_fd, char *dev_name)
-{
-	int BAUDRATE = B9600;
-	struct termios newtio;
-	
-	dev_fd = open(dev_name, O_RDWR | O_SYNC | O_NOCTTY, 0);
-	if(dev_fd < 0) {
-		fprintf(stderr,"Serial I/O Error:  Could not open port %s\n", dev_name);
-		return -1;
-	}
-	
-	//--------------------------------------------------
-	// configuring the serial port.
-	// these settings can be changed with setParms() !
-	//--------------------------------------------------
-	
-	// get the current options for the port
-	tcgetattr(dev_fd, &newtio);
-	
-	// setting the baud rate
-	cfsetispeed(&newtio, BAUDRATE);
-	cfsetospeed(&newtio, BAUDRATE);
-	
-	newtio.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-	newtio.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON | IXOFF);
-	newtio.c_cflag &= ~(CSIZE | PARENB | PARODD);
-	
-	newtio.c_cflag |= (CS8); // 8 Bit
-	newtio.c_oflag &= ~(OPOST);
-	newtio.c_cc[VTIME] = 1;
-	newtio.c_cc[VMIN] = 0;
-	// flush
-	tcflush(dev_fd, TCIFLUSH);
-	// set the options now
-	tcsetattr(dev_fd, TCSANOW, &newtio);
-	return 0;
-}
-*/
-
-//bool DirecsSerial::openAtmelPort(int dev_fd, char *dev_name)
-bool DirecsSerial::openAtmelPort(char *dev_name)
-{
-	//--------------------------------------------------
-	// This is now original code from test/serial.c !
-	//--------------------------------------------------
-	
-	/*
-	The O_NOCTTY flag tells UNIX that this program doesn't want to be the "controlling terminal" for that port.
-	If you don't specify this then any input (such as keyboard abort signals and so forth) will affect your process.
-	Programs like getty(1M/8) use this feature when starting the login process, but normally a user program does not want this behavior.
-	
-	The O_NDELAY flag tells UNIX that this program doesn't care what state the DCD signal line is in - whether the other end of the port is up and running.
-	If you do not specify this flag, your process will be put to sleep until the DCD signal line is the space voltage.
-	*/
-	dev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NDELAY);
-	
-	if (dev_fd == -1)
-	{
-		/*
-		* Could not open the port.
-		*/
-		qDebug("open_port: Unable to open %1", dev_name);
-		return false;
-	}
-	else
-	{
-		fcntl(dev_fd, F_SETFL, 0);
-	}
-	
-	
-	//--------------------------------------------------
-	// configure_port
-	//--------------------------------------------------
-	struct termios options;	
-	
-	/*
-	* GET the current options for the port...
-	*/
-	tcgetattr(dev_fd, &options);
-	
-	/*
-	* Setting the baud rate.
-	*/
-	cfsetispeed(&options, B9600);
-	cfsetospeed(&options, B9600);
-	
-	/*
-	* Enable the receiver and set local mode...
-	*/
-	options.c_cflag |= (CLOCAL | CREAD);
-
-	/*
-	* Setting the Character Size
-	*/
-	options.c_cflag &= ~CSIZE; /* Mask the character size bits */
-	options.c_cflag |= CS8;    /* Select 8 data bits */
-
-	/*
-	* Setting Parity Checking
-	*/
-	// No parity (8N1)
-	options.c_cflag &= ~PARENB;
-	options.c_cflag &= ~CSTOPB;
-	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
-
-	/*
-	* Disabling Hardware Flow Control (Also called CRTSCTS)
-	*/
-	options.c_cflag &= ~CRTSCTS;
-	
-	/*
-	* SET the new options for the port...
-	*/
-	tcsetattr(dev_fd, TCSANOW, &options);
-
-	// FLUSH
-	fcntl(dev_fd, F_SETFL, 0);
-	
-	return true;
 }
 
 
@@ -534,13 +413,11 @@ int DirecsSerial::writeAtmelPort(unsigned char *c, int nChars)
 }
 
 
-
-
-// FIXME make my own readPort   o r    do a numBytes availble in interfaceAvfr !!
-int DirecsSerial::readPortSick(unsigned char *buf, int nChars)
+int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 {
 	//
-	// Code from readPort !!
+	// Original code from method readPort
+	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
 	//
 	int amountRead = 0, bytes_read = 0;
 	struct timeval t;
@@ -600,38 +477,8 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
-//int DirecsSerial::readAtmelPort(int dev_fd, unsigned char *buf, int nChars)
-int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
-{
-	//--------------------------------------------------
-	// This is now original code from test/serial.c !
-	//--------------------------------------------------
-	int amountRead = 0, bytes_read = 0;
-	
-	
-	/*
-	Reading Data from the Port
-	Reading data from a port is a little trickier.
-	When you operate the port in raw data mode, each read system call will return the number of characters that are actually available in the serial input buffers.
-	If no characters are available, the call will block (wait) until characters come in, an interval timer expires, or an error occurs.
-	The read function can be made to return immediately by doing the following.
-	*/
-	fcntl(dev_fd, F_SETFL, FNDELAY);
 
-	/*
-	The FNDELAY option causes the read function to return 0 if no characters are available on the port.
-	To restore normal (blocking) behavior, call fcntl() without the FNDELAY option.
-	This is also used after opening a serial port with the O_NDELAY option.
-	*/
-	fcntl(dev_fd, F_SETFL, 0);
-	
-	// read!
-	amountRead = read(dev_fd, buf, nChars);
-}
-
-
-//int DirecsSerial::closePort(int dev_fd)
-int DirecsSerial::closePort()
+int DirecsSerial::closeAtmelPort()
 {
   return close(dev_fd);
 }
