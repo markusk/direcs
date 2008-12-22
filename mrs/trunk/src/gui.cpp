@@ -871,8 +871,8 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					ui.lblPower2->setEnabled(true);
 					ui.lblPower2->setPalette(QPalette(labelFillColorGreen));
 
-					ui.lblDirection1->setEnabled(true);
-					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
+					ui.lblDirection2->setEnabled(true);
+					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
 					//ui.lblPower2->setText("OFF");
