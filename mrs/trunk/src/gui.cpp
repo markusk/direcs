@@ -1189,6 +1189,60 @@ void Gui::on_radioBtnMotor1OFF_clicked()
 }
 
 
+void Gui::on_radioBtnMotor2FW_clicked()
+{
+	emit drive(MOTOR2FW);
+}
+
+
+void Gui::on_radioBtnMotor2BW_clicked()
+{
+	emit drive(MOTOR2BW);
+}
+
+
+void Gui::on_radioBtnMotor2OFF_clicked()
+{
+	emit drive(MOTOR2OFF);
+}
+
+
+void Gui::on_radioBtnMotor3FW_clicked()
+{
+	emit drive(MOTOR3FW);
+}
+
+
+void Gui::on_radioBtnMotor3BW_clicked()
+{
+	emit drive(MOTOR3BW);
+}
+
+
+void Gui::on_radioBtnMotor3OFF_clicked()
+{
+	emit drive(MOTOR3OFF);
+}
+
+
+void Gui::on_radioBtnMotor4FW_clicked()
+{
+	emit drive(MOTOR4FW);
+}
+
+
+void Gui::on_radioBtnMotor4BW_clicked()
+{
+	emit drive(MOTOR4BW);
+}
+
+
+void Gui::on_radioBtnMotor4OFF_clicked()
+{
+	emit drive(MOTOR4OFF);
+}
+
+
 void Gui::on_actionRemote_activated()
 {
 	// if remote control is enabled, disable some controls in the GUI
@@ -2099,15 +2153,16 @@ void Gui::initializePlots()
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
 
-	col = labelFillColorBlue;
+	col = labelFillColorRed;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
 
-/*
+
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3
 	//--------------------------------------
+	/*
 	ui.qwtPlotCurrent3->setTitle("Motor 3");
 
 	// Set axis titles
@@ -2119,7 +2174,7 @@ void Gui::initializePlots()
 	ui.qwtPlotCurrent3->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-
+	*/
 	col = labelFillColorBlue;
 	curve3.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve3.setPen(QPen(col));
@@ -2129,6 +2184,7 @@ void Gui::initializePlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 4
 	//--------------------------------------
+	/*
 	ui.qwtPlotCurrent4->setTitle("Motor 4");
 
 	// Set axis titles
@@ -2140,12 +2196,11 @@ void Gui::initializePlots()
 	ui.qwtPlotCurrent4->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (1000 mA, Step 200)
 	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
-
-	col = labelFillColorBlue;
+	*/
+	col = labelFillColorRed;
 	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve4.setPen(QPen(col));
 	curve4.setBrush(col);
-*/	
 #endif
 }
 

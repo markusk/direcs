@@ -386,6 +386,15 @@ class Gui : public QMainWindow
 		void on_radioBtnMotor1FW_clicked();
 		void on_radioBtnMotor1BW_clicked();
 		void on_radioBtnMotor1OFF_clicked();
+		void on_radioBtnMotor2FW_clicked();
+		void on_radioBtnMotor2BW_clicked();
+		void on_radioBtnMotor2OFF_clicked();
+		void on_radioBtnMotor3FW_clicked();
+		void on_radioBtnMotor3BW_clicked();
+		void on_radioBtnMotor3OFF_clicked();
+		void on_radioBtnMotor4FW_clicked();
+		void on_radioBtnMotor4BW_clicked();
+		void on_radioBtnMotor4OFF_clicked();
 
 		/**
 		Saves the current picture to disk (one time shot).
@@ -455,6 +464,15 @@ class Gui : public QMainWindow
 		static const unsigned char MOTOR1FW		= 10; /// for the test widget
 		static const unsigned char MOTOR1BW		= 11; /// for the test widget
 		static const unsigned char MOTOR1OFF	= 12; /// for the test widget
+		static const unsigned char MOTOR2FW		= 13; /// for the test widget
+		static const unsigned char MOTOR2BW		= 14; /// for the test widget
+		static const unsigned char MOTOR2OFF	= 15; /// for the test widget
+		static const unsigned char MOTOR3FW		= 16; /// for the test widget
+		static const unsigned char MOTOR3BW		= 17; /// for the test widget
+		static const unsigned char MOTOR3OFF	= 18; /// for the test widget
+		static const unsigned char MOTOR4FW		= 19; /// for the test widget
+		static const unsigned char MOTOR4BW		= 20; /// for the test widget
+		static const unsigned char MOTOR4OFF	= 21; /// for the test widget
 
 		static const unsigned char CLOCKWISE        = 0;  /** Motor direction "CLOCKWISE" */
 		static const unsigned char COUNTERCLOCKWISE = 1;  /** Motor direction "COUNTERCLOCKWISE" */

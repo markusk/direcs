@@ -297,6 +297,15 @@ class Mrs : public QObject
 		static const unsigned char MOTOR1FW		= 10;
 		static const unsigned char MOTOR1BW		= 11;
 		static const unsigned char MOTOR1OFF	= 12;
+		static const unsigned char MOTOR2FW		= 13;
+		static const unsigned char MOTOR2BW		= 14;
+		static const unsigned char MOTOR2OFF	= 15;
+		static const unsigned char MOTOR3FW		= 16;
+		static const unsigned char MOTOR3BW		= 17;
+		static const unsigned char MOTOR3OFF	= 18;
+		static const unsigned char MOTOR4FW		= 19;
+		static const unsigned char MOTOR4BW		= 20;
+		static const unsigned char MOTOR4OFF	= 21;
 		
 		/**
 		Give the sensors some names
