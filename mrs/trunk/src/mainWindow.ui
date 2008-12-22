@@ -557,7 +557,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lblDirection1_2" >
+           <widget class="QLabel" name="lblDirection3" >
             <property name="enabled" >
              <bool>false</bool>
             </property>
@@ -728,7 +728,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lblDirection1_3" >
+           <widget class="QLabel" name="lblDirection4" >
             <property name="enabled" >
              <bool>false</bool>
             </property>

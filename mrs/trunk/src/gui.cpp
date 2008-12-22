@@ -812,7 +812,6 @@ void Gui::showAlarm(short int sensor, bool state)
 
 void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char direction)
 {
-	// show the motor status with the radio buttons
 	switch (motor)
 	{
 		//-------------
@@ -821,18 +820,14 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (power)
 			{
 				case ON:
-					//ui.lblPower1->setText("ON");
 					ui.lblPower1->setEnabled(true);
 					ui.lblPower1->setPalette(QPalette(labelFillColorGreen));
-
 					ui.lblDirection1->setEnabled(true);
 					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
-					//ui.lblPower1->setText("OFF");
 					ui.lblPower1->setEnabled(false);
 					ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
-
 					ui.lblDirection1->setEnabled(false);
 					ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
@@ -846,19 +841,15 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					ui.lblDirection1->setText("BACKWARD");
 					ui.lblDirection1->setEnabled(true);
 					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
-					return;
 					break;
 				case COUNTERCLOCKWISE:
 					ui.lblDirection1->setText("FORWARD");
 					ui.lblDirection1->setEnabled(true);
 					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
-					return;
 					break;
 				case SAME:
-					return;
 					break;
 			}
-			return;
 			break;
 
 		//-------------
@@ -867,18 +858,14 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (power)
 			{
 				case ON:
-					//ui.lblPower2->setText("ON");
 					ui.lblPower2->setEnabled(true);
 					ui.lblPower2->setPalette(QPalette(labelFillColorGreen));
-
 					ui.lblDirection2->setEnabled(true);
 					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
-					//ui.lblPower2->setText("OFF");
 					ui.lblPower2->setEnabled(false);
 					ui.lblPower2->setPalette(QPalette(QColor(255, 255, 255)));
-
 					ui.lblDirection2->setEnabled(false);
 					ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
@@ -892,21 +879,93 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					ui.lblDirection2->setText("BACKWARD");
 					ui.lblDirection2->setEnabled(true);
 					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
-					return;
 					break;
 				case COUNTERCLOCKWISE:
 					ui.lblDirection2->setText("FORWARD");
 					ui.lblDirection2->setEnabled(true);
 					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
-					return;
 					break;
 				case SAME:
-					return;
 					break;
 			}
-			return;
 			break;
-	}
+
+		//-------------
+		case MOTOR3:
+		//-------------
+			switch (power)
+			{
+				case ON:
+					ui.lblPower3->setEnabled(true);
+					ui.lblPower3->setPalette(QPalette(labelFillColorGreen));
+					ui.lblDirection3->setEnabled(true);
+					ui.lblDirection3->setPalette(QPalette(labelFillColorGreen));
+					break;
+				case OFF:
+					ui.lblPower3->setEnabled(false);
+					ui.lblPower3->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.lblDirection3->setEnabled(false);
+					ui.lblDirection3->setPalette(QPalette(QColor(255, 255, 255)));
+					break;
+				case SAME:
+					break;
+			}
+
+			switch (direction)
+			{
+				case CLOCKWISE:
+					ui.lblDirection3->setText("BACKWARD");
+					ui.lblDirection3->setEnabled(true);
+					ui.lblDirection3->setPalette(QPalette(labelFillColorGreen));
+					break;
+				case COUNTERCLOCKWISE:
+					ui.lblDirection3->setText("FORWARD");
+					ui.lblDirection3->setEnabled(true);
+					ui.lblDirection3->setPalette(QPalette(labelFillColorGreen));
+					break;
+				case SAME:
+					break;
+			}
+			break;
+
+		//-------------
+		case MOTOR4:
+		//-------------
+			switch (power)
+			{
+				case ON:
+					ui.lblPower4->setEnabled(true);
+					ui.lblPower4->setPalette(QPalette(labelFillColorGreen));
+					ui.lblDirection4->setEnabled(true);
+					ui.lblDirection4->setPalette(QPalette(labelFillColorGreen));
+					break;
+				case OFF:
+					ui.lblPower4->setEnabled(false);
+					ui.lblPower4->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.lblDirection4->setEnabled(false);
+					ui.lblDirection4->setPalette(QPalette(QColor(255, 255, 255)));
+					break;
+				case SAME:
+					break;
+			}
+
+			switch (direction)
+			{
+				case CLOCKWISE:
+					ui.lblDirection4->setText("BACKWARD");
+					ui.lblDirection4->setEnabled(true);
+					ui.lblDirection4->setPalette(QPalette(labelFillColorGreen));
+					break;
+				case COUNTERCLOCKWISE:
+					ui.lblDirection4->setText("FORWARD");
+					ui.lblDirection4->setEnabled(true);
+					ui.lblDirection4->setPalette(QPalette(labelFillColorGreen));
+					break;
+				case SAME:
+					break;
+			}
+			break;
+	} // switch
 }
 
 

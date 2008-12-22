@@ -338,10 +338,10 @@ class Mrs : public QObject
 		static const unsigned char CLOCKWISE        = 0;  /// Motor direction "CLOCKWISE"
 		static const unsigned char COUNTERCLOCKWISE = 1;  /// Motor direction "COUNTERCLOCKWISE"
 		static const unsigned char SAME             = 3;  /// Motor direction/power "same like before"
-		static const unsigned char MOTOR1           = 10; /// Motor 1 (drive)
-		static const unsigned char MOTOR2           = 20; /// Motor 2 (drive)
-		static const unsigned char MOTOR3           = 30; /// Motor 3 (camera pan)
-		static const unsigned char MOTOR4           = 40; /// Motor 4 (camera pan)
+		static const unsigned char MOTOR1           = 10; /// Motor 1 front left
+		static const unsigned char MOTOR2           = 20; /// Motor 2 front right
+		static const unsigned char MOTOR3           = 30; /// Motor 3 back left
+		static const unsigned char MOTOR4           = 40; /// Motor 4 back right
 		
 		/// The motor sensors
 		static const short int MOTORSENSOR1 = 0;
