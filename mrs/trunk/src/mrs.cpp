@@ -1698,6 +1698,8 @@ void Mrs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
 				motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			}
+			return;
+			break;
 		case MOTOR1BW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
@@ -1705,6 +1707,8 @@ void Mrs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
 				motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
 			}
+			return;
+			break;
 		case MOTOR1OFF: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
@@ -1712,6 +1716,8 @@ void Mrs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
 				motors->motorControl(MOTOR1, OFF, SAME);
 			}
+			return;
+			break;
 	}
 }
 

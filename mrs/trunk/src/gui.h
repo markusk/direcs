@@ -383,10 +383,9 @@ class Gui : public QMainWindow
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);
-		void on_btnMotor1_clicked();
-		void on_btnMotor2_clicked();
-		void on_btnMotor3_clicked();
-		void on_btnMotor4_clicked();
+		void on_radioBtnMotor1FW_clicked();
+		void on_radioBtnMotor1BW_clicked();
+		void on_radioBtnMotor1OFF_clicked();
 
 		/**
 		Saves the current picture to disk (one time shot).

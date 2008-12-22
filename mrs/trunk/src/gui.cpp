@@ -94,6 +94,7 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
 
+	
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
@@ -370,61 +371,6 @@ void Gui::on_btnResetMovement2_clicked()
 	// reset labels
 	ui.labelDrivenDistance2->setText("0 cm");
 	ui.labelRevolutions2->setText("0");
-}
-
-
-void Gui::on_btnMotor1_clicked()
-{
-	if (ui.btnMotor1->isChecked())
-	{
-		if (ui.radioBtnMotor1FW->isChecked())
-			emit drive(MOTOR1FW);
-		else
-			emit drive(MOTOR1BW);
-	}
-	else
-	{
-			emit drive(MOTOR1OFF);
-	}
-}
-
-
-void Gui::on_btnMotor2_clicked()
-{
-	if (ui.btnMotor1->isChecked())
-	{
-		appendLog("motor 2 an");
-	}
-	else
-	{
-		appendLog("motor 2 aus");
-	}
-}
-
-
-void Gui::on_btnMotor3_clicked()
-{
-	if (ui.btnMotor1->isChecked())
-	{
-		appendLog("motor 3 an");
-	}
-	else
-	{
-		appendLog("motor 3 aus");
-	}
-}
-
-
-void Gui::on_btnMotor4_clicked()
-{
-	if (ui.btnMotor1->isChecked())
-	{
-		appendLog("motor 4 an");
-	}
-	else
-	{
-		appendLog("motor 4 aus");
-	}
 }
 
 
@@ -1179,10 +1125,10 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 	curve2.setData(xval, yval, size);
 
 	// attach data to curve
-	curve2.attach(ui.qwtPlotCurrent2);
+	curve2.attach(ui.qwtPlotCurrent1); // add curve to qwtPlot 1 !!
 
 	// after changing the values, replot the curve
-	ui.qwtPlotCurrent2->replot();
+	ui.qwtPlotCurrent1->replot(); // replot qwtPlot 1 !!
 	#endif
 }
 
@@ -1198,10 +1144,10 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 	curve3.setData(xval, yval, size);
 
 	// attach data to curve
-	curve3.attach(ui.qwtPlotCurrent3);
+	curve3.attach(ui.qwtPlotCurrent2); // curve 3 to qwtPlot 2
 
 	// after changing the values, replot the curve
-	ui.qwtPlotCurrent3->replot();
+	ui.qwtPlotCurrent2->replot();
 	#endif
 }
 
@@ -1217,11 +1163,29 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 	curve4.setData(xval, yval, size);
 
 	// attach data to curve
-	curve4.attach(ui.qwtPlotCurrent4);
+	curve4.attach(ui.qwtPlotCurrent2); // curve 4 to qwtPlot 2
 
 	// after changing the values, replot the curve
-	ui.qwtPlotCurrent4->replot();
+	ui.qwtPlotCurrent2->replot();  // replot qwtPlot 2 !!
 	#endif
+}
+
+
+void Gui::on_radioBtnMotor1FW_clicked()
+{
+	emit drive(MOTOR1FW);
+}
+
+
+void Gui::on_radioBtnMotor1BW_clicked()
+{
+	emit drive(MOTOR1BW);
+}
+
+
+void Gui::on_radioBtnMotor1OFF_clicked()
+{
+	emit drive(MOTOR1OFF);
 }
 
 
@@ -2098,11 +2062,11 @@ void Gui::laserSplash(bool status, short int laserScanner)
 
 void Gui::initializePlots()
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 1
+	// plot curve "MOTOR CURRENT" 1 + 2
 	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1");
+	ui.qwtPlotCurrent1->setTitle("Motor 1 + 2");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2121,9 +2085,9 @@ void Gui::initializePlots()
 
 
 	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 2
+	// plot curve "MOTOR CURRENT" 3 + 4
 	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 2");
+	ui.qwtPlotCurrent2->setTitle("Motor 3 + 4");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2140,7 +2104,7 @@ void Gui::initializePlots()
 	curve2.setPen(QPen(col));
 	curve2.setBrush(col);
 
-
+/*
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3
 	//--------------------------------------
@@ -2181,7 +2145,8 @@ void Gui::initializePlots()
 	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve4.setPen(QPen(col));
 	curve4.setBrush(col);
-	#endif
+*/	
+#endif
 }
 
 

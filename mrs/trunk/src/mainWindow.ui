@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1672</width>
-    <height>988</height>
+    <width>1440</width>
+    <height>851</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -26,10 +26,10 @@
    <widget class="QDockWidget" name="dockPower" >
     <property name="geometry" >
      <rect>
-      <x>540</x>
-      <y>530</y>
-      <width>1031</width>
-      <height>231</height>
+      <x>530</x>
+      <y>500</y>
+      <width>538</width>
+      <height>269</height>
      </rect>
     </property>
     <property name="sizePolicy" >
@@ -45,67 +45,35 @@
      <string>Power</string>
     </property>
     <widget class="QWidget" name="dockWidgetContents_7" >
-     <widget class="QWidget" name="layoutWidget" >
-      <property name="geometry" >
-       <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>921</width>
-        <height>201</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" >
-       <item>
-        <widget class="QwtPlot" name="qwtPlotCurrent1" >
-         <property name="font" >
-          <font>
-           <family>Verdana</family>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QwtPlot" name="qwtPlotCurrent2" >
-         <property name="font" >
-          <font>
-           <family>Verdana</family>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QwtPlot" name="qwtPlotCurrent3" >
-         <property name="font" >
-          <font>
-           <family>Verdana</family>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QwtPlot" name="qwtPlotCurrent4" >
-         <property name="font" >
-          <font>
-           <family>Verdana</family>
-          </font>
-         </property>
-        </widget>
-       </item>
-      </layout>
-      <zorder>qwtPlotCurrent2</zorder>
-      <zorder>qwtPlotCurrent3</zorder>
-      <zorder>qwtPlotCurrent4</zorder>
-      <zorder>qwtPlotCurrent1</zorder>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout_9" >
+      <item row="0" column="0" >
+       <widget class="QwtPlot" name="qwtPlotCurrent1" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QwtPlot" name="qwtPlotCurrent2" >
+        <property name="font" >
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QDockWidget" name="dockWidget_2" >
     <property name="geometry" >
      <rect>
-      <x>1077</x>
-      <y>410</y>
-      <width>491</width>
-      <height>121</height>
+      <x>1080</x>
+      <y>500</y>
+      <width>331</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="allowedAreas" >
@@ -115,102 +83,92 @@
      <string>Power</string>
     </property>
     <widget class="QWidget" name="dockWidgetContents_6" >
-     <widget class="QGroupBox" name="groupBoxBattery1" >
-      <property name="geometry" >
-       <rect>
-        <x>9</x>
-        <y>9</y>
-        <width>231</width>
-        <height>83</height>
-       </rect>
-      </property>
-      <property name="autoFillBackground" >
-       <bool>true</bool>
-      </property>
-      <property name="title" >
-       <string>Battery 1</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_8" >
-       <item row="0" column="0" >
-        <widget class="QLabel" name="lblBatteryPower1" >
-         <property name="font" >
-          <font>
-           <pointsize>26</pointsize>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground" >
-          <bool>true</bool>
-         </property>
-         <property name="frameShape" >
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow" >
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="text" >
-          <string>12,0 V</string>
-         </property>
-         <property name="alignment" >
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QGroupBox" name="groupBoxBattery2" >
-      <property name="geometry" >
-       <rect>
-        <x>250</x>
-        <y>10</y>
-        <width>231</width>
-        <height>83</height>
-       </rect>
-      </property>
-      <property name="autoFillBackground" >
-       <bool>true</bool>
-      </property>
-      <property name="title" >
-       <string>Battery 1</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_14" >
-       <item row="0" column="0" >
-        <widget class="QLabel" name="lblBatteryPower2" >
-         <property name="font" >
-          <font>
-           <pointsize>26</pointsize>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground" >
-          <bool>true</bool>
-         </property>
-         <property name="frameShape" >
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow" >
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="text" >
-          <string>24,0 V</string>
-         </property>
-         <property name="alignment" >
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout" >
+      <item row="0" column="0" >
+       <widget class="QGroupBox" name="groupBoxBattery1" >
+        <property name="autoFillBackground" >
+         <bool>true</bool>
+        </property>
+        <property name="title" >
+         <string>Battery 1</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_8" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="lblBatteryPower1" >
+           <property name="font" >
+            <font>
+             <pointsize>24</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="autoFillBackground" >
+            <bool>true</bool>
+           </property>
+           <property name="frameShape" >
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow" >
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="text" >
+            <string>12,0 V</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QGroupBox" name="groupBoxBattery2" >
+        <property name="autoFillBackground" >
+         <bool>true</bool>
+        </property>
+        <property name="title" >
+         <string>Battery 1</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_14" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="lblBatteryPower2" >
+           <property name="font" >
+            <font>
+             <pointsize>24</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="autoFillBackground" >
+            <bool>true</bool>
+           </property>
+           <property name="frameShape" >
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow" >
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="text" >
+            <string>24,0 V</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QDockWidget" name="dockOdometrie" >
     <property name="geometry" >
      <rect>
-      <x>1064</x>
-      <y>9</y>
-      <width>508</width>
+      <x>1060</x>
+      <y>0</y>
+      <width>382</width>
       <height>206</height>
      </rect>
     </property>
@@ -905,8 +863,8 @@
      <rect>
       <x>9</x>
       <y>9</y>
-      <width>509</width>
-      <height>508</height>
+      <width>511</width>
+      <height>509</height>
      </rect>
     </property>
     <property name="sizePolicy" >
@@ -933,7 +891,7 @@
         </property>
         <widget class="QtGLContext" native="1" name="frameCamera" >
          <property name="sizePolicy" >
-          <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -1458,10 +1416,10 @@
    <widget class="QDockWidget" name="dockTest" >
     <property name="geometry" >
      <rect>
-      <x>1064</x>
-      <y>221</y>
-      <width>508</width>
-      <height>192</height>
+      <x>1060</x>
+      <y>200</y>
+      <width>361</width>
+      <height>301</height>
      </rect>
     </property>
     <property name="allowedAreas" >
@@ -1471,267 +1429,219 @@
      <string>Test</string>
     </property>
     <widget class="QWidget" name="dockWidgetContents_8" >
-     <layout class="QGridLayout" name="gridLayout_9" >
+     <layout class="QGridLayout" name="gridLayout_10" >
       <item row="0" column="0" >
-       <widget class="QFrame" name="frame" >
-        <property name="frameShape" >
-         <enum>QFrame::Box</enum>
+       <widget class="QGroupBox" name="groupBoxTestMotor1" >
+        <property name="title" >
+         <string>Motor 1 (Front Left)</string>
         </property>
-        <property name="frameShadow" >
-         <enum>QFrame::Sunken</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_10" >
+        <layout class="QGridLayout" name="gridLayout_11" >
          <item row="0" column="0" >
-          <layout class="QHBoxLayout" name="horizontalLayout_3" >
-           <item>
-            <widget class="QToolButton" name="btnMotor1" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text" >
-              <string>Motor 1
-Front Left</string>
-             </property>
-             <property name="checkable" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2" >
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor1FW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Forward</string>
-               </property>
-               <property name="checked" >
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor1BW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Backward</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
+          <widget class="QRadioButton" name="radioBtnMotor1FW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Forward</string>
+           </property>
+           <property name="checked" >
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor1BW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Backward</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor1OFF" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Off</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item row="0" column="1" >
-       <widget class="QFrame" name="frame_2" >
-        <property name="frameShape" >
-         <enum>QFrame::Box</enum>
+       <widget class="QGroupBox" name="groupBoxTestMotor1_2" >
+        <property name="title" >
+         <string>Motor 2 (Front Right)</string>
         </property>
-        <property name="frameShadow" >
-         <enum>QFrame::Sunken</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_11" >
+        <layout class="QGridLayout" name="gridLayout_7" >
          <item row="0" column="0" >
-          <layout class="QHBoxLayout" name="horizontalLayout_12" >
-           <item>
-            <widget class="QToolButton" name="btnMotor2" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text" >
-              <string>Motor 2
-Front Right</string>
-             </property>
-             <property name="checkable" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_4" >
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor2FW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Forward</string>
-               </property>
-               <property name="checked" >
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor2BW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Backward</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
+          <widget class="QRadioButton" name="radioBtnMotor2FW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Forward</string>
+           </property>
+           <property name="checked" >
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor2BW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Backward</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor2OFF" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Off</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item row="1" column="0" >
-       <widget class="QFrame" name="frame_4" >
-        <property name="frameShape" >
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow" >
-         <enum>QFrame::Sunken</enum>
+       <widget class="QGroupBox" name="groupBoxgroupBoxTestMotor3" >
+        <property name="title" >
+         <string>Motor 3 (Back Left)</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_12" >
          <item row="0" column="0" >
-          <layout class="QHBoxLayout" name="horizontalLayout_14" >
-           <item>
-            <widget class="QToolButton" name="btnMotor3" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text" >
-              <string>Motor 3
-Back Left</string>
-             </property>
-             <property name="checkable" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_5" >
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor3FW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Forward</string>
-               </property>
-               <property name="checked" >
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor3BW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Backward</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
+          <widget class="QRadioButton" name="radioBtnMotor3FW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Forward</string>
+           </property>
+           <property name="checked" >
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor3BW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Backward</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor3OFF" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Off</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item row="1" column="1" >
-       <widget class="QFrame" name="frame_3" >
-        <property name="frameShape" >
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow" >
-         <enum>QFrame::Sunken</enum>
+       <widget class="QGroupBox" name="groupBoxTestMotor4" >
+        <property name="title" >
+         <string>Motor 4 (Back Right)</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_13" >
          <item row="0" column="0" >
-          <layout class="QHBoxLayout" name="horizontalLayout_13" >
-           <item>
-            <widget class="QToolButton" name="btnMotor4" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text" >
-              <string>Motor 4
-Back Right</string>
-             </property>
-             <property name="checkable" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_6" >
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor4FW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Forward</string>
-               </property>
-               <property name="checked" >
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioBtnMotor4BW" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>Backward</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
+          <widget class="QRadioButton" name="radioBtnMotor4FW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Forward</string>
+           </property>
+           <property name="checked" >
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor4BW" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Backward</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" >
+          <widget class="QRadioButton" name="radioBtnMotor4OFF" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Off</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1745,7 +1655,7 @@ Back Right</string>
       <x>540</x>
       <y>10</y>
       <width>511</width>
-      <height>511</height>
+      <height>491</height>
      </rect>
     </property>
     <property name="sizePolicy" >
@@ -1779,7 +1689,7 @@ Back Right</string>
       <enum>QGraphicsView::ScrollHandDrag</enum>
      </property>
     </widget>
-    <widget class="QWidget" name="" >
+    <widget class="QWidget" name="layoutWidget" >
      <layout class="QGridLayout" name="gridLayout_5" >
       <item row="0" column="0" >
        <layout class="QVBoxLayout" >
@@ -2059,8 +1969,8 @@ Back Right</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1672</width>
-     <height>21</height>
+     <width>1440</width>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >

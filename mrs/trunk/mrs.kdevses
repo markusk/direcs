@@ -2,17 +2,17 @@
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="4" >
-  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.h" >
-   <View0 Encoding="" line="95" Type="Source" />
+  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/mrs.cpp" >
+   <View0 Encoding="" line="1702" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/direcsSerial.cpp" >
-   <View0 Encoding="" line="69" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/gui.cpp" >
+   <View0 Encoding="" line="2145" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/interfaceAvr.h" >
-   <View0 Encoding="" line="54" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/gui.h" >
+   <View0 Encoding="" line="454" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/mrs/mrs/trunk/src/interfaceAvr.cpp" >
-   <View0 Encoding="" line="29" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///usr/include/speech_tools/EST_ChannelType.h" >
+   <View0 Encoding="" line="221" Type="Source" />
   </Doc3>
  </DocsAndViews>
  <pluginList>
