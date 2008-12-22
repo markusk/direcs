@@ -185,7 +185,7 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	
 	ioctl(fd, TIOCSETP, &tty);
 	#ifdef TIOCSDTR
-	/* FIXME: huh? - MvS */
+	/*  huh? - MvS */
 	ioctl(fd, TIOCSDTR, 0);
 	#endif
 	#endif
