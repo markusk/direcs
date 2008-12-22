@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1440</width>
+    <width>1441</width>
     <height>851</height>
    </rect>
   </property>
@@ -72,7 +72,7 @@
      <rect>
       <x>1080</x>
       <y>500</y>
-      <width>331</width>
+      <width>351</width>
       <height>251</height>
      </rect>
     </property>
@@ -1418,8 +1418,8 @@
      <rect>
       <x>1060</x>
       <y>200</y>
-      <width>361</width>
-      <height>301</height>
+      <width>381</width>
+      <height>291</height>
      </rect>
     </property>
     <property name="allowedAreas" >
@@ -1431,220 +1431,264 @@
     <widget class="QWidget" name="dockWidgetContents_8" >
      <layout class="QGridLayout" name="gridLayout_10" >
       <item row="0" column="0" >
-       <widget class="QGroupBox" name="groupBoxTestMotor1" >
-        <property name="title" >
-         <string>Motor 1 (Front Left)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_11" >
-         <item row="0" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor1FW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+       <layout class="QGridLayout" name="gridLayout_7" >
+        <item row="0" column="0" >
+         <widget class="QGroupBox" name="groupBoxTestMotor1" >
+          <property name="title" >
+           <string>Motor 1 (Front Left)</string>
+          </property>
+          <widget class="QWidget" name="" >
+           <property name="geometry" >
+            <rect>
+             <x>11</x>
+             <y>27</y>
+             <width>81</width>
+             <height>80</height>
+            </rect>
            </property>
-           <property name="text" >
-            <string>Forward</string>
-           </property>
-           <property name="checked" >
-            <bool>false</bool>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2" >
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor1FW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Forward</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor1BW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Backward</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor1OFF" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Off</string>
+              </property>
+              <property name="checked" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
-         </item>
-         <item row="1" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor1BW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QGroupBox" name="groupBoxTestMotor1_2" >
+          <property name="title" >
+           <string>Motor 2 (Front Right)</string>
+          </property>
+          <widget class="QWidget" name="" >
+           <property name="geometry" >
+            <rect>
+             <x>11</x>
+             <y>27</y>
+             <width>81</width>
+             <height>80</height>
+            </rect>
            </property>
-           <property name="text" >
-            <string>Backward</string>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4" >
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor2FW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Forward</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor2BW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Backward</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor2OFF" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Off</string>
+              </property>
+              <property name="checked" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
-         </item>
-         <item row="2" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor1OFF" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QGroupBox" name="groupBoxgroupBoxTestMotor3" >
+          <property name="title" >
+           <string>Motor 3 (Back Left)</string>
+          </property>
+          <widget class="QWidget" name="" >
+           <property name="geometry" >
+            <rect>
+             <x>11</x>
+             <y>27</y>
+             <width>81</width>
+             <height>80</height>
+            </rect>
            </property>
-           <property name="text" >
-            <string>Off</string>
-           </property>
-           <property name="checked" >
-            <bool>true</bool>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5" >
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor3FW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Forward</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor3BW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Backward</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor3OFF" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Off</string>
+              </property>
+              <property name="checked" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="1" >
-       <widget class="QGroupBox" name="groupBoxTestMotor1_2" >
-        <property name="title" >
-         <string>Motor 2 (Front Right)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_7" >
-         <item row="0" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor2FW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QGroupBox" name="groupBoxTestMotor4" >
+          <property name="title" >
+           <string>Motor 4 (Back Right)</string>
+          </property>
+          <widget class="QWidget" name="" >
+           <property name="geometry" >
+            <rect>
+             <x>11</x>
+             <y>27</y>
+             <width>81</width>
+             <height>80</height>
+            </rect>
            </property>
-           <property name="text" >
-            <string>Forward</string>
-           </property>
-           <property name="checked" >
-            <bool>false</bool>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6" >
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor4FW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Forward</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor4BW" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Backward</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioBtnMotor4OFF" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Off</string>
+              </property>
+              <property name="checked" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
-         </item>
-         <item row="1" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor2BW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Backward</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor2OFF" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Off</string>
-           </property>
-           <property name="checked" >
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="0" >
-       <widget class="QGroupBox" name="groupBoxgroupBoxTestMotor3" >
-        <property name="title" >
-         <string>Motor 3 (Back Left)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_12" >
-         <item row="0" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor3FW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Forward</string>
-           </property>
-           <property name="checked" >
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor3BW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Backward</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor3OFF" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Off</string>
-           </property>
-           <property name="checked" >
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="1" >
-       <widget class="QGroupBox" name="groupBoxTestMotor4" >
-        <property name="title" >
-         <string>Motor 4 (Back Right)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_13" >
-         <item row="0" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor4FW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Forward</string>
-           </property>
-           <property name="checked" >
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor4BW" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Backward</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" >
-          <widget class="QRadioButton" name="radioBtnMotor4OFF" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>Off</string>
-           </property>
-           <property name="checked" >
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -1969,7 +2013,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1440</width>
+     <width>1441</width>
      <height>28</height>
     </rect>
    </property>

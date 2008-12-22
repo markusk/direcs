@@ -113,6 +113,14 @@ infrared Sensors temporarily removed from robot!!
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
 	#endif
+	
+	
+	//----------------------------------
+	// change text of buttons
+	//----------------------------------
+	ui.actionDrive->setText("&Drive");
+	ui.actionDrive->setToolTip("Start driving");
+	ui.actionDrive->setStatusTip("Start driving");
 }
 
 
@@ -268,8 +276,9 @@ void Gui::on_actionDrive_activated()
 		toggle = true;
 
 		// change text of "drive button"
-		// TODO: set tooltip
-		//ui.btnDrive->setText(" Stop &driving");
+		ui.actionDrive->setText("Stop &driving");
+		ui.actionDrive->setToolTip("Stop driving");
+		ui.actionDrive->setStatusTip("Stop driving");
 
 		//----------------
 		// start driving
@@ -282,8 +291,9 @@ void Gui::on_actionDrive_activated()
 		appendLog("Stop driving...");
 
 		// change text of "drive button"
-		// TODO: set tooltip
-		//ui.btnDrive->setText(" &Drive");
+		ui.actionDrive->setText("&Drive");
+		ui.actionDrive->setToolTip("Start driving");
+		ui.actionDrive->setStatusTip("Start driving");
 
 		//****************
 		// stop driving
@@ -1326,13 +1336,13 @@ void Gui::on_actionSimulate_activated()
 	if (ui.actionSimulate->isChecked())
 	{
 		// nice red button background
-		// FIXME: how to change a color of a button?  ui.actionSimulate->setPalette(QPalette(labelFillColorRed));
+		// TODO: how to change a color of a button?  ui.actionSimulate->setPalette(QPalette(labelFillColorRed));
 		emit simulate(true);
 	}
 	else
 	{
 		// set back to default color!!
-		// FIXME: how to change a color of a button?  ui.actionSimulate->setPalette(QApplication::palette());
+		// TODO: how to change a color of a button?  ui.actionSimulate->setPalette(QApplication::palette());
 		emit simulate(false);
 	}
 }
@@ -1630,7 +1640,7 @@ void Gui::initLaserView()
 void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
 {
 	/*
-	// FIXME: doesnt work!
+	// FIXME: laser splash doesnt work!
 	static bool showLaserSplashFront = true;
 
 
@@ -1713,7 +1723,7 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags)
 {
 	/*
-	// FIXME: doesnt work!
+	// FIXME: laser splash doesnt work!
 	static bool showLaserSplashRear = true;
 
 	if (showLaserSplashRear == true)
