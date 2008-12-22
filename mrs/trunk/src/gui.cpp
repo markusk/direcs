@@ -345,20 +345,8 @@ void Gui::on_actionReset_activated()
 	ui.lblDirection2->setEnabled(false);
 	ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 
-
-
 	// reactivate buttons
 	//ui.btnExecuteScript->setEnabled(true);
-
-	// reactivate sliders & Co.
-/*
-	FIXME: change call to new classes
-	ui.sliderMotor1Speed->setEnabled(true);
-	ui.spinBoxMotor1Speed->setEnabled(true);
-
-	ui.sliderMotor2Speed->setEnabled(true);
-	ui.spinBoxMotor2Speed->setEnabled(true);
-*/
 }
 
 
