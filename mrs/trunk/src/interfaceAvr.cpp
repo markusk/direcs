@@ -104,7 +104,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	// send one byte to the serial port
 	if (serialPort->writeAtmelPort(&character, 1) <= 0)
 #else
-	// FIXME: which line one was Original?!?? None of it! Original was writeData ?!??
+	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
 //	if (serialPort->write(&character, 1) == -1)
 #endif
