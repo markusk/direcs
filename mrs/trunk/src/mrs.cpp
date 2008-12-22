@@ -1695,19 +1695,17 @@ void Mrs::drive(const unsigned char command)
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 1 forward");
-				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-				motors->motorControl(MOTOR1, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR1BW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 1 backward");
-				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+				motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR1OFF: // for the test widget in the GUI!!
 			if (robotIsOn)
@@ -1716,25 +1714,22 @@ void Mrs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
 				motors->motorControl(MOTOR1, OFF, SAME);
 			}
-			return;
 			break;
 		case MOTOR2FW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 2 forward");
-				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
-				motors->motorControl(MOTOR2, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR2BW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 2 backward");
-				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+				motors->motorControl(MOTOR2, ON, CLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR2OFF: // for the test widget in the GUI!!
 			if (robotIsOn)
@@ -1743,25 +1738,22 @@ void Mrs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR2, OFF, SAME);
 				motors->motorControl(MOTOR2, OFF, SAME);
 			}
-			return;
 			break;
 		case MOTOR3FW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 3 forward");
-				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
-				motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR3BW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 3 backward");
-				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+				motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR3OFF: // for the test widget in the GUI!!
 			if (robotIsOn)
@@ -1770,25 +1762,22 @@ void Mrs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, OFF, SAME);
 				motors->motorControl(MOTOR3, OFF, SAME);
 			}
-			return;
 			break;
 		case MOTOR4FW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 4 forward");
-				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
-				motors->motorControl(MOTOR4, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR4BW: // for the test widget in the GUI!!
 			if (robotIsOn)
 			{
 				gui->appendLog("Motor 4 backward");
-				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+				motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			}
-			return;
 			break;
 		case MOTOR4OFF: // for the test widget in the GUI!!
 			if (robotIsOn)
@@ -1797,7 +1786,6 @@ void Mrs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 				motors->motorControl(MOTOR4, OFF, SAME);
 			}
-			return;
 			break;
 	}
 }

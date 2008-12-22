@@ -201,7 +201,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			if (direction == CLOCKWISE)
 			{
 				// set the direction
-				if (interface1->sendChar(MOTOR2_CLOCKWISE) == false)
+				if (interface1->sendChar(MOTOR2_COUNTERCLOCKWISE) == false)
 				{
 					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 					mutex->unlock();
@@ -214,7 +214,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			{
 				// set the direction
 				// set the direction
-				if (interface1->sendChar(MOTOR2_COUNTERCLOCKWISE) == false)
+				if (interface1->sendChar(MOTOR2_CLOCKWISE) == false)
 				{
 					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 					mutex->unlock();
@@ -313,10 +313,21 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				}
 			}
 		
+			//
+			//   A T T E N T I O N :
+			//
+			//   Because of the right-left reversed mounting of one of the motors
+			//   the control-logic for CLOCKWISE and COUNTERCLOCKWISE could be used 
+			//   reversed in this method. And only in this method!
+			//   Because of this reversed logic the commands could swapped here!
+			//   (counterclockwise = clockwise and vice versa)
+			//   THIS HAS ONLY TO BE DONE, WHEN THE MOTORS ARE WIRED EXACTLY THE SAME!
+			//   black = minus	red = plus	->	on both motors identically!
+			//
 			if (direction == CLOCKWISE)
 			{
 				// set the direction
-				if (interface1->sendChar(MOTOR4_CLOCKWISE) == false)
+				if (interface1->sendChar(MOTOR4_COUNTERCLOCKWISE) == false)
 				{
 					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 					mutex->unlock();
@@ -328,7 +339,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			if (direction == COUNTERCLOCKWISE)
 			{
 				// set the direction
-				if (interface1->sendChar(MOTOR4_COUNTERCLOCKWISE) == false)
+				if (interface1->sendChar(MOTOR4_CLOCKWISE) == false)
 				{
 					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 					mutex->unlock();
