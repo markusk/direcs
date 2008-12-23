@@ -35,7 +35,19 @@ class JoystickDialog : public QDialog
 	Q_OBJECT
 	
 	public:
-		JoystickDialog(QWidget* parent = 0/*, Qt::WFlags fl = 0*/);
+		JoystickDialog(QWidget* parent = 0);
+
+
+	public slots:
+		/**
+		Shows the joystick button states when pressed.
+		*/
+		void showJoystickButtons(int buttonNumber, bool buttonState);
+
+		/**
+		Shows the joystick values when it moves.
+		*/
+		void showJoystickAxes(int axisNumber, int axisValue);
 
 
 	protected slots:
@@ -43,9 +55,17 @@ class JoystickDialog : public QDialog
 		Event handler for the "About Qt" button.
 		*/
 		//void on_btnAboutQt_clicked(bool checked);
-		
+
+
 	private:
 		Ui::joystickDialog ui;
+
+		// TODO: put axis numbers to ini-file
+		/// Joystick axis numbers
+		static const int JOYSTICKAXISY = 2;
+		static const int JOYSTICKAXISX = 3;
+		static const int JOYSTICKAXIS2X = 4;
+		static const int JOYSTICKAXIS2Y = 5;
 };
 
 #endif

@@ -500,10 +500,10 @@ void Mrs::init()
 	// connect joystick signals to "show joystick data"
 	// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
 	//----------------------------------------------------------------------------
-	connect(joystick, SIGNAL(joystickMoved(int, int)), gui, SLOT(showJoystickAxes(int, int)));
+	connect(joystick, SIGNAL(joystickMoved(int, int)), joystickDialog, SLOT(showJoystickAxes(int, int)));
 	connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
 
-	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), gui, SLOT(showJoystickButtons(int, bool)));
+	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), joystickDialog, SLOT(showJoystickButtons(int, bool)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 

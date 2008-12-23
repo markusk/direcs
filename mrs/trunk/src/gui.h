@@ -241,16 +241,6 @@ class Gui : public QMainWindow
 #endif
 
 		/**
-		Shows the joystick values when it moves.
-		*/
-		void showJoystickAxes(int axisNumber, int axisValue);
-
-		/**
-		Shows the joystick button states when pressed.
-		*/
-		void showJoystickButtons(int buttonNumber, bool buttonState);
-
-		/**
 		Shows the angles of the free area where to drive in lables.
 		@param largestFreeAreaStart
 		@param largestFreeAreaEnd
@@ -504,13 +494,6 @@ class Gui : public QMainWindow
 
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
-
-		// TODO: put axis numbers to ini-file
-		//! Joystick axis numbers
-		static const int JOYSTICKAXISY = 2;
-		static const int JOYSTICKAXISX = 3;
-		static const int JOYSTICKAXIS2X = 4;
-		static const int JOYSTICKAXIS2Y = 5;
 
 		/**
 		Factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels at a default zoom level of 5 !!
