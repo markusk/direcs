@@ -333,12 +333,8 @@ void Mrs::init()
 		//-------------------------------------------------------
 		// move all servos in their default positions
 		//-------------------------------------------------------
-		/*
-		temporarily not in use
-
 		servos->init();
 		gui->appendLog("Servos moved to default positions");
-		*/
 
 		// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 		//-----------------------------------------------------------
@@ -684,17 +680,12 @@ void Mrs::shutdown()
 		// for refreshing the splash...
 		QApplication::processEvents();
 
-		/*
-		 *
-		 * temporarily not in use!
-		 *
 		// just 4 fun
 		if (robotIsOn)
 		{
 			head->look("NORMAL");
 			head->look("DOWN");
 		}
-		 */
 
 		//---------------------------------------------------------------
 		// save changes to ini-file (if check box is checked!)
@@ -2623,16 +2614,20 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 
-				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
-				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
-
-				if (robotDrives == false)
+				if (robotIsOn)
 				{
-					drive(START);
-				}
+					motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+					motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 
-				drive(BACKWARD);
+					if (robotDrives == false)
+					{
+						drive(START);
+					}
+
+					drive(BACKWARD);
+				}
 			}
+
 
 			//==================
 			// eye test mode
@@ -2671,16 +2666,20 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 
-				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
-
-				if (robotDrives == false)
+				if (robotIsOn)
 				{
-					drive(START);
-				}
+					motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+					motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 
-				drive(FORWARD);
+					if (robotDrives == false)
+					{
+						drive(START);
+					}
+	
+					drive(FORWARD);
+				}
 			}
+
 
 			//==================
 			// eye test mode
@@ -2714,7 +2713,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//=========================================================
 			if (testDriveMode)
 			{
-				drive(WAIT);
+				if (robotIsOn)
+					drive(WAIT);
 			}
 			return;
 		}
@@ -2744,15 +2744,18 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 
-				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
-				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
-
-				if (robotDrives == false)
+				if (robotIsOn)
 				{
-					drive(START);
+					motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+					motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+	
+					if (robotDrives == false)
+					{
+						drive(START);
+					}
+	
+					drive(RIGHT);
 				}
-
-				drive(RIGHT);
 			}
 			return;
 		}
@@ -2775,15 +2778,18 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 
-				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
-
-				if (robotDrives == false)
+				if (robotIsOn)
 				{
-					drive(START);
+					motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+					motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+		
+					if (robotDrives == false)
+					{
+						drive(START);
+					}
+		
+					drive(LEFT);
 				}
-
-				drive(LEFT);
 			}
 			return;
 		}
@@ -2799,7 +2805,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//=========================================================
 			if (testDriveMode)
 			{
-				drive(WAIT);
+				if (robotIsOn)
+					drive(WAIT);
 			}
 			return;
 		}
@@ -2846,8 +2853,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				}
 				gui->appendLog(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(servos->getServoPosition(currentTestServo)));
 			}
+
 			return;
 		}
+
 
 		//==================
 		// camera test mode
@@ -2859,7 +2868,8 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				motors->motorControl(MOTOR4, ON, CLOCKWISE);
+				if (robotIsOn)
+					motors->motorControl(MOTOR4, ON, CLOCKWISE);
 				//gui->appendLog("motor 4 on CW");
 			}
 
@@ -2868,8 +2878,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-				//gui->appendLog("motor 4 on CCW");
+				if (robotIsOn)
+				{
+					motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+					//gui->appendLog("motor 4 on CCW");
+				}
 			}
 
 			// move, when button is pressed
@@ -2973,8 +2986,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				//gui->appendLog("motor 3 on CW");
+				if (robotIsOn)
+				{
+					motors->motorControl(MOTOR3, ON, CLOCKWISE);
+					//gui->appendLog("motor 3 on CW");
+				}
 			}
 
 			//------------------
@@ -2982,8 +2998,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-				//gui->appendLog("motor 3 on CCW");
+				if (robotIsOn)
+				{
+					motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+					//gui->appendLog("motor 3 on CCW");
+				}
 			}
 
 			// move, when button is pressed
@@ -3000,8 +3019,11 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (robotIsOn)
 				{
-					//gui->appendLog("Pan stop.");
-					motors->motorControl(MOTOR3, OFF, SAME);
+					if (robotIsOn)
+					{
+						motors->motorControl(MOTOR3, OFF, SAME);
+						//gui->appendLog("Pan stop.");
+					}
 				}
 			}
 			return;

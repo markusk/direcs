@@ -83,6 +83,15 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 	// store the newservo position
 	servoPosition[servo] = position;
 	
+	static bool toggle = false;
+		
+	if (!toggle)
+	{
+		toggle = !toggle;
+		emit message("<font color=\"#FF0000\">Servo functions deactivated in the program [servo.cpp]!</font>");
+	}
+
+	/* TODO: temporarily deactivated (no servos mounted on the current robot)
 	switch (servo)
 	{
 		case SERVO1:
@@ -221,6 +230,7 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 			emit message(QString("<b><font color=\"#FF0000\">ERROR: Servo number %1 not supportet (moveServo)</font>").arg(servo));
 			break;
 	}
+	*/
 }
 
 
@@ -272,11 +282,13 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 
 void Servo::init(void)
 {
+	/* TODO: temporarily deactivated (no servos mounted on the current robot)
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
 		moveServo(servo, servoDefaultPosition[servo]);
 		//emit message(QString("Init servo%1 to def-pos: %2").arg(servo+1).arg(servoDefaultPosition[servo]));
 	}
+	*/
 }
 
 
