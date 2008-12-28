@@ -33,16 +33,20 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	// Initialize the motor revolutions counters
 	revolutions1 = 0;
 	revolutions2 = 0;
+	revolutions3 = 0;
+	revolutions4 = 0;
  
 	// Initialize the distance to next objects in front of the robot
 	drivenDistance1 = 0;
 	drivenDistance2 = 0;
+	drivenDistance3 = 0;
+	drivenDistance4 = 0;
 
 	// Initialize the motor speed (not to fast, before reading the real values from a file!)
 	motor1Speed = 20;
 	motor2Speed = 20;
-	motor3Speed = 10;
-	motor4Speed = 10;
+	motor3Speed = 20;
+	motor4Speed = 20;
 }
 
 
@@ -79,6 +83,12 @@ unsigned int Motor::getRevolutions(unsigned char motor)
 		case MOTOR2:
 			return revolutions2;
 			break;
+		case MOTOR3:
+			return revolutions3;
+			break;
+		case MOTOR4:
+			return revolutions4;
+			break;
 	}
 	
 	return 0;
@@ -94,6 +104,12 @@ double Motor::getDrivenDistance(unsigned char motor)
 			break;
 		case MOTOR2:
 			return drivenDistance2;
+			break;
+		case MOTOR3:
+			return drivenDistance3;
+			break;
+		case MOTOR4:
+			return drivenDistance4;
 			break;
 	}
 	
@@ -505,7 +521,7 @@ void Motor::makeSteps(int steps)
 
 void Motor::parkStepper(unsigned char motor)
 {
-	// FIXME: park stepper correctly!! (temporarily not in use)
+	// TODO: park stepper correctly!! (temporarily not in use)
 	motorControl(STEPPER1, OFF, SAME);
 	motorControl(STEPPER2, OFF, SAME);
 }
@@ -514,6 +530,9 @@ void Motor::parkStepper(unsigned char motor)
 void Motor::calculateMovement()
 {
 /* test
+	
+	// TODO: (not implemented in robot hardware and in avr code!)
+	
 	//--------------------------------------------------------------------------
 	// if motor 1 is ON, step counter + 1
 	//--------------------------------------------------------------------------
@@ -682,6 +701,32 @@ void Motor::resetMovementCounter(short int motor)
 		 
 			// Initialize the distance to next objects in front of the robot
 			drivenDistance2 = 0;
+			return;
+			break;
+		}
+		case MOTOR3:
+		{
+			// Initialize the motor step counters
+			//steps3 = 0;
+		 
+			// Initialize the motor revolutions counters
+			revolutions3 = 0;
+		 
+			// Initialize the distance to next objects in front of the robot
+			drivenDistance3 = 0;
+			return;
+			break;
+		}
+		case MOTOR4:
+		{
+			// Initialize the motor step counters
+			//steps4 = 0;
+		 
+			// Initialize the motor revolutions counters
+			revolutions4 = 0;
+		 
+			// Initialize the distance to next objects in front of the robot
+			drivenDistance4 = 0;
 			return;
 			break;
 		}

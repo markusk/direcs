@@ -72,7 +72,7 @@ class Motor : public QObject
 		/**
 		Returns the driven distance, if the motor is a stepper motor!
 		@param motor is the motor number.
-		@return The driven distance in cm made of wheel1 or 2.
+		@return The driven distance in cm made of a whee1.
 		*/
 		double getDrivenDistance(unsigned char motor);
 		
@@ -107,8 +107,7 @@ class Motor : public QObject
 		
 		
 	private:
-		// FIXME: check the conversion value and make it a const!
-		void calculateMovement();
+		void calculateMovement(); // TODO: check the conversion value and make it a const!
 
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
@@ -121,8 +120,12 @@ class Motor : public QObject
 		//unsigned int steps2;
 		unsigned int revolutions1;
 		unsigned int revolutions2;
+		unsigned int revolutions3;
+		unsigned int revolutions4;
 		double drivenDistance1;
 		double drivenDistance2;
+		double drivenDistance3;
+		double drivenDistance4;
 		
 		static const char ON  = true;   /** For motor "ON" */
 		static const char OFF = false;  /** For motor "OFF" */
