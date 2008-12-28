@@ -42,7 +42,7 @@
 
 /**
 \brief This class is for controling the robot with a joystick.
-It opens a joystick device and emits siglans on joystick movements or when a button is pressed.
+It opens a joystick device and emits signals on joystick movements or when a button is pressed.
 */
 class Joystick : public QThread
 {
@@ -90,7 +90,6 @@ class Joystick : public QThread
 		
 
 	private:
-		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 		QString joystickPort;
 		int fd, i;
@@ -100,11 +99,14 @@ class Joystick : public QThread
 		char name[NAME_LENGTH];
 		uint16_t btnmap[KEY_MAX - BTN_MISC + 1];
 		uint8_t axmap[ABS_MAX + 1];
-		
 		int *axis;
 		char *button;
 		struct js_event js;
 		short int axisButtonNumber;
 		short int axisButtonValue;
+
+		// Every thread sleeps some time, for having a bit more time fo the other threads!
+		// Time in milliseconds
+		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms
 };
 #endif

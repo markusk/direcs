@@ -98,6 +98,11 @@ void Joystick::run()
 	//
 	while (!stopped)
 	{
+		// let the thread sleep some time
+		// for having more time for the other threads
+		msleep(THREADSLEEPTIME);
+		
+		
 		if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event))
 		{
 			emit emitMessage("Error reading joystick device!");
