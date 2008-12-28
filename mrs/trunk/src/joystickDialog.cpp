@@ -28,14 +28,13 @@ JoystickDialog::JoystickDialog(QWidget* parent) : QDialog(parent)
 
 void JoystickDialog::showJoystickButtons(int buttonNumber, bool buttonState)
 {
+	/// @sa Mrs::executeJoystickCommand
 	static bool toggle0 = false;
-
-	//static bool toggle1 = false;
+	static bool toggle1 = false;
 	//static bool toggle2 = false;
 	//static bool toggle3 = false;
-	//static bool toggle4 = false;
+	static bool toggle4 = false;
 	//static bool toggle5 = false;
-
 	static bool toggle10 = false;
 	static bool toggle11 = false;
 
@@ -46,19 +45,16 @@ void JoystickDialog::showJoystickButtons(int buttonNumber, bool buttonState)
 		case 0:
 			if (buttonState==true)
 			{
-				if (toggle0 == false)
-				{
-					toggle0=true;
-				}
-				else
-				{
-					toggle0=false;
-				}
+				toggle0 = !toggle0;
 			}
 			ui.radioBtnJoy0->setChecked(toggle0);
 			break;
 		case 1:
-			ui.radioBtnJoy1->setChecked(buttonState);
+			if (buttonState)
+			{
+				toggle1 = !toggle1;
+			}
+			ui.radioBtnJoy1->setChecked(toggle1);
 			break;
 		case 2:
 			ui.radioBtnJoy2->setChecked(buttonState);
@@ -67,38 +63,28 @@ void JoystickDialog::showJoystickButtons(int buttonNumber, bool buttonState)
 			ui.radioBtnJoy3->setChecked(buttonState);
 			break;
 		case 4:
-			ui.radioBtnJoy4->setChecked(buttonState);
+			if (buttonState==true)
+			{
+				toggle4 = !toggle4;
+			}
+			ui.radioBtnJoy4->setChecked(toggle4);
 			break;
 		case 5:
 			ui.radioBtnJoy5->setChecked(buttonState);
 			break;
 		case 10:
-			if (buttonState==true)
+			if (buttonState)
 			{
-				if (toggle10 == false)
-				{
-					toggle10=true;
-				}
-				else
-				{
-					toggle10=false;
-				}
+				toggle10 = !toggle10;
 			}
 			ui.radioBtnJoy10->setChecked(toggle10);
 			break;
 		case 11:
 			if (buttonState==true)
 			{
-				if (toggle11 == false)
-				{
-					toggle11=true;
-				}
-				else
-				{
-					toggle11=false;
-				}
+				toggle11 = !toggle11;
 			}
-			ui.radioBtnJoy11->setChecked(toggle10);
+			ui.radioBtnJoy11->setChecked(toggle11);
 			break;
 	}
 }

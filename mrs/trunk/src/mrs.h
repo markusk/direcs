@@ -257,6 +257,7 @@ class Mrs : public QObject
 		bool laserScannerFrontFound;
 		bool laserScannerRearFound;
 		bool testDriveMode; /// is enabled, when the robot is controlled via joystick
+		bool mecanumDriveMode; /// is enabled, when the robot is controlled via joystick and should use special mecanum wheel driving 
 		bool servoTestMode;
 		bool eyeTestMode;
 		int currentTestServo;

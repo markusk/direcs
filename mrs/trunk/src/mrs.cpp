@@ -102,6 +102,7 @@ void Mrs::init()
 	robotRemoteMode = false;
 	servoTestMode = false;
 	testDriveMode = false;
+	mecanumDriveMode = false;
 	eyeTestMode = false;
 	currentTestServo = SERVO1;
     useCamera = false;
@@ -1566,7 +1567,6 @@ void Mrs::drive(const unsigned char command)
 {
 	switch (command)
 	{
-		// TODO: Support for all 4 motors here!
 		case FORWARD:
 			gui->appendLog("FORWARD");
 			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
@@ -1619,28 +1619,28 @@ void Mrs::drive(const unsigned char command)
 			break;
 		case TURNLEFT:
 			gui->appendLog("TURNLEFT");
-			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			
-			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
 			return;
 			break;
 		case TURNRIGHT:
 			gui->appendLog("TURNRIGHT");
-			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			
-			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
 			return;
 			break;
 		case START:
@@ -2968,6 +2968,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (robotDrives == false)
 				{
+					// TODO: check if this makes sense...
 					drive(START);
 				}
 
@@ -2984,6 +2985,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (robotDrives == false)
 				{
+					// TODO: check if this makes sense...
 					drive(START);
 				}
 
@@ -3127,13 +3129,23 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			if (robotIsOn)
 			{
-				if (robotDrives == false)
+				if (mecanumDriveMode)
 				{
-					drive(START);
+					// do a right turn in a circle!
+					drive(TURNRIGHT);
 				}
-
-				drive(RIGHT);
+				else
+				{
+					if (robotDrives == false)
+					{
+						// TODO: check if this makes sense...
+						drive(START);
+					}
+	
+					drive(RIGHT);
+				}
 			}
+			return;
 		}
 		
 		//------------------------------------------------------
@@ -3143,13 +3155,23 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			if (robotIsOn)
 			{
-				if (robotDrives == false)
+				if (mecanumDriveMode)
 				{
-					drive(START);
+					// do a right turn in a circle!
+					drive(TURNLEFT);
 				}
-
-				drive(LEFT);
+				else
+				{
+					if (robotDrives == false)
+					{
+						// TODO: check if this makes sense...
+						drive(START);
+					}
+	
+					drive(LEFT);
+				}
 			}
+			return;
 		}
 		
 		//------------------------------------------------------
@@ -3170,14 +3192,13 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 
 void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 {
+	/// @sa Gui::showJoystickButtons
 	static bool toggle0 = false;
 	static bool toggle1 = false;
-	/*
-	static bool toggle2 = false;
-	static bool toggle3 = false;
+	//static bool toggle2 = false;
+	//static bool toggle3 = false;
 	static bool toggle4 = false;
-	static bool toggle5 = false;
-	*/
+	//static bool toggle5 = false;
 	static bool toggle10 = false;
 	static bool toggle11 = false;
 
@@ -3190,18 +3211,17 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle0 == false)
 				{
-					toggle0=true;
 					eyeTestMode=true;
 					gui->appendLog("<font color=\"#0000FF\">Eye test mode enabled.</front>");
 				}
 				else
 				{
-					toggle0=false;
 					eyeTestMode=false;
 					head->look("FORWARD");
 					head->look("NORMAL");
 					gui->appendLog("<font color=\"#0000FF\">Eye test mode disabled.</front>");
 				}
+				toggle0 = !toggle0;
 			}
 			break;
 		case 1: // 2 on js
@@ -3209,7 +3229,6 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle1 == false)
 				{
-					toggle1=true;
 					servoTestMode = true;
 					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON.</front>");
 					gui->appendLog(QString("Servo %1 selected.").arg(currentTestServo+1));
@@ -3219,11 +3238,11 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				}
 				else
 				{
-					toggle1=false;
 					servoTestMode = false;
 					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF.</front>");
 					emit speak("Test mode off");
 				}
+				toggle1 = !toggle1;
 			}
 			break;
 		case 2: // 3 on js
@@ -3231,6 +3250,20 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 		case 3: // 4 on js
 			break;
 		case 4: // 5 on js
+			if (buttonState==true)
+			{
+				if (toggle4 == false)
+				{
+					mecanumDriveMode=true;
+					gui->appendLog("<font color=\"#0000FF\">Mecanum test mode enabled.</front>");
+				}
+				else
+				{
+					mecanumDriveMode=false;
+					gui->appendLog("<font color=\"#0000FF\">Mecanum test mode disabled.</front>");
+				}
+				toggle4 = !toggle4;
+			}
 			break;
 		case 5: // 6 on js
 			break;
@@ -3264,7 +3297,6 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle10 == false)
 				{
-					toggle10 = true;
 					testDriveMode = true;
 					gui->appendLog("<font color=\"#0000FF\">Test drive mode ON.</front>");
 					// TODO: timing problem, when emitting speak signal.
@@ -3273,11 +3305,11 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				}
 				else
 				{
-					toggle10 = false;
 					testDriveMode = false;
 					gui->appendLog("<font color=\"#0000FF\">Test drive mode OFF.</front>");
 					emit speak("Test drive mode off.");
 				}
+				toggle10 = !toggle10;
 			}
 			break;
 		case 11:
@@ -3288,16 +3320,15 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle11 == false)
 				{
-					toggle11 = true;
 					cameraTestMode = true;
 					gui->appendLog("<font color=\"#0000FF\">Camera test mode ON.</front>");
 				}
 				else
 				{
-					toggle11 = false;
 					cameraTestMode = false;
 					gui->appendLog("<font color=\"#0000FF\">Camera test mode OFF.</front>");
 				}
+				toggle11 = !toggle11;
 			}
 			break;
 	}
