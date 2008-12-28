@@ -393,7 +393,7 @@ class Gui : public QMainWindow
 
 
 	private:
-		void initializePlots();
+		void initPlots();
 
 		/**
 		Creates all objects, lines, scene, view etc.
@@ -444,6 +444,11 @@ class Gui : public QMainWindow
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */
+		
+		static const float AMPERESMAXPLOTCURVE1 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 1
+		static const float AMPERESMAXPLOTCURVE2 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 2
+		static const float AMPERESSTEPPLOTCURVE1 = 500.0; /// The step value for the y axis for plot curve number 1
+		static const float AMPERESSTEPPLOTCURVE2 = 500.0; /// The step value for the y axis for plot curve number 1
 
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */

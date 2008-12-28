@@ -279,7 +279,7 @@ void Mrs::init()
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
-	gui->appendLog("Opening serial port for microcontroller communication...");
+	gui->appendLog("Opening serial port for microcontroller communication...", false);
 
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
@@ -333,8 +333,10 @@ void Mrs::init()
 		//-------------------------------------------------------
 		// move all servos in their default positions
 		//-------------------------------------------------------
+		/* TODO: temporarily deactivated (no servos mounted on the current robot)
 		servos->init();
 		gui->appendLog("Servos moved to default positions");
+		*/
 
 		// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 		//-----------------------------------------------------------
@@ -1591,34 +1593,54 @@ void Mrs::drive(const unsigned char command)
 			break;
 		case LEFT:
 			gui->appendLog("LEFT");
-			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+			
+			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
 			return;
 			break;
 		case RIGHT:
 			gui->appendLog("RIGHT");
-			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+			
+			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
 			return;
 			break;
 		case TURNLEFT:
 			gui->appendLog("TURNLEFT");
 			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+			
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
 			return;
 			break;
 		case TURNRIGHT:
 			gui->appendLog("TURNRIGHT");
 			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
+			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+			
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
+			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
 			return;
 			break;
 		case START:
@@ -2934,6 +2956,46 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 		}
 
+		//==================
+		// drive test mode
+		//==================
+		//------------------------------------------------------
+		// drive backward (Y5 axis down/button down)
+		//------------------------------------------------------
+		if (axisValue > 0)
+		{
+			if (robotIsOn)
+			{
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+
+				drive(BACKWARD);
+			}
+		}
+
+		//------------------------------------------------------
+		// drive forward (Y5 axis/button up)
+		//------------------------------------------------------
+		if (axisValue < 0)
+		{
+			if (robotIsOn)
+			{
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+
+				drive(FORWARD);
+			}
+		}
+
+		if (axisValue == 0)
+		{
+			drive(WAIT);
+		}
+
 		return;
 	}
 
@@ -3052,6 +3114,52 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 
 			if (axisValue == 0)
 			{
+			}
+		}
+		
+		//==================
+		// drive test mode
+		//==================
+		//------------------------------------------------------
+		// drive right (X5 axis/button right)
+		//------------------------------------------------------
+		if (axisValue > 0)
+		{
+			if (robotIsOn)
+			{
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+
+				drive(RIGHT);
+			}
+		}
+		
+		//------------------------------------------------------
+		// drive left (X5 axis/button left)
+		//------------------------------------------------------
+		if (axisValue < 0)
+		{
+			if (robotIsOn)
+			{
+				if (robotDrives == false)
+				{
+					drive(START);
+				}
+
+				drive(LEFT);
+			}
+		}
+		
+		//------------------------------------------------------
+		// wait (X5 axis/button)
+		//------------------------------------------------------
+		if (axisValue == 0)
+		{
+			if (robotIsOn)
+			{
+				drive(WAIT);
 			}
 		}
 

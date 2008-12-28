@@ -98,7 +98,7 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
-	initializePlots();
+	initPlots();
 
 	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//----------------------------------------------------------------------------
@@ -2171,7 +2171,7 @@ void Gui::laserSplash(bool status, short int laserScanner)
 #endif
 
 
-void Gui::initializePlots()
+void Gui::initPlots()
 {
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	//--------------------------------------
@@ -2186,8 +2186,8 @@ void Gui::initializePlots()
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
 	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
-	// Ampere (1000 mA, Step 200)
-	//ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
+	// Ampere (5000 mA, Step 500)
+	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, AMPERESMAXPLOTCURVE1, AMPERESSTEPPLOTCURVE1);
 
 	QColor col = labelFillColorBlue;
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -2207,8 +2207,8 @@ void Gui::initializePlots()
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
 	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
-	// Ampere (1000 mA, Step 200)
-	//ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, 4000.0, 400);
+	// Ampere (5000 mA, Step 500)
+	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, AMPERESMAXPLOTCURVE2, AMPERESSTEPPLOTCURVE2);
 
 	col = labelFillColorRed;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
