@@ -44,8 +44,26 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 	// show messages on console on ARM systems
 	Q_UNUSED(sayIt);
 	
-	if (CR == TRUE) // default!
-	qDebug("\n");
+	//if (CR == TRUE) // default!
+	//qDebug("\n");
+	
+	//------------------------------
+	// remove HTML tags from string
+	//------------------------------
+	int start= -1;
+	do
+	{
+		// search for the first HTML "<"
+		start = text.indexOf("<");
+
+		if (start != 1)
+		{
+			text.remove(start, text.indexOf(">")+1 - start);
+		}
+	} while (text.contains(">"));
+	// till the last HTML ">" is found
+	//------------------------------
+	
 	
 	qDebug() << text;
 }

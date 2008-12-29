@@ -53,6 +53,11 @@ int main(int argc, char *argv[])
 	Mrs *m = new Mrs();
 
 
+
+	// start mrs
+	m->init();
+	
+	/*
 	if (argc <= 1)
 	{
 		qDebug("Juhu!");
@@ -61,6 +66,7 @@ int main(int argc, char *argv[])
 	{
 		qDebug("Und das war mit Parameter... :-)");
 	}
+	*/
 	
 	delete m;
 	
@@ -609,6 +615,8 @@ void Mrs::init()
 	splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
+	#else
+	qDebug() << "Searching front laser...";
 	#endif
 	
 	// check FRONT laser
@@ -618,6 +626,8 @@ void Mrs::init()
 	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
+	#else
+	qDebug() << "Searching rear laser...";
 	#endif
 	
 	// check REAR laser
