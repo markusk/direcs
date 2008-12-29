@@ -412,9 +412,6 @@ void  Laser::set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_c
 
 int Laser::carmen_laser_start(short int laserScanner)
 {
-	int returncode = 0;
-	
-	
 	switch (laserScanner)
 	{
 		case LASER1:
