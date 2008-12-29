@@ -534,6 +534,9 @@ int Laser::carmen_laser_start(short int laserScanner)
 			}
 			break;
 	}
+	
+	// this line should never be reached
+	return -1;
 }
 
 
@@ -758,6 +761,9 @@ float Laser::getLaserDistance(int laser, int angle)
 			return laserrange[angle];
 			break;
 	}
+	
+	// this line should never be reached
+	return 0.0;
 }
 
 
