@@ -175,11 +175,10 @@ class Gui : public QObject
 		 */
 		void test();
 
-/* 
 	private:
+/* 
 	TODO:	void closeEvent();
 		*/
-		
 		/**
 		Creates all objects, lines, scene, view etc.
 		*/
