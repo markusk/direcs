@@ -145,11 +145,13 @@ arm {
     		gui
     HEADERS -=	camThread.h \
 			speakThread.h \
+			plotThread.h \
 			QtGLContext.h \
 			gui.h
     HEADERS +=	gui_arm.h
     SOURCES -=	camThread.cpp \
 			speakThread.cpp \
+			plotThread.cpp \
 			QtGLContext.cpp \
 			gui.cpp
     SOURCES +=	gui_arm.cpp

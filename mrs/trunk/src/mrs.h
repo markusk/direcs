@@ -51,9 +51,11 @@
 #endif
 //-------------------------------------------------------------------
 #include <QtDebug>
-#include <QtGui>
-#include <QSplashScreen>
 #include <QMutex>
+#ifndef _ARM_ // only include on _non_ ARM environments!
+	#include <QtGui>
+	#include <QSplashScreen>
+#endif
 //-------------------------------------------------------------------
 
 
@@ -67,7 +69,7 @@ class Mrs : public QObject
     Q_OBJECT
 
 
-	public:		
+	public:
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		Mrs(QSplashScreen *splash); /// For non-ARM systems
 #else
@@ -233,13 +235,16 @@ class Mrs : public QObject
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		Gui *gui;
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		SettingsDialog *settingsDialog; /// The settings dialog
 		JoystickDialog *joystickDialog; /// The joystick dialog/view
+		PlotThread *plotThread;
+		QSplashScreen *splash;
+#endif
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
 		// TODO: Heartbeat *heartbeat;
 		SensorThread *sensorThread;
-		PlotThread *plotThread;
 		Motor *motors;
 		Servo *servos;
 		ObstacleCheckThread *obstCheckThread;
@@ -252,8 +257,6 @@ class Mrs : public QObject
 		//SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
-
-		QSplashScreen *splash;
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;

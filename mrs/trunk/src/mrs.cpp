@@ -23,7 +23,9 @@
 
 int main(int argc, char *argv[])
 {
-#ifndef _ARM_ // only include on _non_ ARM environments!
+	Q_UNUSED(argv);
+	
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	// initialize the resource file
 	Q_INIT_RESOURCE(mrs);
 
@@ -46,7 +48,7 @@ int main(int argc, char *argv[])
 
 	return app.exec();
 	
-#else
+	#else
 	// create Mrs class object
 	Mrs *m = new Mrs();
 
@@ -63,7 +65,7 @@ int main(int argc, char *argv[])
 	delete m;
 	
 	return 0;
-#endif
+	#endif
 }
 
 
@@ -108,9 +110,9 @@ Mrs::Mrs()
 #endif
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	camThread = new CamThread();
-	#endif
+#endif
 	joystick = new Joystick();
 	head = new Head(servos);
 }
@@ -174,16 +176,17 @@ void Mrs::init()
 	// call (a) test method(s) when clicking the test button
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	// currently not in use:
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
-	#endif
+#endif
 
 	//--------------------------------------------------------------------------
 	// resets the driven distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	//--------------------------------------------------------------------------
 	// set the motor speed, when signal comes from Gui
 	//--------------------------------------------------------------------------
@@ -208,7 +211,8 @@ void Mrs::init()
 	// set the minimum laser distance, when signal comes from Gui
 	//--------------------------------------------------------------------------
 	connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
-
+#endif
+	
 	//--------------------------------------------------------------------------
 	// let the GUI show servo messages in the log
 	//--------------------------------------------------------------------------
@@ -270,9 +274,13 @@ void Mrs::init()
 	//--------------------------------------------------------------------------
 	if (inifile1->checkFiles() == false)
 	{
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		// file not found-Msg
 		QMessageBox msgbox(QMessageBox::Critical, tr("mrs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
 		msgbox.exec();
+		#else
+		qDebug() << " ++++ Error opening ini-file " << inifile1->getInifileName() << "+++";
+		#endif
 
 		gui->appendLog(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
 	}
@@ -281,9 +289,9 @@ void Mrs::init()
 		// file found-Msg
 		gui->appendLog(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->showMessage(QObject::tr("Reading settings..."), splashPosition, splashColor);
-#endif
+		#endif
 
 		//================================================================================================================================================================
 		// read all settings
@@ -292,6 +300,7 @@ void Mrs::init()
 	}
 
 
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// connect plotThread signal to "setPlotData"
 	// (Whenever the plot thread has new data, the data are show in the GUI)
@@ -300,6 +309,7 @@ void Mrs::init()
 	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
 	connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
 	connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
+	#endif
 
 	//----------------------------------------------------------------------------
 	// let the GUI show messages in the log (e.g. when special buttons pressed)
@@ -317,9 +327,13 @@ void Mrs::init()
 		qDebug() << "Error opening serial port" << serialPortMicrocontroller;
 		gui->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
 
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		// show a warning dialog!
 		QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
 		msgbox.exec();
+		#else
+		qDebug() << "+++ Error opening serial port" << serialPortMicrocontroller << "+++";
+		#endif
 
 		// no serial port, no robot :-(
 		robotIsOn = false;
@@ -333,11 +347,11 @@ void Mrs::init()
 		// Basic init for all the bits on the robot circuit
 		// AND check, if the robot is "on" (it answers correct)
 		//-------------------------------------------------------
-#ifndef _ARM_ // only include on _non_ ARM environments!
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
-#endif
+		#endif
 
 		// init the circuit & Co. when hitting the button in the GUI
 		connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
@@ -378,11 +392,12 @@ void Mrs::init()
 		/*
 		if (heartbeat->isRunning() == false)
 		{
-#ifndef _ARM_ // only include on _non_ ARM environments!
+			#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-#endif
+			#endif
+		
 			gui->appendLog("Starting heartbeat thread...", false);
 			heartbeat->start();
 			gui->appendLog("Heartbeat thread started.");
@@ -394,30 +409,32 @@ void Mrs::init()
 		//-----------------------------------------------------------
 		if (sensorThread->isRunning() == false)
 		{
-#ifndef _ARM_ // only include on _non_ ARM environments!
+			#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-#endif
+			#endif
+			
 			gui->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
 			gui->appendLog("Sensor thread started.");
 		}
 
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		//-----------------------------------------------------------
 		// start the plot thread ("clock" for plotting the curves)
 		//-----------------------------------------------------------
 		if (plotThread->isRunning() == false)
 		{
-#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-#endif
+			
 			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
 			gui->appendLog("Plot thread started.");
 		}
+		#endif
 	}
 	else
 	{
@@ -434,11 +451,12 @@ void Mrs::init()
 	// start the joystick thread
 	if (joystick->isRunning() == false)
 	{
-#ifndef _ARM_ // only include on _non_ ARM environments!
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
-#endif
+		#endif
+		
 		gui->appendLog("Starting joystick thread...", false);
 		joystick->start();
 		gui->appendLog("Joystick thread started.");
@@ -535,10 +553,11 @@ void Mrs::init()
 	// connect joystick signals to "show joystick data"
 	// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
 	//----------------------------------------------------------------------------
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 	connect(joystick, SIGNAL(joystickMoved(int, int)), joystickDialog, SLOT(showJoystickAxes(int, int)));
-	connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
-
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), joystickDialog, SLOT(showJoystickButtons(int, bool)));
+	#endif
+	connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 
@@ -585,19 +604,21 @@ void Mrs::init()
 	//---------------------------------------------------------------------
 	// check if laser scanners are connected
 	//---------------------------------------------------------------------
-#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
-#endif
+	#endif
+	
 	// check FRONT laser
 	laserScannerFrontFound = laserThread->isConnected(LASER1);
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
-#endif
+	#endif
+	
 	// check REAR laser
 	laserScannerRearFound = laserThread->isConnected(LASER2);
 
@@ -634,11 +655,12 @@ void Mrs::init()
 		// start the laserThread
 		if (laserThread->isRunning() == false)
 		{
-#ifndef _ARM_ // only include on _non_ ARM environments!
+			#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-#endif
+			#endif
+			
 			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
 			gui->appendLog("Laser thread started.");
@@ -647,11 +669,12 @@ void Mrs::init()
 
 		if (obstCheckThread->isRunning() == false)
 		{
-#ifndef _ARM_ // only include on _non_ ARM environments!
+			#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-#endif
+			#endif
+			
 			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			gui->appendLog("Obstacle check thread started.");
@@ -668,11 +691,13 @@ void Mrs::init()
 	}
 
 
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//------------------------------------------------------------------
 	// hide some dialogues
 	//------------------------------------------------------------------
 	settingsDialog->hide();
 	joystickDialog->hide();
+	#endif
 
 
 	//------------------------------------------------------------------
@@ -720,12 +745,13 @@ void Mrs::shutdown()
 {
 		qDebug("Mrs shutdown...");
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->show();
 		splash->showMessage(QObject::tr("Shutting down..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
-#endif
+		#endif
+		
 		// just 4 fun
 		if (robotIsOn)
 		{
@@ -740,17 +766,19 @@ void Mrs::shutdown()
 		// "Save the setting, that no settings shoud be saved"
 		//
 		// save check box status
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 		inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
 
 
 		if (settingsDialog->getCheckBoxSaveSettings() == Qt::Checked)
 		{
 			gui->appendLog("Writing settings...");
-#ifndef _ARM_ // only include on _non_ ARM environments!
+			#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Writing settings..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-#endif
+			#endif
+			
 			// save gui slider values
 			inifile1->writeSetting("Config", "motor1Speed", settingsDialog->getSliderMotorSpeed(1));
 			inifile1->writeSetting("Config", "motor2Speed", settingsDialog->getSliderMotorSpeed(2));
@@ -772,14 +800,15 @@ void Mrs::shutdown()
 			// force writing *immediately*
 			inifile1->sync();
 
-			//QMessageBox::information(0, "mrs", "Settings written. :-)", QMessageBox::Ok);
 			gui->appendLog("Settings written.");
 		}
+	#endif
 
 
 		// show dialog if set in ini-file
 		if (exitDialog == true)
 		{
+			#ifndef _ARM_ // only include on _non_ ARM environments!
 			// ask user if he really wants to exit.
 			if (QMessageBox::question(0, "Leaving program...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
 			{
@@ -789,6 +818,8 @@ void Mrs::shutdown()
 				// don't leave! :-)
 				return;
 			}
+			#endif
+			// TODO: ask for exit on console!
 		}
 
 
@@ -983,6 +1014,7 @@ void Mrs::shutdown()
 		}
 
 
+		#ifndef _ARM_ // only include in _non_ ARM environments!
 		//--------------------------------
 		// quit the plotThread
 		//--------------------------------
@@ -1018,6 +1050,7 @@ void Mrs::shutdown()
 				gui->appendLog("Plot thread terminated.");
 			}
 		}
+		#endif
 
 
 
@@ -1169,7 +1202,9 @@ Mrs::~Mrs()
 	delete camThread;
 	#endif
 	delete joystick;
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 	delete plotThread;
+	#endif
 	delete inifile1;
 	delete obstCheckThread;
 	delete servos;
@@ -1178,8 +1213,10 @@ Mrs::~Mrs()
 	// TODO: delete heartbeat;
 	delete circuit1;
 	delete interface1;
+	#ifndef _ARM_ // only include in _non_ ARM environments!
 	delete joystickDialog;
 	delete settingsDialog;
+	#endif
 	delete gui;
 }
 
@@ -1210,21 +1247,21 @@ void Mrs::showExitDialog()
 
 void Mrs::showSplashMessage(QString text)
 {
-#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->showMessage(text, splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
-#else
+	#else
 	qDebug() << text;
-#endif
+	#endif
 }
 
 
 void Mrs::finishSplash()
 {
-#ifndef _ARM_ // only include on _non_ ARM environments!
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->finish(gui);
-#endif
+	#endif
 }
 
 
@@ -1957,8 +1994,8 @@ void Mrs::readSettings()
             #ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
             // turning "off" camera
             camThread->setCameraDevice(-2);
-            #endif
             gui->disableCamera();
+            #endif
             gui->appendLog("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
             break;
 		case 1:
@@ -2062,12 +2099,18 @@ void Mrs::readSettings()
 			gui->appendLog("<font color=\"#FF0000\">Value \"saveOnExit\"not found in ini-file!</font>");
 			break;
 		case Qt::Unchecked:
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// uncheck checkbox
 			settingsDialog->setCheckBoxSaveSettings(Qt::Unchecked);
+			#endif
 			break;
 		case Qt::Checked:
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set checkbox
 			settingsDialog->setCheckBoxSaveSettings(Qt::Checked);
+			#endif
 			break;
 	}
 
@@ -2102,8 +2145,11 @@ void Mrs::readSettings()
 			gui->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
 			break;
 		default:
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderObstacleValue(minObstacleDistance);
+			#endif
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstacleDistance);
 			// show text
@@ -2124,8 +2170,11 @@ void Mrs::readSettings()
 			gui->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
 			break;
 		default:
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
+			#endif
 			// tell it the obstacle check thread
 			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
 			// show text
@@ -2146,8 +2195,11 @@ void Mrs::readSettings()
 			gui->appendLog("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
 			break;
 		default:
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderRobotSlot(robotSlot);
+			#endif
 			// tell it the obstacle check thread
 			obstCheckThread->setRobotSlot(robotSlot);
 			// show text
@@ -2168,8 +2220,11 @@ void Mrs::readSettings()
 			gui->appendLog("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
 			break;
 		default:
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderStraightForwardDeviation(straightForwardDeviation);
+			#endif
 			// tell it the obstacle check thread
 			obstCheckThread->setStraightForwardDeviation(straightForwardDeviation);
 			// show text
@@ -2223,8 +2278,11 @@ void Mrs::readSettings()
 				mot1Speed = 255;
 			}
 
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(1, mot1Speed);
+			#endif
 			// show text
 			gui->appendLog(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
 			break;
@@ -2251,8 +2309,11 @@ void Mrs::readSettings()
 				mot2Speed = 255;
 			}
 
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(2, mot2Speed);
+			#endif
 			// show text
 			gui->appendLog(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
@@ -2279,8 +2340,11 @@ void Mrs::readSettings()
 				mot3Speed = 255;
 			}
 
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(3, mot3Speed);
+			#endif
 			// show text
 			gui->appendLog(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
 			break;
@@ -2307,8 +2371,11 @@ void Mrs::readSettings()
 				mot4Speed = 255;
 			}
 
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(4, mot4Speed);
+			#endif
 			// show text
 			gui->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
@@ -2335,8 +2402,11 @@ void Mrs::readSettings()
 				minimumSpeed = 255;
 			}
 
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMinimumSpeed(minimumSpeed);
+			#endif
 			// show text
 			gui->appendLog(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
 			break;
@@ -2363,8 +2433,11 @@ void Mrs::readSettings()
 				maximumSpeed = 255;
 			}
 
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMaximumSpeed(maximumSpeed);
+			#endif
 			// show text
 			gui->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
@@ -2627,7 +2700,10 @@ void Mrs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(1) + 1;
 			motors->setMotorSpeed(1, newSpeed);
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(1, newSpeed);
+			#endif
 			return;
 		}
 
@@ -2638,7 +2714,10 @@ void Mrs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(2) + 1;
 			motors->setMotorSpeed(2, newSpeed);
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(2, newSpeed);
+			#endif
 			return;
 		}
 
@@ -2649,7 +2728,10 @@ void Mrs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(1) - 1;
 			motors->setMotorSpeed(1, newSpeed);
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(1, newSpeed);
+			#endif
 			return;
 		}
 
@@ -2660,7 +2742,10 @@ void Mrs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(2) - 1;
 			motors->setMotorSpeed(2, newSpeed);
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(2, newSpeed);
+			#endif
 			return;
 		}
 	}
@@ -2688,9 +2773,12 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE backward
 				//
+				#ifndef _ARM_ // only include in _non_ ARM environments!
+				// TODO: put this setting somewehere
 				//speed = (axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+				#endif
 
 				if (robotIsOn)
 				{
@@ -2740,9 +2828,12 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE forward
 				//
+				#ifndef _ARM_ // only include in _non_ ARM environments!
+				// TODO: put this setting somewehere
 				//speed = (-axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+				#endif
 
 				if (robotIsOn)
 				{
@@ -2818,10 +2909,13 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE RIGHT
 				//
+				#ifndef _ARM_ // only include in _non_ ARM environments!
+				// TODO: put this setting somewehere
 				//speed = (axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
-
+				#endif
+				
 				if (robotIsOn)
 				{
 					motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
@@ -2852,10 +2946,13 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE left
 				//
+				#ifndef _ARM_ // only include in _non_ ARM environments!
+				// TODO: put this setting somewehere
 				//speed = (-axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
-
+				#endif
+				
 				if (robotIsOn)
 				{
 					motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
@@ -3419,12 +3516,14 @@ void Mrs::setSimulationMode(bool status)
 			gui->appendLog("Started.");
 		}
 
+		#ifndef _ARM_ // only include in _non_ ARM environments!
 		if (plotThread->isRunning() == false)
 		{
 			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
 			gui->appendLog("Started.");
 		}
+		#endif
 
 		if (obstCheckThread->isRunning() == false)
 		{
@@ -3454,7 +3553,9 @@ void Mrs::setRobotState(bool state)
 
 void Mrs::speak(QString text)
 {
-	#ifdef _TTY_POSIX_
+	Q_UNUSED(text);
+	
+	#ifdef _TTY_POSIX_ // only available on Linux! :-)
 	int start= -1;
 
 
@@ -3473,7 +3574,6 @@ void Mrs::speak(QString text)
 	} while (text.contains(">"));
 	// till the last HTML ">" is found
 
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	// convert QString to EST_String (defined in EST_String.h)
 	EST_String textForFestival (text.toAscii());
 
@@ -3484,7 +3584,6 @@ void Mrs::speak(QString text)
 	//
 	// say the cleaned text
 	festival_say_text(textForFestival);
-	#endif
 	#endif
 }
 
