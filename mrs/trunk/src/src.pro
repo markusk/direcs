@@ -147,12 +147,20 @@ arm {
 			speakThread.h \
 			plotThread.h \
 			QtGLContext.h \
+			laserScene.h \
+			aboutDialog.h \
+			joystickDialog.h \
+			settingsDialog.h \
 			gui.h
     HEADERS +=	gui_arm.h
     SOURCES -=	camThread.cpp \
 			speakThread.cpp \
 			plotThread.cpp \
 			QtGLContext.cpp \
+			laserScene.cpp \
+			aboutDialog.cpp \
+			joystickDialog.cpp \
+			settingsDialog.cpp \
 			gui.cpp
     SOURCES +=	gui_arm.cpp
     INCLUDEPATH -=	/usr/include/atk-1.0/ \

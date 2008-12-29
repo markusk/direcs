@@ -69,9 +69,10 @@ int main(int argc, char *argv[])
 }
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 const Qt::Alignment Mrs::splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
-
 const QColor Mrs::splashColor = Qt::red;
+#endif
 
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
@@ -697,13 +698,10 @@ void Mrs::init()
 	//------------------------------------------------------------------
 	settingsDialog->hide();
 	joystickDialog->hide();
-	#endif
-
-
+	
 	//------------------------------------------------------------------
 	// for getting the screen resolution
 	//------------------------------------------------------------------
-
 	//QDesktopWidget *desktop = QApplication::desktop();
 
 	//------------------------------------------------------------------
@@ -734,7 +732,6 @@ void Mrs::init()
 	}
 	*/
 
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	// one time init for the laser view
 	gui->initLaserView();
 	#endif

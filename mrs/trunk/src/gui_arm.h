@@ -21,14 +21,14 @@
 #ifndef GUI_ARM_H
 #define GUI_ARM_H
 
-
-#include "ui_mainWindow_arm.h"
+#include <QObject>
+// FIXME: #include "ui_mainWindow_arm.h" needed?
 
 
 /**
 \brief The class for all GUI actions on ARM systems!
 */
-class Gui : public QMainWindow
+class Gui : public QObject
 {
 	Q_OBJECT
 
@@ -174,10 +174,10 @@ class Gui : public QMainWindow
 		 */
 		void test();
 
-
+/* 
 	private:
-		void closeEvent();
-		
+	TODO:	void closeEvent();
+		*/
 		
 		/**
 		Creates all objects, lines, scene, view etc.

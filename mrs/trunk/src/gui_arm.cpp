@@ -18,7 +18,7 @@
  *                                                                       *
  *************************************************************************/
 
-#include "gui.h"
+#include "gui_arm.h"
 
 
 Gui::Gui()
@@ -30,13 +30,13 @@ Gui::~Gui()
 {
 }
 
-
-void Gui::closeEvent()
+/*
+TODO: void Gui::closeEvent()
 {
 	qDebug("closeEvent");
 	emit shutdown();
 }
-
+*/
 
 void Gui::setRobotControls(bool state)
 {
