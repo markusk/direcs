@@ -23,10 +23,10 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-#ifdef _TTY_POSIX_
-	serialPort = new DirecsSerial();
-#else
+#ifdef _TTY_WIN_
 	serialPort = new QextSerialPort();
+#else
+	serialPort = new DirecsSerial();
 #endif
 }
 
@@ -39,26 +39,7 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-#ifdef _TTY_POSIX_
-	// for QString to char* conversion
-	QByteArray ba = comPort.toLatin1();
-
-
-	// check if file (serial port) exists
-	if (QFile::exists(comPort) == false)
-	{
-		qDebug("Serial port file not found!");
-		return false;
-	}
-	
-
-	// serial port config also done in openAtmelPort!
-	if (serialPort->openAtmelPort( ba.data() ) != -1)
-		return true;
-	else
-		return false;
-	
-#else
+#ifdef _TTY_WIN_ // Windows code
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
 		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
@@ -79,16 +60,37 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//serialPort->flush();
 
 	return true;
+	
+#else // Linux AND ARM code using direcsSerial
+	
+	// for QString to char* conversion
+	QByteArray ba = comPort.toLatin1();
+
+
+	// check if file (serial port) exists
+	if (QFile::exists(comPort) == false)
+	{
+		qDebug("Serial port file not found!");
+		return false;
+	}
+	
+
+	// serial port config also done in openAtmelPort!
+	if (serialPort->openAtmelPort( ba.data() ) != -1)
+		return true;
+	else
+		return false;
 #endif
 }
 
 
 void InterfaceAvr::closeComPort()
 {
-#ifdef _TTY_POSIX_
-	serialPort->closeAtmelPort();
-#else
+#ifdef _TTY_WIN_
 	serialPort->close();
+#else
+	// using direcsSerial
+	serialPort->closeAtmelPort();
 #endif
 }
 
@@ -98,15 +100,13 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	static int receiveErrorCounter = 0;
 
 
-#ifdef _TTY_POSIX_
-	//qDebug("Sending char with direcsSerial...");
-
-	// send one byte to the serial port
-	if (serialPort->writeAtmelPort(&character, 1) <= 0)
-#else
+#ifdef _TTY_WIN_
 	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
 //	if (serialPort->write(&character, 1) == -1)
+#else
+	// send one byte to the serial port with direcsSerial
+	if (serialPort->writeAtmelPort(&character, 1) <= 0)
 #endif
 	{
 		receiveErrorCounter++;
@@ -127,12 +127,12 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
-#ifdef _TTY_POSIX_
-	// reading one char
-	return serialPort->readAtmelPort(character, 1); // TODO: check, how many chars are availabe ( numChars() )
-#else
+#ifdef _TTY_WIN_
 	// QextSerialPort code, when using Windows
 	return serialPort->getChar(character);
+#else
+	// reading one char with direcsSerial
+	return serialPort->readAtmelPort(character, 1); // TODO: check, how many chars are availabe ( numChars() )
 #endif
 }
 
