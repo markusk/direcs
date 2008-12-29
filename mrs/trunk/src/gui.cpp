@@ -221,14 +221,12 @@ void Gui::appLog(QString text)
 
 void Gui::appendLog(QString text, bool CR, bool sayIt)
 {
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	// insert the text
 	ui.textEditLog->insertHtml(text);
 
-	if (CR == TRUE)
-	{
-		// insert a line break
+	if (CR == TRUE) // default!
 		ui.textEditLog->insertHtml("<br>");
-	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditLog->ensureCursorVisible();
@@ -239,6 +237,15 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 	{
 		emit speak(text);
 	}
+#else
+	// show messages on console on ARM systems
+	Q_UNUSED(sayIt);
+	
+	if (CR == TRUE) // default!
+	qDebug("\n");
+	
+	qDebug() << text;
+#endif
 }
 
 
