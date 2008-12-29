@@ -22,14 +22,19 @@
 #define MRS_H
 
 //-------------------------------------------------------------------
-#include "gui.h"
-#include "joystickDialog.h"
-#include "settingsDialog.h"
+#ifdef _ARM_ // only include on ARM environments!
+	#include "gui_arm.h"
+#else
+	#include "gui.h"
+	#include "joystickDialog.h"
+	#include "settingsDialog.h"
+	#include "plotThread.h"
+#endif
+
 #include "circuit.h"
 #include "interfaceAvr.h"
 //#include "heartbeat.h"
 #include "sensorThread.h"
-#include "plotThread.h"
 #include "motor.h"
 #include "servo.h"
 #include "obstacleCheckThread.h"

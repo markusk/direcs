@@ -1,13 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="2" >
+ <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/mrs.cpp" >
-   <View0 Encoding="" line="0" Type="Source" />
+   <View0 Encoding="" line="88" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/direcsSerial.h" >
-   <View0 Encoding="" line="47" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/gui.h" >
+   <View0 Encoding="" line="359" Type="Source" />
   </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/gui.cpp" >
+   <View0 Encoding="" line="129" Type="Source" />
+  </Doc2>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>

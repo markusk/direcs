@@ -18,45 +18,22 @@
  *                                                                       *
  *************************************************************************/
 
-#ifndef GUI_H
-#define GUI_H
+#ifndef GUI_ARM_H
+#define GUI_ARM_H
 
 
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-	#include "cv.h" // for type IplImage (camThread)
-#endif
-
-//-------------------------------------------------------------------
-#include <QtGui>
-#include <QtOpenGL>
-#include <QGraphicsScene> // for OpenGL (Laser lines)
-//-------------------------------------------------------------------
-#include "joystickDialog.h"
-#include "settingsDialog.h"
-#include "aboutDialog.h"
-#include "laserScene.h"
-#include "ui_mainWindow.h"
-//-------------------------------------------------------------------
-#include <qwt_plot_layout.h>
-#include <qwt_plot_curve.h>
-#include <qwt_scale_draw.h>
-#include <qwt_scale_widget.h>
-#include <qwt_legend.h>
-#include <qwt_legend_item.h>
-//-------------------------------------------------------------------
-#include "QtGLContext.h"
-
+#include "ui_mainWindow_arm.h"
 
 
 /**
-\brief The class for all GUI actions
+\brief The class for all GUI actions on ARM systems!
 */
 class Gui : public QMainWindow
 {
 	Q_OBJECT
 
 	public:
-		Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent = 0);
+		Gui();
 		~Gui();
 
 		/*
@@ -96,18 +73,6 @@ class Gui : public QMainWindow
 		*/
 		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
 
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-		/**
-		tell the OpenGLContext the image data
-		*/
-		void setCamImageData(int width, int height, int pixeldepth);
-#endif
-
-		/**
-		Initialise the laser view (find the middle of the now fresh shown control etc.)
-		*/
-		void initLaserView();
-
 
 	public slots:
 		/**
@@ -117,84 +82,6 @@ class Gui : public QMainWindow
 		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
 		 */
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
-		/*
-		// just a quick and dirty wrapper static method for old CARMEN standard C code!
-		static void appLog(QString text);
-		*/
-
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-		/**
-		Shows the new picture from the cam (live).
-		@param frame
-		@sa CamThread::camDataComplete()
-		*/
-		void setCamImage(IplImage* frame);
-		//void setCamImage(QImage* image);
-#endif
-
-		/**
-		Show some face track data in the GUI.
-		@param faces is the number of detected faces
-		@param faceX is the X coordinate to the middle of a detected face (0, if none)
-		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
-		@param faceRadius is the radius (0, if none)
-		*/
-		void showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
-
-		/**
-		Disables camera controls in the GUI.
-		@sa CameraThread::setCameraDevice()
-		 */
-		void disableCamera();
-
-		/**
-		Disables face detection checkBoxes in the GUI.
-		@sa CameraThread::setCascadePath()
-		 */
-		void disableFaceDetection();
-
-		/**
-		Enables/Disables some controls in the GUI if the robot, depending on the robots state.
-		@param state can be ON or OFF
-		@sa CameraThread::robotState()
-		 */
-		void setRobotControls(bool state);
-
-		/**
-		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		*/
-		void setPlotData1(double *xval, double *yval, int size);
-
-		/**
-		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		*/
-		void setPlotData2(double *xval, double *yval, int size);
-
-		/**
-		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		*/
-		void setPlotData3(double *xval, double *yval, int size);
-
-		/**
-		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		*/
-		void setPlotData4(double *xval, double *yval, int size);
 
 		/**
 		Append text to the network log in the main window
@@ -216,16 +103,6 @@ class Gui : public QMainWindow
 		void refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags);
 		
 		/**
-		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
-		*/
-		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
-		
-		/**
-		Zoom into the graphicsView/scene, if the mouse wheel was used.
-		*/
-		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
-
-		/**
 		Shows the angles of the free area where to drive in lables.
 		@param largestFreeAreaStart
 		@param largestFreeAreaEnd
@@ -234,27 +111,10 @@ class Gui : public QMainWindow
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
 
 		/**
-		Shows a graphic in the laser scanner view while searching for a scanner.
-		@param status can be true or false
-		@param laserScanner is the number of the laser scanner and can be LASER1, LASER2...
-		*/
-		void laserSplash(bool status, short int laserScanner);
-
-		/**
 		Shows the preferred driving direction in a lable.
 		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
 		*/
 		void showPreferredDirection(QString direction);
-
-		/**
-		Shows the face tracking direction in a lable.
-		@param direction can be UP, DOWN, LEFT, RIGHT or NONE
-		 */
-		void showFaceTrackDirection(QString direction);
-
-
-	protected:
-		void closeEvent(QCloseEvent *event);
 
 
 	signals:
@@ -305,18 +165,6 @@ class Gui : public QMainWindow
 		void simulate(bool state);
 
 		/**
-		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.
-		@param state has to be Qt::Checked to enable the detection. All other states disable.
-		*/
-		void enableFaceDetection(int state);
-
-		/**
-		Enables or disables the face tracking. When activated, a face will be tracked by the camera.
-		@param state has to be Qt::Checked to enable the detection. All other states disable.
-		*/
-		void enableFaceTracking(int state);
-
-		/**
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
 		void speak(QString text);
@@ -327,57 +175,10 @@ class Gui : public QMainWindow
 		void test();
 
 
-	protected slots:
-		/**
-		Action if a menu item or a toolbar button is clicked
-		*/
-		void on_actionExit_activated();
-		void on_actionCamera_activated();
-		void on_actionOdometrie_activated();
-		void on_actionPower_activated();
-		void on_actionSettings_activated();
-		void on_actionLog_activated();
-		void on_actionJoystick_activated();
-		void on_actionAll_activated();
-		void on_actionAbout_activated();
-		void on_actionDrive_activated();
-		void on_actionReset_activated();
-		void on_actionTest_activated();
-		void on_actionRemote_activated();
-		void on_actionSimulate_activated();
-
-
-	private slots:
-		void on_btnResetMovement1_clicked();
-		void on_btnResetMovement2_clicked();
-		//void on_ckeckBoxSaveSettings_stateChanged(int state);
-		void on_btnSavePicture_clicked();
-		void on_sliderZoom_valueChanged(int);
-		void on_checkBoxMirror_stateChanged(int);
-		void on_checkBoxFaceDetection_stateChanged(int);
-		void on_checkBoxFaceTracking_stateChanged(int);
-		void on_radioBtnMotor1FW_clicked();
-		void on_radioBtnMotor1BW_clicked();
-		void on_radioBtnMotor1OFF_clicked();
-		void on_radioBtnMotor2FW_clicked();
-		void on_radioBtnMotor2BW_clicked();
-		void on_radioBtnMotor2OFF_clicked();
-		void on_radioBtnMotor3FW_clicked();
-		void on_radioBtnMotor3BW_clicked();
-		void on_radioBtnMotor3OFF_clicked();
-		void on_radioBtnMotor4FW_clicked();
-		void on_radioBtnMotor4BW_clicked();
-		void on_radioBtnMotor4OFF_clicked();
-
-		/**
-		Saves the current picture to disk (one time shot).
-		*/
-		void saveCamImage(void);
-
-
 	private:
-		void initPlots();
-
+		void closeEvent();
+		
+		
 		/**
 		Creates all objects, lines, scene, view etc.
 		*/
@@ -385,43 +186,6 @@ class Gui : public QMainWindow
 		void createLaserDistanceObjects();
 
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
-		Ui::mainWindow ui;
-		SettingsDialog *settingsDialog; // just a pointer to the object created in the mrs class!
-		JoystickDialog *joystickDialog; // just a pointer to the object created in the mrs class!
-		QwtPlotCurve curve1;
-		QwtPlotCurve curve2;
-		QwtPlotCurve curve3;
-		QwtPlotCurve curve4;
-		QPixmap cameraPicToSave;
-		QColor labelFillColorRed;
-		QColor labelFillColorGreen;
-		QColor labelFillColorBlue;
-		QColor colorLaserObstacle;
-		QColor colorLaserFreeWay;
-		QColor colorLaserPreferredDrivingDirection;
-		QColor colorLaserCenterDrivingDirection;
-		QColor colorHelpLine;
-		QColor colorHelpLineText;
-		QColor colorGraphicsSceneBackground;
-		QPen laserLinePen;
-		int lastZoom;
-		qreal startScale;
-		qreal laserXPos;
-		qreal laserYPos;
-		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
-		//QGraphicsScene *cameraScene;						/** The QGraphicsScene for drawing "over" the camera image */
-		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
-		QList <QGraphicsLineItem*> *laserLineListRear;		/** A pointer to a QList of pointers to the rear laser lines (QGraphicsLineItems) */
-		QList <QGraphicsEllipseItem*> *laserDistanceLineListFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
-		QList <QGraphicsSimpleTextItem*> *laserDistanceTextFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
-		QList <QGraphicsEllipseItem*> *laserDistanceLineListRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
-		QList <QGraphicsSimpleTextItem*> *laserDistanceTextRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
-		QGraphicsPixmapItem *pixmapBot1;
-		QGraphicsPixmapItem *pixmapBot2;
-		QGraphicsPixmapItem *scannerFrontSplash;
-		QGraphicsPixmapItem *scannerRearSplash;
-		QPixmap pixmap; // for IplImageToQImage()
-
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */

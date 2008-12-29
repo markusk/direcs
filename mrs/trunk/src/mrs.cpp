@@ -87,22 +87,25 @@ Mrs::Mrs()
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	this->splash = splash;
-#endif
-	
-	mutex = new QMutex();
-
 	settingsDialog = new SettingsDialog();
 	joystickDialog = new JoystickDialog();
 	gui = new Gui(settingsDialog, joystickDialog);
+#else
+	gui = new Gui();
+#endif
+	
+	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
-//	heartbeat = new Heartbeat(interface1, mutex);
+//	TODO: heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	plotThread = new PlotThread(sensorThread);
+#endif
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)

@@ -145,10 +145,14 @@ arm {
     		gui
     HEADERS -=	camThread.h \
 			speakThread.h \
-			QtGLContext.h
+			QtGLContext.h \
+			gui.h
+    HEADERS +=	gui_arm.h
     SOURCES -=	camThread.cpp \
 			speakThread.cpp \
-			QtGLContext.cpp
+			QtGLContext.cpp \
+			gui.cpp
+    SOURCES +=	gui_arm.cpp
     INCLUDEPATH -=	/usr/include/atk-1.0/ \
 			/usr/lib/gtk-2.0/include/ \
 			/usr/include/pango-1.0/ \
@@ -159,8 +163,7 @@ arm {
 			/usr/local/include/opencv
     LIBS =		-L/usr/lib/ \
 			-L/usr/local/lib
-    FORMS -=	mainWindow.ui
-    FORMS +=	mainWindow_arm.ui
+    FORMS =	mainWindow_arm.ui
     QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
 }
 

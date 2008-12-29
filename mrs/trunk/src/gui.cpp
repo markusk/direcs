@@ -26,7 +26,7 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent) : QMainWindo
 	// copy the pointer from the original SensorThread object
 	settingsDialog = s;
 	joystickDialog = j;
-
+	
 	robotIsOn = false;
 	laserXPos = 0; // correct value is set in the initLaserView()
 	laserYPos = 0; // correct value is set in the initLaserView()
@@ -100,7 +100,6 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	initPlots();
 
-	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
@@ -112,7 +111,6 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
-	#endif
 	
 	
 	//----------------------------------
@@ -221,7 +219,6 @@ void Gui::appLog(QString text)
 
 void Gui::appendLog(QString text, bool CR, bool sayIt)
 {
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	// insert the text
 	ui.textEditLog->insertHtml(text);
 
@@ -237,15 +234,6 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 	{
 		emit speak(text);
 	}
-#else
-	// show messages on console on ARM systems
-	Q_UNUSED(sayIt);
-	
-	if (CR == TRUE) // default!
-	qDebug("\n");
-	
-	qDebug() << text;
-#endif
 }
 
 
@@ -1161,11 +1149,6 @@ void Gui::saveCamImage(void)
 
 void Gui::setPlotData1(double *xval, double *yval, int size)
 {
-#ifdef _ARM_
-	Q_UNUSED(xval);
-	Q_UNUSED(yval);
-	Q_UNUSED(size);
-#else // only include on _non_ ARM environments!
 	//---------------
 	// curve1
 	//---------------
@@ -1178,17 +1161,11 @@ void Gui::setPlotData1(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot();
-#endif
 }
 
 
 void Gui::setPlotData2(double *xval, double *yval, int size)
 {
-#ifdef _ARM_
-	Q_UNUSED(xval);
-	Q_UNUSED(yval);
-	Q_UNUSED(size);
-#else // only include on _non_ ARM environments!
 	//---------------
 	// curve2
 	//---------------
@@ -1201,17 +1178,11 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot(); // replot qwtPlot 1 !!
-#endif
 }
 
 
 void Gui::setPlotData3(double *xval, double *yval, int size)
 {
-#ifdef _ARM_
-	Q_UNUSED(xval);
-	Q_UNUSED(yval);
-	Q_UNUSED(size);
-#else // only include on _non_ ARM environments!
 	//---------------
 	// curve3
 	//---------------
@@ -1224,17 +1195,11 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();
-#endif
 }
 
 
 void Gui::setPlotData4(double *xval, double *yval, int size)
 {
-#ifdef _ARM_
-	Q_UNUSED(xval);
-	Q_UNUSED(yval);
-	Q_UNUSED(size);
-#else // only include on _non_ ARM environments!
 	//---------------
 	// curve4
 	//---------------
@@ -1247,7 +1212,6 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();  // replot qwtPlot 2 !!
-#endif
 }
 
 
@@ -1537,7 +1501,7 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 	}
 }
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
+
 void Gui::initLaserView()
 {
 	// for getting nice x and y position
@@ -1646,10 +1610,8 @@ void Gui::initLaserView()
 	// zoom into the laser lines by default factor
 	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 }
-#endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
 {
 	/*
@@ -1729,10 +1691,8 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 	}
 }
-#endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags)
 {
 	/*
@@ -1815,10 +1775,8 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 //		laserLineListRear->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
 	}
 }
-#endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	//qreal diff = laserFrontYPos - laserRearYPos;
@@ -1833,10 +1791,8 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 	// refresh laserView
 	on_sliderZoom_valueChanged(ui.sliderZoom->value());
 }
-#endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 {
 	int zoomValue = ui.sliderZoom->value();
@@ -1854,10 +1810,8 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 	// refresh laserView (set zoom slider)
 	ui.sliderZoom->setValue(zoomValue);
 }
-#endif
 
 
-#ifndef _ARM_ // only include in _non_ ARM environments!
 void Gui::createLaserScannerObjects()
 {
 	// the start position for the pos. calculation
@@ -2027,10 +1981,8 @@ void Gui::createLaserScannerObjects()
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
 	pixmapBot2->setZValue(3);
 }
-#endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::createLaserDistanceObjects()
 {
 	// set colors
@@ -2123,10 +2075,8 @@ void Gui::createLaserDistanceObjects()
 		scene->addItem(text);
 	}
 }
-#endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
 void Gui::laserSplash(bool status, short int laserScanner)
 {
 	switch (laserScanner)
@@ -2193,12 +2143,10 @@ void Gui::laserSplash(bool status, short int laserScanner)
 			break;
 	}
 }
-#endif
 
 
 void Gui::initPlots()
 {
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1 + 2
 	//--------------------------------------
@@ -2283,5 +2231,4 @@ void Gui::initPlots()
 	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve4.setPen(QPen(col));
 	curve4.setBrush(col);
-#endif
 }
