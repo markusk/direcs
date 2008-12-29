@@ -1154,7 +1154,11 @@ void Gui::saveCamImage(void)
 
 void Gui::setPlotData1(double *xval, double *yval, int size)
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifdef _ARM_
+	Q_UNUSED(xval);
+	Q_UNUSED(yval);
+	Q_UNUSED(size);
+#else // only include on _non_ ARM environments!
 	//---------------
 	// curve1
 	//---------------
@@ -1167,13 +1171,17 @@ void Gui::setPlotData1(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot();
-	#endif
+#endif
 }
 
 
 void Gui::setPlotData2(double *xval, double *yval, int size)
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifdef _ARM_
+	Q_UNUSED(xval);
+	Q_UNUSED(yval);
+	Q_UNUSED(size);
+#else // only include on _non_ ARM environments!
 	//---------------
 	// curve2
 	//---------------
@@ -1186,13 +1194,17 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot(); // replot qwtPlot 1 !!
-	#endif
+#endif
 }
 
 
 void Gui::setPlotData3(double *xval, double *yval, int size)
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifdef _ARM_
+	Q_UNUSED(xval);
+	Q_UNUSED(yval);
+	Q_UNUSED(size);
+#else // only include on _non_ ARM environments!
 	//---------------
 	// curve3
 	//---------------
@@ -1205,13 +1217,17 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();
-	#endif
+#endif
 }
 
 
 void Gui::setPlotData4(double *xval, double *yval, int size)
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+#ifdef _ARM_
+	Q_UNUSED(xval);
+	Q_UNUSED(yval);
+	Q_UNUSED(size);
+#else // only include on _non_ ARM environments!
 	//---------------
 	// curve4
 	//---------------
@@ -1224,7 +1240,7 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();  // replot qwtPlot 2 !!
-	#endif
+#endif
 }
 
 
@@ -1476,10 +1492,12 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 void Gui::on_checkBoxMirror_stateChanged(int state)
 {
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	// QtGL class!!
 	ui.frameCamera->enableMirrorMode(state);
-	#endif
+#else
+	Q_UNUSED(state);
+#endif
 }
 
 
