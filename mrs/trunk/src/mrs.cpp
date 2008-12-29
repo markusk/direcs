@@ -23,7 +23,7 @@
 
 int main(int argc, char *argv[])
 {
-
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	// initialize the resource file
 	Q_INIT_RESOURCE(mrs);
 
@@ -45,6 +45,25 @@ int main(int argc, char *argv[])
 	m.init();
 
 	return app.exec();
+	
+#else
+	// create Mrs class object
+	Mrs *m = new Mrs();
+
+
+	if (argc <= 1)
+	{
+		qDebug("Juhu!");
+	}
+	else
+	{
+		qDebug("Und das war mit Parameter... :-)");
+	}
+	
+	delete m;
+	
+	return 0;
+#endif
 }
 
 
@@ -53,17 +72,23 @@ const Qt::Alignment Mrs::splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 const QColor Mrs::splashColor = Qt::red;
 
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 Mrs::Mrs(QSplashScreen *splash)
+#else
+Mrs::Mrs()
+#endif
 {
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
-	#ifdef _TTY_POSIX_
+#ifdef _TTY_POSIX_
 	//speakThread = new SpeakThread();
-	#endif
+#endif
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	this->splash = splash;
-
+#endif
+	
 	mutex = new QMutex();
 
 	settingsDialog = new SettingsDialog();
@@ -253,7 +278,9 @@ void Mrs::init()
 		// file found-Msg
 		gui->appendLog(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->showMessage(QObject::tr("Reading settings..."), splashPosition, splashColor);
+#endif
 
 		//================================================================================================================================================================
 		// read all settings
@@ -303,9 +330,11 @@ void Mrs::init()
 		// Basic init for all the bits on the robot circuit
 		// AND check, if the robot is "on" (it answers correct)
 		//-------------------------------------------------------
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
+#endif
 
 		// init the circuit & Co. when hitting the button in the GUI
 		connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
@@ -346,10 +375,11 @@ void Mrs::init()
 		/*
 		if (heartbeat->isRunning() == false)
 		{
+#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-
+#endif
 			gui->appendLog("Starting heartbeat thread...", false);
 			heartbeat->start();
 			gui->appendLog("Heartbeat thread started.");
@@ -361,10 +391,11 @@ void Mrs::init()
 		//-----------------------------------------------------------
 		if (sensorThread->isRunning() == false)
 		{
+#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-
+#endif
 			gui->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
 			gui->appendLog("Sensor thread started.");
@@ -375,10 +406,11 @@ void Mrs::init()
 		//-----------------------------------------------------------
 		if (plotThread->isRunning() == false)
 		{
+#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-
+#endif
 			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
 			gui->appendLog("Plot thread started.");
@@ -399,10 +431,11 @@ void Mrs::init()
 	// start the joystick thread
 	if (joystick->isRunning() == false)
 	{
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
-
+#endif
 		gui->appendLog("Starting joystick thread...", false);
 		joystick->start();
 		gui->appendLog("Joystick thread started.");
@@ -517,7 +550,7 @@ void Mrs::init()
 			splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-
+			
 			gui->appendLog("Starting camera thread...", false);
 			camThread->start();
 			gui->appendLog("Camera thread started.");
@@ -549,18 +582,20 @@ void Mrs::init()
 	//---------------------------------------------------------------------
 	// check if laser scanners are connected
 	//---------------------------------------------------------------------
-	// check FRONT laser
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
-
+#endif
+	// check FRONT laser
 	laserScannerFrontFound = laserThread->isConnected(LASER1);
 
-	// check REAR laser
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
-
+#endif
+	// check REAR laser
 	laserScannerRearFound = laserThread->isConnected(LASER2);
 
 	if (laserScannerFrontFound || laserScannerRearFound)
@@ -596,9 +631,11 @@ void Mrs::init()
 		// start the laserThread
 		if (laserThread->isRunning() == false)
 		{
+#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
+#endif
 			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
 			gui->appendLog("Laser thread started.");
@@ -607,9 +644,11 @@ void Mrs::init()
 
 		if (obstCheckThread->isRunning() == false)
 		{
+#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
+#endif
 			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			gui->appendLog("Obstacle check thread started.");
@@ -678,11 +717,12 @@ void Mrs::shutdown()
 {
 		qDebug("Mrs shutdown...");
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->show();
 		splash->showMessage(QObject::tr("Shutting down..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
-
+#endif
 		// just 4 fun
 		if (robotIsOn)
 		{
@@ -703,10 +743,11 @@ void Mrs::shutdown()
 		if (settingsDialog->getCheckBoxSaveSettings() == Qt::Checked)
 		{
 			gui->appendLog("Writing settings...");
+#ifndef _ARM_ // only include on _non_ ARM environments!
 			splash->showMessage(QObject::tr("Writing settings..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-
+#endif
 			// save gui slider values
 			inifile1->writeSetting("Config", "motor1Speed", settingsDialog->getSliderMotorSpeed(1));
 			inifile1->writeSetting("Config", "motor2Speed", settingsDialog->getSliderMotorSpeed(2));
@@ -1166,15 +1207,21 @@ void Mrs::showExitDialog()
 
 void Mrs::showSplashMessage(QString text)
 {
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->showMessage(text, splashPosition, splashColor);
 	// for refreshing the splash...
 	QApplication::processEvents();
+#else
+	qDebug() << text;
+#endif
 }
 
 
 void Mrs::finishSplash()
 {
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->finish(gui);
+#endif
 }
 
 
@@ -1367,7 +1414,7 @@ void Mrs::enableFaceTracking(int state)
 
 void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windoze (and does not make sense for ARM)
 	Q_UNUSED (faces) // not in use, at the moment
 
 	// TODO: put values to consts or ini
@@ -1521,7 +1568,13 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 		emit showFaceTrackDirection("DOWNRIGHT");
 		return;
 	}
-	#endif
+#else
+	// now usage on ARM and Windoze systems
+	Q_UNUSED (faces)
+	Q_UNUSED (faceX)
+	Q_UNUSED (faceY)
+	Q_UNUSED (faceRadius)
+#endif
 }
 
 

@@ -63,7 +63,11 @@ class Mrs : public QObject
 
 
 	public:		
-		Mrs(QSplashScreen *splash);
+#ifndef _ARM_ // only include on _non_ ARM environments!
+		Mrs(QSplashScreen *splash); /// For non-ARM systems
+#else
+		Mrs(); /// For ARM systems only
+#endif
 		~Mrs();
 		static const Qt::Alignment splashPosition;
 		static const QColor splashColor;
