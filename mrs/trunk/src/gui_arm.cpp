@@ -38,13 +38,6 @@ TODO: void Gui::closeEvent()
 }
 */
 
-void Gui::setRobotControls(bool state)
-{
-	// store the state
-	robotIsOn = state;
-}
-
-
 
 void Gui::appendLog(QString text, bool CR, bool sayIt)
 {
@@ -66,7 +59,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	if (CR == TRUE) // default!
 	qDebug("\n");
 	
-	qDebug("Network command:") << text;
+	qDebug() << "Network command:"<< text;
 }
 
 

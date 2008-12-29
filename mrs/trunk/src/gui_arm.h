@@ -22,6 +22,7 @@
 #define GUI_ARM_H
 
 #include <QObject>
+#include <QDebug>
 // FIXME: #include "ui_mainWindow_arm.h" needed?
 
 
