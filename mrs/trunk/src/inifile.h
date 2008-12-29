@@ -22,7 +22,10 @@
 #define INIFILE_H
 
 //-------------------------------------------------------------------
-#include <QtGui>
+#include <QObject>
+#include <QSettings>
+#include <QDir>
+#include <QFile>
 //-------------------------------------------------------------------
 
 /**
