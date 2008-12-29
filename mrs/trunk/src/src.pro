@@ -137,6 +137,12 @@ win32 {
 
 arm {
     message("Processing additional ARM specific scope...")
+    CONFIG = release \
+    warn_on \
+    qt
+    DEFINES = _ARM_
+    QT -=	opengl \
+    		gui
     HEADERS -=	camThread.h \
 			speakThread.h \
 			QtGLContext.h
@@ -155,12 +161,7 @@ arm {
 			-L/usr/local/lib
     FORMS -=	mainWindow.ui
     FORMS +=	mainWindow_arm.ui
-    DEFINES += _ARM_
-    DEFINES -=	_TTY_POSIX_
-    QT -=	opengl \
-    		gui
     QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
-    CONFIG = release
 }
 
 QMAKE_CXXFLAGS = -Wno-parentheses
