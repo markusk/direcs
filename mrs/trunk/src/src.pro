@@ -61,6 +61,34 @@ INCLUDEPATH +=	/usr/include/atk-1.0/ \
 		/usr/include/qwt-qt4 \
 		/usr/local/include/opencv
 
+message("Processing default stuff...")
+DESTDIR = .
+TARGET = ../bin/mrs
+MOC_DIR = ../tmp
+OBJECTS_DIR = ../tmp
+FORMS += aboutDialog.ui \
+	joystickDialog.ui \
+	settingsDialog.ui
+RESOURCES = ../mrs.qrc
+CONFIG += debug \
+    warn_on \
+    qt
+TEMPLATE = app
+CONFIG -= release
+
+LIBS += -L/usr/lib/festival \
+  -L/usr/lib/speech_tools \
+  -lestools \
+  -lestbase \
+  -leststring \
+  -lesd \
+  -lFestival \
+  -lqextserialport \
+  -lqwt-qt4 \
+  -lcv \
+  -lhighgui
+
+
 unix {
     HEADERS +=	posix_qextserialport.h \
 			QtGLContext.h
@@ -123,52 +151,14 @@ arm {
 			/usr/include/speech_tools \
 			/usr/include/festival \
 			/usr/local/include/opencv
-    LIBS -=		-L/usr/lib/ \
-			-L/usr/local/lib \
- 			-L/usr/lib/festival/ \
-			-L/usr/lib/speech_tools/ \
-			-lFestival \
-			-lestools \
-			-lestbase \
-			-leststring \
-			-lesd \
-			-lqwt-qt4 \
-			-lcv \
-			-lhighgui
+    LIBS =		-L/usr/lib/ \
+			-L/usr/local/lib
     FORMS -=	mainWindow.ui
     FORMS +=	mainWindow_arm.ui
     DEFINES += _ARM_
     DEFINES -=	_TTY_POSIX_
     QT -=		opengl
-    QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib -L/home/markus/develop/qextserialport-arm/build
+    QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
 }
-
-DESTDIR = .
-TARGET = ../bin/mrs
-MOC_DIR = ../tmp
-OBJECTS_DIR = ../tmp
-FORMS += aboutDialog.ui \
-	joystickDialog.ui \
-	settingsDialog.ui
-RESOURCES = ../mrs.qrc
-CONFIG += debug \
-    warn_on \
-    qt
-TEMPLATE = app
-CONFIG -= release
-
-LIBS += -L/usr/lib \
-  -L/usr/local/lib \
-  -L/usr/lib/festival \
-  -L/usr/lib/speech_tools \
-  -lestools \
-  -lestbase \
-  -leststring \
-  -lesd \
-  -lFestival \
-  -lqextserialport \
-  -lqwt-qt4 \
-  -lcv \
-  -lhighgui
 
 QMAKE_CXXFLAGS = -Wno-parentheses
