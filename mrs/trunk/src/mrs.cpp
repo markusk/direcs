@@ -1270,7 +1270,7 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 				//----------------
 				// drive right
 				//----------------
-				drive(RIGHT);
+				drive(TURNRIGHT);
 				motors->flashlight(OFF);
 			}
 		}
@@ -1311,7 +1311,7 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 				//----------------
 				// drive left
 				//----------------
-				drive(LEFT);
+				drive(TURNLEFT);
 				motors->flashlight(OFF);
 			}
 		}
