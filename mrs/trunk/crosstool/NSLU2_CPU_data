@@ -1,0 +1,79 @@
+CPU
+---
+armv5teb
+
+Processor       : XScale-IXP42x Family rev 1 (v5b)
+BogoMIPS        : 266.24
+Features        : swp half thumb fastmult edsp
+CPU implementer : 0x69
+CPU architecture: 5TE
+CPU variant     : 0x0
+CPU part        : 0x41f
+CPU revision    : 1
+Cache type      : undefined 5
+Cache clean     : undefined 5
+Cache lockdown  : undefined 5
+Cache format    : Harvard
+I size          : 32768
+I assoc         : 32
+I line length   : 32
+I sets          : 32
+D size          : 32768
+D assoc         : 32
+D line length   : 32
+D sets          : 32
+
+Hardware        : Linksys NSLU2
+Revision        : 0000
+Serial          : 0000000000000000
+
+
+
+
+Debian
+--------------------
+/lib/libc-2.3.6.so
+
+
+
+
+C-LIB OpenSlugOSbe
+-----
+/lib/libc-2.5.so
+
+GLIBC_2.0
+GLIBC_2.1
+GLIBC_2.1.1
+GLIBC_2.1.2
+GLIBC_2.1.3
+GLIBC_2.2
+GLIBC_2.2.1
+GLIBC_2.2.2
+GLIBC_2.2.3
+GLIBC_2.2.4
+GLIBC_2.2.6
+GLIBC_2.3
+GLIBC_2.3.2
+GLIBC_2.3.3
+GLIBC_2.3.4
+GLIBC_2.4
+GLIBC_2.5
+GLIBC_PRIVATE
+
+
+
+Installiert 29.12.2008
+-----------------------
+Selecting previously deselected package libqtcore4.
+Unpacking libqtcore4 (from .../libqtcore4_4.4.3-1_arm.deb) ...
+Selecting previously deselected package libqt4-network.
+Unpacking libqt4-network (from .../libqt4-network_4.4.3-1_arm.deb) ...
+Selecting previously deselected package libsasl2-modules.
+Unpacking libsasl2-modules (from .../libsasl2-modules_2.1.22.dfsg1-23_arm.deb) ...
+Processing triggers for man-db ...
+Setting up bash-completion (20080705) ...
+Installing new version of config file /etc/bash_completion ...
+Setting up libqtcore4 (4.4.3-1) ...
+Setting up libqt4-network (4.4.3-1) ...
+Setting up libsasl2-modules (2.1.22.dfsg1-23) ..
+

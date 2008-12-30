@@ -1,0 +1,87 @@
+Anleitung
+
+. init_env   setz Pfade
+links unter /home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/bin  gesetzt:
+
+# to use in
+# /home/markus/develop/nslu2/crosstool/gcc-4.1.0-glibc-2.3.2/arm-unknown-linux-gnu/bin
+
+ln -s armv5b-softfloat-linux-addr2line arm-linux-addr2line
+ln -s armv5b-softfloat-linux-ar arm-linux-ar 
+ln -s armv5b-softfloat-linux-as arm-linux-as 
+ln -s armv5b-softfloat-linux-c++ arm-linux-c++ 
+ln -s armv5b-softfloat-linux-c++filt arm-linux-c++filt 
+ln -s armv5b-softfloat-linux-cpp arm-linux-cpp 
+ln -s armv5b-softfloat-linux-g++ arm-linux-g++ 
+ln -s armv5b-softfloat-linux-gcc arm-linux-gcc 
+ln -s armv5b-softfloat-linux-gcc-3.4.5 arm-linux-gcc-3.4.5
+ln -s armv5b-softfloat-linux-gccbug arm-linux-gccbug 
+ln -s armv5b-softfloat-linux-gcov arm-linux-gcov 
+ln -s armv5b-softfloat-linux-gprof arm-linux-gprof
+#ln -s armv5b-softfloat-linux-gdb arm-linux-gdb 
+#ln -s armv5b-softfloat-linux-gdbtui arm-linux-gdbtui 
+ln -s armv5b-softfloat-linux-ld arm-linux-ld 
+ln -s armv5b-softfloat-linux-nm arm-linux-nm 
+ln -s armv5b-softfloat-linux-objcopy arm-linux-objcopy 
+ln -s armv5b-softfloat-linux-objdump arm-linux-objdump 
+ln -s armv5b-softfloat-linux-ranlib arm-linux-ranlib 
+ln -s armv5b-softfloat-linux-readelf arm-linux-readelf 
+#ln -s armv5b-softfloat-linux-run arm-linux-run 
+ln -s armv5b-softfloat-linux-size arm-linux-size 
+ln -s armv5b-softfloat-linux-strings arm-linux-strings 
+ln -s armv5b-softfloat-linux-strip arm-linux-strip 
+
+
+
+
+cd /home/markus/develop/nslu2/
+
+
+Für NSLU2 mit OpenSlogBE:
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mkdir build_embedded
+cd build_embedded
+../qt-embedded-linux-opensource-src-4.4.1/configure -release -no-qt3support -no-cups -no-libtiff -no-3dnow -no-largefile -no-phonon -no-accessibility -static -qvfb -big-endian -silent -embedded arm -xplatform qws/linux-arm-g++
+
+
+  O D E R
+
+# ACHTUNG: VORHER auf dem Host in /usr/bin den gcc SymLink von gcc-4.3 nach gcc-4.1 ändern!
+# ACHTUNG: HINTERHER wieder umändern!
+
+
+Für NSLU2 mit Debian mit VNC!:
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mkdir build_embedded_debian
+cd build_embedded_debian
+# static: (ALT!!)
+# ../qt-embedded-linux-opensource-src-4.4.1/configure -release -no-qt3support -no-cups -no-libtiff -no-3dnow -no-largefile -no-phonon -no-accessibility -static -qvfb -qt-gfx-vnc -silent -embedded arm -xplatform qws/linux-arm-g++ -little-endian
+
+# dynmaic:
+../qt-embedded-linux-opensource-src-4.4.1/configure -release -no-qt3support -no-cups -no-libtiff -no-3dnow -no-largefile -no-phonon -no-accessibility -qvfb -qt-gfx-vnc -silent -embedded arm -xplatform qws/linux-arm-g++ -little-endian
+(Dauer: 7 Minuten)
+
+(Zum Bereinigen: 'make confclean' and 'configure')
+
+
+make
+(Dauer: 1 Stunde)
+
+Als root:
+---------
+. /home/markus/develop/nslu2/init_env_arm_debian
+make install
+(Dauer: 1 Minute)
+
+
+
+pro-files Folgendes anhängen:
+INCLUDEPATH = /usr/local/Trolltech/QtEmbedded-4.4.1-arm/include
+QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
+
+
+make clean
+qmake -r
+make
