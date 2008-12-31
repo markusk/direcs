@@ -98,7 +98,8 @@ Mrs::Mrs()
 	this->splash = splash;
 	settingsDialog = new SettingsDialog();
 	joystickDialog = new JoystickDialog();
-	gui = new Gui(settingsDialog, joystickDialog);
+	aboutDialog = new AboutDialog();
+	gui = new Gui(settingsDialog, joystickDialog, aboutDialog);
 #else
 	gui = new Gui();
 #endif
@@ -127,6 +128,7 @@ Mrs::Mrs()
 
 void Mrs::init()
 {
+	aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 	robotIsOn = false;
@@ -708,6 +710,7 @@ void Mrs::init()
 	//------------------------------------------------------------------
 	settingsDialog->hide();
 	joystickDialog->hide();
+	aboutDialog->hide();
 	
 	//------------------------------------------------------------------
 	// for getting the screen resolution
@@ -1221,6 +1224,7 @@ Mrs::~Mrs()
 	delete circuit1;
 	delete interface1;
 	#ifndef _ARM_ // only include in _non_ ARM environments!
+	delete aboutDialog;
 	delete joystickDialog;
 	delete settingsDialog;
 	#endif

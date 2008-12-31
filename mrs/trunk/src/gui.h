@@ -56,7 +56,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent = 0);
+		Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent = 0);
 		~Gui();
 
 		/*
@@ -388,6 +388,7 @@ class Gui : public QMainWindow
 		Ui::mainWindow ui;
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the mrs class!
 		JoystickDialog *joystickDialog; // just a pointer to the object created in the mrs class!
+		AboutDialog *aboutDialog;       // just a pointer to the object created in the mrs class!
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
 		QwtPlotCurve curve3;

@@ -21,11 +21,12 @@
 #include "gui.h"
 
 
-Gui::Gui(SettingsDialog *s, JoystickDialog *j, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointer from the original SensorThread object
 	settingsDialog = s;
 	joystickDialog = j;
+	aboutDialog = a;
 	
 	robotIsOn = false;
 	laserXPos = 0; // correct value is set in the initLaserView()
@@ -464,9 +465,14 @@ void Gui::on_actionJoystick_activated()
 
 void Gui::on_actionAbout_activated()
 {
-	// show about dialog
-	AboutDialog about(this);
-	about.exec();
+	if (aboutDialog->isVisible())
+	{
+		aboutDialog->hide();
+	}
+	else
+	{
+		aboutDialog->show();
+	}
 }
 
 

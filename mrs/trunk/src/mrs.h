@@ -28,6 +28,7 @@
 	#include "gui.h"
 	#include "joystickDialog.h"
 	#include "settingsDialog.h"
+	#include "aboutDialog.h"
 	#include "plotThread.h"
 #endif
 
@@ -237,7 +238,8 @@ class Mrs : public QObject
 		Gui *gui;
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		SettingsDialog *settingsDialog; /// The settings dialog
-		JoystickDialog *joystickDialog; /// The joystick dialog/view
+		JoystickDialog *joystickDialog; /// The joystick dialog
+		AboutDialog *aboutDialog;       /// The about dialog
 		PlotThread *plotThread;
 		QSplashScreen *splash;
 #endif
@@ -285,7 +287,6 @@ class Mrs : public QObject
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
 		//QList <QDateTime> obstacleAlarmRightTimestampList;	/// A list of the timestamps of the obstacle alarms that right occured.
-
 
 		/// The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;

@@ -31,3 +31,9 @@ void AboutDialog::on_btnAboutQt_clicked(bool checked)
 
 	QApplication::aboutQt();
 }
+
+
+void AboutDialog::setVersion(QString text)
+{
+	ui.lblVersion->setText(text);
+}
