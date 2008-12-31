@@ -128,7 +128,9 @@ Mrs::Mrs()
 
 void Mrs::init()
 {
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
+#endif
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 	robotIsOn = false;
@@ -144,7 +146,7 @@ void Mrs::init()
 	mecanumDriveMode = false;
 	eyeTestMode = false;
 	currentTestServo = SERVO1;
-    useCamera = false;
+	useCamera = false;
 	cameraTestMode = false;
 	faceTrackingIsEnabled = false;
 	laserScannerFrontFound = false;

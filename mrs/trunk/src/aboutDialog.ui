@@ -291,7 +291,7 @@
      <height>30</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" >
+   <layout class="QHBoxLayout" name="name3" >
     <item>
      <widget class="QPushButton" name="btnAboutQt" >
       <property name="text" >
@@ -330,7 +330,7 @@
      <height>91</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" >
+   <layout class="QVBoxLayout" name="name1" >
     <item>
      <widget class="QLabel" name="label_5" >
       <property name="text" >
@@ -370,7 +370,7 @@
      <height>91</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" >
+   <layout class="QVBoxLayout" name="name2" >
     <item>
      <widget class="QLabel" name="label_8" >
       <property name="text" >
@@ -405,7 +405,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_14" >
+     <widget class="QLabel" name="lblVersion" >
       <property name="text" >
        <string>0.619</string>
       </property>
