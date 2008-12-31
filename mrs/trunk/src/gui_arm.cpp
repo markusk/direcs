@@ -39,13 +39,18 @@ TODO: void Gui::closeEvent()
 */
 
 
+void Gui::setRobotControls(bool state)
+{
+	// store the state
+	robotIsOn = state;
+}
+
+
 void Gui::appendLog(QString text, bool CR, bool sayIt)
 {
-	// show messages on console on ARM systems
+	Q_UNUSED(CR);
 	Q_UNUSED(sayIt);
-	
-	//if (CR == TRUE) // default!
-	//qDebug("\n");
+	QByteArray textForConsole;
 	
 	//------------------------------
 	// remove HTML tags from string
@@ -58,26 +63,28 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 
 		if (start != 1)
 		{
-			text.remove(start, text.indexOf(">")+1 - start);
+			text.remove(start, text.indexOf(">") + 1 - start );
 		}
 	} while (text.contains(">"));
 	// till the last HTML ">" is found
-	//------------------------------
 	
-	
-	qDebug() << text;
+	// print text to console
+	// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+	textForConsole = text.toLatin1();
+	qDebug("%s", textForConsole.data());
 }
 
 
 void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 {
-	// show messages on console on ARM systems
+	Q_UNUSED(CR);
 	Q_UNUSED(sayIt);
+	QByteArray textForConsole;
 	
-	if (CR == TRUE) // default!
-	qDebug("\n");
-	
-	qDebug() << "Network command:"<< text;
+	// print text to console
+	// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+	textForConsole = text.toLatin1();
+	qDebug("NETWORK COMMAND: %s", textForConsole.data());
 }
 
 

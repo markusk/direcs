@@ -77,6 +77,12 @@ class Gui : public QObject
 
 	public slots:
 		/**
+		Only store the robots state locally.
+		@param state can be ON or OFF
+		 */
+		void setRobotControls(bool state);
+		
+		/**
 		Appends text to the main log in the main window.
 		@param text is the text to be displayed.
 		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
