@@ -71,10 +71,13 @@ FORMS += aboutDialog.ui \
 	settingsDialog.ui
 RESOURCES = ../mrs.qrc
 CONFIG += debug \
-    warn_on \
-    qt
+	qt
 TEMPLATE = app
-CONFIG -= release
+
+message("Using _NO_ warn_on in CONFIG section!")
+message("Using _my own_ CXXFLAGS!")
+QMAKE_CXXFLAGS += -Wall -W -Wno-parentheses
+
 
 LIBS += -L/usr/lib/festival \
   -L/usr/lib/speech_tools \
@@ -176,8 +179,4 @@ arm {
     FORMS =	mainWindow_arm.ui
     QMAKE_LFLAGS = -L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
 }
-
-QMAKE_CXXFLAGS -= -Wall
-QMAKE_CXXFLAGS += -Wno-parentheses
-VERSION = 1.2.3
 
