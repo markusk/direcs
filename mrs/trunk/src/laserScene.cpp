@@ -38,6 +38,7 @@ void LaserScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	//emit robotPositionChanged(mouseEvent);
 	
 	//QGraphicsScene::mousePressEvent(mouseEvent);
+	Q_UNUSED(mouseEvent);
 }
 
 

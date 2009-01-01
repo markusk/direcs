@@ -24,7 +24,7 @@
      <height>201</height>
     </rect>
    </property>
-   <layout class="QGridLayout" >
+   <layout class="QGridLayout" name="name0" >
     <item row="0" column="0" >
      <layout class="QHBoxLayout" name="_2" >
       <item>
