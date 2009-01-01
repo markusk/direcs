@@ -32,6 +32,7 @@ Gui::Gui(MrsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 
 Gui::~Gui()
 {
+	emit commandIssued("shutdown");
 	delete view;
 	//delete media;
 	//delete vwidget;
