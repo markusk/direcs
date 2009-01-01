@@ -23,55 +23,41 @@
 
 int main(int argc, char *argv[])
 {
+	Q_UNUSED(argc);
 	Q_UNUSED(argv);
-	
-	#ifndef _ARM_ // only include on _non_ ARM environments!
-	// initialize the resource file
-	Q_INIT_RESOURCE(mrs);
 
+#ifndef _ARM_ // only include on _non_ ARM environments!
+	// Initialize the resource file
+	Q_INIT_RESOURCE(mrs);
+	
+	// The QApplication class manages the GUI application's control flow and main settings.
 	QApplication app(argc, argv);
 
+	// create a splash screen
 	QPixmap pixmap(":/images/images/splash.png");
 	QSplashScreen splash(pixmap);
 
 	// create Mrs class object
 	Mrs m(&splash);
 
-	//----------------------
-	// the splash screen
-	//----------------------
+	// show the splash screen
 	splash.show();
 	splash.showMessage(QObject::tr("Loading config file..."), Mrs::splashPosition, Mrs::splashColor);
-
-	// start mrs
+	
+#else
+	
+	// The QCoreApplication class provides an event loop for console Qt applications.
+	QCoreApplication app(argc, argv);
+	
+	// create Mrs class object
+	Mrs m;
+	
+#endif
+	
+	// init mrs
 	m.init();
 
 	return app.exec();
-	
-	#else
-	// create Mrs class object
-	Mrs *m = new Mrs();
-
-
-
-	// start mrs
-	m->init();
-	
-	/*
-	if (argc <= 1)
-	{
-		qDebug("Juhu!");
-	}
-	else
-	{
-		qDebug("Und das war mit Parameter... :-)");
-	}
-	*/
-	
-	delete m;
-	
-	return 0;
-	#endif
 }
 
 
@@ -1265,7 +1251,28 @@ void Mrs::showSplashMessage(QString text)
 	// for refreshing the splash...
 	QApplication::processEvents();
 	#else
-	qDebug() << text;
+	QByteArray textForConsole;
+	
+	//------------------------------
+	// remove HTML tags from string
+	//------------------------------
+	int start= -1;
+	do
+	{
+		// search for the first HTML "<"
+		start = text.indexOf("<");
+
+		if (start != 1)
+		{
+			text.remove(start, text.indexOf(">") + 1 - start );
+		}
+	} while (text.contains(">"));
+	// till the last HTML ">" is found
+	
+	// print text to console
+	// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+	textForConsole = text.toLatin1();
+	qDebug("%s", textForConsole.data());
 	#endif
 }
 
