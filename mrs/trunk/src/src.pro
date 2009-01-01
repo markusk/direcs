@@ -1,24 +1,79 @@
 destplatform = $$(DESTPLATFORM)
 !isEmpty( destplatform )CONFIG += $$destplatform
 
-DESTDIR =	.
+message("Processing global scope...")
 
-TARGET =	../bin/mrs
+DESTDIR = .
 
-MOC_DIR =	../tmp
+TARGET = ../bin/mrs
 
-OBJECTS_DIR =	../tmp
+MOC_DIR = ../tmp
 
-RESOURCES =	../mrs.qrc
+OBJECTS_DIR = ../tmp
 
-CONFIG +=	debug \
-		qt
+RESOURCES = ../mrs.qrc
+
+CONFIG += debug \
+	qt
 	
-TEMPLATE =	app
+TEMPLATE = app
 
+HEADERS = circuit.h \
+		head.h \
+		inifile.h \
+		interfaceAvr.h \
+		joystick.h \
+		laser.h \
+		laserThread.h \
+		motor.h \
+		mrs.h \
+		networkThread.h \
+		obstacleCheckThread.h \
+		sensorThread.h \
+		servo.h
+
+SOURCES = circuit.cpp \
+		head.cpp \
+		inifile.cpp \
+		interfaceAvr.cpp \
+		joystick.cpp \
+		laser.cpp \
+		laserThread.cpp \
+		motor.cpp \
+		mrs.cpp \
+		networkThread.cpp \
+		obstacleCheckThread.cpp \
+		sensorThread.cpp \
+		servo.cpp
+
+LIBS +=		-L/usr/lib \
+		-L/usr/local/lib \
+		-L/usr/lib/festival \
+		-L/usr/lib/speech_tools \
+		-lestools \
+		-lestbase \
+		-leststring \
+		-lesd \
+		-lFestival \
+		-ltermcap \
+		-lqwt-qt4 \
+		-lcv \
+		-lhighgui
+
+INCLUDEPATH +=	/usr/include/atk-1.0/ \
+		/usr/lib/gtk-2.0/include/ \
+		/usr/lib/glib-2.0/include/ \
+		/usr/lib/glib/include/ \
+		/usr/include/glib-2.0/ \
+		/usr/include/pango-1.0/ \
+		/usr/include/cairo/ \
+		/usr/include/gtk-2.0/ \
+		/usr/include/speech_tools \
+		/usr/include/festival \
+		/usr/include/qwt-qt4 \
+		/usr/local/include/opencv
 
 message("Using special CXXFLAGS instead of warn_on in CONFIG section.")
-# QMAKE_CXXFLAGS += -Wall -W -Wno-parentheses
 QMAKE_CXXFLAGS += -W -Wno-parentheses
 
 unix {
@@ -26,49 +81,23 @@ unix {
 		message("Processing UNIX scope...")
 		HEADERS +=	aboutDialog.h \
 				camThread.h \
-				circuit.h \
 				direcsSerial.h \
 				gui.h \
-				head.h \
-				inifile.h \
-				interfaceAvr.h \
-				joystick.h \
 				joystickDialog.h \
-				laser.h \
 				laserScene.h \
-				laserThread.h \
-				motor.h \
-				mrs.h \
-				networkThread.h \
-				obstacleCheckThread.h \
 				plotThread.h \
 				QtGLContext.h \
-				sensorThread.h \
-				servo.h \
 				settingsDialog.h \
 				speakThread.h
 				
 		SOURCES +=	aboutDialog.cpp \
 				camThread.cpp \
-				circuit.cpp \
 				direcsSerial.cpp \
 				gui.cpp \
-				head.cpp \
-				inifile.cpp \
-				interfaceAvr.cpp \
-				joystick.cpp \
 				joystickDialog.cpp \
-				laser.cpp \
 				laserScene.cpp \
-				laserThread.cpp \
-				motor.cpp \
-				mrs.cpp \
-				networkThread.cpp \
-				obstacleCheckThread.cpp \
 				plotThread.cpp \
 				QtGLContext.cpp \
-				sensorThread.cpp \
-				servo.cpp \
 				settingsDialog.cpp \
 				speakThread.cpp
 				
@@ -115,68 +144,40 @@ win32 {
 	message("Processing win32 scope...")
 	HEADERS +=	aboutDialog.h \
 			camThread.h \
-			circuit.h \
 			gui.h \
-			head.h \
-			inifile.h \
-			interfaceAvr.h \
-			joystick.h \
 			joystickDialog.h \
-			laser.h \
 			laserScene.h \
-			laserThread.h \
-			motor.h \
-			mrs.h \
-			networkThread.h \
-			obstacleCheckThread.h \
 			plotThread.h \
 			qextserialbase.h \
-			qextserialport.h
+			qextserialport.h \
 			QtGLContext.h \
-			sensorThread.h \
-			servo.h \
 			settingsDialog.h \
 			speakThread.h \
 			win_qextserialport.h
 			
 	SOURCES +=	aboutDialog.cpp \
 			camThread.cpp \
-			circuit.cpp \
 			gui.cpp \
-			head.cpp \
-			inifile.cpp \
-			interfaceAvr.cpp \
-			joystick.cpp \
 			joystickDialog.cpp \
-			laser.cpp \
 			laserScene.cpp \
-			laserThread.cpp \
-			motor.cpp \
-			mrs.cpp \
-			networkThread.cpp \
-			obstacleCheckThread.cpp \
 			plotThread.cpp \
 			QtGLContext.cpp \
-			sensorThread.cpp \
-			servo.cpp \
 			settingsDialog.cpp \
 			speakThread.cpp
 			
-		FORMS +=	mainWindow.ui \
-				aboutDialog.ui \
-				joystickDialog.ui \
-				settingsDialog.ui
-				
-		DEFINES =	_TTY_WIN_ QWT_DLL QT_DLL
-		
-		QT +=		network \
-				opengl
-				
-		INCLUDEPATH +=	.
-		
-		LIBS +=		-L/usr/lib \
-				-L/usr/local/lib \
-				-lqwt-qt4
+	FORMS +=	mainWindow.ui \
+			aboutDialog.ui \
+			joystickDialog.ui \
+			settingsDialog.ui
+			
+	DEFINES =	_TTY_WIN_ QWT_DLL QT_DLL
+	
+	QT +=		network \
+			opengl
+			
+	LIBS +=		-L/usr/lib \
+			-L/usr/local/lib \
+			-lqwt-qt4
 }
 
 arm {
@@ -194,41 +195,11 @@ arm {
 	QT +=		network
 	
 	HEADERS +=	gui_arm.h \
-			head.h \
-			circuit.h \
-			inifile.h \
-			motor.h \
-			mrs.h \
-			sensorThread.h \
-			qextserialbase.h \
-			qextserialport.h \
-			obstacleCheckThread.h \
-			interfaceAvr.h \
-			networkThread.h \
-			laserThread.h \
-			direcsSerial.h \
-			laser.h \
-			joystick.h \
-			servo.h
+			direcsSerial.h
 			
 	SOURCES +=	gui_arm.cpp \
-			head.cpp \
-			circuit.cpp \
-			inifile.cpp \
-			motor.cpp \
-			mrs.cpp \
-			sensorThread.cpp \
-			obstacleCheckThread.cpp \
-			interfaceAvr.cpp \
-			networkThread.cpp \
-			laserThread.cpp \
-			laser.cpp \
-			joystick.cpp \
-			servo.cpp \
 			direcsSerial.cpp
 
-	INCLUDEPATH -=	.
-			
 	LIBS =		-L/usr/lib/ \
 			-L/usr/local/lib
 			
