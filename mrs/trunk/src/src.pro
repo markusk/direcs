@@ -165,11 +165,39 @@ arm {
 	
 	QT +=		network
 	
-	HEADERS +=	gui_arm.h \
-			direcsSerial.h
+	HEADERS +=	circuit.h \
+			direcsSerial.h \
+			gui_arm.h \
+			head.h \
+			inifile.h \
+			interfaceAvr.h \
+			joystick.h \
+			laser.h \
+			laserThread.h \
+			motor.h \
+			mrs.h \
+			networkThread.h \
+			obstacleCheckThread.h \
+			sensorThread.h \
+			servo.h
 			
-	SOURCES +=	gui_arm.cpp \
-			direcsSerial.cpp
+	SOURCES +=	circuit.cpp \
+			direcsSerial.cpp \
+			gui_arm.cpp \
+			head.cpp \
+			inifile.cpp \
+			interfaceAvr.cpp \
+			joystick.cpp \
+			laser.cpp \
+			laserThread.cpp \
+			motor.cpp \
+			mrs.cpp \
+			networkThread.cpp \
+			obstacleCheckThread.cpp \
+			sensorThread.cpp \
+			servo.cpp
+
+
 
 	LIBS =		-L/usr/lib/ \
 			-L/usr/local/lib
