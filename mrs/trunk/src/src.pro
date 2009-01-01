@@ -48,18 +48,6 @@ SOURCES +=	head.cpp \
 		laserScene.cpp \
 		joystickDialog.cpp \
 		settingsDialog.cpp
-INCLUDEPATH +=	/usr/include/atk-1.0/ \
-		/usr/lib/gtk-2.0/include/ \
-		/usr/lib/glib-2.0/include/ \
-		/usr/lib/glib/include/ \
-		/usr/include/glib-2.0/ \
-		/usr/include/pango-1.0/ \
-		/usr/include/cairo/ \
-		/usr/include/gtk-2.0/ \
-		/usr/include/speech_tools \
-		/usr/include/festival \
-		/usr/include/qwt-qt4 \
-		/usr/local/include/opencv
 
 message("Processing default stuff...")
 DESTDIR = .
