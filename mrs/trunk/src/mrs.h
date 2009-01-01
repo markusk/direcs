@@ -99,6 +99,10 @@ class Mrs : public QObject
 		*/
 		bool exitDialog;
 
+/*
+	protected:	
+		bool event(QEvent *event);
+*/
 
 	public slots:
 		/**

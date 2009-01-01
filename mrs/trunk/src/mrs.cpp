@@ -313,6 +313,12 @@ void Mrs::init()
 	//----------------------------------------------------------------------------
 	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
 
+	#ifdef _ARM_ // only include on ARM environments!
+	//-------------------------------------------------------
+	// start the network thread (waiting for commands)
+	//-------------------------------------------------------
+	enableRemoteControlListening(true);
+	#endif
 
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
@@ -737,6 +743,23 @@ void Mrs::init()
 	gui->initLaserView();
 	#endif
 }
+
+
+/*
+bool Mrs::event(QEvent *event)
+{
+	if (event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		qDebug() << "Ate key press" << keyEvent->key();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+*/
 
 
 void Mrs::shutdown()
@@ -2766,6 +2789,13 @@ void Mrs::executeRemoteCommand(QString command)
 			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(2, newSpeed);
 			#endif
+			return;
+		}
+		
+		if (command == "shutdown")
+		{
+			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit shutdown();
 			return;
 		}
 	}
