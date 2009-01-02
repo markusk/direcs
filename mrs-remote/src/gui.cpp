@@ -16,9 +16,13 @@ Gui::Gui(MrsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	speedMotor1 = ui.spinBoxSpeed1->value();
 	speedMotor2 = ui.spinBoxSpeed2->value();
 	
+	// set web address of the robot
+	//ui.plainTextEditWebAddress->setPlainText("http://mrs:8000");
+	ui.lineEditWebAddress->setText("http://nslu/");
+	
 	view = new QWebView(ui.widgetWeb);
-	//view->load(QUrl("http://mrs:8000/"));
-	view->load(QUrl("http://mrs/"));
+	// load the URL
+	view->load(QUrl(ui.lineEditWebAddress->text()));
 	view->show();
 	
 	/*
@@ -27,6 +31,9 @@ Gui::Gui(MrsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	Phonon::createPath(media, vwidget)
 	media->enqueue("/home/markus/media/mp3/Classic/klaus badelt - pirates of the caribbean - 15 - he's a pirate.mp3");
 	*/
+	
+	// When the address field was leaved or enter pressed, call the "go" button slot! :-)
+	connect(ui.lineEditWebAddress, SIGNAL( editingFinished() ), this, SLOT( on_btnGo_clicked() ) );
 }
 
 
@@ -38,6 +45,14 @@ Gui::~Gui()
 	//delete vwidget;
 	
 	delete mrsremote1;
+}
+
+
+void Gui::on_btnGo_clicked()
+{
+	// load the URL
+	// using 'setUrl'instead of 'load' here! setUrl clears the view and loads the URL.
+	view->setUrl(QUrl(ui.lineEditWebAddress->text()));
 }
 
 
@@ -95,6 +110,13 @@ void Gui::on_btnStartStop_clicked()
 		ui.btnStartStop->setIcon(QIcon(":/images/images/underFootOne.png"));
 		robotDrives = false;
 	}
+}
+
+
+void Gui::on_btnShutdown_clicked()
+{
+	robotDrives = false;
+	emit commandIssued("shutdown");
 }
 
 

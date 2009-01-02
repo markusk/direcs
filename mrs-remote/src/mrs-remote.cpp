@@ -57,7 +57,7 @@ MrsRemote::MrsRemote()
 
 MrsRemote::~MrsRemote()
 {
-	QMessageBox::information(0,"test","look");
+	//QMessageBox::information(0,"test","look");
 
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)

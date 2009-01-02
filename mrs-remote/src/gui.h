@@ -56,8 +56,10 @@ class Gui : public QMainWindow
 		void on_btnLeft_clicked();
 		void on_btnRight_clicked();
 		void on_btnStartStop_clicked();
+		void on_btnShutdown_clicked();
 		void on_spinBoxSpeed1_valueChanged(int value);
 		void on_spinBoxSpeed2_valueChanged(int value);
+		void on_btnGo_clicked();
 
 
 	private:
