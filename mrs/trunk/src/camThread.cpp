@@ -347,7 +347,7 @@ void CamThread::setCameraDevice(int device)
 }
 
 
-void CamThread::init()
+bool CamThread::init()
 {
 	if (initDone == false)
 	{
@@ -357,12 +357,12 @@ void CamThread::init()
 		//-----------------
 		// try to capture
 		//-----------------
-		qDebug("INFO: Initialising cam at /dev/video%d...", cameraDevice);
+		//qDebug("INFO: Initialising cam at /dev/video%d...", cameraDevice);
 		capture = cvCaptureFromCAM(cameraDevice);
 		
 		if (!capture)
 		{
-			qDebug("INFO: could not initialize capturing from /dev/video%d. No camera connected?", cameraDevice);
+			//qDebug("INFO: could not initialize capturing from /dev/video%d. No camera connected?", cameraDevice);
 			width=0;
 			height=0;
 			pixeldepth = 0;
@@ -370,7 +370,7 @@ void CamThread::init()
 			stopped = true;
 			// disable camera controls in the GUI
 			emit disableCamera();
-			return;
+			return false;
 		}
 		
 		cameraIsOn = true;
@@ -414,6 +414,7 @@ void CamThread::init()
 			small_img = cvCreateImage( cvSize( cvRound(width/scale), cvRound(height/scale)), 8, 1 );
 		}
 	}
+	return true;
 }
 
 

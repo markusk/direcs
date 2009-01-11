@@ -56,8 +56,9 @@ class CamThread : public QThread
 		~CamThread();
 		
 		/**
+		@return true on success
 		*/
-		void init();
+		bool init();
 
 		/**
 		*/
