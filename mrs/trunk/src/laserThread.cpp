@@ -162,6 +162,15 @@ void LaserThread::getAndStoreLaserValuesFront()
 		else
 		{
 			// flip the data, due to a flipped mounting of the hardware!
+			//
+			// get the data from 0° to 180° (left to right)
+			// 'flip' will be increased every step - 1, so the data are stored from 180° to 0°
+			for (int angle=0, flip=numReadingsFront-1; angle<numReadingsFront; angle++, flip--)
+			{
+				// get value from laser
+				// store the value in an array in this thread
+				laserScannerValuesFront[flip] = laser->getLaserDistance(LASER1, angle);
+			}
 		}
 	}
 }
@@ -192,6 +201,15 @@ void LaserThread::getAndStoreLaserValuesRear()
 		else
 		{
 			// flip the data, due to a flipped mounting of the hardware!
+			//
+			// get the data from 0° to 180° (left to right)
+			// 'flip' will be increased every step - 1, so the data are stored from 180° to 0°
+			for (int angle=0, flip=numReadingsRear-1; angle<numReadingsRear; angle++, flip--)
+			{
+				// get value from laser
+				// store the value in an array in this thread
+				laserScannerValuesRear[flip] = laser->getLaserDistance(LASER2, angle);
+			}
 		}
 	}
 }
