@@ -104,7 +104,7 @@ Mrs::Mrs()
 #endif
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	camThread = new CamThread();
 #endif
 	joystick = new Joystick();
@@ -173,7 +173,7 @@ void Mrs::init()
 	// call (a) test method(s) when clicking the test button
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	// currently not in use:
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
 #endif
@@ -564,7 +564,7 @@ void Mrs::init()
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//-----------------------------------------------------------
 	// check if camera is connected
 	//-----------------------------------------------------------
@@ -572,10 +572,6 @@ void Mrs::init()
 	{
 		if (camThread->isRunning() == false)
 		{
-			splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
-			
 			gui->appendLog("Starting camera thread...", false);
 			camThread->start();
 			gui->appendLog("Camera thread started.");
@@ -845,7 +841,7 @@ void Mrs::shutdown()
 
 
 		// TODO: a universal quit-threads-method
-		#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+		#ifndef _ARM_ // only include on _non_ ARM environments!
 		//--------------------------------
 		// quit the camThread
 		//--------------------------------
@@ -1219,7 +1215,7 @@ Mrs::~Mrs()
 	#endif
 	delete laserThread;
 	delete netThread;
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+	#ifndef _ARM_ // only include on _non_ ARM environments!
 	delete camThread;
 	#endif
 	delete joystick;
@@ -1497,7 +1493,7 @@ void Mrs::enableFaceTracking(int state)
 
 void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windoze (and does not make sense for ARM)
+#ifndef _ARM_ // only include on _non_ ARM environments!
 	Q_UNUSED (faces) // not in use, at the moment
 
 	// TODO: put values to consts or ini
@@ -2034,7 +2030,7 @@ void Mrs::readSettings()
 			break;
 		case 0:
             useCamera = false;
-            #ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+			#ifndef _ARM_ // only include on _non_ ARM environments!
             // turning "off" camera
             camThread->setCameraDevice(-2);
             gui->disableCamera();
@@ -2046,7 +2042,7 @@ void Mrs::readSettings()
 			break;
 	}
 
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+	#ifndef _ARM_ // only include on _non_ ARM environments!
     if (useCamera)
 	{
 		//---------------------------------------------------------------------
@@ -2101,9 +2097,19 @@ void Mrs::readSettings()
 						camThread->setCascadePath(haarClassifierCascade);
 						gui->appendLog(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
 
+						splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
+						// for refreshing the splash...
+						QApplication::processEvents();
+						
 						// initialise the cam
-						camThread->init();
-						gui->appendLog("Camera initialised.");
+						if (camThread->init())
+						{
+							gui->appendLog("Camera initialised.");
+						}
+						else
+						{
+							gui->appendLog("Error initialising camera.");
+						}
 					}
 				}
 				//---------------------------------------------------------------------
@@ -3198,7 +3204,10 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 
 		if (axisValue == 0)
 		{
-			drive(WAIT);
+			if (robotIsOn)
+			{
+				drive(WAIT);
+			}
 		}
 
 		return;
