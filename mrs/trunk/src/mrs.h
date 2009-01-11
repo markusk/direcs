@@ -266,6 +266,7 @@ class Mrs : public QObject
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
+		QString mountingLaserscanner; // just for reading the value here. @sa laserThread
 		QString commaSeparator;
 		bool robotIsOn; /// Stores the robots (circuits) state.ON or OFF
 		bool robotDrives; /// Stores the robots driving state. TRUE, when the robot drives.

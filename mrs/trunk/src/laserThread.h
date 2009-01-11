@@ -52,12 +52,20 @@ class LaserThread : public QThread
 		void setLaserScannerFlag(short int laserScanner, int angle, int flag);
 		
 		/**
-		Sets the serial port for a laser scanner (for modified CARMEN module).
+		Sets the serial port for a laser scanner.
 		@param laserScanner can be LASER1 or LASER2
 		@param serialPort is the port of the laser scanner
 		@sa setDevicePort, read_parameters, laser.h
 		*/
 		void setSerialPort(short int laserScanner, QString serialPort);
+		
+		/**
+		Sets the mounting for a laser scanner to flip the data from 0-179 to 179-0, when the laser scanner is mounted flipped.
+		@param laserScanner can be LASER1 or LASER2
+		@param mounting can be "normal" or "flipped"
+		@sa setDevicePort, read_parameters, laser.h
+		*/
+		void setMounting(short int laserScanner, QString mounting);
 		
 		/**
 		Returns the state of a connected laser scanner.
@@ -96,6 +104,8 @@ class LaserThread : public QThread
 		int numReadingsFront;
 		int numReadingsRear;
 		bool simulationMode;
+		QString mountingLaserscannerFront; /// cane be "normal" or "flipped"
+		QString mountingLaserscannerRear; /// cane be "normal" or "flipped"
 		
 		Laser *laser;
 		

@@ -149,12 +149,19 @@ void LaserThread::getAndStoreLaserValuesFront()
 	// if YES
 	if (numReadingsFront > 0)
 	{
-		// /get the data from 0° to 180° (left to right)
-		for (int angle=0; angle<numReadingsFront; angle++)
+		if (mountingLaserscannerFront == "normal")
 		{
-			// get value from laser
-			// store the value in an array in this thread
-			laserScannerValuesFront[angle] = laser->getLaserDistance(LASER1, angle);
+			// /get the data from 0° to 180° (left to right)
+			for (int angle=0; angle<numReadingsFront; angle++)
+			{
+				// get value from laser
+				// store the value in an array in this thread
+				laserScannerValuesFront[angle] = laser->getLaserDistance(LASER1, angle);
+			}
+		}
+		else
+		{
+			// flip the data, due to a flipped mounting of the hardware!
 		}
 	}
 }
@@ -172,12 +179,19 @@ void LaserThread::getAndStoreLaserValuesRear()
 	// if YES
 	if (numReadingsRear > 0)
 	{
-		// /get the data from 0° to 180° (left to right)
-		for (int angle=0; angle<numReadingsRear; angle++)
+		if (mountingLaserscannerFront == "normal")
 		{
-			// get value from laser
-			// store the value in an array in this thread
-			laserScannerValuesRear[angle] = laser->getLaserDistance(LASER2, angle);
+			// /get the data from 0° to 180° (left to right)
+			for (int angle=0; angle<numReadingsRear; angle++)
+			{
+				// get value from laser
+				// store the value in an array in this thread
+				laserScannerValuesRear[angle] = laser->getLaserDistance(LASER2, angle);
+			}
+		}
+		else
+		{
+			// flip the data, due to a flipped mounting of the hardware!
 		}
 	}
 }
@@ -488,9 +502,11 @@ bool LaserThread::isConnected(short int laserScanner)
 			case LASER2:
 				laserScannerRearIsConnected = true;
 				return true;
+				break;
 			case LASER1:
 				laserScannerFrontIsConnected = true;
 				return true;
+				break;
 		}
 	}
 	else
@@ -500,9 +516,11 @@ bool LaserThread::isConnected(short int laserScanner)
 			case LASER2:
 				laserScannerRearIsConnected = false;
 				return false;
+				break;
 			case LASER1:
 				laserScannerFrontIsConnected = false;
 				return false;
+				break;
 		}
 	}
 	
@@ -516,4 +534,18 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 {
 	// for laser.cpp:
 	laser->setDevicePort(laserScanner, serialPort);
+}
+
+
+void LaserThread::setMounting(short int laserScanner, QString mounting)
+{
+		switch (laserScanner)
+		{
+			case LASER1:
+				mountingLaserscannerFront = mounting;
+				break;
+			case LASER2:
+				mountingLaserscannerRear = mounting;
+				break;
+		}
 }

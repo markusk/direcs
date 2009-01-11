@@ -1984,11 +1984,33 @@ void Mrs::readSettings()
 		}
 		else
 		{
-			//
 			// everything okay
-			//
 			laserThread->setSerialPort(LASER1, serialPortLaserscannerFront);
 			gui->appendLog(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
+			
+			//---------------------------------------------------------------------
+			// read next laser setting
+			mountingLaserscanner = inifile1->readString("Config", "mountingLaserscannerFront");
+		
+			if (mountingLaserscanner == "error2")
+			{
+				laserThread->setMounting(LASER1, "normal");
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			}
+			else
+			{
+				if (mountingLaserscanner == "error1")
+				{
+					laserThread->setMounting(LASER1, "normal");
+					gui->appendLog("<font color=\"#FF0000\">Value \"mountingLaserscannerFront\" not found in ini-file!</font>");
+				}
+				else
+				{
+					// everything okay
+					laserThread->setMounting(LASER1, mountingLaserscanner);
+					gui->appendLog(QString("Front laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
+				}
+			}
 		}
 	}
 
@@ -2010,11 +2032,33 @@ void Mrs::readSettings()
 		}
 		else
 		{
-			//
 			// everything okay
-			//
 			laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
 			gui->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
+			
+			//---------------------------------------------------------------------
+			// read next laser setting
+			mountingLaserscanner = inifile1->readString("Config", "mountingLaserscannerRear");
+		
+			if (mountingLaserscanner == "error2")
+			{
+				laserThread->setMounting(LASER2, "normal");
+				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			}
+			else
+			{
+				if (mountingLaserscanner == "error1")
+				{
+					laserThread->setMounting(LASER2, "normal");
+					gui->appendLog("<font color=\"#FF0000\">Value \"mountingLaserscannerRear\" not found in ini-file!</font>");
+				}
+				else
+				{
+					// everything okay
+					laserThread->setMounting(LASER2, mountingLaserscanner);
+					gui->appendLog(QString("Rear laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
+				}
+			}
 		}
 	}
 

@@ -81,7 +81,7 @@ void Laser::set_default_parameters(sick_laser_p laser, int laser_num)
 	laser->settings.swf = 0;
 	laser->settings.angle_range = 180;
 	laser->settings.angle_resolution = RES_1_00_DEGREE;
-	laser->settings.laser_flipped = 0;
+	laser->settings.laser_flipped = 1;
 	laser->settings.use_remission = 0;
 }
 
