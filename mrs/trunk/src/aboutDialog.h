@@ -28,7 +28,7 @@
 
 
 /**
-Dialog for showing information about mrs.
+\brief Dialog for showing information about the software.
 */
 class AboutDialog : public QDialog
 {

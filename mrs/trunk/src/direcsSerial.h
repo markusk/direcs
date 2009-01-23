@@ -51,7 +51,9 @@
 
 
 /**
-Class to read data from and write data to the serial port.
+\brief Class to read data from and write data to the serial port.
+
+This class is used to communicate with the laser scanners and with the robot (with the Atmel controller).
 */
 class DirecsSerial : public QObject
 {
@@ -63,6 +65,7 @@ class DirecsSerial : public QObject
 	
 		/**
 		Open a connection to the serial line. This method is only used for the atmel serial port! *Not* for the laser scanners!
+		The serial port settings (9600,8,N,1) for the atmel serial port are set in this method, too!!
 		
 		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
 		@return the file descriptor if everything is fine, -1 in case of an error.
@@ -105,8 +108,13 @@ class DirecsSerial : public QObject
 		int writePort(int dev_fd, unsigned char *buf, int nChars);
 		
 		/**
-		for test reasons... :-)
-		*/
+		Writes data to the serial line.
+		This method is only used for the atmel serial port! *Not* for the laser scanners!
+		
+		@param *c Pointer to unsiged char buffer to the data to be send over the serial line
+		@param nChars Number of bytes to be sent
+		@return The number of bytes sent to the serial line.
+		 */
 		int writeAtmelPort(unsigned char *c, int nChars);
 		
 		/**
@@ -121,13 +129,19 @@ class DirecsSerial : public QObject
 		
 		
 		/**
-		for test reasons... :-)
+		Reads data from the serial line
+		This method is only used for the atmel serial port! *Not* for the laser scanners!
+		
+		@param *buf Pointer to unsiged char buffer for the data to be written
+		@param nChars Number of bytes to be written (<= size of the buffer array).
+		@return The number of bytes written.
 		 */
 		int readAtmelPort(unsigned char *buf, int nChars);
 		
 		
 		/**
 		Closes the serial port.
+		This method is only used for the atmel serial port! *Not* for the laser scanners!
 		
 		@return the results reported by close.
 		**/

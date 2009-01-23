@@ -25,6 +25,8 @@
 
 
 /**
+\brief This specialised version of QGraphicsScene is able to react to mouse events.
+
 This specialised version of QGraphicsScene is able to react to different mouse events in order to provide direct user interaction.
 */
 class LaserScene : public QGraphicsScene

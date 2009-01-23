@@ -28,6 +28,8 @@
 
 
 /**
+\brief Dialog for showing the joystick axes and buttons.
+
 Dialog for showing information about the joystick movement and the pressed buttons.
 */
 class JoystickDialog : public QDialog

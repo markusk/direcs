@@ -25,7 +25,11 @@
 #include <QString>
 #include <QtGui/QMouseEvent>
 
-/** An individual OPENGL context class */
+/**
+\brief An individual OPENGL context class for camera stuff using OpenCV.
+
+An individual OPENGL context class for camera stuff using OpenCV.
+*/
 class QtGLContext : public QGLWidget
 {
 	Q_OBJECT

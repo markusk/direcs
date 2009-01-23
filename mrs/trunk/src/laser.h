@@ -179,6 +179,9 @@
 #include <QDebug>
 
 
+/**
+\brief This class handles all the low level laser stuff.
+*/
 class Laser : public QObject
 {
     Q_OBJECT

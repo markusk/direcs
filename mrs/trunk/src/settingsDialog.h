@@ -27,6 +27,8 @@
 #include "ui_settingsDialog.h"
 
 /**
+\brief The dialog for all the programm settings.
+
 Dialog for showing the current settings or to let them change / interact with the main window.
 */
 class SettingsDialog : public QDialog

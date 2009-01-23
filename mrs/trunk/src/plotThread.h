@@ -36,7 +36,9 @@
 //-------------------------------------------------------------------
 
 /**
-This class gets power values from the motor sensors and emits them to the GUI.
+\brief Gets values from sensors and plots them in (emits them to) the GUI.
+
+This class gets current values from the motor sensors and emits them to the GUI, which plots them using qwtplot.
 */
 class PlotThread : public QThread
 {

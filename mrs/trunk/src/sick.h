@@ -149,10 +149,9 @@
 #include <QDebug>
 
 
-/*
-	TODO;doxygenize me!
+/**
+\brief This class handles all the low level SICK laser scanner stuff.
 */
-
 class Sick : public QObject
 {
     Q_OBJECT
