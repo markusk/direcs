@@ -57,6 +57,11 @@ int main(int argc, char *argv[])
 	// init mrs
 	m.init();
 
+#ifdef _ARM_ // only include on ARM environments!
+	qDebug("-------------------------");
+	qDebug("Ready for take off... ;-)");
+	qDebug("-------------------------");
+#endif
 	return app.exec();
 }
 
@@ -276,7 +281,7 @@ void Mrs::init()
 		QMessageBox msgbox(QMessageBox::Critical, tr("mrs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
 		msgbox.exec();
 		#else
-		qDebug() << " ++++ Error opening ini-file " << inifile1->getInifileName() << "+++";
+		qDebug() << "**** Error opening ini-file " << inifile1->getInifileName() << "****";
 		#endif
 
 		gui->appendLog(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
@@ -335,7 +340,7 @@ void Mrs::init()
 		QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
 		msgbox.exec();
 		#else
-		qDebug() << "+++ Error opening serial port" << serialPortMicrocontroller << "+++";
+		qDebug() << "**** Error opening serial port" << serialPortMicrocontroller << "****";
 		#endif
 
 		// no serial port, no robot :-(
