@@ -8,17 +8,17 @@
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
- *   mrs is distributed in the hope that it will be useful,              *
+ *   direcs is distributed in the hope that it will be useful,              *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
  *   GNU General Public License for more details.                        *
  *                                                                       *
  *   You should have received a copy of the GNU General Public License   *
- *   along with mrs. If not, see <http://www.gnu.org/licenses/>.         *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.         *
  *                                                                       *
  *************************************************************************/
 
-#include "mrs.h"
+#include "direcs.h"
 
 
 int main(int argc, char *argv[])
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	// Initialize the resource file
-	Q_INIT_RESOURCE(mrs);
+	Q_INIT_RESOURCE(direcs);
 	
 	// The QApplication class manages the GUI application's control flow and main settings.
 	QApplication app(argc, argv);
@@ -37,25 +37,25 @@ int main(int argc, char *argv[])
 	QPixmap pixmap(":/images/images/splash.png");
 	QSplashScreen splash(pixmap);
 
-	// create Mrs class object
-	Mrs m(&splash);
+	// create Direcs class object
+	Direcs d(&splash);
 
 	// show the splash screen
 	splash.show();
-	splash.showMessage(QObject::tr("Loading config file..."), Mrs::splashPosition, Mrs::splashColor);
+	splash.showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
 	
 #else
 	
 	// The QCoreApplication class provides an event loop for console Qt applications.
 	QCoreApplication app(argc, argv);
 	
-	// create Mrs class object
-	Mrs m;
+	// create Direcs class object
+	Direcs d;
 	
 #endif
 	
-	// init mrs
-	m.init();
+	// init direcs
+	d.init();
 
 #ifdef _ARM_ // only include on ARM environments!
 	qDebug("-------------------------");
@@ -67,15 +67,15 @@ int main(int argc, char *argv[])
 
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
-const Qt::Alignment Mrs::splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
-const QColor Mrs::splashColor = Qt::red;
+const Qt::Alignment Direcs::splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
+const QColor Direcs::splashColor = Qt::red;
 #endif
 
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
-Mrs::Mrs(QSplashScreen *splash)
+Direcs::Direcs(QSplashScreen *splash)
 #else
-Mrs::Mrs()
+Direcs::Direcs()
 #endif
 {
 	//------------------------------------------------------------------
@@ -117,7 +117,7 @@ Mrs::Mrs()
 }
 
 
-void Mrs::init()
+void Direcs::init()
 {
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
@@ -169,7 +169,7 @@ void Mrs::init()
 	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 
 	//--------------------------------------------------------------------------
-	// shutdown Mrs program on exit button
+	// shutdown Direcs program on exit button
 	// shutdown is also called, when the gui is closed
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
@@ -278,7 +278,7 @@ void Mrs::init()
 	{
 		#ifndef _ARM_ // only include on _non_ ARM environments!
 		// file not found-Msg
-		QMessageBox msgbox(QMessageBox::Critical, tr("mrs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
+		QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
 		msgbox.exec();
 		#else
 		qDebug() << "**** Error opening ini-file " << inifile1->getInifileName() << "****";
@@ -597,7 +597,7 @@ void Mrs::init()
 
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
-	// (sets the mrs an the threads to simulation mode)
+	// (sets the direcs an the threads to simulation mode)
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
 	connect(gui, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
@@ -747,7 +747,7 @@ void Mrs::init()
 
 
 /*
-bool Mrs::event(QEvent *event)
+bool Direcs::event(QEvent *event)
 {
 	if (event->type() == QEvent::KeyPress)
 	{
@@ -763,9 +763,9 @@ bool Mrs::event(QEvent *event)
 */
 
 
-void Mrs::shutdown()
+void Direcs::shutdown()
 {
-		qDebug("Mrs shutdown...");
+		qDebug("Direcs shutdown...");
 
 		#ifndef _ARM_ // only include on _non_ ARM environments!
 		splash->show();
@@ -1208,7 +1208,7 @@ void Mrs::shutdown()
 }
 
 
-Mrs::~Mrs()
+Direcs::~Direcs()
 {
 	qDebug("Bye.");
 
@@ -1244,7 +1244,7 @@ Mrs::~Mrs()
 }
 
 
-void Mrs::showExitDialog()
+void Direcs::showExitDialog()
 {
 		gui->appendLog("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
 
@@ -1268,7 +1268,7 @@ void Mrs::showExitDialog()
 }
 
 
-void Mrs::showSplashMessage(QString text)
+void Direcs::showSplashMessage(QString text)
 {
 	#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->showMessage(text, splashPosition, splashColor);
@@ -1301,7 +1301,7 @@ void Mrs::showSplashMessage(QString text)
 }
 
 
-void Mrs::finishSplash()
+void Direcs::finishSplash()
 {
 	#ifndef _ARM_ // only include on _non_ ARM environments!
 	splash->finish(gui);
@@ -1309,7 +1309,7 @@ void Mrs::finishSplash()
 }
 
 
-void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
+void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 {
 	//Q_UNUSED(timestamp);
 
@@ -1483,7 +1483,7 @@ void Mrs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 }
 
 
-void Mrs::enableFaceTracking(int state)
+void Direcs::enableFaceTracking(int state)
 {
 	if (state == Qt::Checked)
 	{
@@ -1496,7 +1496,7 @@ void Mrs::enableFaceTracking(int state)
 }
 
 
-void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
+void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	Q_UNUSED (faces) // not in use, at the moment
@@ -1662,7 +1662,7 @@ void Mrs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 }
 
 
-void Mrs::showSensorData()
+void Direcs::showSensorData()
 {
 	//----------------------------------------
 	// show sensor values with progress bars
@@ -1700,7 +1700,7 @@ void Mrs::showSensorData()
 }
 
 
-void Mrs::drive(const unsigned char command)
+void Direcs::drive(const unsigned char command)
 {
 	switch (command)
 	{
@@ -1940,7 +1940,7 @@ void Mrs::drive(const unsigned char command)
 
 
 
-void Mrs::readSettings()
+void Direcs::readSettings()
 {
 	//---------------------------------------------------------------------
 	// get the programm settings and set the items on the gui (sliders...)
@@ -2710,9 +2710,9 @@ void Mrs::readSettings()
 }
 
 
-void Mrs::enableRemoteControlListening(bool state)
+void Direcs::enableRemoteControlListening(bool state)
 {
-	// store the state gobal to Mrs
+	// store the state gobal to Direcs
 	robotRemoteMode = state;
 
 	if (state == true)
@@ -2739,7 +2739,7 @@ void Mrs::enableRemoteControlListening(bool state)
 }
 
 
-void Mrs::executeRemoteCommand(QString command)
+void Direcs::executeRemoteCommand(QString command)
 {
 	// only react, when remote mode is activated in the GUI!
 	if (robotRemoteMode==true)
@@ -2857,7 +2857,7 @@ void Mrs::executeRemoteCommand(QString command)
 }
 
 
-void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
+void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 {
 	//
 	// Y axis
@@ -3451,7 +3451,7 @@ void Mrs::executeJoystickCommand(int axisNumber, int axisValue)
 }
 
 
-void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
+void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 {
 	/// @sa Gui::showJoystickButtons
 	static bool toggle0 = false;
@@ -3596,13 +3596,13 @@ void Mrs::executeJoystickCommand(int buttonNumber, bool buttonState)
 }
 
 
-bool Mrs::simulationMode() const
+bool Direcs::simulationMode() const
 {
 	return robotSimulationMode;
 }
 
 
-void Mrs::setSimulationMode(bool status)
+void Direcs::setSimulationMode(bool status)
 {
 	robotSimulationMode = status;
 
@@ -3653,13 +3653,13 @@ void Mrs::setSimulationMode(bool status)
 }
 
 
-void Mrs::setRobotState(bool state)
+void Direcs::setRobotState(bool state)
 {
 	robotIsOn = state;
 }
 
 
-void Mrs::speak(QString text)
+void Direcs::speak(QString text)
 {
 	Q_UNUSED(text);
 	
@@ -3696,7 +3696,7 @@ void Mrs::speak(QString text)
 }
 
 
-void Mrs::test()
+void Direcs::test()
 {
 	static bool toggle = OFF;
 

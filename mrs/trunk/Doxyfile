@@ -1,10 +1,10 @@
-# Doxyfile 1.5.5-KDevelop
+# Doxyfile 1.5.6-KDevelop
 
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = mrs
+PROJECT_NAME           = direcs
 PROJECT_NUMBER         = 0.8
 OUTPUT_DIRECTORY       = /home/markus/develop/direcs/mrs/trunk/doc
 CREATE_SUBDIRS         = NO
@@ -47,6 +47,7 @@ IDL_PROPERTY_SUPPORT   = YES
 DISTRIBUTE_GROUP_DOC   = NO
 SUBGROUPING            = YES
 TYPEDEF_HIDES_STRUCT   = NO
+SYMBOL_CACHE_SIZE      = 0
 #---------------------------------------------------------------------------
 # Build related configuration options
 #---------------------------------------------------------------------------
@@ -190,7 +191,11 @@ DOCSET_BUNDLE_ID       = org.doxygen.Project
 HTML_DYNAMIC_SECTIONS  = NO
 CHM_FILE               = 
 HHC_LOCATION           = 
+QTHELP_FILE            = 
+QTHELP_CONFIG          = 
+DOXYGEN2QTHELP_LOC     = 
 GENERATE_CHI           = NO
+CHM_INDEX_ENCODING     = 
 BINARY_TOC             = NO
 TOC_EXPAND             = NO
 DISABLE_INDEX          = NO

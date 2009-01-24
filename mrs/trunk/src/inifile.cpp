@@ -32,7 +32,7 @@ Inifile::Inifile()
 	// set the name of the programms ini-file
 	//------------------------------------------------------------------
 	// TODO: put this to mrs class! With a set-method!
-	mainIniFilename = "mrs.ini";
+	mainIniFilename = "direcs.ini";
 	
 	//------------------------------------------------------------------
 	// create the settings object. Use the ini-format

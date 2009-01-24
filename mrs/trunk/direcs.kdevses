@@ -1,7 +1,11 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="0" />
+ <DocsAndViews NumberOfDocuments="1" >
+  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/mrs.cpp" >
+   <View0 Encoding="" line="0" Type="Source" />
+  </Doc0>
+ </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>

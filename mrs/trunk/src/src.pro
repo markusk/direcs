@@ -5,13 +5,13 @@ message("Processing global scope...")
 
 DESTDIR = .
 
-TARGET = ../bin/mrs
+TARGET = ../bin/direcs
 
 MOC_DIR = ../tmp
 
 OBJECTS_DIR = ../tmp
 
-RESOURCES = ../mrs.qrc
+RESOURCES = ../direcs.qrc
 
 CONFIG += debug \
 	qt
@@ -38,7 +38,7 @@ unix {
 				laserScene.h \
 				laserThread.h \
 				motor.h \
-				mrs.h \
+				direcs.h \
 				networkThread.h \
 				obstacleCheckThread.h \
 				plotThread.h \
@@ -62,7 +62,7 @@ unix {
 				laserScene.cpp \
 				laserThread.cpp \
 				motor.cpp \
-				mrs.cpp \
+				direcs.cpp \
 				networkThread.cpp \
 				obstacleCheckThread.cpp \
 				plotThread.cpp \
@@ -175,7 +175,7 @@ arm {
 			laser.h \
 			laserThread.h \
 			motor.h \
-			mrs.h \
+			direcs.h \
 			networkThread.h \
 			obstacleCheckThread.h \
 			sensorThread.h \
@@ -191,7 +191,7 @@ arm {
 			laser.cpp \
 			laserThread.cpp \
 			motor.cpp \
-			mrs.cpp \
+			direcs.cpp \
 			networkThread.cpp \
 			obstacleCheckThread.cpp \
 			sensorThread.cpp \
@@ -231,7 +231,7 @@ console {
 			laser.h \
 			laserThread.h \
 			motor.h \
-			mrs.h \
+			direcs.h \
 			networkThread.h \
 			obstacleCheckThread.h \
 			sensorThread.h \
@@ -247,7 +247,7 @@ console {
 			laser.cpp \
 			laserThread.cpp \
 			motor.cpp \
-			mrs.cpp \
+			direcs.cpp \
 			networkThread.cpp \
 			obstacleCheckThread.cpp \
 			sensorThread.cpp \

@@ -13,8 +13,8 @@
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
     <description></description>
-    <versioncontrol/>
-    <projectname>mrs</projectname>
+    <versioncontrol></versioncontrol>
+    <projectname>direcs</projectname>
     <defaultencoding></defaultencoding>
   </general>
   <kdevfileview>
@@ -92,7 +92,7 @@
   </kdevdebugger>
   <kdevtrollproject>
     <run>
-      <mainprogram>/home/markus/develop/direcs/mrs/trunk/bin/mrs</mainprogram>
+      <mainprogram>/home/markus/develop/direcs/mrs/trunk/bin/direcs</mainprogram>
       <programargs></programargs>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
@@ -105,13 +105,13 @@
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
       <runarguments>
-        <mrs/>
+        <direcs/>
       </runarguments>
       <cwd>
-        <mrs>/home/markus/develop/direcs/mrs/trunk/</mrs>
+        <direcs>/home/markus/develop/direcs/mrs/trunk/</direcs>
       </cwd>
       <debugarguments>
-        <mrs/>
+        <direcs/>
       </debugarguments>
     </run>
     <general>
@@ -150,21 +150,21 @@
   <kdevdocumentation>
     <projectdoc>
       <docsystem>Doxygen-Dokumentation</docsystem>
-      <docurl>doc</docurl>
-      <usermanualurl/>
+      <docurl>doc/</docurl>
+      <usermanualurl></usermanualurl>
     </projectdoc>
   </kdevdocumentation>
   <substmap>
-    <APPNAME>mrs</APPNAME>
-    <APPNAMELC>mrs</APPNAMELC>
-    <APPNAMESC>Mrs</APPNAMESC>
-    <APPNAMEUC>MRS</APPNAMEUC>
+    <APPNAME>direcs</APPNAME>
+    <APPNAMELC>direcs</APPNAMELC>
+    <APPNAMESC>Direcs</APPNAMESC>
+    <APPNAMEUC>DIRECS</APPNAMEUC>
     <AUTHOR>Markus Knapp</AUTHOR>
-    <EMAIL>webmaster@direcs.de</EMAIL>
+    <EMAIL>www.direcs.de</EMAIL>
     <LICENSE>Custom</LICENSE>
     <VERSION>0.1</VERSION>
     <YEAR>2006</YEAR>
-    <dest>/home/markus/develop/mrs</dest>
+    <dest>/home/markus/develop/direcs</dest>
   </substmap>
   <kdevcppsupport>
     <references>
@@ -230,7 +230,7 @@
     </filetemplates>
   </cppsupportpart>
   <ctagspart>
-    <customArguments/>
+    <customArguments></customArguments>
     <customTagfilePath>/home/markus/develop/subversion/applications/mrs/trunk/tags</customTagfilePath>
     <activeTagsFiles/>
   </ctagspart>
