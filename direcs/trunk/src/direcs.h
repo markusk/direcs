@@ -18,8 +18,8 @@
  *                                                                       *
  *************************************************************************/
 
-#ifndef MRS_H
-#define MRS_H
+#ifndef DIRECS_H
+#define DIRECS_H
 
 //-------------------------------------------------------------------
 #ifdef _ARM_ // only include on ARM environments!

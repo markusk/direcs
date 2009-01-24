@@ -8,13 +8,13 @@
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
- *   mrs is distributed in the hope that it will be useful,              *
+ *   direcs is distributed in the hope that it will be useful,           *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
  *   GNU General Public License for more details.                        *
  *                                                                       *
  *   You should have received a copy of the GNU General Public License   *
- *   along with mrs. If not, see <http://www.gnu.org/licenses/>.         *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
  *                                                                       *
  *************************************************************************/
 
@@ -190,11 +190,11 @@ class Laser : public QObject
 		Laser();
 		~Laser();
 		
-		static const short int LASER1 = 1;	/// For the mrs laserThread
-		static const short int LASER2 = 2;	/// For the mrs laserThread
-		static const short int LASER3 = 4;	/// For the mrs laserThread
-		static const short int LASER4 = 8;	/// For the mrs laserThread
-		static const short int LASER5 = 16;	/// For the mrs laserThread
+		static const short int LASER1 = 1;	/// For the direcs laserThread
+		static const short int LASER2 = 2;	/// For the direcs laserThread
+		static const short int LASER3 = 4;	/// For the direcs laserThread
+		static const short int LASER4 = 8;	/// For the direcs laserThread
+		static const short int LASER5 = 16;	/// For the direcs laserThread
 		
 		/**
 		This data structure is used by carmen_param_install_params and

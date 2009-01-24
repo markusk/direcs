@@ -8,13 +8,13 @@
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
- *   mrs is distributed in the hope that it will be useful,              *
+ *   direcs is distributed in the hope that it will be useful,           *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
  *   GNU General Public License for more details.                        *
  *                                                                       *
  *   You should have received a copy of the GNU General Public License   *
- *   along with mrs. If not, see <http://www.gnu.org/licenses/>.         *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
  *                                                                       *
  *************************************************************************/
 
@@ -297,7 +297,7 @@ class Gui : public QMainWindow
 		This signal is sent from the simulation button and received from all threads which deliver real signals from the bot.
 		Once the signal is received, the slots switches to simulation mode.
 		@param state can be true or false.
-		@sa Mrs::setSimulationMode()
+		@sa Direcs::setSimulationMode()
 		@sa SensorThread::setSimulationMode()
 		@sa LaserThread::setSimulationMode()
 		@sa ObstackeCheckThread::setSimulationMode()
@@ -322,7 +322,7 @@ class Gui : public QMainWindow
 		void speak(QString text);
 
 		/**
-		Emits a signal to call the test method in the Mrs class..
+		Emits a signal to call the test method in the Direcs class..
 		 */
 		void test();
 
@@ -386,9 +386,9 @@ class Gui : public QMainWindow
 
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		Ui::mainWindow ui;
-		SettingsDialog *settingsDialog; // just a pointer to the object created in the mrs class!
-		JoystickDialog *joystickDialog; // just a pointer to the object created in the mrs class!
-		AboutDialog *aboutDialog;       // just a pointer to the object created in the mrs class!
+		SettingsDialog *settingsDialog; // just a pointer to the object created in the direcs class!
+		JoystickDialog *joystickDialog; // just a pointer to the object created in the direcs class!
+		AboutDialog *aboutDialog;       // just a pointer to the object created in the direcs class!
 		QwtPlotCurve curve1;
 		QwtPlotCurve curve2;
 		QwtPlotCurve curve3;
@@ -435,7 +435,7 @@ class Gui : public QMainWindow
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
 
-		/// @sa Mrs::drive() [Slot]
+		/// @sa Direcs::drive() [Slot]
 		static const unsigned char START = 7; //! For button signal "start driving"
 		static const unsigned char STOP  = 8; //! For button signal "stop driving"
 		static const unsigned char MOTOR1FW		= 10; /// for the test widget

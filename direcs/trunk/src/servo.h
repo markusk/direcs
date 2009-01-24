@@ -8,13 +8,13 @@
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
- *   mrs is distributed in the hope that it will be useful,              *
+ *   direcs is distributed in the hope that it will be useful,           *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
  *   GNU General Public License for more details.                        *
  *                                                                       *
  *   You should have received a copy of the GNU General Public License   *
- *   along with mrs. If not, see <http://www.gnu.org/licenses/>.         *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
  *                                                                       *
  *************************************************************************/
 
@@ -100,7 +100,7 @@ class Servo : public QThread
 		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
 		
 		//! defines the size of the servo[] arrays.
-		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in mrs.h !!!
+		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in direcs.h !!!
 		int servoStartPosition[NUMBEROFSERVOS];
 		int servoEndPosition[NUMBEROFSERVOS];
 		int servoMinPosition[NUMBEROFSERVOS];

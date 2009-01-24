@@ -8,13 +8,13 @@
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
- *   mrs is distributed in the hope that it will be useful,              *
+ *   direcs is distributed in the hope that it will be useful,           *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
  *   GNU General Public License for more details.                        *
  *                                                                       *
  *   You should have received a copy of the GNU General Public License   *
- *   along with mrs. If not, see <http://www.gnu.org/licenses/>.         *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
  *                                                                       *
  *************************************************************************/
 
@@ -140,7 +140,7 @@ class CamThread : public QThread
 		@param faceX is the X coordinate to the middle of a detected face (0, if none)
 		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
 		@param faceRadius is the radius (0, if none)
-		@sa Mrs::faceTracking()
+		@sa Direcs::faceTracking()
 		*/
 		void faceDetected(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 

@@ -8,13 +8,13 @@
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
- *   mrs is distributed in the hope that it will be useful,              *
+ *   direcs is distributed in the hope that it will be useful,           *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
  *   GNU General Public License for more details.                        *
  *                                                                       *
  *   You should have received a copy of the GNU General Public License   *
- *   along with mrs. If not, see <http://www.gnu.org/licenses/>.         *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
  *                                                                       *
  *************************************************************************/
 
@@ -157,7 +157,7 @@ class Motor : public QObject
 		static const unsigned char MOTOR2B = BIT3;
 		static const unsigned char MOTORCLOCK = BIT4;
 		
-		// the "serial" commands for the MC -> see "main.h" in the microcontroller source code( mrs avr)!
+		// the "serial" commands for the MC -> see "main.h" in the microcontroller source code (direcs-avr)!
 		static const unsigned char MOTOR1_OFF 				= 20;
 		static const unsigned char MOTOR1_CLOCKWISE 		= 21;
 		static const unsigned char MOTOR1_COUNTERCLOCKWISE 	= 22;
