@@ -1,9 +1,9 @@
 #include "gui.h"
 
 
-Gui::Gui(MrsRemote *m, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 {
-	mrsremote1 = m;
+	direcsremote1 = m;
 	
 	robotDrives = false;
 
@@ -44,7 +44,7 @@ Gui::~Gui()
 	//delete media;
 	//delete vwidget;
 	
-	delete mrsremote1;
+	delete direcsremote1;
 }
 
 
@@ -178,7 +178,7 @@ void Gui::on_btnExit_clicked()
 
 void Gui::closeEvent()
 {
-	mrsremote1->~MrsRemote();
+	direcsremote1->~DirecsRemote();
 }
 
 

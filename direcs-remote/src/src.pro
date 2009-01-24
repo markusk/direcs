@@ -1,14 +1,14 @@
 # Diese Datei wurde mit dem qmake-Manager von KDevelop erstellt. 
 # ------------------------------------------- 
 # Unterordner relativ zum Projektordner: ./src
-# Das Target ist eine Anwendung:  ../bin/mrs-remote
+# Das Target ist eine Anwendung:  ../bin/direcs-remote
 
 FORMS += gui.ui 
 HEADERS += gui.h \
-           mrs-remote.h
+           direcs-remote.h
 SOURCES += gui.cpp \
-           mrs-remote.cpp
-TARGET = ../bin/mrs-remote
+           direcs-remote.cpp
+TARGET = ../bin/direcs-remote
 CONFIG += debug \
 warn_on \
 qt
@@ -18,9 +18,9 @@ TEMPLATE = app
 QT += network \
       webkit
 
-INCLUDEPATH += /home/markus/develop/subversion/applications/mrs-remote/src \
+INCLUDEPATH += /home/markus/develop/subversion/applications/direcs-remote/src \
 		/usr/include/KDE
 
 LIBS += -L/usr/local/lib
 
-RESOURCES += ../mrs-remote.qrc
+RESOURCES += ../direcs-remote.qrc

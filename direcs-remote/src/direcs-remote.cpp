@@ -2,20 +2,20 @@
 #include <config.h>
 #endif
 
-#include "mrs-remote.h"
+#include "direcs-remote.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
  
-	// create MrsRemote class object
-	MrsRemote *m = new MrsRemote();
+	// create DirecsRemote class object
+	DirecsRemote *m = new DirecsRemote();
 
 	return app.exec();
 }
 
 
-MrsRemote::MrsRemote()
+DirecsRemote::DirecsRemote()
 {
 	//------------------------------------------------------------------
 	// create the objects
@@ -55,7 +55,7 @@ MrsRemote::MrsRemote()
 }
 
 
-MrsRemote::~MrsRemote()
+DirecsRemote::~DirecsRemote()
 {
 	//QMessageBox::information(0,"test","look");
 
@@ -67,12 +67,12 @@ MrsRemote::~MrsRemote()
 }
 
 
-void MrsRemote::testPort(int function)
+void DirecsRemote::testPort(int function)
 {
 }
 
 
-void MrsRemote::sendNetworkCommand(QString command)
+void DirecsRemote::sendNetworkCommand(QString command)
 {
 	gui1->appendLog(command);
 	

@@ -1,5 +1,5 @@
-#ifndef MRSREMOTE_H
-#define MRSREMOTE_H
+#ifndef DIRECSREMOTE_H
+#define DIRECSREMOTE_H
 
 //-------------------------------------------------------------------
 #include "gui.h"
@@ -13,14 +13,14 @@ class Gui;
 class QUdpSocket;
 
 
-class MrsRemote : public QObject
+class DirecsRemote : public QObject
 {
     Q_OBJECT
 
 
 	public:
-		MrsRemote();
-		~MrsRemote();
+		DirecsRemote();
+		~DirecsRemote();
 		void testPort(int function);
 		
 	public slots:

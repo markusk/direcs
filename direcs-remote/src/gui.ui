@@ -17,10 +17,10 @@
    </sizepolicy>
   </property>
   <property name="windowTitle" >
-   <string>mrs remote</string>
+   <string>direcs remote</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../mrs-remote.qrc" >
+   <iconset resource="../direcs-remote.qrc" >
     <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
   </property>
   <property name="layoutDirection" >
@@ -48,7 +48,7 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >
+     <iconset resource="../direcs-remote.qrc" >
       <normaloff>:/images/images/down.png</normaloff>:/images/images/down.png</iconset>
     </property>
     <property name="iconSize" >
@@ -71,7 +71,7 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >
+     <iconset resource="../direcs-remote.qrc" >
       <normaloff>:/images/images/back.png</normaloff>:/images/images/back.png</iconset>
     </property>
     <property name="iconSize" >
@@ -94,7 +94,7 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >
+     <iconset resource="../direcs-remote.qrc" >
       <normaloff>:/images/images/forward.png</normaloff>:/images/images/forward.png</iconset>
     </property>
     <property name="iconSize" >
@@ -132,7 +132,7 @@
      <string/>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >
+     <iconset resource="../direcs-remote.qrc" >
       <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
     </property>
     <property name="iconSize" >
@@ -161,7 +161,7 @@
      </rect>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >
+     <iconset resource="../direcs-remote.qrc" >
       <normaloff>:/images/images/up.png</normaloff>:/images/images/up.png</iconset>
     </property>
     <property name="iconSize" >
@@ -247,7 +247,7 @@
      <string>shutdown</string>
     </property>
     <property name="icon" >
-     <iconset resource="../mrs-remote.qrc" >
+     <iconset resource="../direcs-remote.qrc" >
       <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
     </property>
     <property name="iconSize" >
@@ -371,7 +371,7 @@
     <string>E&amp;xit</string>
    </property>
    <property name="icon" >
-    <iconset resource="../mrs-remote.qrc" >
+    <iconset resource="../direcs-remote.qrc" >
      <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
    </property>
    <property name="shortcut" >
@@ -470,7 +470,7 @@
   <tabstop>btnClear</tabstop>
  </tabstops>
  <resources>
-  <include location="../mrs-remote.qrc" />
+  <include location="../direcs-remote.qrc" />
  </resources>
  <connections/>
 </ui>

@@ -14,7 +14,7 @@
     <absoluteprojectpath>false</absoluteprojectpath>
     <description/>
     <versioncontrol/>
-    <projectname>mrs-remote</projectname>
+    <projectname>direcs-remote</projectname>
     <defaultencoding/>
   </general>
   <kdevfileview>
@@ -92,7 +92,7 @@
   </kdevdebugger>
   <kdevtrollproject>
     <run>
-      <mainprogram>/home/markus/develop/direcs/mrs-remote/bin/mrs-remote</mainprogram>
+      <mainprogram>/home/markus/develop/direcs/direcs-remote/bin/direcs-remote</mainprogram>
       <programargs/>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
@@ -100,22 +100,22 @@
       <autocompile>true</autocompile>
       <envvars/>
       <globaldebugarguments/>
-      <globalcwd>/home/markus/develop/direcs/mrs-remote</globalcwd>
+      <globalcwd>/home/markus/develop/direcs/direcs-remote</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
       <runarguments>
-        <mrs-remote/>
+        <direcs-remote/>
       </runarguments>
       <cwd>
-        <mrs-remote>/home/markus/develop/mrs/mrs-remote/trunk</mrs-remote>
+        <direcs-remote>/home/markus/develop/direcs/direcs-remote/trunk</direcs-remote>
       </cwd>
       <debugarguments>
-        <mrs-remote/>
+        <direcs-remote/>
       </debugarguments>
     </run>
     <general>
-      <activedir>src</activedir>
+      <activedir></activedir>
     </general>
     <make>
       <abortonerror>true</abortonerror>
@@ -155,16 +155,16 @@
     </projectdoc>
   </kdevdocumentation>
   <substmap>
-    <APPNAME>mrs-remote</APPNAME>
-    <APPNAMELC>mrs-remote</APPNAMELC>
-    <APPNAMESC>Mrs-remote</APPNAMESC>
-    <APPNAMEUC>MRS-REMOTE</APPNAMEUC>
+    <APPNAME>direcs-remote</APPNAME>
+    <APPNAMELC>direcs-remote</APPNAMELC>
+    <APPNAMESC>Direcs-remote</APPNAMESC>
+    <APPNAMEUC>DIRECS-REMOTE</APPNAMEUC>
     <AUTHOR>Markus Knapp</AUTHOR>
-    <EMAIL>mrs @ direcs . de</EMAIL>
+    <EMAIL>www.direcs.de</EMAIL>
     <LICENSE>Custom</LICENSE>
     <VERSION>0.1</VERSION>
     <YEAR>2006</YEAR>
-    <dest>/home/markus/develop/mrs</dest>
+    <dest>/home/markus/develop/direcs</dest>
   </substmap>
   <kdevcppsupport>
     <references/>
@@ -229,7 +229,7 @@
   </cppsupportpart>
   <ctagspart>
     <customArguments/>
-    <customTagfilePath>/home/markus/develop/subversion/applications/mrs-remote/trunk/tags</customTagfilePath>
+    <customTagfilePath>/home/markus/develop/subversion/applications/direcs-remote/trunk/tags</customTagfilePath>
     <activeTagsFiles/>
   </ctagspart>
 </kdevelop>

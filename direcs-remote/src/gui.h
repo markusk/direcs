@@ -14,7 +14,7 @@
 
 //-------------------------------------------------------------------
 #include "ui_gui.h"
-#include "mrs-remote.h"
+#include "direcs-remote.h"
 #include <QtGui>
 #include <QWebView>
 /*
@@ -26,14 +26,14 @@
 */
 
 // forward declarations because of circular includes!
-class MrsRemote;
+class DirecsRemote;
 
 class Gui : public QMainWindow
 {
 	Q_OBJECT
 
 	public:
-		Gui(MrsRemote *m, QMainWindow *parent = 0);
+		Gui(DirecsRemote *m, QMainWindow *parent = 0);
 		~Gui();
 		int getPort();
 		void appendLog(QString text, bool sayIt=false);
@@ -64,7 +64,7 @@ class Gui : public QMainWindow
 
 	private:
 		Ui::Gui ui;
-		MrsRemote *mrsremote1;
+		DirecsRemote *direcsremote1;
 		QWebView *view;
 		//MediaObject *media;
 		//VideoWidget *vwidget;
