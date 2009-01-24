@@ -1,10 +1,10 @@
 /*************************************************************************
- *   Copyright (C) 2008 by Markus Knapp                                  *
- *   mrs @ direcs.de                                                     *
+ *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   www.direcs.de                                                       *
  *                                                                       *
- *   This file is part of mrs.                                           *
+ *   This file is part of direcs.                                        *
  *                                                                       *
- *   mrs is free software: you can redistribute it and/or modify it      *
+ *   direcs is free software: you can redistribute it and/or modify it   *
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
