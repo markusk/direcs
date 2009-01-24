@@ -2,51 +2,86 @@
 <tagfile>
   <compound kind="file">
     <name>aboutDialog.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>aboutDialog_8cpp</filename>
     <includes id="aboutDialog_8h" name="aboutDialog.h" local="yes" imported="no">aboutDialog.h</includes>
   </compound>
   <compound kind="file">
     <name>aboutDialog.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>aboutDialog_8h</filename>
     <class kind="class">AboutDialog</class>
   </compound>
   <compound kind="file">
     <name>camThread.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>camThread_8cpp</filename>
     <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
   </compound>
   <compound kind="file">
     <name>camThread.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>camThread_8h</filename>
     <class kind="class">CamThread</class>
     <class kind="struct">KOORD_T</class>
   </compound>
   <compound kind="file">
     <name>circuit.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>circuit_8cpp</filename>
     <includes id="circuit_8h" name="circuit.h" local="yes" imported="no">circuit.h</includes>
   </compound>
   <compound kind="file">
     <name>circuit.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>circuit_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Circuit</class>
   </compound>
   <compound kind="file">
+    <name>direcs.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <filename>direcs_8cpp</filename>
+    <includes id="direcs_8h" name="direcs.h" local="yes" imported="no">direcs.h</includes>
+    <member kind="function">
+      <type>int</type>
+      <name>main</name>
+      <anchorfile>direcs_8cpp.html</anchorfile>
+      <anchor>0ddf1224851353fc92bfbff6f499fa97</anchor>
+      <arglist>(int argc, char *argv[])</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>direcs.h</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <filename>direcs_8h</filename>
+    <includes id="gui_8h" name="gui.h" local="yes" imported="no">gui.h</includes>
+    <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
+    <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
+    <includes id="aboutDialog_8h" name="aboutDialog.h" local="yes" imported="no">aboutDialog.h</includes>
+    <includes id="plotThread_8h" name="plotThread.h" local="yes" imported="no">plotThread.h</includes>
+    <includes id="circuit_8h" name="circuit.h" local="yes" imported="no">circuit.h</includes>
+    <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
+    <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
+    <includes id="motor_8h" name="motor.h" local="yes" imported="no">motor.h</includes>
+    <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
+    <includes id="obstacleCheckThread_8h" name="obstacleCheckThread.h" local="yes" imported="no">obstacleCheckThread.h</includes>
+    <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
+    <includes id="networkThread_8h" name="networkThread.h" local="yes" imported="no">networkThread.h</includes>
+    <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
+    <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
+    <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
+    <class kind="class">Direcs</class>
+  </compound>
+  <compound kind="file">
     <name>direcsSerial.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>direcsSerial_8cpp</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
   </compound>
   <compound kind="file">
     <name>direcsSerial.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>direcsSerial_8h</filename>
     <class kind="class">DirecsSerial</class>
     <member kind="define">
@@ -66,13 +101,13 @@
   </compound>
   <compound kind="file">
     <name>gui.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>gui_8cpp</filename>
     <includes id="gui_8h" name="gui.h" local="yes" imported="no">gui.h</includes>
   </compound>
   <compound kind="file">
     <name>gui.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>gui_8h</filename>
     <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
     <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
@@ -83,76 +118,76 @@
   </compound>
   <compound kind="file">
     <name>gui_arm.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>gui__arm_8cpp</filename>
     <includes id="gui__arm_8h" name="gui_arm.h" local="yes" imported="no">gui_arm.h</includes>
   </compound>
   <compound kind="file">
     <name>gui_arm.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>gui__arm_8h</filename>
     <class kind="class">Gui</class>
   </compound>
   <compound kind="file">
     <name>head.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>head_8cpp</filename>
     <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
   </compound>
   <compound kind="file">
     <name>head.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>head_8h</filename>
     <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
     <class kind="class">Head</class>
   </compound>
   <compound kind="file">
     <name>heartbeat.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>heartbeat_8cpp</filename>
     <includes id="heartbeat_8h" name="heartbeat.h" local="yes" imported="no">heartbeat.h</includes>
   </compound>
   <compound kind="file">
     <name>heartbeat.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>heartbeat_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Heartbeat</class>
   </compound>
   <compound kind="file">
     <name>inifile.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>inifile_8cpp</filename>
     <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
   </compound>
   <compound kind="file">
     <name>inifile.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>inifile_8h</filename>
     <class kind="class">Inifile</class>
   </compound>
   <compound kind="file">
     <name>interfaceAvr.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>interfaceAvr_8cpp</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
   </compound>
   <compound kind="file">
     <name>interfaceAvr.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>interfaceAvr_8h</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
     <class kind="class">InterfaceAvr</class>
   </compound>
   <compound kind="file">
     <name>joystick.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>joystick_8cpp</filename>
     <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
   </compound>
   <compound kind="file">
     <name>joystick.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>joystick_8h</filename>
     <class kind="class">Joystick</class>
     <member kind="define">
@@ -165,25 +200,25 @@
   </compound>
   <compound kind="file">
     <name>joystickDialog.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>joystickDialog_8cpp</filename>
     <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
   </compound>
   <compound kind="file">
     <name>joystickDialog.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>joystickDialog_8h</filename>
     <class kind="class">JoystickDialog</class>
   </compound>
   <compound kind="file">
     <name>laser.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>laser_8cpp</filename>
     <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
   </compound>
   <compound kind="file">
     <name>laser.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>laser_8h</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
     <class kind="class">Laser</class>
@@ -629,7 +664,7 @@
   </compound>
   <compound kind="file">
     <name>laser_messages.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>laser__messages_8h</filename>
     <class kind="struct">carmen_laser_laser_config_t</class>
     <member kind="define">
@@ -814,98 +849,63 @@
   </compound>
   <compound kind="file">
     <name>laserScene.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>laserScene_8cpp</filename>
     <includes id="laserScene_8h" name="laserScene.h" local="yes" imported="no">laserScene.h</includes>
   </compound>
   <compound kind="file">
     <name>laserScene.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>laserScene_8h</filename>
     <class kind="class">LaserScene</class>
   </compound>
   <compound kind="file">
     <name>laserThread.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>laserThread_8cpp</filename>
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
   </compound>
   <compound kind="file">
     <name>laserThread.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>laserThread_8h</filename>
     <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
     <class kind="class">LaserThread</class>
   </compound>
   <compound kind="file">
     <name>motor.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>motor_8cpp</filename>
     <includes id="motor_8h" name="motor.h" local="yes" imported="no">motor.h</includes>
   </compound>
   <compound kind="file">
     <name>motor.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>motor_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Motor</class>
   </compound>
   <compound kind="file">
-    <name>mrs.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
-    <filename>mrs_8cpp</filename>
-    <includes id="mrs_8h" name="mrs.h" local="yes" imported="no">mrs.h</includes>
-    <member kind="function">
-      <type>int</type>
-      <name>main</name>
-      <anchorfile>mrs_8cpp.html</anchorfile>
-      <anchor>0ddf1224851353fc92bfbff6f499fa97</anchor>
-      <arglist>(int argc, char *argv[])</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>mrs.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
-    <filename>mrs_8h</filename>
-    <includes id="gui_8h" name="gui.h" local="yes" imported="no">gui.h</includes>
-    <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
-    <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
-    <includes id="aboutDialog_8h" name="aboutDialog.h" local="yes" imported="no">aboutDialog.h</includes>
-    <includes id="plotThread_8h" name="plotThread.h" local="yes" imported="no">plotThread.h</includes>
-    <includes id="circuit_8h" name="circuit.h" local="yes" imported="no">circuit.h</includes>
-    <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
-    <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
-    <includes id="motor_8h" name="motor.h" local="yes" imported="no">motor.h</includes>
-    <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
-    <includes id="obstacleCheckThread_8h" name="obstacleCheckThread.h" local="yes" imported="no">obstacleCheckThread.h</includes>
-    <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
-    <includes id="networkThread_8h" name="networkThread.h" local="yes" imported="no">networkThread.h</includes>
-    <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
-    <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
-    <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
-    <class kind="class">Mrs</class>
-  </compound>
-  <compound kind="file">
     <name>networkThread.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>networkThread_8cpp</filename>
     <includes id="networkThread_8h" name="networkThread.h" local="yes" imported="no">networkThread.h</includes>
   </compound>
   <compound kind="file">
     <name>networkThread.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>networkThread_8h</filename>
     <class kind="class">NetworkThread</class>
   </compound>
   <compound kind="file">
     <name>obstacleCheckThread.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>obstacleCheckThread_8cpp</filename>
     <includes id="obstacleCheckThread_8h" name="obstacleCheckThread.h" local="yes" imported="no">obstacleCheckThread.h</includes>
   </compound>
   <compound kind="file">
     <name>obstacleCheckThread.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>obstacleCheckThread_8h</filename>
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
@@ -913,7 +913,7 @@
   </compound>
   <compound kind="file">
     <name>param_interface.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>param__interface_8h</filename>
     <member kind="define">
       <type>#define</type>
@@ -967,27 +967,27 @@
   </compound>
   <compound kind="file">
     <name>plotThread.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>plotThread_8cpp</filename>
     <includes id="plotThread_8h" name="plotThread.h" local="yes" imported="no">plotThread.h</includes>
   </compound>
   <compound kind="file">
     <name>plotThread.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>plotThread_8h</filename>
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
     <class kind="class">PlotThread</class>
   </compound>
   <compound kind="file">
     <name>posix_qextserialport.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>posix__qextserialport_8h</filename>
     <includes id="qextserialbase_8h" name="qextserialbase.h" local="yes" imported="no">qextserialbase.h</includes>
     <class kind="class">Posix_QextSerialPort</class>
   </compound>
   <compound kind="file">
     <name>qextserialbase.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>qextserialbase_8h</filename>
     <class kind="struct">_PortSettings</class>
     <class kind="class">QextSerialBase</class>
@@ -1532,7 +1532,7 @@
   </compound>
   <compound kind="file">
     <name>qextserialport.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>qextserialport_8h</filename>
     <includes id="win__qextserialport_8h" name="win_qextserialport.h" local="yes" imported="no">win_qextserialport.h</includes>
     <class kind="class">QextSerialPort</class>
@@ -1545,97 +1545,97 @@
     </member>
   </compound>
   <compound kind="file">
-    <name>qrc_mrs.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
-    <filename>qrc__mrs_8cpp</filename>
+    <name>qrc_direcs.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <filename>qrc__direcs_8cpp</filename>
     <member kind="function">
       <type></type>
       <name>Q_CONSTRUCTOR_FUNCTION</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>784ede001d04b31b614a6db16f0f7cf3</anchor>
-      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_mrs)) int QT_MANGLE_NAMESPACE(qCleanupResources_mrs)()</arglist>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
+      <anchor>789a808ed91d1c8b680fa113332bfee4</anchor>
+      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_direcs)) int QT_MANGLE_NAMESPACE(qCleanupResources_direcs)()</arglist>
     </member>
     <member kind="function">
       <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
-      <name>qInitResources_mrs</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
-      <anchor>b55aae3c149e0c206a95d32a9576422a</anchor>
+      <name>qInitResources_direcs</name>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
+      <anchor>5469423cd86cbaef9276ff93d28cec70</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>QT_BEGIN_NAMESPACE bool</type>
       <name>qRegisterResourceData</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
       <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
       <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>qUnregisterResourceData</name>
-      <anchorfile>qrc__mrs_8cpp.html</anchorfile>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
       <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
       <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
     </member>
   </compound>
   <compound kind="file">
     <name>QtGLContext.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>QtGLContext_8cpp</filename>
     <includes id="QtGLContext_8h" name="QtGLContext.h" local="yes" imported="no">QtGLContext.h</includes>
   </compound>
   <compound kind="file">
     <name>QtGLContext.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>QtGLContext_8h</filename>
     <class kind="class">QtGLContext</class>
   </compound>
   <compound kind="file">
     <name>sensorThread.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>sensorThread_8cpp</filename>
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
   </compound>
   <compound kind="file">
     <name>sensorThread.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>sensorThread_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">SensorThread</class>
   </compound>
   <compound kind="file">
     <name>servo.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>servo_8cpp</filename>
     <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
   </compound>
   <compound kind="file">
     <name>servo.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>servo_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Servo</class>
   </compound>
   <compound kind="file">
     <name>settingsDialog.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>settingsDialog_8cpp</filename>
     <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
   </compound>
   <compound kind="file">
     <name>settingsDialog.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>settingsDialog_8h</filename>
     <class kind="class">SettingsDialog</class>
   </compound>
   <compound kind="file">
     <name>sick.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>sick_8cpp</filename>
     <includes id="sick_8h" name="sick.h" local="yes" imported="no">sick.h</includes>
   </compound>
   <compound kind="file">
     <name>sick.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>sick_8h</filename>
     <class kind="class">Sick</class>
     <class kind="struct">Sick::laser_device_t</class>
@@ -1924,19 +1924,19 @@
   </compound>
   <compound kind="file">
     <name>speakThread.cpp</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>speakThread_8cpp</filename>
     <includes id="speakThread_8h" name="speakThread.h" local="yes" imported="no">speakThread.h</includes>
   </compound>
   <compound kind="file">
     <name>speakThread.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>speakThread_8h</filename>
     <class kind="class">SpeakThread</class>
   </compound>
   <compound kind="file">
     <name>init.c</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
     <filename>init_8c</filename>
     <includes id="init_8h" name="init.h" local="yes" imported="no">init.h</includes>
     <member kind="function">
@@ -1984,7 +1984,7 @@
   </compound>
   <compound kind="file">
     <name>init.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
     <filename>init_8h</filename>
     <member kind="function">
       <type>void</type>
@@ -2024,7 +2024,7 @@
   </compound>
   <compound kind="file">
     <name>serial.c</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
     <filename>serial_8c</filename>
     <includes id="serial_8h" name="serial.h" local="yes" imported="no">serial.h</includes>
     <member kind="function">
@@ -2072,7 +2072,7 @@
   </compound>
   <compound kind="file">
     <name>serial.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
     <filename>serial_8h</filename>
     <member kind="function">
       <type>void</type>
@@ -2112,7 +2112,7 @@
   </compound>
   <compound kind="file">
     <name>win_qextserialport.h</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>win__qextserialport_8h</filename>
     <includes id="qextserialbase_8h" name="qextserialbase.h" local="yes" imported="no">qextserialbase.h</includes>
     <class kind="class">Win_QextSerialPort</class>
@@ -2680,6 +2680,1025 @@
       <name>ON</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>1e9f513b37c42e97d6855165af8a3687</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>Direcs</name>
+    <filename>classDirecs.html</filename>
+    <member kind="slot">
+      <type>void</type>
+      <name>drive</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>be9407c8e189c7c97331252c6d4be704</anchor>
+      <arglist>(const unsigned char command)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>enableFaceTracking</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>b94459eb02deb184ef422458f3fb6086</anchor>
+      <arglist>(int state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>enableRemoteControlListening</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>50ea37eb4af15f79fc36731323fd90e0</anchor>
+      <arglist>(bool status)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>executeJoystickCommand</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>8bcb5c2166f7e17c7836e9a05dc8069d</anchor>
+      <arglist>(int buttonNumber, bool buttonState)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>executeJoystickCommand</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>aee8cbf555ca29e8be40133b0752abe7</anchor>
+      <arglist>(int axisNumber, int axisValue)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>executeRemoteCommand</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>09ce973711e202d2ac7b98387c021dcd</anchor>
+      <arglist>(QString command)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>faceTracking</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>f6d01bb511699875f1c7d3f87a44059b</anchor>
+      <arglist>(int faces, int faceX, int faceY, int faceRadius)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>finishSplash</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>6c6e1d538c7e86ceaa2f43c407811c8e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>logicalUnit</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>251d1e2714448ce7c40c729fe0c35a8f</anchor>
+      <arglist>(int sensorAlarm, QDateTime timestamp)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3703a3a652ab8b5bcc3e4e1386053fd4</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setSimulationMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a08c7c9ce0bf89e560e624bdc827ada8</anchor>
+      <arglist>(bool status)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>showExitDialog</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ad88da84c341e1a49b28ea4430917b7d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>showSensorData</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>746eb1c0f713f050a77ab7ba2514b61c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>showSplashMessage</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>f14e0e786b2f75a45a09a1a9a9687f08</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>shutdown</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>627c9bd5ad8d07b4cd5f41ac6f271ae3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>speak</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>1a7c097a9e6d5b7f2189e7192d363147</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>test</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>22ace1ac7a8601ad458aa8394d239ab2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>initCircuit</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>4d666467be3794502bcf6fd1165e8766</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>look</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d6568f9fc729775ad29f28c21303d983</anchor>
+      <arglist>(QString direction)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>showFaceTrackDirection</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>eb74529189a8ef4fd1cdf123a23f2094</anchor>
+      <arglist>(QString direction)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>showPreferredDirection</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>96cfd5b8cc14e575ba737a33880c1e39</anchor>
+      <arglist>(QString direction)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Direcs</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>bba144bfd6c9bcbda45a8ff94e8d540f</anchor>
+      <arglist>(QSplashScreen *splash)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>init</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d16233794f93149cb8595a7d3af2ece3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>simulationMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>41b8d47c98b9da1865582c9e5dfd4208</anchor>
+      <arglist>() const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~Direcs</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5035734335f0205f187a12059c2bebdd</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>exitDialog</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e8c8d53fa935beaf02fd9288f9fedb93</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>noHardwareErrorMessages</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>0107f389b5846f9d9f3d3cf1a336b39d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const QColor</type>
+      <name>splashColor</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>22c21baa8bb1eadb34b23f3b3adf62c3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const Qt::Alignment</type>
+      <name>splashPosition</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5aad8253e310d52e0848faaa9ecd4736</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>readSettings</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>4585a9e133d01f6a42b12023fbf126b1</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>AboutDialog *</type>
+      <name>aboutDialog</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>69d021fc458b49c4a6aaf584064cadf5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>cameraTestMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>25b2341abb3f927fc2de45bf5844c579</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Circuit *</type>
+      <name>circuit1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>53a8594422e2af83d2421552c04e0b9d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>commaSeparator</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>865bcc7e0dc2937cfdb317c360b1680c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>currentTestServo</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>110d317dfd87fb511f0b7d992bafc383</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>eyeTestMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d563ddab2eecc9db9dbaa1777f73872e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>faceTrackingIsEnabled</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>71d3a7e5b1d98e35d7e4a7f5c5743a58</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Gui *</type>
+      <name>gui</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>b2dc1c6da0bcc6e9e2730515279520c0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Head *</type>
+      <name>head</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>327e53395812cbf416ae50252ae5c29c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Inifile *</type>
+      <name>inifile1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e9f1d383a9373fb9cf4f96d51bcd4301</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>InterfaceAvr *</type>
+      <name>interface1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>80e7b7cd568a72dcb3682867de148694</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Joystick *</type>
+      <name>joystick</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>60802d203140b9fc541acff58514bae0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>JoystickDialog *</type>
+      <name>joystickDialog</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>217592e0e53a6f326f80f6c9e489109e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>laserScannerFrontFound</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>23a2da85297f4d35c443634c9cdbb5d3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>laserScannerRearFound</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>c07675dcd297c5b7a55ab73e0e7e68e1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>LaserThread *</type>
+      <name>laserThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>136a3b36ac21ba6434b76fbf2d82c419</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>maximumSpeed</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>2c038b1c65cfdb34efedbfd68b4b4a54</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>mecanumDriveMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>454714c77fd1b2f542b96fd3b2bd10d9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>minimumSpeed</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>c6e511c5a34b3ad72a0dac60826245ac</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>mot1Speed</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>0eb6df1e4e89ae6a82c30382afd2e467</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>mot2Speed</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>33796ae5d0f97ca4d0ff5ab24106f70c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>mot3Speed</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a296b03a6c4c2f5f9f11e723e7bb30e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>mot4Speed</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>aced83ea90f2ab31339459780795bd1a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Motor *</type>
+      <name>motors</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>7e6751104b95e2ecbef4df02d8366720</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>mountingLaserscanner</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>be1c750eb5a1da36a057607a8c570362</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QMutex *</type>
+      <name>mutex</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>2683ae21955409e059082e89f5f1561d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>NetworkThread *</type>
+      <name>netThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>cc1a348b01ffea89cf7c97bd9a803f35</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QList&lt; QDateTime &gt;</type>
+      <name>obstacleAlarmFrontLeftList</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>60969d61fdf82dc75fa057cd01982b13</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QList&lt; QDateTime &gt;</type>
+      <name>obstacleAlarmFrontRightList</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>4005243d95eaeb0740e3dbd527e7391a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>ObstacleCheckThread *</type>
+      <name>obstCheckThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3068433f53e3912cc4cfd639bcdf91cf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>PlotThread *</type>
+      <name>plotThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>bea6085dc320b0740f23cde75a20976c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotDrives</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>98d9eb78b6798094c604cb0d4b26ce5d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotIsOn</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a12db602d58a7aa9b87d3caf823cfbf8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotRemoteMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d1c45d59c0f74e9230f5d160aa7b944e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotSimulationMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>8d4c63fcd80897e451f1d31bc13aac47</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>SensorThread *</type>
+      <name>sensorThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>fa19a6a26b1c55799c07a44f9a9e1d2c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>serialPortLaserscannerFront</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3c1ee948036b8e8a36e9c89590918d8b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>serialPortLaserscannerRear</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>0bf68141035358f3deb343738e259684</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>serialPortMicrocontroller</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>820214d66f848b56ce0e908057dee7c9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Servo *</type>
+      <name>servos</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>4bda51dd5d1444ba304eaba2e83d81d0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>servoTestMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>6f884b756b0bc3856e961231a450ba58</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>SettingsDialog *</type>
+      <name>settingsDialog</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5c6ee2b167fb7f5cc9e3f430ecee8687</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QSplashScreen *</type>
+      <name>splash</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>60e47e144360a4dd05aab71eb5844218</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>testDriveMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>9a340ed2d02723298eedebc2591258d0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>useCamera</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ee6bd375c9ff499d3433ee077c468870</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>BACKWARD</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>f6d851cb31470a4ad5ec1ffb8341cc10</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>CLOCKWISE</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>009cce67759a982c587e408bad8d3574</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>COUNTERCLOCKWISE</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5074946caf3405f8cc9bae356e97fdb5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>FORWARD</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ad74fe3aa6a92f431756a965d52bc1f8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXIS2X</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>20710c24687130ec562cd96ceef94bad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXIS2Y</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>9c0a7b9e00c9886f051cf6b127b6bf52</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISX</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>50c9754b4aad491f3a754cd2dfae27be</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISY</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>afd3dcbe92f234a0260b6dd658f8015e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKDIVISOR</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e301f5bce7e548ac25205cc84c32983d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>LASER1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5cfca721bc6d2103ed9d8ad613c1237b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>LASER2</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d335ba5e895dd7dcc29dd3a7d9109161</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>LASER3</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>4002a9a5b4ddf6c03ce66aed57a493b9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>LASER4</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>b2cd2211f6cf99fc36700a665f318d82</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>LASER5</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>86368e13210cbcaeeac1b34ed37330c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>LEFT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>9e1a6a8c9dc69011ccb6a540a27dbaf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>MAXFALSEALARMS</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>2ff98fa6aaf3793f779af1aa9ceaf2d3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3da2e6bd69adcabeb97279b903972e4c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1BW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>11ed3d6134f2b0159697779b98491e94</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1FW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>b917eb52386c01385c8185ce19f071b9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR1OFF</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>4c6a2a04a89b3cbabdcd0d2514835bc9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR2</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>4d5b17ed1fa73fa7945c3d2ae0141207</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR2BW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>40b71c9a5e99492628eeba6f8c13c620</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR2FW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>cc138927816640305f56312b7204e3bb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR2OFF</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>2f5f8156aec1d00e9a831e9a4c546682</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR3</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>adb5de98820cbfd5cd727bdb6349b1bf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR3BW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>1b6c06cd44fcc34ca6f6a2196cd43c4a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR3FW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>c94755a6c48217ff213c3e7cd6091deb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR3OFF</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>2dc7a50fb4ebd592ebcd9621aa852097</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR4</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ffe3c7a7c9b15da978a4813869ade2d2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR4BW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>23ee65547c86434def158af17c367fb6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR4FW</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>8bfee8293bcc6350816116f8908585ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>MOTOR4OFF</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>0922b61962df31f7a3fd9aea25f54db7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>MOTORSENSOR1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>86d24fc3b51a11596f1985b4e7666c74</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>MOTORSENSOR2</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>292d1f46f9af09b573435548cf26adba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>NONE</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d4a7af2eb8e8ae3bd55c812ae8b9799e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>NUMBEROFSERVOS</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e42088382211811eba984ef2b95a91b2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>OBSTACLEFRONTLEFT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>56fefe66bf9763e57e5ffa66a5025da7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>OBSTACLEFRONTRIGHT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d94da640c85e0f0398f2f647a44016f0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>OBSTACLESEVERYWHEREINFRONT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5f91980d9fac07b8436df12581b99351</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>1d9aedf99169ff2845a1b66c6045d5ee</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e09ce4c0a90d5e0dfa04eb20fb663abd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RIGHT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>f98726a902f99346a36834b668557471</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SAME</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>b32ef3a1fee2525e310b97460e48df48</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a08a5874725f399a2ba51d5cd37ae836</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR16</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3f4e5c7ebf1bb5b897c87dcdb5b58bbf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR2</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>942b0237fa994684e057bc4877cf4826</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR3</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>c0a62ce3396a898124f75650f69353aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR4</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e6729333fb586ca049fb78c80abba227</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR5</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a4239681c88272ecb1c357e744eedfa5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR6</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5176bfc45ac8aa9f54c77d35d73d6271</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR7</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>dc9419b2388a18cd0019d7674057be32</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>SENSOR8</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a328b0a9469557ac9b5ddeb0e8052940</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SERVO1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>b6c735a230053db4c2b86af6f38a4a94</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SERVO2</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>2d3b4a9783e6fd5871580251b1a0c126</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SERVO3</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>66ded2250273029b7bfdcfcea22c2cf0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SERVO4</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>5fc718f0f8b0948248b0360668c4b8f4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SERVO5</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ea292d6a551b38a9d8ac13689265e99f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SERVO6</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3173f1e71bce965a9e6a2ca41411167d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned int</type>
+      <name>SPLASHTIME</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>0f3ddc317f4d04f9b7b39d9d87f94118</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>START</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e9f527d1652474216aabb58cb9f37e5e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>STOP</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>45af0d460aee64b9218e5b478aada6e2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SVCURRENT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>39d8d0a623dc31439d8c06abded9ad0e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SVDEFAULT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>c995ba3b379c135d593d46a2a743c491</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SVEND</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>494eca8ae357fd69938820d856002ebc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SVMAX</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>dc53685fffac134844131d288e33f459</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SVMIN</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e541c73eee83b6a1dc23bba38d6a4222</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SVSTART</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>abc3078fd483a43f44d9cf396210c0c8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>TURNLEFT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>9bb8c0316e2ab02d0bf0766c89ba0de5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>TURNRIGHT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>33f5465be31db31e55acfac018c93eaa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>WAIT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>0f1eac0eafe86fddc1eeb74c08d3b15d</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6871,1025 +7890,6 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>Mrs</name>
-    <filename>classMrs.html</filename>
-    <member kind="slot">
-      <type>void</type>
-      <name>drive</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>92a211fb225b61bf58e2cb9b832844b3</anchor>
-      <arglist>(const unsigned char command)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>enableFaceTracking</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>497a634a07c385d3e3e88fb34b6c2f40</anchor>
-      <arglist>(int state)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>enableRemoteControlListening</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>eb75572475a0e46165d104c25bfc08a0</anchor>
-      <arglist>(bool status)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>executeJoystickCommand</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>8e4476b8247351d8779c98a4ab450e03</anchor>
-      <arglist>(int buttonNumber, bool buttonState)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>executeJoystickCommand</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fdb037993bf6f17f7dea9a458a1d1bb5</anchor>
-      <arglist>(int axisNumber, int axisValue)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>executeRemoteCommand</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>26e07d110b5fadd912ccc2e65cf182ec</anchor>
-      <arglist>(QString command)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>faceTracking</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>54000877fe426da78a98744427633f87</anchor>
-      <arglist>(int faces, int faceX, int faceY, int faceRadius)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>finishSplash</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>902576bc27b86eead1eff4f706e7dade</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>logicalUnit</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>98a62c6d33e28df4d517b77cb7567c27</anchor>
-      <arglist>(int sensorAlarm, QDateTime timestamp)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>setRobotState</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>58f786734bd22b2505636fefb5e08aae</anchor>
-      <arglist>(bool state)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>setSimulationMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>11eec8254e49dc7d33fa4f0cd232308a</anchor>
-      <arglist>(bool status)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>showExitDialog</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>93447869b7a26386d152c20e35671892</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>showSensorData</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>7d2497810c8292cb4a276716570bab53</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>showSplashMessage</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>cf13fed17c3fde96480bbc71a8ae377b</anchor>
-      <arglist>(QString text)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>shutdown</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>7da5a966bf956e7f042f9d48fb1be833</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>speak</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>aed2d46f15387f16f1f458f9a8d38093</anchor>
-      <arglist>(QString text)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>test</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fec132e05a4623abdd9ec9c22eb2cba6</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>initCircuit</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>a6d2b5d94a93968b37bc193c6d34a7b0</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>look</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>df259f7091a4b51359c7962af4b4cd5c</anchor>
-      <arglist>(QString direction)</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>showFaceTrackDirection</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>4fcc5018e5168b5ef982caf963d6299b</anchor>
-      <arglist>(QString direction)</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>showPreferredDirection</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fc2a933be46cd50cdac500f1f4f565ed</anchor>
-      <arglist>(QString direction)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>init</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>82b5a5d392f700b8a207614b4f4a085a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Mrs</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>63514b780b8473060e86870daa18b4c1</anchor>
-      <arglist>(QSplashScreen *splash)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>simulationMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>f38c8bef2e158756505f462b91d0ea3f</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>~Mrs</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>bd48db9a93559a0b2c046d58765f9e8d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable">
-      <type>bool</type>
-      <name>exitDialog</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>2dfaa0e663f8fc14d8311154b9fa9b79</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>bool</type>
-      <name>noHardwareErrorMessages</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>52328e3cd1c6651273b6b69f28b12b0c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static const QColor</type>
-      <name>splashColor</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>9bed58d58d45348e460b15fd46940075</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static const Qt::Alignment</type>
-      <name>splashPosition</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>e6f29d52024023063ac7529336050ed0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>void</type>
-      <name>readSettings</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>75a36a51c05f7aca9bcd9e87912fca1a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>AboutDialog *</type>
-      <name>aboutDialog</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>85c20d8253d6f577d17096ffb99b2e5b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>cameraTestMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>4dc9b8619c278510cef8adf16059e2be</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>Circuit *</type>
-      <name>circuit1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>644f63a293ffe03a6be9059e3b3079f5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>commaSeparator</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>b9ba9c9ec9617ac550b59bf7e5bca45e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>currentTestServo</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>93378bf949cae634ba6cd827cddd4972</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>eyeTestMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>e33469e0f66020cf90fcdfaa26b412a5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>faceTrackingIsEnabled</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>98c80e06de90925933ef9fd9e873bdbd</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>Gui *</type>
-      <name>gui</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>f4b0cbb238d377d382b2e968f82283dd</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>Head *</type>
-      <name>head</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>e244d13c59ec8f99c079f8c3cfd73621</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>Inifile *</type>
-      <name>inifile1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>3b4d976745cdfbad81dbd993d2b1e340</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>InterfaceAvr *</type>
-      <name>interface1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>86fc2ea6b1d999d6516aa9b2e055cde3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>Joystick *</type>
-      <name>joystick</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>e14cfe881082a5b28eefc4ed89abad3f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>JoystickDialog *</type>
-      <name>joystickDialog</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>8ba11197f6213120fdb0f59202b92db8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>laserScannerFrontFound</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>3dfd57467ed969214590cbdf0df002c1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>laserScannerRearFound</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>cfd9b5eea1049c035fb1cd27c4b00977</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>LaserThread *</type>
-      <name>laserThread</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fedcc5b5cf321212279bb4a515467410</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>maximumSpeed</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fce4f1ce7277c9c961134848a5189a46</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>mecanumDriveMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>35cbfc8982e8d75bb1e06f2acc934ebe</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>minimumSpeed</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>f7e7966db9f8ff91d1409944f81fe5c6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>mot1Speed</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>84aa10f50c0d0c83808e01af9911945e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>mot2Speed</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>adff709a990959a67c921d32179c309a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>mot3Speed</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>905943867ea28062b77d924302b026ab</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>mot4Speed</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>0d87c06c1e3ee0e4f42755e91435bce6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>Motor *</type>
-      <name>motors</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>77fc17260dfb7127a5b16e7412fb1b02</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>mountingLaserscanner</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>ff7a036c898a089e148978b6917e7939</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QMutex *</type>
-      <name>mutex</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>e7ab795c2826104366a4439fbb54fc00</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>NetworkThread *</type>
-      <name>netThread</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>7ab0c8f4ca294fe55306b57dcb8eb544</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QList&lt; QDateTime &gt;</type>
-      <name>obstacleAlarmFrontLeftList</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>bd11ea742e8536ac4a51728eeafe38c4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QList&lt; QDateTime &gt;</type>
-      <name>obstacleAlarmFrontRightList</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>d8f1b7c2a597e7bff0e674d151223a4d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>ObstacleCheckThread *</type>
-      <name>obstCheckThread</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>4ff05ef9eca6341dac714826c5157679</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>PlotThread *</type>
-      <name>plotThread</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>5cbec6ff563d789610e39cc3c9b198eb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>robotDrives</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>4d5f6def8893eab495819c9ce0ccaedd</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>robotIsOn</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>bd3673bc42637e132f8a467088fd81bc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>robotRemoteMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>28881fafdd3bb62bf53ba33215c85800</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>robotSimulationMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>20e042e77f111cf34951645272142985</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>SensorThread *</type>
-      <name>sensorThread</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>69713f2fd1db55a59cb732e72e3f6d76</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>serialPortLaserscannerFront</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>39fb0dbf472ccb4d96f5e3305356e00b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>serialPortLaserscannerRear</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fb6880da1dfc70b0c3339844aadbe9e0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>serialPortMicrocontroller</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>92588e4354a5db3e9d345d9f43666c31</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>Servo *</type>
-      <name>servos</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>6e7e7c58ed8965fe7c4fbd17edb4291f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>servoTestMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>17d9508858bed16df0c99d96cbace281</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>SettingsDialog *</type>
-      <name>settingsDialog</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>3370c648ea8d712790a7e7e94808c1c9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QSplashScreen *</type>
-      <name>splash</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>1c2eacc18ff43d871ee65031c08afb7a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>testDriveMode</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>6f12177e670e807798f172cca4332743</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>useCamera</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>8d0881d154deb7b962d9b5b7721b491a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>BACKWARD</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>6287356390b04d6c3ea6afc43e7e61a3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>CLOCKWISE</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>a1f3cb3fe14346dcf07f5eac11ec05e1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>COUNTERCLOCKWISE</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fb42d8d29bcbf3b2704bf54053f619af</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>FORWARD</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>8a65de5f3171c3d28e2eb1540961f652</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>JOYSTICKAXIS2X</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>4355b13d79c921038dfc15af4c599bf4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>JOYSTICKAXIS2Y</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>cccdf3320b79615aae922e51ffda8abe</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>JOYSTICKAXISX</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>3a67b1e6a2f6c4f47af5f8d77f87f6c3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>JOYSTICKAXISY</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>375f717a7f9762b76ba0a2be41b11366</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>JOYSTICKDIVISOR</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>b1e569fdd748068f4235fe47be54806a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>LASER1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>88cca471f52d46644a86e6959834131b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>LASER2</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>b3e4034d98190c9b9e7a145570d3b737</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>LASER3</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>1f59785402b8d40750d62b4a198db2d9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>LASER4</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>03abe75d1d73a109abc950bb2111beb5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>LASER5</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>75ff2459bbf9067afd5f064411820eb2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>LEFT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>cd4e30e3ff13f40f27b7cb077fc314ab</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>MAXFALSEALARMS</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>aa814ec1835f7dc12c2198b3f4f4358d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>250bb4aa8b1beacaaa1f62d86de8d8c7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR1BW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>9595d322c027c850b01e339d16d73823</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR1FW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>b8309b0429b462c67af1f141eb703a74</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR1OFF</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>7599a10d84918366d22ec8ec761a92c5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR2</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>154cb190940a9d2bf8ab7de29afb5bb9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR2BW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>f37e94946d1635e98b29fd30d8f301b0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR2FW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>0626f25abaf6066ccd0f11cd5e7e4f48</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR2OFF</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>d8418a46ae87ce23dea9d27b2eec55d3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR3</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>aed1c8cbf4944e5f6c621de0736f0271</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR3BW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>ef723f809c98da7ab77fede6d812eff9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR3FW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>f6d8f1b02e59d894278272c589bb1128</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR3OFF</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>2ab17db2d6f8144eeb4442028eb0f721</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR4</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>69a3c8f7178c323fd8b9791dceabe93f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR4BW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>130a73882063dd422c42e97984a00493</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR4FW</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>d0f2cf4e2882474a8eb764b19c45b97e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>MOTOR4OFF</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>1cba56e18f187044182b39c43ef49f56</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>MOTORSENSOR1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>91a958b137b86b20d7f76e42f531a0ae</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>MOTORSENSOR2</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>57be79152b5bf9be7be78e050c4ed8ef</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>NONE</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>3400f76eaba5f09438fdc7d158c4c11d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>NUMBEROFSERVOS</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>025f874bbc2753b92640f8c14947ebec</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>OBSTACLEFRONTLEFT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>9ac71e70dc820b12f05493dd7556ddbf</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>OBSTACLEFRONTRIGHT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>5efa69e4eb9cce9b0430462b81baa2e5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>OBSTACLESEVERYWHEREINFRONT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>e22e6e50105f6e18ee6017de8788db7b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const bool</type>
-      <name>OFF</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>adc63eb8a20afe59f561b943c8d9ac65</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const bool</type>
-      <name>ON</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>fb9e2d85ab8a4a9cea6c00843c462570</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>RIGHT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>ae8da94680e31de8526036e1fc63dc60</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SAME</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>8c3833f3a50ee3c1ed9c1fff14cbc8e5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>7f91a651803042066c5ae9f344831cc7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR16</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>c7c7829afc9850d8b87269beed4ea6ed</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR2</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>8a7f122ee498fbcd5e1744ada0cb2600</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR3</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>80bdecd3f5e35d77d61c9bdf2603db33</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR4</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>1344ca1d85ee85b60d750c16152ee79d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR5</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>6598373f6d0b4ecad153adbafcb33804</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR6</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>d72d7f7398c39a18ef2a76cd7b866b6a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR7</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>1d74f264053822ca03a7653d8c921766</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>SENSOR8</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>7aededb18d585794dd06ee21a68196b1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SERVO1</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>25588bbc39f6b82ed9e056f864a0d532</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SERVO2</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>647d9fa9244e5ad6a4d8786a1610c03b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SERVO3</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>516ce27f316563484fdf14e3c4ada3b0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SERVO4</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>3e73c1af579252cb8a324a4f70a8150c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SERVO5</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>a80619f7671510672ce7e7888ea33865</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SERVO6</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>67e2996d2c9a34c83a36178a0cc67658</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned int</type>
-      <name>SPLASHTIME</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>098a7d5aaa5342ab3fdeef946013125e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>START</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>4df276d1e8832ce3d6f57b39eae6a32a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>STOP</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>75bad120ec931a156b645e5f83e2b2df</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SVCURRENT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>829f44f8bb10c9296c4d0dd991311fbb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SVDEFAULT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>a28f3c40a733bed69f5c3a3759bfced1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SVEND</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>103cb19ab62448eb1578bf8c926ad82f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SVMAX</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>bcf2216d8894e7c7666cdf4e965daf0a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SVMIN</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>4e190f92c8b7ddaa5002b7f502642259</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>SVSTART</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>b48cdc184669a6b96d2629b10543a2f4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>TURNLEFT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>298b613a8a4fe2ac1dc7620ba829d7e7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>TURNRIGHT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>bb099b48272b80bdcddc1c70a939ca53</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>WAIT</name>
-      <anchorfile>classMrs.html</anchorfile>
-      <anchor>b6b4e2e5b504bea298e824ea1d08a416</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="class">
     <name>NetworkThread</name>
     <filename>classNetworkThread.html</filename>
     <member kind="signal">
@@ -11281,28 +11281,24 @@
     </member>
   </compound>
   <compound kind="dir">
-    <name>/home/markus/develop/direcs/</name>
-    <path>/home/markus/develop/direcs/</path>
-    <filename>dir_bd3b7a725bad42aec1558fc1fefee67b.html</filename>
-    <dir>/home/markus/develop/direcs/mrs/</dir>
+    <name>direcs/</name>
+    <path>/home/markus/develop/direcs/direcs/</path>
+    <filename>dir_3019565a7209374971dd18603b3fe6c3.html</filename>
+    <dir>direcs/trunk/</dir>
   </compound>
   <compound kind="dir">
-    <name>/home/markus/develop/direcs/mrs/</name>
-    <path>/home/markus/develop/direcs/mrs/</path>
-    <filename>dir_c1316abab53f205de0c70b46da0fa057.html</filename>
-    <dir>/home/markus/develop/direcs/mrs/trunk/</dir>
-  </compound>
-  <compound kind="dir">
-    <name>/home/markus/develop/direcs/mrs/trunk/src/</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/</path>
-    <filename>dir_11a309fa2822be9ce0707169468a8aba.html</filename>
-    <dir>/home/markus/develop/direcs/mrs/trunk/src/test/</dir>
+    <name>direcs/trunk/src/</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <filename>dir_50d92224b2f8744b37ea213f0248066f.html</filename>
+    <dir>direcs/trunk/src/test/</dir>
     <file>aboutDialog.cpp</file>
     <file>aboutDialog.h</file>
     <file>camThread.cpp</file>
     <file>camThread.h</file>
     <file>circuit.cpp</file>
     <file>circuit.h</file>
+    <file>direcs.cpp</file>
+    <file>direcs.h</file>
     <file>direcsSerial.cpp</file>
     <file>direcsSerial.h</file>
     <file>gui.cpp</file>
@@ -11330,8 +11326,6 @@
     <file>laserThread.h</file>
     <file>motor.cpp</file>
     <file>motor.h</file>
-    <file>mrs.cpp</file>
-    <file>mrs.h</file>
     <file>networkThread.cpp</file>
     <file>networkThread.h</file>
     <file>obstacleCheckThread.cpp</file>
@@ -11342,7 +11336,7 @@
     <file>posix_qextserialport.h</file>
     <file>qextserialbase.h</file>
     <file>qextserialport.h</file>
-    <file>qrc_mrs.cpp</file>
+    <file>qrc_direcs.cpp</file>
     <file>QtGLContext.cpp</file>
     <file>QtGLContext.h</file>
     <file>sensorThread.cpp</file>
@@ -11358,18 +11352,18 @@
     <file>win_qextserialport.h</file>
   </compound>
   <compound kind="dir">
-    <name>/home/markus/develop/direcs/mrs/trunk/src/test/</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/src/test/</path>
-    <filename>dir_fbdcccc265b883dd006af5532fe62b7e.html</filename>
+    <name>direcs/trunk/src/test/</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <filename>dir_43fabcfc725a246df0aaf038c4f29448.html</filename>
     <file>init.c</file>
     <file>init.h</file>
     <file>serial.c</file>
     <file>serial.h</file>
   </compound>
   <compound kind="dir">
-    <name>/home/markus/develop/direcs/mrs/trunk/</name>
-    <path>/home/markus/develop/direcs/mrs/trunk/</path>
-    <filename>dir_e62d4f039716ace43a9b7dc374b76e93.html</filename>
-    <dir>/home/markus/develop/direcs/mrs/trunk/src/</dir>
+    <name>direcs/trunk/</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/</path>
+    <filename>dir_cab404750c959038827d9c6e2791adf3.html</filename>
+    <dir>direcs/trunk/src/</dir>
   </compound>
 </tagfile>

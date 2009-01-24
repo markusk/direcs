@@ -2,17 +2,17 @@
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="1" >
-  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/mrs/trunk/src/mrs.cpp" >
-   <View0 Encoding="" line="0" Type="Source" />
+  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
+   <View0 Encoding="" line="75" Type="Source" />
   </Doc0>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
-    <breakpoint0 location="/home/markus/develop/mrs/mrs/trunk/src/sick.cpp:876" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+    <breakpoint0 location="/home/markus/develop/direcs/direcs/trunk/src/sick.cpp:876" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint0>
-    <breakpoint1 location="/home/markus/develop/mrs/mrs/trunk/src/circuit.cpp:43" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+    <breakpoint1 location="/home/markus/develop/direcs/direcs/trunk/src/circuit.cpp:43" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint1>
    </breakpointList>
@@ -24,7 +24,7 @@
   </kdevastyle>
   <kdevbookmarks>
    <bookmarks>
-    <bookmark url="/home/markus/develop/mrs/mrs/trunk/src/sick.cpp" >
+    <bookmark url="/home/markus/develop/direcs/direcs/trunk/src/sick.cpp" >
      <mark line="710" />
     </bookmark>
    </bookmarks>
