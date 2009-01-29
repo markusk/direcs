@@ -1847,7 +1847,7 @@ void Gui::createLaserScannerObjects()
 	// set scene to the GUI
 	ui.graphicsViewLaser->setScene(scene);
 
-	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
+	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet by the hardware))
 	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 
 	//=======================================================

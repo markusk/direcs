@@ -8,13 +8,13 @@
  *   under the terms of the GNU General Public License as published      *
  *   by the Free Software Foundation, version 3 of the License.          *
  *                                                                       *
- *   direcs is distributed in the hope that it will be useful,              *
+ *   direcs is distributed in the hope that it will be useful,           *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
  *   GNU General Public License for more details.                        *
  *                                                                       *
  *   You should have received a copy of the GNU General Public License   *
- *   along with direcs. If not, see <http://www.gnu.org/licenses/>.         *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
  *                                                                       *
  *************************************************************************/
 
@@ -23,6 +23,7 @@
 
 //-------------------------------------------------------------------
 #ifdef _ARM_ // only include on ARM environments!
+	//#include <QObject> // for 'connect' in main()
 	#include "gui_arm.h"
 #else
 	#include "gui.h"
@@ -53,10 +54,20 @@
 //-------------------------------------------------------------------
 #include <QtDebug>
 #include <QMutex>
+
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	#include <QtGui>
 	#include <QSplashScreen>
 #endif
+
+/*
+//#ifdef _ARM_ // only include on ARM environments!
+	#include <QSocketNotifier>
+	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <sys/un.h>
+//#endif
+*/
 //-------------------------------------------------------------------
 
 
@@ -99,10 +110,15 @@ class Direcs : public QObject
 		*/
 		bool exitDialog;
 
-/*
+		/*
+		// Unix signal handlers.
+		static void hupSignalHandler(int unused);
+		static void termSignalHandler(int unused);
+		*/
+	/*
 	protected:	
 		bool event(QEvent *event);
-*/
+	*/
 
 	public slots:
 		/**
@@ -200,6 +216,10 @@ class Direcs : public QObject
 		The method for the test button in the GUI.
 		 */
 		void test();
+		/*
+		void handleSigHup();
+		void handleSigTerm();
+		*/
 
 
 	signals:
@@ -236,7 +256,13 @@ class Direcs : public QObject
 		Reads all settings for the robot from an ini-file.
 		*/
 		void readSettings();
-		
+		/*
+		static int sighupFd[2];
+		static int sigtermFd[2];
+
+		QSocketNotifier *snHup;
+		QSocketNotifier *snTerm;
+		*/
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		Gui *gui;

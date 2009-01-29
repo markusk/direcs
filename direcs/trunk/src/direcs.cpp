@@ -52,6 +52,8 @@ int main(int argc, char *argv[])
 	// create Direcs class object
 	Direcs d;
 	
+	// shutdown, when the program quits (e.g. Ctrl+C was pressed)
+	//connect(app, SIGNAL( aboutToQuit() ), d, SLOT( shutdown() ));
 #endif
 	
 	// init direcs
@@ -114,6 +116,24 @@ Direcs::Direcs()
 #endif
 	joystick = new Joystick();
 	head = new Head(servos);
+
+	/*
+	#ifdef _ARM_ // only include on ARM environments!
+	//--------------------------------------------------------------------------------
+	// Convert the Unix signal to the QSocketNotifier::activated() signal effectively.
+	//--------------------------------------------------------------------------------
+	if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sighupFd))
+		qFatal("Couldn't create HUP socketpair");
+
+	if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sigtermFd))
+		qFatal("Couldn't create TERM socketpair");
+	
+	snHup = new QSocketNotifier(sighupFd[1], QSocketNotifier::Read, this);
+	connect(snHup, SIGNAL(activated(int)), this, SLOT(handleSigHup()));
+	snTerm = new QSocketNotifier(sigtermFd[1], QSocketNotifier::Read, this);
+	connect(snTerm, SIGNAL(activated(int)), this, SLOT(handleSigTerm()));
+	#endif
+	*/
 }
 
 
@@ -149,8 +169,7 @@ void Direcs::init()
 	//------------------------------------------------------------------
 	QLocale::setDefault(QLocale::German);
 	commaSeparator = ",";
-
-
+	
 	//--------------------------------------------------------------------------
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
@@ -249,6 +268,31 @@ void Direcs::init()
 	//connect(gui, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
 	connect(gui, SIGNAL( speak(QString) ), this, SLOT( speak(QString) ));
 
+	/*
+	//----------------------------------------------------------------------------
+	//
+	//----------------------------------------------------------------------------
+	#ifdef _ARM_ // only include on ARM environments!
+	struct sigaction hup, term;
+
+	hup.sa_handler = MyDaemon::hupSignalHandler;
+	sigemptyset(&hup.sa_mask);
+	hup.sa_flags = 0;
+	hup.sa_flags |= SA_RESTART;
+
+	if (sigaction(SIGHUP, &hup, 0) > 0)
+		qDebug("ERROR: return 1");
+
+	term.sa_handler = MyDaemon::termSignalHandler;
+	sigemptyset(&term.sa_mask);
+	term.sa_flags |= SA_RESTART;
+
+	if (sigaction(SIGTERM, &term, 0) > 0)
+		qDebug("ERROR: return 2");
+	#endif
+	*/
+	
+	
 	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// Initialize the speech engine festival
@@ -744,23 +788,6 @@ void Direcs::init()
 	gui->initLaserView();
 	#endif
 }
-
-
-/*
-bool Direcs::event(QEvent *event)
-{
-	if (event->type() == QEvent::KeyPress)
-	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-		qDebug() << "Ate key press" << keyEvent->key();
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-*/
 
 
 void Direcs::shutdown()
@@ -3694,6 +3721,48 @@ void Direcs::speak(QString text)
 	festival_say_text(textForFestival);
 	#endif
 }
+
+
+/*
+void Direcs::hupSignalHandler(int)
+{
+	char a = 1;
+	::write(sighupFd[0], &a, sizeof(a));
+}
+
+
+void Direcs::termSignalHandler(int)
+{
+	char a = 1;
+	::write(sigtermFd[0], &a, sizeof(a));
+}
+
+
+void Direcs::handleSigTerm()
+{
+	snTerm->setEnabled(false);
+	char tmp;
+	::read(sigtermFd[1], &tmp, sizeof(tmp));
+
+	// do Qt stuff
+	qDebug("SigTerm recognized.");
+
+	snTerm->setEnabled(true);
+}
+
+
+void Direcs::handleSigHup()
+{
+	snHup->setEnabled(false);
+	char tmp;
+	::read(sighupFd[1], &tmp, sizeof(tmp));
+
+	// do Qt stuff
+	qDebug("SigHup recognized.");
+	
+	snHup->setEnabled(true);
+}
+*/
 
 
 void Direcs::test()
