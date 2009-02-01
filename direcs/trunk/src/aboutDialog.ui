@@ -248,10 +248,10 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle" >
-   <string>mrs - About</string>
+   <string>direcs - About</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../mrs.qrc" >
+   <iconset resource="../direcs.qrc" >
     <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
   </property>
   <property name="modal" >
@@ -273,7 +273,7 @@
     <string/>
    </property>
    <property name="pixmap" >
-    <pixmap resource="../mrs.qrc" >:/images/images/splash.png</pixmap>
+    <pixmap resource="../direcs.qrc" >:/images/images/splash.png</pixmap>
    </property>
    <property name="scaledContents" >
     <bool>true</bool>
@@ -455,7 +455,7 @@
     </rect>
    </property>
    <property name="text" >
-    <string>mrs's plot engine is based on &lt;b>Qwt&lt;/b></string>
+    <string>direcs plot engine is based on &lt;b>Qwt&lt;/b></string>
    </property>
    <property name="textFormat" >
     <enum>Qt::RichText</enum>
@@ -503,7 +503,7 @@
     </rect>
    </property>
    <property name="text" >
-    <string>mrs's laser scanner engine is based on &lt;b>Carmen&lt;/b></string>
+    <string>direcs laser scanner engine is based on &lt;b>Carmen&lt;/b></string>
    </property>
    <property name="textFormat" >
     <enum>Qt::RichText</enum>
@@ -522,12 +522,12 @@
     <string/>
    </property>
    <property name="pixmap" >
-    <pixmap resource="../mrs.qrc" >:/images/images/kdevelopbanner-small.gif</pixmap>
+    <pixmap resource="../direcs.qrc" >:/images/images/kdevelopbanner-small.gif</pixmap>
    </property>
   </widget>
  </widget>
  <resources>
-  <include location="../mrs.qrc" />
+  <include location="../direcs.qrc" />
  </resources>
  <connections>
   <connection>
