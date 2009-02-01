@@ -27,6 +27,7 @@ NetworkThread::NetworkThread()
 	udpSocket = new QUdpSocket(this);
 	udpSocket->bind(PORT);
 
+	// do something with the network received data, when complete
 	connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 }
 
@@ -90,13 +91,9 @@ void NetworkThread::processPendingDatagrams()
 	}
 }
 
-/*
-void NetworkThread::sendNetworkCommand()
+
+void NetworkThread::sendNetworkCommand(QString text)
 {
-	QString command = "command";
-	emit dataReceived(tr("%1").arg(command));
-	
-	QByteArray datagram = command.toAscii();
-	udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, PORT);
+	QByteArray datagram = text.toAscii();
+	udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, PORT + 1);
 }
-*/

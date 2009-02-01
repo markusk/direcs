@@ -318,12 +318,12 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
 
-	#ifdef _ARM_ // only include on ARM environments!
+	//#ifdef _ARM_ // only include on ARM environments!
 	//-------------------------------------------------------
 	// start the network thread (waiting for commands)
 	//-------------------------------------------------------
 	enableRemoteControlListening(true);
-	#endif
+	//#endif
 
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
@@ -547,6 +547,12 @@ void Direcs::init()
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
 	connect(netThread, SIGNAL( dataReceived(QString) ), gui, SLOT( appendNetworkLog(QString) ));
+	//----------------------------------------------------------------------------
+	// connect sendNetworkString signal to netThreads slot "sendNetworkCommand"
+	// (Whenever the signal is emmited, send the given string over the net)
+	//----------------------------------------------------------------------------
+	connect(this, SIGNAL(sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ));
+
 
 	#ifndef _ARM_ // only include in _non_ ARM environments!
 	//----------------------------------------------------------------------------
@@ -3705,19 +3711,22 @@ void Direcs::test()
 	{
 		toggle = ON;
 		//head->look("LEFT");
+		emit sendNetworkString("ON");
 	}
 	else
 	{
 		toggle = OFF;
+		emit sendNetworkString("OFF");
 		//head->look("RIGHT");
 	}
 
-	motors->flashlight(toggle);
+	if (robotIsOn)
+		motors->flashlight(toggle);
 
 
 	#ifdef _TTY_POSIX_
 	// Say some text;
-	QDateTime now = QDateTime::currentDateTime();
+//	QDateTime now = QDateTime::currentDateTime();
 //	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 	#endif
 

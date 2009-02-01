@@ -229,6 +229,11 @@ class Direcs : public QObject
 		Initialize the robots basic circuit.
 		*/
 		void initCircuit();
+		
+		/**
+		Sends a string over the net.
+		*/
+		void sendNetworkString(QString text);
 
 
 	private:
