@@ -225,3 +225,9 @@ void Gui::on_btnTest_clicked()
 {
 	emit commandIssued("Hello world! :-)");
 }
+
+
+void Gui::showMotorCurrent(int motor, int value)
+{
+	ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
+}

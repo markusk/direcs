@@ -231,7 +231,7 @@ class Direcs : public QObject
 		void initCircuit();
 		
 		/**
-		Sends a string over the net.
+		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
 

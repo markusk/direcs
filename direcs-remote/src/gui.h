@@ -39,11 +39,17 @@ class Gui : public QMainWindow
 		void appendLog(QString text, bool sayIt=false);
 	
 	
+	public slots:
+		void showMotorCurrent(int motor, int value);
+	
+	
 	protected:
 		void closeEvent();
 	
+	
 	signals:
 		void commandIssued(QString command);
+	
 	
 	private slots:
 		void on_btnClear_clicked();

@@ -479,7 +479,8 @@ void Direcs::init()
 	// connect sensor signals to "show sensor data"
 	// (Whenever the sensor data are completely read, show the result in the GUI)
 	//----------------------------------------------------------------------------
-	connect(sensorThread, SIGNAL(sensorDataComplete()), this, SLOT(showSensorData()));
+	connect(sensorThread, SIGNAL( sensorDataComplete() ), this, SLOT( showSensorData() ) );
+	connect(sensorThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
 
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//----------------------------------------------------------------------------

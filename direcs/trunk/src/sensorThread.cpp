@@ -372,6 +372,8 @@ ultrasonic Sensors temporarily removed from robot!!
 			interface1->receiveInt(&value);
 			
 			//qDebug("Received value:%d", value);
+			// send value over the network
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
 			
 			// store measured values in the array
 			motorSensorValue[MOTORSENSOR1] = value;
