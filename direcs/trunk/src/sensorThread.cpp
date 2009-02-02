@@ -373,6 +373,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			
 			//qDebug("Received value:%d", value);
 			// send value over the network
+			// *0m42# means motorsensor1 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
 			
 			// store measured values in the array

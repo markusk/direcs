@@ -77,6 +77,35 @@ class Gui : public QMainWindow
 		bool robotDrives;
 		int speedMotor1;
 		int speedMotor2;
+		
+		// Give the infrared sensors some names
+		//
+		// DONT CHANGE THIS NUMBERS!
+		// THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!
+		//
+		static const short int SENSOR1 = 1;
+		static const short int SENSOR2 = 2;
+		static const short int SENSOR3 = 4;
+		static const short int SENSOR4 = 8;
+		static const short int SENSOR5 = 16;
+		static const short int SENSOR6 = 32;
+		static const short int SENSOR7 = 64;
+		static const short int SENSOR8 = 128;
+		
+		// ultrasonic sensor
+		static const short int SENSOR16 = 256;
+		
+		static const short int MOTORSENSOR1 = 0;
+		static const short int MOTORSENSOR2 = 1;
+		static const short int MOTORSENSOR3 = 2;
+		static const short int MOTORSENSOR4 = 3;
+		
+		/**
+		 Give the contacts for the pan tilt cam end positions some nice names
+		 */
+		static const unsigned char CONTACT1 = 0;
+		static const unsigned char CONTACT2 = 1;
+		static const unsigned char CONTACT3 = 2;
+		static const unsigned char CONTACT4 = 3;
 };
-
 #endif

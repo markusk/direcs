@@ -123,13 +123,19 @@ void DirecsRemote::sendNetworkCommand(QString command)
 
 void DirecsRemote::parseNetworkString(QString text)
 {
-	int value = 99;
+	int value = 0;
+	bool okay = false;
 	
 	if ( text.contains("m") )
 	{
-		QString text2 = text.mid( text.indexOf("m")+1, text.indexOf("#")-1 );
-		gui->appendLog( text2 );
+		int start = text.indexOf("m") + 1;
+		int count = text.indexOf("#") - start;
+		QString text2 = text.mid( start, count );
 		
+		// convert value to int
+		value = text2.toInt(&okay);
+		
+		// show value in the gui
 		emit ( showMotorCurrent(MOTORSENSOR1, value) );
 	}
 }
