@@ -35,9 +35,16 @@ Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	// When the address field was leaved or enter pressed, call the "go" button slot! :-)
 	connect(ui.lineEditWebAddress, SIGNAL( editingFinished() ), this, SLOT( on_btnGo_clicked() ) );
 	
+	
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
+	
+	// define some nice green and red colors
+	labelFillColorGreen = QColor(64, 255, 64);
+	labelFillColorRed   = QColor(255, 64, 64);
+	labelFillColorBlue  = QColor(64, 64, 255);
+	
 	initPlots();
 }
 

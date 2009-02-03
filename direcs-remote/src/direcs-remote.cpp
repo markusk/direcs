@@ -22,6 +22,7 @@ DirecsRemote::DirecsRemote()
 	//------------------------------------------------------------------
 	gui = new Gui(this);
 	udpSocket = new QUdpSocket(this);
+	plotThread = new PlotThread();
 	
 	udpSocketReceiver = new QUdpSocket(this);
 	udpSocketReceiver->bind( gui->getPort() + 1 );
@@ -29,13 +30,31 @@ DirecsRemote::DirecsRemote()
 	// do something with the network received data, when complete
 	connect(udpSocketReceiver, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 	
-	// show received
+	// show received motor current values in gui
 	connect(this, SIGNAL(showMotorCurrent(int, int)), gui, SLOT(showMotorCurrent(int, int)));
+	// emit motor current values to plot thread
+	connect(this, SIGNAL(plotValueReceived(int, int)), plotThread, SLOT(setPlotValue(int, int)));
+	
+	//----------------------------------------------------------------------------
+	// connect plotThread signal to "setPlotData"
+	// (Whenever the plot thread has new data, the data are show in the GUI)
+	//----------------------------------------------------------------------------
+	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
+	connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
+	
+	//----------------------------------------------------------------------------
+	// connect networkThread signal to "dataReceived"
+	// (Whenever data were received, the data are shown in the GUI)
+	//----------------------------------------------------------------------------
+	connect(gui, SIGNAL( commandIssued(QString) ), this, SLOT( sendNetworkCommand(QString) ));
 	
 	//------------------------------------------------------------------
 	// for getting the screen resolution
 	//------------------------------------------------------------------
 	QDesktopWidget *desktop = QApplication::desktop();
+
 
 	//------------------------------------------------------------------
 	// place gui window at a nice position on the screen
@@ -55,22 +74,57 @@ DirecsRemote::DirecsRemote()
 		gui->showMaximized();
 	}
 	
-	
-	//----------------------------------------------------------------------------
-	// connect networkThread signal to "dataReceived"
-	// (Whenever data were received, the data are shown in the GUI)
-	//----------------------------------------------------------------------------
-	connect(gui, SIGNAL( commandIssued(QString) ), this, SLOT( sendNetworkCommand(QString) ));
+	//-----------------------------------------------------------
+	// start the plot thread ("clock" for plotting the curves)
+	//-----------------------------------------------------------
+	if (plotThread->isRunning() == false)
+	{
+		//gui->appendLog("Starting plot thread...", false);
+		plotThread->start();
+		//gui->appendLog("Plot thread started.");
+	}
 }
 
 
 DirecsRemote::~DirecsRemote()
 {
-	//QMessageBox::information(0,"test","look");
+	//--------------------------------
+	// quit the plotThread
+	//--------------------------------
+	if (plotThread->isRunning() == true)
+	{
+		// my own stop routine :-)
+		plotThread->stop();
+
+		// slowing thread down
+		plotThread->setPriority(QThread::IdlePriority);
+		plotThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((plotThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (plotThread->isFinished() == true)
+		{
+		}
+		else
+		{
+			qDebug("Terminating Plot thread because it doesn't answer...");
+			plotThread->terminate();
+			plotThread->wait(1000);
+			qDebug("Plot thread terminated.");
+		}
+	}
 
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
+	delete plotThread;
 	delete udpSocketReceiver;
 	delete udpSocket;
 	delete gui;
@@ -137,5 +191,6 @@ void DirecsRemote::parseNetworkString(QString text)
 		
 		// show value in the gui
 		emit ( showMotorCurrent(MOTORSENSOR1, value) );
+		emit ( plotValueReceived(MOTORSENSOR1, value) );
 	}
 }

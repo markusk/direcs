@@ -105,13 +105,13 @@
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
       <runarguments>
-        <direcs-remote/>
+        <direcs-remote></direcs-remote>
       </runarguments>
       <cwd>
         <direcs-remote>/home/markus/develop/direcs/direcs-remote/trunk</direcs-remote>
       </cwd>
       <debugarguments>
-        <direcs-remote/>
+        <direcs-remote></direcs-remote>
       </debugarguments>
     </run>
     <general>

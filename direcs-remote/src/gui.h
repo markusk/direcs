@@ -17,6 +17,14 @@
 #include "direcs-remote.h"
 #include <QtGui>
 #include <QWebView>
+//-------------------------------------------------------------------
+#include <qwt_plot_layout.h>
+#include <qwt_plot_curve.h>
+#include <qwt_scale_draw.h>
+#include <qwt_scale_widget.h>
+#include <qwt_legend.h>
+#include <qwt_legend_item.h>
+//-------------------------------------------------------------------
 /*
 #include <Phonon/Global>
 #include <Phonon/MediaObject>
@@ -119,6 +127,9 @@ class Gui : public QMainWindow
 		QwtPlotCurve curve2;
 		QwtPlotCurve curve3;
 		QwtPlotCurve curve4;
+		QColor labelFillColorRed;
+		QColor labelFillColorGreen;
+		QColor labelFillColorBlue;
 		
 		// Give the infrared sensors some names
 		//

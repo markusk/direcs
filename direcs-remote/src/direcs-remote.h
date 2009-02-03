@@ -24,7 +24,6 @@ class DirecsRemote : public QObject
 		~DirecsRemote();
 		void testPort(int function);
 	
-	
 	public slots:
 		void sendNetworkCommand(QString command);
 	
@@ -41,6 +40,11 @@ class DirecsRemote : public QObject
 		Emits values read from the network to show them in the gui
 		*/
 		void showMotorCurrent(int motor, int value);
+		
+		/**
+		Emits values read from the network to the plotThread (which emits them to the gui)
+		*/
+		void plotValueReceived(int motor, int value);
 
 
 	private:
@@ -50,6 +54,7 @@ class DirecsRemote : public QObject
 		void parseNetworkString(QString text);
 		
 		Gui *gui;
+		PlotThread *plotThread;
 		QUdpSocket *udpSocket;
 		QUdpSocket *udpSocketReceiver;
 

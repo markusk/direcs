@@ -1,19 +1,25 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="4" >
-  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/direcs-remote.h" >
-   <View0 Encoding="" line="83" Type="Source" />
+ <DocsAndViews NumberOfDocuments="6" >
+  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/gui.cpp" >
+   <View0 Encoding="" line="37" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/direcs-remote.cpp" >
-   <View0 Encoding="" line="135" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/gui.h" >
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/gui.cpp" >
-   <View0 Encoding="" line="247" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/plotThread.cpp" >
+   <View0 Encoding="" line="152" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/gui.h" >
-   <View0 Encoding="" line="111" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/plotThread.h" >
+   <View0 Encoding="" line="52" Type="Source" />
   </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/direcs-remote.h" >
+   <View0 Encoding="" line="46" Type="Source" />
+  </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/direcs-remote.cpp" >
+   <View0 Encoding="" line="51" Type="Source" />
+  </Doc5>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -46,6 +52,15 @@
     <bookmark url="/home/markus/develop/direcs/direcs-remote/trunk/src/camThread.cpp" >
      <mark line="361" />
     </bookmark>
+    <bookmark url="/home/markus/develop/direcs/direcs-remote/src/plotThread.cpp" >
+     <mark line="120" />
+     <mark line="140" />
+     <mark line="80" />
+     <mark line="100" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/sick.c" >
+     <mark line="44" />
+    </bookmark>
     <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/laser-new.cpp" >
      <mark line="614" />
      <mark line="463" />
@@ -53,9 +68,6 @@
      <mark line="605" />
      <mark line="623" />
      <mark line="539" />
-    </bookmark>
-    <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/sick.c" >
-     <mark line="44" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>

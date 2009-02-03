@@ -49,6 +49,10 @@ class PlotThread : public QThread
 		virtual void run();
 
 
+	public slots:
+		void setPlotValue(int motor, int value);
+
+
 	signals:
 		void plotDataComplete1(double *xval1, double *yval1, int size);
 		void plotDataComplete2(double *xval2, double *yval2, int size);

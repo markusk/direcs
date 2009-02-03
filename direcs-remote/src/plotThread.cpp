@@ -147,3 +147,23 @@ void PlotThread::run()
 	}
 	stopped = false;
 }
+
+
+void PlotThread::setPlotValue(int motor, int value)
+{
+	switch (motor)
+	{
+		case MOTORSENSOR1:
+			yval1[SIZE-1] = value;
+			break;
+		case MOTORSENSOR2:
+			yval2[SIZE-1] = value;
+			break;
+		case MOTORSENSOR3:
+			yval3[SIZE-1] = value;
+			break;
+		case MOTORSENSOR4:
+			yval4[SIZE-1] = value;
+			break;
+	}
+}
