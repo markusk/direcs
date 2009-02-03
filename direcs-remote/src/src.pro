@@ -5,9 +5,11 @@
 
 FORMS += gui.ui 
 HEADERS += gui.h \
-           direcs-remote.h
+           direcs-remote.h \
+ plotThread.h
 SOURCES += gui.cpp \
-           direcs-remote.cpp
+           direcs-remote.cpp \
+ plotThread.cpp
 TARGET = ../bin/direcs-remote
 CONFIG += debug \
 warn_on \
@@ -18,9 +20,15 @@ TEMPLATE = app
 QT += network \
       webkit
 
-INCLUDEPATH += /home/markus/develop/subversion/applications/direcs-remote/src \
-		/usr/include/KDE
 
-LIBS += -L/usr/local/lib
 
 RESOURCES += ../direcs-remote.qrc
+CONFIG -= release
+
+INCLUDEPATH += /usr/include/qwt-qt4/ \
+  /home/markus/develop/subversion/applications/direcs-remote/src \
+  /usr/include/KDE
+
+LIBS += -L/usr/local/lib \
+  -lqwt-qt4
+

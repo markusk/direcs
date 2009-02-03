@@ -41,6 +41,42 @@ class Gui : public QMainWindow
 	
 	public slots:
 		void showMotorCurrent(int motor, int value);
+
+		/**
+		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
+		void setPlotData1(double *xval, double *yval, int size);
+
+		/**
+		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
+		void setPlotData2(double *xval, double *yval, int size);
+
+		/**
+		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
+		void setPlotData3(double *xval, double *yval, int size);
+
+		/**
+		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
+		void setPlotData4(double *xval, double *yval, int size);
 	
 	
 	protected:
@@ -69,6 +105,8 @@ class Gui : public QMainWindow
 
 
 	private:
+		void initPlots();
+		
 		Ui::Gui ui;
 		DirecsRemote *direcsremote1;
 		QWebView *view;
@@ -77,6 +115,10 @@ class Gui : public QMainWindow
 		bool robotDrives;
 		int speedMotor1;
 		int speedMotor2;
+		QwtPlotCurve curve1;
+		QwtPlotCurve curve2;
+		QwtPlotCurve curve3;
+		QwtPlotCurve curve4;
 		
 		// Give the infrared sensors some names
 		//
@@ -107,5 +149,10 @@ class Gui : public QMainWindow
 		static const unsigned char CONTACT2 = 1;
 		static const unsigned char CONTACT3 = 2;
 		static const unsigned char CONTACT4 = 3;
+		
+		static const float AMPERESMAXPLOTCURVE1 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 1
+		static const float AMPERESMAXPLOTCURVE2 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 2
+		static const float AMPERESSTEPPLOTCURVE1 = 500.0; /// The step value for the y axis for plot curve number 1
+		static const float AMPERESSTEPPLOTCURVE2 = 500.0; /// The step value for the y axis for plot curve number 1
 };
 #endif

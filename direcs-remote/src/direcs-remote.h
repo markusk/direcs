@@ -3,6 +3,7 @@
 
 //-------------------------------------------------------------------
 #include "gui.h"
+#include "plotThread.h"
 
 #include <QtGui>
 #include <QtNetwork>
