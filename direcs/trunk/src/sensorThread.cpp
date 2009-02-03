@@ -371,7 +371,6 @@ ultrasonic Sensors temporarily removed from robot!!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 			
-			//qDebug("Received value:%d", value);
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
@@ -397,10 +396,16 @@ ultrasonic Sensors temporarily removed from robot!!
 			interface1->receiveInt(&value);
 			//qDebug("Received value motor1: %d", value);
 			
+			// send value over the network
+			// *0m42# means motorsensor1 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
+			
 			// store measured values in the array
 			motorSensorValue[MOTORSENSOR2] = value;
 			value = 0;
 			
+			
+			// TODO: add suport for motors 3 and 4 !  Also in AVR Atmel source code!
 			
 			//====================================================================
 			
