@@ -7,6 +7,7 @@
 
 #include <QtGui>
 #include <QtNetwork>
+#include <QDebug>
 //-------------------------------------------------------------------
 
 // forward declarations because of circular includes!

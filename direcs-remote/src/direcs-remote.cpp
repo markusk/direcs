@@ -180,17 +180,41 @@ void DirecsRemote::parseNetworkString(QString text)
 	int value = 0;
 	bool okay = false;
 	
+	// m = motor sensor value
+	// *0m42# means 'motorsensor1 with 42 mA'
 	if ( text.contains("m") )
 	{
 		int start = text.indexOf("m") + 1;
+		// string always end with a '#'
 		int count = text.indexOf("#") - start;
 		QString text2 = text.mid( start, count );
 		
 		// convert value to int
 		value = text2.toInt(&okay);
 		
-		// show value in the gui
-		emit ( showMotorCurrent(MOTORSENSOR1, value) );
-		emit ( plotValueReceived(MOTORSENSOR1, value) );
+		// check which motor sensor was in string ' *0m... '
+		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR1) ) )
+		{
+			emit ( showMotorCurrent(MOTORSENSOR1, value) );
+			emit ( plotValueReceived(MOTORSENSOR1, value) );
+		}
+			
+		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR2) ) )
+		{
+			emit ( showMotorCurrent(MOTORSENSOR2, value) );
+			emit ( plotValueReceived(MOTORSENSOR2, value) );
+		}
+			
+		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR3) ) )
+		{
+			emit ( showMotorCurrent(MOTORSENSOR3, value) );
+			emit ( plotValueReceived(MOTORSENSOR3, value) );
+		}
+			
+		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR4) ) )
+		{
+			emit ( showMotorCurrent(MOTORSENSOR4, value) );
+			emit ( plotValueReceived(MOTORSENSOR4, value) );
+		}
 	}
 }
