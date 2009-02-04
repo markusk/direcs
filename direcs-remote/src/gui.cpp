@@ -401,16 +401,16 @@ void Gui::showMotorCurrent(int motor, int value)
 	switch (motor)
 	{
 		case MOTORSENSOR1:
-			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
+// 			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
 			break;
 		case MOTORSENSOR2:
-			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
+// 			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
 			break;
 		case MOTORSENSOR3:
-			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
+// 			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
 			break;
 		case MOTORSENSOR4:
-			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
+// 			ui.lblMotor1mA->setText(QString("%1 mA").arg(value));
 			break;
 	}
 }
