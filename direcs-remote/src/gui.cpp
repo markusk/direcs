@@ -978,7 +978,6 @@ void Gui::createLaserScannerObjects()
 		laserLineListFront->append(line);
 
 		// add line to scene
-		line->setVisible(false);
 		scene->addItem(line);
 	}
 
@@ -1008,7 +1007,6 @@ void Gui::createLaserScannerObjects()
 		laserLineListRear->append(line);
 
 		// add line to scene
-		line->setVisible(false);
 		scene->addItem(line);
 	}
 
