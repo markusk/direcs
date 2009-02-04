@@ -697,11 +697,6 @@ void Direcs::init()
 	}
 	else
 	{
-		#ifndef _ARM_ // only include on _non_ ARM environments!
-		// turn off laser splash
-		gui->laserSplash(false, LASER1);
-		gui->laserSplash(false, LASER2);
-		#endif
 		gui->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
 

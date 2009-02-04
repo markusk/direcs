@@ -3,7 +3,7 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="8" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
-   <View0 Encoding="" line="22" Type="Source" />
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/networkThread.cpp" >
    <View0 Encoding="" Type="Source" />
@@ -12,7 +12,7 @@
    <View0 Encoding="" Type="Source" />
   </Doc2>
   <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.h" >
-   <View0 Encoding="" line="60" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.h" >
    <View0 Encoding="" Type="Source" />
@@ -21,10 +21,10 @@
    <View0 Encoding="" Type="Source" />
   </Doc5>
   <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="1899" Type="Source" />
   </Doc6>
   <Doc7 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.h" >
-   <View0 Encoding="" line="47" Type="Source" />
+   <View0 Encoding="" line="414" Type="Source" />
   </Doc7>
  </DocsAndViews>
  <pluginList>
@@ -36,7 +36,7 @@
     <breakpoint1 location="/home/markus/develop/direcs/direcs/trunk/src/circuit.cpp:43" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint1>
-    <breakpoint2 location="/home/markus/develop/direcs/direcs/trunk/src/direcs.cpp:2161" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+    <breakpoint2 location="/home/markus/develop/direcs/direcs/trunk/src/direcs.cpp:2156" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint2>
    </breakpointList>
