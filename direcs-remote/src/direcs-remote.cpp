@@ -6,6 +6,9 @@
 
 int main(int argc, char *argv[])
 {
+	// Initialize the resource file
+	//Q_INIT_RESOURCE(direcs-remote);
+	
 	QApplication app(argc, argv);
  
 	// create DirecsRemote class object
@@ -83,6 +86,16 @@ DirecsRemote::DirecsRemote()
 		plotThread->start();
 		//gui->appendLog("Plot thread started.");
 	}
+	
+	// TODO: nice exit point and error message
+	if (!QGLFormat::hasOpenGL())
+	{
+		qDebug("This system has no OpenGL support!");
+		// TODO: exit?!?
+	}
+	
+	// one time init for the laser view
+	gui->initLaserView();
 }
 
 

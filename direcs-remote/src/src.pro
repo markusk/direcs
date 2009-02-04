@@ -6,10 +6,12 @@
 FORMS += gui.ui 
 HEADERS += gui.h \
            direcs-remote.h \
- plotThread.h
+ plotThread.h \
+ laserScene.h
 SOURCES += gui.cpp \
            direcs-remote.cpp \
- plotThread.cpp
+ plotThread.cpp \
+ laserScene.cpp
 TARGET = ../bin/direcs-remote
 CONFIG += debug \
 warn_on \
@@ -18,7 +20,8 @@ DEFINES = warn_on \
 qt
 TEMPLATE = app
 QT += network \
-      webkit
+      webkit \
+ opengl
 
 
 

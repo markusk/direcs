@@ -1,9 +1,15 @@
 <RCC>
     <qresource prefix="/images">
         <file>images/back.png</file>
+        <file>images/bot_from_above.png</file>
+        <file>images/bot_from_above_TOP2.png</file>
         <file>images/down.png</file>
         <file>images/exit.png</file>
         <file>images/forward.png</file>
+        <file>images/left.png</file>
+        <file>images/right.png</file>
+        <file>images/sickfront.png</file>
+        <file>images/sickrear.png</file>
         <file>images/stop.png</file>
         <file>images/underFootOne.png</file>
         <file>images/up.png</file>
