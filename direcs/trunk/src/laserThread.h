@@ -92,6 +92,11 @@ class LaserThread : public QThread
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		*/
 		void message(QString text);
+		
+		/**
+		Sends a string over the network.
+		*/
+		void sendNetworkString(QString text);
 
 
 	private:

@@ -563,6 +563,12 @@ void Direcs::init()
 	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
 	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
 	#endif
+	
+	//------------------------------------------------------------------------------
+	// connect laserThread signal to networkThread
+	// (Whenever laserscanner data are read, send the data over the network thread)
+	//------------------------------------------------------------------------------
+	connect(laserThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
 
 	//----------------------------------------------------------------------------
 	// connect joystick signals to "show joystick data"

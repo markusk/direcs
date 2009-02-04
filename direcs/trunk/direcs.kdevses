@@ -1,12 +1,12 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="8" >
+ <DocsAndViews NumberOfDocuments="10" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
-   <View0 Encoding="" line="0" Type="Source" />
+   <View0 Encoding="" line="570" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/networkThread.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/networkThread.h" >
    <View0 Encoding="" Type="Source" />
@@ -15,17 +15,23 @@
    <View0 Encoding="" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.h" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="146" Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="376" Type="Source" />
   </Doc5>
   <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-   <View0 Encoding="" line="1899" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc6>
   <Doc7 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.h" >
    <View0 Encoding="" line="414" Type="Source" />
   </Doc7>
+  <Doc8 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/laserThread.cpp" >
+   <View0 Encoding="" line="223" Type="Source" />
+  </Doc8>
+  <Doc9 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/laserThread.h" >
+   <View0 Encoding="" line="98" Type="Source" />
+  </Doc9>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -36,7 +42,7 @@
     <breakpoint1 location="/home/markus/develop/direcs/direcs/trunk/src/circuit.cpp:43" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint1>
-    <breakpoint2 location="/home/markus/develop/direcs/direcs/trunk/src/direcs.cpp:2156" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+    <breakpoint2 location="/home/markus/develop/direcs/direcs/trunk/src/direcs.cpp:2162" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint2>
    </breakpointList>
