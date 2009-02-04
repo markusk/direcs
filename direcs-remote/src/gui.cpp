@@ -68,8 +68,6 @@ Gui::~Gui()
 	delete webView;
 	//delete media;
 	//delete vwidget;
-	delete scannerRearSplash;
-	delete scannerFrontSplash;
 	delete pixmapBot2;
 	delete pixmapBot1;
 
@@ -729,26 +727,6 @@ void Gui::initLaserView()
 
 void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
 {
-	/*
-	// FIXME: laser splash doesnt work!
-	static bool showLaserSplashFront = true;
-
-
-	if (showLaserSplashFront == true)
-	{
-		// first line is longer than 0 m ! (a values was measured)
-		if (laserLineListFront->at(0)->line().length() > 0)
-		{
-			// laser splash screen OFF
-			showLaserSplashFront = false;
-	*/
-//			laserSplash(false, LASER1);
-	/*
-		}
-	}
-	*/
-
-
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 
@@ -810,25 +788,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 
 void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags)
 {
-	/*
-	// FIXME: laser splash doesnt work!
-	static bool showLaserSplashRear = true;
-
-	if (showLaserSplashRear == true)
-	{
-		// first line is longer than 0 m ! (a values was measured)
-		if (laserLineListRear->at(0)->line().length() > 0)
-		{
-			// laser splash screen OFF
-			showLaserSplashRear = false;
-	*/
-//			laserSplash(false, LASER2);
-	/*
-		}
-	}
-	*/
-
-
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 
@@ -959,28 +918,6 @@ void Gui::createLaserScannerObjects()
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet from the hardware))
 	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 
-	//=======================================================
-	// add "searching laser scanner" pic "splash"
-	//=======================================================
-	// add items to the scene
-	scannerFrontSplash = new QGraphicsPixmapItem(QPixmap(":/images/images/sickfront.png"));
-	// add the pixmap
-	scene->addItem(scannerFrontSplash);
-	// center it in the down 1/3
-	scannerFrontSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height()*0.66) - 74));
-	// FIXME:  see refreshLaserView (both). Turning off lasersplash doesn't work
-	scannerFrontSplash->setVisible(false);
-
-	// add items to the scene
-	scannerRearSplash = new QGraphicsPixmapItem(QPixmap(":/images/images/sickrear.png"));
-	// add the pixmap
-	scene->addItem(scannerRearSplash);
-	// center it in the upper 1/3
-	scannerRearSplash->setPos(((ui.graphicsViewLaser->width() / 2) - 74), ((ui.graphicsViewLaser->height()*0.33) - 74));
-	// FIXME:  see refreshLaserView (both). Turning off lasersplash doesn't work
-	scannerRearSplash->setVisible(false);
-
-
 
 	//=======================================================
 	// add robot picture1
@@ -1002,8 +939,7 @@ void Gui::createLaserScannerObjects()
 	// horizontal center
 	pixmapBot1->setPos(laserXPos, laserYPos);
 
-	// add the pixmap (invisible)
-	pixmapBot1->setVisible(false);
+	// add the pixmap
 	scene->addItem(pixmapBot1);
 
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
@@ -1089,8 +1025,7 @@ void Gui::createLaserScannerObjects()
 	// horizontal center
 	pixmapBot2->setPos(laserXPos, laserYPos);
 
-	// add the pixmap (invisible)
-	pixmapBot2->setVisible(false);
+	// add the pixmap
 	scene->addItem(pixmapBot2);
 
 	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.

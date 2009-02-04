@@ -59,7 +59,7 @@ class Gui : public QMainWindow
 
 		/**
 		Initialise the laser view (find the middle of the now fresh shown control etc.)
-		HAS to be called AFTER showing the gui the first time!
+		This method HAS to be called AFTER showing the gui the first time to show the objects correctly!
 		*/
 		void initLaserView();
 	
@@ -210,8 +210,6 @@ class Gui : public QMainWindow
 		QList <QGraphicsSimpleTextItem*> *laserDistanceTextRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
-		QGraphicsPixmapItem *scannerFrontSplash;
-		QGraphicsPixmapItem *scannerRearSplash;
 		QPixmap pixmap; // for IplImageToQImage()
 		
 		// Give the infrared sensors some names
