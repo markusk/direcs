@@ -3,10 +3,10 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="10" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
-   <View0 Encoding="" line="570" Type="Source" />
+   <View0 Encoding="" line="560" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/networkThread.cpp" >
-   <View0 Encoding="" line="0" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/networkThread.h" >
    <View0 Encoding="" Type="Source" />
@@ -15,22 +15,22 @@
    <View0 Encoding="" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.h" >
-   <View0 Encoding="" line="146" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.cpp" >
-   <View0 Encoding="" line="376" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc5>
   <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
    <View0 Encoding="" Type="Source" />
   </Doc6>
   <Doc7 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.h" >
-   <View0 Encoding="" line="414" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc7>
   <Doc8 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/laserThread.cpp" >
-   <View0 Encoding="" line="223" Type="Source" />
+   <View0 Encoding="" line="101" Type="Source" />
   </Doc8>
   <Doc9 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/laserThread.h" >
-   <View0 Encoding="" line="98" Type="Source" />
+   <View0 Encoding="" line="148" Type="Source" />
   </Doc9>
  </DocsAndViews>
  <pluginList>
