@@ -50,6 +50,9 @@ class PlotThread : public QThread
 
 
 	public slots:
+		/**
+		Takes values from the network and stores them local in this class
+		*/
 		void setPlotValue(int motor, int value);
 
 

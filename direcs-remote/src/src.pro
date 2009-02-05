@@ -7,11 +7,13 @@ FORMS += gui.ui
 HEADERS += gui.h \
            direcs-remote.h \
  plotThread.h \
- laserScene.h
+ laserScene.h \
+ laserThread.h
 SOURCES += gui.cpp \
            direcs-remote.cpp \
  plotThread.cpp \
- laserScene.cpp
+ laserScene.cpp \
+ laserThread.cpp
 TARGET = ../bin/direcs-remote
 CONFIG += debug \
 warn_on \

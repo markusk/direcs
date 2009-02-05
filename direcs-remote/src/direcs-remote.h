@@ -4,6 +4,7 @@
 //-------------------------------------------------------------------
 #include "gui.h"
 #include "plotThread.h"
+#include "laserThread.h"
 
 #include <QtGui>
 #include <QtNetwork>
@@ -43,9 +44,14 @@ class DirecsRemote : public QObject
 		void showMotorCurrent(int motor, int value);
 		
 		/**
-		Emits values read from the network to the plotThread (which emits them to the gui)
+		Emits motor current values, read from the network, to the plotThread (which emits them to the gui)
 		*/
 		void plotValueReceived(int motor, int value);
+		
+		/**
+		Emits laser scanner current values, read from the network, to the laserThread (which emits them to the gui)
+		*/
+		void laserValueReceived(int laserScanner, int angle, float value);
 
 
 	private:
@@ -56,6 +62,7 @@ class DirecsRemote : public QObject
 		
 		Gui *gui;
 		PlotThread *plotThread;
+		LaserThread *laserThread;
 		QUdpSocket *udpSocket;
 		QUdpSocket *udpSocketReceiver;
 
@@ -88,5 +95,13 @@ class DirecsRemote : public QObject
 		static const unsigned char CONTACT2 = 1;
 		static const unsigned char CONTACT3 = 2;
 		static const unsigned char CONTACT4 = 3;
+		
+		/**
+		*/
+		static const short int LASER1 = 1;
+		static const short int LASER2 = 2;
+		static const short int LASER3 = 4;
+		static const short int LASER4 = 8;
+		static const short int LASER5 = 16;
 };
 #endif

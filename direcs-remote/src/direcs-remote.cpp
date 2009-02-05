@@ -20,12 +20,15 @@ int main(int argc, char *argv[])
 
 DirecsRemote::DirecsRemote()
 {
+	QLocale::setDefault(QLocale::German);
+	
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
 	gui = new Gui(this);
 	udpSocket = new QUdpSocket(this);
 	plotThread = new PlotThread();
+	laserThread = new LaserThread();
 	
 	udpSocketReceiver = new QUdpSocket(this);
 	udpSocketReceiver->bind( gui->getPort() + 1 );
@@ -37,6 +40,15 @@ DirecsRemote::DirecsRemote()
 	connect(this, SIGNAL(showMotorCurrent(int, int)), gui, SLOT(showMotorCurrent(int, int)));
 	// emit motor current values to plot thread
 	connect(this, SIGNAL(plotValueReceived(int, int)), plotThread, SLOT(setPlotValue(int, int)));
+	// emit laser scanner values to laser thread
+	connect(this, SIGNAL(laserValueReceived(int, int, float)), laserThread, SLOT(setLaserValue(int, int, float)));
+	
+	//----------------------------------------------------------------------------
+	// connect laserThread signal to "dataReceived"
+	// (Whenever data were received, the data are shown in the GUI)
+	//----------------------------------------------------------------------------
+	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
+	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
 	
 	//----------------------------------------------------------------------------
 	// connect plotThread signal to "setPlotData"
@@ -94,13 +106,58 @@ DirecsRemote::DirecsRemote()
 		// TODO: exit?!?
 	}
 	
+	//-----------------------------------------------------------
 	// one time init for the laser view
+	//-----------------------------------------------------------
 	gui->initLaserView();
+	
+	//--------------------------------------------------------------
+	// start the laser thread ("clock" for taking the laser values
+	//--------------------------------------------------------------
+	if (laserThread->isRunning() == false)
+	{
+		//gui->appendLog("Starting laser thread...", false);
+		laserThread->start();
+		//gui->appendLog("Laser thread started.");
+	}
 }
 
 
 DirecsRemote::~DirecsRemote()
 {
+	//--------------------------------
+	// quit the laserThread
+	//--------------------------------
+	if (laserThread->isRunning() == true)
+	{
+		// my own stop routine :-)
+		laserThread->stop();
+
+		// slowing thread down
+		laserThread->setPriority(QThread::IdlePriority);
+		laserThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((laserThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (laserThread->isFinished() == true)
+		{
+		}
+		else
+		{
+			qDebug("Terminating laser thread because it doesn't answer...");
+			laserThread->terminate();
+			laserThread->wait(1000);
+			qDebug("Laser thread terminated.");
+		}
+	}
+	
 	//--------------------------------
 	// quit the plotThread
 	//--------------------------------
@@ -137,6 +194,7 @@ DirecsRemote::~DirecsRemote()
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
+	delete laserThread;
 	delete plotThread;
 	delete udpSocketReceiver;
 	delete udpSocket;
@@ -190,44 +248,102 @@ void DirecsRemote::sendNetworkCommand(QString command)
 
 void DirecsRemote::parseNetworkString(QString text)
 {
-	int value = 0;
+	int iValue = 0;
+	float fValue = 0.0;
+	int start = 0;
+	int count = 0;
 	bool okay = false;
+	QString text2;
+	/*
+	// show the first 10 network strings (DEBUG)
+	static int n = 0;
+	
+	if (n<10)
+	{
+		n++;
+		qDebug() << "string=" << text;
+	}
+	*/
+	
 	
 	// m = motor sensor value
 	// *0m42# means 'motorsensor1 with 42 mA'
 	if ( text.contains("m") )
 	{
-		int start = text.indexOf("m") + 1;
+		start = text.indexOf("m") + 1;
 		// string always end with a '#'
-		int count = text.indexOf("#") - start;
-		QString text2 = text.mid( start, count );
+		count = text.indexOf("#") - start;
+		text2 = text.mid( start, count );
 		
 		// convert value to int
-		value = text2.toInt(&okay);
+		iValue = text2.toInt(&okay);
 		
 		// check which motor sensor was in string ' *0m... '
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR1) ) )
 		{
 // 			emit ( showMotorCurrent(MOTORSENSOR1, value) );
-			emit ( plotValueReceived(MOTORSENSOR1, value) );
+			emit ( plotValueReceived(MOTORSENSOR1, iValue) );
+			return;
 		}
 			
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR2) ) )
 		{
 // 			emit ( showMotorCurrent(MOTORSENSOR2, value) );
-			emit ( plotValueReceived(MOTORSENSOR2, value) );
+			emit ( plotValueReceived(MOTORSENSOR2, iValue) );
+			return;
 		}
 			
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR3) ) )
 		{
 // 			emit ( showMotorCurrent(MOTORSENSOR3, value) );
-			emit ( plotValueReceived(MOTORSENSOR3, value) );
+			emit ( plotValueReceived(MOTORSENSOR3, iValue) );
+			return;
 		}
 			
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR4) ) )
 		{
 // 			emit ( showMotorCurrent(MOTORSENSOR4, value) );
-			emit ( plotValueReceived(MOTORSENSOR4, value) );
+			emit ( plotValueReceived(MOTORSENSOR4, iValue) );
+			return;
 		}
+		
+		return;
+	}
+	
+	
+	// l = laser scanner value
+	// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
+	if ( text.contains("l") )
+	{
+		// get the ANGLE
+		start = text.indexOf("l") + 1;
+		// angle value always end with a 'a'
+		count = text.indexOf("a") - start;
+		text2 = text.mid( start, count );
+		// convert value to int
+		iValue = text2.toInt(&okay);
+		
+		// get the CENTIMETERS
+		start = text.indexOf("a") + 1;
+		// angle value always end with a 'a'
+		count = text.indexOf("#") - start;
+		text2 = text.mid( start, count );
+		// convert value to ***float**
+		fValue = text2.toFloat(&okay);
+		
+		// check which laser scanner was in string ' *0l... '
+		if ( text.startsWith( QString("*%1").arg(LASER1) ) )
+		{
+			emit ( laserValueReceived(LASER1, iValue, fValue) );
+			return;
+		}
+		
+		if ( text.startsWith( QString("*%1").arg(LASER2) ) )
+		{
+			emit ( laserValueReceived(LASER2, iValue, fValue) );
+			return;
+		}
+		
+		return;
 	}
 }
