@@ -13,9 +13,6 @@
 //-------------------------------------------------------------------
 
 //-------------------------------------------------------------------
-#include "ui_gui.h"
-#include "direcs-remote.h"
-#include "laserScene.h"
 #include <QtGui>
 #include <QWebView>
 #include <QtOpenGL>
@@ -27,6 +24,10 @@
 #include <qwt_scale_widget.h>
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
+//-------------------------------------------------------------------
+#include "ui_mainWindow.h"
+#include "direcs-remote.h"
+#include "laserScene.h"
 //-------------------------------------------------------------------
 /*
 #include <Phonon/Global>
@@ -173,7 +174,7 @@ class Gui : public QMainWindow
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
 		
-		Ui::Gui ui;
+		Ui::mainWindow ui;
 		DirecsRemote *direcsremote1;
 		QWebView *webView;
 		//MediaObject *media;

@@ -6,6 +6,9 @@
 
 int main(int argc, char *argv[])
 {
+	Q_UNUSED(argc);
+	Q_UNUSED(argv);
+	
 	// Initialize the resource file
 	//Q_INIT_RESOURCE(direcs-remote);
 	
@@ -65,30 +68,6 @@ DirecsRemote::DirecsRemote()
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( commandIssued(QString) ), this, SLOT( sendNetworkCommand(QString) ));
 	
-	//------------------------------------------------------------------
-	// for getting the screen resolution
-	//------------------------------------------------------------------
-	QDesktopWidget *desktop = QApplication::desktop();
-
-
-	//------------------------------------------------------------------
-	// place gui window at a nice position on the screen
-	//------------------------------------------------------------------
-	if (desktop->width() > 1024)
-	{
-		// move mainWindow to the center of the screen
-		gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
-
-		// show the main window
-		gui->show();
-	}
-	else
-	{
-		// resolution too smal for this window. Maximizing...
-		// show the main window
-		gui->showMaximized();
-	}
-	
 	//-----------------------------------------------------------
 	// start the plot thread ("clock" for plotting the curves)
 	//-----------------------------------------------------------
@@ -120,6 +99,34 @@ DirecsRemote::DirecsRemote()
 		laserThread->start();
 		//gui->appendLog("Laser thread started.");
 	}
+	
+	/*
+	//------------------------------------------------------------------
+	// for getting the screen resolution
+	//------------------------------------------------------------------
+	QDesktopWidget *desktop = QApplication::desktop();
+
+
+	//------------------------------------------------------------------
+	// place gui window at a nice position on the screen
+	//------------------------------------------------------------------
+	if (desktop->width() > 1024)
+	{
+		// move mainWindow to the center of the screen
+		gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
+
+		// show the main window
+		gui->show();
+	}
+	else
+	{
+		// resolution too smal for this window. Maximizing...
+	*/
+		// show the main window
+		gui->showMaximized();
+	/*
+	}
+	*/
 }
 
 
