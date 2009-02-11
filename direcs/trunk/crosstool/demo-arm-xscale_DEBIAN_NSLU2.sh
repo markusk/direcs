@@ -50,7 +50,7 @@ eval `cat arm-xscale.dat gcc-4.1.0-glibc-2.3.2.dat` sh all.sh --notest
 
 # ERROR RUNNING MRS:
 # 28.12.2008
-# ./mrs: relocation error: ./mrs: symbol __subdf3, version GCC_3.0 not defined in file libgcc_s.so.1 with link time reference
+# ./direcs: relocation error: ./direcs: symbol __subdf3, version GCC_3.0 not defined in file libgcc_s.so.1 with link time reference
 # eval `cat arm-xscale.dat gcc-3.4.5-glibc-2.3.6.dat` sh all.sh --notest
 
 echo Done.

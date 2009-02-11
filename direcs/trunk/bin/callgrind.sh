@@ -1,3 +1,3 @@
 #!/bin/sh
 
-valgrind --tool=callgrind --track-fds=yes --time-stamp=yes ./mrs
+valgrind --tool=callgrind --track-fds=yes --time-stamp=yes ./direcs

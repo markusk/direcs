@@ -18,65 +18,78 @@
  *                                                                       *
  *************************************************************************/
 
-#ifndef HEARTBEAT_H
-#define HEARTBEAT_H
+#ifndef PLOTTHREAD_H
+#define PLOTTHREAD_H
 
 //-------------------------------------------------------------------
-#include "interfaceAvr.h"
+#include <qwt_plot.h>
+#include <qwt_plot_marker.h>
+#include <qwt_plot_curve.h>
+#include <qwt_plot_layout.h>
+#include <qwt_legend.h>
+#include <qwt_data.h>
+#include <qwt_text.h>
+//-------------------------------------------------------------------
 #include <QThread>
-#include <QMutex>
 //-------------------------------------------------------------------
 
-/*!
-\brief This thread sends a heartbeat to the microcontroller.
-The microccontroller waits for this heartsbeats. It stops/resets the robot, if no heartbeats are received.
+/**
+\brief Gets values via network and plots them in (emits them to) the GUI.
+TODO: new description!
+This class gets current values from ... and emits them to the GUI, which plots them using qwtplot.
 */
-class Heartbeat : public QThread
+class PlotThread : public QThread
 {
     Q_OBJECT
 
 	public:
-		Heartbeat(InterfaceAvr *i, QMutex *m);
-		~Heartbeat();
-		
-		/**
-		*/
-		void init();
-
-		/**
-		*/
-		bool isConnected(void);
-		
+		PlotThread();
+		~PlotThread();
 		void stop();
 		virtual void run();
 
-		
+
 	public slots:
 		/**
-		This slot sets (stores) the robots (circuits) state within this class.
-		@param state can be ON or OFF
-		 */
-		void setRobotState(bool state);
+		Takes values from the network and stores them local in this class
+		*/
+		void setPlotValue(int motor, int value);
 
 
 	signals:
-		/**
-		TODO: text text text
-		alarm
-		 */
-		void alarm();
+		void plotDataComplete1(double *xval1, double *yval1, int size);
+		void plotDataComplete2(double *xval2, double *yval2, int size);
+		void plotDataComplete3(double *xval3, double *yval3, int size);
+		void plotDataComplete4(double *xval4, double *yval4, int size);
 
 
 	private:
-		bool initDone;
 		volatile bool stopped;
-		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
-		mutable QMutex *mutex; // make this class thread-safe
-		InterfaceAvr *interface1;
 		
-		// Every thread sleeps some time, for having a bit more time for the other threads!
+		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 500; // Default: 500 ms
+		static const unsigned long THREADSLEEPTIME = 1000; // Default: 1000 ms
+		
+		//====================================
+		// array holding the plot values
+		static const int SIZE = 60;
+		double xval1[SIZE];
+		double yval1[SIZE];
+		//====================================
+		double xval2[SIZE];
+		double yval2[SIZE];
+		//====================================
+		double xval3[SIZE];
+		double yval3[SIZE];
+		//====================================
+		double xval4[SIZE];
+		double yval4[SIZE];
+		//====================================
+		
+		static const short int MOTORSENSOR1 = 0;
+		static const short int MOTORSENSOR2 = 1;
+		static const short int MOTORSENSOR3 = 2;
+		static const short int MOTORSENSOR4 = 3;
 };
 
 #endif

@@ -24,11 +24,11 @@
 LaserThread::LaserThread()
 {
 	stopped = false;
-	laserScannerFrontIsConnected = false;
-	laserScannerRearIsConnected = false;
+	laserScannerFrontIsConnected = true; // TODO: get this value via network?
+	laserScannerRearIsConnected = true; // TODO: get this value via network?
 	simulationMode = false;
-	numReadingsFront = 0;
-	numReadingsRear = 0;
+	numReadingsFront = 180;
+	numReadingsRear = 180;
 
 
 	// initialisation
@@ -42,30 +42,11 @@ LaserThread::LaserThread()
 		laserScannerFlagsFront.append(0);
 		laserScannerFlagsRear.append(0);
 	}
-	
-	
-	laser = new Laser();
-	
-	//--------------------------------------------------------------------------
-	// let the splash screen from the direcs class show laser init messages
-	// (connect the signal from the laser class to the signal from this class)
-	//--------------------------------------------------------------------------
-	connect(laser, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
 LaserThread::~LaserThread()
 {
-	// laserScannerFrontIsConnected is set in the isConnected method!
-	if (laserScannerFrontIsConnected || laserScannerRearIsConnected)
-	{
-		// shutdown laser (parameter '0' is not in use)
-		// shuts down ALL lasers (managed internaly in laser.cpp)!
-		laser->carmen_laser_shutdown(0);
-	}
-	
-	
-	delete laser;
 }
 
 
@@ -79,12 +60,12 @@ void LaserThread::stop()
 
 void LaserThread::run()
 {
-	int laserValue = 0;
+// 	int laserValue = 0;
 
 	
 	// check if all 180 beams were read
-	numReadingsFront = 0;
-	numReadingsRear = 0;
+// 	numReadingsFront = 0;
+// 	numReadingsRear = 0;
 	
 	//
 	//  start "threading"...
@@ -100,27 +81,20 @@ void LaserThread::run()
 			((simulationMode==false) && (laserScannerRearIsConnected == true))
 		   )
 		{
-			// CARMEN laser module
-			// asks ALL lasers (managed internaly in laser_main.cpp)!
-			laserValue = laser->carmen_laser_run();
 			
-			switch (laserValue)
-			{
-				case LASER1:
-					getAndStoreLaserValuesFront();
+// 			switch (laserValue)
+// 			{
+// 				case LASER1:
 					emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
-					break;
-				case LASER2:
-					getAndStoreLaserValuesRear();
+// 					break;
+// 				case LASER2:
 					emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
-					break;
-				case (LASER1+LASER2):
-					getAndStoreLaserValuesFront();
-					emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
-					getAndStoreLaserValuesRear();
-					emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
-					break;
-			}
+// 					break;
+// 				case (LASER1+LASER2):
+// 					emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
+// 					emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
+// 					break;
+// 			}
 		}
 		else
 		{
@@ -142,95 +116,11 @@ void LaserThread::run()
 
 void LaserThread::getAndStoreLaserValuesFront()
 {
-	// check if all 180 beams were read (in the laser module)
-	numReadingsFront = laser->getLaserNumReadings(LASER1);
-	
-	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
-	if (numReadingsFront > LASERSCANNERARRAYSIZE)
-		numReadingsFront = LASERSCANNERARRAYSIZE;
-	
-	// if YES
-	if (numReadingsFront > 0)
-	{
-		if (mountingLaserscannerFront == "normal")
-		{
-			// /get the data from 0° to 180° (left to right)
-			for (int angle=0; angle<numReadingsFront; angle++)
-			{
-				// get value from laser
-				// store the value in an array in this thread
-				laserScannerValuesFront[angle] = laser->getLaserDistance(LASER1, angle);
-		
-				// send value over the network
-				// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( laserScannerValuesFront[angle] ) );
-			}
-		}
-		else
-		{
-			// flip the data, due to a flipped mounting of the hardware!
-			//
-			// get the data from 0° to 180° (left to right)
-			// 'flip' will be increased every step - 1, so the data are stored from 180° to 0°
-			for (int angle=0, flip=numReadingsFront-1; angle<numReadingsFront; angle++, flip--)
-			{
-				// get value from laser
-				// store the value in an array in this thread
-				laserScannerValuesFront[flip] = laser->getLaserDistance(LASER1, angle);
-		
-				// send value over the network
-				// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( laserScannerValuesFront[angle] ) );
-			}
-		}
-	}
 }
 
 
 void LaserThread::getAndStoreLaserValuesRear()
 {
-	// check if all 180 beams were read (in the laser module)
-	numReadingsRear = laser->getLaserNumReadings(LASER2);
-	
-	// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
-	if (numReadingsRear > LASERSCANNERARRAYSIZE)
-		numReadingsRear = LASERSCANNERARRAYSIZE;
-	
-	// if YES
-	if (numReadingsRear > 0)
-	{
-		if (mountingLaserscannerFront == "normal")
-		{
-			// /get the data from 0° to 180° (left to right)
-			for (int angle=0; angle<numReadingsRear; angle++)
-			{
-				// get value from laser
-				// store the value in an array in this thread
-				laserScannerValuesRear[angle] = laser->getLaserDistance(LASER2, angle);
-				
-				// send value over the network
-				// *1l23a42# means LASER2 has at angle 23 a length of 42 cm
-				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( laserScannerValuesRear[angle] ) );
-			}
-		}
-		else
-		{
-			// flip the data, due to a flipped mounting of the hardware!
-			//
-			// get the data from 0° to 180° (left to right)
-			// 'flip' will be increased every step - 1, so the data are stored from 180° to 0°
-			for (int angle=0, flip=numReadingsRear-1; angle<numReadingsRear; angle++, flip--)
-			{
-				// get value from laser
-				// store the value in an array in this thread
-				laserScannerValuesRear[flip] = laser->getLaserDistance(LASER2, angle);
-				
-				// send value over the network
-				// *1l23a42# means LASER2 has at angle 23 a length of 42 cm
-				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( laserScannerValuesRear[angle] ) );
-			}
-		}
-	}
 }
 
 
@@ -529,48 +419,11 @@ void LaserThread::setSimulationMode(bool status)
 
 bool LaserThread::isConnected(short int laserScanner)
 {
-	//-----------------------------------------------
-	// try to start the (former CARMEN) laser module
-	//-----------------------------------------------
-	if (laser->carmen_laser_start(laserScanner) == 0)
-	{
-		switch (laserScanner)
-		{
-			case LASER2:
-				laserScannerRearIsConnected = true;
-				return true;
-				break;
-			case LASER1:
-				laserScannerFrontIsConnected = true;
-				return true;
-				break;
-		}
-	}
-	else
-	{
-		switch (laserScanner)
-		{
-			case LASER2:
-				laserScannerRearIsConnected = false;
-				return false;
-				break;
-			case LASER1:
-				laserScannerFrontIsConnected = false;
-				return false;
-				break;
-		}
-	}
-	
-	// TODO: what to do with this?
-	stopped = true;
-	return false;
 }
 
 
 void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 {
-	// for laser.cpp:
-	laser->setDevicePort(laserScanner, serialPort);
 }
 
 
@@ -583,6 +436,20 @@ void LaserThread::setMounting(short int laserScanner, QString mounting)
 				break;
 			case LASER2:
 				mountingLaserscannerRear = mounting;
+				break;
+		}
+}
+
+
+void LaserThread::setLaserValue(int laserScanner, int angle, float value)
+{
+		switch (laserScanner)
+		{
+			case LASER1:
+				laserScannerValuesFront[angle] = value;
+				break;
+			case LASER2:
+				laserScannerValuesRear[angle] = value;
 				break;
 		}
 }

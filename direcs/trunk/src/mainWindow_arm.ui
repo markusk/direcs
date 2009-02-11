@@ -10,10 +10,10 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>mrs - mobile robot system</string>
+   <string>direcs - mobile robot system</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../mrs.qrc" >
+   <iconset resource="../direcs.qrc" >
     <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
   </property>
   <property name="dockNestingEnabled" >
@@ -179,7 +179,7 @@
                </font>
               </property>
               <property name="pixmap" >
-               <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
+               <pixmap resource="../direcs.qrc" >:/images/images/middle.png</pixmap>
               </property>
               <property name="scaledContents" >
                <bool>true</bool>
@@ -1322,7 +1322,7 @@
                  <string>Save</string>
                 </property>
                 <property name="icon" >
-                 <iconset resource="../mrs.qrc" >
+                 <iconset resource="../direcs.qrc" >
                   <normaloff>:/images/images/hdd.png</normaloff>:/images/images/hdd.png</iconset>
                 </property>
                </widget>
@@ -1550,7 +1550,7 @@
                      </font>
                     </property>
                     <property name="pixmap" >
-                     <pixmap resource="../mrs.qrc" >:/images/images/middle.png</pixmap>
+                     <pixmap resource="../direcs.qrc" >:/images/images/middle.png</pixmap>
                     </property>
                     <property name="scaledContents" >
                      <bool>true</bool>
@@ -1846,7 +1846,7 @@
   </widget>
   <action name="actionExit" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
    </property>
    <property name="text" >
@@ -1858,7 +1858,7 @@
   </action>
   <action name="actionLaser_View" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/sick.png</normaloff>:/images/images/sick.png</iconset>
    </property>
    <property name="text" >
@@ -1867,7 +1867,7 @@
   </action>
   <action name="actionCamera" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/cam.png</normaloff>:/images/images/cam.png</iconset>
    </property>
    <property name="text" >
@@ -1876,7 +1876,7 @@
   </action>
   <action name="actionOdometrie" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/kruler.png</normaloff>:/images/images/kruler.png</iconset>
    </property>
    <property name="text" >
@@ -1885,7 +1885,7 @@
   </action>
   <action name="actionSettings" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/package_settings.png</normaloff>:/images/images/package_settings.png</iconset>
    </property>
    <property name="text" >
@@ -1894,7 +1894,7 @@
   </action>
   <action name="actionLog" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/kghostview.png</normaloff>:/images/images/kghostview.png</iconset>
    </property>
    <property name="text" >
@@ -1903,7 +1903,7 @@
   </action>
   <action name="actionJoystick" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/package_games.png</normaloff>:/images/images/package_games.png</iconset>
    </property>
    <property name="text" >
@@ -1912,7 +1912,7 @@
   </action>
   <action name="actionNetwork_Log" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/kwifimanager.png</normaloff>:/images/images/kwifimanager.png</iconset>
    </property>
    <property name="text" >
@@ -1921,7 +1921,7 @@
   </action>
   <action name="actionDrive" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
    </property>
    <property name="text" >
@@ -1933,7 +1933,7 @@
   </action>
   <action name="actionReset" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/eraser.png</normaloff>:/images/images/eraser.png</iconset>
    </property>
    <property name="text" >
@@ -1948,7 +1948,7 @@
     <bool>true</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/kwifimanager.png</normaloff>:/images/images/kwifimanager.png</iconset>
    </property>
    <property name="text" >
@@ -1957,7 +1957,7 @@
   </action>
   <action name="actionTest" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/memory.png</normaloff>:/images/images/memory.png</iconset>
    </property>
    <property name="text" >
@@ -1969,7 +1969,7 @@
     <bool>true</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/kmplot.png</normaloff>:/images/images/kmplot.png</iconset>
    </property>
    <property name="text" >
@@ -1981,7 +1981,7 @@
   </action>
   <action name="actionAll" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/kpersonalizer.png</normaloff>:/images/images/kpersonalizer.png</iconset>
    </property>
    <property name="text" >
@@ -1993,7 +1993,7 @@
   </action>
   <action name="actionAbout" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/help.png</normaloff>:/images/images/help.png</iconset>
    </property>
    <property name="text" >
@@ -2002,7 +2002,7 @@
   </action>
   <action name="actionPower" >
    <property name="icon" >
-    <iconset resource="../mrs.qrc" >
+    <iconset resource="../direcs.qrc" >
      <normaloff>:/images/images/energy.png</normaloff>:/images/images/energy.png</iconset>
    </property>
    <property name="text" >
@@ -2011,7 +2011,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../mrs.qrc" />
+  <include location="../direcs.qrc" />
  </resources>
  <connections/>
 </ui>

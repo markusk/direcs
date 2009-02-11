@@ -139,6 +139,11 @@ class SensorThread : public QThread
 		@sa Direcs::showContactAlarm()
 		*/
 		void contactAlarm(char position, bool state);
+		
+		/**
+		Sends a string over the network.
+		*/
+		void sendNetworkString(QString text);
 
 
 	private:

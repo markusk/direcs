@@ -234,13 +234,6 @@ class Gui : public QMainWindow
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
 
 		/**
-		Shows a graphic in the laser scanner view while searching for a scanner.
-		@param status can be true or false
-		@param laserScanner is the number of the laser scanner and can be LASER1, LASER2...
-		*/
-		void laserSplash(bool status, short int laserScanner);
-
-		/**
 		Shows the preferred driving direction in a lable.
 		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
 		*/
@@ -419,8 +412,6 @@ class Gui : public QMainWindow
 		QList <QGraphicsSimpleTextItem*> *laserDistanceTextRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
-		QGraphicsPixmapItem *scannerFrontSplash;
-		QGraphicsPixmapItem *scannerRearSplash;
 		QPixmap pixmap; // for IplImageToQImage()
 
 

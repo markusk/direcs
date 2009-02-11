@@ -31,9 +31,8 @@ class QUdpSocket;
 /**
 \brief Handles the network access (e.g. WLAN) to the robot.
 
-It opens an udpSocket and listens on a port. When data are received, a signal \e dataReceived is emitted.
+It opens an udpSocket and listens on a port. When data are received, the signal \e dataReceived is emitted.
 */
-// TODO: Change this to a non-thread! Is the a possibility to "disconnect" oder just no "emit"?
 class NetworkThread : public QThread
 {
     Q_OBJECT
@@ -51,22 +50,30 @@ class NetworkThread : public QThread
 		Starts the thread.
 		*/
 		virtual void run();
-		
-		//void sendNetworkCommand();
+	
+	
+	public slots:
+		/**
+		Sends a string over the network
+		*/
+		void sendNetworkCommand(QString text);
 
 
 	signals:
 		/**
+		This signal emits when data were received over the network.
 		*/
 		void dataReceived(QString text);
 
 
 	private slots:
+		/**
+		This slot is automatically called by the framework, in the case of pending datagrams.
+		*/
 		void processPendingDatagrams();
 
 
 	private:
-		//mutable QMutex mutex; // make this class thread-safe
 		QUdpSocket *udpSocket;
 		volatile bool stopped;
 		

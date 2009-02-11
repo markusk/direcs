@@ -1,0 +1,729 @@
+<ui version="4.0" >
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1672</width>
+    <height>988</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>direcs-remote</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="../direcs-remote.qrc" >
+    <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget" />
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1672</width>
+     <height>29</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <widget class="QDockWidget" name="dockWidgetLaser" >
+   <property name="windowTitle" >
+    <string>Laserscanner</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents" >
+    <layout class="QGridLayout" name="gridLayout" >
+     <item row="0" column="0" >
+      <widget class="QSplitter" name="splitter" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QGraphicsView" name="graphicsViewLaser" >
+        <property name="cursor" stdset="0" >
+         <cursorShape>OpenHandCursor</cursorShape>
+        </property>
+        <property name="mouseTracking" >
+         <bool>true</bool>
+        </property>
+        <property name="statusTip" >
+         <string>Robot can be dragged with the </string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+        <property name="dragMode" >
+         <enum>QGraphicsView::ScrollHandDrag</enum>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget" >
+        <layout class="QHBoxLayout" name="horizontalLayout" >
+         <item>
+          <layout class="QVBoxLayout" name="nam1" >
+           <item>
+            <layout class="QHBoxLayout" name="_2" >
+             <item>
+              <widget class="QLabel" name="label18_4" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Largest free area start:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblLaserFrontFreeStart" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>0 deg</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="_3" >
+             <item>
+              <widget class="QLabel" name="label18_5" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Largest free area end:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblLaserFrontFreeEnd" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>0 deg</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="_4" >
+             <item>
+              <widget class="QLabel" name="label18_6" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Center of free area:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblLaserFrontFreeCenter" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>0 deg</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="_5" >
+             <item>
+              <widget class="QLabel" name="label18_7" >
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text" >
+                <string>Preferred direction:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblPreferredDirection" >
+               <property name="sizePolicy" >
+                <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font" >
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="pixmap" >
+                <pixmap resource="../../direcs/trunk/direcs.qrc" >:/images/images/middle.png</pixmap>
+               </property>
+               <property name="scaledContents" >
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>20</width>
+               <height>16</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="name2" >
+           <item>
+            <widget class="QSlider" name="sliderZoom" >
+             <property name="font" >
+              <font>
+               <family>Verdana</family>
+              </font>
+             </property>
+             <property name="minimum" >
+              <number>1</number>
+             </property>
+             <property name="maximum" >
+              <number>10</number>
+             </property>
+             <property name="pageStep" >
+              <number>1</number>
+             </property>
+             <property name="value" >
+              <number>1</number>
+             </property>
+             <property name="sliderPosition" >
+              <number>1</number>
+             </property>
+             <property name="tracking" >
+              <bool>false</bool>
+             </property>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition" >
+              <enum>QSlider::TicksAbove</enum>
+             </property>
+             <property name="tickInterval" >
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="_6" >
+             <item>
+              <layout class="QHBoxLayout" name="_7" >
+               <item>
+                <widget class="QLabel" name="label_33" >
+                 <property name="font" >
+                  <font>
+                   <family>Verdana</family>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>Zoom:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="labelLaserTop" >
+                 <property name="font" >
+                  <font>
+                   <family>Verdana</family>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>1</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>41</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>159</width>
+               <height>51</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetControl" >
+   <property name="windowTitle" >
+    <string>Control</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2" >
+    <layout class="QGridLayout" name="gridLayout_6" >
+     <item row="0" column="0" >
+      <layout class="QGridLayout" name="gridLayout_3" >
+       <item row="0" column="0" >
+        <widget class="QSpinBox" name="spinBoxSpeed1" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font" >
+          <font>
+           <pointsize>34</pointsize>
+          </font>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="minimum" >
+          <number>1</number>
+         </property>
+         <property name="maximum" >
+          <number>255</number>
+         </property>
+         <property name="value" >
+          <number>23</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QPushButton" name="btnForward" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="icon" >
+          <iconset resource="../direcs-remote.qrc" >
+           <normaloff>:/images/images/up.png</normaloff>:/images/images/up.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>82</width>
+           <height>82</height>
+          </size>
+         </property>
+         <property name="shortcut" >
+          <string>8</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" >
+        <widget class="QSpinBox" name="spinBoxSpeed2" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font" >
+          <font>
+           <pointsize>34</pointsize>
+          </font>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="minimum" >
+          <number>1</number>
+         </property>
+         <property name="maximum" >
+          <number>255</number>
+         </property>
+         <property name="value" >
+          <number>23</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QPushButton" name="btnLeft" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="icon" >
+          <iconset resource="../direcs-remote.qrc" >
+           <normaloff>:/images/images/back.png</normaloff>:/images/images/back.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>82</width>
+           <height>82</height>
+          </size>
+         </property>
+         <property name="shortcut" >
+          <string>4</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QPushButton" name="btnStartStop" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="focusPolicy" >
+          <enum>Qt::ClickFocus</enum>
+         </property>
+         <property name="toolTip" >
+          <string>drive</string>
+         </property>
+         <property name="statusTip" >
+          <string>drive</string>
+         </property>
+         <property name="whatsThis" >
+          <string>drive</string>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="icon" >
+          <iconset resource="../direcs-remote.qrc" >
+           <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>82</width>
+           <height>82</height>
+          </size>
+         </property>
+         <property name="shortcut" >
+          <string>5</string>
+         </property>
+         <property name="autoDefault" >
+          <bool>true</bool>
+         </property>
+         <property name="default" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" >
+        <widget class="QPushButton" name="btnRight" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="icon" >
+          <iconset resource="../direcs-remote.qrc" >
+           <normaloff>:/images/images/forward.png</normaloff>:/images/images/forward.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>62</width>
+           <height>62</height>
+          </size>
+         </property>
+         <property name="shortcut" >
+          <string>6</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <layout class="QVBoxLayout" name="verticalLayout" >
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2" >
+           <item>
+            <widget class="QLabel" name="label_4" >
+             <property name="text" >
+              <string>Port:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditPortValue" >
+             <property name="text" >
+              <string>45454</string>
+             </property>
+             <property name="maxLength" >
+              <number>6</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnTest" >
+           <property name="text" >
+            <string>&amp;Test</string>
+           </property>
+           <property name="shortcut" >
+            <string>Alt+T</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="1" >
+        <widget class="QPushButton" name="btnBackward" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="icon" >
+          <iconset resource="../direcs-remote.qrc" >
+           <normaloff>:/images/images/down.png</normaloff>:/images/images/down.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>82</width>
+           <height>82</height>
+          </size>
+         </property>
+         <property name="shortcut" >
+          <string>2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" >
+        <widget class="QPushButton" name="btnShutdown" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip" >
+          <string>shutdown</string>
+         </property>
+         <property name="statusTip" >
+          <string>shutdown</string>
+         </property>
+         <property name="whatsThis" >
+          <string>shutdown</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../direcs-remote.qrc" >
+           <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>82</width>
+           <height>82</height>
+          </size>
+         </property>
+         <property name="shortcut" >
+          <string>2</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+    <zorder></zorder>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetWeb" >
+   <property name="windowTitle" >
+    <string>Webserver</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3" >
+    <layout class="QGridLayout" name="gridLayout_5" >
+     <item row="0" column="0" >
+      <widget class="QSplitter" name="splitter_2" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QWidget" native="1" name="widgetWeb" />
+       <widget class="QWidget" name="layoutWidget" >
+        <layout class="QGridLayout" name="gridLayout_4" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label_5" >
+           <property name="text" >
+            <string>Address:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QLineEdit" name="lineEditWebAddress" />
+         </item>
+         <item row="0" column="2" >
+          <widget class="QPushButton" name="btnGo" >
+           <property name="text" >
+            <string>&amp;Go!</string>
+           </property>
+           <property name="shortcut" >
+            <string>Alt+T</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetLog" >
+   <property name="windowTitle" >
+    <string>Log</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5" >
+    <layout class="QGridLayout" name="gridLayout_2" >
+     <item row="0" column="0" >
+      <layout class="QVBoxLayout" name="verticalLayout_2" >
+       <item>
+        <widget class="QTextEdit" name="textEdit1" />
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3" >
+         <item>
+          <widget class="QPushButton" name="btnClear" >
+           <property name="text" >
+            <string>&amp;Clear</string>
+           </property>
+           <property name="shortcut" >
+            <string>Alt+C</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetMotors" >
+   <property name="windowTitle" >
+    <string>Motor Current</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4" >
+    <layout class="QGridLayout" name="gridLayout_8" >
+     <item row="0" column="0" >
+      <layout class="QGridLayout" name="gridLayout_7" >
+       <item row="0" column="0" >
+        <widget class="QwtPlot" name="qwtPlotCurrent1" >
+         <property name="minimumSize" >
+          <size>
+           <width>257</width>
+           <height>231</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QwtPlot" name="qwtPlotCurrent2" >
+         <property name="minimumSize" >
+          <size>
+           <width>257</width>
+           <height>231</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../direcs-remote.qrc" />
+  <include location="../../direcs/trunk/direcs.qrc" />
+ </resources>
+ <connections/>
+</ui>

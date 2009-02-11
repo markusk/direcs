@@ -22,8 +22,8 @@
 #define LASERTHREAD_H
 
 //-------------------------------------------------------------------
-#include "laser.h"
 #include <QThread>
+#include <QDebug>
 //-------------------------------------------------------------------
 
 /**
@@ -80,6 +80,11 @@ class LaserThread : public QThread
 		This slot enables or disables the simulation mode.
 		*/
 		void setSimulationMode(bool status);
+		
+		/**
+		Takes values from the network and stores them local in this class
+		*/
+		void setLaserValue(int laserScanner, int angle, float value);
 
 
 	signals:
@@ -111,8 +116,6 @@ class LaserThread : public QThread
 		bool simulationMode;
 		QString mountingLaserscannerFront; /// cane be "normal" or "flipped"
 		QString mountingLaserscannerRear; /// cane be "normal" or "flipped"
-		
-		Laser *laser;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
