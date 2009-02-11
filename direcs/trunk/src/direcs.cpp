@@ -117,7 +117,7 @@ Direcs::Direcs()
 	joystick = new Joystick();
 	head = new Head(servos);
 
-	/*
+	
 	#ifdef _ARM_ // only include on ARM environments!
 	//--------------------------------------------------------------------------------
 	// Convert the Unix signal to the QSocketNotifier::activated() signal effectively.
@@ -132,8 +132,9 @@ Direcs::Direcs()
 	connect(snHup, SIGNAL(activated(int)), this, SLOT(handleSigHup()));
 	snTerm = new QSocketNotifier(sigtermFd[1], QSocketNotifier::Read, this);
 	connect(snTerm, SIGNAL(activated(int)), this, SLOT(handleSigTerm()));
+	qDebug("signals connected");
 	#endif
-	*/
+	
 }
 
 
@@ -3723,7 +3724,7 @@ void Direcs::speak(QString text)
 }
 
 
-/*
+
 void Direcs::hupSignalHandler(int)
 {
 	char a = 1;
@@ -3751,6 +3752,9 @@ void Direcs::handleSigTerm()
 }
 
 
+int Direcs::sighupFd[2] = {0};
+int Direcs::sigtermFd[2] = {0};
+
 void Direcs::handleSigHup()
 {
 	snHup->setEnabled(false);
@@ -3762,7 +3766,7 @@ void Direcs::handleSigHup()
 	
 	snHup->setEnabled(true);
 }
-*/
+
 
 
 void Direcs::test()

@@ -60,14 +60,14 @@
 	#include <QSplashScreen>
 #endif
 
-/*
+
 //#ifdef _ARM_ // only include on ARM environments!
 	#include <QSocketNotifier>
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <sys/un.h>
 //#endif
-*/
+
 //-------------------------------------------------------------------
 
 
@@ -110,11 +110,11 @@ class Direcs : public QObject
 		*/
 		bool exitDialog;
 
-		/*
+		
 		// Unix signal handlers.
 		static void hupSignalHandler(int unused);
 		static void termSignalHandler(int unused);
-		*/
+		
 	/*
 	protected:	
 		bool event(QEvent *event);
@@ -216,10 +216,10 @@ class Direcs : public QObject
 		The method for the test button in the GUI.
 		 */
 		void test();
-		/*
+		
 		void handleSigHup();
 		void handleSigTerm();
-		*/
+		
 
 
 	signals:
@@ -256,13 +256,13 @@ class Direcs : public QObject
 		Reads all settings for the robot from an ini-file.
 		*/
 		void readSettings();
-		/*
+		
 		static int sighupFd[2];
 		static int sigtermFd[2];
 
 		QSocketNotifier *snHup;
 		QSocketNotifier *snTerm;
-		*/
+		
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		Gui *gui;
