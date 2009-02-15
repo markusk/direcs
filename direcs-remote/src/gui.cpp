@@ -36,7 +36,7 @@ Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	media = new MediaObject(ui.widgetWeb);
 	vwidget = new VideoWidget(ui.widgetWeb);
 	Phonon::createPath(media, vwidget)
-	media->enqueue("/home/markus/media/mp3/Classic/klaus badelt - pirates of the caribbean - 15 - he's a pirate.mp3");
+	media->enqueue("/home/markus/media/mp3/test.mp3");
 	*/
 	
 	// When the address field was leaved or enter pressed, call the "go" button slot! :-)
