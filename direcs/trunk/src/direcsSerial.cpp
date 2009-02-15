@@ -53,7 +53,7 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	struct termios  ctio;
 		
 	tcgetattr(dev_fd, &ctio); /* save current port settings */
-	ctio.c_iflag = IXON | IGNPAR; // TODO: IXON oder IXOFF ?!?? < < < <
+	ctio.c_iflag = IXON | IGNPAR; // Looks like IXON is default
 	ctio.c_oflag = 0;
 	//                   |  SW flow control  |  Parity 0  |  8 Databits  |  1 StopBit
 	ctio.c_cflag = CREAD |  CLOCAL           |  0         |  CS8         |  1;

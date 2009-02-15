@@ -372,13 +372,11 @@ class Direcs : public QObject
 		static const short int SENSOR8 = 128;
 		
 		////The ultrasonic sensor
-		// TODO: make these values nicer
 		static const short int SENSOR16 = 256;
 		
 		/// Value, if no sensor has a value to react
 		static const short int NONE = 0;
 		
-		// TODO: make these values nicer
 		static const short int OBSTACLEFRONTLEFT = 512;
 		static const short int OBSTACLEFRONTRIGHT = 1024;
 		static const short int OBSTACLESEVERYWHEREINFRONT = 2048;
