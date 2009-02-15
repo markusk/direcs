@@ -43,8 +43,9 @@ CamThread::CamThread() : QThread()
 
 CamThread::~CamThread()
 {
-	// FIXME: delete SIGSEV!
-	//delete imgPtr;
+	stopped = true;
+	// FIXME: delete brings a SIGSEV!
+	// delete imgPtr;
 }
 
 

@@ -1133,10 +1133,9 @@ void Gui::saveCamImage(void)
 	//cameraPicToSave = QPixmap::grabWidget(ui.frameCamera); //doesnt work
 	//cameraPicToSave = QPixmap::grabWidget(ui.dockCamera); //doesnt work
 
-	//---------------------------------------------------------------------
-	// save image to disk, but not within the same seond (same timestamp)
-	//---------------------------------------------------------------------
-	// FIXME: every second is too intensive!!!
+	//--------------------------------------------------------------------------------------
+	// save image to disk, but not within the same seond (same timestamp like last picture)
+	//--------------------------------------------------------------------------------------
 	if (QDateTime::currentDateTime() != timestamp)
 	{
 		// get the actual date and time
@@ -1632,7 +1631,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		if (laserScannerFlags[i] == OBSTACLE)
 		{
 			// obstacle detected!
-			//orgBrush.setColor(colorLaserObstacle);
 			laserLineListFront->at(i)->setPen(QPen(colorLaserObstacle));
 		}
 		else
@@ -1640,6 +1638,7 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			if (laserScannerFlags[i] == LARGESTFREEWAY)
 			{
 				// l a r g e s t   f r e e   w a y
+				// laserLineListFront->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection, 4));
 				laserLineListFront->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
 			}
 			else
@@ -1693,7 +1692,6 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 		if (laserScannerFlags[i] == OBSTACLE)
 		{
 			// obstacle detected!
-			//orgBrush.setColor(colorLaserObstacle);
 			laserLineListRear->at(i)->setPen(QPen(colorLaserObstacle));
 		}
 		else
@@ -1855,7 +1853,8 @@ void Gui::createLaserScannerObjects()
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
 
-		// FIXME doest not work: line->setPen(QPen(colorLaserFreeWay, 3));
+		// set the laser line color
+		//line->setPen(QPen(colorLaserFreeWay, 3));
 		line->setPen(QPen(colorLaserFreeWay));
 
 		// set position of each line
@@ -1881,7 +1880,8 @@ void Gui::createLaserScannerObjects()
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
-		// FIXME doest not work: line->setPen(QPen(colorLaserFreeWay, 3));
+		// set the laser line color
+		// line->setPen(QPen(colorLaserFreeWay, 3));
 		line->setPen(QPen(colorLaserFreeWay));
 
 		// the length (and position) of the laser line in pixel
