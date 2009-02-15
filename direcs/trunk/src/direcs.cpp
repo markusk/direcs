@@ -185,6 +185,7 @@ void Direcs::init()
 	// let some classes know the robots state
 	//--------------------------------------------------------------------------
 	connect(circuit1, SIGNAL( robotState(bool) ), this, SLOT( setRobotState(bool) ));
+	connect(circuit1, SIGNAL( robotState(bool) ), interface1, SLOT( setRobotState(bool) ));
 //	connect(circuit1, SIGNAL( robotState(bool) ), heartbeat, SLOT( setRobotState(bool) ));
 	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 
@@ -2234,14 +2235,12 @@ void Direcs::readSettings()
 			break;
 		case Qt::Unchecked:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// uncheck checkbox
 			settingsDialog->setCheckBoxSaveSettings(Qt::Unchecked);
 			#endif
 			break;
 		case Qt::Checked:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set checkbox
 			settingsDialog->setCheckBoxSaveSettings(Qt::Checked);
 			#endif
@@ -2280,7 +2279,6 @@ void Direcs::readSettings()
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderObstacleValue(minObstacleDistance);
 			#endif
@@ -2305,7 +2303,6 @@ void Direcs::readSettings()
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
 			#endif
@@ -2330,7 +2327,6 @@ void Direcs::readSettings()
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderRobotSlot(robotSlot);
 			#endif
@@ -2355,7 +2351,6 @@ void Direcs::readSettings()
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderStraightForwardDeviation(straightForwardDeviation);
 			#endif
@@ -2413,7 +2408,6 @@ void Direcs::readSettings()
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(1, mot1Speed);
 			#endif
@@ -2444,7 +2438,6 @@ void Direcs::readSettings()
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(2, mot2Speed);
 			#endif
@@ -2475,7 +2468,6 @@ void Direcs::readSettings()
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(3, mot3Speed);
 			#endif
@@ -2506,7 +2498,6 @@ void Direcs::readSettings()
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMotorSpeed(4, mot4Speed);
 			#endif
@@ -2537,7 +2528,6 @@ void Direcs::readSettings()
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMinimumSpeed(minimumSpeed);
 			#endif
@@ -2568,7 +2558,6 @@ void Direcs::readSettings()
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			// set slider to the read value
 			settingsDialog->setSliderMaximumSpeed(maximumSpeed);
 			#endif
@@ -2835,7 +2824,6 @@ void Direcs::executeRemoteCommand(QString command)
 			int newSpeed = motors->getMotorSpeed(1) + 1;
 			motors->setMotorSpeed(1, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(1, newSpeed);
 			#endif
 			return;
@@ -2849,7 +2837,6 @@ void Direcs::executeRemoteCommand(QString command)
 			int newSpeed = motors->getMotorSpeed(2) + 1;
 			motors->setMotorSpeed(2, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(2, newSpeed);
 			#endif
 			return;
@@ -2863,7 +2850,6 @@ void Direcs::executeRemoteCommand(QString command)
 			int newSpeed = motors->getMotorSpeed(1) - 1;
 			motors->setMotorSpeed(1, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(1, newSpeed);
 			#endif
 			return;
@@ -2877,7 +2863,6 @@ void Direcs::executeRemoteCommand(QString command)
 			int newSpeed = motors->getMotorSpeed(2) - 1;
 			motors->setMotorSpeed(2, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// TODO: put this setting somewehere
 			settingsDialog->setSliderMotorSpeed(2, newSpeed);
 			#endif
 			return;
@@ -2915,7 +2900,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE backward
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				// TODO: put this setting somewehere
 				//speed = (axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
@@ -2970,7 +2954,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE forward
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				// TODO: put this setting somewehere
 				//speed = (-axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
@@ -3051,7 +3034,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE RIGHT
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				// TODO: put this setting somewehere
 				//speed = (axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
@@ -3088,7 +3070,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE left
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				// TODO: put this setting somewehere
 				//speed = (-axisValue / JOYSTICKDIVISOR);
 				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );

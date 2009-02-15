@@ -79,7 +79,18 @@ class InterfaceAvr : public QObject
 		@return true on access or false if an error occured.
 		*/
 		bool receiveInt(int *value);
+		
+		
+	public slots:
+		/**
+		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
+		When the class knows this, unnecessary communication with the interface can be avoided.
+		
+		@param state can be ON or OFF
+		 */
+		void setRobotState(bool state);
 	
+		
 	signals:
 		
 		/**
@@ -94,6 +105,7 @@ class InterfaceAvr : public QObject
 #else
 		DirecsSerial *serialPort;
 #endif
+		bool robotState;
 };
 
 #endif

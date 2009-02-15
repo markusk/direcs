@@ -23,11 +23,13 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-#ifdef _TTY_WIN_
+	#ifdef _TTY_WIN_
 	serialPort = new QextSerialPort();
-#else
+	#else
 	serialPort = new DirecsSerial();
-#endif
+	#endif
+	
+	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
 
 
@@ -190,4 +192,10 @@ bool InterfaceAvr::receiveInt(int *value)
 	*value = (intValue + character);
 
 	return true;
+}
+
+
+void InterfaceAvr::setRobotState(bool state)
+{
+	robotState = state;
 }
