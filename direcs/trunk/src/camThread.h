@@ -136,7 +136,8 @@ class CamThread : public QThread
 
 
 		/**
-		TODO: text text text
+		This signal is emmited when a face was detected in the camera image
+		
 		@param faceX is the X coordinate to the middle of a detected face (0, if none)
 		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
 		@param faceRadius is the radius (0, if none)
