@@ -1,0 +1,12 @@
+*.[oa]
+*~
+*.kdevelop.pcs
+ui_*.h
+qrc_*.cpp
+moc_*.cpp
+
+Makefile
+
+direcs/trunk/bin/
+direcs/trunk/tmp/
+direcs-remote/bin/
