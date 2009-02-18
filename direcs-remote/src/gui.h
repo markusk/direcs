@@ -139,7 +139,7 @@ class Gui : public QMainWindow
 		void showPreferredDirection(QString direction);
 		
 		/**
-		Show the camera image from the network class
+		Shows the camera image from the network class
 		*/
 		void setCamImage(QImage* image);
 	

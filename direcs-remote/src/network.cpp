@@ -23,7 +23,6 @@
 
 Network::Network()
 {
-	stopped = false;
     http = new QHttp(this);
 
 	connect(http, SIGNAL(requestFinished(int, bool)), this, SLOT(httpRequestFinished(int, bool)));
@@ -35,12 +34,12 @@ Network::Network()
 #endif
 	
 	connect(http, SIGNAL( readyRead(const QHttpResponseHeader &) ), this, SLOT( takeData() ));
-	//connect(progressDialog, SIGNAL(canceled()), this, SLOT(cancelDownload()));
-	//connect(downloadButton, SIGNAL(clicked()), this, SLOT(downloadFile()));
 	
-	//
-	// start download !!
-	//
+	// the camera image
+	image = new QImage();
+	
+	
+	// start 'download'
 	downloadFile();
 }
 
@@ -48,30 +47,7 @@ Network::Network()
 Network::~Network()
 {
 	cancelDownload();
-}
-
-
-void Network::stop()
-{
-	stopped = true;
-	cancelDownload();
-}
-
-
-void Network::run()
-{
-	//
-	//  start "ing"...
-	//
-	while (!stopped)
-	{
-		// let the  sleep some time
-		// for having more time for the other s
-		msleep(SLEEPTIME);
-		
-		// TODO: do stuff here
-	}
-	stopped = false;
+	delete image;
 }
 
 
@@ -123,14 +99,9 @@ void Network::downloadFile()
 	
 	//------------------------------------------------------------------------------
 	// get the file
-	//------------------------------------------------------------------------------
-	//httpGetId = http->get(path, file);
-	
 	// no file given, so we get a readyRead Signal, every time new data is available!
+	//------------------------------------------------------------------------------
 	httpGetId = http->get(path);
-
-	//progressDialog->setLabelText(tr("Downloading %1.").arg(fileName));
-	qDebug("Downloading....");
 }
 
 
@@ -215,10 +186,6 @@ void Network::updateDataReadProgress(int bytesRead, int totalBytes)
 		return;
 
 	//qDebug("bytesRead: %d / totalBytes", bytesRead, totalBytes);
-	// TODO: read until 'Content-length'
-	
-	//progressDialog->setMaximum(totalBytes);
-	//progressDialog->setValue(bytesRead);
 }
 
 
@@ -269,7 +236,9 @@ void Network::takeData()
 	// start of new frame
 	if (data.startsWith("--BoundaryString"))
 	{
-		/* From 'motion':
+		/*
+		From the original 'motion' source code		
+		
 		// the following string has an extra 16 chars at end for length
 		const char jpeghead[] = "--BoundaryString\r\n"								// 18
 								"Content-type: image/jpeg\r\n"						// 26
@@ -279,32 +248,16 @@ void Network::takeData()
 																					// 75
 																					//=====
 		
-	*/
-		// remove the first 75 chars!
+		http://www.lavrsen.dk/twiki/bin/view/Motion/WebHome
+		*/
+		
+		// Sow we remove the first 75 chars!
 		data.remove(0, 75);
 		
-		/*
-		// -- - - - -- - - - - - - - ---  -- -  - -  - - -
-		file = new QFile("cam.jpg");
-		if (!file->open(QIODevice::WriteOnly))
-		{
-			qDebug("Unable to save the file %1: %2.");
-			//.arg(fileName).arg(file->errorString()));
-			delete file;
-			file = 0;
-			return;
-		}
-		
-		// write data to file
-		file->write(data);
-		file->close();
-		// -- - - - -- - - - - - - - ---  -- -  - -  - - -
-		*/
-		image = new QImage();
+		// put data to a QImage
 		image->loadFromData(data);
 		
+		// emit image to the GUI
 		emit( dataComplete(image) );
-		
-		delete image;
 	}
 }

@@ -22,9 +22,6 @@
 #define NETWORK_H
 
 //-------------------------------------------------------------------
-#include <QThread>
-#include <QDebug>
-//-------------------------------------------------------------------
 #include <QFile>
 #include <QFileInfo>
 #include <QHttp>
@@ -34,32 +31,27 @@
 #include <QSslError>
 #include <QAuthenticator>
 #include <QImage>
+#include <QDebug>
 //-------------------------------------------------------------------
 
 /**
 \brief Handles the network access for the webcam.
 TODO: to be filled with content.
 */
-class Network : public QThread
+class Network : public QObject
 {
     Q_OBJECT
 
 	public:
 		Network();
 		~Network();
-		void stop();
-		virtual void run();
 
 
 	signals:
-		/// Emits TODO: text
-		void dataComplete(QImage* image);
-		
 		/**
-		Emits a info message to a slot.
-		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		Emits a QImage to the GUI, which was received over the network.
 		*/
-		void message(QString text);
+		void dataComplete(QImage* image);
 		
 		/**
 		Sends a string over the network.
@@ -81,7 +73,6 @@ class Network : public QThread
 	
  
 	private:
-		volatile bool stopped;
 		QHttp *http;
 		QFile *file;
 		QByteArray data;
@@ -89,10 +80,6 @@ class Network : public QThread
 		bool httpRequestAborted;
 		QString filename;
 		QImage *image;
-	
-		// Every  sleeps some time, for having a bit more time fo the other s!
-		// Time in milliseconds
-		static const unsigned long SLEEPTIME = 150; // Default: 150 ms
 };
 
 #endif
