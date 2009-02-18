@@ -84,7 +84,7 @@ class Network : public QThread
 		volatile bool stopped;
 		QHttp *http;
 		QFile *file;
-		QByteArray *data;
+		QByteArray data;
 		int httpGetId;
 		bool httpRequestAborted;
 		QString filename;

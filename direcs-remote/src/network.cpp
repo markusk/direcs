@@ -81,7 +81,7 @@ void Network::downloadFile()
 	//filename = "http://www.familie-knapp.de/hello.txt";
 	filename = "http://localhost:8080";
 #else
-	filename = "https://www.familie-knapp.de/hello.txt";
+	filename = "https://localhost:8080";
 #endif
 	
 	QUrl url( filename );
@@ -262,5 +262,13 @@ void Network::sslErrors(const QList<QSslError> &errors)
 
 void Network::takeData()
 {
-	qDebug("New data available");
+	// read ALL available data
+	data = http->readAll();
+	
+	
+	if (data.startsWith("--BoundaryString"))
+	{
+		qDebug("New frame.");
+	}
+	
 }
