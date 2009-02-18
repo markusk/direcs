@@ -149,10 +149,10 @@ class Gui : public QMainWindow
 	
 	private slots:
 		void on_btnClear_clicked();
-		void on_btnExit_clicked();
+		//void on_btnExit_clicked();
 		void on_btnTest_clicked();
-		void on_lblLink_linkActivated(QString link);
-		void on_lblLink_linkHovered(QString link);
+		//void on_lblLink_linkActivated(QString link);
+		//void on_lblLink_linkHovered(QString link);
 		void on_btnForward_clicked();
 		void on_btnBackward_clicked();
 		void on_btnLeft_clicked();

@@ -242,12 +242,12 @@ void Gui::on_spinBoxSpeed2_valueChanged(int value)
 	}
 }
 
-
+/*
 void Gui::on_btnExit_clicked()
 {
 	close();
 }
-
+*/
 
 void Gui::closeEvent()
 {
@@ -279,7 +279,7 @@ void Gui::on_btnClear_clicked()
 	ui.textEdit1->clear();
 }
 
-
+/*
 void Gui::on_lblLink_linkActivated(QString link)
 {
 	appendLog("Link funktioniert");
@@ -292,7 +292,7 @@ void Gui::on_lblLink_linkHovered(QString link)
 	appendLog("Linkfunktioniert");
 	QMessageBox::information(0, "test", "Link hovered! :-)", QMessageBox::Ok, QMessageBox::NoButton);
 }
-
+*/
 
 void Gui::on_btnTest_clicked()
 {
