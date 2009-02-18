@@ -57,6 +57,13 @@ class Network : public QObject
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
+		
+		
+	public slots:
+		/**
+		Takes the URL for loading the file.
+		*/
+		void setUrl(QString url);
 
 	
 	private slots:
@@ -64,21 +71,19 @@ class Network : public QObject
 		void cancelDownload();
 		void httpRequestFinished(int requestId, bool error);
 		void readResponseHeader(const QHttpResponseHeader &responseHeader);
-		void updateDataReadProgress(int bytesRead, int totalBytes);
 		void slotAuthenticationRequired(const QString &, quint16, QAuthenticator *);
-	#ifndef QT_NO_OPENSSL
+		#ifndef QT_NO_OPENSSL
 		void sslErrors(const QList<QSslError> &errors);
-	#endif
-	void takeData();
+		#endif
+		void takeData();
 	
  
 	private:
 		QHttp *http;
-		QFile *file;
 		QByteArray data;
 		int httpGetId;
 		bool httpRequestAborted;
-		QString filename;
+		QString addressToOpen;
 		QImage *image;
 };
 

@@ -587,48 +587,45 @@
     <zorder></zorder>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidgetWeb" >
+  <widget class="QDockWidget" name="dockWidgetCamera" >
    <property name="windowTitle" >
-    <string>Webserver</string>
+    <string>Camera</string>
    </property>
    <attribute name="dockWidgetArea" >
     <number>4</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3" >
-    <layout class="QGridLayout" name="gridLayout_5" >
+    <layout class="QGridLayout" name="gridLayout_9" >
      <item row="0" column="0" >
-      <layout class="QVBoxLayout" name="verticalLayout_3" >
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4" >
-         <item>
-          <widget class="QLabel" name="lblCamera" >
-           <property name="text" >
-            <string>Camera</string>
-           </property>
-           <property name="alignment" >
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" native="1" name="widgetWeb" />
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="gridLayout_4" >
+      <widget class="QSplitter" name="splitter_2" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QLabel" name="lblCamera" >
+        <property name="text" >
+         <string>Camera</string>
+        </property>
+        <property name="scaledContents" >
+         <bool>true</bool>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_2" >
+        <layout class="QGridLayout" name="gridLayout_5" >
          <item row="0" column="0" >
-          <widget class="QLabel" name="label_5" >
+          <widget class="QLabel" name="label_6" >
            <property name="text" >
             <string>Address:</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1" >
-          <widget class="QLineEdit" name="lineEditWebAddress" />
+          <widget class="QLineEdit" name="lineEditWebAddressCamera" />
          </item>
          <item row="0" column="2" >
-          <widget class="QPushButton" name="btnGo" >
+          <widget class="QPushButton" name="btnGoCamera" >
            <property name="text" >
             <string>&amp;Go!</string>
            </property>
@@ -638,8 +635,8 @@
           </widget>
          </item>
         </layout>
-       </item>
-      </layout>
+       </widget>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -722,6 +719,50 @@
         </widget>
        </item>
       </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetWebserver" >
+   <property name="windowTitle" >
+    <string>Webserver</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_6" >
+    <layout class="QGridLayout" name="gridLayout_10" >
+     <item row="0" column="0" >
+      <widget class="QSplitter" name="splitter_3" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QWidget" native="1" name="widgetWeb" />
+       <widget class="QWidget" name="" >
+        <layout class="QGridLayout" name="gridLayout_4" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label_5" >
+           <property name="text" >
+            <string>Address:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QLineEdit" name="lineEditWebAddress" />
+         </item>
+         <item row="0" column="2" >
+          <widget class="QPushButton" name="btnGo" >
+           <property name="text" >
+            <string>&amp;Go!</string>
+           </property>
+           <property name="shortcut" >
+            <string>Alt+T</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
      </item>
     </layout>
    </widget>

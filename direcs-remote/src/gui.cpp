@@ -23,7 +23,10 @@ Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	speedMotor1 = ui.spinBoxSpeed1->value();
 	speedMotor2 = ui.spinBoxSpeed2->value();
 	
+	
+	//----------------------------------------------------------------------------
 	// set web address of the robot
+	//----------------------------------------------------------------------------
 	//ui.plainTextEditWebAddress->setPlainText("http://mrs:8000");
 	ui.lineEditWebAddress->setText("http://nslu/");
 	
@@ -32,15 +35,18 @@ Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	webView->load(QUrl(ui.lineEditWebAddress->text()));
 	webView->show();
 	
-	/*
-	media = new MediaObject(ui.widgetWeb);
-	vwidget = new VideoWidget(ui.widgetWeb);
-	Phonon::createPath(media, vwidget)
-	media->enqueue("/home/markus/media/mp3/test.mp3");
-	*/
-	
-	// When the address field was leaved or enter pressed, call the "go" button slot! :-)
+	// When the web address field was leaved or enter pressed, call the "go" button slot! :-)
 	connect(ui.lineEditWebAddress, SIGNAL( editingFinished() ), this, SLOT( on_btnGo_clicked() ) );
+	
+
+	//----------------------------------------------------------------------------
+	// set web address of the 'motion' camera
+	//----------------------------------------------------------------------------
+	ui.lineEditWebAddressCamera->setText("http://nslu:8080/");
+	on_btnGo_clicked();
+	
+	// When the camera address field was leaved or enter pressed, call the "go" button slot! :-)
+	connect(ui.lineEditWebAddressCamera, SIGNAL( editingFinished() ), this, SLOT( on_btnGoCamera_clicked() ) );
 	
 	
 	//----------------------------------------------------------------------------
@@ -126,6 +132,12 @@ void Gui::on_btnGo_clicked()
 	// load the URL
 	// using 'setUrl'instead of 'load' here! setUrl clears the view and loads the URL.
 	webView->setUrl(QUrl(ui.lineEditWebAddress->text()));
+}
+
+
+void Gui::on_btnGoCamera_clicked()
+{
+	emit ( cameraUrlChanged(ui.lineEditWebAddressCamera->text()) );
 }
 
 

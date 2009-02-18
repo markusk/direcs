@@ -75,6 +75,12 @@ DirecsRemote::DirecsRemote()
 	//----------------------------------------------------------------------------
 	connect(network, SIGNAL( dataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
 	
+	//----------------------------------------------------------------------------
+	// connect signal cameraUrlChanged from the gui to the network class slot
+	// (Whenever the image url is changed, the try to load the image from there
+	//----------------------------------------------------------------------------
+	connect(gui, SIGNAL( cameraUrlChanged(QString) ), network, SLOT ( setUrl(QString) ) );
+	
 	//-----------------------------------------------------------
 	// start the plot thread ("clock" for plotting the curves)
 	//-----------------------------------------------------------

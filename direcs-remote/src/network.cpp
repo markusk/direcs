@@ -26,13 +26,11 @@ Network::Network()
     http = new QHttp(this);
 
 	connect(http, SIGNAL(requestFinished(int, bool)), this, SLOT(httpRequestFinished(int, bool)));
-	connect(http, SIGNAL(dataReadProgress(int, int)), this, SLOT(updateDataReadProgress(int, int)));
 	connect(http, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)), this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
 	connect(http, SIGNAL(authenticationRequired(const QString &, quint16, QAuthenticator *)), this, SLOT(slotAuthenticationRequired(const QString &, quint16, QAuthenticator *)));
-#ifndef QT_NO_OPENSSL
+	#ifndef QT_NO_OPENSSL
 	connect(http, SIGNAL(sslErrors(const QList<QSslError> &)), this, SLOT(sslErrors(const QList<QSslError> &)));
-#endif
-	
+	#endif
 	connect(http, SIGNAL( readyRead(const QHttpResponseHeader &) ), this, SLOT( takeData() ));
 	
 	// the camera image
@@ -40,7 +38,7 @@ Network::Network()
 	
 	
 	// start 'download'
-	downloadFile();
+	//downloadFile();
 }
 
 
@@ -53,35 +51,9 @@ Network::~Network()
 
 void Network::downloadFile()
 {
-#ifndef QT_NO_OPENSSL
-	//filename = "http://www.familie-knapp.de/hello.txt";
-	filename = "http://localhost:8080";
-#else
-	filename = "https://localhost:8080";
-#endif
+	QUrl url( addressToOpen );
+
 	
-	QUrl url( filename );
-	QFileInfo fileInfo(url.path());
-	QString fileName = fileInfo.fileName();
-	if (fileName.isEmpty())
-		fileName = "pic.jpg"; // < < < <
-
-	if (QFile::exists(fileName))
-	{
-		//qDebug("There already exists a file called %1 in the current directory");
-		//QFile::remove(fileName);
-	}
-
-	file = new QFile(fileName);
-	if (!file->open(QIODevice::WriteOnly))
-	{
-		qDebug("Unable to save the file %1: %2.");
-		//.arg(fileName).arg(file->errorString()));
-		delete file;
-		file = 0;
-		return;
-	}
-
 	// https mode or not
 	QHttp::ConnectionMode mode = url.scheme().toLower() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
 	
@@ -92,14 +64,16 @@ void Network::downloadFile()
 		http->setUser(url.userName(), url.password());
 
 	httpRequestAborted = false;
+	
 	QByteArray path = QUrl::toPercentEncoding(url.path(), "!$&'()*+,;=:@/");
+	
 	if (path.isEmpty())
 		path = "/";
 	
 	
 	//------------------------------------------------------------------------------
-	// get the file
-	// no file given, so we get a readyRead Signal, every time new data is available!
+	// no file given as second parameter, so we get a readyRead Signal,
+	// every time new data is available!
 	//------------------------------------------------------------------------------
 	httpGetId = http->get(path);
 }
@@ -107,14 +81,13 @@ void Network::downloadFile()
 
 void Network::cancelDownload()
 {
-	//statusLabel->setText(tr("Download canceled."));
 	qDebug("Download canceled.");
 
 	httpRequestAborted = true;
 	http->abort();
 }
 
- 
+
 void Network::httpRequestFinished(int requestId, bool error)
 {
 	if (requestId != httpGetId)
@@ -122,40 +95,23 @@ void Network::httpRequestFinished(int requestId, bool error)
 	
 	if (httpRequestAborted)
 	{
-		if (file)
-		{
-			file->close();
-			file->remove();
-			delete file;
-			file = 0;
-		}
-
-		//progressDialog->hide();
 		return;
 	}
 
 	if (requestId != httpGetId)
 		return;
 
-	//progressDialog->hide();
-	file->close();
-
+	
 	if (error)
 	{
-		file->remove();
 		//QMessageBox::information(this, tr("HTTP"), tr("Download failed: %1.").arg(http->errorString()));
-		qDebug("Download failed: %1.");
+		qDebug("Download failed.");
 	}
 	else
 	{
-		QString fileName = QFileInfo(QUrl( filename ).path()).fileName();
 		//statusLabel->setText(tr("Downloaded %1 to current directory.").arg(fileName));
 		qDebug("File downloaded.");
 	}
-
-	//downloadButton->setEnabled(true);
-	delete file;
-	file = 0;
 }
 
 
@@ -169,23 +125,12 @@ void Network::readResponseHeader(const QHttpResponseHeader &responseHeader)
 	case 307:                   // Temporary Redirect
 		// these are not error conditions
 		break;
-
 	default:
 		//QMessageBox::information(this, tr("HTTP"), tr("Download failed: %1.").arg(responseHeader.reasonPhrase()));
-		qDebug("Download failed: %1.");
+		qDebug("Download failed.");
 		httpRequestAborted = true;
-		//progressDialog->hide();
 		http->abort();
 	}
-}
-
-
-void Network::updateDataReadProgress(int bytesRead, int totalBytes)
-{
-	if (httpRequestAborted)
-		return;
-
-	//qDebug("bytesRead: %d / totalBytes", bytesRead, totalBytes);
 }
 
 
@@ -210,13 +155,14 @@ void Network::slotAuthenticationRequired(const QString &hostName, quint16, QAuth
 void Network::sslErrors(const QList<QSslError> &errors)
 {
 	QString errorString;
-	foreach (const QSslError &error, errors) {
+	foreach (const QSslError &error, errors)
+	{
 		if (!errorString.isEmpty())
 			errorString += ", ";
 		errorString += error.errorString();
 	}
 
-	qDebug("One or more SSL errors has occurred: %1");
+	qDebug("One or more SSL errors has occurred.");
 	/*
 	if (QMessageBox::warning(this, tr("HTTP Example"), tr("One or more SSL errors has occurred: %1").arg(errorString), QMessageBox::Ignore | QMessageBox::Abort) == QMessageBox::Ignore)
 	{
@@ -260,4 +206,11 @@ void Network::takeData()
 		// emit image to the GUI
 		emit( dataComplete(image) );
 	}
+}
+
+
+void Network::setUrl(QString url)
+{
+	addressToOpen = url;
+	downloadFile();
 }

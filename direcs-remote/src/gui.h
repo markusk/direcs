@@ -29,13 +29,6 @@
 #include "direcs-remote.h"
 #include "laserScene.h"
 //-------------------------------------------------------------------
-/*
-#include <Phonon/Global>
-#include <Phonon/MediaObject>
-#include <Phonon/Path>
-#include <Phonon/AudioOutput>
-//-------------------------------------------------------------------
-*/
 
 // forward declarations because of circular includes!
 class DirecsRemote;
@@ -150,6 +143,7 @@ class Gui : public QMainWindow
 	
 	signals:
 		void commandIssued(QString command);
+		void cameraUrlChanged(QString url);
 	
 	
 	private slots:
@@ -167,6 +161,7 @@ class Gui : public QMainWindow
 		void on_spinBoxSpeed1_valueChanged(int value);
 		void on_spinBoxSpeed2_valueChanged(int value);
 		void on_btnGo_clicked();
+		void on_btnGoCamera_clicked();
 		void on_sliderZoom_valueChanged(int);
 
 
