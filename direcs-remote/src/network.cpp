@@ -33,6 +33,8 @@ Network::Network()
 #ifndef QT_NO_OPENSSL
 	connect(http, SIGNAL(sslErrors(const QList<QSslError> &)), this, SLOT(sslErrors(const QList<QSslError> &)));
 #endif
+	
+	connect(http, SIGNAL( readyRead(const QHttpResponseHeader &) ), this, SLOT( takeData() ));
 	//connect(progressDialog, SIGNAL(canceled()), this, SLOT(cancelDownload()));
 	//connect(downloadButton, SIGNAL(clicked()), this, SLOT(downloadFile()));
 	
@@ -104,7 +106,10 @@ void Network::downloadFile()
 		return;
 	}
 
+	// https mode or not
 	QHttp::ConnectionMode mode = url.scheme().toLower() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
+	
+	// set the HTTP server
 	http->setHost(url.host(), mode, url.port() == -1 ? 0 : url.port());
 
 	if (!url.userName().isEmpty())
@@ -114,7 +119,15 @@ void Network::downloadFile()
 	QByteArray path = QUrl::toPercentEncoding(url.path(), "!$&'()*+,;=:@/");
 	if (path.isEmpty())
 		path = "/";
-	httpGetId = http->get(path, file);
+	
+	
+	//------------------------------------------------------------------------------
+	// get the file
+	//------------------------------------------------------------------------------
+	//httpGetId = http->get(path, file);
+	
+	// no file given, so we get a readyRead Signal, every time new data is available!
+	httpGetId = http->get(path);
 
 	//progressDialog->setLabelText(tr("Downloading %1.").arg(fileName));
 	qDebug("Downloading....");
@@ -201,7 +214,7 @@ void Network::updateDataReadProgress(int bytesRead, int totalBytes)
 	if (httpRequestAborted)
 		return;
 
-	qDebug("bytesRead: %d / totalBytes", bytesRead, totalBytes);
+	//qDebug("bytesRead: %d / totalBytes", bytesRead, totalBytes);
 	// TODO: read until 'Content-length'
 	
 	//progressDialog->setMaximum(totalBytes);
@@ -245,3 +258,9 @@ void Network::sslErrors(const QList<QSslError> &errors)
 	//}
 }
 #endif
+
+
+void Network::takeData()
+{
+	qDebug("New data available");
+}

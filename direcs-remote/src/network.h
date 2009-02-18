@@ -77,12 +77,14 @@ class Network : public QThread
 	#ifndef QT_NO_OPENSSL
 		void sslErrors(const QList<QSslError> &errors);
 	#endif
+	void takeData();
 	
  
 	private:
 		volatile bool stopped;
 		QHttp *http;
 		QFile *file;
+		QByteArray *data;
 		int httpGetId;
 		bool httpRequestAborted;
 		QString filename;
