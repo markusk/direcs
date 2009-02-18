@@ -33,7 +33,7 @@
 #include <QSsl>
 #include <QSslError>
 #include <QAuthenticator>
-#include <QMessageBox> // for qmessagebox
+#include <QImage>
 //-------------------------------------------------------------------
 
 /**
@@ -88,6 +88,7 @@ class Network : public QThread
 		int httpGetId;
 		bool httpRequestAborted;
 		QString filename;
+		QImage image;
 	
 		// Every  sleeps some time, for having a bit more time fo the other s!
 		// Time in milliseconds

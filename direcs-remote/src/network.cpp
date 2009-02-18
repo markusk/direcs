@@ -92,7 +92,7 @@ void Network::downloadFile()
 
 	if (QFile::exists(fileName))
 	{
-		qDebug("There already exists a file called %1 in the current directory");
+		//qDebug("There already exists a file called %1 in the current directory");
 		//QFile::remove(fileName);
 	}
 
@@ -269,6 +269,33 @@ void Network::takeData()
 	if (data.startsWith("--BoundaryString"))
 	{
 		qDebug("New frame.");
+		/* From 'motion':
+		// the following string has an extra 16 chars at end for length
+		const char jpeghead[] = "--BoundaryString\r\n"								// 18
+								"Content-type: image/jpeg\r\n"						// 26
+								"Content-Length:                ";					// 31
+		int headlength = sizeof(jpeghead) - 1;    // don't include terminator		//
+																					//-----
+																					// 75
+																					//=====
+		
+	*/
+		// remove the first 75 chars!
+		data.remove(0, 75);
+		
+		// -- - - - -- - - - - - - - ---  -- -  - -  - - -
+		file = new QFile("cam.jpg");
+		if (!file->open(QIODevice::WriteOnly))
+		{
+			qDebug("Unable to save the file %1: %2.");
+			//.arg(fileName).arg(file->errorString()));
+			delete file;
+			file = 0;
+			return;
+		}
+		
+		// write data to file
+		file->write(data);
+		file->close();
 	}
-	
 }
