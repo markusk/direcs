@@ -266,9 +266,9 @@ void Network::takeData()
 	data = http->readAll();
 	
 	
+	// start of new frame
 	if (data.startsWith("--BoundaryString"))
 	{
-		qDebug("New frame.");
 		/* From 'motion':
 		// the following string has an extra 16 chars at end for length
 		const char jpeghead[] = "--BoundaryString\r\n"								// 18
@@ -283,6 +283,7 @@ void Network::takeData()
 		// remove the first 75 chars!
 		data.remove(0, 75);
 		
+		/*
 		// -- - - - -- - - - - - - - ---  -- -  - -  - - -
 		file = new QFile("cam.jpg");
 		if (!file->open(QIODevice::WriteOnly))
@@ -297,5 +298,13 @@ void Network::takeData()
 		// write data to file
 		file->write(data);
 		file->close();
+		// -- - - - -- - - - - - - - ---  -- -  - -  - - -
+		*/
+		image = new QImage();
+		image->loadFromData(data);
+		
+		emit( dataComplete(image) );
+		
+		delete image;
 	}
 }

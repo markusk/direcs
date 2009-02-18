@@ -597,12 +597,25 @@
    <widget class="QWidget" name="dockWidgetContents_3" >
     <layout class="QGridLayout" name="gridLayout_5" >
      <item row="0" column="0" >
-      <widget class="QSplitter" name="splitter_2" >
-       <property name="orientation" >
-        <enum>Qt::Vertical</enum>
-       </property>
-       <widget class="QWidget" native="1" name="widgetWeb" />
-       <widget class="QWidget" name="layoutWidget" >
+      <layout class="QVBoxLayout" name="verticalLayout_3" >
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" >
+         <item>
+          <widget class="QLabel" name="lblCamera" >
+           <property name="text" >
+            <string>Camera</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" native="1" name="widgetWeb" />
+         </item>
+        </layout>
+       </item>
+       <item>
         <layout class="QGridLayout" name="gridLayout_4" >
          <item row="0" column="0" >
           <widget class="QLabel" name="label_5" >
@@ -625,8 +638,8 @@
           </widget>
          </item>
         </layout>
-       </widget>
-      </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>

@@ -137,6 +137,11 @@ class Gui : public QMainWindow
 		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
 		*/
 		void showPreferredDirection(QString direction);
+		
+		/**
+		Show the camera image from the network class
+		*/
+		void setCamImage(QImage* image);
 	
 	
 	protected:

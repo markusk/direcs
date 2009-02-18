@@ -1153,3 +1153,21 @@ void Gui::showPreferredDirection(QString direction)
 		return;
 	}
 }
+
+
+void Gui::setCamImage(QImage* image)
+{
+	// set image from OpenGL context to Qt frame!
+	//ui.frameCamera->setImage((unsigned char*)frame->imageData);
+
+	// try it with qimage instead of iplImage...
+	ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
+
+/*
+	// save pic, when ckecked in GUI
+	if ( ui.checkBoxAutoSave->isChecked() )
+	{
+		saveCamImage();
+	}
+*/
+}

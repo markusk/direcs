@@ -53,7 +53,7 @@ class Network : public QThread
 
 	signals:
 		/// Emits TODO: text
-		void dataComplete(QString text);
+		void dataComplete(QImage* image);
 		
 		/**
 		Emits a info message to a slot.
@@ -88,7 +88,7 @@ class Network : public QThread
 		int httpGetId;
 		bool httpRequestAborted;
 		QString filename;
-		QImage image;
+		QImage *image;
 	
 		// Every  sleeps some time, for having a bit more time fo the other s!
 		// Time in milliseconds
