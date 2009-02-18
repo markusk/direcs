@@ -8,12 +8,14 @@ HEADERS += gui.h \
            direcs-remote.h \
            plotThread.h \
            laserScene.h \
-           laserThread.h
+           laserThread.h \
+           network.h
 SOURCES += gui.cpp \
            direcs-remote.cpp \
            plotThread.cpp \
            laserScene.cpp \
-           laserThread.cpp
+           laserThread.cpp \
+           network.cpp
 TARGET = ../bin/direcs-remote
 CONFIG += debug \
 warn_on \

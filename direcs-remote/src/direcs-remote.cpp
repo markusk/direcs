@@ -32,6 +32,7 @@ DirecsRemote::DirecsRemote()
 	udpSocket = new QUdpSocket(this);
 	plotThread = new PlotThread();
 	laserThread = new LaserThread();
+	network = new Network();
 	
 	udpSocketReceiver = new QUdpSocket(this);
 	udpSocketReceiver->bind( gui->getPort() + 1 );
@@ -201,6 +202,7 @@ DirecsRemote::~DirecsRemote()
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
+	delete network;
 	delete laserThread;
 	delete plotThread;
 	delete udpSocketReceiver;

@@ -100,7 +100,7 @@
       <autocompile>true</autocompile>
       <envvars/>
       <globaldebugarguments/>
-      <globalcwd>/home/markus/develop/direcs/direcs-remote</globalcwd>
+      <globalcwd>/home/markus/develop/direcs/direcs-remote/bin</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>

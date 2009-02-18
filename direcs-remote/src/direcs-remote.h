@@ -5,6 +5,7 @@
 #include "gui.h"
 #include "plotThread.h"
 #include "laserThread.h"
+#include "network.h"
 
 #include <QtGui>
 #include <QtNetwork>
@@ -63,6 +64,7 @@ class DirecsRemote : public QObject
 		Gui *gui;
 		PlotThread *plotThread;
 		LaserThread *laserThread;
+		Network *network;
 		QUdpSocket *udpSocket;
 		QUdpSocket *udpSocketReceiver;
 
