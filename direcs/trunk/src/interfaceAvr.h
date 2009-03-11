@@ -106,6 +106,9 @@ class InterfaceAvr : public QObject
 		DirecsSerial *serialPort;
 #endif
 		bool robotState;
+		
+		static const bool ON  = true;   /** For robot is "ON" */
+		static const bool OFF = false;  /** For robot is "OFF" */
 };
 
 #endif
