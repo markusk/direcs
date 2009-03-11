@@ -319,6 +319,7 @@ class Direcs : public QObject
 		int mot4Speed;
 		int minimumSpeed;
 		int maximumSpeed;
+		unsigned int value;
 		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.

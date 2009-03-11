@@ -50,6 +50,11 @@ class NetworkThread : public QThread
 		Starts the thread.
 		*/
 		virtual void run();
+		
+		/**
+		Sets the network port
+		*/
+		void setPort(unsigned int port);
 	
 	
 	public slots:
@@ -76,12 +81,11 @@ class NetworkThread : public QThread
 	private:
 		QUdpSocket *udpSocket;
 		volatile bool stopped;
+		unsigned int networkPort;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 1000; // Default: 25 ms  (old: 5 ms)
-
-		static const int PORT = 45454;
 };
 
 #endif

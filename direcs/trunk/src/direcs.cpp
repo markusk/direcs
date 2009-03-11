@@ -2732,6 +2732,30 @@ void Direcs::readSettings()
 		}
 	}
 	gui->appendLog("Servo default settings read and set.");
+
+	//---------------------------------------------------------------------
+	// read setting
+	value = inifile1->readSetting("Config", "networkPort");
+
+	switch (value)
+	{
+		case -2:
+			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			value = 0;
+			break;
+		case -1:
+			gui->appendLog("<font color=\"#FF0000\">Value \"networkPort\" not found in ini-file!</font>");
+			value = 0;
+			break;
+		default:
+			#ifndef _ARM_ // only include in _non_ ARM environments!
+			// set value in networkThread
+			netThread->setPort(value);
+			#endif
+			// show text
+			gui->appendLog(QString("Network port to <b>%1</b>.").arg(value));
+			break;
+	}
 }
 
 
