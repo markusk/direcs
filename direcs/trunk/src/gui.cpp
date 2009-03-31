@@ -2132,10 +2132,11 @@ void Gui::initCompass()
 #endif
 	colorGroup.setColor(QPalette::Foreground, colorGroup.color(QPalette::Base));
 
+/* mk
 	QwtCompass *compass = new QwtCompass(this);
 	compass->setLineWidth(4);
 	compass->setFrameShadow(pos <= 2 ? QwtCompass::Sunken : QwtCompass::Raised);
-
+*/
             /*
 	A compass with a rotating needle in darkBlue. Shows
 	a ticks for each degree.
@@ -2145,13 +2146,13 @@ void Gui::initCompass()
 	colorGroup.setColor(QPalette::Foreground, QColor(Qt::darkBlue).dark(120));
 	colorGroup.setColor(QPalette::Text, Qt::white);
 
-	compass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
-	compass->setScaleTicks(1, 1, 3);
-	compass->setScale(36, 5, 0);
+	ui.qwtCompass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
+	ui.qwtCompass->setScaleTicks(1, 1, 3);
+	ui.qwtCompass->setScale(36, 5, 0);
 
-	compass->setNeedle(new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::ThinStyle));
-	compass->setValue(220.0);
-
+	ui.qwtCompass->setNeedle(new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::ThinStyle));
+	ui.qwtCompass->setValue(220.0);
+/*
 	QPalette newPalette = compass->palette();
 	for ( c = 0; c < QPalette::NColorRoles; c++ )
 	{
@@ -2171,18 +2172,14 @@ void Gui::initCompass()
 	{
 		QPalette::ColorGroup cg = (QPalette::ColorGroup)i;
 
-		const QColor light = 
-				newPalette.color(cg, QPalette::Base).light(170);
+		const QColor light = newPalette.color(cg, QPalette::Base).light(170);
 		const QColor dark = newPalette.color(cg, QPalette::Base).dark(170);
-		const QColor mid = compass->frameShadow() == QwtDial::Raised
-				? newPalette.color(cg, QPalette::Base).dark(110)
-			: newPalette.color(cg, QPalette::Base).light(110);
-    
+		const QColor mid = compass->frameShadow() == QwtDial::Raised ? newPalette.color(cg, QPalette::Base).dark(110) : newPalette.color(cg, QPalette::Base).light(110);
 		newPalette.setColor(cg, QPalette::Dark, dark);
 		newPalette.setColor(cg, QPalette::Mid, mid);
 		newPalette.setColor(cg, QPalette::Light, light);
 	}
 	compass->setPalette(newPalette);
-
+*/
 	// return compass;
 }
