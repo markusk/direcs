@@ -101,6 +101,12 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	initPlots();
 
+	
+	//----------------------------------------------------------------------------
+	// Compass stuff
+	//----------------------------------------------------------------------------
+	initCompass();
+
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
@@ -2101,4 +2107,82 @@ void Gui::initPlots()
 	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curve4.setPen(QPen(col));
 	curve4.setBrush(col);
+}
+
+
+void Gui::initCompass()
+{
+	int pos=0;
+	
+	//needle.draw();
+	//ui.qwtCompass->setTitle("huhu");
+	
+	int c;
+
+	QPalette colorGroup;
+	for ( c = 0; c < QPalette::NColorRoles; c++ )
+	{
+		colorGroup.setColor((QPalette::ColorRole)c, QColor());
+	}
+
+#if QT_VERSION < 0x040000
+	colorGroup.setColor(QPalette::Base, backgroundColor().light(120));
+#else
+	colorGroup.setColor(QPalette::Base, palette().color(backgroundRole()).light(120));
+#endif
+	colorGroup.setColor(QPalette::Foreground, colorGroup.color(QPalette::Base));
+
+	QwtCompass *compass = new QwtCompass(this);
+	compass->setLineWidth(4);
+	compass->setFrameShadow(pos <= 2 ? QwtCompass::Sunken : QwtCompass::Raised);
+
+            /*
+	A compass with a rotating needle in darkBlue. Shows
+	a ticks for each degree.
+			*/
+
+	colorGroup.setColor(QPalette::Base, Qt::darkBlue);
+	colorGroup.setColor(QPalette::Foreground, QColor(Qt::darkBlue).dark(120));
+	colorGroup.setColor(QPalette::Text, Qt::white);
+
+	compass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
+	compass->setScaleTicks(1, 1, 3);
+	compass->setScale(36, 5, 0);
+
+	compass->setNeedle(new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::ThinStyle));
+	compass->setValue(220.0);
+
+	QPalette newPalette = compass->palette();
+	for ( c = 0; c < QPalette::NColorRoles; c++ )
+	{
+		if ( colorGroup.color((QPalette::ColorRole)c).isValid() )
+		{
+			for ( int cg = 0; cg < QPalette::NColorGroups; cg++ )
+			{   
+				newPalette.setColor(
+									(QPalette::ColorGroup)cg, 
+									 (QPalette::ColorRole)c, 
+									  colorGroup.color((QPalette::ColorRole)c));
+			}
+		}
+	}
+
+	for ( int i = 0; i < QPalette::NColorGroups; i++ )
+	{
+		QPalette::ColorGroup cg = (QPalette::ColorGroup)i;
+
+		const QColor light = 
+				newPalette.color(cg, QPalette::Base).light(170);
+		const QColor dark = newPalette.color(cg, QPalette::Base).dark(170);
+		const QColor mid = compass->frameShadow() == QwtDial::Raised
+				? newPalette.color(cg, QPalette::Base).dark(110)
+			: newPalette.color(cg, QPalette::Base).light(110);
+    
+		newPalette.setColor(cg, QPalette::Dark, dark);
+		newPalette.setColor(cg, QPalette::Mid, mid);
+		newPalette.setColor(cg, QPalette::Light, light);
+	}
+	compass->setPalette(newPalette);
+
+	// return compass;
 }

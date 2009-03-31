@@ -44,6 +44,9 @@
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
 //-------------------------------------------------------------------
+#include <qwt_compass.h>
+#include <qwt_dial_needle.h>
+//-------------------------------------------------------------------
 #include "QtGLContext.h"
 
 
@@ -370,6 +373,7 @@ class Gui : public QMainWindow
 
 	private:
 		void initPlots();
+		void initCompass();
 
 		/**
 		Creates all objects, lines, scene, view etc.
@@ -386,6 +390,7 @@ class Gui : public QMainWindow
 		QwtPlotCurve curve2;
 		QwtPlotCurve curve3;
 		QwtPlotCurve curve4;
+		QwtCompassMagnetNeedle needle;
 		QPixmap cameraPicToSave;
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
