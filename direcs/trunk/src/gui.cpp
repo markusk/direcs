@@ -2137,11 +2137,12 @@ void Gui::initCompass()
 	compass->setLineWidth(4);
 	compass->setFrameShadow(pos <= 2 ? QwtCompass::Sunken : QwtCompass::Raised);
 */
-            /*
+        /*
 	A compass with a rotating needle in darkBlue. Shows
 	a ticks for each degree.
-			*/
-
+	*/
+/*
+// no 2
 	colorGroup.setColor(QPalette::Base, Qt::darkBlue);
 	colorGroup.setColor(QPalette::Foreground, QColor(Qt::darkBlue).dark(120));
 	colorGroup.setColor(QPalette::Text, Qt::white);
@@ -2151,19 +2152,31 @@ void Gui::initCompass()
 	ui.qwtCompass->setScale(36, 5, 0);
 
 	ui.qwtCompass->setNeedle(new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::ThinStyle));
-	ui.qwtCompass->setValue(220.0);
-/*
-	QPalette newPalette = compass->palette();
+	ui.qwtCompass->setValue(0.0); // 0 degress = north
+*/
+
+// no 4
+            /*
+             A compass showing another needle
+             */
+            ui.qwtCompass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
+            ui.qwtCompass->setScaleTicks(0, 0, 3);
+
+            ui.qwtCompass->setNeedle(new QwtCompassMagnetNeedle( QwtCompassMagnetNeedle::TriangleStyle, Qt::white, Qt::red));
+            ui.qwtCompass->setValue(0.0);
+
+
+
+	// get palette
+	QPalette newPalette = ui.qwtCompass->palette();
+
 	for ( c = 0; c < QPalette::NColorRoles; c++ )
 	{
 		if ( colorGroup.color((QPalette::ColorRole)c).isValid() )
 		{
 			for ( int cg = 0; cg < QPalette::NColorGroups; cg++ )
 			{   
-				newPalette.setColor(
-									(QPalette::ColorGroup)cg, 
-									 (QPalette::ColorRole)c, 
-									  colorGroup.color((QPalette::ColorRole)c));
+				newPalette.setColor( (QPalette::ColorGroup)cg, (QPalette::ColorRole)c, colorGroup.color((QPalette::ColorRole)c));
 			}
 		}
 	}
@@ -2174,12 +2187,14 @@ void Gui::initCompass()
 
 		const QColor light = newPalette.color(cg, QPalette::Base).light(170);
 		const QColor dark = newPalette.color(cg, QPalette::Base).dark(170);
-		const QColor mid = compass->frameShadow() == QwtDial::Raised ? newPalette.color(cg, QPalette::Base).dark(110) : newPalette.color(cg, QPalette::Base).light(110);
+		const QColor mid = ui.qwtCompass->frameShadow() == QwtDial::Raised ? newPalette.color(cg, QPalette::Base).dark(110) : newPalette.color(cg, QPalette::Base).light(110);
 		newPalette.setColor(cg, QPalette::Dark, dark);
 		newPalette.setColor(cg, QPalette::Mid, mid);
 		newPalette.setColor(cg, QPalette::Light, light);
 	}
-	compass->setPalette(newPalette);
-*/
+	
+	// set new palette
+	ui.qwtCompass->setPalette(newPalette);
+
 	// return compass;
 }
