@@ -5,8 +5,18 @@ ui_*.h
 qrc_*.cpp
 moc_*.cpp
 
+*.eep
+*.elf
+*.hex
+*.lss
+*.lst
+*.map
+*.sym
+
 Makefile
 
 direcs/trunk/bin/
 direcs/trunk/tmp/
 direcs-remote/bin/
+
+direcs-avr/.dep/

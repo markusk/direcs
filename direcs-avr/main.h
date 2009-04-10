@@ -91,6 +91,11 @@
 #include <stdlib.h> // für utoa und itoa
 #include <avr/delay.h>
 
+// for i2c (micromag3 sensor)
+#include "i2c/i2cmaster.h"
+// #include "i2c/atmega2560board.h"
+
+
 #include "usart.h"
 #include "adconv.h"
 #include "ultra.h"
