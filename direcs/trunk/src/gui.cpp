@@ -2198,3 +2198,9 @@ void Gui::initCompass()
 
 	// return compass;
 }
+
+
+void Gui::setCompass(double degree)
+{
+	ui.qwtCompass->setValue(degree);
+}
