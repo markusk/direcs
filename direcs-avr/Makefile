@@ -37,7 +37,7 @@ TARGET = main
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c usart.c adconv.c ultra.c pwm.c servo.c
+SRC = $(TARGET).c usart.c adconv.c ultra.c pwm.c servo.c micromag.c
 
 
 # List Assembler source files here.

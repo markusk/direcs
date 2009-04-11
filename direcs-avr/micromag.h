@@ -10,7 +10,7 @@
 */
 
 
-#define F_CPU 12000000
+//#define F_CPU 12000000
 #define BAUD 9600
 #define UBRR (((F_CPU / (BAUD * 16UL))) - 1)
 
@@ -34,18 +34,21 @@
 
 #include <avr/io.h>
 #include <string.h>
-#include <util/delay.h>
+// org: #include <util/delay.h>
+#include <avr/delay.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 
  //Forward declarations
-int main();
+int test();
+/*
 void init_serial();
 void lcd_clear();
 void lcd_writec(unsigned char c);
 void lcd_writes(char *s);
 void lcd_line2();
+*/
 void init_spi();
 uint8_t spi_comm(uint8_t data);
