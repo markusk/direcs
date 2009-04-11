@@ -659,6 +659,7 @@ ultrasonic Sensors temporarily removed from robot!!
 
 		} // simulation = false
 
+
 		//====================================================================
 		//  e m i t  Signal
 		//====================================================================
@@ -939,7 +940,6 @@ void SensorThread::setSimulationMode(bool state)
 		xAxis = READ_AXIS_X;
 		yAxis = READ_AXIS_Y;
 		zAxis = READ_AXIS_Z;
-		qDebug("sensor threas sim mode enabled x=%d...", xAxis);
 	}
 	else
 	{
@@ -973,7 +973,6 @@ void SensorThread::setSimulationMode(bool state)
 		xAxis = 0;
 		yAxis = 0;
 		zAxis = 0;
-		qDebug("sensor threas sim mode disabled.");
 	}
 }
 
@@ -987,7 +986,6 @@ int SensorThread::getCompassValue(unsigned char axis)
 			break;
 		case READ_AXIS_Y:
 			return yAxis;
-			break;
 			break;
 		case READ_AXIS_Z:
 			return zAxis;
