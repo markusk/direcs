@@ -25,8 +25,8 @@ uint16_t rightDistanceCounter = 0;
 int main(void)
 {
 	uint8_t redLEDtoggle = 0;
-	
-	
+
+
 	// stores the serial received command
 	uint16_t value = 0;
 
@@ -42,7 +42,7 @@ int main(void)
 	//-----------------
 	// I/O definitions
 	//-----------------
-	
+
 	// switch port C bits to input / output
 	//
 	// Bit0 = yellow LED
@@ -51,13 +51,13 @@ int main(void)
 	// Bit3 = ultrasonic echo (input)
 	//
 	DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC4) | (1 << DDC5) | (1 << DDC6) | (1 << DDC7);
-	
+
 	// switch some bits on port EA to output (*red* onBoard LED)
 	DDRD |= (1 << DDD5);
 
 	// switch some bits on port A to input (camera pan tilt end switches)
 	//DDRA &= ~((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3));
-	
+
 	// switch port L (all PINS) to output [drive motor 1 to 3]
 	DDRL = 0xff;
 
@@ -65,7 +65,7 @@ int main(void)
 	DDRD = (1 << DDD6) | (1 << DDD7);
 	// switch some bits on port G to output [motor 4 pwm]
 	DDRG |= (1<<PIN5);
-	
+
 	// switch port H (all PINS) to output [servos]
 	DDRH = 0xff;
 	// switch some bits on port E to output [2 more servos]
@@ -75,7 +75,7 @@ int main(void)
 	PORTC |= (1<<PIN0);
 	// flashlight off
 	PORTC &= ~(1<<PIN1);
-	
+
 	// turn all drive motor bits off (except PWM bits)
 	// motor 1
 	PORTL &= ~(1<<PIN0);
@@ -89,7 +89,7 @@ int main(void)
 	// motor 4
 	PORTD &= ~(1<<PIN6);
 	PORTD &= ~(1<<PIN7);
-	
+
 	// turn OFF "power saving mode" for ADC (analof digital converters)!
 	// (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
@@ -100,7 +100,7 @@ int main(void)
 	// this is *here* for setting the interrupt control registers
 	//-------------------------------------------------------------
 	cli();
-	
+
 	// switch some bits on port J to input
 	//
 	// Bit3 = Motor 1 Encoder 1
@@ -134,12 +134,12 @@ int main(void)
 	// activate the pins which can cause an interrupt
 	// At this time use only the FORWARD sensor to generate an interrupt
 	PCMSK2 =  (1 << PCINT16) | (1 << PCINT17) | (1 << PCINT18) | (1 << PCINT19);
-	
+
 	//----------------------------------------------------------------------------
 	// enable global interrupts
 	//----------------------------------------------------------------------------
 	sei();
-	
+
 	// initialize the PWM timer (with compare value 100)  [this is the motor speed!]
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 100 * 64 µs = 6400 µs = 6,4 ms
@@ -155,7 +155,7 @@ int main(void)
 
 	// start the motor PWM timers
 	startPWM();
-	
+
 	/*
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
@@ -166,7 +166,7 @@ int main(void)
 	setServoPosition(4, 19); // <- exact position now in the mrs.ini!
 	setServoPosition(5, 24); // <- exact position now in the mrs.ini!
 	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-	
+
 	// start the servo PWM timer
 	startPWMServo(1);
 	startPWMServo(2);
@@ -207,8 +207,8 @@ int main(void)
 		// react on the received command
 		//--------------------------------
 		value = UsartReceive();
-		
-		
+
+
 		switch (value)
 		{
 			case INIT:
@@ -247,7 +247,7 @@ int main(void)
 				// this answer is used to see if the robot is "on"
 				UsartTransmit( (uint8_t)(64) );
 				break;
-			
+
 			//-------------------------------
 			case READ_SENSOR_1:
 				// read value from the analog digital converter (ADC)
@@ -320,7 +320,7 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-				
+
 			case READ_SENSOR_16:
 				// ultra sonic sensor !!
 				value = ultraschall_messung();
@@ -329,7 +329,7 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-				
+
 			case READ_MOTOR_SENSOR1:
 				// motor sensor
 				value = readADC(SENSORMOTOR1);
@@ -338,7 +338,7 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-				
+
 			case READ_MOTOR_SENSOR2:
 				// motor sensor
 				value = readADC(SENSORMOTOR2);
@@ -347,7 +347,7 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-			
+
 			case READ_MOTOR_DISTANCE1:
 				// driven distance of motor 1 (encoder)
 				value = rightDistanceCounter;
@@ -356,7 +356,7 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-			
+
 			case READ_MOTOR_DISTANCE2:
 				// driven distance of motor 2 (encoder)
 				value = leftDistanceCounter;
@@ -365,13 +365,13 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-			
+
 			case RESET_MOTOR_DISTANCE1:
 				// reset driven distance of motor 1 (encoder)
 				rightDistanceCounter = 0;
 				rightWheelCounter = 0;
 				break;
-			
+
 			case RESET_MOTOR_DISTANCE2:
 				// reset driven distance of motor 1 (encoder)
 				leftDistanceCounter = 0;
@@ -581,52 +581,79 @@ int main(void)
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
 				break;
+
+			case READ_AXIS_X:
+				// read x axis from the micromag3 sensor
+				value = readMicromag(READ_AXIS_X);
+				// send MS-Byte
+				UsartTransmit( (uint8_t)(value >> 8) );
+				// send LS-Byte
+				UsartTransmit( (uint8_t)(value) );
+				break;
+
+			case READ_AXIS_Y:
+				// read x axis from the micromag3 sensor
+				value = readMicromag(READ_AXIS_Y);
+				// send MS-Byte
+				UsartTransmit( (uint8_t)(value >> 8) );
+				// send LS-Byte
+				UsartTransmit( (uint8_t)(value) );
+				break;
+
+			case READ_AXIS_Z:
+				// read x axis from the micromag3 sensor
+				value = readMicromag(READ_AXIS_Z);
+				// send MS-Byte
+				UsartTransmit( (uint8_t)(value >> 8) );
+				// send LS-Byte
+				UsartTransmit( (uint8_t)(value) );
+				break;
 /*
 			//-------------------------------
 			case STEPPER1_OFF:
 				// disable stepper motor 1
 				PORTA &= ~(1<<PIN1);
 				break;
-				
+
 			case STEPPER2_OFF:
 				// disable stepper motor 2
 				PORTA &= ~(1<<PIN3);
 				break;
-				
+
 			case STEPPER1_ON:
 				// enable stepper motor 1
 				PORTA |= (1<<PIN1);
 				break;
-				
+
 			case STEPPER2_ON:
 				// enable stepper motor 2
 				PORTA |= (1<<PIN3);
 				break;
-				
+
 			case STEPPER1_CLOCKWISE:
-				// set stepper motor 1 to cw 
+				// set stepper motor 1 to cw
 				PORTA &= ~(1<<PIN2);
 				break;
-				
+
 			case STEPPER2_CLOCKWISE:
-				// set stepper motor 2 to cw 
+				// set stepper motor 2 to cw
 				PORTA &= ~(1<<PIN4);
 				break;
-				
+
 			case STEPPER1_COUNTERCLOCKWISE:
-				// set stepper motor 1 to ccw 
+				// set stepper motor 1 to ccw
 				PORTA |= (1<<PIN2);
 				break;
-				
+
 			case STEPPER2_COUNTERCLOCKWISE:
-				// set stepper motor 2 to ccw 
+				// set stepper motor 2 to ccw
 				PORTA |= (1<<PIN4);
 				break;
-				
+
 			case STEPPER_CLOCK:
 				// set stepper motor clock to high
 				PORTA |= (1<<PIN0);
-				// and then to low 
+				// and then to low
 				PORTA &= ~(1<<PIN0);
 				break;
 */
@@ -650,7 +677,7 @@ int main(void)
 		}
 	} // while (1)
 
-	
+
 	// this line is never reached!
 	return 0;
 }
@@ -666,23 +693,23 @@ SIGNAL(PCINT1_vect)
 	//
 	// At each interrupt the wheel moves:  195 mm / 240 = 1,783 mm.
 	// For 10 mm (1 cm) we need:  10 mm / 1,783mm = 5,60747 interrupts  ->  After 6 interruupts the robot moves 10 mm (1 cm).
-	
-	
+
+
 	//static uint8_t value = 0;
-	
-	
+
+
 	//----------------------------
 	// if left wheel moves
 	//----------------------------
 	if ( bit_is_set(PINJ,PIN3) )
 	{
 		leftWheelCounter++;
-		
+
 		if (leftWheelCounter == 6)
 		{
 			leftDistanceCounter++;
 			leftWheelCounter = 0;
-			
+
 			/*
 			//
 			// TEST TEST TEST
@@ -703,14 +730,14 @@ SIGNAL(PCINT1_vect)
 			*/
 		}
 	}
-	
+
 	//----------------------------
 	// if right wheel moves
 	//----------------------------
 	if ( bit_is_set(PINJ,PIN6) )
 	{
 		rightWheelCounter++;
-		
+
 		if (rightWheelCounter == 6)
 		{
 			rightDistanceCounter++;
@@ -737,7 +764,7 @@ SIGNAL(PCINT2_vect)
 	{
 //		camPanLSwitch = 0;
 	}
-	
+
 	//----------------------------
 	// if Cam Pan R switch set
 	//----------------------------
@@ -752,7 +779,7 @@ SIGNAL(PCINT2_vect)
 	{
 //		camPanRSwitch = 0;
 	}
-	
+
 	//----------------------------
 	// if Cam Tilt L/TOP switch set
 	//----------------------------
@@ -767,7 +794,7 @@ SIGNAL(PCINT2_vect)
 	{
 //		camTiltLSwitch = 0;
 	}
-	
+
 	//----------------------------
 	// if Cam Tilt R/BOTTOM switch set
 	//----------------------------
