@@ -24,7 +24,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 {
 	stopped = false;
 	simulationMode = false;
-	
+
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
@@ -38,7 +38,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRSensorValue[SENSOR6] = 0;
 	iRSensorValue[SENSOR7] = 0;
 	iRSensorValue[SENSOR8] = 0;
-	
+
 	// initialisation
 	for (int i=0; i<USSENSORARRAYSIZE; i++)
 	{
@@ -57,6 +57,11 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	{
 		contactValue[i] = 0;
 	}
+
+	// init the 3D compass values
+	xAxis = 99;
+	yAxis = 0;
+	zAxis = 0;
 
 
 	// These are the measured values from the AD-Conversion from the IR-Sensors
@@ -133,8 +138,8 @@ void SensorThread::run()
 	//bool result = false;
 	int value = 0;
 	unsigned char cValue = 0;
-	
-	
+
+
 	//
 	//  start "threading"...
 	//
@@ -143,17 +148,17 @@ void SensorThread::run()
 		// let the thread sleep some time
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-		
-		
+
+
 		if (simulationMode == false)
 		{
 
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-			
+			mutex->lock(); // TODO: do a lock direct before a interface call!!
+
 /*
 infrared Sensors temporarily removed from robot!!
-			
+
 			//------------------------------------------------------
 			// read value from sensor 1
 			//------------------------------------------------------
@@ -164,7 +169,7 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s1 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 16 Bit answer from the MC
 			if (interface1->receiveInt(&value) == false)
 			{
@@ -172,13 +177,13 @@ infrared Sensors temporarily removed from robot!!
 				mutex->unlock();
 			}
 			//interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR1] = value;
 			//qDebug("received value sensor1: %d", value);
 			value = 0;
 
-			
+
 			//------------------------------------------------------
 			// read value from sensor 2
 			//------------------------------------------------------
@@ -189,17 +194,17 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s2 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR2] = value;
 			//qDebug("received value sensor2: %d", value);
 			value = 0;
 
-			
+
 			//------------------------------------------------------
 			// read value from sensor 3
 			//------------------------------------------------------
@@ -210,17 +215,17 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s3 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR3] = value;
 			//qDebug("received value sensor3: %d", value);
 			value = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read value from sensor 4
 			//------------------------------------------------------
@@ -231,17 +236,17 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s4 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR4] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read value from sensor 5
 			//------------------------------------------------------
@@ -252,17 +257,17 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s5 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR5] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
 
-			
+
 			//------------------------------------------------------
 			// read value from sensor 6
 			//------------------------------------------------------
@@ -273,18 +278,18 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s6 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 			//qDebug("Received value: %d", value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR6] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read value from sensor 7
 			//------------------------------------------------------
@@ -295,17 +300,17 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s7 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR7] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read value from sensor 8
 			//------------------------------------------------------
@@ -316,11 +321,11 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s8 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			iRSensorValue[SENSOR8] = value;
 			//qDebug("received value sensor4: %d", value);
@@ -328,8 +333,8 @@ infrared Sensors temporarily removed from robot!!
 
 infrared Sensors temporarily removed from robot!!
 			//====================================================================
-	
-		
+
+
 			//---------------------------------------------------------------------
 			// command "16" means "read value from sensor 16" ultra sonic sensor!
 			//---------------------------------------------------------------------
@@ -340,23 +345,23 @@ infrared Sensors temporarily removed from robot!!
 				qDebug("ERROR s16 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-		
+
 			// store measured values in the sensor values array
 			usSensorValue[0] = value;
 			//qDebug("received value sensor5: %d", value);
 			value = 0;
-			
+
 ultrasonic Sensors temporarily removed from robot!!
 */
-	
-			
+
+
 			//====================================================================
-			
-			
+
+
 			//------------------------------------------------------
 			// read value from sensor motor 1
 			//------------------------------------------------------
@@ -367,19 +372,19 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR m1 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
-			
+
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
-			
+
 			// store measured values in the array
 			motorSensorValue[MOTORSENSOR1] = value;
 			value = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read value from sensor motor 2
 			//------------------------------------------------------
@@ -390,26 +395,26 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR m2 sending to serial port (SensorThread)");
 				return;
 			}
-			
-			
+
+
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 			//qDebug("Received value motor1: %d", value);
-			
+
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
-			
+
 			// store measured values in the array
 			motorSensorValue[MOTORSENSOR2] = value;
 			value = 0;
-			
-			
+
+
 			// TODO: add suport for motors 3 and 4 !  Also in AVR Atmel source code!
-			
+
 			//====================================================================
-			
-			
+
+
 			//------------------------------------------------------
 			// read driven distance from motor 1 (encoder sensor)
 			//------------------------------------------------------
@@ -420,16 +425,16 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR md1 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 			//qDebug("Received value motor1: %d", value);
-			
+
 			// store measured values in the array
 			drivenDistance[MOTORSENSOR1] = value;
 			value = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read driven distance from motor 2 (encoder sensor)
 			//------------------------------------------------------
@@ -440,19 +445,19 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR md2 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 			//qDebug("Received value motor1: %d", value);
-			
+
 			// store measured values in the array
 			drivenDistance[MOTORSENSOR2] = value;
 			value = 0;
-			
-			
+
+
 			//====================================================================
-			
-			
+
+
 			//------------------------------------------------------
 			// read value of contact 1 (cam pan L)
 			//------------------------------------------------------
@@ -463,14 +468,14 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR c1 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 8 Bit answer from the MC **8 bit**
 			interface1->receiveChar(&cValue);
-			
+
 			// store measured value
 			contactValue[CONTACT1] = cValue;
-			
-			// emit 
+
+			// emit
 			if (cValue == 0)
 			{
 				emit contactAlarm(LEFT, false);
@@ -482,8 +487,8 @@ ultrasonic Sensors temporarily removed from robot!!
 
 			cValue = 0;
 
-			
-			
+
+
 			//------------------------------------------------------
 			// read value of contact 2 (cam pan R)
 			//------------------------------------------------------
@@ -494,14 +499,14 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR c2 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 8 Bit answer from the MC **8 bit**
 			interface1->receiveChar(&cValue);
-			
+
 			// store measured value
 			contactValue[CONTACT2] = cValue;
-			
-			// emit 
+
+			// emit
 			if (cValue == 0)
 			{
 				emit contactAlarm(RIGHT, false);
@@ -512,8 +517,8 @@ ultrasonic Sensors temporarily removed from robot!!
 			}
 
 			cValue = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read value of contact 3 (cam tilt L/TOP)
 			//------------------------------------------------------
@@ -524,14 +529,14 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR c3 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 8 Bit answer from the MC **8 bit**
 			interface1->receiveChar(&cValue);
-			
+
 			// store measured value
 			contactValue[CONTACT3] = cValue;
-			
-			// emit 
+
+			// emit
 			if (cValue == 0)
 			{
 				emit contactAlarm(TOP, false);
@@ -542,8 +547,8 @@ ultrasonic Sensors temporarily removed from robot!!
 			}
 
 			cValue = 0;
-			
-			
+
+
 			//------------------------------------------------------
 			// read value of contact 4 (cam tilt R/BOTTOM)
 			//------------------------------------------------------
@@ -554,14 +559,14 @@ ultrasonic Sensors temporarily removed from robot!!
 				qDebug("ERROR c4 sending to serial port (SensorThread)");
 				return;
 			}
-			
+
 			// receive the 8 Bit answer from the MC **8 bit**
 			interface1->receiveChar(&cValue);
-			
+
 			// store measured value
 			contactValue[CONTACT4] = cValue;
-			
-			// emit 
+
+			// emit
 			if (cValue == 0)
 			{
 				emit contactAlarm(BOTTOM, false);
@@ -572,16 +577,93 @@ ultrasonic Sensors temporarily removed from robot!!
 			}
 
 			cValue = 0;
-			
+
+
+
+			//====================================================================
+
+
+			//------------------------------------------------------
+			// read x value from magnetic sensor
+			//------------------------------------------------------
+			if (interface1->sendChar(READ_AXIS_X) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				qDebug("ERROR x sending to serial port (SensorThread)");
+				return;
+			}
+
+			// receive the 16 Bit answer from the MC
+			interface1->receiveInt(&value);
+
+			// send value over the network
+			// *0m42# means motorsensor1 with 42 mA
+			// emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1))); // TODO: which string for the axes?!
+
+			// store measured value
+			xAxis = value;
+			value = 0;
+
+
+			//------------------------------------------------------
+			// read y value from magnetic sensor
+			//------------------------------------------------------
+			if (interface1->sendChar(READ_AXIS_Y) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				qDebug("ERROR y sending to serial port (SensorThread)");
+				return;
+			}
+
+			// receive the 16 Bit answer from the MC
+			interface1->receiveInt(&value);
+
+			// send value over the network
+			// *0m42# means motorsensor1 with 42 mA
+			// emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1))); // TODO: which string for the axes?!
+
+			// store measured value
+			yAxis = value;
+			value = 0;
+
+
+			//------------------------------------------------------
+			// read z value from magnetic sensor
+			//------------------------------------------------------
+			if (interface1->sendChar(READ_AXIS_Z) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				qDebug("ERROR z sending to serial port (SensorThread)");
+				return;
+			}
+
+			// receive the 16 Bit answer from the MC
+			interface1->receiveInt(&value);
+
+			// send value over the network
+			// *0m42# means motorsensor1 with 42 mA
+			// emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1))); // TODO: which string for the axes?!
+
+			// store measured value
+			zAxis = value;
+			value = 0;
+
+
+			//====================================================================
 			// Unlock the mutex.
+			//====================================================================
 			mutex->unlock();
 
 		} // simulation = false
-		
+
 		//====================================================================
 		//  e m i t  Signal
 		//====================================================================
 		emit sensorDataComplete();
+
 	}
 	stopped = false;
 }
@@ -590,19 +672,19 @@ ultrasonic Sensors temporarily removed from robot!!
 int SensorThread::convertToDistance(int sensorValue)
 {
 	unsigned char calibrationValue = 8;
-	
-	
+
+
 	// search the array for the measured value
 	for (int n=0; n<=(IRSENSORARRAYSIZE-1); n++)
 	{
-		if (sensorValue >= iRDistance[n]) 
+		if (sensorValue >= iRDistance[n])
 		{
 			// return the index number plus calibration value
 			// (this IS the measured distance in cm!!)
 			return (n+calibrationValue);
 		}
 	}
-	
+
 	// value not found in the array
 	// return the highest DISTANCE (the highest index number plus calibration value!)
 	return (IRSENSORARRAYSIZE + calibrationValue);
@@ -612,8 +694,8 @@ int SensorThread::convertToDistance(int sensorValue)
 int SensorThread::convertToSensorValue(int distance)
 {
 	unsigned char calibrationValue = 8;
-	
-	
+
+
 	if ((distance-calibrationValue) <= 0)
 	{
 		return iRDistance[0];
@@ -623,7 +705,7 @@ int SensorThread::convertToSensorValue(int distance)
 	{
 		return iRDistance[IRSENSORARRAYSIZE-1];
 	}
-	
+
 	return (iRDistance[distance-calibrationValue]);
 }
 
@@ -635,8 +717,8 @@ int SensorThread::getMAmpere(int sensor)
 		qDebug("ERROR sensorThread, getMAmpere: wrong motor sensor");
 		return 0;
 	}
-	
-	
+
+
 	// convert the measured value to mili Ampere (mA)
 	//
 	// sensorValue 29 = 1000 mili Ampere (mA)
@@ -653,7 +735,7 @@ int SensorThread::getContactValue(int contact)
 		qDebug("ERROR sensorThread, getContactValue: wrong contact number");
 		return 0;
 	}
-	
+
 	// typecasting for convenience!
 	return (int) contactValue[contact];
 }
@@ -666,7 +748,7 @@ int SensorThread::getIrSensorValue(int sensor)
 		qDebug("ERROR: wrong ir sensor");
 		return 0;
 	}
-	
+
 	return iRSensorValue[sensor];
 }
 
@@ -677,48 +759,48 @@ Returns the distance in centimeters from an infrared sensor.
 int SensorThread::getDistance(int sensor)
 {
 	int distance = 0;
-	
+
 	if ((sensor < SENSOR1) || (sensor > SENSOR8))
 	{
 		qDebug("ERROR: wrong ir sensor");
 		return 0;
 	}
-	
+
 	// get the stored distance
 	distance = convertToDistance(iRSensorValue[sensor]);
-	
+
 	//qDebug("sensor: %1", sensor);
-	
+
 	//--------------------------------------------------------------------------------------
 	// correct the value from sensors because of their position on the bot
 	// e.g. the measured distance from the sensor is not the same then this from the bot.
 	//--------------------------------------------------------------------------------------
 	if (sensor == SENSOR1) // sensor front left
 		distance -= 9;
-	
+
 	if (sensor == SENSOR2) // sensor front right
 		distance -= 9;
-	
+
 	if (sensor == SENSOR3) // sensor back right
 		distance -= 9;
-	
+
 	if (sensor == SENSOR4) // sensor back left
 		distance -= 7;
-	
+
 	if (sensor == SENSOR5) // sensor left
 		distance -= 1;
-	
+
 	if (sensor == SENSOR6) // front senor (under the laser)
 		distance -= 19;
-	
+
 	if (sensor == SENSOR7) // sensor right
 		distance -= 1;
-	
+
 	if (sensor == SENSOR8) // middle back senor
 		distance -= 9;
-	
-	
-	
+
+
+
 	return distance;
 }
 
@@ -730,7 +812,7 @@ int SensorThread::getDrivenDistance(int sensor)
 		qDebug("ERROR: wrong motor sensor");
 		return 0;
 	}
-	
+
 	return drivenDistance[sensor];
 }
 
@@ -745,9 +827,9 @@ void SensorThread::resetDrivenDistance(int sensor)
 
 	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 	mutex->lock();
-	
+
 	//------------------------------------------------------
-	// reset 
+	// reset
 	//------------------------------------------------------
 	switch (sensor)
 	{
@@ -786,20 +868,20 @@ int SensorThread::getUsSensorValue(int sensor)
 	// So this value is substracted from the returned result to give the distance from the robot to the next obstacle
 	// (and not the distance from the sensor to the next obstacle)
 	unsigned char calibrationValue = 53;
-	
-	
+
+
 	if ((sensor < SENSOR16) || (sensor > SENSOR16))
 	{
 		qDebug("ERROR: wrong us sensor");
 		return 0;
 	}
-	
+
 	switch (sensor)
 	{
 		case SENSOR16:
 			return (usSensorValue[0] - calibrationValue);
 	}
-	
+
 	// this line is never reached
 	return 0;
 }
@@ -810,14 +892,14 @@ int SensorThread::getMotorSensorValue(int sensor)
 	//
 	// These values were NOT converted at any point in this method!
 	//
-	
+
 	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSORARRAYSIZE-1))
 	{
 		qDebug("ERROR: wrong motor sensor");
 		return 0;
 	}
-	
-	
+
+
 	return motorSensorValue[sensor];
 }
 
@@ -825,7 +907,7 @@ int SensorThread::getMotorSensorValue(int sensor)
 void SensorThread::setSimulationMode(bool state)
 {
 	simulationMode = state;
-	
+
 	// fill array with some nice values
 	if (simulationMode == true)
 	{
@@ -839,20 +921,25 @@ void SensorThread::setSimulationMode(bool state)
 		iRSensorValue[SENSOR6] = convertToSensorValue(40);
 		iRSensorValue[SENSOR7] = convertToSensorValue(10);
 		iRSensorValue[SENSOR8] = convertToSensorValue(59);
-		
+
 		// all values in cm
 		usSensorValue[0] = 28;
-		
+
 		motorSensorValue[MOTORSENSOR1] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 		motorSensorValue[MOTORSENSOR2] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 		motorSensorValue[MOTORSENSOR3] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 		motorSensorValue[MOTORSENSOR4] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
-		
+
 		// initialisation
 		for (int i=0; i<CONTACTARRAYSIZE; i++)
 		{
 			contactValue[i] = 0;
 		}
+
+		xAxis = READ_AXIS_X;
+		yAxis = READ_AXIS_Y;
+		zAxis = READ_AXIS_Z;
+		qDebug("sensor threas sim mode enabled x=%d...", xAxis);
 	}
 	else
 	{
@@ -864,23 +951,49 @@ void SensorThread::setSimulationMode(bool state)
 		iRSensorValue[SENSOR6] = 0;
 		iRSensorValue[SENSOR7] = 0;
 		iRSensorValue[SENSOR8] = 0;
-		
+
 		// initialisation
 		for (int i=0; i<USSENSORARRAYSIZE; i++)
 		{
 			usSensorValue[i] = 53; // +53 = 0cm from the bot
 		}
-	
+
 		// initialisation
 		for (int i=0; i<MOTORSENSORARRAYSIZE; i++)
 		{
 			motorSensorValue[i] = 0;
 		}
-	
+
 		// initialisation
 		for (int i=0; i<CONTACTARRAYSIZE; i++)
 		{
 			contactValue[i] = 0;
 		}
+
+		xAxis = 0;
+		yAxis = 0;
+		zAxis = 0;
+		qDebug("sensor threas sim mode disabled.");
 	}
+}
+
+
+int SensorThread::getCompassValue(unsigned char axis)
+{
+	switch (axis)
+	{
+		case READ_AXIS_X:
+			return xAxis;
+			break;
+		case READ_AXIS_Y:
+			return yAxis;
+			break;
+			break;
+		case READ_AXIS_Z:
+			return zAxis;
+			break;
+	}
+
+	// this line should never be reached!
+	return -1;
 }

@@ -110,6 +110,12 @@ class SensorThread : public QThread
 		*/
 		int getContactValue(int contact);
 
+		/**
+		@return The measured x, y and z value from the 3D magnetic compass module (micromag3).
+		@param axis is the x, y or z axis.
+		*/
+		int getCompassValue(unsigned char axis);
+
 
 	public slots:
 		/**
@@ -216,6 +222,14 @@ class SensorThread : public QThread
 		For example, a measured sensor value for a motor sensor is 100, this multiplied with a conversion factor 29 results in 290 mA.
 		*/
 		static const unsigned char CONVERSIONFACTORMOTORSENSOR = 29;
+
+		/**
+		The x, y and z  axis value from the 3D magnetic sensor
+		 */
+		int xAxis;
+		int yAxis;
+		int zAxis;
+
 
 		/**
 		 Give the contacts for the pan tilt cam end positions some nice names
