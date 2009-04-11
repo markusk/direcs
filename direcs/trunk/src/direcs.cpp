@@ -188,6 +188,9 @@ void Direcs::init()
 	connect(circuit1, SIGNAL( robotState(bool) ), interface1, SLOT( setRobotState(bool) ));
 //	connect(circuit1, SIGNAL( robotState(bool) ), heartbeat, SLOT( setRobotState(bool) ));
 	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
+	// this is needed, when the openCOMPort method fails:
+	connect(this, SIGNAL( robotState(bool) ), interface1, SLOT( setRobotState(bool) ));
+	//FIXME: no sensorThread, when acivating this: connect(this, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 
 	//--------------------------------------------------------------------------
 	// shutdown Direcs program on exit button
@@ -391,6 +394,9 @@ void Direcs::init()
 
 		// no serial port, no robot :-(
 		robotIsOn = false;
+		
+		// this tells all the interface method that the robot is OFF!
+		emit robotState(false);
 	}
 	else
 	{
@@ -1740,9 +1746,8 @@ void Direcs::showSensorData()
 	//--------------------------------------------------------------------
 	gui->setCompass( sensorThread->getCompassValue(READ_AXIS_X) );
 
-	// TODO: do something with this values
+	// TODO: do something with the axis values
 	//gui->appendLog( QString("x=%1 / x=%2 / z=%3").arg(sensorThread->getCompassValue(READ_AXIS_X)).arg(sensorThread->getCompassValue(READ_AXIS_Y)).arg(sensorThread->getCompassValue(READ_AXIS_Z)) );
-	gui->appendLog( QString("x=%1 / x=%2 / z=%3").arg(sensorThread->getCompassValue(READ_AXIS_X)).arg(sensorThread->getCompassValue(READ_AXIS_Y)).arg(sensorThread->getCompassValue(READ_AXIS_Z)) );
 }
 
 

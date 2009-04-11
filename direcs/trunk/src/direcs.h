@@ -224,6 +224,13 @@ class Direcs : public QObject
 
 	signals:
 		/**
+		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
+		This is called, when the "openCOMPort" method fails!!
+		@param state can be ON or OFF
+		*/
+		void robotState(bool state);
+		
+		/**
 		Shows the preferred driving direction of the robot in the GUI
 		@sa logicalUnit()
 		*/
