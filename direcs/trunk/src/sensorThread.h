@@ -41,12 +41,12 @@ class SensorThread : public QThread
 	public:
 		SensorThread(InterfaceAvr *i, QMutex *m);
 		~SensorThread();
-		
+
 		/**
 		Stops the thread.
 		*/
 		void stop();
-		
+
 		/**
 		Starts the thread.
 		*/
@@ -57,31 +57,31 @@ class SensorThread : public QThread
 		@param sensor is the sensor number.
 		*/
 		int getIrSensorValue(int sensor);
-		
+
 		/**
 		@return The value of an ultrasonic sensor.
 		@param sensor is the sensor number.
 		*/
 		int getUsSensorValue(int sensor);
-		
+
 		/**
 		@return The value of a motor sensor.
 		@param sensor is the sensor number.
 		*/
 		int getMotorSensorValue(int sensor);
-		
+
 		/**
 		@return The distance in cm, of a sensor.
 		@param sensor is the sensor number.
 		*/
 		int getDistance(int sensor);
-		
+
 		/**
 		@return The driven distance in cm, of a wheel encoder.
 		@param sensor is the sensor number.
 		*/
 		int getDrivenDistance(int sensor);
-		
+
 		/**
 		Converts a infrared sensor value to a distance in cm.
 		@param sensorValue is the measured sensor value.
@@ -89,7 +89,7 @@ class SensorThread : public QThread
 		@sa convertToSensorValue()
 		*/
 		int convertToDistance(int sensorValue);
-		
+
 		/**
 		Converts a distance in cm to an infrared sensor value.
 		@param distance is the distance in cm.
@@ -97,27 +97,27 @@ class SensorThread : public QThread
 		@sa convertToDistance()
 		*/
 		int convertToSensorValue(int distance);
-		
+
 		/**
 		@return The measured motor sensor value in milli Ampere (mA).
 		@param motor is the motor number.
 		*/
 		int getMAmpere(int motor);
-		
+
 		/**
 		@return The 'measured' contact value. 0 if OFF; unequal to 0 if set.
 		@param contact is the contact number.
 		*/
 		int getContactValue(int contact);
-		
-	
+
+
 	public slots:
 		/**
 		Resets the driven distance to 0.
 		@param sensor is the sensor number.
 		*/
 		void resetDrivenDistance(int sensor);
-		
+
 		/**
 		This slot enables or disables the simulation mode.
 		In the simulation mode all sensor values are set to a fixed value. No real sensor values are read from the robot, when set to true.
@@ -139,7 +139,7 @@ class SensorThread : public QThread
 		@sa Direcs::showContactAlarm()
 		*/
 		void contactAlarm(char position, bool state);
-		
+
 		/**
 		Sends a string over the network.
 		*/
@@ -151,7 +151,7 @@ class SensorThread : public QThread
 		InterfaceAvr *interface1;
 		volatile bool stopped;
 		bool simulationMode;
-		
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms  (old: 5 ms)
@@ -169,10 +169,10 @@ class SensorThread : public QThread
 		static const short int SENSOR6 = 32;
 		static const short int SENSOR7 = 64;
 		static const short int SENSOR8 = 128;
-		
+
 		// ultrasonic sensor
 		static const short int SENSOR16 = 256;
-		
+
 		// 5 sensors + 1 = 16
 		// This just for convenience to call the array index by the sensor names.
 		// (wastin' some memory ;-) )
@@ -182,35 +182,35 @@ class SensorThread : public QThread
 		// For example:  iRSensorValue[SENSOR4] = 0;
 		//
 		int iRSensorValue[SENSOR8+1]; // ToDo: array mit 129 Werten statt 8 für 8 Sensoren !!! Überleg dir was !!!
-		
+
 		/** defines the size of the iRDistance[] array !! */
 		static const unsigned char IRSENSORARRAYSIZE = 40;
 		int iRDistance[IRSENSORARRAYSIZE];
-		
+
 		/**
 		Defines the size of the usSensorValue[] array
 		This es equal to the number of ultrasonic sensors.
 		*/
 		static const unsigned char USSENSORARRAYSIZE = 1;
 		int usSensorValue[USSENSORARRAYSIZE];
-		
+
 		/**
 		Defines the size of the motorSensorValue[] array
 		This es equal to the number of motor sensors.
 		*/
 		static const unsigned char MOTORSENSORARRAYSIZE = 4;
 		int motorSensorValue[MOTORSENSORARRAYSIZE];
-		
+
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 		static const short int MOTORSENSOR3 = 2;
 		static const short int MOTORSENSOR4 = 3;
-		
+
 		// defines the size of the drivenDistance[] array
 		// This es equal to the number of motors!
 		static const unsigned char DRIVENDISTANCEARRAYSIZE = 2;
 		int drivenDistance[DRIVENDISTANCEARRAYSIZE];
-		
+
 		/**
 		Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.
 		For example, a measured sensor value for a motor sensor is 100, this multiplied with a conversion factor 29 results in 290 mA.
@@ -233,7 +233,7 @@ class SensorThread : public QThread
 
 		static const unsigned char CONTACTARRAYSIZE = 4;
 		char contactValue[CONTACTARRAYSIZE];
-		
+
 		//
 		// the "serial" commands for the MC
 		//
@@ -246,16 +246,20 @@ class SensorThread : public QThread
 		static const unsigned char READ_SENSOR_7  = 7;
 		static const unsigned char READ_SENSOR_8  = 8;
 		static const unsigned char READ_SENSOR_16 = 16;
-		
+
 		static const unsigned char READ_MOTOR_SENSOR1 = 28;
 		static const unsigned char READ_MOTOR_SENSOR2 = 29;
-		
+
 		static const unsigned char READ_MOTOR_DISTANCE1	= 30;
 		static const unsigned char READ_MOTOR_DISTANCE2	= 31;
-		
-		static const short int RESET_MOTOR_DISTANCE1 = 32;
-		static const short int RESET_MOTOR_DISTANCE2 = 33;
-		
+
+		static const short int RESET_MOTOR_DISTANCE1 = 32; // TODO: why int instead of char? Where else?
+		static const short int RESET_MOTOR_DISTANCE2 = 33; // TODO: why int instead of char? Where else?
+
+		static const unsigned char READ_AXIS_X = 61;
+		static const unsigned char READ_AXIS_Y = 62;
+		static const unsigned char READ_AXIS_Z = 63;
+
 		static const unsigned char READ_CONTACT1 = 70;
 		static const unsigned char READ_CONTACT2 = 71;
 		static const unsigned char READ_CONTACT3 = 72;
