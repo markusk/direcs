@@ -13,6 +13,23 @@
 #include "micromag.h"
 
 
+uint16_t readMicromag(unsigned char axis)
+{
+	switch (axis)
+	{
+		case READ_AXIS_X:
+			return READ_AXIS_X; // TODO: measure and return the real value
+			break;
+		case READ_AXIS_Y:
+			return READ_AXIS_Y; // TODO: measure and return the real value
+			break;
+		case READ_AXIS_Z:
+			return READ_AXIS_Z; // TODO: measure and return the real value
+			break;
+	}
+}
+
+
  int test()
  {
     //char s[20];

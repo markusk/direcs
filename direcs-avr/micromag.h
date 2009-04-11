@@ -32,6 +32,12 @@
 #define DD_RST DDB5
 
 
+#define	READ_AXIS_X				61
+#define	READ_AXIS_Y				62
+#define	READ_AXIS_Z				63
+
+
+
 #include <avr/io.h>
 #include <string.h>
 // org: #include <util/delay.h>
@@ -50,5 +56,13 @@ void lcd_writec(unsigned char c);
 void lcd_writes(char *s);
 void lcd_line2();
 */
+
+/**
+read axis value from micromag3 sensor
+@return the axis value
+@param the axis x, y or z (can be READ_AXIS_X, READ_AXIS_Y or READ_AXIS_Z)
+*/
+uint16_t readMicromag(unsigned char axis);
+
 void init_spi();
 uint8_t spi_comm(uint8_t data);
