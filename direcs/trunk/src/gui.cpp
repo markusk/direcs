@@ -27,7 +27,7 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	settingsDialog = s;
 	joystickDialog = j;
 	aboutDialog = a;
-	
+
 	robotIsOn = false;
 	laserXPos = 0; // correct value is set in the initLaserView()
 	laserYPos = 0; // correct value is set in the initLaserView()
@@ -95,13 +95,13 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
 
-	
+
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
 	initPlots();
 
-	
+
 	//----------------------------------------------------------------------------
 	// Compass stuff
 	//----------------------------------------------------------------------------
@@ -118,8 +118,8 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
-	
-	
+
+
 	//----------------------------------
 	// change text of buttons
 	//----------------------------------
@@ -2112,11 +2112,6 @@ void Gui::initPlots()
 
 void Gui::initCompass()
 {
-	int pos=0;
-	
-	//needle.draw();
-	//ui.qwtCompass->setTitle("huhu");
-	
 	int c;
 
 	QPalette colorGroup;
@@ -2132,38 +2127,16 @@ void Gui::initCompass()
 #endif
 	colorGroup.setColor(QPalette::Foreground, colorGroup.color(QPalette::Base));
 
-/* mk
-	QwtCompass *compass = new QwtCompass(this);
-	compass->setLineWidth(4);
-	compass->setFrameShadow(pos <= 2 ? QwtCompass::Sunken : QwtCompass::Raised);
-*/
-        /*
-	A compass with a rotating needle in darkBlue. Shows
-	a ticks for each degree.
-	*/
-/*
-// no 2
-	colorGroup.setColor(QPalette::Base, Qt::darkBlue);
-	colorGroup.setColor(QPalette::Foreground, QColor(Qt::darkBlue).dark(120));
-	colorGroup.setColor(QPalette::Text, Qt::white);
 
+	// no 4
+	/*
+	 A compass showing another needle
+	 */
 	ui.qwtCompass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
-	ui.qwtCompass->setScaleTicks(1, 1, 3);
-	ui.qwtCompass->setScale(36, 5, 0);
+	ui.qwtCompass->setScaleTicks(0, 0, 3);
 
-	ui.qwtCompass->setNeedle(new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::ThinStyle));
-	ui.qwtCompass->setValue(0.0); // 0 degress = north
-*/
-
-// no 4
-            /*
-             A compass showing another needle
-             */
-            ui.qwtCompass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
-            ui.qwtCompass->setScaleTicks(0, 0, 3);
-
-            ui.qwtCompass->setNeedle(new QwtCompassMagnetNeedle( QwtCompassMagnetNeedle::TriangleStyle, Qt::white, Qt::red));
-            ui.qwtCompass->setValue(0.0);
+	ui.qwtCompass->setNeedle(new QwtCompassMagnetNeedle( QwtCompassMagnetNeedle::TriangleStyle, Qt::white, Qt::red));
+	ui.qwtCompass->setValue(0.0);
 
 
 
@@ -2175,7 +2148,7 @@ void Gui::initCompass()
 		if ( colorGroup.color((QPalette::ColorRole)c).isValid() )
 		{
 			for ( int cg = 0; cg < QPalette::NColorGroups; cg++ )
-			{   
+			{
 				newPalette.setColor( (QPalette::ColorGroup)cg, (QPalette::ColorRole)c, colorGroup.color((QPalette::ColorRole)c));
 			}
 		}
@@ -2192,11 +2165,9 @@ void Gui::initCompass()
 		newPalette.setColor(cg, QPalette::Mid, mid);
 		newPalette.setColor(cg, QPalette::Light, light);
 	}
-	
+
 	// set new palette
 	ui.qwtCompass->setPalette(newPalette);
-
-	// return compass;
 }
 
 
