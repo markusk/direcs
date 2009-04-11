@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	// Initialize the resource file
 	Q_INIT_RESOURCE(direcs);
-	
+
 	// The QApplication class manages the GUI application's control flow and main settings.
 	QApplication app(argc, argv);
 
@@ -43,19 +43,19 @@ int main(int argc, char *argv[])
 	// show the splash screen
 	splash.show();
 	splash.showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
-	
+
 #else
-	
+
 	// The QCoreApplication class provides an event loop for console Qt applications.
 	QCoreApplication app(argc, argv);
-	
+
 	// create Direcs class object
 	Direcs d;
-	
+
 	// shutdown, when the program quits (e.g. Ctrl+C was pressed)
 	//connect(app, SIGNAL( aboutToQuit() ), d, SLOT( shutdown() ));
 #endif
-	
+
 	// init direcs
 	d.init();
 
@@ -96,7 +96,7 @@ Direcs::Direcs()
 #else
 	gui = new Gui();
 #endif
-	
+
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
@@ -117,7 +117,7 @@ Direcs::Direcs()
 	joystick = new Joystick();
 	head = new Head(servos);
 
-	
+
 	#ifdef _ARM_ // only include on ARM environments!
 	//--------------------------------------------------------------------------------
 	// Convert the Unix signal to the QSocketNotifier::activated() signal effectively.
@@ -127,14 +127,14 @@ Direcs::Direcs()
 
 	if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sigtermFd))
 		qFatal("Couldn't create TERM socketpair");
-	
+
 	snHup = new QSocketNotifier(sighupFd[1], QSocketNotifier::Read, this);
 	connect(snHup, SIGNAL(activated(int)), this, SLOT(handleSigHup()));
 	snTerm = new QSocketNotifier(sigtermFd[1], QSocketNotifier::Read, this);
 	connect(snTerm, SIGNAL(activated(int)), this, SLOT(handleSigTerm()));
 	qDebug("signals connected");
 	#endif
-	
+
 }
 
 
@@ -170,7 +170,7 @@ void Direcs::init()
 	//------------------------------------------------------------------
 	QLocale::setDefault(QLocale::German);
 	commaSeparator = ",";
-	
+
 	//--------------------------------------------------------------------------
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
@@ -235,7 +235,7 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
 #endif
-	
+
 	//--------------------------------------------------------------------------
 	// let the GUI show servo messages in the log
 	//--------------------------------------------------------------------------
@@ -293,8 +293,8 @@ void Direcs::init()
 		qDebug("ERROR: return 2");
 	#endif
 	*/
-	
-	
+
+
 	#ifndef _ARM_ // only include on _non_ ARM environments!
 	//----------------------------------------------------------------------------
 	// Initialize the speech engine festival
@@ -451,7 +451,7 @@ void Direcs::init()
 			// for refreshing the splash...
 			QApplication::processEvents();
 			#endif
-		
+
 			gui->appendLog("Starting heartbeat thread...", false);
 			heartbeat->start();
 			gui->appendLog("Heartbeat thread started.");
@@ -468,7 +468,7 @@ void Direcs::init()
 			// for refreshing the splash...
 			QApplication::processEvents();
 			#endif
-			
+
 			gui->appendLog("Starting sensor thread...", false);
 			sensorThread->start();
 			gui->appendLog("Sensor thread started.");
@@ -483,7 +483,7 @@ void Direcs::init()
 			splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
-			
+
 			gui->appendLog("Starting plot thread...", false);
 			plotThread->start();
 			gui->appendLog("Plot thread started.");
@@ -510,7 +510,7 @@ void Direcs::init()
 		// for refreshing the splash...
 		QApplication::processEvents();
 		#endif
-		
+
 		gui->appendLog("Starting joystick thread...", false);
 		joystick->start();
 		gui->appendLog("Joystick thread started.");
@@ -609,7 +609,7 @@ void Direcs::init()
 	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
 	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
 	#endif
-	
+
 	//------------------------------------------------------------------------------
 	// connect laserThread signal to networkThread
 	// (Whenever laserscanner data are read, send the data over the network thread)
@@ -674,7 +674,7 @@ void Direcs::init()
 	#else
 	qDebug() << "Searching front laser...";
 	#endif
-	
+
 	// check FRONT laser
 	laserScannerFrontFound = laserThread->isConnected(LASER1);
 
@@ -685,7 +685,7 @@ void Direcs::init()
 	#else
 	qDebug() << "Searching rear laser...";
 	#endif
-	
+
 	// check REAR laser
 	laserScannerRearFound = laserThread->isConnected(LASER2);
 
@@ -727,7 +727,7 @@ void Direcs::init()
 			// for refreshing the splash...
 			QApplication::processEvents();
 			#endif
-			
+
 			gui->appendLog("Starting Laser thread...", false);
 			laserThread->start();
 			gui->appendLog("Laser thread started.");
@@ -741,7 +741,7 @@ void Direcs::init()
 			// for refreshing the splash...
 			QApplication::processEvents();
 			#endif
-			
+
 			gui->appendLog("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			gui->appendLog("Obstacle check thread started.");
@@ -760,7 +760,7 @@ void Direcs::init()
 	settingsDialog->hide();
 	joystickDialog->hide();
 	aboutDialog->hide();
-	
+
 	//------------------------------------------------------------------
 	// for getting the screen resolution
 	//------------------------------------------------------------------
@@ -810,7 +810,7 @@ void Direcs::shutdown()
 		// for refreshing the splash...
 		QApplication::processEvents();
 		#endif
-		
+
 		// just 4 fun
 		if (robotIsOn)
 		{
@@ -837,7 +837,7 @@ void Direcs::shutdown()
 			// for refreshing the splash...
 			QApplication::processEvents();
 			#endif
-			
+
 			// save gui slider values
 			inifile1->writeSetting("Config", "motor1Speed", settingsDialog->getSliderMotorSpeed(1));
 			inifile1->writeSetting("Config", "motor2Speed", settingsDialog->getSliderMotorSpeed(2));
@@ -1313,7 +1313,7 @@ void Direcs::showSplashMessage(QString text)
 	QApplication::processEvents();
 	#else
 	QByteArray textForConsole;
-	
+
 	//------------------------------
 	// remove HTML tags from string
 	//------------------------------
@@ -1329,7 +1329,7 @@ void Direcs::showSplashMessage(QString text)
 		}
 	} while (text.contains(">"));
 	// till the last HTML ">" is found
-	
+
 	// print text to console
 	// qDebug() << text; is NOT used, because it adds quotation marks to all strings
 	textForConsole = text.toLatin1();
@@ -1734,6 +1734,15 @@ void Direcs::showSensorData()
 	//--------------------------------------------------------------
 	gui->showDrivenDistance(MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1));
 	gui->showDrivenDistance(MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2));
+
+	//--------------------------------------------------------------------
+	// show x, y and z axis values in the GUI (frim the micromag sensor)
+	//--------------------------------------------------------------------
+	gui->setCompass( sensorThread->getCompassValue(READ_AXIS_X) );
+
+	// TODO: do something with this values
+	//gui->appendLog( QString("x=%1 / x=%2 / z=%3").arg(sensorThread->getCompassValue(READ_AXIS_X)).arg(sensorThread->getCompassValue(READ_AXIS_Y)).arg(sensorThread->getCompassValue(READ_AXIS_Z)) );
+	gui->appendLog( QString("x=%1 / x=%2 / z=%3").arg(sensorThread->getCompassValue(READ_AXIS_X)).arg(sensorThread->getCompassValue(READ_AXIS_Y)).arg(sensorThread->getCompassValue(READ_AXIS_Z)) );
 }
 
 
@@ -1771,7 +1780,7 @@ void Direcs::drive(const unsigned char command)
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
-			
+
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -1784,7 +1793,7 @@ void Direcs::drive(const unsigned char command)
 			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
-			
+
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
@@ -1797,7 +1806,7 @@ void Direcs::drive(const unsigned char command)
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
-			
+
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
@@ -1810,7 +1819,7 @@ void Direcs::drive(const unsigned char command)
 			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
-			
+
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -2029,11 +2038,11 @@ void Direcs::readSettings()
 			// everything okay
 			laserThread->setSerialPort(LASER1, serialPortLaserscannerFront);
 			gui->appendLog(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
-			
+
 			//---------------------------------------------------------------------
 			// read next laser setting
 			mountingLaserscanner = inifile1->readString("Config", "mountingLaserscannerFront");
-		
+
 			if (mountingLaserscanner == "error2")
 			{
 				laserThread->setMounting(LASER1, "normal");
@@ -2077,11 +2086,11 @@ void Direcs::readSettings()
 			// everything okay
 			laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
 			gui->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
-			
+
 			//---------------------------------------------------------------------
 			// read next laser setting
 			mountingLaserscanner = inifile1->readString("Config", "mountingLaserscannerRear");
-		
+
 			if (mountingLaserscanner == "error2")
 			{
 				laserThread->setMounting(LASER2, "normal");
@@ -2186,7 +2195,7 @@ void Direcs::readSettings()
 						splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
 						// for refreshing the splash...
 						QApplication::processEvents();
-						
+
 						// initialise the cam
 						if (camThread->init())
 						{
@@ -2891,7 +2900,7 @@ void Direcs::executeRemoteCommand(QString command)
 			#endif
 			return;
 		}
-		
+
 		if (command == "shutdown")
 		{
 			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
@@ -2992,7 +3001,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 					{
 						drive(START);
 					}
-	
+
 					drive(FORWARD);
 				}
 			}
@@ -3062,17 +3071,17 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				#endif
-				
+
 				if (robotIsOn)
 				{
 					motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 					motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
-	
+
 					if (robotDrives == false)
 					{
 						drive(START);
 					}
-	
+
 					drive(RIGHT);
 				}
 			}
@@ -3098,17 +3107,17 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				#endif
-				
+
 				if (robotIsOn)
 				{
 					motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 					motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
-		
+
 					if (robotDrives == false)
 					{
 						drive(START);
 					}
-		
+
 					drive(LEFT);
 				}
 			}
@@ -3420,7 +3429,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 			}
 		}
-		
+
 		//==================
 		// drive test mode
 		//==================
@@ -3443,13 +3452,13 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 						// TODO: check if this makes sense...
 						drive(START);
 					}
-	
+
 					drive(RIGHT);
 				}
 			}
 			return;
 		}
-		
+
 		//------------------------------------------------------
 		// drive left (X5 axis/button left)
 		//------------------------------------------------------
@@ -3469,13 +3478,13 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 						// TODO: check if this makes sense...
 						drive(START);
 					}
-	
+
 					drive(LEFT);
 				}
 			}
 			return;
 		}
-		
+
 		//------------------------------------------------------
 		// wait (X5 axis/button)
 		//------------------------------------------------------
@@ -3703,7 +3712,7 @@ void Direcs::setRobotState(bool state)
 void Direcs::speak(QString text)
 {
 	Q_UNUSED(text);
-	
+
 	#ifdef _TTY_POSIX_ // only available on Linux! :-)
 	int start= -1;
 
@@ -3776,7 +3785,7 @@ void Direcs::handleSigHup()
 
 	// do Qt stuff
 	qDebug("SigHup recognized.");
-	
+
 	snHup->setEnabled(true);
 }
 
