@@ -15,22 +15,71 @@
 
 uint16_t readMicromag(unsigned char axis)
 {
+	int16_t value = 0;
+	
+
 	switch (axis)
 	{
 		case READ_AXIS_X:
-			return READ_AXIS_X; // TODO: measure and return the real value
+			/*
+			// x axis
+			PORT_SPI &= ~(1<<DD_SS);
+			//Pulse RST
+			PORT_SPI |= (1<<DD_RST);
+			_delay_ms(1);
+			PORT_SPI &= ~(1<<DD_RST);
+			// org: spi_comm(0b01110001);
+			spi_comm(113);
+			while(!(PIN_SPI & (1<<DD_RDY)));
+			value = (spi_comm(0) << 8) | spi_comm(0);
+			PORT_SPI |= (1<<DD_SS);
+			return value;
+			*/
+			return READ_AXIS_X;
 			break;
 		case READ_AXIS_Y:
+			/*
+			// y axis
+			PORT_SPI &= ~(1<<DD_SS);
+			//Pulse RST
+			PORT_SPI |= (1<<DD_RST);
+			_delay_ms(1);
+			PORT_SPI &= ~(1<<DD_RST);
+			// org: spi_comm(0b01110010);
+			spi_comm(114);
+			while(!(PIN_SPI & (1<<DD_RDY)));
+			value = (spi_comm(0) << 8) | spi_comm(0);
+			PORT_SPI |= (1<<DD_SS);
+			return value;
+			*/
 			return READ_AXIS_Y; // TODO: measure and return the real value
 			break;
 		case READ_AXIS_Z:
+			/*
+			//z axis
+			PORT_SPI &= ~(1<<DD_SS);
+			//Pulse RST
+			PORT_SPI |= (1<<DD_RST);
+			_delay_ms(1);
+			PORT_SPI &= ~(1<<DD_RST);
+			// org: spi_comm(0b01110011);
+			spi_comm(115);
+			while(!(PIN_SPI & (1<<DD_RDY)));
+			value = (spi_comm(0) << 8) | spi_comm(0);
+			PORT_SPI |= (1<<DD_SS);
+			return value;
+			*/
 			return READ_AXIS_Z; // TODO: measure and return the real value
 			break;
 	}
+
+	// this line should never be reached!
+	value = -1;
+	return value;
 }
 
 
- int test()
+int test(void)
  {
     //char s[20];
     int delay;
@@ -44,7 +93,7 @@ uint16_t readMicromag(unsigned char axis)
 
     for(;;)
     {
-       //x axis
+       // x axis
        PORT_SPI &= ~(1<<DD_SS);
        //Pulse RST
        PORT_SPI |= (1<<DD_RST);
@@ -57,7 +106,7 @@ uint16_t readMicromag(unsigned char axis)
        PORT_SPI |= (1<<DD_SS);
 
 
-       //y axis
+       // y axis
        PORT_SPI &= ~(1<<DD_SS);
        //Pulse RST
        PORT_SPI |= (1<<DD_RST);
@@ -70,7 +119,7 @@ uint16_t readMicromag(unsigned char axis)
        PORT_SPI |= (1<<DD_SS);
 
 
-       //z axis
+       // z axis
        PORT_SPI &= ~(1<<DD_SS);
        //Pulse RST
        PORT_SPI |= (1<<DD_RST);
@@ -153,7 +202,7 @@ uint16_t readMicromag(unsigned char axis)
  }
 */
 
- void init_spi()
+ void init_spi(void)
  {
 
     //SS high
