@@ -224,13 +224,6 @@ class Direcs : public QObject
 
 	signals:
 		/**
-		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
-		This is called, when the "openCOMPort" method fails!!
-		@param state can be ON or OFF
-		*/
-		void robotState(bool state);
-		
-		/**
 		Shows the preferred driving direction of the robot in the GUI
 		@sa logicalUnit()
 		*/
@@ -335,8 +328,8 @@ class Direcs : public QObject
 		/// The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;
 
-		static const bool ON  = true;   /** For motor "ON" */
-		static const bool OFF = false;  /** For motor "OFF" */
+		static const bool ON  = true;   /** For motor or robot "ON" */
+		static const bool OFF = false;  /** For motor or robot "OFF" */
 
 		/// Some driving directions for the robot. @sa drive() [Slot]
 		static const unsigned char FORWARD		= 1;

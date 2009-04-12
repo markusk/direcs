@@ -184,13 +184,14 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	// let some classes know the robots state
 	//--------------------------------------------------------------------------
-	connect(circuit1, SIGNAL( robotState(bool) ), this, SLOT( setRobotState(bool) ));
-	connect(circuit1, SIGNAL( robotState(bool) ), interface1, SLOT( setRobotState(bool) ));
-//	connect(circuit1, SIGNAL( robotState(bool) ), heartbeat, SLOT( setRobotState(bool) ));
-	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
-	// this is needed, when the openCOMPort method fails:
-	connect(this, SIGNAL( robotState(bool) ), interface1, SLOT( setRobotState(bool) ));
+	// this is needed, when the first openCOMPort method fails:
+	connect(interface1, SIGNAL( robotState(bool) ), sensorThread, SLOT( setRobotState(bool) ));
 	//FIXME: no sensorThread, when acivating this: connect(this, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
+	
+	// also set the robot to OFF, when there are problems with the circuit
+	connect(circuit1, SIGNAL( robotState(bool) ), this, SLOT( setRobotState(bool) ));
+	//connect(circuit1, SIGNAL( robotState(bool) ), heartbeat, SLOT( setRobotState(bool) ));
+	connect(circuit1, SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 
 	//--------------------------------------------------------------------------
 	// shutdown Direcs program on exit button
@@ -394,9 +395,6 @@ void Direcs::init()
 
 		// no serial port, no robot :-(
 		robotIsOn = false;
-		
-		// this tells all the interface method that the robot is OFF!
-		emit robotState(false);
 	}
 	else
 	{
