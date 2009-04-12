@@ -145,7 +145,7 @@ void Direcs::init()
 #endif
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
-	robotIsOn = false;
+// 	robotIsOn = false;
 	robotDrives = false;
 	mot1Speed = 0;
 	mot2Speed = 0;
@@ -190,7 +190,7 @@ void Direcs::init()
 	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
+//	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
 	
 	// also set the robot to OFF, when there are problems with the circuit
@@ -198,7 +198,7 @@ void Direcs::init()
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
+//	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
 
 	//--------------------------------------------------------------------------
@@ -402,10 +402,13 @@ void Direcs::init()
 		#endif
 
 		// no serial port, no robot :-(
-		robotIsOn = false;
+// 		robotIsOn = false;
 	}
 	else
 	{
+		//*******************
+		//* The robot is ON *
+		//*******************
 		gui->appendLog("Serial port opened.");
 
 
@@ -423,92 +426,89 @@ void Direcs::init()
 		connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 		connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 
-		//==========================================
+		//==========================
 		// init the robots circuit
-		//==========================================
-		circuit1->initCircuit();
-	}
-
-
-	if (robotIsOn)
-	{
-		gui->appendLog("Robot is <font color=\"#00FF00\">ON</font> and answers.");
-
-		//-------------------------------------------------------
-		// set the read motor speed
-		//-------------------------------------------------------
-		motors->setMotorSpeed(1, mot1Speed);
-		motors->setMotorSpeed(2, mot2Speed);
-		motors->setMotorSpeed(3, mot3Speed);
-		motors->setMotorSpeed(4, mot4Speed);
-		gui->appendLog("Motor speed set in microcontroller");
-
-		//-------------------------------------------------------
-		// move all servos in their default positions
-		//-------------------------------------------------------
-		/* TODO: temporarily deactivated (no servos mounted on the current robot)
-		servos->init();
-		gui->appendLog("Servos moved to default positions");
-		*/
-
-		// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
-		//-----------------------------------------------------------
-		// start the heartbeat thread
-		//-----------------------------------------------------------
-		/*
-		if (heartbeat->isRunning() == false)
+		//==========================
+		if (circuit1->initCircuit() == true)
 		{
+			gui->appendLog("Robot is <font color=\"#00FF00\">ON</font> and answers.");
+	
+			//-------------------------------------------------------
+			// set the read motor speed
+			//-------------------------------------------------------
+			motors->setMotorSpeed(1, mot1Speed);
+			motors->setMotorSpeed(2, mot2Speed);
+			motors->setMotorSpeed(3, mot3Speed);
+			motors->setMotorSpeed(4, mot4Speed);
+			gui->appendLog("Motor speed set in microcontroller");
+	
+			//-------------------------------------------------------
+			// move all servos in their default positions
+			//-------------------------------------------------------
+			/* TODO: temporarily deactivated (no servos mounted on the current robot)
+			servos->init();
+			gui->appendLog("Servos moved to default positions");
+			*/
+	
+			// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
+			//-----------------------------------------------------------
+			// start the heartbeat thread
+			//-----------------------------------------------------------
+			/*
+			if (heartbeat->isRunning() == false)
+			{
+				#ifndef _ARM_ // only include on _non_ ARM environments!
+				splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
+				// for refreshing the splash...
+				QApplication::processEvents();
+				#endif
+	
+				gui->appendLog("Starting heartbeat thread...", false);
+				heartbeat->start();
+				gui->appendLog("Heartbeat thread started.");
+			}
+			*/
+	
+			//-----------------------------------------------------------
+			// start the sensor thread for reading the sensors)
+			//-----------------------------------------------------------
+			if (sensorThread->isRunning() == false)
+			{
+				#ifndef _ARM_ // only include on _non_ ARM environments!
+				splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
+				// for refreshing the splash...
+				QApplication::processEvents();
+				#endif
+	
+				gui->appendLog("Starting sensor thread...", false);
+				sensorThread->start();
+				gui->appendLog("Sensor thread started.");
+			}
+	
 			#ifndef _ARM_ // only include on _non_ ARM environments!
-			splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
+			//-----------------------------------------------------------
+			// start the plot thread ("clock" for plotting the curves)
+			//-----------------------------------------------------------
+			if (plotThread->isRunning() == false)
+			{
+				splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
+				// for refreshing the splash...
+				QApplication::processEvents();
+	
+				gui->appendLog("Starting plot thread...", false);
+				plotThread->start();
+				gui->appendLog("Plot thread started.");
+			}
 			#endif
-
-			gui->appendLog("Starting heartbeat thread...", false);
-			heartbeat->start();
-			gui->appendLog("Heartbeat thread started.");
-		}
-		*/
-
-		//-----------------------------------------------------------
-		// start the sensor thread for reading the sensors)
-		//-----------------------------------------------------------
-		if (sensorThread->isRunning() == false)
+		} // init was successfull
+		else
 		{
-			#ifndef _ARM_ // only include on _non_ ARM environments!
-			splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
-			#endif
-
-			gui->appendLog("Starting sensor thread...", false);
-			sensorThread->start();
-			gui->appendLog("Sensor thread started.");
+			gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+			gui->appendLog("Heartbeat thread NOT started!");
+			gui->appendLog("Sensor thread NOT started!");
+			gui->appendLog("Plot thread NOT started!");
 		}
-
-		#ifndef _ARM_ // only include on _non_ ARM environments!
-		//-----------------------------------------------------------
-		// start the plot thread ("clock" for plotting the curves)
-		//-----------------------------------------------------------
-		if (plotThread->isRunning() == false)
-		{
-			splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
-
-			gui->appendLog("Starting plot thread...", false);
-			plotThread->start();
-			gui->appendLog("Plot thread started.");
-		}
-		#endif
-	}
-	else
-	{
-		gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-		gui->appendLog("Heartbeat thread NOT started!");
-		gui->appendLog("Sensor thread NOT started!");
-		gui->appendLog("Plot thread NOT started!");
-	}
+	} // robot is ON
 
 
 	//-----------------------------------------------------------
@@ -824,11 +824,8 @@ void Direcs::shutdown()
 		#endif
 
 		// just 4 fun
-		if (robotIsOn)
-		{
-			head->look("NORMAL");
-			head->look("DOWN");
-		}
+		head->look("NORMAL");
+		head->look("DOWN");
 
 		//---------------------------------------------------------------
 		// save changes to ini-file (if check box is checked!)
@@ -1567,7 +1564,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 		//head->look("NORMAL");
 		emit showFaceTrackDirection("NONE");
 
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			/*
 			motors->motorControl(MOTOR3, OFF, SAME);
@@ -1585,7 +1582,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track left
 	if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("LEFT");
 			/*
@@ -1600,7 +1597,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track right
 	if ( (faceX > xLevelRight) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("RIGHT");
 			/*
@@ -1615,7 +1612,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track up
 	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY < yLevelUp) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("UP");
 			/*
@@ -1630,7 +1627,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track up left
 	if ( (faceX < xLevelLeft) && (faceY < yLevelUp) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("UPLEFT");
 			/*
@@ -1645,7 +1642,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track up right
 	if ( (faceX > xLevelLeft) && (faceY < yLevelUp) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("UPRIGHT");
 			/*
@@ -1660,7 +1657,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track down
 	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY > yLevelDown) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("DOWN");
 			/*
@@ -1675,7 +1672,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track down left
 	if ( (faceX < xLevelLeft) && (faceY > yLevelDown) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("DOWNLEFT");
 			/*
@@ -1690,7 +1687,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	// track down right
 	if ( (faceX > xLevelRight) && (faceY > yLevelDown) )
 	{
-		if ( robotIsOn && (faceTrackingIsEnabled) )
+		if (faceTrackingIsEnabled)
 		{
 			head->look("DOWNRIGHT");
 			/*
@@ -1838,8 +1835,8 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case START:
-			if (robotIsOn)
-			{
+// 			if (robotIsOn)
+// 			{
 				robotDrives = true;
 				gui->appendLog("Starting to drive forward...");
 				gui->appendLog("START");
@@ -1852,13 +1849,13 @@ void Direcs::drive(const unsigned char command)
 				motors->motorControl(MOTOR2, ON, CLOCKWISE);
 				motors->motorControl(MOTOR3, ON, CLOCKWISE);
 				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-			}
-			else
-			{
-				// show message
-				gui->appendLog("<font color=\"#FF0000\">Robot is OFF!</font>");
-				robotDrives = false;
-			}
+// 			}
+// 			else
+// 			{
+// 				// show message
+// 				gui->appendLog("<font color=\"#FF0000\">Robot is OFF!</font>");
+// 				robotDrives = false;
+// 			}
 			return;
 			break;
 		case WAIT:
@@ -1897,100 +1894,64 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case MOTOR1FW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 1 forward");
-				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
-			}
+			gui->appendLog("Motor 1 forward");
+			gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR1BW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 1 backward");
-				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-				motors->motorControl(MOTOR1, ON, CLOCKWISE);
-			}
+			gui->appendLog("Motor 1 backward");
+			gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+			motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			break;
 		case MOTOR1OFF: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 1 OFF");
-				gui->showMotorStatus(MOTOR1, OFF, SAME);
-				motors->motorControl(MOTOR1, OFF, SAME);
-			}
+			gui->appendLog("Motor 1 OFF");
+			gui->showMotorStatus(MOTOR1, OFF, SAME);
+			motors->motorControl(MOTOR1, OFF, SAME);
 			break;
 		case MOTOR2FW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 2 forward");
-				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
-			}
+			gui->appendLog("Motor 2 forward");
+			gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR2BW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 2 backward");
-				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
-				motors->motorControl(MOTOR2, ON, CLOCKWISE);
-			}
+			gui->appendLog("Motor 2 backward");
+			gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+			motors->motorControl(MOTOR2, ON, CLOCKWISE);
 			break;
 		case MOTOR2OFF: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 2 OFF");
-				gui->showMotorStatus(MOTOR2, OFF, SAME);
-				motors->motorControl(MOTOR2, OFF, SAME);
-			}
+			gui->appendLog("Motor 2 OFF");
+			gui->showMotorStatus(MOTOR2, OFF, SAME);
+			motors->motorControl(MOTOR2, OFF, SAME);
 			break;
 		case MOTOR3FW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 3 forward");
-				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-			}
+			gui->appendLog("Motor 3 forward");
+			gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR3BW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 3 backward");
-				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
-				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-			}
+			gui->appendLog("Motor 3 backward");
+			gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			break;
 		case MOTOR3OFF: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 3 OFF");
-				gui->showMotorStatus(MOTOR3, OFF, SAME);
-				motors->motorControl(MOTOR3, OFF, SAME);
-			}
+			gui->appendLog("Motor 3 OFF");
+			gui->showMotorStatus(MOTOR3, OFF, SAME);
+			motors->motorControl(MOTOR3, OFF, SAME);
 			break;
 		case MOTOR4FW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 4 forward");
-				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-			}
+			gui->appendLog("Motor 4 forward");
+			gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR4BW: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 4 backward");
-				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
-				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-			}
+			gui->appendLog("Motor 4 backward");
+			gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+			motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			break;
 		case MOTOR4OFF: // for the test widget in the GUI!!
-			if (robotIsOn)
-			{
-				gui->appendLog("Motor 4 OFF");
-				gui->showMotorStatus(MOTOR4, OFF, SAME);
-				motors->motorControl(MOTOR4, OFF, SAME);
-			}
+			gui->appendLog("Motor 4 OFF");
+			gui->showMotorStatus(MOTOR4, OFF, SAME);
+			motors->motorControl(MOTOR4, OFF, SAME);
 			break;
 	}
 }
@@ -2949,8 +2910,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				#endif
 
-				if (robotIsOn)
-				{
+//				if (robotIsOn)
+//				{
 					motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 					motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 
@@ -2960,7 +2921,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 					}
 
 					drive(BACKWARD);
-				}
+//				}
 			}
 
 
@@ -2973,11 +2934,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->setServoPosition( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
 				servos->setServoPosition( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
 
-				if (robotIsOn)
-				{
-					servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
-					servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
-				}
+				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
+				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
 
 			return;
@@ -3003,18 +2961,15 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				#endif
 
-				if (robotIsOn)
+				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+
+				if (robotDrives == false)
 				{
-					motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-					motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
-
-					if (robotDrives == false)
-					{
-						drive(START);
-					}
-
-					drive(FORWARD);
+					drive(START);
 				}
+
+				drive(FORWARD);
 			}
 
 
@@ -3029,11 +2984,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// right eye
 				servos->setServoPosition( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 
-				if (robotIsOn)
-				{
-					servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
-					servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
-				}
+				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
+				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
 
 			return;
@@ -3050,8 +3002,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//=========================================================
 			if (testDriveMode)
 			{
-				if (robotIsOn)
-					drive(WAIT);
+				drive(WAIT);
 			}
 			return;
 		}
@@ -3083,18 +3034,15 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				#endif
 
-				if (robotIsOn)
+				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+
+				if (robotDrives == false)
 				{
-					motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
-					motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
-
-					if (robotDrives == false)
-					{
-						drive(START);
-					}
-
-					drive(RIGHT);
+					drive(START);
 				}
+
+				drive(RIGHT);
 			}
 			return;
 		}
@@ -3119,18 +3067,15 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				#endif
 
-				if (robotIsOn)
+				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+
+				if (robotDrives == false)
 				{
-					motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-					motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
-
-					if (robotDrives == false)
-					{
-						drive(START);
-					}
-
-					drive(LEFT);
+					drive(START);
 				}
+
+				drive(LEFT);
 			}
 			return;
 		}
@@ -3146,8 +3091,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//=========================================================
 			if (testDriveMode)
 			{
-				if (robotIsOn)
-					drive(WAIT);
+				drive(WAIT);
 			}
 			return;
 		}
@@ -3188,10 +3132,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				if (robotIsOn)
-				{
-					servos->moveServo(currentTestServo, servos->getServoPosition(currentTestServo));
-				}
+				servos->moveServo(currentTestServo, servos->getServoPosition(currentTestServo));
 				gui->appendLog(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(servos->getServoPosition(currentTestServo)));
 			}
 
@@ -3209,8 +3150,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				if (robotIsOn)
-					motors->motorControl(MOTOR4, ON, CLOCKWISE);
+				motors->motorControl(MOTOR4, ON, CLOCKWISE);
 				//gui->appendLog("motor 4 on CW");
 			}
 
@@ -3219,30 +3159,21 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				if (robotIsOn)
-				{
-					motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-					//gui->appendLog("motor 4 on CCW");
-				}
+				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+				//gui->appendLog("motor 4 on CCW");
 			}
 
 			// move, when button is pressed
 			if (axisValue != 0)
 			{
-				if (robotIsOn)
-				{
-					//gui->appendLog("Tilting Cam...");
-				}
+				//gui->appendLog("Tilting Cam...");
 			}
 
 			// stop, when button is pressed!
 			if (axisValue == 0)
 			{
-				if (robotIsOn)
-				{
-					//gui->appendLog("Tilt stop.");
-					motors->motorControl(MOTOR4, OFF, SAME);
-				}
+				//gui->appendLog("Tilt stop.");
+				motors->motorControl(MOTOR4, OFF, SAME);
 			}
 			return;
 		} // cam test mode [tilt]
@@ -3283,16 +3214,13 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------------------------------------------
 		if (axisValue > 0)
 		{
-			if (robotIsOn)
+			if (robotDrives == false)
 			{
-				if (robotDrives == false)
-				{
-					// TODO: check if this makes sense...
-					drive(START);
-				}
-
-				drive(BACKWARD);
+				// TODO: check if this makes sense...
+				drive(START);
 			}
+
+			drive(BACKWARD);
 		}
 
 		//------------------------------------------------------
@@ -3300,24 +3228,18 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------------------------------------------
 		if (axisValue < 0)
 		{
-			if (robotIsOn)
+			if (robotDrives == false)
 			{
-				if (robotDrives == false)
-				{
-					// TODO: check if this makes sense...
-					drive(START);
-				}
-
-				drive(FORWARD);
+				// TODO: check if this makes sense...
+				drive(START);
 			}
+
+			drive(FORWARD);
 		}
 
 		if (axisValue == 0)
 		{
-			if (robotIsOn)
-			{
-				drive(WAIT);
-			}
+			drive(WAIT);
 		}
 
 		return;
@@ -3353,10 +3275,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				if (robotIsOn)
-				{
-//					servos->moveServo(SERVO1, servo1Pos);
-				}
+//				servos->moveServo(SERVO1, servo1Pos);
 //				gui->appendLog(QString("Servo 1 moved to %1.").arg(servo1Pos));
 			}
 			return;
@@ -3372,11 +3291,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-				if (robotIsOn)
-				{
-					motors->motorControl(MOTOR3, ON, CLOCKWISE);
-					//gui->appendLog("motor 3 on CW");
-				}
+				motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				//gui->appendLog("motor 3 on CW");
 			}
 
 			//------------------
@@ -3384,33 +3300,21 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-				if (robotIsOn)
-				{
-					motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-					//gui->appendLog("motor 3 on CCW");
-				}
+				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				//gui->appendLog("motor 3 on CCW");
 			}
 
 			// move, when button is pressed
 			if (axisValue != 0)
 			{
-				if (robotIsOn)
-				{
-					//gui->appendLog("Panning Cam...");
-				}
+				//gui->appendLog("Panning Cam...");
 			}
 
 			// stop, when button is pressed!
 			if (axisValue == 0)
 			{
-				if (robotIsOn)
-				{
-					if (robotIsOn)
-					{
-						motors->motorControl(MOTOR3, OFF, SAME);
-						//gui->appendLog("Pan stop.");
-					}
-				}
+				motors->motorControl(MOTOR3, OFF, SAME);
+				//gui->appendLog("Pan stop.");
 			}
 			return;
 		} // cam test mode [pan]
@@ -3449,23 +3353,20 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------------------------------------------
 		if (axisValue > 0)
 		{
-			if (robotIsOn)
+			if (mecanumDriveMode)
 			{
-				if (mecanumDriveMode)
+				// do a right turn in a circle!
+				drive(TURNRIGHT);
+			}
+			else
+			{
+				if (robotDrives == false)
 				{
-					// do a right turn in a circle!
-					drive(TURNRIGHT);
+					// TODO: check if this makes sense...
+					drive(START);
 				}
-				else
-				{
-					if (robotDrives == false)
-					{
-						// TODO: check if this makes sense...
-						drive(START);
-					}
 
-					drive(RIGHT);
-				}
+				drive(RIGHT);
 			}
 			return;
 		}
@@ -3475,23 +3376,20 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------------------------------------------
 		if (axisValue < 0)
 		{
-			if (robotIsOn)
+			if (mecanumDriveMode)
 			{
-				if (mecanumDriveMode)
+				// do a right turn in a circle!
+				drive(TURNLEFT);
+			}
+			else
+			{
+				if (robotDrives == false)
 				{
-					// do a right turn in a circle!
-					drive(TURNLEFT);
+					// TODO: check if this makes sense...
+					drive(START);
 				}
-				else
-				{
-					if (robotDrives == false)
-					{
-						// TODO: check if this makes sense...
-						drive(START);
-					}
 
-					drive(LEFT);
-				}
+				drive(LEFT);
 			}
 			return;
 		}
@@ -3501,10 +3399,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		//------------------------------------------------------
 		if (axisValue == 0)
 		{
-			if (robotIsOn)
-			{
-				drive(WAIT);
-			}
+			drive(WAIT);
 		}
 
 		return;
@@ -3703,21 +3598,23 @@ void Direcs::setSimulationMode(bool status)
 	}
 	else
 	{
-		// if robot is OFF stop all threads which read from the circuit!
-		if (robotIsOn == false)
-		{
-			sensorThread->stop();
-			gui->appendLog("Sensor thread stopped.");
-		}
+		// FIXME: wozu das??? was ist mit dem plothread? merken welche geatartet waren? if robot is OFF stop all threads which read from the circuit!
+// 		if (robotIsOn == false)
+// 		{
+// 			sensorThread->stop();
+// 			gui->appendLog("Sensor thread stopped.");
+// 		}
 		gui->appendLog("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
 }
 
 
+/*
 void Direcs::setRobotState(bool state)
 {
 	robotIsOn = state;
 }
+*/
 
 
 void Direcs::speak(QString text)
@@ -3820,8 +3717,7 @@ void Direcs::test()
 		//head->look("RIGHT");
 	}
 
-	if (robotIsOn)
-		motors->flashlight(toggle);
+	motors->flashlight(toggle);
 
 
 	#ifdef _TTY_POSIX_

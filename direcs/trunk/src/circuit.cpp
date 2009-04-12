@@ -36,7 +36,7 @@ Circuit::~Circuit()
 }
 
 
-void Circuit::initCircuit()
+bool Circuit::initCircuit()
 {
 	if (robotIsOn) // maybe robot is already recognized as OFF by the interface class!
 	{
@@ -60,7 +60,7 @@ void Circuit::initCircuit()
 				firstInitDone = true;
 				robotIsOn = true;
 				emit robotState(true);
-				return;
+				return true;
 			}
 		}
 	
@@ -71,11 +71,11 @@ void Circuit::initCircuit()
 		firstInitDone = true;
 		robotIsOn = false;
 		emit robotState(false);
+		return false;
 	}
-	else
-	{
-		qDebug("INFO from initCircuit: Robot is OFF.");
-	}
+	
+	qDebug("INFO from initCircuit: Robot is OFF.");
+	return false;
 }
 
 
