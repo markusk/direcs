@@ -38,6 +38,8 @@ Servo::Servo(InterfaceAvr *i, QMutex *m)
 		servoMaxPosition[servo] = 255;
 		servoPosition[servo] = servoDefaultPosition[servo];
 	}
+	
+	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
 
 
@@ -71,166 +73,169 @@ void Servo::run()
 
 void Servo::moveServo(unsigned char servo, unsigned char position)
 {
-	//qDebug("moveServo%d to position %d. Start=%d / Default=%d / End=%d", servo, position, servoStartPosition[servo], servoDefaultPosition[servo], servoEndPosition[servo]);
-
-	// *don't* move servo to a position out of the allowed range!!
-	if ( (position < servoMinPosition[servo]) || (position > servoMaxPosition[servo]) )
+	if (robotState == ON)
 	{
-		//emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
-		return;
-	}
-
-	// store the newservo position
-	servoPosition[servo] = position;
+		//qDebug("moveServo%d to position %d. Start=%d / Default=%d / End=%d", servo, position, servoStartPosition[servo], servoDefaultPosition[servo], servoEndPosition[servo]);
 	
-	static bool toggle = false;
+		// *don't* move servo to a position out of the allowed range!!
+		if ( (position < servoMinPosition[servo]) || (position > servoMaxPosition[servo]) )
+		{
+			//emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
+			return;
+		}
+	
+		// store the newservo position
+		servoPosition[servo] = position;
 		
-	if (!toggle)
-	{
-		toggle = !toggle;
-		emit message("<font color=\"#FF0000\">Servo functions deactivated in the program [servo.cpp]!</font>");
-	}
+		static bool toggle = false;
+			
+		if (!toggle)
+		{
+			toggle = !toggle;
+			emit message("<font color=\"#FF0000\">Servo functions deactivated in the program [servo.cpp]!</font>");
+		}
 
-	/* TODO: temporarily deactivated (no servos mounted on the current robot)
-	switch (servo)
-	{
-		case SERVO1:
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-			// which servo
-			if (interface1->sendChar(SET_SERVO1) == false)
-			{
+		/* TODO: temporarily deactivated (no servos mounted on the current robot)
+		switch (servo)
+		{
+			case SERVO1:
+				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+				mutex->lock();
+				// which servo
+				if (interface1->sendChar(SET_SERVO1) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
+				// the position
+				if (interface1->sendChar(position) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// the position
-			if (interface1->sendChar(position) == false)
-			{
+				break;
+			case SERVO2:
+				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+				mutex->lock();
+				// which servo
+				if (interface1->sendChar(SET_SERVO2) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
+				// the position
+				if (interface1->sendChar(position) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// Unlock the mutex.
-			mutex->unlock();
-			break;
-		case SERVO2:
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-			// which servo
-			if (interface1->sendChar(SET_SERVO2) == false)
-			{
+				break;
+			case SERVO3:
+				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+				mutex->lock();
+				// which servo
+				if (interface1->sendChar(SET_SERVO3) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
+				// the position
+				if (interface1->sendChar(position) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// the position
-			if (interface1->sendChar(position) == false)
-			{
+				break;
+			case SERVO4:
+				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+				mutex->lock();
+				// which servo
+				if (interface1->sendChar(SET_SERVO4) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
+				// the position
+				if (interface1->sendChar(position) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// Unlock the mutex.
-			mutex->unlock();
-			break;
-		case SERVO3:
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-			// which servo
-			if (interface1->sendChar(SET_SERVO3) == false)
-			{
+				break;
+			case SERVO5:
+				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+				mutex->lock();
+				// which servo
+				if (interface1->sendChar(SET_SERVO5) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
+				// the position
+				if (interface1->sendChar(position) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// the position
-			if (interface1->sendChar(position) == false)
-			{
+				break;
+			case SERVO6:
+				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+				mutex->lock();
+				// which servo
+				if (interface1->sendChar(SET_SERVO6) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
+				// the position
+				if (interface1->sendChar(position) == false)
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					qDebug("ERROR sending to serial port (Servo)");
+					return;
+				}
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// Unlock the mutex.
-			mutex->unlock();
-			break;
-		case SERVO4:
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-			// which servo
-			if (interface1->sendChar(SET_SERVO4) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// the position
-			if (interface1->sendChar(position) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// Unlock the mutex.
-			mutex->unlock();
-			break;
-		case SERVO5:
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-			// which servo
-			if (interface1->sendChar(SET_SERVO5) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// the position
-			if (interface1->sendChar(position) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// Unlock the mutex.
-			mutex->unlock();
-			break;
-		case SERVO6:
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-			// which servo
-			if (interface1->sendChar(SET_SERVO6) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// the position
-			if (interface1->sendChar(position) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (Servo)");
-				return;
-			}
-			// Unlock the mutex.
-			mutex->unlock();
-			break;
-		default:
-			emit message(QString("<b><font color=\"#FF0000\">ERROR: Servo number %1 not supportet (moveServo)</font>").arg(servo));
-			break;
-	}
+				break;
+			default:
+				emit message(QString("<b><font color=\"#FF0000\">ERROR: Servo number %1 not supportet (moveServo)</font>").arg(servo));
+				break;
+		}
 	*/
+	} // robot is ON
 }
 
 
@@ -283,11 +288,14 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 void Servo::init(void)
 {
 	/* TODO: temporarily deactivated (no servos mounted on the current robot)
-	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
+	if (robotState == ON)
 	{
-		moveServo(servo, servoDefaultPosition[servo]);
-		//emit message(QString("Init servo%1 to def-pos: %2").arg(servo+1).arg(servoDefaultPosition[servo]));
-	}
+		for (int servo=0; servo<NUMBEROFSERVOS; servo++)
+		{
+			moveServo(servo, servoDefaultPosition[servo]);
+			//emit message(QString("Init servo%1 to def-pos: %2").arg(servo+1).arg(servoDefaultPosition[servo]));
+		}
+	} // robot is ON
 	*/
 }
 
@@ -325,4 +333,11 @@ unsigned char Servo::getServoPosition(int servo, unsigned char type)
 
 	// this line is never reached
 	return 0;
+}
+
+
+void Servo::setRobotState(bool state)
+{
+	// store the state within this class
+	robotState = state;
 }

@@ -135,9 +135,8 @@ class SensorThread : public QThread
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
 		When the class knows this, unnecessary communication with the interface can be avoided.
-		
 		@param state can be ON or OFF
-		 */
+		*/
 		void setRobotState(bool state);
 
 

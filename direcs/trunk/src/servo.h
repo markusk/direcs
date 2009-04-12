@@ -81,6 +81,13 @@ class Servo : public QThread
 		Moves all servos into their default positions.
 		 */
 		void init(void);
+		
+		/**
+		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
+		When the class knows this, unnecessary communication with the interface can be avoided.
+		@param state can be ON or OFF
+		 */
+		void setRobotState(bool state);
 
 
 	signals:
@@ -94,6 +101,7 @@ class Servo : public QThread
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
+		bool robotState; // stores the robot state within this class
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
@@ -108,6 +116,9 @@ class Servo : public QThread
 		int servoDefaultPosition[NUMBEROFSERVOS];
 		int servoPosition[NUMBEROFSERVOS]; //! the current position of the servo!
 		//int servoPositionConvHelper[NUMBEROFSERVOS]; //! a conversion helper, if the servo is fixed the other way round!
+
+		static const bool ON  = true;   /** For motor or robot "ON" */
+		static const bool OFF = false;  /** For motor or robot "OFF" */
 		
 		//! the possible servo data
 		static const unsigned char SVSTART   = 0;
