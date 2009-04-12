@@ -104,12 +104,21 @@ class Motor : public QObject
 		 */
 		void setMotorSpeed(int motor, int speed);
 		
+		/**
+		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
+		When the class knows this, unnecessary communication with the interface can be avoided.
+		
+		@param state can be ON or OFF
+		 */
+		void setRobotState(bool state);
+		
 		
 	private:
 		void calculateMovement(); // TODO: check the conversion value and make it a const!
 
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
+		bool robotState; // stores the robot state within this class
 		int motor1Speed;
 		int motor2Speed;
 		int motor3Speed;
