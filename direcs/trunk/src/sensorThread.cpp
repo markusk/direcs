@@ -412,7 +412,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			value = 0;
 
 
-			// TODO: add suport for motors 3 and 4 !  Also in AVR Atmel source code!
+			// TODO: add suport for motor sensors 3 and 4 !  Also in AVR Atmel source code!
 
 			//====================================================================
 
@@ -599,13 +599,13 @@ ultrasonic Sensors temporarily removed from robot!!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 
-			// send value over the network
-			// *0m42# means motorsensor1 with 42 mA
-			// emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1))); // TODO: which string for the axes?!
-
 			// store measured value
 			xAxis = value;
 			value = 0;
+
+			// send value over the network
+			// *xc42# means axis x of the compass has 42°
+			emit sendNetworkString( QString("*xc%1#").arg( xAxis ));
 
 
 			//------------------------------------------------------
@@ -622,13 +622,13 @@ ultrasonic Sensors temporarily removed from robot!!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 
-			// send value over the network
-			// *0m42# means motorsensor1 with 42 mA
-			// emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1))); // TODO: which string for the axes?!
-
 			// store measured value
 			yAxis = value;
 			value = 0;
+
+			// send value over the network
+			// *yc42# means axis y of the compass has 42°
+			emit sendNetworkString( QString("*yc%1#").arg( yAxis ));
 
 
 			//------------------------------------------------------
@@ -645,13 +645,13 @@ ultrasonic Sensors temporarily removed from robot!!
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 
-			// send value over the network
-			// *0m42# means motorsensor1 with 42 mA
-			// emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1))); // TODO: which string for the axes?!
-
 			// store measured value
 			zAxis = value;
 			value = 0;
+
+			// send value over the network
+			// *zc42# means axis z of the compass has 42°
+			emit sendNetworkString( QString("*zc%1#").arg( zAxis ));
 
 
 			//====================================================================
