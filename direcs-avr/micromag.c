@@ -21,7 +21,6 @@ uint16_t readMicromag(unsigned char axis)
 	switch (axis)
 	{
 		case READ_AXIS_X:
-			/*
 			// x axis
 			PORT_SPI &= ~(1<<DD_SS);
 			//Pulse RST
@@ -34,11 +33,8 @@ uint16_t readMicromag(unsigned char axis)
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			PORT_SPI |= (1<<DD_SS);
 			return value;
-			*/
-			return READ_AXIS_X;
 			break;
 		case READ_AXIS_Y:
-			/*
 			// y axis
 			PORT_SPI &= ~(1<<DD_SS);
 			//Pulse RST
@@ -51,11 +47,8 @@ uint16_t readMicromag(unsigned char axis)
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			PORT_SPI |= (1<<DD_SS);
 			return value;
-			*/
-			return READ_AXIS_Y; // TODO: measure and return the real value
 			break;
 		case READ_AXIS_Z:
-			/*
 			//z axis
 			PORT_SPI &= ~(1<<DD_SS);
 			//Pulse RST
@@ -68,8 +61,6 @@ uint16_t readMicromag(unsigned char axis)
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			PORT_SPI |= (1<<DD_SS);
 			return value;
-			*/
-			return READ_AXIS_Z; // TODO: measure and return the real value
 			break;
 	}
 
