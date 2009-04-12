@@ -119,6 +119,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRDistance[37] = 227;
 	iRDistance[38] = 217;
 	iRDistance[39] = 210;
+	
+	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
 
 
@@ -150,7 +152,7 @@ void SensorThread::run()
 		msleep(THREADSLEEPTIME);
 
 
-		if (simulationMode == false)
+		if ( (robotState == ON) && (simulationMode == false) )
 		{
 
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -994,4 +996,11 @@ int SensorThread::getCompassValue(unsigned char axis)
 
 	// this line should never be reached!
 	return -1;
+}
+
+
+void SensorThread::setRobotState(bool state)
+{
+	// store the state within this class
+	robotState = state;
 }

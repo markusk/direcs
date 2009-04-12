@@ -131,6 +131,14 @@ class SensorThread : public QThread
 		@sa Gui::simulate()
 		*/
 		void setSimulationMode(bool state);
+		
+		/**
+		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
+		When the class knows this, unnecessary communication with the interface can be avoided.
+		
+		@param state can be ON or OFF
+		 */
+		void setRobotState(bool state);
 
 
 	signals:
@@ -157,7 +165,8 @@ class SensorThread : public QThread
 		InterfaceAvr *interface1;
 		volatile bool stopped;
 		bool simulationMode;
-
+		bool robotState; // stores the robot state within this class
+	
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms  (old: 5 ms)
@@ -230,6 +239,8 @@ class SensorThread : public QThread
 		int yAxis;
 		int zAxis;
 
+		static const bool ON  = true;   /** For motor or robot "ON" */
+		static const bool OFF = false;  /** For motor or robot "OFF" */
 
 		/**
 		 Give the contacts for the pan tilt cam end positions some nice names
