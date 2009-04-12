@@ -1003,4 +1003,9 @@ void SensorThread::setRobotState(bool state)
 {
 	// store the state within this class
 	robotState = state;
+	
+	if (robotState==OFF)
+		qDebug("Robot is OFF");
+	else
+		qDebug("Robot is ON");
 }

@@ -75,15 +75,26 @@ bool InterfaceAvr::openComPort(QString comPort)
 	if (QFile::exists(comPort) == false)
 	{
 		qDebug("Serial port file not found!");
+		
+		// this tells other classes that the robot is OFF!
+		emit robotState(false);
+		
 		return false;
 	}
-	
+
 
 	// serial port config also done in openAtmelPort!
 	if (serialPort->openAtmelPort( ba.data() ) != -1)
+	{
 		return true;
+	}
 	else
+	{
+		// this tells other classes that the robot is OFF!
+		emit robotState(false);
+		
 		return false;
+	}
 #endif
 }
 
