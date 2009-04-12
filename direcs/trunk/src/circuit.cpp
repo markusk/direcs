@@ -26,7 +26,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	interface1 = i;
 	mutex = m;
 
-	robotIsOn = false;
+	robotIsOn = true; // We think positive
 	firstInitDone = false;
 }
 
@@ -38,37 +38,44 @@ Circuit::~Circuit()
 
 void Circuit::initCircuit()
 {
-	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-	mutex->lock();
-
-	//-------------------------------------------------------
-	// Basic init for all the bits on the robot circuit
-	//-------------------------------------------------------
-	if (interface1->sendChar(INIT) == true)
+	if (robotIsOn) // maybe robot is already recognized as OFF by the interface class!
 	{
-		// check if the robot answers with "@"
-		unsigned char answer = 0;
-		interface1->receiveChar(&answer);
-
-		// everthing's fine :-)
-		if (answer == INITANSWER)
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+	
+		//-------------------------------------------------------
+		// Basic init for all the bits on the robot circuit
+		//-------------------------------------------------------
+		if (interface1->sendChar(INIT) == true)
 		{
-			// Unlock the mutex
-			mutex->unlock();
-			firstInitDone = true;
-			robotIsOn = true;
-			emit robotState(true);
-			return;
+			// check if the robot answers with "@"
+			unsigned char answer = 0;
+			interface1->receiveChar(&answer);
+	
+			// everthing's fine :-)
+			if (answer == INITANSWER)
+			{
+				// Unlock the mutex
+				mutex->unlock();
+				firstInitDone = true;
+				robotIsOn = true;
+				emit robotState(true);
+				return;
+			}
 		}
+	
+		// Unlock the mutex.
+		mutex->unlock();
+
+		qDebug("INFO from initCircuit: Robot is OFF.");
+		firstInitDone = true;
+		robotIsOn = false;
+		emit robotState(false);
 	}
-
-	// Unlock the mutex.
-	mutex->unlock();
-
-	qDebug("INFO: Robot is OFF.");
-	firstInitDone = true;
-	robotIsOn = false;
-	emit robotState(false);
+	else
+	{
+		qDebug("INFO from initCircuit: Robot is OFF.");
+	}
 }
 
 
@@ -82,4 +89,11 @@ bool Circuit::isConnected()
 	}
 
 	return robotIsOn;
+}
+
+
+void Circuit::setRobotState(bool state)
+{
+	// store the state within this class
+	robotIsOn = state;
 }

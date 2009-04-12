@@ -50,6 +50,15 @@ class Circuit : public QObject
 		Initialises the robot's circuits. It also checks, if the robot is ON or OFF.
 		 */
 		void initCircuit();
+		
+		/**
+		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
+		When the class knows this, unnecessary communication with the interface can be avoided.
+		
+		@param state can be ON or OFF
+		 */
+		void setRobotState(bool state);
+
 
 	signals:
 		/**
@@ -64,7 +73,7 @@ class Circuit : public QObject
 		InterfaceAvr *interface1;
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
-		bool robotIsOn;
+		bool robotIsOn; // stores the robot state within this class
 		bool firstInitDone;
 		
 		static const bool ON  = true;
