@@ -79,19 +79,15 @@ class InterfaceAvr : public QObject
 		@return true on access or false if an error occured.
 		*/
 		bool receiveInt(int *value);
-		
-		
-	public slots:
-		/**
-		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
-		When the class knows this, unnecessary communication with the interface can be avoided.
-		
-		@param state can be ON or OFF
-		 */
-		void setRobotState(bool state);
 	
-		
+	
 	signals:
+		/**
+		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
+		This signal is emitted, when the openComPort() method fails!
+		@param state can be ON or OFF
+		*/
+		void robotState(bool state);
 		
 		/**
 		This signal is emmited, when too much errors occur while receiving or sending to the serial port.
@@ -99,14 +95,13 @@ class InterfaceAvr : public QObject
 		*/
 		void tooMuchErrors();
 
+	
 	private:
 #ifdef _TTY_WIN_
 		QextSerialPort *serialPort;
 #else
 		DirecsSerial *serialPort;
 #endif
-		bool robotState;
-		
 		static const bool ON  = true;   /** For robot is "ON" */
 		static const bool OFF = false;  /** For robot is "OFF" */
 };

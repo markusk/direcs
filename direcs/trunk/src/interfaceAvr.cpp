@@ -28,8 +28,6 @@ InterfaceAvr::InterfaceAvr()
 	#else
 	serialPort = new DirecsSerial();
 	#endif
-	
-	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
 
 
@@ -45,6 +43,10 @@ bool InterfaceAvr::openComPort(QString comPort)
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
 		qDebug("Error opening serial port! [InterfaceAvr::openComPort]");
+		
+		// this tells other classes that the robot is OFF!
+		emit robotState(false);
+		
 		return false;
 	}
 
@@ -105,7 +107,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 #ifdef _TTY_WIN_
 	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
-//	if (serialPort->write(&character, 1) == -1)
+	//	if (serialPort->write(&character, 1) == -1)
 #else
 	// send one byte to the serial port with direcsSerial
 	if (serialPort->writeAtmelPort(&character, 1) <= 0)
@@ -122,7 +124,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 		}
 		return false;
 	}
-
+	
 	return true;
 }
 
@@ -192,10 +194,4 @@ bool InterfaceAvr::receiveInt(int *value)
 	*value = (intValue + character);
 
 	return true;
-}
-
-
-void InterfaceAvr::setRobotState(bool state)
-{
-	robotState = state;
 }
