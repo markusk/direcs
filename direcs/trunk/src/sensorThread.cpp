@@ -586,7 +586,7 @@ contacts temporarily removed from robot!! */
 
 			//====================================================================
 
-/* FIXME:compass reading does nit work!
+// FIXME:compass reading does not work!
 			//------------------------------------------------------
 			// read x value from magnetic sensor
 			//------------------------------------------------------
@@ -609,6 +609,7 @@ contacts temporarily removed from robot!! */
 			// *xc42# means axis x of the compass has 42°
 			emit sendNetworkString( QString("*xc%1#").arg( xAxis ));
 
+/* FIXME:compass reading does not work!
 
 			//------------------------------------------------------
 			// read y value from magnetic sensor
@@ -655,7 +656,7 @@ contacts temporarily removed from robot!! */
 			// *zc42# means axis z of the compass has 42°
 			emit sendNetworkString( QString("*zc%1#").arg( zAxis ));
 			
-FIXME:compass reading does nit work! */
+FIXME:compass reading does not work! */
 			
 			//-------------------------
 			// emit ALL axis values
