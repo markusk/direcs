@@ -21,17 +21,22 @@ uint16_t readMicromag(unsigned char axis)
 	switch (axis)
 	{
 		case READ_AXIS_X:
-			// x axis
+			// Slave Selsect to LOW (select device)
 			PORT_SPI &= ~(1<<DD_SS);
-			//Pulse RST
+			// Pulse RESET
 			PORT_SPI |= (1<<DD_RST);
 			_delay_ms(1);
 			PORT_SPI &= ~(1<<DD_RST);
+			// send command (on the MOSI line)
 			// org: spi_comm(0b01110001);
 			spi_comm(113);
-			while(!(PIN_SPI & (1<<DD_RDY)));
+			// wait for DATA READY to become HIGH (data are ready)
+			while(!(PIN_SPI & (1<<DD_RDY))); // TODO: check for timeout (max. delay is 60 ms)!
+			// take data
 			value = (spi_comm(0) << 8) | spi_comm(0);
+			// Slave Selsect to HIGH (unselect device)
 			PORT_SPI |= (1<<DD_SS);
+			// value = 45;
 			return value;
 			break;
 		case READ_AXIS_Y:
