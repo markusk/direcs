@@ -28,10 +28,13 @@ uint16_t readMicromag(unsigned char axis)
 			_delay_ms(1);
 			PORT_SPI &= ~(1<<DD_RST);
 			// send command (on the MOSI line)
-			// org: spi_comm(0b01110001);
-			spi_comm(113);
+			// org: spi_comm(0b01110001) = 113d (112+1)
+			// neu:  spi_comm(0b00100001) = 32d (32+1) anderer period select
+			spi_comm(32);
 			// wait for DATA READY to become HIGH (data are ready)
-			while(!(PIN_SPI & (1<<DD_RDY))); // TODO: check for timeout (max. delay is 60 ms)!
+			while(!(PIN_SPI & (1<<DD_RDY))); // TODO: check for timeout (max. delay is 2 ms)!
+			// TODO: only wait for Data Ready?
+
 			// take data
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			// Slave Selsect to HIGH (unselect device)
@@ -46,8 +49,9 @@ uint16_t readMicromag(unsigned char axis)
 			PORT_SPI |= (1<<DD_RST);
 			_delay_ms(1);
 			PORT_SPI &= ~(1<<DD_RST);
-			// org: spi_comm(0b01110010);
-			spi_comm(114);
+			// org: spi_comm(0b01110010) = 114d (112+2)
+			// neu:  spi_comm(0b00100001) = 34d (32+2) anderer period select
+			spi_comm(34);
 			while(!(PIN_SPI & (1<<DD_RDY)));
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			PORT_SPI |= (1<<DD_SS);
@@ -60,8 +64,9 @@ uint16_t readMicromag(unsigned char axis)
 			PORT_SPI |= (1<<DD_RST);
 			_delay_ms(1);
 			PORT_SPI &= ~(1<<DD_RST);
-			// org: spi_comm(0b01110011);
-			spi_comm(115);
+			// org: spi_comm(0b01110011) = 115d (112+3)
+			// neu:  spi_comm(0b00100001) = 35d (32+3) anderer period select
+			spi_comm(35);
 			while(!(PIN_SPI & (1<<DD_RDY)));
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			PORT_SPI |= (1<<DD_SS);
@@ -198,34 +203,33 @@ int test(void)
  }
 */
 
- void init_spi(void)
- {
+void init_spi(void)
+{
+	// 'Slave Select' HIGH (don't select the device *now*)
+	PORT_SPI |= (1<<DD_SS);
 
-    //SS high
-    PORT_SPI |= (1<<DD_SS);
+	// 'Reset' is usually LOW
+	PORT_SPI &= ~(1<<DD_RST);
 
-    //RST low
-    PORT_SPI &= ~(1<<DD_RST);
+	// Set SS, MOSI, SCK, RST output, rest input (MOSI is output, means that the Atmel is the master!)
+	DDR_SPI = (1 << DD_SS) | (1<<DD_MOSI) | (1<<DD_SCK) | (1<<DD_RST);
 
-    // Set SS, MOSI, SCK, RST output, rest input
-    DDR_SPI = (1 << DD_SS) | (1<<DD_MOSI) | (1<<DD_SCK) | (1<<DD_RST);
-
-    // Enable SPI, Master, set clock rate fck/64
-    SPCR = (1<<SPE)|(1<<MSTR)| (1<<SPR1) | (1<<SPR0);
-
- }
+	// Enable SPI, Master, set clock rate fck/128 -> 16 MHz/128 = 125 kHz
+	// MSB is transmitted first
+	// CPOL = 0 (low)
+	SPCR = (1<<SPE) | (1<<MSTR) | (1<<SPR1) | (1<<SPR0);
+}
 
 
 
- uint8_t spi_comm(uint8_t data)
- {
+uint8_t spi_comm(uint8_t data)
+{
+	// Start transmission
+	SPDR = data;
 
-    // Start transmission
-    SPDR = data;
+	// Wait for transmission complete
+	while(!(SPSR & (1<<SPIF)));
 
-    // Wait for transmission complete
-    while(!(SPSR & (1<<SPIF)));
-
-    return SPDR;
-
- }
+	// return SPI data register
+	return SPDR;
+}
