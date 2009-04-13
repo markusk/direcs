@@ -2171,7 +2171,11 @@ void Gui::initCompass()
 }
 
 
-void Gui::setCompass(double degree)
+void Gui::showCompassData(int x, int y, int z)
 {
-	ui.qwtCompass->setValue(degree);
+	ui.lblCompassX->setText( QString("%1 deg").arg(x) );
+	ui.lblCompassY->setText( QString("%1 deg").arg(y) );
+	ui.lblCompassZ->setText( QString("%1 deg").arg(z) );
+	
+	ui.qwtCompass->setValue(x);
 }

@@ -247,12 +247,14 @@ class Gui : public QMainWindow
 		@param direction can be UP, DOWN, LEFT, RIGHT or NONE
 		 */
 		void showFaceTrackDirection(QString direction);
-		
+
 		/**
-		Sets the compass needle to de given value
-		@param degree
+		Shows the compass axes values in labels. Also sets the compass needle to the value of the x axis.
+		@param x is the x axis value
+		@param y is the y axis value
+		@param z is the z axis value
 		*/
-		void setCompass(double degree);
+		void showCompassData(int x, int y, int z);
 
 
 	protected:

@@ -539,6 +539,7 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL( sensorDataComplete() ), this, SLOT( showSensorData() ) );
 	connect(sensorThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
+	connect(sensorThread, SIGNAL( compassDataComplete(int, int, int) ), gui, SLOT( showCompassData(int, int, int) ) );
 
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//----------------------------------------------------------------------------
@@ -1743,14 +1744,6 @@ void Direcs::showSensorData()
 	//--------------------------------------------------------------
 	gui->showDrivenDistance(MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1));
 	gui->showDrivenDistance(MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2));
-
-	//--------------------------------------------------------------------
-	// show x, y and z axis values in the GUI (frim the micromag sensor)
-	//--------------------------------------------------------------------
-	gui->setCompass( sensorThread->getCompassValue(READ_AXIS_X) );
-
-	// TODO: do something with the axis values
-	//gui->appendLog( QString("x=%1 / x=%2 / z=%3").arg(sensorThread->getCompassValue(READ_AXIS_X)).arg(sensorThread->getCompassValue(READ_AXIS_Y)).arg(sensorThread->getCompassValue(READ_AXIS_Z)) );
 }
 
 

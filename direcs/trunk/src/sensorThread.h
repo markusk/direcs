@@ -157,6 +157,12 @@ class SensorThread : public QThread
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
+		
+		/**
+		This signal is emitted when all compass values were read.
+		@sa Direcs::showCompassAxes()
+		*/
+		void compassDataComplete(int x, int y, int z);
 
 
 	private:

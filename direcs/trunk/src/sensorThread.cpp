@@ -653,6 +653,10 @@ ultrasonic Sensors temporarily removed from robot!!
 			// *zc42# means axis z of the compass has 42°
 			emit sendNetworkString( QString("*zc%1#").arg( zAxis ));
 
+			//-------------------------
+			// emit ALL axis values
+			//-------------------------
+			emit compassDataComplete(xAxis, yAxis, zAxis);
 
 			//====================================================================
 			// Unlock the mutex.
