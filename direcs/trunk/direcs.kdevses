@@ -1,31 +1,13 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="8" >
+ <DocsAndViews NumberOfDocuments="2" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
-   <View0 Encoding="" line="1740" Type="Source" />
+   <View0 Encoding="" line="732" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.cpp" >
-   <View0 Encoding="" line="658" Type="Source" />
+   <View0 Encoding="" line="59" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/interfaceAvr.cpp" >
-   <View0 Encoding="" line="151" Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/circuit.cpp" >
-   <View0 Encoding="" line="67" Type="Source" />
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcsSerial.cpp" >
-   <View0 Encoding="" line="446" Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-   <View0 Encoding="" line="2181" Type="Source" />
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.h" >
-   <View0 Encoding="" line="251" Type="Source" />
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.h" >
-   <View0 Encoding="" line="164" Type="Source" />
-  </Doc7>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>

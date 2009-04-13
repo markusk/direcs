@@ -59,7 +59,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	}
 
 	// init the 3D compass values
-	xAxis = 99;
+	xAxis = 0;
 	yAxis = 0;
 	zAxis = 0;
 
@@ -459,6 +459,7 @@ ultrasonic Sensors temporarily removed from robot!!
 
 			//====================================================================
 
+/* contacts temporarily removed from robot!!
 
 			//------------------------------------------------------
 			// read value of contact 1 (cam pan L)
@@ -580,11 +581,12 @@ ultrasonic Sensors temporarily removed from robot!!
 
 			cValue = 0;
 
+contacts temporarily removed from robot!! */
 
 
 			//====================================================================
 
-
+/* FIXME:compass reading does nit work!
 			//------------------------------------------------------
 			// read x value from magnetic sensor
 			//------------------------------------------------------
@@ -652,7 +654,9 @@ ultrasonic Sensors temporarily removed from robot!!
 			// send value over the network
 			// *zc42# means axis z of the compass has 42°
 			emit sendNetworkString( QString("*zc%1#").arg( zAxis ));
-
+			
+FIXME:compass reading does nit work! */
+			
 			//-------------------------
 			// emit ALL axis values
 			//-------------------------
