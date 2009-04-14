@@ -23,14 +23,16 @@ uint16_t readMicromag(unsigned char axis)
 		case READ_AXIS_X:
 			// Slave Selsect to LOW (select device)
 			PORT_SPI &= ~(1<<DD_SS);
-			// Pulse RESET
+			// Pulse RESET:
+			// reset HIGH
 			PORT_SPI |= (1<<DD_RST);
 			_delay_ms(1);
+			// reset LOW
 			PORT_SPI &= ~(1<<DD_RST);
 			// send command (on the MOSI line)
 			// org: spi_comm(0b01110001) = 113d (112+1)
-			// neu:  spi_comm(0b00100001) = 32d (32+1) anderer period select
-			spi_comm(32);
+			// neu:  spi_comm(0b00100001) = 97d (96+1) anderer period select
+			spi_comm(97);
 			// wait for DATA READY to become HIGH (data are ready)
 			while(!(PIN_SPI & (1<<DD_RDY))); // TODO: check for timeout (max. delay is 2 ms)!
 			// TODO: only wait for Data Ready?
@@ -50,8 +52,8 @@ uint16_t readMicromag(unsigned char axis)
 			_delay_ms(1);
 			PORT_SPI &= ~(1<<DD_RST);
 			// org: spi_comm(0b01110010) = 114d (112+2)
-			// neu:  spi_comm(0b00100001) = 34d (32+2) anderer period select
-			spi_comm(34);
+			// neu:  spi_comm(0b00100001) = 98d (96+2) anderer period select
+			spi_comm(98);
 			while(!(PIN_SPI & (1<<DD_RDY)));
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			PORT_SPI |= (1<<DD_SS);
@@ -65,8 +67,8 @@ uint16_t readMicromag(unsigned char axis)
 			_delay_ms(1);
 			PORT_SPI &= ~(1<<DD_RST);
 			// org: spi_comm(0b01110011) = 115d (112+3)
-			// neu:  spi_comm(0b00100001) = 35d (32+3) anderer period select
-			spi_comm(35);
+			// neu:  spi_comm(0b00100001) = 99d (96+3) anderer period select
+			spi_comm(99);
 			while(!(PIN_SPI & (1<<DD_RDY)));
 			value = (spi_comm(0) << 8) | spi_comm(0);
 			PORT_SPI |= (1<<DD_SS);
@@ -211,7 +213,7 @@ void init_spi(void)
 	// 'Reset' is usually LOW
 	PORT_SPI &= ~(1<<DD_RST);
 
-	// Set SS, MOSI, SCK, RST output, rest input (MOSI is output, means that the Atmel is the master!)
+	// Set SLAVE SELECT, MOSI, SCK, RESET output, rest input (MOSI is output, means that the Atmel is the master!)
 	DDR_SPI = (1 << DD_SS) | (1<<DD_MOSI) | (1<<DD_SCK) | (1<<DD_RST);
 
 	// Enable SPI, Master, set clock rate fck/128 -> 16 MHz/128 = 125 kHz

@@ -666,6 +666,7 @@ int main(void)
 				PORTA &= ~(1<<PIN0);
 				break;
 */
+/*
 			default:
 				//
 				// red 'traffic' LED
@@ -683,6 +684,7 @@ int main(void)
 					PORTC |= (1<<PIN0);
 				}
 				break;
+*/
 		}
 	} // while (1)
 
