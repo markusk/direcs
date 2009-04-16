@@ -382,7 +382,8 @@ class Gui : public QMainWindow
 	private:
 		void initPlots();
 		void initCompass();
-
+		void initCompassView();
+		
 		/**
 		Creates all objects, lines, scene, view etc.
 		*/
@@ -416,7 +417,6 @@ class Gui : public QMainWindow
 		qreal laserXPos;
 		qreal laserYPos;
 		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
-		//QGraphicsScene *cameraScene;						/** The QGraphicsScene for drawing "over" the camera image */
 		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
 		QList <QGraphicsLineItem*> *laserLineListRear;		/** A pointer to a QList of pointers to the rear laser lines (QGraphicsLineItems) */
 		QList <QGraphicsEllipseItem*> *laserDistanceLineListFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
@@ -426,6 +426,10 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QPixmap pixmap; // for IplImageToQImage()
+		QGraphicsScene *compassScene;						/// The QGraphicsScene for showing the compass lines in the GUI
+		QGraphicsLineItem *xAxis;							/// The compass X axis in the graphics view
+		QGraphicsLineItem *yAxis;							/// The compass X axis in the graphics view
+		QGraphicsLineItem *zAxis;							/// The compass X axis in the graphics view
 
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */

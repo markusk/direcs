@@ -28,8 +28,8 @@
      <rect>
       <x>530</x>
       <y>520</y>
-      <width>521</width>
-      <height>231</height>
+      <width>541</width>
+      <height>270</height>
      </rect>
     </property>
     <property name="sizePolicy" >
@@ -73,7 +73,7 @@
       <x>1060</x>
       <y>620</y>
       <width>371</width>
-      <height>131</height>
+      <height>135</height>
      </rect>
     </property>
     <property name="allowedAreas" >
@@ -83,116 +83,125 @@
      <string>Navigation</string>
     </property>
     <widget class="QWidget" name="dockWidgetContents_6" >
-     <layout class="QGridLayout" name="gridLayout_8" >
-      <item row="0" column="0" >
-       <layout class="QHBoxLayout" name="horizontalLayout_2" >
-        <item>
-         <widget class="QwtCompass" name="qwtCompass" >
-          <property name="enabled" >
-           <bool>true</bool>
-          </property>
-          <property name="lineWidth" >
-           <number>4</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QGridLayout" name="gridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="label18_8" >
-            <property name="font" >
-             <font>
-              <family>Verdana</family>
-             </font>
-            </property>
-            <property name="text" >
-             <string>X:</string>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" >
-           <widget class="QLabel" name="lblCompassX" >
-            <property name="font" >
-             <font>
-              <family>Verdana</family>
-             </font>
-            </property>
-            <property name="text" >
-             <string>0 deg</string>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="label18_9" >
-            <property name="font" >
-             <font>
-              <family>Verdana</family>
-             </font>
-            </property>
-            <property name="text" >
-             <string>Y:</string>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="QLabel" name="lblCompassY" >
-            <property name="font" >
-             <font>
-              <family>Verdana</family>
-             </font>
-            </property>
-            <property name="text" >
-             <string>0 deg</string>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" >
-           <widget class="QLabel" name="label18_10" >
-            <property name="font" >
-             <font>
-              <family>Verdana</family>
-             </font>
-            </property>
-            <property name="text" >
-             <string>Z:</string>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" >
-           <widget class="QLabel" name="lblCompassZ" >
-            <property name="font" >
-             <font>
-              <family>Verdana</family>
-             </font>
-            </property>
-            <property name="text" >
-             <string>0 deg</string>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-     </layout>
+     <widget class="QWidget" name="" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>351</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_8" >
+       <item row="0" column="0" >
+        <widget class="QGraphicsView" name="graphicsViewCompass" />
+       </item>
+       <item row="0" column="1" >
+        <widget class="QwtCompass" name="qwtCompass" >
+         <property name="enabled" >
+          <bool>true</bool>
+         </property>
+         <property name="lineWidth" >
+          <number>4</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" >
+        <layout class="QGridLayout" name="gridLayout" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label18_8" >
+           <property name="font" >
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="text" >
+            <string>X:</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QLabel" name="lblCompassX" >
+           <property name="font" >
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="text" >
+            <string>0 deg</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QLabel" name="label18_9" >
+           <property name="font" >
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="text" >
+            <string>Y:</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" >
+          <widget class="QLabel" name="lblCompassY" >
+           <property name="font" >
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="text" >
+            <string>0 deg</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" >
+          <widget class="QLabel" name="label18_10" >
+           <property name="font" >
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="text" >
+            <string>Z:</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1" >
+          <widget class="QLabel" name="lblCompassZ" >
+           <property name="font" >
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="text" >
+            <string>0 deg</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </widget>
    <widget class="QDockWidget" name="dockOdometrie" >
@@ -201,7 +210,7 @@
       <x>1060</x>
       <y>10</y>
       <width>384</width>
-      <height>206</height>
+      <height>211</height>
      </rect>
     </property>
     <property name="allowedAreas" >
@@ -896,7 +905,7 @@
       <x>9</x>
       <y>9</y>
       <width>511</width>
-      <height>509</height>
+      <height>512</height>
      </rect>
     </property>
     <property name="sizePolicy" >
@@ -1474,7 +1483,7 @@
             <rect>
              <x>11</x>
              <y>27</y>
-             <width>88</width>
+             <width>92</width>
              <height>80</height>
             </rect>
            </property>
@@ -1538,7 +1547,7 @@
             <rect>
              <x>11</x>
              <y>27</y>
-             <width>88</width>
+             <width>92</width>
              <height>80</height>
             </rect>
            </property>
@@ -1602,7 +1611,7 @@
             <rect>
              <x>11</x>
              <y>27</y>
-             <width>88</width>
+             <width>92</width>
              <height>80</height>
             </rect>
            </property>
@@ -1666,7 +1675,7 @@
             <rect>
              <x>11</x>
              <y>27</y>
-             <width>88</width>
+             <width>92</width>
              <height>80</height>
             </rect>
            </property>
@@ -2152,7 +2161,7 @@
      <x>0</x>
      <y>0</y>
      <width>1434</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >

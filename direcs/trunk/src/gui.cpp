@@ -106,6 +106,7 @@ infrared Sensors temporarily removed from robot!!
 	// Compass stuff
 	//----------------------------------------------------------------------------
 	initCompass();
+	initCompassView(); // crate the graphics scene object, the compass axes etc.
 
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
@@ -179,7 +180,12 @@ Gui::~Gui()
 	delete laserLineListRear;
 
 	delete scene;
-	//delete cameraScene;
+	
+	// delete compass stuff
+	delete zAxis;
+	delete yAxis;
+	delete xAxis;
+	delete compassScene;
 }
 
 
@@ -2168,6 +2174,46 @@ void Gui::initCompass()
 
 	// set new palette
 	ui.qwtCompass->setPalette(newPalette);
+}
+
+
+void Gui::initCompassView()
+{
+	// the graphicsScene for the compass
+	compassScene = new QGraphicsScene();
+
+	// set some colors
+	compassScene->setBackgroundBrush(Qt::black);
+
+	// turn off moving of scene, when objects extend the scene									-> DISABLED to enable dragging the robot in the laserView!!
+	// (set scene rect to size of GUI element)													-> DISABLED to enable dragging the robot in the laserView!!
+	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());	-> DISABLED to enable dragging the robot in the laserView!!
+
+	// set scene to the GUI
+	ui.graphicsViewCompass->setScene(compassScene);
+
+	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet by the hardware))
+	ui.graphicsViewCompass->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+	
+		
+	QGraphicsLineItem *xAxis = new QGraphicsLineItem();
+	QGraphicsLineItem *yAxis = new QGraphicsLineItem();
+	QGraphicsLineItem *zAxis = new QGraphicsLineItem();
+
+	// set the laser line color
+	xAxis->setPen(QPen(Qt::red));
+	yAxis->setPen(QPen(Qt::green));
+	zAxis->setPen(QPen(Qt::blue));
+	
+	xAxis->setLine( 0,  0,   0, -40); // TODO: correct values
+	yAxis->setLine( 0,  0,  40,  0);
+	zAxis->setLine( 0,  0,  20, -20);
+	
+	// add items to scene
+	compassScene->addItem(xAxis);
+	compassScene->addItem(yAxis);
+	compassScene->addItem(zAxis);
+
 }
 
 
