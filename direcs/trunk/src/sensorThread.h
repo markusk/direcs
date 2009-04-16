@@ -53,26 +53,26 @@ class SensorThread : public QThread
 		virtual void run();
 
 		/**
-		@return The value of an infrared sensor.
 		@param sensor is the sensor number.
+		@return The value of an infrared sensor.
 		*/
 		int getIrSensorValue(int sensor);
 
 		/**
-		@return The value of an ultrasonic sensor.
 		@param sensor is the sensor number.
+		@return The value of an ultrasonic sensor.
 		*/
 		int getUsSensorValue(int sensor);
 
 		/**
-		@return The value of a motor sensor.
 		@param sensor is the sensor number.
+		@return The value of a motor sensor.
 		*/
 		int getMotorSensorValue(int sensor);
 
 		/**
-		@return The distance in cm, of a sensor.
 		@param sensor is the sensor number.
+		@return The distance in cm, of a sensor.
 		*/
 		int getDistance(int sensor);
 
@@ -162,10 +162,17 @@ class SensorThread : public QThread
 		This signal is emitted when all compass values were read.
 		@sa Direcs::showCompassAxes()
 		*/
-		void compassDataComplete(int x, int y, int z);
+		void compassDataComplete(float x, float y, float z);
 
 
 	private:
+		/**
+		Converts the compass sensor value (16 bit integer) to degrees (0 to 360).
+		@param sensorValue
+		@return The given value in degrees (0 to 360).
+		*/
+		float convertToDegree(int sensorValue);
+		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
@@ -174,7 +181,7 @@ class SensorThread : public QThread
 	
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms  (old: 5 ms)
+		static const unsigned long THREADSLEEPTIME = 500; // Default: 25 ms
 
 		// Give the infrared sensors some names
 		//
@@ -240,9 +247,9 @@ class SensorThread : public QThread
 		/**
 		The x, y and z  axis value from the 3D magnetic sensor
 		 */
-		int xAxis;
-		int yAxis;
-		int zAxis;
+		float xAxis;
+		float yAxis;
+		float zAxis;
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */

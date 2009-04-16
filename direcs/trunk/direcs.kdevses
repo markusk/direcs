@@ -1,13 +1,22 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="2" >
+ <DocsAndViews NumberOfDocuments="5" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="542" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.cpp" >
-   <View0 Encoding="" line="657" Type="Source" />
+   <View0 Encoding="" line="653" Type="Source" />
   </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
+   <View0 Encoding="" line="2175" Type="Source" />
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.h" >
+   <View0 Encoding="" line="245" Type="Source" />
+  </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/sensorThread.h" >
+   <View0 Encoding="" line="183" Type="Source" />
+  </Doc4>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>

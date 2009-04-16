@@ -2171,11 +2171,12 @@ void Gui::initCompass()
 }
 
 
-void Gui::showCompassData(int x, int y, int z)
+void Gui::showCompassData(float x, float y, float z)
 {
-	ui.lblCompassX->setText( QString("%1 deg").arg(x) );
-	ui.lblCompassY->setText( QString("%1 deg").arg(y) );
-	ui.lblCompassZ->setText( QString("%1 deg").arg(z) );
+	// also formats the string to 3 digits precision!
+	ui.lblCompassX->setText( QString("%1").setNum(x, 'g', 3).append(" deg") );
+	ui.lblCompassY->setText( QString("%1").setNum(y, 'g', 3).append(" deg") );
+	ui.lblCompassZ->setText( QString("%1").setNum(z, 'g', 3).append(" deg") );
 	
 	ui.qwtCompass->setValue(x);
 }

@@ -539,7 +539,7 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL( sensorDataComplete() ), this, SLOT( showSensorData() ) );
 	connect(sensorThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
-	connect(sensorThread, SIGNAL( compassDataComplete(int, int, int) ), gui, SLOT( showCompassData(int, int, int) ) );
+	connect(sensorThread, SIGNAL( compassDataComplete(float, float, float) ), gui, SLOT( showCompassData(float, float, float) ) );
 
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//----------------------------------------------------------------------------

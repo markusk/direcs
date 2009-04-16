@@ -254,7 +254,7 @@ class Gui : public QMainWindow
 		@param y is the y axis value
 		@param z is the z axis value
 		*/
-		void showCompassData(int x, int y, int z);
+		void showCompassData(float x, float y, float z);
 
 
 	protected:

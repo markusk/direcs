@@ -59,9 +59,9 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	}
 
 	// init the 3D compass values
-	xAxis = 0;
-	yAxis = 0;
-	zAxis = 0;
+	xAxis = 0.0;
+	yAxis = 0.0;
+	zAxis = 0.0;
 
 
 	// These are the measured values from the AD-Conversion from the IR-Sensors
@@ -158,8 +158,7 @@ void SensorThread::run()
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock(); // TODO: do a lock direct before a interface call!!
 
-/*
-infrared Sensors temporarily removed from robot!!
+/* infrared Sensors temporarily removed from robot!!
 
 			//------------------------------------------------------
 			// read value from sensor 1
@@ -601,13 +600,14 @@ contacts temporarily removed from robot!! */
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 
-			// store measured value
-			xAxis = value;
+			// convert the value to degrees and store the value in the class member
+			xAxis =  convertToDegree(value);
 			value = 0;
-
+			
 			// send value over the network
 			// *xc42# means axis x of the compass has 42°
-			emit sendNetworkString( QString("*xc%1#").arg( xAxis ));
+			// CONVERT TO INT! Only for displaying!
+			emit sendNetworkString( QString("*xc%1#").arg( (int) xAxis ));
 
 
 			//------------------------------------------------------
@@ -624,13 +624,14 @@ contacts temporarily removed from robot!! */
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 
-			// store measured value
-			yAxis = value;
+			// convert the value to degrees and store the value in the class member
+			yAxis = convertToDegree(value);
 			value = 0;
 
 			// send value over the network
 			// *yc42# means axis y of the compass has 42°
-			emit sendNetworkString( QString("*yc%1#").arg( yAxis ));
+			// CONVERT TO INT! Only for displaying!
+			emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
 
 
 			//------------------------------------------------------
@@ -647,13 +648,14 @@ contacts temporarily removed from robot!! */
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 
-			// store measured value
-			zAxis = value;
+			// convert the value to degrees and store the value in the class member
+			zAxis = convertToDegree(value);
 			value = 0;
 
 			// send value over the network
 			// *zc42# means axis z of the compass has 42°
-			emit sendNetworkString( QString("*zc%1#").arg( zAxis ));
+			// CONVERT TO INT! Only for displaying!
+			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
 			
 			
 			//-------------------------
@@ -1010,4 +1012,16 @@ void SensorThread::setRobotState(bool state)
 {
 	// store the state within this class
 	robotState = state;
+}
+
+
+float SensorThread::convertToDegree(int sensorValue)
+{
+	// 'value' has to be between 0 and 65536, because we're using a 16 bit value
+	//
+	// A compass has 360 degrees, so the factor for 1 degree is 360/65536
+	
+	float result = (sensorValue * (360.0 / 65536.0));
+	
+	return (sensorValue * (360.0 / 65536.0));
 }
