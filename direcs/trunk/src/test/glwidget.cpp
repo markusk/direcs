@@ -181,6 +181,7 @@ GLuint GLWidget::makeObject()
 
     glBegin(GL_QUADS);
 
+/*
     GLdouble x1 = +0.06;
     GLdouble y1 = -0.14;
     GLdouble x2 = +0.14;
@@ -189,6 +190,7 @@ GLuint GLWidget::makeObject()
     GLdouble y3 = +0.00;
     GLdouble x4 = +0.30;
     GLdouble y4 = +0.22;
+*/
     
     GLdouble xAxisX1 = -0.05;
     GLdouble xAxisY1 = -0.20;
@@ -208,31 +210,39 @@ GLuint GLWidget::makeObject()
     GLdouble yAxisX4 = -0.05;
     GLdouble yAxisY4 = +0.05;
     
+//     quad(x1, y1, x2, y2, y2, x2, y1, x1, xAxisColor); // waagerechter T-Strich, Ober- und Unterfläche
+//     extrude(x1, y1, x2, y2, xAxisColor); //  waagerechter T-Strich, Aussenfläche rechts
+//     extrude(x2, y2, y2, x2, xAxisColor); //  waagerechter T-Strich, Aussenfläche unten (Boden)
+//     extrude(y2, x2, y1, x1, xAxisColor); //  waagerechter T-Strich, Aussenfläche links **
+//     extrude(y1, x1, x1, y1, xAxisColor); //  waagerechter T-Strich, Aussenfläche oben (Dach)
 
-    // org: quad(x1, y1, x2, y2, y2, x2, y1, x1, xAxisColor); // waagerechter T-Strich, Ober- und Unterfläche
+//     quad(x3, y3, x4, y4, y4, x4, y3, x3, yAxisColor); // senkrechter T-Strich, Ober- und Unterfläche
+//     extrude(x3, y3, x4, y4, yAxisColor); //  senkrechter T-Strich, Aussenfläche rechts
+//     extrude(x4, y4, y4, x4, yAxisColor); //  senkrechter T-Strich, Aussenfläche unten (Boden) *
+//     extrude(y4, x4, y3, x3, yAxisColor); //  senkrechter T-Strich, Aussenfläche links
+
+
+    // xAxis
     quad(xAxisX1, xAxisY1, xAxisX2, xAxisY2, xAxisX3, xAxisY3, xAxisX4, xAxisY4, xAxisColor);
-    // org: quad(x3, y3, x4, y4, y4, x4, y3, x3, yAxisColor); // senkrechter T-Strich, Ober- und Unterfläche
-    quad(yAxisX1, yAxisY1, yAxisX2, yAxisY2, yAxisX3, yAxisY3, yAxisX4, yAxisY4, yAxisColor);
-
     extrude(xAxisX1, xAxisY1, xAxisX2, xAxisY2, xAxisColor); // kleine seitenfläche unten
     extrude(xAxisX3, xAxisY3, xAxisX4, xAxisY4, xAxisColor); // kleine seitenfläche oben
     extrude(xAxisX4, xAxisY4, xAxisX1, xAxisY1, xAxisColor); // große seitenfläche links
     extrude(xAxisX2, xAxisY2, xAxisX3, xAxisY3, xAxisColor); // große seitenfläche rechts
 
-//     extrude(x1, y1, x2, y2, xAxisColor); //  waagerechter T-Strich, Aussenfläche rechts
-//     extrude(x2, y2, y2, x2, xAxisColor); //  waagerechter T-Strich, Aussenfläche unten (Boden)
-//     extrude(y2, x2, y1, x1, xAxisColor); //  waagerechter T-Strich, Aussenfläche links **
-//     extrude(y1, x1, x1, y1, xAxisColor); //  waagerechter T-Strich, Aussenfläche oben (Dach)
-//     extrude(x3, y3, x4, y4, yAxisColor); //  senkrechter T-Strich, Aussenfläche rechts
-//     extrude(x4, y4, y4, x4, yAxisColor); //  senkrechter T-Strich, Aussenfläche unten (Boden) *
-//     extrude(y4, x4, y3, x3, yAxisColor); //  senkrechter T-Strich, Aussenfläche links
+    // yAxis
+    quad(yAxisX1, yAxisY1, yAxisX2, yAxisY2, yAxisX3, yAxisY3, yAxisX4, yAxisY4, yAxisColor);
+    extrude(yAxisX1, yAxisY1, yAxisX4, yAxisY4, yAxisColor); // kleine seitenfläche links
+    extrude(yAxisX2, yAxisY2, yAxisX3, yAxisY3, yAxisColor); // kleine seitenfläche rechts
+    extrude(yAxisX1, yAxisY1, yAxisX2, yAxisY2, yAxisColor); // große seitenfläche unten
+    extrude(yAxisX4, yAxisY4, yAxisX3, yAxisY3, yAxisColor); // große seitenfläche oben
 
+/*
     const double Pi = 3.14159265358979323846;
     const int NumSectors = 200;
 
-// kreis
-/*
-    for (int i = 0; i < NumSectors; ++i) {
+    // kreis
+    for (int i = 0; i < NumSectors; ++i)
+    {
         double angle1 = (i * 2 * Pi) / NumSectors;
         GLdouble x5 = 0.30 * sin(angle1);
         GLdouble y5 = 0.30 * cos(angle1);
@@ -280,10 +290,10 @@ void GLWidget::extrude(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, QColo
 
     qglColor(color.dark(250 + int(100 * x1)));
 
-    glVertex3d(x1, y1, +0.05); // -6  14
-    glVertex3d(x2, y2, +0.05); // -14  6
-    glVertex3d(x2, y2, -0.05); // -14 6
-    glVertex3d(x1, y1, -0.05); // -6 14
+    glVertex3d(x1, y1, +0.05);
+    glVertex3d(x2, y2, +0.05);
+    glVertex3d(x2, y2, -0.05);
+    glVertex3d(x1, y1, -0.05);
 }
 
 void GLWidget::normalizeAngle(int *angle)
