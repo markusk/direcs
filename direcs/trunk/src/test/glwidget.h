@@ -77,9 +77,8 @@ protected:
 //! [3]
 private:
     GLuint makeObject();
-    void quad(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2,
-              GLdouble x3, GLdouble y3, GLdouble x4, GLdouble y4);
-    void extrude(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2);
+    void quad(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, GLdouble x3, GLdouble y3, GLdouble x4, GLdouble y4, QColor color);
+    void extrude(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, QColor color);
     void normalizeAngle(int *angle);
 
     GLuint object;
@@ -87,8 +86,10 @@ private:
     int yRot;
     int zRot;
     QPoint lastPos;
-    QColor trolltechGreen;
-    QColor trolltechPurple;
+    QColor xAxisColor;
+    QColor yAxisColor;
+    QColor zAxisColor;
+    QColor backgroundColor;
 };
 //! [3]
 

@@ -51,8 +51,10 @@ GLWidget::GLWidget(QWidget *parent)
     yRot = 0;
     zRot = 0;
 
-    trolltechGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
-    trolltechPurple = QColor::fromCmykF(0.39, 0.39, 0.0, 0.0);
+    xAxisColor = Qt::red;
+    yAxisColor = Qt::green;
+    zAxisColor = Qt::blue;
+    backgroundColor = Qt::black;
 }
 //! [0]
 
@@ -114,7 +116,7 @@ void GLWidget::setZRotation(int angle)
 //! [6]
 void GLWidget::initializeGL()
 {
-    qglClearColor(trolltechPurple.dark());
+    qglClearColor(backgroundColor.dark());
     object = makeObject();
     glShadeModel(GL_FLAT);
     glEnable(GL_DEPTH_TEST);
@@ -188,16 +190,16 @@ GLuint GLWidget::makeObject()
     GLdouble x4 = +0.30;
     GLdouble y4 = +0.22;
 
-    quad(x1, y1, x2, y2, y2, x2, y1, x1); // waagerechter T-Strich, Ober- und Unterfläche
-    quad(x3, y3, x4, y4, y4, x4, y3, x3); // senkrechter T-Strich, Ober- und Unterfläche
+    quad(x1, y1, x2, y2, y2, x2, y1, x1, xAxisColor); // waagerechter T-Strich, Ober- und Unterfläche
+    quad(x3, y3, x4, y4, y4, x4, y3, x3, yAxisColor); // senkrechter T-Strich, Ober- und Unterfläche
 
-    extrude(x1, y1, x2, y2); //  waagerechter T-Strich, Aussenfläche rechts
-    extrude(x2, y2, y2, x2); //  waagerechter T-Strich, Aussenfläche unten (Boden)
-    extrude(y2, x2, y1, x1); //  waagerechter T-Strich, Aussenfläche links
-    extrude(y1, x1, x1, y1); //  waagerechter T-Strich, Aussenfläche oben (Dach)
-    extrude(x3, y3, x4, y4); //  senkrechter T-Strich, Aussenfläche rechts
-    extrude(x4, y4, y4, x4); //  senkrechter T-Strich, Aussenfläche unten (Boden)
-    extrude(y4, x4, y3, x3); //  senkrechter T-Strich, Aussenfläche links
+    extrude(x1, y1, x2, y2, xAxisColor); //  waagerechter T-Strich, Aussenfläche rechts
+    extrude(x2, y2, y2, x2, xAxisColor); //  waagerechter T-Strich, Aussenfläche unten (Boden)
+    extrude(y2, x2, y1, x1, xAxisColor); //  waagerechter T-Strich, Aussenfläche links
+    extrude(y1, x1, x1, y1, xAxisColor); //  waagerechter T-Strich, Aussenfläche oben (Dach)
+    extrude(x3, y3, x4, y4, yAxisColor); //  senkrechter T-Strich, Aussenfläche rechts
+    extrude(x4, y4, y4, x4, yAxisColor); //  senkrechter T-Strich, Aussenfläche unten (Boden)
+    extrude(y4, x4, y3, x3, yAxisColor); //  senkrechter T-Strich, Aussenfläche links
 
     const double Pi = 3.14159265358979323846;
     const int NumSectors = 200;
@@ -230,10 +232,9 @@ GLuint GLWidget::makeObject()
     return list;
 }
 
-void GLWidget::quad(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2,
-                    GLdouble x3, GLdouble y3, GLdouble x4, GLdouble y4)
+void GLWidget::quad(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, GLdouble x3, GLdouble y3, GLdouble x4, GLdouble y4, QColor color)
 {
-    qglColor(trolltechGreen);
+    qglColor(color);
 
     // definition von eckpunkten
     glVertex3d(x1, y1, -0.05);
@@ -247,9 +248,11 @@ void GLWidget::quad(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2,
     glVertex3d(x1, y1, +0.05);
 }
 
-void GLWidget::extrude(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2)
+void GLWidget::extrude(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, QColor color)
 {
-    qglColor(trolltechGreen.dark(250 + int(100 * x1)));
+    // extrude = durchdrücken
+
+    qglColor(color.dark(250 + int(100 * x1)));
 
     glVertex3d(x1, y1, +0.05);
     glVertex3d(x2, y2, +0.05);
