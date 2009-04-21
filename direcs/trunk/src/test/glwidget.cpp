@@ -189,8 +189,19 @@ GLuint GLWidget::makeObject()
     GLdouble y3 = +0.00;
     GLdouble x4 = +0.30;
     GLdouble y4 = +0.22;
+    
+    GLdouble xAxisX1 = -0.05;
+    GLdouble xAxisY1 = -0.10;
+    GLdouble xAxisX2 = +0.05;
+    GLdouble xAxisY2 = -0.10;
+    GLdouble xAxisX3 = +0.05;
+    GLdouble xAxisY3 = +0.10;
+    GLdouble xAxisX4 = -0.05;
+    GLdouble xAxisY4 = +0.10;
+    
 
-    quad(x1, y1, x2, y2, y2, x2, y1, x1, xAxisColor); // waagerechter T-Strich, Ober- und Unterfläche
+    // org: quad(x1, y1, x2, y2, y2, x2, y1, x1, xAxisColor); // waagerechter T-Strich, Ober- und Unterfläche
+    quad(xAxisX1, xAxisY1, xAxisX2, xAxisY2, xAxisX3, xAxisY3, xAxisX4, xAxisY4, xAxisColor); // waagerechter T-Strich, Ober- und Unterfläche
     quad(x3, y3, x4, y4, y4, x4, y3, x3, yAxisColor); // senkrechter T-Strich, Ober- und Unterfläche
 
     extrude(x1, y1, x2, y2, xAxisColor); //  waagerechter T-Strich, Aussenfläche rechts
