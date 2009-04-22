@@ -77,7 +77,7 @@ protected:
 //! [3]
 private:
     GLuint makeObject();
-    void quad(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, GLdouble x3, GLdouble y3, GLdouble x4, GLdouble y4, QColor color);
+    void quad(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, GLdouble x3, GLdouble y3, GLdouble x4, GLdouble y4, QColor color); /// creates a quad
     void extrude(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, QColor color);
     void normalizeAngle(int *angle);
 

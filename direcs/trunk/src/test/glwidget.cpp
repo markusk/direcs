@@ -201,13 +201,13 @@ GLuint GLWidget::makeObject()
     GLdouble xAxisX4 = -0.05;
     GLdouble xAxisY4 = +0.20;
     
-    GLdouble yAxisX1 = -0.05;
+    GLdouble yAxisX1 = +0.05;
     GLdouble yAxisY1 = -0.05;
     GLdouble yAxisX2 = +0.20;
     GLdouble yAxisY2 = -0.05;
     GLdouble yAxisX3 = +0.20;
     GLdouble yAxisY3 = +0.05;
-    GLdouble yAxisX4 = -0.05;
+    GLdouble yAxisX4 = +0.05;
     GLdouble yAxisY4 = +0.05;
     
 //     quad(x1, y1, x2, y2, y2, x2, y1, x1, xAxisColor); // waagerechter T-Strich, Ober- und Unterfläche
@@ -221,46 +221,20 @@ GLuint GLWidget::makeObject()
 //     extrude(x4, y4, y4, x4, yAxisColor); //  senkrechter T-Strich, Aussenfläche unten (Boden) *
 //     extrude(y4, x4, y3, x3, yAxisColor); //  senkrechter T-Strich, Aussenfläche links
 
-
+/*
     // xAxis
     quad(xAxisX1, xAxisY1, xAxisX2, xAxisY2, xAxisX3, xAxisY3, xAxisX4, xAxisY4, xAxisColor);
     extrude(xAxisX1, xAxisY1, xAxisX2, xAxisY2, xAxisColor); // kleine seitenfläche unten
     extrude(xAxisX3, xAxisY3, xAxisX4, xAxisY4, xAxisColor); // kleine seitenfläche oben
     extrude(xAxisX4, xAxisY4, xAxisX1, xAxisY1, xAxisColor); // große seitenfläche links
     extrude(xAxisX2, xAxisY2, xAxisX3, xAxisY3, xAxisColor); // große seitenfläche rechts
-
+*/
     // yAxis
     quad(yAxisX1, yAxisY1, yAxisX2, yAxisY2, yAxisX3, yAxisY3, yAxisX4, yAxisY4, yAxisColor);
-    extrude(yAxisX1, yAxisY1, yAxisX4, yAxisY4, yAxisColor); // kleine seitenfläche links
-    extrude(yAxisX2, yAxisY2, yAxisX3, yAxisY3, yAxisColor); // kleine seitenfläche rechts
-    extrude(yAxisX1, yAxisY1, yAxisX2, yAxisY2, yAxisColor); // große seitenfläche unten
-    extrude(yAxisX4, yAxisY4, yAxisX3, yAxisY3, yAxisColor); // große seitenfläche oben
-
-/*
-    const double Pi = 3.14159265358979323846;
-    const int NumSectors = 200;
-
-    // kreis
-    for (int i = 0; i < NumSectors; ++i)
-    {
-        double angle1 = (i * 2 * Pi) / NumSectors;
-        GLdouble x5 = 0.30 * sin(angle1);
-        GLdouble y5 = 0.30 * cos(angle1);
-        GLdouble x6 = 0.20 * sin(angle1);
-        GLdouble y6 = 0.20 * cos(angle1);
-
-        double angle2 = ((i + 1) * 2 * Pi) / NumSectors;
-        GLdouble x7 = 0.20 * sin(angle2);
-        GLdouble y7 = 0.20 * cos(angle2);
-        GLdouble x8 = 0.30 * sin(angle2);
-        GLdouble y8 = 0.30 * cos(angle2);
-
-        quad(x5, y5, x6, y6, x7, y7, x8, y8);
-
-        extrude(x6, y6, x7, y7);
-        extrude(x8, y8, x5, y5);
-    }
-*/
+    extrude(yAxisX1, yAxisY1, yAxisX4, yAxisY4, Qt::white); // kleine seitenfläche links
+    extrude(yAxisX2, yAxisY2, yAxisX3, yAxisY3, Qt::gray); // kleine seitenfläche rechts
+    extrude(yAxisX1, yAxisY1, yAxisX2, yAxisY2, Qt::yellow); // große seitenfläche unten
+    extrude(yAxisX4, yAxisY4, yAxisX3, yAxisY3, Qt::cyan); // große seitenfläche oben  <  nicht zu sehen
 
     glEnd();
 
