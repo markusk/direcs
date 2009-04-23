@@ -62,6 +62,12 @@ GLWidget::GLWidget(QWidget *parent)
 GLWidget::~GLWidget()
 {
     makeCurrent();
+    
+    //---
+    gluDeleteNurbsRenderer (nobs);
+    gluDeleteQuadric (q);
+    //---
+
     glDeleteLists(object, 1);
 }
 //! [1]
@@ -235,6 +241,20 @@ GLuint GLWidget::makeObject()
     extrude(yAxisX2, yAxisY2, yAxisX3, yAxisY3, Qt::gray); // kleine seitenfläche rechts
     extrude(yAxisX1, yAxisY1, yAxisX2, yAxisY2, Qt::yellow); // große seitenfläche unten
     extrude(yAxisX4, yAxisY4, yAxisX3, yAxisY3, Qt::cyan); // große seitenfläche oben  <  nicht zu sehen
+
+//---
+    cyl_radius = 0.05;
+    cyl_height = 0.10;
+
+    qglColor(Qt::blue);
+    GLUquadricObj* q = gluNewQuadric ();
+    GLUnurbsObj* nobs = gluNewNurbsRenderer ();
+    
+    gluBeginSurface (nobs);
+    gluCylinder (q, (GLdouble)cyl_radius, (GLdouble)cyl_radius, (GLdouble)cyl_height, 32, 32);
+    gluEndSurface (nobs);
+//---
+
 
     glEnd();
 

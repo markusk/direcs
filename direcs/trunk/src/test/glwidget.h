@@ -82,9 +82,14 @@ private:
     void normalizeAngle(int *angle);
 
     GLuint object;
+    GLUquadricObj* q;
+    GLUnurbsObj* nobs;;
+
     int xRot;
     int yRot;
     int zRot;
+    double cyl_radius;
+    double cyl_height;
     QPoint lastPos;
     QColor xAxisColor;
     QColor yAxisColor;
