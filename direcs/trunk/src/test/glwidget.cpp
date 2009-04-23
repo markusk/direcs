@@ -235,22 +235,24 @@ GLuint GLWidget::makeObject()
     extrude(xAxisX4, xAxisY4, xAxisX1, xAxisY1, xAxisColor); // große seitenfläche links
     extrude(xAxisX2, xAxisY2, xAxisX3, xAxisY3, xAxisColor); // große seitenfläche rechts
 */
+/*
     // yAxis
     quad(yAxisX1, yAxisY1, yAxisX2, yAxisY2, yAxisX3, yAxisY3, yAxisX4, yAxisY4, yAxisColor);
     extrude(yAxisX1, yAxisY1, yAxisX4, yAxisY4, Qt::white); // kleine seitenfläche links
     extrude(yAxisX2, yAxisY2, yAxisX3, yAxisY3, Qt::gray); // kleine seitenfläche rechts
     extrude(yAxisX1, yAxisY1, yAxisX2, yAxisY2, Qt::yellow); // große seitenfläche unten
     extrude(yAxisX4, yAxisY4, yAxisX3, yAxisY3, Qt::cyan); // große seitenfläche oben  <  nicht zu sehen
-
+*/
 //---
     cyl_radius = 0.05;
-    cyl_height = 0.10;
+    cyl_height = 0.40;
 
     qglColor(Qt::blue);
     GLUquadricObj* q = gluNewQuadric ();
     GLUnurbsObj* nobs = gluNewNurbsRenderer ();
     
     gluBeginSurface (nobs);
+    gluQuadricOrientation(q, GLU_OUTSIDE);
     gluCylinder (q, (GLdouble)cyl_radius, (GLdouble)cyl_radius, (GLdouble)cyl_height, 32, 32);
     gluEndSurface (nobs);
 //---
