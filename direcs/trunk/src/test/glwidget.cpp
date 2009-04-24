@@ -8,7 +8,6 @@
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
-    object = 0;
     xRot = 0;
     yRot = 0;
     zRot = 0;
@@ -17,6 +16,9 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
     yAxisColor = Qt::green;
     zAxisColor = Qt::blue;
     backgroundColor = Qt::black;
+    
+    // initialize quadric pointers
+    xAxis = NULL;
 }
 
 
@@ -24,68 +26,53 @@ GLWidget::~GLWidget()
 {
     makeCurrent();
     
-    gluDeleteQuadric (q);
-}
-
-
-QSize GLWidget::minimumSizeHint() const
-{
-    return QSize(50, 50);
-}
-
-
-QSize GLWidget::sizeHint() const
-{
-    return QSize(400, 400);
-}
-
-
-void GLWidget::setXRotation(int angle)
-{
-    normalizeAngle(&angle);
-    if (angle != xRot) {
-        xRot = angle;
-        emit xRotationChanged(angle);
-        updateGL();
-    }
-}
-
-
-void GLWidget::setYRotation(int angle)
-{
-    normalizeAngle(&angle);
-    if (angle != yRot) {
-        yRot = angle;
-        emit yRotationChanged(angle);
-        updateGL();
-    }
-}
-
-
-void GLWidget::setZRotation(int angle)
-{
-    normalizeAngle(&angle);
-    if (angle != zRot) {
-        zRot = angle;
-        emit zRotationChanged(angle);
-        updateGL();
-    }
+    if (zAxis)
+      gluDeleteQuadric (zAxis);
+      
+    if (xAxis)
+      gluDeleteQuadric (xAxis);
 }
 
 
 void GLWidget::initializeGL()
 {
     qglClearColor(backgroundColor.dark());
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);    
     glEnable(GL_DEPTH_TEST);
-//     glEnable(GL_CULL_FACE); // nur aussen seiten füllen
+
+/*
+    GLfloat LightAmbient[] = {0.3, 0.3, 0.3, 1.0};
+    GLfloat LightDiffuse[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat LightSpecular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat LightPosition[] = {0.0, 0.0, 3.0, 1.0};
+    GLfloat spot_direction[] = {0.0, 0.0, -1.0};
     
+    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, LightSpecular);
+    glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 50.0);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 10.0);
     
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+*/  
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+
+
     cyl_radius = 0.05;
     cyl_height = 0.40;
 
-    qglColor(Qt::blue);
-    q = gluNewQuadric();
+    xAxis = gluNewQuadric();
+    zAxis = gluNewQuadric();
+
+    gluQuadricNormals(xAxis, GLU_SMOOTH);
+    gluQuadricNormals(zAxis, GLU_SMOOTH);
 }
 
 
@@ -98,8 +85,15 @@ void GLWidget::paintGL()
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    // zylinder zeichnen
-    gluCylinder(q, (GLdouble)cyl_radius, (GLdouble)cyl_radius, (GLdouble)cyl_height, 32, 32);
+    // zylinder 1 zeichnen
+    // object, baseradius, topradius, height, slices, stacks
+    qglColor(xAxisColor);
+    gluCylinder(xAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
+
+    // move to the "left"
+    glTranslatef(0.0, 0.0, cyl_height);
+    qglColor(zAxisColor);
+    gluCylinder(zAxis, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
 }
 
 
@@ -145,4 +139,49 @@ void GLWidget::normalizeAngle(int *angle)
         *angle += 360 * 16;
     while (*angle > 360 * 16)
         *angle -= 360 * 16;
+}
+
+
+QSize GLWidget::minimumSizeHint() const
+{
+    return QSize(50, 50);
+}
+
+
+QSize GLWidget::sizeHint() const
+{
+    return QSize(400, 400);
+}
+
+
+void GLWidget::setXRotation(int angle)
+{
+    normalizeAngle(&angle);
+    if (angle != xRot) {
+        xRot = angle;
+        emit xRotationChanged(angle);
+        updateGL();
+    }
+}
+
+
+void GLWidget::setYRotation(int angle)
+{
+    normalizeAngle(&angle);
+    if (angle != yRot) {
+        yRot = angle;
+        emit yRotationChanged(angle);
+        updateGL();
+    }
+}
+
+
+void GLWidget::setZRotation(int angle)
+{
+    normalizeAngle(&angle);
+    if (angle != zRot) {
+        zRot = angle;
+        emit zRotationChanged(angle);
+        updateGL();
+    }
 }

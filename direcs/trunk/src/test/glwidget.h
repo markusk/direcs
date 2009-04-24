@@ -78,14 +78,14 @@ protected:
 private:
     void normalizeAngle(int *angle);
 
-    GLuint object;
-    GLUquadricObj* q;
+    GLUquadricObj* xAxis;
+    GLUquadricObj* zAxis;
 
     int xRot;
     int yRot;
     int zRot;
-    double cyl_radius;
-    double cyl_height;
+    GLdouble cyl_radius;
+    GLdouble cyl_height;
     QPoint lastPos;
     QColor xAxisColor;
     QColor yAxisColor;
