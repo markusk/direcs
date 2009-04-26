@@ -19,15 +19,32 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
     
     // initialize quadric pointers
     xAxis = NULL;
+    yAxis = NULL;
+    zAxis = NULL;
+    xAxisCone = NULL;
+    yAxisCone = NULL;
+    zAxisCone = NULL;
 }
 
 
 GLWidget::~GLWidget()
 {
     makeCurrent();
-    
-    if (zAxis)
+      
+    if (zAxisCone)
       gluDeleteQuadric (zAxis);
+      
+    if (yAxisCone)
+      gluDeleteQuadric (yAxis);
+      
+    if (xAxisCone)
+      gluDeleteQuadric (xAxis);
+
+  if (zAxis)
+      gluDeleteQuadric (zAxis);
+      
+    if (yAxis)
+      gluDeleteQuadric (yAxis);
       
     if (xAxis)
       gluDeleteQuadric (xAxis);
@@ -69,10 +86,20 @@ void GLWidget::initializeGL()
     cyl_height = 0.40;
 
     xAxis = gluNewQuadric();
+    yAxis = gluNewQuadric();
     zAxis = gluNewQuadric();
 
+    xAxisCone = gluNewQuadric();
+    yAxisCone = gluNewQuadric();
+    zAxisCone = gluNewQuadric();
+
     gluQuadricNormals(xAxis, GLU_SMOOTH);
+    gluQuadricNormals(yAxis, GLU_SMOOTH);
     gluQuadricNormals(zAxis, GLU_SMOOTH);
+
+    gluQuadricNormals(xAxisCone, GLU_SMOOTH);
+    gluQuadricNormals(yAxisCone, GLU_SMOOTH);
+    gluQuadricNormals(zAxisCone, GLU_SMOOTH);
 }
 
 
@@ -85,15 +112,15 @@ void GLWidget::paintGL()
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    // zylinder 1 zeichnen
+    // cylinder 1
     // object, baseradius, topradius, height, slices, stacks
     qglColor(xAxisColor);
     gluCylinder(xAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
-
-    // move to the "left"
+    // move
     glTranslatef(0.0, 0.0, cyl_height);
-    qglColor(zAxisColor);
-    gluCylinder(zAxis, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
+    qglColor(xAxisColor);
+    // cone 1
+    gluCylinder(xAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
 }
 
 

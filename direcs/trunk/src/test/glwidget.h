@@ -79,7 +79,11 @@ private:
     void normalizeAngle(int *angle);
 
     GLUquadricObj* xAxis;
+    GLUquadricObj* yAxis;
     GLUquadricObj* zAxis;
+    GLUquadricObj* xAxisCone;
+    GLUquadricObj* yAxisCone;
+    GLUquadricObj* zAxisCone;
 
     int xRot;
     int yRot;
