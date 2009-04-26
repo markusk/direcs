@@ -59,28 +59,28 @@ void GLWidget::initializeGL()
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);    
     glEnable(GL_DEPTH_TEST);
 
-/*
-    GLfloat LightAmbient[] = {0.3, 0.3, 0.3, 1.0};
-    GLfloat LightDiffuse[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat LightSpecular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat LightAmbient[] = {0.25, 0.25, 0.25, 1.0};		// Umgebungslicht
+    GLfloat LightDiffuse[] = {0.4, 0.4, 0.4, 1.0};		// Bei diffusem Licht ist die Richtung des Lichts erkennbar, aus der es kommt
+    GLfloat LightSpecular[] = {0.77, 0.77, 0.77, 1.0};		// Glanz
+
     GLfloat LightPosition[] = {0.0, 0.0, 3.0, 1.0};
-    GLfloat spot_direction[] = {0.0, 0.0, -1.0};
+    GLfloat spot_direction[] = {0.0, 0.0, -1.0}; // Richtung in die das Spotlight zeigt
     
     glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, LightSpecular);
     glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
-    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 50.0);
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 50.0); // gibt den Winkel an, der zwischen Richtung und max. Auswurf besteht
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction);
-    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 10.0);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 10.0); // gibt an, wie stark die lichtstärke nach aussen abnimmt
     
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
-*/  
+    glEnable(GL_COLOR_MATERIAL); // neu
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
+    glEnable(GL_BLEND); // erforderlich, wenn Materialien durchsichtig sind
 
 
     cyl_radius = 0.03;
