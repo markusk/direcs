@@ -11,11 +11,6 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
     xRot = 0;
     yRot = 0;
     zRot = 0;
-
-    xAxisColor = Qt::red;
-    yAxisColor = Qt::green;
-    zAxisColor = Qt::blue;
-    backgroundColor = Qt::black;
     
     // initialize quadric pointers
     xAxis = NULL;
@@ -53,6 +48,12 @@ GLWidget::~GLWidget()
 
 void GLWidget::initializeGL()
 {
+    xAxisColor = Qt::red;
+    yAxisColor = Qt::green;
+    zAxisColor = Qt::blue;
+    backgroundColor = Qt::black;
+
+
     qglClearColor(backgroundColor.dark());
     glShadeModel(GL_SMOOTH);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);    
@@ -82,8 +83,8 @@ void GLWidget::initializeGL()
     glEnable(GL_BLEND);
 
 
-    cyl_radius = 0.05;
-    cyl_height = 0.40;
+    cyl_radius = 0.03;
+    cyl_height = 0.30;
 
     xAxis = gluNewQuadric();
     yAxis = gluNewQuadric();
@@ -112,7 +113,7 @@ void GLWidget::paintGL()
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    // X cylinder
+    // X cylinder (red)
     qglColor(xAxisColor);
     // object, baseradius, topradius, height, slices, stacks
     gluCylinder(xAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
@@ -122,10 +123,10 @@ void GLWidget::paintGL()
     // X cone
     gluCylinder(xAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
 
-    // Y cylinder
+    // Y cylinder (green)
     qglColor(yAxisColor);
     // move back and rotate one axis
-    glTranslatef(0.0, 0.0, -cyl_height);
+    glTranslatef(0.0, 0.0, - (cyl_height - cyl_radius));
     glRotated(90, 1.0, 0.0, 0.0);
     // object, baseradius, topradius, height, slices, stacks
     gluCylinder(yAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
@@ -135,11 +136,10 @@ void GLWidget::paintGL()
     // Y cone
     gluCylinder(yAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
 
-    // Z cylinder
-    // move
+    // Z cylinder (blue)
     qglColor(zAxisColor);
     // move back and rotate one axis
-    glTranslatef(0.0, 0.0, -cyl_height);
+    glTranslatef(0.0, 0.0, - (cyl_height));
     glRotated(90, 0.0, 1.0, 0.0);
     // object, baseradius, topradius, height, slices, stacks
     gluCylinder(zAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
