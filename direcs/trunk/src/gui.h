@@ -35,6 +35,8 @@
 #include "settingsDialog.h"
 #include "aboutDialog.h"
 #include "laserScene.h"
+#include "QtGLContext.h"
+#include "compassWidget.h"
 #include "ui_mainWindow.h"
 //-------------------------------------------------------------------
 #include <qwt_plot_layout.h>
@@ -47,7 +49,6 @@
 #include <qwt_compass.h>
 #include <qwt_dial_needle.h>
 //-------------------------------------------------------------------
-#include "QtGLContext.h"
 
 
 

@@ -27,6 +27,7 @@ unix {
 		HEADERS +=	aboutDialog.h \
 				camThread.h \
 				circuit.h \
+				compassWidget.h \
 				direcsSerial.h \
 				gui.h \
 				head.h \
@@ -51,6 +52,7 @@ unix {
 		SOURCES +=	aboutDialog.cpp \
 				camThread.cpp \
 				circuit.cpp \
+				compassWidget.cpp \
 				direcsSerial.cpp \
 				gui.cpp \
 				head.cpp \
@@ -82,15 +84,7 @@ unix {
 		QT +=		network \
 				opengl
 				
-		INCLUDEPATH +=	/usr/include/atk-1.0/ \
-				/usr/lib/gtk-2.0/include/ \
-				/usr/lib/glib-2.0/include/ \
-				/usr/lib/glib/include/ \
-				/usr/include/glib-2.0/ \
-				/usr/include/pango-1.0/ \
-				/usr/include/cairo/ \
-				/usr/include/gtk-2.0/ \
-				/usr/include/speech_tools \
+		INCLUDEPATH +=	/usr/include/speech_tools \
 				/usr/include/festival \
 				/usr/include/qwt-qt4 \
 				/usr/local/include/opencv
@@ -115,6 +109,7 @@ win32 {
 	message("Processing win32 scope...")
 	HEADERS +=	aboutDialog.h \
 			camThread.h \
+			compassWidget.cpp \
 			gui.h \
 			joystickDialog.h \
 			laserScene.h \
@@ -128,6 +123,7 @@ win32 {
 			
 	SOURCES +=	aboutDialog.cpp \
 			camThread.cpp \
+			compassWidget.cpp \
 			gui.cpp \
 			joystickDialog.cpp \
 			laserScene.cpp \
