@@ -32,13 +32,13 @@ GLWidget::~GLWidget()
     makeCurrent();
       
     if (zAxisCone)
-      gluDeleteQuadric (zAxis);
+      gluDeleteQuadric (zAxisCone);
       
     if (yAxisCone)
-      gluDeleteQuadric (yAxis);
+      gluDeleteQuadric (yAxisCone);
       
     if (xAxisCone)
-      gluDeleteQuadric (xAxis);
+      gluDeleteQuadric (xAxisCone);
 
   if (zAxis)
       gluDeleteQuadric (zAxis);
