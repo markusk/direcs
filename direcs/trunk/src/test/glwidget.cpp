@@ -123,8 +123,10 @@ void GLWidget::paintGL()
     gluCylinder(xAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
 
     // Y cylinder
-    // move
     qglColor(yAxisColor);
+    // move back and rotate one axis
+    glTranslatef(0.0, 0.0, -cyl_height);
+    glRotated(90, 1.0, 0.0, 0.0);
     // object, baseradius, topradius, height, slices, stacks
     gluCylinder(yAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
     // move
@@ -136,6 +138,9 @@ void GLWidget::paintGL()
     // Z cylinder
     // move
     qglColor(zAxisColor);
+    // move back and rotate one axis
+    glTranslatef(0.0, 0.0, -cyl_height);
+    glRotated(90, 0.0, 1.0, 0.0);
     // object, baseradius, topradius, height, slices, stacks
     gluCylinder(zAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
     // move
