@@ -83,7 +83,7 @@
      <string>Navigation</string>
     </property>
     <widget class="QWidget" name="dockWidgetContents_6" >
-     <widget class="QWidget" name="" >
+     <widget class="QWidget" name="layoutWidget" >
       <property name="geometry" >
        <rect>
         <x>10</x>
@@ -93,9 +93,6 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_8" >
-       <item row="0" column="0" >
-        <widget class="QGraphicsView" name="graphicsViewCompass" />
-       </item>
        <item row="0" column="1" >
         <widget class="QwtCompass" name="qwtCompass" >
          <property name="enabled" >
@@ -199,6 +196,77 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="0" column="0" >
+        <widget class="CompassWidget" native="1" name="frameCompass" >
+         <property name="palette" >
+          <palette>
+           <active>
+            <colorrole role="Base" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="Base" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="Base" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+         <property name="autoFillBackground" >
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -2411,6 +2479,12 @@
    <class>QtGLContext</class>
    <extends>QWidget</extends>
    <header>QtGLContext.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CompassWidget</class>
+   <extends>QWidget</extends>
+   <header>compassWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -81,10 +81,7 @@ infrared Sensors temporarily removed from robot!!
 	ui.lblBatteryPower4->setPalette(QPalette(QColor(255, 255, 255)));
 	*/
 
-	//----------------------------------------------------------------------------------
-	// connecting...
-	//----------------------------------------------------------------------------------
-
+	
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face detect check box changes, set the detection mode
 	//----------------------------------------------------------------------------------
@@ -182,10 +179,13 @@ Gui::~Gui()
 	delete scene;
 	
 	// delete compass stuff
+	//delete compassWidget;
+	/*
 	delete zAxis;
 	delete yAxis;
 	delete xAxis;
 	delete compassScene;
+	*/
 }
 
 
@@ -2188,6 +2188,12 @@ void Gui::initCompass()
 
 void Gui::initCompassView()
 {
+	// the 3D OpenGL compass
+//	compassWidget = new CompassWidget;
+	// add widget to the GUI
+//	ui.frameCompass->initializeGL();
+	
+/*
 	// the graphicsScene for the compass
 	compassScene = new QGraphicsScene();
 
@@ -2204,7 +2210,6 @@ void Gui::initCompassView()
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet by the hardware))
 	ui.graphicsViewCompass->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 	
-		
 	QGraphicsLineItem *xAxis = new QGraphicsLineItem();
 	QGraphicsLineItem *yAxis = new QGraphicsLineItem();
 	QGraphicsLineItem *zAxis = new QGraphicsLineItem();
@@ -2222,7 +2227,7 @@ void Gui::initCompassView()
 	compassScene->addItem(xAxis);
 	compassScene->addItem(yAxis);
 	compassScene->addItem(zAxis);
-
+*/
 }
 
 

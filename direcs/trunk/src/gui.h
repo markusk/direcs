@@ -427,10 +427,12 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QPixmap pixmap; // for IplImageToQImage()
-		QGraphicsScene *compassScene;						/// The QGraphicsScene for showing the compass lines in the GUI
-		QGraphicsLineItem *xAxis;							/// The compass X axis in the graphics view
-		QGraphicsLineItem *yAxis;							/// The compass X axis in the graphics view
-		QGraphicsLineItem *zAxis;							/// The compass X axis in the graphics view
+//		QGraphicsScene *compassScene;						/// The QGraphicsScene for showing the compass lines in the GUI
+//		QGraphicsLineItem *xAxis;							/// The compass X axis in the graphics view
+//		QGraphicsLineItem *yAxis;							/// The compass X axis in the graphics view
+//		QGraphicsLineItem *zAxis;							/// The compass X axis in the graphics view
+	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
+
 
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
