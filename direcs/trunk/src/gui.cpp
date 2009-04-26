@@ -1683,7 +1683,16 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
 		// set tool tip of the line to the distance
-		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+		// Org: laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+		
+		QPointF point = laserLineListFront->at(i)->scenePos();
+		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(point.x()).arg(point.y()) );
+		
+// 		QLineF line;
+// 		line = laserLineListFront->at(i)->line();
+//  		qreal x = line.dx();
+//  		qreal y = line.dy();
+//  		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(x).arg(y) );
 	}
 }
 
