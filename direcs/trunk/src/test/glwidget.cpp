@@ -112,15 +112,37 @@ void GLWidget::paintGL()
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    // cylinder 1
-    // object, baseradius, topradius, height, slices, stacks
+    // X cylinder
     qglColor(xAxisColor);
+    // object, baseradius, topradius, height, slices, stacks
     gluCylinder(xAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
     // move
     glTranslatef(0.0, 0.0, cyl_height);
     qglColor(xAxisColor);
-    // cone 1
+    // X cone
     gluCylinder(xAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
+
+    // Y cylinder
+    // move
+    qglColor(yAxisColor);
+    // object, baseradius, topradius, height, slices, stacks
+    gluCylinder(yAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
+    // move
+    glTranslatef(0.0, 0.0, cyl_height);
+    qglColor(yAxisColor);
+    // Y cone
+    gluCylinder(yAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
+
+    // Z cylinder
+    // move
+    qglColor(zAxisColor);
+    // object, baseradius, topradius, height, slices, stacks
+    gluCylinder(zAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
+    // move
+    glTranslatef(0.0, 0.0, cyl_height);
+    qglColor(zAxisColor);
+    // Z cone
+    gluCylinder(zAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
 }
 
 
@@ -177,7 +199,7 @@ QSize GLWidget::minimumSizeHint() const
 
 QSize GLWidget::sizeHint() const
 {
-    return QSize(400, 400);
+    return QSize(800, 800);
 }
 
 
