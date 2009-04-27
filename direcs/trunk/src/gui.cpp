@@ -1685,14 +1685,12 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		// set tool tip of the line to the distance
 		// Org: laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 		
-		QPointF point = laserLineListFront->at(i)->scenePos();
-		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(point.x()).arg(point.y()) );
-		
-// 		QLineF line;
-// 		line = laserLineListFront->at(i)->line();
-//  		qreal x = line.dx();
-//  		qreal y = line.dy();
-//  		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(x).arg(y) );
+		// convert from polar to Cartesian coordinates
+		// minus the current "middle position" of the robot within the gui frame
+		// FIXME: fix this conversion to the correct values!
+		int xKart = qRound( laserLineLength * cos(i) ) - laserXPos;
+		int yKart = qRound( laserLineLength * sin(i) ) - laserYPos;
+		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(xKart).arg(yKart) );
 	}
 }
 
@@ -2233,11 +2231,18 @@ void Gui::initCompassView()
 
 void Gui::showCompassData(float x, float y, float z)
 {
+	ui.lblCompassX->setText( QString("%1").arg(x).append(" deg") );
+	ui.lblCompassY->setText( QString("%1").arg(y).append(" deg") );
+	ui.lblCompassZ->setText( QString("%1").arg(z).append(" deg") );
+	
+/*
 	// also formats the string to 3 digits precision!
 	ui.lblCompassX->setText( QString("%1").setNum(x, 'g', 3).append(" deg") );
 	ui.lblCompassY->setText( QString("%1").setNum(y, 'g', 3).append(" deg") );
 	ui.lblCompassZ->setText( QString("%1").setNum(z, 'g', 3).append(" deg") );
+*/
 /*
+	// nicer display
 	QString helper = QString("%1").arg(x);
 	ui.lblCompassX->setText( QString( helper.left( helper.indexOf(".")+3 )).append(" deg") );
 	helper = QString("%1").arg(y);
