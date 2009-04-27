@@ -658,11 +658,6 @@ contacts temporarily removed from robot!! */
 			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
 			
 			
-			//-------------------------
-			// emit ALL axis values
-			//-------------------------
-			emit compassDataComplete(xAxis, yAxis, zAxis);
-
 			//====================================================================
 			// Unlock the mutex.
 			//====================================================================
@@ -670,6 +665,11 @@ contacts temporarily removed from robot!! */
 
 		} // simulation = false
 
+		
+		//------------------------------
+		// emit ALL compass axes values
+		//------------------------------
+		emit compassDataComplete(xAxis, yAxis, zAxis);
 
 		//====================================================================
 		//  e m i t  Signal
