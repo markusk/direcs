@@ -18,5 +18,6 @@ Makefile
 direcs/trunk/bin/
 direcs/trunk/tmp/
 direcs-remote/bin/
+direcs/trunk/src/test/hellogl
 
 direcs-avr/.dep/

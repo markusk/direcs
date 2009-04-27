@@ -2234,17 +2234,20 @@ void Gui::initCompassView()
 void Gui::showCompassData(float x, float y, float z)
 {
 	// also formats the string to 3 digits precision!
-	//ui.lblCompassX->setText( QString("%1").setNum(x, 'g', 3).append(" deg") );
-	//ui.lblCompassY->setText( QString("%1").setNum(y, 'g', 3).append(" deg") );
-	//ui.lblCompassZ->setText( QString("%1").setNum(z, 'g', 3).append(" deg") );
-	
+	ui.lblCompassX->setText( QString("%1").setNum(x, 'g', 3).append(" deg") );
+	ui.lblCompassY->setText( QString("%1").setNum(y, 'g', 3).append(" deg") );
+	ui.lblCompassZ->setText( QString("%1").setNum(z, 'g', 3).append(" deg") );
+/*
 	QString helper = QString("%1").arg(x);
 	ui.lblCompassX->setText( QString( helper.left( helper.indexOf(".")+3 )).append(" deg") );
 	helper = QString("%1").arg(y);
 	ui.lblCompassY->setText( QString( helper.left( helper.indexOf(".")+3 )).append(" deg") );
 	helper = QString("%1").arg(z);
 	ui.lblCompassZ->setText( QString( helper.left( helper.indexOf(".")+3 )).append(" deg") );
-	
+*/
 	
 	ui.qwtCompass->setValue(x);
+	
+	// set the 3D OpenGL compass!
+	ui.frameCompass->setAllRotations(x, y, z);
 }

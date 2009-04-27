@@ -250,7 +250,7 @@ class Gui : public QMainWindow
 		void showFaceTrackDirection(QString direction);
 
 		/**
-		Shows the compass axes values in labels. Also sets the compass needle to the value of the x axis.
+		Shows the compass axes values in labels. Also sets the compass needle to the value of the x axis and sets the 3D OpenGL compass!
 		@param x is the x axis value
 		@param y is the y axis value
 		@param z is the z axis value
