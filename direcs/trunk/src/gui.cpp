@@ -2043,7 +2043,7 @@ void Gui::initPlots()
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -2064,7 +2064,7 @@ void Gui::initPlots()
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
