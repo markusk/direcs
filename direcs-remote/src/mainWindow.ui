@@ -5,9 +5,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1672</width>
-    <height>988</height>
+    <width>1676</width>
+    <height>1021</height>
    </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>0</width>
+    <height>1021</height>
+   </size>
   </property>
   <property name="windowTitle" >
    <string>direcs-remote</string>
@@ -22,8 +28,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1672</width>
-     <height>29</height>
+     <width>1676</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>
@@ -504,6 +510,12 @@
            </item>
            <item>
             <widget class="QLineEdit" name="lineEditPortValue" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text" >
               <string>45454</string>
              </property>
@@ -738,7 +750,7 @@
         <enum>Qt::Vertical</enum>
        </property>
        <widget class="QWidget" native="1" name="widgetWeb" />
-       <widget class="QWidget" name="" >
+       <widget class="QWidget" name="layoutWidget" >
         <layout class="QGridLayout" name="gridLayout_4" >
          <item row="0" column="0" >
           <widget class="QLabel" name="label_5" >
