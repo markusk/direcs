@@ -59,8 +59,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	ui.progressBarSensor6->setMaximum(SENSORPROGRESSBARMAXIR);
 	ui.progressBarSensor7->setMaximum(SENSORPROGRESSBARMAXIR);
 	ui.progressBarSensor8->setMaximum(SENSORPROGRESSBARMAXIR);
-	*/
 	ui.progressBarSensor16->setMaximum(SENSORPROGRESSBARMAXUS);
+	*/
 /*
 infrared Sensors temporarily removed from robot!!
 	ui.progressBarSensor1->raise();
@@ -334,8 +334,8 @@ void Gui::on_actionReset_activated()
 	ui.progressBarSensor6->setValue(0);
 	ui.progressBarSensor7->setValue(0);
 	ui.progressBarSensor8->setValue(0);
-	*/
 	ui.progressBarSensor16->setValue(0);
+	*/
 	//ui.btnExecuteScript->setText("Execute s&cript");
 
 	// set labels back in default position
@@ -388,7 +388,7 @@ void Gui::on_actionAll_activated()
 {
 	ui.dockCamera->show();
 	ui.dockOdometrie->show();
-	ui.dockPower->show();
+	ui.dockEnergy->show();
 	ui.dockLog->show();
 	settingsDialog->show();
 	joystickDialog->show();
@@ -423,13 +423,13 @@ void Gui::on_actionOdometrie_activated()
 
 void Gui::on_actionPower_activated()
 {
-	if (ui.dockPower->isVisible())
+	if (ui.dockEnergy->isVisible())
 	{
-		ui.dockPower->hide();
+		ui.dockEnergy->hide();
 	}
 	else
 	{
-		ui.dockPower->show();
+		ui.dockEnergy->show();
 	}
 }
 
@@ -582,11 +582,11 @@ void Gui::showDistanceGraphical(int sensor, int distance)
 			ui.progressBarSensor8->setValue(distance);
 			return;
 			break;
-		*/
 		case SENSOR16:
 			ui.progressBarSensor16->setValue(distance);
 			return;
 			break;
+		*/
 	}
 }
 
@@ -795,7 +795,6 @@ void Gui::showAlarm(short int sensor, bool state)
 			}
 			return;
 			break;
-		*/
 		case SENSOR16:
 			if (state == ON)
 			{
@@ -815,6 +814,7 @@ void Gui::showAlarm(short int sensor, bool state)
 			}
 			return;
 			break;
+		*/
 	}
 }
 

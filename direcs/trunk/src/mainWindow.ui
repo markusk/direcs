@@ -500,7 +500,7 @@
       <item row="0" column="0" >
        <layout class="QVBoxLayout" name="verticalLayout_10" >
         <item>
-         <widget class="QGraphicsView" name="graphicsViewLaser_2" >
+         <widget class="QGraphicsView" name="graphicsViewLaser" >
           <property name="sizePolicy" >
            <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
             <horstretch>0</horstretch>
@@ -554,7 +554,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblLaserFrontFreeStart_2" >
+               <widget class="QLabel" name="lblLaserFrontFreeStart" >
                 <property name="font" >
                  <font>
                   <family>Verdana</family>
@@ -585,7 +585,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblLaserFrontFreeEnd_2" >
+               <widget class="QLabel" name="lblLaserFrontFreeEnd" >
                 <property name="font" >
                  <font>
                   <family>Verdana</family>
@@ -616,7 +616,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblLaserFrontFreeCenter_2" >
+               <widget class="QLabel" name="lblLaserFrontFreeCenter" >
                 <property name="font" >
                  <font>
                   <family>Verdana</family>
@@ -647,7 +647,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblPreferredDirection_2" >
+               <widget class="QLabel" name="lblPreferredDirection" >
                 <property name="sizePolicy" >
                  <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
                   <horstretch>0</horstretch>
@@ -687,7 +687,7 @@
           <item row="0" column="1" >
            <layout class="QVBoxLayout" name="name2_2" >
             <item>
-             <widget class="QSlider" name="sliderZoom_2" >
+             <widget class="QSlider" name="sliderZoom" >
               <property name="font" >
                <font>
                 <family>Verdana</family>
@@ -739,7 +739,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="labelLaserTop_2" >
+                 <widget class="QLabel" name="labelLaserTop" >
                   <property name="font" >
                    <font>
                     <family>Verdana</family>
