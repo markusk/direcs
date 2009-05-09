@@ -17,7 +17,13 @@ Makefile
 
 direcs/trunk/bin/
 direcs/trunk/tmp/
-direcs-remote/bin/
 direcs/trunk/src/test/hellogl
 
+direcs-remote/bin/
+
+direcs/trunk/src/Makefile.Debug
+direcs/trunk/src/Makefile.Release
+direcs/trunk/doc/
+
 direcs-avr/.dep/
+direcs-avr/Debug/
