@@ -1,12 +1,10 @@
 /*
     Magnetometer.c - Communicate with MicroMag3 Magnetometer
     Written by Frank Kienast in November, 2007
-
-    Target is ATMega16 with 12MHz xtal clock.
-    Sparkfun Serial LCD (9600 baud) connected to TX.
-
-
     Found at http://forum.sparkfun.com/viewtopic.php?t=8813
+
+    Modified by Markus Knapp in April, 2009
+    Target is ATMega2560 with 16 MHz xtal clock.
 */
 
 
@@ -35,7 +33,6 @@
 
 #include <avr/io.h>
 #include <string.h>
-// org: #include <util/delay.h>
 #include <avr/delay.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,21 +41,11 @@
 #include "i2c/i2cmaster.h"
 
 
- //Forward declarations
-int test(void);
-/*
-void init_serial();
-void lcd_clear();
-void lcd_writec(unsigned char c);
-void lcd_writes(char *s);
-void lcd_line2();
-*/
-
 /**
 read axis value from micromag3 sensor
 @return the axis value
 @param the axis x, y or z (can be READ_AXIS_X, READ_AXIS_Y or READ_AXIS_Z)
 */
 uint16_t readMicromag(unsigned char axis);
-void init_spi(void);
-uint8_t spi_comm(uint8_t data);
+void     init_spi(void);
+uint8_t  spi_comm(uint8_t data);
