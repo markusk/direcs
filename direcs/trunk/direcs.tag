@@ -39,6 +39,84 @@
     <class kind="class">Circuit</class>
   </compound>
   <compound kind="file">
+    <name>compassWidget.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <filename>compassWidget_8cpp</filename>
+    <includes id="compassWidget_8h" name="compassWidget.h" local="yes" imported="no">compassWidget.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>compassWidget.h</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <filename>compassWidget_8h</filename>
+    <class kind="class">CompassWidget</class>
+  </compound>
+  <compound kind="file">
+    <name>qrc_direcs.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/debug/</path>
+    <filename>debug_2qrc__direcs_8cpp</filename>
+    <member kind="function">
+      <type></type>
+      <name>Q_CONSTRUCTOR_FUNCTION</name>
+      <anchorfile>debug_2qrc__direcs_8cpp.html</anchorfile>
+      <anchor>789a808ed91d1c8b680fa113332bfee4</anchor>
+      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_direcs)) int QT_MANGLE_NAMESPACE(qCleanupResources_direcs)()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
+      <name>qInitResources_direcs</name>
+      <anchorfile>debug_2qrc__direcs_8cpp.html</anchorfile>
+      <anchor>5469423cd86cbaef9276ff93d28cec70</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_BEGIN_NAMESPACE bool</type>
+      <name>qRegisterResourceData</name>
+      <anchorfile>debug_2qrc__direcs_8cpp.html</anchorfile>
+      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>qUnregisterResourceData</name>
+      <anchorfile>debug_2qrc__direcs_8cpp.html</anchorfile>
+      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>qrc_direcs.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <filename>qrc__direcs_8cpp</filename>
+    <member kind="function">
+      <type></type>
+      <name>Q_CONSTRUCTOR_FUNCTION</name>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
+      <anchor>789a808ed91d1c8b680fa113332bfee4</anchor>
+      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_direcs)) int QT_MANGLE_NAMESPACE(qCleanupResources_direcs)()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
+      <name>qInitResources_direcs</name>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
+      <anchor>5469423cd86cbaef9276ff93d28cec70</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>QT_BEGIN_NAMESPACE bool</type>
+      <name>qRegisterResourceData</name>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
+      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>qUnregisterResourceData</name>
+      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
+      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
+      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>direcs.cpp</name>
     <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>direcs_8cpp</filename>
@@ -114,6 +192,7 @@
     <includes id="aboutDialog_8h" name="aboutDialog.h" local="yes" imported="no">aboutDialog.h</includes>
     <includes id="laserScene_8h" name="laserScene.h" local="yes" imported="no">laserScene.h</includes>
     <includes id="QtGLContext_8h" name="QtGLContext.h" local="yes" imported="no">QtGLContext.h</includes>
+    <includes id="compassWidget_8h" name="compassWidget.h" local="yes" imported="no">compassWidget.h</includes>
     <class kind="class">Gui</class>
   </compound>
   <compound kind="file">
@@ -1545,39 +1624,6 @@
     </member>
   </compound>
   <compound kind="file">
-    <name>qrc_direcs.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
-    <filename>qrc__direcs_8cpp</filename>
-    <member kind="function">
-      <type></type>
-      <name>Q_CONSTRUCTOR_FUNCTION</name>
-      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
-      <anchor>789a808ed91d1c8b680fa113332bfee4</anchor>
-      <arglist>(QT_MANGLE_NAMESPACE(qInitResources_direcs)) int QT_MANGLE_NAMESPACE(qCleanupResources_direcs)()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_END_NAMESPACE int QT_MANGLE_NAMESPACE()</type>
-      <name>qInitResources_direcs</name>
-      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
-      <anchor>5469423cd86cbaef9276ff93d28cec70</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>QT_BEGIN_NAMESPACE bool</type>
-      <name>qRegisterResourceData</name>
-      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
-      <anchor>bd8d83733ca9800d36d9bb41f512929e</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>qUnregisterResourceData</name>
-      <anchorfile>qrc__direcs_8cpp.html</anchorfile>
-      <anchor>54b96c9f44d004fc0ea13bb581f97a71</anchor>
-      <arglist>(int, const unsigned char *, const unsigned char *, const unsigned char *)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>QtGLContext.cpp</name>
     <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>QtGLContext_8cpp</filename>
@@ -1935,6 +1981,18 @@
     <class kind="class">SpeakThread</class>
   </compound>
   <compound kind="file">
+    <name>glwidget.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <filename>glwidget_8cpp</filename>
+    <includes id="glwidget_8h" name="glwidget.h" local="yes" imported="no">glwidget.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>glwidget.h</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <filename>glwidget_8h</filename>
+    <class kind="class">GLWidget</class>
+  </compound>
+  <compound kind="file">
     <name>init.c</name>
     <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
     <filename>init_8c</filename>
@@ -2020,6 +2078,19 @@
       <anchorfile>init_8h.html</anchorfile>
       <anchor>211f88b55f7484c2a908fd67e99c0d70</anchor>
       <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>main.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <filename>main_8cpp</filename>
+    <includes id="window_8h" name="window.h" local="yes" imported="no">window.h</includes>
+    <member kind="function">
+      <type>int</type>
+      <name>main</name>
+      <anchorfile>main_8cpp.html</anchorfile>
+      <anchor>0ddf1224851353fc92bfbff6f499fa97</anchor>
+      <arglist>(int argc, char *argv[])</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2109,6 +2180,19 @@
       <anchor>211f88b55f7484c2a908fd67e99c0d70</anchor>
       <arglist>(int dev_fd, unsigned char *c, int nChars)</arglist>
     </member>
+  </compound>
+  <compound kind="file">
+    <name>window.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <filename>window_8cpp</filename>
+    <includes id="glwidget_8h" name="glwidget.h" local="yes" imported="no">glwidget.h</includes>
+    <includes id="window_8h" name="window.h" local="yes" imported="no">window.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>window.h</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <filename>window_8h</filename>
+    <class kind="class">Window</class>
   </compound>
   <compound kind="file">
     <name>win_qextserialport.h</name>
@@ -2592,11 +2676,18 @@
     <name>Circuit</name>
     <filename>classCircuit.html</filename>
     <member kind="slot">
-      <type>void</type>
+      <type>bool</type>
       <name>initCircuit</name>
       <anchorfile>classCircuit.html</anchorfile>
-      <anchor>7dc3e20cb3709fb2712759bfc50c8acf</anchor>
+      <anchor>0105b84827f9d428c79badee59bcf6b8</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>967d7fef9e9652d1e9cf84d35ce21f42</anchor>
+      <arglist>(bool state)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -2684,6 +2775,241 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>CompassWidget</name>
+    <filename>classCompassWidget.html</filename>
+    <member kind="slot">
+      <type>void</type>
+      <name>setAllRotations</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>97261d426c948a5b1e33f04e5406a8b3</anchor>
+      <arglist>(float xAngle, float yAngle, float zAngle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setXRotation</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>f498ed88aca2a64afaed34da2072d2ab</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setYRotation</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>cf81bd7addd64a5689832533c276581b</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setZRotation</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>1c0ffed712c099e7e9a324abe55acbf6</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>xRotationChanged</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>99d6b874a246165e38b0cae7f5d6b205</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>yRotationChanged</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>7ce4e6cd6acd8d7e385c6236ee2df279</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>zRotationChanged</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>013de5fe22736925e767569ef014eb06</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>CompassWidget</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>41ded400023945a2db96be67cbb829ce</anchor>
+      <arglist>(QWidget *parent=0)</arglist>
+    </member>
+    <member kind="function">
+      <type>QSize</type>
+      <name>minimumSizeHint</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>dfa96bea4450c3e52d399aaab81cbd68</anchor>
+      <arglist>() const </arglist>
+    </member>
+    <member kind="function">
+      <type>QSize</type>
+      <name>sizeHint</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>6f78ac1b6e49b0b25bc85bd7cb166ff7</anchor>
+      <arglist>() const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~CompassWidget</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>3f06ddd2e817e522a1219f3b963d6b19</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>initializeGL</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>73e053385c9e3c1be0d437843044d70b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>mouseMoveEvent</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>dd1d211b30743011ecc0e369f0c00dd2</anchor>
+      <arglist>(QMouseEvent *event)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>mousePressEvent</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>28cfb97432bc0b1b11b79585aa8a7e72</anchor>
+      <arglist>(QMouseEvent *event)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>paintGL</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>e2bc860a96dcd8c5d12a068ddd8814cb</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>resizeGL</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>193a78015a13eb81dc627aa4f19651e5</anchor>
+      <arglist>(int width, int height)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>normalizeAngle</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>84d1963ca9c018cad57e0bf6de1b0e93</anchor>
+      <arglist>(int *angle)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>backgroundColor</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>493b10769448a0cb98f9b399c9409751</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLdouble</type>
+      <name>cyl_height</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>3fc774d7ddbbbadc26789ed58b078a94</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLdouble</type>
+      <name>cyl_radius</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>25d05d4875896f1a7480f70c51786af1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QPoint</type>
+      <name>lastPos</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>a5a501c592fdfb84bf4f4617bb5bf932</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>xAxis</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>83afdad03d8baa5607d5cd03e1592585</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>xAxisColor</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>10f8a1c831fadf7f490188060114dea1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>xAxisCone</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>b96fba74fac719082c94a024110d1572</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>xRot</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>a7a3a3aaf1bd8051e8091824219203ea</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>yAxis</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>321d88be21109e3c930fe0d708c7c3ba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>yAxisColor</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>b46585f83e75c49b71c57b29f39e4f90</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>yAxisCone</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>2ad247f0fc823f9f7c656abd533b0a1b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>yRot</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>452da3ca00e7a5a32805f4cae10f8d06</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>zAxis</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>cc4d03c1fd98dc1c85caa1c9c90f5e8f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>zAxisColor</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>ee5302cb498596530e86813ef9b6da25</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>zAxisCone</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>bae6fac6dd9847c68bbbe7b297fc0115</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>zRot</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>4d669a44f0ff5f5beb4eb91d8e459bc1</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>Direcs</name>
     <filename>classDirecs.html</filename>
     <member kind="slot">
@@ -2744,17 +3070,24 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>handleSigHup</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>84f3b37b146bc89e9f8448e419c50cf7</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>handleSigTerm</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>6576847be775d5f516a5863bee87fcb1</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>logicalUnit</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>251d1e2714448ce7c40c729fe0c35a8f</anchor>
       <arglist>(int sensorAlarm, QDateTime timestamp)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>setRobotState</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>3703a3a652ab8b5bcc3e4e1386053fd4</anchor>
-      <arglist>(bool state)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -2821,6 +3154,13 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>sendNetworkString</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e22e6e57011830258ee6ef6f47fa46dc</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>showFaceTrackDirection</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>eb74529189a8ef4fd1cdf123a23f2094</anchor>
@@ -2860,6 +3200,20 @@
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>5035734335f0205f187a12059c2bebdd</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>hupSignalHandler</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>e8678ff95d82eb12ebb29e723bdf8142</anchor>
+      <arglist>(int unused)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>termSignalHandler</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>671395afc6218d71da3c454c24a9d83f</anchor>
+      <arglist>(int unused)</arglist>
     </member>
     <member kind="variable">
       <type>bool</type>
@@ -3122,13 +3476,6 @@
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
-      <name>robotIsOn</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a12db602d58a7aa9b87d3caf823cfbf8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
       <name>robotRemoteMode</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>d1c45d59c0f74e9230f5d160aa7b944e</anchor>
@@ -3191,6 +3538,20 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QSocketNotifier *</type>
+      <name>snHup</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d61f188d535629c173bd41aaa19b1ab1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QSocketNotifier *</type>
+      <name>snTerm</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>9856c414d5acf360195803d87217a5ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>QSplashScreen *</type>
       <name>splash</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3209,6 +3570,13 @@
       <name>useCamera</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>ee6bd375c9ff499d3433ee077c468870</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>unsigned int</type>
+      <name>value</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>77fd5f778e4899a7a2d0279ad429f80d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3500,6 +3868,27 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
+      <name>READ_AXIS_X</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>6fc2794bd6a8f6639be86c0be377d9b4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>READ_AXIS_Y</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>7871a7b8fa4d0203f831b7f39d2851f4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>READ_AXIS_Z</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3135834bd3d8e8ac0e4e1ca625658534</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
       <name>RIGHT</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>f98726a902f99346a36834b668557471</anchor>
@@ -3616,6 +4005,20 @@
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>3173f1e71bce965a9e6a2ca41411167d</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static int</type>
+      <name>sighupFd</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>3d11ff389870bf1ef58c0f36dd6ae756</anchor>
+      <arglist>[2]</arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static int</type>
+      <name>sigtermFd</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>d8d860a9e3df5dc0f7b1c69969e7b40e</anchor>
+      <arglist>[2]</arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned int</type>
@@ -3812,6 +4215,234 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>GLWidget</name>
+    <filename>classGLWidget.html</filename>
+    <member kind="slot">
+      <type>void</type>
+      <name>setXRotation</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>7083404e9ab8feffb2c486f7c15308ce</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setYRotation</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>29012eba3cb4201f78807066f2c9dcd4</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setZRotation</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>6f6b4fbbcc566d999db7e53aadeba889</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>xRotationChanged</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>3a557b9cd96f7b89661ceaa567c91640</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>yRotationChanged</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>d47d672d0124b995e82551a95b59badb</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>zRotationChanged</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>b2035753b19b46105020d6045ac75a79</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>GLWidget</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>b79c391c86de1ffb76f6950b49d82c0c</anchor>
+      <arglist>(QWidget *parent=0)</arglist>
+    </member>
+    <member kind="function">
+      <type>QSize</type>
+      <name>minimumSizeHint</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>de3142625c1bfda0576e419b176cf8b1</anchor>
+      <arglist>() const </arglist>
+    </member>
+    <member kind="function">
+      <type>QSize</type>
+      <name>sizeHint</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>57698bc426052845b43a135a13540154</anchor>
+      <arglist>() const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~GLWidget</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>535192a4262b4501e5493303834f45d3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>initializeGL</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>7fab13e8cc9fc0730ca54c08b2c923a7</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>mouseMoveEvent</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>9043bac13d6f0a5307ea5c7f9b3caa50</anchor>
+      <arglist>(QMouseEvent *event)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>mousePressEvent</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>b144cc8064c1bbf6d0ef0646ca0bd06c</anchor>
+      <arglist>(QMouseEvent *event)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>paintGL</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>640b5570cb2b37724fd5b58a77339c5e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>resizeGL</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>c0d2a8ecf60907a81c0d73475d851025</anchor>
+      <arglist>(int width, int height)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>normalizeAngle</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>1e1d21d000d24735432063986079ea1f</anchor>
+      <arglist>(int *angle)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>backgroundColor</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>95ba72bc9139f8f73cfe35ad8386476c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLdouble</type>
+      <name>cyl_height</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>67a375f431f4b719f54ea24425216312</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLdouble</type>
+      <name>cyl_radius</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>b2962bc4ecf2ba015dac9107fdcfd4a0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QPoint</type>
+      <name>lastPos</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>9fb7fece62b92f7a0bb4167ea1e05c28</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>xAxis</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>757462415ec702c6531c9a6bf8aedfa0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>xAxisColor</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>fc7297970af746b6d3a27d4e8a831645</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>xAxisCone</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>e323888034fa041dc4940cb172cbee2c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>xRot</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>603babfc4347b1d856742d2088e48427</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>yAxis</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>95febf5ee74e62f1d9a92b326304ceda</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>yAxisColor</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>de18bd377b689cd296f02683815c0dc3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>yAxisCone</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>ae219471e266af6eef2f64e8a83da86b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>yRot</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>9d7e08316aa483c447ef0fc0a03875c3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>zAxis</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>2aa56d90353c5bd4e92f301d67588f50</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>zAxisColor</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>ba2f0b4dc7863415d11e56f868b4715b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLUquadricObj *</type>
+      <name>zAxisCone</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>f132cb341236d8e311bb409af3ecef17</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>zRot</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>42f34356f5f02cab779821174a1a9700</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>Gui</name>
     <filename>classGui.html</filename>
     <member kind="slot">
@@ -3855,13 +4486,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>879b018073c869d6c66e93a0f97186c0</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>laserSplash</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>d97b27756611d445d617944d830f4429</anchor>
-      <arglist>(bool status, short int laserScanner)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -3939,6 +4563,13 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>fae9bee62ab4dc720aaf2f53369331df</anchor>
       <arglist>(QGraphicsSceneMouseEvent *mouseEvent)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>showCompassData</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>84d9780332e44fcbb97638cc5921039e</anchor>
+      <arglist>(float x, float y, float z)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4495,6 +5126,20 @@
     </member>
     <member kind="function" protection="private">
       <type>void</type>
+      <name>initCompass</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>d6d964f3313b5ca38df7b406bac536c1</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>initCompassView</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>620648992ee97010e920269c4402ab59</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
       <name>initPlots</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>2e3d7a85b4cd42c8665ce85224a33524</anchor>
@@ -4561,6 +5206,13 @@
       <name>colorLaserPreferredDrivingDirection</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>f2fdc3742f6ca52dfb0e28f314394c64</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>CompassWidget *</type>
+      <name>compassWidget</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>636485e9326a26074751ae86ab2f63d5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -4690,6 +5342,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QwtCompassMagnetNeedle</type>
+      <name>needle</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>4dbcd0deac8cfe08b2596750b3fcf9d0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>QPixmap</type>
       <name>pixmap</name>
       <anchorfile>classGui.html</anchorfile>
@@ -4715,20 +5374,6 @@
       <name>robotIsOn</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>512ba9345ec438a124970cb00da32672</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsPixmapItem *</type>
-      <name>scannerFrontSplash</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>53b75eb64e8432bc2f94059808224dda</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsPixmapItem *</type>
-      <name>scannerRearSplash</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>c98c0ae9835b37565d78073702480efe</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -5512,6 +6157,13 @@
     <filename>classInterfaceAvr.html</filename>
     <member kind="signal">
       <type>void</type>
+      <name>robotState</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>6230a0949698d08815a2f6982f5e0f71</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>tooMuchErrors</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
       <anchor>034c0c0154327f9fcc041b848de9417b</anchor>
@@ -5571,6 +6223,20 @@
       <name>serialPort</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
       <anchor>edab59c98eb5d3c751ac30ce9fd617d2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>83c9884ea7a6da5fc3c3c378ac9ced33</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>c970e1c228d353e01969d70617625d9b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -5848,6 +6514,11 @@
   <compound kind="class">
     <name>Laser</name>
     <filename>classLaser.html</filename>
+    <class kind="struct">Laser::carmen_laser_laser_config_t</class>
+    <class kind="struct">Laser::carmen_param_t</class>
+    <class kind="struct">Laser::laser_device_t</class>
+    <class kind="struct">Laser::laser_settings_t</class>
+    <class kind="struct">Laser::sick_laser_t</class>
     <member kind="enumeration">
       <name>carmen_laser_laser_type_t</name>
       <anchorfile>classLaser.html</anchorfile>
@@ -5927,122 +6598,6 @@
       <name>carmen_param_type_t</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>fce32f7e0ae3501145539b173fa89b11</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>struct Laser::laser_device_t *</type>
-      <name>laser_device_p</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>c6564d2e70587f9cab8042f3dfa2c83c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>laser_model_t</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>135cd55fa9a98a47e2aaf6904eb2dd29</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PLS</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>135cd55fa9a98a47e2aaf6904eb2dd296e8a2a257b9860a43687eadb40569bd1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>LMS</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>135cd55fa9a98a47e2aaf6904eb2dd29ed77b942cc9bf09ff3606dee888c2486</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>parity_t</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>9de3e625fd14cdfa8a82e3e978b218c5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>N</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>9de3e625fd14cdfa8a82e3e978b218c5b3f008b6955f4b34e9352275164cc8ef</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>E</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>9de3e625fd14cdfa8a82e3e978b218c5001f6d014fe14e47df0be513e183b22c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>O</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>9de3e625fd14cdfa8a82e3e978b218c5b604a80f21f483f1579017d06971d3eb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>range_dist_t</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>2e87397b3c5194e1ee246e985010afc4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE80M</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>2e87397b3c5194e1ee246e985010afc447f9dc259106199bfeb344afefc8abbb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE160M</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>2e87397b3c5194e1ee246e985010afc4415393916e35abc009e5b614b6dc5442</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE320M</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>2e87397b3c5194e1ee246e985010afc46ba34162e98a9c694d004dfff55e6659</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_REMISSION_NORM</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>2e87397b3c5194e1ee246e985010afc49cdb36323e3cbfee5fcdf1951a385e9c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_REMISSION_DIRECT</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>2e87397b3c5194e1ee246e985010afc4c7efa2d17320cd0f1024312327536969</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>range_res_t</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>b04292a54df79206c48ed3bee627b84a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>CM</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>b04292a54df79206c48ed3bee627b84ae7b456af2eab49babcdba7a6ab0883f0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>MM</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>b04292a54df79206c48ed3bee627b84a8ba4e17b490d6a9c1f06e57be0d4ddd1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DM</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>b04292a54df79206c48ed3bee627b84a3b5576383d00567eb3c3143005a89c19</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>struct Laser::sick_laser_t *</type>
-      <name>sick_laser_p</name>
-      <anchorfile>classLaser.html</anchorfile>
-      <anchor>73831719ba5723cf3e0b9d6a4c75081a</anchor>
       <arglist></arglist>
     </member>
     <member kind="signal">
@@ -6612,11 +7167,6 @@
       <anchor>d196ffc1c3f13b2e516732868ce05b8b</anchor>
       <arglist></arglist>
     </member>
-    <class kind="struct">Laser::carmen_laser_laser_config_t</class>
-    <class kind="struct">Laser::carmen_param_t</class>
-    <class kind="struct">Laser::laser_device_t</class>
-    <class kind="struct">Laser::laser_settings_t</class>
-    <class kind="struct">Laser::sick_laser_t</class>
   </compound>
   <compound kind="struct">
     <name>Laser::carmen_laser_laser_config_t</name>
@@ -6625,49 +7175,49 @@
       <type>double</type>
       <name>accuracy</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>decafcd73353d88206a2dc57809012e1</anchor>
+      <anchor>fb0e65d908fb47820f08d0cf523139dd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>angular_resolution</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>1cc966e2bc39aea42dbf118f7529ed93</anchor>
+      <anchor>6097c31b02ae3196825e0d802904bd92</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>fov</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>e87a675a8180a70c71d60ad38c72d1db</anchor>
+      <anchor>ce3dff60583122279bd4b9bd1de41f41</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>carmen_laser_laser_type_t</type>
       <name>laser_type</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>dd8562057ed2998c2dae12ad05bb32dd</anchor>
+      <anchor>16732478f70d69032044166714258475</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>maximum_range</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>f90c6d5e1238c09b085a93bb91056cb3</anchor>
+      <anchor>453195aca06efa1d0126b5c90a632286</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>carmen_laser_remission_type_t</type>
       <name>remission_mode</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>6077e8e767b0919574957d4e16ef5011</anchor>
+      <anchor>f2a2512c0a62a54226a6ceb25251f228</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>start_angle</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>54df8ed82aeadcc9f5eef62e79a5b948</anchor>
+      <anchor>237f76880da9f1657c4e06ec68aaff26</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6678,42 +7228,42 @@
       <type>carmen_param_change_handler_t</type>
       <name>handler</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>042cd81dd0ead9d10b81ee5174fb6e84</anchor>
+      <anchor>a6ea13b487fe345db3dc10283925f424</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>module</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>2ab22a4680e2c10728e710f6f2b2e77f</anchor>
+      <anchor>c8cf949897f5d300e68334df25ad115b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>subscribe</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>dfa010e5943d24d2e89f468b70823e5d</anchor>
+      <anchor>454b20691bda10d28b4e5e8f60ef517c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>carmen_param_type_t</type>
       <name>type</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>baedac59ebaa892139f528e1da6b7399</anchor>
+      <anchor>b8ce806e634595667d4b01cd57a63f7b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>void *</type>
       <name>user_variable</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>c4ddbc011df1580dbd83f07b6812df26</anchor>
+      <anchor>17beae1b8cd8cdcac49668104dd0abd7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>variable</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>d5ba062ece4877c2e9e82ecb925b7dda</anchor>
+      <anchor>b9d0ff862c750bb5144e3876d4df3bc2</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6724,77 +7274,77 @@
       <type>int</type>
       <name>baudrate</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>6c85c0a546ad4a561b23fd8d14c608ff</anchor>
+      <anchor>6d98b0bea1db46ea72acc3a7d7eb136e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>af4bd26ff2e4a2af297f05b80374865a</anchor>
+      <anchor>840ec8d3c7cb075f52c985f303878127</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>fd</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>28e2cc9802a9c7bfef5fa2ef5625c0e6</anchor>
+      <anchor>810c1da5975539d158ae93d7c0a62828</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>83fcd4a10203529f1783124767e1d235</anchor>
+      <anchor>723f3a4997e469b73844438fee791c3c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>f2ff814e20252eafe08dbe04e1a49efa</anchor>
+      <anchor>184c70ebc6c8b5b88bba04d20bc89c24</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>5d434f9559221d08376d5a946eb9b421</anchor>
+      <anchor>c11c3c7649dd5303806eca1667270d40</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>passwd</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>2f71a68c600aed1d1d7665400511af9f</anchor>
+      <anchor>ce350bf5ab9ef3cf0bcb09b85f909e8a</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>bb5e8282e89a9f5d43984e7299816580</anchor>
+      <anchor>4c61af9e5f55867eb721e740dfd82c33</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>4690aaf25bad16bcf079082ca8e056ec</anchor>
+      <anchor>d3ac00fb7cac672d367ce3475e4a284f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>ttyport</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>4afb944e353704dd9d5dba7dd2c19662</anchor>
+      <anchor>8ac3fdb580df7ef0f0a084684c81a80e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>64a85304f51def43f9a34d5a7240a2bf</anchor>
+      <anchor>6abcc0d868eea978b861ddf21a8063cd</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6805,147 +7355,147 @@
       <type>int</type>
       <name>angle_range</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>4cdb48b4b37f1050aaa02a6d70bb5498</anchor>
+      <anchor>7aa53d7e1dade4bcc30ac188984d6104</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>angle_resolution</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>d5646ebf319039e43b1f6144a78ab9ed</anchor>
+      <anchor>f08bf2d59bf5a3748536f8291f439f91</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7fe002df0bc7b2d21004ea8cd7c861fb</anchor>
+      <anchor>5577745641d1fe7edc45d99851f5a593</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>detect_baudrate</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>be7c8c5d45f42ad5c822cee991366450</anchor>
+      <anchor>7dcdf203e28f8bcd5a15a8b6963e2174</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char</type>
       <name>device_name</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>5c90e15fc62b350c63d98683ed7de99c</anchor>
+      <anchor>acb77cfc07cd3920aefa87a59593ed0a</anchor>
       <arglist>[MAX_NAME_LENGTH]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>45c85766324352c5484d1ab82dd20f08</anchor>
+      <anchor>1b6628e696a673c388e5f3cf02f1a7a1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_flipped</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>c5c7ede7dc464ad6eb3a6b62a1d9e2dd</anchor>
+      <anchor>34a6f6d90d0f473262853940b5442586</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>3c0998b7e8520893a9fe391c1aa62566</anchor>
+      <anchor>74093f8f090c0bc47ee3df46004af9af</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>num_values</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>dc4849e3638b9ae21734194a18cd9008</anchor>
+      <anchor>4d4f25b64fa6290d41de42d396b2c939</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7cd4073d0927388ff8c04cd17bbcd1bf</anchor>
+      <anchor>e4c5ad3a57bb4f01b9fabd55633d0c86</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>password</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>64d6334065907917695f999285569203</anchor>
+      <anchor>1fc35b713084618e1259930e036472b7</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>range_dist_t</type>
       <name>range_dist</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>10c2b727440b9a9a445fb28ced929cf8</anchor>
+      <anchor>8ba639527868e2242ee120ba51a4919d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>range_res_t</type>
       <name>range_res</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>85adcb9c1a6c85a63535831873531675</anchor>
+      <anchor>23f3388bd093e1c5a2f160d3449aa630</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>rem_values</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>c98fa14aee455a17ef997fc73ae8ebb9</anchor>
+      <anchor>7d6e7bac474194874bf352f9116716e8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>set_baudrate</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>739128bb2cf1413fa21dde1873681121</anchor>
+      <anchor>b6500ff7c537d5a31e2e38e0f24de6f7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>start_baudrate</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>e3254e815e8be19459ab7ead29ddd873</anchor>
+      <anchor>ad0736ddc2e6dd8116fbe23afb62f0b4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>2e259c94866c6d2b9d49f9d0f1de2eab</anchor>
+      <anchor>3133ad46a7ab0487b5980e5f0d94f747</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7d39862a98072a871b3ddff60491b8ca</anchor>
+      <anchor>a6da46b9e464eb91daf1ed423c1535db</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7e907cfee9dfcbd9cff3100f6845ed95</anchor>
+      <anchor>0be40df2b16325dedc31a8c07675d8a3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_highspeed</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>a4f6098882595ab81a75a9e97713ab02</anchor>
+      <anchor>7d24022aa771018b22446eb95c2e9e46</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_remission</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>ed592a94b54ebf7c11f730770c8472d2</anchor>
+      <anchor>7d5a73ee28ae01d98d1ca77a5739d82b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6956,119 +7506,119 @@
       <type>unsigned char *</type>
       <name>buffer</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>d2a02c892c0496d643513e6e8124c218</anchor>
+      <anchor>f95fb3fd27081a0b3deff0fdcdbc7474</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>buffer_position</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>9f467588946e22c3786d444a17749f97</anchor>
+      <anchor>1cf17421ed90be93f172565a4b929150</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_device_t</type>
       <name>dev</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>ddd60dc0f654ad8cd89348758ccdf514</anchor>
+      <anchor>bd5820612cc2b833a652baa36a5ab3a8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>glare</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>b50c044968d74b14d7ba20cfa3888f0b</anchor>
+      <anchor>7c70f9db8869b5d8c17aa01132704874</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>new_reading</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>2251ee6d8d1bfb428424c776f14bd693</anchor>
+      <anchor>66950c01fa07fcc54bd69631ef36e3b0</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>numvalues</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>c6f68488d1f6672c38b4d83ea4e07bd5</anchor>
+      <anchor>ffb05a0bb213af30f09c4212bc380351</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_length</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>ca3fbde473796912671c2970755fd97a</anchor>
+      <anchor>95e4ba0cd37bec61f2478ef5baecc7e3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_offset</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>8ea57b85f12def3813b0dc4acdcce260</anchor>
+      <anchor>559b40e88b068bd65032f5df20fa7dcb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>packet_timestamp</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>43d03db8c2146d36329487597fe2288a</anchor>
+      <anchor>d6e8533ddcbb9c9dde3dc6a0fccb94bd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>processed_mark</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>e05b5456190954bbf2d8bedb0ca3cbd0</anchor>
+      <anchor>663b531d93f5abf2a7c99b811e763e26</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>range</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>c5530054d023d1efca4398fc75ea40fa</anchor>
+      <anchor>c7725e9993d3b1eae70b42ccdec45057</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>remission</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>dce871107d143c142dd1bbf88f556a79</anchor>
+      <anchor>7f9ae172f96b3ea86b989bb82da04644</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>remvalues</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>565ea6bc4c68fcb6957de5b3d6916b0d</anchor>
+      <anchor>74eeee0f4575305081b38f2aaf4c95bf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_settings_t</type>
       <name>settings</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>557df5af30d0bc9e87af9f9696585aca</anchor>
+      <anchor>105c55d402c046ec296d8a973e11aec1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>sfv</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>4c8838d091f65e89f3b1997d641122b7</anchor>
+      <anchor>2eb7cfb97f2996cbe67e031f8115fdac</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>timestamp</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>13eec7a3e5252159787bf35ab2b765bc</anchor>
+      <anchor>38bb16779a618bc1a9f9f16ffe63ad81</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>wfv</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>4887aef594faa1bb3e24637a88821f83</anchor>
+      <anchor>01ac3705300da645ea172a89796c131e</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7175,6 +7725,13 @@
       <name>message</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>76c20204a9753c29216150fda24a50a5</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>sendNetworkString</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>d718118f7065602d94512b86ac2a5c4b</anchor>
       <arglist>(QString text)</arglist>
     </member>
     <member kind="function">
@@ -7426,6 +7983,13 @@
       <anchor>ba184ab7772ff11d8ceff18299bb4343</anchor>
       <arglist>(int motor, int speed)</arglist>
     </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>2a1d4668d9e1cd818b74f7098ab78af6</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
     <member kind="function">
       <type>void</type>
       <name>flashlight</name>
@@ -7585,6 +8149,13 @@
       <name>revolutions4</name>
       <anchorfile>classMotor.html</anchorfile>
       <anchor>7d6f1b91be487b98503cd585179ce390</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotState</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>f25e583de34fcfff39f6211b4bc7bd7b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -7892,6 +8463,13 @@
   <compound kind="class">
     <name>NetworkThread</name>
     <filename>classNetworkThread.html</filename>
+    <member kind="slot">
+      <type>void</type>
+      <name>sendNetworkCommand</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>638c5285bb5a95907b0bb6321316f8e6</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
     <member kind="signal">
       <type>void</type>
       <name>dataReceived</name>
@@ -7915,6 +8493,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>setPort</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>980af370dd379471c74d74681015e24c</anchor>
+      <arglist>(unsigned int port)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>stop</name>
       <anchorfile>classNetworkThread.html</anchorfile>
       <anchor>d00403b687698c2f3e1ed09a09bf1b41</anchor>
@@ -7935,6 +8520,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>unsigned int</type>
+      <name>networkPort</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>b64acfb63d81390eb4aa7378eb584420</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>volatile bool</type>
       <name>stopped</name>
       <anchorfile>classNetworkThread.html</anchorfile>
@@ -7946,13 +8538,6 @@
       <name>udpSocket</name>
       <anchorfile>classNetworkThread.html</anchorfile>
       <anchor>892986032dd0a523de81da28c68001db</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>PORT</name>
-      <anchorfile>classNetworkThread.html</anchorfile>
-      <anchor>f802aa5814b2104e4d3e0507e916e060</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9260,6 +9845,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>d8f15b54eb1653e5a926de95cc06ccaf</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setSimulationMode</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>5b088b4b348ede7b4ef26c7214ec492e</anchor>
@@ -9267,10 +9859,24 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>compassDataComplete</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>40db7e2d27426c84f8babb7055f9c4db</anchor>
+      <arglist>(float x, float y, float z)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>contactAlarm</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>a26a189c66a12c662276a53f737f8d57</anchor>
       <arglist>(char position, bool state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>sendNetworkString</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>45da7b4633ac1eaff3c5d7c7dd18c470</anchor>
+      <arglist>(QString text)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -9292,6 +9898,13 @@
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>560aec8ef4adc3398bf3fedfe2e080ab</anchor>
       <arglist>(int distance)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getCompassValue</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>51b1fdf8f2a08dcde0bfea11b14541e0</anchor>
+      <arglist>(unsigned char axis)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -9370,6 +9983,13 @@
       <anchor>1964356150f7b6d6fbd83a788ff4c830</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function" protection="private">
+      <type>float</type>
+      <name>convertToDegree</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>ad0a6a3a09afd6d64424746d7e106e22</anchor>
+      <arglist>(int sensorValue)</arglist>
+    </member>
     <member kind="variable" protection="private">
       <type>char</type>
       <name>contactValue</name>
@@ -9421,6 +10041,13 @@
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
+      <name>robotState</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>979c683c0d985a544effb6fb5e10c809</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
       <name>simulationMode</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>76615ff6f8017119dfcfb20c814e0c73</anchor>
@@ -9439,6 +10066,27 @@
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>b6f77a6a03a31e1deea60fa5a9ba3ea6</anchor>
       <arglist>[USSENSORARRAYSIZE]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>xAxis</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>c73d3c6a5a7048227fbac1d441618eaf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>yAxis</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>586970a6598aa43e6c89c887a7dd8a1f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>zAxis</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>8b0cb37210c3419daef0166a1da91d6b</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const char</type>
@@ -9543,6 +10191,41 @@
       <name>MOTORSENSORARRAYSIZE</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>179463273b2dd085d76b62a4011a570b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>5a94de18461850b6c084e19c26da8024</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>cf335355a8997ae728468be227ddd891</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>READ_AXIS_X</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>486f1e444a9ff62d896aacf1c2c89a76</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>READ_AXIS_Y</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>593dc91b6eb40d775aec932323cfd60c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>READ_AXIS_Z</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>2038d5a71c9606da28b75a217a90d11b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9787,6 +10470,13 @@
       <anchor>50019278e68334d583893770567b1e4e</anchor>
       <arglist>(unsigned char servo, unsigned char position)</arglist>
     </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classServo.html</anchorfile>
+      <anchor>2ad05f337468533e4b869928b9acbbdf</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
     <member kind="signal">
       <type>void</type>
       <name>message</name>
@@ -9851,6 +10541,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotState</name>
+      <anchorfile>classServo.html</anchorfile>
+      <anchor>834117bb566915d2dd3c92125b6d8812</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>int</type>
       <name>servoDefaultPosition</name>
       <anchorfile>classServo.html</anchorfile>
@@ -9904,6 +10601,20 @@
       <name>NUMBEROFSERVOS</name>
       <anchorfile>classServo.html</anchorfile>
       <anchor>d816c8183857fe2bf612c1dcbd2529f3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
+      <anchorfile>classServo.html</anchorfile>
+      <anchor>f1ff35855136fd566a171c848640be02</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classServo.html</anchorfile>
+      <anchor>79949feb833e1eb6a4e80d0c1a43179d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -10222,122 +10933,9 @@
   <compound kind="class">
     <name>Sick</name>
     <filename>classSick.html</filename>
-    <member kind="typedef">
-      <type>struct Sick::laser_device_t *</type>
-      <name>laser_device_p</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>0ce6358c4737a6ab58c1fd314c1f0808</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>laser_model_t</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>771de876d0da63e53f132d0294b39a9e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PLS</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>771de876d0da63e53f132d0294b39a9e048f3e8a1ee8ac3496393555c813c813</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>LMS</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>771de876d0da63e53f132d0294b39a9e01c22c16299c90926432d7dec75ff226</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>parity_t</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>25067f87762fdac9e71dd325be0c9f18</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>N</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>25067f87762fdac9e71dd325be0c9f1895da8eb6df88e6547ef1ba0e7e072cbc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>E</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>25067f87762fdac9e71dd325be0c9f1846ca6549ee7de6a9212aad6e19701938</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>O</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>25067f87762fdac9e71dd325be0c9f180b86f4a7638ca6dccdcb43a4b7199fad</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>range_dist_t</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>af0ad9b8663188c3e7f0a19ac64257a4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE80M</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>af0ad9b8663188c3e7f0a19ac64257a400aa86de69b0ecd323bcad7ce2ac6026</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE160M</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>af0ad9b8663188c3e7f0a19ac64257a4ec28d478485c3dc1465018a7c1479c60</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_RANGE320M</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>af0ad9b8663188c3e7f0a19ac64257a4dfb50827dfb8e1f3a6d413f4aa7974aa</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_REMISSION_NORM</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>af0ad9b8663188c3e7f0a19ac64257a485af65dff6e4a98660459284ca7d5954</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SICK_REMISSION_DIRECT</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>af0ad9b8663188c3e7f0a19ac64257a4d9bb70e80a53a0db7dbc05758ab27270</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>range_res_t</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>6f5eb50c69821256bc449cf54302b372</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>CM</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>6f5eb50c69821256bc449cf54302b37236638a3e59c744af827ae4e757c18bb3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>MM</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>6f5eb50c69821256bc449cf54302b37295b9da7cc2930dda9fc0900140765326</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DM</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>6f5eb50c69821256bc449cf54302b372b5e118cdd66db381ad662d92ad4a5c9a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>struct Sick::sick_laser_t *</type>
-      <name>sick_laser_p</name>
-      <anchorfile>classSick.html</anchorfile>
-      <anchor>79aaf8a9eda793b5ef6431ea63ba5ad7</anchor>
-      <arglist></arglist>
-    </member>
+    <class kind="struct">Sick::laser_device_t</class>
+    <class kind="struct">Sick::laser_settings_t</class>
+    <class kind="struct">Sick::sick_laser_t</class>
     <member kind="function">
       <type>double</type>
       <name>carmen_get_time</name>
@@ -10632,9 +11230,6 @@
       <anchor>24e6e691db068d1d1d4e5272b51ee1a7</anchor>
       <arglist>(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length)</arglist>
     </member>
-    <class kind="struct">Sick::laser_device_t</class>
-    <class kind="struct">Sick::laser_settings_t</class>
-    <class kind="struct">Sick::sick_laser_t</class>
   </compound>
   <compound kind="struct">
     <name>Sick::laser_device_t</name>
@@ -10643,77 +11238,77 @@
       <type>int</type>
       <name>baudrate</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>4b580a3a107470ac37c4e812a39c957c</anchor>
+      <anchor>e48d35b782cd64d9976d839ce99ac553</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>94a279c248b82515fd84791e4713b697</anchor>
+      <anchor>cc1c3d1df275228941037e8e1b59d419</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>fd</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>05845f4f0677698520df3192bf437a45</anchor>
+      <anchor>2e2c32e05143006f0b12691ebd471ca4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>dab4b73e5bfd998d8cc9adda1676e8c6</anchor>
+      <anchor>d024e659df49742b7e49f6697d82cb08</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>35123c861b61892961cac9077389a89b</anchor>
+      <anchor>471b495935a5a593e333c237858dcb16</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>060d9402aa097f14ac3a12dcf882e352</anchor>
+      <anchor>cdd6fbfd13cf65ed8ad6efe9ff5090c3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>passwd</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>1bbfb0e417c5a1fdd399edd2157ca16e</anchor>
+      <anchor>1eafbc29f734e08f5a76fa9c28b49964</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>cbd1e5206636fa5dd12525bfad935bc8</anchor>
+      <anchor>76aeb7ace4d6c9b3284e9ec915739090</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>84c04ff5aca52cd76dfc826735d6a409</anchor>
+      <anchor>ae446fa18719e12bbcda3eb9e76cc2ac</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>ttyport</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>a85790c247aafb424eeb12da7837e2e9</anchor>
+      <anchor>5927e2f271293caea9b0d771cc41aab4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>ff179d9a506a67801e0cdfa33b4e6089</anchor>
+      <anchor>de989f8d718d5fcf1fc700878677a563</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -10724,147 +11319,147 @@
       <type>int</type>
       <name>angle_range</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>6baffed381662e5059af6911913f2937</anchor>
+      <anchor>c269e46eaf84f076cddbe375de6039fc</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>angle_resolution</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>2b962d0f659bd6174f21026f18ce41a7</anchor>
+      <anchor>13d8c64a4d2e71702aca1909a17b8b69</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>18199cbf76320f8ff900fdb7ad602913</anchor>
+      <anchor>311eb67b365aadcb66520a2ba767807e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>detect_baudrate</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>d1586e8d9d11d26769d14cc4caff0f1b</anchor>
+      <anchor>5ec8fd901ba10b403863096040312480</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char</type>
       <name>device_name</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>dc9afc783eca1b863a96bf44e70960bd</anchor>
+      <anchor>f57a63391b946981e961735c2b8abb49</anchor>
       <arglist>[MAX_NAME_LENGTH]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>2112d759e912b9c273ba21b2762e5f10</anchor>
+      <anchor>d8246a6c0806062059de1ff2a00e21ee</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_flipped</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>b6eecb11d64db14d050b1be3ef54e201</anchor>
+      <anchor>5bd6cbe0bc4fa11171eab3aea3c51038</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>5b1e710fc5e6c2d47cbde24b9bb23176</anchor>
+      <anchor>c9ceb7f0d738ee7b991d11f9a407ec11</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>num_values</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>8c805cc0fa4b425d0ff3bb5083157c58</anchor>
+      <anchor>5d2a046bba846f646e3e6936a1133fab</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>dd172321d6ad972d3890e3914a106ae3</anchor>
+      <anchor>3891f5036ee820ce160eaefd544e822f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>password</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>0113cac6703dfb515c0c26443ddc47ea</anchor>
+      <anchor>09830576427b17f99ebea2e5c01f88a7</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>range_dist_t</type>
       <name>range_dist</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>8a17d8bdaab08a4e6e23c4edf40bddb5</anchor>
+      <anchor>5124025a03de19d2c8bb8677f5dbc48a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>range_res_t</type>
       <name>range_res</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>841a9065d1e0bd6e4bb9fb92a2c96430</anchor>
+      <anchor>bf4c037328c2f4ca4ca7cee43ca6d11f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>rem_values</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>d320242434d1419c3f484c891b3c3ef8</anchor>
+      <anchor>a9d0d3595aad0c4b60a2c0d9ad67ae1f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>set_baudrate</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>42be8d00e36cfd0bdca5f43b619b56ac</anchor>
+      <anchor>3d77ea896d64ce59346e0070aa13e3ee</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>start_baudrate</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>7c2d81566e96a673e8a4da11bdd4040e</anchor>
+      <anchor>a33695e7ea8ae93d59968ccb67592d6e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>608af2d778c7f311f763e37bc1cf361c</anchor>
+      <anchor>eca18d031bd126b580d21281b977321d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>923276dd1fbefbbafa27fb54b5503d61</anchor>
+      <anchor>292bcd27ab6eb68803dbf7dc33832db1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>0963947564d8bbfd35a1531fb43ce000</anchor>
+      <anchor>e206d9282f1971d2169cb7c975260730</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_highspeed</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>97caf14e33ad8ef86ab3ff260342f512</anchor>
+      <anchor>0ae959d116336ea4fe6de5111ac7b7aa</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_remission</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>a1aaf8caeb8291b88b56a414ef181a39</anchor>
+      <anchor>f954f46e126044925fd7615673df73cf</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -10875,119 +11470,119 @@
       <type>unsigned char *</type>
       <name>buffer</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>95abc3090d32e0b5fb914ce798bb21c8</anchor>
+      <anchor>49333e725f9f8acb814a7ec5f946dce5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>buffer_position</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>aa8c2cf3580c71fdbf188ffa0002f4b4</anchor>
+      <anchor>4ae7cac33a51689759381a0c3f116f46</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_device_t</type>
       <name>dev</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>263666c67fc70e3686c135c58a72a5b4</anchor>
+      <anchor>c26380ba6100cd33121850a2d5ca477c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>glare</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>c33d4f51cb0ec411c6224127c224e55c</anchor>
+      <anchor>3f91ea60962ae7e3109e79cb3f2df89b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>new_reading</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>66867b3646d9d67be3fc078fc9ed70ff</anchor>
+      <anchor>c0f3f302e12a8be95f4161a8af9f5006</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>numvalues</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>ac84c2f4404782782b282187f7c322eb</anchor>
+      <anchor>e0a181fff284e5b02ecd96f5eafd12b4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_length</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>692791bc1abd610da08323cbc569856f</anchor>
+      <anchor>f1ff7b25050b7725f01b7a2f5bb10d94</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_offset</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>924bb37dcb08814030c470335b5eed2c</anchor>
+      <anchor>743fbffc4efb02bf11ce1187893a5ab5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>packet_timestamp</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>04e90ffc47d355837b2f2e7a5e483eda</anchor>
+      <anchor>fb87b8eb09486dee03a819c258045365</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>processed_mark</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>f369b0fb038b46c5be254613a5c8a032</anchor>
+      <anchor>3b96b7ee5a81376c6a29cb229eb55199</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>range</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>d550817c9a877dc1eae50e72b6c63b85</anchor>
+      <anchor>d89ba81c1f8c7cb44bb146a97cbec67d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>remission</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>4d86aff0cf49596132a9e174b65dab89</anchor>
+      <anchor>d7b6b1b0762d660755f87d8cf2c131f6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>remvalues</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>cd50c52b5a373a528da2af1683db8457</anchor>
+      <anchor>8f7a867c1f47a8abdbb0ca9e633933d6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_settings_t</type>
       <name>settings</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>5c7cf830b3cf1aa2ace39c7171c15b1a</anchor>
+      <anchor>33f3bc67ee0fa62067ced8e140b27110</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>sfv</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>40437128edf0d8028e252c9d65141b6c</anchor>
+      <anchor>326444d3edfebfff6c7fe7f741dfac4d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>timestamp</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>911d53573e6df92cf8c916a568400479</anchor>
+      <anchor>070f7e4b2257972e88367b501fb05f19</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>wfv</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>2815f6726712ec0da39a0058d5f5b72b</anchor>
+      <anchor>adefc0aae2db47d2d9a34ca0069d45f9</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11280,6 +11875,58 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="class">
+    <name>Window</name>
+    <filename>classWindow.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>Window</name>
+      <anchorfile>classWindow.html</anchorfile>
+      <anchor>74e6087da23d3c24e9fac0245e5ec92c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>QSlider *</type>
+      <name>createSlider</name>
+      <anchorfile>classWindow.html</anchorfile>
+      <anchor>968680849bd0b7b796d278c86b71c84b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLWidget *</type>
+      <name>glWidget</name>
+      <anchorfile>classWindow.html</anchorfile>
+      <anchor>82a3439ed463b4b7aa61359f54c2a6cb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QSlider *</type>
+      <name>xSlider</name>
+      <anchorfile>classWindow.html</anchorfile>
+      <anchor>cb297e842006d34a4184973cb562fbe3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QSlider *</type>
+      <name>ySlider</name>
+      <anchorfile>classWindow.html</anchorfile>
+      <anchor>3215c57c61756aee6b822fbe0d23e512</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QSlider *</type>
+      <name>zSlider</name>
+      <anchorfile>classWindow.html</anchorfile>
+      <anchor>36ed8bc3410e3a73d377d1da8a8490bd</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="dir">
+    <name>direcs/trunk/src/debug/</name>
+    <path>/home/markus/develop/direcs/direcs/trunk/src/debug/</path>
+    <filename>dir_f96ca1571ae2bb925882b6cc3f6f99e5.html</filename>
+    <file>qrc_direcs.cpp</file>
+  </compound>
   <compound kind="dir">
     <name>direcs/</name>
     <path>/home/markus/develop/direcs/direcs/</path>
@@ -11290,6 +11937,7 @@
     <name>direcs/trunk/src/</name>
     <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
     <filename>dir_50d92224b2f8744b37ea213f0248066f.html</filename>
+    <dir>direcs/trunk/src/debug/</dir>
     <dir>direcs/trunk/src/test/</dir>
     <file>aboutDialog.cpp</file>
     <file>aboutDialog.h</file>
@@ -11297,6 +11945,8 @@
     <file>camThread.h</file>
     <file>circuit.cpp</file>
     <file>circuit.h</file>
+    <file>compassWidget.cpp</file>
+    <file>compassWidget.h</file>
     <file>direcs.cpp</file>
     <file>direcs.h</file>
     <file>direcsSerial.cpp</file>
@@ -11355,10 +12005,15 @@
     <name>direcs/trunk/src/test/</name>
     <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
     <filename>dir_43fabcfc725a246df0aaf038c4f29448.html</filename>
+    <file>glwidget.cpp</file>
+    <file>glwidget.h</file>
     <file>init.c</file>
     <file>init.h</file>
+    <file>main.cpp</file>
     <file>serial.c</file>
     <file>serial.h</file>
+    <file>window.cpp</file>
+    <file>window.h</file>
   </compound>
   <compound kind="dir">
     <name>direcs/trunk/</name>

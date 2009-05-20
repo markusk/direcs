@@ -121,10 +121,6 @@ class Gui : public QMainWindow
 		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
 		 */
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
-		/*
-		// just a quick and dirty wrapper static method for old CARMEN standard C code!
-		static void appLog(QString text);
-		*/
 
 #ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		/**
@@ -507,8 +503,9 @@ class Gui : public QMainWindow
 		static const int STARTZOOMLEVEL = 3;
 
 		//! the initial Y position of the laser lines and the robot image in the GUI
-		static const int INITIALLASERYPOSFRONT = 100;
-		static const int INITIALLASERYPOSREAR  = 100;
+		//! This is the difference in pixel measured drom the absolute center within the robot pixmap!
+		static const int INITIALLASERYPOSFRONT = 64.0;
+		static const int INITIALLASERYPOSREAR  = 64.0;
 
 		//! Number of distance semi circles
 		static const int LASERDISTANCECIRCLES = 27;

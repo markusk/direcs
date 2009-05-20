@@ -3,13 +3,13 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="67" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-   <View0 Encoding="" line="982" Type="Source" />
+   <View0 Encoding="" line="1391" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/compassWidget.cpp" >
-   <View0 Encoding="" line="257" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.h" >
+   <View0 Encoding="" line="507" Type="Source" />
   </Doc2>
  </DocsAndViews>
  <pluginList>
@@ -18,6 +18,9 @@
     <breakpoint0 location="/home/markus/develop/direcs/direcs/trunk/src/sick.cpp:876" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint0>
+    <breakpoint1 location="/home/markus/develop/direcs/direcs/trunk/src/gui.cpp:32" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+     <tracedExpressions/>
+    </breakpoint1>
    </breakpointList>
    <showInternalCommands value="0" />
   </kdevdebugger>
@@ -28,7 +31,8 @@
   <kdevbookmarks>
    <bookmarks>
     <bookmark url="/home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-     <mark line="1692" />
+     <mark line="1686" />
+     <mark line="1536" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/trunk/src/sick.cpp" >
      <mark line="710" />

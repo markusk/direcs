@@ -29,8 +29,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	aboutDialog = a;
 
 	robotIsOn = false;
-	laserXPos = 0; // correct value is set in the initLaserView()
-	laserYPos = 0; // correct value is set in the initLaserView()
+	laserXPos = 0; // correct value is set in the initLaserView()!!
+	laserYPos = 0; // correct value is set in the initLaserView()!!
 
 	// define some nice green and red colors
 	labelFillColorGreen = QColor(64, 255, 64);
@@ -217,15 +217,6 @@ void Gui::setRobotControls(bool state)
 	ui.btnResetMovement1->setEnabled(state);
 	ui.btnResetMovement2->setEnabled(state);
 }
-
-
-/*
-void Gui::appLog(QString text)
-{
-	// just a quick and dirty wrapper static method for old CARMEN standard C code!
-	Gui::appendLog(text);
-}
-*/
 
 
 void Gui::appendLog(QString text, bool CR, bool sayIt)
@@ -1369,21 +1360,21 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// set the position of the bot
 	//------------------------------
 	// recalculate the middle position of the bot pixmap!
-	x = laserXPos -  ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
-	y = laserYPos - ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
+	x = laserXPos -  ( pixmapBot1->pixmap().width()  / 2 / startScale * lastZoom);
+	y = laserYPos -  ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
 	//laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
 
 	// horizontal center
 	pixmapBot1->setPos(x, y);
 	pixmapBot2->setPos(x, y);
-	//appendLog(QString("<b>sliderZoomValueChanged...bot y pos()=%1</b>").arg(pixmapBot1->y()));
 
-
+	
 	//------------------------------------------------------
 	// change the x and y position of the FRONT laser lines
 	//------------------------------------------------------
 	x = laserXPos;
-	y = laserYPos;
+	y = laserYPos - (INITIALLASERYPOSFRONT / startScale * lastZoom);
+	//appendLog(QString("<b>sliderZoomValueChanged...x=%1  y=%2</b>").arg(laserXPos).arg(laserYPos));
 
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
@@ -1398,7 +1389,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// change the y position of the REAR laser lines
 	//------------------------------------------------
 	x = laserXPos;
-	y = laserYPos;
+	y = laserYPos + (INITIALLASERYPOSREAR / startScale * lastZoom);
+	//appendLog(QString("<b>sliderZoomValueChanged...x=%1  y=%2</b>").arg(laserXPos).arg(laserYPos));
 
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
@@ -1543,10 +1535,12 @@ void Gui::initLaserView()
 	// (horicontal and vertical middle of the view)
 	laserXPos = (ui.graphicsViewLaser->width()  / 2);
 	laserYPos = (ui.graphicsViewLaser->height() / 2);
+	
 
 	// init laser y pos at startup!
 	x = laserXPos;
-	y = laserYPos + INITIALLASERYPOSFRONT;
+	y = laserYPos + INITIALLASERYPOSFRONT; // TODO: INITIALLASERYPOSFRONT has no effect?!? laserYPos is always 0 ???
+	appendLog(QString("<b>test...x=%1  y=%2</b>").arg(x).arg(y) );
 
 	//--------------
 	// REAR laser
