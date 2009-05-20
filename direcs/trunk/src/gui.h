@@ -504,8 +504,8 @@ class Gui : public QMainWindow
 
 		//! the initial Y position of the laser lines and the robot image in the GUI
 		//! This is the difference in pixel measured drom the absolute center within the robot pixmap!
-		static const int INITIALLASERYPOSFRONT = 64.0;
-		static const int INITIALLASERYPOSREAR  = 64.0;
+		static const int INITIALLASERYPOSFRONT = 60.0; // FIXME: when values are different, the distance line do not fit on the lsaer lines in on_sliderZoom_valueChanged
+		static const int INITIALLASERYPOSREAR  = 60.0; // FIXME: when values are different, the distance line do not fit on the lsaer lines in on_sliderZoom_valueChanged
 
 		//! Number of distance semi circles
 		static const int LASERDISTANCECIRCLES = 27;

@@ -1362,7 +1362,6 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	// recalculate the middle position of the bot pixmap!
 	x = laserXPos -  ( pixmapBot1->pixmap().width()  / 2 / startScale * lastZoom);
 	y = laserYPos -  ( pixmapBot1->pixmap().height() / 2 / startScale * lastZoom);
-	//laserXPos = (ui.graphicsViewLaser->width() / 2) - ( pixmapBot1->pixmap().width() / 2 / startScale * lastZoom);
 
 	// horizontal center
 	pixmapBot1->setPos(x, y);
@@ -1374,7 +1373,6 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------------------------------
 	x = laserXPos;
 	y = laserYPos - (INITIALLASERYPOSFRONT / startScale * lastZoom);
-	//appendLog(QString("<b>sliderZoomValueChanged...x=%1  y=%2</b>").arg(laserXPos).arg(laserYPos));
 
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
@@ -1390,7 +1388,6 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------------------------
 	x = laserXPos;
 	y = laserYPos + (INITIALLASERYPOSREAR / startScale * lastZoom);
-	//appendLog(QString("<b>sliderZoomValueChanged...x=%1  y=%2</b>").arg(laserXPos).arg(laserYPos));
 
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
@@ -1412,7 +1409,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
 		x = laserXPos - (newSize / 2);
-		y = laserYPos - (newSize / 2);
+		y = laserYPos - (newSize / 2) + (INITIALLASERYPOSFRONT / startScale * lastZoom);
 
 		// change the width and height
 		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
@@ -1445,7 +1442,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
 		x = laserXPos - (newSize / 2);
-		y = laserYPos - (newSize / 2);
+		y = laserYPos - (newSize / 2) - (INITIALLASERYPOSREAR / startScale * lastZoom);
 
 		// change the width and height
 		laserDistanceLineListRear->at(i)->setRect(0, 0, newSize, newSize);
@@ -1539,9 +1536,9 @@ void Gui::initLaserView()
 
 	// init laser y pos at startup!
 	x = laserXPos;
-	y = laserYPos + INITIALLASERYPOSFRONT; // TODO: INITIALLASERYPOSFRONT has no effect?!? laserYPos is always 0 ???
-	appendLog(QString("<b>test...x=%1  y=%2</b>").arg(x).arg(y) );
+	y = laserYPos; // INITIALLASERYPOSFRONT has no effect here, only in on_sliderZoom_valueChanged !!
 
+	
 	//--------------
 	// REAR laser
 	//--------------
@@ -1558,7 +1555,7 @@ void Gui::initLaserView()
 	}
 
 
-	y = laserYPos + INITIALLASERYPOSREAR;
+	y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
 
 	//--------------
 	// FRONT laser
@@ -1843,8 +1840,8 @@ void Gui::createLaserScannerObjects()
 	// add the pixmap
 	scene->addItem(pixmapBot1);
 
-	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
-	pixmapBot1->setZValue(1);
+	// put one layer up (layer 2).
+	pixmapBot1->setZValue(2);
 
 
 	//=====================================================
@@ -1873,8 +1870,8 @@ void Gui::createLaserScannerObjects()
 		// set position of each line
 		line->rotate(i);
 
-		// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
-		line->setZValue(2);
+		// put one layer up (layer 3).
+		line->setZValue(3);
 
 		// add line to QList
 		laserLineListFront->append(line);
@@ -1903,8 +1900,8 @@ void Gui::createLaserScannerObjects()
 		// set position of each line
 		line->rotate(i);
 
-		// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
-		line->setZValue(2);
+		// put one layer up (layer 3).
+		line->setZValue(3);
 
 		// add line to QList
 		laserLineListRear->append(line);
@@ -1929,8 +1926,8 @@ void Gui::createLaserScannerObjects()
 	// add the pixmap
 	scene->addItem(pixmapBot2);
 
-	// put one layer up (layer 2). All others share the same (unset) layer under the pixmap.
-	pixmapBot2->setZValue(3);
+	// put one layer up (layer 4).
+	pixmapBot2->setZValue(4);
 }
 
 
@@ -1968,9 +1965,9 @@ void Gui::createLaserDistanceObjects()
 		// set text color
 		text->setBrush(QBrush(colorHelpLine));
 
-		// setting to the highest layer level
-		semiCircle->setZValue(4);
-		text->setZValue(4);
+		// setting to the lowest layer level
+		semiCircle->setZValue(1);
+		text->setZValue(1);
 
 		// add semiCircle to QList
 		laserDistanceLineListFront->append(semiCircle);
@@ -2011,9 +2008,9 @@ void Gui::createLaserDistanceObjects()
 		// set text color
 		text->setBrush(QBrush(colorHelpLine));
 
-		// setting to the highest layer level
-		semiCircle->setZValue(4);
-		text->setZValue(4);
+		// setting to the lowest layer level!
+		semiCircle->setZValue(1);
+		text->setZValue(1);
 
 		// add semiCircle to QList
 		laserDistanceLineListRear->append(semiCircle);

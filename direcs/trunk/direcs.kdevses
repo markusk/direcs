@@ -3,13 +3,13 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
-   <View0 Encoding="" line="67" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-   <View0 Encoding="" line="1391" Type="Source" />
+   <View0 Encoding="" line="1683" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/gui.h" >
-   <View0 Encoding="" line="507" Type="Source" />
+   <View0 Encoding="" line="355" Type="Source" />
   </Doc2>
  </DocsAndViews>
  <pluginList>
@@ -31,8 +31,7 @@
   <kdevbookmarks>
    <bookmarks>
     <bookmark url="/home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-     <mark line="1686" />
-     <mark line="1536" />
+     <mark line="1683" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/trunk/src/sick.cpp" >
      <mark line="710" />
