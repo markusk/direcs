@@ -24,10 +24,13 @@
 SpeakThread::SpeakThread()
 {
 	stopped = false;
-	speaking = false;
 	saySomething = false;
 	
 #ifdef _TTY_POSIX_
+	// Synchronous playback
+	// 0 ms length sound buffer for SynthCallBack
+	// default location for espeak-data directory
+	// dont allow espeakEVENT_PHONEME events
 	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL,0); 
 	// set speech rate down to 150 words per minute
 	setRate(150);
@@ -37,16 +40,23 @@ SpeakThread::SpeakThread()
 
 SpeakThread::~SpeakThread()
 {
-	saySomething = false;
-	stopped = false;
 #ifdef _TTY_POSIX_
 	espeak_Terminate();
 #endif
+	saySomething = false;
+	stopped = false;
 }
 
 
 void SpeakThread::stop()
 {
+	// check if already speaking
+	if (espeak_IsPlaying() == 1)
+	{
+		// shut up
+		espeak_Cancel();
+	}
+	
 	stopped = true;
 }
 
@@ -67,7 +77,7 @@ void SpeakThread::run()
 		{
 			saySomething = false;
 			
-			// remove HTML tags from string
+			// remove HTML tags from string (needed for reading messages from the GUI log)
 			textToSpeak = removeHTML(textToSpeak);
 			
 			// speak!
@@ -88,14 +98,21 @@ void SpeakThread::speak(QString text)
 	textToSpeak = text;
 	// enbale the run method to speak :-)
 	saySomething = true;
+	
+	// check if already speaking
+	if (espeak_IsPlaying() == 1)
+	{
+		// shut up
+		espeak_Cancel();
+	}
 #endif
 }
 
 
-void SpeakThread::lang(const char *lang)
+void SpeakThread::setLanguage(QString language)
 {
 #ifdef _TTY_POSIX_
-	espeak_SetVoiceByName(lang);
+	espeak_SetVoiceByName(language.toAscii());
 #endif
 }
 
@@ -108,7 +125,7 @@ void SpeakThread::setRate(int value)
 }
 
 
-void SpeakThread::setVoices(unsigned char gender,unsigned char age)
+void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 {
 #ifdef _TTY_POSIX_
 	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();

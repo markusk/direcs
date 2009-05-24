@@ -3648,22 +3648,32 @@ void Direcs::test()
 		toggle = ON;
 		//head->look("LEFT");
 		emit sendNetworkString("ON");
+#ifdef _TTY_POSIX_
+		speakThread->setLanguage("en");
+		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
+		// Say some text;
+		QDateTime now = QDateTime::currentDateTime();
+		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+#endif
 	}
 	else
 	{
 		toggle = OFF;
 		emit sendNetworkString("OFF");
-		//head->look("RIGHT");
+		
+#ifdef _TTY_POSIX_
+		speakThread->setLanguage("de");
+		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
+		// Say some text;
+		QDateTime now = QDateTime::currentDateTime();
+		emit speak(tr("und das ganze geht auch in Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+#endif
 	}
+		//head->look("RIGHT");
 // // 
 //	motors->flashlight(toggle);
 
 
-	#ifdef _TTY_POSIX_
-	// Say some text;
-	QDateTime now = QDateTime::currentDateTime();
-	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
-	#endif
 	
 /*
 	static int spsr = 0;

@@ -41,6 +41,9 @@ class SpeakThread : public QThread
 		~SpeakThread();
 		void stop();
 		virtual void run();
+		void setLanguage(QString language);
+		void setVoice(unsigned char gender,unsigned char age);
+		void setRate(int value);
 
 
 	public slots:
@@ -52,19 +55,15 @@ class SpeakThread : public QThread
 
 
 	private:
-		void lang(const char *lang);
-		void setRate(int value);
-		void setVoices(unsigned char gender,unsigned char age);
 		QString removeHTML(QString string);
 		
 		volatile bool stopped;
-		bool speaking;
 		bool saySomething; /// this is for the thread, which waits for something to say.
 		QString textToSpeak;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 600; // TODO: Which Default value? 600 ms?
+		static const unsigned long THREADSLEEPTIME = 600; // Default value: 600 ms
 		
 };
 
