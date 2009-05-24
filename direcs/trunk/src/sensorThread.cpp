@@ -602,6 +602,7 @@ contacts temporarily removed from robot!! */
 
 			// convert the value to degrees and store the value in the class member
 			xAxis =  convertToDegree(value);
+			qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
 			value = 0;
 			
 			// send value over the network

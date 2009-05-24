@@ -280,7 +280,7 @@ void Direcs::init()
 	// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
 	//connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
 	//connect(gui, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-	connect(gui, SIGNAL( speak(QString) ), this, SLOT( speak(QString) ));
+	connect(gui, SIGNAL( speak(QString) ), this, SLOT( speak(QString) )); // FIXME: switch to HW speech or do all in one class!
 
 	/*
 	//----------------------------------------------------------------------------
@@ -3709,14 +3709,23 @@ void Direcs::test()
 		emit sendNetworkString("OFF");
 		//head->look("RIGHT");
 	}
-
-	motors->flashlight(toggle);
+// // 
+//	motors->flashlight(toggle);
 
 
 	#ifdef _TTY_POSIX_
 	// Say some text;
-//	QDateTime now = QDateTime::currentDateTime();
-//	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+	QDateTime now = QDateTime::currentDateTime();
+	emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4:%5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 	#endif
-
+	
+/*
+	static int spsr = 0;
+	static int spfif = 64;
+	
+	//spfif  =  1 << spfif;
+	spfif  =  spfif << 1;
+	
+	gui->appendLog(QString("spfif: %1").arg(spfif) );
+*/
 }

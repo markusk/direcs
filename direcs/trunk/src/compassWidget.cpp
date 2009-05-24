@@ -226,7 +226,8 @@ QSize CompassWidget::sizeHint() const
 void CompassWidget::setXRotation(int angle)
 {
 	normalizeAngle(&angle);
-	if (angle != xRot) {
+	if (angle != xRot)
+	{
 		xRot = angle;
 		//emit xRotationChanged(angle);
 		updateGL();
@@ -237,7 +238,8 @@ void CompassWidget::setXRotation(int angle)
 void CompassWidget::setYRotation(int angle)
 {
 	normalizeAngle(&angle);
-	if (angle != yRot) {
+	if (angle != yRot)
+	{
 		yRot = angle;
 		//emit yRotationChanged(angle);
 		updateGL();
@@ -248,7 +250,8 @@ void CompassWidget::setYRotation(int angle)
 void CompassWidget::setZRotation(int angle)
 {
 	normalizeAngle(&angle);
-	if (angle != zRot) {
+	if (angle != zRot)
+	{
 		zRot = angle;
 		//emit zRotationChanged(angle);
 		updateGL();
@@ -258,7 +261,10 @@ void CompassWidget::setZRotation(int angle)
 
 void CompassWidget::setAllRotations(float xAngle, float yAngle, float zAngle)
 {
-	setXRotation( (int) (xAngle*16) );
-	setYRotation( (int) (yAngle*16) );
-	setZRotation( (int) (zAngle*16) );
+// 	setXRotation( (int) (xAngle*16) );
+// 	setYRotation( (int) (yAngle*16) );
+// 	setZRotation( (int) (zAngle*16) );
+	setXRotation( (int) xAngle );
+	setYRotation( (int) yAngle );
+	setZRotation( (int) zAngle );
 }
