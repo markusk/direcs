@@ -25,23 +25,23 @@ SpeakThread::SpeakThread()
 {
 	stopped = false;
 	speaking = false;
+	saySomething = false;
 	
-	
-	//----------------------------------------------------------------------------
-	// Initialize the speech engine festival
-	//----------------------------------------------------------------------------
-	#ifdef _TTY_POSIX_
-	//      1 = we want the festival init files loaded
-	// 500000 = default scheme heap size
-	qDebug("festival initialized");
-	festival_initialize(1, 500000);
-	#endif
+#ifdef _TTY_POSIX_
+	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL,0); 
+	// set speech rate down to 150 words per minute
+	setRate(150);
+#endif
 }
 
 
 SpeakThread::~SpeakThread()
 {
+	saySomething = false;
 	stopped = false;
+#ifdef _TTY_POSIX_
+	espeak_Terminate();
+#endif
 }
 
 
@@ -62,21 +62,19 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 		
-		if (speaking==true)
+#ifdef _TTY_POSIX_
+		if (saySomething == true)
 		{
-			#ifdef _TTY_POSIX_
-			// say the text
-			qDebug("Speaking...");
-			// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
-			// file: ~/.festivalrc
-			// (Parameter.set 'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $SR $FILE")
-			// (Parameter.set 'Audio_Method 'Audio_Command)
-			// for speaking while audio is already in use!
-			//
-			festival_say_text(textForFestival);
-			#endif
-			speaking=false;
+			saySomething = false;
+			
+			// remove HTML tags from string
+			textToSpeak = removeHTML(textToSpeak);
+			
+			// speak!
+			espeak_Synth( textToSpeak.toAscii(), textToSpeak.length()+1, 0, POS_CHARACTER, 0, espeakCHARS_AUTO, NULL, NULL ); 
+			espeak_Synchronize(); 
 		}
+#endif
 		
 	}
 	stopped = false;
@@ -85,16 +83,39 @@ void SpeakThread::run()
 
 void SpeakThread::speak(QString text)
 {
-	#ifdef _TTY_POSIX_
-	// remove HTML tags from string
-	text = removeHTML(text);
-	
-	// convert QString to EST_String (defined in EST_String.h)
-	textForFestival = EST_String(text.toAscii());
-	
-	speaking = true;
-	#endif
-	
+#ifdef _TTY_POSIX_
+	// store the text in the class member
+	textToSpeak = text;
+	// enbale the run method to speak :-)
+	saySomething = true;
+#endif
+}
+
+
+void SpeakThread::lang(const char *lang)
+{
+#ifdef _TTY_POSIX_
+	espeak_SetVoiceByName(lang);
+#endif
+}
+
+
+void SpeakThread::setRate(int value)
+{
+#ifdef _TTY_POSIX_
+	espeak_SetParameter(espeakRATE, value, 0);
+#endif
+}
+
+
+void SpeakThread::setVoices(unsigned char gender,unsigned char age)
+{
+#ifdef _TTY_POSIX_
+	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
+	voice_spec->gender=gender;
+	voice_spec->age = age;
+	espeak_SetVoiceByProperties(voice_spec);
+#endif
 }
 
 
@@ -103,9 +124,6 @@ QString SpeakThread::removeHTML(QString string)
 	int start= -1;
 	
 	
-	//------------------------------
-	// remove HTML tags from string
-	//------------------------------
 	do
 	{
 		// search for the first HTML "<"
@@ -116,7 +134,7 @@ QString SpeakThread::removeHTML(QString string)
 			string.remove(start, string.indexOf(">")+1 - start);
 		}
 	} while (string.contains(">"));
-	// till the last HTML ">" is found
+	// to the last HTML ">" found
 	
 	return string;
 }

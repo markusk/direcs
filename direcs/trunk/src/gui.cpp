@@ -231,7 +231,7 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 	ui.textEditLog->ensureCursorVisible();
 
 
-	// say the message via festival
+	// say the message via Linux espeak
 	if (sayIt == true)
 	{
 		emit speak(text);
@@ -254,7 +254,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	ui.textEditNetworkLog->ensureCursorVisible();
 
 
-	// say the message via festival
+	// say the message via Linux espeak
 	if (sayIt == true)
 	{
 		emit speak(text);

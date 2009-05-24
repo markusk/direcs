@@ -46,10 +46,9 @@
 #include "joystick.h"
 #include "head.h"
 //-------------------------------------------------------------------
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV and festival are not available for Windows (and does not make sense for ARM)
+#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV and espeak are not available for Windows (and does not make sense for ARM)
 	#include "camThread.h"
-	#include <festival.h> // FIXME: instead of speakThread-include!
-	//#include "speakThread.h"
+	#include "speakThread.h"
 #endif
 //-------------------------------------------------------------------
 #include <QtDebug>
@@ -202,13 +201,6 @@ class Direcs : public QObject
 		*/
 
 		/**
-		Speaks a text with festival. All HTML-Code in the parameter (text) is also removed internally).
-		@param text is the text to speak.
-		*/
-		// FIXME: use speakThread instead!!
-		void speak(QString text);
-
-		/**
 		Ends the programm, after asking "really?".
 		Calls the destructor of this class, after saving settings and some other exit stuff.
 		*/
@@ -245,7 +237,7 @@ class Direcs : public QObject
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.
 		*/
-		//void speak(QString text);
+		void speak(QString text);
 
 		/**
 		Initialize the robots basic circuit.
@@ -293,7 +285,7 @@ class Direcs : public QObject
 #ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		CamThread *camThread;
 #endif
-		//SpeakThread *speakThread;
+		SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
 		QString serialPortMicrocontroller;

@@ -22,13 +22,13 @@
 #define SPEAKTHREAD_H
 
 //-------------------------------------------------------------------
-#include <festival.h>
+#include "speak_lib.h"
 #include <QThread>
 //-------------------------------------------------------------------
 
 
 /*!
-\brief Speaks a text with festival.
+\brief Speaks a text with espeak.
 
 Also removes HTML-Tags from the text to speak.
 */
@@ -44,23 +44,28 @@ class SpeakThread : public QThread
 
 
 	public slots:
+		/**
+		Speaks a text with espeak. All HTML-Code in the parameter (text) is also removed internally).
+		@param text is the text to speak.
+		*/
 		void speak(QString text);
 
 
 	private:
-		//mutable QMutex mutex; // make this class thread-safe
+		void lang(const char *lang);
+		void setRate(int value);
+		void setVoices(unsigned char gender,unsigned char age);
 		QString removeHTML(QString string);
+		
 		volatile bool stopped;
 		bool speaking;
-		#ifdef _TTY_POSIX_
-		EST_String textForFestival;
-		#endif
+		bool saySomething; /// this is for the thread, which waits for something to say.
+		QString textToSpeak;
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 600; // Default: 600 ms
+		static const unsigned long THREADSLEEPTIME = 600; // TODO: Which Default value? 600 ms?
 		
-		static const unsigned char FLAG = 1;
 };
 
 #endif

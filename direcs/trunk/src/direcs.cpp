@@ -84,7 +84,7 @@ Direcs::Direcs()
 	// create the objects
 	//------------------------------------------------------------------
 #ifdef _TTY_POSIX_
-	//speakThread = new SpeakThread();
+	speakThread = new SpeakThread();
 #endif
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
@@ -277,10 +277,8 @@ void Direcs::init()
 	// say a text
 	//----------------------------------------------------------------------------
 	#ifdef _TTY_POSIX_
-	// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
-	//connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-	//connect(gui, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-	connect(gui, SIGNAL( speak(QString) ), this, SLOT( speak(QString) )); // FIXME: switch to HW speech or do all in one class!
+	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+	connect(gui,  SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
 
 	/*
 	//----------------------------------------------------------------------------
@@ -307,24 +305,12 @@ void Direcs::init()
 	*/
 
 
-	#ifndef _ARM_ // only include on _non_ ARM environments!
-	//----------------------------------------------------------------------------
-	// Initialize the speech engine festival
-	//----------------------------------------------------------------------------
-	//      1 = we want the festival init files loaded
-	// 500000 = default scheme heap size
-	festival_initialize(1, 500000);
-	#endif
-
-	// FIXME: SIOD ERROR: the currently assigned stack limit has been exceded
-	/*
 	if (speakThread->isRunning() == false)
 	{
 		gui->appendLog("Starting speak thread...", false);
 		speakThread->start();
 		gui->appendLog("Speak thread started.");
 	}
-	*/
 	#endif
 
 
@@ -969,7 +955,6 @@ void Direcs::shutdown()
 		}
 
 
-		/*
 		#ifdef _TTY_POSIX_
 		//--------------------------------
 		// quit the speakThread
@@ -1007,7 +992,6 @@ void Direcs::shutdown()
 			}
 		}
 		#endif
-		*/
 
 		//--------------------------------
 		// quit the network thread
@@ -1263,7 +1247,7 @@ Direcs::~Direcs()
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
 	#ifdef _TTY_POSIX_
-	//delete speakThread;
+	delete speakThread;
 	#endif
 	delete laserThread;
 	delete netThread;
@@ -3608,44 +3592,6 @@ void Direcs::setRobotState(bool state)
 	robotIsOn = state;
 }
 */
-
-
-void Direcs::speak(QString text)
-{
-	Q_UNUSED(text);
-
-	#ifdef _TTY_POSIX_ // only available on Linux! :-)
-	int start= -1;
-
-
-	//------------------------------
-	// remove HTML tags from string
-	//------------------------------
-	do
-	{
-		// search for the first HTML "<"
-		start = text.indexOf("<");
-
-		if (start != 1)
-		{
-			text.remove(start, text.indexOf(">")+1 - start);
-		}
-	} while (text.contains(">"));
-	// till the last HTML ">" is found
-
-	// convert QString to EST_String (defined in EST_String.h)
-	EST_String textForFestival (text.toAscii());
-
-	// file: ~/.festivalrc
-	// (Parameter.set 'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $SR $FILE")
-	// (Parameter.set 'Audio_Method 'Audio_Command)
-	// for speaking while audio is already in use!
-	//
-	// say the cleaned text
-	festival_say_text(textForFestival);
-	#endif
-}
-
 
 
 void Direcs::hupSignalHandler(int)
