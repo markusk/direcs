@@ -2,57 +2,57 @@
 <tagfile>
   <compound kind="file">
     <name>aboutDialog.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>aboutDialog_8cpp</filename>
     <includes id="aboutDialog_8h" name="aboutDialog.h" local="yes" imported="no">aboutDialog.h</includes>
   </compound>
   <compound kind="file">
     <name>aboutDialog.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>aboutDialog_8h</filename>
     <class kind="class">AboutDialog</class>
   </compound>
   <compound kind="file">
     <name>camThread.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>camThread_8cpp</filename>
     <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
   </compound>
   <compound kind="file">
     <name>camThread.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>camThread_8h</filename>
     <class kind="class">CamThread</class>
     <class kind="struct">KOORD_T</class>
   </compound>
   <compound kind="file">
     <name>circuit.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>circuit_8cpp</filename>
     <includes id="circuit_8h" name="circuit.h" local="yes" imported="no">circuit.h</includes>
   </compound>
   <compound kind="file">
     <name>circuit.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>circuit_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Circuit</class>
   </compound>
   <compound kind="file">
     <name>compassWidget.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>compassWidget_8cpp</filename>
     <includes id="compassWidget_8h" name="compassWidget.h" local="yes" imported="no">compassWidget.h</includes>
   </compound>
   <compound kind="file">
     <name>compassWidget.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>compassWidget_8h</filename>
     <class kind="class">CompassWidget</class>
   </compound>
   <compound kind="file">
     <name>qrc_direcs.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/debug/</path>
+    <path>/home/markus/develop/direcs/direcs/src/debug/</path>
     <filename>debug_2qrc__direcs_8cpp</filename>
     <member kind="function">
       <type></type>
@@ -85,7 +85,7 @@
   </compound>
   <compound kind="file">
     <name>qrc_direcs.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>qrc__direcs_8cpp</filename>
     <member kind="function">
       <type></type>
@@ -118,7 +118,7 @@
   </compound>
   <compound kind="file">
     <name>direcs.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>direcs_8cpp</filename>
     <includes id="direcs_8h" name="direcs.h" local="yes" imported="no">direcs.h</includes>
     <member kind="function">
@@ -131,7 +131,7 @@
   </compound>
   <compound kind="file">
     <name>direcs.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>direcs_8h</filename>
     <includes id="gui_8h" name="gui.h" local="yes" imported="no">gui.h</includes>
     <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
@@ -153,13 +153,13 @@
   </compound>
   <compound kind="file">
     <name>direcsSerial.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>direcsSerial_8cpp</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
   </compound>
   <compound kind="file">
     <name>direcsSerial.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>direcsSerial_8h</filename>
     <class kind="class">DirecsSerial</class>
     <member kind="define">
@@ -179,13 +179,13 @@
   </compound>
   <compound kind="file">
     <name>gui.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>gui_8cpp</filename>
     <includes id="gui_8h" name="gui.h" local="yes" imported="no">gui.h</includes>
   </compound>
   <compound kind="file">
     <name>gui.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>gui_8h</filename>
     <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
     <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
@@ -197,76 +197,76 @@
   </compound>
   <compound kind="file">
     <name>gui_arm.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>gui__arm_8cpp</filename>
     <includes id="gui__arm_8h" name="gui_arm.h" local="yes" imported="no">gui_arm.h</includes>
   </compound>
   <compound kind="file">
     <name>gui_arm.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>gui__arm_8h</filename>
     <class kind="class">Gui</class>
   </compound>
   <compound kind="file">
     <name>head.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>head_8cpp</filename>
     <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
   </compound>
   <compound kind="file">
     <name>head.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>head_8h</filename>
     <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
     <class kind="class">Head</class>
   </compound>
   <compound kind="file">
     <name>heartbeat.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>heartbeat_8cpp</filename>
     <includes id="heartbeat_8h" name="heartbeat.h" local="yes" imported="no">heartbeat.h</includes>
   </compound>
   <compound kind="file">
     <name>heartbeat.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>heartbeat_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Heartbeat</class>
   </compound>
   <compound kind="file">
     <name>inifile.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>inifile_8cpp</filename>
     <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
   </compound>
   <compound kind="file">
     <name>inifile.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>inifile_8h</filename>
     <class kind="class">Inifile</class>
   </compound>
   <compound kind="file">
     <name>interfaceAvr.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>interfaceAvr_8cpp</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
   </compound>
   <compound kind="file">
     <name>interfaceAvr.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>interfaceAvr_8h</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
     <class kind="class">InterfaceAvr</class>
   </compound>
   <compound kind="file">
     <name>joystick.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>joystick_8cpp</filename>
     <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
   </compound>
   <compound kind="file">
     <name>joystick.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>joystick_8h</filename>
     <class kind="class">Joystick</class>
     <member kind="define">
@@ -279,25 +279,25 @@
   </compound>
   <compound kind="file">
     <name>joystickDialog.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>joystickDialog_8cpp</filename>
     <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
   </compound>
   <compound kind="file">
     <name>joystickDialog.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>joystickDialog_8h</filename>
     <class kind="class">JoystickDialog</class>
   </compound>
   <compound kind="file">
     <name>laser.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laser_8cpp</filename>
     <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
   </compound>
   <compound kind="file">
     <name>laser.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laser_8h</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
     <class kind="class">Laser</class>
@@ -743,7 +743,7 @@
   </compound>
   <compound kind="file">
     <name>laser_messages.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laser__messages_8h</filename>
     <class kind="struct">carmen_laser_laser_config_t</class>
     <member kind="define">
@@ -928,63 +928,63 @@
   </compound>
   <compound kind="file">
     <name>laserScene.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laserScene_8cpp</filename>
     <includes id="laserScene_8h" name="laserScene.h" local="yes" imported="no">laserScene.h</includes>
   </compound>
   <compound kind="file">
     <name>laserScene.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laserScene_8h</filename>
     <class kind="class">LaserScene</class>
   </compound>
   <compound kind="file">
     <name>laserThread.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laserThread_8cpp</filename>
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
   </compound>
   <compound kind="file">
     <name>laserThread.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laserThread_8h</filename>
     <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
     <class kind="class">LaserThread</class>
   </compound>
   <compound kind="file">
     <name>motor.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>motor_8cpp</filename>
     <includes id="motor_8h" name="motor.h" local="yes" imported="no">motor.h</includes>
   </compound>
   <compound kind="file">
     <name>motor.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>motor_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Motor</class>
   </compound>
   <compound kind="file">
     <name>networkThread.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>networkThread_8cpp</filename>
     <includes id="networkThread_8h" name="networkThread.h" local="yes" imported="no">networkThread.h</includes>
   </compound>
   <compound kind="file">
     <name>networkThread.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>networkThread_8h</filename>
     <class kind="class">NetworkThread</class>
   </compound>
   <compound kind="file">
     <name>obstacleCheckThread.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>obstacleCheckThread_8cpp</filename>
     <includes id="obstacleCheckThread_8h" name="obstacleCheckThread.h" local="yes" imported="no">obstacleCheckThread.h</includes>
   </compound>
   <compound kind="file">
     <name>obstacleCheckThread.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>obstacleCheckThread_8h</filename>
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
@@ -992,7 +992,7 @@
   </compound>
   <compound kind="file">
     <name>param_interface.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>param__interface_8h</filename>
     <member kind="define">
       <type>#define</type>
@@ -1046,27 +1046,27 @@
   </compound>
   <compound kind="file">
     <name>plotThread.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>plotThread_8cpp</filename>
     <includes id="plotThread_8h" name="plotThread.h" local="yes" imported="no">plotThread.h</includes>
   </compound>
   <compound kind="file">
     <name>plotThread.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>plotThread_8h</filename>
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
     <class kind="class">PlotThread</class>
   </compound>
   <compound kind="file">
     <name>posix_qextserialport.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>posix__qextserialport_8h</filename>
     <includes id="qextserialbase_8h" name="qextserialbase.h" local="yes" imported="no">qextserialbase.h</includes>
     <class kind="class">Posix_QextSerialPort</class>
   </compound>
   <compound kind="file">
     <name>qextserialbase.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>qextserialbase_8h</filename>
     <class kind="struct">_PortSettings</class>
     <class kind="class">QextSerialBase</class>
@@ -1611,7 +1611,7 @@
   </compound>
   <compound kind="file">
     <name>qextserialport.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>qextserialport_8h</filename>
     <includes id="win__qextserialport_8h" name="win_qextserialport.h" local="yes" imported="no">win_qextserialport.h</includes>
     <class kind="class">QextSerialPort</class>
@@ -1625,63 +1625,63 @@
   </compound>
   <compound kind="file">
     <name>QtGLContext.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>QtGLContext_8cpp</filename>
     <includes id="QtGLContext_8h" name="QtGLContext.h" local="yes" imported="no">QtGLContext.h</includes>
   </compound>
   <compound kind="file">
     <name>QtGLContext.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>QtGLContext_8h</filename>
     <class kind="class">QtGLContext</class>
   </compound>
   <compound kind="file">
     <name>sensorThread.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>sensorThread_8cpp</filename>
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
   </compound>
   <compound kind="file">
     <name>sensorThread.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>sensorThread_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">SensorThread</class>
   </compound>
   <compound kind="file">
     <name>servo.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>servo_8cpp</filename>
     <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
   </compound>
   <compound kind="file">
     <name>servo.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>servo_8h</filename>
     <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
     <class kind="class">Servo</class>
   </compound>
   <compound kind="file">
     <name>settingsDialog.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>settingsDialog_8cpp</filename>
     <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
   </compound>
   <compound kind="file">
     <name>settingsDialog.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>settingsDialog_8h</filename>
     <class kind="class">SettingsDialog</class>
   </compound>
   <compound kind="file">
     <name>sick.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>sick_8cpp</filename>
     <includes id="sick_8h" name="sick.h" local="yes" imported="no">sick.h</includes>
   </compound>
   <compound kind="file">
     <name>sick.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>sick_8h</filename>
     <class kind="class">Sick</class>
     <class kind="struct">Sick::laser_device_t</class>
@@ -1970,31 +1970,31 @@
   </compound>
   <compound kind="file">
     <name>speakThread.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8cpp</filename>
     <includes id="speakThread_8h" name="speakThread.h" local="yes" imported="no">speakThread.h</includes>
   </compound>
   <compound kind="file">
     <name>speakThread.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8h</filename>
     <class kind="class">SpeakThread</class>
   </compound>
   <compound kind="file">
     <name>glwidget.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>glwidget_8cpp</filename>
     <includes id="glwidget_8h" name="glwidget.h" local="yes" imported="no">glwidget.h</includes>
   </compound>
   <compound kind="file">
     <name>glwidget.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>glwidget_8h</filename>
     <class kind="class">GLWidget</class>
   </compound>
   <compound kind="file">
     <name>init.c</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>init_8c</filename>
     <includes id="init_8h" name="init.h" local="yes" imported="no">init.h</includes>
     <member kind="function">
@@ -2042,7 +2042,7 @@
   </compound>
   <compound kind="file">
     <name>init.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>init_8h</filename>
     <member kind="function">
       <type>void</type>
@@ -2082,7 +2082,7 @@
   </compound>
   <compound kind="file">
     <name>main.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>main_8cpp</filename>
     <includes id="window_8h" name="window.h" local="yes" imported="no">window.h</includes>
     <member kind="function">
@@ -2095,7 +2095,7 @@
   </compound>
   <compound kind="file">
     <name>serial.c</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>serial_8c</filename>
     <includes id="serial_8h" name="serial.h" local="yes" imported="no">serial.h</includes>
     <member kind="function">
@@ -2143,7 +2143,7 @@
   </compound>
   <compound kind="file">
     <name>serial.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>serial_8h</filename>
     <member kind="function">
       <type>void</type>
@@ -2183,20 +2183,20 @@
   </compound>
   <compound kind="file">
     <name>window.cpp</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>window_8cpp</filename>
     <includes id="glwidget_8h" name="glwidget.h" local="yes" imported="no">glwidget.h</includes>
     <includes id="window_8h" name="window.h" local="yes" imported="no">window.h</includes>
   </compound>
   <compound kind="file">
     <name>window.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>window_8h</filename>
     <class kind="class">Window</class>
   </compound>
   <compound kind="file">
     <name>win_qextserialport.h</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>win__qextserialport_8h</filename>
     <includes id="qextserialbase_8h" name="qextserialbase.h" local="yes" imported="no">qextserialbase.h</includes>
     <class kind="class">Win_QextSerialPort</class>
@@ -11922,8 +11922,8 @@
     </member>
   </compound>
   <compound kind="dir">
-    <name>direcs/trunk/src/debug/</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/debug/</path>
+    <name>direcs/src/debug/</name>
+    <path>/home/markus/develop/direcs/direcs/src/debug/</path>
     <filename>dir_f96ca1571ae2bb925882b6cc3f6f99e5.html</filename>
     <file>qrc_direcs.cpp</file>
   </compound>
@@ -11931,14 +11931,14 @@
     <name>direcs/</name>
     <path>/home/markus/develop/direcs/direcs/</path>
     <filename>dir_3019565a7209374971dd18603b3fe6c3.html</filename>
-    <dir>direcs/trunk/</dir>
+    <dir>direcs/</dir>
   </compound>
   <compound kind="dir">
-    <name>direcs/trunk/src/</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/</path>
+    <name>direcs/src/</name>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>dir_50d92224b2f8744b37ea213f0248066f.html</filename>
-    <dir>direcs/trunk/src/debug/</dir>
-    <dir>direcs/trunk/src/test/</dir>
+    <dir>direcs/src/debug/</dir>
+    <dir>direcs/src/test/</dir>
     <file>aboutDialog.cpp</file>
     <file>aboutDialog.h</file>
     <file>camThread.cpp</file>
@@ -12002,8 +12002,8 @@
     <file>win_qextserialport.h</file>
   </compound>
   <compound kind="dir">
-    <name>direcs/trunk/src/test/</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/src/test/</path>
+    <name>direcs/src/test/</name>
+    <path>/home/markus/develop/direcs/direcs/src/test/</path>
     <filename>dir_43fabcfc725a246df0aaf038c4f29448.html</filename>
     <file>glwidget.cpp</file>
     <file>glwidget.h</file>
@@ -12016,9 +12016,9 @@
     <file>window.h</file>
   </compound>
   <compound kind="dir">
-    <name>direcs/trunk/</name>
-    <path>/home/markus/develop/direcs/direcs/trunk/</path>
+    <name>direcs/</name>
+    <path>/home/markus/develop/direcs/direcs/</path>
     <filename>dir_cab404750c959038827d9c6e2791adf3.html</filename>
-    <dir>direcs/trunk/src/</dir>
+    <dir>direcs/src/</dir>
   </compound>
 </tagfile>

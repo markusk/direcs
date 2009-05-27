@@ -92,7 +92,7 @@
   </kdevdebugger>
   <kdevtrollproject>
     <run>
-      <mainprogram>/home/markus/develop/direcs/direcs/trunk/bin/direcs</mainprogram>
+      <mainprogram>/home/markus/develop/direcs/direcs/bin/direcs</mainprogram>
       <programargs/>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
@@ -100,7 +100,7 @@
       <autocompile>true</autocompile>
       <envvars/>
       <globaldebugarguments/>
-      <globalcwd>/home/markus/develop/direcs/direcs/trunk/bin/</globalcwd>
+      <globalcwd>/home/markus/develop/direcs/direcs/bin/</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
@@ -108,7 +108,7 @@
         <direcs/>
       </runarguments>
       <cwd>
-        <direcs>/home/markus/develop/direcs/direcs/trunk/</direcs>
+        <direcs>/home/markus/develop/direcs/direcs/</direcs>
       </cwd>
       <debugarguments>
         <direcs/>
@@ -231,7 +231,7 @@
   </cppsupportpart>
   <ctagspart>
     <customArguments/>
-    <customTagfilePath>/home/markus/develop/subversion/applications/direcs/trunk/tags</customTagfilePath>
+    <customTagfilePath>/home/markus/develop/subversion/applications/direcs/tags</customTagfilePath>
     <activeTagsFiles/>
   </ctagspart>
 </kdevelop>

@@ -2,23 +2,23 @@
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="3" >
-  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/direcs.cpp" >
+  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
    <View0 Encoding="" line="3668" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/speakThread.h" >
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/speakThread.h" >
    <View0 Encoding="" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/trunk/src/speakThread.cpp" >
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/speakThread.cpp" >
    <View0 Encoding="" line="58" Type="Source" />
   </Doc2>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
-    <breakpoint0 location="/home/markus/develop/direcs/direcs/trunk/src/sick.cpp:876" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+    <breakpoint0 location="/home/markus/develop/direcs/direcs/src/sick.cpp:876" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint0>
-    <breakpoint1 location="/home/markus/develop/direcs/direcs/trunk/src/gui.cpp:32" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+    <breakpoint1 location="/home/markus/develop/direcs/direcs/src/gui.cpp:32" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint1>
    </breakpointList>
@@ -30,11 +30,11 @@
   </kdevastyle>
   <kdevbookmarks>
    <bookmarks>
-    <bookmark url="/home/markus/develop/direcs/direcs/trunk/src/gui.cpp" >
-     <mark line="1683" />
-    </bookmark>
-    <bookmark url="/home/markus/develop/direcs/direcs/trunk/src/sick.cpp" >
+    <bookmark url="/home/markus/develop/direcs/direcs/src/sick.cpp" >
      <mark line="710" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
+     <mark line="1683" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>
