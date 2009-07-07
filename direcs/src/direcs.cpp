@@ -3653,7 +3653,7 @@ void Direcs::test()
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
-		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+ 		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 #endif
 	}
 	else
@@ -3666,15 +3666,17 @@ void Direcs::test()
 		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
-		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+ 		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 #endif
 	}
 		//head->look("RIGHT");
-// // 
-//	motors->flashlight(toggle);
 
-
+	// test the GUI LED
+	gui->setLEDHeartbeat(toggle);
 	
+// 	motors->flashlight(toggle);
+
+
 /*
 	static int spsr = 0;
 	static int spfif = 64;

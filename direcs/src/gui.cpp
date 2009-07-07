@@ -2247,3 +2247,17 @@ void Gui::showCompassData(float x, float y, float z)
 	// set the 3D OpenGL compass!
 	ui.frameCompass->setAllRotations(x, y, z);
 }
+
+
+void Gui::setLEDHeartbeat(bool state)
+{
+	if (state)
+	{
+		ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+	}
+	else
+	{
+		ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+		return;
+	}
+}

@@ -253,6 +253,12 @@ class Gui : public QMainWindow
 		*/
 		void showCompassData(float x, float y, float z);
 
+		/**
+		Turns the heartbeat LED on or off (green or gray pixmap).
+		@param state can be ON or OFF.
+		*/
+		void setLEDHeartbeat(bool state);
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);

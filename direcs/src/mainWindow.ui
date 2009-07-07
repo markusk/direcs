@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>mainWindow</class>
- <widget class="QMainWindow" name="mainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,22 +10,22 @@
     <height>835</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>direcs - mobile robot system</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../direcs.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../direcs.qrc">
     <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
   </property>
-  <property name="dockNestingEnabled" >
+  <property name="dockNestingEnabled">
    <bool>true</bool>
   </property>
-  <property name="dockOptions" >
+  <property name="dockOptions">
    <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
-  <widget class="QWidget" name="centralWidget" >
-   <widget class="QDockWidget" name="dockLog" >
-    <property name="geometry" >
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QDockWidget" name="dockLog">
+    <property name="geometry">
      <rect>
       <x>400</x>
       <y>530</y>
@@ -32,31 +33,31 @@
       <height>231</height>
      </rect>
     </property>
-    <property name="sizePolicy" >
-     <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
-    <property name="allowedAreas" >
+    <property name="allowedAreas">
      <set>Qt::LeftDockWidgetArea</set>
     </property>
-    <property name="windowTitle" >
+    <property name="windowTitle">
      <string>Logs</string>
     </property>
-    <widget class="QWidget" name="dockWidgetContents_7" >
-     <layout class="QGridLayout" name="gridLayout_10" >
-      <item row="0" column="0" >
-       <layout class="QVBoxLayout" name="verticalLayout_9" >
+    <widget class="QWidget" name="dockWidgetContents_7">
+     <layout class="QGridLayout" name="gridLayout_10">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_9">
         <item>
-         <widget class="QTextEdit" name="textEditLog" >
-          <property name="minimumSize" >
+         <widget class="QTextEdit" name="textEditLog">
+          <property name="minimumSize">
            <size>
             <width>390</width>
             <height>0</height>
            </size>
           </property>
-          <property name="font" >
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
@@ -64,8 +65,8 @@
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="textEditNetworkLog" >
-          <property name="font" >
+         <widget class="QTextEdit" name="textEditNetworkLog">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
@@ -77,8 +78,8 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QDockWidget" name="dockEnergy" >
-    <property name="geometry" >
+   <widget class="QDockWidget" name="dockEnergy">
+    <property name="geometry">
      <rect>
       <x>990</x>
       <y>220</y>
@@ -86,52 +87,52 @@
       <height>296</height>
      </rect>
     </property>
-    <property name="windowTitle" >
+    <property name="windowTitle">
      <string>Energy</string>
     </property>
-    <widget class="QWidget" name="dockWidgetContents_12" >
-     <layout class="QGridLayout" name="gridLayout_4" >
-      <item row="1" column="0" >
-       <layout class="QVBoxLayout" name="verticalLayout" >
+    <widget class="QWidget" name="dockWidgetContents_12">
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="1" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout" >
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QGroupBox" name="groupBoxBattery1" >
-            <property name="maximumSize" >
+           <widget class="QGroupBox" name="groupBoxBattery1">
+            <property name="maximumSize">
              <size>
               <width>16777215</width>
               <height>65</height>
              </size>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="title" >
+            <property name="title">
              <string>Battery 1</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3" >
-             <item row="0" column="0" >
-              <widget class="QLabel" name="lblBatteryPower1" >
-               <property name="font" >
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <widget class="QLabel" name="lblBatteryPower1">
+               <property name="font">
                 <font>
                  <pointsize>24</pointsize>
                  <weight>50</weight>
                  <bold>false</bold>
                 </font>
                </property>
-               <property name="autoFillBackground" >
+               <property name="autoFillBackground">
                 <bool>true</bool>
                </property>
-               <property name="frameShape" >
+               <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
-               <property name="frameShadow" >
+               <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <property name="text" >
+               <property name="text">
                 <string>12,0 V</string>
                </property>
-               <property name="alignment" >
+               <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
@@ -140,42 +141,42 @@
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBoxBattery2" >
-            <property name="maximumSize" >
+           <widget class="QGroupBox" name="groupBoxBattery2">
+            <property name="maximumSize">
              <size>
               <width>16777215</width>
               <height>65</height>
              </size>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="title" >
+            <property name="title">
              <string>Battery 2</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_2" >
-             <item row="0" column="0" >
-              <widget class="QLabel" name="lblBatteryPower2" >
-               <property name="font" >
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="lblBatteryPower2">
+               <property name="font">
                 <font>
                  <pointsize>24</pointsize>
                  <weight>50</weight>
                  <bold>false</bold>
                 </font>
                </property>
-               <property name="autoFillBackground" >
+               <property name="autoFillBackground">
                 <bool>true</bool>
                </property>
-               <property name="frameShape" >
+               <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
-               <property name="frameShadow" >
+               <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <property name="text" >
+               <property name="text">
                 <string>24,0 V</string>
                </property>
-               <property name="alignment" >
+               <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
@@ -186,16 +187,16 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2" >
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QwtPlot" name="qwtPlotCurrent1" >
-            <property name="maximumSize" >
+           <widget class="QwtPlot" name="qwtPlotCurrent1">
+            <property name="maximumSize">
              <size>
               <width>200</width>
               <height>180</height>
              </size>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
              </font>
@@ -203,14 +204,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QwtPlot" name="qwtPlotCurrent2" >
-            <property name="maximumSize" >
+           <widget class="QwtPlot" name="qwtPlotCurrent2">
+            <property name="maximumSize">
              <size>
               <width>200</width>
               <height>180</height>
              </size>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
              </font>
@@ -224,8 +225,8 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QDockWidget" name="dockNavigation" >
-    <property name="geometry" >
+   <widget class="QDockWidget" name="dockNavigation">
+    <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
@@ -233,47 +234,47 @@
       <height>221</height>
      </rect>
     </property>
-    <property name="allowedAreas" >
+    <property name="allowedAreas">
      <set>Qt::RightDockWidgetArea</set>
     </property>
-    <property name="windowTitle" >
+    <property name="windowTitle">
      <string>Navigation</string>
     </property>
-    <widget class="QWidget" name="dockWidgetContents_13" >
-     <layout class="QGridLayout" name="gridLayout" >
-      <item row="0" column="0" >
-       <layout class="QVBoxLayout" name="verticalLayout_2" >
+    <widget class="QWidget" name="dockWidgetContents_13">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_15" >
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
           <item>
-           <widget class="CompassWidget" native="1" name="frameCompass" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
+           <widget class="CompassWidget" name="frameCompass" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize" >
+            <property name="minimumSize">
              <size>
               <width>150</width>
               <height>150</height>
              </size>
             </property>
-            <property name="palette" >
+            <property name="palette">
              <palette>
               <active>
-               <colorrole role="Base" >
-                <brush brushstyle="SolidPattern" >
-                 <color alpha="255" >
+               <colorrole role="Base">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
                   <red>255</red>
                   <green>255</green>
                   <blue>255</blue>
                  </color>
                 </brush>
                </colorrole>
-               <colorrole role="Window" >
-                <brush brushstyle="SolidPattern" >
-                 <color alpha="255" >
+               <colorrole role="Window">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
                   <red>0</red>
                   <green>0</green>
                   <blue>0</blue>
@@ -282,18 +283,18 @@
                </colorrole>
               </active>
               <inactive>
-               <colorrole role="Base" >
-                <brush brushstyle="SolidPattern" >
-                 <color alpha="255" >
+               <colorrole role="Base">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
                   <red>255</red>
                   <green>255</green>
                   <blue>255</blue>
                  </color>
                 </brush>
                </colorrole>
-               <colorrole role="Window" >
-                <brush brushstyle="SolidPattern" >
-                 <color alpha="255" >
+               <colorrole role="Window">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
                   <red>0</red>
                   <green>0</green>
                   <blue>0</blue>
@@ -302,18 +303,18 @@
                </colorrole>
               </inactive>
               <disabled>
-               <colorrole role="Base" >
-                <brush brushstyle="SolidPattern" >
-                 <color alpha="255" >
+               <colorrole role="Base">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
                   <red>0</red>
                   <green>0</green>
                   <blue>0</blue>
                  </color>
                 </brush>
                </colorrole>
-               <colorrole role="Window" >
-                <brush brushstyle="SolidPattern" >
-                 <color alpha="255" >
+               <colorrole role="Window">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
                   <red>0</red>
                   <green>0</green>
                   <blue>0</blue>
@@ -323,23 +324,23 @@
               </disabled>
              </palette>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QwtCompass" name="qwtCompass" >
-            <property name="enabled" >
+           <widget class="QwtCompass" name="qwtCompass">
+            <property name="enabled">
              <bool>true</bool>
             </property>
-            <property name="minimumSize" >
+            <property name="minimumSize">
              <size>
               <width>150</width>
               <height>150</height>
              </size>
             </property>
-            <property name="lineWidth" >
+            <property name="lineWidth">
              <number>4</number>
             </property>
            </widget>
@@ -347,35 +348,35 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_14" >
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3" >
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QLabel" name="label18_12" >
-              <property name="font" >
+             <widget class="QLabel" name="label18_12">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>X:</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lblCompassX" >
-              <property name="font" >
+             <widget class="QLabel" name="lblCompassX">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>0 deg</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
@@ -383,11 +384,11 @@
            </layout>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2" >
-            <property name="orientation" >
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -396,33 +397,33 @@
            </spacer>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_12" >
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
             <item>
-             <widget class="QLabel" name="label18_13" >
-              <property name="font" >
+             <widget class="QLabel" name="label18_13">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Y:</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lblCompassY" >
-              <property name="font" >
+             <widget class="QLabel" name="lblCompassY">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>0 deg</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
@@ -430,11 +431,11 @@
            </layout>
           </item>
           <item>
-           <spacer name="horizontalSpacer_3" >
-            <property name="orientation" >
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -443,33 +444,33 @@
            </spacer>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_13" >
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
             <item>
-             <widget class="QLabel" name="label18_14" >
-              <property name="font" >
+             <widget class="QLabel" name="label18_14">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Z:</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lblCompassZ" >
-              <property name="font" >
+             <widget class="QLabel" name="lblCompassZ">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>0 deg</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
@@ -483,8 +484,8 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QDockWidget" name="dockLaser" >
-    <property name="geometry" >
+   <widget class="QDockWidget" name="dockLaser">
+    <property name="geometry">
      <rect>
       <x>400</x>
       <y>0</y>
@@ -492,78 +493,78 @@
       <height>525</height>
      </rect>
     </property>
-    <property name="windowTitle" >
+    <property name="windowTitle">
      <string>Laser</string>
     </property>
-    <widget class="QWidget" name="dockWidgetContents" >
-     <layout class="QGridLayout" name="gridLayout_15" >
-      <item row="0" column="0" >
-       <layout class="QVBoxLayout" name="verticalLayout_10" >
+    <widget class="QWidget" name="dockWidgetContents">
+     <layout class="QGridLayout" name="gridLayout_15">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
-         <widget class="QGraphicsView" name="graphicsViewLaser" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
+         <widget class="QGraphicsView" name="graphicsViewLaser">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="minimumSize" >
+          <property name="minimumSize">
            <size>
             <width>370</width>
             <height>370</height>
            </size>
           </property>
-          <property name="font" >
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="cursor" stdset="0" >
+          <property name="cursor" stdset="0">
            <cursorShape>OpenHandCursor</cursorShape>
           </property>
-          <property name="mouseTracking" >
+          <property name="mouseTracking">
            <bool>true</bool>
           </property>
-          <property name="statusTip" >
+          <property name="statusTip">
            <string>Robot can be dragged with the mouse!</string>
           </property>
-          <property name="alignment" >
+          <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
-          <property name="dragMode" >
+          <property name="dragMode">
            <enum>QGraphicsView::ScrollHandDrag</enum>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QGridLayout" name="gridLayout_12" >
-          <item row="0" column="0" >
-           <layout class="QVBoxLayout" name="nam1_2" >
+         <layout class="QGridLayout" name="gridLayout_12">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="nam1_2">
             <item>
-             <layout class="QHBoxLayout" name="_8" >
+             <layout class="QHBoxLayout" name="_8">
               <item>
-               <widget class="QLabel" name="label18_8" >
-                <property name="font" >
+               <widget class="QLabel" name="label18_8">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Largest free area start:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblLaserFrontFreeStart" >
-                <property name="font" >
+               <widget class="QLabel" name="lblLaserFrontFreeStart">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0 deg</string>
                 </property>
-                <property name="alignment" >
+                <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
@@ -571,30 +572,30 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_9" >
+             <layout class="QHBoxLayout" name="_9">
               <item>
-               <widget class="QLabel" name="label18_9" >
-                <property name="font" >
+               <widget class="QLabel" name="label18_9">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Largest free area end:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblLaserFrontFreeEnd" >
-                <property name="font" >
+               <widget class="QLabel" name="lblLaserFrontFreeEnd">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0 deg</string>
                 </property>
-                <property name="alignment" >
+                <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
@@ -602,30 +603,30 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_10" >
+             <layout class="QHBoxLayout" name="_10">
               <item>
-               <widget class="QLabel" name="label18_10" >
-                <property name="font" >
+               <widget class="QLabel" name="label18_10">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Center of free area:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblLaserFrontFreeCenter" >
-                <property name="font" >
+               <widget class="QLabel" name="lblLaserFrontFreeCenter">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0 deg</string>
                 </property>
-                <property name="alignment" >
+                <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
@@ -633,36 +634,36 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_11" >
+             <layout class="QHBoxLayout" name="_11">
               <item>
-               <widget class="QLabel" name="label18_11" >
-                <property name="font" >
+               <widget class="QLabel" name="label18_11">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Preferred direction:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lblPreferredDirection" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+               <widget class="QLabel" name="lblPreferredDirection">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="font" >
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="pixmap" >
-                 <pixmap resource="../direcs.qrc" >:/images/images/middle.png</pixmap>
+                <property name="pixmap">
+                 <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
                 </property>
-                <property name="scaledContents" >
+                <property name="scaledContents">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -671,10 +672,10 @@
             </item>
             <item>
              <spacer>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
                 <height>16</height>
@@ -684,68 +685,68 @@
             </item>
            </layout>
           </item>
-          <item row="0" column="1" >
-           <layout class="QVBoxLayout" name="name2_2" >
+          <item row="0" column="1">
+           <layout class="QVBoxLayout" name="name2_2">
             <item>
-             <widget class="QSlider" name="sliderZoom" >
-              <property name="font" >
+             <widget class="QSlider" name="sliderZoom">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="minimum" >
+              <property name="minimum">
                <number>1</number>
               </property>
-              <property name="maximum" >
+              <property name="maximum">
                <number>10</number>
               </property>
-              <property name="pageStep" >
+              <property name="pageStep">
                <number>1</number>
               </property>
-              <property name="value" >
+              <property name="value">
                <number>1</number>
               </property>
-              <property name="sliderPosition" >
+              <property name="sliderPosition">
                <number>1</number>
               </property>
-              <property name="tracking" >
+              <property name="tracking">
                <bool>false</bool>
               </property>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="tickPosition" >
+              <property name="tickPosition">
                <enum>QSlider::TicksAbove</enum>
               </property>
-              <property name="tickInterval" >
+              <property name="tickInterval">
                <number>1</number>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_12" >
+             <layout class="QHBoxLayout" name="_12">
               <item>
-               <layout class="QHBoxLayout" name="_13" >
+               <layout class="QHBoxLayout" name="_13">
                 <item>
-                 <widget class="QLabel" name="label_34" >
-                  <property name="font" >
+                 <widget class="QLabel" name="label_34">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Zoom:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="labelLaserTop" >
-                  <property name="font" >
+                 <widget class="QLabel" name="labelLaserTop">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>1</string>
                   </property>
                  </widget>
@@ -754,10 +755,10 @@
               </item>
               <item>
                <spacer>
-                <property name="orientation" >
+                <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="sizeHint" stdset="0" >
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>41</width>
                   <height>22</height>
@@ -769,10 +770,10 @@
             </item>
             <item>
              <spacer>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>159</width>
                 <height>51</height>
@@ -789,72 +790,72 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QDockWidget" name="dockTest" >
-    <property name="geometry" >
+   <widget class="QDockWidget" name="dockTest">
+    <property name="geometry">
      <rect>
       <x>990</x>
       <y>530</y>
-      <width>431</width>
+      <width>427</width>
       <height>231</height>
      </rect>
     </property>
-    <property name="allowedAreas" >
+    <property name="allowedAreas">
      <set>Qt::RightDockWidgetArea</set>
     </property>
-    <property name="windowTitle" >
+    <property name="windowTitle">
      <string>Test</string>
     </property>
-    <widget class="QWidget" name="dockWidgetContents_8" >
-     <layout class="QGridLayout" name="gridLayout_5" >
-      <item row="0" column="0" >
-       <widget class="QGroupBox" name="groupBoxTestMotor1" >
-        <property name="title" >
+    <widget class="QWidget" name="dockWidgetContents_8">
+     <layout class="QGridLayout" name="gridLayout_16">
+      <item row="0" column="0">
+       <widget class="QGroupBox" name="groupBoxTestMotor1">
+        <property name="title">
          <string>Motor 1 (Front Left)</string>
         </property>
-        <layout class="QGridLayout" name="gridLayout_9" >
-         <item row="0" column="0" >
-          <layout class="QVBoxLayout" name="verticalLayout_4" >
+        <layout class="QGridLayout" name="gridLayout_9">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor1FW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor1FW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Forward</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor1BW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor1BW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Backward</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor1OFF" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor1OFF">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Off</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>true</bool>
              </property>
             </widget>
@@ -864,55 +865,55 @@
         </layout>
        </widget>
       </item>
-      <item row="0" column="1" >
-       <widget class="QGroupBox" name="groupBoxTestMotor1_2" >
-        <property name="title" >
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="groupBoxTestMotor1_2">
+        <property name="title">
          <string>Motor 2 (Front Right)</string>
         </property>
-        <layout class="QGridLayout" name="gridLayout_6" >
-         <item row="0" column="0" >
-          <layout class="QVBoxLayout" name="verticalLayout_5" >
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor2FW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor2FW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Forward</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor2BW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor2BW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Backward</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor2OFF" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor2OFF">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Off</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>true</bool>
              </property>
             </widget>
@@ -922,55 +923,78 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="0" >
-       <widget class="QGroupBox" name="groupBoxgroupBoxTestMotor3" >
-        <property name="title" >
+      <item row="0" column="2">
+       <widget class="QGroupBox" name="groupBoxState">
+        <property name="title">
+         <string>State</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lblLEDHeartbeat">
+           <property name="pixmap">
+            <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Heartbeat</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="groupBoxgroupBoxTestMotor3">
+        <property name="title">
          <string>Motor 3 (Back Left)</string>
         </property>
-        <layout class="QGridLayout" name="gridLayout_7" >
-         <item row="0" column="0" >
-          <layout class="QVBoxLayout" name="verticalLayout_6" >
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor3FW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor3FW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Forward</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor3BW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor3BW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Backward</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor3OFF" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor3OFF">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Off</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>true</bool>
              </property>
             </widget>
@@ -980,55 +1004,55 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="1" >
-       <widget class="QGroupBox" name="groupBoxTestMotor4" >
-        <property name="title" >
+      <item row="1" column="1">
+       <widget class="QGroupBox" name="groupBoxTestMotor4">
+        <property name="title">
          <string>Motor 4 (Back Right)</string>
         </property>
-        <layout class="QGridLayout" name="gridLayout_8" >
-         <item row="0" column="0" >
-          <layout class="QVBoxLayout" name="verticalLayout_8" >
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor4FW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor4FW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Forward</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor4BW" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor4BW">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Backward</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor4OFF" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <widget class="QRadioButton" name="radioBtnMotor4OFF">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>Off</string>
              </property>
-             <property name="checked" >
+             <property name="checked">
               <bool>true</bool>
              </property>
             </widget>
@@ -1041,8 +1065,8 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QDockWidget" name="dockOdometrie" >
-    <property name="geometry" >
+   <widget class="QDockWidget" name="dockOdometrie">
+    <property name="geometry">
      <rect>
       <x>990</x>
       <y>0</y>
@@ -1050,30 +1074,30 @@
       <height>211</height>
      </rect>
     </property>
-    <property name="allowedAreas" >
+    <property name="allowedAreas">
      <set>Qt::AllDockWidgetAreas</set>
     </property>
-    <property name="windowTitle" >
+    <property name="windowTitle">
      <string>Odometrie</string>
     </property>
-    <widget class="QWidget" name="dockWidgetContents_10" >
-     <layout class="QGridLayout" name="gridLayout_14" >
-      <item row="0" column="0" >
-       <layout class="QVBoxLayout" name="name8" >
+    <widget class="QWidget" name="dockWidgetContents_10">
+     <layout class="QGridLayout" name="gridLayout_14">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="name8">
         <item>
-         <layout class="QHBoxLayout" name="_14" >
+         <layout class="QHBoxLayout" name="_14">
           <item>
-           <widget class="QLabel" name="lblPower1" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblPower1">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>31</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1084,38 +1108,38 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="cursor" >
+            <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>MOTOR 1</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lblDirection1" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblDirection1">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>31</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1126,22 +1150,22 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>FORWARD</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>true</bool>
             </property>
            </widget>
@@ -1149,34 +1173,34 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="name7" >
+         <layout class="QHBoxLayout" name="name7">
           <item>
-           <layout class="QVBoxLayout" name="_15" >
+           <layout class="QVBoxLayout" name="_15">
             <item>
-             <layout class="QHBoxLayout" name="_16" >
+             <layout class="QHBoxLayout" name="_16">
               <item>
-               <widget class="QLabel" name="textLabel1_2" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel1_2">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Revolutions:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelRevolutions1" >
-                <property name="font" >
+               <widget class="QLabel" name="labelRevolutions1">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="layoutDirection" >
+                <property name="layoutDirection">
                  <enum>Qt::RightToLeft</enum>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0</string>
                 </property>
                </widget>
@@ -1184,30 +1208,30 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_17" >
+             <layout class="QHBoxLayout" name="_17">
               <item>
-               <widget class="QLabel" name="textLabel1" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel1">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Distance:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelDrivenDistance1" >
-                <property name="font" >
+               <widget class="QLabel" name="labelDrivenDistance1">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0 cm</string>
                 </property>
-                <property name="alignment" >
+                <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
@@ -1217,13 +1241,13 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="btnResetMovement1" >
-            <property name="font" >
+           <widget class="QPushButton" name="btnResetMovement1">
+            <property name="font">
              <font>
               <family>Verdana</family>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Reset</string>
             </property>
            </widget>
@@ -1232,16 +1256,16 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="1" >
-       <layout class="QVBoxLayout" name="name9" >
+      <item row="0" column="1">
+       <layout class="QVBoxLayout" name="name9">
         <item>
-         <layout class="QHBoxLayout" name="_18" >
+         <layout class="QHBoxLayout" name="_18">
           <item>
-           <widget class="QLabel" name="lblPower2" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblPower2">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1252,29 +1276,29 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>MOTOR 2</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lblDirection2" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblDirection2">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1285,22 +1309,22 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>FORWARD</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>true</bool>
             </property>
            </widget>
@@ -1308,34 +1332,34 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="name6" >
+         <layout class="QHBoxLayout" name="name6">
           <item>
-           <layout class="QVBoxLayout" name="_19" >
+           <layout class="QVBoxLayout" name="_19">
             <item>
-             <layout class="QHBoxLayout" name="_20" >
+             <layout class="QHBoxLayout" name="_20">
               <item>
-               <widget class="QLabel" name="textLabel2_7" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel2_7">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Revolutions:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelRevolutions2" >
-                <property name="font" >
+               <widget class="QLabel" name="labelRevolutions2">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="layoutDirection" >
+                <property name="layoutDirection">
                  <enum>Qt::RightToLeft</enum>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0</string>
                 </property>
                </widget>
@@ -1343,30 +1367,30 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_21" >
+             <layout class="QHBoxLayout" name="_21">
               <item>
-               <widget class="QLabel" name="textLabel2_6" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel2_6">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Distance:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelDrivenDistance2" >
-                <property name="font" >
+               <widget class="QLabel" name="labelDrivenDistance2">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0 cm</string>
                 </property>
-                <property name="alignment" >
+                <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
@@ -1376,13 +1400,13 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="btnResetMovement2" >
-            <property name="font" >
+           <widget class="QPushButton" name="btnResetMovement2">
+            <property name="font">
              <font>
               <family>Verdana</family>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Reset</string>
             </property>
            </widget>
@@ -1391,22 +1415,22 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0" >
-       <layout class="QVBoxLayout" name="name10" >
+      <item row="1" column="0">
+       <layout class="QVBoxLayout" name="name10">
         <item>
-         <layout class="QHBoxLayout" name="_22" >
+         <layout class="QHBoxLayout" name="_22">
           <item>
-           <widget class="QLabel" name="lblPower3" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblPower3">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1417,35 +1441,35 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>MOTOR 3</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lblDirection3" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblDirection3">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1456,22 +1480,22 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>FORWARD</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>true</bool>
             </property>
            </widget>
@@ -1479,34 +1503,34 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="name4" >
+         <layout class="QHBoxLayout" name="name4">
           <item>
-           <layout class="QVBoxLayout" name="_23" >
+           <layout class="QVBoxLayout" name="_23">
             <item>
-             <layout class="QHBoxLayout" name="_1" >
+             <layout class="QHBoxLayout" name="_1">
               <item>
-               <widget class="QLabel" name="textLabel1_3" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel1_3">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Revolutions:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelRevolutions1_2" >
-                <property name="font" >
+               <widget class="QLabel" name="labelRevolutions1_2">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="layoutDirection" >
+                <property name="layoutDirection">
                  <enum>Qt::RightToLeft</enum>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0</string>
                 </property>
                </widget>
@@ -1514,30 +1538,30 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_0" >
+             <layout class="QHBoxLayout" name="_0">
               <item>
-               <widget class="QLabel" name="textLabel1_4" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel1_4">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Distance:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelDrivenDistance1_2" >
-                <property name="font" >
+               <widget class="QLabel" name="labelDrivenDistance1_2">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0 cm</string>
                 </property>
-                <property name="alignment" >
+                <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
@@ -1547,13 +1571,13 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="btnResetMovement1_2" >
-            <property name="font" >
+           <widget class="QPushButton" name="btnResetMovement1_2">
+            <property name="font">
              <font>
               <family>Verdana</family>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Reset</string>
             </property>
            </widget>
@@ -1562,22 +1586,22 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="1" >
-       <layout class="QVBoxLayout" name="name11" >
+      <item row="1" column="1">
+       <layout class="QVBoxLayout" name="name11">
         <item>
-         <layout class="QHBoxLayout" name="_24" >
+         <layout class="QHBoxLayout" name="_24">
           <item>
-           <widget class="QLabel" name="lblPower4" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblPower4">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1588,35 +1612,35 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>MOTOR 4</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lblDirection4" >
-            <property name="enabled" >
+           <widget class="QLabel" name="lblDirection4">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font>
               <family>Verdana</family>
               <pointsize>11</pointsize>
@@ -1627,22 +1651,22 @@
               <strikeout>false</strikeout>
              </font>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="frameShadow" >
+            <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>FORWARD</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>true</bool>
             </property>
            </widget>
@@ -1650,34 +1674,34 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="name5" >
+         <layout class="QHBoxLayout" name="name5">
           <item>
-           <layout class="QVBoxLayout" name="_25" >
+           <layout class="QVBoxLayout" name="_25">
             <item>
-             <layout class="QHBoxLayout" name="_26" >
+             <layout class="QHBoxLayout" name="_26">
               <item>
-               <widget class="QLabel" name="textLabel1_5" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel1_5">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Revolutions:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelRevolutions1_3" >
-                <property name="font" >
+               <widget class="QLabel" name="labelRevolutions1_3">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="layoutDirection" >
+                <property name="layoutDirection">
                  <enum>Qt::RightToLeft</enum>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0</string>
                 </property>
                </widget>
@@ -1685,30 +1709,30 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="_27" >
+             <layout class="QHBoxLayout" name="_27">
               <item>
-               <widget class="QLabel" name="textLabel1_6" >
-                <property name="font" >
+               <widget class="QLabel" name="textLabel1_6">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Distance:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="labelDrivenDistance1_3" >
-                <property name="font" >
+               <widget class="QLabel" name="labelDrivenDistance1_3">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>0 cm</string>
                 </property>
-                <property name="alignment" >
+                <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
@@ -1718,13 +1742,13 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="btnResetMovement1_3" >
-            <property name="font" >
+           <widget class="QPushButton" name="btnResetMovement1_3">
+            <property name="font">
              <font>
               <family>Verdana</family>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Reset</string>
             </property>
            </widget>
@@ -1736,8 +1760,8 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QDockWidget" name="dockCamera" >
-    <property name="geometry" >
+   <widget class="QDockWidget" name="dockCamera">
+    <property name="geometry">
      <rect>
       <x>10</x>
       <y>230</y>
@@ -1745,45 +1769,45 @@
       <height>531</height>
      </rect>
     </property>
-    <property name="sizePolicy" >
-     <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
-    <property name="features" >
+    <property name="features">
      <set>QDockWidget::AllDockWidgetFeatures</set>
     </property>
-    <property name="allowedAreas" >
+    <property name="allowedAreas">
      <set>Qt::LeftDockWidgetArea</set>
     </property>
-    <property name="windowTitle" >
+    <property name="windowTitle">
      <string>Camera</string>
     </property>
-    <widget class="QWidget" name="dockWidgetContents_11" >
-     <layout class="QGridLayout" name="gridLayout_11" >
-      <item row="0" column="0" >
-       <layout class="QVBoxLayout" name="verticalLayout_11" >
+    <widget class="QWidget" name="dockWidgetContents_11">
+     <layout class="QGridLayout" name="gridLayout_11">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_11">
         <item>
-         <widget class="QtGLContext" native="1" name="frameCamera" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
+         <widget class="QtGLContext" name="frameCamera" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="minimumSize" >
+          <property name="minimumSize">
            <size>
             <width>240</width>
             <height>320</height>
            </size>
           </property>
-          <property name="palette" >
+          <property name="palette">
            <palette>
             <active>
-             <colorrole role="Window" >
-              <brush brushstyle="SolidPattern" >
-               <color alpha="255" >
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
                 <red>0</red>
                 <green>0</green>
                 <blue>0</blue>
@@ -1792,9 +1816,9 @@
              </colorrole>
             </active>
             <inactive>
-             <colorrole role="Window" >
-              <brush brushstyle="SolidPattern" >
-               <color alpha="255" >
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
                 <red>0</red>
                 <green>0</green>
                 <blue>0</blue>
@@ -1803,9 +1827,9 @@
              </colorrole>
             </inactive>
             <disabled>
-             <colorrole role="Window" >
-              <brush brushstyle="SolidPattern" >
-               <color alpha="255" >
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
                 <red>0</red>
                 <green>0</green>
                 <blue>0</blue>
@@ -1815,42 +1839,42 @@
             </disabled>
            </palette>
           </property>
-          <property name="font" >
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="autoFillBackground" >
+          <property name="autoFillBackground">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_10" >
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>
-           <layout class="QVBoxLayout" name="name0" >
+           <layout class="QVBoxLayout" name="name0">
             <item>
-             <widget class="QPushButton" name="btnSavePicture" >
-              <property name="font" >
+             <widget class="QPushButton" name="btnSavePicture">
+              <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Save</string>
               </property>
-              <property name="icon" >
-               <iconset resource="../direcs.qrc" >
+              <property name="icon">
+               <iconset resource="../direcs.qrc">
                 <normaloff>:/images/images/hdd.png</normaloff>:/images/images/hdd.png</iconset>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_2" >
-              <property name="orientation" >
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
                 <height>40</height>
@@ -1861,65 +1885,65 @@
            </layout>
           </item>
           <item>
-           <layout class="QGridLayout" name="gridLayout_13" >
-            <item row="0" column="0" >
-             <layout class="QVBoxLayout" name="verticalLayout_3" >
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="QCheckBox" name="checkBoxFaceDetection" >
-                <property name="font" >
+               <widget class="QCheckBox" name="checkBoxFaceDetection">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Face Detection</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBoxFaceTracking" >
-                <property name="font" >
+               <widget class="QCheckBox" name="checkBoxFaceTracking">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Face Tracking</string>
                 </property>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_4" >
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
-                 <widget class="QLabel" name="textLabel2_8" >
-                  <property name="font" >
+                 <widget class="QLabel" name="textLabel2_8">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Face X:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="lblFaceX" >
-                  <property name="font" >
+                 <widget class="QLabel" name="lblFaceX">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>0</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_8" >
-                  <property name="orientation" >
+                 <spacer name="horizontalSpacer_8">
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -1930,37 +1954,37 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5" >
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <item>
-                 <widget class="QLabel" name="textLabel2_9" >
-                  <property name="font" >
+                 <widget class="QLabel" name="textLabel2_9">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Face Y:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="lblFaceY" >
-                  <property name="font" >
+                 <widget class="QLabel" name="lblFaceY">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>0</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_11" >
-                  <property name="orientation" >
+                 <spacer name="horizontalSpacer_11">
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -1971,37 +1995,37 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6" >
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <item>
-                 <widget class="QLabel" name="textLabel2_10" >
-                  <property name="font" >
+                 <widget class="QLabel" name="textLabel2_10">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Radius:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="lblFaceRadius" >
-                  <property name="font" >
+                 <widget class="QLabel" name="lblFaceRadius">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>0</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_12" >
-                  <property name="orientation" >
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -2013,12 +2037,12 @@
               </item>
              </layout>
             </item>
-            <item row="0" column="1" >
-             <spacer name="horizontalSpacer" >
-              <property name="orientation" >
+            <item row="0" column="1">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>40</width>
                 <height>20</height>
@@ -2026,61 +2050,61 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="2" >
-             <layout class="QVBoxLayout" name="verticalLayout_7" >
+            <item row="0" column="2">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
-               <widget class="QCheckBox" name="checkBoxMirror" >
-                <property name="font" >
+               <widget class="QCheckBox" name="checkBoxMirror">
+                <property name="font">
                  <font>
                   <family>Verdana</family>
                  </font>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Mirror</string>
                 </property>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_7" >
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <item>
-                 <widget class="QLabel" name="textLabel2_11" >
-                  <property name="font" >
+                 <widget class="QLabel" name="textLabel2_11">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Track to:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="lblFaceTrackTo" >
-                  <property name="sizePolicy" >
-                   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                 <widget class="QLabel" name="lblFaceTrackTo">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="font" >
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="pixmap" >
-                   <pixmap resource="../direcs.qrc" >:/images/images/middle.png</pixmap>
+                  <property name="pixmap">
+                   <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
                   </property>
-                  <property name="scaledContents" >
+                  <property name="scaledContents">
                    <bool>true</bool>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_6" >
-                  <property name="orientation" >
+                 <spacer name="horizontalSpacer_6">
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -2091,37 +2115,37 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_8" >
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
                 <item>
-                 <widget class="QLabel" name="textLabel2_12" >
-                  <property name="font" >
+                 <widget class="QLabel" name="textLabel2_12">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Last face X:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="lblLastFaceX" >
-                  <property name="font" >
+                 <widget class="QLabel" name="lblLastFaceX">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>0</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_7" >
-                  <property name="orientation" >
+                 <spacer name="horizontalSpacer_7">
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -2132,37 +2156,37 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_9" >
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
                 <item>
-                 <widget class="QLabel" name="textLabel2_13" >
-                  <property name="font" >
+                 <widget class="QLabel" name="textLabel2_13">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Last face Y:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="lblLastFaceY" >
-                  <property name="font" >
+                 <widget class="QLabel" name="lblLastFaceY">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>0</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_10" >
-                  <property name="orientation" >
+                 <spacer name="horizontalSpacer_10">
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -2173,37 +2197,37 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_11" >
+               <layout class="QHBoxLayout" name="horizontalLayout_11">
                 <item>
-                 <widget class="QLabel" name="textLabel2_14" >
-                  <property name="font" >
+                 <widget class="QLabel" name="textLabel2_14">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Faces:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="lblFaces" >
-                  <property name="font" >
+                 <widget class="QLabel" name="lblFaces">
+                  <property name="font">
                    <font>
                     <family>Verdana</family>
                    </font>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>0</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_9" >
-                  <property name="orientation" >
+                 <spacer name="horizontalSpacer_9">
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -2215,12 +2239,12 @@
               </item>
              </layout>
             </item>
-            <item row="1" column="1" >
-             <spacer name="verticalSpacer_3" >
-              <property name="orientation" >
+            <item row="1" column="1">
+             <spacer name="verticalSpacer_3">
+              <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
                 <height>40</height>
@@ -2238,243 +2262,243 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar" >
-   <property name="geometry" >
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>1430</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile" >
-    <property name="title" >
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionDrive" />
-    <addaction name="actionReset" />
-    <addaction name="actionRemote" />
-    <addaction name="actionTest" />
-    <addaction name="actionSimulate" />
-    <addaction name="separator" />
-    <addaction name="actionExit" />
+    <addaction name="actionDrive"/>
+    <addaction name="actionReset"/>
+    <addaction name="actionRemote"/>
+    <addaction name="actionTest"/>
+    <addaction name="actionSimulate"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuView" >
-    <property name="title" >
+   <widget class="QMenu" name="menuView">
+    <property name="title">
      <string>&amp;View</string>
     </property>
-    <addaction name="actionAll" />
-    <addaction name="separator" />
-    <addaction name="actionCamera" />
-    <addaction name="actionJoystick" />
-    <addaction name="actionLog" />
-    <addaction name="actionOdometrie" />
-    <addaction name="actionPower" />
-    <addaction name="separator" />
-    <addaction name="actionSettings" />
+    <addaction name="actionAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionCamera"/>
+    <addaction name="actionJoystick"/>
+    <addaction name="actionLog"/>
+    <addaction name="actionOdometrie"/>
+    <addaction name="actionPower"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menuHelp" >
-    <property name="title" >
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout" />
+    <addaction name="actionAbout"/>
    </widget>
-   <addaction name="menuFile" />
-   <addaction name="menuView" />
-   <addaction name="menuHelp" />
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
-  <widget class="QToolBar" name="toolBar" >
-   <property name="windowTitle" >
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
     <string>toolBar</string>
    </property>
-   <attribute name="toolBarArea" >
+   <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
-   <attribute name="toolBarBreak" >
+   <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="separator" />
-   <addaction name="actionDrive" />
-   <addaction name="actionReset" />
-   <addaction name="actionRemote" />
-   <addaction name="actionTest" />
-   <addaction name="actionSimulate" />
-   <addaction name="separator" />
-   <addaction name="actionCamera" />
-   <addaction name="actionJoystick" />
-   <addaction name="actionLog" />
-   <addaction name="actionOdometrie" />
-   <addaction name="actionPower" />
-   <addaction name="actionAll" />
-   <addaction name="actionSettings" />
-   <addaction name="separator" />
-   <addaction name="actionAbout" />
-   <addaction name="separator" />
-   <addaction name="actionExit" />
+   <addaction name="separator"/>
+   <addaction name="actionDrive"/>
+   <addaction name="actionReset"/>
+   <addaction name="actionRemote"/>
+   <addaction name="actionTest"/>
+   <addaction name="actionSimulate"/>
+   <addaction name="separator"/>
+   <addaction name="actionCamera"/>
+   <addaction name="actionJoystick"/>
+   <addaction name="actionLog"/>
+   <addaction name="actionOdometrie"/>
+   <addaction name="actionPower"/>
+   <addaction name="actionAll"/>
+   <addaction name="actionSettings"/>
+   <addaction name="separator"/>
+   <addaction name="actionAbout"/>
+   <addaction name="separator"/>
+   <addaction name="actionExit"/>
   </widget>
-  <action name="actionExit" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>E&amp;xit</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Alt+X</string>
    </property>
   </action>
-  <action name="actionLaser_View" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionLaser_View">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/sick.png</normaloff>:/images/images/sick.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Laser View</string>
    </property>
   </action>
-  <action name="actionCamera" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionCamera">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/cam.png</normaloff>:/images/images/cam.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Camera</string>
    </property>
   </action>
-  <action name="actionOdometrie" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionOdometrie">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/kruler.png</normaloff>:/images/images/kruler.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Odometrie</string>
    </property>
   </action>
-  <action name="actionSettings" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/package_settings.png</normaloff>:/images/images/package_settings.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Settings</string>
    </property>
   </action>
-  <action name="actionLog" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionLog">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/kghostview.png</normaloff>:/images/images/kghostview.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Log</string>
    </property>
   </action>
-  <action name="actionJoystick" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionJoystick">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/package_games.png</normaloff>:/images/images/package_games.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Joystick</string>
    </property>
   </action>
-  <action name="actionNetwork_Log" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionNetwork_Log">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/kwifimanager.png</normaloff>:/images/images/kwifimanager.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Network Log</string>
    </property>
   </action>
-  <action name="actionDrive" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionDrive">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Drive</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Alt+D</string>
    </property>
   </action>
-  <action name="actionReset" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionReset">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/eraser.png</normaloff>:/images/images/eraser.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Reset</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Alt+R</string>
    </property>
   </action>
-  <action name="actionRemote" >
-   <property name="checkable" >
+  <action name="actionRemote">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/kwifimanager.png</normaloff>:/images/images/kwifimanager.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Remote</string>
    </property>
   </action>
-  <action name="actionTest" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionTest">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/memory.png</normaloff>:/images/images/memory.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Test</string>
    </property>
   </action>
-  <action name="actionSimulate" >
-   <property name="checkable" >
+  <action name="actionSimulate">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/kmplot.png</normaloff>:/images/images/kmplot.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Simulate</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Alt+S</string>
    </property>
   </action>
-  <action name="actionAll" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionAll">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/kpersonalizer.png</normaloff>:/images/images/kpersonalizer.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>All</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Alt+A</string>
    </property>
   </action>
-  <action name="actionAbout" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/help.png</normaloff>:/images/images/help.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>About</string>
    </property>
   </action>
-  <action name="actionPower" >
-   <property name="icon" >
-    <iconset resource="../direcs.qrc" >
+  <action name="actionPower">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/energy.png</normaloff>:/images/images/energy.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Power</string>
    </property>
   </action>
@@ -2491,6 +2515,11 @@
    <header>qwt_compass.h</header>
   </customwidget>
   <customwidget>
+   <class>QwtDial</class>
+   <extends>QWidget</extends>
+   <header>qwt_dial.h</header>
+  </customwidget>
+  <customwidget>
    <class>QtGLContext</class>
    <extends>QWidget</extends>
    <header>QtGLContext.h</header>
@@ -2504,7 +2533,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../direcs.qrc" />
+  <include location="../direcs.qrc"/>
  </resources>
  <connections/>
 </ui>
