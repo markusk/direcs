@@ -95,7 +95,6 @@ unix {
   -L/usr/local/lib \
   -lespeak \
   -lesd \
-  -ltermcap \
   -lqwt-qt4 \
   -lcv \
   -lhighgui

@@ -3,13 +3,13 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="3668" Type="Source" />
+   <View0 Encoding="" line="3689" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/speakThread.h" >
-   <View0 Encoding="" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.h" >
+   <View0 Encoding="" line="545" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/speakThread.cpp" >
-   <View0 Encoding="" line="58" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.cpp" >
+   <View0 Encoding="" line="2263" Type="Source" />
   </Doc2>
  </DocsAndViews>
  <pluginList>
