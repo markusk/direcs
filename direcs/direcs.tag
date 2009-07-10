@@ -300,9 +300,9 @@
     <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laser_8h</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
-    <class kind="class">Laser</class>
     <class kind="struct">Laser::carmen_laser_laser_config_t</class>
     <class kind="struct">Laser::carmen_param_t</class>
+    <class kind="class">Laser</class>
     <class kind="struct">Laser::laser_device_t</class>
     <class kind="struct">Laser::laser_settings_t</class>
     <class kind="struct">Laser::sick_laser_t</class>
@@ -1683,9 +1683,9 @@
     <name>sick.h</name>
     <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>sick_8h</filename>
-    <class kind="class">Sick</class>
     <class kind="struct">Sick::laser_device_t</class>
     <class kind="struct">Sick::laser_settings_t</class>
+    <class kind="class">Sick</class>
     <class kind="struct">Sick::sick_laser_t</class>
     <member kind="define">
       <type>#define</type>
@@ -1969,6 +1969,494 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>speak_lib.h</name>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
+    <filename>speak__lib_8h</filename>
+    <class kind="struct">espeak_EVENT</class>
+    <class kind="struct">espeak_VOICE</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>ESPEAK_API_REVISION</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>4ebd80f609d68af61e9c2c82db32347f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakCHARS_8BIT</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>8eec0349847b778080421b525e22d475</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakCHARS_AUTO</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>6e6b875c3cdd17e9b74e99f995578798</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakCHARS_UTF8</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>8b7bbb23f50801d590758f5f25cdc52b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakCHARS_WCHAR</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>f8c74623ab8d124c947e4d82a330454b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakENDPAUSE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>8c981ed3b17f710b346bee5445d76059</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakKEEP_NAMEDATA</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>000f8797c40def710716ec4fd4f04405</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakPHONEMES</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>4eb4e1c81607264a58d563c1fa40e02e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>espeakSSML</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>6216f72d2bd7168ad3e39d6005607de2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>int(</type>
+      <name>t_espeak_callback</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>565b12678d654c7b74acfd7e2c7aed0d</anchor>
+      <arglist>)(short *, int, espeak_EVENT *)</arglist>
+    </member>
+    <member kind="enumeration">
+      <name>espeak_AUDIO_OUTPUT</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>23dea85b1ce61e5ce20312cf6512471b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>AUDIO_OUTPUT_PLAYBACK</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>23dea85b1ce61e5ce20312cf6512471bf9276fb14cedc1f380452dc0d10a7af0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>AUDIO_OUTPUT_RETRIEVAL</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>23dea85b1ce61e5ce20312cf6512471b3f879b5e9a9f82c536a27747ae201a74</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>AUDIO_OUTPUT_SYNCHRONOUS</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>23dea85b1ce61e5ce20312cf6512471b639877b8e2621b5897c487db183d19ac</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>AUDIO_OUTPUT_SYNCH_PLAYBACK</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>23dea85b1ce61e5ce20312cf6512471befca8e2c4393d4ac3e1b0275d78fa3e3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>espeak_ERROR</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1c9e117cca2ea4fdb7d11395f8e01c5d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>EE_OK</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1c9e117cca2ea4fdb7d11395f8e01c5d950dd5af648ddef4fd586c0db2a1dad6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>EE_INTERNAL_ERROR</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1c9e117cca2ea4fdb7d11395f8e01c5d130c9ce94b70f542ac5cddc2fdd83ff4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>EE_BUFFER_FULL</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1c9e117cca2ea4fdb7d11395f8e01c5d17817d21810de77cfb3aebda4f207382</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>EE_NOT_FOUND</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1c9e117cca2ea4fdb7d11395f8e01c5d067653f94e43fa692e0f220f7f6b9064</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>espeak_EVENT_TYPE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_LIST_TERMINATED</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a8fe2f8edc14729dfe7770c12dd5c7446</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_WORD</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a1f4a469ea6c3228316ec615800f345d6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_SENTENCE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a82fe00ad2a36ab7a2bfdf2fba1f92dfd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_MARK</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a09b24e282eaee025d499499c7fa49494</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_PLAY</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3ad8675c02305dbbf8df612cb2d9b59c95</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_END</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a6085aa4a2bc45adabbe6cc87f44e3313</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_MSG_TERMINATED</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a7a124d35f31b71ae4acca40aa542099b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEVENT_PHONEME</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>733d14390c664816340338f3d4443e3a87612fcf05c59d8b8966cd8ff144cf1d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>espeak_PARAMETER</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakSILENCE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec8fcc6eb4d7dd509891acb93a0f2b8b5e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakRATE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec8f530605c1777eebfb2b3053569d04c8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakVOLUME</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec6f9f6b9e7de987713f881e8e0269abb7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakPITCH</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec7cab746b6e0a53d82ca32a892ba51bd0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakRANGE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec0b2a8ba75516a6a5d3f2c241daf803e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakPUNCTUATION</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dececc684f64b8f146e4ebf16a7279ce98f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakCAPITALS</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143decea9310e49717c41c3c0ad231cc2755b3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakWORDGAP</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec6ebccbda58716b2b891eaee31f4c82f7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakOPTIONS</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec7ce72f21ca46c91344c4fe9daa7ea284</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakINTONATION</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec84b96ec238db50a6d69da9531a6c509e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakRESERVED1</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143deccee03d994dc2104096712ecba05486e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakRESERVED2</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dece77bd03ab7a2744a544310ee8354ca56</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakEMPHASIS</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec5b77ba9ce3c4703df4557c480c7c9fe0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakLINELENGTH</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec6fc8a2a5638f775c01ae081aa8afb61c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakVOICETYPE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec5c03f6e4315bf92e987510c630089f18</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>N_SPEECH_PARAM</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>d954721bea738a74e20120a828143dec28aaf5337520edb910f38a2a4de2a48d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>espeak_POSITION_TYPE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>346d1f0d723d42370ad1866189c571ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>POS_CHARACTER</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>346d1f0d723d42370ad1866189c571ce27fe2613c6be410a12b23de6de085e38</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>POS_WORD</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>346d1f0d723d42370ad1866189c571cec33dcba5a7510c7b1ab4e6db0d57d677</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>POS_SENTENCE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>346d1f0d723d42370ad1866189c571cea2ce87ecd833ec0126e8178908950d26</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>espeak_PUNCT_TYPE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1fb70081343a9d94f86d371e640999bc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakPUNCT_NONE</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1fb70081343a9d94f86d371e640999bc4f69e262e17934a0e1ad362f8e4645a3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakPUNCT_ALL</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1fb70081343a9d94f86d371e640999bc5deb26b79fcdffec5d2cc1c2fa670dd3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>espeakPUNCT_SOME</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1fb70081343a9d94f86d371e640999bcb7c8d5db81cbfd48acbebd7e1d0425df</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_Cancel</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>8d0e48de349009162376527c9e10a55b</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_Char</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>188cc5184c038128d822a672a27e5bd2</anchor>
+      <arglist>(wchar_t character)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>espeak_CompileDictionary</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>b30b1f2e616b04938a2bd4f7b655f70c</anchor>
+      <arglist>(const char *path, FILE *log)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_VOICE *</type>
+      <name>espeak_GetCurrentVoice</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>0b0b95afde994470ff8c26f352b18670</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>espeak_GetParameter</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>7741613926f4d38b6d27999b8ff80d47</anchor>
+      <arglist>(espeak_PARAMETER parameter, int current)</arglist>
+    </member>
+    <member kind="function">
+      <type>const char *</type>
+      <name>espeak_Info</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>b615fb396bb493018fc429801b2e5be2</anchor>
+      <arglist>(void *ptr)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>espeak_Initialize</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>f5562abcb04f9866d131b0ced1f71e6a</anchor>
+      <arglist>(espeak_AUDIO_OUTPUT output, int buflength, const char *path, int options)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>espeak_IsPlaying</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>2ade8f73a4a653d7dc1680bb9e0960e1</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_Key</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>92d7918f7d832ebc9816bc0829e564f1</anchor>
+      <arglist>(const char *key_name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const espeak_VOICE **</type>
+      <name>espeak_ListVoices</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>39a6f7cf8b9b65d31c278325476290a6</anchor>
+      <arglist>(espeak_VOICE *voice_spec)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_SetParameter</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>e2fe73a2f94f8668f5e81daa1939c870</anchor>
+      <arglist>(espeak_PARAMETER parameter, int value, int relative)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>espeak_SetPhonemeTrace</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>825cadb45c9a123edfc21128054f856c</anchor>
+      <arglist>(int value, FILE *stream)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_SetPunctuationList</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1572771c9adc97599c55347a0379b380</anchor>
+      <arglist>(const wchar_t *punctlist)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>espeak_SetSynthCallback</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>ab7084c81b3fe6a266dc0c5758063a7e</anchor>
+      <arglist>(t_espeak_callback *SynthCallback)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>espeak_SetUriCallback</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>1f75bd1b434c4bf55a0861a6e4ece0fc</anchor>
+      <arglist>(int(*UriCallback)(int, const char *, const char *))</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_SetVoiceByName</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>dd5fdf459b7429bd2850e34dacc7ab74</anchor>
+      <arglist>(const char *name)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_SetVoiceByProperties</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>6cdb6bbe542f757ee73b220b39d5bb86</anchor>
+      <arglist>(espeak_VOICE *voice_spec)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_Synchronize</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>aa2d366845024e4c95cc6f47c7c25206</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_Synth</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>cbfcd3cadfe05c3ae4d6b680b95300d7</anchor>
+      <arglist>(const void *text, size_t size, unsigned int position, espeak_POSITION_TYPE position_type, unsigned int end_position, unsigned int flags, unsigned int *unique_identifier, void *user_data)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_Synth_Mark</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>7e05103df96fa6844d4ee36e2edfb9b2</anchor>
+      <arglist>(const void *text, size_t size, const char *index_mark, unsigned int end_position, unsigned int flags, unsigned int *unique_identifier, void *user_data)</arglist>
+    </member>
+    <member kind="function">
+      <type>espeak_ERROR</type>
+      <name>espeak_Terminate</name>
+      <anchorfile>speak__lib_8h.html</anchorfile>
+      <anchor>a9e2f5fc55b6ebb10ad7a5a073e24b79</anchor>
+      <arglist>(void)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>speakThread.cpp</name>
     <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8cpp</filename>
@@ -1978,6 +2466,7 @@
     <name>speakThread.h</name>
     <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8h</filename>
+    <includes id="speak__lib_8h" name="speak_lib.h" local="yes" imported="no">speak_lib.h</includes>
     <class kind="class">SpeakThread</class>
   </compound>
   <compound kind="file">
@@ -3126,13 +3615,6 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>speak</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>1a7c097a9e6d5b7f2189e7192d363147</anchor>
-      <arglist>(QString text)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>test</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>22ace1ac7a8601ad458aa8394d239ab2</anchor>
@@ -3172,6 +3654,13 @@
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>96cfd5b8cc14e575ba737a33880c1e39</anchor>
       <arglist>(QString direction)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>speak</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>1a7c097a9e6d5b7f2189e7192d363147</anchor>
+      <arglist>(QString text)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -3549,6 +4038,13 @@
       <name>snTerm</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>9856c414d5acf360195803d87217a5ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>SpeakThread *</type>
+      <name>speakThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>48230b6212690a54a5151cf974a92a16</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -4214,6 +4710,147 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>espeak_EVENT</name>
+    <filename>structespeak__EVENT.html</filename>
+    <member kind="variable">
+      <type>int</type>
+      <name>audio_position</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>a3092f6c2654c6cbc3f6b05dad937db4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>union espeak_EVENT::@0</type>
+      <name>id</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>e178dde193368f844651d0faa0bfe05c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const char *</type>
+      <name>name</name>
+      <anchorfile>unionespeak__EVENT_1_1@0.html</anchorfile>
+      <anchor>867cfe2e47128c6bc20faba75f3471e4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>number</name>
+      <anchorfile>unionespeak__EVENT_1_1@0.html</anchorfile>
+      <anchor>a6eebd2b48d5b439d1f0be3baea85904</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>length</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>bbd21434c4786c17c5b8f6c549deb21d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>sample</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>745b6b1589873eafc8a92f731d791527</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>text_position</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>6c68c5805c5643afa0635099dac29ac5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>espeak_EVENT_TYPE</type>
+      <name>type</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>5c1605442325d07e3f3304a888c2836d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned int</type>
+      <name>unique_identifier</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>899378327aa61379d913f51b0f893e4e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>user_data</name>
+      <anchorfile>structespeak__EVENT.html</anchorfile>
+      <anchor>23fa9411d77c54211a8130a1d58b27c2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>espeak_VOICE</name>
+    <filename>structespeak__VOICE.html</filename>
+    <member kind="variable">
+      <type>unsigned char</type>
+      <name>age</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>19bc2b17c6060b3a7a5fd8c73de30e55</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned char</type>
+      <name>gender</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>5d38fe46c7e50fdd9311c2be0085ad31</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const char *</type>
+      <name>identifier</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>7b65b91bd27994cbabf7f19a7e0a8cee</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const char *</type>
+      <name>languages</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>72f5fe87bb84535203cfe386fbfe1a27</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const char *</type>
+      <name>name</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>23520bb9b5b63914306bde6c82f83057</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>score</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>4a38220ecee07b4abc1168a3addca84c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>spare</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>e1a0e9a96c0ab23d6c226b7b6ea0c245</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned char</type>
+      <name>variant</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>6d8e94ba79e4f3ce897c1349f2a92124</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned char</type>
+      <name>xx1</name>
+      <anchorfile>structespeak__VOICE.html</anchorfile>
+      <anchor>0e245cae97af281355939d7ec5ee3dfb</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>GLWidget</name>
     <filename>classGLWidget.html</filename>
@@ -4514,6 +5151,13 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>fb229f99efac2e5a33733f3d29db5c3f</anchor>
       <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLEDHeartbeat</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>3dd394c19d5125fe01edd049d8e7b204</anchor>
+      <arglist>(bool state)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -6600,6 +7244,122 @@
       <anchor>fce32f7e0ae3501145539b173fa89b11</anchor>
       <arglist></arglist>
     </member>
+    <member kind="typedef">
+      <type>struct Laser::laser_device_t *</type>
+      <name>laser_device_p</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>c6564d2e70587f9cab8042f3dfa2c83c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>laser_model_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>135cd55fa9a98a47e2aaf6904eb2dd29</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>PLS</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>135cd55fa9a98a47e2aaf6904eb2dd296e8a2a257b9860a43687eadb40569bd1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LMS</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>135cd55fa9a98a47e2aaf6904eb2dd29ed77b942cc9bf09ff3606dee888c2486</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>parity_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>N</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5b3f008b6955f4b34e9352275164cc8ef</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>E</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5001f6d014fe14e47df0be513e183b22c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>O</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>9de3e625fd14cdfa8a82e3e978b218c5b604a80f21f483f1579017d06971d3eb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_dist_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE80M</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc447f9dc259106199bfeb344afefc8abbb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE160M</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc4415393916e35abc009e5b614b6dc5442</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE320M</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc46ba34162e98a9c694d004dfff55e6659</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_NORM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc49cdb36323e3cbfee5fcdf1951a385e9c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_DIRECT</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>2e87397b3c5194e1ee246e985010afc4c7efa2d17320cd0f1024312327536969</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_res_t</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>CM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84ae7b456af2eab49babcdba7a6ab0883f0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>MM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84a8ba4e17b490d6a9c1f06e57be0d4ddd1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>DM</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>b04292a54df79206c48ed3bee627b84a3b5576383d00567eb3c3143005a89c19</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>struct Laser::sick_laser_t *</type>
+      <name>sick_laser_p</name>
+      <anchorfile>classLaser.html</anchorfile>
+      <anchor>73831719ba5723cf3e0b9d6a4c75081a</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="signal">
       <type>void</type>
       <name>message</name>
@@ -7175,49 +7935,49 @@
       <type>double</type>
       <name>accuracy</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>fb0e65d908fb47820f08d0cf523139dd</anchor>
+      <anchor>decafcd73353d88206a2dc57809012e1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>angular_resolution</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>6097c31b02ae3196825e0d802904bd92</anchor>
+      <anchor>1cc966e2bc39aea42dbf118f7529ed93</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>fov</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>ce3dff60583122279bd4b9bd1de41f41</anchor>
+      <anchor>e87a675a8180a70c71d60ad38c72d1db</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>carmen_laser_laser_type_t</type>
       <name>laser_type</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>16732478f70d69032044166714258475</anchor>
+      <anchor>dd8562057ed2998c2dae12ad05bb32dd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>maximum_range</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>453195aca06efa1d0126b5c90a632286</anchor>
+      <anchor>f90c6d5e1238c09b085a93bb91056cb3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>carmen_laser_remission_type_t</type>
       <name>remission_mode</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>f2a2512c0a62a54226a6ceb25251f228</anchor>
+      <anchor>6077e8e767b0919574957d4e16ef5011</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>start_angle</name>
       <anchorfile>structLaser_1_1carmen__laser__laser__config__t.html</anchorfile>
-      <anchor>237f76880da9f1657c4e06ec68aaff26</anchor>
+      <anchor>54df8ed82aeadcc9f5eef62e79a5b948</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7228,42 +7988,42 @@
       <type>carmen_param_change_handler_t</type>
       <name>handler</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>a6ea13b487fe345db3dc10283925f424</anchor>
+      <anchor>042cd81dd0ead9d10b81ee5174fb6e84</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>module</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>c8cf949897f5d300e68334df25ad115b</anchor>
+      <anchor>2ab22a4680e2c10728e710f6f2b2e77f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>subscribe</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>454b20691bda10d28b4e5e8f60ef517c</anchor>
+      <anchor>dfa010e5943d24d2e89f468b70823e5d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>carmen_param_type_t</type>
       <name>type</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>b8ce806e634595667d4b01cd57a63f7b</anchor>
+      <anchor>baedac59ebaa892139f528e1da6b7399</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>void *</type>
       <name>user_variable</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>17beae1b8cd8cdcac49668104dd0abd7</anchor>
+      <anchor>c4ddbc011df1580dbd83f07b6812df26</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>variable</name>
       <anchorfile>structLaser_1_1carmen__param__t.html</anchorfile>
-      <anchor>b9d0ff862c750bb5144e3876d4df3bc2</anchor>
+      <anchor>d5ba062ece4877c2e9e82ecb925b7dda</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7274,77 +8034,77 @@
       <type>int</type>
       <name>baudrate</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>6d98b0bea1db46ea72acc3a7d7eb136e</anchor>
+      <anchor>6c85c0a546ad4a561b23fd8d14c608ff</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>840ec8d3c7cb075f52c985f303878127</anchor>
+      <anchor>af4bd26ff2e4a2af297f05b80374865a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>fd</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>810c1da5975539d158ae93d7c0a62828</anchor>
+      <anchor>28e2cc9802a9c7bfef5fa2ef5625c0e6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>723f3a4997e469b73844438fee791c3c</anchor>
+      <anchor>83fcd4a10203529f1783124767e1d235</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>184c70ebc6c8b5b88bba04d20bc89c24</anchor>
+      <anchor>f2ff814e20252eafe08dbe04e1a49efa</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>c11c3c7649dd5303806eca1667270d40</anchor>
+      <anchor>5d434f9559221d08376d5a946eb9b421</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>passwd</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>ce350bf5ab9ef3cf0bcb09b85f909e8a</anchor>
+      <anchor>2f71a68c600aed1d1d7665400511af9f</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>4c61af9e5f55867eb721e740dfd82c33</anchor>
+      <anchor>bb5e8282e89a9f5d43984e7299816580</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>d3ac00fb7cac672d367ce3475e4a284f</anchor>
+      <anchor>4690aaf25bad16bcf079082ca8e056ec</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>ttyport</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>8ac3fdb580df7ef0f0a084684c81a80e</anchor>
+      <anchor>4afb944e353704dd9d5dba7dd2c19662</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structLaser_1_1laser__device__t.html</anchorfile>
-      <anchor>6abcc0d868eea978b861ddf21a8063cd</anchor>
+      <anchor>64a85304f51def43f9a34d5a7240a2bf</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7355,147 +8115,147 @@
       <type>int</type>
       <name>angle_range</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7aa53d7e1dade4bcc30ac188984d6104</anchor>
+      <anchor>4cdb48b4b37f1050aaa02a6d70bb5498</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>angle_resolution</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>f08bf2d59bf5a3748536f8291f439f91</anchor>
+      <anchor>d5646ebf319039e43b1f6144a78ab9ed</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>5577745641d1fe7edc45d99851f5a593</anchor>
+      <anchor>7fe002df0bc7b2d21004ea8cd7c861fb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>detect_baudrate</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7dcdf203e28f8bcd5a15a8b6963e2174</anchor>
+      <anchor>be7c8c5d45f42ad5c822cee991366450</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char</type>
       <name>device_name</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>acb77cfc07cd3920aefa87a59593ed0a</anchor>
+      <anchor>5c90e15fc62b350c63d98683ed7de99c</anchor>
       <arglist>[MAX_NAME_LENGTH]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>1b6628e696a673c388e5f3cf02f1a7a1</anchor>
+      <anchor>45c85766324352c5484d1ab82dd20f08</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_flipped</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>34a6f6d90d0f473262853940b5442586</anchor>
+      <anchor>c5c7ede7dc464ad6eb3a6b62a1d9e2dd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>74093f8f090c0bc47ee3df46004af9af</anchor>
+      <anchor>3c0998b7e8520893a9fe391c1aa62566</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>num_values</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>4d4f25b64fa6290d41de42d396b2c939</anchor>
+      <anchor>dc4849e3638b9ae21734194a18cd9008</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>e4c5ad3a57bb4f01b9fabd55633d0c86</anchor>
+      <anchor>7cd4073d0927388ff8c04cd17bbcd1bf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>password</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>1fc35b713084618e1259930e036472b7</anchor>
+      <anchor>64d6334065907917695f999285569203</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>range_dist_t</type>
       <name>range_dist</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>8ba639527868e2242ee120ba51a4919d</anchor>
+      <anchor>10c2b727440b9a9a445fb28ced929cf8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>range_res_t</type>
       <name>range_res</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>23f3388bd093e1c5a2f160d3449aa630</anchor>
+      <anchor>85adcb9c1a6c85a63535831873531675</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>rem_values</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7d6e7bac474194874bf352f9116716e8</anchor>
+      <anchor>c98fa14aee455a17ef997fc73ae8ebb9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>set_baudrate</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>b6500ff7c537d5a31e2e38e0f24de6f7</anchor>
+      <anchor>739128bb2cf1413fa21dde1873681121</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>start_baudrate</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>ad0736ddc2e6dd8116fbe23afb62f0b4</anchor>
+      <anchor>e3254e815e8be19459ab7ead29ddd873</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>3133ad46a7ab0487b5980e5f0d94f747</anchor>
+      <anchor>2e259c94866c6d2b9d49f9d0f1de2eab</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>a6da46b9e464eb91daf1ed423c1535db</anchor>
+      <anchor>7d39862a98072a871b3ddff60491b8ca</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>0be40df2b16325dedc31a8c07675d8a3</anchor>
+      <anchor>7e907cfee9dfcbd9cff3100f6845ed95</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_highspeed</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7d24022aa771018b22446eb95c2e9e46</anchor>
+      <anchor>a4f6098882595ab81a75a9e97713ab02</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_remission</name>
       <anchorfile>structLaser_1_1laser__settings__t.html</anchorfile>
-      <anchor>7d5a73ee28ae01d98d1ca77a5739d82b</anchor>
+      <anchor>ed592a94b54ebf7c11f730770c8472d2</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7506,119 +8266,119 @@
       <type>unsigned char *</type>
       <name>buffer</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>f95fb3fd27081a0b3deff0fdcdbc7474</anchor>
+      <anchor>d2a02c892c0496d643513e6e8124c218</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>buffer_position</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>1cf17421ed90be93f172565a4b929150</anchor>
+      <anchor>9f467588946e22c3786d444a17749f97</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_device_t</type>
       <name>dev</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>bd5820612cc2b833a652baa36a5ab3a8</anchor>
+      <anchor>ddd60dc0f654ad8cd89348758ccdf514</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>glare</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>7c70f9db8869b5d8c17aa01132704874</anchor>
+      <anchor>b50c044968d74b14d7ba20cfa3888f0b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>new_reading</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>66950c01fa07fcc54bd69631ef36e3b0</anchor>
+      <anchor>2251ee6d8d1bfb428424c776f14bd693</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>numvalues</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>ffb05a0bb213af30f09c4212bc380351</anchor>
+      <anchor>c6f68488d1f6672c38b4d83ea4e07bd5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_length</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>95e4ba0cd37bec61f2478ef5baecc7e3</anchor>
+      <anchor>ca3fbde473796912671c2970755fd97a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_offset</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>559b40e88b068bd65032f5df20fa7dcb</anchor>
+      <anchor>8ea57b85f12def3813b0dc4acdcce260</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>packet_timestamp</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>d6e8533ddcbb9c9dde3dc6a0fccb94bd</anchor>
+      <anchor>43d03db8c2146d36329487597fe2288a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>processed_mark</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>663b531d93f5abf2a7c99b811e763e26</anchor>
+      <anchor>e05b5456190954bbf2d8bedb0ca3cbd0</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>range</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>c7725e9993d3b1eae70b42ccdec45057</anchor>
+      <anchor>c5530054d023d1efca4398fc75ea40fa</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>remission</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>7f9ae172f96b3ea86b989bb82da04644</anchor>
+      <anchor>dce871107d143c142dd1bbf88f556a79</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>remvalues</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>74eeee0f4575305081b38f2aaf4c95bf</anchor>
+      <anchor>565ea6bc4c68fcb6957de5b3d6916b0d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_settings_t</type>
       <name>settings</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>105c55d402c046ec296d8a973e11aec1</anchor>
+      <anchor>557df5af30d0bc9e87af9f9696585aca</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>sfv</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>2eb7cfb97f2996cbe67e031f8115fdac</anchor>
+      <anchor>4c8838d091f65e89f3b1997d641122b7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>timestamp</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>38bb16779a618bc1a9f9f16ffe63ad81</anchor>
+      <anchor>13eec7a3e5252159787bf35ab2b765bc</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>wfv</name>
       <anchorfile>structLaser_1_1sick__laser__t.html</anchorfile>
-      <anchor>01ac3705300da645ea172a89796c131e</anchor>
+      <anchor>4887aef594faa1bb3e24637a88821f83</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -10936,6 +11696,122 @@
     <class kind="struct">Sick::laser_device_t</class>
     <class kind="struct">Sick::laser_settings_t</class>
     <class kind="struct">Sick::sick_laser_t</class>
+    <member kind="typedef">
+      <type>struct Sick::laser_device_t *</type>
+      <name>laser_device_p</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>0ce6358c4737a6ab58c1fd314c1f0808</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>laser_model_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>771de876d0da63e53f132d0294b39a9e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>PLS</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>771de876d0da63e53f132d0294b39a9e048f3e8a1ee8ac3496393555c813c813</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LMS</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>771de876d0da63e53f132d0294b39a9e01c22c16299c90926432d7dec75ff226</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>parity_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f18</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>N</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f1895da8eb6df88e6547ef1ba0e7e072cbc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>E</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f1846ca6549ee7de6a9212aad6e19701938</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>O</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>25067f87762fdac9e71dd325be0c9f180b86f4a7638ca6dccdcb43a4b7199fad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_dist_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE80M</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a400aa86de69b0ecd323bcad7ce2ac6026</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE160M</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4ec28d478485c3dc1465018a7c1479c60</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_RANGE320M</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4dfb50827dfb8e1f3a6d413f4aa7974aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_NORM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a485af65dff6e4a98660459284ca7d5954</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SICK_REMISSION_DIRECT</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>af0ad9b8663188c3e7f0a19ac64257a4d9bb70e80a53a0db7dbc05758ab27270</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>range_res_t</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b372</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>CM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b37236638a3e59c744af827ae4e757c18bb3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>MM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b37295b9da7cc2930dda9fc0900140765326</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>DM</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>6f5eb50c69821256bc449cf54302b372b5e118cdd66db381ad662d92ad4a5c9a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>struct Sick::sick_laser_t *</type>
+      <name>sick_laser_p</name>
+      <anchorfile>classSick.html</anchorfile>
+      <anchor>79aaf8a9eda793b5ef6431ea63ba5ad7</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function">
       <type>double</type>
       <name>carmen_get_time</name>
@@ -11238,77 +12114,77 @@
       <type>int</type>
       <name>baudrate</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>e48d35b782cd64d9976d839ce99ac553</anchor>
+      <anchor>4b580a3a107470ac37c4e812a39c957c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>cc1c3d1df275228941037e8e1b59d419</anchor>
+      <anchor>94a279c248b82515fd84791e4713b697</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>fd</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>2e2c32e05143006f0b12691ebd471ca4</anchor>
+      <anchor>05845f4f0677698520df3192bf437a45</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>d024e659df49742b7e49f6697d82cb08</anchor>
+      <anchor>dab4b73e5bfd998d8cc9adda1676e8c6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>471b495935a5a593e333c237858dcb16</anchor>
+      <anchor>35123c861b61892961cac9077389a89b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>cdd6fbfd13cf65ed8ad6efe9ff5090c3</anchor>
+      <anchor>060d9402aa097f14ac3a12dcf882e352</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>passwd</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>1eafbc29f734e08f5a76fa9c28b49964</anchor>
+      <anchor>1bbfb0e417c5a1fdd399edd2157ca16e</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>76aeb7ace4d6c9b3284e9ec915739090</anchor>
+      <anchor>cbd1e5206636fa5dd12525bfad935bc8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>ae446fa18719e12bbcda3eb9e76cc2ac</anchor>
+      <anchor>84c04ff5aca52cd76dfc826735d6a409</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char *</type>
       <name>ttyport</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>5927e2f271293caea9b0d771cc41aab4</anchor>
+      <anchor>a85790c247aafb424eeb12da7837e2e9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structSick_1_1laser__device__t.html</anchorfile>
-      <anchor>de989f8d718d5fcf1fc700878677a563</anchor>
+      <anchor>ff179d9a506a67801e0cdfa33b4e6089</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11319,147 +12195,147 @@
       <type>int</type>
       <name>angle_range</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>c269e46eaf84f076cddbe375de6039fc</anchor>
+      <anchor>6baffed381662e5059af6911913f2937</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>angle_resolution</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>13d8c64a4d2e71702aca1909a17b8b69</anchor>
+      <anchor>2b962d0f659bd6174f21026f18ce41a7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>databits</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>311eb67b365aadcb66520a2ba767807e</anchor>
+      <anchor>18199cbf76320f8ff900fdb7ad602913</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>detect_baudrate</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>5ec8fd901ba10b403863096040312480</anchor>
+      <anchor>d1586e8d9d11d26769d14cc4caff0f1b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>char</type>
       <name>device_name</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>f57a63391b946981e961735c2b8abb49</anchor>
+      <anchor>dc9afc783eca1b863a96bf44e70960bd</anchor>
       <arglist>[MAX_NAME_LENGTH]</arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>hwf</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>d8246a6c0806062059de1ff2a00e21ee</anchor>
+      <anchor>2112d759e912b9c273ba21b2762e5f10</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_flipped</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>5bd6cbe0bc4fa11171eab3aea3c51038</anchor>
+      <anchor>b6eecb11d64db14d050b1be3ef54e201</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>laser_num</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>c9ceb7f0d738ee7b991d11f9a407ec11</anchor>
+      <anchor>5b1e710fc5e6c2d47cbde24b9bb23176</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>num_values</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>5d2a046bba846f646e3e6936a1133fab</anchor>
+      <anchor>8c805cc0fa4b425d0ff3bb5083157c58</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>parity_t</type>
       <name>parity</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>3891f5036ee820ce160eaefd544e822f</anchor>
+      <anchor>dd172321d6ad972d3890e3914a106ae3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned char</type>
       <name>password</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>09830576427b17f99ebea2e5c01f88a7</anchor>
+      <anchor>0113cac6703dfb515c0c26443ddc47ea</anchor>
       <arglist>[8]</arglist>
     </member>
     <member kind="variable">
       <type>range_dist_t</type>
       <name>range_dist</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>5124025a03de19d2c8bb8677f5dbc48a</anchor>
+      <anchor>8a17d8bdaab08a4e6e23c4edf40bddb5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>range_res_t</type>
       <name>range_res</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>bf4c037328c2f4ca4ca7cee43ca6d11f</anchor>
+      <anchor>841a9065d1e0bd6e4bb9fb92a2c96430</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>rem_values</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>a9d0d3595aad0c4b60a2c0d9ad67ae1f</anchor>
+      <anchor>d320242434d1419c3f484c891b3c3ef8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>set_baudrate</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>3d77ea896d64ce59346e0070aa13e3ee</anchor>
+      <anchor>42be8d00e36cfd0bdca5f43b619b56ac</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>start_baudrate</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>a33695e7ea8ae93d59968ccb67592d6e</anchor>
+      <anchor>7c2d81566e96a673e8a4da11bdd4040e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>stopbits</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>eca18d031bd126b580d21281b977321d</anchor>
+      <anchor>608af2d778c7f311f763e37bc1cf361c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>swf</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>292bcd27ab6eb68803dbf7dc33832db1</anchor>
+      <anchor>923276dd1fbefbbafa27fb54b5503d61</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_model_t</type>
       <name>type</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>e206d9282f1971d2169cb7c975260730</anchor>
+      <anchor>0963947564d8bbfd35a1531fb43ce000</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_highspeed</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>0ae959d116336ea4fe6de5111ac7b7aa</anchor>
+      <anchor>97caf14e33ad8ef86ab3ff260342f512</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>use_remission</name>
       <anchorfile>structSick_1_1laser__settings__t.html</anchorfile>
-      <anchor>f954f46e126044925fd7615673df73cf</anchor>
+      <anchor>a1aaf8caeb8291b88b56a414ef181a39</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11470,119 +12346,119 @@
       <type>unsigned char *</type>
       <name>buffer</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>49333e725f9f8acb814a7ec5f946dce5</anchor>
+      <anchor>95abc3090d32e0b5fb914ce798bb21c8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>buffer_position</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>4ae7cac33a51689759381a0c3f116f46</anchor>
+      <anchor>aa8c2cf3580c71fdbf188ffa0002f4b4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_device_t</type>
       <name>dev</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>c26380ba6100cd33121850a2d5ca477c</anchor>
+      <anchor>263666c67fc70e3686c135c58a72a5b4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>glare</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>3f91ea60962ae7e3109e79cb3f2df89b</anchor>
+      <anchor>c33d4f51cb0ec411c6224127c224e55c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>new_reading</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>c0f3f302e12a8be95f4161a8af9f5006</anchor>
+      <anchor>66867b3646d9d67be3fc078fc9ed70ff</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>numvalues</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>e0a181fff284e5b02ecd96f5eafd12b4</anchor>
+      <anchor>ac84c2f4404782782b282187f7c322eb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_length</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>f1ff7b25050b7725f01b7a2f5bb10d94</anchor>
+      <anchor>692791bc1abd610da08323cbc569856f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>packet_offset</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>743fbffc4efb02bf11ce1187893a5ab5</anchor>
+      <anchor>924bb37dcb08814030c470335b5eed2c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>packet_timestamp</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>fb87b8eb09486dee03a819c258045365</anchor>
+      <anchor>04e90ffc47d355837b2f2e7a5e483eda</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>long int</type>
       <name>processed_mark</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>3b96b7ee5a81376c6a29cb229eb55199</anchor>
+      <anchor>f369b0fb038b46c5be254613a5c8a032</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>range</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>d89ba81c1f8c7cb44bb146a97cbec67d</anchor>
+      <anchor>d550817c9a877dc1eae50e72b6c63b85</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double *</type>
       <name>remission</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>d7b6b1b0762d660755f87d8cf2c131f6</anchor>
+      <anchor>4d86aff0cf49596132a9e174b65dab89</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int</type>
       <name>remvalues</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>8f7a867c1f47a8abdbb0ca9e633933d6</anchor>
+      <anchor>cd50c52b5a373a528da2af1683db8457</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>laser_settings_t</type>
       <name>settings</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>33f3bc67ee0fa62067ced8e140b27110</anchor>
+      <anchor>5c7cf830b3cf1aa2ace39c7171c15b1a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>sfv</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>326444d3edfebfff6c7fe7f741dfac4d</anchor>
+      <anchor>40437128edf0d8028e252c9d65141b6c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>double</type>
       <name>timestamp</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>070f7e4b2257972e88367b501fb05f19</anchor>
+      <anchor>911d53573e6df92cf8c916a568400479</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>int *</type>
       <name>wfv</name>
       <anchorfile>structSick_1_1sick__laser__t.html</anchorfile>
-      <anchor>adefc0aae2db47d2d9a34ca0069d45f9</anchor>
+      <anchor>2815f6726712ec0da39a0058d5f5b72b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11602,6 +12478,27 @@
       <anchorfile>classSpeakThread.html</anchorfile>
       <anchor>1685e5e2cc12fa0c16baecd93b8ea173</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setLanguage</name>
+      <anchorfile>classSpeakThread.html</anchorfile>
+      <anchor>783f92da214dfeae62c4c1da3eaa52a8</anchor>
+      <arglist>(QString language)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setRate</name>
+      <anchorfile>classSpeakThread.html</anchorfile>
+      <anchor>5ed29b8457ff8650a2860411f58a485b</anchor>
+      <arglist>(int value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setVoice</name>
+      <anchorfile>classSpeakThread.html</anchorfile>
+      <anchor>029f47723b62b96a535d9b95c535562c</anchor>
+      <arglist>(unsigned char gender, unsigned char age)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -11633,9 +12530,9 @@
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
-      <name>speaking</name>
+      <name>saySomething</name>
       <anchorfile>classSpeakThread.html</anchorfile>
-      <anchor>e22206a994b0fc9cbf14c82f7c076c68</anchor>
+      <anchor>54d310e03cb60fa07d09d33e916b7adf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -11645,11 +12542,11 @@
       <anchor>b9a88f86dc937a91799bbe2bb22431b8</anchor>
       <arglist></arglist>
     </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>FLAG</name>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>textToSpeak</name>
       <anchorfile>classSpeakThread.html</anchorfile>
-      <anchor>ce1b4fa63327524eeb7e0c1e5116857e</anchor>
+      <anchor>377e451cb9972102b43f361055dae391</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -11924,19 +12821,19 @@
   <compound kind="dir">
     <name>direcs/src/debug/</name>
     <path>/home/markus/develop/direcs/direcs/src/debug/</path>
-    <filename>dir_f96ca1571ae2bb925882b6cc3f6f99e5.html</filename>
+    <filename>dir_f22699d3b4251f447fd9cbba82c5207d.html</filename>
     <file>qrc_direcs.cpp</file>
   </compound>
   <compound kind="dir">
     <name>direcs/</name>
     <path>/home/markus/develop/direcs/direcs/</path>
     <filename>dir_3019565a7209374971dd18603b3fe6c3.html</filename>
-    <dir>direcs/</dir>
+    <dir>direcs/src/</dir>
   </compound>
   <compound kind="dir">
     <name>direcs/src/</name>
     <path>/home/markus/develop/direcs/direcs/src/</path>
-    <filename>dir_50d92224b2f8744b37ea213f0248066f.html</filename>
+    <filename>dir_1f5e34ed32492f56944c2b3ff4f31806.html</filename>
     <dir>direcs/src/debug/</dir>
     <dir>direcs/src/test/</dir>
     <file>aboutDialog.cpp</file>
@@ -11997,6 +12894,7 @@
     <file>settingsDialog.h</file>
     <file>sick.cpp</file>
     <file>sick.h</file>
+    <file>speak_lib.h</file>
     <file>speakThread.cpp</file>
     <file>speakThread.h</file>
     <file>win_qextserialport.h</file>
@@ -12004,7 +12902,7 @@
   <compound kind="dir">
     <name>direcs/src/test/</name>
     <path>/home/markus/develop/direcs/direcs/src/test/</path>
-    <filename>dir_43fabcfc725a246df0aaf038c4f29448.html</filename>
+    <filename>dir_0390757782f16cdcc51ae245aaeb20bf.html</filename>
     <file>glwidget.cpp</file>
     <file>glwidget.h</file>
     <file>init.c</file>
@@ -12014,11 +12912,5 @@
     <file>serial.h</file>
     <file>window.cpp</file>
     <file>window.h</file>
-  </compound>
-  <compound kind="dir">
-    <name>direcs/</name>
-    <path>/home/markus/develop/direcs/direcs/</path>
-    <filename>dir_cab404750c959038827d9c6e2791adf3.html</filename>
-    <dir>direcs/src/</dir>
   </compound>
 </tagfile>
