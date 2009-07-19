@@ -255,6 +255,11 @@ class Direcs : public QObject
 		Reads all settings for the robot from an ini-file.
 		*/
 		void readSettings();
+		
+		/**
+		Checks the command-line arguments passed to the program.
+		*/
+		void checkArguments();
 
 		static int sighupFd[2];
 		static int sigtermFd[2];
@@ -315,6 +320,7 @@ class Direcs : public QObject
 		int minimumSpeed;
 		int maximumSpeed;
 		unsigned int value;
+		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.

@@ -135,20 +135,6 @@ Direcs::Direcs()
 	connect(snTerm, SIGNAL(activated(int)), this, SLOT(handleSigTerm()));
 	qDebug("signals connected");
 	#endif
-
-
-	//--------------------------------------------------------------------------------
-	// create the commmand line arguments list
-	//--------------------------------------------------------------------------------
-	splash->showMessage(QObject::tr("Checking command-line arguments..."), splashPosition, splashColor);
-	arguments = QCoreApplication::arguments();
-	int count = arguments.count() - 1;
-	
-	// if arguments were passed on the command line
-	if (count > 0)
-	{
-		qDebug() << count << "argument(s) passed...";
-	}
 }
 
 
@@ -177,7 +163,25 @@ void Direcs::init()
 	faceTrackingIsEnabled = false;
 	laserScannerFrontFound = false;
 	laserScannerRearFound = false;
+	consoleMode = false;
 
+
+	//--------------------------------------------------------------------------------
+	// create the commmand line arguments list
+	//--------------------------------------------------------------------------------
+	splash->showMessage(QObject::tr("Checking command-line arguments..."), splashPosition, splashColor);
+	arguments = QCoreApplication::arguments();
+	int count = arguments.count() - 1;
+	
+	// check if arguments were passed on the command-line
+	if (count > 0)
+	{
+		qDebug() << count << "argument(s) passed...";
+		// check the arguments
+		checkArguments();
+	}
+	
+	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
 	// For example: 1.234,00 EUR
@@ -3650,6 +3654,22 @@ void Direcs::handleSigHup()
 	snHup->setEnabled(true);
 }
 
+
+void Direcs::checkArguments()
+{
+	// first of all convert all strings to lower case
+	for (int i=1; i<arguments.count(); i++)
+	{
+		arguments[i] = arguments.at(i).toLower();
+	}
+	
+	
+	if (arguments.contains("console"))
+	{
+		consoleMode = true;
+		qDebug("CONSOLE mode activated. Now passing all messages to the console.");
+	}
+}
 
 
 void Direcs::test()
