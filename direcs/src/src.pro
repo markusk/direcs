@@ -84,9 +84,7 @@ unix {
             QT +=		network \
 				opengl
 
-            INCLUDEPATH +=	/usr/include/speech_tools \
-				/usr/include/festival \
-				/usr/include/qwt-qt4 \
+            INCLUDEPATH +=	/usr/include/qwt-qt4 \
 				/usr/local/include/opencv
 
             CONFIG -= release
@@ -94,7 +92,6 @@ unix {
             LIBS += -L/usr/lib \
   -L/usr/local/lib \
   -lespeak \
-  -lesd \
   -lqwt-qt4 \
   -lcv \
   -lhighgui
@@ -252,7 +249,8 @@ console {
 
 
     LIBS =		-L/usr/lib/ \
-			-L/usr/local/lib
-
+			-L/usr/local/lib \
+			-lespeak \
+			
     FORMS =		mainWindow_arm.ui
 }
