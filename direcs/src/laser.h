@@ -75,11 +75,11 @@
 #define MAXFLOAT FLT_MAX
 #endif
 
-#define     CARMEN_FRONT_LASER_NUM       0
-#define     CARMEN_REAR_LASER_NUM        1
-#define     CARMEN_LASER3_NUM            2
-#define     CARMEN_LASER4_NUM            3
-#define     CARMEN_LASER5_NUM            4
+#define     DIRECS_FRONT_LASER_NUM       0
+#define     DIRECS_REAR_LASER_NUM        1
+#define     DIRECS_LASER3_NUM            2
+#define     DIRECS_LASER4_NUM            3
+#define     DIRECS_LASER5_NUM            4
 
 
 /**
@@ -89,33 +89,33 @@
  * data via ipc to other modules.
  **/
 /// all raw laser messages have the same format
-#define      CARMEN_LASER_LASER_FMT       "{int,{int,double,double,double,double,double,int},int,<float:3>,int,<float:5>,double,string}"
+#define      DIRECS_LASER_LASER_FMT       "{int,{int,double,double,double,double,double,int},int,<float:3>,int,<float:5>,double,string}"
 
-#define      CARMEN_LASER_FRONTLASER_NAME "carmen_laser_frontlaser"
-#define      CARMEN_LASER_FRONTLASER_FMT  CARMEN_LASER_LASER_FMT
+#define      DIRECS_LASER_FRONTLASER_NAME "direcs_laser_frontlaser"
+#define      DIRECS_LASER_FRONTLASER_FMT  DIRECS_LASER_LASER_FMT
 
 /// Note that laser1 is the same as frontlaser
-#define      CARMEN_LASER_LASER1_NAME     CARMEN_LASER_FRONTLASER_NAME
-#define      CARMEN_LASER_LASER1_FMT      CARMEN_LASER_FRONTLASER_FMT
+#define      DIRECS_LASER_LASER1_NAME     DIRECS_LASER_FRONTLASER_NAME
+#define      DIRECS_LASER_LASER1_FMT      DIRECS_LASER_FRONTLASER_FMT
 
-#define      CARMEN_LASER_REARLASER_NAME  "carmen_laser_rearlaser"
-#define      CARMEN_LASER_REARLASER_FMT   CARMEN_LASER_LASER_FMT
+#define      DIRECS_LASER_REARLASER_NAME  "direcs_laser_rearlaser"
+#define      DIRECS_LASER_REARLASER_FMT   DIRECS_LASER_LASER_FMT
 
 /// Note that laser2 is the same as reartlaser
-#define      CARMEN_LASER_LASER2_NAME     CARMEN_LASER_REARLASER_NAME
-#define      CARMEN_LASER_LASER2_FMT      CARMEN_LASER_REARLASER_FMT
+#define      DIRECS_LASER_LASER2_NAME     DIRECS_LASER_REARLASER_NAME
+#define      DIRECS_LASER_LASER2_FMT      DIRECS_LASER_REARLASER_FMT
 
-#define      CARMEN_LASER_LASER3_NAME     "carmen_laser_laser3"
-#define      CARMEN_LASER_LASER3_FMT      CARMEN_LASER_LASER_FMT
+#define      DIRECS_LASER_LASER3_NAME     "direcs_laser_laser3"
+#define      DIRECS_LASER_LASER3_FMT      DIRECS_LASER_LASER_FMT
 
-#define      CARMEN_LASER_LASER4_NAME     "carmen_laser_laser4"
-#define      CARMEN_LASER_LASER4_FMT      CARMEN_LASER_LASER_FMT
+#define      DIRECS_LASER_LASER4_NAME     "direcs_laser_laser4"
+#define      DIRECS_LASER_LASER4_FMT      DIRECS_LASER_LASER_FMT
 
-#define      CARMEN_LASER_LASER5_NAME     "carmen_laser_laser5"
-#define      CARMEN_LASER_LASER5_FMT      CARMEN_LASER_LASER_FMT
+#define      DIRECS_LASER_LASER5_NAME     "direcs_laser_laser5"
+#define      DIRECS_LASER_LASER5_FMT      DIRECS_LASER_LASER_FMT
 
-#define      CARMEN_LASER_ALIVE_NAME            "carmen_laser_alive"
-#define      CARMEN_LASER_ALIVE_FMT             "{int,int,int,int,int}"
+#define      DIRECS_LASER_ALIVE_NAME            "direcs_laser_alive"
+#define      DIRECS_LASER_ALIVE_FMT             "{int,int,int,int,int}"
 
 #ifndef TRUE
 #define TRUE 1
@@ -128,8 +128,8 @@
 #define M_PI 3.14159265358979323846  // pi
 #endif
 
-#define CARMEN_LASER_USE_SELECT 1
-#define CARMEN_LASER_LOW_LATENCY 1
+#define DIRECS_LASER_USE_SELECT 1
+#define DIRECS_LASER_LOW_LATENCY 1
 
 #define LASER_BUFFER_SIZE                100000
 
@@ -197,20 +197,20 @@ class Laser : public QObject
 		static const short int LASER5 = 16;	/// For the direcs laserThread
 		
 		/**
-		This data structure is used by carmen_param_install_params and
-		carmen_param_usage to load and report the usage of a large number of
+		This data structure is used by direcs_param_install_params and
+		direcs_param_usage to load and report the usage of a large number of
 		parameters.
 		*/
-		typedef char carmen_param_type_t;
+		typedef char direcs_param_type_t;
 
-		typedef void (*carmen_param_change_handler_t)(char *module, char *variable, char *value);
+		typedef void (*direcs_param_change_handler_t)(char *module, char *variable, char *value);
 		
 		typedef struct
 		{
 			char *module;							/// The module name of this parameter
 			char *variable;							/// The variable name to be loaded.
-			carmen_param_type_t type;				/// Type should match user_variable:
-													/// e.g., CARMEN_PARAM_INT if the local
+			direcs_param_type_t type;				/// Type should match user_variable:
+													/// e.g., DIRECS_PARAM_INT if the local
 													/// variable storage is an integer.
 			void *user_variable;					/// A pointer to the local variable storage.
 			int subscribe;							/// If the param_daemon publishes a
@@ -218,10 +218,10 @@ class Laser : public QObject
 													/// someone has changed the variable
 													/// value, should the local value be
 													/// updated? 1 for yes, 0 for no.
-			carmen_param_change_handler_t handler;	/// Declare a handler if the
+			direcs_param_change_handler_t handler;	/// Declare a handler if the
 													/// param_daemon publishes a change to
 													/// this variable's value.
-		} carmen_param_t, *carmen_param_p;
+		} direcs_param_t, *direcs_param_p;
 
 		typedef enum { PLS, LMS } laser_model_t;
 		typedef enum { CM, MM, DM } range_res_t;
@@ -290,7 +290,7 @@ class Laser : public QObject
 			HOKUYO_URG = 2,
 			SIMULATED_LASER = 3,
 			UMKNOWN_PROXIMITY_SENSOR = 99
-		} carmen_laser_laser_type_t;
+		} direcs_laser_laser_type_t;
 		
 		/**
 		Possible remission values
@@ -300,21 +300,21 @@ class Laser : public QObject
 			REMISSION_NONE       = 0,
 			REMISSION_DIRECT     = 1,
 			REMISSION_NORMALIZED = 2
-		} carmen_laser_remission_type_t;
+		} direcs_laser_remission_type_t;
 		
 		/**
 		The configuration of the laser
 		*/
 		typedef struct
 		{
-			carmen_laser_laser_type_t laser_type;			/// what kind of laser is this
+			direcs_laser_laser_type_t laser_type;			/// what kind of laser is this
 			double start_angle;								/// angle of the first beam relative to the center of the laser
 			double fov;										/// field of view of the laser
 			double angular_resolution;						/// angular resolution of the laser
 			double maximum_range;							/// the maximum valid range of a measurement
 			double accuracy;								/// error in the range measurements
-			carmen_laser_remission_type_t remission_mode;	/// if and what kind of remission values are used
-		} carmen_laser_laser_config_t;
+			direcs_laser_remission_type_t remission_mode;	/// if and what kind of remission values are used
+		} direcs_laser_laser_config_t;
 		
 		// vorher **global** in laser_main.cpp!
 		sick_laser_t *laser1; // defined in sick.h
@@ -322,11 +322,11 @@ class Laser : public QObject
 		sick_laser_t *laser3;
 		sick_laser_t *laser4;
 		sick_laser_t *laser5;
-		carmen_laser_laser_config_t *laser1_config;
-		carmen_laser_laser_config_t *laser2_config;
-		carmen_laser_laser_config_t *laser3_config;
-		carmen_laser_laser_config_t *laser4_config;
-		carmen_laser_laser_config_t *laser5_config;
+		direcs_laser_laser_config_t *laser1_config;
+		direcs_laser_laser_config_t *laser2_config;
+		direcs_laser_laser_config_t *laser3_config;
+		direcs_laser_laser_config_t *laser4_config;
+		direcs_laser_laser_config_t *laser5_config;
 		
 		int use_laser1;
 		int use_laser2;
@@ -337,16 +337,16 @@ class Laser : public QObject
 		
 		QString laserSerialPort1;
 		QString laserSerialPort2;
-		int carmen_laser_start(short int laserScanner);
-		void carmen_laser_shutdown(int x);
-		int carmen_laser_run(void);
+		int direcs_laser_start(short int laserScanner);
+		void direcs_laser_shutdown(int x);
+		int direcs_laser_run(void);
 		void shutdown_laser(int x);
 		int getLaserNumReadings(int laser);
 		float getLaserDistance(int laser, int angle);
 		void setDevicePort(short int laser, QString serialPort);
-		double carmen_radians_to_degrees(double theta);
-		double carmen_degrees_to_radians(double theta);
-		void  set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t* config);
+		double direcs_radians_to_degrees(double theta);
+		double direcs_degrees_to_radians(double theta);
+		void  set_laser_config_structure(sick_laser_p laser, direcs_laser_laser_config_t* config);
 		void read_parameters(short int laserScanner);
 		void interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov);
 		void check_parameter_settings(sick_laser_p laser);
@@ -366,7 +366,7 @@ class Laser : public QObject
 		
 		int sick_connect_device(sick_laser_p laser);
 		
-		double carmen_get_time(void);
+		double direcs_get_time(void);
 
 
 	signals:

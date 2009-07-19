@@ -136,7 +136,7 @@ class LaserThread : public QThread
 		static const unsigned char FLAG = 1;
 		
 		/**
-		For the integrated CARMEN laser module
+		For the integrated DIRECS laser module
 		*/
 		static const short int LASER1 = 1;
 		static const short int LASER2 = 2;

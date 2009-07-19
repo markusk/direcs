@@ -61,7 +61,7 @@ LaserThread::~LaserThread()
 	{
 		// shutdown laser (parameter '0' is not in use)
 		// shuts down ALL lasers (managed internaly in laser.cpp)!
-		laser->carmen_laser_shutdown(0);
+		laser->direcs_laser_shutdown(0);
 	}
 	
 	
@@ -100,9 +100,9 @@ void LaserThread::run()
 			((simulationMode==false) && (laserScannerRearIsConnected == true))
 		   )
 		{
-			// CARMEN laser module
+			// DIRECS laser module
 			// asks ALL lasers (managed internaly in laser_main.cpp)!
-			laserValue = laser->carmen_laser_run();
+			laserValue = laser->direcs_laser_run();
 			
 			switch (laserValue)
 			{
@@ -530,9 +530,9 @@ void LaserThread::setSimulationMode(bool status)
 bool LaserThread::isConnected(short int laserScanner)
 {
 	//-----------------------------------------------
-	// try to start the (former CARMEN) laser module
+	// try to start the (former DIRECS) laser module
 	//-----------------------------------------------
-	if (laser->carmen_laser_start(laserScanner) == 0)
+	if (laser->direcs_laser_start(laserScanner) == 0)
 	{
 		switch (laserScanner)
 		{

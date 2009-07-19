@@ -35,11 +35,11 @@ Laser::Laser()
 	laser4 = new sick_laser_t;
 	laser5 = new sick_laser_t;
 		
-	laser1_config = new carmen_laser_laser_config_t;
-	laser2_config = new carmen_laser_laser_config_t;
-	laser3_config = new carmen_laser_laser_config_t;
-	laser4_config = new carmen_laser_laser_config_t;
-	laser5_config = new carmen_laser_laser_config_t;
+	laser1_config = new direcs_laser_laser_config_t;
+	laser2_config = new direcs_laser_laser_config_t;
+	laser3_config = new direcs_laser_laser_config_t;
+	laser4_config = new direcs_laser_laser_config_t;
+	laser5_config = new direcs_laser_laser_config_t;
 	
 	serialPort = new DirecsSerial();
 }
@@ -192,7 +192,7 @@ void Laser::interpret_params(sick_laser_p laser, char *dev, char *type, double r
 	if (fabs(fov-M_PI) < 0.1 || fabs(fov-100.0/180.0*M_PI) < 0.1)
 		qDebug("The parameter laser_laserX_fov in the ini file must\nbe specified in degrees not in radians!");
 
-	// Markus Original: laser->settings.angle_range = carmen_round(fov);
+	// Markus Original: laser->settings.angle_range = direcs_round(fov);
 	laser->settings.angle_range = qRound(fov);
 
 	if ( laser->settings.angle_range != 180 && laser->settings.angle_range != 100 )
@@ -311,7 +311,7 @@ void Laser::read_parameters(short int laserScanner)
 }
 
 
-void  Laser::set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_config_t* config)
+void  Laser::set_laser_config_structure(sick_laser_p laser, direcs_laser_laser_config_t* config)
 {
 
 	if (laser->settings.type == LMS) {
@@ -340,54 +340,54 @@ void  Laser::set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_c
 	}
 	
 	if (laser->settings.num_values == 181 ) {
-		config->angular_resolution = carmen_degrees_to_radians(1.0); 
+		config->angular_resolution = direcs_degrees_to_radians(1.0); 
 		config->fov  = M_PI;
 		config->start_angle = -0.5*config->fov;
 	} 
 	else if (laser->settings.num_values == 361 ) {
-		config->angular_resolution = carmen_degrees_to_radians(0.5); 
+		config->angular_resolution = direcs_degrees_to_radians(0.5); 
 		config->fov  = M_PI;
 		config->start_angle = -0.5*config->fov;
 	} 
 	else if (laser->settings.num_values == 180 ) {
-		config->angular_resolution = carmen_degrees_to_radians(1.0);
+		config->angular_resolution = direcs_degrees_to_radians(1.0);
 		config->fov  = M_PI - config->angular_resolution;
 		config->start_angle = -0.5*M_PI;
 	} 
 	else if (laser->settings.num_values == 360 ) {
-		config->angular_resolution = carmen_degrees_to_radians(0.5);
+		config->angular_resolution = direcs_degrees_to_radians(0.5);
 		config->fov  = M_PI - config->angular_resolution;
 		config->start_angle = -0.5*M_PI;
 	} 
 	else   if (laser->settings.num_values == 401 ) {
-		config->angular_resolution = carmen_degrees_to_radians(0.25);
-		config->fov  = carmen_degrees_to_radians(100.0);
-		config->start_angle = -0.5*carmen_degrees_to_radians(100.0);
+		config->angular_resolution = direcs_degrees_to_radians(0.25);
+		config->fov  = direcs_degrees_to_radians(100.0);
+		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
 	} 
 	else   if (laser->settings.num_values == 201 ) {
-		config->angular_resolution = carmen_degrees_to_radians(0.5);
-		config->fov  = carmen_degrees_to_radians(100.0);
-		config->start_angle = -0.5*carmen_degrees_to_radians(100.0);
+		config->angular_resolution = direcs_degrees_to_radians(0.5);
+		config->fov  = direcs_degrees_to_radians(100.0);
+		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
 	} 
 	else   if (laser->settings.num_values == 101 ) {
-		config->angular_resolution = carmen_degrees_to_radians(1.0);
-		config->fov  = carmen_degrees_to_radians(100.0);
-		config->start_angle = -0.5*carmen_degrees_to_radians(100.0);
+		config->angular_resolution = direcs_degrees_to_radians(1.0);
+		config->fov  = direcs_degrees_to_radians(100.0);
+		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
 	} 
 	else   if (laser->settings.num_values == 400 ) {
-		config->angular_resolution = carmen_degrees_to_radians(0.25);
-		config->fov  = carmen_degrees_to_radians(100.0) - config->angular_resolution;
-		config->start_angle = -0.5*carmen_degrees_to_radians(100.0);
+		config->angular_resolution = direcs_degrees_to_radians(0.25);
+		config->fov  = direcs_degrees_to_radians(100.0) - config->angular_resolution;
+		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
 	} 
 	else   if (laser->settings.num_values == 200 ) {
-		config->angular_resolution = carmen_degrees_to_radians(0.5);
-		config->fov  = carmen_degrees_to_radians(100.0) - config->angular_resolution;
-		config->start_angle = -0.5*carmen_degrees_to_radians(100.0);
+		config->angular_resolution = direcs_degrees_to_radians(0.5);
+		config->fov  = direcs_degrees_to_radians(100.0) - config->angular_resolution;
+		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
 	} 
 	else   if (laser->settings.num_values == 100 ) {
-		config->angular_resolution = carmen_degrees_to_radians(1.0);
-		config->fov  = carmen_degrees_to_radians(100.0) - config->angular_resolution;
-		config->start_angle = -0.5*carmen_degrees_to_radians(100.0);
+		config->angular_resolution = direcs_degrees_to_radians(1.0);
+		config->fov  = direcs_degrees_to_radians(100.0) - config->angular_resolution;
+		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
 	} 
 	else {
 		config->fov  = M_PI;
@@ -410,13 +410,13 @@ void  Laser::set_laser_config_structure(sick_laser_p laser, carmen_laser_laser_c
 }
 
 
-int Laser::carmen_laser_start(short int laserScanner)
+int Laser::direcs_laser_start(short int laserScanner)
 {
 	switch (laserScanner)
 	{
 		case LASER1:
 			// get laser default parameter
-			set_default_parameters(laser1, CARMEN_FRONT_LASER_NUM);
+			set_default_parameters(laser1, DIRECS_FRONT_LASER_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER1);
 			// start lasers, and start publishing scans
@@ -440,7 +440,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER2:
 			// get laser default parameter
-			set_default_parameters(laser2, CARMEN_REAR_LASER_NUM);
+			set_default_parameters(laser2, DIRECS_REAR_LASER_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER2);
 			// start lasers, and start publishing scans
@@ -464,7 +464,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER3:
 			// get laser default parameter
-			set_default_parameters(laser3, CARMEN_LASER3_NUM);
+			set_default_parameters(laser3, DIRECS_LASER3_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER3);
 			// start lasers, and start publishing scans
@@ -488,7 +488,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER4:
 			// get laser default parameter
-			set_default_parameters(laser4, CARMEN_LASER4_NUM);
+			set_default_parameters(laser4, DIRECS_LASER4_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER4);
 			// start lasers, and start publishing scans
@@ -512,7 +512,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 
 		case LASER5:
 			// get laser default parameter
-			set_default_parameters(laser5, CARMEN_LASER4_NUM);
+			set_default_parameters(laser5, DIRECS_LASER4_NUM);
 			// read parameters and also sets "user_laser*"
 			read_parameters(LASER5);
 			// start lasers, and start publishing scans
@@ -540,7 +540,7 @@ int Laser::carmen_laser_start(short int laserScanner)
 }
 
 
-void Laser::carmen_laser_shutdown(int signo __attribute__ ((unused)))
+void Laser::direcs_laser_shutdown(int signo __attribute__ ((unused)))
 {
 	if(use_laser1)
 		sick_stop_laser(laser1);
@@ -559,7 +559,7 @@ void Laser::carmen_laser_shutdown(int signo __attribute__ ((unused)))
 }
 
 
-int Laser::carmen_laser_run(void)
+int Laser::direcs_laser_run(void)
 {
 	static int first = 1;
 	static double last_update;
@@ -572,11 +572,11 @@ int Laser::carmen_laser_run(void)
 	
 	if (first)
 	{
-		last_update = carmen_get_time();
+		last_update = direcs_get_time();
 		first = 0;
 	}
 	
-	current_time = carmen_get_time();
+	current_time = direcs_get_time();
 	print_stats = (current_time - last_update > 1.0);
 
 	
@@ -603,7 +603,7 @@ int Laser::carmen_laser_run(void)
 	
 	if(use_laser2)
 	{
-		//qDebug("carmen_laser_run: use_laser1=true");
+		//qDebug("direcs_laser_run: use_laser1=true");
 		sick_handle_laser(laser2);
 		
 		if (laser2->new_reading)
@@ -685,7 +685,7 @@ int Laser::carmen_laser_run(void)
 		last_alive = current_time;
 	}
 
-	//carmen_publish_heartbeat("laser");
+	//direcs_publish_heartbeat("laser");
 
 	return laserValue;
 }
@@ -693,7 +693,7 @@ int Laser::carmen_laser_run(void)
 
 void Laser::shutdown_laser(int x)
 {
-	carmen_laser_shutdown(x);
+	direcs_laser_shutdown(x);
 	exit(-1);
 }
 
@@ -782,12 +782,12 @@ void Laser::setDevicePort(short int laser, QString serialPort)
 }
 
 
-double Laser::carmen_radians_to_degrees(double theta)
+double Laser::direcs_radians_to_degrees(double theta)
 {
 	return (theta * 180.0 / M_PI);
 }
 
-double Laser::carmen_degrees_to_radians(double theta)
+double Laser::direcs_degrees_to_radians(double theta)
 {
 	return (theta * M_PI / 180.0);
 }
@@ -1007,7 +1007,7 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 		return(-1);
 	}
 	
-	#ifdef CARMEN_LASER_LOW_LATENCY
+	#ifdef DIRECS_LASER_LOW_LATENCY
 	serialPort->setLowLatency(laser->dev.fd);
 	#endif
 	
@@ -1050,7 +1050,7 @@ int Laser::sick_read_data(sick_laser_p laser, unsigned char *data, double timeou
 	static int val, i, j, l, pos, chk1, chk2;
 	double start_time;
 
-	#ifdef CARMEN_LASER_USE_SELECT
+	#ifdef DIRECS_LASER_USE_SELECT
 	fd_set read_set;
 	struct timeval timer;
 	timer.tv_sec=(long)(floor(timeout));
@@ -1064,15 +1064,15 @@ int Laser::sick_read_data(sick_laser_p laser, unsigned char *data, double timeou
 	chk1 = FALSE;
 	chk2 = FALSE;
 
-	#ifdef CARMEN_LASER_USE_SELECT
+	#ifdef DIRECS_LASER_USE_SELECT
 	while(select(laser->dev.fd+1, &read_set, NULL, NULL, &timer))
 	{
-		start_time = carmen_get_time();
+		start_time = direcs_get_time();
 	#else
 
-	start_time = carmen_get_time();
+	start_time = direcs_get_time();
 		
-	while(carmen_get_time() - start_time < timeout)
+	while(direcs_get_time() - start_time < timeout)
 	{
 	#endif
 		val = serialPort->numChars(laser->dev.fd);
@@ -1123,7 +1123,7 @@ int Laser::sick_read_data(sick_laser_p laser, unsigned char *data, double timeou
 		if(pos == l + 6)
 			return(l + 6);
 		
-		#ifndef CARMEN_LASER_USE_SELECT
+		#ifndef DIRECS_LASER_USE_SELECT
 		usleep(1000);
 		#endif
 	}
@@ -1137,7 +1137,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 	unsigned char buffer[MAX_COMMAND_SIZE];
 	int pos = 0, i, check, length, loop, answer = 0, counter = 0;
 	int val = 0;
-	#ifdef CARMEN_LASER_USE_SELECT
+	#ifdef DIRECS_LASER_USE_SELECT
 	fd_set read_set;
 	struct timeval timer;
 	timer.tv_sec=1;
@@ -1169,7 +1169,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 	/* wait for acknowledgement */
 	loop = 1;
 	answer = INI;
-	#ifdef CARMEN_LASER_USE_SELECT
+	#ifdef DIRECS_LASER_USE_SELECT
 	loop=select(laser->dev.fd+1, &read_set, NULL, NULL, &timer);
 	if(loop) {
 	#else
@@ -1201,7 +1201,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 		answer = TIO;
 		loop = 0;
 		}
-	#ifndef CARMEN_LASER_USE_SELECT
+	#ifndef DIRECS_LASER_USE_SELECT
 		usleep(1000); 
 	#endif
 	}
@@ -1465,13 +1465,13 @@ int Laser::sick_testBaudrate(sick_laser_p laser, int brate)
 	//	double elapsed_time = 0;
 	
 	// get time
-	//	start_time = carmen_get_time();
+	//	start_time = direcs_get_time();
 	//qDebug("\nstart time: %f seks", start_time);
 	// end Markus
 
 
 	sick_set_baudrate(laser, brate);
-	//	elapsed_time = (carmen_get_time() - start_time);
+	//	elapsed_time = (direcs_get_time() - start_time);
 	//	qDebug("elapsed time till here: %f seks", elapsed_time);
 	
 	response = sick_write_command(laser, 0x30, ReqLaser, 2);
@@ -1566,7 +1566,7 @@ void Laser::sick_install_settings(sick_laser_p laser)
 	laser->dev.ttyport = (char *)malloc((strlen(laser->settings.device_name) + 1) * sizeof(char));
 
 	// not nedded:
-	// carmen_test_alloc(laser->dev.ttyport);
+	// direcs_test_alloc(laser->dev.ttyport);
 
 	strcpy(laser->dev.ttyport, laser->settings.device_name);
 }
@@ -1580,23 +1580,23 @@ void Laser::sick_allocate_laser(sick_laser_p laser)
 	
 	laser->range = (double *)malloc(laser->settings.num_values * sizeof(double));
 	// Not nedded:
-	//carmen_test_alloc(laser->range);
+	//direcs_test_alloc(laser->range);
 	
 	laser->glare = (int *)malloc(laser->settings.num_values * sizeof(int));
 	// Not nedded:
-	// carmen_test_alloc(laser->glare);
+	// direcs_test_alloc(laser->glare);
 	
 	laser->wfv = (int *)malloc(laser->settings.num_values * sizeof(int));
 	// Not nedded:
-	//carmen_test_alloc(laser->wfv);
+	//direcs_test_alloc(laser->wfv);
 	
 	laser->sfv = (int *)malloc(laser->settings.num_values * sizeof(int));
 	// Not nedded:
-	//carmen_test_alloc(laser->sfv);
+	//direcs_test_alloc(laser->sfv);
 	
 	laser->buffer = (unsigned char *)malloc(LASER_BUFFER_SIZE);
 	// Not nedded:
-	//carmen_test_alloc(laser->buffer);
+	//direcs_test_alloc(laser->buffer);
 	
 	laser->new_reading = 0;
 	laser->buffer_position = 0;
@@ -1615,7 +1615,7 @@ void Laser::sick_allocate_laser(sick_laser_p laser)
 		laser->remvalues = laser->settings.rem_values;
 		laser->remission = (double *)malloc(laser->settings.rem_values * sizeof(double));
 		// not needed here:
-		//carmen_test_alloc(laser->remission);
+		//direcs_test_alloc(laser->remission);
 		
 		for(i = 0; i< laser->settings.rem_values; i++)
 	  		laser->remission[i] = 0;
@@ -1869,7 +1869,7 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 	int leftover;
 	
 	laser->new_reading = 0;
-	#ifdef CARMEN_LASER_USE_SELECT
+	#ifdef DIRECS_LASER_USE_SELECT
 	double timeout=0.1;
 	fd_set read_set;
 	struct timeval timer;
@@ -1894,7 +1894,7 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 	{
 		if (laser->packet_timestamp<0.)
 		{
-			laser->packet_timestamp=carmen_get_time();
+			laser->packet_timestamp=direcs_get_time();
 		}
 		
 		laser->buffer_position += bytes_read;
@@ -1945,14 +1945,14 @@ void Laser::sick_stop_laser(sick_laser_p laser)
 }
 
 
-double Laser::carmen_get_time(void)
+double Laser::direcs_get_time(void)
 {
 	struct timeval tv;
 	double t;
 
 	if (gettimeofday(&tv, NULL) < 0)
 	{
-		qDebug("carmen_get_time encountered error in gettimeofday : %s", strerror(errno));
+		qDebug("direcs_get_time encountered error in gettimeofday : %s", strerror(errno));
 	}
 	
 	t = tv.tv_sec + tv.tv_usec/1000000.0;

@@ -43,7 +43,7 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	
 	/*
 	Original code in sick_serial_conect:
-	#ifdef CARMEN_LASER_LOW_LATENCY
+	#ifdef DIRECS_LASER_LOW_LATENCY
 		serialPort->setLowLatency(laser->dev.fd);
 	#endif
 	*/
