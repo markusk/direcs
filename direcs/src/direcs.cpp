@@ -33,11 +33,12 @@ int main(int argc, char *argv[])
 	// The QApplication class manages the GUI application's control flow and main settings.
 	QApplication app(argc, argv);
 
+	
 	// create a splash screen
 	QPixmap pixmap(":/images/images/splash.png");
 	QSplashScreen splash(pixmap);
-
-	// create Direcs class object
+	
+	// create the Direcs class object
 	Direcs d(&splash);
 
 	// show the splash screen
@@ -135,6 +136,19 @@ Direcs::Direcs()
 	qDebug("signals connected");
 	#endif
 
+
+	//--------------------------------------------------------------------------------
+	// create the commmand line arguments list
+	//--------------------------------------------------------------------------------
+	splash->showMessage(QObject::tr("Checking command-line arguments..."), splashPosition, splashColor);
+	arguments = QCoreApplication::arguments();
+	int count = arguments.count() - 1;
+	
+	// if arguments were passed on the command line
+	if (count > 0)
+	{
+		qDebug() << count << "argument(s) passed...";
+	}
 }
 
 
