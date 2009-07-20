@@ -2298,13 +2298,11 @@ QString Gui::removeHtml(QString text)
 	// remove HTML tags from string
 	//------------------------------
 	int start= -1;
-	int end= -1;
 	do
 	{
 		// search for the first HTML "<"
 		start = text.indexOf("<");
-		end = text.indexOf(">") - start + 1;
-		text.remove(start, end);
+		text.remove(start, text.indexOf(">") - start + 1);
 	} while (text.contains(">"));
 	// till the last HTML ">" is found
 	
