@@ -222,6 +222,12 @@ class Direcs : public QObject
 		@sa logicalUnit()
 		*/
 		void showPreferredDirection(QString direction);
+		
+		/**
+		Let the other classes know if we are in the console mode (activated via command-line argument)
+		@sa Gui::setConsoleMode()
+		*/
+		void publishConsoleMode(bool state);
 
 		/**
 		Shows the face tracking direction in a lable.

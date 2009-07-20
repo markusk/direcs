@@ -29,6 +29,7 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	aboutDialog = a;
 
 	robotIsOn = false;
+	consoleMode = false;
 	laserXPos = 0; // correct value is set in the initLaserView()!!
 	laserYPos = 0; // correct value is set in the initLaserView()!!
 
@@ -221,7 +222,7 @@ void Gui::setRobotControls(bool state)
 
 void Gui::appendLog(QString text, bool CR, bool sayIt)
 {
-	// insert the text
+	// insert the text in the GUI
 	ui.textEditLog->insertHtml(text);
 
 	if (CR == TRUE) // default!
@@ -229,6 +230,17 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditLog->ensureCursorVisible();
+
+
+	if (consoleMode)
+	{
+		// remove HTML code
+		text = removeHtml(text);
+		// print text to console
+		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+		QByteArray textForConsole = text.toLatin1();
+		qDebug("%s", textForConsole.data());
+	}
 
 
 	// say the message via Linux espeak
@@ -252,6 +264,17 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditNetworkLog->ensureCursorVisible();
+
+
+	if (consoleMode)
+	{
+		// remove HTML code
+		text = removeHtml(text);
+		// print text to console
+		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+		QByteArray textForConsole = text.toLatin1();
+		qDebug("%s", textForConsole.data());
+	}
 
 
 	// say the message via Linux espeak
@@ -2260,4 +2283,32 @@ void Gui::setLEDHeartbeat(bool state)
 		ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 		return;
 	}
+}
+
+
+void Gui::setConsoleMode(bool state)
+{
+	consoleMode = state;
+}
+
+
+QString Gui::removeHtml(QString text)
+{
+	//------------------------------
+	// remove HTML tags from string
+	//------------------------------
+	int start= -1;
+	do
+	{
+		// search for the first HTML "<"
+		start = text.indexOf("<");
+
+		if (start != 1)
+		{
+			text.remove(start, text.indexOf(">") + 1 - start );
+		}
+	} while (text.contains(">"));
+	// till the last HTML ">" is found
+	
+	return text;
 }

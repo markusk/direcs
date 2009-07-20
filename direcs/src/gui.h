@@ -259,6 +259,13 @@ class Gui : public QMainWindow
 		*/
 		void setLEDHeartbeat(bool state);
 
+		/**
+		Turns the CONSOLE mode on or off.
+		If enabled, all log messages are passed to the console.
+		@param state can be true or false.
+		*/
+		void setConsoleMode(bool state);
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -393,6 +400,13 @@ class Gui : public QMainWindow
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
 
+		/**
+		Removes HTML code from a given string.
+		@param text is the string to be cleaned
+		@return the cleaned string
+		*/
+		QString removeHtml(QString text);
+
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		Ui::mainWindow ui;
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the direcs class!
@@ -434,7 +448,7 @@ class Gui : public QMainWindow
 //		QGraphicsLineItem *yAxis;							/// The compass X axis in the graphics view
 //		QGraphicsLineItem *zAxis;							/// The compass X axis in the graphics view
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
-
+		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */

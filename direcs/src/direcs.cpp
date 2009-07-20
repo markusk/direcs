@@ -166,6 +166,11 @@ void Direcs::init()
 	consoleMode = false;
 
 
+	//--------------------------------------------------------------------------
+	// let some other classes know if we are in the console mode
+	//--------------------------------------------------------------------------
+	connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
+	
 	//--------------------------------------------------------------------------------
 	// create the commmand line arguments list
 	//--------------------------------------------------------------------------------
@@ -180,7 +185,6 @@ void Direcs::init()
 		// check the arguments
 		checkArguments();
 	}
-	
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -394,7 +398,7 @@ void Direcs::init()
 
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
-		qDebug() << "Error opening serial port" << serialPortMicrocontroller;
+		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
 		gui->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
 
 		#ifndef _ARM_ // only include on _non_ ARM environments!
@@ -3667,6 +3671,7 @@ void Direcs::checkArguments()
 	if (arguments.contains("console"))
 	{
 		consoleMode = true;
+		emit publishConsoleMode(consoleMode);
 		qDebug("CONSOLE mode activated. Now passing all messages to the console.");
 	}
 }
