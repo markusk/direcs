@@ -95,12 +95,6 @@ int main(int argc, char *argv[])
 }
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
-const Qt::Alignment Direcs::splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
-const QColor Direcs::splashColor = Qt::red;
-#endif
-
-
 Direcs::Direcs()
 {
 	//------------------------------------------------------------------
@@ -164,6 +158,8 @@ void Direcs::init()
 {
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
+	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
+	splashColor = Qt::red;
 #endif
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
@@ -192,7 +188,7 @@ void Direcs::init()
 	// show the splash screen
 	//--------------------------------------------------------------------------
 	splash->show();
-	splash->showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
+	splash->showMessage(QObject::tr("Loading config file..."), splashPosition, splashColor);
 	//--------------------------------------------------------------------------
 	
 	//--------------------------------------------------------------------------

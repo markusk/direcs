@@ -84,8 +84,6 @@ class Direcs : public QObject
 	public:
 		Direcs();
 		~Direcs();
-		static const Qt::Alignment splashPosition;
-		static const QColor splashColor;
 
 		/**
 		TODO: add description
@@ -280,6 +278,10 @@ class Direcs : public QObject
 		AboutDialog *aboutDialog;       /// The about dialog
 		PlotThread *plotThread;
 		QSplashScreen *splash;
+#ifndef _ARM_ // only include on _non_ ARM environments!
+		Qt::Alignment splashPosition; 	/// The splash screen position
+		QColor splashColor; 			/// The splash screen text color
+#endif
 		QStringList arguments;			/// contains the list of command-line arguments
 #endif
 		Circuit *circuit1;
