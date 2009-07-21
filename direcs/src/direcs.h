@@ -82,16 +82,13 @@ class Direcs : public QObject
 
 
 	public:
-#ifndef _ARM_ // only include on _non_ ARM environments!
-		Direcs(QSplashScreen *splash); /// For non-ARM systems
-#else
-		Direcs(); /// For ARM systems only
-#endif
+		Direcs();
 		~Direcs();
 		static const Qt::Alignment splashPosition;
 		static const QColor splashColor;
 
 		/**
+		TODO: add description
 		*/
 		void init();
 
@@ -283,6 +280,7 @@ class Direcs : public QObject
 		AboutDialog *aboutDialog;       /// The about dialog
 		PlotThread *plotThread;
 		QSplashScreen *splash;
+		QPixmap *splashPixmap;
 		QStringList arguments;			/// contains the list of command-line arguments
 #endif
 		Circuit *circuit1;

@@ -93,7 +93,7 @@
   <kdevtrollproject>
     <run>
       <mainprogram>/home/markus/develop/direcs/direcs/bin/direcs</mainprogram>
-      <programargs>conSOLe</programargs>
+      <programargs></programargs>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
       <terminal>false</terminal>

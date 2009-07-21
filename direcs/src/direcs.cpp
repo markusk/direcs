@@ -23,62 +23,85 @@
 
 int main(int argc, char *argv[])
 {
-	// check for command-line parameter "console"
+	bool consoleModeActivated = false;
+	
+	
+	// Check for command-line argument "console".
+	// A deeper argument check will be done later within the class Direcs!
 	if (argc > 1)
 	{
 		qDebug() << argc - 1 << "argument(s) passed...";
 		
 		for (int i=1; i<argc; i++)
 		{
-			// now search for the "console" parameter (ignoring case)
+			// now search for the "console" parameter (case insensitive)
 			if (strcasecmp(argv[i], "console") == 0)
 			{
-				qDebug() << "console word found :-)";
+				consoleModeActivated = true;
 			}
 		}
 	}
-
-
-#ifndef _ARM_ // only include on _non_ ARM environments!
-	// Initialize the resource file
-	Q_INIT_RESOURCE(direcs);
-
-	// The QApplication class manages the GUI application's control flow and main settings.
-	QApplication app(argc, argv);
-
 	
-	// create a splash screen
-	QPixmap pixmap(":/images/images/splash.png");
-	QSplashScreen splash(pixmap);
 	
-	// create the Direcs class object
-	Direcs d(&splash);
+	if (consoleModeActivated)
+	{
+		//----------------------
+		// CREATE A CONSOLE APP
+		//----------------------
+		
+		// The QCoreApplication class provides an event loop for console Qt applications.
+		QCoreApplication app(argc, argv);
 
-	// show the splash screen
-	splash.show();
-	splash.showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
+		// create Direcs class object
+ 		Direcs d;
+	
+		// TODO: shutdown, when the program quits (e.g. Ctrl+C was pressed in the console)
+		//connect(app, SIGNAL( aboutToQuit() ), d, SLOT( shutdown() ));
 
-#else
-
-	// The QCoreApplication class provides an event loop for console Qt applications.
-	QCoreApplication app(argc, argv);
-
-	// create Direcs class object
-	Direcs d;
-
-	// shutdown, when the program quits (e.g. Ctrl+C was pressed)
-	//connect(app, SIGNAL( aboutToQuit() ), d, SLOT( shutdown() ));
-#endif
-
-	// init direcs
-	d.init();
-
-#ifdef _ARM_ // only include on ARM environments!
-	qDebug("-------------------------");
-	qDebug("Ready for take off... ;-)");
-	qDebug("-------------------------");
-#endif
-	return app.exec();
+		// init direcs
+		d.init();
+		
+		#ifdef _ARM_ // only include on ARM environments!
+		qDebug("-------------------------");
+		qDebug("Ready for take off... ;-)");
+		qDebug("-------------------------");
+		#endif
+		
+		return app.exec();
+	}
+	else
+	{
+		//----------------------
+		// CREATE A GUI APP
+		//----------------------
+		qDebug() << " No arguments passed...";
+		
+		#ifndef _ARM_ // only include on _non_ ARM environments!
+		// Initialize the resource file
+		Q_INIT_RESOURCE(direcs);
+	
+		// The QApplication class manages the GUI application's control flow and main settings.
+		QApplication app(argc, argv);
+	
+/*	
+		// create a splash screen
+		QPixmap pixmap(":/images/images/splash.png");
+		QSplashScreen splash(pixmap);
+		// create the Direcs class object
+		Direcs d(&splash);
+*/
+ 		Direcs d;
+/*	
+		// show the splash screen
+		splash.show();
+		splash.showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
+*/
+		// init direcs
+		d.init();
+		#endif
+		
+		return app.exec();
+	}
 }
 
 
@@ -88,11 +111,7 @@ const QColor Direcs::splashColor = Qt::red;
 #endif
 
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
-Direcs::Direcs(QSplashScreen *splash)
-#else
 Direcs::Direcs()
-#endif
 {
 	//------------------------------------------------------------------
 	// create the objects
@@ -102,7 +121,7 @@ Direcs::Direcs()
 #endif
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
-	this->splash = splash;
+// 	this->splash = splash;
 	settingsDialog = new SettingsDialog();
 	joystickDialog = new JoystickDialog();
 	aboutDialog = new AboutDialog();
@@ -110,6 +129,8 @@ Direcs::Direcs()
 #else
 	gui = new Gui();
 #endif
+	splashPixmap = new QPixmap(":/images/images/splash.png");
+	splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
@@ -178,7 +199,15 @@ void Direcs::init()
 	laserScannerRearFound = false;
 	consoleMode = false;
 
-
+	
+	//--------------------------------------------------------------------------
+	// show the splash screen
+	//--------------------------------------------------------------------------
+	//splash->setPixmap(splashPixmap);
+	splash->show();
+	splash->showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
+	//--------------------------------------------------------------------------
+	
 	//--------------------------------------------------------------------------
 	// let some other classes know if we are in the console mode
 	//--------------------------------------------------------------------------

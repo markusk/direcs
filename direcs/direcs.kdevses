@@ -1,10 +1,13 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="1" >
+ <DocsAndViews NumberOfDocuments="2" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="22" Type="Source" />
+   <View0 Encoding="" line="114" Type="Source" />
   </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.h" >
+   <View0 Encoding="" line="34" Type="Source" />
+  </Doc1>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -25,7 +28,7 @@
      <mark line="710" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/direcs.cpp" >
-     <mark line="187" />
+     <mark line="207" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
      <mark line="1706" />
