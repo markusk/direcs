@@ -23,8 +23,21 @@
 
 int main(int argc, char *argv[])
 {
-	Q_UNUSED(argc);
-	Q_UNUSED(argv);
+	// check for command-line parameter "console"
+	if (argc > 1)
+	{
+		qDebug() << argc - 1 << "argument(s) passed...";
+		
+		for (int i=1; i<argc; i++)
+		{
+			// now search for the "console" parameter (ignoring case)
+			if (strcasecmp(argv[i], "console") == 0)
+			{
+				qDebug() << "console word found :-)";
+			}
+		}
+	}
+
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	// Initialize the resource file
@@ -174,7 +187,6 @@ void Direcs::init()
 	//--------------------------------------------------------------------------------
 	// create the commmand line arguments list
 	//--------------------------------------------------------------------------------
-	splash->showMessage(QObject::tr("Checking command-line arguments..."), splashPosition, splashColor);
 	arguments = QCoreApplication::arguments();
 	int count = arguments.count() - 1;
 	
@@ -3661,14 +3673,7 @@ void Direcs::handleSigHup()
 
 void Direcs::checkArguments()
 {
-	// first of all convert all strings to lower case
-	for (int i=1; i<arguments.count(); i++)
-	{
-		arguments[i] = arguments.at(i).toLower();
-	}
-	
-	
-	if (arguments.contains("console"))
+	if (arguments.contains("console", Qt::CaseInsensitive))
 	{
 		consoleMode = true;
 		emit publishConsoleMode(consoleMode);

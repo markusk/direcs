@@ -3,7 +3,7 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="1" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="21" Type="Source" />
+   <View0 Encoding="" line="22" Type="Source" />
   </Doc0>
  </DocsAndViews>
  <pluginList>
@@ -23,6 +23,9 @@
    <bookmarks>
     <bookmark url="/home/markus/develop/direcs/direcs/src/sick.cpp" >
      <mark line="710" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/direcs/direcs/src/direcs.cpp" >
+     <mark line="187" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
      <mark line="1706" />
