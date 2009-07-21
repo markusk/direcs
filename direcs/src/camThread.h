@@ -138,9 +138,12 @@ class CamThread : public QThread
 		/**
 		This signal is emmited when a face was detected in the camera image
 		
+		@param faces is the total number of faces detected
 		@param faceX is the X coordinate to the middle of a detected face (0, if none)
 		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
 		@param faceRadius is the radius (0, if none)
+		@param lastFaceX is the X coordinate of the latest face detected
+		@param lastFaceY is the Y coordinate of the latest face detected
 		@sa Direcs::faceTracking()
 		*/
 		void faceDetected(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
