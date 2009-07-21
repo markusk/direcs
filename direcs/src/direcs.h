@@ -280,7 +280,6 @@ class Direcs : public QObject
 		AboutDialog *aboutDialog;       /// The about dialog
 		PlotThread *plotThread;
 		QSplashScreen *splash;
-		QPixmap *splashPixmap;
 		QStringList arguments;			/// contains the list of command-line arguments
 #endif
 		Circuit *circuit1;

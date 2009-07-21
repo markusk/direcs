@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 		//----------------------
 		// CREATE A GUI APP
 		//----------------------
-		qDebug() << " No arguments passed...";
+		qDebug() << "No command-line arguments passed...";
 		
 		#ifndef _ARM_ // only include on _non_ ARM environments!
 		// Initialize the resource file
@@ -83,19 +83,9 @@ int main(int argc, char *argv[])
 		// The QApplication class manages the GUI application's control flow and main settings.
 		QApplication app(argc, argv);
 	
-/*	
-		// create a splash screen
-		QPixmap pixmap(":/images/images/splash.png");
-		QSplashScreen splash(pixmap);
 		// create the Direcs class object
-		Direcs d(&splash);
-*/
  		Direcs d;
-/*	
-		// show the splash screen
-		splash.show();
-		splash.showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
-*/
+		
 		// init direcs
 		d.init();
 		#endif
@@ -121,7 +111,6 @@ Direcs::Direcs()
 #endif
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
-// 	this->splash = splash;
 	settingsDialog = new SettingsDialog();
 	joystickDialog = new JoystickDialog();
 	aboutDialog = new AboutDialog();
@@ -129,7 +118,6 @@ Direcs::Direcs()
 #else
 	gui = new Gui();
 #endif
-	splashPixmap = new QPixmap(":/images/images/splash.png");
 	splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 
 	mutex = new QMutex();
@@ -203,7 +191,6 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	// show the splash screen
 	//--------------------------------------------------------------------------
-	//splash->setPixmap(splashPixmap);
 	splash->show();
 	splash->showMessage(QObject::tr("Loading config file..."), Direcs::splashPosition, Direcs::splashColor);
 	//--------------------------------------------------------------------------
