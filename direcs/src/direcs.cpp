@@ -1438,13 +1438,19 @@ void Direcs::shutdown()
 		//-----------------------------
 		emit message("Closing serial port to microcontroller...");
 		interface1->closeComPort();
+		
+		
+	if (consoleMode)
+	{
+		// In the gui mode the quit is done automatically by the close signal.
+		// This following line automaticall calls the Direcs destructor method.
+		QCoreApplication::quit();
+	}
 }
 
 
 Direcs::~Direcs()
 {
-	qDebug("Bye.");
-
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
@@ -1482,6 +1488,8 @@ Direcs::~Direcs()
 		delete settingsDialog;
 	}
 	#endif
+	
+	qDebug("Bye.");
 	
 	if (consoleMode)
 	{
