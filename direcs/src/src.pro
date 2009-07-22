@@ -28,6 +28,7 @@ unix {
 				camThread.h \
 				circuit.h \
 				compassWidget.h \
+				consoleGui.h \
 				direcsSerial.h \
 				gui.h \
 				head.h \
@@ -53,6 +54,7 @@ unix {
 				camThread.cpp \
 				circuit.cpp \
 				compassWidget.cpp \
+				consoleGui.cpp \
 				direcsSerial.cpp \
 				gui.cpp \
 				head.cpp \
@@ -106,7 +108,8 @@ win32 {
     message("Processing win32 scope...")
     HEADERS +=	aboutDialog.h \
 			camThread.h \
-			compassWidget.cpp \
+			compassWidget.h \
+			consoleGui.h \
 			gui.h \
 			joystickDialog.h \
 			laserScene.h \
@@ -121,6 +124,7 @@ win32 {
     SOURCES +=	aboutDialog.cpp \
 			camThread.cpp \
 			compassWidget.cpp \
+			consoleGui.cpp \
 			gui.cpp \
 			joystickDialog.cpp \
 			laserScene.cpp \

@@ -1,25 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="6" >
+ <DocsAndViews NumberOfDocuments="1" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="3693" Type="Source" />
-  </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui_arm.h" >
-   <View0 Encoding="" line="35" Type="Source" />
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.h" >
-   <View0 Encoding="" line="62" Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.cpp" >
-   <View0 Encoding="" line="22" Type="Source" />
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui_arm.cpp" >
    <View0 Encoding="" line="0" Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.h" >
-   <View0 Encoding="" line="328" Type="Source" />
-  </Doc5>
+  </Doc0>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -27,6 +12,9 @@
     <breakpoint0 location="/home/markus/develop/direcs/direcs/src/sick.cpp:876" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint0>
+    <breakpoint1 location="/home/markus/develop/direcs/direcs/src/direcs.cpp:101" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+     <tracedExpressions/>
+    </breakpoint1>
    </breakpointList>
    <showInternalCommands value="0" />
   </kdevdebugger>
@@ -40,7 +28,7 @@
      <mark line="710" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/direcs.cpp" >
-     <mark line="201" />
+     <mark line="1462" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
      <mark line="1706" />

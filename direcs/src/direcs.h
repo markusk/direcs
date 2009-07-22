@@ -23,9 +23,9 @@
 
 //-------------------------------------------------------------------
 #ifdef _ARM_ // only include on ARM environments!
-	//#include <QObject> // for 'connect' in main()
 	#include "gui_arm.h"
 #else
+	#include "consoleGui.h"
 	#include "gui.h"
 	#include "joystickDialog.h"
 	#include "settingsDialog.h"
@@ -82,7 +82,7 @@ class Direcs : public QObject
 
 
 	public:
-		Direcs(bool consoleMode);
+		Direcs(bool bConsoleMode);
 		~Direcs();
 
 		/**
@@ -104,7 +104,6 @@ class Direcs : public QObject
 		Configures if an exit dialog should be shown, when exiting the main program.
 		*/
 		bool exitDialog;
-
 
 		// Unix signal handlers.
 		static void hupSignalHandler(int unused);
@@ -251,6 +250,12 @@ class Direcs : public QObject
 		*/
 		void sendNetworkString(QString text);
 
+		/**
+		Emits a string to the GUI log / console.
+		@param text is the message to be emitted
+		*/
+		void message(QString text);
+
 
 	private:
 		/**
@@ -272,6 +277,7 @@ class Direcs : public QObject
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		Gui *gui;
+		ConsoleGui *consoleGui;
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		SettingsDialog *settingsDialog; /// The settings dialog
 		JoystickDialog *joystickDialog; /// The joystick dialog
@@ -326,7 +332,7 @@ class Direcs : public QObject
 		int minimumSpeed;
 		int maximumSpeed;
 		unsigned int value;
-		bool mConsoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
+		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
