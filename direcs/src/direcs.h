@@ -254,7 +254,7 @@ class Direcs : public QObject
 		Emits a string to the GUI log / console.
 		@param text is the message to be emitted
 		*/
-		void message(QString text);
+		void message(QString text, bool CR=true, bool sayIt=false);
 
 
 	private:

@@ -135,32 +135,41 @@ Direcs::Direcs(bool bConsoleMode)
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
 #ifndef _ARM_ // only include on _non_ ARM environments!
-	plotThread = new PlotThread(sensorThread);
+	if (!consoleMode)
+	{
+		plotThread = new PlotThread(sensorThread);
+	}
 #endif
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
 #ifndef _ARM_ // only include on _non_ ARM environments!
-	camThread = new CamThread();
+	if (!consoleMode)
+	{
+		camThread = new CamThread();
+	}
 #endif
 	joystick = new Joystick();
 	head = new Head(servos);
 
 
 	#ifdef _ARM_ // only include on ARM environments!
-	//--------------------------------------------------------------------------------
-	// Convert the Unix signal to the QSocketNotifier::activated() signal effectively.
-	//--------------------------------------------------------------------------------
-	if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sighupFd))
-		qFatal("Couldn't create HUP socketpair");
-
-	if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sigtermFd))
-		qFatal("Couldn't create TERM socketpair");
-
-	snHup = new QSocketNotifier(sighupFd[1], QSocketNotifier::Read, this);
-	connect(snHup, SIGNAL(activated(int)), this, SLOT(handleSigHup()));
-	snTerm = new QSocketNotifier(sigtermFd[1], QSocketNotifier::Read, this);
-	connect(snTerm, SIGNAL(activated(int)), this, SLOT(handleSigTerm()));
-	qDebug("signals connected");
+	if (consoleMode)
+	{
+		//--------------------------------------------------------------------------------
+		// Convert the Unix signal to the QSocketNotifier::activated() signal effectively.
+		//--------------------------------------------------------------------------------
+		if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sighupFd))
+			qFatal("Couldn't create HUP socketpair");
+	
+		if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sigtermFd))
+			qFatal("Couldn't create TERM socketpair");
+	
+		snHup = new QSocketNotifier(sighupFd[1], QSocketNotifier::Read, this);
+		connect(snHup, SIGNAL(activated(int)), this, SLOT(handleSigHup()));
+		snTerm = new QSocketNotifier(sigtermFd[1], QSocketNotifier::Read, this);
+		connect(snTerm, SIGNAL(activated(int)), this, SLOT(handleSigTerm()));
+		qDebug("signals connected");
+	}
 	#endif
 }
 
@@ -210,7 +219,7 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	// let some other classes know if we are in the console mode
 	//--------------------------------------------------------------------------
-	connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
+	// FIXME: not in use anymore! connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
 	
 	/*
 	not in use at the moment...
@@ -269,7 +278,10 @@ void Direcs::init()
 //	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
+	if (!consoleMode)
+	{
+		connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
+	}
 	
 	// also set the robot to OFF, when there are problems with the circuit
 	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
@@ -277,27 +289,36 @@ void Direcs::init()
 //	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
+	if (!consoleMode)
+	{
+		connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
+	}
 
-	//--------------------------------------------------------------------------
-	// shutdown Direcs program on exit button
-	// shutdown is also called, when the gui is closed
-	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
-
-	//--------------------------------------------------------------------------
-	// call (a) test method(s) when clicking the test button
-	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(test()), this, SLOT(test()));
+	if (!consoleMode)
+	{
+		//--------------------------------------------------------------------------
+		// shutdown Direcs program on exit button
+		// shutdown is also called, when the gui is closed
+		//--------------------------------------------------------------------------
+		connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
+	
+		//--------------------------------------------------------------------------
+		// call (a) test method(s) when clicking the test button
+		//--------------------------------------------------------------------------
+		connect(gui, SIGNAL(test()), this, SLOT(test()));
+	}
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	// currently not in use:
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
 #endif
 
-	//--------------------------------------------------------------------------
-	// resets the driven distance, when signal comes from Gui
-	//--------------------------------------------------------------------------
-	connect(gui, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
+	if (!consoleMode)
+	{
+		//--------------------------------------------------------------------------
+		// resets the driven distance, when signal comes from Gui
+		//--------------------------------------------------------------------------
+		connect(gui, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
+	}
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
@@ -326,32 +347,32 @@ void Direcs::init()
 		// set the minimum laser distance, when signal comes from Gui
 		//--------------------------------------------------------------------------
 		connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+
+		//--------------------------------------------------------------------------
+		// let the GUI show servo messages in the log
+		//--------------------------------------------------------------------------
+		connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+	
+		#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
+		//-------------------------------------------------------------------------------------
+		// disable face detection in the GUI, on error with loading haar cascade in CamThread
+		// Must be before readSettings!
+		//-------------------------------------------------------------------------------------
+		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() ));
+	
+		//-------------------------------------------------------------------------------------
+		// disable camera controls in the GUI, on error opeing the camera in the CamThread
+		// Must be before readSettings!
+		//-------------------------------------------------------------------------------------
+		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() ));
+		#endif
 	}
 #endif
-
-	//--------------------------------------------------------------------------
-	// let the GUI show servo messages in the log
-	//--------------------------------------------------------------------------
-	connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 
 	//--------------------------------------------------------------------------
 	// let the splash screen show laser init messages
 	//--------------------------------------------------------------------------
 	connect(laserThread, SIGNAL(message(QString)), this, SLOT(showSplashMessage(QString)));
-
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-	//-------------------------------------------------------------------------------------
-	// disable face detection in the GUI, on error with loading haar cascade in CamThread
-	// Must be before readSettings!
-	//-------------------------------------------------------------------------------------
-	connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() ));
-
-	//-------------------------------------------------------------------------------------
-	// disable camera controls in the GUI, on error opeing the camera in the CamThread
-	// Must be before readSettings!
-	//-------------------------------------------------------------------------------------
-	connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() ));
-	#endif
 
 
 	//----------------------------------------------------------------------------
@@ -359,7 +380,10 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	#ifdef _TTY_POSIX_
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-	connect(gui,  SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+	if (!consoleMode)
+	{
+		connect(gui,  SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+	}
 
 	/*
 	//----------------------------------------------------------------------------
@@ -448,8 +472,16 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	// let the GUI show messages in the log (e.g. when special buttons pressed)
 	//----------------------------------------------------------------------------
-	connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
+	if (!consoleMode)
+	{
+		connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
+	}
+	else
+	{
+		connect(joystick, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
+	}
 
+	
 	//#ifdef _ARM_ // only include on ARM environments!
 	//-------------------------------------------------------
 	// start the network thread (waiting for commands)
@@ -499,12 +531,13 @@ void Direcs::init()
 			splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
+			
+			// init the circuit & Co. when hitting the button in the GUI
+			connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+			connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 		}
 		#endif
 
-		// init the circuit & Co. when hitting the button in the GUI
-		connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
-		connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 
 		//==========================
 		// init the robots circuit
@@ -617,10 +650,14 @@ void Direcs::init()
 		emit message("Joystick thread started.");
 	}
 
-	//----------------------------------------------------------------------------
-	// drive in the direction which was emited
-	//----------------------------------------------------------------------------
-	connect(gui, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
+	
+	if (!consoleMode)
+	{
+		//----------------------------------------------------------------------------
+		// drive in the direction which was emited from the gui
+		//----------------------------------------------------------------------------
+		connect(gui, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
+	}
 
 	//----------------------------------------------------------------------------
 	// connect sensor signals to "show sensor data"
@@ -628,7 +665,10 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL( sensorDataComplete() ), this, SLOT( showSensorData() ) );
 	connect(sensorThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
-	connect(sensorThread, SIGNAL( compassDataComplete(float, float, float) ), gui, SLOT( showCompassData(float, float, float) ) );
+	if (!consoleMode)
+	{
+		connect(sensorThread, SIGNAL( compassDataComplete(float, float, float) ), gui, SLOT( showCompassData(float, float, float) ) );
+	}
 
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	//----------------------------------------------------------------------------
@@ -637,33 +677,36 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
 
-	//----------------------------------------------------------------------------
-	// connect camDataComplete from the cam thread to signal "setCamImage"
-	// (Whenever the image is complete, the image is shown in the GUI)
-	//----------------------------------------------------------------------------
-	connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
-	//connect(camThread, SIGNAL( camDataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
-
-	//--------------------------------------------------------------------------------------------------------
-	// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
-	//--------------------------------------------------------------------------------------------------------
-	connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
-	connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
-
-	//----------------------------------------------------------------------------
-	// enable face detection, when activated in the GUI
-	//----------------------------------------------------------------------------
-	connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
-
-	//----------------------------------------------------------------------------
-	// enable face tracking, when activated in the GUI
-	//----------------------------------------------------------------------------
-	connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
-
-	//----------------------------------------------------------------------------
-	// show the face track direction in the gui
-	//----------------------------------------------------------------------------
-	connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
+	if (!consoleMode)
+	{
+		//----------------------------------------------------------------------------
+		// connect camDataComplete from the cam thread to signal "setCamImage"
+		// (Whenever the image is complete, the image is shown in the GUI)
+		//----------------------------------------------------------------------------
+		connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
+		//connect(camThread, SIGNAL( camDataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
+	
+		//--------------------------------------------------------------------------------------------------------
+		// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
+		//--------------------------------------------------------------------------------------------------------
+		connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
+		connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
+	
+		//----------------------------------------------------------------------------
+		// enable face detection, when activated in the GUI
+		//----------------------------------------------------------------------------
+		connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
+	
+		//----------------------------------------------------------------------------
+		// enable face tracking, when activated in the GUI
+		//----------------------------------------------------------------------------
+		connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
+	
+		//----------------------------------------------------------------------------
+		// show the face track direction in the gui
+		//----------------------------------------------------------------------------
+		connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
+	}
 	#endif
 
 	//----------------------------------------------------------------------------
@@ -671,31 +714,43 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), this, SLOT(logicalUnit(int, QDateTime)));
 
-	//----------------------------------------------------------------------------
-	// show the angle where to drive in a GUI label
-	//----------------------------------------------------------------------------
-	connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui, SLOT(showLaserFrontAngles(int, int, int)));
-
-	//----------------------------------------------------------------------------
-	// show the preferred driving direction in a GUI label
-	//----------------------------------------------------------------------------
-	connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
-
-	//----------------------------------------------------------------------------
-	// connect remote control button from gui to remote control method here
-	// (Whenever the button is pushed, enable the network remote control)
-	//----------------------------------------------------------------------------
-	connect(gui, SIGNAL( enableRemoteControlListening(bool) ), this, SLOT( enableRemoteControlListening(bool) ));
+	if (!consoleMode)
+	{
+		//----------------------------------------------------------------------------
+		// show the angle where to drive in a GUI label
+		//----------------------------------------------------------------------------
+		connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui, SLOT(showLaserFrontAngles(int, int, int)));
+	
+		//----------------------------------------------------------------------------
+		// show the preferred driving direction in a GUI label
+		//----------------------------------------------------------------------------
+		connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
+	
+		//----------------------------------------------------------------------------
+		// connect remote control button from gui to remote control method here
+		// (Whenever the button is pushed, enable the network remote control)
+		//----------------------------------------------------------------------------
+		connect(gui, SIGNAL( enableRemoteControlListening(bool) ), this, SLOT( enableRemoteControlListening(bool) ));
+	}
 
 	//----------------------------------------------------------------------------
 	// execute the received remote commands
 	//----------------------------------------------------------------------------
 	connect(netThread, SIGNAL( dataReceived(QString) ), this, SLOT( executeRemoteCommand(QString) ));
+	
 	//----------------------------------------------------------------------------
 	// connect networkThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
-	connect(netThread, SIGNAL( dataReceived(QString) ), gui, SLOT( appendNetworkLog(QString) ));
+	if (!consoleMode)
+	{
+		connect(netThread, SIGNAL( dataReceived(QString) ), gui, SLOT( appendNetworkLog(QString) ));
+	}
+	else
+	{
+		connect(netThread, SIGNAL( dataReceived(QString) ), consoleGui, SLOT( appendNetworkLog(QString) ));
+	}
+	
 	//----------------------------------------------------------------------------
 	// connect sendNetworkString signal to netThreads slot "sendNetworkCommand"
 	// (Whenever the signal is emmited, send the given string over the net)
@@ -765,14 +820,17 @@ void Direcs::init()
 	#endif
 
 
-	//----------------------------------------------------------------------------
-	// connect simulation button from gui to activate the simulation mode
-	// (sets the direcs an the threads to simulation mode)
-	//----------------------------------------------------------------------------
-	connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
-	connect(gui, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
-	connect(gui, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
-	connect(gui, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
+	if (!consoleMode)
+	{
+		//----------------------------------------------------------------------------
+		// connect simulation button from gui to activate the simulation mode
+		// (sets the direcs an the threads to simulation mode)
+		//----------------------------------------------------------------------------
+		connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
+		connect(gui, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
+		connect(gui, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
+		connect(gui, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
+	}
 
 
 	//---------------------------------------------------------------------
@@ -1515,16 +1573,19 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	static short int lastSensorValue = -1; // < the initial value has to be different to ALL SENSOR-constants!!
 
 
-	// first switch all (old) sensor alarms OFF
-	gui->showAlarm(SENSOR1, OFF);
-	gui->showAlarm(SENSOR2, OFF);
-	gui->showAlarm(SENSOR3, OFF);
-	gui->showAlarm(SENSOR4, OFF);
-	gui->showAlarm(SENSOR5, OFF);
-	gui->showAlarm(SENSOR6, OFF);
-	gui->showAlarm(SENSOR7, OFF);
-	gui->showAlarm(SENSOR8, OFF);
-	gui->showAlarm(SENSOR16, OFF);
+	if (!consoleMode)
+	{
+		// first switch all (old) sensor alarms OFF
+		gui->showAlarm(SENSOR1, OFF);
+		gui->showAlarm(SENSOR2, OFF);
+		gui->showAlarm(SENSOR3, OFF);
+		gui->showAlarm(SENSOR4, OFF);
+		gui->showAlarm(SENSOR5, OFF);
+		gui->showAlarm(SENSOR6, OFF);
+		gui->showAlarm(SENSOR7, OFF);
+		gui->showAlarm(SENSOR8, OFF);
+		gui->showAlarm(SENSOR16, OFF);
+	}
 
 
 	// if all sensor values are the same like the last, do nothing!
@@ -1865,39 +1926,42 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 
 void Direcs::showSensorData()
 {
-	//----------------------------------------
-	// show sensor values with progress bars
-	//----------------------------------------
-	gui->showDistanceGraphical(SENSOR1, sensorThread->getDistance(SENSOR1));
-	gui->showDistanceGraphical(SENSOR2, sensorThread->getDistance(SENSOR2));
-	gui->showDistanceGraphical(SENSOR3, sensorThread->getDistance(SENSOR3));
-	gui->showDistanceGraphical(SENSOR4, sensorThread->getDistance(SENSOR4));
-	gui->showDistanceGraphical(SENSOR5, sensorThread->getDistance(SENSOR5));
-	gui->showDistanceGraphical(SENSOR6, sensorThread->getDistance(SENSOR6));
-	gui->showDistanceGraphical(SENSOR7, sensorThread->getDistance(SENSOR7));
-	gui->showDistanceGraphical(SENSOR8, sensorThread->getDistance(SENSOR8));
-	gui->showDistanceGraphical(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
-
-	/*
-	//-------------------------------------------------------
-	// show distance value in a text label (in centimeters!)
-	//-------------------------------------------------------
-	gui->showDistance(SENSOR1, sensorThread->getDistance(SENSOR1));
-	gui->showDistance(SENSOR2, sensorThread->getDistance(SENSOR2));
-	gui->showDistance(SENSOR3, sensorThread->getDistance(SENSOR3));
-	gui->showDistance(SENSOR4, sensorThread->getDistance(SENSOR4));
-	gui->showDistance(SENSOR5, sensorThread->getDistance(SENSOR5));
-	gui->showDistance(SENSOR6, sensorThread->getDistance(SENSOR6));
-	gui->showDistance(SENSOR7, sensorThread->getDistance(SENSOR7));
-	gui->showDistance(SENSOR8, sensorThread->getDistance(SENSOR8));
-	gui->showDistance(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
-	*/
-
-	//--------------------------------------------------------------
-	// show driven distance value in a text label (in centimeters!)
-	//--------------------------------------------------------------
-	gui->showDrivenDistance(MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1));
-	gui->showDrivenDistance(MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2));
+	if (!consoleMode)
+	{
+		//----------------------------------------
+		// show sensor values with progress bars
+		//----------------------------------------
+		gui->showDistanceGraphical(SENSOR1, sensorThread->getDistance(SENSOR1));
+		gui->showDistanceGraphical(SENSOR2, sensorThread->getDistance(SENSOR2));
+		gui->showDistanceGraphical(SENSOR3, sensorThread->getDistance(SENSOR3));
+		gui->showDistanceGraphical(SENSOR4, sensorThread->getDistance(SENSOR4));
+		gui->showDistanceGraphical(SENSOR5, sensorThread->getDistance(SENSOR5));
+		gui->showDistanceGraphical(SENSOR6, sensorThread->getDistance(SENSOR6));
+		gui->showDistanceGraphical(SENSOR7, sensorThread->getDistance(SENSOR7));
+		gui->showDistanceGraphical(SENSOR8, sensorThread->getDistance(SENSOR8));
+		gui->showDistanceGraphical(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
+	
+		/*
+		//-------------------------------------------------------
+		// show distance value in a text label (in centimeters!)
+		//-------------------------------------------------------
+		gui->showDistance(SENSOR1, sensorThread->getDistance(SENSOR1));
+		gui->showDistance(SENSOR2, sensorThread->getDistance(SENSOR2));
+		gui->showDistance(SENSOR3, sensorThread->getDistance(SENSOR3));
+		gui->showDistance(SENSOR4, sensorThread->getDistance(SENSOR4));
+		gui->showDistance(SENSOR5, sensorThread->getDistance(SENSOR5));
+		gui->showDistance(SENSOR6, sensorThread->getDistance(SENSOR6));
+		gui->showDistance(SENSOR7, sensorThread->getDistance(SENSOR7));
+		gui->showDistance(SENSOR8, sensorThread->getDistance(SENSOR8));
+		gui->showDistance(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
+		*/
+	
+		//--------------------------------------------------------------
+		// show driven distance value in a text label (in centimeters!)
+		//--------------------------------------------------------------
+		gui->showDrivenDistance(MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1));
+		gui->showDrivenDistance(MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2));
+	}
 }
 
 
@@ -1907,10 +1971,13 @@ void Direcs::drive(const unsigned char command)
 	{
 		case FORWARD:
 			emit message("FORWARD");
-			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -1919,10 +1986,13 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case BACKWARD:
 			emit message("BACKWARD");
-			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
@@ -1931,11 +2001,13 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case LEFT:
 			emit message("LEFT");
-			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
-
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -1944,11 +2016,13 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case RIGHT:
 			emit message("RIGHT");
-			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
-
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
@@ -1957,11 +2031,13 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case TURNLEFT:
 			emit message("TURNLEFT");
-			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
-
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
@@ -1970,11 +2046,13 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case TURNRIGHT:
 			emit message("TURNRIGHT");
-			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-			gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
-
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -1988,10 +2066,13 @@ void Direcs::drive(const unsigned char command)
 				emit message("Starting to drive forward...");
 				emit message("START");
 				// set the motors to "drive FORWARD"
-				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+				if (!consoleMode)
+				{
+					gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+					gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+					gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+					gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+				}
 				motors->motorControl(MOTOR1, ON, CLOCKWISE);
 				motors->motorControl(MOTOR2, ON, CLOCKWISE);
 				motors->motorControl(MOTOR3, ON, CLOCKWISE);
@@ -2007,10 +2088,13 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case WAIT:
 			emit message("WAIT");
-			gui->showMotorStatus(MOTOR1, OFF, SAME);
-			gui->showMotorStatus(MOTOR2, OFF, SAME);
-			gui->showMotorStatus(MOTOR3, OFF, SAME);
-			gui->showMotorStatus(MOTOR4, OFF, SAME);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, OFF, SAME);
+				gui->showMotorStatus(MOTOR2, OFF, SAME);
+				gui->showMotorStatus(MOTOR3, OFF, SAME);
+				gui->showMotorStatus(MOTOR4, OFF, SAME);
+			}
 			// turning motors off
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
@@ -2024,10 +2108,13 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case STOP:
 			emit message("STOP");
-			gui->showMotorStatus(MOTOR1, OFF, SAME);
-			gui->showMotorStatus(MOTOR2, OFF, SAME);
-			gui->showMotorStatus(MOTOR3, OFF, SAME);
-			gui->showMotorStatus(MOTOR4, OFF, SAME);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, OFF, SAME);
+				gui->showMotorStatus(MOTOR2, OFF, SAME);
+				gui->showMotorStatus(MOTOR3, OFF, SAME);
+				gui->showMotorStatus(MOTOR4, OFF, SAME);
+			}
 			// turning motors off
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
@@ -2042,62 +2129,98 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case MOTOR1FW: // for the test widget in the GUI!!
 			emit message("Motor 1 forward");
-			gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR1BW: // for the test widget in the GUI!!
 			emit message("Motor 1 backward");
-			gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+			}
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			break;
 		case MOTOR1OFF: // for the test widget in the GUI!!
 			emit message("Motor 1 OFF");
-			gui->showMotorStatus(MOTOR1, OFF, SAME);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, OFF, SAME);
+			}
 			motors->motorControl(MOTOR1, OFF, SAME);
 			break;
 		case MOTOR2FW: // for the test widget in the GUI!!
 			emit message("Motor 2 forward");
-			gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
+			}
 			motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR2BW: // for the test widget in the GUI!!
 			emit message("Motor 2 backward");
-			gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+			}
 			motors->motorControl(MOTOR2, ON, CLOCKWISE);
 			break;
 		case MOTOR2OFF: // for the test widget in the GUI!!
 			emit message("Motor 2 OFF");
-			gui->showMotorStatus(MOTOR2, OFF, SAME);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR2, OFF, SAME);
+			}
 			motors->motorControl(MOTOR2, OFF, SAME);
 			break;
 		case MOTOR3FW: // for the test widget in the GUI!!
 			emit message("Motor 3 forward");
-			gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
+			}
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR3BW: // for the test widget in the GUI!!
 			emit message("Motor 3 backward");
-			gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+			}
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			break;
 		case MOTOR3OFF: // for the test widget in the GUI!!
 			emit message("Motor 3 OFF");
-			gui->showMotorStatus(MOTOR3, OFF, SAME);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR3, OFF, SAME);
+			}
 			motors->motorControl(MOTOR3, OFF, SAME);
 			break;
 		case MOTOR4FW: // for the test widget in the GUI!!
 			emit message("Motor 4 forward");
-			gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
+			}
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR4BW: // for the test widget in the GUI!!
 			emit message("Motor 4 backward");
-			gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+			}
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			break;
 		case MOTOR4OFF: // for the test widget in the GUI!!
 			emit message("Motor 4 OFF");
-			gui->showMotorStatus(MOTOR4, OFF, SAME);
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR4, OFF, SAME);
+			}
 			motors->motorControl(MOTOR4, OFF, SAME);
 			break;
 	}
@@ -3919,7 +4042,10 @@ void Direcs::test()
 		//head->look("RIGHT");
 
 	// test the GUI LED
-	gui->setLEDHeartbeat(toggle);
+	if (!consoleMode)
+	{
+		gui->setLEDHeartbeat(toggle);
+	}
 	
 // 	motors->flashlight(toggle);
 
