@@ -23,7 +23,7 @@
 
 int main(int argc, char *argv[])
 {
-	bool consoleModeActivated = false;
+	bool consoleMode = false;
 	
 	
 	// Check for command-line argument "console".
@@ -37,13 +37,13 @@ int main(int argc, char *argv[])
 			// now search for the "console" parameter (case insensitive)
 			if (strcasecmp(argv[i], "console") == 0)
 			{
-				consoleModeActivated = true;
+				consoleMode = true;
 			}
 		}
 	}
 	
 	
-	if (consoleModeActivated)
+	if (consoleMode)
 	{
 		//----------------------
 		// CREATE A CONSOLE APP
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 		QCoreApplication app(argc, argv);
 
 		// create Direcs class object
- 		Direcs d;
+ 		Direcs d(consoleMode);
 	
 		// TODO: shutdown, when the program quits (e.g. Ctrl+C was pressed in the console)
 		//connect(app, SIGNAL( aboutToQuit() ), d, SLOT( shutdown() ));
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 		QApplication app(argc, argv);
 	
 		// create the Direcs class object
- 		Direcs d;
+ 		Direcs d(consoleMode);
 		
 		// init direcs
 		d.init();
@@ -95,8 +95,11 @@ int main(int argc, char *argv[])
 }
 
 
-Direcs::Direcs()
+Direcs::Direcs(bool consoleMode)
 {
+	// store state from main method
+	mConsoleMode = consoleMode;
+	
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
@@ -181,7 +184,6 @@ void Direcs::init()
 	faceTrackingIsEnabled = false;
 	laserScannerFrontFound = false;
 	laserScannerRearFound = false;
-	consoleMode = false;
 
 	
 	//--------------------------------------------------------------------------
@@ -3687,8 +3689,8 @@ void Direcs::checkArguments()
 {
 	if (arguments.contains("console", Qt::CaseInsensitive))
 	{
-		consoleMode = true;
-		emit publishConsoleMode(consoleMode);
+		mConsoleMode = true;
+		emit publishConsoleMode(mConsoleMode);
 		qDebug("CONSOLE mode activated. Now passing all messages to the console.");
 	}
 }

@@ -82,7 +82,7 @@ class Direcs : public QObject
 
 
 	public:
-		Direcs();
+		Direcs(bool consoleMode);
 		~Direcs();
 
 		/**
@@ -326,7 +326,7 @@ class Direcs : public QObject
 		int minimumSpeed;
 		int maximumSpeed;
 		unsigned int value;
-		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
+		bool mConsoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
