@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 			if (strcasecmp(argv[i], "console") == 0)
 			{
 				consoleMode = true;
+				qDebug() << "Console mode enabled.";
 			}
 		}
 	}
@@ -95,10 +96,11 @@ int main(int argc, char *argv[])
 }
 
 
-Direcs::Direcs(bool consoleMode)
+Direcs::Direcs(bool bConsoleMode)
 {
-	// store state from main method
-	mConsoleMode = consoleMode;
+	// store mode from main method
+	consoleMode = bConsoleMode;
+	
 	
 	//------------------------------------------------------------------
 	// create the objects
@@ -107,15 +109,21 @@ Direcs::Direcs(bool consoleMode)
 	speakThread = new SpeakThread();
 #endif
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
-	settingsDialog = new SettingsDialog();
-	joystickDialog = new JoystickDialog();
-	aboutDialog = new AboutDialog();
-	gui = new Gui(settingsDialog, joystickDialog, aboutDialog);
-#else
-	gui = new Gui();
-#endif
-	splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
+// #ifndef _ARM_ // only include on _non_ ARM environments!
+	if (consoleMode)
+	{
+		consoleGui = new ConsoleGui();
+	}
+	else
+// #else
+	{
+		settingsDialog = new SettingsDialog();
+		joystickDialog = new JoystickDialog();
+		aboutDialog = new AboutDialog();
+		gui = new Gui(settingsDialog, joystickDialog, aboutDialog);
+		splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
+	}
+// #endif
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
@@ -160,9 +168,12 @@ Direcs::Direcs(bool consoleMode)
 void Direcs::init()
 {
 #ifndef _ARM_ // only include on _non_ ARM environments!
-	aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
-	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
-	splashColor = Qt::red;
+	if (!consoleMode)
+	{
+		aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
+		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
+		splashColor = Qt::red;
+	}
 #endif
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
@@ -189,14 +200,20 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	// show the splash screen
 	//--------------------------------------------------------------------------
-	splash->show();
-	splash->showMessage(QObject::tr("Loading config file..."), splashPosition, splashColor);
+	if (!consoleMode)
+	{
+		splash->show();
+		splash->showMessage(QObject::tr("Loading config file..."), splashPosition, splashColor);
+	}
 	//--------------------------------------------------------------------------
 	
 	//--------------------------------------------------------------------------
 	// let some other classes know if we are in the console mode
 	//--------------------------------------------------------------------------
 	connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
+	
+	/*
+	not in use at the moment...
 	
 	//--------------------------------------------------------------------------------
 	// create the commmand line arguments list
@@ -211,6 +228,7 @@ void Direcs::init()
 		// check the arguments
 		checkArguments();
 	}
+	*/
 	
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
@@ -220,9 +238,21 @@ void Direcs::init()
 	commaSeparator = ",";
 
 	//--------------------------------------------------------------------------
+	// show messages in the GUI log or in the console
+	//--------------------------------------------------------------------------
+	if (consoleMode)
+	{
+		connect(this, SIGNAL( message(QString) ), consoleGui, SLOT( appendLog(QString) ));
+	}
+	else
+	{
+		connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
+	}
+	
+	//--------------------------------------------------------------------------
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
-	gui->appendLog(QString("Current path: %1").arg(inifile1->checkPath()));
+	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
 
 	//--------------------------------------------------------------------------
 	// show a QMessage wth the possibility to exit the main programm, when errors occured!
@@ -270,30 +300,33 @@ void Direcs::init()
 	connect(gui, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
-	//--------------------------------------------------------------------------
-	// set the motor speed, when signal comes from Gui
-	//--------------------------------------------------------------------------
-	connect(settingsDialog, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
-
-	//--------------------------------------------------------------------------
-	// set the robot slot, when signal comes from Gui
-	//--------------------------------------------------------------------------
-	connect(settingsDialog, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-
-	//--------------------------------------------------------------------------
-	// set the straight forward deviation, when signal comes from Gui
-	//--------------------------------------------------------------------------
-	connect(settingsDialog, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
-
-	//--------------------------------------------------------------------------
-	// set the minimum distance, when signal comes from Gui
-	//--------------------------------------------------------------------------
-	connect(settingsDialog, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
-
-	//--------------------------------------------------------------------------
-	// set the minimum laser distance, when signal comes from Gui
-	//--------------------------------------------------------------------------
-	connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+	if (!consoleMode)
+	{
+		//--------------------------------------------------------------------------
+		// set the motor speed, when signal comes from Gui
+		//--------------------------------------------------------------------------
+		connect(settingsDialog, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
+	
+		//--------------------------------------------------------------------------
+		// set the robot slot, when signal comes from Gui
+		//--------------------------------------------------------------------------
+		connect(settingsDialog, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
+	
+		//--------------------------------------------------------------------------
+		// set the straight forward deviation, when signal comes from Gui
+		//--------------------------------------------------------------------------
+		connect(settingsDialog, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
+	
+		//--------------------------------------------------------------------------
+		// set the minimum distance, when signal comes from Gui
+		//--------------------------------------------------------------------------
+		connect(settingsDialog, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
+	
+		//--------------------------------------------------------------------------
+		// set the minimum laser distance, when signal comes from Gui
+		//--------------------------------------------------------------------------
+		connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+	}
 #endif
 
 	//--------------------------------------------------------------------------
@@ -355,9 +388,9 @@ void Direcs::init()
 
 	if (speakThread->isRunning() == false)
 	{
-		gui->appendLog("Starting speak thread...", false);
+		emit message("Starting speak thread...", false);
 		speakThread->start();
-		gui->appendLog("Speak thread started.");
+		emit message("Speak thread started.");
 	}
 	#endif
 
@@ -369,22 +402,26 @@ void Direcs::init()
 	if (inifile1->checkFiles() == false)
 	{
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		// file not found-Msg
-		QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
-		msgbox.exec();
+		if (!consoleMode)
+		{
+			// file not found-Msg
+			QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
+			msgbox.exec();
+		}
 		#else
 		qDebug() << "**** Error opening ini-file " << inifile1->getInifileName() << "****";
 		#endif
 
-		gui->appendLog(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
+		emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
 	}
 	else
 	{
 		// file found-Msg
-		gui->appendLog(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
+		emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		splash->showMessage(QObject::tr("Reading settings..."), splashPosition, splashColor);
+		if (!consoleMode)
+			splash->showMessage(QObject::tr("Reading settings..."), splashPosition, splashColor);
 		#endif
 
 		//================================================================================================================================================================
@@ -395,14 +432,17 @@ void Direcs::init()
 
 
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-	//----------------------------------------------------------------------------
-	// connect plotThread signal to "setPlotData"
-	// (Whenever the plot thread has new data, the data are show in the GUI)
-	//----------------------------------------------------------------------------
-	connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
-	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
-	connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
-	connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
+	if (!consoleMode)
+	{
+		//----------------------------------------------------------------------------
+		// connect plotThread signal to "setPlotData"
+		// (Whenever the plot thread has new data, the data are show in the GUI)
+		//----------------------------------------------------------------------------
+		connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
+		connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
+		connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
+		connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
+	}
 	#endif
 
 	//----------------------------------------------------------------------------
@@ -420,17 +460,20 @@ void Direcs::init()
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
-	gui->appendLog("Opening serial port for microcontroller communication...", false);
+	emit message("Opening serial port for microcontroller communication...", false);
 
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
 		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
-		gui->appendLog(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
+		emit message(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
 
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		// show a warning dialog!
-		QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
-		msgbox.exec();
+		if (!consoleMode)
+		{
+			// show a warning dialog!
+			QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+			msgbox.exec();
+		}
 		#else
 		qDebug() << "**** Error opening serial port" << serialPortMicrocontroller << "****";
 		#endif
@@ -443,7 +486,7 @@ void Direcs::init()
 		//*******************
 		//* The robot is ON *
 		//*******************
-		gui->appendLog("Serial port opened.");
+		emit message("Serial port opened.");
 
 
 		//-------------------------------------------------------
@@ -451,9 +494,12 @@ void Direcs::init()
 		// AND check, if the robot is "on" (it answers correct)
 		//-------------------------------------------------------
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
-		// for refreshing the splash...
-		QApplication::processEvents();
+		if (!consoleMode)
+		{
+			splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+		}
 		#endif
 
 		// init the circuit & Co. when hitting the button in the GUI
@@ -465,7 +511,7 @@ void Direcs::init()
 		//==========================
 		if (circuit1->initCircuit() == true)
 		{
-			gui->appendLog("Robot is <font color=\"#00FF00\">ON</font> and answers.");
+			emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 	
 			//-------------------------------------------------------
 			// set the read motor speed
@@ -474,14 +520,14 @@ void Direcs::init()
 			motors->setMotorSpeed(2, mot2Speed);
 			motors->setMotorSpeed(3, mot3Speed);
 			motors->setMotorSpeed(4, mot4Speed);
-			gui->appendLog("Motor speed set in microcontroller");
+			emit message("Motor speed set in microcontroller");
 	
 			//-------------------------------------------------------
 			// move all servos in their default positions
 			//-------------------------------------------------------
 			/* TODO: temporarily deactivated (no servos mounted on the current robot)
 			servos->init();
-			gui->appendLog("Servos moved to default positions");
+			emit message("Servos moved to default positions");
 			*/
 	
 			// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
@@ -497,9 +543,9 @@ void Direcs::init()
 				QApplication::processEvents();
 				#endif
 	
-				gui->appendLog("Starting heartbeat thread...", false);
+				emit message("Starting heartbeat thread...", false);
 				heartbeat->start();
-				gui->appendLog("Heartbeat thread started.");
+				emit message("Heartbeat thread started.");
 			}
 			*/
 	
@@ -509,14 +555,17 @@ void Direcs::init()
 			if (sensorThread->isRunning() == false)
 			{
 				#ifndef _ARM_ // only include on _non_ ARM environments!
-				splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
-				// for refreshing the splash...
-				QApplication::processEvents();
+				if (!consoleMode)
+				{
+					splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
+					// for refreshing the splash...
+					QApplication::processEvents();
+				}
 				#endif
 	
-				gui->appendLog("Starting sensor thread...", false);
+				emit message("Starting sensor thread...", false);
 				sensorThread->start();
-				gui->appendLog("Sensor thread started.");
+				emit message("Sensor thread started.");
 			}
 	
 			#ifndef _ARM_ // only include on _non_ ARM environments!
@@ -525,22 +574,25 @@ void Direcs::init()
 			//-----------------------------------------------------------
 			if (plotThread->isRunning() == false)
 			{
-				splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
-				// for refreshing the splash...
-				QApplication::processEvents();
-	
-				gui->appendLog("Starting plot thread...", false);
-				plotThread->start();
-				gui->appendLog("Plot thread started.");
+				if (!consoleMode)
+				{
+					splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
+					// for refreshing the splash...
+					QApplication::processEvents();
+		
+					emit message("Starting plot thread...", false);
+					plotThread->start();
+					emit message("Plot thread started.");
+				}
 			}
 			#endif
 		} // init was successfull
 		else
 		{
-			gui->appendLog("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-			gui->appendLog("Heartbeat thread NOT started!");
-			gui->appendLog("Sensor thread NOT started!");
-			gui->appendLog("Plot thread NOT started!");
+			emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+			emit message("Heartbeat thread NOT started!");
+			emit message("Sensor thread NOT started!");
+			emit message("Plot thread NOT started!");
 		}
 	} // robot is ON
 
@@ -552,14 +604,17 @@ void Direcs::init()
 	if (joystick->isRunning() == false)
 	{
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
-		// for refreshing the splash...
-		QApplication::processEvents();
+		if (!consoleMode)
+		{
+			splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+		}
 		#endif
 
-		gui->appendLog("Starting joystick thread...", false);
+		emit message("Starting joystick thread...", false);
 		joystick->start();
-		gui->appendLog("Joystick thread started.");
+		emit message("Joystick thread started.");
 	}
 
 	//----------------------------------------------------------------------------
@@ -649,12 +704,15 @@ void Direcs::init()
 
 
 	#ifndef _ARM_ // only include in _non_ ARM environments!
-	//----------------------------------------------------------------------------
-	// connect laserThread signal to "dataReceived"
-	// (Whenever data were received, the data are shown in the GUI)
-	//----------------------------------------------------------------------------
-	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
-	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
+	if (!consoleMode)
+	{
+		//----------------------------------------------------------------------------
+		// connect laserThread signal to "dataReceived"
+		// (Whenever data were received, the data are shown in the GUI)
+		//----------------------------------------------------------------------------
+		connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
+		connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
+	}
 	#endif
 
 	//------------------------------------------------------------------------------
@@ -668,35 +726,41 @@ void Direcs::init()
 	// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
 	//----------------------------------------------------------------------------
 	#ifndef _ARM_ // only include in _non_ ARM environments!
-	connect(joystick, SIGNAL(joystickMoved(int, int)), joystickDialog, SLOT(showJoystickAxes(int, int)));
-	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), joystickDialog, SLOT(showJoystickButtons(int, bool)));
+	if (!consoleMode)
+	{
+		connect(joystick, SIGNAL(joystickMoved(int, int)), joystickDialog, SLOT(showJoystickAxes(int, int)));
+		connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), joystickDialog, SLOT(showJoystickButtons(int, bool)));
+	}
 	#endif
 	connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-	//-----------------------------------------------------------
-	// check if camera is connected
-	//-----------------------------------------------------------
-	if (camThread->isConnected())
+	if (!consoleMode)
 	{
-		if (camThread->isRunning() == false)
+		//-----------------------------------------------------------
+		// check if camera is connected
+		//-----------------------------------------------------------
+		if (camThread->isConnected())
 		{
-			gui->appendLog("Starting camera thread...", false);
-			camThread->start();
-			gui->appendLog("Camera thread started.");
-			if (camThread->isConnected())
+			if (camThread->isRunning() == false)
 			{
-				gui->appendLog(QString("Camera resolution is %1x%2.").arg(camThread->imageWidth()).arg(camThread->imageHeight()));
-				// tell the gui the image size and depth
-				gui->setCamImageData(camThread->imageWidth(), camThread->imageHeight(), camThread->imagePixelDepth());
+				emit message("Starting camera thread...", false);
+				camThread->start();
+				emit message("Camera thread started.");
+				if (camThread->isConnected())
+				{
+					emit message(QString("Camera resolution is %1x%2.").arg(camThread->imageWidth()).arg(camThread->imageHeight()));
+					// tell the gui the image size and depth
+					gui->setCamImageData(camThread->imageWidth(), camThread->imageHeight(), camThread->imagePixelDepth());
+				}
 			}
 		}
-	}
-	else
-	{
-		gui->appendLog("Camera thread NOT started!");
+		else
+		{
+			emit message("Camera thread NOT started!");
+		}
 	}
 	#endif
 
@@ -715,9 +779,12 @@ void Direcs::init()
 	// check if laser scanners are connected
 	//---------------------------------------------------------------------
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-	splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
-	// for refreshing the splash...
-	QApplication::processEvents();
+	if (!consoleMode)
+	{
+		splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
+		// for refreshing the splash...
+		QApplication::processEvents();
+	}
 	#else
 	qDebug() << "Searching front laser...";
 	#endif
@@ -726,9 +793,12 @@ void Direcs::init()
 	laserScannerFrontFound = laserThread->isConnected(LASER1);
 
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-	splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
-	// for refreshing the splash...
-	QApplication::processEvents();
+	if (!consoleMode)
+	{
+		splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
+		// for refreshing the splash...
+		QApplication::processEvents();
+	}
 	#else
 	qDebug() << "Searching rear laser...";
 	#endif
@@ -740,28 +810,31 @@ void Direcs::init()
 	{
 		if (laserScannerFrontFound)
 		{
-			gui->appendLog("Front laser scanner found.");
+			emit message("Front laser scanner found.");
 		}
 		else
 		{
-			gui->appendLog("Front laser scanner NOT found.");
+			emit message("Front laser scanner NOT found.");
 		}
 
 		if (laserScannerRearFound)
 		{
-			gui->appendLog("Rear laser scanner found.");
+			emit message("Rear laser scanner found.");
 		}
 		else
 		{
-			gui->appendLog("Rear laser scanner NOT found.");
+			emit message("Rear laser scanner NOT found.");
 		}
 
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		// TODO: nice exit point and error message
-		if (!QGLFormat::hasOpenGL())
+		if (!consoleMode)
 		{
-			qDebug() << "This system has no OpenGL support" << endl;
-			showExitDialog();
+			// TODO: nice exit point and error message
+			if (!QGLFormat::hasOpenGL())
+			{
+				qDebug() << "This system has no OpenGL support" << endl;
+				showExitDialog();
+			}
 		}
 		#endif
 
@@ -770,79 +843,88 @@ void Direcs::init()
 		if (laserThread->isRunning() == false)
 		{
 			#ifndef _ARM_ // only include on _non_ ARM environments!
-			splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
+			if (!consoleMode)
+			{
+				splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
+				// for refreshing the splash...
+				QApplication::processEvents();
+			}
 			#endif
 
-			gui->appendLog("Starting Laser thread...", false);
+			emit message("Starting Laser thread...", false);
 			laserThread->start();
-			gui->appendLog("Laser thread started.");
+			emit message("Laser thread started.");
 		}
 
 
 		if (obstCheckThread->isRunning() == false)
 		{
 			#ifndef _ARM_ // only include on _non_ ARM environments!
-			splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
+			if (!consoleMode)
+			{
+				splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
+				// for refreshing the splash...
+				QApplication::processEvents();
+			}
 			#endif
 
-			gui->appendLog("Starting obstacle check thread...", false);
+			emit message("Starting obstacle check thread...", false);
 			obstCheckThread->start();
-			gui->appendLog("Obstacle check thread started.");
+			emit message("Obstacle check thread started.");
 		}
 	}
 	else
 	{
-		gui->appendLog("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
+		emit message("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
 
 
 	#ifndef _ARM_ // only include in _non_ ARM environments!
-	//------------------------------------------------------------------
-	// hide some dialogues
-	//------------------------------------------------------------------
-	settingsDialog->hide();
-	joystickDialog->hide();
-	aboutDialog->hide();
-
-	//------------------------------------------------------------------
-	// for getting the screen resolution
-	//------------------------------------------------------------------
-	//QDesktopWidget *desktop = QApplication::desktop();
-
-	//------------------------------------------------------------------
-	// place gui window at a nice position on the screen
-	//------------------------------------------------------------------
-	/*
-	if (desktop->width() > 1024)
+	if (!consoleMode)
 	{
-		// move mainWindow to the center of the screen
-		gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
-
-		// show the gui
-		gui->show();
-
-		// delete the splash screen
-		QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+		//------------------------------------------------------------------
+		// hide some dialogues
+		//------------------------------------------------------------------
+		settingsDialog->hide();
+		joystickDialog->hide();
+		aboutDialog->hide();
+	
+		//------------------------------------------------------------------
+		// for getting the screen resolution
+		//------------------------------------------------------------------
+		//QDesktopWidget *desktop = QApplication::desktop();
+	
+		//------------------------------------------------------------------
+		// place gui window at a nice position on the screen
+		//------------------------------------------------------------------
+		/*
+		if (desktop->width() > 1024)
+		{
+			// move mainWindow to the center of the screen
+			gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
+	
+			// show the gui
+			gui->show();
+	
+			// delete the splash screen
+			QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+		}
+		else
+		{
+		*/
+			// resolution too smal for this window. Maximizing...
+			// show the main window
+			gui->showMaximized();
+	
+			// delete the splash screen
+			QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+		/*
+		}
+		*/
+	
+		// one time init for the laser view
+		gui->initLaserView();
 	}
-	else
-	{
-	*/
-		// resolution too smal for this window. Maximizing...
-		// show the main window
-		gui->showMaximized();
-
-		// delete the splash screen
-		QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
-	/*
-	}
-	*/
-
-	// one time init for the laser view
-	gui->initLaserView();
 	#endif
 }
 
@@ -852,10 +934,13 @@ void Direcs::shutdown()
 		qDebug("Direcs shutdown...");
 
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		splash->show();
-		splash->showMessage(QObject::tr("Shutting down..."), splashPosition, splashColor);
-		// for refreshing the splash...
-		QApplication::processEvents();
+		if (!consoleMode)
+		{
+			splash->show();
+			splash->showMessage(QObject::tr("Shutting down..."), splashPosition, splashColor);
+			// for refreshing the splash...
+			QApplication::processEvents();
+		}
 		#endif
 
 		// just 4 fun
@@ -869,57 +954,61 @@ void Direcs::shutdown()
 		// "Save the setting, that no settings shoud be saved"
 		//
 		// save check box status
-	#ifndef _ARM_ // only include in _non_ ARM environments!
-		inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
-
-
-		if (settingsDialog->getCheckBoxSaveSettings() == Qt::Checked)
+		#ifndef _ARM_ // only include in _non_ ARM environments!
+		if (!consoleMode)
 		{
-			gui->appendLog("Writing settings...");
-			#ifndef _ARM_ // only include on _non_ ARM environments!
-			splash->showMessage(QObject::tr("Writing settings..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
-			#endif
-
-			// save gui slider values
-			inifile1->writeSetting("Config", "motor1Speed", settingsDialog->getSliderMotorSpeed(1));
-			inifile1->writeSetting("Config", "motor2Speed", settingsDialog->getSliderMotorSpeed(2));
-			inifile1->writeSetting("Config", "minimumSpeed", settingsDialog->getSliderMinimumSpeed());
-			inifile1->writeSetting("Config", "maximumSpeed", settingsDialog->getSliderMaximumSpeed());
-			inifile1->writeSetting("Config", "minObstacleDistance", settingsDialog->getSliderObstacleValue());
-			inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", settingsDialog->getSliderObstacleLaserScannerValue());
-			inifile1->writeSetting("Config", "robotSlot", settingsDialog->getSliderRobotSlotValue());
-			inifile1->writeSetting("Config", "straightForwardDeviation", settingsDialog->getSliderStraightForwardDeviationValue());
-
-			// save check box status
 			inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
-
-			// Later...
-			//
-			//noHardwareErrorMessages
-			//exitDialog
-
-			// force writing *immediately*
-			inifile1->sync();
-
-			gui->appendLog("Settings written.");
+	
+	
+			if (settingsDialog->getCheckBoxSaveSettings() == Qt::Checked)
+			{
+				emit message("Writing settings...");
+				splash->showMessage(QObject::tr("Writing settings..."), splashPosition, splashColor);
+				// for refreshing the splash...
+				QApplication::processEvents();
+	
+				// save gui slider values
+				inifile1->writeSetting("Config", "motor1Speed", settingsDialog->getSliderMotorSpeed(1));
+				inifile1->writeSetting("Config", "motor2Speed", settingsDialog->getSliderMotorSpeed(2));
+				inifile1->writeSetting("Config", "minimumSpeed", settingsDialog->getSliderMinimumSpeed());
+				inifile1->writeSetting("Config", "maximumSpeed", settingsDialog->getSliderMaximumSpeed());
+				inifile1->writeSetting("Config", "minObstacleDistance", settingsDialog->getSliderObstacleValue());
+				inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", settingsDialog->getSliderObstacleLaserScannerValue());
+				inifile1->writeSetting("Config", "robotSlot", settingsDialog->getSliderRobotSlotValue());
+				inifile1->writeSetting("Config", "straightForwardDeviation", settingsDialog->getSliderStraightForwardDeviationValue());
+	
+				// save check box status
+				inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
+	
+				// Later...
+				//
+				//noHardwareErrorMessages
+				//exitDialog
+	
+				// force writing *immediately*
+				inifile1->sync();
+	
+				emit message("Settings written.");
+			}
 		}
-	#endif
+		#endif
 
 
 		// show dialog if set in ini-file
 		if (exitDialog == true)
 		{
 			#ifndef _ARM_ // only include on _non_ ARM environments!
-			// ask user if he really wants to exit.
-			if (QMessageBox::question(0, "Leaving program...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+			if (!consoleMode)
 			{
-				//---------
-				// if NO
-				//---------
-				// don't leave! :-)
-				return;
+				// ask user if he really wants to exit.
+				if (QMessageBox::question(0, "Leaving program...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+				{
+					//---------
+					// if NO
+					//---------
+					// don't leave! :-)
+					return;
+				}
 			}
 			#endif
 			// TODO: ask for exit on console!
@@ -928,39 +1017,42 @@ void Direcs::shutdown()
 
 		// TODO: a universal quit-threads-method
 		#ifndef _ARM_ // only include on _non_ ARM environments!
-		//--------------------------------
-		// quit the camThread
-		//--------------------------------
-		if (camThread->isRunning() == true)
+		if (!consoleMode)
 		{
-			gui->appendLog("Stopping camera thread...");
-
-			// my own stop routine :-)
-			camThread->stop();
-
-			// slowing thread down
-			camThread->setPriority(QThread::IdlePriority);
-			camThread->quit();
-
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-			QTime t;
-			t.start();
-			do
+			//--------------------------------
+			// quit the camThread
+			//--------------------------------
+			if (camThread->isRunning() == true)
 			{
-			} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-			if (camThread->isFinished() == true)
-			{
-				gui->appendLog("Camera thread stopped.");
-			}
-			else
-			{
-				gui->appendLog("Terminating camera thread because it doesn't answer...");
-				camThread->terminate();
-				camThread->wait(1000);
-				gui->appendLog("Camera thread terminated.");
+				emit message("Stopping camera thread...");
+	
+				// my own stop routine :-)
+				camThread->stop();
+	
+				// slowing thread down
+				camThread->setPriority(QThread::IdlePriority);
+				camThread->quit();
+	
+				//-------------------------------------------
+				// start measuring time for timeout ckecking
+				//-------------------------------------------
+				QTime t;
+				t.start();
+				do
+				{
+				} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+				if (camThread->isFinished() == true)
+				{
+					emit message("Camera thread stopped.");
+				}
+				else
+				{
+					emit message("Terminating camera thread because it doesn't answer...");
+					camThread->terminate();
+					camThread->wait(1000);
+					emit message("Camera thread terminated.");
+				}
 			}
 		}
 		#endif
@@ -971,7 +1063,7 @@ void Direcs::shutdown()
 		//--------------------------------
 		if (laserThread->isRunning() == true)
 		{
-			gui->appendLog("Stopping laser thread...");
+			emit message("Stopping laser thread...");
 
 			// my own stop routine :-)
 			laserThread->stop();
@@ -991,14 +1083,14 @@ void Direcs::shutdown()
 
 			if (laserThread->isFinished() == true)
 			{
-				gui->appendLog("Laser thread stopped.");
+				emit message("Laser thread stopped.");
 			}
 			else
 			{
-				gui->appendLog("Terminating laser thread because it doesn't answer...");
+				emit message("Terminating laser thread because it doesn't answer...");
 				laserThread->terminate();
 				laserThread->wait(1000);
-				gui->appendLog("Laser thread terminated.");
+				emit message("Laser thread terminated.");
 			}
 		}
 
@@ -1009,7 +1101,7 @@ void Direcs::shutdown()
 		//--------------------------------
 		if (speakThread->isRunning() == true)
 		{
-			gui->appendLog("Stopping speak thread...");
+			emit message("Stopping speak thread...");
 
 				// my own stop routine :-)
 			speakThread->stop();
@@ -1029,14 +1121,14 @@ void Direcs::shutdown()
 
 			if (speakThread->isFinished() == true)
 			{
-				gui->appendLog("Speak thread stopped.");
+				emit message("Speak thread stopped.");
 			}
 			else
 			{
-				gui->appendLog("Terminating speak thread because it doesn't answer...");
+				emit message("Terminating speak thread because it doesn't answer...");
 				speakThread->terminate();
 				speakThread->wait(1000);
-				gui->appendLog("Speak thread terminated.");
+				emit message("Speak thread terminated.");
 			}
 		}
 		#endif
@@ -1046,7 +1138,7 @@ void Direcs::shutdown()
 		//--------------------------------
 		if (netThread->isRunning() == true)
 		{
-			gui->appendLog("Stopping network thread...");
+			emit message("Stopping network thread...");
 
 			// my own stop routine :-)
 			netThread->stop();
@@ -1066,14 +1158,14 @@ void Direcs::shutdown()
 
 			if (netThread->isFinished() == true)
 			{
-				gui->appendLog("Network thread stopped.");
+				emit message("Network thread stopped.");
 			}
 			else
 			{
-				gui->appendLog("Terminating network thread because it doesn't answer...");
+				emit message("Terminating network thread because it doesn't answer...");
 				netThread->terminate();
 				netThread->wait(1000);
-				gui->appendLog("Network thread terminated.");
+				emit message("Network thread terminated.");
 			}
 		}
 
@@ -1083,7 +1175,7 @@ void Direcs::shutdown()
 		//--------------------------------
 		if (joystick->isRunning() == true)
 		{
-			gui->appendLog("Stopping joystick thread...");
+			emit message("Stopping joystick thread...");
 
 			// my own stop routine :-)
 			joystick->stop();
@@ -1103,52 +1195,55 @@ void Direcs::shutdown()
 
 			if (joystick->isFinished() == true)
 			{
-				gui->appendLog("Joystick thread stopped.");
+				emit message("Joystick thread stopped.");
 			}
 			else
 			{
-				gui->appendLog("Terminating joystick thread because it doesn't answer...");
+				emit message("Terminating joystick thread because it doesn't answer...");
 				joystick->terminate();
 				joystick->wait(1000);
-				gui->appendLog("Joystick thread terminated.");
+				emit message("Joystick thread terminated.");
 			}
 		}
 
 
 		#ifndef _ARM_ // only include in _non_ ARM environments!
-		//--------------------------------
-		// quit the plotThread
-		//--------------------------------
-		if (plotThread->isRunning() == true)
+		if (!consoleMode)
 		{
-			gui->appendLog("Stopping Plot thread...");
-
-			// my own stop routine :-)
-			plotThread->stop();
-
-			// slowing thread down
-			plotThread->setPriority(QThread::IdlePriority);
-			plotThread->quit();
-
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-			QTime t;
-			t.start();
-			do
+			//--------------------------------
+			// quit the plotThread
+			//--------------------------------
+			if (plotThread->isRunning() == true)
 			{
-			} while ((plotThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-			if (plotThread->isFinished() == true)
-			{
-				gui->appendLog("Plot thread stopped.");
-			}
-			else
-			{
-				gui->appendLog("Terminating Plot thread because it doesn't answer...");
-				plotThread->terminate();
-				plotThread->wait(1000);
-				gui->appendLog("Plot thread terminated.");
+				emit message("Stopping Plot thread...");
+	
+				// my own stop routine :-)
+				plotThread->stop();
+	
+				// slowing thread down
+				plotThread->setPriority(QThread::IdlePriority);
+				plotThread->quit();
+	
+				//-------------------------------------------
+				// start measuring time for timeout ckecking
+				//-------------------------------------------
+				QTime t;
+				t.start();
+				do
+				{
+				} while ((plotThread->isFinished() == false) && (t.elapsed() <= 2000));
+	
+				if (plotThread->isFinished() == true)
+				{
+					emit message("Plot thread stopped.");
+				}
+				else
+				{
+					emit message("Terminating Plot thread because it doesn't answer...");
+					plotThread->terminate();
+					plotThread->wait(1000);
+					emit message("Plot thread terminated.");
+				}
 			}
 		}
 		#endif
@@ -1161,7 +1256,7 @@ void Direcs::shutdown()
 		//qDebug("Starting to stop the obstacle check thread NOW!");
 		if (obstCheckThread->isRunning() == true)
 		{
-			gui->appendLog("Stopping obstacle check thread...");
+			emit message("Stopping obstacle check thread...");
 
 			// my own stop routine :-)
 			obstCheckThread->stop();
@@ -1181,14 +1276,14 @@ void Direcs::shutdown()
 
 			if (obstCheckThread->isFinished() == true)
 			{
-				gui->appendLog("Obstacle check thread stopped.");
+				emit message("Obstacle check thread stopped.");
 			}
 			else
 			{
-				gui->appendLog("Terminating obstacle check thread because it doesn't answer...");
+				emit message("Terminating obstacle check thread because it doesn't answer...");
 				obstCheckThread->terminate();
 				obstCheckThread->wait(1000);
-				gui->appendLog("Obstacle check thread terminated.");
+				emit message("Obstacle check thread terminated.");
 			}
 		}
 
@@ -1199,7 +1294,7 @@ void Direcs::shutdown()
 		//qDebug("Starting to stop the sensor thread NOW!");
 		if (sensorThread->isRunning() == true)
 		{
-			gui->appendLog("Stopping sensor thread...");
+			emit message("Stopping sensor thread...");
 
 			// my own stop routine :-)
 			sensorThread->stop();
@@ -1219,14 +1314,14 @@ void Direcs::shutdown()
 
 			if (sensorThread->isFinished() == true)
 			{
-				gui->appendLog("Sensor thread stopped.");
+				emit message("Sensor thread stopped.");
 			}
 			else
 			{
-				gui->appendLog("Terminating sensor thread because it doesn't answer...");
+				emit message("Terminating sensor thread because it doesn't answer...");
 				sensorThread->terminate();
 				sensorThread->wait(1000);
-				gui->appendLog("Sensor thread terminated.");
+				emit message("Sensor thread terminated.");
 			}
 		}
 
@@ -1237,7 +1332,7 @@ void Direcs::shutdown()
 		//--------------------------
 		if (heartbeat->isRunning() == true)
 		{
-			gui->appendLog("Stopping heartbeat thread...");
+			emit message("Stopping heartbeat thread...");
 
 			// my own stop routine :-)
 			heartbeat->stop();
@@ -1257,14 +1352,14 @@ void Direcs::shutdown()
 
 			if (heartbeat->isFinished() == true)
 			{
-				gui->appendLog("Heartbeat thread stopped.");
+				emit message("Heartbeat thread stopped.");
 			}
 			else
 			{
-				gui->appendLog("Terminating heartbeat thread because it doesn't answer...");
+				emit message("Terminating heartbeat thread because it doesn't answer...");
 				heartbeat->terminate();
 				heartbeat->wait(1000);
-				gui->appendLog("Heartbeat thread terminated.");
+				emit message("Heartbeat thread terminated.");
 			}
 		}
 		*/
@@ -1273,7 +1368,7 @@ void Direcs::shutdown()
 		//-------------------------------------------------------
 		// Last init for the robots circuits
 		//-------------------------------------------------------
-		gui->appendLog("Last circuit init...");
+		emit message("Last circuit init...");
 		if (robotIsOn)
 		{
 			circuit1->initCircuit();
@@ -1282,7 +1377,7 @@ void Direcs::shutdown()
 		//-----------------------------
 		// close serial port to mc
 		//-----------------------------
-		gui->appendLog("Closing serial port to microcontroller...");
+		emit message("Closing serial port to microcontroller...");
 		interface1->closeComPort();
 }
 
@@ -1300,11 +1395,17 @@ Direcs::~Direcs()
 	delete laserThread;
 	delete netThread;
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-	delete camThread;
+	if (!consoleMode)
+	{
+		delete camThread;
+	}
 	#endif
 	delete joystick;
 	#ifndef _ARM_ // only include in _non_ ARM environments!
-	delete plotThread;
+	if (!consoleMode)
+	{
+		delete plotThread;
+	}
 	#endif
 	delete inifile1;
 	delete obstCheckThread;
@@ -1315,17 +1416,29 @@ Direcs::~Direcs()
 	delete circuit1;
 	delete interface1;
 	#ifndef _ARM_ // only include in _non_ ARM environments!
-	delete aboutDialog;
-	delete joystickDialog;
-	delete settingsDialog;
+	if (!consoleMode)
+	{
+		delete aboutDialog;
+		delete joystickDialog;
+		delete settingsDialog;
+	}
 	#endif
-	delete gui;
+	
+	if (consoleMode)
+	{
+		delete consoleGui;
+	}
+	else
+	{
+		delete splash;
+		delete gui;
+	}
 }
 
 
 void Direcs::showExitDialog()
 {
-		gui->appendLog("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
+		emit message("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
 
 		/*
 		// ask user if he really wants to exit.
@@ -1347,12 +1460,15 @@ void Direcs::showExitDialog()
 }
 
 
-void Direcs::showSplashMessage(QString text)
+void Direcs::showSplashMessage(QString text) // FIXME: not in use?
 {
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-	splash->showMessage(text, splashPosition, splashColor);
-	// for refreshing the splash...
-	QApplication::processEvents();
+	if (!consoleMode)
+	{
+		splash->showMessage(text, splashPosition, splashColor);
+		// for refreshing the splash...
+		QApplication::processEvents();
+	}
 	#else
 	QByteArray textForConsole;
 
@@ -1383,7 +1499,10 @@ void Direcs::showSplashMessage(QString text)
 void Direcs::finishSplash()
 {
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-	splash->finish(gui);
+	if (!consoleMode)
+	{
+		splash->finish(gui);
+	}
 	#endif
 }
 
@@ -1434,8 +1553,8 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 		if (robotDrives)
 		{
-			//gui->appendLog("No obstacle in front of any sensor. :-)");
-			//gui->appendLog("Driving forward...");
+			//emit message("No obstacle in front of any sensor. :-)");
+			//emit message("Driving forward...");
 
 			//----------------
 			// drive forward
@@ -1475,7 +1594,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 			if (robotDrives)
 			{
-				gui->appendLog("<b>Obstacle front left. Turning right.</b>");
+				emit message("<b>Obstacle front left. Turning right.</b>");
 
 				//----------------
 				// drive right
@@ -1516,7 +1635,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 			if (robotDrives)
 			{
-				gui->appendLog("<b>Obstacle front right. Turning left.</b>");
+				emit message("<b>Obstacle front right. Turning left.</b>");
 
 				//----------------
 				// drive left
@@ -1547,7 +1666,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 
 		if (robotDrives)
 		{
-			gui->appendLog("<b>Obstacles everywhere in front of the robot. Waiting.</b>");
+			emit message("<b>Obstacles everywhere in front of the robot. Waiting.</b>");
 
 			//----------------
 			// drive WAIT
@@ -1578,158 +1697,161 @@ void Direcs::enableFaceTracking(int state)
 void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
 #ifndef _ARM_ // only include on _non_ ARM environments!
-	Q_UNUSED (faces) // not in use, at the moment
-
-	// TODO: put values to consts or ini
-	int xLevelRight = (camThread->imageWidth()  / 2) + faceRadius;
-	int xLevelLeft  = (camThread->imageWidth()  / 2) - faceRadius;
-	int yLevelUp    = (camThread->imageHeight() / 2) - faceRadius;
-	int yLevelDown  = (camThread->imageHeight() / 2) + faceRadius;
-
-
-	// track nowhere (face is in the middle) or faceRadius is 0 -> no faces detected
-	if (
-			(faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) ||
-			(faceRadius == 0)
-	   )
+	if (!consoleMode)
 	{
-		//head->look("FORWARD");
-		//head->look("NORMAL");
-		emit showFaceTrackDirection("NONE");
-
-		if (faceTrackingIsEnabled)
+		Q_UNUSED (faces) // not in use, at the moment
+	
+		// TODO: put values to consts or ini
+		int xLevelRight = (camThread->imageWidth()  / 2) + faceRadius;
+		int xLevelLeft  = (camThread->imageWidth()  / 2) - faceRadius;
+		int yLevelUp    = (camThread->imageHeight() / 2) - faceRadius;
+		int yLevelDown  = (camThread->imageHeight() / 2) + faceRadius;
+	
+	
+		// track nowhere (face is in the middle) or faceRadius is 0 -> no faces detected
+		if (
+				(faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) ||
+				(faceRadius == 0)
+		)
 		{
-			/*
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
-			*/
+			//head->look("FORWARD");
+			//head->look("NORMAL");
+			emit showFaceTrackDirection("NONE");
+	
+			if (faceTrackingIsEnabled)
+			{
+				/*
+				motors->motorControl(MOTOR3, OFF, SAME);
+				motors->motorControl(MOTOR4, OFF, SAME);
+				*/
+			}
+			return;
 		}
-		return;
-	}
-
-
-	// face detected :-)
-	//head->look("CURIOUS");
-
-
-	// track left
-	if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
-	{
-		if (faceTrackingIsEnabled)
+	
+	
+		// face detected :-)
+		//head->look("CURIOUS");
+	
+	
+		// track left
+		if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 		{
-			head->look("LEFT");
-			/*
-			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR4, OFF, SAME);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("LEFT");
+				/*
+				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR4, OFF, SAME);
+				*/
+			}
+			emit showFaceTrackDirection("LEFT");
+			return;
 		}
-		emit showFaceTrackDirection("LEFT");
-		return;
-	}
-
-	// track right
-	if ( (faceX > xLevelRight) && (faceY > yLevelUp) && (faceY < yLevelDown) )
-	{
-		if (faceTrackingIsEnabled)
+	
+		// track right
+		if ( (faceX > xLevelRight) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 		{
-			head->look("RIGHT");
-			/*
-			motors->motorControl(MOTOR3, ON, CLOCKWISE);
-			motors->motorControl(MOTOR4, OFF, SAME);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("RIGHT");
+				/*
+				motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				motors->motorControl(MOTOR4, OFF, SAME);
+				*/
+			}
+			emit showFaceTrackDirection("RIGHT");
+			return;
 		}
-		emit showFaceTrackDirection("RIGHT");
-		return;
-	}
-
-	// track up
-	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY < yLevelUp) )
-	{
-		if (faceTrackingIsEnabled)
+	
+		// track up
+		if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY < yLevelUp) )
 		{
-			head->look("UP");
-			/*
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, ON, CLOCKWISE);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("UP");
+				/*
+				motors->motorControl(MOTOR3, OFF, SAME);
+				motors->motorControl(MOTOR4, ON, CLOCKWISE);
+				*/
+			}
+			emit showFaceTrackDirection("UP");
+			return;
 		}
-		emit showFaceTrackDirection("UP");
-		return;
-	}
-
-	// track up left
-	if ( (faceX < xLevelLeft) && (faceY < yLevelUp) )
-	{
-		if (faceTrackingIsEnabled)
+	
+		// track up left
+		if ( (faceX < xLevelLeft) && (faceY < yLevelUp) )
 		{
-			head->look("UPLEFT");
-			/*
-			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR4, ON, CLOCKWISE);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("UPLEFT");
+				/*
+				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR4, ON, CLOCKWISE);
+				*/
+			}
+			emit showFaceTrackDirection("UPLEFT");
+			return;
 		}
-		emit showFaceTrackDirection("UPLEFT");
-		return;
-	}
-
-	// track up right
-	if ( (faceX > xLevelLeft) && (faceY < yLevelUp) )
-	{
-		if (faceTrackingIsEnabled)
+	
+		// track up right
+		if ( (faceX > xLevelLeft) && (faceY < yLevelUp) )
 		{
-			head->look("UPRIGHT");
-			/*
-			motors->motorControl(MOTOR3, ON, CLOCKWISE);
-			motors->motorControl(MOTOR4, ON, CLOCKWISE);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("UPRIGHT");
+				/*
+				motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				motors->motorControl(MOTOR4, ON, CLOCKWISE);
+				*/
+			}
+			emit showFaceTrackDirection("UPRIGHT");
+			return;
 		}
-		emit showFaceTrackDirection("UPRIGHT");
-		return;
-	}
-
-	// track down
-	if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY > yLevelDown) )
-	{
-		if (faceTrackingIsEnabled)
+	
+		// track down
+		if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY > yLevelDown) )
 		{
-			head->look("DOWN");
-			/*
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("DOWN");
+				/*
+				motors->motorControl(MOTOR3, OFF, SAME);
+				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+				*/
+			}
+			emit showFaceTrackDirection("DOWN");
+			return;
 		}
-		emit showFaceTrackDirection("DOWN");
-		return;
-	}
-
-	// track down left
-	if ( (faceX < xLevelLeft) && (faceY > yLevelDown) )
-	{
-		if (faceTrackingIsEnabled)
+	
+		// track down left
+		if ( (faceX < xLevelLeft) && (faceY > yLevelDown) )
 		{
-			head->look("DOWNLEFT");
-			/*
-			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("DOWNLEFT");
+				/*
+				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+				*/
+			}
+			emit showFaceTrackDirection("DOWNLEFT");
+			return;
 		}
-		emit showFaceTrackDirection("DOWNLEFT");
-		return;
-	}
-
-	// track down right
-	if ( (faceX > xLevelRight) && (faceY > yLevelDown) )
-	{
-		if (faceTrackingIsEnabled)
+	
+		// track down right
+		if ( (faceX > xLevelRight) && (faceY > yLevelDown) )
 		{
-			head->look("DOWNRIGHT");
-			/*
-			motors->motorControl(MOTOR3, ON, CLOCKWISE);
-			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-			*/
+			if (faceTrackingIsEnabled)
+			{
+				head->look("DOWNRIGHT");
+				/*
+				motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+				*/
+			}
+			emit showFaceTrackDirection("DOWNRIGHT");
+			return;
 		}
-		emit showFaceTrackDirection("DOWNRIGHT");
-		return;
 	}
 #else
 	// now usage on ARM and Windoze systems
@@ -1784,7 +1906,7 @@ void Direcs::drive(const unsigned char command)
 	switch (command)
 	{
 		case FORWARD:
-			gui->appendLog("FORWARD");
+			emit message("FORWARD");
 			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -1796,7 +1918,7 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case BACKWARD:
-			gui->appendLog("BACKWARD");
+			emit message("BACKWARD");
 			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
@@ -1808,7 +1930,7 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case LEFT:
-			gui->appendLog("LEFT");
+			emit message("LEFT");
 			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -1821,7 +1943,7 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case RIGHT:
-			gui->appendLog("RIGHT");
+			emit message("RIGHT");
 			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
@@ -1834,7 +1956,7 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case TURNLEFT:
-			gui->appendLog("TURNLEFT");
+			emit message("TURNLEFT");
 			gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
@@ -1847,7 +1969,7 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case TURNRIGHT:
-			gui->appendLog("TURNRIGHT");
+			emit message("TURNRIGHT");
 			gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
 			gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
 			gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -1863,8 +1985,8 @@ void Direcs::drive(const unsigned char command)
 // 			if (robotIsOn)
 // 			{
 				robotDrives = true;
-				gui->appendLog("Starting to drive forward...");
-				gui->appendLog("START");
+				emit message("Starting to drive forward...");
+				emit message("START");
 				// set the motors to "drive FORWARD"
 				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
 				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
@@ -1878,13 +2000,13 @@ void Direcs::drive(const unsigned char command)
 // 			else
 // 			{
 // 				// show message
-// 				gui->appendLog("<font color=\"#FF0000\">Robot is OFF!</font>");
+// 				emit message("<font color=\"#FF0000\">Robot is OFF!</font>");
 // 				robotDrives = false;
 // 			}
 			return;
 			break;
 		case WAIT:
-			gui->appendLog("WAIT");
+			emit message("WAIT");
 			gui->showMotorStatus(MOTOR1, OFF, SAME);
 			gui->showMotorStatus(MOTOR2, OFF, SAME);
 			gui->showMotorStatus(MOTOR3, OFF, SAME);
@@ -1901,7 +2023,7 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case STOP:
-			gui->appendLog("STOP");
+			emit message("STOP");
 			gui->showMotorStatus(MOTOR1, OFF, SAME);
 			gui->showMotorStatus(MOTOR2, OFF, SAME);
 			gui->showMotorStatus(MOTOR3, OFF, SAME);
@@ -1919,62 +2041,62 @@ void Direcs::drive(const unsigned char command)
 			return;
 			break;
 		case MOTOR1FW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 1 forward");
+			emit message("Motor 1 forward");
 			gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR1BW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 1 backward");
+			emit message("Motor 1 backward");
 			gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			break;
 		case MOTOR1OFF: // for the test widget in the GUI!!
-			gui->appendLog("Motor 1 OFF");
+			emit message("Motor 1 OFF");
 			gui->showMotorStatus(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR1, OFF, SAME);
 			break;
 		case MOTOR2FW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 2 forward");
+			emit message("Motor 2 forward");
 			gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR2BW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 2 backward");
+			emit message("Motor 2 backward");
 			gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
 			motors->motorControl(MOTOR2, ON, CLOCKWISE);
 			break;
 		case MOTOR2OFF: // for the test widget in the GUI!!
-			gui->appendLog("Motor 2 OFF");
+			emit message("Motor 2 OFF");
 			gui->showMotorStatus(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
 			break;
 		case MOTOR3FW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 3 forward");
+			emit message("Motor 3 forward");
 			gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR3BW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 3 backward");
+			emit message("Motor 3 backward");
 			gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			break;
 		case MOTOR3OFF: // for the test widget in the GUI!!
-			gui->appendLog("Motor 3 OFF");
+			emit message("Motor 3 OFF");
 			gui->showMotorStatus(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
 			break;
 		case MOTOR4FW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 4 forward");
+			emit message("Motor 4 forward");
 			gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 			break;
 		case MOTOR4BW: // for the test widget in the GUI!!
-			gui->appendLog("Motor 4 backward");
+			emit message("Motor 4 backward");
 			gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			break;
 		case MOTOR4OFF: // for the test widget in the GUI!!
-			gui->appendLog("Motor 4 OFF");
+			emit message("Motor 4 OFF");
 			gui->showMotorStatus(MOTOR4, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
 			break;
@@ -1988,7 +2110,7 @@ void Direcs::readSettings()
 	//---------------------------------------------------------------------
 	// get the programm settings and set the items on the gui (sliders...)
 	//---------------------------------------------------------------------
-	gui->appendLog("Reading settings...");
+	emit message("Reading settings...");
 
 
 	//---------------------------------------------------------------------
@@ -1997,20 +2119,20 @@ void Direcs::readSettings()
 
 	if (serialPortMicrocontroller == "error2")
 	{
-		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortMicrocontroller == "error1")
 		{
-			gui->appendLog("<font color=\"#FF0000\">Value \"serialPortMicrocontroller\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"serialPortMicrocontroller\" not found in ini-file!</font>");
 		}
 		else
 		{
 			//
 			// everything okay
 			//
-			gui->appendLog(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
+			emit message(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
 		}
 	}
 
@@ -2021,20 +2143,20 @@ void Direcs::readSettings()
 	if (serialPortLaserscannerFront == "error2")
 	{
 		laserThread->setSerialPort(LASER1, "none");
-		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortLaserscannerFront == "error1")
 		{
 			laserThread->setSerialPort(LASER1, "none");
-			gui->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerFront\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"serialPortLaserscannerFront\" not found in ini-file!</font>");
 		}
 		else
 		{
 			// everything okay
 			laserThread->setSerialPort(LASER1, serialPortLaserscannerFront);
-			gui->appendLog(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
+			emit message(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
 
 			//---------------------------------------------------------------------
 			// read next laser setting
@@ -2043,20 +2165,20 @@ void Direcs::readSettings()
 			if (mountingLaserscanner == "error2")
 			{
 				laserThread->setMounting(LASER1, "normal");
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
 				if (mountingLaserscanner == "error1")
 				{
 					laserThread->setMounting(LASER1, "normal");
-					gui->appendLog("<font color=\"#FF0000\">Value \"mountingLaserscannerFront\" not found in ini-file!</font>");
+					emit message("<font color=\"#FF0000\">Value \"mountingLaserscannerFront\" not found in ini-file!</font>");
 				}
 				else
 				{
 					// everything okay
 					laserThread->setMounting(LASER1, mountingLaserscanner);
-					gui->appendLog(QString("Front laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
+					emit message(QString("Front laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
 				}
 			}
 		}
@@ -2069,20 +2191,20 @@ void Direcs::readSettings()
 	if (serialPortLaserscannerRear == "error2")
 	{
 		laserThread->setSerialPort(LASER2, "none");
-		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (serialPortLaserscannerRear == "error1")
 		{
 			laserThread->setSerialPort(LASER2, "none");
-			gui->appendLog("<font color=\"#FF0000\">Value \"serialPortLaserscannerRear\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"serialPortLaserscannerRear\" not found in ini-file!</font>");
 		}
 		else
 		{
 			// everything okay
 			laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
-			gui->appendLog(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
+			emit message(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
 
 			//---------------------------------------------------------------------
 			// read next laser setting
@@ -2091,20 +2213,20 @@ void Direcs::readSettings()
 			if (mountingLaserscanner == "error2")
 			{
 				laserThread->setMounting(LASER2, "normal");
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
 				if (mountingLaserscanner == "error1")
 				{
 					laserThread->setMounting(LASER2, "normal");
-					gui->appendLog("<font color=\"#FF0000\">Value \"mountingLaserscannerRear\" not found in ini-file!</font>");
+					emit message("<font color=\"#FF0000\">Value \"mountingLaserscannerRear\" not found in ini-file!</font>");
 				}
 				else
 				{
 					// everything okay
 					laserThread->setMounting(LASER2, mountingLaserscanner);
-					gui->appendLog(QString("Rear laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
+					emit message(QString("Rear laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
 				}
 			}
 		}
@@ -2115,19 +2237,22 @@ void Direcs::readSettings()
     switch (inifile1->readSetting("Config", "useCamera"))
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-            gui->appendLog("<font color=\"#FF0000\">Value \"useCamera\"not found in ini-file!</font>");
+            emit message("<font color=\"#FF0000\">Value \"useCamera\"not found in ini-file!</font>");
 			break;
 		case 0:
             useCamera = false;
 			#ifndef _ARM_ // only include on _non_ ARM environments!
-            // turning "off" camera
-            camThread->setCameraDevice(-2);
-            gui->disableCamera();
+			if (!consoleMode)
+			{
+				// turning "off" camera
+				camThread->setCameraDevice(-2);
+				gui->disableCamera();
+			}
             #endif
-            gui->appendLog("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
+            emit message("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
             break;
 		case 1:
             useCamera = true;
@@ -2135,79 +2260,82 @@ void Direcs::readSettings()
 	}
 
 	#ifndef _ARM_ // only include on _non_ ARM environments!
-    if (useCamera)
+	if (!consoleMode)
 	{
-		//---------------------------------------------------------------------
-		// read setting
-		int cameraDevice = inifile1->readSetting("Config", "cameraDevice");
-
-		if (cameraDevice == -2)
+		if (useCamera)
 		{
-			camThread->setCameraDevice(-2);
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-		}
-		else
-		{
-			if (cameraDevice == -1)
+			//---------------------------------------------------------------------
+			// read setting
+			int cameraDevice = inifile1->readSetting("Config", "cameraDevice");
+	
+			if (cameraDevice == -2)
 			{
 				camThread->setCameraDevice(-2);
-				gui->appendLog("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
-				//
-				// everything okay
-				//
-				// set it in the cam thread
-				camThread->setCameraDevice(cameraDevice);
-
-				gui->appendLog(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
-
-
-				//---------------------------------------------------------------------
-				// read setting
-				QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
-
-				if (haarClassifierCascade == "error2")
+				if (cameraDevice == -1)
 				{
-					camThread->setCascadePath("none");
-					gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+					camThread->setCameraDevice(-2);
+					emit message("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
 				}
 				else
 				{
-					if (haarClassifierCascade == "error1")
+					//
+					// everything okay
+					//
+					// set it in the cam thread
+					camThread->setCameraDevice(cameraDevice);
+	
+					emit message(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
+	
+	
+					//---------------------------------------------------------------------
+					// read setting
+					QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
+	
+					if (haarClassifierCascade == "error2")
 					{
 						camThread->setCascadePath("none");
-						gui->appendLog("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
+						emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 					}
 					else
 					{
-						//
-						// everything okay
-						//
-						// set it in the cam thread
-						camThread->setCascadePath(haarClassifierCascade);
-						gui->appendLog(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
-
-						splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
-						// for refreshing the splash...
-						QApplication::processEvents();
-
-						// initialise the cam
-						if (camThread->init())
+						if (haarClassifierCascade == "error1")
 						{
-							gui->appendLog("Camera initialised.");
+							camThread->setCascadePath("none");
+							emit message("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
 						}
 						else
 						{
-							gui->appendLog("Error initialising camera.");
+							//
+							// everything okay
+							//
+							// set it in the cam thread
+							camThread->setCascadePath(haarClassifierCascade);
+							emit message(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
+	
+							splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
+							// for refreshing the splash...
+							QApplication::processEvents();
+	
+							// initialise the cam
+							if (camThread->init())
+							{
+								emit message("Camera initialised.");
+							}
+							else
+							{
+								emit message("Error initialising camera.");
+							}
 						}
 					}
+					//---------------------------------------------------------------------
 				}
-				//---------------------------------------------------------------------
 			}
-		}
-	} // dont use camera!
+		} // use camera
+	} // no console mode
 	#endif
 
 	//---------------------------------------------------------------------
@@ -2215,17 +2343,17 @@ void Direcs::readSettings()
 	switch (inifile1->readSetting("Config", "noHardwareErrorMessages"))
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"noHardwareErrorMessages\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"noHardwareErrorMessages\"not found in ini-file!</font>");
 			break;
 		case 0:
 			noHardwareErrorMessages = false;
 			break;
 		case 1:
 			noHardwareErrorMessages = true;
-			gui->appendLog("<font color=\"#808080\">Suppressing hardware error messages (see ini-file)</font>");
+			emit message("<font color=\"#808080\">Suppressing hardware error messages (see ini-file)</font>");
 			break;
 	}
 
@@ -2234,21 +2362,27 @@ void Direcs::readSettings()
 	switch (inifile1->readSetting("Config", "saveOnExit"))
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"saveOnExit\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"saveOnExit\"not found in ini-file!</font>");
 			break;
 		case Qt::Unchecked:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// uncheck checkbox
-			settingsDialog->setCheckBoxSaveSettings(Qt::Unchecked);
+			if (!consoleMode)
+			{
+				// uncheck checkbox
+				settingsDialog->setCheckBoxSaveSettings(Qt::Unchecked);
+			}
 			#endif
 			break;
 		case Qt::Checked:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set checkbox
-			settingsDialog->setCheckBoxSaveSettings(Qt::Checked);
+			if (!consoleMode)
+			{
+				// set checkbox
+				settingsDialog->setCheckBoxSaveSettings(Qt::Checked);
+			}
 			#endif
 			break;
 	}
@@ -2258,10 +2392,10 @@ void Direcs::readSettings()
 	switch (inifile1->readSetting("Config", "exitDialog"))
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"exitDialog\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"exitDialog\"not found in ini-file!</font>");
 			break;
 		case 0:
 			exitDialog = false;
@@ -2278,20 +2412,23 @@ void Direcs::readSettings()
 	switch (minObstacleDistance)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderObstacleValue(minObstacleDistance);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderObstacleValue(minObstacleDistance);
+			}
 			#endif
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstacleDistance);
 			// show text
-			gui->appendLog(QString("Min. obstacle distance set to <b>%1 cm</b>.").arg(minObstacleDistance));
+			emit message(QString("Min. obstacle distance set to <b>%1 cm</b>.").arg(minObstacleDistance));
 			break;
 	}
 
@@ -2302,20 +2439,23 @@ void Direcs::readSettings()
 	switch (minObstacleDistanceLaserScanner)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
+			}
 			#endif
 			// tell it the obstacle check thread
 			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
 			// show text
-			gui->appendLog(QString("Min. obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner));
+			emit message(QString("Min. obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner));
 			break;
 	}
 
@@ -2326,20 +2466,23 @@ void Direcs::readSettings()
 	switch (robotSlot)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderRobotSlot(robotSlot);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderRobotSlot(robotSlot);
+			}
 			#endif
 			// tell it the obstacle check thread
 			obstCheckThread->setRobotSlot(robotSlot);
 			// show text
-			gui->appendLog(QString("Robot slot set to <b>%1 deg.</b>").arg(robotSlot));
+			emit message(QString("Robot slot set to <b>%1 deg.</b>").arg(robotSlot));
 			break;
 	}
 
@@ -2350,20 +2493,23 @@ void Direcs::readSettings()
 	switch (straightForwardDeviation)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
 			break;
 		default:
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderStraightForwardDeviation(straightForwardDeviation);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderStraightForwardDeviation(straightForwardDeviation);
+			}
 			#endif
 			// tell it the obstacle check thread
 			obstCheckThread->setStraightForwardDeviation(straightForwardDeviation);
 			// show text
-			gui->appendLog(QString("Straight forward deviation set to <b>%1 deg.</b>").arg(straightForwardDeviation));
+			emit message(QString("Straight forward deviation set to <b>%1 deg.</b>").arg(straightForwardDeviation));
 			break;
 	}
 
@@ -2373,13 +2519,13 @@ void Direcs::readSettings()
 
 	if (joystickPort == "error2")
 	{
-		gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (joystickPort == "error1")
 		{
-			gui->appendLog("<font color=\"#FF0000\">Value \"joystickPort\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"joystickPort\" not found in ini-file!</font>");
 		}
 		else
 		{
@@ -2388,7 +2534,7 @@ void Direcs::readSettings()
 			//
 			// tell the  obstacle check thread the distance
 			joystick->setPort(joystickPort);
-			gui->appendLog(QString("Joystick port set to <b>%1</b>.").arg(joystickPort));
+			emit message(QString("Joystick port set to <b>%1</b>.").arg(joystickPort));
 		}
 	}
 
@@ -2399,26 +2545,29 @@ void Direcs::readSettings()
 	switch (mot1Speed)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot1Speed = 0;
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"motor1Speed\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"motor1Speed\" not found in ini-file!</font>");
 			mot1Speed = 0;
 			break;
 		default:
 			if (mot1Speed > 254)
 			{
-				gui->appendLog("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than 255!! Value set to 255!</font>");
+				emit message("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than 255!! Value set to 255!</font>");
 				mot1Speed = 255;
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderMotorSpeed(1, mot1Speed);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderMotorSpeed(1, mot1Speed);
+			}
 			#endif
 			// show text
-			gui->appendLog(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
+			emit message(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
 			break;
 	}
 
@@ -2429,26 +2578,29 @@ void Direcs::readSettings()
 	switch (mot2Speed)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot2Speed = 0;
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"motor2Speed\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"motor2Speed\" not found in ini-file!</font>");
 			mot2Speed = 0;
 			break;
 		default:
 			if (mot2Speed > 254)
 			{
-				gui->appendLog("<font color=\"#FF0000\">Value \"motor2Speed\" is greater than 255!! Value set to 255!</font>");
+				emit message("<font color=\"#FF0000\">Value \"motor2Speed\" is greater than 255!! Value set to 255!</font>");
 				mot2Speed = 255;
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderMotorSpeed(2, mot2Speed);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderMotorSpeed(2, mot2Speed);
+			}
 			#endif
 			// show text
-			gui->appendLog(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
+			emit message(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
 	}
 
@@ -2459,26 +2611,29 @@ void Direcs::readSettings()
 	switch (mot3Speed)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot3Speed = 0;
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"motor3Speed\" not found in ini-file!</font>");
 			mot3Speed = 0;
 			break;
 		default:
 			if (mot3Speed > 254)
 			{
-				gui->appendLog("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than 255!! Value set to 255!</font>");
+				emit message("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than 255!! Value set to 255!</font>");
 				mot3Speed = 255;
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderMotorSpeed(3, mot3Speed);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderMotorSpeed(3, mot3Speed);
+			}
 			#endif
 			// show text
-			gui->appendLog(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
+			emit message(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
 			break;
 	}
 
@@ -2489,26 +2644,29 @@ void Direcs::readSettings()
 	switch (mot4Speed)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			mot4Speed = 0;
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"motor4Speed\" not found in ini-file!</font>");
 			mot4Speed = 0;
 			break;
 		default:
 			if (mot4Speed > 254)
 			{
-				gui->appendLog("<font color=\"#FF0000\">Value \"motor4Speed\" is greater than 255!! Value set to 255!</font>");
+				emit message("<font color=\"#FF0000\">Value \"motor4Speed\" is greater than 255!! Value set to 255!</font>");
 				mot4Speed = 255;
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderMotorSpeed(4, mot4Speed);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderMotorSpeed(4, mot4Speed);
+			}
 			#endif
 			// show text
-			gui->appendLog(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
+			emit message(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
 	}
 
@@ -2519,26 +2677,29 @@ void Direcs::readSettings()
 	switch (minimumSpeed)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			minimumSpeed = 0;
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"minimumSpeed\" not found in ini-file!</font>");
 			minimumSpeed = 0;
 			break;
 		default:
 			if (minimumSpeed > 254)
 			{
-				gui->appendLog("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than 255!! Value set to 255!</font>");
+				emit message("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than 255!! Value set to 255!</font>");
 				minimumSpeed = 255;
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderMinimumSpeed(minimumSpeed);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderMinimumSpeed(minimumSpeed);
+			}
 			#endif
 			// show text
-			gui->appendLog(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
+			emit message(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
 			break;
 	}
 
@@ -2549,26 +2710,29 @@ void Direcs::readSettings()
 	switch (maximumSpeed)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			maximumSpeed = 0;
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"maximumSpeed\" not found in ini-file!</font>");
 			maximumSpeed = 0;
 			break;
 		default:
 			if (maximumSpeed > 254)
 			{
-				gui->appendLog("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than 255!! Value set to 255!</font>");
+				emit message("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than 255!! Value set to 255!</font>");
 				maximumSpeed = 255;
 			}
 
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			// set slider to the read value
-			settingsDialog->setSliderMaximumSpeed(maximumSpeed);
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderMaximumSpeed(maximumSpeed);
+			}
 			#endif
 			// show text
-			gui->appendLog(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
+			emit message(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
 	}
 
@@ -2582,17 +2746,17 @@ void Direcs::readSettings()
 		switch (settingValue)
 		{
 			case -2:
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 				settingValue = 0;
 				break;
 			case -1:
-				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
 				break;
 			default:
 				if (settingValue > 254)
 				{
-					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
 				}
 
@@ -2600,11 +2764,11 @@ void Direcs::readSettings()
 				servos->setServoPosition(servo, SVSTART, settingValue);
 
 				// show text
-				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
-	gui->appendLog("Servo start settings read and set.");
+	emit message("Servo start settings read and set.");
 
 	//---------------------------------------------------------------------
 	// read servo END settings
@@ -2616,17 +2780,17 @@ void Direcs::readSettings()
 		switch (settingValue)
 		{
 			case -2:
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 				settingValue = 0;
 				break;
 			case -1:
-				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
 				break;
 			default:
 				if (settingValue > 254)
 				{
-					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
 				}
 
@@ -2634,11 +2798,11 @@ void Direcs::readSettings()
 				servos->setServoPosition(servo, SVEND, settingValue);
 
 				// show text
-				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
-	gui->appendLog("Servo end settings read and set.");
+	emit message("Servo end settings read and set.");
 	//---------------------------------------------------------------------
 	// read servo MIN settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -2649,17 +2813,17 @@ void Direcs::readSettings()
 		switch (settingValue)
 		{
 			case -2:
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 				settingValue = 0;
 				break;
 			case -1:
-				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
 				break;
 			default:
 				if (settingValue > 254)
 				{
-					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
 				}
 
@@ -2667,11 +2831,11 @@ void Direcs::readSettings()
 				servos->setServoPosition(servo, SVMIN, settingValue);
 
 				// show text
-				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
-	gui->appendLog("Servo min. settings read and set.");
+	emit message("Servo min. settings read and set.");
 	//---------------------------------------------------------------------
 	// read servo MAX settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -2682,17 +2846,17 @@ void Direcs::readSettings()
 		switch (settingValue)
 		{
 			case -2:
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 				settingValue = 0;
 				break;
 			case -1:
-				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
 				break;
 			default:
 				if (settingValue > 254)
 				{
-					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
 				}
 
@@ -2700,11 +2864,11 @@ void Direcs::readSettings()
 				servos->setServoPosition(servo, SVMAX, settingValue);
 
 				// show text
-				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
-	gui->appendLog("Servo max. settings read and set.");
+	emit message("Servo max. settings read and set.");
 	//---------------------------------------------------------------------
 	// read servo DEFAULT settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -2715,17 +2879,17 @@ void Direcs::readSettings()
 		switch (settingValue)
 		{
 			case -2:
-				gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 				settingValue = 0;
 				break;
 			case -1:
-				gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
 				break;
 			default:
 				if (settingValue > 254)
 				{
-					gui->appendLog(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
 				}
 
@@ -2733,11 +2897,11 @@ void Direcs::readSettings()
 				servos->setServoPosition(servo, SVDEFAULT, settingValue);
 
 				// show text
-				//gui->appendLog(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
-	gui->appendLog("Servo default settings read and set.");
+	emit message("Servo default settings read and set.");
 
 	//---------------------------------------------------------------------
 	// read setting
@@ -2746,20 +2910,18 @@ void Direcs::readSettings()
 	switch (value)
 	{
 		case -2:
-			gui->appendLog("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			value = 0;
 			break;
 		case -1:
-			gui->appendLog("<font color=\"#FF0000\">Value \"networkPort\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"networkPort\" not found in ini-file!</font>");
 			value = 0;
 			break;
 		default:
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			// set value in networkThread
 			netThread->setPort(value);
-			#endif
 			// show text
-			gui->appendLog(QString("Network port to <b>%1</b>.").arg(value));
+			emit message(QString("Network port to <b>%1</b>.").arg(value));
 			break;
 	}
 }
@@ -2777,18 +2939,18 @@ void Direcs::enableRemoteControlListening(bool state)
 		//-----------------------------------------------------------
 		if (netThread->isRunning() == false)
 		{
-			gui->appendLog("Starting network thread...", false);
+			emit message("Starting network thread...", false);
 			netThread->start();
-			gui->appendLog("Network thread started.");
+			emit message("Network thread started.");
 		}
 	}
 	else
 	{
 		if (netThread->isRunning() == true)
 		{
-			gui->appendLog("Stopping network thread...", false);
+			emit message("Stopping network thread...", false);
 			netThread->stop();
-			gui->appendLog("Network thread stopped.");
+			emit message("Network thread stopped.");
 		}
 	}
 }
@@ -2801,7 +2963,7 @@ void Direcs::executeRemoteCommand(QString command)
 	{
 		if (command == "start")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(START);
 			return;
 		}
@@ -2809,7 +2971,7 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "forward")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(FORWARD);
 			return;
 		}
@@ -2817,7 +2979,7 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "backward")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(BACKWARD);
 			return;
 		}
@@ -2825,7 +2987,7 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "stop")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(STOP);
 			return;
 		}
@@ -2833,7 +2995,7 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "left")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(LEFT);
 			return;
 		}
@@ -2841,7 +3003,7 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "right")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			drive(RIGHT);
 			return;
 		}
@@ -2849,12 +3011,15 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "increasespeedmotor1")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 
 			int newSpeed = motors->getMotorSpeed(1) + 1;
 			motors->setMotorSpeed(1, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			settingsDialog->setSliderMotorSpeed(1, newSpeed);
+			if (!consoleMode)
+			{
+				settingsDialog->setSliderMotorSpeed(1, newSpeed);
+			}
 			#endif
 			return;
 		}
@@ -2862,12 +3027,15 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "increasespeedmotor2")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 
 			int newSpeed = motors->getMotorSpeed(2) + 1;
 			motors->setMotorSpeed(2, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			settingsDialog->setSliderMotorSpeed(2, newSpeed);
+			if (!consoleMode)
+			{
+				settingsDialog->setSliderMotorSpeed(2, newSpeed);
+			}
 			#endif
 			return;
 		}
@@ -2875,12 +3043,15 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "reducespeedmotor1")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 
 			int newSpeed = motors->getMotorSpeed(1) - 1;
 			motors->setMotorSpeed(1, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			settingsDialog->setSliderMotorSpeed(1, newSpeed);
+			if (!consoleMode)
+			{
+				settingsDialog->setSliderMotorSpeed(1, newSpeed);
+			}
 			#endif
 			return;
 		}
@@ -2888,19 +3059,22 @@ void Direcs::executeRemoteCommand(QString command)
 
 		if (command == "reducespeedmotor2")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 
 			int newSpeed = motors->getMotorSpeed(2) - 1;
 			motors->setMotorSpeed(2, newSpeed);
 			#ifndef _ARM_ // only include in _non_ ARM environments!
-			settingsDialog->setSliderMotorSpeed(2, newSpeed);
+			if (!consoleMode)
+			{
+				settingsDialog->setSliderMotorSpeed(2, newSpeed);
+			}
 			#endif
 			return;
 		}
 
 		if (command == "shutdown")
 		{
-			gui->appendLog(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
+			emit message(tr("<font color=\"#0000FF\">Executing remote command \"%1\".</font>").arg(command));
 			emit shutdown();
 			return;
 		}
@@ -2930,9 +3104,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE backward
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				//speed = (axisValue / JOYSTICKDIVISOR);
-				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
-				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+				if (!consoleMode)
+				{
+					//speed = (axisValue / JOYSTICKDIVISOR);
+					settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+					settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+				}
 				#endif
 
 //				if (robotIsOn)
@@ -2981,9 +3158,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE forward
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				//speed = (-axisValue / JOYSTICKDIVISOR);
-				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+				if (!consoleMode)
+				{
+					//speed = (-axisValue / JOYSTICKDIVISOR);
+					settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+					settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+				}
 				#endif
 
 				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
@@ -3054,9 +3234,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE RIGHT
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				//speed = (axisValue / JOYSTICKDIVISOR);
-				settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
-				settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+				if (!consoleMode)
+				{
+					//speed = (axisValue / JOYSTICKDIVISOR);
+					settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
+					settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
+				}
 				#endif
 
 				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
@@ -3087,9 +3270,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				// DRIVE left
 				//
 				#ifndef _ARM_ // only include in _non_ ARM environments!
-				//speed = (-axisValue / JOYSTICKDIVISOR);
-				settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
-				settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+				if (!consoleMode)
+				{
+					//speed = (-axisValue / JOYSTICKDIVISOR);
+					settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
+					settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
+				}
 				#endif
 
 				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
@@ -3158,7 +3344,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue != 0)
 			{
 				servos->moveServo(currentTestServo, servos->getServoPosition(currentTestServo));
-				gui->appendLog(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(servos->getServoPosition(currentTestServo)));
+				emit message(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(servos->getServoPosition(currentTestServo)));
 			}
 
 			return;
@@ -3176,7 +3362,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue > 0)
 			{
 				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-				//gui->appendLog("motor 4 on CW");
+				//emit message("motor 4 on CW");
 			}
 
 			//------------------
@@ -3185,19 +3371,19 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue < 0)
 			{
 				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-				//gui->appendLog("motor 4 on CCW");
+				//emit message("motor 4 on CCW");
 			}
 
 			// move, when button is pressed
 			if (axisValue != 0)
 			{
-				//gui->appendLog("Tilting Cam...");
+				//emit message("Tilting Cam...");
 			}
 
 			// stop, when button is pressed!
 			if (axisValue == 0)
 			{
-				//gui->appendLog("Tilt stop.");
+				//emit message("Tilt stop.");
 				motors->motorControl(MOTOR4, OFF, SAME);
 			}
 			return;
@@ -3301,7 +3487,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue != 0)
 			{
 //				servos->moveServo(SERVO1, servo1Pos);
-//				gui->appendLog(QString("Servo 1 moved to %1.").arg(servo1Pos));
+//				emit message(QString("Servo 1 moved to %1.").arg(servo1Pos));
 			}
 			return;
 		} // servo test mode
@@ -3317,7 +3503,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue > 0)
 			{
 				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				//gui->appendLog("motor 3 on CW");
+				//emit message("motor 3 on CW");
 			}
 
 			//------------------
@@ -3326,20 +3512,20 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue < 0)
 			{
 				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-				//gui->appendLog("motor 3 on CCW");
+				//emit message("motor 3 on CCW");
 			}
 
 			// move, when button is pressed
 			if (axisValue != 0)
 			{
-				//gui->appendLog("Panning Cam...");
+				//emit message("Panning Cam...");
 			}
 
 			// stop, when button is pressed!
 			if (axisValue == 0)
 			{
 				motors->motorControl(MOTOR3, OFF, SAME);
-				//gui->appendLog("Pan stop.");
+				//emit message("Pan stop.");
 			}
 			return;
 		} // cam test mode [pan]
@@ -3454,14 +3640,14 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle0 == false)
 				{
 					eyeTestMode=true;
-					gui->appendLog("<font color=\"#0000FF\">Eye test mode enabled.</front>");
+					emit message("<font color=\"#0000FF\">Eye test mode enabled.</front>");
 				}
 				else
 				{
 					eyeTestMode=false;
 					head->look("FORWARD");
 					head->look("NORMAL");
-					gui->appendLog("<font color=\"#0000FF\">Eye test mode disabled.</front>");
+					emit message("<font color=\"#0000FF\">Eye test mode disabled.</front>");
 				}
 				toggle0 = !toggle0;
 			}
@@ -3472,8 +3658,8 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle1 == false)
 				{
 					servoTestMode = true;
-					gui->appendLog("<font color=\"#0000FF\">Servo test mode ON.</front>");
-					gui->appendLog(QString("Servo %1 selected.").arg(currentTestServo+1));
+					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
+					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
 					// TODO: timing problem, when emitting speak signal.
 					// restults in "Error reading joystick device!"
 					emit speak("Servo test mode");
@@ -3481,7 +3667,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				else
 				{
 					servoTestMode = false;
-					gui->appendLog("<font color=\"#0000FF\">Servo test mode OFF.</front>");
+					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
 					emit speak("Test mode off");
 				}
 				toggle1 = !toggle1;
@@ -3497,12 +3683,12 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle4 == false)
 				{
 					mecanumDriveMode=true;
-					gui->appendLog("<font color=\"#0000FF\">Mecanum test mode enabled.</front>");
+					emit message("<font color=\"#0000FF\">Mecanum test mode enabled.</front>");
 				}
 				else
 				{
 					mecanumDriveMode=false;
-					gui->appendLog("<font color=\"#0000FF\">Mecanum test mode disabled.</front>");
+					emit message("<font color=\"#0000FF\">Mecanum test mode disabled.</front>");
 				}
 				toggle4 = !toggle4;
 			}
@@ -3516,7 +3702,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				// servo test mode
 				if (servoTestMode==true)
 				{
-					gui->appendLog(QString("Servo %1 selected.").arg((--currentTestServo)+1));
+					emit message(QString("Servo %1 selected.").arg((--currentTestServo)+1));
 				}
 			}
 			break;
@@ -3527,7 +3713,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				// servo test mode
 				if (servoTestMode==true)
 				{
-					gui->appendLog(QString("Servo %1 selected.").arg((++currentTestServo)+1));
+					emit message(QString("Servo %1 selected.").arg((++currentTestServo)+1));
 				}
 			}
 			break;
@@ -3540,7 +3726,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle10 == false)
 				{
 					testDriveMode = true;
-					gui->appendLog("<font color=\"#0000FF\">Test drive mode ON.</front>");
+					emit message("<font color=\"#0000FF\">Test drive mode ON.</front>");
 					// TODO: timing problem, when emitting speak signal.
 					// restults in "Error reading joystick device!"
 					emit speak("Test drive mode");
@@ -3548,7 +3734,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				else
 				{
 					testDriveMode = false;
-					gui->appendLog("<font color=\"#0000FF\">Test drive mode OFF.</front>");
+					emit message("<font color=\"#0000FF\">Test drive mode OFF.</front>");
 					emit speak("Test drive mode off.");
 				}
 				toggle10 = !toggle10;
@@ -3563,12 +3749,12 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle11 == false)
 				{
 					cameraTestMode = true;
-					gui->appendLog("<font color=\"#0000FF\">Camera test mode ON.</front>");
+					emit message("<font color=\"#0000FF\">Camera test mode ON.</front>");
 				}
 				else
 				{
 					cameraTestMode = false;
-					gui->appendLog("<font color=\"#0000FF\">Camera test mode OFF.</front>");
+					emit message("<font color=\"#0000FF\">Camera test mode OFF.</front>");
 				}
 				toggle11 = !toggle11;
 			}
@@ -3589,36 +3775,39 @@ void Direcs::setSimulationMode(bool status)
 
 	if (status == true)
 	{
-		gui->appendLog("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
+		emit message("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
 
 		if (laserThread->isRunning() == false)
 		{
-			gui->appendLog("Starting Laser thread...", false);
+			emit message("Starting Laser thread...", false);
 			laserThread->start();
-			gui->appendLog("Started.");
+			emit message("Started.");
 		}
 
 		if (sensorThread->isRunning() == false)
 		{
-			gui->appendLog("Starting Sensor thread...", false);
+			emit message("Starting Sensor thread...", false);
 			sensorThread->start();
-			gui->appendLog("Started.");
+			emit message("Started.");
 		}
 
 		#ifndef _ARM_ // only include in _non_ ARM environments!
-		if (plotThread->isRunning() == false)
+		if (!consoleMode)
 		{
-			gui->appendLog("Starting plot thread...", false);
-			plotThread->start();
-			gui->appendLog("Started.");
+			if (plotThread->isRunning() == false)
+			{
+				emit message("Starting plot thread...", false);
+				plotThread->start();
+				emit message("Started.");
+			}
 		}
 		#endif
 
 		if (obstCheckThread->isRunning() == false)
 		{
-			gui->appendLog("Starting obstacle check thread...", false);
+			emit message("Starting obstacle check thread...", false);
 			obstCheckThread->start();
-			gui->appendLog("Started.");
+			emit message("Started.");
 		}
 	}
 	else
@@ -3627,9 +3816,9 @@ void Direcs::setSimulationMode(bool status)
 // 		if (robotIsOn == false)
 // 		{
 // 			sensorThread->stop();
-// 			gui->appendLog("Sensor thread stopped.");
+// 			emit message("Sensor thread stopped.");
 // 		}
-		gui->appendLog("<font color=\"#0000FF\">Simulation mode disabled.</font>");
+		emit message("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
 }
 
@@ -3689,8 +3878,8 @@ void Direcs::checkArguments()
 {
 	if (arguments.contains("console", Qt::CaseInsensitive))
 	{
-		mConsoleMode = true;
-		emit publishConsoleMode(mConsoleMode);
+		consoleMode = true;
+		emit publishConsoleMode(consoleMode);
 		qDebug("CONSOLE mode activated. Now passing all messages to the console.");
 	}
 }
@@ -3742,6 +3931,6 @@ void Direcs::test()
 	//spfif  =  1 << spfif;
 	spfif  =  spfif << 1;
 	
-	gui->appendLog(QString("spfif: %1").arg(spfif) );
+	emit message(QString("spfif: %1").arg(spfif) );
 */
 }
