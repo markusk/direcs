@@ -671,14 +671,15 @@ void Direcs::init()
 	}
 
 	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-	//----------------------------------------------------------------------------
-	// connect sensor contact signals to "show contact alarm"
-	// (Whenever the an alarm contact was closed, show the result in the cam image)
-	//----------------------------------------------------------------------------
-	connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
 
 	if (!consoleMode)
 	{
+		//----------------------------------------------------------------------------
+		// connect sensor contact signals to "show contact alarm"
+		// (Whenever the an alarm contact was closed, show the result in the cam image)
+		//----------------------------------------------------------------------------
+		connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
+		
 		//----------------------------------------------------------------------------
 		// connect camDataComplete from the cam thread to signal "setCamImage"
 		// (Whenever the image is complete, the image is shown in the GUI)

@@ -49,6 +49,9 @@
     <bookmark url="/home/markus/develop/direcs/direcs-remote/src/laserThread.cpp" >
      <mark line="46" />
     </bookmark>
+    <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/sick.c" >
+     <mark line="44" />
+    </bookmark>
     <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/laser-new.cpp" >
      <mark line="614" />
      <mark line="463" />
@@ -56,9 +59,6 @@
      <mark line="605" />
      <mark line="623" />
      <mark line="539" />
-    </bookmark>
-    <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/sick.c" >
-     <mark line="44" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>
