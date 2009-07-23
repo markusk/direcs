@@ -42,7 +42,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 #ifdef _TTY_WIN_ // Windows code
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
-		qDebug() << "Error opening" << comPort <<"! [InterfaceAvr::openComPort]";
+		//qDebug() << "Error opening" << comPort <<"! [InterfaceAvr::openComPort]";
 		
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
@@ -74,7 +74,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
-		qDebug() << "Error opening" << comPort <<"!  [InterfaceAvr::openComPort]";
+		//qDebug() << "Error opening" << comPort <<"!  [InterfaceAvr::openComPort]";
 		
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
