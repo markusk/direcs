@@ -53,11 +53,10 @@ int main(int argc, char *argv[])
 		// The QCoreApplication class provides an event loop for console Qt applications.
 		QCoreApplication app(argc, argv);
 
+		CleanExit cleanExit;
+		
 		// create Direcs class object
  		Direcs d(consoleMode);
-	
-		// TODO: shutdown, when the program quits (e.g. Ctrl+C was pressed in the console)
-		//connect(app, SIGNAL( aboutToQuit() ), d, SLOT( shutdown() ));
 
 		// init direcs
 		d.init();
@@ -101,21 +100,22 @@ Direcs::Direcs(bool bConsoleMode)
 	// store mode from main method
 	consoleMode = bConsoleMode;
 	
-	
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
 #ifdef _TTY_POSIX_
 	speakThread = new SpeakThread();
 #endif
-
-// #ifndef _ARM_ // only include on _non_ ARM environments!
+	
 	if (consoleMode)
 	{
 		consoleGui = new ConsoleGui();
+//		myEvent = new Events();
+		// install an event filter to grab CTRL+C
+//  		consoleGui->installEventFilter(myEvent);
+//			this->installEventFilter(myEvent);
 	}
 	else
-// #else
 	{
 		settingsDialog = new SettingsDialog();
 		joystickDialog = new JoystickDialog();
@@ -123,7 +123,7 @@ Direcs::Direcs(bool bConsoleMode)
 		gui = new Gui(settingsDialog, joystickDialog, aboutDialog);
 		splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 	}
-// #endif
+
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
@@ -150,27 +150,6 @@ Direcs::Direcs(bool bConsoleMode)
 #endif
 	joystick = new Joystick();
 	head = new Head(servos);
-
-
-	#ifdef _ARM_ // only include on ARM environments!
-	if (consoleMode)
-	{
-		//--------------------------------------------------------------------------------
-		// Convert the Unix signal to the QSocketNotifier::activated() signal effectively.
-		//--------------------------------------------------------------------------------
-		if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sighupFd))
-			qFatal("Couldn't create HUP socketpair");
-	
-		if (::socketpair(AF_UNIX, SOCK_STREAM, 0, sigtermFd))
-			qFatal("Couldn't create TERM socketpair");
-	
-		snHup = new QSocketNotifier(sighupFd[1], QSocketNotifier::Read, this);
-		connect(snHup, SIGNAL(activated(int)), this, SLOT(handleSigHup()));
-		snTerm = new QSocketNotifier(sigtermFd[1], QSocketNotifier::Read, this);
-		connect(snTerm, SIGNAL(activated(int)), this, SLOT(handleSigTerm()));
-		qDebug("signals connected");
-	}
-	#endif
 }
 
 
@@ -385,30 +364,6 @@ void Direcs::init()
 		connect(gui,  SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
 	}
 
-	/*
-	//----------------------------------------------------------------------------
-	//
-	//----------------------------------------------------------------------------
-	#ifdef _ARM_ // only include on ARM environments!
-	struct sigaction hup, term;
-
-	hup.sa_handler = MyDaemon::hupSignalHandler;
-	sigemptyset(&hup.sa_mask);
-	hup.sa_flags = 0;
-	hup.sa_flags |= SA_RESTART;
-
-	if (sigaction(SIGHUP, &hup, 0) > 0)
-		qDebug("ERROR: return 1");
-
-	term.sa_handler = MyDaemon::termSignalHandler;
-	sigemptyset(&term.sa_mask);
-	term.sa_flags |= SA_RESTART;
-
-	if (sigaction(SIGTERM, &term, 0) > 0)
-		qDebug("ERROR: return 2");
-	#endif
-	*/
-
 
 	if (speakThread->isRunning() == false)
 	{
@@ -497,7 +452,7 @@ void Direcs::init()
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
 		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
-		emit message(QString("<font color=\"#FF0000\">Error opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
+		emit message(QString("<font color=\"#FF0000\">ERROR opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
 
 		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
@@ -507,7 +462,7 @@ void Direcs::init()
 			msgbox.exec();
 		}
 		#else
-		qDebug() << "**** Error opening serial port" << serialPortMicrocontroller << "****";
+		qDebug() << "**** ERROR opening serial port" << serialPortMicrocontroller << "****";
 		#endif
 
 		// no serial port, no robot :-(
@@ -1443,7 +1398,7 @@ void Direcs::shutdown()
 	if (consoleMode)
 	{
 		// In the gui mode the quit is done automatically by the close signal.
-		// This following line automaticall calls the Direcs destructor method.
+		// This following line automaticall calls the Direcs destructor.
 		QCoreApplication::quit();
 	}
 }
@@ -3963,49 +3918,6 @@ void Direcs::setRobotState(bool state)
 */
 
 
-void Direcs::hupSignalHandler(int)
-{
-	char a = 1;
-	::write(sighupFd[0], &a, sizeof(a));
-}
-
-
-void Direcs::termSignalHandler(int)
-{
-	char a = 1;
-	::write(sigtermFd[0], &a, sizeof(a));
-}
-
-
-void Direcs::handleSigTerm()
-{
-	snTerm->setEnabled(false);
-	char tmp;
-	::read(sigtermFd[1], &tmp, sizeof(tmp));
-
-	// do Qt stuff
-	qDebug("SigTerm recognized.");
-
-	snTerm->setEnabled(true);
-}
-
-
-int Direcs::sighupFd[2] = {0};
-int Direcs::sigtermFd[2] = {0};
-
-void Direcs::handleSigHup()
-{
-	snHup->setEnabled(false);
-	char tmp;
-	::read(sighupFd[1], &tmp, sizeof(tmp));
-
-	// do Qt stuff
-	qDebug("SigHup recognized.");
-
-	snHup->setEnabled(true);
-}
-
-
 void Direcs::checkArguments()
 {
 	if (arguments.contains("console", Qt::CaseInsensitive))
@@ -4057,15 +3969,4 @@ void Direcs::test()
 	}
 	
 // 	motors->flashlight(toggle);
-
-
-/*
-	static int spsr = 0;
-	static int spfif = 64;
-	
-	//spfif  =  1 << spfif;
-	spfif  =  spfif << 1;
-	
-	emit message(QString("spfif: %1").arg(spfif) );
-*/
 }

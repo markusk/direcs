@@ -51,8 +51,10 @@
 	#include "speakThread.h"
 #endif
 //-------------------------------------------------------------------
+#include <QObject>
 #include <QtDebug>
 #include <QMutex>
+#include <QSocketNotifier>
 
 #ifndef _ARM_ // only include on _non_ ARM environments!
 	#include <QtGui>
@@ -60,14 +62,26 @@
 #endif
 
 
-//#ifdef _ARM_ // only include on ARM environments!
-	#include <QSocketNotifier>
-	#include <sys/types.h>
-	#include <sys/socket.h>
-	#include <sys/un.h>
-	#include <string.h>
-//#endif
+//-------------------------------------------------------------------
+#include <signal.h> // for SIGINT
+#include <QtCore/QCoreApplication>
+using namespace std;
 
+struct CleanExit
+{
+	CleanExit()
+	{
+		signal(SIGINT, &CleanExit::exitQt);
+		signal(SIGTERM, &CleanExit::exitQt);
+		// signal(SIGBREAK, &CleanExit::exitQt) ;
+	}
+
+	static void exitQt(int sig)
+	{
+		// this is now called in the console mode, when hitting ctrl+c (SIGINT)
+		QCoreApplication::quit(); // FIXME: threads are not ended!
+	}
+};
 //-------------------------------------------------------------------
 
 
@@ -84,6 +98,7 @@ class Direcs : public QObject
 	public:
 		Direcs(bool bConsoleMode);
 		~Direcs();
+
 
 		/**
 		TODO: add description
@@ -105,14 +120,6 @@ class Direcs : public QObject
 		*/
 		bool exitDialog;
 
-		// Unix signal handlers.
-		static void hupSignalHandler(int unused);
-		static void termSignalHandler(int unused);
-
-	/*
-	protected:
-		bool event(QEvent *event);
-	*/
 
 	public slots:
 		/**
@@ -206,10 +213,6 @@ class Direcs : public QObject
 		 */
 		void test();
 
-		void handleSigHup();
-		void handleSigTerm();
-
-
 
 	signals:
 		/**
@@ -268,14 +271,9 @@ class Direcs : public QObject
 		*/
 		void checkArguments();
 
-		static int sighupFd[2];
-		static int sigtermFd[2];
-
-		QSocketNotifier *snHup;
-		QSocketNotifier *snTerm;
-
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
+		//Events *myEvent; /// my event filter for grabbing ctrl+c in the console mode
 		Gui *gui;
 		ConsoleGui *consoleGui;
 #ifndef _ARM_ // only include on _non_ ARM environments!
