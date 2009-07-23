@@ -49,13 +49,8 @@
 #include <QtDebug>
 #include <QMutex>
 #include <QSocketNotifier>
-
-#ifndef _ARM_ // only include on _non_ ARM environments!
-	#include <QtGui>
-	#include <QSplashScreen>
-#endif
-
-
+#include <QtGui>
+#include <QSplashScreen>
 //-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
 #include <QtCore/QCoreApplication>
@@ -254,6 +249,12 @@ class Direcs : public QObject
 		@param text is the message to be emitted
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false);
+
+		/**
+		Emits a string to the splash screen.
+		@param text is the message to be emitted
+		*/
+		void splashMessage(QString text);
 
 
 	private:

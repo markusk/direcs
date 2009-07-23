@@ -19,7 +19,7 @@ TEMPLATE = app
 message("Using special CXXFLAGS instead of warn_on in CONFIG section.")
 QMAKE_CXXFLAGS += -W -Wno-parentheses
 
-unix : !arm {
+unix {
         message("Processing UNIX scope...")
         HEADERS +=	aboutDialog.h \
 				camThread.h \
@@ -145,54 +145,5 @@ win32 {
 
 arm {
     message("Processing ARM scope...")
-
-    CONFIG =	release \
-			warn_on \
-			qt
-
-    DEFINES =	_ARM_
-
-    QT -=		opengl \
-			gui
-
-    QT +=		network
-
-    HEADERS +=	circuit.h \
-			direcsSerial.h \
-			head.h \
-			inifile.h \
-			interfaceAvr.h \
-			joystick.h \
-			laser.h \
-			laserThread.h \
-			motor.h \
-			direcs.h \
-			networkThread.h \
-			obstacleCheckThread.h \
-			sensorThread.h \
-			servo.h
-
-    SOURCES +=	circuit.cpp \
-			direcsSerial.cpp \
-			head.cpp \
-			inifile.cpp \
-			interfaceAvr.cpp \
-			joystick.cpp \
-			laser.cpp \
-			laserThread.cpp \
-			motor.cpp \
-			direcs.cpp \
-			networkThread.cpp \
-			obstacleCheckThread.cpp \
-			sensorThread.cpp \
-			servo.cpp
-
-
-
-    LIBS =		-L/usr/lib/ \
-			-L/usr/local/lib
-
-    FORMS =		mainWindow_arm.ui
-
     QMAKE_LFLAGS =	-L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
 }

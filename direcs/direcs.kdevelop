@@ -93,13 +93,13 @@
   <kdevtrollproject>
     <run>
       <mainprogram>/home/markus/develop/direcs/direcs/bin/direcs</mainprogram>
-      <programargs>console</programargs>
+      <programargs/>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
-      <globaldebugarguments>console</globaldebugarguments>
+      <globaldebugarguments/>
       <globalcwd>/home/markus/develop/direcs/direcs/bin/</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
@@ -115,7 +115,7 @@
       </debugarguments>
     </run>
     <general>
-      <activedir>src</activedir>
+      <activedir></activedir>
     </general>
     <make>
       <abortonerror>true</abortonerror>

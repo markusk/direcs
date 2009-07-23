@@ -177,14 +177,22 @@ void Direcs::init()
 	if (!consoleMode)
 	{
 		splash->show();
-		splash->showMessage(QObject::tr("Loading config file..."), splashPosition, splashColor);
 	}
+	
 	//--------------------------------------------------------------------------
+	// show splash messages in the splash screen
+	//--------------------------------------------------------------------------
+	connect(this, SIGNAL( splashMessage(QString) ), this, SLOT( showSplashMessage(QString) ));
+
+	//--------------------------------------------------------------------------
+	// let the splash screen also show laser init messages
+	//--------------------------------------------------------------------------
+	connect(laserThread, SIGNAL(message(QString)), this, SLOT(showSplashMessage(QString)));
 	
 	//--------------------------------------------------------------------------
 	// let some other classes know if we are in the console mode
 	//--------------------------------------------------------------------------
-	// FIXME: not in use anymore! connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
+	// TODO: not in use anymore! connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
 	
 	/*
 	not in use at the moment...
@@ -226,6 +234,7 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
+	emit splashMessage("Loading config file...");
 	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
 
 	//--------------------------------------------------------------------------
@@ -328,11 +337,6 @@ void Direcs::init()
 		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() ));
 	}
 
-	//--------------------------------------------------------------------------
-	// let the splash screen show laser init messages
-	//--------------------------------------------------------------------------
-	connect(laserThread, SIGNAL(message(QString)), this, SLOT(showSplashMessage(QString)));
-
 
 	//----------------------------------------------------------------------------
 	// say a text
@@ -375,12 +379,10 @@ void Direcs::init()
 		// file found-Msg
 		emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 
-		if (!consoleMode)
-			splash->showMessage(QObject::tr("Reading settings..."), splashPosition, splashColor);
-
-		//================================================================================================================================================================
+		//=========================
 		// read all settings
-		//================================================================================================================================================================
+		//=========================
+		emit splashMessage("Reading settings...");
 		readSettings();
 	}
 
@@ -449,10 +451,6 @@ void Direcs::init()
 		//-------------------------------------------------------
 		if (!consoleMode)
 		{
-			splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
-			
 			// init the circuit & Co. when hitting the button in the GUI
 			connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 			connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
@@ -462,6 +460,8 @@ void Direcs::init()
 		//==========================
 		// init the robots circuit
 		//==========================
+		emit splashMessage("Searching robot...");
+		
 		if (circuit1->initCircuit() == true)
 		{
 			emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
@@ -490,9 +490,7 @@ void Direcs::init()
 			/*
 			if (heartbeat->isRunning() == false)
 			{
-				splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
-				// for refreshing the splash...
-				QApplication::processEvents();
+				emit splashMessage("Starting heartbeat thread...");
 	
 				emit message("Starting heartbeat thread...", false);
 				heartbeat->start();
@@ -505,13 +503,7 @@ void Direcs::init()
 			//-----------------------------------------------------------
 			if (sensorThread->isRunning() == false)
 			{
-				if (!consoleMode)
-				{
-					splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
-					// for refreshing the splash...
-					QApplication::processEvents();
-				}
-	
+				emit splashMessage("Starting sensor thread...");
 				emit message("Starting sensor thread...", false);
 				sensorThread->start();
 				emit message("Sensor thread started.");
@@ -524,10 +516,7 @@ void Direcs::init()
 				//-----------------------------------------------------------
 				if (plotThread->isRunning() == false)
 				{
-						splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
-						// for refreshing the splash...
-						QApplication::processEvents();
-			
+						emit splashMessage("Starting plot thread...");
 						emit message("Starting plot thread...", false);
 						plotThread->start();
 						emit message("Plot thread started.");
@@ -550,13 +539,7 @@ void Direcs::init()
 	// start the joystick thread
 	if (joystick->isRunning() == false)
 	{
-		if (!consoleMode)
-		{
-			splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
-		}
-
+		emit splashMessage("Starting joystick thread...");
 		emit message("Starting joystick thread...", false);
 		joystick->start();
 		emit message("Joystick thread started.");
@@ -741,24 +724,12 @@ void Direcs::init()
 	//---------------------------------------------------------------------
 	// check if laser scanners are connected
 	//---------------------------------------------------------------------
-	if (!consoleMode)
-	{
-		splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
-		// for refreshing the splash...
-		QApplication::processEvents();
-	}
-	
 	// check FRONT laser
+	emit splashMessage("Searching front laser...");
 	laserScannerFrontFound = laserThread->isConnected(LASER1);
 
-	if (!consoleMode)
-	{
-		splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
-		// for refreshing the splash...
-		QApplication::processEvents();
-	}
-
 	// check REAR laser
+	emit splashMessage("Searching rear laser...");
 	laserScannerRearFound = laserThread->isConnected(LASER2);
 
 	if (laserScannerFrontFound || laserScannerRearFound)
@@ -795,13 +766,7 @@ void Direcs::init()
 		// start the laserThread
 		if (laserThread->isRunning() == false)
 		{
-			if (!consoleMode)
-			{
-				splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
-				// for refreshing the splash...
-				QApplication::processEvents();
-			}
-
+			emit splashMessage("Starting Laser thread...");
 			emit message("Starting Laser thread...", false);
 			laserThread->start();
 			emit message("Laser thread started.");
@@ -810,13 +775,7 @@ void Direcs::init()
 
 		if (obstCheckThread->isRunning() == false)
 		{
-			if (!consoleMode)
-			{
-				splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
-				// for refreshing the splash...
-				QApplication::processEvents();
-			}
-
+			emit splashMessage("Starting obstacle check thread...");
 			emit message("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			emit message("Obstacle check thread started.");
@@ -883,9 +842,7 @@ void Direcs::shutdown()
 		if (!consoleMode)
 		{
 			splash->show();
-			splash->showMessage(QObject::tr("Shutting down..."), splashPosition, splashColor);
-			// for refreshing the splash...
-			QApplication::processEvents();
+			emit splashMessage("Shutting down...");
 		}
 
 		// just 4 fun
@@ -907,9 +864,7 @@ void Direcs::shutdown()
 			if (settingsDialog->getCheckBoxSaveSettings() == Qt::Checked)
 			{
 				emit message("Writing settings...");
-				splash->showMessage(QObject::tr("Writing settings..."), splashPosition, splashColor);
-				// for refreshing the splash...
-				QApplication::processEvents();
+				emit splashMessage("Writing settings...");
 	
 				// save gui slider values
 				inifile1->writeSetting("Config", "motor1Speed", settingsDialog->getSliderMotorSpeed(1));
@@ -1398,9 +1353,8 @@ void Direcs::showExitDialog()
 }
 
 
-void Direcs::showSplashMessage(QString text) // FIXME: not in use?
+void Direcs::showSplashMessage(QString text)
 {
-	// IFXME: use this with a emmit instead of direct calls!!
 	if (!consoleMode)
 	{
 		splash->showMessage(text, splashPosition, splashColor);
@@ -2306,10 +2260,7 @@ void Direcs::readSettings()
 							// set it in the cam thread
 							camThread->setCascadePath(haarClassifierCascade);
 							emit message(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
-	
-							splash->showMessage(QObject::tr("Initialising camera..."), splashPosition, splashColor);
-							// for refreshing the splash...
-							QApplication::processEvents();
+							emit splashMessage("Initialising camera...");
 	
 							// initialise the cam
 							if (camThread->init())
