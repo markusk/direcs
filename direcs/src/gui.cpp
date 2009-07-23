@@ -1116,17 +1116,14 @@ void Gui::disableCamera()
 }
 
 
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 void Gui::setCamImageData(int width, int height, int pixeldepth)
 {
 	// tell the OpenGLContext the image data
 	ui.frameCamera->setImageData(width, height, pixeldepth);
 	appendLog("Camera image width, height and pixel depth set.");
 }
-#endif
 
 
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 //void Gui::setCamImage(QImage* image)
 void Gui::setCamImage(IplImage* frame)
 {
@@ -1144,7 +1141,6 @@ void Gui::setCamImage(IplImage* frame)
 	}
 */
 }
-#endif
 
 
 void Gui::saveCamImage(void)
@@ -1490,12 +1486,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 void Gui::on_checkBoxMirror_stateChanged(int state)
 {
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 	// QtGL class!!
 	ui.frameCamera->enableMirrorMode(state);
-#else
-	Q_UNUSED(state);
-#endif
 }
 
 

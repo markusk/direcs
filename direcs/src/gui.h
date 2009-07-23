@@ -22,10 +22,7 @@
 #define GUI_H
 
 
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-	#include "cv.h" // for type IplImage (camThread)
-#endif
-
+#include "cv.h" // for type IplImage (camThread)
 //-------------------------------------------------------------------
 #include <QtGui>
 #include <QtOpenGL>
@@ -100,12 +97,10 @@ class Gui : public QMainWindow
 		*/
 		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
 
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		/**
 		tell the OpenGLContext the image data
 		*/
 		void setCamImageData(int width, int height, int pixeldepth);
-#endif
 
 		/**
 		Initialise the laser view (find the middle of the now fresh shown control etc.)
@@ -122,7 +117,6 @@ class Gui : public QMainWindow
 		 */
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
 
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		/**
 		Shows the new picture from the cam (live).
 		@param frame
@@ -130,7 +124,6 @@ class Gui : public QMainWindow
 		*/
 		void setCamImage(IplImage* frame);
 		//void setCamImage(QImage* image);
-#endif
 
 		/**
 		Show some face track data in the GUI.

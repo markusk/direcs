@@ -159,7 +159,6 @@ arm {
 
     HEADERS +=	circuit.h \
 			direcsSerial.h \
-			gui_arm.h \
 			head.h \
 			inifile.h \
 			interfaceAvr.h \
@@ -175,7 +174,6 @@ arm {
 
     SOURCES +=	circuit.cpp \
 			direcsSerial.cpp \
-			gui_arm.cpp \
 			head.cpp \
 			inifile.cpp \
 			interfaceAvr.cpp \

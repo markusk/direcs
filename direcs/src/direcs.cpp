@@ -61,12 +61,6 @@ int main(int argc, char *argv[])
 		// init direcs
 		d.init();
 		
-		#ifdef _ARM_ // only include on ARM environments!
-		qDebug("-------------------------");
-		qDebug("Ready for take off... ;-)");
-		qDebug("-------------------------");
-		#endif
-		
 		return app.exec();
 	}
 	else
@@ -76,7 +70,6 @@ int main(int argc, char *argv[])
 		//----------------------
 		qDebug() << "No command-line arguments passed...";
 		
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		// Initialize the resource file
 		Q_INIT_RESOURCE(direcs);
 	
@@ -88,7 +81,6 @@ int main(int argc, char *argv[])
 		
 		// init direcs
 		d.init();
-		#endif
 		
 		return app.exec();
 	}
@@ -103,7 +95,7 @@ Direcs::Direcs(bool bConsoleMode)
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 	speakThread = new SpeakThread();
 #endif
 	
@@ -134,20 +126,16 @@ Direcs::Direcs(bool bConsoleMode)
 	servos = new Servo(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		plotThread = new PlotThread(sensorThread);
 	}
-#endif
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		camThread = new CamThread();
 	}
-#endif
 	joystick = new Joystick();
 	head = new Head(servos);
 }
@@ -155,14 +143,12 @@ Direcs::Direcs(bool bConsoleMode)
 
 void Direcs::init()
 {
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashColor = Qt::red;
 	}
-#endif
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 // 	robotIsOn = false;
@@ -286,10 +272,8 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		connect(gui, SIGNAL(test()), this, SLOT(test()));
 	}
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	// currently not in use:
 	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
-#endif
 
 	if (!consoleMode)
 	{
@@ -299,7 +283,6 @@ void Direcs::init()
 		connect(gui, SIGNAL(resetDrivenDistance(int)), sensorThread, SLOT(resetDrivenDistance(int)));
 	}
 
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		//--------------------------------------------------------------------------
@@ -332,7 +315,6 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 	
-		#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		//-------------------------------------------------------------------------------------
 		// disable face detection in the GUI, on error with loading haar cascade in CamThread
 		// Must be before readSettings!
@@ -344,9 +326,7 @@ void Direcs::init()
 		// Must be before readSettings!
 		//-------------------------------------------------------------------------------------
 		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() ));
-		#endif
 	}
-#endif
 
 	//--------------------------------------------------------------------------
 	// let the splash screen show laser init messages
@@ -357,8 +337,9 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	// say a text
 	//----------------------------------------------------------------------------
-	#ifdef _TTY_POSIX_
+	#ifdef Q_OS_UNIX
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+	
 	if (!consoleMode)
 	{
 		connect(gui,  SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
@@ -380,16 +361,12 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	if (inifile1->checkFiles() == false)
 	{
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 		{
 			// file not found-Msg
 			QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
 			msgbox.exec();
 		}
-		#else
-		qDebug() << "**** Error opening ini-file " << inifile1->getInifileName() << "****";
-		#endif
 
 		emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
 	}
@@ -398,10 +375,8 @@ void Direcs::init()
 		// file found-Msg
 		emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 			splash->showMessage(QObject::tr("Reading settings..."), splashPosition, splashColor);
-		#endif
 
 		//================================================================================================================================================================
 		// read all settings
@@ -410,7 +385,6 @@ void Direcs::init()
 	}
 
 
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		//----------------------------------------------------------------------------
@@ -422,8 +396,8 @@ void Direcs::init()
 		connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
 		connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
 	}
-	#endif
 
+	
 	//----------------------------------------------------------------------------
 	// let the GUI show messages in the log (e.g. when special buttons pressed)
 	//----------------------------------------------------------------------------
@@ -435,14 +409,11 @@ void Direcs::init()
 	{
 		connect(joystick, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
 	}
-
 	
-	//#ifdef _ARM_ // only include on ARM environments!
 	//-------------------------------------------------------
 	// start the network thread (waiting for commands)
 	//-------------------------------------------------------
 	enableRemoteControlListening(true);
-	//#endif
 
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
@@ -454,16 +425,12 @@ void Direcs::init()
 		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
 		emit message(QString("<font color=\"#FF0000\">ERROR opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
 
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 		{
 			// show a warning dialog!
 			QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
 			msgbox.exec();
 		}
-		#else
-		qDebug() << "**** ERROR opening serial port" << serialPortMicrocontroller << "****";
-		#endif
 
 		// no serial port, no robot :-(
 // 		robotIsOn = false;
@@ -480,7 +447,6 @@ void Direcs::init()
 		// Basic init for all the bits on the robot circuit
 		// AND check, if the robot is "on" (it answers correct)
 		//-------------------------------------------------------
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 		{
 			splash->showMessage(QObject::tr("Searching robot..."), splashPosition, splashColor);
@@ -491,7 +457,6 @@ void Direcs::init()
 			connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 			connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 		}
-		#endif
 
 
 		//==========================
@@ -525,11 +490,9 @@ void Direcs::init()
 			/*
 			if (heartbeat->isRunning() == false)
 			{
-				#ifndef _ARM_ // only include on _non_ ARM environments!
 				splash->showMessage(QObject::tr("Starting heartbeat thread..."), splashPosition, splashColor);
 				// for refreshing the splash...
 				QApplication::processEvents();
-				#endif
 	
 				emit message("Starting heartbeat thread...", false);
 				heartbeat->start();
@@ -542,38 +505,34 @@ void Direcs::init()
 			//-----------------------------------------------------------
 			if (sensorThread->isRunning() == false)
 			{
-				#ifndef _ARM_ // only include on _non_ ARM environments!
 				if (!consoleMode)
 				{
 					splash->showMessage(QObject::tr("Starting sensor thread..."), splashPosition, splashColor);
 					// for refreshing the splash...
 					QApplication::processEvents();
 				}
-				#endif
 	
 				emit message("Starting sensor thread...", false);
 				sensorThread->start();
 				emit message("Sensor thread started.");
 			}
 	
-			#ifndef _ARM_ // only include on _non_ ARM environments!
-			//-----------------------------------------------------------
-			// start the plot thread ("clock" for plotting the curves)
-			//-----------------------------------------------------------
-			if (plotThread->isRunning() == false)
+			if (!consoleMode)
 			{
-				if (!consoleMode)
+				//-----------------------------------------------------------
+				// start the plot thread ("clock" for plotting the curves)
+				//-----------------------------------------------------------
+				if (plotThread->isRunning() == false)
 				{
-					splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
-					// for refreshing the splash...
-					QApplication::processEvents();
-		
-					emit message("Starting plot thread...", false);
-					plotThread->start();
-					emit message("Plot thread started.");
+						splash->showMessage(QObject::tr("Starting plot thread..."), splashPosition, splashColor);
+						// for refreshing the splash...
+						QApplication::processEvents();
+			
+						emit message("Starting plot thread...", false);
+						plotThread->start();
+						emit message("Plot thread started.");
 				}
 			}
-			#endif
 		} // init was successfull
 		else
 		{
@@ -591,14 +550,12 @@ void Direcs::init()
 	// start the joystick thread
 	if (joystick->isRunning() == false)
 	{
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 		{
 			splash->showMessage(QObject::tr("Starting joystick thread..."), splashPosition, splashColor);
 			// for refreshing the splash...
 			QApplication::processEvents();
 		}
-		#endif
 
 		emit message("Starting joystick thread...", false);
 		joystick->start();
@@ -625,8 +582,7 @@ void Direcs::init()
 		connect(sensorThread, SIGNAL( compassDataComplete(float, float, float) ), gui, SLOT( showCompassData(float, float, float) ) );
 	}
 
-	#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
-
+	
 	if (!consoleMode)
 	{
 		//----------------------------------------------------------------------------
@@ -663,8 +619,8 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
 	}
-	#endif
 
+	
 	//----------------------------------------------------------------------------
 	// connect obstacle check (alarm!) sensor signal to "logical unit"
 	//----------------------------------------------------------------------------
@@ -713,8 +669,6 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(this, SIGNAL(sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ));
 
-
-	#ifndef _ARM_ // only include in _non_ ARM environments!
 	if (!consoleMode)
 	{
 		//----------------------------------------------------------------------------
@@ -724,7 +678,6 @@ void Direcs::init()
 		connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
 		connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
 	}
-	#endif
 
 	//------------------------------------------------------------------------------
 	// connect laserThread signal to networkThread
@@ -736,18 +689,15 @@ void Direcs::init()
 	// connect joystick signals to "show joystick data"
 	// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
 	//----------------------------------------------------------------------------
-	#ifndef _ARM_ // only include in _non_ ARM environments!
 	if (!consoleMode)
 	{
 		connect(joystick, SIGNAL(joystickMoved(int, int)), joystickDialog, SLOT(showJoystickAxes(int, int)));
 		connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), joystickDialog, SLOT(showJoystickButtons(int, bool)));
 	}
-	#endif
+	
 	connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
 	connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
-
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		//-----------------------------------------------------------
@@ -773,7 +723,6 @@ void Direcs::init()
 			emit message("Camera thread NOT started!");
 		}
 	}
-	#endif
 
 
 	if (!consoleMode)
@@ -792,30 +741,22 @@ void Direcs::init()
 	//---------------------------------------------------------------------
 	// check if laser scanners are connected
 	//---------------------------------------------------------------------
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		splash->showMessage(QObject::tr("Searching front laser..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
 	}
-	#else
-	qDebug() << "Searching front laser...";
-	#endif
-
+	
 	// check FRONT laser
 	laserScannerFrontFound = laserThread->isConnected(LASER1);
 
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		splash->showMessage(QObject::tr("Searching rear laser..."), splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
 	}
-	#else
-	qDebug() << "Searching rear laser...";
-	#endif
 
 	// check REAR laser
 	laserScannerRearFound = laserThread->isConnected(LASER2);
@@ -840,7 +781,6 @@ void Direcs::init()
 			emit message("Rear laser scanner NOT found.");
 		}
 
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 		{
 			// TODO: nice exit point and error message
@@ -850,20 +790,17 @@ void Direcs::init()
 				showExitDialog();
 			}
 		}
-		#endif
 
 
 		// start the laserThread
 		if (laserThread->isRunning() == false)
 		{
-			#ifndef _ARM_ // only include on _non_ ARM environments!
 			if (!consoleMode)
 			{
 				splash->showMessage(QObject::tr("Starting Laser thread..."), splashPosition, splashColor);
 				// for refreshing the splash...
 				QApplication::processEvents();
 			}
-			#endif
 
 			emit message("Starting Laser thread...", false);
 			laserThread->start();
@@ -873,14 +810,12 @@ void Direcs::init()
 
 		if (obstCheckThread->isRunning() == false)
 		{
-			#ifndef _ARM_ // only include on _non_ ARM environments!
 			if (!consoleMode)
 			{
 				splash->showMessage(QObject::tr("Starting obstacle check thread..."), splashPosition, splashColor);
 				// for refreshing the splash...
 				QApplication::processEvents();
 			}
-			#endif
 
 			emit message("Starting obstacle check thread...", false);
 			obstCheckThread->start();
@@ -892,8 +827,7 @@ void Direcs::init()
 		emit message("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 	}
 
-
-	#ifndef _ARM_ // only include in _non_ ARM environments!
+	
 	if (!consoleMode)
 	{
 		//------------------------------------------------------------------
@@ -939,7 +873,6 @@ void Direcs::init()
 		// one time init for the laser view
 		gui->initLaserView();
 	}
-	#endif
 }
 
 
@@ -947,7 +880,6 @@ void Direcs::shutdown()
 {
 		qDebug("Direcs shutdown...");
 
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 		{
 			splash->show();
@@ -955,7 +887,6 @@ void Direcs::shutdown()
 			// for refreshing the splash...
 			QApplication::processEvents();
 		}
-		#endif
 
 		// just 4 fun
 		head->look("NORMAL");
@@ -968,7 +899,6 @@ void Direcs::shutdown()
 		// "Save the setting, that no settings shoud be saved"
 		//
 		// save check box status
-		#ifndef _ARM_ // only include in _non_ ARM environments!
 		if (!consoleMode)
 		{
 			inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
@@ -1005,13 +935,11 @@ void Direcs::shutdown()
 				emit message("Settings written.");
 			}
 		}
-		#endif
 
 
 		// show dialog if set in ini-file
 		if (exitDialog == true)
 		{
-			#ifndef _ARM_ // only include on _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// ask user if he really wants to exit.
@@ -1024,13 +952,11 @@ void Direcs::shutdown()
 					return;
 				}
 			}
-			#endif
 			// TODO: ask for exit on console!
 		}
 
 
 		// TODO: a universal quit-threads-method
-		#ifndef _ARM_ // only include on _non_ ARM environments!
 		if (!consoleMode)
 		{
 			//--------------------------------
@@ -1069,7 +995,6 @@ void Direcs::shutdown()
 				}
 			}
 		}
-		#endif
 
 
 		//--------------------------------
@@ -1109,7 +1034,7 @@ void Direcs::shutdown()
 		}
 
 
-		#ifdef _TTY_POSIX_
+		#ifdef Q_OS_UNIX
 		//--------------------------------
 		// quit the speakThread
 		//--------------------------------
@@ -1220,8 +1145,7 @@ void Direcs::shutdown()
 			}
 		}
 
-
-		#ifndef _ARM_ // only include in _non_ ARM environments!
+		
 		if (!consoleMode)
 		{
 			//--------------------------------
@@ -1260,8 +1184,6 @@ void Direcs::shutdown()
 				}
 			}
 		}
-		#endif
-
 
 
 		//--------------------------------
@@ -1409,24 +1331,20 @@ Direcs::~Direcs()
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
-	#ifdef _TTY_POSIX_
+	#ifdef Q_OS_UNIX
 	delete speakThread;
 	#endif
 	delete laserThread;
 	delete netThread;
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		delete camThread;
 	}
-	#endif
 	delete joystick;
-	#ifndef _ARM_ // only include in _non_ ARM environments!
 	if (!consoleMode)
 	{
 		delete plotThread;
 	}
-	#endif
 	delete inifile1;
 	delete obstCheckThread;
 	delete servos;
@@ -1435,14 +1353,12 @@ Direcs::~Direcs()
 	// TODO: delete heartbeat;
 	delete circuit1;
 	delete interface1;
-	#ifndef _ARM_ // only include in _non_ ARM environments!
 	if (!consoleMode)
 	{
 		delete aboutDialog;
 		delete joystickDialog;
 		delete settingsDialog;
 	}
-	#endif
 	
 	qDebug("Bye.");
 	
@@ -1484,48 +1400,47 @@ void Direcs::showExitDialog()
 
 void Direcs::showSplashMessage(QString text) // FIXME: not in use?
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
+	// IFXME: use this with a emmit instead of direct calls!!
 	if (!consoleMode)
 	{
 		splash->showMessage(text, splashPosition, splashColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
 	}
-	#else
-	QByteArray textForConsole;
-
-	//------------------------------
-	// remove HTML tags from string
-	//------------------------------
-	int start= -1;
-	do
+	else
 	{
-		// search for the first HTML "<"
-		start = text.indexOf("<");
-
-		if (start != 1)
+		QByteArray textForConsole;
+	
+		//------------------------------
+		// remove HTML tags from string
+		//------------------------------
+		int start= -1;
+		do
 		{
-			text.remove(start, text.indexOf(">") + 1 - start );
-		}
-	} while (text.contains(">"));
-	// till the last HTML ">" is found
-
-	// print text to console
-	// qDebug() << text; is NOT used, because it adds quotation marks to all strings
-	textForConsole = text.toLatin1();
-	qDebug("%s", textForConsole.data());
-	#endif
+			// search for the first HTML "<"
+			start = text.indexOf("<");
+	
+			if (start != 1)
+			{
+				text.remove(start, text.indexOf(">") + 1 - start );
+			}
+		} while (text.contains(">"));
+		// till the last HTML ">" is found
+	
+		// print text to console
+		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+		textForConsole = text.toLatin1();
+		qDebug("%s", textForConsole.data());
+	}
 }
 
 
 void Direcs::finishSplash()
 {
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		splash->finish(gui);
 	}
-	#endif
 }
 
 
@@ -1721,7 +1636,6 @@ void Direcs::enableFaceTracking(int state)
 
 void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
-#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		Q_UNUSED (faces) // not in use, at the moment
@@ -1878,13 +1792,6 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			return;
 		}
 	}
-#else
-	// now usage on ARM and Windoze systems
-	Q_UNUSED (faces)
-	Q_UNUSED (faceX)
-	Q_UNUSED (faceY)
-	Q_UNUSED (faceRadius)
-#endif
 }
 
 
@@ -2331,14 +2238,12 @@ void Direcs::readSettings()
 			break;
 		case 0:
             useCamera = false;
-			#ifndef _ARM_ // only include on _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// turning "off" camera
 				camThread->setCameraDevice(-2);
 				gui->disableCamera();
 			}
-            #endif
             emit message("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
             break;
 		case 1:
@@ -2346,7 +2251,6 @@ void Direcs::readSettings()
 			break;
 	}
 
-	#ifndef _ARM_ // only include on _non_ ARM environments!
 	if (!consoleMode)
 	{
 		if (useCamera)
@@ -2423,7 +2327,6 @@ void Direcs::readSettings()
 			}
 		} // use camera
 	} // no console mode
-	#endif
 
 	//---------------------------------------------------------------------
 	// read setting / and error handling
@@ -2455,22 +2358,18 @@ void Direcs::readSettings()
 			emit message("<font color=\"#FF0000\">Value \"saveOnExit\"not found in ini-file!</font>");
 			break;
 		case Qt::Unchecked:
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// uncheck checkbox
 				settingsDialog->setCheckBoxSaveSettings(Qt::Unchecked);
 			}
-			#endif
 			break;
 		case Qt::Checked:
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set checkbox
 				settingsDialog->setCheckBoxSaveSettings(Qt::Checked);
 			}
-			#endif
 			break;
 	}
 
@@ -2505,13 +2404,12 @@ void Direcs::readSettings()
 			emit message("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
 			break;
 		default:
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderObstacleValue(minObstacleDistance);
 			}
-			#endif
+			
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstacleDistance);
 			// show text
@@ -2532,13 +2430,12 @@ void Direcs::readSettings()
 			emit message("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
 			break;
 		default:
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
 			}
-			#endif
+			
 			// tell it the obstacle check thread
 			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
 			// show text
@@ -2559,13 +2456,12 @@ void Direcs::readSettings()
 			emit message("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
 			break;
 		default:
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderRobotSlot(robotSlot);
 			}
-			#endif
+			
 			// tell it the obstacle check thread
 			obstCheckThread->setRobotSlot(robotSlot);
 			// show text
@@ -2586,13 +2482,12 @@ void Direcs::readSettings()
 			emit message("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
 			break;
 		default:
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderStraightForwardDeviation(straightForwardDeviation);
 			}
-			#endif
+			
 			// tell it the obstacle check thread
 			obstCheckThread->setStraightForwardDeviation(straightForwardDeviation);
 			// show text
@@ -2646,13 +2541,12 @@ void Direcs::readSettings()
 				mot1Speed = 255;
 			}
 
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(1, mot1Speed);
 			}
-			#endif
+			
 			// show text
 			emit message(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
 			break;
@@ -2679,13 +2573,12 @@ void Direcs::readSettings()
 				mot2Speed = 255;
 			}
 
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(2, mot2Speed);
 			}
-			#endif
+			
 			// show text
 			emit message(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
@@ -2712,13 +2605,12 @@ void Direcs::readSettings()
 				mot3Speed = 255;
 			}
 
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(3, mot3Speed);
 			}
-			#endif
+			
 			// show text
 			emit message(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
 			break;
@@ -2745,13 +2637,12 @@ void Direcs::readSettings()
 				mot4Speed = 255;
 			}
 
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(4, mot4Speed);
 			}
-			#endif
+			
 			// show text
 			emit message(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
@@ -2778,13 +2669,12 @@ void Direcs::readSettings()
 				minimumSpeed = 255;
 			}
 
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderMinimumSpeed(minimumSpeed);
 			}
-			#endif
+			
 			// show text
 			emit message(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
 			break;
@@ -2811,13 +2701,12 @@ void Direcs::readSettings()
 				maximumSpeed = 255;
 			}
 
-			#ifndef _ARM_ // only include in _non_ ARM environments!
 			if (!consoleMode)
 			{
 				// set slider to the read value
 				settingsDialog->setSliderMaximumSpeed(maximumSpeed);
 			}
-			#endif
+			
 			// show text
 			emit message(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
@@ -3102,12 +2991,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(1) + 1;
 			motors->setMotorSpeed(1, newSpeed);
-			#ifndef _ARM_ // only include in _non_ ARM environments!
+			
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(1, newSpeed);
 			}
-			#endif
+			
 			return;
 		}
 
@@ -3118,12 +3007,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(2) + 1;
 			motors->setMotorSpeed(2, newSpeed);
-			#ifndef _ARM_ // only include in _non_ ARM environments!
+			
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(2, newSpeed);
 			}
-			#endif
+			
 			return;
 		}
 
@@ -3134,12 +3023,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(1) - 1;
 			motors->setMotorSpeed(1, newSpeed);
-			#ifndef _ARM_ // only include in _non_ ARM environments!
+			
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(1, newSpeed);
 			}
-			#endif
+			
 			return;
 		}
 
@@ -3150,12 +3039,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(2) - 1;
 			motors->setMotorSpeed(2, newSpeed);
-			#ifndef _ARM_ // only include in _non_ ARM environments!
+			
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(2, newSpeed);
 			}
-			#endif
+			
 			return;
 		}
 
@@ -3190,14 +3079,13 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE backward
 				//
-				#ifndef _ARM_ // only include in _non_ ARM environments!
+				
 				if (!consoleMode)
 				{
 					//speed = (axisValue / JOYSTICKDIVISOR);
 					settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 					settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				}
-				#endif
 
 //				if (robotIsOn)
 //				{
@@ -3244,14 +3132,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE forward
 				//
-				#ifndef _ARM_ // only include in _non_ ARM environments!
 				if (!consoleMode)
 				{
 					//speed = (-axisValue / JOYSTICKDIVISOR);
 					settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 					settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				}
-				#endif
 
 				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
@@ -3320,14 +3206,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE RIGHT
 				//
-				#ifndef _ARM_ // only include in _non_ ARM environments!
 				if (!consoleMode)
 				{
 					//speed = (axisValue / JOYSTICKDIVISOR);
 					settingsDialog->setSliderMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 					settingsDialog->setSliderMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
 				}
-				#endif
 
 				motors->setMotorSpeed( 1, (axisValue / JOYSTICKDIVISOR) );
 				motors->setMotorSpeed( 2, (axisValue / JOYSTICKDIVISOR) );
@@ -3356,14 +3240,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE left
 				//
-				#ifndef _ARM_ // only include in _non_ ARM environments!
 				if (!consoleMode)
 				{
 					//speed = (-axisValue / JOYSTICKDIVISOR);
 					settingsDialog->setSliderMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 					settingsDialog->setSliderMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
 				}
-				#endif
 
 				motors->setMotorSpeed( 1, (-axisValue / JOYSTICKDIVISOR) );
 				motors->setMotorSpeed( 2, (-axisValue / JOYSTICKDIVISOR) );
@@ -3878,7 +3760,6 @@ void Direcs::setSimulationMode(bool status)
 			emit message("Started.");
 		}
 
-		#ifndef _ARM_ // only include in _non_ ARM environments!
 		if (!consoleMode)
 		{
 			if (plotThread->isRunning() == false)
@@ -3888,7 +3769,6 @@ void Direcs::setSimulationMode(bool status)
 				emit message("Started.");
 			}
 		}
-		#endif
 
 		if (obstCheckThread->isRunning() == false)
 		{
@@ -3939,7 +3819,7 @@ void Direcs::test()
 		toggle = ON;
 		//head->look("LEFT");
 		emit sendNetworkString("ON");
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 		speakThread->setLanguage("en");
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
 		// Say some text;
@@ -3952,7 +3832,7 @@ void Direcs::test()
 		toggle = OFF;
 		emit sendNetworkString("OFF");
 		
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 		speakThread->setLanguage("de");
 		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;

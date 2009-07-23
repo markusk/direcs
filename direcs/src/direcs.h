@@ -22,17 +22,12 @@
 #define DIRECS_H
 
 //-------------------------------------------------------------------
-#ifdef _ARM_ // only include on ARM environments!
-	#include "gui_arm.h"
-#else
-	#include "consoleGui.h"
-	#include "gui.h"
-	#include "joystickDialog.h"
-	#include "settingsDialog.h"
-	#include "aboutDialog.h"
-	#include "plotThread.h"
-#endif
-
+#include "consoleGui.h"
+#include "gui.h"
+#include "joystickDialog.h"
+#include "settingsDialog.h"
+#include "aboutDialog.h"
+#include "plotThread.h"
 #include "circuit.h"
 #include "interfaceAvr.h"
 //#include "heartbeat.h"
@@ -45,9 +40,8 @@
 #include "laserThread.h"
 #include "joystick.h"
 #include "head.h"
-//-------------------------------------------------------------------
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV and espeak are not available for Windows (and does not make sense for ARM)
-	#include "camThread.h"
+#include "camThread.h"
+#ifdef Q_OS_UNIX
 	#include "speakThread.h"
 #endif
 //-------------------------------------------------------------------
@@ -78,7 +72,9 @@ struct CleanExit
 
 	static void exitQt(int sig)
 	{
+		Q_UNUSED(sig);
 		// this is now called in the console mode, when hitting ctrl+c (SIGINT)
+		// emit a signal here to call shutdown?
 		QCoreApplication::quit(); // FIXME: threads are not ended!
 	}
 };
@@ -298,9 +294,7 @@ class Direcs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-#ifdef _TTY_POSIX_ // only include in Linux environments, because OpenCV is not available for Windows (and does not make sense for ARM)
 		CamThread *camThread;
-#endif
 		SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
@@ -331,6 +325,7 @@ class Direcs : public QObject
 		int maximumSpeed;
 		unsigned int value;
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
+		bool shutdownAlreadyCalled;
 		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.

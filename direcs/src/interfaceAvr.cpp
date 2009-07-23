@@ -23,7 +23,7 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	#ifdef _TTY_WIN_
+	#ifdef Q_WS_WIN
 	serialPort = new QextSerialPort();
 	#else
 	serialPort = new DirecsSerial();
@@ -39,11 +39,9 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-#ifdef _TTY_WIN_ // Windows code
+#ifdef Q_WS_WIN
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
-		//qDebug() << "Error opening" << comPort <<"! [InterfaceAvr::openComPort]";
-		
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
 		
@@ -65,7 +63,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 	return true;
 	
-#else // Linux AND ARM code using direcsSerial
+#else // Linux uses direcsSerial:
 	
 	// for QString to char* conversion
 	QByteArray ba = comPort.toLatin1();
@@ -101,7 +99,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 void InterfaceAvr::closeComPort()
 {
-#ifdef _TTY_WIN_
+#ifdef Q_WS_WIN
 	serialPort->close();
 #else
 	// using direcsSerial
@@ -115,7 +113,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	static int receiveErrorCounter = 0;
 
 
-#ifdef _TTY_WIN_
+#ifdef Q_WS_WIN
 	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
 	//	if (serialPort->write(&character, 1) == -1)
@@ -142,7 +140,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
-#ifdef _TTY_WIN_
+#ifdef Q_WS_WIN
 	// QextSerialPort code, when using Windows
 	return serialPort->getChar(character);
 #else

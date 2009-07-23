@@ -22,11 +22,11 @@
 #define INTERFACEAVR_H
 
 //-------------------------------------------------------------------
-#ifdef _TTY_WIN_ // On Windoze systems use qextserialport (I had problems with this under linux in the past!)
+#ifdef Q_WS_WIN // On windows systems use qextserialport (I had problems with this under linux!)
 	#include "qextserialport.h"
 	class QextSerialPort; // forward declarations because of circular includes!
 #else
-	#include "direcsSerial.h" // On LINUX and ARM systems use my own serial port class
+	#include "direcsSerial.h" // LINUX systems use my own serial port class
 #endif
 
 #include <QFile>
@@ -98,7 +98,7 @@ class InterfaceAvr : public QObject
 
 	
 	private:
-#ifdef _TTY_WIN_
+#ifdef Q_WS_WIN
 		QextSerialPort *serialPort;
 #else
 		DirecsSerial *serialPort;

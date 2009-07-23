@@ -26,7 +26,7 @@ SpeakThread::SpeakThread()
 	stopped = false;
 	saySomething = false;
 	
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 	// Synchronous playback
 	// 0 ms length sound buffer for SynthCallBack
 	// default location for espeak-data directory
@@ -40,7 +40,7 @@ SpeakThread::SpeakThread()
 
 SpeakThread::~SpeakThread()
 {
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 	espeak_Terminate();
 #endif
 	saySomething = false;
@@ -72,7 +72,7 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 		
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 		if (saySomething == true)
 		{
 			saySomething = false;
@@ -93,7 +93,7 @@ void SpeakThread::run()
 
 void SpeakThread::speak(QString text)
 {
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 	// store the text in the class member
 	textToSpeak = text;
 	// enbale the run method to speak :-)
@@ -111,7 +111,7 @@ void SpeakThread::speak(QString text)
 
 void SpeakThread::setLanguage(QString language)
 {
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 	espeak_SetVoiceByName(language.toAscii());
 #endif
 }
@@ -119,7 +119,7 @@ void SpeakThread::setLanguage(QString language)
 
 void SpeakThread::setRate(int value)
 {
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 	espeak_SetParameter(espeakRATE, value, 0);
 #endif
 }
@@ -127,7 +127,7 @@ void SpeakThread::setRate(int value)
 
 void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 {
-#ifdef _TTY_POSIX_
+#ifdef Q_OS_UNIX
 	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
 	voice_spec->gender=gender;
 	voice_spec->age = age;
