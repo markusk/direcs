@@ -402,7 +402,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c, int nChars)
 	if (n < 0)
 	{
 		// error
-		qDebug("write() of n bytes failed!");
+		//qDebug("write() of n bytes failed!");
 	}
 	else
 	{

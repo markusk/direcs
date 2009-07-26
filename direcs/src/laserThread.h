@@ -28,6 +28,7 @@
 
 /**
 \brief Handles all the Laser scanners.
+
 It checks, if they are connected, accesses them and emits all read data via Signal. It also provides a simulation mode.
 */
 class LaserThread : public QThread

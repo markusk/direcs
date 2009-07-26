@@ -3586,7 +3586,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					servoTestMode = false;
 					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
-					emit speak("Test mode off");
+					emit speak("Servo mode disabled");
 				}
 				toggle1 = !toggle1;
 			}
@@ -3602,11 +3602,13 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					mecanumDriveMode=true;
 					emit message("<font color=\"#0000FF\">Mecanum test mode enabled.</front>");
+					emit speak("Mecanum test mode.");
 				}
 				else
 				{
 					mecanumDriveMode=false;
 					emit message("<font color=\"#0000FF\">Mecanum test mode disabled.</front>");
+					emit speak("Mecanum test mode disabled.");
 				}
 				toggle4 = !toggle4;
 			}

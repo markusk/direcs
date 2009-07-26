@@ -29,9 +29,9 @@
 //-------------------------------------------------------------------
 
 /**
-\brief Responsible for getting all data from all sensors.
+\brief Responsible for getting all data from all sensors - except laserscanners.
 
-The SensorThread class is a thread, responsible for getting all data from all sensors (infrared, ultrasonic, motor current sensors and wheel encoders) and to store them.
+The SensorThread class is a thread, responsible for getting all data from all sensors (infrared, ultrasonic, motor current sensors, wheel encoders and the 3D compass) and to store them.
 It also gives read/write access to this data.
 */
 class SensorThread : public QThread
@@ -181,7 +181,7 @@ class SensorThread : public QThread
 	
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
 
 		// Give the infrared sensors some names
 		//
