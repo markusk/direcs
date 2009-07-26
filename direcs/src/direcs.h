@@ -92,7 +92,7 @@ class Direcs : public QObject
 
 
 		/**
-		TODO: add description
+		Initalises the complete program and robot. Conntect all signals and slots.
 		*/
 		void init();
 
@@ -116,7 +116,7 @@ class Direcs : public QObject
 		/**
 		Instructs the robot to drive FORWARD, BACKWARD, LEFT, RIGHT, TURNLEFT and TURNRIGHT. The commands START, STOP or WAIT are also possible.
 		@param command
-		 */
+		*/
 		void drive(const unsigned char command);
 
 		/**

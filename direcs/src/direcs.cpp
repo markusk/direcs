@@ -68,7 +68,6 @@ int main(int argc, char *argv[])
 		//----------------------
 		// CREATE A GUI APP
 		//----------------------
-		qDebug() << "No command-line arguments passed...";
 		
 		// Initialize the resource file
 		Q_INIT_RESOURCE(direcs);
@@ -149,6 +148,7 @@ void Direcs::init()
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashColor = Qt::red;
 	}
+	inifile1->setInifileName("direcs.ini");
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 // 	robotIsOn = false;
@@ -3580,8 +3580,6 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 					servoTestMode = true;
 					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
 					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
-					// TODO: timing problem, when emitting speak signal.
-					// restults in "Error reading joystick device!"
 					emit speak("Servo test mode");
 				}
 				else
@@ -3647,8 +3645,6 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					testDriveMode = true;
 					emit message("<font color=\"#0000FF\">Test drive mode ON.</front>");
-					// TODO: timing problem, when emitting speak signal.
-					// restults in "Error reading joystick device!"
 					emit speak("Test drive mode");
 				}
 				else

@@ -31,17 +31,10 @@ Inifile::Inifile()
 	//------------------------------------------------------------------
 	// set the name of the programms ini-file
 	//------------------------------------------------------------------
-	// TODO: put this to direcs class! With a set-method!
-	mainIniFilename = "direcs.ini";
+	mainIniFilename = "not_set";
+
+	// the setings object is created in the setInifileName() method !
 	
-	//------------------------------------------------------------------
-	// create the settings object. Use the ini-format
-	//------------------------------------------------------------------
-	settings = new QSettings(mainIniFilename, QSettings::IniFormat);
-
-	// deactivate fallbacks (read only in the specified file)
-	settings->setFallbacksEnabled(false);
-
  
 	// Inizialize the (script) command counter
 	//commandCounter = 0;
@@ -70,13 +63,19 @@ QString Inifile::checkPath()
 
 	return programPath;
 }
-	
+
 
 bool Inifile::checkFiles()
 {
 	QString filename;
 	
 
+	if (mainIniFilename == "not_set")
+	{
+		return false;
+	}
+	
+	
 	// path + filename for ini-file
 	filename = programPath;
 	filename.append("/");
@@ -464,7 +463,26 @@ void Inifile::commandClock()
 }
 */
 
+
 void Inifile::sync(void)
 {
 	settings->sync();
+}
+
+
+void Inifile::setInifileName(QString filename)
+{
+	if (mainIniFilename == "not_set")
+	{
+		// set the filename
+		mainIniFilename = filename;
+	
+		//------------------------------------------------------------------
+		// create the settings object. Use the ini-format
+		//------------------------------------------------------------------
+		settings = new QSettings(mainIniFilename, QSettings::IniFormat);
+	
+		// deactivate fallbacks (read only in the specified file)
+		settings->setFallbacksEnabled(false);
+	}
 }

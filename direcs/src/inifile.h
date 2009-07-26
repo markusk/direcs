@@ -99,6 +99,15 @@ class Inifile : public QObject
 		*/
 		QString getInifileName();
 
+
+	public slots:
+		/**
+		set the name of the ini-file where all the settings are stored.
+		@param filename
+		*/
+		void setInifileName(QString filename);
+
+
 	//private slots:
 		//void commandClock();
 

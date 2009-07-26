@@ -325,8 +325,6 @@ void Gui::on_actionDrive_activated()
 
 void Gui::on_actionReset_activated()
 {
-	// TODO: check, if robot is OFF !!!!
-
 	// reset the circuit (motors off etc.)
 	emit initCircuit();
 
