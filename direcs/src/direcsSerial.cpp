@@ -88,11 +88,10 @@ void DirecsSerial::setRTS(int fd  __attribute__ ((unused)))
 }
 
 
-void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf, int swf, int stopb)
+void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb)
 {
 	int spd = -1;
 	int newbaud = 0;
-	int bit = bits[0];
 	#ifdef _POSIX
 	struct termios tty;
 	tcgetattr(fd, &tty);
@@ -103,13 +102,14 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	
 	
 	/* We generate mark and space parity ourself. */
-	if(bit == '7' && (par[0] == 'M' || par[0] == 'S'))
-		bit = '8';
+	if(bits == 7 && (par == parityM || par == parityS))
+		bits = 8;
 
 
 	/* Check if 'baudr' is really a number */
-	if((newbaud = (atol(baudr) / 100)) == 0 && baudr[0] != '0')
-		newbaud = -1;
+// 	if((newbaud = (atol(baudr) / 100)) == 0 && baudr[0] != '0')
+// 		newbaud = -1;
+	newbaud = (baudr/100);
 	
 	switch(newbaud)
 	{
@@ -176,9 +176,9 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	/* Number of bits is ignored */
 	tty.sg_flags = RAW | TANDEM;
 	
-	if(par[0] == 'E') // even
+	if(par == parityEven) // even
 		tty.sg_flags |= EVENP;
-	else if(par[0] == 'O') // odd
+	else if(par == parityOdd) // odd
 		tty.sg_flags |= ODDP;
 	else
 		tty.sg_flags |= PASS8 | ANYP; //
@@ -193,9 +193,9 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	#if defined (_V7) && !defined(_POSIX)
 	if(spd != -1) tty.sg_ispeed = tty.sg_ospeed = spd;
 	tty.sg_flags = RAW;
-	if(par[0] == 'E')
+	if(par == parityEven)
 		tty.sg_flags |= EVENP;
-	else if(par[0] == 'O')
+	else if(par == parityOdd)
 		tty.sg_flags |= ODDP;
 	ioctl(fd, TIOCSETP, &tty);
 	#endif
@@ -209,18 +209,18 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 
 
 	/* The data bits */
-	switch (bit)
+	switch (bits)
 	{
-		case '5':
+		case 5:
 			tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS5;
 			break;
-		case '6':
+		case 6:
 			tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS6;
 			break;
-		case '7':
+		case 7:
 			tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS7;
 			break;
-		case '8':
+		case 8:
 		default:
 			tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8;
 			break;
@@ -270,9 +270,9 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 	// set the PARITY
 	tty.c_cflag &= ~(PARENB | PARODD); // delete parity bit and odd bit, so we have PARITY=N here
 	
-	if(par[0] == 'E')
+	if(par == parityEven)
 		tty.c_cflag |= PARENB; // Parity=EVEN
-	else if(par[0] == 'O')
+	else if(par == parityOdd)
 		tty.c_cflag |= PARODD; // Parity=ODD
 	
 
@@ -300,29 +300,12 @@ void DirecsSerial::setParms(int fd, char *baudr, char *par, char *bits, int hwf,
 }
 
 
-void DirecsSerial::configurePort(int dev_fd, int baudrate, char *parity)
+void DirecsSerial::configurePort(int dev_fd, int baudrate, char parity)
 {
-	switch(baudrate)
-	{
-		case 9600: 
-			setParms(dev_fd, "9600", parity, "8", 0, 0);
-			break;
-		case 19200: 
-			setParms(dev_fd, "19200", parity, "8", 0, 0);
-			break;
-		case 38400: 
-			setParms(dev_fd, "38400", parity, "8", 0, 0);
-			break;
-		case 57600:
-		case 55555:
-			setParms(dev_fd, "57600", parity, "8", 0, 0);
-			break;
-		case 115200:
-			setParms(dev_fd, "115200", parity, "8", 0, 0);
-		case 500000:
-			setParms(dev_fd, "500000", parity, "8", 0, 0);
-			break;
-	}
+	if (baudrate == 55555)
+		baudrate = 57600;
+	
+	setParms(dev_fd, baudrate, parity, 8, 0, 0);
 }
 
 
@@ -384,19 +367,8 @@ int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
-//int DirecsSerial::writeAtmelPort(int dev_fd, unsigned char *c, int nChars)
-int DirecsSerial::writeAtmelPort(unsigned char *c, int nChars)
+int DirecsSerial::writeAtmelPort(unsigned char *c)
 {
-	//--------------------------------------------------
-	// This is now original code from test/serial.c !
-	//--------------------------------------------------
-	/*
-	Writing Data to the Port
-	Writing data to the port is easy - just use the write(2) system call to send data it.
-	The write function returns the number of bytes sent or -1 if an error occurred.
-	Usually the only error you'll run into is EIO when a MODEM or data link drops the Data Carrier Detect (DCD) line.
-	This condition will persist until you close the port.int write_port(void)
-	*/
 	int n = write(dev_fd, c, 1);
 	
 	if (n < 0)

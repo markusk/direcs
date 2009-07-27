@@ -119,7 +119,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	//	if (serialPort->write(&character, 1) == -1)
 #else
 	// send one byte to the serial port with direcsSerial
-	if (serialPort->writeAtmelPort(&character, 1) <= 0)
+	if (serialPort->writeAtmelPort(&character) <= 0)
 #endif
 	{
 		receiveErrorCounter++;
