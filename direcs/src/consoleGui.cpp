@@ -382,7 +382,7 @@ void ConsoleGui::showMotorStatus(unsigned char motor, bool power, unsigned char 
 	Q_UNUSED(motor);
 	Q_UNUSED(power);
 	Q_UNUSED(direction);
-	
+/*	
 	switch (motor)
 	{
 		//-------------
@@ -496,6 +496,7 @@ void ConsoleGui::showMotorStatus(unsigned char motor, bool power, unsigned char 
 			}
 			break;
 	} // switch
+	*/
 }
 
 

@@ -553,6 +553,10 @@ void Gui::showDistance(int sensor, int distance)
 
 void Gui::showDistanceGraphical(int sensor, int distance)
 {
+	Q_UNUSED(sensor);
+	Q_UNUSED(distance);
+	
+/*
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
 	  return;
@@ -561,7 +565,6 @@ void Gui::showDistanceGraphical(int sensor, int distance)
 
 	switch (sensor)
 	{
-		/*
 		case SENSOR1:
 			ui.progressBarSensor1->setValue(distance);
 			return;
@@ -598,8 +601,8 @@ void Gui::showDistanceGraphical(int sensor, int distance)
 			ui.progressBarSensor16->setValue(distance);
 			return;
 			break;
-		*/
 	}
+*/
 }
 
 
@@ -629,6 +632,10 @@ void Gui::showDrivenDistance(int sensor, int distance)
 
 void Gui::showAlarm(short int sensor, bool state)
 {
+	Q_UNUSED(sensor);
+	Q_UNUSED(state);
+	
+/*	
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
 		qDebug("error in showAlarm! sensorValue=%d", sensor);
@@ -638,7 +645,6 @@ void Gui::showAlarm(short int sensor, bool state)
 
 	switch (sensor)
 	{
-		/*
 		case SENSOR1:
 			if (state == ON)
 			{
@@ -826,8 +832,8 @@ void Gui::showAlarm(short int sensor, bool state)
 			}
 			return;
 			break;
-		*/
 	}
+*/
 }
 
 
@@ -851,8 +857,6 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					ui.lblPower1->setPalette(QPalette(QColor(255, 255, 255)));
 					ui.lblDirection1->setEnabled(false);
 					ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
-					break;
-				case SAME:
 					break;
 			}
 
@@ -890,8 +894,6 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					ui.lblDirection2->setEnabled(false);
 					ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
-				case SAME:
-					break;
 			}
 
 			switch (direction)
@@ -928,8 +930,6 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					ui.lblDirection3->setEnabled(false);
 					ui.lblDirection3->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
-				case SAME:
-					break;
 			}
 
 			switch (direction)
@@ -965,8 +965,6 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 					ui.lblPower4->setPalette(QPalette(QColor(255, 255, 255)));
 					ui.lblDirection4->setEnabled(false);
 					ui.lblDirection4->setPalette(QPalette(QColor(255, 255, 255)));
-					break;
-				case SAME:
 					break;
 			}
 
