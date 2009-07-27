@@ -3560,14 +3560,16 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				if (toggle0 == false)
 				{
 					eyeTestMode=true;
-					emit message("<font color=\"#0000FF\">Eye test mode enabled.</front>");
+					emit message("<font color=\"#0000FF\">Eye test mode ON.</front>");
+					emit speak("Eye test mode.");
 				}
 				else
 				{
 					eyeTestMode=false;
 					head->look("FORWARD");
 					head->look("NORMAL");
-					emit message("<font color=\"#0000FF\">Eye test mode disabled.</front>");
+					emit message("<font color=\"#0000FF\">Eye test mode OFF.</front>");
+					emit speak("Eye test mode disabled.");
 				}
 				toggle0 = !toggle0;
 			}
@@ -3586,7 +3588,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					servoTestMode = false;
 					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
-					emit speak("Servo mode disabled");
+					emit speak("Servo test mode disabled");
 				}
 				toggle1 = !toggle1;
 			}
@@ -3647,13 +3649,13 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					testDriveMode = true;
 					emit message("<font color=\"#0000FF\">Test drive mode ON.</front>");
-					emit speak("Test drive mode");
+					emit speak("Test drive mode.");
 				}
 				else
 				{
 					testDriveMode = false;
 					emit message("<font color=\"#0000FF\">Test drive mode OFF.</front>");
-					emit speak("Test drive mode off.");
+					emit speak("Test drive mode disabled.");
 				}
 				toggle10 = !toggle10;
 			}
@@ -3668,11 +3670,13 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 				{
 					cameraTestMode = true;
 					emit message("<font color=\"#0000FF\">Camera test mode ON.</front>");
+					emit speak("Camerea test mode.");
 				}
 				else
 				{
 					cameraTestMode = false;
 					emit message("<font color=\"#0000FF\">Camera test mode OFF.</front>");
+					emit speak("Camerea test mode disabled.");
 				}
 				toggle11 = !toggle11;
 			}
