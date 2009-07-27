@@ -3803,11 +3803,6 @@ void Direcs::test()
 	}
 		//head->look("RIGHT");
 
-	// test the GUI LED
-	if (!consoleMode)
-	{
-		gui->setLEDHeartbeat(toggle);
-	}
-	
-// 	motors->flashlight(toggle);
+
+	motors->flashlight(toggle);
 }
