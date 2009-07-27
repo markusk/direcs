@@ -39,6 +39,8 @@
 #define NAME_LENGTH 128
 
 #include <QThread>
+#include <QDateTime>
+#include <QDebug>
 
 /**
 \brief This class is for controling the robot with a joystick.
@@ -104,9 +106,12 @@ class Joystick : public QThread
 		struct js_event js;
 		short int axisButtonNumber;
 		short int axisButtonValue;
+		short int lastAxisButtonNumber;
+		short int lastAxisButtonValue;
+		bool lastButtonState;
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 250; // Default: 25 ms
 };
 #endif

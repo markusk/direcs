@@ -45,6 +45,9 @@ void Joystick::run()
 	buttons = 2;
 	axisButtonNumber = 0;
 	axisButtonValue = 0;
+	lastAxisButtonNumber = 0;
+	lastAxisButtonValue = 0;
+	lastButtonState = false;
 
 	
 	// check if joystick is accessible
@@ -111,21 +114,47 @@ void Joystick::run()
 			//
 			// try further!
 		}
-
-		switch(js.type & ~JS_EVENT_INIT)
+		else
 		{
-		case JS_EVENT_BUTTON:
-			axisButtonNumber = js.number;
-			if (js.value == 0)
-				emit joystickButtonPressed(axisButtonNumber, false);
-			if (js.value == 1)
-				emit joystickButtonPressed(axisButtonNumber, true);
-			break;
-		case JS_EVENT_AXIS:
-			axisButtonNumber = js.number;
-			axisButtonValue = js.value;
-			emit joystickMoved(axisButtonNumber, axisButtonValue);
-			break;
+		QDateTime now = QDateTime::currentDateTime();
+		qDebug() << "joystick event" << now.toString("hh:mm:ss");
+			switch(js.type & ~JS_EVENT_INIT)
+			{
+				case JS_EVENT_BUTTON:
+					axisButtonNumber = js.number;
+					if (js.value == 0)
+					{
+						// only emit message. when joystick state has changed!
+// 						if ((axisButtonNumber != lastAxisButtonNumber) && (lastButtonState != false) )
+// 						{
+							qDebug("other button / state");
+							emit joystickButtonPressed(axisButtonNumber, false);
+// 						}
+						// store actual joystick state
+						lastAxisButtonNumber = axisButtonNumber;
+						lastButtonState = false;
+						break;
+					}
+					if (js.value == 1)
+					{
+ 						// only emit message. when joystick state has changed!
+// 						if ((axisButtonNumber != lastAxisButtonNumber) && (lastButtonState != true) )
+// 						{
+							qDebug("other button / state");
+							emit joystickButtonPressed(axisButtonNumber, true);
+// 						}
+						// store actual joystick state
+						lastAxisButtonNumber = axisButtonNumber;
+						lastButtonState = true;
+						break;
+					}
+					break;
+				case JS_EVENT_AXIS:
+					axisButtonNumber = js.number;
+					axisButtonValue = js.value;
+					emit joystickMoved(axisButtonNumber, axisButtonValue);
+					break;
+			}
 		}
 	}
 
