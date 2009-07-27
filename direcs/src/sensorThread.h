@@ -160,9 +160,18 @@ class SensorThread : public QThread
 		
 		/**
 		This signal is emitted when all compass values were read.
+		@param x is the x axis value
+		@param y is the y axis value
+		@param z is the z axis value
 		@sa Direcs::showCompassAxes()
 		*/
 		void compassDataComplete(float x, float y, float z);
+		
+		/**
+		This signal is emitted every TODO: seconds, when a specific value from the microcontroller was received.
+		@sa Gui::setLEDHeartbeat()
+		*/
+		void heartbeat(bool alive);
 
 
 	private:

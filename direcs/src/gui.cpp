@@ -1110,7 +1110,7 @@ void Gui::disableCamera()
 {
 	appendLog("Camera disabled!");
 	ui.dockCamera->setEnabled(false);
-	ui.dockCamera->hide();
+	//ui.dockCamera->hide();
 }
 
 

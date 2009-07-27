@@ -45,10 +45,6 @@ void Joystick::run()
 	buttons = 2;
 	axisButtonNumber = 0;
 	axisButtonValue = 0;
-	lastAxisButtonNumber = 0;
-	lastAxisButtonValue = 0;
-	lastButtonState = false;
-
 	
 	// check if joystick is accessible
 	if (isConnected() == false)
@@ -57,7 +53,6 @@ void Joystick::run()
 		return;
 	}
 
-	
 	ioctl(fd, JSIOCGVERSION, &version);
 	ioctl(fd, JSIOCGAXES, &axes);
 	ioctl(fd, JSIOCGBUTTONS, &buttons);
@@ -109,43 +104,22 @@ void Joystick::run()
 		if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event))
 		{
 			emit emitMessage("Error reading joystick device!");
-			//stopped = true;
-			//return;
-			//
-			// try further!
+			// no 'return' here, try further!
 		}
 		else
 		{
-		QDateTime now = QDateTime::currentDateTime();
-		qDebug() << "joystick event" << now.toString("hh:mm:ss");
 			switch(js.type & ~JS_EVENT_INIT)
 			{
 				case JS_EVENT_BUTTON:
 					axisButtonNumber = js.number;
 					if (js.value == 0)
 					{
-						// only emit message. when joystick state has changed!
-// 						if ((axisButtonNumber != lastAxisButtonNumber) && (lastButtonState != false) )
-// 						{
-							qDebug("other button / state");
-							emit joystickButtonPressed(axisButtonNumber, false);
-// 						}
-						// store actual joystick state
-						lastAxisButtonNumber = axisButtonNumber;
-						lastButtonState = false;
+						emit joystickButtonPressed(axisButtonNumber, false);
 						break;
 					}
 					if (js.value == 1)
 					{
- 						// only emit message. when joystick state has changed!
-// 						if ((axisButtonNumber != lastAxisButtonNumber) && (lastButtonState != true) )
-// 						{
-							qDebug("other button / state");
-							emit joystickButtonPressed(axisButtonNumber, true);
-// 						}
-						// store actual joystick state
-						lastAxisButtonNumber = axisButtonNumber;
-						lastButtonState = true;
+						emit joystickButtonPressed(axisButtonNumber, true);
 						break;
 					}
 					break;

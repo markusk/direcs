@@ -39,11 +39,10 @@
 #define NAME_LENGTH 128
 
 #include <QThread>
-#include <QDateTime>
-#include <QDebug>
 
 /**
 \brief This class is for controling the robot with a joystick.
+
 It opens a joystick device and emits signals on joystick movements or when a button is pressed.
 */
 class Joystick : public QThread
@@ -106,9 +105,6 @@ class Joystick : public QThread
 		struct js_event js;
 		short int axisButtonNumber;
 		short int axisButtonValue;
-		short int lastAxisButtonNumber;
-		short int lastAxisButtonValue;
-		bool lastButtonState;
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

@@ -560,10 +560,18 @@ void Direcs::init()
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL( sensorDataComplete() ), this, SLOT( showSensorData() ) );
 	connect(sensorThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
+	
 	if (!consoleMode)
 	{
 		connect(sensorThread, SIGNAL( compassDataComplete(float, float, float) ), gui, SLOT( showCompassData(float, float, float) ) );
 	}
+
+	
+	//----------------------------------------------------------------------------
+	// connect sensor signals to "show that the robot is still alive"
+	// (Whenever a specifiv sensor data is received, show the result in the GUI)
+	//----------------------------------------------------------------------------
+	connect(sensorThread, SIGNAL( heartbeat(bool)), gui, SLOT( setLEDHeartbeat(bool) ) );
 
 	
 	if (!consoleMode)

@@ -140,6 +140,7 @@ void SensorThread::run()
 	//bool result = false;
 	int value = 0;
 	//unsigned char cValue = 0;
+	bool heartbeatToggle = false;
 
 
 	//
@@ -374,6 +375,12 @@ ultrasonic Sensors temporarily removed from robot!!
 				return;
 			}
 
+			//====================================================================
+			// send an optical heartbeat signal to the GUI
+			heartbeatToggle = !heartbeatToggle;
+			emit heartbeat(heartbeatToggle);
+			//====================================================================
+			
 			// receive the 16 Bit answer from the MC
 			interface1->receiveInt(&value);
 
@@ -1021,8 +1028,6 @@ float SensorThread::convertToDegree(int sensorValue)
 	// 'value' has to be between 0 and 65536, because we're using a 16 bit value
 	//
 	// A compass has 360 degrees, so the factor for 1 degree is 360/65536
-	
-	float result = (sensorValue * (360.0 / 65536.0));
 	
 	return (sensorValue * (360.0 / 65536.0));
 }
