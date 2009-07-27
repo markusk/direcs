@@ -155,7 +155,6 @@ bool InterfaceAvr::receiveInt(int *value)
 	static int receiveErrorCounter = 0;
 	unsigned char character = 0;
 	int intValue = 0;
-	int helpValue = 0;
 
 
 	//-----------------
