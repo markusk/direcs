@@ -29,6 +29,12 @@ Laser::Laser()
 	use_laser5 = 0;
 	quit_signal = 0;
 	
+	laserSerialPort1 = "none";
+	laserSerialPort2 = "none";
+	laserSerialPort3 = "none";
+	laserSerialPort4 = "none";
+	laserSerialPort5 = "none";
+	
 	laser1 = new sick_laser_t;
 	laser2 = new sick_laser_t;
 	laser3 = new sick_laser_t;
@@ -69,7 +75,7 @@ void Laser::set_default_parameters(sick_laser_p laser, int laser_num)
 	laser->settings.range_res = CM;
 	laser->settings.range_dist = SICK_RANGE80M;
 	laser->settings.laser_num = laser_num;
-	strcpy(laser->settings.device_name, "/dev/tty0"); // only default! real value set in read_parameters!
+	laser->settings.device_name = "/dev/tty0"; // only default! real value set in read_parameters!
 	laser->settings.detect_baudrate = TRUE;
 	laser->settings.use_highspeed = FALSE;
 	laser->settings.start_baudrate = 9600;
@@ -180,13 +186,13 @@ void Laser::check_parameter_settings(sick_laser_p laser)
 }
 
 
-void Laser::interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov)
+void Laser::interpret_params(sick_laser_p laser, QString dev, QString type, double res, QString rem, double fov)
 {
-	strcpy(laser->settings.device_name, dev);
+	laser->settings.device_name = dev;
 	
-	if(strcmp(type, "LMS") == 0)
+	if (type == "LMS")
 		laser->settings.type = LMS;
-	else if(strcmp(type, "PLS") == 0)
+	else if (type == "PLS")
 		laser->settings.type = PLS;
 
 	if (fabs(fov-M_PI) < 0.1 || fabs(fov-100.0/180.0*M_PI) < 0.1)
@@ -208,22 +214,22 @@ void Laser::interpret_params(sick_laser_p laser, char *dev, char *type, double r
 		laser->settings.angle_resolution = RES_1_00_DEGREE;
 	
 	/* remission values - start */
-	if(strcmp(rem, "direct") == 0) {
+	if (rem == "direct") {
 		laser->settings.use_remission = 1;
 		laser->settings.range_dist = SICK_REMISSION_DIRECT;
 	}
-	else if(strcmp(rem, "normalized") == 0) {
+	else if (rem == "normalized") {
 		laser->settings.use_remission = 1;
 		laser->settings.range_dist = SICK_REMISSION_NORM;
 	}
-	else if(strcmp(rem, "no") == 0) {
+	else if (rem == "no") {
 		laser->settings.use_remission = 0;
 	}
-	else if(strcmp(rem, "off") == 0) {
+	else if (rem == "off") {
 		laser->settings.use_remission = 0;
-		qDebug("Warning: please set the value of the parameter \nlaser_use_remission to \"no\" and do not use \"off\".\nAssuming \"no\" for now.\n\n");
+		qDebug() << "Warning: please set the value of the parameter \nlaser_use_remission to \"no\" and do not use \"off\".\nAssuming \"no\" for now.\n\n";
 	}
-	else qDebug("ERROR: Parameter laser_use_remission for laser %d has invalid value: %s\nPossible values are: direct, normalized and off.\n", laser->settings.laser_num, rem);
+	else qDebug() << "ERROR: Parameter laser_use_remission for laser" << laser->settings.laser_num << "has invalid value:" << rem << "\nPossible values are: direct, normalized and off.\n";
 	/* remission values - stop */
 	
 	check_parameter_settings(laser);
@@ -232,79 +238,68 @@ void Laser::interpret_params(sick_laser_p laser, char *dev, char *type, double r
 
 void Laser::read_parameters(short int laserScanner)
 {
-	char *dev1, *dev2, *dev3, *dev4, *dev5;
-	char *str1, *str2, *str3, *str4, *str5;
+	QString str1, str2, str3, str4, str5;
 	double res1, res2, res3, res4, res5;
 	double fov1, fov2, fov3, fov4, fov5;
-	char *rem1, *rem2, *rem3, *rem4, *rem5;
-	
-	// Markus
-	// for QString to char* conversion
-	QByteArray ba;
+	QString rem1, rem2, rem3, rem4, rem5;
+	QByteArray ba; // for QString to char* conversion
 	
 	
 	switch (laserScanner)
 	{
 		case LASER1:
-			ba = laserSerialPort1.toLatin1();
-			dev1 = ba.data();
 			str1 = "PLS";
 			res1 = 1.0;
 			rem1 = "no";
 			fov1 = 180;
-			if(strncmp(dev1, "none", 4) != 0)
+			if (laserSerialPort1 != "none")
 			{
 				use_laser1 = 1;
-				interpret_params(laser1, dev1, str1, res1, rem1, fov1);
+				interpret_params(laser1, laserSerialPort1, str1, res1, rem1, fov1);
 			}
 			break;
 		case LASER2:
-			ba = laserSerialPort2.toLatin1();
-			dev2 = ba.data();
 			str2 = "PLS";
 			res2 = 1.0;
 			rem2 = "no";
 			fov2 = 180;
-			if(strncmp(dev2, "none", 4) != 0)
+			if (laserSerialPort2 != "none")
 			{
 				use_laser2 = 1;
-				interpret_params(laser2, dev2, str2, res2, rem2, fov2);
+				interpret_params(laser2, laserSerialPort2, str2, res2, rem2, fov2);
 			}
 			break;
 		case LASER3:
-			dev3 = "none";
 			str3 = "PLS";
 			res3 = 1.0;
 			rem3 = "no";
 			fov3 = 180;
-			if(strncmp(dev3, "none", 4) != 0)
+			if (laserSerialPort3 != "none")
 			{
 				use_laser3 = 1;
-				interpret_params(laser3, dev3, str3, res3, rem3, fov3);
+				interpret_params(laser3, laserSerialPort3, str3, res3, rem3, fov3);
 			}
 			break;
 		case LASER4:
-			dev4 = "none";
 			str4 = "PLS";
 			res4 = 1.0;
 			rem4 = "no";
 			fov4 = 180;
-			if(strncmp(dev4, "none", 4) != 0)
+			if (laserSerialPort4 != "none")
 			{
 				use_laser4 = 1;
-				interpret_params(laser4, dev4, str4, res4, rem4, fov4);
+				interpret_params(laser4, laserSerialPort4, str4, res4, rem4, fov4);
 			}
 			break;
 		case LASER5:
-			dev5 = "none";
 			str5 = "PLS";
 			res5 = 1.0;
 			rem5 = "no";
 			fov5 = 180;
-			if(strncmp(dev5, "none", 4) != 0)
+			if (laserSerialPort5 != "none")
 			{
 				use_laser5 = 1;
-				interpret_params(laser5, dev5, str5, res5, rem5, fov5);
+				interpret_params(laser5, laserSerialPort5, str5, res5, rem5, fov5);
 			}
 			break;
 	}
@@ -1002,7 +997,11 @@ void Laser::sick_set_baudrate(sick_laser_p laser, int brate)
 
 int Laser::sick_serial_connect(sick_laser_p laser)
 {
-	if((laser->dev.fd = open(laser->dev.ttyport, O_RDWR | O_NOCTTY, 0)) < 0)
+	// for QString to char* conversion
+	QByteArray ba = laser->dev.ttyport.toLatin1();
+	
+	
+	if((laser->dev.fd = open(ba.data(), O_RDWR | O_NOCTTY, 0)) < 0)
 	{
 		return(-1);
 	}
@@ -1563,12 +1562,7 @@ void Laser::sick_install_settings(sick_laser_p laser)
 	laser->dev.hwf = laser->settings.hwf;
 	laser->dev.swf = laser->settings.swf;
 	strncpy((char *)laser->dev.passwd, (const char *)laser->settings.password, 8);
-	laser->dev.ttyport = (char *)malloc((strlen(laser->settings.device_name) + 1) * sizeof(char));
-
-	// not nedded:
-	// direcs_test_alloc(laser->dev.ttyport);
-
-	strcpy(laser->dev.ttyport, laser->settings.device_name);
+	laser->dev.ttyport = laser->settings.device_name;
 }
 
 

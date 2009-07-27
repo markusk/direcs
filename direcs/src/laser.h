@@ -232,7 +232,7 @@ class Laser : public QObject
 		{
 			int                fd; // this is the file descriptor
 			laser_model_t      type;
-			char               *ttyport;
+			QString            ttyport;
 			int                baudrate;
 			parity_t           parity;
 			unsigned char      passwd[8];
@@ -245,7 +245,7 @@ class Laser : public QObject
 		
 		typedef struct
 		{
-			char device_name[MAX_NAME_LENGTH];
+			QString device_name;
 			laser_model_t type;
 			range_res_t range_res;
 			range_dist_t range_dist;
@@ -337,6 +337,9 @@ class Laser : public QObject
 		
 		QString laserSerialPort1;
 		QString laserSerialPort2;
+		QString laserSerialPort3;
+		QString laserSerialPort4;
+		QString laserSerialPort5;
 		int direcs_laser_start(short int laserScanner);
 		void direcs_laser_shutdown(int x);
 		int direcs_laser_run(void);
@@ -348,7 +351,7 @@ class Laser : public QObject
 		double direcs_degrees_to_radians(double theta);
 		void  set_laser_config_structure(sick_laser_p laser, direcs_laser_laser_config_t* config);
 		void read_parameters(short int laserScanner);
-		void interpret_params(sick_laser_p laser, char *dev, char *type, double res, char *rem, double fov);
+		void interpret_params(sick_laser_p laser, QString dev, QString type, double res, QString rem, double fov);
 		void check_parameter_settings(sick_laser_p laser);
 		void set_default_parameters(sick_laser_p laser, int laser_num);
 		
