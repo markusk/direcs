@@ -16,9 +16,6 @@ CONFIG += debug \
 
 TEMPLATE = app
 
-message("Using special CXXFLAGS instead of warn_on in CONFIG section.")
-QMAKE_CXXFLAGS += -W -Wno-parentheses
-
 unix {
         message("Processing UNIX scope...")
         HEADERS +=	aboutDialog.h \
