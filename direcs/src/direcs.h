@@ -36,6 +36,7 @@
 #include "servo.h"
 #include "obstacleCheckThread.h"
 #include "inifile.h"
+#include "logfile.h"
 #include "networkThread.h"
 #include "laserThread.h"
 #include "joystick.h"
@@ -308,7 +309,8 @@ class Direcs : public QObject
 		bool robotDrives; /// Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; /// Stores the robots simulation state
 		bool robotRemoteMode; /// Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
-        bool useCamera; /// if a camera is connected, but should not be used (just for testing, for a faster program start)
+		bool writeLogFile; /// if true, a logfile is written of all pgm messages (see ini-file)
+		bool useCamera; /// if a camera is connected, but should not be used (just for testing, for a faster program start)
 		bool laserScannerFrontFound;
 		bool laserScannerRearFound;
 		bool testDriveMode; /// is enabled, when the robot is controlled via joystick

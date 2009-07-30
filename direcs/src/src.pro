@@ -17,8 +17,8 @@ CONFIG += debug \
 TEMPLATE = app
 
 unix {
-        message("Processing UNIX scope...")
-        HEADERS +=	aboutDialog.h \
+    message("Processing UNIX scope...")
+    HEADERS +=	aboutDialog.h \
 				camThread.h \
 				circuit.h \
 				compassWidget.h \
@@ -42,9 +42,10 @@ unix {
 				sensorThread.h \
 				servo.h \
 				settingsDialog.h \
-				speakThread.h
+				speakThread.h \
+	logfile.h
 
-        SOURCES +=	aboutDialog.cpp \
+    SOURCES +=	aboutDialog.cpp \
 				camThread.cpp \
 				circuit.cpp \
 				compassWidget.cpp \
@@ -68,33 +69,34 @@ unix {
 				sensorThread.cpp \
 				servo.cpp \
 				settingsDialog.cpp \
-				speakThread.cpp
+				speakThread.cpp \
+	logfile.cpp
 
-        FORMS +=	mainWindow.ui \
+    FORMS +=	mainWindow.ui \
 				aboutDialog.ui \
 				joystickDialog.ui \
 				settingsDialog.ui
 
-        DEFINES =	_TTY_POSIX_
+    DEFINES =	_TTY_POSIX_
 
-        QT +=		network \
+    QT +=		network \
 				opengl
 
-        INCLUDEPATH +=	/usr/include/qwt-qt4 \
+    INCLUDEPATH +=	/usr/include/qwt-qt4 \
 				/usr/local/include/opencv
 
-        CONFIG -= release
+    CONFIG -= release
 
-        LIBS += -L/usr/lib \
+    LIBS += -L/usr/lib \
   -L/usr/local/lib \
   -lespeak \
   -lqwt-qt4 \
   -lcv \
   -lhighgui
-        OBJECTS_DIR = ../tmp
+    OBJECTS_DIR = ../tmp
 
-        MOC_DIR = ../tmp
-    }
+    MOC_DIR = ../tmp
+}
 
 win32 {
     message("Processing win32 scope...")

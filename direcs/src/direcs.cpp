@@ -149,9 +149,11 @@ void Direcs::init()
 		splashColor = Qt::red;
 	}
 	inifile1->setInifileName("direcs.ini");
+	// TODO: direcs->setLogFileName("direcs.log");
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
-// 	robotIsOn = false;
+	writeLogFile = false;
+	// 	robotIsOn = false;
 	robotDrives = false;
 	mot1Speed = 0;
 	mot2Speed = 0;
@@ -2067,6 +2069,27 @@ void Direcs::readSettings()
 	// get the programm settings and set the items on the gui (sliders...)
 	//---------------------------------------------------------------------
 	emit message("Reading settings...");
+
+	
+	//---------------------------------------------------------------------
+	// read setting
+	switch (inifile1->readSetting("Config", "writeLogFile"))
+	{
+		case -2:
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			break;
+		case -1:
+			emit message("<font color=\"#FF0000\">Value \"writeLogFile\"not found in ini-file!</font>");
+			break;
+		case 0:
+			writeLogFile = false;
+			emit message("Not writing a logfile.");
+			break;
+		case 1:
+			writeLogFile = true;
+			emit message("Writing a logfile!");
+			break;
+	}
 
 
 	//---------------------------------------------------------------------

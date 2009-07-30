@@ -1,2 +1,0 @@
-# for usage in qmake pro files!
-export DESTPLATFORM=console
