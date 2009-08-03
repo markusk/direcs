@@ -43,7 +43,10 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	//-------------------------------------------------------
 	ui.setupUi(this);
 
-	// set battery power labels to green :-) // TODO: make them red, if critical!!
+	// set battery power labels to green
+	ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
+	ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
+	
 	ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
 	ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
 
@@ -643,10 +646,36 @@ void Gui::showVoltage(int sensor, float voltage)
 	{
 		case VOLTAGESENSOR1:
 			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+				
+			// change color of the label depending on the voltage
+			if (voltage < MINIMUMVOLTAGE1)
+			{
+				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorRed));
+				ui.lblVoltage1->setPalette(QPalette(labelFillColorRed));
+			}
+			else
+			{
+				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
+				ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
+			}
+			
 			return;
 			break;
 		case VOLTAGESENSOR2:
 			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+				
+			// change color of the label depending on the voltage
+			if (voltage < MINIMUMVOLTAGE2)
+			{
+				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorRed));
+				ui.lblVoltage2->setPalette(QPalette(labelFillColorRed));
+			}
+			else
+			{
+				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
+				ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
+			}
+			
 			return;
 			break;
 	}

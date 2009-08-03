@@ -1803,6 +1803,45 @@ void Direcs::showSensorData()
 		gui->showVoltage(VOLTAGESENSOR1, sensorThread->getVoltage(VOLTAGESENSOR1) );
 		gui->showVoltage(VOLTAGESENSOR2, sensorThread->getVoltage(VOLTAGESENSOR2) );
 	}
+
+/*
+	//-------------------------------------------------------
+	// Voltage alarm!
+	// TODO: do a check and emit this to the gui to show the lables in red!
+	//-------------------------------------------------------
+	// TODO: is this the best place for the following lines?
+	static bool marker=false; // TODO: do this with a timer or something, for repeating it
+	
+	if (sensorThread->getVoltage(VOLTAGESENSOR1) < MINIMUMVOLTAGE1)
+	{
+		
+		if (!marker)
+		{
+			marker = true;
+			emit speak("The 12 volt batteries are empty.");
+			// TODO: maybe also do a shutdown or a 'stop" while driving...?!?
+		}
+	}
+	else
+	{
+		marker = false;
+	}
+	
+	if (sensorThread->getVoltage(VOLTAGESENSOR2) < MINIMUMVOLTAGE2)
+	{
+		
+		if (!marker)
+		{
+			marker = true;
+			emit speak("The 24 volt batteries are empty.");
+			// TODO: maybe also do a shutdown or a 'stop" while driving...?!?
+		}
+	}
+	else
+	{
+		marker = false;
+	}
+*/
 }
 
 
