@@ -43,12 +43,9 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	//-------------------------------------------------------
 	ui.setupUi(this);
 
-	// set battery power labels to green :-)
-	ui.lblBatteryPower1->setPalette(QPalette(labelFillColorGreen));
-	//ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
-	ui.lblBatteryPower2->setPalette(QPalette(labelFillColorGreen));
-	//ui.lblBatteryPower3->setPalette(QPalette(labelFillColorGreen));
-	//ui.lblBatteryPower4->setPalette(QPalette(labelFillColorGreen));
+	// set battery power labels to green :-) // TODO: make them red, if critical!!
+	ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
+	ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
 
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
@@ -503,7 +500,8 @@ void Gui::showDistance(int sensor, int distance)
 {
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
-	  return;
+		qDebug("ERROR gui, showDistance: wrong IR sensor number");
+		return;
 	}
 
 
@@ -559,7 +557,8 @@ void Gui::showDistanceGraphical(int sensor, int distance)
 /*
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
-	  return;
+		qDebug("ERROR gui, showDistanceGraphical: wrong IR sensor number");
+		return;
 	}
 
 
@@ -612,7 +611,8 @@ void Gui::showDrivenDistance(int sensor, int distance)
 	// erwartet den value als distance (z.B. in cm)!
 	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR2))
 	{
-	  return;
+		qDebug("ERROR gui, showDrivenDistance: wrong motor sensor number");
+		return;
 	}
 
 
@@ -624,6 +624,29 @@ void Gui::showDrivenDistance(int sensor, int distance)
 			break;
 		case MOTORSENSOR2:
 			ui.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
+			return;
+			break;
+	}
+}
+
+
+void Gui::showVoltage(int sensor, int voltage)
+{
+	if ((sensor < VOLTAGESENSOR1) || (sensor > VOLTAGESENSOR2))
+	{
+		qDebug("ERROR gui, showVoltage: wrong voltage sensor number");
+		return;
+	}
+
+
+	switch (sensor)
+	{
+		case VOLTAGESENSOR1:
+			ui.lblVoltage1->setText(QString("%1 V").arg(voltage));
+			return;
+			break;
+		case VOLTAGESENSOR2:
+			ui.lblVoltage2->setText(QString("%1 V").arg(voltage));
 			return;
 			break;
 	}

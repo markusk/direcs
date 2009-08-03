@@ -83,6 +83,13 @@ class Gui : public QMainWindow
 		void showDrivenDistance(int sensor, int distance);
 
 		/**
+		Shows the voltage from the power supply in a text label.
+		@param sensor is the sensor number.
+		@param voltage is the voltage in V.
+		*/
+		void showVoltage(int sensor, int voltage);
+
+		/**
 		Shows a sensor alarm (turns progressBars red, text in bold etc.)
 		@param sensor is the sensor number.
 		@param state can be ON or OFF.
@@ -501,6 +508,9 @@ class Gui : public QMainWindow
 
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
+
+		static const short int VOLTAGESENSOR1 = 0;
+		static const short int VOLTAGESENSOR2 = 1;
 
 		/**
 		Factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels at a default zoom level of 5 !!
