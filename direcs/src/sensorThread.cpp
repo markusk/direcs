@@ -809,8 +809,18 @@ int SensorThread::getVoltage(int sensor)
 		return 0;
 	}
 
-	// convert the measured value to Volt (V)
-	return ( voltageSensorValue[sensor] );
+	
+	if (sensor == VOLTAGESENSOR1)
+	{
+		// convert the measured value to Volt (V)
+		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR1 );
+	}
+
+	if (sensor == VOLTAGESENSOR2)
+	{
+		// convert the measured value to Volt (V)
+		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR2 );
+	}
 }
 
 
@@ -839,9 +849,6 @@ int SensorThread::getIrSensorValue(int sensor)
 }
 
 
-/*!
-Returns the distance in centimeters from an infrared sensor.
-*/
 int SensorThread::getDistance(int sensor)
 {
 	int distance = 0;

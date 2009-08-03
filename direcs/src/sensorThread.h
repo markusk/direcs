@@ -268,6 +268,13 @@ class SensorThread : public QThread
 		static const unsigned char CONVERSIONFACTORMOTORSENSOR = 29;
 
 		/**
+		Defines the conversion factor for the voltage sensors to convert the sensor value in a "real world" value.
+		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57 results in 12 V.
+		*/
+		static const unsigned char CONVERSIONFACTORVOLTAGESENSOR1 = 57;
+		static const unsigned char CONVERSIONFACTORVOLTAGESENSOR2 = 57;
+
+		/**
 		The x, y and z  axis value from the 3D magnetic sensor
 		 */
 		float xAxis;
