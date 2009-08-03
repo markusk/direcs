@@ -630,7 +630,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 }
 
 
-void Gui::showVoltage(int sensor, int voltage)
+void Gui::showVoltage(int sensor, float voltage)
 {
 	if ((sensor < VOLTAGESENSOR1) || (sensor > VOLTAGESENSOR2))
 	{
@@ -642,11 +642,11 @@ void Gui::showVoltage(int sensor, int voltage)
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-			ui.lblVoltage1->setText(QString("%1 V").arg(voltage));
+			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
 			return;
 			break;
 		case VOLTAGESENSOR2:
-			ui.lblVoltage2->setText(QString("%1 V").arg(voltage));
+			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
 			return;
 			break;
 	}
@@ -2256,25 +2256,10 @@ void Gui::initCompassView()
 
 void Gui::showCompassData(float x, float y, float z)
 {
-	ui.lblCompassX->setText( QString("%1").arg(x).append(" deg") );
-	ui.lblCompassY->setText( QString("%1").arg(y).append(" deg") );
-	ui.lblCompassZ->setText( QString("%1").arg(z).append(" deg") );
-	
-/*
 	// also formats the string to 3 digits precision!
-	ui.lblCompassX->setText( QString("%1").setNum(x, 'g', 3).append(" deg") );
-	ui.lblCompassY->setText( QString("%1").setNum(y, 'g', 3).append(" deg") );
-	ui.lblCompassZ->setText( QString("%1").setNum(z, 'g', 3).append(" deg") );
-*/
-/*
-	// nicer display
-	QString helper = QString("%1").arg(x);
-	ui.lblCompassX->setText( QString( helper.left( helper.indexOf(".")+3 )).append(" deg") );
-	helper = QString("%1").arg(y);
-	ui.lblCompassY->setText( QString( helper.left( helper.indexOf(".")+3 )).append(" deg") );
-	helper = QString("%1").arg(z);
-	ui.lblCompassZ->setText( QString( helper.left( helper.indexOf(".")+3 )).append(" deg") );
-*/
+	ui.lblCompassX->setText( QString("%1").setNum(x, 'f', 3).append(" deg") );
+	ui.lblCompassY->setText( QString("%1").setNum(y, 'f', 3).append(" deg") );
+	ui.lblCompassZ->setText( QString("%1").setNum(z, 'f', 3).append(" deg") );
 	
 	ui.qwtCompass->setValue(x);
 	

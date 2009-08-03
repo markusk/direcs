@@ -87,7 +87,7 @@ class Gui : public QMainWindow
 		@param sensor is the sensor number.
 		@param voltage is the voltage in V.
 		*/
-		void showVoltage(int sensor, int voltage);
+		void showVoltage(int sensor, float voltage);
 
 		/**
 		Shows a sensor alarm (turns progressBars red, text in bold etc.)

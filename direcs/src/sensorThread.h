@@ -106,19 +106,19 @@ class SensorThread : public QThread
 
 		/**
 		@param sensor is the sensor number and can be VOLTAGESENSOR1 or VOLTAGESENSOR2.
-		@return The value of an voltage sensor.
+		@return The (already converted) voltage in Volt (V).
 		*/
-		int getVoltage(int sensor);
+		float getVoltage(int sensor);
 
 		/**
-		@return The 'measured' contact value. 0 if OFF; unequal to 0 if set.
 		@param contact is the contact number.
+		@return The 'measured' contact value. 0 if OFF; unequal to 0 if set.
 		*/
 		int getContactValue(int contact);
 
 		/**
-		@return The measured x, y and z value from the 3D magnetic compass module (micromag3).
 		@param axis is the x, y or z axis.
+		@return The measured x, y and z value from the 3D magnetic compass module (micromag3).
 		*/
 		int getCompassValue(unsigned char axis);
 
@@ -187,6 +187,13 @@ class SensorThread : public QThread
 		@return The given value in degrees (0 to 360).
 		*/
 		float convertToDegree(int sensorValue);
+
+		/**
+		Converts a voltage sensor value to a value in Volt (V).
+		@param sensor is the sensor number.
+		@return The voltage in Volt.
+		*/
+		float convertToVolt(int sensor);
 		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
@@ -269,10 +276,10 @@ class SensorThread : public QThread
 
 		/**
 		Defines the conversion factor for the voltage sensors to convert the sensor value in a "real world" value.
-		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57 results in 12 V.
+		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57.0 results in 12 V.
 		*/
-		static const unsigned char CONVERSIONFACTORVOLTAGESENSOR1 = 57;
-		static const unsigned char CONVERSIONFACTORVOLTAGESENSOR2 = 57;
+		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.0;
+		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 57.0;
 
 		/**
 		The x, y and z  axis value from the 3D magnetic sensor

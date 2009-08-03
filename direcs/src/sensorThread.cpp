@@ -40,8 +40,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 // 	iRSensorValue[SENSOR8] = 0; -> now voltage 12 V (measuring the power supply / accumulators)
 	
 	// Array for storing the measured voltage values
-	voltageSensorValue[VOLTAGESENSOR1] = 0;
-	voltageSensorValue[VOLTAGESENSOR2] = 0;
+	voltageSensorValue[VOLTAGESENSOR1] = 0.0;
+	voltageSensorValue[VOLTAGESENSOR2] = 0.0;
 
 	// initialisation
 	for (int i=0; i<USSENSORARRAYSIZE; i++)
@@ -381,8 +381,8 @@ ultrasonic Sensors temporarily removed from robot!!
 			interface1->receiveInt(&value);
 
 			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg(voltageSensorValue[VOLTAGESENSOR1]));
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 
 			// store measured values in the sensor values array
 			voltageSensorValue[VOLTAGESENSOR1] = value;
@@ -406,8 +406,8 @@ ultrasonic Sensors temporarily removed from robot!!
 			interface1->receiveInt(&value);
 
 			// send value over the network
-			// *1v42# means voltagesensor2 with 42 V
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg(voltageSensorValue[VOLTAGESENSOR2]));
+			// *1v42# means voltagesensor2 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
 
 			// store measured values in the sensor values array
 			voltageSensorValue[VOLTAGESENSOR2] = value;
@@ -801,7 +801,7 @@ int SensorThread::getMAmpere(int sensor)
 }
 
 
-int SensorThread::getVoltage(int sensor)
+float SensorThread::getVoltage(int sensor)
 {
 	if ((sensor < VOLTAGESENSOR1) || (sensor > VOLTAGESENSOR2))
 	{
@@ -810,17 +810,8 @@ int SensorThread::getVoltage(int sensor)
 	}
 
 	
-	if (sensor == VOLTAGESENSOR1)
-	{
-		// convert the measured value to Volt (V)
-		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR1 );
-	}
-
-	if (sensor == VOLTAGESENSOR2)
-	{
-		// convert the measured value to Volt (V)
-		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR2 );
-	}
+	// return the converted measured value in Volt (V)
+	return convertToVolt(sensor);
 }
 
 
@@ -1109,4 +1100,27 @@ float SensorThread::convertToDegree(int sensorValue)
 	// A compass has 360 degrees, so the factor for 1 degree is 360/65536
 	
 	return (sensorValue * (360.0 / 65536.0));
+}
+
+
+float SensorThread::convertToVolt(int sensor)
+{
+	if ((sensor < VOLTAGESENSOR1) || (sensor > VOLTAGESENSOR2))
+	{
+		qDebug("ERROR sensorThread, convertToVolt: wrong voltage sensor");
+		return 0;
+	}
+
+	
+	if (sensor == VOLTAGESENSOR1)
+	{
+		// convert the measured value to Volt (V)
+		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR1 );
+	}
+
+	if (sensor == VOLTAGESENSOR2)
+	{
+		// convert the measured value to Volt (V)
+		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR2 );
+	}
 }
