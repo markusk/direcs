@@ -1763,6 +1763,7 @@ void Direcs::showSensorData()
 {
 	if (!consoleMode)
 	{
+		/*
 		//----------------------------------------
 		// show sensor values with progress bars
 		//----------------------------------------
@@ -1776,7 +1777,6 @@ void Direcs::showSensorData()
 		gui->showDistanceGraphical(SENSOR8, sensorThread->getDistance(SENSOR8));
 		gui->showDistanceGraphical(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
 	
-		/*
 		//-------------------------------------------------------
 		// show distance value in a text label (in centimeters!)
 		//-------------------------------------------------------
@@ -1794,8 +1794,14 @@ void Direcs::showSensorData()
 		//--------------------------------------------------------------
 		// show driven distance value in a text label (in centimeters!)
 		//--------------------------------------------------------------
-		gui->showDrivenDistance(MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1));
-		gui->showDrivenDistance(MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2));
+		gui->showDrivenDistance( MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1) );
+		gui->showDrivenDistance( MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2) );
+	
+		//-------------------------------------------------------
+		// show voltage value in a text label
+		//-------------------------------------------------------
+		gui->showVoltage(VOLTAGESENSOR1, sensorThread->getVoltage(VOLTAGESENSOR1) );
+		gui->showVoltage(VOLTAGESENSOR2, sensorThread->getVoltage(VOLTAGESENSOR2) );
 	}
 }
 

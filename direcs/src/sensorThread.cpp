@@ -37,7 +37,11 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRSensorValue[SENSOR5] = 0;
 	iRSensorValue[SENSOR6] = 0;
 	iRSensorValue[SENSOR7] = 0;
-	iRSensorValue[SENSOR8] = 0;
+// 	iRSensorValue[SENSOR8] = 0; -> now voltage 12 V (measuring the power supply / accumulators)
+	
+	// Array for storing the measured voltage values
+	voltageSensorValue[VOLTAGESENSOR1] = 0;
+	voltageSensorValue[VOLTAGESENSOR2] = 0;
 
 	// initialisation
 	for (int i=0; i<USSENSORARRAYSIZE; i++)
@@ -359,7 +363,56 @@ infrared Sensors temporarily removed from robot!!
 
 ultrasonic Sensors temporarily removed from robot!!
 */
+			//====================================================================
 
+
+			//---------------------------------------------------------
+			// read value from voltage sensor 1 (formerly IR sensor 8)
+			//---------------------------------------------------------
+			if (interface1->sendChar(READ_SENSOR_8) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				qDebug("ERROR reading voltage sensor 1 [SensorThread]");
+				return;
+			}
+
+			// receive the 16 Bit answer from the MC
+			interface1->receiveInt(&value);
+
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg(voltageSensorValue[VOLTAGESENSOR1]));
+
+			// store measured values in the sensor values array
+			voltageSensorValue[VOLTAGESENSOR1] = value;
+			value = 0;
+
+/*
+
+
+			//---------------------------------------------------------
+			// read value from voltage sensor 2 (formerly IR sensor 8)
+			//---------------------------------------------------------
+			if (interface1->sendChar(READ_SENSOR_7) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				qDebug("ERROR reading voltage sensor 2 [SensorThread]");
+				return;
+			}
+
+			// receive the 16 Bit answer from the MC
+			interface1->receiveInt(&value);
+
+			// send value over the network
+			// *1v42# means voltagesensor2 with 42 V
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg(voltageSensorValue[VOLTAGESENSOR2]));
+
+			// store measured values in the sensor values array
+			voltageSensorValue[VOLTAGESENSOR2] = value;
+			value = 0;
+*/
 
 			//====================================================================
 
@@ -371,7 +424,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR m1 sending to serial port (SensorThread)");
+				qDebug("ERROR reading motor sensor 1 [SensorThread]");
 				return;
 			}
 
@@ -400,7 +453,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR m2 sending to serial port (SensorThread)");
+				qDebug("ERROR reading motor sensor 2 [SensorThread]");
 				return;
 			}
 
@@ -410,7 +463,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			//qDebug("Received value motor1: %d", value);
 
 			// send value over the network
-			// *0m42# means motorsensor1 with 42 mA
+			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
 
 			// store measured values in the array
@@ -748,6 +801,19 @@ int SensorThread::getMAmpere(int sensor)
 }
 
 
+int SensorThread::getVoltage(int sensor)
+{
+	if ((sensor < VOLTAGESENSOR1) || (sensor > VOLTAGESENSOR2))
+	{
+		qDebug("ERROR sensorThread, getVoltage: wrong voltage sensor");
+		return 0;
+	}
+
+	// convert the measured value to Volt (V)
+	return ( voltageSensorValue[sensor] );
+}
+
+
 int SensorThread::getContactValue(int contact)
 {
 	if ((contact < CONTACT1) || (contact > CONTACT4))
@@ -950,6 +1016,9 @@ void SensorThread::setSimulationMode(bool state)
 		motorSensorValue[MOTORSENSOR3] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 		motorSensorValue[MOTORSENSOR4] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 
+		voltageSensorValue[VOLTAGESENSOR1] = 4;
+		voltageSensorValue[VOLTAGESENSOR2] = 2;
+
 		// initialisation
 		for (int i=0; i<CONTACTARRAYSIZE; i++)
 		{
@@ -982,6 +1051,9 @@ void SensorThread::setSimulationMode(bool state)
 		{
 			motorSensorValue[i] = 0;
 		}
+		
+		voltageSensorValue[VOLTAGESENSOR1] = 0;
+		voltageSensorValue[VOLTAGESENSOR2] = 0;
 
 		// initialisation
 		for (int i=0; i<CONTACTARRAYSIZE; i++)

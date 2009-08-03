@@ -31,7 +31,7 @@
 /**
 \brief Responsible for getting all data from all sensors - except laserscanners.
 
-The SensorThread class is a thread, responsible for getting all data from all sensors (infrared, ultrasonic, motor current sensors, wheel encoders and the 3D compass) and to store them.
+The SensorThread class is a thread, responsible for getting all data from all sensors (infrared, ultrasonic, motor current sensors, wheel encoders, voltage sensors and the 3D compass) and to store them.
 It also gives read/write access to this data.
 */
 class SensorThread : public QThread
@@ -103,6 +103,12 @@ class SensorThread : public QThread
 		@param motor is the motor number.
 		*/
 		int getMAmpere(int motor);
+
+		/**
+		@param sensor is the sensor number and can be VOLTAGESENSOR1 or VOLTAGESENSOR2.
+		@return The value of an voltage sensor.
+		*/
+		int getVoltage(int sensor);
 
 		/**
 		@return The 'measured' contact value. 0 if OFF; unequal to 0 if set.
@@ -222,6 +228,14 @@ class SensorThread : public QThread
 		/** defines the size of the iRDistance[] array !! */
 		static const unsigned char IRSENSORARRAYSIZE = 40;
 		int iRDistance[IRSENSORARRAYSIZE];
+
+		/**
+		for storing the voltage values from the accumulators (power supply)
+		*/
+		int voltageSensorValue[2];
+
+		static const short int VOLTAGESENSOR1 = 0;
+		static const short int VOLTAGESENSOR2 = 1;
 
 		/**
 		Defines the size of the usSensorValue[] array

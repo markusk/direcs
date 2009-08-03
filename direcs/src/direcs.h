@@ -409,6 +409,10 @@ class Direcs : public QObject
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 
+		/// The voltage sensors
+		static const short int VOLTAGESENSOR1 = 0;
+		static const short int VOLTAGESENSOR2 = 1;
+
 		/// The servos
 		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in servo.h !!!
 		/// the servo numbers
