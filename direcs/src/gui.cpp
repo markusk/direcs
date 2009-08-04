@@ -2099,7 +2099,7 @@ void Gui::initPlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1 + 2
 	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1 + 2 (mA)");
+	ui.qwtPlotCurrent1->setTitle("Motor 1 + 2");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2120,7 +2120,7 @@ void Gui::initPlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3 + 4
 	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 3 + 4 (mA)");
+	ui.qwtPlotCurrent2->setTitle("Motor 3 + 4");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
