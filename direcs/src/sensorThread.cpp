@@ -36,12 +36,12 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRSensorValue[SENSOR4] = 0;
 	iRSensorValue[SENSOR5] = 0;
 	iRSensorValue[SENSOR6] = 0;
-	iRSensorValue[SENSOR7] = 0;
+// 	iRSensorValue[SENSOR7] = 0; -> now voltage 24 V (measuring the power supply / accumulators)
 // 	iRSensorValue[SENSOR8] = 0; -> now voltage 12 V (measuring the power supply / accumulators)
 	
 	// Array for storing the measured voltage values
-	voltageSensorValue[VOLTAGESENSOR1] = 0.0;
-	voltageSensorValue[VOLTAGESENSOR2] = 0.0;
+	voltageSensorValue[VOLTAGESENSOR1] = 0;
+	voltageSensorValue[VOLTAGESENSOR2] = 0;
 
 	// initialisation
 	for (int i=0; i<USSENSORARRAYSIZE; i++)
@@ -294,8 +294,14 @@ void SensorThread::run()
 			iRSensorValue[SENSOR6] = value;
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
-
-
+infrared Sensors temporarily removed from robot!!
+			//====================================================================
+*/
+/*
+			//====================================================================
+sensor 7 and 8 now voltage sensors!!
+			
+			
 			//------------------------------------------------------
 			// read value from sensor 7
 			//------------------------------------------------------
@@ -337,7 +343,7 @@ void SensorThread::run()
 			//qDebug("received value sensor4: %d", value);
 			value = 0;
 
-infrared Sensors temporarily removed from robot!!
+sensor 7 and 8 now voltage sensors!!
 			//====================================================================
 
 
@@ -388,11 +394,9 @@ ultrasonic Sensors temporarily removed from robot!!
 			voltageSensorValue[VOLTAGESENSOR1] = value;
 			value = 0;
 
-/*
-
 
 			//---------------------------------------------------------
-			// read value from voltage sensor 2 (formerly IR sensor 8)
+			// read value from voltage sensor 2 (formerly IR sensor 7)
 			//---------------------------------------------------------
 			if (interface1->sendChar(READ_SENSOR_7) == false)
 			{
@@ -412,7 +416,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			// store measured values in the sensor values array
 			voltageSensorValue[VOLTAGESENSOR2] = value;
 			value = 0;
-*/
+
 
 			//====================================================================
 
