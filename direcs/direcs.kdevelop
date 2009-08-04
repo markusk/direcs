@@ -2,7 +2,7 @@
 <kdevelop>
   <general>
     <author>Markus Knapp</author>
-    <email/>
+    <email></email>
     <version>0.9</version>
     <projectmanagement>KDevTrollProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
@@ -12,10 +12,10 @@
     <ignoreparts/>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description/>
-    <versioncontrol/>
+    <description></description>
+    <versioncontrol></versioncontrol>
     <projectname>direcs</projectname>
-    <defaultencoding/>
+    <defaultencoding></defaultencoding>
   </general>
   <kdevfileview>
     <groups>
@@ -73,12 +73,12 @@
   </kdevdoctreeview>
   <kdevdebugger>
     <general>
-      <dbgshell/>
+      <dbgshell></dbgshell>
       <programargs/>
-      <gdbpath/>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <gdbpath></gdbpath>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
@@ -93,13 +93,13 @@
   <kdevtrollproject>
     <run>
       <mainprogram>/home/markus/develop/direcs/direcs/bin/direcs</mainprogram>
-      <programargs/>
+      <programargs></programargs>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
-      <globaldebugarguments/>
+      <globaldebugarguments></globaldebugarguments>
       <globalcwd>/home/markus/develop/direcs/direcs/bin/</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
@@ -151,7 +151,7 @@
     <projectdoc>
       <docsystem>Doxygen Documentation Collection</docsystem>
       <docurl>doc/</docurl>
-      <usermanualurl/>
+      <usermanualurl></usermanualurl>
     </projectdoc>
   </kdevdocumentation>
   <substmap>
@@ -167,7 +167,9 @@
     <dest>/home/markus/develop/direcs</dest>
   </substmap>
   <kdevcppsupport>
-    <references/>
+    <references>
+      <pcs>Qt4</pcs>
+    </references>
     <codecompletion>
       <includeGlobalFunctions>true</includeGlobalFunctions>
       <includeTypes>true</includeTypes>
@@ -193,12 +195,12 @@
       <alwaysParseInBackground>true</alwaysParseInBackground>
       <usePermanentCaching>true</usePermanentCaching>
       <alwaysIncludeNamespaces>true</alwaysIncludeNamespaces>
-      <includePaths>.;</includePaths>
+      <includePaths>.;src/</includePaths>
       <parseMissingHeadersExperimental>false</parseMissingHeadersExperimental>
       <resolveIncludePathsUsingMakeExperimental>false</resolveIncludePathsUsingMakeExperimental>
     </codecompletion>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>

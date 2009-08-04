@@ -50,6 +50,12 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
 	ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
 
+	//----------------------------------------------------------------------------
+	// Voltage stuff (progressBars)
+	//----------------------------------------------------------------------------
+	ui.progressBarVoltage1->setRange(0, MAXIMUMVOLTAGE1);
+	ui.progressBarVoltage2->setRange(0, MAXIMUMVOLTAGE2);
+	
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
 	ui.progressBarSensor1->setMaximum(SENSORPROGRESSBARMAXIR);
@@ -93,12 +99,10 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
 
-
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
 	initPlots();
-
 
 	//----------------------------------------------------------------------------
 	// Compass stuff
@@ -646,6 +650,7 @@ void Gui::showVoltage(int sensor, float voltage)
 	{
 		case VOLTAGESENSOR1:
 			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+			ui.progressBarVoltage1->setValue(voltage);
 				
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE1)
@@ -663,6 +668,7 @@ void Gui::showVoltage(int sensor, float voltage)
 			break;
 		case VOLTAGESENSOR2:
 			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+			ui.progressBarVoltage2->setValue(voltage);
 				
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE2)
@@ -2093,11 +2099,11 @@ void Gui::initPlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1 + 2
 	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1 + 2");
+	ui.qwtPlotCurrent1->setTitle("Motor 1 + 2 (mA)");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time
@@ -2114,11 +2120,11 @@ void Gui::initPlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3 + 4
 	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 3 + 4");
+	ui.qwtPlotCurrent2->setTitle("Motor 3 + 4 (mA)");
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
-	ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
+	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::yLeft, "Current/mA");
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time

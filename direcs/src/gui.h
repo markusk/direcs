@@ -514,6 +514,9 @@ class Gui : public QMainWindow
 		
 		static const float MINIMUMVOLTAGE1 = 10.80; // TODO: put min. voltage 1 in the ini-file
 		static const float MINIMUMVOLTAGE2 = 21.60; // TODO: put min. voltage 2 in the ini-file
+		
+		static const float MAXIMUMVOLTAGE1 = 13.80; /// for progress bars TODO: put max. voltage 1 in the ini-file
+		static const float MAXIMUMVOLTAGE2 = 27.60; /// for progress bars TODO: put max. voltage 2 in the ini-file
 
 		/**
 		Factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels at a default zoom level of 5 !!

@@ -108,6 +108,13 @@
              <bool>true</bool>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
+             <item row="1" column="0">
+              <widget class="QProgressBar" name="progressBarVoltage1">
+               <property name="value">
+                <number>42</number>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="lblVoltage1">
                <property name="font">
@@ -172,6 +179,13 @@
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QProgressBar" name="progressBarVoltage2">
+               <property name="value">
+                <number>42</number>
                </property>
               </widget>
              </item>
