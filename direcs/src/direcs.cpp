@@ -847,9 +847,9 @@ void Direcs::shutdown()
 
 		if (!consoleMode)
 		{
-			//--------------------------------
-			// hide all except the mainDialog
-			//--------------------------------
+			//-----------------------------------------
+			// hide all dialogs, except the mainDialog
+			//-----------------------------------------
 			if (settingsDialog->isVisible())
 				settingsDialog->hide();
 			
