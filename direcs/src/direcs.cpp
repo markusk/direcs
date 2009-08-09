@@ -809,12 +809,11 @@ void Direcs::init()
 		//------------------------------------------------------------------
 		// for getting the screen resolution
 		//------------------------------------------------------------------
-		//QDesktopWidget *desktop = QApplication::desktop();
+		QDesktopWidget *desktop = QApplication::desktop();
 	
 		//------------------------------------------------------------------
 		// place gui window at a nice position on the screen
 		//------------------------------------------------------------------
-		/*
 		if (desktop->width() > 1024)
 		{
 			// move mainWindow to the center of the screen
@@ -828,16 +827,13 @@ void Direcs::init()
 		}
 		else
 		{
-		*/
 			// resolution too smal for this window. Maximizing...
 			// show the main window
 			gui->showMaximized();
 	
 			// delete the splash screen
 			QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
-		/*
 		}
-		*/
 	
 		// one time init for the laser view
 		gui->initLaserView();
@@ -851,6 +847,18 @@ void Direcs::shutdown()
 
 		if (!consoleMode)
 		{
+			//--------------------------------
+			// hide all except the mainDialog
+			//--------------------------------
+			if (settingsDialog->isVisible())
+				settingsDialog->hide();
+			
+			if (joystickDialog->isVisible())
+				joystickDialog->hide();
+			
+			if (aboutDialog->isVisible())
+				aboutDialog->hide();
+			
 			splash->show();
 			emit splashMessage("Shutting down...");
 		}
@@ -1275,13 +1283,29 @@ void Direcs::shutdown()
 			circuit1->initCircuit();
 		}
 */
-		//-----------------------------
-		// close serial port to mc
-		//-----------------------------
-		emit message("Closing serial port to microcontroller...");
-		interface1->closeComPort();
+	//-----------------------------
+	// close serial port to mc
+	//-----------------------------
+	emit message("Closing serial port to microcontroller...");
+	interface1->closeComPort();
+
+
+	//--------------------------------
+	// close all except the mainDialog
+	//--------------------------------
+	if (!consoleMode)
+	{
+		if (settingsDialog->isVisible())
+			settingsDialog->close();
 		
+		if (joystickDialog->isVisible())
+			joystickDialog->close();
 		
+		if (aboutDialog->isVisible())
+			aboutDialog->close();
+	}
+	
+	
 	if (consoleMode)
 	{
 		// In the gui mode the quit is done automatically by the close signal.
