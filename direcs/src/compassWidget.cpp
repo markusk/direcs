@@ -200,37 +200,37 @@ void CompassWidget::paintGL()
 	//glRotatef(rquad,1.0f,1.0f,1.0f);                        // Rotate The Cube On X, Y & Z
 	glBegin(GL_QUADS);                                      // Start Drawing The Cube
 	
-	glColor3f(0.0f,1.0f,0.0f);                      // Set The Color To Green
+	qglColor(xAxisColor);                      // Set The Color To Green
 	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Top)
 	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Top)
 	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Top)
 	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Top)
 	
-	glColor3f(1.0f,0.5f,0.0f);                      // Set The Color To Orange
+	qglColor(Qt::cyan);                      // Set The Color To Orange
 	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Top Right Of The Quad (Bottom)
 	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Top Left Of The Quad (Bottom)
 	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Bottom)
 	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Bottom)
 	
-	glColor3f(1.0f,0.0f,0.0f);                      // Set The Color To Red
+	qglColor(yAxisColor);                      // Set The Color To Red
 	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Front)
 	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Front)
 	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Front)
 	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Front)
 
-	glColor3f(1.0f,1.0f,0.0f);                      // Set The Color To Yellow
+	qglColor(Qt::yellow);                      // Set The Color To Yellow
 	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Back)
 	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Back)
 	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Back)
 	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Back)
 
-	glColor3f(0.0f,0.0f,1.0f);                      // Set The Color To Blue
+	qglColor(zAxisColor);                      // Set The Color To Blue
 	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Left)
 	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Left)
 	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Left)
 	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Left)
 
-	glColor3f(1.0f,0.0f,1.0f);                      // Set The Color To Violet
+	qglColor(Qt::magenta);                      // Set The Color To Violet
 	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Right)
 	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Right)
 	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Right)
