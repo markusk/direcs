@@ -34,12 +34,23 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	xAxisCone = NULL;
 	yAxisCone = NULL;
 	zAxisCone = NULL;
+	
+	// real init done at initializeGL()
+	cyl_radius = 0.0;
+	cyl_height = 0.0;
+	
+	cubeWidth  = 0.0;
+	cubeHeight = 0.0;
+	cubeDepth  = 0.0;
 }
 
 
 CompassWidget::~CompassWidget()
 {
 	makeCurrent();
+		
+	if (cube)
+		gluDeleteQuadric (cube);
 		
 	if (zAxisCone)
 		gluDeleteQuadric (zAxisCone);
@@ -66,6 +77,7 @@ void CompassWidget::initializeGL()
 	xAxisColor = Qt::red;
 	yAxisColor = Qt::green;
 	zAxisColor = Qt::blue;
+	cubeColor = Qt::yellow;
 	backgroundColor = Qt::black;
 	
 	
@@ -101,6 +113,10 @@ void CompassWidget::initializeGL()
 	cyl_radius = 0.03;
 	cyl_height = 0.30;
 	
+	cubeWidth = 0.30;
+	cubeHeight = 0.30;
+	cubeDepth = 0.30;
+	
 	xAxisCylinder = gluNewQuadric();
 	yAxisCylinder = gluNewQuadric();
 	zAxisCylinder = gluNewQuadric();
@@ -109,6 +125,8 @@ void CompassWidget::initializeGL()
 	yAxisCone = gluNewQuadric();
 	zAxisCone = gluNewQuadric();
 	
+	cube = gluNewQuadric();
+	
 	gluQuadricNormals(xAxisCylinder, GLU_SMOOTH);
 	gluQuadricNormals(yAxisCylinder, GLU_SMOOTH);
 	gluQuadricNormals(zAxisCylinder, GLU_SMOOTH);
@@ -116,6 +134,8 @@ void CompassWidget::initializeGL()
 	gluQuadricNormals(xAxisCone, GLU_SMOOTH);
 	gluQuadricNormals(yAxisCone, GLU_SMOOTH);
 	gluQuadricNormals(zAxisCone, GLU_SMOOTH);
+	
+	gluQuadricNormals(cube, GLU_SMOOTH);
 }
 
 
@@ -163,6 +183,60 @@ void CompassWidget::paintGL()
 	qglColor(zAxisColor);
 	// Z cone
 	gluCylinder(zAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
+
+	// the cube
+	qglColor(cubeColor);
+	// object, baseradius, topradius, height, slices, stacks
+	//gluCube(cubeWidth, cubeHeight, cubeDepth); // FIXME: gibts nicht?
+	// move
+	//glTranslatef(0.0, 0.0, cyl_height);
+	
+	float rquad = 0.15;
+	cubeHeight = cyl_height;
+	
+	//glTranslatef(1.5f,0.0f,-7.0f);                          // Move Right And Into The Screen
+	glTranslated(0.0, 0.0, 0.0);
+	
+	//glRotatef(rquad,1.0f,1.0f,1.0f);                        // Rotate The Cube On X, Y & Z
+	glBegin(GL_QUADS);                                      // Start Drawing The Cube
+	
+	glColor3f(0.0f,1.0f,0.0f);                      // Set The Color To Green
+	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Top)
+	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Top)
+	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Top)
+	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Top)
+	
+	glColor3f(1.0f,0.5f,0.0f);                      // Set The Color To Orange
+	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Top Right Of The Quad (Bottom)
+	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Top Left Of The Quad (Bottom)
+	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Bottom)
+	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Bottom)
+	
+	glColor3f(1.0f,0.0f,0.0f);                      // Set The Color To Red
+	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Front)
+	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Front)
+	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Front)
+	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Front)
+
+	glColor3f(1.0f,1.0f,0.0f);                      // Set The Color To Yellow
+	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Back)
+	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Back)
+	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Back)
+	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Back)
+
+	glColor3f(0.0f,0.0f,1.0f);                      // Set The Color To Blue
+	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Left)
+	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Left)
+	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Left)
+	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Left)
+
+	glColor3f(1.0f,0.0f,1.0f);                      // Set The Color To Violet
+	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Right)
+	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Right)
+	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Right)
+	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Right)
+
+	glEnd();                                                // Done Drawing The Quad
 }
 
 
