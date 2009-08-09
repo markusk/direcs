@@ -70,9 +70,9 @@ class CompassWidget : public QGLWidget
 	private:
 		void normalizeAngle(int *angle);
 	
-		GLUquadricObj* xAxis;
-		GLUquadricObj* yAxis;
-		GLUquadricObj* zAxis;
+		GLUquadricObj* xAxisCylinder;
+		GLUquadricObj* yAxisCylinder;
+		GLUquadricObj* zAxisCylinder;
 		GLUquadricObj* xAxisCone;
 		GLUquadricObj* yAxisCone;
 		GLUquadricObj* zAxisCone;

@@ -28,9 +28,9 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	zRot = 0;
 	
 	// initialize quadric pointers
-	xAxis = NULL;
-	yAxis = NULL;
-	zAxis = NULL;
+	xAxisCylinder = NULL;
+	yAxisCylinder = NULL;
+	zAxisCylinder = NULL;
 	xAxisCone = NULL;
 	yAxisCone = NULL;
 	zAxisCone = NULL;
@@ -50,14 +50,14 @@ CompassWidget::~CompassWidget()
 	if (xAxisCone)
 		gluDeleteQuadric (xAxisCone);
 	
-	if (zAxis)
-		gluDeleteQuadric (zAxis);
+	if (zAxisCylinder)
+		gluDeleteQuadric (zAxisCylinder);
 		
-	if (yAxis)
-		gluDeleteQuadric (yAxis);
+	if (yAxisCylinder)
+		gluDeleteQuadric (yAxisCylinder);
 		
-	if (xAxis)
-		gluDeleteQuadric (xAxis);
+	if (xAxisCylinder)
+		gluDeleteQuadric (xAxisCylinder);
 }
 
 
@@ -101,17 +101,17 @@ void CompassWidget::initializeGL()
 	cyl_radius = 0.03;
 	cyl_height = 0.30;
 	
-	xAxis = gluNewQuadric();
-	yAxis = gluNewQuadric();
-	zAxis = gluNewQuadric();
+	xAxisCylinder = gluNewQuadric();
+	yAxisCylinder = gluNewQuadric();
+	zAxisCylinder = gluNewQuadric();
 	
 	xAxisCone = gluNewQuadric();
 	yAxisCone = gluNewQuadric();
 	zAxisCone = gluNewQuadric();
 	
-	gluQuadricNormals(xAxis, GLU_SMOOTH);
-	gluQuadricNormals(yAxis, GLU_SMOOTH);
-	gluQuadricNormals(zAxis, GLU_SMOOTH);
+	gluQuadricNormals(xAxisCylinder, GLU_SMOOTH);
+	gluQuadricNormals(yAxisCylinder, GLU_SMOOTH);
+	gluQuadricNormals(zAxisCylinder, GLU_SMOOTH);
 	
 	gluQuadricNormals(xAxisCone, GLU_SMOOTH);
 	gluQuadricNormals(yAxisCone, GLU_SMOOTH);
@@ -131,7 +131,7 @@ void CompassWidget::paintGL()
 	// X cylinder (red)
 	qglColor(xAxisColor);
 	// object, baseradius, topradius, height, slices, stacks
-	gluCylinder(xAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
+	gluCylinder(xAxisCylinder, cyl_radius, cyl_radius, cyl_height, 32, 32);
 	// move
 	glTranslatef(0.0, 0.0, cyl_height);
 	qglColor(xAxisColor);
@@ -144,7 +144,7 @@ void CompassWidget::paintGL()
 	glTranslatef(0.0, 0.0, - (cyl_height - cyl_radius));
 	glRotated(90, 1.0, 0.0, 0.0);
 	// object, baseradius, topradius, height, slices, stacks
-	gluCylinder(yAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
+	gluCylinder(yAxisCylinder, cyl_radius, cyl_radius, cyl_height, 32, 32);
 	// move
 	glTranslatef(0.0, 0.0, cyl_height);
 	qglColor(yAxisColor);
@@ -157,7 +157,7 @@ void CompassWidget::paintGL()
 	glTranslatef(0.0, 0.0, - (cyl_height));
 	glRotated(90, 0.0, 1.0, 0.0);
 	// object, baseradius, topradius, height, slices, stacks
-	gluCylinder(zAxis, cyl_radius, cyl_radius, cyl_height, 32, 32);
+	gluCylinder(zAxisCylinder, cyl_radius, cyl_radius, cyl_height, 32, 32);
 	// move
 	glTranslatef(0.0, 0.0, cyl_height);
 	qglColor(zAxisColor);
