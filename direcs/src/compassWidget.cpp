@@ -36,7 +36,7 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	zAxisCone = NULL;
 	
 	// initialize texture pointers
-	m_robotTextureAbove = 0;
+	robotTextureFront = 0;
 	
 	// real init done at initializeGL()
 	cyl_radius = 0.0;
@@ -58,8 +58,8 @@ CompassWidget::~CompassWidget()
 {
 	makeCurrent();
 		
-	if (m_robotTextureAbove)
-		deleteTexture(m_robotTextureAbove);
+	if (robotTextureFront)
+		deleteTexture(robotTextureFront);
 			
 	if (zAxisCone)
 		gluDeleteQuadric (zAxisCone);
@@ -83,7 +83,7 @@ CompassWidget::~CompassWidget()
 
 void CompassWidget::initializeGL()
 {
-	robotTextureTop.load(":/images/images/bot_from_above.png");
+	robotImageFront.load(":/images/images/bot_back.png");
 	
 // 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);
@@ -121,7 +121,7 @@ void CompassWidget::initializeGL()
 	cyl_height = 0.30;
 	
 	cubeWidth  = 1.00;
-	cubeHeight = 1.00;
+	cubeHeight = 0.50;
 	cubeDepth  = 1.00;
 	
 	xAxisCylinder = gluNewQuadric();
@@ -197,7 +197,7 @@ void CompassWidget::paintGL()
 	static GLfloat mat_diffuse[] = {0.5, 0.5, 0.5, 1.0};
 	static GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
 	static GLfloat low_shininess[] = {2.5};
-	static GLfloat translucent[] = {1.0, 1.0, 1.0, 0.33};
+// 	static GLfloat translucent[] = {1.0, 1.0, 1.0, 0.33};
 	
  	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
  	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
@@ -206,10 +206,10 @@ void CompassWidget::paintGL()
  	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
 
 	// bind textures
-	m_robotTextureAbove = bindTexture(robotTextureTop, GL_TEXTURE_2D, GL_RGBA);
+	robotTextureFront = bindTexture(robotImageFront, GL_TEXTURE_2D, GL_RGBA);
 	
 	// create texture coordinates and enable texturing
-	glBindTexture(GL_TEXTURE_2D, m_robotTextureAbove);
+	glBindTexture(GL_TEXTURE_2D, robotTextureFront);
 
 	// enable texturing
 	glEnable(GL_TEXTURE_2D);
