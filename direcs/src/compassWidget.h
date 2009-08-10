@@ -76,7 +76,6 @@ class CompassWidget : public QGLWidget
 		GLUquadricObj* xAxisCone;
 		GLUquadricObj* yAxisCone;
 		GLUquadricObj* zAxisCone;
-		GLUquadricObj* cube;
 	
 		int xRot;
 		int yRot;
@@ -86,13 +85,13 @@ class CompassWidget : public QGLWidget
 		GLdouble cubeWidth;
 		GLdouble cubeHeight;
 		GLdouble cubeDepth;
-		GLuint m_robotTextureAbove;
 		QPoint lastPos;
 		QColor xAxisColor;
 		QColor yAxisColor;
 		QColor zAxisColor;
-		QColor cubeColor;
 		QColor backgroundColor;
+		GLuint m_robotTextureAbove;
+		QImage robotTextureTop;
 };
 
 #endif
