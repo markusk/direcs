@@ -23,9 +23,9 @@
 
 CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 {
-	xRot = 0;
-	yRot = 0;
-	zRot = 0;
+	xRot = 0.0;
+	yRot = 0.0;
+	zRot = 0.0;
 	
 	// initialize quadric pointers
 	xAxisCylinder = NULL;
@@ -135,9 +135,9 @@ void CompassWidget::initializeGL()
 	cyl_radius = 0.03;
 	cyl_height = 0.30;
 	
-	cubeWidth  = 1.00;
-	cubeHeight = 0.71;
-	cubeDepth  = 1.00;
+	cubeWidth  = 0.40;
+	cubeHeight = 0.28;
+	cubeDepth  = 0.40;
 	
 	xAxisCylinder = gluNewQuadric();
 	yAxisCylinder = gluNewQuadric();
@@ -229,7 +229,7 @@ void CompassWidget::paintGL()
 	// enable texturing
 	glEnable(GL_TEXTURE_2D);
 	
-	glTranslated(0.0, 0.0, -5.0);
+	glTranslated(0.0, 0.0, -6.0);
 	
 	// create FRONT texture
 	glBindTexture(GL_TEXTURE_2D, robotTextureFront);
@@ -244,42 +244,30 @@ void CompassWidget::paintGL()
 	// create RIGHT texture
 	glBindTexture(GL_TEXTURE_2D, robotTextureRight);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 0.0);		glVertex3f( cubeWidth, cubeHeight, cubeHeight); // Top Left			1
-	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeWidth, cubeHeight,-cubeHeight); // Top Right		2
-	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeWidth,-cubeHeight,-cubeHeight); // Bottom Right		3
-	glTexCoord2f(0.0, 1.0);		glVertex3f( cubeWidth,-cubeHeight, cubeHeight); // Bottom Left		4
+	glTexCoord2f(0.0, 0.0);		glVertex3f( cubeHeight, cubeHeight, cubeWidth); // Top Left			1
+	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeHeight, cubeHeight,-cubeWidth); // Top Right		2
+	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeHeight,-cubeHeight,-cubeWidth); // Bottom Right		3
+	glTexCoord2f(0.0, 1.0);		glVertex3f( cubeHeight,-cubeHeight, cubeWidth); // Bottom Left		4
 	glEnd();
-/*
 
 	// create LEFT texture
 	glBindTexture(GL_TEXTURE_2D, robotTextureLeft);
-	
 	glBegin(GL_QUADS);
-	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Back)
-	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Back)
-	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Back)
-	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Back)
+	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeHeight, cubeHeight,-cubeWidth); // Top Left			1
+	glTexCoord2f(1.0, 0.0);		glVertex3f(-cubeHeight, cubeHeight, cubeWidth); // Top Right		2
+	glTexCoord2f(1.0, 1.0);		glVertex3f(-cubeHeight,-cubeHeight, cubeWidth); // Bottom Right		3
+	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeHeight,-cubeHeight,-cubeWidth); // Bottom Left		4
 	glEnd();
 
-// 	qglColor(zAxisColor);                      // Set The Color To Blue
-	// create RIGHT texture
-	glBindTexture(GL_TEXTURE_2D, robotTextureRight);
-	
+	// create BACK texture
+	glBindTexture(GL_TEXTURE_2D, robotTextureBack);
 	glBegin(GL_QUADS);
-	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Left)
-	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Left)
-	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Left)
-	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Left)
+	glTexCoord2f(0.0, 0.0);		glVertex3f( cubeHeight, cubeHeight,-cubeWidth); // Top Left			1
+	glTexCoord2f(1.0, 0.0);		glVertex3f(-cubeHeight, cubeHeight,-cubeWidth); // Top Right		2
+	glTexCoord2f(1.0, 1.0);		glVertex3f(-cubeHeight,-cubeHeight,-cubeWidth); // Bottom Right		3
+	glTexCoord2f(0.0, 1.0);		glVertex3f( cubeHeight,-cubeHeight,-cubeWidth); // Bottom Left		4
 	glEnd();
 
-	glBegin(GL_QUADS);
-	qglColor(Qt::magenta);                      // Set The Color To Violet
-	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Right)
-	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Right)
-	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Right)
-	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Right)
-	glEnd();
-*/
 	glDisable(GL_TEXTURE_2D);
 }
 
@@ -309,23 +297,23 @@ void CompassWidget::mouseMoveEvent(QMouseEvent *event)
 	
 	if (event->buttons() & Qt::LeftButton)
 	{
-		setXRotation(xRot + 8 * dy);
-		setYRotation(yRot + 8 * dx);
+		setXRotation(xRot + 8.0 * dy);
+		setYRotation(yRot + 8.0 * dx);
 	} else if (event->buttons() & Qt::RightButton)
 	{
-		setXRotation(xRot + 8 * dy);
-		setZRotation(zRot + 8 * dx);
+		setXRotation(xRot + 8.0 * dy);
+		setZRotation(zRot + 8.0 * dx);
 	}
 	lastPos = event->pos();
 }
 
 
-void CompassWidget::normalizeAngle(int *angle)
+void CompassWidget::normalizeAngle(float *angle)
 {
-	while (*angle < 0)
-		*angle += 360 * 16;
-	while (*angle > 360 * 16)
-		*angle -= 360 * 16;
+	while (*angle < 0.0)
+		*angle += 360.0 * 16.0;
+	while (*angle > 360.0 * 16.0)
+		*angle -= 360.0 * 16.0;
 }
 
 
@@ -341,7 +329,7 @@ QSize CompassWidget::sizeHint() const
 }
 
 
-void CompassWidget::setXRotation(int angle)
+void CompassWidget::setXRotation(float angle)
 {
 	normalizeAngle(&angle);
 	if (angle != xRot)
@@ -353,7 +341,7 @@ void CompassWidget::setXRotation(int angle)
 }
 
 
-void CompassWidget::setYRotation(int angle)
+void CompassWidget::setYRotation(float angle)
 {
 	normalizeAngle(&angle);
 	if (angle != yRot)
@@ -365,7 +353,7 @@ void CompassWidget::setYRotation(int angle)
 }
 
 
-void CompassWidget::setZRotation(int angle)
+void CompassWidget::setZRotation(float angle)
 {
 	normalizeAngle(&angle);
 	if (angle != zRot)
@@ -382,7 +370,7 @@ void CompassWidget::setAllRotations(float xAngle, float yAngle, float zAngle)
 // 	setXRotation( (int) (xAngle*16) );
 // 	setYRotation( (int) (yAngle*16) );
 // 	setZRotation( (int) (zAngle*16) );
-	setXRotation( (int) xAngle );
-	setYRotation( (int) yAngle );
-	setZRotation( (int) zAngle );
+	setXRotation( xAngle );
+	setYRotation( yAngle );
+	setZRotation( zAngle );
 }

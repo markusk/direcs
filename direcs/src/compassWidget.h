@@ -40,9 +40,9 @@ class CompassWidget : public QGLWidget
 		QSize sizeHint() const;
 
 	public slots:
-		void setXRotation(int angle);
-		void setYRotation(int angle);
-		void setZRotation(int angle);
+		void setXRotation(float angle);
+		void setYRotation(float angle);
+		void setZRotation(float angle);
 		
 		/**
 		This is an additional member function, provided for convenience.
@@ -54,9 +54,9 @@ class CompassWidget : public QGLWidget
 		void setAllRotations(float xAngle, float yAngle, float zAngle);
 
 	signals:
-		void xRotationChanged(int angle);
-		void yRotationChanged(int angle);
-		void zRotationChanged(int angle);
+		void xRotationChanged(float angle);
+		void yRotationChanged(float angle);
+		void zRotationChanged(float angle);
 
 
 	protected:
@@ -68,7 +68,7 @@ class CompassWidget : public QGLWidget
 
 
 	private:
-		void normalizeAngle(int *angle);
+		void normalizeAngle(float *angle);
 	
 		GLUquadricObj* xAxisCylinder;
 		GLUquadricObj* yAxisCylinder;
@@ -77,9 +77,9 @@ class CompassWidget : public QGLWidget
 		GLUquadricObj* yAxisCone;
 		GLUquadricObj* zAxisCone;
 	
-		int xRot;
-		int yRot;
-		int zRot;
+		float xRot;
+		float yRot;
+		float zRot;
 		GLdouble cyl_radius;
 		GLdouble cyl_height;
 		GLdouble cubeWidth;
