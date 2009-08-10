@@ -7,6 +7,10 @@
         <file>images/cam.png</file>
         <file>images/downleft.png</file>
         <file>images/downright.png</file>
+        <file>images/bot_front.png</file>
+        <file>images/bot_right.png</file>
+        <file>images/bot_back.png</file>
+        <file>images/bot_left.png</file>
         <file>images/energy.png</file>
         <file>images/eraser.png</file>
         <file>images/exit.png</file>

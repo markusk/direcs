@@ -93,8 +93,8 @@ void CompassWidget::initializeGL()
 	glDepthFunc(GL_LEQUAL);
 	
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	
-	GLfloat LightAmbient[] = {0.95, 0.95, 0.95, 1.0};	// Umgebungslicht
+/*	
+	GLfloat LightAmbient[] = {0.25, 0.25, 0.25, 1.0};	// Umgebungslicht
 	GLfloat LightDiffuse[] = {0.4, 0.4, 0.4, 1.0};		// Bei diffusem Licht ist die Richtung des Lichts erkennbar, aus der es kommt
 	GLfloat LightSpecular[] = {0.77, 0.77, 0.77, 1.0};	// Glanz
 	
@@ -116,13 +116,13 @@ void CompassWidget::initializeGL()
 	
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND); // erforderlich, wenn Materialien durchsichtig sind
-	
+*/	
 	cyl_radius = 0.03;
 	cyl_height = 0.30;
 	
-	cubeWidth = 0.30;
-	cubeHeight = 0.30;
-	cubeDepth = 0.30;
+	cubeWidth  = 1.00;
+	cubeHeight = 1.00;
+	cubeDepth  = 1.00;
 	
 	xAxisCylinder = gluNewQuadric();
 	yAxisCylinder = gluNewQuadric();
@@ -141,14 +141,15 @@ void CompassWidget::paintGL()
 	
 	// reset modelview matrix
 	glLoadIdentity();
-	
+/*	
 	glTranslated(0.0, 0.0, -10.0);
-	
+*/	
+	// enable roation
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 	
-	
+/*
 	// X cylinder (red)
 	qglColor(xAxisColor);
 	// object, baseradius, topradius, height, slices, stacks
@@ -184,13 +185,13 @@ void CompassWidget::paintGL()
 	qglColor(zAxisColor);
 	// Z cone
 	gluCylinder(zAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
-
+*/
 	//----------------------------------------------------------------------------------
-/*	
+	
 	// use mipmapped textures
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-*/	
+	
 	// TODO: should be located elsewhere
 	static GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
 	static GLfloat mat_diffuse[] = {0.5, 0.5, 0.5, 1.0};
@@ -213,7 +214,7 @@ void CompassWidget::paintGL()
 	// enable texturing
 	glEnable(GL_TEXTURE_2D);
 
-	glTranslatef(0.0, 0.0, 0.0);
+	glTranslatef(0.0, 0.0, -5.0);
 	
 	
 	glBegin(GL_QUADS);
@@ -221,8 +222,8 @@ void CompassWidget::paintGL()
 	//qglColor(Qt::cyan);  // Set The Color To Orange
 	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeHeight,-cubeHeight, cubeHeight); // Top Left Of The Quad (Bottom)
 	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeHeight,-cubeHeight, cubeHeight); // Top Right Of The Quad (Bottom)
-	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeHeight,-cubeHeight,-cubeHeight); // Bottom Right Of The Quad (Bottom)
-	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight); // Bottom Left Of The Quad (Bottom)
+	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeHeight, cubeHeight, cubeHeight); // Bottom Right Of The Quad (Bottom)
+	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeHeight, cubeHeight, cubeHeight); // Bottom Left Of The Quad (Bottom)
 	
 	// disable texturing
 	glDisable(GL_TEXTURE_2D);
