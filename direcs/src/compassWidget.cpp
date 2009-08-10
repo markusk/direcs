@@ -136,7 +136,7 @@ void CompassWidget::initializeGL()
 	cyl_height = 0.30;
 	
 	cubeWidth  = 1.00;
-	cubeHeight = 0.50;
+	cubeHeight = 0.71;
 	cubeDepth  = 1.00;
 	
 	xAxisCylinder = gluNewQuadric();
@@ -235,10 +235,10 @@ void CompassWidget::paintGL()
 	glBindTexture(GL_TEXTURE_2D, robotTextureFront);
 	
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeHeight, cubeHeight, cubeHeight); // Top Left Of The Quad (Bottom)		1
-	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeHeight, cubeHeight, cubeHeight); // Top Right Of The Quad (Bottom)		2
-	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeHeight,-cubeHeight, cubeHeight); // Bottom Right Of The Quad (Bottom)	3
-	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeHeight,-cubeHeight, cubeHeight); // Bottom Left Of The Quad (Bottom)	4
+	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeWidth, cubeHeight, cubeHeight); // Top Left Of The Quad (Bottom)		1
+	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeWidth, cubeHeight, cubeHeight); // Top Right Of The Quad (Bottom)		2
+	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeWidth,-cubeHeight, cubeHeight); // Bottom Right Of The Quad (Bottom)	3
+	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeWidth,-cubeHeight, cubeHeight); // Bottom Left Of The Quad (Bottom)	4
 	glEnd();
 /*
 
