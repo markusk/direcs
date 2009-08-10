@@ -37,6 +37,9 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	
 	// initialize texture pointers
 	robotTextureFront = 0;
+	robotTextureBack = 0;
+	robotTextureLeft = 0;
+	robotTextureRight = 0;
 	
 	// real init done at initializeGL()
 	cyl_radius = 0.0;
@@ -60,6 +63,15 @@ CompassWidget::~CompassWidget()
 		
 	if (robotTextureFront)
 		deleteTexture(robotTextureFront);
+		
+	if (robotTextureBack)
+		deleteTexture(robotTextureBack);
+		
+	if (robotTextureLeft)
+		deleteTexture(robotTextureLeft);
+		
+	if (robotTextureRight)
+		deleteTexture(robotTextureRight);
 			
 	if (zAxisCone)
 		gluDeleteQuadric (zAxisCone);
@@ -83,7 +95,10 @@ CompassWidget::~CompassWidget()
 
 void CompassWidget::initializeGL()
 {
-	robotImageFront.load(":/images/images/bot_back.png");
+	robotImageFront.load(":/images/images/bot_front.png");
+	robotImageBack.load(":/images/images/bot_back.png");
+	robotImageLeft.load(":/images/images/bot_left.png");
+	robotImageRight.load(":/images/images/bot_right.png");
 	
 // 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);
@@ -207,53 +222,68 @@ void CompassWidget::paintGL()
 
 	// bind textures
 	robotTextureFront = bindTexture(robotImageFront, GL_TEXTURE_2D, GL_RGBA);
-	
-	// create texture coordinates and enable texturing
-	glBindTexture(GL_TEXTURE_2D, robotTextureFront);
+	robotTextureBack = bindTexture(robotImageBack, GL_TEXTURE_2D, GL_RGBA);
+	robotTextureLeft = bindTexture(robotImageLeft, GL_TEXTURE_2D, GL_RGBA);
+	robotTextureRight = bindTexture(robotImageRight, GL_TEXTURE_2D, GL_RGBA);
 
 	// enable texturing
 	glEnable(GL_TEXTURE_2D);
-
-	glTranslatef(0.0, 0.0, -5.0);
 	
+	glTranslated(0.0, 0.0, -5.0);
+	
+	// create FRONT texture
+	glBindTexture(GL_TEXTURE_2D, robotTextureFront);
 	
 	glBegin(GL_QUADS);
-	
-	//qglColor(Qt::cyan);  // Set The Color To Orange
-	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeHeight,-cubeHeight, cubeHeight); // Top Left Of The Quad (Bottom)
-	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeHeight,-cubeHeight, cubeHeight); // Top Right Of The Quad (Bottom)
-	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeHeight, cubeHeight, cubeHeight); // Bottom Right Of The Quad (Bottom)
-	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeHeight, cubeHeight, cubeHeight); // Bottom Left Of The Quad (Bottom)
-	
-	// disable texturing
-	glDisable(GL_TEXTURE_2D);
+	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeHeight, cubeHeight, cubeHeight); // Top Left Of The Quad (Bottom)		1
+	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeHeight, cubeHeight, cubeHeight); // Top Right Of The Quad (Bottom)		2
+	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeHeight,-cubeHeight, cubeHeight); // Bottom Right Of The Quad (Bottom)	3
+	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeHeight,-cubeHeight, cubeHeight); // Bottom Left Of The Quad (Bottom)	4
+	glEnd();
 /*
 
-	qglColor(yAxisColor);                      // Set The Color To Red
+// 	qglColor(yAxisColor);                      // Set The Color To Red
+	// create BACK texture
+	glBindTexture(GL_TEXTURE_2D, robotTextureBack);
+	
+	glBegin(GL_QUADS);
 	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Front)
 	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Front)
 	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Front)
 	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Front)
+	glEnd();
 
-	qglColor(Qt::yellow);                      // Set The Color To Yellow
+// 	qglColor(Qt::yellow);                      // Set The Color To Yellow
+	// create LEFT texture
+	glBindTexture(GL_TEXTURE_2D, robotTextureLeft);
+	
+	glBegin(GL_QUADS);
 	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Back)
 	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Back)
 	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Back)
 	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Back)
+	glEnd();
 
-	qglColor(zAxisColor);                      // Set The Color To Blue
+// 	qglColor(zAxisColor);                      // Set The Color To Blue
+	// create RIGHT texture
+	glBindTexture(GL_TEXTURE_2D, robotTextureRight);
+	
+	glBegin(GL_QUADS);
 	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Left)
 	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Left)
 	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Left)
 	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Left)
+	glEnd();
 
+	glBegin(GL_QUADS);
 	qglColor(Qt::magenta);                      // Set The Color To Violet
 	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Right)
 	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Right)
 	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Right)
 	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Right)
+	glEnd();
 */
-	glEnd();                                                // Done Drawing The Quad
+	glDisable(GL_TEXTURE_2D);
 }
 
 

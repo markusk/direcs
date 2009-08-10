@@ -92,6 +92,12 @@ class CompassWidget : public QGLWidget
 		QColor backgroundColor;
 		GLuint robotTextureFront;
 		QImage robotImageFront;
+		GLuint robotTextureBack;
+		QImage robotImageBack;
+		GLuint robotTextureLeft;
+		QImage robotImageLeft;
+		GLuint robotTextureRight;
+		QImage robotImageRight;
 };
 
 #endif
