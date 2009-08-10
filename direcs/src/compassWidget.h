@@ -86,6 +86,7 @@ class CompassWidget : public QGLWidget
 		GLdouble cubeWidth;
 		GLdouble cubeHeight;
 		GLdouble cubeDepth;
+		GLuint m_robotTextureAbove;
 		QPoint lastPos;
 		QColor xAxisColor;
 		QColor yAxisColor;

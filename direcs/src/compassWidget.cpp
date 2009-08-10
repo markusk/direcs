@@ -34,6 +34,10 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	xAxisCone = NULL;
 	yAxisCone = NULL;
 	zAxisCone = NULL;
+	cube = NULL;
+	
+	// initialize texture pointers
+	m_robotTextureAbove = 0;
 	
 	// real init done at initializeGL()
 	cyl_radius = 0.0;
@@ -42,6 +46,13 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	cubeWidth  = 0.0;
 	cubeHeight = 0.0;
 	cubeDepth  = 0.0;
+	
+	// set the colors
+	xAxisColor = Qt::red;
+	yAxisColor = Qt::green;
+	zAxisColor = Qt::blue;
+	cubeColor = Qt::yellow;
+	backgroundColor = Qt::black;
 }
 
 
@@ -49,6 +60,9 @@ CompassWidget::~CompassWidget()
 {
 	makeCurrent();
 		
+	if (m_robotTextureAbove)
+		deleteTexture(m_robotTextureAbove);
+			
 	if (cube)
 		gluDeleteQuadric (cube);
 		
@@ -74,13 +88,6 @@ CompassWidget::~CompassWidget()
 
 void CompassWidget::initializeGL()
 {
-	xAxisColor = Qt::red;
-	yAxisColor = Qt::green;
-	zAxisColor = Qt::blue;
-	cubeColor = Qt::yellow;
-	backgroundColor = Qt::black;
-	
-	
 	qglClearColor(backgroundColor.dark());
 	glShadeModel(GL_SMOOTH);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);    
@@ -108,7 +115,6 @@ void CompassWidget::initializeGL()
 	
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND); // erforderlich, wenn Materialien durchsichtig sind
-	
 	
 	cyl_radius = 0.03;
 	cyl_height = 0.30;
@@ -148,6 +154,7 @@ void CompassWidget::paintGL()
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 	
+	
 	// X cylinder (red)
 	qglColor(xAxisColor);
 	// object, baseradius, topradius, height, slices, stacks
@@ -184,34 +191,68 @@ void CompassWidget::paintGL()
 	// Z cone
 	gluCylinder(zAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
 
-	// the cube
-	qglColor(cubeColor);
-	// object, baseradius, topradius, height, slices, stacks
-	//gluCube(cubeWidth, cubeHeight, cubeDepth); // FIXME: gibts nicht?
-	// move
-	//glTranslatef(0.0, 0.0, cyl_height);
+	//----------------------------------------------------------------------------------
+
+ 	
+	// prepare textures
+	QImage robotTextureAbove(":/images/images/bot_from_above.png");
 	
-	float rquad = 0.15;
+	// use mipmapped textures
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	
+	// enable 2D mapping (s/t coordinates, sphere map won't rotate texture!)
+//  	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+//  	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	
+	// ***************
+	// **********************
+	// TODO: should be located elsewhere
+	static GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+	static GLfloat mat_diffuse[] = {0.5, 0.5, 0.5, 1.0};
+	static GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+	static GLfloat low_shininess[] = {2.5};
+	static GLfloat translucent[] = {1.0, 1.0, 1.0, 0.33};
+	
+	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+	// **********************
+	
+	// bind textures
+	m_robotTextureAbove = bindTexture(robotTextureAbove, GL_TEXTURE_2D, GL_RGBA);
+	
+	// create texture coordinates and enable texturing
+// 	glEnable(GL_TEXTURE_GEN_S);
+// 	glEnable(GL_TEXTURE_GEN_T);
+	glBindTexture(GL_TEXTURE_2D, m_robotTextureAbove);
+	glEnable(GL_TEXTURE_2D);
+
+// 	glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+// 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	
+	
 	cubeHeight = cyl_height;
+	glTranslatef(0.0, 0.0, 0.0);
 	
-	//glTranslatef(1.5f,0.0f,-7.0f);                          // Move Right And Into The Screen
-	glTranslated(0.0, 0.0, 0.0);
+	glBegin(GL_QUADS);
 	
-	//glRotatef(rquad,1.0f,1.0f,1.0f);                        // Rotate The Cube On X, Y & Z
-	glBegin(GL_QUADS);                                      // Start Drawing The Cube
+	//qglColor(Qt::cyan);                      // Set The Color To Orange
+	glTexCoord2f(0.0, 0.0);			glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Top Left Of The Quad (Bottom)
+	glTexCoord2f(1.0, 0.0);			glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Top Right Of The Quad (Bottom)
+	glTexCoord2f(1.0, 1.0);			glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Bottom)
+	glTexCoord2f(0.0, 1.0);			glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Bottom)
 	
-	qglColor(xAxisColor);                      // Set The Color To Green
-	glVertex3f( cubeHeight, cubeHeight,-cubeHeight);                  // Top Right Of The Quad (Top)
-	glVertex3f(-cubeHeight, cubeHeight,-cubeHeight);                  // Top Left Of The Quad (Top)
-	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Top)
-	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Top)
-	
-	qglColor(Qt::cyan);                      // Set The Color To Orange
-	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Top Right Of The Quad (Bottom)
-	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Top Left Of The Quad (Bottom)
-	glVertex3f(-cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Left Of The Quad (Bottom)
-	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Bottom)
-	
+	// ****************
+	// disable texturing
+// 	glDisable(GL_TEXTURE_GEN_S);
+// 	glDisable(GL_TEXTURE_GEN_T);
+	glDisable(GL_TEXTURE_2D);
+	// ****************
+
+/*
 	qglColor(yAxisColor);                      // Set The Color To Red
 	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Front)
 	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Front)
@@ -235,7 +276,7 @@ void CompassWidget::paintGL()
 	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Right)
 	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Right)
 	glVertex3f( cubeHeight,-cubeHeight,-cubeHeight);                  // Bottom Right Of The Quad (Right)
-
+*/
 	glEnd();                                                // Done Drawing The Quad
 }
 
