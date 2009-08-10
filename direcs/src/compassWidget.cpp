@@ -233,27 +233,24 @@ void CompassWidget::paintGL()
 	
 	// create FRONT texture
 	glBindTexture(GL_TEXTURE_2D, robotTextureFront);
-	
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeWidth, cubeHeight, cubeHeight); // Top Left Of The Quad (Bottom)		1
-	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeWidth, cubeHeight, cubeHeight); // Top Right Of The Quad (Bottom)		2
-	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeWidth,-cubeHeight, cubeHeight); // Bottom Right Of The Quad (Bottom)	3
-	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeWidth,-cubeHeight, cubeHeight); // Bottom Left Of The Quad (Bottom)	4
+	glTexCoord2f(0.0, 0.0);		glVertex3f(-cubeWidth, cubeHeight, cubeHeight); // Top Left			1
+	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeWidth, cubeHeight, cubeHeight); // Top Right		2
+	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeWidth,-cubeHeight, cubeHeight); // Bottom Right		3
+	glTexCoord2f(0.0, 1.0);		glVertex3f(-cubeWidth,-cubeHeight, cubeHeight); // Bottom Left		4
+	glEnd();
+
+
+	// create RIGHT texture
+	glBindTexture(GL_TEXTURE_2D, robotTextureRight);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 0.0);		glVertex3f( cubeWidth, cubeHeight, cubeHeight); // Top Left			1
+	glTexCoord2f(1.0, 0.0);		glVertex3f( cubeWidth, cubeHeight,-cubeHeight); // Top Right		2
+	glTexCoord2f(1.0, 1.0);		glVertex3f( cubeWidth,-cubeHeight,-cubeHeight); // Bottom Right		3
+	glTexCoord2f(0.0, 1.0);		glVertex3f( cubeWidth,-cubeHeight, cubeHeight); // Bottom Left		4
 	glEnd();
 /*
 
-// 	qglColor(yAxisColor);                      // Set The Color To Red
-	// create BACK texture
-	glBindTexture(GL_TEXTURE_2D, robotTextureBack);
-	
-	glBegin(GL_QUADS);
-	glVertex3f( cubeHeight, cubeHeight, cubeHeight);                  // Top Right Of The Quad (Front)
-	glVertex3f(-cubeHeight, cubeHeight, cubeHeight);                  // Top Left Of The Quad (Front)
-	glVertex3f(-cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Left Of The Quad (Front)
-	glVertex3f( cubeHeight,-cubeHeight, cubeHeight);                  // Bottom Right Of The Quad (Front)
-	glEnd();
-
-// 	qglColor(Qt::yellow);                      // Set The Color To Yellow
 	// create LEFT texture
 	glBindTexture(GL_TEXTURE_2D, robotTextureLeft);
 	
