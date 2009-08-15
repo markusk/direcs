@@ -229,7 +229,8 @@ void CompassWidget::paintGL()
 	// enable texturing
 	glEnable(GL_TEXTURE_2D);
 	
-	glTranslated(0.0, 0.0, -6.0);
+	// move into the screen
+	glTranslated(0.0, 0.0, -7.0);
 	
 	// create FRONT texture
 	glBindTexture(GL_TEXTURE_2D, robotTextureFront);
