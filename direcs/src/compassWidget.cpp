@@ -298,13 +298,15 @@ void CompassWidget::mouseMoveEvent(QMouseEvent *event)
 	
 	if (event->buttons() & Qt::LeftButton)
 	{
-		setXRotation(xRot + 8.0 * dy);
-		setYRotation(yRot + 8.0 * dx);
+		setXRotation(xRot + 1.0 * dx);
+		setYRotation(yRot - 1.0 * dy);
 	} else if (event->buttons() & Qt::RightButton)
 	{
-		setXRotation(xRot + 8.0 * dy);
-		setZRotation(zRot + 8.0 * dx);
+		setXRotation(xRot + 1.0 * dy);
+		setZRotation(zRot + 1.0 * dx);
 	}
+	
+	// store current x and y pos
 	lastPos = event->pos();
 }
 
@@ -315,18 +317,6 @@ void CompassWidget::normalizeAngle(float *angle)
 		*angle += 360.0 * 16.0;
 	while (*angle > 360.0 * 16.0)
 		*angle -= 360.0 * 16.0;
-}
-
-
-QSize CompassWidget::minimumSizeHint() const
-{
-	return QSize(50, 50);
-}
-
-
-QSize CompassWidget::sizeHint() const
-{
-	return QSize(800, 800);
 }
 
 
@@ -374,4 +364,16 @@ void CompassWidget::setAllRotations(float xAngle, float yAngle, float zAngle)
 	setXRotation( xAngle );
 	setYRotation( yAngle );
 	setZRotation( zAngle );
+}
+
+
+QSize CompassWidget::minimumSizeHint() const
+{
+	return QSize(50, 50);
+}
+
+
+QSize CompassWidget::sizeHint() const
+{
+	return QSize(800, 800);
 }
