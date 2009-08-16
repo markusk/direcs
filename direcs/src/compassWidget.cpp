@@ -27,6 +27,12 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	yRot = 0.0;
 	zRot = 0.0;
 	
+	// initial view settings
+	m_mouseAngleH = 0.0;
+	m_mouseAngleV = 0.0;
+	m_mouseLastX = 0;
+	m_mouseLastY = 0;
+	
 	// initialize quadric pointers
 	xAxisCylinder = NULL;
 	yAxisCylinder = NULL;
@@ -160,9 +166,14 @@ void CompassWidget::paintGL()
 	glTranslated(0.0, 0.0, -10.0);
 */	
 	// enable roation
+/*
 	glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
+*/
+	glRotatef(m_mouseAngleH, 1.0, 0.0, 0.0);
+	glRotatef(m_mouseAngleV, 0.0, 1.0, 0.0);
+	//glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 	
 /*
 	// X cylinder (red)
@@ -293,6 +304,7 @@ void CompassWidget::mousePressEvent(QMouseEvent *event)
 
 void CompassWidget::mouseMoveEvent(QMouseEvent *event)
 {
+/*
 	int dx = event->x() - lastPos.x();
 	int dy = event->y() - lastPos.y();
 	
@@ -308,6 +320,48 @@ void CompassWidget::mouseMoveEvent(QMouseEvent *event)
 	
 	// store current x and y pos
 	lastPos = event->pos();
+*/
+	if (event->buttons() & Qt::LeftButton)
+	{
+		if(lastPos.x() != 0)
+		{
+			m_mouseAngleH += (lastPos.x() - event->x());
+			m_mouseAngleH = m_mouseAngleH < 360 ? m_mouseAngleH : 0;
+			m_mouseAngleH = m_mouseAngleH >= 0 ? m_mouseAngleH : 359;
+		}
+		if(lastPos.y() != 0)
+		{
+			m_mouseAngleV -= (lastPos.y() - event->y());
+			m_mouseAngleV = m_mouseAngleV < 90 ? m_mouseAngleV : 90;
+			m_mouseAngleV = m_mouseAngleV > -90 ? m_mouseAngleV : -90;
+		}
+
+// 		lastPos.x() = event->x();
+// 		lastPos.y() = event->y();
+		
+		qDebug("X winkel=%f / X winkel=%f", m_mouseAngleH, m_mouseAngleV);
+		updateGL();
+		
+		// store current x and y pos
+		lastPos = event->pos();
+	}
+	else if (event->buttons() & Qt::RightButton)
+	{
+		/*
+		if(lastPos.y() != 0)
+		{
+			m_cameraZoom -= (lastPos.y() - event->y());
+			m_cameraZoom = m_cameraZoom >= m_cameraZoomLBound ? m_cameraZoom : m_cameraZoomLBound;
+			m_cameraZoom = m_cameraZoom >= m_cameraZoomUBound ? m_cameraZoomUBound : m_cameraZoom;
+		}
+		*/
+// 		lastPos.y() = event->y();
+		// store current x and y pos
+		
+		updateGL();
+		
+		lastPos = event->pos();
+	}
 }
 
 

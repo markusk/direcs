@@ -80,6 +80,12 @@ class CompassWidget : public QGLWidget
 		float xRot;
 		float yRot;
 		float zRot;
+		
+		int m_mouseLastX;
+		int m_mouseLastY;
+		double m_mouseAngleH;
+		double m_mouseAngleV;
+		
 		GLdouble cyl_radius;
 		GLdouble cyl_height;
 		GLdouble cubeWidth;
