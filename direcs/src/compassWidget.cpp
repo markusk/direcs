@@ -160,9 +160,9 @@ void CompassWidget::paintGL()
 	glTranslated(0.0, 0.0, -10.0);
 */	
 	// enable roation
-	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
-	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
-	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
+	glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
+	glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
+	glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 	
 /*
 	// X cylinder (red)
@@ -229,7 +229,7 @@ void CompassWidget::paintGL()
 	// enable texturing
 	glEnable(GL_TEXTURE_2D);
 	
-	// move into the screen
+	// move world 7 units away from the current view point
 	glTranslated(0.0, 0.0, -7.0);
 	
 	// create FRONT texture
@@ -276,7 +276,7 @@ void CompassWidget::paintGL()
 void CompassWidget::resizeGL(int width, int height)
 {
 	int side = qMin(width, height);
-	glViewport((width - side) / 2, (height - side) / 2, side, side);
+	glViewport((width - side) / 2, (height - side) / 2, side, side); // TODO: check this viewport stuff
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -298,8 +298,8 @@ void CompassWidget::mouseMoveEvent(QMouseEvent *event)
 	
 	if (event->buttons() & Qt::LeftButton)
 	{
-		setXRotation(xRot + 1.0 * dx);
-		setYRotation(yRot - 1.0 * dy);
+ 		setXRotation(xRot + 1.0 * dy); // TODO: why is x and y swapped?!?
+ 		setXRotation(xRot + 1.0 * dy); // TODO: why is x and y swapped?!?
 	} else if (event->buttons() & Qt::RightButton)
 	{
 		setXRotation(xRot + 1.0 * dy);
