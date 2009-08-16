@@ -304,42 +304,21 @@ void CompassWidget::mousePressEvent(QMouseEvent *event)
 
 void CompassWidget::mouseMoveEvent(QMouseEvent *event)
 {
-/*
-	int dx = event->x() - lastPos.x();
-	int dy = event->y() - lastPos.y();
-	
-	if (event->buttons() & Qt::LeftButton)
-	{
- 		setXRotation(xRot + 1.0 * dy); // TODO: why is x and y swapped?!?
- 		setXRotation(xRot + 1.0 * dy); // TODO: why is x and y swapped?!?
-	} else if (event->buttons() & Qt::RightButton)
-	{
-		setXRotation(xRot + 1.0 * dy);
-		setZRotation(zRot + 1.0 * dx);
-	}
-	
-	// store current x and y pos
-	lastPos = event->pos();
-*/
 	if (event->buttons() & Qt::LeftButton)
 	{
 		if(lastPos.x() != 0)
 		{
-			m_mouseAngleH += (lastPos.x() - event->x());
+			m_mouseAngleH -= (lastPos.y() - event->y());
 			m_mouseAngleH = m_mouseAngleH < 360 ? m_mouseAngleH : 0;
 			m_mouseAngleH = m_mouseAngleH >= 0 ? m_mouseAngleH : 359;
 		}
 		if(lastPos.y() != 0)
 		{
-			m_mouseAngleV -= (lastPos.y() - event->y());
+			m_mouseAngleV += (lastPos.x() - event->x());
 			m_mouseAngleV = m_mouseAngleV < 90 ? m_mouseAngleV : 90;
 			m_mouseAngleV = m_mouseAngleV > -90 ? m_mouseAngleV : -90;
 		}
 
-// 		lastPos.x() = event->x();
-// 		lastPos.y() = event->y();
-		
-		qDebug("X winkel=%f / X winkel=%f", m_mouseAngleH, m_mouseAngleV);
 		updateGL();
 		
 		// store current x and y pos
@@ -355,11 +334,10 @@ void CompassWidget::mouseMoveEvent(QMouseEvent *event)
 			m_cameraZoom = m_cameraZoom >= m_cameraZoomUBound ? m_cameraZoomUBound : m_cameraZoom;
 		}
 		*/
-// 		lastPos.y() = event->y();
-		// store current x and y pos
 		
 		updateGL();
 		
+		// store current x and y pos
 		lastPos = event->pos();
 	}
 }
