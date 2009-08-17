@@ -22,10 +22,7 @@
 
 Logfile::Logfile()
 {
-	//------------------------------------------------------------------
-	// set the name of the programms ini-file
-	//------------------------------------------------------------------
-	mainIniFilename = "not_set";
+	logFilename = "not_set";
 }
 
 
@@ -33,7 +30,7 @@ Logfile::~Logfile()
 {
 }
 
-
+/*
 QString Logfile::checkPath()
 {
 	//
@@ -52,7 +49,7 @@ bool Logfile::checkFiles()
 	QString filename;
 	
 
-	if (mainIniFilename == "not_set")
+	if (filename == "not_set")
 	{
 		return false;
 	}
@@ -61,105 +58,58 @@ bool Logfile::checkFiles()
 	// path + filename for ini-file
 	filename = programPath;
 	filename.append("/");
-	filename.append(mainIniFilename);
+	filename.append(iniFilename);
 
 	// check if ini-file exists
 	if (QFile::exists(filename) == false)
 	{
 		return false;
 	}
-	else
+	
+	
+	return true;
+}
+*/
+
+void Logfile::appendLog(QString text, bool CR)
+{
+	if (logFilename == "not_set")
 	{
-		return true;
-	}
-/*	
-	// This variable holds the version of the Windows operating system on which the application is run (Windows only).
-	WinVersion QSysInfo::WindowsVersion;
-*/	
-	
-}
-
-
-QString Logfile::getInifileName()
-{
-	return mainIniFilename;
-}
-
-
-void Logfile::writeSetting(QString group, QString name, int value)
-{
-	//-------------------------------------
-	// store the programm settings		
-	//-------------------------------------
-	settings->beginGroup(group);
-	
-	// save setting
-	settings->setValue(name, value);
-	
-	settings->endGroup();
-}
-
-
-int Logfile::readSetting(QString group, QString name)
-{
-	
-	// check if ini-file is writable
-	if (settings->isWritable() == false)
-	{
-		return -2;
+		qDebug("logFilename not set!");
+		return;
 	}
 	
-	// string for group+value in inifile
-	QString iniSection = group + "/" + name;
+	
+	// remove HTML
+	int start= -1;
+	do
+	{
+		// search for the first HTML "<"
+		start = text.indexOf("<");
 
-	// read value from ini-file
-	// return value or -1 on error.
-	return settings->value(iniSection, -1).toInt();
+		if (start != 1)
+		{
+			text.remove(start, text.indexOf(">")+1 - start);
+		}
+	} while (text.contains(">"));
+	// to the last HTML ">" found
+
+	
+	QDateTime now = QDateTime::currentDateTime(); // get the current date and time
+	QTextStream out(&file);
+	out << now.toString("yyyy") << "-" << now.toString("MM") << "-" << now.toString("dd") << " " << now.toString("hh") << ":" << now.toString("mm") << ":" << now.toString("ss") << " " << text << "\n";
 }
 
 
-QString Logfile::readString(QString group, QString name)
+void Logfile::setFilename(QString filename)
 {
+	// set the filename
+	logFilename = filename;
+	file.setFileName(filename);
 	
-	// check if ini-file is writable
-	if (settings->isWritable() == false)
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) // TODO: append every time?!??!!
 	{
-		return "error2";
-	}
-	
-	// string for group+name in inifile
-	QString iniSection = group + "/" + name;
-
-	if (settings->contains(iniSection) == false)
-	{
-		return "error1";
-	}
-	
-	// read value from ini-file
-	// return String 
-	return settings->value(iniSection, name).toString();
-}
-
-
-void Logfile::sync(void)
-{
-	settings->sync();
-}
-
-
-void Logfile::setInifileName(QString filename)
-{
-	if (mainIniFilename == "not_set")
-	{
-		// set the filename
-		mainIniFilename = filename;
-	
-		//------------------------------------------------------------------
-		// create the settings object. Use the ini-format
-		//------------------------------------------------------------------
-		settings = new QSettings(mainIniFilename, QSettings::IniFormat);
-	
-		// deactivate fallbacks (read only in the specified file)
-		settings->setFallbacksEnabled(false);
+		qDebug("Error opening logfile!");
+		return;
 	}
 }

@@ -305,6 +305,7 @@ class Direcs : public QObject
 		SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
+		Logfile *logfile;
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;

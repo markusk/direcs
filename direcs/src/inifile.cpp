@@ -470,7 +470,7 @@ void Inifile::sync(void)
 }
 
 
-void Inifile::setInifileName(QString filename)
+void Inifile::setFilename(QString filename)
 {
 	if (mainIniFilename == "not_set")
 	{

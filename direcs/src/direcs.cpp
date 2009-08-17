@@ -94,6 +94,7 @@ Direcs::Direcs(bool bConsoleMode)
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
+	logfile = new Logfile();
 #ifdef Q_OS_UNIX
 	speakThread = new SpeakThread();
 #endif
@@ -150,7 +151,8 @@ void Direcs::init()
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashColor = Qt::red;
 	}
-	inifile1->setInifileName("direcs.ini");
+	inifile1->setFilename("direcs.ini");
+	logfile->setFilename("direcs.log");
 	// TODO: direcs->setLogFileName("direcs.log");
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
@@ -1297,6 +1299,12 @@ void Direcs::shutdown()
 	//-----------------------------
 	emit message("Closing serial port to microcontroller...");
 	interface1->closeComPort();
+	
+	//-----------------------------
+	// last log file message
+	//-----------------------------
+	if (writeLogFile)
+		logfile->appendLog("************************************************************************************************** stop *");
 
 
 	//--------------------------------
@@ -1329,6 +1337,7 @@ Direcs::~Direcs()
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
+	delete logfile;
 	#ifdef Q_OS_UNIX
 	delete speakThread;
 	#endif
@@ -2244,6 +2253,14 @@ void Direcs::readSettings()
 		case 1:
 			writeLogFile = true;
 			emit message("Writing a logfile!");
+			//--------------------------------------------------------------------------
+			// write messages for the GUI or fotthe console ALSO to a logfile
+			//--------------------------------------------------------------------------
+			connect(this, SIGNAL( message(QString) ), logfile, SLOT( appendLog(QString) ));
+			//-----------------------------
+			// first log file message
+			//-----------------------------
+			logfile->appendLog("* start *************************************************************************************************");
 			break;
 	}
 
