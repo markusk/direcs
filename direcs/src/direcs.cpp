@@ -137,6 +137,8 @@ Direcs::Direcs(bool bConsoleMode)
 	}
 	joystick = new Joystick();
 	head = new Head(servos);
+	
+	drivingSpeedTimer = new QTimer();
 }
 
 
@@ -555,6 +557,12 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		connect(gui, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
 	}
+	
+	//----------------------------------------------------------------------------
+	// increase the speed by an interval defined as a const in the header file
+	// this is used when starting to drive
+	//----------------------------------------------------------------------------
+	connect(drivingSpeedTimer, SIGNAL( timeout() ), this, SLOT( increaseDrivingSpeed() ));
 
 	//----------------------------------------------------------------------------
 	// connect sensor signals to "show sensor data"
@@ -1977,6 +1985,10 @@ void Direcs::drive(const unsigned char command)
 					gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
 					gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
 				}
+				
+				motors->setMotorSpeed(MOTOR1, 0); // TODO: check if this works
+				drivingSpeedTimer->start(drivingSpeedTimerInterval);
+				
 				motors->motorControl(MOTOR1, ON, CLOCKWISE);
 				motors->motorControl(MOTOR2, ON, CLOCKWISE);
 				motors->motorControl(MOTOR3, ON, CLOCKWISE);
@@ -2130,6 +2142,37 @@ void Direcs::drive(const unsigned char command)
 	}
 }
 
+
+void Direcs::increaseDrivingSpeed(void)
+{
+	static int currentSpeed1 = 0;
+	static int currentSpeed2 = 0;
+	static int currentSpeed3 = 0;
+	static int currentSpeed4 = 0;
+	static bool endSpeed1Reached = false;
+	static bool endSpeed2Reached = false;
+	static bool endSpeed3Reached = false;
+	static bool endSpeed4Reached = false;
+	
+	
+	currentSpeed1 = motors->getMotorSpeed(MOTOR1);
+	
+	if (currentSpeed1 < maximumSpeed)
+	{
+		currentSpeed1++;
+		motors->setMotorSpeed(MOTOR1, currentSpeed1);
+	}
+	else
+	{
+		endSpeed1Reached = true;
+	}
+	
+	// all motors at theri end speed? // TODO: check if end speed is refreshed in this class, when changed via gui!!
+	if (endSpeed1Reached)
+	{
+		drivingSpeedTimer->stop();
+	}
+}
 
 
 void Direcs::readSettings()

@@ -119,6 +119,11 @@ class Direcs : public QObject
 		@param command
 		*/
 		void drive(const unsigned char command);
+		
+		/**
+		Increases the dribing speed to its maximum speed. This is used to have a smooth driveaway of the robot and works together with a timer.
+		*/
+		void increaseDrivingSpeed(void);
 
 		/**
 		The locialUnit handles the behavior of the robot. This slot is called if an obstacle is detected from the obstacleCheckThread.
@@ -305,6 +310,7 @@ class Direcs : public QObject
 		QString serialPortLaserscannerRear;
 		QString mountingLaserscanner; // just for reading the value here. @sa laserThread
 		QString commaSeparator;
+		QTimer *drivingSpeedTimer;
 		//bool robotIsOn; /// Stores the robots (circuits) state.ON or OFF
 		bool robotDrives; /// Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; /// Stores the robots simulation state
@@ -336,6 +342,9 @@ class Direcs : public QObject
 
 		/// The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;
+
+		/// The time between one de/increase of the motor speed (to its minimum/maximum) and the next in ms
+		static const unsigned int drivingSpeedTimerInterval = 100;
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */

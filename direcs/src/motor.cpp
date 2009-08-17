@@ -722,7 +722,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 			speed = 0;
 		}
 		
-		if (speed > 255)
+		if (speed > 255) // TODO: check if this max value is okay, since we have an int here now. sa: direcsAcr for max values!
 		{
 			speed = 255;
 		}
