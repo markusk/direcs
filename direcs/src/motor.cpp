@@ -730,10 +730,9 @@ void Motor::setMotorSpeed(int motor, int speed)
 		
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
-		// TODO: create a slot whichs sets and stores the robots on off state wihtin this class!
-		switch(motor)
+		switch (motor)
 		{
-			case 1:
+			case MOTOR1:
 				// store the speed
 				motor1Speed = speed;
 				// send the command to the microcontroller (MOTOR 1)
@@ -757,7 +756,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 				}
 				break;
 				
-			case 2:
+			case MOTOR2:
 				// store the speed
 				motor2Speed = speed;
 				// send the command to the microcontroller (MOTOR 2)
@@ -781,7 +780,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 				}
 				break;
 		
-			case 3:
+			case MOTOR3:
 				// store the speed
 				motor3Speed = speed;
 				// send the command to the microcontroller (MOTOR 3)
@@ -805,7 +804,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 				}
 				break;
 				
-			case 4:
+			case MOTOR4:
 				// store the speed
 				motor4Speed = speed;
 				// send the command to the microcontroller (MOTOR 4)
@@ -840,11 +839,17 @@ int Motor::getMotorSpeed(int motor)
 {
 	switch (motor)
 	{
-		case 1:
+		case MOTOR1:
 			return motor1Speed;
 			break;
-		case 2:
+		case MOTOR2:
 			return motor2Speed;
+			break;
+		case MOTOR3:
+			return motor3Speed;
+			break;
+		case MOTOR4:
+			return motor4Speed;
 			break;
 	}
 	

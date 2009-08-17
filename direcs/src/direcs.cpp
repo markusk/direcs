@@ -936,6 +936,10 @@ void Direcs::shutdown()
 			// TODO: ask for exit on console!
 		}
 
+		
+		emit message("Stop driving!");
+		drive(STOP);
+
 
 		// TODO: a universal quit-threads-method
 		if (!consoleMode)
@@ -1280,17 +1284,14 @@ void Direcs::shutdown()
 			}
 		}
 		*/
-/*
-		removed for still "head looking down"!!
-		//-------------------------------------------------------
-		// Last init for the robots circuits
-		//-------------------------------------------------------
-		emit message("Last circuit init...");
-		if (robotIsOn)
-		{
-			circuit1->initCircuit();
-		}
-*/
+
+
+	//-------------------------------------------------------
+	// Last init for the robots circuits
+	//-------------------------------------------------------
+	emit message("Last circuit init...");
+	circuit1->initCircuit();
+
 	//-----------------------------
 	// close serial port to mc
 	//-----------------------------
@@ -1987,6 +1988,9 @@ void Direcs::drive(const unsigned char command)
 				}
 				
 				motors->setMotorSpeed(MOTOR1, 0); // TODO: check if this works
+				motors->setMotorSpeed(MOTOR2, 0); // TODO: check if this works
+				motors->setMotorSpeed(MOTOR3, 0); // TODO: check if this works
+				motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
 				drivingSpeedTimer->start(drivingSpeedTimerInterval);
 				
 				motors->motorControl(MOTOR1, ON, CLOCKWISE);
@@ -2153,24 +2157,64 @@ void Direcs::increaseDrivingSpeed(void)
 	static bool endSpeed2Reached = false;
 	static bool endSpeed3Reached = false;
 	static bool endSpeed4Reached = false;
+	static int increaseInterval = qRound(maximumSpeed * 0.1); // increase interval is 10%
+	// TODO: start with which speed?
 	
-	
+
 	currentSpeed1 = motors->getMotorSpeed(MOTOR1);
-	
 	if (currentSpeed1 < maximumSpeed)
 	{
-		currentSpeed1++;
+		endSpeed1Reached = false;
+		currentSpeed1 += increaseInterval;
 		motors->setMotorSpeed(MOTOR1, currentSpeed1);
+// 		qDebug("increasing from speed %d to %d @ motor %d.", currentSpeed1, maximumSpeed, MOTOR1);
 	}
 	else
 	{
 		endSpeed1Reached = true;
 	}
 	
+	currentSpeed2 = motors->getMotorSpeed(MOTOR2);
+	if (currentSpeed2 < maximumSpeed)
+	{
+		endSpeed2Reached = false;
+		currentSpeed2 += increaseInterval;
+		motors->setMotorSpeed(MOTOR2, currentSpeed2);
+	}
+	else
+	{
+		endSpeed2Reached = true;
+	}
+	
+	currentSpeed3 = motors->getMotorSpeed(MOTOR3);
+	if (currentSpeed3 < maximumSpeed)
+	{
+		endSpeed3Reached = false;
+		currentSpeed3 += increaseInterval;
+		motors->setMotorSpeed(MOTOR3, currentSpeed3);
+	}
+	else
+	{
+		endSpeed3Reached = true;
+	}
+	
+	currentSpeed4 = motors->getMotorSpeed(MOTOR4);
+	if (currentSpeed4 < maximumSpeed)
+	{
+		endSpeed4Reached = false;
+		currentSpeed4 += increaseInterval;
+		motors->setMotorSpeed(MOTOR4, currentSpeed4);
+	}
+	else
+	{
+		endSpeed4Reached = true;
+	}
+	
 	// all motors at theri end speed? // TODO: check if end speed is refreshed in this class, when changed via gui!!
-	if (endSpeed1Reached)
+	if (endSpeed1Reached && endSpeed2Reached && endSpeed3Reached && endSpeed4Reached)
 	{
 		drivingSpeedTimer->stop();
+// 		qDebug("timer stopped");
 	}
 }
 

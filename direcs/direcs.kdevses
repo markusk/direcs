@@ -3,25 +3,25 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="7" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/logfile.h" >
-   <View0 Encoding="" line="0" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/compassWidget.cpp" >
-   <View0 Encoding="" line="336" Type="Source" />
+   <View0 Encoding="" line="297" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/compassWidget.h" >
-   <View0 Encoding="" line="87" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc2>
   <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="2145" Type="Source" />
+   <View0 Encoding="" line="2147" Type="Source" />
   </Doc3>
   <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/motor.cpp" >
-   <View0 Encoding="" line="121" Type="Source" />
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/motor.h" >
-   <View0 Encoding="" line="104" Type="Source" />
+   <View0 Encoding="" line="159" Type="Source" />
   </Doc5>
   <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.h" >
-   <View0 Encoding="" line="345" Type="Source" />
+   <View0 Encoding="" line="346" Type="Source" />
   </Doc6>
  </DocsAndViews>
  <pluginList>
@@ -41,7 +41,6 @@
    <bookmarks>
     <bookmark url="/home/markus/develop/direcs/direcs/src/direcs.cpp" >
      <mark line="103" />
-     <mark line="2145" />
      <mark line="55" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
