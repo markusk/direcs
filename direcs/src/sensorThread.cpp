@@ -729,6 +729,16 @@ contacts temporarily removed from robot!! */
 			mutex->unlock();
 
 		} // simulation = false
+		
+		if (simulationMode)
+		{
+			// FIXME: here or where, when simulating?????  send an optical heartbeat signal to the GUI
+			// TODO: now we're sleeping 500ms because ww're only simulating. Is this okay????
+			msleep(500);
+			heartbeatToggle = !heartbeatToggle;
+			
+			emit heartbeat(heartbeatToggle);
+		}
 
 		
 		//------------------------------
@@ -740,7 +750,6 @@ contacts temporarily removed from robot!! */
 		//  e m i t  Signal
 		//====================================================================
 		emit sensorDataComplete();
-
 	}
 	stopped = false;
 }
@@ -1127,4 +1136,6 @@ float SensorThread::convertToVolt(int sensor)
 		// convert the measured value to Volt (V)
 		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR2 );
 	}
+	
+	return -1.0;
 }

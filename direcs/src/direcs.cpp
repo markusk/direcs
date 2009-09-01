@@ -584,6 +584,11 @@ void Direcs::init()
 	// (Whenever a specifiv sensor data is received, show the result in the GUI)
 	//----------------------------------------------------------------------------
 	connect(sensorThread, SIGNAL( heartbeat(bool)), gui, SLOT( setLEDHeartbeat(bool) ) );
+	//----------------------------------------------------------------------------
+	// connect sensor signals and write the heartbeat to the logfile
+	// (Whenever a specific sensor data is received, write this to the logfile)
+	//----------------------------------------------------------------------------
+	connect(sensorThread, SIGNAL( heartbeat(bool)), logfile, SLOT( writeHeartbeat(bool) ) );
 
 	
 	if (!consoleMode)

@@ -176,6 +176,7 @@ class SensorThread : public QThread
 		/**
 		This signal is emitted every TODO: seconds, when a specific value from the microcontroller was received.
 		@sa Gui::setLEDHeartbeat()
+		@sa Logfile::writeHeartbeat()
 		*/
 		void heartbeat(bool alive);
 

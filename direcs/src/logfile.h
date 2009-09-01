@@ -57,6 +57,14 @@ class Logfile : public QObject
 		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
 		 */
 		void appendLog(QString text, bool CR=true);
+		
+		/**
+		Write the received heartbeat signal from the hardware to the logfile.
+		TODO: Place somewhere else!
+		@param alive can be true or false
+		@sa SensorThread::heartbeat()
+		 */
+		void writeHeartbeat(bool alive);
 
 
 	private:

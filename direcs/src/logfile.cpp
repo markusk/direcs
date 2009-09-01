@@ -113,3 +113,9 @@ void Logfile::setFilename(QString filename)
 		return;
 	}
 }
+
+
+void Logfile::writeHeartbeat(bool alive)
+{
+	appendLog("-heartbeat-");
+}

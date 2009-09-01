@@ -121,7 +121,7 @@ class Direcs : public QObject
 		void drive(const unsigned char command);
 		
 		/**
-		Increases the dribing speed to its maximum speed. This is used to have a smooth driveaway of the robot and works together with a timer.
+		Increases the driving speed to its maximum speed. This is used to have a smooth driveaway of the robot and works together with a timer.
 		*/
 		void increaseDrivingSpeed(void);
 
