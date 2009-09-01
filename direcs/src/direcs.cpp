@@ -583,7 +583,10 @@ void Direcs::init()
 	// connect sensor signals to "show that the robot is still alive"
 	// (Whenever a specifiv sensor data is received, show the result in the GUI)
 	//----------------------------------------------------------------------------
-	connect(sensorThread, SIGNAL( heartbeat(bool)), gui, SLOT( setLEDHeartbeat(bool) ) );
+	if (!consoleMode)
+	{
+		connect(sensorThread, SIGNAL( heartbeat(bool)), gui, SLOT( setLEDHeartbeat(bool) ) );
+	}
 	//----------------------------------------------------------------------------
 	// connect sensor signals and write the heartbeat to the logfile
 	// (Whenever a specific sensor data is received, write this to the logfile)
