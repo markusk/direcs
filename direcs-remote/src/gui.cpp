@@ -27,8 +27,7 @@ Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	//----------------------------------------------------------------------------
 	// set web address of the robot
 	//----------------------------------------------------------------------------
-	//ui.plainTextEditWebAddress->setPlainText("http://mrs:8000");
-	ui.lineEditWebAddress->setText("http://nslu/");
+	ui.lineEditWebAddress->setText("http://robotwlan/");
 	
 	webView = new QWebView(ui.widgetWeb);
 	// load the URL
@@ -42,7 +41,7 @@ Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	//----------------------------------------------------------------------------
 	// set web address of the 'motion' camera
 	//----------------------------------------------------------------------------
-	ui.lineEditWebAddressCamera->setText("http://nslu:8080/");
+	ui.lineEditWebAddressCamera->setText("http://robotwlan:8081/");
 	on_btnGo_clicked();
 	
 	// When the camera address field was leaved or enter pressed, call the "go" button slot! :-)
