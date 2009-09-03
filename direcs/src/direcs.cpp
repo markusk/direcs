@@ -1897,6 +1897,18 @@ void Direcs::showSensorData()
 
 void Direcs::drive(const unsigned char command)
 {
+	static unsigned char lastCommand = 255;
+	
+	
+	// if its the same command, do nothing
+	if (command == lastCommand)
+	{
+		return;
+	}
+	
+	// store the current command
+	lastCommand = command;
+	
 	switch (command)
 	{
 		case FORWARD:
