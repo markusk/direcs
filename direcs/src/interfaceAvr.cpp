@@ -110,7 +110,7 @@ void InterfaceAvr::closeComPort()
 
 bool InterfaceAvr::sendChar(unsigned char character)
 {
-	static int receiveErrorCounter = 0;
+// 	static int receiveErrorCounter = 0;
 
 
 #ifdef Q_WS_WIN
@@ -122,15 +122,15 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	if (serialPort->writeAtmelPort(&character) <= 0)
 #endif
 	{
-		receiveErrorCounter++;
-		//qDebug("%d. ERROR sendChar to serial port (sendChar, InterfaceAvr)", receiveErrorCounter);
+// 		receiveErrorCounter++;
+		qDebug("*** ERROR writing to serial port (sendChar, InterfaceAvr) ***");
 
-		// MASSIVE COMMUNICATION ERROR!
-		if (receiveErrorCounter >= 4)
-		{
-			receiveErrorCounter = 0;
+// 		// MASSIVE COMMUNICATION ERROR!
+// 		if (receiveErrorCounter >= 4)
+// 		{
+// 			receiveErrorCounter = 0;
 			emit tooMuchErrors();
-		}
+// 		}
 		return false;
 	}
 	
@@ -145,14 +145,22 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	return serialPort->getChar(character);
 #else
 	// reading one char with direcsSerial
-	return serialPort->readAtmelPort(character, 1); // TODO: check, how many chars are availabe ( numChars() )
+	// Must return 1 (1 character succussfull read)!
+	if (serialPort->readAtmelPort(character, 1) != 1)
+	{
+		// ERROR
+		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
+		return false;
+	}
+	
+	return true;
 #endif
 }
 
 
 bool InterfaceAvr::receiveInt(int *value)
 {
-	static int receiveErrorCounter = 0;
+// 	static int receiveErrorCounter = 0;
 	unsigned char character = 0;
 	int intValue = 0;
 
@@ -162,24 +170,24 @@ bool InterfaceAvr::receiveInt(int *value)
 	//-----------------
 	if (receiveChar(&character) == false)
 	{
-		receiveErrorCounter++;
-		//qDebug("%d. ERROR receiving from serial port (receiveInt, InterfaceAvr)", receiveErrorCounter);
+// 		receiveErrorCounter++;
+		qDebug("*** ERROR reading from serial port (receiveInt, InterfaceAvr) ***");
 
 		//
 		// MASSIVE COMMUNICATION ERROR!
 		//
-		if (receiveErrorCounter >= 4)
-		{
-			receiveErrorCounter = 0;
+// 		if (receiveErrorCounter >= 4)
+// 		{
+// 			receiveErrorCounter = 0;
 			emit tooMuchErrors();
-		}
+// 		}
 
 		value = 0;
 		return false;
 	}
 
 	// reset error counter
-	receiveErrorCounter = 0;
+// 	receiveErrorCounter = 0;
 
 
 	// bit shifting
@@ -191,7 +199,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	//-----------------
 	if (receiveChar(&character) == false)
 	{
-		//qDebug("ERROR receiving from serial port (receiveInt, InterfaceAvr)");
+		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
 		value = 0;
 		return false;
 	}
