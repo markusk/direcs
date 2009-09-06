@@ -804,7 +804,7 @@
       <x>990</x>
       <y>530</y>
       <width>427</width>
-      <height>231</height>
+      <height>234</height>
      </rect>
     </property>
     <property name="allowedAreas">
@@ -1086,13 +1086,6 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="lblPower1">
-        <property name="text">
-         <string>lblPower1</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </widget>
@@ -1119,9 +1112,6 @@
          <layout class="QHBoxLayout" name="_14">
           <item>
            <widget class="QPushButton" name="btnPower1">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -1133,6 +1123,9 @@
             </property>
             <property name="text">
              <string>MOTOR 1</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1269,35 +1262,21 @@
         <item>
          <layout class="QHBoxLayout" name="_18">
           <item>
-           <widget class="QLabel" name="lblPower2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Verdana</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-             </font>
+           <widget class="QPushButton" name="btnPower2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
             <property name="text">
              <string>MOTOR 2</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1428,41 +1407,21 @@
         <item>
          <layout class="QHBoxLayout" name="_22">
           <item>
-           <widget class="QLabel" name="lblPower3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QPushButton" name="btnPower3">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font">
-             <font>
-              <family>Verdana</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-             </font>
-            </property>
             <property name="autoFillBackground">
              <bool>true</bool>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
             </property>
             <property name="text">
              <string>MOTOR 3</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1599,41 +1558,21 @@
         <item>
          <layout class="QHBoxLayout" name="_24">
           <item>
-           <widget class="QLabel" name="lblPower4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QPushButton" name="btnPower4">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font">
-             <font>
-              <family>Verdana</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-             </font>
-            </property>
             <property name="autoFillBackground">
              <bool>true</bool>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
             </property>
             <property name="text">
              <string>MOTOR 4</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
