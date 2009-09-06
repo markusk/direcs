@@ -1294,6 +1294,26 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 }
 
 
+void Gui::on_btnPower1_clicked()
+{
+	static bool toggle = false;
+	
+	
+	toggle = !toggle;
+	if (toggle)
+	{
+		// set button to green
+		ui.btnTestDrive->setPalette(QPalette(labelFillColorGreen));
+		emit drive(MOTOR1FW);
+	}
+	else
+	{
+		// set button to red
+		ui.btnTestDrive->setPalette(QPalette(labelFillColorRed));
+	}
+}
+
+
 void Gui::on_radioBtnMotor1FW_clicked()
 {
 	emit drive(MOTOR1FW);
@@ -1363,6 +1383,21 @@ void Gui::on_radioBtnMotor4BW_clicked()
 void Gui::on_radioBtnMotor4OFF_clicked()
 {
 	emit drive(MOTOR4OFF);
+}
+
+
+void Gui::on_btnTestDrive_toggled(bool checked) // FIXME: this is a test ! ! !
+{
+	if (checked)
+	{
+		// set button to green
+		ui.btnTestDrive->setPalette(QPalette(labelFillColorGreen));
+	}
+	else
+	{
+		// set button to red
+		ui.btnTestDrive->setPalette(QPalette(labelFillColorRed));
+	}
 }
 
 

@@ -370,6 +370,7 @@ class Gui : public QMainWindow
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);
+		void on_btnPower1_clicked();
 		void on_radioBtnMotor1FW_clicked();
 		void on_radioBtnMotor1BW_clicked();
 		void on_radioBtnMotor1OFF_clicked();
@@ -382,6 +383,7 @@ class Gui : public QMainWindow
 		void on_radioBtnMotor4FW_clicked();
 		void on_radioBtnMotor4BW_clicked();
 		void on_radioBtnMotor4OFF_clicked();
+		void on_btnTestDrive_toggled(bool); // FIXME: this is a test ! ! !
 
 		/**
 		Saves the current picture to disk (one time shot).

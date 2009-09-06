@@ -954,7 +954,7 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QGroupBox" name="groupBoxgroupBoxTestMotor3">
         <property name="title">
          <string>Motor 3 (Back Left)</string>
@@ -1012,7 +1012,7 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="QGroupBox" name="groupBoxTestMotor4">
         <property name="title">
          <string>Motor 4 (Back Right)</string>
@@ -1070,6 +1070,29 @@
         </layout>
        </widget>
       </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="btnTestDrive">
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Test Drive</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="lblPower1">
+        <property name="text">
+         <string>lblPower1</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
@@ -1078,7 +1101,7 @@
      <rect>
       <x>990</x>
       <y>0</y>
-      <width>431</width>
+      <width>444</width>
       <height>211</height>
      </rect>
     </property>
@@ -1095,44 +1118,21 @@
         <item>
          <layout class="QHBoxLayout" name="_14">
           <item>
-           <widget class="QLabel" name="lblPower1">
+           <widget class="QPushButton" name="btnPower1">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
-              <verstretch>31</verstretch>
+              <verstretch>0</verstretch>
              </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>Verdana</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-             </font>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="autoFillBackground">
              <bool>true</bool>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
             <property name="text">
              <string>MOTOR 1</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
