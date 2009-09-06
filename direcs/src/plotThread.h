@@ -64,7 +64,7 @@ class PlotThread : public QThread
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 1000; // Default: 1000 ms
+		static const unsigned long THREADSLEEPTIME = 500; // Default: 1000 ms
 		
 		//====================================
 		// array holding the plot values

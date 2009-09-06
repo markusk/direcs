@@ -122,7 +122,7 @@ class DirecsSerial : public QObject
 		@param dev_fd The file descriptor associated to the serial line.
 		@param *buf Pointer to unsiged char buffer for the data to be read
 		@param nChars Number of bytes to be read (<= size of the buffer array).
-		@return The number of bytes read.
+		@return The number of bytes written.
 		**/
 		int readPort(int dev_fd, unsigned char *buf, int nChars);
 		
@@ -133,7 +133,7 @@ class DirecsSerial : public QObject
 		
 		@param *buf Pointer to unsiged char buffer for the data to be written
 		@param nChars Number of bytes to be written (<= size of the buffer array).
-		@return The number of bytes written.
+		@return The number of bytes read.
 		 */
 		int readAtmelPort(unsigned char *buf, int nChars);
 		
