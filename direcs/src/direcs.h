@@ -274,6 +274,14 @@ class Direcs : public QObject
 		*/
 		void checkArguments();
 
+		/**
+		Resets the driving speed timer, so at the next drive command, the robots start with a smooth drive - not with maximum speed.
+		@sa drive()
+		@sa increaseDrivingSpeed()
+		*/
+		void resetDrivingSpeedTimer(void);
+
+		
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		//Events *myEvent; /// my event filter for grabbing ctrl+c in the console mode
@@ -333,6 +341,10 @@ class Direcs : public QObject
 		int mot4Speed;
 		int minimumSpeed;
 		int maximumSpeed;
+		bool endSpeedMotor1Reached;
+		bool endSpeedMotor2Reached;
+		bool endSpeedMotor3Reached;
+		bool endSpeedMotor4Reached;
 		unsigned int value;
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		bool shutdownAlreadyCalled;
@@ -345,7 +357,7 @@ class Direcs : public QObject
 		static const unsigned int SPLASHTIME  = 2000;
 
 		/// The time between one de/increase of the motor speed (to its minimum/maximum) and the next in ms
-		static const unsigned int drivingSpeedTimerInterval = 100;
+		static const unsigned int DRIVINGSPEEDINCREASER = 200;
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */

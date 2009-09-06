@@ -175,6 +175,10 @@ void Direcs::init()
 	faceTrackingIsEnabled = false;
 	laserScannerFrontFound = false;
 	laserScannerRearFound = false;
+	endSpeedMotor1Reached = false;
+	endSpeedMotor2Reached = false;
+	endSpeedMotor3Reached = false;
+	endSpeedMotor4Reached = false;
 
 	
 	//--------------------------------------------------------------------------
@@ -2020,7 +2024,9 @@ void Direcs::drive(const unsigned char command)
 				motors->setMotorSpeed(MOTOR2, 0); // TODO: check if this works
 				motors->setMotorSpeed(MOTOR3, 0); // TODO: check if this works
 				motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
-				drivingSpeedTimer->start(drivingSpeedTimerInterval);
+				
+				resetDrivingSpeedTimer();
+				drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
 				
 				motors->motorControl(MOTOR1, ON, CLOCKWISE);
 				motors->motorControl(MOTOR2, ON, CLOCKWISE);
@@ -2037,6 +2043,7 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case WAIT:
 			emit message("WAIT");
+			resetDrivingSpeedTimer();
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
@@ -2057,6 +2064,7 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case STOP:
 			emit message("STOP");
+			resetDrivingSpeedTimer();
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
@@ -2176,74 +2184,78 @@ void Direcs::drive(const unsigned char command)
 }
 
 
+void Direcs::resetDrivingSpeedTimer(void)
+{
+	endSpeedMotor1Reached = false;
+	endSpeedMotor2Reached = false;
+	endSpeedMotor3Reached = false;
+	endSpeedMotor4Reached = false;
+}
+
+
 void Direcs::increaseDrivingSpeed(void)
 {
-	static int currentSpeed1 = 0;
-	static int currentSpeed2 = 0;
-	static int currentSpeed3 = 0;
-	static int currentSpeed4 = 0;
-	static bool endSpeed1Reached = false;
-	static bool endSpeed2Reached = false;
-	static bool endSpeed3Reached = false;
-	static bool endSpeed4Reached = false;
-	static int increaseInterval = qRound(maximumSpeed * 0.1); // increase interval is 10%
-	// TODO: start with which speed?
-	
+	int currentSpeed1 = 0;
+	int currentSpeed2 = 0;
+	int currentSpeed3 = 0;
+	int currentSpeed4 = 0;
+	int increaseInterval = qRound(maximumSpeed * 0.1); // increase interval is 10%. TODO: start with which minimumSpeed?
+
 
 	currentSpeed1 = motors->getMotorSpeed(MOTOR1);
 	if (currentSpeed1 < maximumSpeed)
 	{
-		endSpeed1Reached = false;
+		endSpeedMotor1Reached = false;
 		currentSpeed1 += increaseInterval;
 		motors->setMotorSpeed(MOTOR1, currentSpeed1);
 // 		qDebug("increasing from speed %d to %d @ motor %d.", currentSpeed1, maximumSpeed, MOTOR1);
 	}
 	else
 	{
-		endSpeed1Reached = true;
+		endSpeedMotor1Reached = true;
 	}
 	
 	currentSpeed2 = motors->getMotorSpeed(MOTOR2);
 	if (currentSpeed2 < maximumSpeed)
 	{
-		endSpeed2Reached = false;
+		endSpeedMotor2Reached = false;
 		currentSpeed2 += increaseInterval;
 		motors->setMotorSpeed(MOTOR2, currentSpeed2);
 	}
 	else
 	{
-		endSpeed2Reached = true;
+		endSpeedMotor2Reached = true;
 	}
 	
 	currentSpeed3 = motors->getMotorSpeed(MOTOR3);
 	if (currentSpeed3 < maximumSpeed)
 	{
-		endSpeed3Reached = false;
+		endSpeedMotor3Reached = false;
 		currentSpeed3 += increaseInterval;
 		motors->setMotorSpeed(MOTOR3, currentSpeed3);
 	}
 	else
 	{
-		endSpeed3Reached = true;
+		endSpeedMotor3Reached = true;
 	}
 	
 	currentSpeed4 = motors->getMotorSpeed(MOTOR4);
 	if (currentSpeed4 < maximumSpeed)
 	{
-		endSpeed4Reached = false;
+		endSpeedMotor4Reached = false;
 		currentSpeed4 += increaseInterval;
 		motors->setMotorSpeed(MOTOR4, currentSpeed4);
 	}
 	else
 	{
-		endSpeed4Reached = true;
+		endSpeedMotor4Reached = true;
 	}
 	
-	// all motors at theri end speed? // TODO: check if end speed is refreshed in this class, when changed via gui!!
-	if (endSpeed1Reached && endSpeed2Reached && endSpeed3Reached && endSpeed4Reached)
+	// all motors at their end speed? // TODO: check if end speed is refreshed in this class, when changed via gui!!
+	if (endSpeedMotor1Reached && endSpeedMotor2Reached && endSpeedMotor3Reached && endSpeedMotor4Reached)
 	{
 		drivingSpeedTimer->stop();
-// 		qDebug("timer stopped");
+		// qDebug("**driving speed timer stopped**");
 	}
 }
 
