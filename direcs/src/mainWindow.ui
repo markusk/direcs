@@ -105,6 +105,16 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
+           <widget class="QLabel" name="lblBattery1">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QGroupBox" name="groupBoxBattery1">
             <property name="maximumSize">
              <size>
@@ -119,7 +129,7 @@
              <item row="1" column="0">
               <widget class="QProgressBar" name="progressBarVoltage1">
                <property name="value">
-                <number>42</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
@@ -142,7 +152,7 @@
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="text">
-                <string>12,0 V</string>
+                <string>0,0 V</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -150,6 +160,16 @@
               </widget>
              </item>
             </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblBattery2">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
+            </property>
            </widget>
           </item>
           <item>
@@ -183,7 +203,7 @@
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="text">
-                <string>24,0 V</string>
+                <string>0,0 V</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -193,7 +213,7 @@
              <item row="1" column="0">
               <widget class="QProgressBar" name="progressBarVoltage2">
                <property name="value">
-                <number>42</number>
+                <number>0</number>
                </property>
               </widget>
              </item>

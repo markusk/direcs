@@ -4,7 +4,12 @@
         <file>images/black.png</file>
         <file>images/bot_from_above.png</file>
         <file>images/bot_from_above_TOP2.png</file>
+        <file>images/battery-040.png</file>
+        <file>images/battery-060.png</file>
+        <file>images/battery-080.png</file>
         <file>images/battery-100.png</file>
+        <file>images/battery-low.png</file>
+        <file>images/battery-missing.png</file>
         <file>images/bot_front.png</file>
         <file>images/bot_right.png</file>
         <file>images/bot_back.png</file>

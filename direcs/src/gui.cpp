@@ -44,11 +44,11 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	ui.setupUi(this);
 
 	// set battery power labels to green
-	ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
-	ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
+// 	ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
+// 	ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
 	
-	ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
-	ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
+// 	ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
+// 	ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
 
 	//----------------------------------------------------------------------------
 	// Voltage stuff (progressBars)
@@ -651,41 +651,64 @@ void Gui::showVoltage(int sensor, float voltage)
 		return;
 	}
 
+// qDebug("voltage %d=%f / MINIMUMVOLTAGE1=%f / MINIMUMVOLTAGE2=%f", sensor, voltage, MINIMUMVOLTAGE1, MINIMUMVOLTAGE2);
 
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 1).append(" Volt"));
 			ui.progressBarVoltage1->setValue(voltage);
-				
+			
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE1)
 			{
-				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorRed));
-				ui.lblVoltage1->setPalette(QPalette(labelFillColorRed));
+// 				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorRed));
+// 				ui.lblVoltage1->setPalette(QPalette(labelFillColorRed));
+				// change icon
+				if (voltage > 0.0)
+				{
+					ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-060.png"));
+				}
+				else
+				{
+					ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+				}
 			}
 			else
 			{
-				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
-				ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
+// 				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
+// 				ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
+				// change icon
+				ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
 			}
 			
 			return;
 			break;
 		case VOLTAGESENSOR2:
-			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 1).append(" Volt"));
 			ui.progressBarVoltage2->setValue(voltage);
 				
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE2)
 			{
-				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorRed));
-				ui.lblVoltage2->setPalette(QPalette(labelFillColorRed));
+// 				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorRed));
+// 				ui.lblVoltage2->setPalette(QPalette(labelFillColorRed));
+				// change icon
+				if (voltage > 0.0)
+				{
+					ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-060.png"));
+				}
+				else
+				{
+					ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+				}
 			}
 			else
 			{
-				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
-				ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
+// 				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
+// 				ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
+				// change icon
+				ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
 			}
 			
 			return;
