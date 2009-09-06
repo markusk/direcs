@@ -3,10 +3,10 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/direcs-remote.h" >
-   <View0 Encoding="" line="69" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/direcs-remote.cpp" >
-   <View0 Encoding="" line="75" Type="Source" />
+   <View0 Encoding="" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-remote/src/network.h" >
    <View0 Encoding="" line="53" Type="Source" />
@@ -52,6 +52,9 @@
     <bookmark url="/home/markus/develop/direcs/direcs-remote/src/laserThread.cpp" >
      <mark line="46" />
     </bookmark>
+    <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/sick.c" >
+     <mark line="44" />
+    </bookmark>
     <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/laser-new.cpp" >
      <mark line="614" />
      <mark line="463" />
@@ -59,9 +62,6 @@
      <mark line="605" />
      <mark line="623" />
      <mark line="539" />
-    </bookmark>
-    <bookmark url="/home/markus/develop/subversion/applications/direcs-remote/trunk/src/sick.c" >
-     <mark line="44" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>

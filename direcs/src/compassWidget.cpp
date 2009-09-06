@@ -106,7 +106,7 @@ void CompassWidget::initializeGL()
 	robotImageLeft.load(":/images/images/bot_left.png");
 	robotImageRight.load(":/images/images/bot_right.png");
 	
-// 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);
 	qglClearColor(backgroundColor.dark());
 	glClearDepth(1.0);
@@ -114,7 +114,9 @@ void CompassWidget::initializeGL()
 	glDepthFunc(GL_LEQUAL);
 	
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	
 /*	
+	//----------------------- pfeile -------------------------
 	GLfloat LightAmbient[] = {0.25, 0.25, 0.25, 1.0};	// Umgebungslicht
 	GLfloat LightDiffuse[] = {0.4, 0.4, 0.4, 1.0};		// Bei diffusem Licht ist die Richtung des Lichts erkennbar, aus der es kommt
 	GLfloat LightSpecular[] = {0.77, 0.77, 0.77, 1.0};	// Glanz
@@ -137,7 +139,8 @@ void CompassWidget::initializeGL()
 	
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND); // erforderlich, wenn Materialien durchsichtig sind
-*/	
+	//----------------------- pfeile -------------------------
+	*/
 	cyl_radius = 0.03;
 	cyl_height = 0.30;
 	
@@ -162,20 +165,25 @@ void CompassWidget::paintGL()
 	
 	// reset modelview matrix
 	glLoadIdentity();
-/*	
-	glTranslated(0.0, 0.0, -10.0);
-*/	
-	// enable roation
 /*
+	//----------------------- pfeile -------------------------
+	glTranslated(0.0, 0.0, -10.0);
+	
+	// enable roation
 	glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
+	//----------------------- pfeile -------------------------
 */
+
+	//-------------------------- texture ------------------------
 	glRotatef(m_mouseAngleH, 1.0, 0.0, 0.0);
 	glRotatef(m_mouseAngleV, 0.0, 1.0, 0.0);
 	//glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
-	
+	//-------------------------- texture ------------------------
 /*
+
+	//----------------------- pfeile -------------------------
 	// X cylinder (red)
 	qglColor(xAxisColor);
 	// object, baseradius, topradius, height, slices, stacks
@@ -211,9 +219,10 @@ void CompassWidget::paintGL()
 	qglColor(zAxisColor);
 	// Z cone
 	gluCylinder(zAxisCone, (cyl_radius*1.5), 0.0, cyl_height/2.0, 32, 32);
+	//----------------------- pfeile -------------------------
 */
-	//----------------------------------------------------------------------------------
-	
+
+	//-------------------------- texture ------------------------
 	// use mipmapped textures
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
@@ -281,6 +290,7 @@ void CompassWidget::paintGL()
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
+	//-------------------------- texture ------------------------
 }
 
 
