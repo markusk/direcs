@@ -2109,7 +2109,7 @@ void Gui::initPlots()
 	// time
 	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (5000 mA, Step 500)
-	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, AMPERESMAXPLOTCURVE1, AMPERESSTEPPLOTCURVE1);
+// 	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::yLeft,   0, AMPERESMAXPLOTCURVE1, AMPERESSTEPPLOTCURVE1); // use free dynamic axis scale now!
 
 	QColor col = labelFillColorBlue;
 	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -2130,7 +2130,7 @@ void Gui::initPlots()
 	// time
 	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 	// Ampere (5000 mA, Step 500)
-	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, AMPERESMAXPLOTCURVE2, AMPERESSTEPPLOTCURVE2);
+//	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::yLeft,   0, AMPERESMAXPLOTCURVE2, AMPERESSTEPPLOTCURVE2); // use free dynamic axis scale now!
 
 	col = labelFillColorRed;
 	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
