@@ -435,7 +435,7 @@ void Direcs::init()
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
 		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
-		emit message(QString("<font color=\"#FF0000\">ERROR opening serial port '%1'!</font>").arg(serialPortMicrocontroller));
+		emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
 
 		if (!consoleMode)
 		{
