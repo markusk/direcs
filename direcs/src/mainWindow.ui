@@ -803,8 +803,8 @@
      <rect>
       <x>990</x>
       <y>530</y>
-      <width>427</width>
-      <height>234</height>
+      <width>421</width>
+      <height>221</height>
      </rect>
     </property>
     <property name="allowedAreas">
@@ -816,274 +816,43 @@
     <widget class="QWidget" name="dockWidgetContents_8">
      <layout class="QGridLayout" name="gridLayout_16">
       <item row="0" column="0">
-       <widget class="QGroupBox" name="groupBoxTestMotor1">
-        <property name="title">
-         <string>Motor 1 (Front Left)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_9">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor1FW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Forward</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor1BW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Backward</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor1OFF">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Off</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QGroupBox" name="groupBoxTestMotor1_2">
-        <property name="title">
-         <string>Motor 2 (Front Right)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor2FW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Forward</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor2BW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Backward</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor2OFF">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Off</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="2">
        <widget class="QGroupBox" name="groupBoxState">
         <property name="title">
          <string>State</string>
         </property>
-        <layout class="QGridLayout" name="gridLayout_5">
+        <layout class="QFormLayout" name="formLayout_2">
          <item row="0" column="0">
-          <widget class="QLabel" name="lblLEDHeartbeat">
-           <property name="pixmap">
-            <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Heartbeat</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QGroupBox" name="groupBoxgroupBoxTestMotor3">
-        <property name="title">
-         <string>Motor 3 (Back Left)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_7">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <layout class="QHBoxLayout" name="horizontalLayout_16">
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor3FW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Forward</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
+            <widget class="QLabel" name="lblLEDHeartbeat">
+             <property name="pixmap">
+              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor3BW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QLabel" name="label">
              <property name="text">
-              <string>Backward</string>
+              <string>Heartbeat</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioBtnMotor3OFF">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
-             <property name="text">
-              <string>Off</string>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
              </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
+            </spacer>
            </item>
           </layout>
          </item>
         </layout>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QGroupBox" name="groupBoxTestMotor4">
-        <property name="title">
-         <string>Motor 4 (Back Right)</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_8">
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor4FW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Forward</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor4BW">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Backward</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioBtnMotor4OFF">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Off</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="btnTestDrive">
-        <property name="autoFillBackground">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Test Drive</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
        </widget>
       </item>
      </layout>
@@ -1773,7 +1542,7 @@
                <string>Save</string>
               </property>
               <property name="icon">
-               <iconset resource="../direcs.qrc">
+               <iconset>
                 <normaloff>:/images/images/hdd.png</normaloff>:/images/images/hdd.png</iconset>
               </property>
              </widget>
@@ -2249,7 +2018,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
+     <normaloff>:/images/images/system-shutdown.png</normaloff>:/images/images/system-shutdown.png</iconset>
    </property>
    <property name="text">
     <string>E&amp;xit</string>
@@ -2270,7 +2039,7 @@
   <action name="actionCamera">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/cam.png</normaloff>:/images/images/cam.png</iconset>
+     <normaloff>:/images/images/camera-web.png</normaloff>:/images/images/camera-web.png</iconset>
    </property>
    <property name="text">
     <string>Camera</string>
@@ -2279,7 +2048,7 @@
   <action name="actionOdometrie">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/kruler.png</normaloff>:/images/images/kruler.png</iconset>
+     <normaloff>:/images/images/measure.png</normaloff>:/images/images/measure.png</iconset>
    </property>
    <property name="text">
     <string>Odometrie</string>
@@ -2288,7 +2057,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/package_settings.png</normaloff>:/images/images/package_settings.png</iconset>
+     <normaloff>:/images/images/configure.png</normaloff>:/images/images/configure.png</iconset>
    </property>
    <property name="text">
     <string>Settings</string>
@@ -2297,7 +2066,7 @@
   <action name="actionLog">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/kghostview.png</normaloff>:/images/images/kghostview.png</iconset>
+     <normaloff>:/images/images/text-plain.png</normaloff>:/images/images/text-plain.png</iconset>
    </property>
    <property name="text">
     <string>Log</string>
@@ -2306,7 +2075,7 @@
   <action name="actionJoystick">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/package_games.png</normaloff>:/images/images/package_games.png</iconset>
+     <normaloff>:/images/images/input-gaming.png</normaloff>:/images/images/input-gaming.png</iconset>
    </property>
    <property name="text">
     <string>Joystick</string>
@@ -2314,7 +2083,7 @@
   </action>
   <action name="actionNetwork_Log">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/kwifimanager.png</normaloff>:/images/images/kwifimanager.png</iconset>
    </property>
    <property name="text">
@@ -2336,7 +2105,7 @@
   <action name="actionReset">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/eraser.png</normaloff>:/images/images/eraser.png</iconset>
+     <normaloff>:/images/images/draw-eraser.png</normaloff>:/images/images/draw-eraser.png</iconset>
    </property>
    <property name="text">
     <string>Reset</string>
@@ -2351,7 +2120,7 @@
    </property>
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/kwifimanager.png</normaloff>:/images/images/kwifimanager.png</iconset>
+     <normaloff>:/images/images/network-wireless.png</normaloff>:/images/images/network-wireless.png</iconset>
    </property>
    <property name="text">
     <string>Remote</string>
@@ -2360,7 +2129,7 @@
   <action name="actionTest">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/memory.png</normaloff>:/images/images/memory.png</iconset>
+     <normaloff>:/images/images/media-flash.png</normaloff>:/images/images/media-flash.png</iconset>
    </property>
    <property name="text">
     <string>Test</string>
@@ -2372,7 +2141,7 @@
    </property>
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/kmplot.png</normaloff>:/images/images/kmplot.png</iconset>
+     <normaloff>:/images/images/utilities-system-monitor.png</normaloff>:/images/images/utilities-system-monitor.png</iconset>
    </property>
    <property name="text">
     <string>Simulate</string>
@@ -2384,7 +2153,7 @@
   <action name="actionAll">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/kpersonalizer.png</normaloff>:/images/images/kpersonalizer.png</iconset>
+     <normaloff>:/images/images/window-duplicate.png</normaloff>:/images/images/window-duplicate.png</iconset>
    </property>
    <property name="text">
     <string>All</string>
@@ -2396,7 +2165,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/help.png</normaloff>:/images/images/help.png</iconset>
+     <normaloff>:/images/images/help-about.png</normaloff>:/images/images/help-about.png</iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -2405,7 +2174,7 @@
   <action name="actionPower">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/energy.png</normaloff>:/images/images/energy.png</iconset>
+     <normaloff>:/images/images/battery-100.png</normaloff>:/images/images/battery-100.png</iconset>
    </property>
    <property name="text">
     <string>Power</string>
