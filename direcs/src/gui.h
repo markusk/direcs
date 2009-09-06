@@ -374,6 +374,10 @@ class Gui : public QMainWindow
 		void on_btnPower2_toggled(bool);
 		void on_btnPower3_toggled(bool);
 		void on_btnPower4_toggled(bool);
+		void on_btnDirection1_toggled(bool);
+		void on_btnDirection2_toggled(bool);
+		void on_btnDirection3_toggled(bool);
+		void on_btnDirection4_toggled(bool);
 		void on_radioBtnMotor1FW_clicked();
 		void on_radioBtnMotor1BW_clicked();
 		void on_radioBtnMotor1OFF_clicked();

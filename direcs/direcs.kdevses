@@ -1,28 +1,19 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="7" >
+ <DocsAndViews NumberOfDocuments="4" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="2252" Type="Source" />
+   <View0 Encoding="" line="4036" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/compassWidget.cpp" >
-   <View0 Encoding="" Type="Source" />
+   <View0 Encoding="" line="22" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcsSerial.cpp" >
-   <View0 Encoding="" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.h" >
+   <View0 Encoding="" line="372" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcsSerial.h" >
-   <View0 Encoding="" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.cpp" >
+   <View0 Encoding="" line="1482" Type="Source" />
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
-   <View0 Encoding="" Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/interfaceAvr.cpp" >
-   <View0 Encoding="" line="145" Type="Source" />
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.h" >
-   <View0 Encoding="" line="343" Type="Source" />
-  </Doc6>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -47,7 +38,7 @@
      <mark line="55" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
-     <mark line="1753" />
+     <mark line="1950" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
      <mark line="751" />

@@ -367,14 +367,14 @@ void Gui::on_actionReset_activated()
 	ui.btnPower3->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.btnPower4->setPalette(QPalette(QColor(255, 255, 255)));
 
-	ui.lblDirection1->setText("FORWARD");
-	ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.lblDirection2->setText("FORWARD");
-	ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.lblDirection3->setText("FORWARD");
-	ui.lblDirection3->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.lblDirection4->setText("FORWARD");
-	ui.lblDirection4->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.btnDirection1->setText("FORWARD");
+	ui.btnDirection1->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.btnDirection2->setText("FORWARD");
+	ui.btnDirection2->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.btnDirection3->setText("FORWARD");
+	ui.btnDirection3->setPalette(QPalette(QColor(255, 255, 255)));
+	ui.btnDirection4->setText("FORWARD");
+	ui.btnDirection4->setPalette(QPalette(QColor(255, 255, 255)));
 }
 
 
@@ -912,23 +912,23 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case ON:
 					ui.btnPower1->setPalette(QPalette(labelFillColorGreen));
-					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
 					ui.btnPower1->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.lblDirection1->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.btnDirection1->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.lblDirection1->setText("BACKWARD");
-					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection1->setText("BACKWARD");
+					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.lblDirection1->setText("FORWARD");
-					ui.lblDirection1->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection1->setText("FORWARD");
+					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -942,23 +942,23 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case ON:
 					ui.btnPower2->setPalette(QPalette(labelFillColorGreen));
-					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
 					ui.btnPower2->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.lblDirection2->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.btnDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.lblDirection2->setText("BACKWARD");
-					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection2->setText("BACKWARD");
+					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.lblDirection2->setText("FORWARD");
-					ui.lblDirection2->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection2->setText("FORWARD");
+					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -972,23 +972,23 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case ON:
 					ui.btnPower3->setPalette(QPalette(labelFillColorGreen));
-					ui.lblDirection3->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
 					ui.btnPower3->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.lblDirection3->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.btnDirection3->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.lblDirection3->setText("BACKWARD");
-					ui.lblDirection3->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection3->setText("BACKWARD");
+					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.lblDirection3->setText("FORWARD");
-					ui.lblDirection3->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection3->setText("FORWARD");
+					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -1002,23 +1002,23 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case ON:
 					ui.btnPower4->setPalette(QPalette(labelFillColorGreen));
-					ui.lblDirection4->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
 					ui.btnPower4->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.lblDirection4->setPalette(QPalette(QColor(255, 255, 255)));
+					ui.btnDirection4->setPalette(QPalette(QColor(255, 255, 255)));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.lblDirection4->setText("BACKWARD");
-					ui.lblDirection4->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection4->setText("BACKWARD");
+					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.lblDirection4->setText("FORWARD");
-					ui.lblDirection4->setPalette(QPalette(labelFillColorGreen));
+					ui.btnDirection4->setText("FORWARD");
+					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -1282,12 +1282,20 @@ void Gui::on_btnPower1_toggled(bool checked)
 	{
 		// motor on
 		ui.btnPower1->setPalette(QPalette(labelFillColorGreen));
-		emit drive(MOTOR1FW); // TODO: check if FW or BW
+		
+		if (ui.btnDirection1->isChecked())
+		{
+			emit drive(MOTOR1BW);
+		}
+		else
+		{
+			emit drive(MOTOR1FW);
+		}
 	}
 	else
 	{
 		// motor off
-		ui.btnPower1->setPalette(QPalette(labelFillColorRed)); // TODO: use default gray instead of red!
+		ui.btnPower1->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR1OFF);
 	}
 }
@@ -1299,12 +1307,20 @@ void Gui::on_btnPower2_toggled(bool checked)
 	{
 		// motor on
 		ui.btnPower2->setPalette(QPalette(labelFillColorGreen));
-		emit drive(MOTOR2FW); // TODO: check if FW or BW
+		
+		if (ui.btnDirection2->isChecked())
+		{
+			emit drive(MOTOR2BW);
+		}
+		else
+		{
+			emit drive(MOTOR2FW);
+		}
 	}
 	else
 	{
 		// motor off
-		ui.btnPower2->setPalette(QPalette(labelFillColorRed)); // TODO: use default gray instead of red!
+		ui.btnPower2->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR2OFF);
 	}
 }
@@ -1316,12 +1332,20 @@ void Gui::on_btnPower3_toggled(bool checked)
 	{
 		// motor on
 		ui.btnPower3->setPalette(QPalette(labelFillColorGreen));
-		emit drive(MOTOR3FW); // TODO: check if FW or BW
+		
+		if (ui.btnDirection3->isChecked())
+		{
+			emit drive(MOTOR3BW);
+		}
+		else
+		{
+			emit drive(MOTOR3FW);
+		}
 	}
 	else
 	{
 		// motor off
-		ui.btnPower3->setPalette(QPalette(labelFillColorRed)); // TODO: use default gray instead of red!
+		ui.btnPower3->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR3OFF);
 	}
 }
@@ -1333,13 +1357,121 @@ void Gui::on_btnPower4_toggled(bool checked)
 	{
 		// motor on
 		ui.btnPower4->setPalette(QPalette(labelFillColorGreen));
-		emit drive(MOTOR4FW); // TODO: check if FW or BW
+		
+		if (ui.btnDirection4->isChecked())
+		{
+			emit drive(MOTOR4BW);
+		}
+		else
+		{
+			emit drive(MOTOR4FW);
+		}
 	}
 	else
 	{
 		// motor off
-		ui.btnPower4->setPalette(QPalette(labelFillColorRed)); // TODO: use default gray instead of red!
+		ui.btnPower4->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR4OFF);
+	}
+}
+
+
+void Gui::on_btnDirection1_toggled(bool checked)
+{
+	if (checked)
+	{
+		// backward
+		ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
+		
+		if (ui.btnPower1->isChecked())
+		{
+			emit drive(MOTOR1BW);
+		}
+	}
+	else
+	{
+		// forward
+		ui.btnDirection1->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
+		
+		if (ui.btnPower1->isChecked())
+		{
+			emit drive(MOTOR1FW);
+		}
+	}
+}
+
+
+void Gui::on_btnDirection2_toggled(bool checked)
+{
+	if (checked)
+	{
+		// backward
+		ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
+		
+		if (ui.btnPower2->isChecked())
+		{
+			emit drive(MOTOR1BW);
+		}
+	}
+	else
+	{
+		// forward
+		ui.btnDirection2->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
+		
+		if (ui.btnPower2->isChecked())
+		{
+			emit drive(MOTOR2FW);
+		}
+	}
+}
+
+
+void Gui::on_btnDirection3_toggled(bool checked)
+{
+	if (checked)
+	{
+		// backward
+		ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
+		
+		if (ui.btnPower3->isChecked())
+		{
+			emit drive(MOTOR3BW);
+		}
+	}
+	else
+	{
+		// forward
+		ui.btnDirection3->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
+		
+		if (ui.btnPower3->isChecked())
+		{
+			emit drive(MOTOR3FW);
+		}
+	}
+}
+
+
+void Gui::on_btnDirection4_toggled(bool checked)
+{
+	if (checked)
+	{
+		// backward
+		ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
+		
+		if (ui.btnPower4->isChecked())
+		{
+			emit drive(MOTOR4BW);
+		}
+	}
+	else
+	{
+		// forward
+		ui.btnDirection4->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
+		
+		if (ui.btnPower4->isChecked())
+		{
+			emit drive(MOTOR4FW);
+		}
 	}
 }
 
