@@ -378,19 +378,6 @@ class Gui : public QMainWindow
 		void on_btnDirection2_toggled(bool);
 		void on_btnDirection3_toggled(bool);
 		void on_btnDirection4_toggled(bool);
-		void on_radioBtnMotor1FW_clicked();
-		void on_radioBtnMotor1BW_clicked();
-		void on_radioBtnMotor1OFF_clicked();
-		void on_radioBtnMotor2FW_clicked();
-		void on_radioBtnMotor2BW_clicked();
-		void on_radioBtnMotor2OFF_clicked();
-		void on_radioBtnMotor3FW_clicked();
-		void on_radioBtnMotor3BW_clicked();
-		void on_radioBtnMotor3OFF_clicked();
-		void on_radioBtnMotor4FW_clicked();
-		void on_radioBtnMotor4BW_clicked();
-		void on_radioBtnMotor4OFF_clicked();
-		void on_btnTestDrive_toggled(bool); // FIXME: this is a test ! ! !
 
 		/**
 		Saves the current picture to disk (one time shot).
