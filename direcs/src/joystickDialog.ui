@@ -1,10 +1,11 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>joystickDialog</class>
- <widget class="QDialog" name="joystickDialog" >
-  <property name="windowModality" >
+ <widget class="QDialog" name="joystickDialog">
+  <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
-  <property name="geometry" >
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -12,20 +13,24 @@
     <height>164</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Joystick</string>
   </property>
-  <widget class="QRadioButton" name="radioBtnJoy5Up" >
-   <property name="enabled" >
+  <property name="windowIcon">
+   <iconset resource="../direcs.qrc">
+    <normaloff>:/images/images/input-gaming.png</normaloff>:/images/images/input-gaming.png</iconset>
+  </property>
+  <widget class="QRadioButton" name="radioBtnJoy5Up">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>30</x>
      <y>10</y>
@@ -33,23 +38,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy4Left" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy4Left">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>20</x>
      <y>20</y>
@@ -57,23 +62,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy11" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy11">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>102</x>
      <y>10</y>
@@ -81,23 +86,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy10" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy10">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>120</x>
      <y>10</y>
@@ -105,23 +110,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy5Down" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy5Down">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>30</x>
      <y>30</y>
@@ -129,23 +134,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy0" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy0">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>120</x>
      <y>30</y>
@@ -153,23 +158,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy4Right" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy4Right">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>40</x>
      <y>20</y>
@@ -177,20 +182,20 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QSlider" name="sliderJoystickY" >
-   <property name="geometry" >
+  <widget class="QSlider" name="sliderJoystickY">
+   <property name="geometry">
     <rect>
      <x>77</x>
      <y>13</y>
@@ -198,41 +203,41 @@
      <height>135</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="minimum" >
+   <property name="minimum">
     <number>-32767</number>
    </property>
-   <property name="maximum" >
+   <property name="maximum">
     <number>32767</number>
    </property>
-   <property name="pageStep" >
+   <property name="pageStep">
     <number>100</number>
    </property>
-   <property name="value" >
+   <property name="value">
     <number>0</number>
    </property>
-   <property name="orientation" >
+   <property name="orientation">
     <enum>Qt::Vertical</enum>
    </property>
-   <property name="invertedAppearance" >
+   <property name="invertedAppearance">
     <bool>true</bool>
    </property>
-   <property name="tickPosition" >
+   <property name="tickPosition">
     <enum>QSlider::TicksBothSides</enum>
    </property>
-   <property name="tickInterval" >
+   <property name="tickInterval">
     <number>2000</number>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy4" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy4">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>140</x>
      <y>10</y>
@@ -240,23 +245,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy3" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy3">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>140</x>
      <y>30</y>
@@ -264,23 +269,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy1" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy1">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>130</x>
      <y>20</y>
@@ -288,23 +293,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy5" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy5">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>150</x>
      <y>20</y>
@@ -312,23 +317,23 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioBtnJoy2" >
-   <property name="enabled" >
+  <widget class="QRadioButton" name="radioBtnJoy2">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="geometry" >
+   <property name="geometry">
     <rect>
      <x>130</x>
      <y>40</y>
@@ -336,20 +341,20 @@
      <height>16</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="text" >
+   <property name="text">
     <string/>
    </property>
-   <property name="autoExclusive" >
+   <property name="autoExclusive">
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QSlider" name="sliderJoystickX" >
-   <property name="geometry" >
+  <widget class="QSlider" name="sliderJoystickX">
+   <property name="geometry">
     <rect>
      <x>20</x>
      <y>70</y>
@@ -357,34 +362,36 @@
      <height>23</height>
     </rect>
    </property>
-   <property name="font" >
+   <property name="font">
     <font>
      <family>Verdana</family>
     </font>
    </property>
-   <property name="minimum" >
+   <property name="minimum">
     <number>-32767</number>
    </property>
-   <property name="maximum" >
+   <property name="maximum">
     <number>32767</number>
    </property>
-   <property name="pageStep" >
+   <property name="pageStep">
     <number>100</number>
    </property>
-   <property name="value" >
+   <property name="value">
     <number>0</number>
    </property>
-   <property name="orientation" >
+   <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
-   <property name="tickPosition" >
+   <property name="tickPosition">
     <enum>QSlider::TicksBothSides</enum>
    </property>
-   <property name="tickInterval" >
+   <property name="tickInterval">
     <number>2000</number>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../direcs.qrc"/>
+ </resources>
  <connections/>
 </ui>

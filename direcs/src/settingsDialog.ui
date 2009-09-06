@@ -1,10 +1,11 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>settingsDialog</class>
- <widget class="QDialog" name="settingsDialog" >
-  <property name="windowModality" >
+ <widget class="QDialog" name="settingsDialog">
+  <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
-  <property name="geometry" >
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -12,85 +13,89 @@
     <height>221</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <widget class="QWidget" name="layoutWidget" >
-   <property name="geometry" >
+  <property name="windowIcon">
+   <iconset resource="../direcs.qrc">
+    <normaloff>:/images/images/configure.png</normaloff>:/images/images/configure.png</iconset>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>540</width>
+     <width>552</width>
      <height>201</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="name0" >
-    <item row="0" column="0" >
-     <layout class="QHBoxLayout" name="_2" >
+   <layout class="QGridLayout" name="name0">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="_2">
       <item>
-       <layout class="QVBoxLayout" name="_3" >
+       <layout class="QVBoxLayout" name="_3">
         <item>
-         <widget class="QLabel" name="label_2" >
-          <property name="font" >
+         <widget class="QLabel" name="label_2">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Current Speed Motor1</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxMotor1Speed" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxMotor1Speed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderMotor1Speed" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderMotor1Speed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>100</number>
           </property>
-          <property name="tracking" >
+          <property name="tracking">
            <bool>false</bool>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>20</number>
           </property>
          </widget>
@@ -98,69 +103,69 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="_4" >
+       <layout class="QVBoxLayout" name="_4">
         <item>
-         <widget class="QLabel" name="label_5" >
-          <property name="font" >
+         <widget class="QLabel" name="label_5">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Current Speed Motor2</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxMotor2Speed" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxMotor2Speed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderMotor2Speed" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderMotor2Speed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>100</number>
           </property>
-          <property name="tracking" >
+          <property name="tracking">
            <bool>false</bool>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>20</number>
           </property>
          </widget>
@@ -168,69 +173,69 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="_5" >
+       <layout class="QVBoxLayout" name="_5">
         <item>
-         <widget class="QLabel" name="label_7" >
-          <property name="font" >
+         <widget class="QLabel" name="label_7">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Minimum Speed Motors</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxMinimumSpeed" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxMinimumSpeed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderMinimumSpeed" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderMinimumSpeed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>100</number>
           </property>
-          <property name="tracking" >
+          <property name="tracking">
            <bool>false</bool>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>20</number>
           </property>
          </widget>
@@ -238,69 +243,69 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="_6" >
+       <layout class="QVBoxLayout" name="_6">
         <item>
-         <widget class="QLabel" name="label_8" >
-          <property name="font" >
+         <widget class="QLabel" name="label_8">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Maximum Speed Motors</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxMaximumSpeed" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxMaximumSpeed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderMaximumSpeed" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderMaximumSpeed">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>100</number>
           </property>
-          <property name="tracking" >
+          <property name="tracking">
            <bool>false</bool>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>20</number>
           </property>
          </widget>
@@ -308,78 +313,78 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="_7" >
+       <layout class="QVBoxLayout" name="_7">
         <item>
-         <widget class="QLabel" name="label" >
-          <property name="font" >
+         <widget class="QLabel" name="label">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Obstacle alarm Infrared</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxObstacle" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxObstacle">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="suffix" >
+          <property name="suffix">
            <string> cm</string>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>8</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>47</number>
           </property>
-          <property name="singleStep" >
+          <property name="singleStep">
            <number>1</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>47</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderObstacle" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderObstacle">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>8</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>47</number>
           </property>
-          <property name="singleStep" >
+          <property name="singleStep">
            <number>1</number>
           </property>
-          <property name="pageStep" >
+          <property name="pageStep">
            <number>2</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>47</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>47</number>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>3</number>
           </property>
          </widget>
@@ -387,81 +392,81 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="_8" >
+       <layout class="QVBoxLayout" name="_8">
         <item>
-         <widget class="QLabel" name="label_9" >
-          <property name="font" >
+         <widget class="QLabel" name="label_9">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Obstacle Laser Scanner</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxObstacleLaserScanner" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxObstacleLaserScanner">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="suffix" >
+          <property name="suffix">
            <string> cm</string>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>6000</number>
           </property>
-          <property name="singleStep" >
+          <property name="singleStep">
            <number>1</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderObstacleLaserScanner" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderObstacleLaserScanner">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>6000</number>
           </property>
-          <property name="singleStep" >
+          <property name="singleStep">
            <number>10</number>
           </property>
-          <property name="pageStep" >
+          <property name="pageStep">
            <number>100</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>100</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>100</number>
           </property>
-          <property name="tracking" >
+          <property name="tracking">
            <bool>false</bool>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>500</number>
           </property>
          </widget>
@@ -469,72 +474,72 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="_9" >
+       <layout class="QVBoxLayout" name="_9">
         <item>
-         <widget class="QLabel" name="label_4" >
-          <property name="font" >
+         <widget class="QLabel" name="label_4">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Robot Slot (Angle)</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxRobotSlot" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxRobotSlot">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="suffix" >
+          <property name="suffix">
            <string>°</string>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>180</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>4</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderRobotSlot" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderRobotSlot">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>180</number>
           </property>
-          <property name="pageStep" >
+          <property name="pageStep">
            <number>2</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>4</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>4</number>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>17</number>
           </property>
          </widget>
@@ -542,72 +547,72 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="_10" >
+       <layout class="QVBoxLayout" name="_10">
         <item>
-         <widget class="QLabel" name="label_6" >
-          <property name="font" >
+         <widget class="QLabel" name="label_6">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Straight Forward Deviation</string>
           </property>
-          <property name="wordWrap" >
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBoxStraightForwardDeviation" >
-          <property name="font" >
+         <widget class="QSpinBox" name="spinBoxStraightForwardDeviation">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="suffix" >
+          <property name="suffix">
            <string>°</string>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>180</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>2</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="sliderStraightForwardDeviation" >
-          <property name="font" >
+         <widget class="QSlider" name="sliderStraightForwardDeviation">
+          <property name="font">
            <font>
             <family>Verdana</family>
            </font>
           </property>
-          <property name="minimum" >
+          <property name="minimum">
            <number>1</number>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>180</number>
           </property>
-          <property name="pageStep" >
+          <property name="pageStep">
            <number>2</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>2</number>
           </property>
-          <property name="sliderPosition" >
+          <property name="sliderPosition">
            <number>2</number>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>17</number>
           </property>
          </widget>
@@ -616,14 +621,14 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0" >
-     <widget class="QCheckBox" name="checkBoxSaveSettings" >
-      <property name="font" >
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="checkBoxSaveSettings">
+      <property name="font">
        <font>
         <family>Verdana</family>
        </font>
       </property>
-      <property name="text" >
+      <property name="text">
        <string>Save settings on exit</string>
       </property>
      </widget>
@@ -631,6 +636,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../direcs.qrc"/>
+ </resources>
  <connections/>
 </ui>
