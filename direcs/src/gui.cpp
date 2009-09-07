@@ -2245,10 +2245,26 @@ void Gui::createLaserDistanceObjects()
 
 void Gui::initPlots()
 {
+	// get the current application font
+	QFont applicationFont = QApplication::font();
+	
+	
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1 + 2
 	//--------------------------------------
-	ui.qwtPlotCurrent1->setTitle("Motor 1 + 2");
+	// set this font for the plot widget
+	ui.qwtPlotCurrent1->setAxisFont(QwtPlot::xBottom, applicationFont);
+	ui.qwtPlotCurrent1->setAxisFont(QwtPlot::yLeft, applicationFont);
+	ui.qwtPlotCurrent1->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	
+	// set title and font of plot widget
+	int size = applicationFont.pointSize();
+	QwtText title = QString("Motor 1 + 2");
+	// increase title by 2 points
+	applicationFont.setPointSize(++size);
+	applicationFont.setBold(true);
+	title.setFont(applicationFont);
+	ui.qwtPlotCurrent1->setTitle(title);
 
 	// Set axis titles
 	//ui.qwtPlotCurrent1->setAxisTitle(QwtPlot::xBottom, "Time/s");
@@ -2269,7 +2285,22 @@ void Gui::initPlots()
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3 + 4
 	//--------------------------------------
-	ui.qwtPlotCurrent2->setTitle("Motor 3 + 4");
+	// get the current application font
+	applicationFont = QApplication::font();
+	
+	// set this font for the plot widget
+	ui.qwtPlotCurrent2->setAxisFont(QwtPlot::xBottom, applicationFont);
+	ui.qwtPlotCurrent2->setAxisFont(QwtPlot::yLeft, applicationFont);
+	ui.qwtPlotCurrent2->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	
+	// set title and font of plot widget
+	size = applicationFont.pointSize();
+	title = QString("Motor 3 + 4");
+	// increase title by 2 points
+	applicationFont.setPointSize(++size);
+	applicationFont.setBold(true);
+	title.setFont(applicationFont);
+	ui.qwtPlotCurrent2->setTitle(title);
 
 	// Set axis titles
 	//ui.qwtPlotCurrent2->setAxisTitle(QwtPlot::xBottom, "Time/s");
