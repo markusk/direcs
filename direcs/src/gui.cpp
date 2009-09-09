@@ -53,8 +53,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	//----------------------------------------------------------------------------
 	// Voltage stuff (progressBars)
 	//----------------------------------------------------------------------------
-	ui.progressBarVoltage1->setRange(0, MAXIMUMVOLTAGE1);
-	ui.progressBarVoltage2->setRange(0, MAXIMUMVOLTAGE2);
+// 	ui.progressBarVoltage1->setRange(0, MAXIMUMVOLTAGE1);
+// 	ui.progressBarVoltage2->setRange(0, MAXIMUMVOLTAGE2);
 	
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
@@ -410,7 +410,8 @@ void Gui::on_actionAll_activated()
 {
 	ui.dockCamera->show();
 	ui.dockOdometrie->show();
-	ui.dockEnergy->show();
+	ui.dockVoltage->show();
+	ui.dockCurrent->show();
 	ui.dockLog->show();
 	settingsDialog->show();
 	joystickDialog->show();
@@ -443,15 +444,28 @@ void Gui::on_actionOdometrie_activated()
 }
 
 
-void Gui::on_actionPower_activated()
+void Gui::on_actionVoltage_activated()
 {
-	if (ui.dockEnergy->isVisible())
+	if (ui.dockVoltage->isVisible())
 	{
-		ui.dockEnergy->hide();
+		ui.dockVoltage->hide();
 	}
 	else
 	{
-		ui.dockEnergy->show();
+		ui.dockVoltage->show();
+	}
+}
+
+
+void Gui::on_actionCurrent_activated()
+{
+	if (ui.dockCurrent->isVisible())
+	{
+		ui.dockCurrent->hide();
+	}
+	else
+	{
+		ui.dockCurrent->show();
 	}
 }
 
@@ -656,8 +670,8 @@ void Gui::showVoltage(int sensor, float voltage)
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 1).append(" Volt"));
-			ui.progressBarVoltage1->setValue(voltage);
+			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+// 			ui.progressBarVoltage1->setValue(voltage);
 			
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE1)
@@ -685,8 +699,8 @@ void Gui::showVoltage(int sensor, float voltage)
 			return;
 			break;
 		case VOLTAGESENSOR2:
-			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 1).append(" Volt"));
-			ui.progressBarVoltage2->setValue(voltage);
+			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+//			ui.progressBarVoltage2->setValue(voltage);
 				
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE2)
