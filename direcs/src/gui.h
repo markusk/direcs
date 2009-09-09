@@ -43,7 +43,7 @@
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
 //-------------------------------------------------------------------
-#include <qwt_compass.h>
+// #include <qwt_compass.h>
 #include <qwt_dial_needle.h>
 //-------------------------------------------------------------------
 
@@ -251,7 +251,7 @@ class Gui : public QMainWindow
 		@param y is the y axis value
 		@param z is the z axis value
 		*/
-		void showCompassData(float x, float y, float z);
+ 		void showCompassData(float x, float y, float z);
 
 		/**
 		Turns the heartbeat LED on or off (green or gray pixmap).
@@ -387,8 +387,9 @@ class Gui : public QMainWindow
 
 
 	private:
+		void init();
 		void initPlots();
-		void initCompass();
+// 		void initCompass();
 		void initCompassView();
 		
 		/**
@@ -413,7 +414,7 @@ class Gui : public QMainWindow
 		QwtPlotCurve curve2;
 		QwtPlotCurve curve3;
 		QwtPlotCurve curve4;
-		QwtCompassMagnetNeedle needle;
+// 		QwtCompassMagnetNeedle needle;
 		QPixmap cameraPicToSave;
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
@@ -440,10 +441,6 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QPixmap pixmap; // for IplImageToQImage()
-//		QGraphicsScene *compassScene;						/// The QGraphicsScene for showing the compass lines in the GUI
-//		QGraphicsLineItem *xAxis;							/// The compass X axis in the graphics view
-//		QGraphicsLineItem *yAxis;							/// The compass X axis in the graphics view
-//		QGraphicsLineItem *zAxis;							/// The compass X axis in the graphics view
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 

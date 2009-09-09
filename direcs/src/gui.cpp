@@ -42,6 +42,16 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
+	
+	//--------------------------------
+	// do the rest of my init stuff
+	//--------------------------------
+	init();
+}
+
+
+void Gui::init()
+{
 
 	// set battery power labels to green
 // 	ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
@@ -107,8 +117,7 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	// Compass stuff
 	//----------------------------------------------------------------------------
-	initCompass();
-	initCompassView(); // crate the graphics scene object, the compass axes etc.
+// 	initCompass(); // this is for the 2D compass. Not in use at the moment.
 
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
@@ -182,15 +191,6 @@ Gui::~Gui()
 	delete laserLineListRear;
 
 	delete scene;
-	
-	// delete compass stuff
-	//delete compassWidget;
-	/*
-	delete zAxis;
-	delete yAxis;
-	delete xAxis;
-	delete compassScene;
-	*/
 }
 
 
@@ -2330,6 +2330,7 @@ void Gui::initPlots()
 }
 
 
+/*
 void Gui::initCompass()
 {
 	int c;
@@ -2348,16 +2349,12 @@ void Gui::initCompass()
 	colorGroup.setColor(QPalette::Foreground, colorGroup.color(QPalette::Base));
 
 
-	// no 4
-	/*
-	 A compass showing another needle
-	 */
+	 // A 2D compass showing another needle. No. 4
 	ui.qwtCompass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
 	ui.qwtCompass->setScaleTicks(0, 0, 3);
 
 	ui.qwtCompass->setNeedle(new QwtCompassMagnetNeedle( QwtCompassMagnetNeedle::TriangleStyle, Qt::white, Qt::red));
 	ui.qwtCompass->setValue(0.0);
-
 
 
 	// get palette
@@ -2389,51 +2386,7 @@ void Gui::initCompass()
 	// set new palette
 	ui.qwtCompass->setPalette(newPalette);
 }
-
-
-void Gui::initCompassView()
-{
-	// the 3D OpenGL compass
-//	compassWidget = new CompassWidget;
-	// add widget to the GUI
-//	ui.frameCompass->initializeGL();
-	
-/*
-	// the graphicsScene for the compass
-	compassScene = new QGraphicsScene();
-
-	// set some colors
-	compassScene->setBackgroundBrush(Qt::black);
-
-	// turn off moving of scene, when objects extend the scene									-> DISABLED to enable dragging the robot in the laserView!!
-	// (set scene rect to size of GUI element)													-> DISABLED to enable dragging the robot in the laserView!!
-	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());	-> DISABLED to enable dragging the robot in the laserView!!
-
-	// set scene to the GUI
-	ui.graphicsViewCompass->setScene(compassScene);
-
-	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet by the hardware))
-	ui.graphicsViewCompass->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
-	
-	QGraphicsLineItem *xAxis = new QGraphicsLineItem();
-	QGraphicsLineItem *yAxis = new QGraphicsLineItem();
-	QGraphicsLineItem *zAxis = new QGraphicsLineItem();
-
-	// set the laser line color
-	xAxis->setPen(QPen(Qt::red));
-	yAxis->setPen(QPen(Qt::green));
-	zAxis->setPen(QPen(Qt::blue));
-	
-	xAxis->setLine( 0,  0,   0, -40); // TODO: correct values
-	yAxis->setLine( 0,  0,  40,  0);
-	zAxis->setLine( 0,  0,  20, -20);
-	
-	// add items to scene
-	compassScene->addItem(xAxis);
-	compassScene->addItem(yAxis);
-	compassScene->addItem(zAxis);
 */
-}
 
 
 void Gui::showCompassData(float x, float y, float z)
@@ -2443,7 +2396,7 @@ void Gui::showCompassData(float x, float y, float z)
 	ui.lblCompassY->setText( QString("%1").setNum(y, 'f', 3).append(" deg") );
 	ui.lblCompassZ->setText( QString("%1").setNum(z, 'f', 3).append(" deg") );
 	
-	ui.qwtCompass->setValue(x);
+// 	ui.qwtCompass->setValue(x);
 	
 	// set the 3D OpenGL compass!
 	ui.frameCompass->setAllRotations(x, y, z);
