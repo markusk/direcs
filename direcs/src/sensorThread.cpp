@@ -1028,7 +1028,7 @@ void SensorThread::setSimulationMode(bool state)
 		motorSensorValue[MOTORSENSOR4] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
 
 		voltageSensorValue[VOLTAGESENSOR1] = 10.500000 * CONVERSIONFACTORVOLTAGESENSOR1; // simulate an empty 12 V battery
-		voltageSensorValue[VOLTAGESENSOR2] = 00.000000 * CONVERSIONFACTORVOLTAGESENSOR2; // simulate a none-connected 24 V battery
+		voltageSensorValue[VOLTAGESENSOR2] = 24.000000 * CONVERSIONFACTORVOLTAGESENSOR2; // simulate a full 24 V battery
 
 		// initialisation
 		for (int i=0; i<CONTACTARRAYSIZE; i++)

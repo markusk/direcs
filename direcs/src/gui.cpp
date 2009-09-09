@@ -1536,14 +1536,16 @@ void Gui::on_actionSimulate_activated()
 {
 	if (ui.actionSimulate->isChecked())
 	{
-		// nice red button background
-		// TODO: how to change a color of a button?  ui.actionSimulate->setPalette(QPalette(labelFillColorRed));
+		ui.actionSimulate->setIcon(QIcon(QPixmap(":/images/images/utilities-system-monitor-active.png")));
+		ui.actionSimulate->setStatusTip("Disable simulation");
+		ui.actionSimulate->setToolTip("Disable simulation");
 		emit simulate(true);
 	}
 	else
 	{
-		// set back to default color!!
-		// TODO: how to change a color of a button?  ui.actionSimulate->setPalette(QApplication::palette());
+		ui.actionSimulate->setIcon(QIcon(QPixmap(":/images/images/utilities-system-monitor.png")));
+		ui.actionSimulate->setStatusTip("Simulate");
+		ui.actionSimulate->setToolTip("Simulate");
 		emit simulate(false);
 	}
 }
