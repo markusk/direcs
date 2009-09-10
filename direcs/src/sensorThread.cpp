@@ -62,6 +62,12 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 		contactValue[i] = 0;
 	}
 
+	// initialisation
+	for (int i=0; i<DRIVENDISTANCEARRAYSIZE; i++)
+	{
+		drivenDistance[i] = 0;
+	}
+
 	// init the 3D compass values
 	xAxis = 0.0;
 	yAxis = 0.0;
@@ -1036,6 +1042,12 @@ void SensorThread::setSimulationMode(bool state)
 			contactValue[i] = 0;
 		}
 
+		// initialisation
+		for (int i=0; i<DRIVENDISTANCEARRAYSIZE; i++)
+		{
+			drivenDistance[i] = 42;
+		}
+
 		xAxis = READ_AXIS_X;
 		yAxis = READ_AXIS_Y;
 		zAxis = READ_AXIS_Z;
@@ -1070,6 +1082,12 @@ void SensorThread::setSimulationMode(bool state)
 		for (int i=0; i<CONTACTARRAYSIZE; i++)
 		{
 			contactValue[i] = 0;
+		}
+
+		// initialisation
+		for (int i=0; i<DRIVENDISTANCEARRAYSIZE; i++)
+		{
+			drivenDistance[i] = 0;
 		}
 
 		xAxis = 0;
