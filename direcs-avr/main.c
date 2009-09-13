@@ -24,7 +24,6 @@ uint16_t rightDistanceCounter = 0;
 
 int main(void)
 {
-/*
 	// stores the serial received command
 	uint16_t value = 0;
 
@@ -180,54 +179,9 @@ int main(void)
 // 	startPWMServo(6);
 
 	// initialize USART (serial port)
- 	UsartInit();
+	UsartInit();
 
-*/
 
-	//---------------------------------------------------------
-	// T E S T
-	//---------------------------------------------------------
-	// switch port L (all PINS) to output [drive motor 1 to 3]
-	DDRA = 0xff;
-	DDRC |= (1 << DDC1);
-	DDRD |= (1 << DDC5);
-
-	while(1)
-	{
-		// test mk
-		PORTA |=  (1<<PIN0);
-		PORTA |=  (1<<PIN1);
-		PORTA |=  (1<<PIN2);
-		PORTA |=  (1<<PIN3);
-		PORTA |=  (1<<PIN4);
-		PORTA |=  (1<<PIN5);
-		PORTA |=  (1<<PIN6);
-		PORTA |=  (1<<PIN7);
-		
-		PORTC &= ~(1<<PIN1); // fl off
-		PORTD |= (1<<PIN5); // red LED off
-		
-		_delay_ms(250);
-		_delay_ms(250);
-		
-		PORTA &=  ~(1<<PIN0);
-		PORTA &=  ~(1<<PIN1);
-		PORTA &=  ~(1<<PIN2);
-		PORTA &=  ~(1<<PIN3);
-		PORTA &=  ~(1<<PIN4);
-		PORTA &=  ~(1<<PIN5);
-		PORTA &=  ~(1<<PIN6);
-		PORTA &=  ~(1<<PIN7);
-		
-		PORTC |= (1<<PIN1); // fl on
-		PORTD &= ~(1<<PIN5); // red LED on
-
-		_delay_ms(250);
-		_delay_ms(250);
-	}
-	//---------------------------------------------------------
-
-/*
 	while(1)
 	{
 		//-----------------------------------------
@@ -645,7 +599,7 @@ int main(void)
 
 		}
 	} // while (1)
-*/
+
 
 	// this line is never reached!
 	return 0;
