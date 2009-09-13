@@ -24,9 +24,6 @@ uint16_t rightDistanceCounter = 0;
 
 int main(void)
 {
-	uint8_t redLEDtoggle = 0;
-
-
 	// stores the serial received command
 	uint16_t value = 0;
 
@@ -51,18 +48,15 @@ int main(void)
 	// Bit3 = ultrasonic echo (input)
 	//
 	DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC4) | (1 << DDC5) | (1 << DDC6) | (1 << DDC7);
-
-	// switch some bits on port EA to output (*red* onBoard LED)
-	DDRD |= (1 << DDD5);
-
+	
 	// switch some bits on port A to input (camera pan tilt end switches)
 	//DDRA &= ~((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3));
 
 	// switch port L (all PINS) to output [drive motor 1 to 3]
 	DDRL = 0xff;
 
-	// switch some bits on port D to output [motor 4]
-	DDRD = (1 << DDD6) | (1 << DDD7);
+	// switch some bits on port D to output [read LED, motor 4]
+	DDRD |= (1 << DDD5) | (1 << DDD6) | (1 << DDD7);
 	// switch some bits on port G to output [motor 4 pwm]
 	DDRG |= (1<<PIN5);
 
@@ -94,13 +88,13 @@ int main(void)
 	// (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
 
-
 	//-------------------------------------------------------------
 	// no interrupts please!
 	// this is *here* for setting the interrupt control registers
 	//-------------------------------------------------------------
 	cli();
 
+	
 	// switch some bits on port J to input
 	//
 	// Bit3 = Motor 1 Encoder 1
@@ -124,8 +118,9 @@ int main(void)
 	PCICR = (1 << PCIE1);
 	// activate the pins which can cause an interrupt
 	// At this time use only the FORWARD sensor to generate an interrupt
-	PCMSK1 =  (1 << PCINT12) /*| (1 << PCINT13) | (1 << PCINT14)*/ | (1 << PCINT15);
-
+	// PCMSK1 =  (1 << PCINT12) | (1 << PCINT13) | (1 << PCINT14) | (1 << PCINT15);
+	PCMSK1 =  (1 << PCINT12) | (1 << PCINT15);
+	
 	//----------------------------------------------------------------------------
 	// Set the "Pin Change Interrupt Control Register"
 	// -> any change on any enabled PCINT23:16 pin will now cause an interrupt!
@@ -163,48 +158,67 @@ int main(void)
 	setPWMwidth(4, 100);
 
 	// start the motor PWM timers
-	startPWM();
+ 	startPWM();
 
-	/*
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 12 * 64 µs = 768 µs ?!?
-	setServoPosition(1, 19); // <- exact position now in the mrs.ini!
-	setServoPosition(2, 13); // <- exact position now in the mrs.ini!
-	setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-	setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-	setServoPosition(5, 24); // <- exact position now in the mrs.ini!
-	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+// 	setServoPosition(1, 19); // <- exact position now in the mrs.ini!
+// 	setServoPosition(2, 13); // <- exact position now in the mrs.ini!
+// 	setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+// 	setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+// 	setServoPosition(5, 24); // <- exact position now in the mrs.ini!
+// 	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 
 	// start the servo PWM timer
-	startPWMServo(1);
-	startPWMServo(2);
-	startPWMServo(3);
-	startPWMServo(4);
-	startPWMServo(5);
-	startPWMServo(6);
-	*/
+// 	startPWMServo(1);
+// 	startPWMServo(2);
+// 	startPWMServo(3);
+// 	startPWMServo(4);
+// 	startPWMServo(5);
+// 	startPWMServo(6);
 
 	// initialize USART (serial port)
-	UsartInit();
+ 	UsartInit();
 
 
-
+/*
 	//---------------------------------------------------------
 	// T E S T
 	//---------------------------------------------------------
-/*
+
 	while(1)
 	{
+		// test mk
+		PORTA |=  (1<<PIN0);
+		PORTA |=  (1<<PIN1);
+		PORTA |=  (1<<PIN2);
+		PORTA |=  (1<<PIN3);
+		PORTA |=  (1<<PIN4);
+		PORTA |=  (1<<PIN5);
+		PORTA |=  (1<<PIN6);
+		PORTA |=  (1<<PIN7);
+		
+		PORTC &= ~(1<<PIN1); // fl off
+		PORTD |= (1<<PIN5); // red LED off
+		
+		_delay_ms(250);
+		_delay_ms(250);
+		
+		PORTA &=  ~(1<<PIN0);
+		PORTA &=  ~(1<<PIN1);
+		PORTA &=  ~(1<<PIN2);
+		PORTA &=  ~(1<<PIN3);
+		PORTA &=  ~(1<<PIN4);
+		PORTA &=  ~(1<<PIN5);
+		PORTA &=  ~(1<<PIN6);
+		PORTA &=  ~(1<<PIN7);
+		
+		PORTC |= (1<<PIN1); // fl on
+		PORTD &= ~(1<<PIN5); // red LED on
 
-		for (value=8; value<20; value++)
-		{
-			setServoPosition(4, value);
-			_delay_ms(255);
-			_delay_ms(255);
-			_delay_ms(255);
-			_delay_ms(255);
-		}
+		_delay_ms(250);
+		_delay_ms(250);
 	}
 	//---------------------------------------------------------
 */
@@ -221,18 +235,6 @@ int main(void)
 		switch (value)
 		{
 			case INIT:
-				if (redLEDtoggle == 0)
-				{
-					redLEDtoggle = 1;
-					// yelow LED on (low active!)
-					PORTC &= ~(1<<PIN0);
-				}
-				else
-				{
-					redLEDtoggle = 0;
-					// yelow LED off (low active!)
-					PORTC |= (1<<PIN0);
-				}
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
 				PORTL &= ~(1<<PIN1);
@@ -244,14 +246,14 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				// flashlight off
 				PORTC &= ~(1<<PIN1);
-				/*
-				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-				setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-				setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-				setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-				setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-				*/
+				
+// 				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+// 				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+// 				setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+// 				setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+// 				setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+// 				setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+				
 				// "answer" with "@" [Ascii Dezimal @ = 64]
 				// this answer is used to see if the robot is "on"
 				UsartTransmit( (uint8_t)(64) );
@@ -666,25 +668,24 @@ int main(void)
 				PORTA &= ~(1<<PIN0);
 				break;
 */
-/*
-			default:
-				//
-				// red 'traffic' LED
-				//
-				if (redLEDtoggle == 0)
-				{
-					redLEDtoggle = 1;
-					// yelow LED on (low active!)
-					PORTC &= ~(1<<PIN0);
-				}
-				else
-				{
-					redLEDtoggle = 0;
-					// yelow LED off (low active!)
-					PORTC |= (1<<PIN0);
-				}
-				break;
-*/
+// 			default:
+// 				//
+// 				// yellow 'traffic' LED
+// 				//
+// 				if (yellowLEDtoggle == 0)
+// 				{
+// 					yellowLEDtoggle = 1;
+// 					// yelow LED on (low active!)
+// 					PORTC &= ~(1<<PIN0);
+// 				}
+// 				else
+// 				{
+// 					yellowLEDtoggle = 0;
+// 					// yelow LED off (low active!)
+// 					PORTC |= (1<<PIN0);
+// 				}
+// 				break;
+
 		}
 	} // while (1)
 
@@ -693,7 +694,7 @@ int main(void)
 	return 0;
 }
 
-
+/*
 SIGNAL(PCINT1_vect)
 {
 	//
@@ -721,24 +722,22 @@ SIGNAL(PCINT1_vect)
 			leftDistanceCounter++;
 			leftWheelCounter = 0;
 
-			/*
 			//
 			// TEST TEST TEST
 			//
-			if (value == 0)
-			{
-				value = 1;
-				PORTC &= ~(1<<PIN0); // yellow led ON (low)
-			}
-			else
-			{
-				value = 0;
-				PORTC |= (1<<PIN0); // yelow LED off (low active -> high)
-			}
+// 			if (value == 0)
+// 			{
+// 				value = 1;
+// 				PORTC &= ~(1<<PIN0); // yellow led ON (low)
+// 			}
+// 			else
+// 			{
+// 				value = 0;
+// 				PORTC |= (1<<PIN0); // yelow LED off (low active -> high)
+// 			}
 			//
 			// TEST TEST TEST
 			//
-			*/
 		}
 	}
 
@@ -756,11 +755,10 @@ SIGNAL(PCINT1_vect)
 		}
 	}
 }
-
-
+*/
+/*
 SIGNAL(PCINT2_vect)
 {
-/*
 	//----------------------------
 	// if Cam Pan L switch set
 	//----------------------------
@@ -820,5 +818,5 @@ SIGNAL(PCINT2_vect)
 	{
 //		camTiltRSwitch = 0;
 	}
-*/
 }
+*/
