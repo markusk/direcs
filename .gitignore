@@ -19,6 +19,8 @@ direcs/bin/
 direcs/tmp/
 direcs/src/test/hellogl
 
+direcs-avrsim/bin/
+  
 direcs-remote/bin/
 
 direcs/src/Makefile.Debug

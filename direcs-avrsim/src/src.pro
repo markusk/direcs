@@ -16,11 +16,13 @@ TEMPLATE = app
 unix {
     HEADERS +=	direcsSerial.h \
 				gui.h \
-				direcs-avrsim.h
+				direcs-avrsim.h \
+	interfaceAvr.h
 
     SOURCES +=	direcsSerial.cpp \
 				gui.cpp \
-				direcs-avrsim.cpp
+				direcs-avrsim.cpp \
+	interfaceAvr.cpp
 
     FORMS +=	mainWindow.ui
 

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/images" >
+        <file>images/utilities-system-monitor.png</file>
+        <file>images/utilities-system-monitor-active.png</file>
+        <file>images/led_gray.gif</file>
+        <file>images/led_green.gif</file>
+        <file>images/media-flash.png</file>
+        <file>images/splash.png</file>
+        <file>images/system-shutdown.png</file>
+    </qresource>
+</RCC>

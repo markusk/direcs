@@ -66,6 +66,8 @@ int main(int argc, char *argv[])
 
 DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 {
+	Q_UNUSED(bConsoleMode);
+	
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
@@ -73,7 +75,7 @@ DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 	splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 
 	mutex = new QMutex();
-	serialPort = new DirecsSerial();
+	interface1 = new InterfaceAvr();
 }
 
 
@@ -81,32 +83,8 @@ void DirecsAvrsim::init()
 {
 	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 	splashColor = Qt::red;
-	serialPortMicrocontroller = "error1";
-	serialPortLaserscannerFront = "error1";
-	writeLogFile = false;
-	// 	robotIsOn = false;
-	robotDrives = false;
-	mot1Speed = 0;
-	mot2Speed = 0;
-	mot3Speed = 0;
-	mot4Speed = 0;
+	serialPortMicrocontroller = "/dev/ttyLaserScannerFront";
 	robotSimulationMode = false;
-	robotRemoteMode = false;
-	servoTestMode = false;
-	testDriveMode = false;
-	mecanumDriveMode = false;
-	eyeTestMode = false;
-	currentTestServo = SERVO1;
-	useCamera = false;
-	cameraTestMode = false;
-	faceTrackingIsEnabled = false;
-	laserScannerFrontFound = false;
-	laserScannerRearFound = false;
-	endSpeedMotor1Reached = false;
-	endSpeedMotor2Reached = false;
-	endSpeedMotor3Reached = false;
-	endSpeedMotor4Reached = false;
-
 	
 	//--------------------------------------------------------------------------
 	// show the splash screen
@@ -145,6 +123,12 @@ void DirecsAvrsim::init()
 	commaSeparator = ",";
 
 	connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
+
+	//--------------------------------------------------------------------------
+	// let some classes know the robots state
+	//--------------------------------------------------------------------------
+	// this is needed, when the first openCOMPort method fails:
+	//connect(interface1,	SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 	
 	//--------------------------------------------------------------------------
 	// shutdown Direcs-avrsim program on exit button
@@ -163,8 +147,8 @@ void DirecsAvrsim::init()
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
 	emit message("Opening serial port for microcontroller communication...", false);
-/*
-TODO:	if (interface1->openComPort(serialPortMicrocontroller) == false)
+
+	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
 		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
 		emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
@@ -182,28 +166,9 @@ TODO:	if (interface1->openComPort(serialPortMicrocontroller) == false)
 		// * The robot is ON *
 		// *******************
 		emit message("Serial port opened.");
-
-
-		//==========================
-		// init the robots circuit
-		//==========================
-		emit splashMessage("Searching robot...");
-		
-		if (circuit1->initCircuit() == true)
-		{
-			emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
-		
-		} // init was successfull
-		else
-		{
-			emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-			emit message("Heartbeat thread NOT started!");
-			emit message("Sensor thread NOT started!");
-			emit message("Plot thread NOT started!");
-		}
 	} // robot is ON
-*/
 
+	
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
 	// (sets the direcs an the threads to simulation mode)
@@ -217,7 +182,7 @@ TODO:	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	gui->show();
 
 	// delete the splash screen
-	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+ 	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 }
 
 
@@ -232,7 +197,12 @@ void DirecsAvrsim::shutdown()
 	// close serial port to mc
 	//-----------------------------
 	emit message("Closing serial port to microcontroller...");
-//TODO:	interface1->closeComPort();
+
+	//-----------------------------
+	// close serial port to mc
+	//-----------------------------
+	emit message("Closing serial port to microcontroller...");
+	interface1->closeComPort();
 }
 
 
@@ -242,7 +212,6 @@ DirecsAvrsim::~DirecsAvrsim()
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
 	qDebug("Bye.");
-	delete serialPort;
 	delete splash;
 	delete gui;
 }

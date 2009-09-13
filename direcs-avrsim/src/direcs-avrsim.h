@@ -23,7 +23,7 @@
 
 //-------------------------------------------------------------------
 #include "gui.h"
-#include "direcsSerial.h"
+#include "interfaceAvr.h"
 //-------------------------------------------------------------------
 #include <QObject>
 #include <QtDebug>
@@ -126,47 +126,14 @@ class DirecsAvrsim : public QObject
 		Qt::Alignment splashPosition; 	/// The splash screen position
 		QColor splashColor; 			/// The splash screen text color
 		QStringList arguments;			/// contains the list of command-line arguments
-		DirecsSerial *serialPort;
+		InterfaceAvr *interface1;
 		QString serialPortMicrocontroller;
-		QString serialPortLaserscannerFront;
-		QString serialPortLaserscannerRear;
-		QString mountingLaserscanner; // just for reading the value here. @sa laserThread
 		QString commaSeparator;
-		QTimer *drivingSpeedTimer;
-		//bool robotIsOn; /// Stores the robots (circuits) state.ON or OFF
-		bool robotDrives; /// Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; /// Stores the robots simulation state
-		bool robotRemoteMode; /// Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
-		bool writeLogFile; /// if true, a logfile is written of all pgm messages (see ini-file)
-		bool useCamera; /// if a camera is connected, but should not be used (just for testing, for a faster program start)
-		bool laserScannerFrontFound;
-		bool laserScannerRearFound;
-		bool testDriveMode; /// is enabled, when the robot is controlled via joystick
-		bool mecanumDriveMode; /// is enabled, when the robot is controlled via joystick and should use special mecanum wheel driving
-		bool servoTestMode;
-		bool eyeTestMode;
-		int currentTestServo;
-		bool cameraTestMode;
-		bool faceTrackingIsEnabled;
-		int mot1Speed;
-		int mot2Speed;
-		int mot3Speed;
-		int mot4Speed;
-		int minimumSpeed;
-		int maximumSpeed;
-		bool endSpeedMotor1Reached;
-		bool endSpeedMotor2Reached;
-		bool endSpeedMotor3Reached;
-		bool endSpeedMotor4Reached;
 		unsigned int value;
-		bool shutdownAlreadyCalled;
-		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
-		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
-		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
-		//QList <QDateTime> obstacleAlarmRightTimestampList;	/// A list of the timestamps of the obstacle alarms that right occured.
 
 		/// The splash screen time of view in ms
-		static const unsigned int SPLASHTIME  = 2000;
+		static const unsigned int SPLASHTIME  = 500;
 
 		/// The time between one de/increase of the motor speed (to its minimum/maximum) and the next in ms
 		static const unsigned int DRIVINGSPEEDINCREASER = 200;
