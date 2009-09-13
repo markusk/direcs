@@ -167,7 +167,9 @@
     <dest>/home/markus/develop/direcs</dest>
   </substmap>
   <kdevcppsupport>
-    <references/>
+    <references>
+      <pcs>Qt4</pcs>
+    </references>
     <codecompletion>
       <includeGlobalFunctions>true</includeGlobalFunctions>
       <includeTypes>true</includeTypes>

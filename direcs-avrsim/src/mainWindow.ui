@@ -68,6 +68,7 @@
     <addaction name="separator"/>
     <addaction name="actionLog"/>
     <addaction name="separator"/>
+    <addaction name="actionState"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -99,6 +100,7 @@
    <addaction name="actionSimulate"/>
    <addaction name="separator"/>
    <addaction name="actionLog"/>
+   <addaction name="actionState"/>
    <addaction name="separator"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
@@ -204,7 +206,7 @@
   </action>
   <action name="actionLog">
    <property name="icon">
-    <iconset>
+    <iconset resource="../direcsAvrsim.qrc">
      <normaloff>:/images/images/text-plain.png</normaloff>:/images/images/text-plain.png</iconset>
    </property>
    <property name="text">
@@ -224,6 +226,18 @@
    </property>
    <property name="shortcut">
     <string>Alt+S</string>
+   </property>
+  </action>
+  <action name="actionState">
+   <property name="icon">
+    <iconset resource="../direcsAvrsim.qrc">
+     <normaloff>:/images/images/led_green.gif</normaloff>:/images/images/led_green.gif</iconset>
+   </property>
+   <property name="text">
+    <string>State</string>
+   </property>
+   <property name="toolTip">
+    <string>State</string>
    </property>
   </action>
  </widget>

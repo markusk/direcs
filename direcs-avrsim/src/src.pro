@@ -13,23 +13,23 @@ CONFIG += debug \
 
 TEMPLATE = app
 
-unix {
-    HEADERS +=	direcsSerial.h \
-				gui.h \
-				direcs-avrsim.h \
-	interfaceAvr.h
+HEADERS +=	direcsSerial.h \
+	gui.h \
+	direcs-avrsim.h \
+	interfaceAvr.h \
+	simulationThread.h
 
-    SOURCES +=	direcsSerial.cpp \
-				gui.cpp \
-				direcs-avrsim.cpp \
-	interfaceAvr.cpp
+SOURCES +=	direcsSerial.cpp \
+	gui.cpp \
+	direcs-avrsim.cpp \
+	interfaceAvr.cpp \
+	simulationThread.cpp
 
-    FORMS +=	mainWindow.ui
+FORMS +=	mainWindow.ui
 
-    DEFINES =	_TTY_POSIX_
+DEFINES =	_TTY_POSIX_
 
-    CONFIG -= release
+CONFIG -= release
 
-    LIBS += -L/usr/lib \
-  -L/usr/local/lib
-}
+LIBS += -L/usr/lib \
+	-L/usr/local/lib

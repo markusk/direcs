@@ -7,5 +7,6 @@
         <file>images/media-flash.png</file>
         <file>images/splash.png</file>
         <file>images/system-shutdown.png</file>
+        <file>images/text-plain.png</file>
     </qresource>
 </RCC>

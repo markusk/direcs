@@ -24,6 +24,7 @@
 //-------------------------------------------------------------------
 #include "gui.h"
 #include "interfaceAvr.h"
+#include "simulationThread.h"
 //-------------------------------------------------------------------
 #include <QObject>
 #include <QtDebug>
@@ -127,6 +128,7 @@ class DirecsAvrsim : public QObject
 		QColor splashColor; 			/// The splash screen text color
 		QStringList arguments;			/// contains the list of command-line arguments
 		InterfaceAvr *interface1;
+		SimulationThread *simulationThread;
 		QString serialPortMicrocontroller;
 		QString commaSeparator;
 		bool robotSimulationMode; /// Stores the robots simulation state

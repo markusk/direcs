@@ -76,6 +76,8 @@ DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
+	
+	simulationThread = new SimulationThread(interface1, mutex);
 }
 
 
@@ -129,6 +131,7 @@ void DirecsAvrsim::init()
 	//--------------------------------------------------------------------------
 	// this is needed, when the first openCOMPort method fails:
 	//connect(interface1,	SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
+	connect(interface1,	SIGNAL( robotState(bool) ), simulationThread,	SLOT( setRobotState(bool) ));
 	
 	//--------------------------------------------------------------------------
 	// shutdown Direcs-avrsim program on exit button
@@ -192,6 +195,44 @@ void DirecsAvrsim::shutdown()
 
 	splash->show();
 	emit splashMessage("Shutting down...");
+	
+	//--------------------------
+	// quit the sensor thread
+	//--------------------------
+	//qDebug("Starting to stop the sensor thread NOW!");
+	if (simulationThread->isRunning() == true)
+	{
+		emit message("Stopping sensor thread...");
+
+		// my own stop routine :-)
+		simulationThread->stop();
+
+		// slowing thread down
+		simulationThread->setPriority(QThread::IdlePriority);
+		simulationThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((simulationThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (simulationThread->isFinished() == true)
+		{
+			emit message("Sensor thread stopped.");
+		}
+		else
+		{
+			emit message("Terminating sensor thread because it doesn't answer...");
+			simulationThread->terminate();
+			simulationThread->wait(1000);
+			emit message("Sensor thread terminated.");
+		}
+	}
+
 
 	//-----------------------------
 	// close serial port to mc
@@ -212,6 +253,7 @@ DirecsAvrsim::~DirecsAvrsim()
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
 	qDebug("Bye.");
+	delete simulationThread;
 	delete splash;
 	delete gui;
 }
@@ -244,9 +286,23 @@ void DirecsAvrsim::setSimulationMode(bool status)
 	if (status == true)
 	{
 		emit message("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
+		
+		//------------------------------
+		// start the simulation thread
+		//------------------------------
+		if (simulationThread->isRunning() == false)
+		{
+			emit message("Starting simulation thread...", false);
+			simulationThread->start();
+			emit message("Simulation thread started.");
+		}
 	}
 	else
 	{
+		emit message("Stopping simulation thread...", false);
+		simulationThread->stop();
+		emit message("Simulation thread stopped.");
+		
 		emit message("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
 }
