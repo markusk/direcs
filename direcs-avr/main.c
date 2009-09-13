@@ -24,6 +24,7 @@ uint16_t rightDistanceCounter = 0;
 
 int main(void)
 {
+/*
 	// stores the serial received command
 	uint16_t value = 0;
 
@@ -181,11 +182,15 @@ int main(void)
 	// initialize USART (serial port)
  	UsartInit();
 
+*/
 
-/*
 	//---------------------------------------------------------
 	// T E S T
 	//---------------------------------------------------------
+	// switch port L (all PINS) to output [drive motor 1 to 3]
+	DDRA = 0xff;
+	DDRC |= (1 << DDC1);
+	DDRD |= (1 << DDC5);
 
 	while(1)
 	{
@@ -221,8 +226,8 @@ int main(void)
 		_delay_ms(250);
 	}
 	//---------------------------------------------------------
-*/
 
+/*
 	while(1)
 	{
 		//-----------------------------------------
@@ -619,55 +624,7 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-/*
-			//-------------------------------
-			case STEPPER1_OFF:
-				// disable stepper motor 1
-				PORTA &= ~(1<<PIN1);
-				break;
-
-			case STEPPER2_OFF:
-				// disable stepper motor 2
-				PORTA &= ~(1<<PIN3);
-				break;
-
-			case STEPPER1_ON:
-				// enable stepper motor 1
-				PORTA |= (1<<PIN1);
-				break;
-
-			case STEPPER2_ON:
-				// enable stepper motor 2
-				PORTA |= (1<<PIN3);
-				break;
-
-			case STEPPER1_CLOCKWISE:
-				// set stepper motor 1 to cw
-				PORTA &= ~(1<<PIN2);
-				break;
-
-			case STEPPER2_CLOCKWISE:
-				// set stepper motor 2 to cw
-				PORTA &= ~(1<<PIN4);
-				break;
-
-			case STEPPER1_COUNTERCLOCKWISE:
-				// set stepper motor 1 to ccw
-				PORTA |= (1<<PIN2);
-				break;
-
-			case STEPPER2_COUNTERCLOCKWISE:
-				// set stepper motor 2 to ccw
-				PORTA |= (1<<PIN4);
-				break;
-
-			case STEPPER_CLOCK:
-				// set stepper motor clock to high
-				PORTA |= (1<<PIN0);
-				// and then to low
-				PORTA &= ~(1<<PIN0);
-				break;
-*/
+				
 // 			default:
 // 				//
 // 				// yellow 'traffic' LED
@@ -688,7 +645,7 @@ int main(void)
 
 		}
 	} // while (1)
-
+*/
 
 	// this line is never reached!
 	return 0;
