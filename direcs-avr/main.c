@@ -64,10 +64,14 @@ int main(void)
 	DDRH = 0xff;
 	// switch some bits on port E to output [2 more servos]
 	DDRE |= (1 << DDE3) | (1 << DDE4);
-
+	// turn red LED OFF (low active!)
+	PORTD |= (1<<PIN6);
+	
 	// yelow LED off (low active -> turn bit high!)
 	PORTC |= (1<<PIN0);
 	// flashlight off
+	// yelow LED off (low active -> turn bit high!)
+	PORTC |= (1<<PIN0);
 	PORTC &= ~(1<<PIN1);
 
 	// turn all drive motor bits off (except PWM bits)

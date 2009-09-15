@@ -41,23 +41,19 @@ unsigned char UsartReceive(void)
 	
 	while(!(UCSR3A & (1<<RXC3)))
 	{
-/*
 		// play with the red LED, while waitung,,,
 		redLEDcounter++;
-		if (redLEDcounter>32000)
+		if (redLEDcounter>64000)
 		{
 			redLEDcounter=0;
 			// red LED on (low active!)
 			PORTD &= ~(1<<PIN5);
-			PORTC |= (1<<PIN1); // fl on
 		}
 		else
 		{
 			// red LED off (low active!)
 			PORTD |= (1<<PIN5);
-			PORTC &= ~(1<<PIN1); // fl off
 		}
-*/
 	}
 	
 	return UDR3;
