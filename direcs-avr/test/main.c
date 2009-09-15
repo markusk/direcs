@@ -13,6 +13,7 @@ int main(void)
 	
 	
 	// test mk
+	/*
 	PORTA |=  (1<<PIN0); // 				JP2, Pin 26
 	PORTA |=  (1<<PIN1); // 				JP2, Pin 25
 	PORTA |=  (1<<PIN2); // 				JP2, Pin 24
@@ -21,13 +22,34 @@ int main(void)
 	PORTA |=  (1<<PIN5); // 				JP2, Pin 21
 	PORTA |=  (1<<PIN6); // 				JP2, Pin 20
 	PORTA |=  (1<<PIN7); // 				JP2, Pin 19
-	
-	PORTC |= (1<<PIN1); // fl on			JP2, Pin 4
-	PORTD &= ~(1<<PIN5); // red LED on		JP1, Pin 45
+	*/
 	
 	
 	while(1)
 	{
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		
+		PORTC |= (1<<PIN1); // fl on			JP2, Pin 4
+		PORTD &= ~(1<<PIN5); // red LED on		JP1, Pin 45
+		
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		_delay_ms(250);
+		
+		PORTC &= ~(1<<PIN1); // fl off			JP2, Pin 4
+		PORTD |= (1<<PIN5); // red LED off		JP1, Pin 45
 	}
 	
 	// this line es never reached
