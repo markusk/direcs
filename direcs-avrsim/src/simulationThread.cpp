@@ -46,7 +46,7 @@ void SimulationThread::stop()
 
 void SimulationThread::run()
 {
-// 	int value = 0;
+	unsigned char receivedChar = 0;
 	bool heartbeatToggle = false;
 
 
@@ -62,36 +62,42 @@ void SimulationThread::run()
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
-
+			//---------------------------------------------------------
+			// receive an char on the serial line
+			//---------------------------------------------------------
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock(); // TODO: do a lock direct before a interface call!!
-
-/*
-			//---------------------------------------------------------
-			// read value from voltage sensor 1 (formerly IR sensor 8)
-			//---------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_8) == false)
+			mutex->lock();
+			
+			if (interface1->receiveChar(&receivedChar) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR reading voltage sensor 1 [SimulationThread]");
-				return;
+// 				qDebug("nothing to read [SimulationThread]");
+// 				return;
 			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-			
+			else
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				switch (receivedChar)
+				{
+					case INIT:
+						// "answer" with "@" [Ascii Dezimal @ = 64]
+						// this answer is used to see if the robot is "on"
+						if (interface1->sendChar(INIT) == false)
+						{
+							// Unlock the mutex.
+							mutex->unlock();
+							qDebug("ERROR sending to serial port [SimulationThread]");
+							return;
+							}
+						break;
+				}
+			} // serial reading was successfull
+/*
 			//====================================================================
-
 			//====================================================================
 			//====================================================================
-			//====================================================================
-			//-----------------------------------------
-			// waiting "endlessly" for serial data...
-			// react on the received command
-			//--------------------------------
-			value = UsartReceive();
-
 
 			switch (value)
 			{
