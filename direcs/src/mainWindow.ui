@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>984</height>
+    <height>980</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -284,7 +284,7 @@
      <x>0</x>
      <y>0</y>
      <width>1676</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -2100,7 +2100,8 @@
    </property>
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/utilities-system-monitor.png</normaloff>:/images/images/utilities-system-monitor.png</iconset>
+     <normaloff>:/images/images/utilities-system-monitor.png</normaloff>
+     <normalon>:/images/images/utilities-system-monitor-active.png</normalon>:/images/images/utilities-system-monitor.png</iconset>
    </property>
    <property name="text">
     <string>Simulate</string>

@@ -1185,7 +1185,7 @@ void Gui::disableCamera()
 {
 	appendLog("Camera disabled!");
 	ui.dockCamera->setEnabled(false);
-	//ui.dockCamera->hide();
+	ui.dockCamera->hide();
 }
 
 
@@ -1536,14 +1536,12 @@ void Gui::on_actionSimulate_activated()
 {
 	if (ui.actionSimulate->isChecked())
 	{
-		ui.actionSimulate->setIcon(QIcon(QPixmap(":/images/images/utilities-system-monitor-active.png")));
 		ui.actionSimulate->setStatusTip("Disable simulation");
 		ui.actionSimulate->setToolTip("Disable simulation");
 		emit simulate(true);
 	}
 	else
 	{
-		ui.actionSimulate->setIcon(QIcon(QPixmap(":/images/images/utilities-system-monitor.png")));
 		ui.actionSimulate->setStatusTip("Simulate");
 		ui.actionSimulate->setToolTip("Simulate");
 		emit simulate(false);
