@@ -36,24 +36,9 @@ void UsartTransmitString(unsigned char *string)
 
 unsigned char UsartReceive(void)
 {
-	uint16_t redLEDcounter = 0;
-	
-	
 	while(!(UCSR3A & (1<<RXC3)))
 	{
-		// play with the red LED, while waitung,,,
-		redLEDcounter++;
-		if (redLEDcounter>64000)
-		{
-			redLEDcounter=0;
-			// red LED on (low active!)
-			PORTD &= ~(1<<PIN5);
-		}
-		else
-		{
-			// red LED off (low active!)
-			PORTD |= (1<<PIN5);
-		}
+		// TODO: what is with timeout?
 	}
 	
 	return UDR3;

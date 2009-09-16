@@ -24,6 +24,7 @@ uint16_t rightDistanceCounter = 0;
 
 int main(void)
 {
+	uint8_t redLEDtoggle = 0;
 	// stores the serial received command
 	uint16_t value = 0;
 
@@ -57,6 +58,7 @@ int main(void)
 
 	// switch some bits on port D to output [read LED, motor 4]
 	DDRD |= (1 << DDD5) | (1 << DDD6) | (1 << DDD7);
+	
 	// switch some bits on port G to output [motor 4 pwm]
 	DDRG |= (1<<PIN5);
 
@@ -64,14 +66,14 @@ int main(void)
 	DDRH = 0xff;
 	// switch some bits on port E to output [2 more servos]
 	DDRE |= (1 << DDE3) | (1 << DDE4);
-	// turn red LED OFF (low active!)
-	PORTD |= (1<<PIN6);
 	
+	// red LED on (low active!)
+	PORTD &= ~(1<<PIN5);
 	// yelow LED off (low active -> turn bit high!)
 	PORTC |= (1<<PIN0);
 	// flashlight off
-	// yelow LED off (low active -> turn bit high!)
 	PORTC |= (1<<PIN0);
+	// yelow LED off (low active -> turn bit high!)
 	PORTC &= ~(1<<PIN1);
 
 	// turn all drive motor bits off (except PWM bits)
@@ -191,9 +193,22 @@ int main(void)
 		//-----------------------------------------
 		// waiting "endlessly" for serial data...
 		// react on the received command
-		//--------------------------------
+		//-----------------------------------------
 		value = UsartReceive();
-
+		
+		// toggling the red LED on and off with every received serial commmand
+		if (redLEDtoggle==0)
+		{
+			redLEDtoggle=1;
+			// red LED on (low active!)
+			PORTD &= ~(1<<PIN5);
+		}
+		else
+		{
+			redLEDtoggle=0;
+			// red LED off (low active!)
+			PORTD |= (1<<PIN5);
+		}
 
 		switch (value)
 		{
@@ -209,6 +224,8 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				// flashlight off
 				PORTC &= ~(1<<PIN1);
+				// red LED off (low active!)
+				PORTD |= (1<<PIN5);
 				
 // 				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
 // 				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
