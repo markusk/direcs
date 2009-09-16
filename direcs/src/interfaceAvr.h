@@ -95,6 +95,12 @@ class InterfaceAvr : public QObject
 		@sa Direcs::showExitDialog()
 		*/
 		void tooMuchErrors();
+		
+		/**
+		Sends a string to the GUI log.
+		@param text is the message to be emitted
+		*/
+		void emitMessage(QString text);
 
 	
 	private:

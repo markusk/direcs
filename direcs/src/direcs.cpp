@@ -416,10 +416,12 @@ void Direcs::init()
 	if (!consoleMode)
 	{
 		connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
+		connect(interface1, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
 	}
 	else
 	{
 		connect(joystick, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
+		connect(interface1, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
 	}
 	
 	//-------------------------------------------------------

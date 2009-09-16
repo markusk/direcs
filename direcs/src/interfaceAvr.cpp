@@ -149,6 +149,7 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	if (serialPort->readAtmelPort(character, 1) != 1)
 	{
 		// ERROR
+		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveChar, InterfaceAvr)!<font>");
 		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
 		return false;
 	}
@@ -171,6 +172,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	if (receiveChar(&character) == false)
 	{
 // 		receiveErrorCounter++;
+		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt, InterfaceAvr)!<font>");
 		qDebug("*** ERROR reading from serial port (receiveInt, InterfaceAvr) ***");
 
 		//
@@ -179,7 +181,7 @@ bool InterfaceAvr::receiveInt(int *value)
 // 		if (receiveErrorCounter >= 4)
 // 		{
 // 			receiveErrorCounter = 0;
-			emit tooMuchErrors();
+//			emit tooMuchErrors();
 // 		}
 
 		value = 0;
