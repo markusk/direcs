@@ -128,6 +128,19 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		
 		switch (motor)
 		{
+			//----------------------------------------------------------------------------------
+			// ALLMOTORS is for sending only -one- command for all motors over the serial line!
+			//----------------------------------------------------------------------------------
+			case ALLMOTORS:
+				// set the direction
+				if (interface1->sendChar(direction) == false)
+				{
+					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+				break;
 			//-------------------------
 			// Motor 1
 			//-------------------------

@@ -156,8 +156,24 @@ class Motor : public QObject
 		static const unsigned char SAME             = 3;  // Motor direction/power "same like before"
 		static const unsigned char MOTOR1           = 10; //! Motor 1 (front left)
 		static const unsigned char MOTOR2           = 20; //! Motor 2 (front right)
-		static const unsigned char MOTOR3           = 30; //! Motor 3 (back left)
-		static const unsigned char MOTOR4           = 40; //! Motor 4 (back right)
+		static const unsigned char MOTOR3			= 30; //! Motor 3 (back left)
+		static const unsigned char MOTOR4			= 40; //! Motor 4 (back right)
+		static const unsigned char ALLMOTORS		= 90; //! used the hole robot gets one command for all motors (like 'forwardall'). This is so save transmissions on the serial line.
+		
+		/// Some driving directions for the robot. @sa Direcs::drive() [Slot]
+		static const unsigned char FORWARD		= 1;
+		static const unsigned char BACKWARD		= 2;
+		static const unsigned char LEFT			= 3;
+		static const unsigned char RIGHT		= 4;
+		static const unsigned char TURNLEFT		= 5;
+		static const unsigned char TURNRIGHT	= 6;
+		static const unsigned char START		= 7;
+		static const unsigned char STOP			= 8;
+		static const unsigned char WAIT			= 9;
+		// static const unsigned char DIAGONAL_FORWARD_LEFT
+		// static const unsigned char DIAGONAL_FORWARD_RIGHT
+		// static const unsigned char DIAGONAL_BACKWARD_LEFT
+		// static const unsigned char DIAGONAL_BACKWARD_RIGHT
 
 		// The bits for controling the USB-Circuit
 		static const unsigned char MOTOR1A = BIT0;

@@ -1926,10 +1926,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case BACKWARD:
@@ -1941,10 +1944,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case LEFT:
@@ -1956,10 +1962,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case RIGHT:
@@ -1971,10 +1980,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case TURNLEFT:
@@ -1986,10 +1998,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case TURNRIGHT:
@@ -2001,46 +2016,43 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case START:
-// 			if (robotIsOn)
-// 			{
-				robotDrives = true;
-				emit message("Starting to drive forward...");
-				emit message("START");
-				// set the motors to "drive FORWARD"
-				if (!consoleMode)
-				{
-					gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-					gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
-					gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
-					gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
-				}
-				
-				motors->setMotorSpeed(MOTOR1, 0); // TODO: check if this works
-				motors->setMotorSpeed(MOTOR2, 0); // TODO: check if this works
-				motors->setMotorSpeed(MOTOR3, 0); // TODO: check if this works
-				motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
-				
-				resetDrivingSpeedTimer();
-				drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
-				
-				motors->motorControl(MOTOR1, ON, CLOCKWISE);
-				motors->motorControl(MOTOR2, ON, CLOCKWISE);
-				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-// 			}
-// 			else
-// 			{
-// 				// show message
-// 				emit message("<font color=\"#FF0000\">Robot is OFF!</font>");
-// 				robotDrives = false;
-// 			}
+			robotDrives = true;
+			emit message("Starting to drive forward...");
+			emit message("START");
+			// set the motors to "drive FORWARD"
+			if (!consoleMode)
+			{
+				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+			}
+			
+			motors->setMotorSpeed(MOTOR1, 0); // TODO: check if this works
+			motors->setMotorSpeed(MOTOR2, 0); // TODO: check if this works
+			motors->setMotorSpeed(MOTOR3, 0); // TODO: check if this works
+			motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
+			
+			resetDrivingSpeedTimer();
+			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
+			
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
+			motors->motorControl(MOTOR1, ON, CLOCKWISE);
+			motors->motorControl(MOTOR2, ON, CLOCKWISE);
+			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case WAIT:
@@ -2054,10 +2066,14 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			// turning motors off
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
+			
 			//
 			// Don't stop the motThread (PWM)!
 			// Only switching motors off!
@@ -2075,10 +2091,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			// turning motors off
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			//
 			// Don't stop the motThread (clock)!
 			// Only switching motors off!
