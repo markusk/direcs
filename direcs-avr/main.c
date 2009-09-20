@@ -497,46 +497,23 @@ int main(void)
 				break;
 
 			//-------------------------------
+			case BOTSTART:
 			case BOTFORWARD:
 				// MOTOR 1 CLOCKWISE
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
 				// set Motor1 B bit
 				PORTL |= (1<<PIN1);
-				// MOTOR 2 CLOCKWISE
-				// delete Motor2 A bit
-				PORTL &= ~(1<<PIN2);
-				// set Motor2 B bit
-				PORTL |= (1<<PIN3);
-				// MOTOR 3 CLOCKWISE
-				// delete Motor3 A bit
-				PORTL &= ~(1<<PIN6);
-				// set Motor3 B bit
-				PORTL |= (1<<PIN7);
-				// MOTOR 4 CLOCKWISE
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// set Motor4 B bit
-				PORTD |= (1<<PIN7);
-				break;
-				
-			case BOTBACKWARD:
-			case BOTSTART:
-				// MOTOR 1 COUNTERCLOCKWISE
-				// set Motor1 A bit
-				PORTL |= (1<<PIN0);
-				// delete Motor1 B bit
-				PORTL &= ~(1<<PIN1);
 				// MOTOR 2 COUNTERCLOCKWISE
 				// set Motor2 A bit
 				PORTL |= (1<<PIN2);
 				// delete Motor2 B bit
 				PORTL &= ~(1<<PIN3);
-				// MOTOR 3 COUNTERCLOCKWISE
-				// set Motor3 A bit
-				PORTL |= (1<<PIN6);
-				// delete Motor3 B bit
-				PORTL &= ~(1<<PIN7);
+				// MOTOR 3 CLOCKWISE
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// set Motor3 B bit
+				PORTL |= (1<<PIN7);
 				// MOTOR 4 COUNTERCLOCKWISE
 				// set Motor4 A bit
 				PORTD |= (1<<PIN6);
@@ -544,36 +521,39 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				break;
 				
-			case BOTLEFT:
+			case BOTBACKWARD:
+				// MOTOR 1 COUNTERCLOCKWISE
+				// set Motor1 A bit
+				PORTL |= (1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// MOTOR 2 CLOCKWISE
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// set Motor2 B bit
+				PORTL |= (1<<PIN3);
+				// MOTOR 3 COUNTERCLOCKWISE
+				// set Motor3 A bit
+				PORTL |= (1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
 				// MOTOR 4 CLOCKWISE
 				// delete Motor4 A bit
 				PORTD &= ~(1<<PIN6);
 				// set Motor4 B bit
 				PORTD |= (1<<PIN7);
+				break;
+				
+			case BOTLEFT:
 				break;
 				
 			case BOTRIGHT:
-				// MOTOR 4 CLOCKWISE
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// set Motor4 B bit
-				PORTD |= (1<<PIN7);
 				break;
 				
 			case BOTTURNLEFT:
-				// MOTOR 4 CLOCKWISE
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// set Motor4 B bit
-				PORTD |= (1<<PIN7);
 				break;
 				
 			case BOTTURNRIGHT:
-				// MOTOR 4 CLOCKWISE
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// set Motor4 B bit
-				PORTD |= (1<<PIN7);
 				break;
 				
 			case BOTSTOP:
