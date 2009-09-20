@@ -410,10 +410,14 @@ class Gui : public QMainWindow
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the direcs class!
 		JoystickDialog *joystickDialog; // just a pointer to the object created in the direcs class!
 		AboutDialog *aboutDialog;       // just a pointer to the object created in the direcs class!
-		QwtPlotCurve curve1;
-		QwtPlotCurve curve2;
-		QwtPlotCurve curve3;
-		QwtPlotCurve curve4;
+		QwtPlotCurve curveCurrent1;
+		QwtPlotCurve curveCurrent2;
+		QwtPlotCurve curveCurrent3;
+		QwtPlotCurve curveCurrent4;
+		QwtPlotCurve curveVoltage1;
+		QwtPlotCurve curveVoltage2;
+		QwtPlotCurve curveVoltage3;
+		QwtPlotCurve curveVoltage4;
 // 		QwtCompassMagnetNeedle needle;
 		QPixmap cameraPicToSave;
 		QColor labelFillColorRed;

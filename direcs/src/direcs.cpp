@@ -147,7 +147,7 @@ void Direcs::init()
 {
 	if (!consoleMode)
 	{
-		aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
+		aboutDialog->setVersion("0.9"); // TODO: put this at a nicer place
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashTextColor = Qt::white;
 	}

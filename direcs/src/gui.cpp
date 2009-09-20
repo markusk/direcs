@@ -411,13 +411,14 @@ void Gui::on_actionTest_activated()
 
 void Gui::on_actionAll_activated()
 {
+	ui.dockNavigation->show();
 	ui.dockCamera->show();
 	ui.dockOdometrie->show();
 	ui.dockVoltage->show();
 	ui.dockCurrent->show();
 	ui.dockLog->show();
-	settingsDialog->show();
-	joystickDialog->show();
+// 	settingsDialog->show();
+// 	joystickDialog->show();
 }
 
 
@@ -1251,14 +1252,14 @@ void Gui::saveCamImage(void)
 void Gui::setPlotData1(double *xval, double *yval, int size)
 {
 	//---------------
-	// curve1
+	// curveCurrent1
 	//---------------
 
 	// set curve with data
-	curve1.setData(xval, yval, size);
+	curveCurrent1.setData(xval, yval, size);
 
 	// attach data to curve
-	curve1.attach(ui.qwtPlotCurrent1);
+	curveCurrent1.attach(ui.qwtPlotCurrent1);
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot();
@@ -1268,14 +1269,14 @@ void Gui::setPlotData1(double *xval, double *yval, int size)
 void Gui::setPlotData2(double *xval, double *yval, int size)
 {
 	//---------------
-	// curve2
+	// curveCurrent2
 	//---------------
 
 	// set curve with data
-	curve2.setData(xval, yval, size);
+	curveCurrent2.setData(xval, yval, size);
 
 	// attach data to curve
-	curve2.attach(ui.qwtPlotCurrent1); // add curve to qwtPlot 1 !!
+	curveCurrent2.attach(ui.qwtPlotCurrent1); // add curve to qwtPlot 1 !!
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot(); // replot qwtPlot 1 !!
@@ -1285,14 +1286,14 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 void Gui::setPlotData3(double *xval, double *yval, int size)
 {
 	//---------------
-	// curve3
+	// curveCurrent3
 	//---------------
 
 	// set curve with data
-	curve3.setData(xval, yval, size);
+	curveCurrent3.setData(xval, yval, size);
 
 	// attach data to curve
-	curve3.attach(ui.qwtPlotCurrent2); // curve 3 to qwtPlot 2
+	curveCurrent3.attach(ui.qwtPlotCurrent2); // curve 3 to qwtPlot 2
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();
@@ -1302,14 +1303,14 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 void Gui::setPlotData4(double *xval, double *yval, int size)
 {
 	//---------------
-	// curve4
+	// curveCurrent4
 	//---------------
 
 	// set curve with data
-	curve4.setData(xval, yval, size);
+	curveCurrent4.setData(xval, yval, size);
 
 	// attach data to curve
-	curve4.attach(ui.qwtPlotCurrent2); // curve 4 to qwtPlot 2
+	curveCurrent4.attach(ui.qwtPlotCurrent2); // curve 4 to qwtPlot 2
 
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();  // replot qwtPlot 2 !!
@@ -2274,12 +2275,14 @@ void Gui::initPlots()
 	// time (60 sec)
 	ui.qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
-	curve1.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curve1.setPen(QPen(labelFillColorBlue));
-	curve1.setBrush(labelFillColorBlue);
+	curveCurrent1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveCurrent1.setPen(QPen(labelFillColorBlue));
+	curveCurrent1.setBrush(labelFillColorBlue);
 
 
+	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3 + 4
+	//--------------------------------------
 	// get the current application font
 	applicationFont = QApplication::font();
 	
@@ -2301,19 +2304,83 @@ void Gui::initPlots()
 	// time (60 sec)
 	ui.qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
-	curve2.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curve2.setPen(QPen(labelFillColorRed));
-	curve2.setBrush(labelFillColorRed);
+	curveCurrent2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveCurrent2.setPen(QPen(labelFillColorRed));
+	curveCurrent2.setBrush(labelFillColorRed);
 
 	// plot curve "MOTOR CURRENT" 3
-	curve3.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curve3.setPen(QPen(labelFillColorBlue));
-	curve3.setBrush(labelFillColorBlue);
+	curveCurrent3.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveCurrent3.setPen(QPen(labelFillColorBlue));
+	curveCurrent3.setBrush(labelFillColorBlue);
 
 	// plot curve "MOTOR CURRENT" 4
-	curve4.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curve4.setPen(QPen(labelFillColorRed));
-	curve4.setBrush(labelFillColorRed);
+	curveCurrent4.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveCurrent4.setPen(QPen(labelFillColorRed));
+	curveCurrent4.setBrush(labelFillColorRed);
+	
+	
+	//--------------------------------------
+	// plot curve "MOTOR VOLTAGE" 1 + 2
+	//--------------------------------------
+	// get the current application font
+	applicationFont = QApplication::font();
+	// set this font for the plot widget
+	ui.qwtPlotVoltage1->setAxisFont(QwtPlot::xBottom, applicationFont);
+	ui.qwtPlotVoltage1->setAxisFont(QwtPlot::yLeft, applicationFont);
+	ui.qwtPlotVoltage1->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	
+	// set title and font of plot widget
+	fontSize = applicationFont.pointSize();
+	plotTitle = QString("Motor 1 + 2");
+	// increase title by 2 points
+	applicationFont.setPointSize(++fontSize);
+	applicationFont.setBold(true);
+	plotTitle.setFont(applicationFont);
+	ui.qwtPlotVoltage1->setTitle(plotTitle);
+	
+	// Set axis scale (instead of using autoscale, which is default)
+	// time (60 sec)
+	ui.qwtPlotVoltage1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+
+	curveVoltage1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveVoltage1.setPen(QPen(labelFillColorBlue));
+	curveVoltage1.setBrush(labelFillColorBlue);
+	
+	
+	//--------------------------------------
+	// plot curve "MOTOR VOLTAGE" 3 + 4
+	//--------------------------------------
+	// get the current application font
+	applicationFont = QApplication::font();
+	// set this font for the plot widget
+	ui.qwtPlotVoltage2->setAxisFont(QwtPlot::xBottom, applicationFont);
+	ui.qwtPlotVoltage2->setAxisFont(QwtPlot::yLeft, applicationFont);
+	ui.qwtPlotVoltage2->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	
+	// set title and font of plot widget
+	fontSize = applicationFont.pointSize();
+	plotTitle = QString("Motor 3 + 4");
+	// increase title by 2 points
+	applicationFont.setPointSize(++fontSize);
+	applicationFont.setBold(true);
+	plotTitle.setFont(applicationFont);
+	ui.qwtPlotVoltage2->setTitle(plotTitle);
+	
+	// Set axis scale (instead of using autoscale, which is default)
+	// time (60 sec)
+	ui.qwtPlotVoltage2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+
+	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveVoltage2.setPen(QPen(labelFillColorBlue));
+	curveVoltage2.setBrush(labelFillColorBlue);
+
+	curveVoltage3.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveVoltage3.setPen(QPen(labelFillColorBlue));
+	curveVoltage3.setBrush(labelFillColorBlue);
+
+	curveVoltage4.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveVoltage4.setPen(QPen(labelFillColorBlue));
+	curveVoltage4.setBrush(labelFillColorBlue);
 }
 
 

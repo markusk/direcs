@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>980</height>
+    <height>981</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -284,7 +284,7 @@
      <x>0</x>
      <y>0</y>
      <width>1676</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -984,12 +984,27 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4">
-    <layout class="QGridLayout" name="gridLayout_6">
+    <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QwtPlot" name="qwtPlotVoltage1">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>180</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
           <widget class="QLabel" name="lblBattery1">
            <property name="text">
             <string/>
@@ -1002,7 +1017,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item>
           <widget class="QLabel" name="lblVoltage1">
            <property name="font">
             <font>
@@ -1018,7 +1033,7 @@
             <enum>QFrame::Raised</enum>
            </property>
            <property name="text">
-            <string>12,00 V</string>
+            <string>0,00 V</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1027,8 +1042,12 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
-        <widget class="QwtPlot" name="qwtPlotVoltage1">
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QwtPlot" name="qwtPlotVoltage2">
          <property name="maximumSize">
           <size>
            <width>200</width>
@@ -1042,11 +1061,7 @@
          </property>
         </widget>
        </item>
-      </layout>
-     </item>
-     <item row="0" column="1">
-      <layout class="QGridLayout" name="gridLayout_8">
-       <item row="0" column="0">
+       <item>
         <layout class="QGridLayout" name="gridLayout_9">
          <item row="0" column="0">
           <widget class="QLabel" name="lblBattery2">
@@ -1077,7 +1092,7 @@
             <enum>QFrame::Raised</enum>
            </property>
            <property name="text">
-            <string>24,00 V</string>
+            <string>0,00 V</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1085,21 +1100,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="QwtPlot" name="qwtPlotVoltage2">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>180</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Verdana</family>
-          </font>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>
@@ -1114,10 +1114,25 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_5">
-    <layout class="QGridLayout" name="gridLayout_18">
+    <layout class="QGridLayout" name="gridLayout_5">
      <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout_7">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QwtPlot" name="qwtPlotCurrent1">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>180</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QGridLayout" name="gridLayout_14">
          <item row="0" column="0">
           <widget class="QLabel" name="lblCurrent1">
@@ -1135,7 +1150,7 @@
             <enum>QFrame::Raised</enum>
            </property>
            <property name="text">
-            <string>2000 mA</string>
+            <string>0 mA</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1144,8 +1159,12 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
-        <widget class="QwtPlot" name="qwtPlotCurrent1">
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QwtPlot" name="qwtPlotCurrent2">
          <property name="maximumSize">
           <size>
            <width>200</width>
@@ -1159,11 +1178,7 @@
          </property>
         </widget>
        </item>
-      </layout>
-     </item>
-     <item row="0" column="1">
-      <layout class="QGridLayout" name="gridLayout_16">
-       <item row="0" column="0">
+       <item>
         <layout class="QGridLayout" name="gridLayout_17">
          <item row="0" column="0">
           <widget class="QLabel" name="lblCurrent2">
@@ -1181,7 +1196,7 @@
             <enum>QFrame::Raised</enum>
            </property>
            <property name="text">
-            <string>1000 mA</string>
+            <string>0 mA</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1190,24 +1205,15 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
-        <widget class="QwtPlot" name="qwtPlotCurrent2">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>180</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Verdana</family>
-          </font>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
     </layout>
+    <zorder>lblCurrent1</zorder>
+    <zorder>lblCurrent2</zorder>
+    <zorder>lblCurrent2</zorder>
+    <zorder>lblCurrent2</zorder>
+    <zorder></zorder>
+    <zorder></zorder>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockNavigation">
