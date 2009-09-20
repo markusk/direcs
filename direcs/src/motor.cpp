@@ -121,6 +121,8 @@ double Motor::getDrivenDistance(unsigned char motor)
 
 void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
 {
+	unsigned char command = 0;
+	
 	if (robotState == ON)
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -132,8 +134,40 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 			// ALLMOTORS is for sending only -one- command for all motors over the serial line!
 			//----------------------------------------------------------------------------------
 			case ALLMOTORS:
-				// set the direction
-				if (interface1->sendChar(direction) == false)
+				// convert the given direction into the corresponding serial command for the avr code
+				switch (direction)
+				{
+					case FORWARD:
+						command = BOTFORWARD;
+						break;
+					case BACKWARD:
+						command = BOTBACKWARD;
+						break;
+					case LEFT:
+						command = BOTLEFT;
+						break;
+					case RIGHT:
+						command = BOTRIGHT;
+						break;
+					case TURNLEFT:
+						command = BOTTURNLEFT;
+						break;
+					case TURNRIGHT:
+						command = BOTTURNRIGHT;
+						break;
+					case START:
+						command = BOTSTART;
+						break;
+					case STOP:
+						command = BOTSTOP;
+						break;
+					case WAIT:
+						command = BOTWAIT;
+						break;
+				}
+					
+				// send command to bot
+				if (interface1->sendChar(command) == false)
 				{
 					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 					mutex->unlock();

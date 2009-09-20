@@ -426,6 +426,7 @@ class Direcs : public QObject
 		static const unsigned char MOTOR2           = 20; /// Motor 2 front right
 		static const unsigned char MOTOR3           = 30; /// Motor 3 back left
 		static const unsigned char MOTOR4           = 40; /// Motor 4 back right
+		static const unsigned char ALLMOTORS		= 90; //! used the hole robot gets one command for all motors (like 'forwardall'). This is so save transmissions on the serial line.
 
 		/// The motor sensors
 		static const short int MOTORSENSOR1 = 0;

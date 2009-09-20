@@ -203,6 +203,20 @@ class Motor : public QObject
 		static const unsigned char MOTOR3_SPEED_SET			= 56;
 		static const unsigned char MOTOR4_SPEED_SET			= 57;
 
+		/// The serial driving commands for the robot
+		static const unsigned char BOTFORWARD				= 80;
+		static const unsigned char BOTBACKWARD				= 81;
+		static const unsigned char BOTLEFT					= 82;
+		static const unsigned char BOTRIGHT					= 83;
+		static const unsigned char BOTTURNLEFT				= 84;
+		static const unsigned char BOTTURNRIGHT				= 85;
+		static const unsigned char BOTSTART					= 86;
+		static const unsigned char BOTSTOP					= 87;
+		static const unsigned char BOTWAIT					= 88;
+		// static const unsigned char BOTDIAGONAL_FORWARD_LEFT
+		// static const unsigned char BOTDIAGONAL_FORWARD_RIGHT
+		// static const unsigned char BOTDIAGONAL_BACKWARD_LEFT
+		// static const unsigned char BOTDIAGONAL_BACKWARD_RIGHT
 		
 		static const unsigned char FLASHLIGHT_OFF 		= 40;
 		static const unsigned char FLASHLIGHT_ON 		= 41;
