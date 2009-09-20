@@ -888,8 +888,8 @@ void Direcs::shutdown()
 		}
 
 		// just 4 fun
-		head->look("NORMAL");
-		head->look("DOWN");
+// 		head->look("NORMAL"); no head mounted at the moment...
+// 		head->look("DOWN");   no head mounted at the moment...
 
 		//---------------------------------------------------------------
 		// save changes to ini-file (if check box is checked!)
@@ -953,8 +953,8 @@ void Direcs::shutdown()
 		}
 
 		
-		emit message("Stop driving!");
-		drive(STOP);
+		emit message("TODO: Stop driving!");
+// 		drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
 
 
 		// TODO: a universal quit-threads-method
@@ -966,6 +966,7 @@ void Direcs::shutdown()
 			if (camThread->isRunning() == true)
 			{
 				emit message("Stopping camera thread...");
+				emit splashMessage("Stopping camera thread...");
 	
 				// my own stop routine :-)
 				camThread->stop();
@@ -990,6 +991,7 @@ void Direcs::shutdown()
 				else
 				{
 					emit message("Terminating camera thread because it doesn't answer...");
+					emit splashMessage("Terminating camera thread because it doesn't answer...");
 					camThread->terminate();
 					camThread->wait(1000);
 					emit message("Camera thread terminated.");
@@ -1004,6 +1006,7 @@ void Direcs::shutdown()
 		if (laserThread->isRunning() == true)
 		{
 			emit message("Stopping laser thread...");
+			emit splashMessage("Stopping laser thread...");
 
 			// my own stop routine :-)
 			laserThread->stop();
@@ -1028,6 +1031,7 @@ void Direcs::shutdown()
 			else
 			{
 				emit message("Terminating laser thread because it doesn't answer...");
+				emit splashMessage("Terminating laser thread because it doesn't answer...");
 				laserThread->terminate();
 				laserThread->wait(1000);
 				emit message("Laser thread terminated.");
@@ -1042,6 +1046,7 @@ void Direcs::shutdown()
 		if (speakThread->isRunning() == true)
 		{
 			emit message("Stopping speak thread...");
+			emit splashMessage("Stopping speak thread...");
 
 				// my own stop routine :-)
 			speakThread->stop();
@@ -1066,6 +1071,7 @@ void Direcs::shutdown()
 			else
 			{
 				emit message("Terminating speak thread because it doesn't answer...");
+				emit splashMessage("Terminating speak thread because it doesn't answer...");
 				speakThread->terminate();
 				speakThread->wait(1000);
 				emit message("Speak thread terminated.");
@@ -1079,6 +1085,7 @@ void Direcs::shutdown()
 		if (netThread->isRunning() == true)
 		{
 			emit message("Stopping network thread...");
+			emit splashMessage("Stopping network thread...");
 
 			// my own stop routine :-)
 			netThread->stop();
@@ -1103,6 +1110,7 @@ void Direcs::shutdown()
 			else
 			{
 				emit message("Terminating network thread because it doesn't answer...");
+				emit splashMessage("Terminating network thread because it doesn't answer...");
 				netThread->terminate();
 				netThread->wait(1000);
 				emit message("Network thread terminated.");
@@ -1116,6 +1124,7 @@ void Direcs::shutdown()
 		if (joystick->isRunning() == true)
 		{
 			emit message("Stopping joystick thread...");
+			emit splashMessage("Stopping joystick thread...");
 
 			// my own stop routine :-)
 			joystick->stop();
@@ -1140,6 +1149,7 @@ void Direcs::shutdown()
 			else
 			{
 				emit message("Terminating joystick thread because it doesn't answer...");
+				emit splashMessage("Terminating joystick thread because it doesn't answer...");
 				joystick->terminate();
 				joystick->wait(1000);
 				emit message("Joystick thread terminated.");
@@ -1155,6 +1165,7 @@ void Direcs::shutdown()
 			if (plotThread->isRunning() == true)
 			{
 				emit message("Stopping Plot thread...");
+				emit splashMessage("Stopping Plot thread...");
 	
 				// my own stop routine :-)
 				plotThread->stop();
@@ -1179,6 +1190,7 @@ void Direcs::shutdown()
 				else
 				{
 					emit message("Terminating Plot thread because it doesn't answer...");
+					emit splashMessage("Terminating Plot thread because it doesn't answer...");
 					plotThread->terminate();
 					plotThread->wait(1000);
 					emit message("Plot thread terminated.");
@@ -1194,6 +1206,7 @@ void Direcs::shutdown()
 		if (obstCheckThread->isRunning() == true)
 		{
 			emit message("Stopping obstacle check thread...");
+			emit splashMessage("Stopping obstacle check thread...");
 
 			// my own stop routine :-)
 			obstCheckThread->stop();
@@ -1218,6 +1231,7 @@ void Direcs::shutdown()
 			else
 			{
 				emit message("Terminating obstacle check thread because it doesn't answer...");
+				emit splashMessage("Terminating obstacle check thread because it doesn't answer...");
 				obstCheckThread->terminate();
 				obstCheckThread->wait(1000);
 				emit message("Obstacle check thread terminated.");
@@ -1232,6 +1246,7 @@ void Direcs::shutdown()
 		if (sensorThread->isRunning() == true)
 		{
 			emit message("Stopping sensor thread...");
+			emit splashMessage("Stopping sensor thread...");
 
 			// my own stop routine :-)
 			sensorThread->stop();
@@ -1256,6 +1271,7 @@ void Direcs::shutdown()
 			else
 			{
 				emit message("Terminating sensor thread because it doesn't answer...");
+				emit splashMessage("Terminating sensor thread because it doesn't answer...");
 				sensorThread->terminate();
 				sensorThread->wait(1000);
 				emit message("Sensor thread terminated.");
@@ -1294,6 +1310,7 @@ void Direcs::shutdown()
 			else
 			{
 				emit message("Terminating heartbeat thread because it doesn't answer...");
+				emit splashMessage("Terminating heartbeat thread because it doesn't answer...");
 				heartbeat->terminate();
 				heartbeat->wait(1000);
 				emit message("Heartbeat thread terminated.");
@@ -1305,8 +1322,8 @@ void Direcs::shutdown()
 	//-------------------------------------------------------
 	// Last init for the robots circuits
 	//-------------------------------------------------------
-	emit message("Last circuit init...");
-	circuit1->initCircuit();
+	emit message("TODO: Last circuit init...");
+// 	circuit1->initCircuit(); // FIXME: what, if the robote serial communication hangs here? timeout check?
 
 	//-----------------------------
 	// close serial port to mc
@@ -1926,13 +1943,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-			/**/ //TODO: this is a test mode for sending only -one- serial command to the mc
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case BACKWARD:
@@ -1944,13 +1961,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-			/**/ //TODO: this is a test mode for sending only -one- serial command to the mc
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case LEFT:
@@ -2046,13 +2063,13 @@ void Direcs::drive(const unsigned char command)
 			resetDrivingSpeedTimer();
 			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
 			
-			/**/ //TODO: this is a test mode for sending only -one- serial command to the mc
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			motors->motorControl(MOTOR2, ON, CLOCKWISE);
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case WAIT:
@@ -2066,13 +2083,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			// turning motors off
-			/**/ //TODO: this is a test mode for sending only -one- serial command to the mc
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+ 			*/
+ 			motors->motorControl(ALLMOTORS, SAME, command);
 			
 			//
 			// Don't stop the motThread (PWM)!
@@ -2091,13 +2108,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			// turning motors off
-			/**/ //TODO: this is a test mode for sending only -one- serial command to the mc
+			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
 			//
 			// Don't stop the motThread (clock)!
 			// Only switching motors off!
