@@ -121,7 +121,7 @@ double Motor::getDrivenDistance(unsigned char motor)
 
 void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
 {
-	unsigned char command = 0;
+	unsigned char command = BOTSTOP;
 	
 	if (robotState == ON)
 	{
@@ -545,6 +545,9 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				break;
 	*/
 		}
+			
+		// Unlocks the mutex
+		mutex->unlock();
 	} // robot is ON
 }
 
