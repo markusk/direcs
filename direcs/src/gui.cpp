@@ -222,6 +222,9 @@ void Gui::setRobotControls(bool state)
 	ui.btnResetMovement1->setEnabled(state);
 	ui.btnResetMovement2->setEnabled(state);
 	
+	// set the state LED to red
+	setLEDHeartbeat(RED);
+	
 	/*
 	TODO: still needed? state already checked in motorControl at lower level. :-)
 	ui.btnPower1->setEnabled(state);
@@ -2387,16 +2390,19 @@ void Gui::showCompassData(float x, float y, float z)
 }
 
 
-void Gui::setLEDHeartbeat(bool state)
+void Gui::setLEDHeartbeat(unsigned char state)
 {
-	if (state)
+	switch (state)
 	{
-		ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
-	}
-	else
-	{
-		ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-		return;
+		case RED:
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
 	}
 }
 

@@ -115,7 +115,9 @@ void Logfile::setFilename(QString filename)
 }
 
 
-void Logfile::writeHeartbeat(bool alive)
+void Logfile::writeHeartbeat(unsigned char state)
 {
+	Q_UNUSED(state);
+	
 	appendLog("-heartbeat-");
 }

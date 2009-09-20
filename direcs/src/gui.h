@@ -254,10 +254,10 @@ class Gui : public QMainWindow
  		void showCompassData(float x, float y, float z);
 
 		/**
-		Turns the heartbeat LED on or off (green or gray pixmap).
-		@param state can be ON or OFF.
+		Turns the GUI heartbeat/state LED red, green or off.
+		@param state can be RED, GREEN or OFF.
 		*/
-		void setLEDHeartbeat(bool state);
+		void setLEDHeartbeat(unsigned char state);
 
 		/**
 		Turns the CONSOLE mode on or off.
@@ -558,5 +558,12 @@ class Gui : public QMainWindow
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+		
+		/**
+		The GUI LED colors
+		*/
+		static const unsigned char LEDOFF	= 0;
+		static const unsigned char RED		= 1;
+		static const unsigned char GREEN	= 2;
 };
 #endif

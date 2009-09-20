@@ -61,10 +61,10 @@ class Logfile : public QObject
 		/**
 		Write the received heartbeat signal from the hardware to the logfile.
 		TODO: Place somewhere else!
-		@param alive can be true or false
+		@param state is unused!
 		@sa SensorThread::heartbeat()
 		 */
-		void writeHeartbeat(bool alive);
+		void writeHeartbeat(unsigned char state);
 
 
 	private:

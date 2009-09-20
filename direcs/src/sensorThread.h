@@ -178,7 +178,7 @@ class SensorThread : public QThread
 		@sa Gui::setLEDHeartbeat()
 		@sa Logfile::writeHeartbeat()
 		*/
-		void heartbeat(bool alive);
+		void heartbeat(unsigned char state);
 
 
 	private:
@@ -204,7 +204,7 @@ class SensorThread : public QThread
 	
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 10; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms
 
 		// Give the infrared sensors some names
 		//
@@ -339,6 +339,13 @@ class SensorThread : public QThread
 		static const unsigned char READ_CONTACT2 = 71;
 		static const unsigned char READ_CONTACT3 = 72;
 		static const unsigned char READ_CONTACT4 = 73;
+		
+		/**
+		This is for the @sa heartbeat signal (the GUI LED colors)
+		*/
+		static const unsigned char LEDOFF	= 0;
+		static const unsigned char RED		= 1;
+		static const unsigned char GREEN	= 2;
 };
 
 #endif

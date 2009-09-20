@@ -440,8 +440,15 @@ ultrasonic Sensors temporarily removed from robot!!
 
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
+			if (!heartbeatToggle)
+			{
+	 			emit heartbeat(GREEN);
+			}
+			else
+			{
+	 			emit heartbeat(LEDOFF);
+			}
 			heartbeatToggle = !heartbeatToggle;
-			emit heartbeat(heartbeatToggle);
 			//====================================================================
 			
 			// receive the 16 Bit answer from the MC
@@ -741,12 +748,18 @@ contacts temporarily removed from robot!! */
 			// FIXME: here or where, when simulating?????  send an optical heartbeat signal to the GUI
 			// TODO: now we're sleeping 500ms because ww're only simulating. Is this okay????
 			msleep(500);
-			heartbeatToggle = !heartbeatToggle;
 			
-			emit heartbeat(heartbeatToggle);
+			if (!heartbeatToggle)
+			{
+	 			emit heartbeat(GREEN);
+			}
+			else
+			{
+	 			emit heartbeat(LEDOFF);
+			}
+			heartbeatToggle = !heartbeatToggle;
 		}
 
-		
 		//------------------------------
 		// emit ALL compass axes values
 		//------------------------------
