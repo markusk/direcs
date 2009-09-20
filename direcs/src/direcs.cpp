@@ -867,7 +867,10 @@ void Direcs::init()
 
 void Direcs::shutdown()
 {
-		qDebug("Direcs shutdown...");
+// 		qDebug("Shutting down...");
+		emit message("----------------");
+		emit message("Shutting down...");
+		emit message("----------------");
 
 		if (!consoleMode)
 		{
@@ -990,7 +993,7 @@ void Direcs::shutdown()
 				}
 				else
 				{
-					emit message("Terminating camera thread because it doesn't answer...");
+					emit message("ERROR: Terminating camera thread because it doesn't answer...");
 					emit splashMessage("Terminating camera thread because it doesn't answer...");
 					camThread->terminate();
 					camThread->wait(1000);
@@ -1030,7 +1033,7 @@ void Direcs::shutdown()
 			}
 			else
 			{
-				emit message("Terminating laser thread because it doesn't answer...");
+				emit message("ERROR: Terminating laser thread because it doesn't answer...");
 				emit splashMessage("Terminating laser thread because it doesn't answer...");
 				laserThread->terminate();
 				laserThread->wait(1000);
@@ -1070,7 +1073,7 @@ void Direcs::shutdown()
 			}
 			else
 			{
-				emit message("Terminating speak thread because it doesn't answer...");
+				emit message("ERROR: Terminating speak thread because it doesn't answer...");
 				emit splashMessage("Terminating speak thread because it doesn't answer...");
 				speakThread->terminate();
 				speakThread->wait(1000);
@@ -1109,7 +1112,7 @@ void Direcs::shutdown()
 			}
 			else
 			{
-				emit message("Terminating network thread because it doesn't answer...");
+				emit message("ERROR: Terminating network thread because it doesn't answer...");
 				emit splashMessage("Terminating network thread because it doesn't answer...");
 				netThread->terminate();
 				netThread->wait(1000);
@@ -1148,7 +1151,7 @@ void Direcs::shutdown()
 			}
 			else
 			{
-				emit message("Terminating joystick thread because it doesn't answer...");
+				emit message("ERROR: Terminating joystick thread because it doesn't answer...");
 				emit splashMessage("Terminating joystick thread because it doesn't answer...");
 				joystick->terminate();
 				joystick->wait(1000);
@@ -1189,7 +1192,7 @@ void Direcs::shutdown()
 				}
 				else
 				{
-					emit message("Terminating Plot thread because it doesn't answer...");
+					emit message("ERROR: Terminating Plot thread because it doesn't answer...");
 					emit splashMessage("Terminating Plot thread because it doesn't answer...");
 					plotThread->terminate();
 					plotThread->wait(1000);
@@ -1230,7 +1233,7 @@ void Direcs::shutdown()
 			}
 			else
 			{
-				emit message("Terminating obstacle check thread because it doesn't answer...");
+				emit message("ERROR: Terminating obstacle check thread because it doesn't answer...");
 				emit splashMessage("Terminating obstacle check thread because it doesn't answer...");
 				obstCheckThread->terminate();
 				obstCheckThread->wait(1000);
@@ -1270,7 +1273,7 @@ void Direcs::shutdown()
 			}
 			else
 			{
-				emit message("Terminating sensor thread because it doesn't answer...");
+				emit message("ERROR: Terminating sensor thread because it doesn't answer...");
 				emit splashMessage("Terminating sensor thread because it doesn't answer...");
 				sensorThread->terminate();
 				sensorThread->wait(1000);
@@ -1309,7 +1312,7 @@ void Direcs::shutdown()
 			}
 			else
 			{
-				emit message("Terminating heartbeat thread because it doesn't answer...");
+				emit message("ERROR: Terminating heartbeat thread because it doesn't answer...");
 				emit splashMessage("Terminating heartbeat thread because it doesn't answer...");
 				heartbeat->terminate();
 				heartbeat->wait(1000);
