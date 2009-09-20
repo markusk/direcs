@@ -295,7 +295,7 @@ class Direcs : public QObject
 		QSplashScreen *splash;
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		Qt::Alignment splashPosition; 	/// The splash screen position
-		QColor splashColor; 			/// The splash screen text color
+		QColor splashTextColor; 			/// The splash screen text color
 #endif
 		QStringList arguments;			/// contains the list of command-line arguments
 #endif

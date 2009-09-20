@@ -149,7 +149,7 @@ void Direcs::init()
 	{
 		aboutDialog->setVersion("1.2.3"); // TODO: put this at a nicer place
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
-		splashColor = Qt::red;
+		splashTextColor = Qt::white;
 	}
 	inifile1->setFilename("direcs.ini");
 	logfile->setFilename("direcs.log");
@@ -1443,7 +1443,7 @@ void Direcs::showSplashMessage(QString text)
 {
 	if (!consoleMode)
 	{
-		splash->showMessage(text, splashPosition, splashColor);
+		splash->showMessage(text, splashPosition, splashTextColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
 	}
