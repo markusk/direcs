@@ -12,6 +12,7 @@ moc_*.cpp
 *.lst
 *.map
 *.sym
+.directory
 
 Makefile
 
@@ -29,3 +30,4 @@ direcs/doc/
 
 direcs-avr/.dep/
 direcs-avr/Debug/
+direcs-avr/test/.dep
