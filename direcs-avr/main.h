@@ -68,6 +68,21 @@
 #define READ_CONTACT3			72
 #define READ_CONTACT4			73
 
+/// Some direct driving commmands for the robot. @sa Direcs::drive() @sa Direcs::motorControl()
+#define BOTFORWARD 				80
+#define BOTBACKWARD 			81
+#define BOTLEFT					82
+#define BOTRIGHT				83
+#define BOTTURNLEFT				84
+#define BOTTURNRIGHT			85
+#define BOTSTART				86
+#define BOTSTOP					87
+#define BOTWAIT					88
+// #define BOTDIAGONAL_FORWARD_LEFT
+// #define BOTDIAGONAL_FORWARD_RIGHT
+// #define BOTDIAGONAL_BACKWARD_LEFT
+// #define BOTDIAGONAL_BACKWARD_RIGHT
+
 
 // these numbers represent the Ports of the A/D converter C  !!!
 // for the infrared sensors and the motor sensors

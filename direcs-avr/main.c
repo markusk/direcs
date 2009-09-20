@@ -435,24 +435,24 @@ int main(void)
 
 			case MOTOR3_CLOCKWISE: // cam pan R
 				// only, when end switch is clear
-				if ( bit_is_clear(PINK,PIN2) )
-				{
+// 				if ( bit_is_clear(PINK,PIN2) )
+// 				{
 					// delete Motor3 A bit
 					PORTL &= ~(1<<PIN6);
 					// set Motor3 B bit
 					PORTL |= (1<<PIN7);
-				}
+// 				}
 				break;
 
 			case MOTOR3_COUNTERCLOCKWISE: // cam pan L
 				// only, when end switch is clear
-				if ( bit_is_clear(PINK,PIN3) )
-				{
+// 				if ( bit_is_clear(PINK,PIN3) )
+// 				{
 					// set Motor3 A bit
 					PORTL |= (1<<PIN6);
 					// delete Motor3 B bit
 					PORTL &= ~(1<<PIN7);
-				}
+// 				}
 				break;
 
 			case MOTOR3_SPEED_SET:
@@ -471,23 +471,23 @@ int main(void)
 
 			case MOTOR4_CLOCKWISE: // cam tilt top
 				// only, when end switch is clear
-				if ( bit_is_clear(PINK,PIN1) )
-				{
+// 				if ( bit_is_clear(PINK,PIN1) )
+// 				{
 					// delete Motor4 A bit
 					PORTD &= ~(1<<PIN6);
 					// set Motor4 B bit
 					PORTD |= (1<<PIN7);
-				}
+// 				}
 				break;
 
 			case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
-				if ( bit_is_clear(PINK,PIN0) )
-				{
+// 				if ( bit_is_clear(PINK,PIN0) )
+// 				{
 					// set Motor4 A bit
 					PORTD |= (1<<PIN6);
 					// delete Motor4 B bit
 					PORTD &= ~(1<<PIN7);
-				}
+// 				}
 				break;
 
 			case MOTOR4_SPEED_SET:
@@ -497,6 +497,110 @@ int main(void)
 				break;
 
 			//-------------------------------
+			case BOTFORWARD:
+				// MOTOR 1 CLOCKWISE
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// set Motor1 B bit
+				PORTL |= (1<<PIN1);
+				// MOTOR 2 CLOCKWISE
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// set Motor2 B bit
+				PORTL |= (1<<PIN3);
+				// MOTOR 3 CLOCKWISE
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// set Motor3 B bit
+				PORTL |= (1<<PIN7);
+				// MOTOR 4 CLOCKWISE
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				break;
+				
+			case BOTBACKWARD:
+			case BOTSTART:
+				// MOTOR 1 COUNTERCLOCKWISE
+				// set Motor1 A bit
+				PORTL |= (1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// MOTOR 2 COUNTERCLOCKWISE
+				// set Motor2 A bit
+				PORTL |= (1<<PIN2);
+				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN3);
+				// MOTOR 3 COUNTERCLOCKWISE
+				// set Motor3 A bit
+				PORTL |= (1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// MOTOR 4 COUNTERCLOCKWISE
+				// set Motor4 A bit
+				PORTD |= (1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+				break;
+				
+			case BOTLEFT:
+				// MOTOR 4 CLOCKWISE
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				break;
+				
+			case BOTRIGHT:
+				// MOTOR 4 CLOCKWISE
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				break;
+				
+			case BOTTURNLEFT:
+				// MOTOR 4 CLOCKWISE
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				break;
+				
+			case BOTTURNRIGHT:
+				// MOTOR 4 CLOCKWISE
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				break;
+				
+			case BOTSTOP:
+			case BOTWAIT:
+				// MOTOR 1 OFF
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// MOTOR 2 OFF
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN3);
+				// MOTOR 3 OFF
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// MOTOR 4 OFF
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+				break;
+				
+				//-------------------------------
 			case SET_SERVO1:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
