@@ -147,7 +147,7 @@ void Direcs::init()
 {
 	if (!consoleMode)
 	{
-		aboutDialog->setVersion("0.9"); // TODO: put this at a nicer place
+		aboutDialog->setVersion("0.9"); // TODO: put this at a nicer place // this is also shown in the about dialog
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashTextColor = Qt::white;
 	}
@@ -432,22 +432,26 @@ void Direcs::init()
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
+	emit splashMessage("Opening serial port for microcontroller communication...");
 	emit message("Opening serial port for microcontroller communication...", false);
 
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
+		//********************
+		//* The robot is OFF *
+		//********************
 		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
 		emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
 
+		/*
+		not in use. Don't show a message box
 		if (!consoleMode)
 		{
 			// show a warning dialog!
 			QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
 			msgbox.exec();
 		}
-
-		// no serial port, no robot :-(
-// 		robotIsOn = false;
+		*/
 	}
 	else
 	{
@@ -613,7 +617,6 @@ void Direcs::init()
 		// (Whenever the image is complete, the image is shown in the GUI)
 		//----------------------------------------------------------------------------
 		connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
-		//connect(camThread, SIGNAL( camDataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
 	
 		//--------------------------------------------------------------------------------------------------------
 		// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
@@ -1338,7 +1341,7 @@ void Direcs::shutdown()
 	// last log file message
 	//-----------------------------
 	if (writeLogFile)
-		logfile->appendLog("************************************************************************************************** stop *");
+		logfile->appendLog("-------------------------------------------------------------------------------------------------- stop -");
 
 
 	//--------------------------------
@@ -2333,7 +2336,7 @@ void Direcs::readSettings()
 			//-----------------------------
 			// first log file message
 			//-----------------------------
-			logfile->appendLog("* start *************************************************************************************************");
+			logfile->appendLog("- start -------------------------------------------------------------------------------------------------");
 			break;
 	}
 

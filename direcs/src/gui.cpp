@@ -52,6 +52,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 void Gui::init()
 {
+	// remote control is enabled by default. @sa Direcs::init()
+	ui.actionRemote->setChecked(true);
 
 	// set battery power labels to green
 // 	ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
