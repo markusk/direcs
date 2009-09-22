@@ -2322,7 +2322,7 @@ void Gui::initPlots()
 	
 	
 	//--------------------------------------
-	// plot curve "MOTOR VOLTAGE" 1 + 2
+	// plot curve "VOLTAGE 1"
 	//--------------------------------------
 	// get the current application font
 	applicationFont = QApplication::font();
@@ -2333,7 +2333,7 @@ void Gui::initPlots()
 	
 	// set title and font of plot widget
 	fontSize = applicationFont.pointSize();
-	plotTitle = QString("Motor 1 + 2");
+	plotTitle = QString("12 V Battery");
 	// increase title by 2 points
 	applicationFont.setPointSize(++fontSize);
 	applicationFont.setBold(true);
@@ -2361,7 +2361,7 @@ void Gui::initPlots()
 	
 	// set title and font of plot widget
 	fontSize = applicationFont.pointSize();
-	plotTitle = QString("Motor 3 + 4");
+	plotTitle = QString("24 V Battery");
 	// increase title by 2 points
 	applicationFont.setPointSize(++fontSize);
 	applicationFont.setBold(true);
@@ -2375,14 +2375,6 @@ void Gui::initPlots()
 	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveVoltage2.setPen(QPen(labelFillColorBlue));
 	curveVoltage2.setBrush(labelFillColorBlue);
-
-	curveVoltage3.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curveVoltage3.setPen(QPen(labelFillColorBlue));
-	curveVoltage3.setBrush(labelFillColorBlue);
-
-	curveVoltage4.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curveVoltage4.setPen(QPen(labelFillColorBlue));
-	curveVoltage4.setBrush(labelFillColorBlue);
 }
 
 

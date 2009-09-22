@@ -416,8 +416,6 @@ class Gui : public QMainWindow
 		QwtPlotCurve curveCurrent4;
 		QwtPlotCurve curveVoltage1;
 		QwtPlotCurve curveVoltage2;
-		QwtPlotCurve curveVoltage3;
-		QwtPlotCurve curveVoltage4;
 // 		QwtCompassMagnetNeedle needle;
 		QPixmap cameraPicToSave;
 		QColor labelFillColorRed;
