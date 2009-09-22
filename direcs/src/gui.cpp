@@ -224,8 +224,12 @@ void Gui::setRobotControls(bool state)
 	ui.btnResetMovement1->setEnabled(state);
 	ui.btnResetMovement2->setEnabled(state);
 	
-	// set the state LED to red
-	setLEDHeartbeat(RED);
+	if (!robotIsOn)
+	{
+		// TODO: test if this really is needed. Is the heartbeaet in the sensorthread sufficient?
+		// set the state LED to red
+		setLEDHeartbeat(RED);
+	}
 	
 	/*
 	TODO: still needed? state already checked in motorControl at lower level. :-)
@@ -2313,7 +2317,7 @@ void Gui::initPlots()
 
 	curveCurrent1.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent1.setPen(QPen(labelFillColorBlue));
-	curveCurrent1.setBrush(labelFillColorBlue);
+// 	curveCurrent1.setBrush(labelFillColorBlue); // this fills the area under the line
 
 
 	//--------------------------------------
@@ -2342,17 +2346,17 @@ void Gui::initPlots()
 
 	curveCurrent2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent2.setPen(QPen(labelFillColorRed));
-	curveCurrent2.setBrush(labelFillColorRed);
+// 	curveCurrent2.setBrush(labelFillColorRed); // this fills the area under the line
 
 	// plot curve "MOTOR CURRENT" 3
 	curveCurrent3.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent3.setPen(QPen(labelFillColorBlue));
-	curveCurrent3.setBrush(labelFillColorBlue);
+// 	curveCurrent3.setBrush(labelFillColorBlue); // this fills the area under the line
 
 	// plot curve "MOTOR CURRENT" 4
 	curveCurrent4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent4.setPen(QPen(labelFillColorRed));
-	curveCurrent4.setBrush(labelFillColorRed);
+// 	curveCurrent4.setBrush(labelFillColorRed); // this fills the area under the line
 	
 	
 	//--------------------------------------
@@ -2379,8 +2383,8 @@ void Gui::initPlots()
 	ui.qwtPlotVoltage1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
 	curveVoltage1.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curveVoltage1.setPen(QPen(labelFillColorBlue));
-	curveVoltage1.setBrush(labelFillColorBlue);
+ 	curveVoltage1.setPen(QPen(labelFillColorBlue));
+// 	curveVoltage1.setBrush(labelFillColorBlue); // this fills the area under the line
 	
 	
 	//--------------------------------------
@@ -2408,7 +2412,7 @@ void Gui::initPlots()
 
 	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveVoltage2.setPen(QPen(labelFillColorBlue));
-	curveVoltage2.setBrush(labelFillColorBlue);
+// 	curveVoltage2.setBrush(labelFillColorBlue); // this fills the area under the line
 }
 
 

@@ -3,7 +3,7 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="1" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="0" Type="Source" />
+   <View0 Encoding="" line="599" Type="Source" />
   </Doc0>
  </DocsAndViews>
  <pluginList>
@@ -26,7 +26,7 @@
      <mark line="55" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
-     <mark line="1908" />
+     <mark line="1946" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
      <mark line="772" />

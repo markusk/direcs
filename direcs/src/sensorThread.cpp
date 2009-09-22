@@ -745,10 +745,10 @@ contacts temporarily removed from robot!! */
 		
 		if (simulationMode)
 		{
-			// FIXME: here or where, when simulating?????  send an optical heartbeat signal to the GUI
 			// TODO: now we're sleeping 500ms because ww're only simulating. Is this okay????
 			msleep(500);
 			
+			// TODO: here or where, when simulating?????  send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
 			{
 	 			emit heartbeat(GREEN);
@@ -1042,9 +1042,9 @@ void SensorThread::setSimulationMode(bool state)
 		usSensorValue[0] = 28;
 
 		motorSensorValue[MOTORSENSOR1] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
-		motorSensorValue[MOTORSENSOR2] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
-		motorSensorValue[MOTORSENSOR3] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
-		motorSensorValue[MOTORSENSOR4] = (int)1000/CONVERSIONFACTORMOTORSENSOR;
+		motorSensorValue[MOTORSENSOR2] = (int)2000/CONVERSIONFACTORMOTORSENSOR;
+		motorSensorValue[MOTORSENSOR3] = (int)3000/CONVERSIONFACTORMOTORSENSOR;
+		motorSensorValue[MOTORSENSOR4] = (int)4000/CONVERSIONFACTORMOTORSENSOR;
 
 		voltageSensorValue[VOLTAGESENSOR1] = 10.500000 * CONVERSIONFACTORVOLTAGESENSOR1; // simulate an empty 12 V battery
 		voltageSensorValue[VOLTAGESENSOR2] = 24.000000 * CONVERSIONFACTORVOLTAGESENSOR2; // simulate a full 24 V battery
@@ -1061,12 +1061,16 @@ void SensorThread::setSimulationMode(bool state)
 			drivenDistance[i] = 42;
 		}
 
+		// compass test values
 		xAxis = READ_AXIS_X;
 		yAxis = READ_AXIS_Y;
 		zAxis = READ_AXIS_Z;
 	}
 	else
 	{
+		if (robotState==OFF)
+			emit heartbeat(RED);
+		
 		iRSensorValue[SENSOR1] = 0;
 		iRSensorValue[SENSOR2] = 0;
 		iRSensorValue[SENSOR3] = 0;
