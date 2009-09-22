@@ -1319,6 +1319,40 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 }
 
 
+void Gui::setPlotData5(double *xval, double *yval, int size)
+{
+	//---------------
+	// curveVoltage1
+	//---------------
+
+	// set curve with data
+	curveVoltage1.setData(xval, yval, size);
+
+	// attach data to curve
+	curveVoltage1.attach(ui.qwtPlotVoltage1);
+
+	// after changing the values, replot the curve
+	ui.qwtPlotVoltage1->replot();
+}
+
+
+void Gui::setPlotData6(double *xval, double *yval, int size)
+{
+	//---------------
+	// curveVoltage2
+	//---------------
+
+	// set curve with data
+	curveVoltage2.setData(xval, yval, size);
+
+	// attach data to curve
+	curveVoltage2.attach(ui.qwtPlotVoltage2);
+
+	// after changing the values, replot the curve
+	ui.qwtPlotVoltage2->replot();
+}
+
+
 void Gui::on_btnPower1_toggled(bool checked)
 {
 	if (checked)

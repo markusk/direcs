@@ -37,11 +37,15 @@ PlotThread::PlotThread(SensorThread *s)
 		xval2[i] = i;
 		xval3[i] = i;
 		xval4[i] = i;
+		xval5[i] = i;
+		xval6[i] = i;
 		
 		yval1[i] = 0;
 		yval2[i] = 0;
 		yval3[i] = 0;
 		yval4[i] = 0;
+		yval5[i] = 0;
+		yval6[i] = 0;
 	}
 }
 
@@ -147,6 +151,46 @@ void PlotThread::run()
 		//  e m i t
 		//--------------
 		emit plotDataComplete4(xval4, yval4, SIZE);
+
+
+		//------------------------------------------------------
+		// get value from voltage sensor 1
+		//------------------------------------------------------
+		// shift the values
+		// (and delete the first one)
+		for (int i=1; i<SIZE; i++)
+		{
+			yval5[i-1] = yval5[i];
+		}
+		
+		// get the sensor value
+		// the last value (second 60) is the latest (the read value)!
+		yval5[SIZE-1] = sensThread->getVoltage(VOLTAGESENSOR1);
+
+		//--------------
+		//  e m i t
+		//--------------
+		emit plotDataComplete5(xval5, yval5, SIZE);
+
+
+		//------------------------------------------------------
+		// get value from voltage sensor 2
+		//------------------------------------------------------
+		// shift the values
+		// (and delete the first one)
+		for (int i=1; i<SIZE; i++)
+		{
+			yval6[i-1] = yval6[i];
+		}
+		
+		// get the sensor value
+		// the last value (second 60) is the latest (the read value)!
+		yval6[SIZE-1] = sensThread->getVoltage(VOLTAGESENSOR2);
+
+		//--------------
+		//  e m i t
+		//--------------
+		emit plotDataComplete6(xval6, yval6, SIZE);
 	}
 	stopped = false;
 }

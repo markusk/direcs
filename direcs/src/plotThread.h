@@ -56,6 +56,8 @@ class PlotThread : public QThread
 		void plotDataComplete2(double *xval2, double *yval2, int size);
 		void plotDataComplete3(double *xval3, double *yval3, int size);
 		void plotDataComplete4(double *xval4, double *yval4, int size);
+		void plotDataComplete5(double *xval4, double *yval4, int size);
+		void plotDataComplete6(double *xval4, double *yval4, int size);
 
 
 	private:
@@ -81,11 +83,20 @@ class PlotThread : public QThread
 		double xval4[SIZE];
 		double yval4[SIZE];
 		//====================================
+		double xval5[SIZE];
+		double yval5[SIZE];
+		//====================================
+		double xval6[SIZE];
+		double yval6[SIZE];
+		//====================================
 		
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 		static const short int MOTORSENSOR3 = 2;
 		static const short int MOTORSENSOR4 = 3;
+		
+		static const short int VOLTAGESENSOR1 = 0;
+		static const short int VOLTAGESENSOR2 = 1;
 };
 
 #endif
