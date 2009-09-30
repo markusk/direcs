@@ -426,6 +426,10 @@ void Direcs::init()
 		connect(interface1, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
 	}
 	
+	// also emit messages to the logfile
+// 	connect(interface1, SIGNAL(emitMessage(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
+ 	connect(joystick, SIGNAL(emitMessage(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error
+	
 	//-------------------------------------------------------
 	// start the network thread (waiting for commands)
 	//-------------------------------------------------------
@@ -1987,13 +1991,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-			/**/ //TODO: this is a test mode for sending only -one- serial command to the mc
+			/* //TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+ 			*/
+ 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case RIGHT:
@@ -2005,13 +2009,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-			/**/ //TODO: this is a test mode for sending only -one- serial command to the mc
+			/* //TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+ 			*/
+ 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case TURNLEFT:
