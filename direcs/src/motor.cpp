@@ -174,6 +174,8 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					//qDebug("ERROR sending to serial port (Motor)");
 					return;
 				}
+				// Unlocks the mutex
+				mutex->unlock();
 				break;
 			//-------------------------
 			// Motor 1
@@ -226,7 +228,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// don't change the direction (motor was only turned on or off)!
 				}
 		
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				// Unlocks the mutex
 				mutex->unlock();
 			
 				break;
@@ -295,7 +297,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// don't change the direction (motor was only turned on or off)!
 				}
 				
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				// Unlocks the mutex
 				mutex->unlock();
 			
 				break;
@@ -352,7 +354,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// don't change the direction (motor was only turned on or off)!
 				}
 		
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				// Unlocks the mutex
 				mutex->unlock();
 				
 				break;
@@ -420,7 +422,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// don't change the direction (motor was only turned on or off)!
 				}
 		
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+				// Unlocks the mutex
 				mutex->unlock();
 		
 				break;
@@ -546,7 +548,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 	*/
 		}
 			
-		// Unlocks the mutex
+		// Unlocks the mutex, if no case statement fits in the switch command
 		mutex->unlock();
 	} // robot is ON
 }
