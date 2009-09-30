@@ -58,8 +58,8 @@ bool InterfaceAvr::openComPort(QString comPort)
 	serialPort->setDataBits(DATA_8);
 	serialPort->setStopBits(STOP_1);
 	
-	// Flushes all pending I/O to the serial port.
-	//serialPort->flush();
+	// Flushes all pending I/O to the serial port
+	serialPort->flush();
 
 	return true;
 	
@@ -81,7 +81,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	}
 
 
-	// serial port config also done in openAtmelPort!
+	// serial port config and flush also done in openAtmelPort!
 	if (serialPort->openAtmelPort( ba.data() ) != -1)
 	{
 		return true;
@@ -140,17 +140,32 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
+	int returnValue = -1;
 #ifdef Q_WS_WIN
 	// QextSerialPort code, when using Windows
 	return serialPort->getChar(character);
 #else
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	if (serialPort->readAtmelPort(character, 1) != 1)
+	returnValue = serialPort->readAtmelPort(character, 1);
+	
+	// on ERROR
+	if (returnValue != 1)
 	{
-		// ERROR
-		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveChar, InterfaceAvr)!<font>");
-		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
+		if (returnValue == -1)
+		{
+			emit emitMessage("<font color=\"#FF0000\">ERROR reading serial port (readAtmelPort->direcsSerial->InterfaceAvr)!<font>");
+// 			qDebug("*** ERROR reading serial port (readAtmelPort->direcsSerial->InterfaceAvr)! ***");
+			return false;
+		}
+		
+		if (returnValue == -2)
+		{
+			emit emitMessage("<font color=\"#FF0000\">ERROR selecting serial port (readAtmelPort->direcsSerial->InterfaceAvr)!<font>");
+// 			qDebug("*** ERROR selecting serial port (readAtmelPort->direcsSerial->InterfaceAvr)! ***");
+			return false;
+		}
+		
 		return false;
 	}
 	
@@ -172,8 +187,8 @@ bool InterfaceAvr::receiveInt(int *value)
 	if (receiveChar(&character) == false)
 	{
 // 		receiveErrorCounter++;
-		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt, InterfaceAvr)!<font>");
-		qDebug("*** ERROR reading from serial port (receiveInt, InterfaceAvr) ***");
+		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt MSB, InterfaceAvr)!<font>");
+// 		qDebug("*** ERROR reading from serial port (receiveInt, InterfaceAvr) ***");
 
 		//
 		// MASSIVE COMMUNICATION ERROR!
@@ -201,7 +216,8 @@ bool InterfaceAvr::receiveInt(int *value)
 	//-----------------
 	if (receiveChar(&character) == false)
 	{
-		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
+		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt LSB, InterfaceAvr)!<font>");
+// 		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
 		value = 0;
 		return false;
 	}

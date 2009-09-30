@@ -62,7 +62,7 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
 	cfsetispeed(&ctio, (speed_t) B9600);
 	cfsetospeed(&ctio, (speed_t) B9600);
-	tcflush(dev_fd, TCIFLUSH);
+	tcflush(dev_fd, TCIFLUSH); // Flushes all pending I/O to the serial port
 	tcsetattr(dev_fd, TCSANOW, &ctio);
 	
 	return (dev_fd);
@@ -396,23 +396,34 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	fd_set set;
 	int err;
 	
-	while(nChars > 0)
+	while (nChars > 0)
 	{
 		t.tv_sec = 0;
 		t.tv_usec = READ_TIMEOUT;
 		FD_ZERO(&set);
 		FD_SET(dev_fd, &set);
+		
 		err = select(dev_fd + 1, &set, NULL, NULL, &t);
-		if(err == 0)
+		if (err == 0)
+		{
 			return -2;
+		}
 	
+		// read from the serial device
 		amountRead = read(dev_fd, buf, nChars);
+		
 		if(amountRead < 0 && errno != EWOULDBLOCK)
+		{
 			return -1;
-		else if(amountRead > 0) {
-			bytes_read += amountRead;
-			nChars -= amountRead;
-			buf += amountRead;
+		}
+		else
+		{
+			if(amountRead > 0)
+			{
+				bytes_read += amountRead;
+				nChars -= amountRead;
+				buf += amountRead;
+			}
 		}
 	}
 	return bytes_read;
