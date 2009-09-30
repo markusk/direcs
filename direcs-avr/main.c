@@ -495,7 +495,16 @@ int main(void)
 				value = UsartReceive();
 				setPWMwidth(4, value);
 				break;
-
+				
+			case SPEED_SET_ALLMOTORS:
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setPWMwidth(1, value);
+				setPWMwidth(2, value);
+				setPWMwidth(3, value);
+				setPWMwidth(4, value);
+				break;
+				
 			//-------------------------------
 			case BOTSTART:
 			case BOTFORWARD:

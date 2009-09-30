@@ -47,6 +47,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	motor2Speed = 20;
 	motor3Speed = 20;
 	motor4Speed = 20;
+	motorSpeedAllMotors = 20;
 	
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
@@ -784,6 +785,33 @@ void Motor::setMotorSpeed(int motor, int speed)
 		mutex->lock();
 		switch (motor)
 		{
+			case ALLMOTORS:
+				// store the speed
+				motorSpeedAllMotors = speed;
+				motor1Speed = speed;
+				motor2Speed = speed;
+				motor3Speed = speed;
+				motor4Speed = speed;
+				// send the command to the microcontroller (MOTOR 1)
+				if (interface1->sendChar(SPEED_SET_ALLMOTORS) == true)
+				{
+					// send the value to the microcontroller
+					if (interface1->sendChar(speed) == false)
+					{
+						// Unlock the mutex.
+						mutex->unlock();
+						//qDebug("ERROR sending to serial port (Motor)");
+						return;
+					}
+				}
+				else	
+				{
+					// Unlock the mutex.
+					mutex->unlock();
+					//qDebug("ERROR sending to serial port (Motor)");
+					return;
+				}
+				break;
 			case MOTOR1:
 				// store the speed
 				motor1Speed = speed;
@@ -884,6 +912,12 @@ void Motor::setMotorSpeed(int motor, int speed)
 		// Unlock the mutex.
 		mutex->unlock();
 	} // robot is ON
+}
+
+
+void Motor::setMaximumSpeed(int speed)
+{
+	// FIXME: set the maximum speed for the robot / in this class!
 }
 
 

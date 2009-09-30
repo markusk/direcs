@@ -308,6 +308,11 @@ void Direcs::init()
 		// set the motor speed, when signal comes from Gui
 		//--------------------------------------------------------------------------
 		connect(settingsDialog, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
+		
+		//--------------------------------------------------------------------------
+		// set the maximum robot speed, when signal comes from Gui
+		//--------------------------------------------------------------------------
+		connect(settingsDialog, SIGNAL(setMaximumSpeed(int)), motors, SLOT(setMaximumSpeed(int)));
 	
 		//--------------------------------------------------------------------------
 		// set the robot slot, when signal comes from Gui

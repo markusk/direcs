@@ -57,6 +57,8 @@
 #define MOTOR3_SPEED_SET		56
 #define MOTOR4_SPEED_SET		57
 
+#define SPEED_SET_ALLMOTORS		60
+
 #define	READ_AXIS_X				61
 #define	READ_AXIS_Y				62
 #define	READ_AXIS_Z				63

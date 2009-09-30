@@ -15,10 +15,10 @@ void setPWMwidth(uint8_t motor, uint8_t value)
 		case 2: // drive 2
 			OCR5C = value;
 			break;
-		case 3: // cam pan *and* tilt (same, at the moment)
+		case 3: // drive 3 [old: cam pan *and* tilt (same, at the moment)]
 			OCR0B = value;
 			break;
-		case 4: // cam pan *and* tilt (same, at the moment)
+		case 4: // drive 4 [old: cam pan *and* tilt (same, at the moment)]
 			OCR0B = value;
 			break;
 	}

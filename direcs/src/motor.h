@@ -99,10 +99,16 @@ class Motor : public QObject
 	public slots:
 		/**
 		Sets the speed of a motor.
-		@param motor is the motor number.
+		@param motor is the motor number (MOTOR1, MOTOR2, MOTOR3, MOTOR4, ALLMOTORS).
 		@param speed is the speed (0 - 255).
 		 */
 		void setMotorSpeed(int motor, int speed);
+		
+		/**
+		Sets the maximum speed of alls motors (the robot).
+		@param speed is the speed (0 - 255).
+		 */
+		void setMaximumSpeed(int speed);
 		
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
@@ -123,6 +129,7 @@ class Motor : public QObject
 		int motor2Speed;
 		int motor3Speed;
 		int motor4Speed;
+		int motorSpeedAllMotors; // this is the speed for all motors together, when set in one command
 
 		//unsigned int steps1;
 		//unsigned int steps2;
@@ -202,6 +209,8 @@ class Motor : public QObject
 
 		static const unsigned char MOTOR3_SPEED_SET			= 56;
 		static const unsigned char MOTOR4_SPEED_SET			= 57;
+		
+		static const unsigned char SPEED_SET_ALLMOTORS		= 60;
 
 		/// The serial driving commands for the robot
 		static const unsigned char BOTFORWARD				= 80;

@@ -136,6 +136,11 @@ class SettingsDialog : public QDialog
 		@param speed is the speed (0 - 255).
 		*/
 		void setMotorSpeed(int motor, int speed);
+		/**
+		Emits the new maximum speed of the robot(s motors).
+		@param speed is the speed (0 - 255).
+		*/
+		void setMaximumSpeed(int speed);
 		
 		/**
 		This slot sets the angle, where the robots has to fit thru
@@ -164,6 +169,10 @@ class SettingsDialog : public QDialog
 	private slots:
 		void on_sliderMotor1Speed_sliderReleased();
 		void on_sliderMotor2Speed_sliderReleased();
+		void on_sliderMotor3Speed_sliderReleased();
+		void on_sliderMotor4Speed_sliderReleased();
+		void on_sliderAllMotorsSpeed_sliderReleased();
+		void on_sliderMaximumSpeed_sliderReleased();
 
 
 	protected slots:
@@ -175,6 +184,12 @@ class SettingsDialog : public QDialog
 		
 	private:
 		Ui::settingsDialog ui;
+		
+		static const unsigned char MOTOR1           = 10; //! Motor 1 (front left)
+		static const unsigned char MOTOR2           = 20; //! Motor 2 (front right)
+		static const unsigned char MOTOR3			= 30; //! Motor 3 (back left)
+		static const unsigned char MOTOR4			= 40; //! Motor 4 (back right)
+		static const unsigned char ALLMOTORS		= 90; //! used the hole robot gets one command for all motors (like 'forwardall'). This is so save transmissions on the serial line.
 };
 
 #endif

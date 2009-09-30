@@ -28,16 +28,22 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
 	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
+	connect(ui.sliderMotor3Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor3Speed, SLOT(setValue(int)));
+	connect(ui.sliderMotor4Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor4Speed, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxMotor1Speed, SIGNAL(valueChanged(int)), ui.sliderMotor1Speed, SLOT(setValue(int)));
 	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
+	connect(ui.spinBoxMotor3Speed, SIGNAL(valueChanged(int)), ui.sliderMotor3Speed, SLOT(setValue(int)));
+	connect(ui.spinBoxMotor4Speed, SIGNAL(valueChanged(int)), ui.sliderMotor4Speed, SLOT(setValue(int)));
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMaximumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMaximumSpeed, SLOT(setValue(int)));
 	connect(ui.sliderMinimumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMinimumSpeed, SLOT(setValue(int)));
+	connect(ui.sliderAllMotorsSpeed, SIGNAL(valueChanged(int)), ui.spinBoxAllMotorsSpeed, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxMaximumSpeed, SIGNAL(valueChanged(int)), ui.sliderMaximumSpeed, SLOT(setValue(int)));
 	connect(ui.spinBoxMinimumSpeed, SIGNAL(valueChanged(int)), ui.sliderMinimumSpeed, SLOT(setValue(int)));
+	connect(ui.spinBoxAllMotorsSpeed, SIGNAL(valueChanged(int)), ui.sliderAllMotorsSpeed, SLOT(setValue(int)));
 	
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlot, SLOT(setValue(int)));
@@ -154,7 +160,7 @@ void SettingsDialog::setSliderMotorSpeed(int motor, int value)
 void SettingsDialog::on_sliderMotor1Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
-	emit setMotorSpeed(1, ui.sliderMotor1Speed->value());
+	emit setMotorSpeed(MOTOR1, ui.sliderMotor1Speed->value());
 	
 	//int value = ui.sliderMotor1Speed->value();
 	
@@ -167,10 +173,58 @@ void SettingsDialog::on_sliderMotor1Speed_sliderReleased()
 void SettingsDialog::on_sliderMotor2Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
-	emit setMotorSpeed(2, ui.sliderMotor2Speed->value());
+	emit setMotorSpeed(MOTOR2, ui.sliderMotor2Speed->value());
 	
 	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor2Speed->value() * 16);
 	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor2Speed->value()));
+}
+
+
+void SettingsDialog::on_sliderMotor3Speed_sliderReleased()
+{
+	// no auto connect in constructor, because this slot has no "value" parameter!
+	emit setMotorSpeed(MOTOR3, ui.sliderMotor3Speed->value());
+	
+	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor3Speed->value() * 16);
+	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor3Speed->value()));
+}
+
+
+void SettingsDialog::on_sliderMotor4Speed_sliderReleased()
+{
+	// no auto connect in constructor, because this slot has no "value" parameter!
+	emit setMotorSpeed(MOTOR4, ui.sliderMotor4Speed->value());
+	
+	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor4Speed->value() * 16);
+	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor4Speed->value()));
+}
+
+
+void SettingsDialog::on_sliderAllMotorsSpeed_sliderReleased()
+{
+	/*
+	int speed = ui.sliderAllMotorsSpeed->value();
+	
+
+	// set same speed to 4 other motor speed sliders
+	ui.sliderMotor1Speed->setValue(speed);
+	ui.sliderMotor2Speed->setValue(speed);
+	ui.sliderMotor3Speed->setValue(speed);
+	ui.sliderMotor4Speed->setValue(speed);
+	*/
+	
+	// no auto connect in constructor, because this slot has no "value" parameter!
+	emit setMotorSpeed(ALLMOTORS, ui.sliderAllMotorsSpeed->value());
+	
+	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor4Speed->value() * 16);
+	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor4Speed->value()));
+}
+
+
+void SettingsDialog::on_sliderMaximumSpeed_sliderReleased()
+{
+	// no auto connect in constructor, because this slot has no "value" parameter!
+	emit setMaximumSpeed(ui.sliderMaximumSpeed->value());
 }
 
 
