@@ -2379,6 +2379,10 @@ void Gui::initPlots()
 	ui.qwtPlotVoltage1->setTitle(plotTitle);
 	
 	// Set axis scale (instead of using autoscale, which is default)
+	// maximum voltage value at which the axis should and, and the steps between each divider
+	ui.qwtPlotVoltage1->setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE1, 2.0); // TODO: put a nice step value here, to ini or to config mene
+	
+	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec)
 	ui.qwtPlotVoltage1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
@@ -2405,6 +2409,10 @@ void Gui::initPlots()
 	applicationFont.setBold(true);
 	plotTitle.setFont(applicationFont);
 	ui.qwtPlotVoltage2->setTitle(plotTitle);
+	
+	// Set axis scale (instead of using autoscale, which is default)
+	// maximum voltage value at which the axis should and, and the steps between each divider
+	ui.qwtPlotVoltage2->setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE2, 4.0); // TODO: put a nice step value here, to ini or to config mene
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec)
