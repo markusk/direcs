@@ -85,7 +85,7 @@ void DirecsAvrsim::init()
 {
 	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 	splashColor = Qt::red;
-	serialPortMicrocontroller = "/dev/ttyLaserScannerFront";
+	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; // FIXME: put to ini-file or somewhere else!
 	robotSimulationMode = false;
 	
 	//--------------------------------------------------------------------------
@@ -186,6 +186,11 @@ void DirecsAvrsim::init()
 
 	// delete the splash screen
  	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+	
+	//--------------------------
+	// lets have fun, now
+	//--------------------------
+	emit message(QString("Now waiting for serial commands on %1...").arg(serialPortMicrocontroller), false);
 }
 
 

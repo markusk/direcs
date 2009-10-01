@@ -1,16 +1,13 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="3" >
-  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-avrsim/src/simulationThread.cpp" >
-   <View0 Encoding="" line="75" Type="Source" />
+ <DocsAndViews NumberOfDocuments="2" >
+  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-avrsim/src/direcs-avrsim.cpp" >
+   <View0 Encoding="" line="192" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-avrsim/src/interfaceAvr.cpp" >
-   <View0 Encoding="" line="74" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-avrsim/src/simulationThread.cpp" >
+   <View0 Encoding="" line="70" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs-avrsim/src/simulationThread.h" >
-   <View0 Encoding="" line="86" Type="Source" />
-  </Doc2>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
