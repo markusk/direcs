@@ -246,7 +246,6 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-
 /*
 			//---------------
 			// motor sensors
@@ -273,36 +272,38 @@ void SensorThread::run()
 			}
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
-/*			
-			
-			//------------------------------------------------------
-			// read value from sensor motor 2
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_MOTOR_SENSOR2) == false)
+/*
+			if (readMotorSensor(MOTORSENSOR2) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR reading motor sensor 2 [SensorThread]");
-				return;
+				stop();
 			}
-
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-			//qDebug("Received value motor1: %d", value);
-
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
+*/
+/* TODO: implement reading of motor sensors 3 and 4 !
+			
+			if (readMotorSensor(MOTORSENSOR3) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR3).arg(getMAmpere(MOTORSENSOR3)));
 
-			// store measured values in the array
-			motorSensorValue[MOTORSENSOR2] = value;
-			value = 0;
-
-
-			// TODO: add suport for motor sensors 3 and 4 !  Also in AVR Atmel source code!
-
-			//====================================================================
+			if (readMotorSensor(MOTORSENSOR4) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
 
 
 			//------------------------------------------------------
