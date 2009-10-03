@@ -72,8 +72,6 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
-		//qDebug() << "Error opening" << comPort <<"!  [InterfaceAvr::openComPort]";
-		
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
 		
@@ -123,7 +121,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 #endif
 	{
 // 		receiveErrorCounter++;
-		qDebug("*** ERROR writing to serial port (sendChar, InterfaceAvr) ***");
+ 		emit emitMessage("<font color=\"#FF0000\">ERROR writing to serial port (sendChar, InterfaceAvr)!<font>");
 
 // 		// MASSIVE COMMUNICATION ERROR!
 // 		if (receiveErrorCounter >= 4)
@@ -149,7 +147,7 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	if (serialPort->readAtmelPort(character, 1) != 1)
 	{
 		// ERROR
-		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
+ 		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveChar, InterfaceAvr)!<font>");
 		return false;
 	}
 	
@@ -171,8 +169,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	if (receiveChar(&character) == false)
 	{
 // 		receiveErrorCounter++;
-// 		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt MSB, InterfaceAvr)!<font>");     ALREADY in receiveChar!
-// 		qDebug("*** ERROR reading from serial port (receiveInt, InterfaceAvr) ***");
+		// emit error message already in calling receiveChar!
 
 		//
 		// MASSIVE COMMUNICATION ERROR!
@@ -200,8 +197,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	//-----------------
 	if (receiveChar(&character) == false)
 	{
-// 		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt LSB, InterfaceAvr)!<font>");     ALREADY in receiveChar!
-// 		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
+		// emit error message already in calling receiveChar!
 		value = 0;
 		return false;
 	}
