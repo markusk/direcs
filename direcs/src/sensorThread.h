@@ -216,6 +216,13 @@ class SensorThread : public QThread
 		@return true on success, false on error
 		*/
 		bool readVoltageSensor(short int sensor);
+
+		/**
+		Reads a motor sensor value from the microcontroller
+		@param sensor is the sensor number (MOTORSENSOR1 to MOTORSENSOR4)
+		@return true on success, false on error
+		*/
+		bool readMotorSensor(short int sensor);
 		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
@@ -225,7 +232,7 @@ class SensorThread : public QThread
 	
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 25; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 250; // Default: 25 ms
 
 		// Give the infrared sensors some names
 		//

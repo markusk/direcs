@@ -147,7 +147,6 @@ void SensorThread::stop()
 
 void SensorThread::run()
 {
-	int value = 0;
 	bool heartbeatToggle = false;
 
 
@@ -162,8 +161,11 @@ void SensorThread::run()
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
 
-/* infrared Sensors temporarily removed from robot!!
+/*			infrared Sensors temporarily removed from robot!!
 
+			//------------------
+			// infrared sensors
+			//------------------
 			if (readInfraredSensor(SENSOR1) == false)
 			{
 				// Unlock the mutex.
@@ -206,13 +208,14 @@ void SensorThread::run()
 				stop();
 			}
 
-			//---------------------------------------------------------
 			// infrared sensors 7 and 8 are now the voltage sensors!
-			//---------------------------------------------------------
 */
 
-/* ultrasonic Sensors temporarily removed from robot!!
-			// ultrasonic Sensors temporarily removed from robot!!
+/*			ultrasonic Sensors temporarily removed from robot!!
+			
+			//---------------------
+			// ulatrasonic sensors
+			//---------------------
 			if (readUltrasonicSensor(SENSOR16) == false)
 			{
 				// Unlock the mutex.
@@ -221,6 +224,9 @@ void SensorThread::run()
 			}
 */
 
+			//-----------------
+			// voltage sensors
+			//-----------------
 			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
 				// Unlock the mutex.
@@ -242,17 +248,19 @@ void SensorThread::run()
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
 
 /*
-			//------------------------------------------------------
-			// read value from sensor motor 1
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_MOTOR_SENSOR1) == false)
+			//---------------
+			// motor sensors
+			//---------------
+			if (readMotorSensor(MOTORSENSOR1) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR reading motor sensor 1 [SensorThread]");
-				return;
+				stop();
 			}
-
+			// send value over the network
+			// *0m42# means motorsensor1 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
+*/
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
@@ -265,19 +273,8 @@ void SensorThread::run()
 			}
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
+/*			
 			
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// send value over the network
-			// *0m42# means motorsensor1 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
-
-			// store measured values in the array
-			motorSensorValue[MOTORSENSOR1] = value;
-			value = 0;
-
-
 			//------------------------------------------------------
 			// read value from sensor motor 2
 			//------------------------------------------------------
@@ -1255,6 +1252,110 @@ bool SensorThread::readVoltageSensor(short int sensor)
 				qDebug("ERROR reading voltage sensor 2");
 				return false;
 			}
+			break;
+	}
+	
+	// this line should be never reached
+	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+	return false;
+}
+
+
+bool SensorThread::readMotorSensor(short int sensor)
+{
+	int value = 0;
+	
+	switch (sensor)
+	{
+		case MOTORSENSOR1:
+			// read sensor
+			if (interface1->sendChar(READ_MOTOR_SENSOR1) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					voltageSensorValue[MOTORSENSOR1] = 0;
+					return false;
+				}
+	
+				// store measured value
+				voltageSensorValue[MOTORSENSOR1] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading motor sensor 1");
+				return false;
+			}
+			break;
+		case MOTORSENSOR2:
+			// read sensor
+			if (interface1->sendChar(READ_MOTOR_SENSOR2) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					voltageSensorValue[MOTORSENSOR2] = 0;
+					return false;
+				}
+	
+				// store measured value
+				voltageSensorValue[MOTORSENSOR2] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading motor sensor 2");
+				return false;
+			}
+			break;
+		case MOTORSENSOR3:
+			qDebug("ERROR reading motor sensor 3 not implented yet!!"); // TODO implement reading motor sensor 3
+			/*
+			// read sensor
+			if (interface1->sendChar(READ_MOTOR_SENSOR3) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					voltageSensorValue[MOTORSENSOR3] = 0;
+					return false;
+				}
+	
+				// store measured value
+				voltageSensorValue[MOTORSENSOR3] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading motor sensor 3");
+				return false;
+			}
+			*/
+			break;
+		case MOTORSENSOR4:
+			qDebug("ERROR reading motor sensor 4 not implented yet!!"); // TODO implement reading motor sensor 4
+			/*
+			// read sensor
+			if (interface1->sendChar(READ_MOTOR_SENSOR4) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					voltageSensorValue[MOTORSENSOR4] = 0;
+					return false;
+				}
+	
+				// store measured value
+				voltageSensorValue[MOTORSENSOR4] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading motor sensor 4");
+				return false;
+			}
+			*/
 			break;
 	}
 	
