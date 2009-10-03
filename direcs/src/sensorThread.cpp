@@ -147,9 +147,7 @@ void SensorThread::stop()
 
 void SensorThread::run()
 {
-	//bool result = false;
 	int value = 0;
-	//unsigned char cValue = 0;
 	bool heartbeatToggle = false;
 
 
@@ -171,185 +169,52 @@ void SensorThread::run()
 
 /* infrared Sensors temporarily removed from robot!!
 
-			//------------------------------------------------------
-			// read value from sensor 1
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_1) == false)
+			if (readInfraredSensor(SENSOR1) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR s1 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
 
-			// receive the 16 Bit answer from the MC
-			if (interface1->receiveInt(&value) == false)
+			if (readInfraredSensor(SENSOR2) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
+				stop();
 			}
-			//interface1->receiveInt(&value);
 
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR1] = value;
-			//qDebug("received value sensor1: %d", value);
-			value = 0;
-
-
-			//------------------------------------------------------
-			// read value from sensor 2
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_2) == false)
+			if (readInfraredSensor(SENSOR3) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR s2 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
 
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR2] = value;
-			//qDebug("received value sensor2: %d", value);
-			value = 0;
-
-
-			//------------------------------------------------------
-			// read value from sensor 3
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_3) == false)
+			if (readInfraredSensor(SENSOR4) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR s3 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
 
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR3] = value;
-			//qDebug("received value sensor3: %d", value);
-			value = 0;
-
-
-			//------------------------------------------------------
-			// read value from sensor 4
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_4) == false)
+			if (readInfraredSensor(SENSOR5) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR s4 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
 
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR4] = value;
-			//qDebug("received value sensor4: %d", value);
-			value = 0;
-
-
-			//------------------------------------------------------
-			// read value from sensor 5
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_5) == false)
+			if (readInfraredSensor(SENSOR6) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR s5 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
 
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR5] = value;
-			//qDebug("received value sensor4: %d", value);
-			value = 0;
-
-
-			//------------------------------------------------------
-			// read value from sensor 6
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_6) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR s6 sending to serial port (SensorThread)");
-				return;
-			}
-
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-			//qDebug("Received value: %d", value);
-
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR6] = value;
-			//qDebug("received value sensor4: %d", value);
-			value = 0;
-infrared Sensors temporarily removed from robot!!
-			//====================================================================
-*/
-/*
-			//====================================================================
-sensor 7 and 8 now voltage sensors!!
+			//---------------------------------------------------------
+			// infrared sensors 7 and 8 are now the voltage sensors!
+			//---------------------------------------------------------
 			
-			
-			//------------------------------------------------------
-			// read value from sensor 7
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_7) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR s7 sending to serial port (SensorThread)");
-				return;
-			}
-
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR7] = value;
-			//qDebug("received value sensor4: %d", value);
-			value = 0;
-
-
-			//------------------------------------------------------
-			// read value from sensor 8
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_8) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR s8 sending to serial port (SensorThread)");
-				return;
-			}
-
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// store measured values in the sensor values array
-			iRSensorValue[SENSOR8] = value;
-			//qDebug("received value sensor4: %d", value);
-			value = 0;
-
-sensor 7 and 8 now voltage sensors!!
 			//====================================================================
 
 
@@ -1173,4 +1038,186 @@ float SensorThread::convertToVolt(int sensor)
 	}
 	
 	return -1.0;
+}
+
+
+bool SensorThread::readInfraredSensor(short int sensor)
+{
+	int value = 0;
+	
+	switch (sensor)
+	{
+		case SENSOR1:
+			// read infrared sensor 1
+			if (interface1->sendChar(READ_SENSOR_1) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR1] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR1] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 1");
+				return false;
+			}
+			break;
+		case SENSOR2:
+			// read infrared sensor 2
+			if (interface1->sendChar(READ_SENSOR_2) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR2] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR2] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 2");
+				return false;
+			}
+			break;
+		case SENSOR3:
+			// read infrared sensor 3
+			if (interface1->sendChar(READ_SENSOR_3) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR3] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR3] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 3");
+				return false;
+			}
+			break;
+		case SENSOR4:
+			// read infrared sensor 4
+			if (interface1->sendChar(READ_SENSOR_4) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR4] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR4] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 4");
+				return false;
+			}
+			break;
+		case SENSOR5:
+			// read infrared sensor 5
+			if (interface1->sendChar(READ_SENSOR_5) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR5] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR5] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 5");
+				return false;
+			}
+			break;
+		case SENSOR6:
+			// read infrared sensor 6
+			if (interface1->sendChar(READ_SENSOR_6) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR6] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR6] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 6");
+				return false;
+			}
+			break;
+		case SENSOR7:
+			// read infrared sensor 7
+			if (interface1->sendChar(READ_SENSOR_7) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR7] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR7] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 7");
+				return false;
+			}
+			break;
+		case SENSOR8:
+			// read infrared sensor 8
+			if (interface1->sendChar(READ_SENSOR_8) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					iRSensorValue[SENSOR8] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				iRSensorValue[SENSOR8] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading infrared sensor 8");
+				return false;
+			}
+			break;
+	}
+	
+	// this line should be never reached
+	qDebug("WARNING: wrong sensor number in readInfraredSensor()");
+	return false;
 }
