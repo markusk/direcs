@@ -246,7 +246,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-/*
+
 			//---------------
 			// motor sensors
 			//---------------
@@ -259,7 +259,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
-*/
+
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
@@ -304,8 +304,8 @@ void SensorThread::run()
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
-
-
+*/
+			int value = 0;
 			//------------------------------------------------------
 			// read driven distance from motor 1 (encoder sensor)
 			//------------------------------------------------------
@@ -325,7 +325,7 @@ void SensorThread::run()
 			drivenDistance[MOTORSENSOR1] = value;
 			value = 0;
 
-
+/*
 			//------------------------------------------------------
 			// read driven distance from motor 2 (encoder sensor)
 			//------------------------------------------------------
@@ -1003,6 +1003,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR1] = 0;
+					qDebug("ERROR reading infrared sensor 1");
 					return false;
 				}
 	
@@ -1024,6 +1025,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR2] = 0;
+					qDebug("ERROR reading infrared sensor 2");
 					return false;
 				}
 	
@@ -1045,6 +1047,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR3] = 0;
+					qDebug("ERROR reading infrared sensor 3");
 					return false;
 				}
 	
@@ -1066,6 +1069,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR4] = 0;
+					qDebug("ERROR reading infrared sensor 4");
 					return false;
 				}
 	
@@ -1087,6 +1091,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR5] = 0;
+					qDebug("ERROR reading infrared sensor 5");
 					return false;
 				}
 	
@@ -1108,6 +1113,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR6] = 0;
+					qDebug("ERROR reading infrared sensor 6");
 					return false;
 				}
 	
@@ -1129,6 +1135,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR7] = 0;
+					qDebug("ERROR reading infrared sensor 7");
 					return false;
 				}
 	
@@ -1150,6 +1157,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR8] = 0;
+					qDebug("ERROR reading infrared sensor 8");
 					return false;
 				}
 	
@@ -1185,6 +1193,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					usSensorValue[ULTRASONICSENSOR1] = 0;
+					qDebug("ERROR reading ultrasonic sensor 1");
 					return false;
 				}
 	
@@ -1220,6 +1229,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					voltageSensorValue[VOLTAGESENSOR1] = 0;
+					qDebug("ERROR reading voltage sensor 1");
 					return false;
 				}
 	
@@ -1241,6 +1251,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					voltageSensorValue[VOLTAGESENSOR2] = 0;
+					qDebug("ERROR reading voltage sensor 2");
 					return false;
 				}
 	
@@ -1276,6 +1287,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					voltageSensorValue[MOTORSENSOR1] = 0;
+					qDebug("ERROR reading motor sensor 1");
 					return false;
 				}
 	
@@ -1297,6 +1309,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					voltageSensorValue[MOTORSENSOR2] = 0;
+					qDebug("ERROR reading motor sensor 2");
 					return false;
 				}
 	
