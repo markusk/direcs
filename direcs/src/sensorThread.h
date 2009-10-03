@@ -209,6 +209,13 @@ class SensorThread : public QThread
 		@return true on success, false on error
 		*/
 		bool readUltrasonicSensor(short int sensor);
+
+		/**
+		Reads a voltage sensor value from the microcontroller
+		@param sensor is the sensor number (VOLTAGESENSOR1, VOLTAGESENSOR2)
+		@return true on success, false on error
+		*/
+		bool readVoltageSensor(short int sensor);
 		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
@@ -265,6 +272,8 @@ class SensorThread : public QThread
 		*/
 		static const unsigned char USSENSORARRAYSIZE = 1;
 		int usSensorValue[USSENSORARRAYSIZE];
+		
+		static const short int ULTRASONICSENSOR1 = 0;
 
 		/**
 		Defines the size of the motorSensorValue[] array

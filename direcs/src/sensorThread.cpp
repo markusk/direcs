@@ -36,8 +36,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRSensorValue[SENSOR4] = 0;
 	iRSensorValue[SENSOR5] = 0;
 	iRSensorValue[SENSOR6] = 0;
-// 	iRSensorValue[SENSOR7] = 0; -> now voltage 24 V (measuring the power supply / accumulators)
-// 	iRSensorValue[SENSOR8] = 0; -> now voltage 12 V (measuring the power supply / accumulators)
+// 	iRSensorValue[SENSOR7] = 0; -> now voltage 12 V (measuring the power supply / accumulators), sensor 1 !!
+// 	iRSensorValue[SENSOR8] = 0; -> now voltage 24 V (measuring the power supply / accumulators)  sensor 2 !!
 	
 	// Array for storing the measured voltage values
 	voltageSensorValue[VOLTAGESENSOR1] = 0;
@@ -211,7 +211,7 @@ void SensorThread::run()
 			//---------------------------------------------------------
 */
 
-// ultrasonic Sensors temporarily removed from robot!!
+/* ultrasonic Sensors temporarily removed from robot!!
 			// ultrasonic Sensors temporarily removed from robot!!
 			if (readUltrasonicSensor(SENSOR16) == false)
 			{
@@ -219,57 +219,29 @@ void SensorThread::run()
 				mutex->unlock();
 				stop();
 			}
+*/
 
-
-			//---------------------------------------------------------
-			// read value from voltage sensor 1 (formerly IR sensor 8)
-			//---------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_8) == false)
+			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR reading voltage sensor 1 [SensorThread]");
-				return;
+				stop();
 			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 
-			// store measured values in the sensor values array
-			voltageSensorValue[VOLTAGESENSOR1] = value;
-			value = 0;
-
-/*
-			//---------------------------------------------------------
-			// read value from voltage sensor 2 (formerly IR sensor 7)
-			//---------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_7) == false)
+			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR reading voltage sensor 2 [SensorThread]");
-				return;
+				stop();
 			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
 			// send value over the network
-			// *1v42# means voltagesensor2 with 42 V (the digits after the decimal points are ignored here!)
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
 
-			// store measured values in the sensor values array
-			voltageSensorValue[VOLTAGESENSOR2] = value;
-			value = 0;
-
-
-			//====================================================================
-
-
+/*
 			//------------------------------------------------------
 			// read value from sensor motor 1
 			//------------------------------------------------------
@@ -1026,7 +998,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 	switch (sensor)
 	{
 		case SENSOR1:
-			// read infrared sensor 1
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_1) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1036,7 +1008,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR1] = value;
 				return true;
 			}
@@ -1047,7 +1019,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 		case SENSOR2:
-			// read infrared sensor 2
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_2) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1057,7 +1029,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR2] = value;
 				return true;
 			}
@@ -1068,7 +1040,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 		case SENSOR3:
-			// read infrared sensor 3
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_3) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1078,7 +1050,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR3] = value;
 				return true;
 			}
@@ -1089,7 +1061,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 		case SENSOR4:
-			// read infrared sensor 4
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_4) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1099,7 +1071,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR4] = value;
 				return true;
 			}
@@ -1110,7 +1082,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 		case SENSOR5:
-			// read infrared sensor 5
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_5) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1120,7 +1092,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR5] = value;
 				return true;
 			}
@@ -1131,7 +1103,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 		case SENSOR6:
-			// read infrared sensor 6
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_6) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1141,7 +1113,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR6] = value;
 				return true;
 			}
@@ -1152,7 +1124,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 		case SENSOR7:
-			// read infrared sensor 7
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_7) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1162,7 +1134,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR7] = value;
 				return true;
 			}
@@ -1173,7 +1145,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 		case SENSOR8:
-			// read infrared sensor 8
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_8) == true)
 			{
 				// receive the 16 Bit answer from the MC
@@ -1183,7 +1155,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					return false;
 				}
 	
-				// store measured values in the sensor values array
+				// store measured value
 				iRSensorValue[SENSOR8] = value;
 				return true;
 			}
@@ -1208,18 +1180,18 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 	switch (sensor)
 	{
 		case SENSOR16:
-			// read ultrasonic sensor 1
+			// read sensor
 			if (interface1->sendChar(READ_SENSOR_16) == true)
 			{
 				// receive the 16 Bit answer from the MC
 				if (interface1->receiveInt(&value) == false)
 				{
-					usSensorValue[0] = 0;
+					usSensorValue[ULTRASONICSENSOR1] = 0;
 					return false;
 				}
 	
-				// store measured values in the sensor values array
-				usSensorValue[0] = value;
+				// store measured value
+				usSensorValue[ULTRASONICSENSOR1] = value;
 				return true;
 			}
 			else
@@ -1232,5 +1204,61 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 	
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readUltrasonicSensor()");
+	return false;
+}
+
+
+bool SensorThread::readVoltageSensor(short int sensor)
+{
+	int value = 0;
+	
+	switch (sensor)
+	{
+		case VOLTAGESENSOR1:
+			// read sensor
+			if (interface1->sendChar(READ_SENSOR_8) == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					voltageSensorValue[VOLTAGESENSOR1] = 0;
+					return false;
+				}
+	
+				// store measured value
+				voltageSensorValue[VOLTAGESENSOR1] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading voltage sensor 1");
+				return false;
+			}
+			break;
+		case VOLTAGESENSOR2:
+			// read sensor
+			if (interface1->sendChar(READ_SENSOR_7) == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					voltageSensorValue[VOLTAGESENSOR2] = 0;
+					return false;
+				}
+	
+				// store measured value
+				voltageSensorValue[VOLTAGESENSOR2] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading voltage sensor 2");
+				return false;
+			}
+			break;
+	}
+	
+	// this line should be never reached
+	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
 	return false;
 }
