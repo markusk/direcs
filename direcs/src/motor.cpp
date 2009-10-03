@@ -768,6 +768,8 @@ void Motor::resetMovementCounter(short int motor)
 
 void Motor::setMotorSpeed(int motor, int speed)
 {
+	// FIXME: add a return code on serial error (false or so)
+
 	if (robotState == ON)
 	{
 		if (speed < 0)
@@ -812,6 +814,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 					return;
 				}
 				break;
+
 			case MOTOR1:
 				// store the speed
 				motor1Speed = speed;
