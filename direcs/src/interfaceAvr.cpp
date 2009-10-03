@@ -140,32 +140,16 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
-	int returnValue = -1;
 #ifdef Q_WS_WIN
 	// QextSerialPort code, when using Windows
 	return serialPort->getChar(character);
 #else
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	returnValue = serialPort->readAtmelPort(character, 1);
-	
-	// on ERROR
-	if (returnValue != 1)
+	if (serialPort->readAtmelPort(character, 1) != 1)
 	{
-		if (returnValue == -1)
-		{
-			emit emitMessage("<font color=\"#FF0000\">ERROR reading serial port (readAtmelPort->direcsSerial->InterfaceAvr)!<font>");
-// 			qDebug("*** ERROR reading serial port (readAtmelPort->direcsSerial->InterfaceAvr)! ***");
-			return false;
-		}
-		
-		if (returnValue == -2)
-		{
-			emit emitMessage("<font color=\"#FF0000\">ERROR selecting serial port (readAtmelPort->direcsSerial->InterfaceAvr)!<font>");
-// 			qDebug("*** ERROR selecting serial port (readAtmelPort->direcsSerial->InterfaceAvr)! ***");
-			return false;
-		}
-		
+		// ERROR
+		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
 		return false;
 	}
 	
@@ -187,7 +171,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	if (receiveChar(&character) == false)
 	{
 // 		receiveErrorCounter++;
-		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt MSB, InterfaceAvr)!<font>");
+// 		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt MSB, InterfaceAvr)!<font>");     ALREADY in receiveChar!
 // 		qDebug("*** ERROR reading from serial port (receiveInt, InterfaceAvr) ***");
 
 		//
@@ -216,7 +200,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	//-----------------
 	if (receiveChar(&character) == false)
 	{
-		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt LSB, InterfaceAvr)!<font>");
+// 		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveInt LSB, InterfaceAvr)!<font>");     ALREADY in receiveChar!
 // 		qDebug("*** ERROR reading from serial port (receiveChar, InterfaceAvr) ***");
 		value = 0;
 		return false;

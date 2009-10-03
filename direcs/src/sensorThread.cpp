@@ -400,7 +400,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			voltageSensorValue[VOLTAGESENSOR1] = value;
 			value = 0;
 
-
+/*
 			//---------------------------------------------------------
 			// read value from voltage sensor 2 (formerly IR sensor 7)
 			//---------------------------------------------------------
@@ -531,7 +531,7 @@ ultrasonic Sensors temporarily removed from robot!!
 			// store measured values in the array
 			drivenDistance[MOTORSENSOR2] = value;
 			value = 0;
-
+*/
 
 			//====================================================================
 
@@ -661,7 +661,7 @@ contacts temporarily removed from robot!! */
 
 
 			//====================================================================
-
+/*
 
 			//------------------------------------------------------
 			// read x value from magnetic sensor
@@ -734,7 +734,7 @@ contacts temporarily removed from robot!! */
 			// *zc42# means axis z of the compass has 42°
 			// CONVERT TO INT! Only for displaying!
 			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
-			
+*/			
 			
 			//====================================================================
 			// Unlock the mutex.
