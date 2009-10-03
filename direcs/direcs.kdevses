@@ -3,13 +3,13 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="537" Type="Source" />
+   <View0 Encoding="" line="608" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
-   <View0 Encoding="" line="244" Type="Source" />
+   <View0 Encoding="" line="170" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/sensorThread.h" >
-   <View0 Encoding="" line="336" Type="Source" />
+   <View0 Encoding="" line="239" Type="Source" />
   </Doc2>
  </DocsAndViews>
  <pluginList>
@@ -35,7 +35,7 @@
      <mark line="1946" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
-     <mark line="588" />
+     <mark line="518" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/motor.cpp" >
      <mark line="791" />

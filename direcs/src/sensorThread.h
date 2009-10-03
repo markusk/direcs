@@ -231,6 +231,13 @@ class SensorThread : public QThread
 		*/
 		bool readDrivenDistance(short int sensor);
 		
+		/**
+		Reads an axis value from the 3D compass from the microcontroller
+		@param axis is the axis number (XAXIS, YAXIS or ZAXIS)
+		@return true on success, false on error
+		*/
+		bool readCompassAxis(short int axis);
+		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
@@ -328,6 +335,10 @@ class SensorThread : public QThread
 		float xAxis;
 		float yAxis;
 		float zAxis;
+		
+		static const short int XAXIS = 0;
+		static const short int YAXIS = 1;
+		static const short int ZAXIS = 2;
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */

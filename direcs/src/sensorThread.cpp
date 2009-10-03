@@ -160,6 +160,143 @@ void SensorThread::run()
 		{
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
+			
+			//-----------------
+			// voltage sensors
+			//-----------------
+			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop(); // TODO: and what now? sa: other stop calls!
+			}
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
+
+			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
+/* FIXME: deactivated due to errors. when activated, voltage sensor values are 0 or something stupid else!
+			//---------------
+			// motor sensors
+			//---------------
+			if (readMotorSensor(MOTORSENSOR1) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *0m42# means motorsensor1 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
+			
+			if (readMotorSensor(MOTORSENSOR2) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
+*/
+			//====================================================================
+			// send an optical heartbeat signal to the GUI
+			if (!heartbeatToggle)
+			{
+	 			emit heartbeat(GREEN);
+			}
+			else
+			{
+	 			emit heartbeat(LEDOFF);
+			}
+			heartbeatToggle = !heartbeatToggle;
+			//====================================================================
+
+			/* TODO: implement reading of motor sensors 3 and 4 !
+			
+			if (readMotorSensor(MOTORSENSOR3) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR3).arg(getMAmpere(MOTORSENSOR3)));
+
+			if (readMotorSensor(MOTORSENSOR4) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
+			*/
+
+			//-----------------
+			// driven distance
+			//-----------------
+			if (readDrivenDistance(MOTORDISTANCE1) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			
+			if (readDrivenDistance(MOTORDISTANCE2) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+
+			//-------------------------------------------
+			// read value from magnetic sensor / compass
+			//-------------------------------------------
+			if (readCompassAxis(XAXIS) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *xc42# means axis x of the compass has 42°
+			// CONVERT TO INT! Only for displaying!
+			emit sendNetworkString( QString("*xc%1#").arg( (int) xAxis ));
+
+			if (readCompassAxis(YAXIS) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *yc42# means axis y of the compass has 42°
+			// CONVERT TO INT! Only for displaying!
+			emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
+
+
+			if (readCompassAxis(ZAXIS) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *zc42# means axis z of the compass has 42°
+			// CONVERT TO INT! Only for displaying!
+			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
+
 
 /*			infrared Sensors temporarily removed from robot!!
 
@@ -222,107 +359,8 @@ void SensorThread::run()
 				stop();
 			}
 */
-			//-----------------
-			// voltage sensors
-			//-----------------
-			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 
-			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-/* FIXME: deactivated due to errors. when activated, voltage sensor values are 0 or something stupid else!
-			//---------------
-			// motor sensors
-			//---------------
-			if (readMotorSensor(MOTORSENSOR1) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *0m42# means motorsensor1 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
-			
-			if (readMotorSensor(MOTORSENSOR2) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *1m42# means motorsensor2 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
-*/
-			//====================================================================
-			// send an optical heartbeat signal to the GUI
-			if (!heartbeatToggle)
-			{
-	 			emit heartbeat(GREEN);
-			}
-			else
-			{
-	 			emit heartbeat(LEDOFF);
-			}
-			heartbeatToggle = !heartbeatToggle;
-			//====================================================================
-
-		/* TODO: implement reading of motor sensors 3 and 4 !
-			
-			if (readMotorSensor(MOTORSENSOR3) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *1m42# means motorsensor2 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR3).arg(getMAmpere(MOTORSENSOR3)));
-
-			if (readMotorSensor(MOTORSENSOR4) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *1m42# means motorsensor2 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
-*/
-
-			//-----------------
-			// driven distance
-			//-----------------
-			if (readDrivenDistance(MOTORDISTANCE1) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			
-			if (readDrivenDistance(MOTORDISTANCE2) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-
-/* contacts temporarily removed from robot!!
-
+/*			contacts temporarily removed from robot!!
 			//------------------------------------------------------
 			// read value of contact 1 (cam pan L)
 			//------------------------------------------------------
@@ -351,7 +389,6 @@ void SensorThread::run()
 			}
 
 			cValue = 0;
-
 
 
 			//------------------------------------------------------
@@ -383,7 +420,6 @@ void SensorThread::run()
 
 			cValue = 0;
 
-
 			//------------------------------------------------------
 			// read value of contact 3 (cam tilt L/TOP)
 			//------------------------------------------------------
@@ -412,7 +448,6 @@ void SensorThread::run()
 			}
 
 			cValue = 0;
-
 
 			//------------------------------------------------------
 			// read value of contact 4 (cam tilt R/BOTTOM)
@@ -444,83 +479,6 @@ void SensorThread::run()
 			cValue = 0;
 
 contacts temporarily removed from robot!! */
-
-
-			//====================================================================
-/*
-
-			//------------------------------------------------------
-			// read x value from magnetic sensor
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_AXIS_X) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR x sending to serial port (SensorThread)");
-				return;
-			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// convert the value to degrees and store the value in the class member
-			xAxis =  convertToDegree(value);
-// 			qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
-			value = 0;
-			
-			// send value over the network
-			// *xc42# means axis x of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*xc%1#").arg( (int) xAxis ));
-
-
-			//------------------------------------------------------
-			// read y value from magnetic sensor
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_AXIS_Y) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR y sending to serial port (SensorThread)");
-				return;
-			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// convert the value to degrees and store the value in the class member
-			yAxis = convertToDegree(value);
-			value = 0;
-
-			// send value over the network
-			// *yc42# means axis y of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
-
-
-			//------------------------------------------------------
-			// read z value from magnetic sensor
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_AXIS_Z) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR z sending to serial port (SensorThread)");
-				return;
-			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// convert the value to degrees and store the value in the class member
-			zAxis = convertToDegree(value);
-			value = 0;
-
-			// send value over the network
-			// *zc42# means axis z of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
-*/			
 			
 			//====================================================================
 			// Unlock the mutex.
@@ -1406,5 +1364,88 @@ bool SensorThread::readDrivenDistance(short int sensor)
 	
 	// this line should be never reached
 	qDebug("WARNING: wrong motor distance number in readDrivenDistance()");
+	return false;
+}
+
+
+bool SensorThread::readCompassAxis(short int axis)
+{
+	int value = 0;
+	
+	switch (axis)
+	{
+		case XAXIS:
+			// read sensor
+			if (interface1->sendChar(READ_AXIS_X) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					xAxis = 0;
+					qDebug("ERROR reading x axis");
+					return false;
+				}
+	
+				// convert the value to degrees and store the value in the class member
+				xAxis =  convertToDegree(value);
+				// qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading x axis");
+				return false;
+			}
+			break;
+		case YAXIS:
+			// read sensor
+			if (interface1->sendChar(READ_AXIS_Y) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					yAxis = 0;
+					qDebug("ERROR reading y axis");
+					return false;
+				}
+	
+				// convert the value to degrees and store the value in the class member
+				yAxis =  convertToDegree(value);
+				// qDebug("From Atmel=%d / yAxis=%f", value, yAxis);
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading y axis");
+				return false;
+			}
+			break;
+		case ZAXIS:
+			// read sensor
+			if (interface1->sendChar(READ_AXIS_Z) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					zAxis = 0;
+					qDebug("ERROR reading z axis");
+					return false;
+				}
+	
+				// convert the value to degrees and store the value in the class member
+				zAxis =  convertToDegree(value);
+				// qDebug("From Atmel=%d / zAxis=%f", value, zAxis);
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading z axis");
+				return false;
+			}
+			break;
+	}
+	
+	// this line should be never reached
+	qDebug("WARNING: compass axis number in readCompassAxis()");
 	return false;
 }
