@@ -198,21 +198,21 @@ class SensorThread : public QThread
 
 		/**
 		Reads an infrared sensor value from the microcontroller
-		@param sensor is the sensor number
+		@param sensor is the sensor number (SENSOR1 to SENSOR6)
 		@return true on success, false on error
 		*/
 		bool readInfraredSensor(short int sensor);
 
 		/**
 		Reads an ultrasonic sensor value from the microcontroller
-		@param sensor is the sensor number
+		@param sensor is the sensor number (ULTRASONICSENSOR1)
 		@return true on success, false on error
 		*/
 		bool readUltrasonicSensor(short int sensor);
 
 		/**
 		Reads a voltage sensor value from the microcontroller
-		@param sensor is the sensor number (VOLTAGESENSOR1, VOLTAGESENSOR2)
+		@param sensor is the sensor number (VOLTAGESENSOR1 to VOLTAGESENSOR2)
 		@return true on success, false on error
 		*/
 		bool readVoltageSensor(short int sensor);
@@ -223,6 +223,13 @@ class SensorThread : public QThread
 		@return true on success, false on error
 		*/
 		bool readMotorSensor(short int sensor);
+		
+		/**
+		Reads a driven distance value from the microcontroller
+		@param sensor is the sensor number (MOTORDISTANCE1 to MOTORDISTANCE2)
+		@return true on success, false on error
+		*/
+		bool readDrivenDistance(short int sensor);
 		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
@@ -298,6 +305,9 @@ class SensorThread : public QThread
 		// This es equal to the number of motors!
 		static const unsigned char DRIVENDISTANCEARRAYSIZE = 2;
 		int drivenDistance[DRIVENDISTANCEARRAYSIZE];
+
+		static const short int MOTORDISTANCE1 = 0;
+		static const short int MOTORDISTANCE2 = 1;
 
 		/**
 		Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.

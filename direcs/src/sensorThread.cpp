@@ -210,7 +210,6 @@ void SensorThread::run()
 
 			// infrared sensors 7 and 8 are now the voltage sensors!
 */
-
 /*			ultrasonic Sensors temporarily removed from robot!!
 			
 			//---------------------
@@ -223,7 +222,6 @@ void SensorThread::run()
 				stop();
 			}
 */
-
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -246,7 +244,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-
+/* FIXME: deactivated due to errors. when activated, voltage sensor values are 0 or something stupid else!
 			//---------------
 			// motor sensors
 			//---------------
@@ -259,7 +257,17 @@ void SensorThread::run()
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
-
+			
+			if (readMotorSensor(MOTORSENSOR2) == false)
+			{
+				// Unlock the mutex.
+				mutex->unlock();
+				stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
+*/
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
@@ -272,18 +280,8 @@ void SensorThread::run()
 			}
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
-/*
-			if (readMotorSensor(MOTORSENSOR2) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *1m42# means motorsensor2 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
-*/
-/* TODO: implement reading of motor sensors 3 and 4 !
+
+		/* TODO: implement reading of motor sensors 3 and 4 !
 			
 			if (readMotorSensor(MOTORSENSOR3) == false)
 			{
@@ -305,48 +303,23 @@ void SensorThread::run()
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
 */
-			int value = 0;
-			//------------------------------------------------------
-			// read driven distance from motor 1 (encoder sensor)
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_MOTOR_DISTANCE1) == false)
+
+			//-----------------
+			// driven distance
+			//-----------------
+			if (readDrivenDistance(MOTORDISTANCE1) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR md1 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-			//qDebug("Received value motor1: %d", value);
-
-			// store measured values in the array
-			drivenDistance[MOTORSENSOR1] = value;
-			value = 0;
-
-/*
-			//------------------------------------------------------
-			// read driven distance from motor 2 (encoder sensor)
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_MOTOR_DISTANCE2) == false)
+			
+			if (readDrivenDistance(MOTORDISTANCE2) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR md2 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
-
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-			//qDebug("Received value motor1: %d", value);
-
-			// store measured values in the array
-			drivenDistance[MOTORSENSOR2] = value;
-			value = 0;
-*/
-
-			//====================================================================
 
 /* contacts temporarily removed from robot!!
 
@@ -1375,5 +1348,63 @@ bool SensorThread::readMotorSensor(short int sensor)
 	
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+	return false;
+}
+
+
+bool SensorThread::readDrivenDistance(short int sensor)
+{
+	int value = 0;
+	
+	switch (sensor)
+	{
+		case MOTORDISTANCE1:
+			// read sensor
+			if (interface1->sendChar(READ_MOTOR_DISTANCE1) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					drivenDistance[MOTORDISTANCE1] = 0;
+					qDebug("ERROR reading driven distance 1");
+					return false;
+				}
+	
+				// store measured value
+				drivenDistance[MOTORDISTANCE1] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading driven distance 1");
+				return false;
+			}
+			break;
+		case MOTORDISTANCE2:
+			// read sensor
+			if (interface1->sendChar(READ_MOTOR_DISTANCE2) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					drivenDistance[MOTORDISTANCE2] = 0;
+					qDebug("ERROR reading driven distance 2");
+					return false;
+				}
+	
+				// store measured value
+				drivenDistance[MOTORDISTANCE2] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading driven distance 2");
+				return false;
+			}
+			break;
+	}
+	
+	// this line should be never reached
+	qDebug("WARNING: wrong motor distance number in readDrivenDistance()");
 	return false;
 }
