@@ -151,21 +151,16 @@ void SensorThread::run()
 	bool heartbeatToggle = false;
 
 
-	//
 	//  start "threading"...
-	//
 	while (!stopped)
 	{
-		// let the thread sleep some time
-		// for having more time for the other threads
+		// let the thread sleep some time for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
-
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock(); // TODO: do a lock direct before a interface call!!
+			mutex->lock();
 
 /* infrared Sensors temporarily removed from robot!!
 
@@ -214,33 +209,16 @@ void SensorThread::run()
 			//---------------------------------------------------------
 			// infrared sensors 7 and 8 are now the voltage sensors!
 			//---------------------------------------------------------
-			
-			//====================================================================
+*/
 
-
-			//---------------------------------------------------------------------
-			// command "16" means "read value from sensor 16" ultra sonic sensor!
-			//---------------------------------------------------------------------
-			if (interface1->sendChar(READ_SENSOR_16) == false)
+// ultrasonic Sensors temporarily removed from robot!!
+			// ultrasonic Sensors temporarily removed from robot!!
+			if (readUltrasonicSensor(SENSOR16) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR s16 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
-
-			//if (interface1->receiveInt(value) == true) < < error handling necessary ? ?  still done in "receiveInt" but ony with qDebug msg!
-			// receive the 16 Bit answer from the MC
-			interface1->receiveInt(&value);
-
-			// store measured values in the sensor values array
-			usSensorValue[0] = value;
-			//qDebug("received value sensor5: %d", value);
-			value = 0;
-
-ultrasonic Sensors temporarily removed from robot!!
-*/
-			//====================================================================
 
 
 			//---------------------------------------------------------
@@ -1219,5 +1197,40 @@ bool SensorThread::readInfraredSensor(short int sensor)
 	
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readInfraredSensor()");
+	return false;
+}
+
+
+bool SensorThread::readUltrasonicSensor(short int sensor)
+{
+	int value = 0;
+	
+	switch (sensor)
+	{
+		case SENSOR16:
+			// read ultrasonic sensor 1
+			if (interface1->sendChar(READ_SENSOR_16) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					usSensorValue[0] = 0;
+					return false;
+				}
+	
+				// store measured values in the sensor values array
+				usSensorValue[0] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading ultrasonic sensor 1");
+				return false;
+			}
+			break;
+	}
+	
+	// this line should be never reached
+	qDebug("WARNING: wrong sensor number in readUltrasonicSensor()");
 	return false;
 }

@@ -197,11 +197,18 @@ class SensorThread : public QThread
 		float convertToVolt(int sensor);
 
 		/**
-		Reads an inreared sensor value from the microcontroller
+		Reads an infrared sensor value from the microcontroller
 		@param sensor is the sensor number
 		@return true on success, false on error
 		*/
 		bool readInfraredSensor(short int sensor);
+
+		/**
+		Reads an ultrasonic sensor value from the microcontroller
+		@param sensor is the sensor number
+		@return true on success, false on error
+		*/
+		bool readUltrasonicSensor(short int sensor);
 		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
