@@ -108,8 +108,12 @@ void Joystick::run()
 		}
 		else
 		{
-			switch(js.type & ~JS_EVENT_INIT)
+// 			switch(js.type & ~JS_EVENT_INIT)
+			switch(js.type)
 			{
+				case JS_EVENT_INIT:
+					emit emitMessage("Joystick initialised.");
+					break;
 				case JS_EVENT_BUTTON:
 					axisButtonNumber = js.number;
 					if (js.value == 0)

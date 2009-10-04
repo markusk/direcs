@@ -1,19 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="4" >
-  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
-   <View0 Encoding="" Type="Source" />
+ <DocsAndViews NumberOfDocuments="1" >
+  <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
+   <View0 Encoding="" line="3304" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/sensorThread.h" >
-   <View0 Encoding="" Type="Source" />
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/servo.h" >
-   <View0 Encoding="" Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.h" >
-   <View0 Encoding="" line="256" Type="Source" />
-  </Doc3>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -37,11 +28,11 @@
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
      <mark line="1946" />
     </bookmark>
-    <bookmark url="/home/markus/develop/direcs/direcs/src/motor.cpp" >
-     <mark line="791" />
-    </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
      <mark line="1389" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/direcs/direcs/src/motor.cpp" >
+     <mark line="791" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>
