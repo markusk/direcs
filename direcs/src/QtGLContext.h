@@ -78,10 +78,10 @@ protected:
 	*/
 	/**
 	draws the texture sub image on the screen
-	@param ulX is the upper left x coordinate
-	@param ulY is the upper left y coordinate
-	@param lrX is the lower right x coordinate
-	@param lrY is the lower right y coordinate
+	@param ul is the upper left coordinate
+	@param ur is the upper right coordinate
+	@param ll is the lower left coordinate
+	@param lr is the lower right coordinate
 	*/
 	void drawTexture(float ul, float ur, float ll, float lr);
 	//! helper method

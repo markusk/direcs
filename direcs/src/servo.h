@@ -32,7 +32,7 @@
 /**
 \brief This class controls connected servos
 
-It has to be a thread because of communicating at the same time with the microcontroller via the class @saInterface() !
+It has to be a thread because of communicating at the same time with the microcontroller via the class. @sa InterfaceAvr() !
 */
 class Servo : public QThread
 {

@@ -253,6 +253,8 @@ class Direcs : public QObject
 		/**
 		Emits a string to the GUI log / console.
 		@param text is the message to be emitted
+		@param CR is true when a CR/LF should be added at the end of the line (default)
+		@param sayIt is true when the text for the log also should be spoken (default=false)
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false);
 

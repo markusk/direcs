@@ -133,7 +133,7 @@ class SensorThread : public QThread
 		/**
 		This slot enables or disables the simulation mode.
 		In the simulation mode all sensor values are set to a fixed value. No real sensor values are read from the robot, when set to true.
-		@param status can be true or false.
+		@param state can be true or false.
 		@sa Gui::simulate()
 		*/
 		void setSimulationMode(bool state);
