@@ -167,8 +167,8 @@ void SensorThread::run()
 			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop(); // TODO: and what now? sa: other stop calls!
+				// mutex->unlock();
+				// stop(); // TODO: and what now? sa: other stop calls!
 			}
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -177,12 +177,13 @@ void SensorThread::run()
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
+			
 /* FIXME: deactivated due to errors. when activated, voltage sensor values are 0 or something stupid else!
 			//---------------
 			// motor sensors
@@ -190,8 +191,8 @@ void SensorThread::run()
 			if (readMotorSensor(MOTORSENSOR1) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
@@ -200,13 +201,36 @@ void SensorThread::run()
 			if (readMotorSensor(MOTORSENSOR2) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
 */
+			/* TODO: implement reading of motor sensors 3 and 4 !
+			
+			if (readMotorSensor(MOTORSENSOR3) == false)
+			{
+				// Unlock the mutex.
+				// mutex->unlock();
+				// stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR3).arg(getMAmpere(MOTORSENSOR3)));
+
+			if (readMotorSensor(MOTORSENSOR4) == false)
+			{
+				// Unlock the mutex.
+				// mutex->unlock();
+				// stop();
+			}
+			// send value over the network
+			// *1m42# means motorsensor2 with 42 mA
+			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
+			*/
+			
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
@@ -220,44 +244,21 @@ void SensorThread::run()
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
 
-			/* TODO: implement reading of motor sensors 3 and 4 !
-			
-			if (readMotorSensor(MOTORSENSOR3) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *1m42# means motorsensor2 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR3).arg(getMAmpere(MOTORSENSOR3)));
-
-			if (readMotorSensor(MOTORSENSOR4) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				stop();
-			}
-			// send value over the network
-			// *1m42# means motorsensor2 with 42 mA
-			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
-			*/
-
 			//-----------------
 			// driven distance
 			//-----------------
 			if (readDrivenDistance(MOTORDISTANCE1) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 			
 			if (readDrivenDistance(MOTORDISTANCE2) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 
 			//-------------------------------------------
@@ -266,8 +267,8 @@ void SensorThread::run()
 			if (readCompassAxis(XAXIS) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 			// send value over the network
 			// *xc42# means axis x of the compass has 42°
@@ -277,8 +278,8 @@ void SensorThread::run()
 			if (readCompassAxis(YAXIS) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 			// send value over the network
 			// *yc42# means axis y of the compass has 42°
@@ -289,8 +290,8 @@ void SensorThread::run()
 			if (readCompassAxis(ZAXIS) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 			// send value over the network
 			// *zc42# means axis z of the compass has 42°
@@ -309,43 +310,43 @@ void SensorThread::run()
 			if (readInfraredSensor(SENSOR1) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 
 			if (readInfraredSensor(SENSOR2) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 
 			if (readInfraredSensor(SENSOR3) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 
 			if (readInfraredSensor(SENSOR4) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 
 			if (readInfraredSensor(SENSOR5) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 
 			if (readInfraredSensor(SENSOR6) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 
 			// infrared sensors 7 and 8 are now the voltage sensors!
@@ -358,8 +359,8 @@ void SensorThread::run()
 			if (readUltrasonicSensor(SENSOR16) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 */
 
@@ -368,8 +369,8 @@ void SensorThread::run()
 			if (readContact(CONTACT1) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 				else
 				{
@@ -388,8 +389,8 @@ void SensorThread::run()
 			if (readContact(CONTACT2) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 				else
 				{
@@ -408,8 +409,8 @@ void SensorThread::run()
 			if (readContact(CONTACT3) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 				else
 				{
@@ -428,8 +429,8 @@ void SensorThread::run()
 			if (readContact(CONTACT4) == false)
 			{
 				// Unlock the mutex.
-				mutex->unlock();
-				stop();
+				// mutex->unlock();
+				// stop();
 			}
 				else
 				{
@@ -669,15 +670,11 @@ void SensorThread::resetDrivenDistance(int sensor)
 			break;
 	}
 
-	// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+	// Unlocks the mutex.
 	mutex->unlock();
-
 }
 
 
-/*!
-Returns the stored value from an ultrasonic sensor in cm
-*/
 int SensorThread::getUsSensorValue(int sensor)
 {
 	// This value represents the distance from the sensor to the front of the robot in cm.
