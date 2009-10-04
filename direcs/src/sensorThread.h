@@ -238,6 +238,13 @@ class SensorThread : public QThread
 		*/
 		bool readCompassAxis(short int axis);
 		
+		/**
+		Reads a contact value from the microcontroller (end contacts, when puhsing something or so)
+		@param contact is the contact number (CONTACT1 to CONTACT4)
+		@return true on success, false on error
+		*/
+		bool readContact(short int contact);
+		
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;

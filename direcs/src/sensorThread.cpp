@@ -297,6 +297,9 @@ void SensorThread::run()
 			// CONVERT TO INT! Only for displaying!
 			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
 
+			// emit ALL compass axes values
+			emit compassDataComplete(xAxis, yAxis, zAxis);
+
 
 /*			infrared Sensors temporarily removed from robot!!
 
@@ -361,138 +364,98 @@ void SensorThread::run()
 */
 
 /*			contacts temporarily removed from robot!!
-			//------------------------------------------------------
 			// read value of contact 1 (cam pan L)
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_CONTACT1) == false)
+			if (readContact(CONTACT1) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR c1 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
-
-			// receive the 8 Bit answer from the MC **8 bit**
-			interface1->receiveChar(&cValue);
-
-			// store measured value
-			contactValue[CONTACT1] = cValue;
-
-			// emit
-			if (cValue == 0)
-			{
-				emit contactAlarm(LEFT, false);
+				else
+				{
+				// emit
+				if (contactValue[CONTACT1] == 0)
+				{
+					emit contactAlarm(LEFT, false);
+				}
+				else
+				{
+					emit contactAlarm(LEFT, true);
+				}
 			}
-			else
-			{
-				emit contactAlarm(LEFT, true);
-			}
-
-			cValue = 0;
-
-
-			//------------------------------------------------------
+			
 			// read value of contact 2 (cam pan R)
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_CONTACT2) == false)
+			if (readContact(CONTACT2) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR c2 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
-
-			// receive the 8 Bit answer from the MC **8 bit**
-			interface1->receiveChar(&cValue);
-
-			// store measured value
-			contactValue[CONTACT2] = cValue;
-
-			// emit
-			if (cValue == 0)
-			{
-				emit contactAlarm(RIGHT, false);
+				else
+				{
+				// emit
+				if (contactValue[CONTACT2] == 0)
+				{
+					emit contactAlarm(RIGHT, false);
+				}
+				else
+				{
+					emit contactAlarm(RIGHT, true);
+				}
 			}
-			else
-			{
-				emit contactAlarm(RIGHT, true);
-			}
-
-			cValue = 0;
-
-			//------------------------------------------------------
+			
 			// read value of contact 3 (cam tilt L/TOP)
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_CONTACT3) == false)
+			if (readContact(CONTACT3) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR c3 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
-
-			// receive the 8 Bit answer from the MC **8 bit**
-			interface1->receiveChar(&cValue);
-
-			// store measured value
-			contactValue[CONTACT3] = cValue;
-
-			// emit
-			if (cValue == 0)
-			{
-				emit contactAlarm(TOP, false);
+				else
+				{
+				// emit
+				if (contactValue[CONTACT3] == 0)
+				{
+					emit contactAlarm(TOP, false);
+				}
+				else
+				{
+					emit contactAlarm(TOP, true);
+				}
 			}
-			else
-			{
-				emit contactAlarm(TOP, true);
-			}
-
-			cValue = 0;
-
-			//------------------------------------------------------
+			
 			// read value of contact 4 (cam tilt R/BOTTOM)
-			//------------------------------------------------------
-			if (interface1->sendChar(READ_CONTACT4) == false)
+			if (readContact(CONTACT4) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				qDebug("ERROR c4 sending to serial port (SensorThread)");
-				return;
+				stop();
 			}
-
-			// receive the 8 Bit answer from the MC **8 bit**
-			interface1->receiveChar(&cValue);
-
-			// store measured value
-			contactValue[CONTACT4] = cValue;
-
-			// emit
-			if (cValue == 0)
-			{
-				emit contactAlarm(BOTTOM, false);
+				else
+				{
+				// emit
+				if (contactValue[CONTACT1] == 0)
+				{
+					emit contactAlarm(BOTTOM, false);
+				}
+				else
+				{
+					emit contactAlarm(BOTTOM, true);
+				}
 			}
-			else
-			{
-				emit contactAlarm(BOTTOM, true);
-			}
-
-			cValue = 0;
-
 contacts temporarily removed from robot!! */
 			
-			//====================================================================
 			// Unlock the mutex.
-			//====================================================================
 			mutex->unlock();
 
 		} // simulation = false
 		
 		if (simulationMode)
 		{
-			// TODO: now we're sleeping 500ms because ww're only simulating. Is this okay????
+			// now we're sleeping 500ms because we're only simulating.
 			msleep(500);
 			
-			// TODO: here or where, when simulating?????  send an optical heartbeat signal to the GUI
+			// send an (simulated) optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
 			{
 	 			emit heartbeat(GREEN);
@@ -503,15 +466,8 @@ contacts temporarily removed from robot!! */
 			}
 			heartbeatToggle = !heartbeatToggle;
 		}
-
-		//------------------------------
-		// emit ALL compass axes values
-		//------------------------------
-		emit compassDataComplete(xAxis, yAxis, zAxis);
-
-		//====================================================================
+		
 		//  e m i t  Signal
-		//====================================================================
 		emit sensorDataComplete();
 	}
 	stopped = false;
@@ -1446,6 +1402,104 @@ bool SensorThread::readCompassAxis(short int axis)
 	}
 	
 	// this line should be never reached
-	qDebug("WARNING: compass axis number in readCompassAxis()");
+	qDebug("WARNING: wrong compass axis number in readCompassAxis()");
+	return false;
+}
+
+
+bool SensorThread::readContact(short int contact)
+{
+	int value = 0;
+	
+	switch (contact)
+	{
+		case CONTACT1:
+			// read sensor
+			if (interface1->sendChar(READ_CONTACT1) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					contactValue[CONTACT1] = 0;
+					qDebug("ERROR reading contact");
+					return false;
+				}
+	
+				contactValue[CONTACT1] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading contact");
+				return false;
+			}
+			break;
+		case CONTACT2:
+			// read sensor
+			if (interface1->sendChar(READ_CONTACT2) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					contactValue[CONTACT2] = 0;
+					qDebug("ERROR reading contact");
+					return false;
+				}
+	
+				contactValue[CONTACT2] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading contact");
+				return false;
+			}
+			break;
+		case CONTACT3:
+			// read sensor
+			if (interface1->sendChar(READ_CONTACT3) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					contactValue[CONTACT3] = 0;
+					qDebug("ERROR reading contact");
+					return false;
+				}
+	
+				contactValue[CONTACT3] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading contact");
+				return false;
+			}
+			break;
+		case CONTACT4:
+			// read sensor
+			if (interface1->sendChar(READ_CONTACT4) == true)
+			{
+				// receive the 16 Bit answer from the MC
+				if (interface1->receiveInt(&value) == false)
+				{
+					contactValue[CONTACT4] = 0;
+					qDebug("ERROR reading contact");
+					return false;
+				}
+	
+				contactValue[CONTACT4] = value;
+				return true;
+			}
+			else
+			{
+				qDebug("ERROR reading contact");
+				return false;
+			}
+			break;
+	}
+	
+	// this line should be never reached
+	qDebug("WARNING: wrong contact number in readContact()");
 	return false;
 }
