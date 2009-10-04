@@ -596,7 +596,7 @@ void Direcs::init()
 	
 	if (!consoleMode)
 	{
-		connect(sensorThread, SIGNAL( compassDataComplete(float, float, float) ), gui, SLOT( showCompassData(float, float, float) ) );
+		connect(sensorThread, SIGNAL( compassDataComplete(float, float, float, float) ), gui, SLOT( showCompassData(float, float, float, float) ) );
 	}
 
 	

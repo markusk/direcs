@@ -121,7 +121,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 #endif
 	{
 // 		receiveErrorCounter++;
- 		emit emitMessage("<font color=\"#FF0000\">ERROR writing to serial port (sendChar, InterfaceAvr)!<font>");
+ 		emit emitMessage("<font color=\"#FF0000\">ERROR writing sserial port (sendChar, InterfaceAvr)!<font>");
 
 // 		// MASSIVE COMMUNICATION ERROR!
 // 		if (receiveErrorCounter >= 4)
@@ -147,7 +147,7 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	if (serialPort->readAtmelPort(character, 1) != 1)
 	{
 		// ERROR
- 		emit emitMessage("<font color=\"#FF0000\">ERROR reading from serial port (receiveChar, InterfaceAvr)!<font>");
+ 		emit emitMessage("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, InterfaceAvr)!<font>");
 		return false;
 	}
 	

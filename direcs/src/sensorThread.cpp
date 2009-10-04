@@ -72,6 +72,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	xAxis = 0.0;
 	yAxis = 0.0;
 	zAxis = 0.0;
+	heading = 0.0;
 
 
 	// These are the measured values from the AD-Conversion from the IR-Sensors
@@ -286,7 +287,6 @@ void SensorThread::run()
 			// CONVERT TO INT! Only for displaying!
 			emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
 
-
 			if (readCompassAxis(ZAXIS) == false)
 			{
 				// Unlock the mutex.
@@ -298,8 +298,11 @@ void SensorThread::run()
 			// CONVERT TO INT! Only for displaying!
 			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
 
+			// Only *after* all axes were read:
+			calculateHeading();
+			
 			// emit ALL compass axes values
-			emit compassDataComplete(xAxis, yAxis, zAxis);
+			emit compassDataComplete(xAxis, yAxis, zAxis, heading);
 
 
 /*			infrared Sensors temporarily removed from robot!!
@@ -762,6 +765,7 @@ void SensorThread::setSimulationMode(bool state)
 		xAxis = READ_AXIS_X;
 		yAxis = READ_AXIS_Y;
 		zAxis = READ_AXIS_Z;
+		heading = 42;
 	}
 	else
 	{
@@ -810,12 +814,12 @@ void SensorThread::setSimulationMode(bool state)
 	}
 }
 
-
+/*
 int SensorThread::getCompassValue(unsigned char axis)
 {
 	switch (axis)
 	{
-		case READ_AXIS_X:
+		case READ_AXIS_X: // this is wrong! has to be XAXIS!
 			return xAxis;
 			break;
 		case READ_AXIS_Y:
@@ -827,9 +831,10 @@ int SensorThread::getCompassValue(unsigned char axis)
 	}
 
 	// this line should never be reached!
+	qDebug("WARNING: wrong axis number in getCompassValue");
 	return -1;
 }
-
+*/
 
 void SensorThread::setRobotState(bool state)
 {
@@ -840,11 +845,51 @@ void SensorThread::setRobotState(bool state)
 
 float SensorThread::convertToDegree(int sensorValue)
 {
+	// The sensorValue comes as a 16 bit integer 2's complement from the sensor!
+	// So do we have a negative value?
+	if ( (sensorValue & 32768) == 32768)
+	{
+		// delete the 'sign' bit
+		sensorValue -= 32768;
+		
+		// convert into negative
+		sensorValue = sensorValue * -1;
+	}
+
 	// 'value' has to be between 0 and 65536, because we're using a 16 bit value
 	//
 	// A compass has 360 degrees, so the factor for 1 degree is 360/65536
+	return ( (float) sensorValue * (360.0 / 65536.0));
+// 	return sensorValue;
+}
+
+
+void SensorThread::calculateHeading(void)
+{
+	if (xAxis == 0 && yAxis < 0)
+	{
+		heading = M_PI/2;
+	}
 	
-	return (sensorValue * (360.0 / 65536.0));
+	if (xAxis == 0 && yAxis > 0)
+	{
+		heading = 3*M_PI/2; 
+	}
+	
+	if (xAxis < 0)
+	{
+		heading = M_PI - atan(float(yAxis)/float(xAxis));
+	}
+	
+	if (xAxis > 0 && yAxis < 0)
+	{
+		heading = -atan(float(yAxis)/float(xAxis)); 
+	}
+	
+	if (xAxis > 0 && yAxis > 0)
+	{
+		heading = 2*M_PI - atan(float(yAxis)/float(xAxis));
+	}
 }
 
 
@@ -1341,7 +1386,7 @@ bool SensorThread::readCompassAxis(short int axis)
 	
 				// convert the value to degrees and store the value in the class member
 				xAxis =  convertToDegree(value);
-				// qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
+				//qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
 				return true;
 			}
 			else
@@ -1364,7 +1409,7 @@ bool SensorThread::readCompassAxis(short int axis)
 	
 				// convert the value to degrees and store the value in the class member
 				yAxis =  convertToDegree(value);
-				// qDebug("From Atmel=%d / yAxis=%f", value, yAxis);
+				//qDebug("From Atmel=%d / yAxis=%f", value, yAxis);
 				return true;
 			}
 			else

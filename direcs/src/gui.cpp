@@ -2483,17 +2483,18 @@ void Gui::initCompass()
 */
 
 
-void Gui::showCompassData(float x, float y, float z)
+void Gui::showCompassData(float x, float y, float z, float heading)
 {
-	// also formats the string to 3 digits precision!
-	ui.lblCompassX->setText( QString("%1").setNum(x, 'f', 3).append(" deg") );
-	ui.lblCompassY->setText( QString("%1").setNum(y, 'f', 3).append(" deg") );
-	ui.lblCompassZ->setText( QString("%1").setNum(z, 'f', 3).append(" deg") );
+	// also formats the string to 1 digits precision!
+	ui.lblCompassX->setText( QString("%1").setNum(x, 'f', 1).append(" deg") );
+	ui.lblCompassY->setText( QString("%1").setNum(y, 'f', 1).append(" deg") );
+	ui.lblCompassZ->setText( QString("%1").setNum(z, 'f', 1).append(" deg") );
+	ui.lblCompassHeading->setText( QString("%1").setNum(heading, 'f', 1).append(" deg") );
 	
 // 	ui.qwtCompass->setValue(x);
 	
 	// set the 3D OpenGL compass!
-	ui.frameCompass->setAllRotations(x, y, z);
+	ui.frameCompass->setAllRotations(x, y, z); // TODO: and what to do with the 'heading'?
 }
 
 

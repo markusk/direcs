@@ -268,8 +268,9 @@ class Gui : public QMainWindow
 		@param x is the x axis value
 		@param y is the y axis value
 		@param z is the z axis value
+		@param heading is the heading of the compass
 		*/
- 		void showCompassData(float x, float y, float z);
+ 		void showCompassData(float x, float y, float z, float heading);
 
 		/**
 		Turns the GUI heartbeat/state LED red, green or off.

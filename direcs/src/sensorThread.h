@@ -169,9 +169,10 @@ class SensorThread : public QThread
 		@param x is the x axis value
 		@param y is the y axis value
 		@param z is the z axis value
-		@sa Direcs::showCompassAxes()
+		@param heading is the heading of the compass
+		@sa Direcs::showCompassData() SensorThread::calculateHeading()
 		*/
-		void compassDataComplete(float x, float y, float z);
+		void compassDataComplete(float x, float y, float z, float heading);
 		
 		/**
 		This signal is emitted every TODO: seconds, when a specific value from the microcontroller was received.
@@ -183,11 +184,16 @@ class SensorThread : public QThread
 
 	private:
 		/**
-		Converts the compass sensor value (16 bit integer) to degrees (0 to 360).
+		Converts the compass sensor value (16 bit integer 2's complement format) to degrees (0 to 360).
 		@param sensorValue
 		@return The given value in degrees (0 to 360).
 		*/
 		float convertToDegree(int sensorValue);
+		
+		/**
+		Translates the x and y data from the 3D compass into a single orientation reading.
+		*/
+		void calculateHeading(void);
 
 		/**
 		Converts a voltage sensor value to a value in Volt (V).
@@ -253,7 +259,7 @@ class SensorThread : public QThread
 	
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 250; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
 
 		// Give the infrared sensors some names
 		//
@@ -337,11 +343,12 @@ class SensorThread : public QThread
 		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125;
 
 		/**
-		The x, y and z  axis value from the 3D magnetic sensor
+		The x, y, z axis value from the 3D magnetic sensor and the heading
 		 */
 		float xAxis;
 		float yAxis;
 		float zAxis;
+		float heading;
 		
 		static const short int XAXIS = 0;
 		static const short int YAXIS = 1;
