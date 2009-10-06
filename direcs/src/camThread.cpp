@@ -358,12 +358,12 @@ bool CamThread::init()
 		//-----------------
 		// try to capture
 		//-----------------
-		//qDebug("INFO: Initialising cam at /dev/video%d...", cameraDevice);
-		capture = cvCaptureFromCAM(cameraDevice);
+		qDebug("INFO: Initialising cam at /dev/video%d...", cameraDevice);
+		capture = cvCaptureFromCAM(cameraDevice); // TODO: how to detect a timeout here?
 		
 		if (!capture)
 		{
-			//qDebug("INFO: could not initialize capturing from /dev/video%d. No camera connected?", cameraDevice);
+			qDebug("INFO: could not initialize capturing from /dev/video%d. No camera connected?", cameraDevice);
 			width=0;
 			height=0;
 			pixeldepth = 0;

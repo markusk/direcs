@@ -1213,12 +1213,6 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockNavigation">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
    <property name="maximumSize">
     <size>
      <width>411</width>
@@ -1504,10 +1498,6 @@
       </layout>
      </item>
     </layout>
-    <zorder>layoutWidget</zorder>
-    <zorder>horizontalSpacer_5</zorder>
-    <zorder>label18_14</zorder>
-    <zorder>label18_15</zorder>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockCamera">
