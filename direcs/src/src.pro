@@ -32,6 +32,7 @@ unix {
 				joystickDialog.h \
 				laser.h \
 				laserScene.h \
+				laserSickS300.h \
 				laserThread.h \
 				motor.h \
 				direcs.h \
@@ -58,6 +59,7 @@ unix {
 				joystick.cpp \
 				joystickDialog.cpp \
 				laser.cpp \
+				laserSickS300.cpp \
 				laserScene.cpp \
 				laserThread.cpp \
 				motor.cpp \
