@@ -34,8 +34,9 @@ void SickS3000_Register(DriverTable* table)
 */
 
 
-// org: SickS3000::SickS3000(ConfigFile* cf, int section) : Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN, PLAYER_LASER_CODE)
-SickS3000::SickS3000(ConfigFile* cf, int section)
+// org1: SickS3000::SickS3000(ConfigFile* cf, int section) : Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN, PLAYER_LASER_CODE)
+// org2: SickS3000::SickS3000(ConfigFile* cf, int section)
+SickS3000::SickS3000()
 {
   const char *c_read_mode;
 
@@ -227,7 +228,8 @@ int SickS3000::ChangeTermSpeed(int speed)
 }
 
 
-int SickS3000::ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
+// org: int SickS3000::ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
+int SickS3000::ProcessMessage(player_msghdr * hdr, void * data)
 {
   // Process messages here.  Send a response if necessary, using Publish().
   // If you handle the message successfully, return 0.  Otherwise,
@@ -267,11 +269,14 @@ int SickS3000::ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, voi
     geom.size.sl = 0.25;
     geom.size.sw = 0.25;
 
+	/* mk: to ged rid of the MessageQueue. MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
+	// FIXME: publish to where now? emmit?
     this->Publish(this->device_addr,
                   resp_queue,
                   PLAYER_MSGTYPE_RESP_ACK,
                   PLAYER_LASER_REQ_GET_GEOM,
                   (void*)&geom, sizeof(geom), NULL);
+	*/
     return 0;
   }
   return -1;

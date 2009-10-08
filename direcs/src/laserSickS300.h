@@ -61,7 +61,8 @@ class SickS3000 : public QObject
 		/**
 		Constructor.  Retrieve options from the configuration file and do any pre-Setup() setup.
 		*/
-		SickS3000(ConfigFile* cf, int section);
+		// org: SickS3000(ConfigFile* cf, int section);
+		SickS3000();
 
 		/**
 		Set up the device.  Return 0 if things go well, and -1 otherwise.
@@ -79,7 +80,9 @@ class SickS3000 : public QObject
 		If you handle the message successfully, return 0.  Otherwise,
 		return -1, and a NACK will be sent for you, if a response is required.
 		*/
-		int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
+		// org: int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
+		int ProcessMessage(player_msghdr * hdr, void * data);
+		// mk: MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
 
 	private:
 		/**
