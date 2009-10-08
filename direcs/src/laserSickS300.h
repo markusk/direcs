@@ -21,6 +21,7 @@
 #ifndef LASERSICKS300_H
 #define LASERSICKS300_H
 
+#include <math.h> // for M_PI
 #include <unistd.h>
 #include <string.h>
 
@@ -110,7 +111,7 @@ class SickS3000 : public QObject
 		return -1, and a NACK will be sent for you, if a response is required.
 		*/
 		// org: int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
-// FIXME: später		int ProcessMessage(player_msghdr * hdr, void * data);
+// mk FIXME: später		int ProcessMessage(player_msghdr * hdr, void * data);
 		// mk: MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
 
 	private:

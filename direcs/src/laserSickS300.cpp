@@ -47,18 +47,18 @@ SickS3000::SickS3000()
 
   if(strcasecmp(c_read_mode,"continuous")==0)
     {
-      PLAYER_MSG0(7,"continuous mode output");
+      qDebug("7, continuous mode output");
       read_mode=LASER_CONTINUOUS_MODE;
     }
   else
     if(strcasecmp(c_read_mode,"request")==0)
       {
-	PLAYER_MSG0(7,"request mode output");
+	qDebug("7, request mode output");
 	read_mode=LASER_REQUEST_MODE;
       }
     else
       {
-	PLAYER_ERROR("unknown read mode");
+	qDebug("unknown read mode");
       }
 
   printf("Player SICK S300 started\n");
@@ -78,7 +78,7 @@ int SickS3000::Setup()
   // configure a serial port.
   if(this->OpenTerm()<0)
     {
-      PLAYER_ERROR("Error opening serial port");
+      qDebug("Error opening serial port");
       return -1;
     }
 
@@ -88,7 +88,7 @@ int SickS3000::Setup()
 
   // Start the device thread; spawns a new thread and executes
   // SickS3000::Main(), which contains the main loop for the driver.
-  StartThread();
+  // FIXME: StartThread();
 
   return(0);
 }
@@ -99,7 +99,7 @@ int SickS3000::Shutdown()
   puts("Shutting SickS3000 driver down");
 
   // Stop and join the driver thread
-  StopThread();
+  // FIXME: StopThread();
 
   sleep(1);
 
@@ -142,7 +142,7 @@ int SickS3000::ChangeTermSpeed(int speed)
   if (ioctl(this->laser_fd, TIOCGSERIAL, &serial) < 0) 
   {
     //RETURN_ERROR(1, "error on TIOCGSERIAL in beginning");
-    PLAYER_WARN("ioctl() failed while trying to get serial port info");
+    qDebug("ioctl() failed while trying to get serial port info"); // mk TODO: maybe return here?
   }
   else
   {
@@ -151,7 +151,7 @@ int SickS3000::ChangeTermSpeed(int speed)
     if (ioctl(this->laser_fd, TIOCSSERIAL, &serial) < 0) 
     {
       //RETURN_ERROR(1, "error on TIOCSSERIAL in beginning");
-      PLAYER_WARN("ioctl() failed while trying to set serial port info");
+      qDebug("ioctl() failed while trying to set serial port info"); // mk TODO: maybe return here?
     }
   }
 #endif
@@ -163,27 +163,27 @@ int SickS3000::ChangeTermSpeed(int speed)
     case 9600:
       //PLAYER_MSG0(2, "terminal speed to 9600");
       if( tcgetattr( this->laser_fd, &term ) < 0 )
-        RETURN_ERROR(1, "unable to get device attributes");
+        qDebug("1, unable to get device attributes"); // mk TODO: maybe return here?
         
       cfmakeraw( &term );
       cfsetispeed( &term, B9600 );
       cfsetospeed( &term, B9600 );
         
       if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
-        RETURN_ERROR(1, "unable to set device attributes");
+        qDebug("1, unable to set device attributes"); // mk TODO: maybe return here?
       break;
 
     case 38400:
       //PLAYER_MSG0(2, "terminal speed to 38400");
       if( tcgetattr( this->laser_fd, &term ) < 0 )
-        RETURN_ERROR(1, "unable to get device attributes");
+        qDebug("1, unable to get device attributes"); // mk TODO: maybe return here?
         
       cfmakeraw( &term );
       cfsetispeed( &term, B38400 );
       cfsetospeed( &term, B38400 );
         
       if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
-        RETURN_ERROR(1, "unable to set device attributes");
+        qDebug("1, unable to set device attributes"); // mk TODO: maybe return here?
       break;
 
     case 500000:
@@ -191,7 +191,7 @@ int SickS3000::ChangeTermSpeed(int speed)
 
 #ifdef HAVE_HI_SPEED_SERIAL    
       if (ioctl(this->laser_fd, TIOCGSERIAL, &this->old_serial) < 0) {
-        RETURN_ERROR(1, "error on TIOCGSERIAL ioctl");
+        qDebug("1, error on TIOCGSERIAL ioctl"); // mk TODO: maybe return here?
       }
     
       serial = this->old_serial;
@@ -200,7 +200,7 @@ int SickS3000::ChangeTermSpeed(int speed)
       serial.custom_divisor = 48; // for FTDI USB/serial converter divisor is 240/5
     
       if (ioctl(this->laser_fd, TIOCSSERIAL, &serial) < 0) {
-        RETURN_ERROR(1, "error on TIOCSSERIAL ioctl");
+        qDebug("1, error on TIOCSSERIAL ioctl"); // mk TODO: maybe return here?
       }
     
 #else
@@ -211,18 +211,18 @@ int SickS3000::ChangeTermSpeed(int speed)
       // the driver will know we want 500000 instead.
 
       if( tcgetattr( this->laser_fd, &term ) < 0 )
-        RETURN_ERROR(1, "unable to get device attributes");    
+        qDebug("1, unable to get device attributes");     // mk TODO: maybe return here?
 
       cfmakeraw( &term );
       cfsetispeed( &term, B38400 );
       cfsetospeed( &term, B38400 );
     
       if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
-        RETURN_ERROR(1, "unable to set device attributes");
+        qDebug("1, unable to set device attributes"); // mk TODO: maybe return here?
     
       break;
     default:
-      PLAYER_ERROR1("unknown speed %d", speed);
+      qDebug("unknown speed %d", speed); // mk TODO: maybe return here?
   }
   return 0;
 }
@@ -305,14 +305,14 @@ void SickS3000::Main()
       n_count=write(laser_fd,get_token_buf,20);
       if(n_count!=20)
 	{
-	  PLAYER_ERROR("error sending request token");
+	  qDebug("error sending request token");
 	}
-      PLAYER_MSG0(7,"token requested");
+      qDebug("7, token requested");
       n_count=ReadBytes(laser_fd,buffer,4);
       if(n_count!=4 || (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00))
-	PLAYER_ERROR("error getting request token");
+	qDebug("error getting request token");
       else
-	PLAYER_MSG0(7,"got token");
+	qDebug("7,got token");
     }
 
   // The main loop; interact with the device here
@@ -323,14 +323,14 @@ void SickS3000::Main()
 
     // Process incoming messages.  SickS3000::ProcessMessage() is
     // called on each message.
-    ProcessMessages();
+    // mk FIXME: späterProcessMessages();
 
     // Interact with the device, and push out the resulting data, using
     // Driver::Publish()
     if(read_mode==LASER_CONTINUOUS_MODE)
       {
 	if(ReadContinuousTelegram(data.ranges)<0)
-	  PLAYER_ERROR("error reading continuous telegram");
+	  qDebug("error reading continuous telegram");
 	else
 		; // mk
 	  // FIXME: Make data available
@@ -346,15 +346,13 @@ void SickS3000::Main()
 	/* request scan data (block 12) */
 	n_count=write(laser_fd,read_data_buf,10);
 	if(n_count!=10)
-	  PLAYER_ERROR("error requesting scan data");
+	  qDebug("error requesting scan data");
 	if(ReadRequestTelegram(data.ranges)<0)
-	  PLAYER_ERROR("error reading request telegram");
+	  qDebug("error reading request telegram");
 	else
 	  {
 	  // Make data available
-	    this->Publish(this->device_addr, NULL, 
-			  PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN,
-			  (void*)&data, sizeof(data), NULL);
+// mk FIXME: später	    this->Publish(this->device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
 	  }
       }
 
@@ -390,7 +388,7 @@ int SickS3000::OpenTerm()
   this->laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
   if (this->laser_fd < 0)
   {
-    PLAYER_ERROR2("unable to open serial port [%s]; [%s]",
+    qDebug("unable to open serial port [%s]; [%s]",
                   (char*) this->device_name, strerror(errno));
     return 1;
   }
@@ -400,14 +398,14 @@ int SickS3000::OpenTerm()
   //
   struct termios term;
   if( tcgetattr( this->laser_fd, &term ) < 0 )
-    RETURN_ERROR(1, "Unable to get serial port attributes");
+    qDebug("1, Unable to get serial port attributes"); // mk TODO: maybe return here?
   
   cfmakeraw( &term );
   cfsetispeed( &term, B9600 );
   cfsetospeed( &term, B9600 );
   
   if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
-    RETURN_ERROR(1, "Unable to set serial port attributes");
+    qDebug("1, Unable to set serial port attributes"); // mk TODO: maybe return here?
 
   // Make sure queue is empty
   //
@@ -435,7 +433,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
 
   memset(buffer,0xFF,LASER_MAX_BUFFER_SIZE);
 
-  PLAYER_MSG0(9,"waiting for header ... ");
+  qDebug("9, waiting for header ... ");
   /* parse first 6 bytes 
    * 0x00 0x00 0x00 0x00 0x00 0x00
    * 4 byte reply header
@@ -444,7 +442,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
   n_count=ReadBytes(this->laser_fd,buffer,1);
   if(n_count<1)
     {
-      PLAYER_ERROR("Could not read header");
+      qDebug("Could not read header");
       return -1;
     }
   if(buffer[0]==0x00)
@@ -471,7 +469,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
 	parsed=true;
     }
   /* header first 6 bytes received */
-  PLAYER_MSG0(7,"telegram start received");
+  qDebug("7,telegram start received");
 
 /* read size of telegram */
   telegram_size=0;
@@ -482,7 +480,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
     }
   else
     {
-      PLAYER_ERROR("error parsing: telegram size expected");
+      qDebug("error parsing: telegram size expected");
       return -1;
     }
 
@@ -501,7 +499,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
     }
   else
     {
-      PLAYER_ERROR("error parsing: coordination flag expected");
+      qDebug("error parsing: coordination flag expected");
       return -1;
     }
   /* device code */
@@ -512,7 +510,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
     }
   else
     {
-      PLAYER_ERROR("error parsing: device code expected");
+      qDebug("error parsing: device code expected");
       return -1;
     }
   /* protocol version */
@@ -523,7 +521,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
     }
   else
     {
-      PLAYER_ERROR("error parsing: protocol version expected");
+      qDebug("error parsing: protocol version expected");
       return -1;
     }
   /* status */
@@ -534,7 +532,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
     }
   else
     {
-      PLAYER_ERROR("error parsing: status expected");
+      qDebug("error parsing: status expected");
       return -1;
     }
   /* timestamp */
@@ -594,11 +592,11 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
     }
   else
     {
-      PLAYER_ERROR("error parsing");
+      qDebug("error parsing");
       return -1;
     }
 
-  PLAYER_MSG0(9,"continuous telegram succesfully received");
+  qDebug("9,continuous telegram succesfully received");
 
   return 0;
 }
@@ -615,7 +613,7 @@ int SickS3000::ReadRequestTelegram(float *ranges)
   n_count=ReadBytes(laser_fd,buffer,4);
   if(n_count!=4 || (strncmp((const char *)buffer,header_start_buff,4)!=0))
     {
-      PLAYER_ERROR("header start expected");
+      qDebug("header start expected");
       return -1;
     }
 
@@ -623,7 +621,7 @@ int SickS3000::ReadRequestTelegram(float *ranges)
   n_count=ReadBytes(laser_fd,buffer,6);
   if(n_count!=6)
     {
-      PLAYER_ERROR("repeated header expected");
+      qDebug("repeated header expected");
       return -1;
     }
 
@@ -631,7 +629,7 @@ int SickS3000::ReadRequestTelegram(float *ranges)
   n_count=read(laser_fd,buffer,2);
   if(n_count!=2)
     {
-      PLAYER_ERROR("monitoring data expected");
+      qDebug("monitoring data expected");
       return -1;
     }
 
@@ -639,7 +637,7 @@ int SickS3000::ReadRequestTelegram(float *ranges)
   n_count=ReadBytes(laser_fd,buffer,1522);
   if(n_count!=1522)
     {
-      PLAYER_ERROR("insuficient number of bytes retrieved");
+      qDebug("insuficient number of bytes retrieved");
       return -1;
     }
 
@@ -653,7 +651,7 @@ int SickS3000::ReadRequestTelegram(float *ranges)
   n_count=ReadBytes(laser_fd,buffer,2);
   if(n_count!=2)
     {
-      PLAYER_ERROR("crc code expected");
+      qDebug("crc code expected");
       return -1;
     }
 
