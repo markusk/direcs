@@ -1,73 +1,27 @@
-/*
- * Player driver for Sick's S3000 laser scanner
- *                      
- */ 
+/*************************************************************************
+*   Copyright (C) 2009 by Markus Knapp                                  *
+*   www.direcs.de                                                       *
+*                                                                       *
+*   This file is part of direcs.                                        *
+*                                                                       *
+*   direcs is free software: you can redistribute it and/or modify it   *
+*   under the terms of the GNU General Public License as published      *
+*   by the Free Software Foundation, version 3 of the License.          *
+*                                                                       *
+*   direcs is distributed in the hope that it will be useful,           *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
+*   GNU General Public License for more details.                        *
+*                                                                       *
+*   You should have received a copy of the GNU General Public License   *
+*   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
+*                                                                       *
+*************************************************************************/
 
-#include <unistd.h>
-#include <string.h>
+#include "laserSickS300.h"
 
-#include <termios.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <linux/serial.h>
-
-#include <libplayercore/playercore.h>
-
-#define DEFAULT_LASER_RATE 38400
-#define DEFAULT_LASER_PORT "/dev/ttyS0"
-#define DEFAULT_LASER_SAMPLES 381
-#define LASER_MAX_BUFFER_SIZE 1024
-#define DEFAULT_LASER_MODE "continuous" /* by default, try continuous mode */
-
-#define LASER_CONTINUOUS_MODE 1
-#define LASER_REQUEST_MODE 2
-
-#define HAVE_HI_SPEED_SERIAL 1
-
-// Error macros
-#define RETURN_ERROR(erc, m) {PLAYER_ERROR(m); return erc;}
- 
-////////////////////////////////////////////////////////////////////////////////
-// The class for the driver
-class SickS3000 : public Driver
-{
-  public:
-    
-    SickS3000(ConfigFile* cf, int section);
-
-    virtual int Setup();
-    virtual int Shutdown();
-
-    // This method will be invoked on each incoming message
-    virtual int ProcessMessage(MessageQueue* resp_queue, 
-                               player_msghdr * hdr,
-                               void * data);
-
-  private:
-
-    // Main function for device thread.
-    virtual void Main();
-  int OpenTerm();
-  int CloseTerm();
-  int ChangeTermSpeed(int speed);
-  ssize_t ReadBytes(int fd, unsigned char *buf, size_t count);
-  int ReadContinuousTelegram(float *ranges);
-  int ReadRequestTelegram(float *ranges);
-
-  int port_rate;
-  const char *device_name;
-  int laser_fd;
-  struct termios oldtio;
-  int read_mode;
-
-#ifdef HAVE_HI_SPEED_SERIAL
-  struct serial_struct old_serial;
-#endif
-
-};
-
-Driver* 
-SickS3000_Init(ConfigFile* cf, int section)
+/* mk not needed?
+Driver* SickS3000_Init(ConfigFile* cf, int section)
 {
   // Create and return a new instance of this driver
   return((Driver*)(new SickS3000(cf, section)));
@@ -77,13 +31,11 @@ void SickS3000_Register(DriverTable* table)
 {
   table->AddDriver("sicks3000", SickS3000_Init);
 }
+*/
 
-////////////////////////////////////////////////////////////////////////////////
-// Constructor.  Retrieve options from the configuration file and do any
-// pre-Setup() setup.
+
+// org: SickS3000::SickS3000(ConfigFile* cf, int section) : Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN, PLAYER_LASER_CODE)
 SickS3000::SickS3000(ConfigFile* cf, int section)
-    : Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN, 
-             PLAYER_LASER_CODE)
 {
   const char *c_read_mode;
 
@@ -116,10 +68,9 @@ SickS3000::SickS3000(ConfigFile* cf, int section)
   return;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Set up the device.  Return 0 if things go well, and -1 otherwise.
+
 int SickS3000::Setup()
-{   
+{
   puts("Sick S3000 driver initialising");
 
   // Here you do whatever is necessary to setup the device, like open and
@@ -142,8 +93,6 @@ int SickS3000::Setup()
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
-// Shutdown the device
 int SickS3000::Shutdown()
 {
   puts("Shutting SickS3000 driver down");
@@ -160,10 +109,7 @@ int SickS3000::Shutdown()
   return(0);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Close the terminal
-// Returns 0 on success
-//
+
 int SickS3000::CloseTerm()
 {
   /* REMOVE
@@ -179,11 +125,7 @@ int SickS3000::CloseTerm()
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Set the terminal speed
-// Valid values are 9600 and 38400
-// Returns 0 on success
-//
+
 int SickS3000::ChangeTermSpeed(int speed)
 {
   struct termios term;
@@ -211,7 +153,7 @@ int SickS3000::ChangeTermSpeed(int speed)
       PLAYER_WARN("ioctl() failed while trying to set serial port info");
     }
   }
-#endif  
+#endif
 
   //printf("LASER: change TERM speed: %d\n", speed);
 
@@ -284,9 +226,8 @@ int SickS3000::ChangeTermSpeed(int speed)
   return 0;
 }
 
-int SickS3000::ProcessMessage(MessageQueue* resp_queue, 
-                                  player_msghdr * hdr,
-                                  void * data)
+
+int SickS3000::ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
 {
   // Process messages here.  Send a response if necessary, using Publish().
   // If you handle the message successfully, return 0.  Otherwise,
@@ -338,10 +279,7 @@ int SickS3000::ProcessMessage(MessageQueue* resp_queue,
 }
 
 
-
-////////////////////////////////////////////////////////////////////////////////
-// Main function for device thread
-void SickS3000::Main() 
+void SickS3000::Main()
 {
   const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
   const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
@@ -351,7 +289,7 @@ void SickS3000::Main()
   int n_count;
 
   data.min_angle=-5*M_PI/180;
-  data.max_angle=180*M_PI/180; /* 190 degrees: angle from -5º to 185º */
+  data.max_angle=180*M_PI/180; /* 190 degrees: angle from -5ï¿½ to 185ï¿½ */
   data.resolution=0.5*M_PI/180;
   data.max_range=5.0;
   data.ranges_count=DEFAULT_LASER_SAMPLES;
@@ -423,6 +361,7 @@ void SickS3000::Main()
   }
 }
 
+
 ssize_t SickS3000::ReadBytes(int fd, unsigned char *buf, size_t count)
 {
   size_t i;
@@ -440,9 +379,7 @@ ssize_t SickS3000::ReadBytes(int fd, unsigned char *buf, size_t count)
   return res;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Open the terminal
-// Returns 0 on success
+
 int SickS3000::OpenTerm()
 {
   this->laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
@@ -473,6 +410,7 @@ int SickS3000::OpenTerm()
     
   return 0;
 }
+
 
 int SickS3000::ReadContinuousTelegram(float *ranges)
 {
@@ -660,6 +598,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
   return 0;
 }
 
+
 int SickS3000::ReadRequestTelegram(float *ranges)
 {
   const char header_start_buff[]={0x00,0x00,0x00,0x00};
@@ -716,10 +655,7 @@ int SickS3000::ReadRequestTelegram(float *ranges)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Extra stuff for building a shared object.
-
-/* need the extern to avoid C++ name-mangling  */
+/* mk not nedded?
 extern "C" {
   int player_driver_init(DriverTable* table)
   {
@@ -729,4 +665,4 @@ extern "C" {
     return(0);
   }
 }
-
+*/

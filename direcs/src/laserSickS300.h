@@ -29,7 +29,7 @@
 #include <sys/ioctl.h>
 #include <linux/serial.h>
 
-#include <libplayercore/playercore.h>
+// mk #include <libplayercore/playercore.h>
 
 #define DEFAULT_LASER_RATE 38400
 #define DEFAULT_LASER_PORT "/dev/ttyS0"
@@ -44,7 +44,12 @@
 
 // Error macros
 #define RETURN_ERROR(erc, m) {PLAYER_ERROR(m); return erc;}
- 
+
+#include <QtGlobal>
+#include <QString>
+#include <QDebug>
+
+
 /**
 to be described...
 */
@@ -53,81 +58,68 @@ class SickS3000 : public QObject
 	Q_OBJECT
 	
 	public:
-		SickS3000(ConfigFile* cf, int section);
-
-		virtual int Setup();
-		virtual int Shutdown();
-		virtual int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data); // This method will be invoked on each incoming message
-
-	private:
-		// Main function for device thread.
-		virtual void Main();
-		int OpenTerm();
-		int CloseTerm();
-		int ChangeTermSpeed(int speed);
-		ssize_t ReadBytes(int fd, unsigned char *buf, size_t count);
-		int ReadContinuousTelegram(float *ranges);
-		int ReadRequestTelegram(float *ranges);
-
-//-- mk ab hier neu
-		/// maybe not needed? // Create and return a new instance of this driver
-		Driver* SickS3000_Init(ConfigFile* cf, int section); 
-
-		/// maybe not needed? 
-		void SickS3000_Register(DriverTable* table);
-
 		/**
 		Constructor.  Retrieve options from the configuration file and do any pre-Setup() setup.
 		*/
-		SickS3000(ConfigFile* cf, int section) : Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN, PLAYER_LASER_CODE);
+		SickS3000(ConfigFile* cf, int section);
 
 		/**
 		Set up the device.  Return 0 if things go well, and -1 otherwise.
 		*/
-		int Setup();
-
+		int Setup(); // mk: why virtual?
+		
 		/**
 		Shutdown the device
 		*/
 		int Shutdown();
+		
+		/**
+		Process messages here.  Send a response if necessary, using Publish().
+		This method will be invoked on each incoming message.
+		If you handle the message successfully, return 0.  Otherwise,
+		return -1, and a NACK will be sent for you, if a response is required.
+		*/
+		int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
 
+	private:
+		/**
+		Main function for device thread
+		*/
+		void Main();
+		
+		/**
+		Open the terminal
+		Returns 0 on success
+		*/
+		int OpenTerm();
+		
 		/**
 		Close the terminal
 		Returns 0 on success
 		*/
 		int CloseTerm();
-
-		/**
-		Process messages here.  Send a response if necessary, using Publish().
-		If you handle the message successfully, return 0.  Otherwise,
-		return -1, and a NACK will be sent for you, if a response is required.
-		*/
-		int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
 		
-		/**
-		Main function for device thread
-		*/
-		void Main();
-
+		int ChangeTermSpeed(int speed);
+		
 		ssize_t ReadBytes(int fd, unsigned char *buf, size_t count);
-
-		/*
-		Open the terminal
-		Returns 0 on success
-		*/
-		int OpenTerm();
-
+		
 		int ReadContinuousTelegram(float *ranges);
-
+		
 		int ReadRequestTelegram(float *ranges);
+
+//-- mk ab hier neu
+		/// maybe not needed? // Create and return a new instance of this driver
+// 		Driver* SickS3000_Init(ConfigFile* cf, int section); 
+
+		/// maybe not needed? 
+// 		void SickS3000_Register(DriverTable* table);
 
 		/*  mk: not needed?
 		Extra stuff for building a shared object.
 		extern "C" {
 			int player_driver_init(DriverTable* table)
 		*/
-
-		//-- mk ende hier 
+		//-- mk ende hier
 
 		int port_rate;
 		const char *device_name;
