@@ -228,6 +228,7 @@ int SickS3000::ChangeTermSpeed(int speed)
 }
 
 
+/* mk: FIXME: später...
 // org: int SickS3000::ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
 int SickS3000::ProcessMessage(player_msghdr * hdr, void * data)
 {
@@ -269,20 +270,16 @@ int SickS3000::ProcessMessage(player_msghdr * hdr, void * data)
     geom.size.sl = 0.25;
     geom.size.sw = 0.25;
 
-	/* mk: to ged rid of the MessageQueue. MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
+	// mk: to ged rid of the MessageQueue. MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
 	// FIXME: publish to where now? emmit?
-    this->Publish(this->device_addr,
-                  resp_queue,
-                  PLAYER_MSGTYPE_RESP_ACK,
-                  PLAYER_LASER_REQ_GET_GEOM,
-                  (void*)&geom, sizeof(geom), NULL);
-	*/
-    return 0;
+	this->Publish(this->device_addr, resp_queue, PLAYER_MSGTYPE_RESP_ACK, PLAYER_LASER_REQ_GET_GEOM, (void*)&geom, sizeof(geom), NULL);
+	
+	return 0;
   }
   return -1;
 
 }
-
+*/
 
 void SickS3000::Main()
 {
@@ -335,10 +332,13 @@ void SickS3000::Main()
 	if(ReadContinuousTelegram(data.ranges)<0)
 	  PLAYER_ERROR("error reading continuous telegram");
 	else
-	  // Make data available
+		; // mk
+	  // FIXME: Make data available
+		/*
 	  this->Publish(this->device_addr, NULL, 
 			PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN,
 			(void*)&data, sizeof(data), NULL);
+		*/
       }
 
     else /* working on request mode */

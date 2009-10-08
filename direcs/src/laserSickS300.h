@@ -31,6 +31,35 @@
 
 // mk #include <libplayercore/playercore.h>
 
+
+// mk start new (instead of including libplayercore/playercore.h)
+// This is from player-3.0.0/libplayercommon/error.h
+/// @internal Message types (internal use only; code should use the macros)
+#define PLAYER_ERR_ERR 0
+#define PLAYER_ERR_WARN 1
+#define PLAYER_ERR_MSG 2
+#define PLAYER_ERR_DBG 2
+
+/// Error message macros
+#define PLAYER_ERROR(msg)         ErrorPrint(PLAYER_ERR_ERR, 0, __FILE__, __LINE__, "error   : " msg "\n")
+#define PLAYER_ERROR1(msg, a)     ErrorPrint(PLAYER_ERR_ERR, 0, __FILE__, __LINE__, "error   : " msg "\n", a)
+#define PLAYER_ERROR2(msg, a, b)  ErrorPrint(PLAYER_ERR_ERR, 0, __FILE__, __LINE__, "error   : " msg "\n", a, b)
+
+/// Warning message macros
+#define PLAYER_WARN(msg)        ErrorPrint(PLAYER_ERR_WARN, 0, __FILE__, __LINE__, "warning : " msg "\n")
+
+/// General messages.  Use level to indicate the message importance
+///  - 0 : important
+///  - 1 : informative
+///  - 2+ : diagnostic
+/// All messages are recorded in the log file, but only the more important
+/// messages are printed on the console.  Use the command line option to
+/// dictate which messages will be printed.
+#define PLAYER_MSG0(level, msg) ErrorPrint(PLAYER_ERR_MSG, level, __FILE__, __LINE__, "" msg "\n") 
+
+// mk end new
+
+
 #define DEFAULT_LASER_RATE 38400
 #define DEFAULT_LASER_PORT "/dev/ttyS0"
 #define DEFAULT_LASER_SAMPLES 381
@@ -81,7 +110,7 @@ class SickS3000 : public QObject
 		return -1, and a NACK will be sent for you, if a response is required.
 		*/
 		// org: int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
-		int ProcessMessage(player_msghdr * hdr, void * data);
+// FIXME: später		int ProcessMessage(player_msghdr * hdr, void * data);
 		// mk: MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
 
 	private:
