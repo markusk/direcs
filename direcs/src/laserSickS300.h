@@ -50,7 +50,7 @@
 /**
 TODO: to be described...
 */
-class SickS3000 : public QObject
+class SickS300 : public QObject
 {
 	Q_OBJECT
 	
@@ -58,8 +58,8 @@ class SickS3000 : public QObject
 		/**
 		Constructor.  Retrieve options from the configuration file and do any pre-Setup() setup.
 		*/
-		// org: SickS3000(ConfigFile* cf, int section);
-		SickS3000();
+		// org: SickS300(ConfigFile* cf, int section);
+		SickS300();
 
 		/**
 		Set up the device.  Return 0 if things go well, and -1 otherwise.
@@ -141,10 +141,10 @@ class SickS3000 : public QObject
 
 		//-- mk ab hier neu
 		/// maybe not needed? // Create and return a new instance of this driver
-// 		Driver* SickS3000_Init(ConfigFile* cf, int section); 
+// 		Driver* SickS300_Init(ConfigFile* cf, int section); 
 
 		/// maybe not needed? 
-// 		void SickS3000_Register(DriverTable* table);
+// 		void SickS300_Register(DriverTable* table);
 
 		/*  mk: not needed?
 		Extra stuff for building a shared object.

@@ -36,7 +36,7 @@ void SickS3000_Register(DriverTable* table)
 
 // org1: SickS3000::SickS3000(ConfigFile* cf, int section) : Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN, PLAYER_LASER_CODE)
 // org2: SickS3000::SickS3000(ConfigFile* cf, int section)
-SickS3000::SickS3000()
+SickS300::SickS300()
 {
   const char *c_read_mode;
 
@@ -70,9 +70,9 @@ SickS3000::SickS3000()
 }
 
 
-int SickS3000::Setup()
+int SickS300::Setup()
 {
-  puts("Sick S3000 driver initialising");
+  puts("Sick S300 driver initialising");
 
   // Here you do whatever is necessary to setup the device, like open and
   // configure a serial port.
@@ -84,19 +84,19 @@ int SickS3000::Setup()
 
   ChangeTermSpeed(this->port_rate);
 
-  puts("Sick S3000 driver ready");
+  puts("Sick S300 driver ready");
 
   // Start the device thread; spawns a new thread and executes
-  // SickS3000::Main(), which contains the main loop for the driver.
+  // SickS300::Main(), which contains the main loop for the driver.
   // FIXME: StartThread();
 
   return(0);
 }
 
 
-int SickS3000::Shutdown()
+int SickS300::Shutdown()
 {
-  puts("Shutting SickS3000 driver down");
+  puts("Shutting SickS300 driver down");
 
   // Stop and join the driver thread
   // FIXME: StopThread();
@@ -105,13 +105,13 @@ int SickS3000::Shutdown()
 
   CloseTerm();
 
-  puts("SickS3000 driver has been shutdown");
+  puts("SickS300 driver has been shutdown");
 
   return(0);
 }
 
 
-int SickS3000::CloseTerm()
+int SickS300::CloseTerm()
 {
   /* REMOVE
 #ifdef HAVE_HI_SPEED_SERIAL
@@ -127,7 +127,7 @@ int SickS3000::CloseTerm()
 }
 
 
-int SickS3000::ChangeTermSpeed(int speed)
+int SickS300::ChangeTermSpeed(int speed)
 {
   struct termios term;
 
@@ -230,7 +230,7 @@ int SickS3000::ChangeTermSpeed(int speed)
 
 /* mk: FIXME: später...
 // org: int SickS3000::ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
-int SickS3000::ProcessMessage(player_msghdr * hdr, void * data)
+int SickS300::ProcessMessage(player_msghdr * hdr, void * data)
 {
   // Process messages here.  Send a response if necessary, using Publish().
   // If you handle the message successfully, return 0.  Otherwise,
@@ -281,7 +281,7 @@ int SickS3000::ProcessMessage(player_msghdr * hdr, void * data)
 }
 */
 
-void SickS3000::Main()
+void SickS300::Main()
 {
 	const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
 	const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
@@ -328,7 +328,7 @@ void SickS3000::Main()
 		// test if we are supposed to cancel
 		pthread_testcancel();
 		
-		// Process incoming messages.  SickS3000::ProcessMessage() is
+		// Process incoming messages.  SickS300::ProcessMessage() is
 		// called on each message.
 		// mk FIXME: späterProcessMessages();
 		
@@ -378,7 +378,7 @@ void SickS3000::Main()
 }
 
 
-ssize_t SickS3000::ReadBytes(int fd, unsigned char *buf, size_t count)
+ssize_t SickS300::ReadBytes(int fd, unsigned char *buf, size_t count)
 {
   size_t i;
   int res,b;
@@ -396,7 +396,7 @@ ssize_t SickS3000::ReadBytes(int fd, unsigned char *buf, size_t count)
 }
 
 
-int SickS3000::OpenTerm()
+int SickS300::OpenTerm()
 {
   this->laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
   if (this->laser_fd < 0)
@@ -427,7 +427,7 @@ int SickS3000::OpenTerm()
 }
 
 
-int SickS3000::ReadContinuousTelegram(float *ranges)
+int SickS300::ReadContinuousTelegram(float *ranges)
 {
   unsigned char buffer[LASER_MAX_BUFFER_SIZE];
   int n_count;
@@ -614,7 +614,7 @@ int SickS3000::ReadContinuousTelegram(float *ranges)
 }
 
 
-int SickS3000::ReadRequestTelegram(float *ranges)
+int SickS300::ReadRequestTelegram(float *ranges)
 {
   const char header_start_buff[]={0x00,0x00,0x00,0x00};
   unsigned char buffer[1522];
@@ -674,8 +674,8 @@ int SickS3000::ReadRequestTelegram(float *ranges)
 extern "C" {
   int player_driver_init(DriverTable* table)
   {
-    puts("SickS3000 driver initializing");
-    SickS3000_Register(table);
+    puts("SickS300 driver initializing");
+    SickS300_Register(table);
     puts("SickS300 driver done");
     return(0);
   }
