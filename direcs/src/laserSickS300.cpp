@@ -40,22 +40,23 @@ SickS300::SickS300()
 {
 	const char *c_read_mode;
 
-	// TODO: Read an option from the configuration file
-//	this->port_rate = cf->ReadInt(section, "rate", DEFAULT_LASER_RATE);
-//	this->device_name = cf->ReadString(section,"port",DEFAULT_LASER_PORT);
-//	c_read_mode = cf->ReadString(section,"read_mode",DEFAULT_LASER_MODE);
 
+	// TODO: put these settings to the ini-file
+	port_rate = DEFAULT_LASER_RATE;
+	device_name = DEFAULT_LASER_PORT;
+	c_read_mode = DEFAULT_LASER_MODE;
+	
 	if(strcasecmp(c_read_mode,"continuous")==0)
 	{
 		qDebug("7, continuous mode output");
-		read_mode=LASER_CONTINUOUS_MODE;
+		read_mode = LASER_CONTINUOUS_MODE;
 	}
 	else
 	{
-		if(strcasecmp(c_read_mode,"request")==0)
+		if (strcasecmp(c_read_mode,"request")==0)
 		{
 			qDebug("7, request mode output");
-			read_mode=LASER_REQUEST_MODE;
+			read_mode = LASER_REQUEST_MODE;
 		}
 		else
 		{
@@ -63,12 +64,17 @@ SickS300::SickS300()
 		}
 	}
 
-	qDebug() << "Player SICK S300 started";
+	qDebug() << "Laserscanner SICK S300 started";
 	qDebug() << "Reading mode:" << read_mode << "(" << LASER_CONTINUOUS_MODE << "continuous mode;" << LASER_REQUEST_MODE << "request mode)";
 	qDebug() << "Device:" << this->device_name;
 	qDebug() << "Baudrate:" << this->port_rate;
+}
 
-	return;
+
+SickS300::~SickS300()
+{
+	// Shutting laserscanner down
+	shutdown();
 }
 
 
@@ -78,13 +84,13 @@ int SickS300::setup()
 
 	// Here you do whatever is necessary to setup the device, like open and
 	// configure a serial port.
-	if(this->openTerm()<0)
+	if (openTerm() < 0)
 	{
 		qDebug("Error opening serial port");
 		return -1;
 	}
 
-	changeTermSpeed(this->port_rate);
+	changeTermSpeed(port_rate);
 
 	qDebug("Sick S300 driver ready");
 
@@ -98,7 +104,7 @@ int SickS300::setup()
 
 int SickS300::shutdown()
 {
-	qDebug("Shutting SickS300 driver down");
+	qDebug("Shutting laserscanner SICK S300 down");
 	
 	// Stop and join the driver thread
 	// FIXME: StopThread();
@@ -107,7 +113,7 @@ int SickS300::shutdown()
 	
 	closeTerm();
 	
-	qDebug("SickS300 driver has been shutdown");
+	qDebug("SICK S300 has been shutdown");
 	
 	return(0);
 }

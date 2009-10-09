@@ -60,6 +60,11 @@ class SickS300 : public QObject
 		*/
 		// org: SickS300(ConfigFile* cf, int section);
 		SickS300();
+		
+		/**
+		Destructor
+		*/
+		~SickS300();
 
 		/**
 		Set up the device.  Return 0 if things go well, and -1 otherwise.
