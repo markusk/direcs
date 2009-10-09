@@ -64,12 +64,12 @@ class SickS300 : public QObject
 		/**
 		Set up the device.  Return 0 if things go well, and -1 otherwise.
 		*/
-		int Setup(); // mk: why virtual?
+		int setup(); // mk: why virtual?
 		
 		/**
 		Shutdown the device
 		*/
-		int Shutdown();
+		int shutdown();
 		
 		/**
 		Process messages here.  Send a response if necessary, using Publish().
@@ -78,7 +78,7 @@ class SickS300 : public QObject
 		return -1, and a NACK will be sent for you, if a response is required.
 		*/
 		// org: int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
-		// mk FIXME: später		int ProcessMessage(player_msghdr * hdr, void * data);
+		// mk FIXME: später		int processMessage(player_msghdr * hdr, void * data);
 		// mk: MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
 
 	private:
@@ -117,27 +117,27 @@ class SickS300 : public QObject
 		/**
 		Main function for device thread
 		*/
-		void Main();
+		void main();
 		
 		/**
 		Open the terminal
 		Returns 0 on success
 		*/
-		int OpenTerm();
+		int openTerm();
 		
 		/**
 		Close the terminal
 		Returns 0 on success
 		*/
-		int CloseTerm();
+		int closeTerm();
 		
-		int ChangeTermSpeed(int speed);
+		int changeTermSpeed(int speed);
 		
-		ssize_t ReadBytes(int fd, unsigned char *buf, size_t count);
+		ssize_t readBytes(int fd, unsigned char *buf, size_t count);
 		
-		int ReadContinuousTelegram(float *ranges);
+		int readContinuousTelegram(float *ranges);
 		
-		int ReadRequestTelegram(float *ranges);
+		int readRequestTelegram(float *ranges);
 
 		//-- mk ab hier neu
 		// TODO: maybe not needed? // Create and return a new instance of this driver

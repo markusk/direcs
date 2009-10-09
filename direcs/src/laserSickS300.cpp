@@ -63,30 +63,30 @@ SickS300::SickS300()
 		}
 	}
 
-	printf("Player SICK S300 started\n");
-	printf("Reading mode: %d (%d continuous mode ; %d request mode)\n",read_mode,LASER_CONTINUOUS_MODE,LASER_REQUEST_MODE);
-	printf("Device: %s\n",this->device_name); 
-	printf("Baudrate: %d\n",this->port_rate);
+	qDebug() << "Player SICK S300 started";
+	qDebug() << "Reading mode:" << read_mode << "(" << LASER_CONTINUOUS_MODE << "continuous mode;" << LASER_REQUEST_MODE << "request mode)";
+	qDebug() << "Device:" << this->device_name;
+	qDebug() << "Baudrate:" << this->port_rate;
 
 	return;
 }
 
 
-int SickS300::Setup()
+int SickS300::setup()
 {
-	puts("Sick S300 driver initialising");
+	qDebug("Sick S300 driver initialising");
 
 	// Here you do whatever is necessary to setup the device, like open and
 	// configure a serial port.
-	if(this->OpenTerm()<0)
+	if(this->openTerm()<0)
 	{
 		qDebug("Error opening serial port");
 		return -1;
 	}
 
-	ChangeTermSpeed(this->port_rate);
+	changeTermSpeed(this->port_rate);
 
-	puts("Sick S300 driver ready");
+	qDebug("Sick S300 driver ready");
 
 	// Start the device thread; spawns a new thread and executes
 	// SickS300::Main(), which contains the main loop for the driver.
@@ -96,31 +96,31 @@ int SickS300::Setup()
 }
 
 
-int SickS300::Shutdown()
+int SickS300::shutdown()
 {
-	puts("Shutting SickS300 driver down");
+	qDebug("Shutting SickS300 driver down");
 	
 	// Stop and join the driver thread
 	// FIXME: StopThread();
 	
 	sleep(1);
 	
-	CloseTerm();
+	closeTerm();
 	
-	puts("SickS300 driver has been shutdown");
+	qDebug("SickS300 driver has been shutdown");
 	
 	return(0);
 }
 
 
-int SickS300::CloseTerm()
+int SickS300::closeTerm()
 {
 /* REMOVE
 #ifdef HAVE_HI_SPEED_SERIAL
 	if (ioctl(this->laser_fd, TIOCSSERIAL, &this->old_serial) < 0)
 	{
 		//RETURN_ERROR(1, "error trying to reset serial to old state");
-		PLAYER_WARN("ioctl() failed while trying to reset serial to old state");
+		qDebug("ioctl() failed while trying to reset serial to old state");
 	}
 #endif
 */
@@ -130,7 +130,7 @@ int SickS300::CloseTerm()
 }
 
 
-int SickS300::ChangeTermSpeed(int speed)
+int SickS300::changeTermSpeed(int speed)
 {
 	struct termios term;
 
@@ -210,7 +210,7 @@ int SickS300::ChangeTermSpeed(int speed)
 			}
 
 #else
-			fprintf(stderr, "sicklms200: Trying to change to 500kbps, but no support compiled in, defaulting to 38.4kbps.\n");
+			qDebug() << stderr << "sicklms200: Trying to change to 500kbps, but no support compiled in, defaulting to 38.4kbps.";
 #endif
 
 			// even if we are doing 500kbps, we have to set the speed to 38400...
@@ -236,32 +236,32 @@ int SickS300::ChangeTermSpeed(int speed)
 
 
 /* mk: FIXME: später...
-// org: int SickS3000::ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
-int SickS300::ProcessMessage(player_msghdr * hdr, void * data)
+// org: int SickS3000::processMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
+int SickS300::processMessage(player_msghdr * hdr, void * data)
 {
 	// Process messages here.  Send a response if necessary, using Publish().
 	// If you handle the message successfully, return 0.  Otherwise,
 	// return -1, and a NACK will be sent for you, if a response is required.
-	PLAYER_MSG0(7,"ProcessMessage: some message arrived");
+	qDebug("7, ProcessMessage: some message arrived");
 
 	assert(hdr);
 	assert(data);
 
 	if(Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ, PLAYER_LASER_REQ_SET_CONFIG, this->device_addr))
 	{
-		PLAYER_MSG0(7,"ProcessMessage: message type:  PLAYER_LASER_REQ_SET_CONFIG");
+		qDebug("7, ProcessMessage: message type:  PLAYER_LASER_REQ_SET_CONFIG");
 		return 0;
 	}
 
 	if(Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ, PLAYER_LASER_REQ_GET_CONFIG, this->device_addr))
 	{
-		PLAYER_MSG0(7,"ProcessMessage: message type: PLAYER_LASER_REQ_GET_CONFIG");
+		qDebug("7, ProcessMessage: message type: PLAYER_LASER_REQ_GET_CONFIG");
 		return 0;
 	}
 
 	if(Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ, PLAYER_LASER_REQ_GET_GEOM, this->device_addr))
 	{
-		PLAYER_MSG0(7,"ProcessMessage: message type:  PLAYER_LASER_REQ_GET_GEOM ");
+		qDebug("7, ProcessMessage: message type:  PLAYER_LASER_REQ_GET_GEOM ");
 		player_laser_geom_t geom;
 		geom.pose.px = 0.0;
 		geom.pose.py = 0.0;
@@ -283,7 +283,7 @@ int SickS300::ProcessMessage(player_msghdr * hdr, void * data)
 */
 
 
-void SickS300::Main()
+void SickS300::main()
 {
 	const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
 	const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
@@ -312,7 +312,7 @@ void SickS300::Main()
 		}
 		
 		qDebug("7, token requested");
-		n_count=ReadBytes(laser_fd,buffer,4);
+		n_count = readBytes(laser_fd,buffer,4);
 		
 		if (n_count!=4 || (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00))
 		{
@@ -338,7 +338,7 @@ void SickS300::Main()
 		// Driver::Publish()
 		if (read_mode==LASER_CONTINUOUS_MODE)
 		{
-			if(ReadContinuousTelegram(data.ranges)<0)
+			if (readContinuousTelegram(data.ranges)<0)
 			{
 				qDebug("error reading continuous telegram");
 			}
@@ -358,7 +358,7 @@ void SickS300::Main()
 				qDebug("error requesting scan data");
 			}
 			
-			if(ReadRequestTelegram(data.ranges)<0)
+			if (readRequestTelegram(data.ranges)<0)
 			{
 				qDebug("error reading request telegram");
 			}
@@ -380,7 +380,7 @@ void SickS300::Main()
 }
 
 
-ssize_t SickS300::ReadBytes(int fd, unsigned char *buf, size_t count)
+ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 {
 	size_t i;
 	int res,b;
@@ -402,7 +402,7 @@ ssize_t SickS300::ReadBytes(int fd, unsigned char *buf, size_t count)
 }
 
 
-int SickS300::OpenTerm()
+int SickS300::openTerm()
 {
 	this->laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
 	if (this->laser_fd < 0)
@@ -416,14 +416,18 @@ int SickS300::OpenTerm()
 	//
 	struct termios term;
 	if( tcgetattr( this->laser_fd, &term ) < 0 )
+	{
 		qDebug("1, Unable to get serial port attributes"); // mk TODO: maybe return here?
+	}
 
 	cfmakeraw( &term );
 	cfsetispeed( &term, B9600 );
 	cfsetospeed( &term, B9600 );
 
 	if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
+	{
 		qDebug("1, Unable to set serial port attributes"); // mk TODO: maybe return here?
+	}
 
 	// Make sure queue is empty
 	//
@@ -433,7 +437,7 @@ int SickS300::OpenTerm()
 }
 
 
-int SickS300::ReadContinuousTelegram(float *ranges)
+int SickS300::readContinuousTelegram(float *ranges)
 {
 	unsigned char buffer[LASER_MAX_BUFFER_SIZE];
 	int n_count;
@@ -458,14 +462,14 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	* 4 byte reply header
 	* 2 byte block numbbre (0x00 0x00 for data output)
 	*/
-	n_count=ReadBytes(this->laser_fd,buffer,1);
-	if(n_count<1)
+	n_count = readBytes(this->laser_fd,buffer,1);
+	if (n_count<1)
 	{
 		qDebug("Could not read header");
 		return -1;
 	}
 	
-	if(buffer[0]==0x00)
+	if (buffer[0]==0x00)
 	{
 		i++;
 		parsing=true;
@@ -473,11 +477,11 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	
 	count_answer++;
 	
-	while(n_count!=-1 && n_count!=0 && !parsed)
+	while (n_count!=-1 && n_count!=0 && !parsed)
 	{
-		n_count=ReadBytes(this->laser_fd,buffer,1);
+		n_count = readBytes(this->laser_fd,buffer,1);
 		count_answer++;
-		if(buffer[0]==0x00)
+		if (buffer[0]==0x00)
 		{
 			i++;
 			parsing=true;
@@ -499,8 +503,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 
 	/* read size of telegram */
 	telegram_size=0;
-	n_count=ReadBytes(this->laser_fd,buffer,2);
-	if(n_count==2)
+	n_count = readBytes(this->laser_fd,buffer,2);
+	if (n_count==2)
 	{
 		telegram_size=(buffer[0] << 8) | buffer[1];
 	}
@@ -518,8 +522,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 
 	/* remaining header */
 	/* coordination flag */
-	n_count=ReadBytes(this->laser_fd,buffer,1);
-	if(n_count==1 && buffer[0]==0xFF)
+	n_count = readBytes(this->laser_fd,buffer,1);
+	if (n_count==1 && buffer[0]==0xFF)
 	{
 		telegram_size--;
 	}
@@ -530,8 +534,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	}
 	
 	/* device code */
-	n_count=ReadBytes(this->laser_fd,buffer,1);
-	if(n_count==1 && buffer[0]==0x07)
+	n_count = readBytes(this->laser_fd,buffer,1);
+	if (n_count==1 && buffer[0]==0x07)
 	{
 		telegram_size--;
 	}
@@ -542,8 +546,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	}
 	
 	/* protocol version */
-	n_count=ReadBytes(this->laser_fd,buffer,2);
-	if(n_count==2 && buffer[0]==0x02 && buffer[1]==0x01)
+	n_count = readBytes(this->laser_fd,buffer,2);
+	if (n_count==2 && buffer[0]==0x02 && buffer[1]==0x01)
 	{
 		telegram_size-=2;
 	}
@@ -554,8 +558,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	}
 	
 	/* status */
-	n_count=ReadBytes(this->laser_fd,buffer,2);
-	if(n_count==2 && buffer[0]==0x00 && (buffer[1]==0x00 || buffer[1]==0x01))
+	n_count = readBytes(this->laser_fd,buffer,2);
+	if (n_count==2 && buffer[0]==0x00 && (buffer[1]==0x00 || buffer[1]==0x01))
 	{
 		telegram_size-=2;
 	}
@@ -566,8 +570,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	}
 	
 	/* timestamp */
-	n_count=ReadBytes(this->laser_fd,buffer,4);
-	if(n_count==4)
+	n_count = readBytes(this->laser_fd,buffer,4);
+	if (n_count==4)
 	{
 		telegram_size-=4;
 	}
@@ -577,8 +581,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	}
 	
 	/* telegram number */
-	n_count=ReadBytes(this->laser_fd,buffer,2);
-	if(n_count==2)
+	n_count = readBytes(this->laser_fd,buffer,2);
+	if (n_count==2)
 	{
 		telegram_size-=2;
 	}
@@ -591,8 +595,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	* bb bb flag
 	* 11 11 id for measurement data from angular range 1
 	*/
-	n_count=ReadBytes(this->laser_fd,buffer,4);
-	if(n_count!=4)
+	n_count = readBytes(this->laser_fd,buffer,4);
+	if (n_count!=4)
 	{
 		return -1;
 	}
@@ -601,14 +605,14 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 
 	/* read data */
 	// cout << "reading data: " << telegram_size-2 << " bytes, " << (telegram_size-2)/2 << " samples" << endl;
-	n_count=ReadBytes(this->laser_fd,buffer,telegram_size-2);
-	if(n_count!=telegram_size-2)
+	n_count = readBytes(this->laser_fd,buffer,telegram_size-2);
+	if (n_count!=telegram_size-2)
 	{
 		return -1;
 	}
 
 	/* fill data */
-	for(i=0;i<DEFAULT_LASER_SAMPLES;i++)
+	for (i=0;i<DEFAULT_LASER_SAMPLES;i++)
 	{
 		ranges[i]=(float)(((buffer[2*i+1] & 0x1f)<<8) | buffer[2*i]);
 		ranges[i] /= 100.0; /* original measure in cm , player works in meters */
@@ -618,8 +622,8 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 	telegram_size-=(telegram_size-2);
 
 	/* read crc */
-	n_count=ReadBytes(this->laser_fd,buffer,2);
-	if(n_count==2)
+	n_count = readBytes(this->laser_fd,buffer,2);
+	if (n_count==2)
 	{
 		telegram_size-=2;
 	}
@@ -635,7 +639,7 @@ int SickS300::ReadContinuousTelegram(float *ranges)
 }
 
 
-int SickS300::ReadRequestTelegram(float *ranges)
+int SickS300::readRequestTelegram(float *ranges)
 {
 	const char header_start_buff[]={0x00,0x00,0x00,0x00};
 	unsigned char buffer[1522];
@@ -643,46 +647,46 @@ int SickS300::ReadRequestTelegram(float *ranges)
 	int i;
 
 	/* read answer header , 4 bytes */
-	n_count=ReadBytes(laser_fd,buffer,4);
-	if(n_count!=4 || (strncmp((const char *)buffer,header_start_buff,4)!=0))
+	n_count = readBytes(laser_fd,buffer,4);
+	if (n_count!=4 || (strncmp((const char *)buffer,header_start_buff,4)!=0))
 	{
 		qDebug("header start expected");
 		return -1;
 	}
 
 	/* read repeated header, 6 bytes */
-	n_count=ReadBytes(laser_fd,buffer,6);
-	if(n_count!=6)
+	n_count = readBytes(laser_fd,buffer,6);
+	if (n_count!=6)
 	{
 		qDebug("repeated header expected");
 		return -1;
 	}
 
 	/* block 12 monitoring data */
-	n_count=read(laser_fd,buffer,2);
-	if(n_count!=2)
+	n_count = read(laser_fd,buffer,2);
+	if (n_count!=2)
 	{
 		qDebug("monitoring data expected");
 		return -1;
 	}
 
 	/* read data */
-	n_count=ReadBytes(laser_fd,buffer,1522);
-	if(n_count!=1522)
+	n_count = readBytes(laser_fd,buffer,1522);
+	if (n_count!=1522)
 	{
 		qDebug("insuficient number of bytes retrieved");
 		return -1;
 	}
 
-	for(i=0;i<DEFAULT_LASER_SAMPLES;i++)
+	for (i=0;i<DEFAULT_LASER_SAMPLES;i++)
 	{
 		ranges[i]=(float)(((buffer[2*i+1] & 0x1f)<<8) | buffer[2*i]);
 		ranges[i] /= 100.0; /* original measure in cm , player works in meters */
 	}
 
 	/* read crc */
-	n_count=ReadBytes(laser_fd,buffer,2);
-	if(n_count!=2)
+	n_count = readBytes(laser_fd,buffer,2);
+	if (n_count!=2)
 	{
 		qDebug("crc code expected");
 		return -1;
@@ -696,9 +700,9 @@ extern "C"
 {
 	int player_driver_init(DriverTable* table)
 	{
-		puts("SickS300 driver initializing");
+		qDebug("SickS300 driver initializing");
 		SickS300_Register(table);
-		puts("SickS300 driver done");
+		qDebug("SickS300 driver done");
 		
 		return(0);
 	}
