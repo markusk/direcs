@@ -31,48 +31,16 @@
 #include <sys/ioctl.h>
 #include <linux/serial.h>
 
-// mk #include <libplayercore/playercore.h>
+#define DEFAULT_LASER_RATE		38400
+#define DEFAULT_LASER_PORT		"/dev/ttyS0"
+#define DEFAULT_LASER_SAMPLES	381
+#define LASER_MAX_BUFFER_SIZE	1024
+#define DEFAULT_LASER_MODE		"continuous"	// by default, try continuous mode
 
+#define LASER_CONTINUOUS_MODE	1
+#define LASER_REQUEST_MODE		2
 
-// mk 1 start new (instead of including libplayercore/playercore.h)
-// This is from player-3.0.0/libplayercommon/error.h
-/// @internal Message types (internal use only; code should use the macros)
-#define PLAYER_ERR_ERR 0
-#define PLAYER_ERR_WARN 1
-#define PLAYER_ERR_MSG 2
-#define PLAYER_ERR_DBG 2
-
-/// Error message macros
-#define PLAYER_ERROR(msg)         ErrorPrint(PLAYER_ERR_ERR, 0, __FILE__, __LINE__, "error   : " msg "\n")
-#define PLAYER_ERROR1(msg, a)     ErrorPrint(PLAYER_ERR_ERR, 0, __FILE__, __LINE__, "error   : " msg "\n", a)
-#define PLAYER_ERROR2(msg, a, b)  ErrorPrint(PLAYER_ERR_ERR, 0, __FILE__, __LINE__, "error   : " msg "\n", a, b)
-
-/// Warning message macros
-#define PLAYER_WARN(msg)        ErrorPrint(PLAYER_ERR_WARN, 0, __FILE__, __LINE__, "warning : " msg "\n")
-
-/// General messages.  Use level to indicate the message importance
-///  - 0 : important
-///  - 1 : informative
-///  - 2+ : diagnostic
-/// All messages are recorded in the log file, but only the more important
-/// messages are printed on the console.  Use the command line option to
-/// dictate which messages will be printed.
-#define PLAYER_MSG0(level, msg) ErrorPrint(PLAYER_ERR_MSG, level, __FILE__, __LINE__, "" msg "\n") 
-// mk 1 end new
-
-#define DEFAULT_LASER_RATE 38400
-#define DEFAULT_LASER_PORT "/dev/ttyS0"
-#define DEFAULT_LASER_SAMPLES 381
-#define LASER_MAX_BUFFER_SIZE 1024
-#define DEFAULT_LASER_MODE "continuous" /* by default, try continuous mode */
-
-#define LASER_CONTINUOUS_MODE 1
-#define LASER_REQUEST_MODE 2
-
-#define HAVE_HI_SPEED_SERIAL 1
-
-// Error macros
-#define RETURN_ERROR(erc, m) {PLAYER_ERROR(m); return erc;}
+#define HAVE_HI_SPEED_SERIAL	1
 
 #include <QtGlobal>
 #include <QString>
