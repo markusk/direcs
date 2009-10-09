@@ -40,10 +40,10 @@ SickS3000::SickS3000()
 {
   const char *c_read_mode;
 
-  // Read an option from the configuration file
-  this->port_rate = cf->ReadInt(section, "rate", DEFAULT_LASER_RATE);
-  this->device_name = cf->ReadString(section,"port",DEFAULT_LASER_PORT);
-  c_read_mode = cf->ReadString(section,"read_mode",DEFAULT_LASER_MODE);
+	// TODO: Read an option from the configuration file
+// 	this->port_rate = cf->ReadInt(section, "rate", DEFAULT_LASER_RATE);
+// 	this->device_name = cf->ReadString(section,"port",DEFAULT_LASER_PORT);
+// 	c_read_mode = cf->ReadString(section,"read_mode",DEFAULT_LASER_MODE);
 
   if(strcasecmp(c_read_mode,"continuous")==0)
     {
@@ -283,85 +283,98 @@ int SickS3000::ProcessMessage(player_msghdr * hdr, void * data)
 
 void SickS3000::Main()
 {
-  const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
-  const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
+	const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
+	const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
+	
+	player_laser_data_t data;
+	unsigned char buffer[LASER_MAX_BUFFER_SIZE];
+	int n_count;
+	
+	data.min_angle=-5*M_PI/180;
+	data.max_angle=180*M_PI/180; /* 190 degrees: angle from -5� to 185� */
+	data.resolution=0.5*M_PI/180;
+	data.max_range=5.0;
+	data.ranges_count=DEFAULT_LASER_SAMPLES;
+	
+	data.intensity_count=0; /* do not know this */
+	data.id=0;
 
-  player_laser_data_t data;
-  unsigned char buffer[LASER_MAX_BUFFER_SIZE];
-  int n_count;
-
-  data.min_angle=-5*M_PI/180;
-  data.max_angle=180*M_PI/180; /* 190 degrees: angle from -5� to 185� */
-  data.resolution=0.5*M_PI/180;
-  data.max_range=5.0;
-  data.ranges_count=DEFAULT_LASER_SAMPLES;
-
-  data.intensity_count=0; /* do not know this */
-  data.id=0;
-
-  if(read_mode==LASER_REQUEST_MODE)
-    {
-      /* request token */
-      n_count=write(laser_fd,get_token_buf,20);
-      if(n_count!=20)
+	if (read_mode==LASER_REQUEST_MODE)
 	{
-	  qDebug("error sending request token");
+		/* request token */
+		n_count=write(laser_fd,get_token_buf,20);
+		
+		if (n_count!=20)
+		{
+			qDebug("error sending request token");
+		}
+		
+		qDebug("7, token requested");
+		n_count=ReadBytes(laser_fd,buffer,4);
+		
+		if (n_count!=4 || (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00))
+		{
+			qDebug("error getting request token");
+		}
+		else
+		{
+			qDebug("7, got token");
+		}
 	}
-      qDebug("7, token requested");
-      n_count=ReadBytes(laser_fd,buffer,4);
-      if(n_count!=4 || (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00))
-	qDebug("error getting request token");
-      else
-	qDebug("7,got token");
-    }
 
-  // The main loop; interact with the device here
-  for(;;)
-  {
-    // test if we are supposed to cancel
-    pthread_testcancel();
-
-    // Process incoming messages.  SickS3000::ProcessMessage() is
-    // called on each message.
-    // mk FIXME: späterProcessMessages();
-
-    // Interact with the device, and push out the resulting data, using
-    // Driver::Publish()
-    if(read_mode==LASER_CONTINUOUS_MODE)
-      {
-	if(ReadContinuousTelegram(data.ranges)<0)
-	  qDebug("error reading continuous telegram");
-	else
-		; // mk
-	  // FIXME: Make data available
-		/*
-	  this->Publish(this->device_addr, NULL, 
-			PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN,
-			(void*)&data, sizeof(data), NULL);
-		*/
-      }
-
-    else /* working on request mode */
-      {
-	/* request scan data (block 12) */
-	n_count=write(laser_fd,read_data_buf,10);
-	if(n_count!=10)
-	  qDebug("error requesting scan data");
-	if(ReadRequestTelegram(data.ranges)<0)
-	  qDebug("error reading request telegram");
-	else
-	  {
-	  // Make data available
-// mk FIXME: später	    this->Publish(this->device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
-	  }
-      }
-
-    data.id++;
-
-    // Sleep (you might, for example, block on a read() instead)
-    if(read_mode==LASER_CONTINUOUS_MODE)
-      usleep(10000);
-  }
+	// The main loop; interact with the device here
+	for(;;)
+	{
+		// test if we are supposed to cancel
+		pthread_testcancel();
+		
+		// Process incoming messages.  SickS3000::ProcessMessage() is
+		// called on each message.
+		// mk FIXME: späterProcessMessages();
+		
+		// Interact with the device, and push out the resulting data, using
+		// Driver::Publish()
+		if (read_mode==LASER_CONTINUOUS_MODE)
+		{
+			if(ReadContinuousTelegram(data.ranges)<0)
+			{
+				qDebug("error reading continuous telegram");
+			}
+			else
+			{ // mk
+				// FIXME: Make data available
+				// this->Publish(this->device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
+			} // mk
+		}
+		else /* working on request mode */
+		{
+			/* request scan data (block 12) */
+			n_count=write(laser_fd,read_data_buf,10);
+			
+			if (n_count!=10)
+			{
+				qDebug("error requesting scan data");
+			}
+			
+			if(ReadRequestTelegram(data.ranges)<0)
+			{
+				qDebug("error reading request telegram");
+			}
+			else
+			{
+				// Make data available
+				// mk FIXME: später	    this->Publish(this->device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
+			}
+		}
+	
+		data.id++;
+	
+		// Sleep (you might, for example, block on a read() instead)
+		if (read_mode==LASER_CONTINUOUS_MODE)
+		{
+			usleep(10000);
+		}
+	} // for(;;)
 }
 
 
@@ -388,8 +401,7 @@ int SickS3000::OpenTerm()
   this->laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
   if (this->laser_fd < 0)
   {
-    qDebug("unable to open serial port [%s]; [%s]",
-                  (char*) this->device_name, strerror(errno));
+    qDebug("unable to open serial port [%s]; [%s]", (char*) this->device_name, strerror(errno));
     return 1;
   }
 

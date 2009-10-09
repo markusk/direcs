@@ -21,7 +21,8 @@
 #ifndef LASERSICKS300_H
 #define LASERSICKS300_H
 
-#include <math.h> // for M_PI
+#include <math.h>  // for M_PI
+#include <errno.h> // for errno
 #include <unistd.h>
 #include <string.h>
 
@@ -33,7 +34,7 @@
 // mk #include <libplayercore/playercore.h>
 
 
-// mk start new (instead of including libplayercore/playercore.h)
+// mk 1 start new (instead of including libplayercore/playercore.h)
 // This is from player-3.0.0/libplayercommon/error.h
 /// @internal Message types (internal use only; code should use the macros)
 #define PLAYER_ERR_ERR 0
@@ -57,9 +58,7 @@
 /// messages are printed on the console.  Use the command line option to
 /// dictate which messages will be printed.
 #define PLAYER_MSG0(level, msg) ErrorPrint(PLAYER_ERR_MSG, level, __FILE__, __LINE__, "" msg "\n") 
-
-// mk end new
-
+// mk 1 end new
 
 #define DEFAULT_LASER_RATE 38400
 #define DEFAULT_LASER_PORT "/dev/ttyS0"
@@ -81,7 +80,7 @@
 
 
 /**
-to be described...
+TODO: to be described...
 */
 class SickS3000 : public QObject
 {
@@ -115,6 +114,38 @@ class SickS3000 : public QObject
 		// mk: MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
 
 	private:
+		// mk 2 start new
+		// This is from player-3.0.0/libplayerinterface/player_interfaces.h
+		/** @brief Data: scan (@ref PLAYER_LASER_DATA_SCAN)
+		
+		The basic laser data packet.  */
+		typedef struct player_laser_data
+		{
+		/** Start and end angles for the laser scan [rad].  */
+		float min_angle;
+		/** Start and end angles for the laser scan [rad].  */
+		float max_angle;
+		/** Angular resolution [rad].  */
+		float resolution;
+		/** Maximum range [m]. */
+		float max_range;
+		/** Number of range readings.  */
+		// org uint32_t ranges_count;
+		unsigned int ranges_count;
+		/** Range readings [m]. */
+		float *ranges;
+		/** Number of intensity readings */
+		// org uint32_t intensity_count;
+		unsigned int intensity_count;
+		/** Intensity readings. */
+		// org uint8_t *intensity;
+		unsigned int *intensity;
+		/** A unique, increasing, ID for the scan */
+		// org uint32_t id;
+		unsigned int id;
+		} player_laser_data_t;
+		// mk 2 end new
+		
 		/**
 		Main function for device thread
 		*/
@@ -140,7 +171,7 @@ class SickS3000 : public QObject
 		
 		int ReadRequestTelegram(float *ranges);
 
-//-- mk ab hier neu
+		//-- mk ab hier neu
 		/// maybe not needed? // Create and return a new instance of this driver
 // 		Driver* SickS3000_Init(ConfigFile* cf, int section); 
 
