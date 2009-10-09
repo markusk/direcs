@@ -98,7 +98,7 @@ int SickS300::setup()
 	// SickS300::Main(), which contains the main loop for the driver.
 	// FIXME: StartThread();
 
-	return(0);
+	return 0;
 }
 
 
@@ -115,7 +115,7 @@ int SickS300::shutdown()
 	
 	qDebug("SICK S300 has been shutdown");
 	
-	return(0);
+	return 0;
 }
 
 
@@ -123,7 +123,7 @@ int SickS300::closeTerm()
 {
 /* REMOVE
 #ifdef HAVE_HI_SPEED_SERIAL
-	if (ioctl(this->laser_fd, TIOCSSERIAL, &this->old_serial) < 0)
+	if (ioctl(laser_fd, TIOCSSERIAL, &this->old_serial) < 0)
 	{
 		//RETURN_ERROR(1, "error trying to reset serial to old state");
 		qDebug("ioctl() failed while trying to reset serial to old state");
@@ -131,7 +131,7 @@ int SickS300::closeTerm()
 #endif
 */
 	
-	::close(this->laser_fd);
+	close(laser_fd);
 	return 0;
 }
 
@@ -148,20 +148,22 @@ int SickS300::changeTermSpeed(int speed)
 	// to get another baud rate instead (based on custom_divisor)
 	// this way even if the previous player doesn't reset the
 	// port correctly, we'll end up with the right speed we want
-	if (ioctl(this->laser_fd, TIOCGSERIAL, &serial) < 0) 
+	if (ioctl(laser_fd, TIOCGSERIAL, &serial) < 0) 
 	{
 		//RETURN_ERROR(1, "error on TIOCGSERIAL in beginning");
-		qDebug("ioctl() failed while trying to get serial port info"); // mk TODO: maybe return here?
+		qDebug("ioctl() failed while trying to get serial port info");
+		return -1;
 	}
 	else
 	{
 		serial.flags &= ~ASYNC_SPD_CUST;
 		serial.custom_divisor = 0;
 		
-		if (ioctl(this->laser_fd, TIOCSSERIAL, &serial) < 0) 
+		if (ioctl(laser_fd, TIOCSSERIAL, &serial) < 0) 
 		{
 			//RETURN_ERROR(1, "error on TIOCSSERIAL in beginning");
-			qDebug("ioctl() failed while trying to set serial port info"); // mk TODO: maybe return here?
+			qDebug("ioctl() failed while trying to set serial port info");
+			return -1;
 		}
 	}
 #endif
@@ -172,37 +174,50 @@ int SickS300::changeTermSpeed(int speed)
 	{
 		case 9600:
 			//PLAYER_MSG0(2, "terminal speed to 9600");
-			if( tcgetattr( this->laser_fd, &term ) < 0 )
-				qDebug("1, unable to get device attributes"); // mk TODO: maybe return here?
+			if( tcgetattr( laser_fd, &term ) < 0 )
+			{
+				qDebug("unable to get device attributes");
+				return -1;
+			}
 	
 			cfmakeraw( &term );
 			cfsetispeed( &term, B9600 );
 			cfsetospeed( &term, B9600 );
 	
-			if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
-				qDebug("1, unable to set device attributes"); // mk TODO: maybe return here?
+			if( tcsetattr( laser_fd, TCSAFLUSH, &term ) < 0 )
+			{
+				qDebug("unable to set device attributes");
+				return -1;
+			}
 			break;
 
 		case 38400:
 			//PLAYER_MSG0(2, "terminal speed to 38400");
-			if( tcgetattr( this->laser_fd, &term ) < 0 )
-				qDebug("1, unable to get device attributes"); // mk TODO: maybe return here?
+			if( tcgetattr( laser_fd, &term ) < 0 )
+			{
+				qDebug("unable to get device attributes");
+				return -1;
+			}
 
 			cfmakeraw( &term );
 			cfsetispeed( &term, B38400 );
 			cfsetospeed( &term, B38400 );
 
-			if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
-				qDebug("1, unable to set device attributes"); // mk TODO: maybe return here?
+			if( tcsetattr( laser_fd, TCSAFLUSH, &term ) < 0 )
+			{
+				qDebug("unable to set device attributes");
+				return -1;
+			}
 			break;
 
 		case 500000:
 			//PLAYER_MSG0(2, "terminal speed to 500000");
 
 #ifdef HAVE_HI_SPEED_SERIAL    
-			if (ioctl(this->laser_fd, TIOCGSERIAL, &this->old_serial) < 0)
+			if (ioctl(laser_fd, TIOCGSERIAL, &this->old_serial) < 0)
 			{
-				qDebug("1, error on TIOCGSERIAL ioctl"); // mk TODO: maybe return here?
+				qDebug("error on TIOCGSERIAL ioctl");
+				return -1;
 			}
 
 			serial = this->old_serial;
@@ -210,9 +225,10 @@ int SickS300::changeTermSpeed(int speed)
 			serial.flags |= ASYNC_SPD_CUST;
 			serial.custom_divisor = 48; // for FTDI USB/serial converter divisor is 240/5
 
-			if (ioctl(this->laser_fd, TIOCSSERIAL, &serial) < 0)
+			if (ioctl(laser_fd, TIOCSSERIAL, &serial) < 0)
 			{
-				qDebug("1, error on TIOCSSERIAL ioctl"); // mk TODO: maybe return here?
+				qDebug("error on TIOCSSERIAL ioctl");
+				return -1;
 			}
 
 #else
@@ -222,19 +238,26 @@ int SickS300::changeTermSpeed(int speed)
 			// even if we are doing 500kbps, we have to set the speed to 38400...
 			// the driver will know we want 500000 instead.
 
-			if( tcgetattr( this->laser_fd, &term ) < 0 )
-				qDebug("1, unable to get device attributes");     // mk TODO: maybe return here?
+			if( tcgetattr( laser_fd, &term ) < 0 )
+			{
+				qDebug("unable to get device attributes");
+				return -1;
+			}
 
 			cfmakeraw( &term );
 			cfsetispeed( &term, B38400 );
 			cfsetospeed( &term, B38400 );
 
-			if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
-				qDebug("1, unable to set device attributes"); // mk TODO: maybe return here?
+			if( tcsetattr( laser_fd, TCSAFLUSH, &term ) < 0 )
+			{
+				qDebug("unable to set device attributes");
+				return -1;
+			}
 
 			break;
 		default:
-			qDebug("unknown speed %d", speed); // mk TODO: maybe return here?
+			qDebug("unknown speed %d", speed);
+			return -1;
 	}
 	
 	return 0;
@@ -399,7 +422,9 @@ ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 		b=read(fd,buf+i,1);
 		
 		if(b!=1)
+		{
 			return b;
+		}
 		
 		res++;
 	}
@@ -410,34 +435,37 @@ ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 
 int SickS300::openTerm()
 {
-	this->laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
-	if (this->laser_fd < 0)
+	laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
+	
+	if (laser_fd < 0)
 	{
 		qDebug("unable to open serial port [%s]; [%s]", (char*) this->device_name, strerror(errno));
-		return 1;
+		return -1;
 	}
 
 	// set the serial port speed to 9600 to match the laser
 	// later we can ramp the speed up to the SICK's 38K
 	//
 	struct termios term;
-	if( tcgetattr( this->laser_fd, &term ) < 0 )
+	if( tcgetattr( laser_fd, &term ) < 0 )
 	{
-		qDebug("1, Unable to get serial port attributes"); // mk TODO: maybe return here?
+		qDebug("Unable to get serial port attributes");
+		return -1;
 	}
 
 	cfmakeraw( &term );
 	cfsetispeed( &term, B9600 );
 	cfsetospeed( &term, B9600 );
 
-	if( tcsetattr( this->laser_fd, TCSAFLUSH, &term ) < 0 )
+	if( tcsetattr( laser_fd, TCSAFLUSH, &term ) < 0 )
 	{
-		qDebug("1, Unable to set serial port attributes"); // mk TODO: maybe return here?
+		qDebug("1, Unable to set serial port attributes");
+		return -1;
 	}
 
 	// Make sure queue is empty
 	//
-	tcflush(this->laser_fd, TCIOFLUSH);
+	tcflush(laser_fd, TCIOFLUSH);
 
 	return 0;
 }
@@ -468,7 +496,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	* 4 byte reply header
 	* 2 byte block numbbre (0x00 0x00 for data output)
 	*/
-	n_count = readBytes(this->laser_fd,buffer,1);
+	n_count = readBytes(laser_fd,buffer,1);
 	if (n_count<1)
 	{
 		qDebug("Could not read header");
@@ -485,7 +513,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	
 	while (n_count!=-1 && n_count!=0 && !parsed)
 	{
-		n_count = readBytes(this->laser_fd,buffer,1);
+		n_count = readBytes(laser_fd,buffer,1);
 		count_answer++;
 		if (buffer[0]==0x00)
 		{
@@ -509,7 +537,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 
 	/* read size of telegram */
 	telegram_size=0;
-	n_count = readBytes(this->laser_fd,buffer,2);
+	n_count = readBytes(laser_fd,buffer,2);
 	if (n_count==2)
 	{
 		telegram_size=(buffer[0] << 8) | buffer[1];
@@ -528,7 +556,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 
 	/* remaining header */
 	/* coordination flag */
-	n_count = readBytes(this->laser_fd,buffer,1);
+	n_count = readBytes(laser_fd,buffer,1);
 	if (n_count==1 && buffer[0]==0xFF)
 	{
 		telegram_size--;
@@ -540,7 +568,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* device code */
-	n_count = readBytes(this->laser_fd,buffer,1);
+	n_count = readBytes(laser_fd,buffer,1);
 	if (n_count==1 && buffer[0]==0x07)
 	{
 		telegram_size--;
@@ -552,7 +580,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* protocol version */
-	n_count = readBytes(this->laser_fd,buffer,2);
+	n_count = readBytes(laser_fd,buffer,2);
 	if (n_count==2 && buffer[0]==0x02 && buffer[1]==0x01)
 	{
 		telegram_size-=2;
@@ -564,7 +592,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* status */
-	n_count = readBytes(this->laser_fd,buffer,2);
+	n_count = readBytes(laser_fd,buffer,2);
 	if (n_count==2 && buffer[0]==0x00 && (buffer[1]==0x00 || buffer[1]==0x01))
 	{
 		telegram_size-=2;
@@ -576,7 +604,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* timestamp */
-	n_count = readBytes(this->laser_fd,buffer,4);
+	n_count = readBytes(laser_fd,buffer,4);
 	if (n_count==4)
 	{
 		telegram_size-=4;
@@ -587,7 +615,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* telegram number */
-	n_count = readBytes(this->laser_fd,buffer,2);
+	n_count = readBytes(laser_fd,buffer,2);
 	if (n_count==2)
 	{
 		telegram_size-=2;
@@ -601,7 +629,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	* bb bb flag
 	* 11 11 id for measurement data from angular range 1
 	*/
-	n_count = readBytes(this->laser_fd,buffer,4);
+	n_count = readBytes(laser_fd,buffer,4);
 	if (n_count!=4)
 	{
 		return -1;
@@ -611,7 +639,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 
 	/* read data */
 	// cout << "reading data: " << telegram_size-2 << " bytes, " << (telegram_size-2)/2 << " samples" << endl;
-	n_count = readBytes(this->laser_fd,buffer,telegram_size-2);
+	n_count = readBytes(laser_fd,buffer,telegram_size-2);
 	if (n_count!=telegram_size-2)
 	{
 		return -1;
@@ -628,7 +656,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	telegram_size-=(telegram_size-2);
 
 	/* read crc */
-	n_count = readBytes(this->laser_fd,buffer,2);
+	n_count = readBytes(laser_fd,buffer,2);
 	if (n_count==2)
 	{
 		telegram_size-=2;
@@ -710,7 +738,7 @@ extern "C"
 		SickS300_Register(table);
 		qDebug("SickS300 driver done");
 		
-		return(0);
+		return 0;
 	}
 }
 */
