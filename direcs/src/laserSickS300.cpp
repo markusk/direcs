@@ -66,8 +66,8 @@ SickS300::SickS300()
 
 	qDebug() << "Laserscanner SICK S300 started";
 	qDebug() << "Reading mode:" << read_mode << "(" << LASER_CONTINUOUS_MODE << "continuous mode;" << LASER_REQUEST_MODE << "request mode)";
-	qDebug() << "Device:" << this->device_name;
-	qDebug() << "Baudrate:" << this->port_rate;
+	qDebug() << "Device:" << device_name;
+	qDebug() << "Baudrate:" << port_rate;
 }
 
 
@@ -80,19 +80,19 @@ SickS300::~SickS300()
 
 int SickS300::setup()
 {
-	qDebug("Sick S300 driver initialising");
+	qDebug("Initialising Sick S300...");
 
 	// Here you do whatever is necessary to setup the device, like open and
 	// configure a serial port.
 	if (openTerm() < 0)
 	{
-		qDebug("Error opening serial port");
+		qDebug("Error opening serial port for S300");
 		return -1;
 	}
 
 	changeTermSpeed(port_rate);
 
-	qDebug("Sick S300 driver ready");
+	qDebug("Sick S300 ready");
 
 	// Start the device thread; spawns a new thread and executes
 	// SickS300::Main(), which contains the main loop for the driver.
