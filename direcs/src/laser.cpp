@@ -248,10 +248,10 @@ void Laser::read_parameters(short int laserScanner)
 	switch (laserScanner)
 	{
 		case LASER1:
-			str1 = "PLS";
-			res1 = 1.0;
-			rem1 = "no";
-			fov1 = 180;
+			str1 = "PLS";	// FIXME: put this to the ini-file!
+			res1 = 1.0;		// FIXME: put this to the ini-file!
+			rem1 = "no";	// FIXME: put this to the ini-file!
+			fov1 = 180;		// FIXME: put this to the ini-file!
 			if (laserSerialPort1 != "none")
 			{
 				use_laser1 = 1;

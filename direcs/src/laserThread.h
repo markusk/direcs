@@ -44,6 +44,12 @@ class LaserThread : public QThread
 		float getLaserScannerFlag(short int laserScanner, int angle);
 		
 		/**
+		Sets the type of the laser
+		@param laserType can be PLS or S300 (others possible, but not implemented completely. @sa Laser::direcs_laser_laser_type_t )
+		*/
+		void setLaserScannerType(unsigned char laserType);
+
+		/**
 		This method sets the a flag for each laser line (angle) which represents a free way, an obstackle etc.
 		@param laserScanner can be LASER1 or LASER2
 		@param angle is the angle in degrees
@@ -101,10 +107,11 @@ class LaserThread : public QThread
 
 
 	private:
-		void getAndStoreLaserValuesFront();
-		void getAndStoreLaserValuesRear();
+		void getAndStoreLaserValuesFront(); // TODO: use one common getAndStoreLaserValue method!
+		void getAndStoreLaserValuesRear();  // TODO: use one common getAndStoreLaserValue method!
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
+		unsigned char laserScannerType;
 		bool laserScannerFrontIsConnected;
 		bool laserScannerRearIsConnected;
 		int numReadingsFront;
@@ -119,11 +126,18 @@ class LaserThread : public QThread
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 150; // Default: 150 ms
 		
+		// FIXME: put this to the ini-file or so. Fix also: read_parameters() in laser.cpp !!
+		static const unsigned char LMS = 0; // this is temporary
+		static const unsigned char PLS = 1; // this is temporary
+		static const unsigned char HOKUYO_URG = 2; // this is not in use, but according to laser.h, direcs_laser_laser_type_t
+		static const unsigned char SIMULATED_LASER = 3; // this is not in use, but according to laser.h, direcs_laser_laser_type_t
+		static const unsigned char S300 = 4; // this is temporary
+		
 		/**
 		Defines the size of the laserScannerValue[] array
 		This es equal to the number of degrees.
 		*/
-		static const unsigned char LASERSCANNERARRAYSIZE = 180;
+		static const unsigned char LASERSCANNERARRAYSIZE = 180; // FIXME: put this to the ini-file or so. Fix also: read_parameters() in laser.cpp !!
 		
 		QList <float> laserScannerValuesFront;  /// The measured distances from the front laser scanner.
 		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
