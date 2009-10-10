@@ -94,35 +94,36 @@ class SickS300 : public QObject
 		The basic laser data packet.  */
 		typedef struct player_laser_data
 		{
-		/** Start and end angles for the laser scan [rad].  */
-		float min_angle;
-		/** Start and end angles for the laser scan [rad].  */
-		float max_angle;
-		/** Angular resolution [rad].  */
-		float resolution;
-		/** Maximum range [m]. */
-		float max_range;
-		/** Number of range readings.  */
-		// org uint32_t ranges_count;
-		unsigned int ranges_count;
-		/** Range readings [m]. */
-		float *ranges;
-		/** Number of intensity readings */
-		// org uint32_t intensity_count;
-		unsigned int intensity_count;
-		/** Intensity readings. */
-		// org uint8_t *intensity;
-		unsigned int *intensity;
-		/** A unique, increasing, ID for the scan */
-		// org uint32_t id;
-		unsigned int id;
+			/** Start and end angles for the laser scan [rad].  */
+			float min_angle;
+			/** Start and end angles for the laser scan [rad].  */
+			float max_angle;
+			/** Angular resolution [rad].  */
+			float resolution;
+			/** Maximum range [m]. */
+			float max_range;
+			/** Number of range readings.  */
+			// org uint32_t ranges_count;
+			unsigned int ranges_count;
+			/** Range readings [m]. */
+			float *ranges;
+			/** Number of intensity readings */
+			// org uint32_t intensity_count;
+			unsigned int intensity_count;
+			/** Intensity readings. */
+			// org uint8_t *intensity;
+			unsigned int *intensity;
+			/** A unique, increasing, ID for the scan */
+			// org uint32_t id;
+			unsigned int id;
 		} player_laser_data_t;
 		// mk 2 end new
 		
 		/**
-		Main function for device thread
+		Initialises the laser scanner communication.
+		@return 0 on access and any other value on error
 		*/
-		void main();
+		int init();
 		
 		/**
 		Open the terminal
@@ -158,6 +159,10 @@ class SickS300 : public QObject
 			int player_driver_init(DriverTable* table)
 		*/
 		//-- mk ende hier
+		
+		int test(); // FIXME: just a test
+	
+		player_laser_data_t data; /// the scan data, including the measuread lengths!
 
 		int port_rate;
 		const char *device_name;

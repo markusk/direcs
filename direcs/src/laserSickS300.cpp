@@ -38,25 +38,21 @@ void SickS3000_Register(DriverTable* table)
 // org2: SickS3000::SickS3000(ConfigFile* cf, int section)
 SickS300::SickS300()
 {
-	const char *c_read_mode;
-
-
-	// TODO: put these settings to the ini-file
-	port_rate = DEFAULT_LASER_RATE;
-	device_name = DEFAULT_LASER_PORT;
-	c_read_mode = DEFAULT_LASER_MODE;
+	port_rate = DEFAULT_LASER_RATE;		// TODO: put these settings to the ini-file
+	device_name = DEFAULT_LASER_PORT;	// TODO: put these settings to the ini-file
+// 	read_mode = LASER_CONTINUOUS_MODE;	// TODO: put these settings to the ini-file
+	read_mode = LASER_REQUEST_MODE;	// TODO: put these settings to the ini-file
 	
-	if(strcasecmp(c_read_mode,"continuous")==0)
+	
+	if (read_mode == LASER_CONTINUOUS_MODE)
 	{
 		qDebug("7, continuous mode output");
-		read_mode = LASER_CONTINUOUS_MODE;
 	}
 	else
 	{
-		if (strcasecmp(c_read_mode,"request")==0)
+		if (read_mode == LASER_REQUEST_MODE)
 		{
 			qDebug("7, request mode output");
-			read_mode = LASER_REQUEST_MODE;
 		}
 		else
 		{
@@ -94,11 +90,12 @@ int SickS300::setup()
 
 	qDebug("Sick S300 ready");
 
+	// Initialise the laser scanner communication
+	return init();
+	
 	// Start the device thread; spawns a new thread and executes
-	// SickS300::Main(), which contains the main loop for the driver.
+	// SickS300::Main(), which contains the main loop for the driver. Renamed to 'init()'
 	// FIXME: StartThread();
-
-	return 0;
 }
 
 
@@ -146,7 +143,7 @@ int SickS300::changeTermSpeed(int speed)
 	// we should check and reset the AYSNC_SPD_CUST flag
 	// since if it's set and we request 38400, we're likely
 	// to get another baud rate instead (based on custom_divisor)
-	// this way even if the previous player doesn't reset the
+	// this way even if the previous call doesn't reset the
 	// port correctly, we'll end up with the right speed we want
 	if (ioctl(laser_fd, TIOCGSERIAL, &serial) < 0) 
 	{
@@ -168,7 +165,7 @@ int SickS300::changeTermSpeed(int speed)
 	}
 #endif
 
-	//printf("LASER: change TERM speed: %d\n", speed);
+	qDebug("LASER: change TERM speed: %d", speed);
 
 	switch(speed)
 	{
@@ -312,12 +309,11 @@ int SickS300::processMessage(player_msghdr * hdr, void * data)
 */
 
 
-void SickS300::main()
+int SickS300::init()
 {
 	const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
 	const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
 	
-	player_laser_data_t data;
 	unsigned char buffer[LASER_MAX_BUFFER_SIZE];
 	int n_count;
 	
@@ -333,11 +329,13 @@ void SickS300::main()
 	if (read_mode==LASER_REQUEST_MODE)
 	{
 		/* request token */
+		qDebug("Requesting token because we're in the request mode...");
 		n_count=write(laser_fd,get_token_buf,20);
 		
 		if (n_count!=20)
 		{
 			qDebug("error sending request token");
+			return -1;
 		}
 		
 		qDebug("7, token requested");
@@ -346,13 +344,20 @@ void SickS300::main()
 		if (n_count!=4 || (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00))
 		{
 			qDebug("error getting request token");
+			return -1;
 		}
 		else
 		{
 			qDebug("7, got token");
 		}
 	}
-
+	
+	/// FIXME: this is a first test
+	// try to read some data
+	return test();
+	
+	
+/* FIXME: uncomment this
 	// The main loop; interact with the device here
 	for(;;)
 	{
@@ -361,7 +366,7 @@ void SickS300::main()
 		
 		// Process incoming messages.  SickS300::ProcessMessage() is
 		// called on each message.
-		// mk FIXME: späterProcessMessages();
+		// mk FIXME: später ProcessMessages();
 		
 		// Interact with the device, and push out the resulting data, using
 		// Driver::Publish()
@@ -377,9 +382,9 @@ void SickS300::main()
 				// this->Publish(this->device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
 			} // mk
 		}
-		else /* working on request mode */
+		else // working on request mode
 		{
-			/* request scan data (block 12) */
+			// request scan data (block 12)
 			n_count=write(laser_fd,read_data_buf,10);
 			
 			if (n_count!=10)
@@ -406,6 +411,7 @@ void SickS300::main()
 			usleep(10000);
 		}
 	} // for(;;)
+*/
 }
 
 
@@ -742,3 +748,55 @@ extern "C"
 	}
 }
 */
+
+
+int SickS300::test()
+{
+	/// FIXME: this is a first test
+	int n_count = 0;
+	const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
+	
+	
+	if (read_mode == LASER_CONTINUOUS_MODE)
+	{
+		qDebug("Reading one telegram in continuous mode...");
+		if (readContinuousTelegram(data.ranges) < 0)
+		{
+			qDebug("error reading continuous telegram");
+			return -1;
+		}
+		else
+		{
+			qDebug("Telegram read successfully! :-)");
+			return 0;
+			// FIXME: Make data available
+			// this->Publish(this->device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
+		}
+	}
+	else // working on request mode
+	{
+		qDebug("Requesting scan data...");
+		
+		// request scan data (block 12)
+		n_count=write(laser_fd,read_data_buf,10);
+		
+		if (n_count!=10)
+		{
+			qDebug("error requesting scan data");
+			return -1;
+		}
+		
+		if (readRequestTelegram(data.ranges)<0)
+		{
+			qDebug("error reading request telegram");
+			return -1;
+		}
+		else
+		{
+			// Make data available
+			// mk FIXME: später	    this->Publish(this->device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
+			qDebug("Telegram read successfully! :-)");
+			return 0;
+		}
+	}
+}
