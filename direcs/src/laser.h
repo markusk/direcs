@@ -180,7 +180,9 @@
 
 
 /**
-\brief This class handles all the low level laser stuff.
+\brief This class handles all the low level laser stuff for the old laser scanners.
+
+Currently supported are SICK LMS, PLS or HOKUYO_URG.
 */
 class Laser : public QObject
 {

@@ -120,9 +120,10 @@ class SickS300 : public QObject
 		// mk 2 end new
 		
 		/**
-		Main function for device thread
+		Initialises the laser scanner communication.
+		@return 0 on access and any other value on error
 		*/
-		void main();
+		int init();
 		
 		/**
 		Open the terminal
