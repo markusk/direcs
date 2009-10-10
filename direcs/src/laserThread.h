@@ -23,6 +23,7 @@
 
 //-------------------------------------------------------------------
 #include "laser.h"
+#include "laserSickS300.h"
 #include <QThread>
 //-------------------------------------------------------------------
 
@@ -120,7 +121,8 @@ class LaserThread : public QThread
 		QString mountingLaserscannerFront; /// cane be "normal" or "flipped"
 		QString mountingLaserscannerRear; /// cane be "normal" or "flipped"
 		
-		Laser *laser;
+		Laser *laser; // the object for the PLS or LMS laserscanner
+		SickS300 *laserS300; // the object for the S300 laserscanner
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

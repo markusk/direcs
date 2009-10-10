@@ -57,6 +57,7 @@ LaserThread::LaserThread()
 	{
 		if (laserScannerType == S300)
 		{
+			laserS300 = new SickS300();
 		}
 		else
 		{
@@ -76,15 +77,16 @@ LaserThread::~LaserThread()
 			// shutdown laser (parameter '0' is not in use)
 			// This shuts down ALL lasers (managed internaly in laser.cpp)!
 			laser->direcs_laser_shutdown(0);
+			delete laser;
+		}
+		else
+		{
+			if (laserScannerType == S300)
+			{
+				delete laserS300;
+			}
 		}
 	}
-	
-	if (laserScannerType == PLS)
-	{
-		delete laser;
-	}
-	
-	// TODO: add S300 delete stuff
 }
 
 
@@ -601,9 +603,25 @@ bool LaserThread::isConnected(short int laserScanner)
 	}
 	else
 	{
-		// TODO: S300 stuff
-		qDebug("Processing the S300 stuff");
-		return false;
+		switch (laserScanner)
+		{
+			case LASER1:
+				// connect to serial port etc.
+				if (laserS300->setup() == 0)
+				{
+					laserScannerFrontIsConnected = true;
+					return true;
+				}
+				
+				laserScannerFrontIsConnected = false;
+				return false;
+				break;
+			case LASER2:
+				qDebug("Support for S300 as rear laser scanner not implemented yet");
+				laserScannerRearIsConnected = false;
+				return false;
+				break;
+		}
 	}
 	
 	stopped = true; // don't run the thread!
