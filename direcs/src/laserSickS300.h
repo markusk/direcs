@@ -159,11 +159,8 @@ class SickS300 : public QObject
 			int player_driver_init(DriverTable* table)
 		*/
 		//-- mk ende hier
-		
-		int test(); // FIXME: just a test
 	
 		player_laser_data_t data; /// the scan data, including the measuread lengths!
-
 		int port_rate;
 		const char *device_name;
 		int laser_fd;

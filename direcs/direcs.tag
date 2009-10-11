@@ -704,6 +704,75 @@
     <class kind="class">LaserScene</class>
   </compound>
   <compound kind="file">
+    <name>laserSickS300.cpp</name>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
+    <filename>laserSickS300_8cpp</filename>
+    <includes id="laserSickS300_8h" name="laserSickS300.h" local="yes" imported="no">laserSickS300.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>laserSickS300.h</name>
+    <path>/home/markus/develop/direcs/direcs/src/</path>
+    <filename>laserSickS300_8h</filename>
+    <class kind="struct">SickS300::player_laser_data</class>
+    <class kind="class">SickS300</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>DEFAULT_LASER_MODE</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>afe4fd0efff1d63a4683eab40aa78724e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DEFAULT_LASER_PORT</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>afebc79c506d5e7e50da63ef7d173d3c0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DEFAULT_LASER_RATE</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>aab85fd2b10bbf40e9816ebdd61432a1a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DEFAULT_LASER_SAMPLES</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>ab8c4532ba5f7d8171f7df694f10715e0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HAVE_HI_SPEED_SERIAL</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>ac47390e8db524ba7ac99609cab3bdc4a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LASER_CONTINUOUS_MODE</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>ac61292934fc755a9aa9bac8893f80034</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LASER_MAX_BUFFER_SIZE</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>a7165e9e54084c0543a1c4c277641d6fa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LASER_REQUEST_MODE</name>
+      <anchorfile>laserSickS300_8h.html</anchorfile>
+      <anchor>acb173be73d2969869383a94d831b2914</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>laserThread.cpp</name>
     <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laserThread_8cpp</filename>
@@ -714,6 +783,7 @@
     <path>/home/markus/develop/direcs/direcs/src/</path>
     <filename>laserThread_8h</filename>
     <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
+    <includes id="laserSickS300_8h" name="laserSickS300.h" local="yes" imported="no">laserSickS300.h</includes>
     <class kind="class">LaserThread</class>
   </compound>
   <compound kind="file">
@@ -8480,6 +8550,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>setLaserScannerType</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a296a050bd2b6bf5757b21b17d3270e9a</anchor>
+      <arglist>(unsigned char laserType)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>setMounting</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>a2f8d85fb81d9cd36c4eff92404b64a93</anchor>
@@ -8528,6 +8605,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>SickS300 *</type>
+      <name>laserS300</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>af104c61128b19900e2d883f7835e9862</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>QList&lt; int &gt;</type>
       <name>laserScannerFlagsFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
@@ -8553,6 +8637,13 @@
       <name>laserScannerRearIsConnected</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>a8628ca87816183ff5cd23a24f48e616f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>unsigned char</type>
+      <name>laserScannerType</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a66aaefeb23f3268ff2870bb4346a8490</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -8626,6 +8717,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>HOKUYO_URG</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>aac43976770b1656953f852948fe40320</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>LASER1</name>
       <anchorfile>classLaserThread.html</anchorfile>
@@ -8665,6 +8763,34 @@
       <name>LASERSCANNERARRAYSIZE</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>ae0730fee0b5703fcc380ca53933bd025</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>LMS</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a73dc4d92ae3660482d28892530e23028</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>PLS</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>aac61a9274487b98b7f9ae877c89c8f93</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>S300</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a40c2d45f0d415c9a6b5886f0d8e2aaf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SIMULATED_LASER</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a98449068a065b114b744106d47a45130</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -12155,6 +12281,218 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>SickS300</name>
+    <filename>classSickS300.html</filename>
+    <class kind="struct">SickS300::player_laser_data</class>
+    <member kind="function">
+      <type>int</type>
+      <name>setup</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>abd2c1b9e1c284b9bcb50f31dbef40d12</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>shutdown</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a2386213b2d5408493a96044df30d2c3e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>SickS300</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>aea38ed8874aa695e7ed3ff26e613548e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~SickS300</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>aa2afa09724ff957e39e6786a59684f68</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="typedef" protection="private">
+      <type>struct SickS300::player_laser_data</type>
+      <name>player_laser_data_t</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>ad5189781cff1f0df4208fd392a13d5da</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>changeTermSpeed</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>ab52ff1feb07c4234c88706deb21f287c</anchor>
+      <arglist>(int speed)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>closeTerm</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a38698d0727b645af3368dec8f032ae30</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>init</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a1534d3f367ad20045b888625aa4145aa</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>openTerm</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a6d4a938bc98f34519d32061ace6cdfe3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>ssize_t</type>
+      <name>readBytes</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a7fdcb43d00a74c2df0a4a16be8ab6418</anchor>
+      <arglist>(int fd, unsigned char *buf, size_t count)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>readContinuousTelegram</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>ac73bdbebd937bd3c9e3258355a02e60b</anchor>
+      <arglist>(float *ranges)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>readRequestTelegram</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a7a8d848c80ff0579aa26e83ea0ef3567</anchor>
+      <arglist>(float *ranges)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>test</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>acf62d068760e59ffb6034eed38006ed8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>player_laser_data_t</type>
+      <name>data</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>ab840924f9e2190ea07ac28298999a999</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>const char *</type>
+      <name>device_name</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a98edbd56324b141fe513446b20e1e4e0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laser_fd</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>af1e34ccad279ef9fa25b54e75e0ab8a2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>struct serial_struct</type>
+      <name>old_serial</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a6a2f89f5a84194ad8c1a1745195fa5aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>struct termios</type>
+      <name>oldtio</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a915808312b6f24cc7bd9c91e738b5914</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>port_rate</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a084ea13a18557ff099484dfe8f514d77</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>read_mode</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a4de9a8fe5418aceeb1e6db6c39b97aef</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>SickS300::player_laser_data</name>
+    <filename>structSickS300_1_1player__laser__data.html</filename>
+    <member kind="variable">
+      <type>unsigned int</type>
+      <name>id</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a2d345f3398be7b391c5db71454ccaae9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned int *</type>
+      <name>intensity</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a5a08edc5187e3dcb98b49ff2cf2581dc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned int</type>
+      <name>intensity_count</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>ae5b000af00497117b1df885427967ff6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>float</type>
+      <name>max_angle</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a0a97d12c40c527241f42dfa5ee85f2d7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>float</type>
+      <name>max_range</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a9a1bdc9484eeb4cfb8d79e926807cb77</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>float</type>
+      <name>min_angle</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a22bb3949fb9b8b6d3534d968972b5646</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>float *</type>
+      <name>ranges</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a6571b8a9bbbe823ab980c30f2314eeaf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned int</type>
+      <name>ranges_count</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a84484753a228d1a6c8fc03dd280ccc69</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>float</type>
+      <name>resolution</name>
+      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
+      <anchor>a6da486f734c96264566c85f727dc3b7a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>SpeakThread</name>
     <filename>classSpeakThread.html</filename>
     <member kind="slot">
@@ -12508,6 +12846,8 @@
     <file>laser.h</file>
     <file>laserScene.cpp</file>
     <file>laserScene.h</file>
+    <file>laserSickS300.cpp</file>
+    <file>laserSickS300.h</file>
     <file>laserThread.cpp</file>
     <file>laserThread.h</file>
     <file>logfile.cpp</file>
