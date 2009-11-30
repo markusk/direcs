@@ -662,7 +662,7 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		// show the angle where to drive in a GUI label
 		//----------------------------------------------------------------------------
-		connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int)), gui, SLOT(showLaserFrontAngles(int, int, int)));
+		connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int, float)), gui, SLOT(showLaserFrontAngles(int, int, int, float)));
 	
 		//----------------------------------------------------------------------------
 		// show the preferred driving direction in a GUI label

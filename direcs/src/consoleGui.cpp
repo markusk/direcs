@@ -500,11 +500,12 @@ void ConsoleGui::showMotorStatus(unsigned char motor, bool power, unsigned char 
 }
 
 
-void ConsoleGui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay)
+void ConsoleGui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
 	Q_UNUSED(largestFreeAreaStart);
 	Q_UNUSED(largestFreeAreaEnd);
 	Q_UNUSED(centerOfFreeWay);
+	Q_UNUSED(width);
 	// TODO:show value/state in console
 }
 

@@ -113,8 +113,9 @@ class ConsoleGui : public QObject
 		@param largestFreeAreaStart
 		@param largestFreeAreaEnd
 		@param centerOfFreeWay
+		@param width of the estimated drive-tru area
 		*/
-		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
+		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width);
 
 		/**
 		Shows the preferred driving direction in a lable.

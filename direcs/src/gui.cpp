@@ -1079,7 +1079,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 }
 
 
-void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay)
+void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
 	// TODO: do all this stuff for the rear scanner?
 	ui.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
@@ -1087,52 +1087,24 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
 	
 	
-	if ((largestFreeAreaStart>0) && (largestFreeAreaEnd<180))
+	// show width in cm with one decimal place (Nachkommastelle)
+	if (width != -1)
 	{
-		// calculate width of the largest free area with the 'Kosinussatz'
-		// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
-		float width = 0.0;
-		float b = 0.0;
-		float c = 0.0;
-		float alpha = 0.0;
-		// TODO: check if alpha > 179° !?
-		
-		b = laserLineListFront->at(largestFreeAreaStart)->line().length();
-		c = laserLineListFront->at(largestFreeAreaEnd)->line().length();
-		alpha = (largestFreeAreaEnd - largestFreeAreaStart);
-		
-		// to get the 'true drive-tru width':
-		// make the triangle to be one with same-length-sides of b and c
-		if (c < b)
-		{
-			b = c;
-		}
-		else
-		{
-			if (b < c)
-			{
-				c = b;
-			}
-		}
-		
-		// calculate
-		width = sqrt( pow(b, 2) + pow(c, 2) - 2*b*c * cos(alpha) );
-		
-		// show width in cm with one decimal place (Nachkommastelle)
-		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 1).append(" cm"));
-		
+		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
 		
 		// test test test
 		// test test test
-		// test test test
-		
 		// get the coordinates of the regarding laser lines (free area)
 		QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
 		QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
 		
 		// set the circle position!
-		widthLeftCircle->setPos(pointB); // TODO: set pos
-		//widthLeftCircle->mapFromItem(laserLineListFront->at(largestFreeAreaStart), laserLineListFront->at(largestFreeAreaStart)->scenePos()); // TODO: set pos
+		// (b is the length of the line)
+	//	widthLeftCircle->setPos( (pointB.x() - (widthCirclesWidth/2)) + b, (pointB.y() - (widthCirclesWidth/2)) ); // TODO: set pos
+	}
+	else
+	{
+		ui.lblLaserFrontFreeWidth->setText("oo");
 	}
 }
 
@@ -2341,10 +2313,13 @@ void Gui::createLaserDistanceObjects()
 
 void Gui::createLaserWidthObjects()
 {
+	widthCirclesWidth = 50;  // TODO: which radius?
+		
 	widthLeftCircle = new QGraphicsEllipseItem();
+	widthRightCircle = new QGraphicsEllipseItem();
 	
 		// set the start angle of the circle
-	widthLeftCircle->setStartAngle(0*16);
+	widthLeftCircle->setStartAngle(0*16); // TODO: all the right circle stuff!
 	// set the span angle of the circle
 	widthLeftCircle->setSpanAngle(360*16);
 
@@ -2356,7 +2331,7 @@ void Gui::createLaserWidthObjects()
 	
 	// draw a circle to see the coordinates for the 'drive-tru width'
 	// change the width and height
-	widthLeftCircle->setRect(0, 0, 50, 50); // TODO: which radius?
+	widthLeftCircle->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
 	
 	// add the item to the scene
 	scene->addItem(widthLeftCircle); // fixme

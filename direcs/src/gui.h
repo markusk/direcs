@@ -248,8 +248,9 @@ class Gui : public QMainWindow
 		@param largestFreeAreaStart
 		@param largestFreeAreaEnd
 		@param centerOfFreeWay
+		@param width of the estimated drive-tru area
 		*/
-		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
+		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width);
 
 		/**
 		Shows the preferred driving direction in a lable.
@@ -465,6 +466,7 @@ class Gui : public QMainWindow
 		QPixmap pixmap; // for IplImageToQImage()
 		QGraphicsEllipseItem *widthLeftCircle; /// shows the width for the robots drive-tru
 		QGraphicsEllipseItem *widthRightCircle; /// shows the width for the robots drive-tru
+		qreal widthCirclesWidth; /// the width of the robots drive-tru circles
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 

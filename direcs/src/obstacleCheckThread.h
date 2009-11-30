@@ -94,8 +94,9 @@ class ObstacleCheckThread : public QThread
 		@param largestFreeAreaStart is the start angle of the largest free area.
 		@param largestFreeAreaEnd is the end angle of the largest free area.
 		@param centerOfFreeWay is the center of the largest free area.
+		@param width of the estimated drive-tru area
 		*/
-		void newDrivingAngleSet(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay);
+		void newDrivingAngleSet(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width);
 
 
 	private:
@@ -114,6 +115,11 @@ class ObstacleCheckThread : public QThread
 		int largestFreeAreaEnd;
 		
 		int centerOfFreeWay;
+		
+		float width;
+		float b;
+		float c;
+		float alpha;
 		
 		/*! defines the minimum slot in degrees, where the robot has to fit through */
 		int robotSlot;

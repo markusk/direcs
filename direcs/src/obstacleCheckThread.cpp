@@ -333,13 +333,49 @@ void ObstacleCheckThread::run()
 		{
 		}
 
+		
+		//----------------------------------------------------------------------------
+		// LASER SCANNER DATA ANALYSIS - STEP III a
+		//--------------------------------------------------------------------------------------
+		// Calculate the width of the estimated drive-tru direction/area with the 'Kosinussatz'
+		// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
+		//--------------------------------------------------------------------------------------
+		if ((largestFreeAreaStart>0) && (largestFreeAreaEnd<180)) // FIXME: what if we have more than 180° or less 0°? See whole class!
+		{
+			// b and c are the sides of the triangle
+			b = laserThread->getLaserScannerValue(LASER1, largestFreeAreaStart);
+			c = laserThread->getLaserScannerValue(LASER1, largestFreeAreaEnd);
+			alpha = (largestFreeAreaEnd - largestFreeAreaStart);
+			
+			// to get the 'true drive-tru width':
+			// make the triangle to be one with same-length-sides of b and c
+			if (c < b)
+			{
+				b = c;
+			}
+			else
+			{
+				if (b < c)
+				{
+					c = b;
+				}
+			}
+			
+			// calculate
+			width = sqrt( pow(b, 2) + pow(c, 2) - 2*b*c * cos(alpha) );
+		}
+		else
+		{
+			width = -1;
+		}
+		
 
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP IV
 		//----------------------------------------------------------------------------
 		// Emit the result for the GUI
 		//----------------------------------------------------------------------------
-		emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWay);
+		emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWay, width);
 
 		if (centerOfFreeWay == -1)
 		{
