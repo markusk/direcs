@@ -416,6 +416,7 @@ class Gui : public QMainWindow
 		*/
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
+		void createLaserWidthObjects();
 
 		/**
 		Removes HTML code from a given string.
@@ -462,6 +463,8 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QPixmap pixmap; // for IplImageToQImage()
+		QGraphicsEllipseItem *widthLeftCircle; /// shows the width for the robots drive-tru
+		QGraphicsEllipseItem *widthRightCircle; /// shows the width for the robots drive-tru
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 

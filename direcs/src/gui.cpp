@@ -126,6 +126,8 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	createLaserScannerObjects();
 	createLaserDistanceObjects();
+	createLaserWidthObjects();
+
 
 	//----------------------------------------------------------------------------------
 	// get the mouse position, when the robot position is to be changed
@@ -147,7 +149,9 @@ Gui::~Gui()
 {
 	delete pixmapBot2;
 	delete pixmapBot1;
-
+	
+	delete widthLeftCircle;
+	delete widthRightCircle;
 
 	// empty QList
 	while (!laserDistanceTextFront->isEmpty())
@@ -1082,37 +1086,54 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 //	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
 	ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
 	
-	// calculate width of the largest free area with the 'Kosinussatz'
-	// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
-	float width = 0.0;
-	float b = 0.0;
-	float c = 0.0;
-	float alpha = 0.0;
-	// TODO: check if alpha > 179° !?
 	
-	b = laserLineListFront->at(largestFreeAreaStart)->line().length();
-	c = laserLineListFront->at(largestFreeAreaEnd)->line().length();
-	alpha = (largestFreeAreaEnd - largestFreeAreaStart);
-	
-	// to get the 'true drive-tru width':
-	// make the triangle to be one with same-length-sides of b and c
-	if (c < b)
+	if ((largestFreeAreaStart>0) && (largestFreeAreaEnd<180))
 	{
-		b = c;
-	}
-	else
-	{
-		if (b < c)
+		// calculate width of the largest free area with the 'Kosinussatz'
+		// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
+		float width = 0.0;
+		float b = 0.0;
+		float c = 0.0;
+		float alpha = 0.0;
+		// TODO: check if alpha > 179° !?
+		
+		b = laserLineListFront->at(largestFreeAreaStart)->line().length();
+		c = laserLineListFront->at(largestFreeAreaEnd)->line().length();
+		alpha = (largestFreeAreaEnd - largestFreeAreaStart);
+		
+		// to get the 'true drive-tru width':
+		// make the triangle to be one with same-length-sides of b and c
+		if (c < b)
 		{
-			c = b;
+			b = c;
 		}
+		else
+		{
+			if (b < c)
+			{
+				c = b;
+			}
+		}
+		
+		// calculate
+		width = sqrt( pow(b, 2) + pow(c, 2) - 2*b*c * cos(alpha) );
+		
+		// show width in cm with one decimal place (Nachkommastelle)
+		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 1).append(" cm"));
+		
+		
+		// test test test
+		// test test test
+		// test test test
+		
+		// get the coordinates of the regarding laser lines (free area)
+		QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
+		QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
+		
+		// set the circle position!
+		widthLeftCircle->setPos(pointB); // TODO: set pos
+		//widthLeftCircle->mapFromItem(laserLineListFront->at(largestFreeAreaStart), laserLineListFront->at(largestFreeAreaStart)->scenePos()); // TODO: set pos
 	}
-	
-	// calculate
-	width = sqrt( pow(b, 2) + pow(c, 2) - 2*b*c * cos(alpha) );
-	
-	// show width in cm with one decimal place (Nachkommastelle)
-	ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 1).append(" cm"));
 }
 
 
@@ -2315,6 +2336,30 @@ void Gui::createLaserDistanceObjects()
 		// add text to scene
 		scene->addItem(text);
 	}
+}
+
+
+void Gui::createLaserWidthObjects()
+{
+	widthLeftCircle = new QGraphicsEllipseItem();
+	
+		// set the start angle of the circle
+	widthLeftCircle->setStartAngle(0*16);
+	// set the span angle of the circle
+	widthLeftCircle->setSpanAngle(360*16);
+
+	// set the color
+	widthLeftCircle->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+
+	// setting to the lowest layer level
+	widthLeftCircle->setZValue(1);
+	
+	// draw a circle to see the coordinates for the 'drive-tru width'
+	// change the width and height
+	widthLeftCircle->setRect(0, 0, 50, 50); // TODO: which radius?
+	
+	// add the item to the scene
+	scene->addItem(widthLeftCircle); // fixme
 }
 
 
