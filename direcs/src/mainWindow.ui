@@ -65,19 +65,19 @@
                </font>
               </property>
               <property name="text">
-               <string>Largest free area start:</string>
+               <string>Largest free area:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lblLaserFrontFreeStart">
+             <widget class="QLabel" name="lblLaserFrontFreeArea">
               <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
               <property name="text">
-               <string>0 deg</string>
+               <string>0 - 180 deg</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -96,12 +96,12 @@
                </font>
               </property>
               <property name="text">
-               <string>Largest free area end:</string>
+               <string>Largest free area center:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lblLaserFrontFreeEnd">
+             <widget class="QLabel" name="lblLaserFrontFreeCenter">
               <property name="font">
                <font>
                 <family>Verdana</family>
@@ -127,19 +127,19 @@
                </font>
               </property>
               <property name="text">
-               <string>Center of free area:</string>
+               <string>Free area width:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lblLaserFrontFreeCenter">
+             <widget class="QLabel" name="lblLaserFrontFreeWidth">
               <property name="font">
                <font>
                 <family>Verdana</family>
                </font>
               </property>
               <property name="text">
-               <string>0 deg</string>
+               <string>0 cm</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -1077,9 +1077,42 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay)
 {
-	ui.lblLaserFrontFreeStart->setText(QString("%1 deg").arg(largestFreeAreaStart));
-	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
+	// TODO: do all this stuff for the rear scanner?
+	ui.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
+//	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
 	ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
+	
+	// calculate width of the largest free area with the 'Kosinussatz'
+	// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
+	float width = 0.0;
+	float b = 0.0;
+	float c = 0.0;
+	float alpha = 0.0;
+	// TODO: check if alpha > 179° !?
+	
+	b = laserLineListFront->at(largestFreeAreaStart)->line().length();
+	c = laserLineListFront->at(largestFreeAreaEnd)->line().length();
+	alpha = (largestFreeAreaEnd - largestFreeAreaStart);
+	
+	// to get the 'true drive-tru width':
+	// make the triangle to be one with same-length-sides of b and c
+	if (c < b)
+	{
+		b = c;
+	}
+	else
+	{
+		if (b < c)
+		{
+			c = b;
+		}
+	}
+	
+	// calculate
+	width = sqrt( pow(b, 2) + pow(c, 2) - 2*b*c * cos(alpha) );
+	
+	// show width in cm with one decimal place (Nachkommastelle)
+	ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 1).append(" cm"));
 }
 
 
