@@ -41,7 +41,14 @@ class LaserThread : public QThread
 		~LaserThread();
 		void stop();
 		virtual void run();
+		
+		/**
+		@return the (last) measuread value (distance) in meters(!)
+		*/
 		float getLaserScannerValue(short int laserScanner, int angle);
+		
+		/**
+		*/
 		float getLaserScannerFlag(short int laserScanner, int angle);
 		
 		/**

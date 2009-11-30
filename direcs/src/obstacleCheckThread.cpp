@@ -343,8 +343,8 @@ void ObstacleCheckThread::run()
 		if ((largestFreeAreaStart>0) && (largestFreeAreaEnd<180)) // FIXME: what if we have more than 180° or less 0°? See whole class!
 		{
 			// b and c are the sides of the triangle
-			b = laserThread->getLaserScannerValue(LASER1, largestFreeAreaStart);
-			c = laserThread->getLaserScannerValue(LASER1, largestFreeAreaEnd);
+			b = laserThread->getLaserScannerValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
+			c = laserThread->getLaserScannerValue(LASER1, largestFreeAreaEnd) * 100; // converted in cm, here!
 			alpha = (largestFreeAreaEnd - largestFreeAreaStart);
 			
 			// to get the 'true drive-tru width':
