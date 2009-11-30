@@ -98,6 +98,9 @@ unix {
     OBJECTS_DIR = ../tmp
 
     MOC_DIR = ../tmp
+    QMAKE_CXXFLAGS_DEBUG += -pg
+    QMAKE_CXXFLAGS_RELEASE += -pg
+
 }
 
 win32 {

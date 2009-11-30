@@ -30,7 +30,7 @@ LaserThread::LaserThread()
 	numReadingsFront = 0;
 	numReadingsRear = 0;
 
-	setLaserScannerType(S300); // FIXME: gett this from the ini-file
+	setLaserScannerType(PLS); // FIXME: gett this from the ini-file
 
 	// initialisation
 	for (int i=0; i<LASERSCANNERARRAYSIZE; i++)

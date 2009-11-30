@@ -1,16 +1,19 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="3" >
+ <DocsAndViews NumberOfDocuments="4" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
    <View0 Encoding="" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/laserSickS300.h" >
-   <View0 Encoding="" line="35" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/laserThread.cpp" >
+   <View0 Encoding="" line="574" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/laserSickS300.cpp" >
-   <View0 Encoding="" line="768" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/laser.cpp" >
+   <View0 Encoding="" line="1456" Type="Source" />
   </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcsSerial.cpp" >
+   <View0 Encoding="" line="46" Type="Source" />
+  </Doc3>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -32,7 +35,6 @@
    <bookmarks>
     <bookmark url="/home/markus/develop/direcs/direcs/src/laserSickS300.cpp" >
      <mark line="770" />
-     <mark line="40" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/direcs.cpp" >
      <mark line="104" />
@@ -41,11 +43,15 @@
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
      <mark line="1946" />
     </bookmark>
+    <bookmark url="/home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
+     <mark line="1389" />
+    </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/motor.cpp" >
      <mark line="791" />
     </bookmark>
-    <bookmark url="/home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
-     <mark line="1389" />
+    <bookmark url="/home/markus/develop/direcs/direcs/src/laser.cpp" >
+     <mark line="1640" />
+     <mark line="1494" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>
