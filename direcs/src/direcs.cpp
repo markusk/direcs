@@ -2427,20 +2427,20 @@ void Direcs::readSettings()
 
 			if (typeLaserscannerFront == "error2")
 			{
-				laserThread->setScannerType(LASER1, "none");
+				laserThread->setLaserscannerType(LASER1, "none");
 				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
 				if (typeLaserscannerFront == "error1")
 				{
-					laserThread->setScannerType(LASER1, "none");
+					laserThread->setLaserscannerType(LASER1, "none");
 					emit message("<font color=\"#FF0000\">Value \"typeLaserscannerFront\" not found in ini-file!</font>");
 				}
 				else
 				{
 					// everything okay
-					laserThread->setScannerType(LASER1, typeLaserscannerFront);
+					laserThread->setLaserscannerType(LASER1, typeLaserscannerFront);
 					emit message(QString("Front laser scanner type set to <b>%1</b>.").arg(typeLaserscannerFront));
 				}
 			}
@@ -2456,8 +2456,8 @@ void Direcs::readSettings()
 				emit message("<font color=\"#FF0000\">Value \"laserscannerAngleFront\"not found in ini-file!</font>");
 				break;
 			default:
-				laserThread->setLaserscannerAngle(LASER1, laserscannerAngleFront\);
-				emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront\));
+				laserThread->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+				emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront));
 				break;
 			}
 
@@ -2516,20 +2516,20 @@ void Direcs::readSettings()
 
 			if (typeLaserscannerRear == "error2")
 			{
-				laserThread->setScannerType(LASER2, "none");
+				laserThread->setLaserscannerType(LASER2, "none");
 				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
 				if (typeLaserscannerRear == "error1")
 				{
-					laserThread->setScannerType(LASER2, "none");
+					laserThread->setLaserscannerType(LASER2, "none");
 					emit message("<font color=\"#FF0000\">Value \"typeLaserscannerRear\" not found in ini-file!</font>");
 				}
 				else
 				{
 					// everything okay
-					laserThread->setScannerType(LASER2, typeLaserscannerRear);
+					laserThread->setLaserscannerType(LASER2, typeLaserscannerRear);
 					emit message(QString("Rear laser scanner type set to <b>%1</b>.").arg(typeLaserscannerRear));
 				}
 			}
