@@ -116,10 +116,10 @@ class ObstacleCheckThread : public QThread
 		
 		int centerOfFreeWay;
 		
-		float width;
-		float b;
-		float c;
-		float alpha;
+		double width;
+		double b;
+		double c;
+		double alpha;
 		
 		/*! defines the minimum slot in degrees, where the robot has to fit through */
 		int robotSlot;

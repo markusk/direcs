@@ -362,7 +362,8 @@ void ObstacleCheckThread::run()
 			}
 			
 			// calculate
-			width = sqrt( pow(b, 2) + pow(c, 2) - 2*b*c * cos(alpha) );
+			// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
+			width = sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI/180.0) );
 		}
 		else
 		{

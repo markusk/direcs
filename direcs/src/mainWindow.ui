@@ -34,9 +34,6 @@
           <family>Verdana</family>
          </font>
         </property>
-        <property name="cursor" stdset="0">
-         <cursorShape>OpenHandCursor</cursorShape>
-        </property>
         <property name="mouseTracking">
          <bool>true</bool>
         </property>

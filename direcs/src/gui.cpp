@@ -1090,17 +1090,28 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	// show width in cm with one decimal place (Nachkommastelle)
 	if (width != -1)
 	{
-		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
+		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 1).append(" cm"));
 		
 		// test test test
 		// test test test
 		// get the coordinates of the regarding laser lines (free area)
 		QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
 		QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
+	
+		
+		
+		// test 2
+		// test 2
+		qreal y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
+		// reset transform or rotation
+		widthLeftCircle->resetTransform();
+		// rotate every line by one degree
+		widthLeftCircle->rotate(largestFreeAreaStart);
+		// set position of each line
+		//widthLeftCircle->setPos((x - laserLineListFront->at(i)->line().length()), y);
 		
 		// set the circle position!
-		// (b is the length of the line)
-	//	widthLeftCircle->setPos( (pointB.x() - (widthCirclesWidth/2)) + b, (pointB.y() - (widthCirclesWidth/2)) ); // TODO: set pos
+		widthLeftCircle->setPos( (pointB.x() - laserLineListFront->at(largestFreeAreaStart)->line().length() - (widthCirclesWidth/2)), (pointB.y() - (widthCirclesWidth/2)) ); // TODO: set pos
 	}
 	else
 	{
@@ -1828,7 +1839,7 @@ void Gui::initLaserView()
 	//--------------
 	// REAR laser
 	//--------------
-	for (int i=0, angle=90; i<laserLineListRear->size(); i++, angle--)
+	for (int i=0, angle=90; i<laserLineListRear->size(); i++, angle--) // FIXME: what if we have more than 180°?!
 	{
 		// reset transform or rotation
 		laserLineListRear->at(i)->resetTransform();
@@ -1846,7 +1857,7 @@ void Gui::initLaserView()
 	//--------------
 	// FRONT laser
 	//--------------
-	for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle--)
+	for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle--) // FIXME: what if we have more than 180°?!
 	{
 		// reset transform or rotation
 		laserLineListFront->at(i)->resetTransform();
@@ -1967,7 +1978,7 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		// FIXME: fix this conversion to the correct values!
 		int xKart = qRound( laserLineLength * cos(i) ) - laserXPos;
 		int yKart = qRound( laserLineLength * sin(i) ) - laserYPos;
-		laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(xKart).arg(yKart) );
+		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(xKart).arg(yKart) );
 	}
 }
 
@@ -2141,7 +2152,7 @@ void Gui::createLaserScannerObjects()
 	// create the FRONT laser line list
 	//-------------------------------------
 	// TODO: check if always 180 lines!
-	// create 180 laser lines (0 to 179)
+	// create 180 laser lines (0 to 179) FIXME: what if we have an other range?!
 	for (int i=-90; i<90; i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
@@ -2154,7 +2165,7 @@ void Gui::createLaserScannerObjects()
 		line->setPen(QPen(colorLaserFreeWay));
 
 		// set position of each line
-		line->rotate(i);
+// 		line->rotate(i);
 
 		// put one layer up (layer 3).
 		line->setZValue(3);
@@ -2184,7 +2195,7 @@ void Gui::createLaserScannerObjects()
 		line->setLine(0,0,0,0);
 
 		// set position of each line
-		line->rotate(i);
+// 		line->rotate(i);
 
 		// put one layer up (layer 3).
 		line->setZValue(3);

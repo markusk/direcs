@@ -1,28 +1,19 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="7" >
+ <DocsAndViews NumberOfDocuments="4" >
   <Doc0 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcs.cpp" >
-   <View0 Encoding="" line="664" Type="Source" />
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/laserThread.cpp" >
-   <View0 Encoding="" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.cpp" >
+   <View0 Encoding="" line="1642" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/laser.cpp" >
-   <View0 Encoding="" line="1456" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/obstacleCheckThread.cpp" >
+   <View0 Encoding="" line="364" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/direcsSerial.cpp" >
-   <View0 Encoding="" line="46" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/obstacleCheckThread.h" >
+   <View0 Encoding="" line="120" Type="Source" />
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/gui.cpp" >
-   <View0 Encoding="" line="1077" Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/obstacleCheckThread.h" >
-   <View0 Encoding="" line="97" Type="Source" />
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/markus/develop/direcs/direcs/src/obstacleCheckThread.cpp" >
-   <View0 Encoding="" line="334" Type="Source" />
-  </Doc6>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -33,6 +24,9 @@
     <breakpoint1 location="/home/markus/develop/direcs/direcs/src/laserSickS300.cpp:772" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint1>
+    <breakpoint2 location="/home/markus/develop/direcs/direcs/src/obstacleCheckThread.cpp:346" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+     <tracedExpressions/>
+    </breakpoint2>
    </breakpointList>
    <showInternalCommands value="0" />
   </kdevdebugger>
@@ -50,18 +44,22 @@
      <mark line="55" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/gui.cpp" >
-     <mark line="1979" />
-     <mark line="1084" />
-    </bookmark>
-    <bookmark url="/home/markus/develop/direcs/direcs/src/motor.cpp" >
-     <mark line="791" />
+     <mark line="1961" />
+     <mark line="1094" />
+     <mark line="2324" />
     </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/sensorThread.cpp" >
      <mark line="1389" />
     </bookmark>
+    <bookmark url="/home/markus/develop/direcs/direcs/src/motor.cpp" >
+     <mark line="791" />
+    </bookmark>
     <bookmark url="/home/markus/develop/direcs/direcs/src/laser.cpp" >
      <mark line="1640" />
      <mark line="1494" />
+    </bookmark>
+    <bookmark url="/home/markus/develop/direcs/direcs/src/obstacleCheckThread.cpp" >
+     <mark line="351" />
     </bookmark>
    </bookmarks>
   </kdevbookmarks>
