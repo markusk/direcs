@@ -30,7 +30,7 @@ LaserThread::LaserThread()
 	numReadingsFront = 0;
 	numReadingsRear = 0;
 
-	setLaserScannerType(PLS); // FIXME: gett this from the ini-file
+	setLaserscannerType(PLS); // FIXME: gett this from the ini-file
 
 	// initialisation
 	for (int i=0; i<LASERSCANNERARRAYSIZE; i++)
@@ -44,7 +44,7 @@ LaserThread::LaserThread()
 		laserScannerFlagsRear.append(0);
 	}
 	
-	if (laserScannerType == PLS)
+	if (laserscannerType == PLS)
 	{
 		// this is the 'old' laser stuff
 		laser = new Laser();
@@ -55,7 +55,7 @@ LaserThread::LaserThread()
 	}
 	else
 	{
-		if (laserScannerType == S300)
+		if (laserscannerType == S300)
 		{
 			laserS300 = new SickS300();
 		}
@@ -121,7 +121,7 @@ void LaserThread::run()
 			((simulationMode==false) && (laserScannerRearIsConnected == true))
 		   )
 		{
-			if (laserScannerType == PLS)
+			if (laserscannerType == PLS)
 			{
 				// asks ALL lasers (managed internaly in laser_main.cpp) for data.
 				laserValue = laser->direcs_laser_run();
@@ -172,7 +172,7 @@ void LaserThread::run()
 
 void LaserThread::getAndStoreLaserValuesFront()
 {
-	if (laserScannerType == PLS)
+	if (laserscannerType == PLS)
 	{
 		// check if all 180 beams were read (in the laser module)
 		numReadingsFront = laser->getLaserNumReadings(LASER1);
@@ -569,7 +569,7 @@ void LaserThread::setSimulationMode(bool status)
 
 bool LaserThread::isConnected(short int laserScanner)
 {
-	if (laserScannerType == PLS)
+	if (laserscannerType == PLS)
 	{
 		// try to start the laser module
 		if (laser->direcs_laser_start(laserScanner) == 0)
@@ -631,7 +631,7 @@ bool LaserThread::isConnected(short int laserScanner)
 
 void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 {
-	if (laserScannerType == PLS)
+	if (laserscannerType == PLS)
 	{
 		// for laser.cpp:
 		laser->setDevicePort(laserScanner, serialPort);
@@ -651,13 +651,66 @@ void LaserThread::setMounting(short int laserScanner, QString mounting)
 				mountingLaserscannerRear = mounting;
 				break;
 			default:
-				qDebug("laser number not supported yet (LaserThreadd::setMounting");
+				qDebug("laser number not yet supported (LaserThreadd::setMounting");
 				break;
 		}
 }
 
 
-void LaserThread::setLaserScannerType(unsigned char laserType)
+void LaserThread::setLaserscannerType(short int laserScanner, QString laserType)
 {
-	laserScannerType = laserType;
+		switch (laserScanner)
+		{
+			case LASER1:
+			if (laserType=="LMS")
+			{
+				laserscannerTypeFront = LMS;
+			}
+			else
+			{
+				if (laserType=="PLS")
+				{
+					laserscannerTypeFront = PLS;
+				}
+				else
+				{
+					if (laserType=="S300")
+					{
+						laserscannerTypeFront = S300;
+					}
+					else
+					{
+						qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER1");
+					}
+				}
+			}
+			break;
+		case LASER2:
+			if (laserType=="LMS")
+			{
+				laserscannerTypeFront = LMS;
+			}
+			else
+			{
+				if (laserType=="PLS")
+				{
+					laserscannerTypeFront = PLS;
+				}
+				else
+				{
+					if (laserType=="S300")
+					{
+						laserscannerTypeFront = S300;
+					}
+					else
+					{
+						qDebug("laser type not yet supported (LaserThreadd::setLaserscannerType, LASER1");
+					}
+				}
+			}
+			break;
+		default:
+			qDebug("laser number not yet supported  (LaserThreadd::setLaserscannerType");
+			break;
+		}
 }

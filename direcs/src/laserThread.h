@@ -53,9 +53,10 @@ class LaserThread : public QThread
 		
 		/**
 		Sets the type of the laser
+		@param laserScanner can be LASER1 or LASER2
 		@param laserType can be PLS or S300 (others possible, but not implemented completely. @sa Laser::direcs_laser_laser_type_t )
 		*/
-		void setLaserScannerType(unsigned char laserType);
+		void setLaserscannerType(short int laserScanner, QString laserType);
 
 		/**
 		This method sets the a flag for each laser line (angle) which represents a free way, an obstackle etc.
@@ -119,7 +120,8 @@ class LaserThread : public QThread
 		void getAndStoreLaserValuesRear();  // TODO: use one common getAndStoreLaserValue method!
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
-		unsigned char laserScannerType;
+		unsigned char laserscannerTypeFront;
+		unsigned char laserscannerTypeRear;
 		bool laserScannerFrontIsConnected;
 		bool laserScannerRearIsConnected;
 		int numReadingsFront;
