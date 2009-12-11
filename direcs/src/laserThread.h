@@ -179,6 +179,10 @@ class LaserThread : public QThread
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+
+		// the tags for the laser lines
+		static const int FREEWAY = 0;
+		static const int OBSTACLE = 1;
 };
 
 #endif

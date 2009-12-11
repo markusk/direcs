@@ -125,8 +125,8 @@ void LaserThread::run()
 			//---------------------------------
 			// S I M U L A T I O N   M O D E
 			//---------------------------------
-			numReadingsFront = 180; // FIXME: check if we have a 270 deg. laser!
-			numReadingsRear = 180;  // FIXME: check if we have a 270 deg. laser!
+			numReadingsFront = laserscannerAngleFront;
+			numReadingsRear = laserscannerAngleRear;
 			//====================================================================
 			//  e m i t  Signal
 			//====================================================================
@@ -332,7 +332,19 @@ void LaserThread::setSimulationMode(bool status)
 	{
 		numReadingsFront = laserscannerAngleFront;
 		numReadingsRear = laserscannerAngleRear;
-/*		
+
+		// sim value init
+		// the distances
+		for (int i=0; i<laserScannerValuesFront.size(); i++)
+		{
+			laserScannerValuesFront[i] = 7.5; //(i+1) / 100;
+		}
+
+		for (int i=0; i<laserScannerValuesRear.size(); i++)
+		{
+			laserScannerValuesRear[i] = 2.5; //(i+1) / 100;
+		}
+/*
 		// fill with values from 1 to 180 cm
 		for (float i=0; i<LASERSCANNERARRAYSIZE; i++)
 		{
@@ -340,6 +352,7 @@ void LaserThread::setSimulationMode(bool status)
 			laserScannerValuesRear[i] = 0.18;//(i+1) / 100;
 		}
 */
+		/*
 		// fill the array with some nice values
 		laserScannerValuesFront[0]	= 0.25;		laserScannerValuesRear[0]	= 0.25;
 		laserScannerValuesFront[1]	= 0.25;		laserScannerValuesRear[1]	= 0.25;
@@ -521,7 +534,7 @@ void LaserThread::setSimulationMode(bool status)
 		laserScannerValuesFront[177]	= 0.18;		laserScannerValuesRear[177]	= 0.18;
 		laserScannerValuesFront[178]	= 0.18;		laserScannerValuesRear[178]	= 0.18;
 		laserScannerValuesFront[179]	= 0.18;		laserScannerValuesRear[179]	= 0.18; // FIXME: and what, if we have 270 degrees? FIXME FIXME FIXME
-
+*/
 		// for refreshing the gui (deleting simulated laser lines)
 		emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
 		emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
@@ -529,14 +542,15 @@ void LaserThread::setSimulationMode(bool status)
 	else
 	{
 		// initialisation
-		for (int i=0; i<laserscannerAngleFront; i++)
+		for (int i=0; i<laserScannerValuesFront.size(); i++)
 		{
 			// the distances
 			laserScannerValuesFront[i] = 0;
 			// the flags
 			laserScannerFlagsFront[i] = OBSTACLE;
 		}
-		for (int i=0; i<laserscannerAngleRear; i++)
+
+		for (int i=0; i<laserScannerValuesRear.size(); i++)
 		{
 			// the distances
 			laserScannerValuesRear[i] = 0;
@@ -697,6 +711,8 @@ void LaserThread::setLaserscannerAngle(short int laserScanner, int angle)
 				// add a 0 flag
 				laserScannerFlagsFront.append(0);
 			}
+			//qDebug("list size laserScannerValuesFront, Laser%d: %d", laserScanner, laserScannerValuesFront.size());
+			//qDebug("list size laserScannerFlagsFront, Laser%d: %d", laserScanner, laserScannerFlagsFront.size());
 			break;
 		case LASER2:
 			// store value in the class member
@@ -709,6 +725,8 @@ void LaserThread::setLaserscannerAngle(short int laserScanner, int angle)
 				// add a 0 flag
 				laserScannerFlagsRear.append(0);
 			}
+			//qDebug("list size laserScannerValuesRear, Laser%d: %d", laserScanner, laserScannerValuesRear.size());
+			//qDebug("list size laserScannerFlagsRear, Laser%d: %d", laserScanner, laserScannerFlagsRear.size());
 			break;
 		default:
 			qDebug("laser number not yet supported  (LaserThreadd::setLaserscannerAngle");
