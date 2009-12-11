@@ -43,16 +43,7 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	robotSlot = 1;
 	straightForwardDeviation = 0;
 	
-	//
-	// init
-	//
-	// FIXME: change this 180 to a const or something else
-	for (int angle=0; angle<180; angle++)
-	{
-		// delete the "obstacle flag" -> free way at the actual angle
-		laserThread->setLaserScannerFlag(LASER1, angle, FREEWAY);
-		laserThread->setLaserScannerFlag(LASER2, angle, FREEWAY);
-	}
+	// init of the laser scanner flags is now done in the laserThread
 }
 
 
