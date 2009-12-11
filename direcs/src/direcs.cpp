@@ -2420,6 +2420,47 @@ void Direcs::readSettings()
 					emit message(QString("Front laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
 				}
 			}
+
+			//---------------------------------------------------------------------
+			// read next laser setting
+			typeLaserscannerFront = inifile1->readString("Config", "typeLaserscannerFront");
+
+			if (typeLaserscannerFront == "error2")
+			{
+				laserThread->setScannerType(LASER1, "none");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			}
+			else
+			{
+				if (typeLaserscannerFront == "error1")
+				{
+					laserThread->setScannerType(LASER1, "none");
+					emit message("<font color=\"#FF0000\">Value \"typeLaserscannerFront\" not found in ini-file!</font>");
+				}
+				else
+				{
+					// everything okay
+					laserThread->setScannerType(LASER1, typeLaserscannerFront);
+					emit message(QString("Front laser scanner type set to <b>%1</b>.").arg(typeLaserscannerFront));
+				}
+			}
+
+			//---------------------------------------------------------------------
+			// read next setting
+			switch (inifile1->readSetting("Config", "laserscannerAngleFront"))
+			{
+			case -2:
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				break;
+			case -1:
+				emit message("<font color=\"#FF0000\">Value \"laserscannerAngleFront\"not found in ini-file!</font>");
+				break;
+			default:
+				laserThread->setLaserscannerAngle(LASER1, laserscannerAngleFront\);
+				emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront\));
+				break;
+			}
+
 		}
 	}
 
@@ -2468,6 +2509,47 @@ void Direcs::readSettings()
 					emit message(QString("Rear laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
 				}
 			}
+
+			//---------------------------------------------------------------------
+			// read next laser setting
+			typeLaserscannerRear = inifile1->readString("Config", "typeLaserscannerRear");
+
+			if (typeLaserscannerRear == "error2")
+			{
+				laserThread->setScannerType(LASER2, "none");
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			}
+			else
+			{
+				if (typeLaserscannerRear == "error1")
+				{
+					laserThread->setScannerType(LASER2, "none");
+					emit message("<font color=\"#FF0000\">Value \"typeLaserscannerRear\" not found in ini-file!</font>");
+				}
+				else
+				{
+					// everything okay
+					laserThread->setScannerType(LASER2, typeLaserscannerRear);
+					emit message(QString("Rear laser scanner type set to <b>%1</b>.").arg(typeLaserscannerRear));
+				}
+			}
+
+			//---------------------------------------------------------------------
+			// read next setting
+			switch (inifile1->readSetting("Config", "laserscannerAngleRear"))
+			{
+			case -2:
+				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+				break;
+			case -1:
+				emit message("<font color=\"#FF0000\">Value \"laserscannerAngleRear\"not found in ini-file!</font>");
+				break;
+			default:
+				laserThread->setLaserscannerAngle(LASER1, laserscannerAngleRear);
+				emit message(QString("Rear laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleRear));
+				break;
+			}
+
 		}
 	}
 
