@@ -76,13 +76,20 @@ class LaserThread : public QThread
 		void setSerialPort(short int laserScanner, QString serialPort);
 		
 		/**
-		Sets the mounting for a laser scanner to flip the data from 0-179 to 179-0, when the laser scanner is mounted flipped.
+		Sets the mounting for a laser scanner to flip the data for example from 0-179 to 179-0, when the laser scanner is mounted flipped.
 		@param laserScanner can be LASER1 or LASER2
 		@param mounting can be "normal" or "flipped"
 		@sa setDevicePort, read_parameters, laser.h
 		*/
 		void setMounting(short int laserScanner, QString mounting);
-		
+
+		/**
+		Defines the angle of the laserscanner. e.g. 180 or 270 degrees
+		@param laserScanner can be LASER1 or LASER2
+		@param angle is the angle
+		*/
+		void setLaserscannerAngle(short int laserScanner, int angle);
+
 		/**
 		Returns the state of a connected laser scanner.
 		@param laserScanner can be LASER1 or LASER2
