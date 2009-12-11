@@ -192,14 +192,14 @@ void ObstacleCheckThread::run()
 				//-----------------------------
 				// set the "obstacle flag"
 				//-----------------------------
-				laserThread->setLaserScannerFlag(LASER1, angle, OBSTACLE);
+				laserThread->setFlag(LASER1, angle, OBSTACLE);
 			}
 			else
 			{
 				//-------------------------------------------------------------
 				// delete the "obstacle flag" -> free way at the actual angle
 				//-------------------------------------------------------------
-				laserThread->setLaserScannerFlag(LASER1, angle, FREEWAY);
+				laserThread->setFlag(LASER1, angle, FREEWAY);
 			}
 		}
 
@@ -221,11 +221,10 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
-		// TODO: change this 180 to a const or something else
-		for (int angle=0; angle<180; angle++)
+		for (int angle=0; angle<laserThread->getAngle(LASER1); angle++)
 		{
 			// check only lines with no obstacles (FREEWAY)!
-			if (laserThread->getLaserScannerFlag(LASER1, angle) == FREEWAY)
+			if (laserThread->getFlag(LASER1, angle) == FREEWAY)
 			{
 				// If this is the FIRST angle AND the next angle is "free"
 				// OR
@@ -235,8 +234,8 @@ void ObstacleCheckThread::run()
 				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area start"!)
 				//
 				if (
-					((laserThread->getLaserScannerFlag(LASER1, angle+1) == FREEWAY) && (angle == 0)) ||
-					((laserThread->getLaserScannerFlag(LASER1, angle+1) == FREEWAY) && (laserThread->getLaserScannerFlag(LASER1, angle-1) == OBSTACLE))
+					((laserThread->getFlag(LASER1, angle+1) == FREEWAY) && (angle == 0)) ||
+					((laserThread->getFlag(LASER1, angle+1) == FREEWAY) && (laserThread->getFlag(LASER1, angle-1) == OBSTACLE))
 				   )
 				{
 					// store current free area beginning
@@ -259,7 +258,7 @@ void ObstacleCheckThread::run()
 				// FIXME: why -1 ?!? But works so far!
 				//
 				if (
-					((laserThread->getLaserScannerFlag(LASER1, angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(LASER1, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
+					((laserThread->getFlag(LASER1, angle+1) == OBSTACLE) && (laserThread->getFlag(LASER1, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
 					((angle == 179) && (actualFreeAreaEnd == -1))
 				   )
 				{
@@ -289,7 +288,7 @@ void ObstacleCheckThread::run()
 		{
 			for (int angle=largestFreeAreaStart; angle<=largestFreeAreaEnd; angle++)
 			{
-				laserThread->setLaserScannerFlag(LASER1, angle, LARGESTFREEWAY);
+				laserThread->setFlag(LASER1, angle, LARGESTFREEWAY);
 			}
 		}
 		else
@@ -299,7 +298,7 @@ void ObstacleCheckThread::run()
 			{
 				for (int angle=actualFreeAreaStart; angle<=actualFreeAreaEnd; angle++)
 				{
-					laserThread->setLaserScannerFlag(LASER1, angle, LARGESTFREEWAY);
+					laserThread->setFlag(LASER1, angle, LARGESTFREEWAY);
 				}
 			}
 		}
@@ -318,7 +317,7 @@ void ObstacleCheckThread::run()
 			centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
 			
 			// set flag to "light green"
-			laserThread->setLaserScannerFlag(LASER1, centerOfFreeWay, CENTEROFLARGESTFREEWAY);
+			laserThread->setFlag(LASER1, centerOfFreeWay, CENTEROFLARGESTFREEWAY);
 		}
 		else
 		{
@@ -425,14 +424,14 @@ void ObstacleCheckThread::run()
 				//-----------------------------
 				// set the "obstacle flag"
 				//-----------------------------
-				laserThread->setLaserScannerFlag(LASER2, angle, OBSTACLE);
+				laserThread->setFlag(LASER2, angle, OBSTACLE);
 			}
 			else
 			{
 				//-------------------------------------------------------------
 				// delete the "obstacle flag" -> free way at the actual angle
 				//-------------------------------------------------------------
-				laserThread->setLaserScannerFlag(LASER2, angle, FREEWAY);
+				laserThread->setFlag(LASER2, angle, FREEWAY);
 			}
 		}
 
@@ -454,11 +453,10 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
-		// TODO: change this 180 to a const or something else
-		for (int angle=0; angle<180; angle++)
+		for (int angle=0; angle<laserThread->getAngle(LASER2); angle++)
 		{
 			// check only lines with no obstacles (FREEWAY)!
-			if (laserThread->getLaserScannerFlag(LASER2, angle) == FREEWAY)
+			if (laserThread->getFlag(LASER2, angle) == FREEWAY)
 			{
 				// If this is the FIRST angle AND the next angle is "free"
 				// OR
@@ -468,8 +466,8 @@ void ObstacleCheckThread::run()
 				// Automaticaly angles at the size of 1° will be NOT be ignored (not set to "free area start"!)
 				//
 				if (
-					((laserThread->getLaserScannerFlag(LASER2, angle+1) == FREEWAY) && (angle == 0)) ||
-					((laserThread->getLaserScannerFlag(LASER2, angle+1) == FREEWAY) && (laserThread->getLaserScannerFlag(LASER2, angle-1) == OBSTACLE))
+					((laserThread->getFlag(LASER2, angle+1) == FREEWAY) && (angle == 0)) ||
+					((laserThread->getFlag(LASER2, angle+1) == FREEWAY) && (laserThread->getFlag(LASER2, angle-1) == OBSTACLE))
 				   )
 				{
 					// store current free area beginning
@@ -492,7 +490,7 @@ void ObstacleCheckThread::run()
 				// FIXME: why -1 ?!? But works so far!
 				//
 				if (
-					((laserThread->getLaserScannerFlag(LASER2, angle+1) == OBSTACLE) && (laserThread->getLaserScannerFlag(LASER2, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
+					((laserThread->getFlag(LASER2, angle+1) == OBSTACLE) && (laserThread->getFlag(LASER2, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
 					((angle == 179) && (actualFreeAreaEnd == -1))
 				   )
 				{
@@ -522,7 +520,7 @@ void ObstacleCheckThread::run()
 		{
 			for (int angle=largestFreeAreaStart; angle<=largestFreeAreaEnd; angle++)
 			{
-				laserThread->setLaserScannerFlag(LASER2, angle, LARGESTFREEWAY);
+				laserThread->setFlag(LASER2, angle, LARGESTFREEWAY);
 			}
 		}
 		else
@@ -532,7 +530,7 @@ void ObstacleCheckThread::run()
 			{
 				for (int angle=actualFreeAreaStart; angle<=actualFreeAreaEnd; angle++)
 				{
-					laserThread->setLaserScannerFlag(LASER2, angle, LARGESTFREEWAY);
+					laserThread->setFlag(LASER2, angle, LARGESTFREEWAY);
 				}
 			}
 		}
@@ -551,7 +549,7 @@ void ObstacleCheckThread::run()
 			centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
 			
 			// set flag to "light green"
-			laserThread->setLaserScannerFlag(LASER2, centerOfFreeWay, CENTEROFLARGESTFREEWAY);
+			laserThread->setFlag(LASER2, centerOfFreeWay, CENTEROFLARGESTFREEWAY);
 		}
 		else
 		{

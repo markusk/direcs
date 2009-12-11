@@ -277,9 +277,9 @@ float LaserThread::getLaserScannerValue(short int laserScanner, int angle)
 }
 
 
-float LaserThread::getLaserScannerFlag(short int laserScanner, int angle)
+float LaserThread::getFlag(short int laserScanner, int angle)
 {
-	if ((angle < 0) || (laserScanner==LASER1 &&  (angle > laserscannerAngleFront)) || (laserScanner==LASER2 &&  (angle > laserscannerAngleRear)) )
+	if ((angle < 0) || ((laserScanner==LASER1) &&  (angle > laserscannerAngleFront)) || ((laserScanner==LASER2) &&  (angle > laserscannerAngleRear)) )
 	{
 		qDebug("laser angle out of alowed range (LaserThread::getLaserScannerFlag)");
 		return 0;
@@ -300,7 +300,7 @@ float LaserThread::getLaserScannerFlag(short int laserScanner, int angle)
 }
 
 
-void LaserThread::setLaserScannerFlag(short int laserScanner, int angle, int flag)
+void LaserThread::setFlag(short int laserScanner, int angle, int flag)
 {
 	if ((angle < 0) || (laserScanner==LASER1 &&  (angle > laserscannerAngleFront)) || (laserScanner==LASER2 &&  (angle > laserscannerAngleRear)) )
 	{

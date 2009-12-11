@@ -48,8 +48,11 @@ class LaserThread : public QThread
 		float getLaserScannerValue(short int laserScanner, int angle);
 		
 		/**
+		@param laserScanner can be LASER1 or LASER2
+		@param angle is the wanted angle in degrees
+		@returns the laser scanner line flag (the flag shows if there is an obstacle at this line or not)
 		*/
-		float getLaserScannerFlag(short int laserScanner, int angle);
+		float getFlag(short int laserScanner, int angle);
 		
 		/**
 		Sets the type of the laser
@@ -65,7 +68,7 @@ class LaserThread : public QThread
 		@param flag can be FREEWAY, OBSTACLE, LARGESTFREEWAY or CENTEROFLARGESTFREEWAY.
 		@sa ObstacleCheckThread
 		*/
-		void setLaserScannerFlag(short int laserScanner, int angle, int flag);
+		void setFlag(short int laserScanner, int angle, int flag);
 		
 		/**
 		Sets the serial port for a laser scanner.
