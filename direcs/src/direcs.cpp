@@ -156,6 +156,8 @@ void Direcs::init()
 	// TODO: direcs->setLogFileName("direcs.log");
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
+	typeLaserscannerFront= "error1";
+	typeLaserscannerRear= "error1";
 	writeLogFile = false;
 	// 	robotIsOn = false;
 	robotDrives = false;
@@ -175,6 +177,8 @@ void Direcs::init()
 	faceTrackingIsEnabled = false;
 	laserScannerFrontFound = false;
 	laserScannerRearFound = false;
+	laserscannerAngleFront=0;
+	laserscannerAngleRear=0;
 	endSpeedMotor1Reached = false;
 	endSpeedMotor2Reached = false;
 	endSpeedMotor3Reached = false;
@@ -2447,7 +2451,9 @@ void Direcs::readSettings()
 
 			//---------------------------------------------------------------------
 			// read next setting
-			switch (inifile1->readSetting("Config", "laserscannerAngleFront"))
+			laserscannerAngleFront = inifile1->readSetting("Config", "laserscannerAngleFront");
+
+			switch (laserscannerAngleFront)
 			{
 			case -2:
 				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
@@ -2536,7 +2542,9 @@ void Direcs::readSettings()
 
 			//---------------------------------------------------------------------
 			// read next setting
-			switch (inifile1->readSetting("Config", "laserscannerAngleRear"))
+			laserscannerAngleRear = inifile1->readSetting("Config", "laserscannerAngleRear");
+
+			switch (laserscannerAngleRear)
 			{
 			case -2:
 				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
@@ -2545,7 +2553,7 @@ void Direcs::readSettings()
 				emit message("<font color=\"#FF0000\">Value \"laserscannerAngleRear\"not found in ini-file!</font>");
 				break;
 			default:
-				laserThread->setLaserscannerAngle(LASER1, laserscannerAngleRear);
+				laserThread->setLaserscannerAngle(LASER2, laserscannerAngleRear);
 				emit message(QString("Rear laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleRear));
 				break;
 			}
