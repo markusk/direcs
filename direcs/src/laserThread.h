@@ -91,6 +91,13 @@ class LaserThread : public QThread
 		void setLaserscannerAngle(short int laserScanner, int angle);
 
 		/**
+		Returns the physical angle of the laserscanner in degrees, e.g. 180 or 270.
+		@param laserScanner can be LASER1 or LASER2
+		@return the angle in degrees
+		*/
+		int getAngle(short int laserScanner);
+
+		/**
 		Returns the state of a connected laser scanner.
 		@param laserScanner can be LASER1 or LASER2
 		@return true, if connected
@@ -136,7 +143,9 @@ class LaserThread : public QThread
 		bool simulationMode;
 		QString mountingLaserscannerFront; /// cane be "normal" or "flipped"
 		QString mountingLaserscannerRear; /// cane be "normal" or "flipped"
-		
+		int laserscannerAngleFront; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees
+		int laserscannerAngleRear; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees
+
 		Laser *laser; // the object for the PLS or LMS laserscanner
 		SickS300 *laserS300; // the object for the S300 laserscanner
 		
@@ -151,12 +160,6 @@ class LaserThread : public QThread
 		static const unsigned char SIMULATED_LASER = 3; // this is not in use, but according to laser.h, direcs_laser_laser_type_t
 		static const unsigned char S300 = 4; // this is temporary
 		
-		/**
-		Defines the size of the laserScannerValue[] array
-		This es equal to the number of degrees.
-		*/
-		static const unsigned char LASERSCANNERARRAYSIZE = 180; // FIXME: put this to the ini-file or so. Fix also: read_parameters() in laser.cpp !!
-		
 		QList <float> laserScannerValuesFront;  /// The measured distances from the front laser scanner.
 		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
 		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.
@@ -167,7 +170,7 @@ class LaserThread : public QThread
 		*/
 		static const unsigned char DISTANCE = 0;
 		static const unsigned char FLAG = 1;
-		
+
 		/**
 		For the integrated DIRECS laser module
 		*/
