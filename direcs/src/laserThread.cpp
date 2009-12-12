@@ -335,14 +335,14 @@ void LaserThread::setSimulationMode(bool status)
 
 		// sim value init
 		// the distances
-		for (int i=0; i<laserScannerValuesFront.size(); i++)
+		for (int i=0; i<laserScannerValuesFront.size()-1; i++)
 		{
-			laserScannerValuesFront[i] = 7.5; //(i+1) / 100;
+			laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
 		}
 
-		for (int i=0; i<laserScannerValuesRear.size(); i++)
+		for (int i=0; i<laserScannerValuesRear.size()-1; i++)
 		{
-			laserScannerValuesRear[i] = 2.5; //(i+1) / 100;
+			laserScannerValuesRear[i] = 2.30; //(i+1) / 100;
 		}
 /*
 		// fill with values from 1 to 180 cm
@@ -542,7 +542,7 @@ void LaserThread::setSimulationMode(bool status)
 	else
 	{
 		// initialisation
-		for (int i=0; i<laserScannerValuesFront.size(); i++)
+		for (int i=0; i<laserScannerValuesFront.size()-1; i++)
 		{
 			// the distances
 			laserScannerValuesFront[i] = 0;
@@ -550,7 +550,7 @@ void LaserThread::setSimulationMode(bool status)
 			laserScannerFlagsFront[i] = OBSTACLE;
 		}
 
-		for (int i=0; i<laserScannerValuesRear.size(); i++)
+		for (int i=0; i<laserScannerValuesRear.size()-1; i++)
 		{
 			// the distances
 			laserScannerValuesRear[i] = 0;

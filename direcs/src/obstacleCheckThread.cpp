@@ -183,8 +183,7 @@ void ObstacleCheckThread::run()
 		// If obstacle in front of the laser scanner,
 		// set a flag at the corresponding angles
 		//---------------------------------------------------------
-		// FIXME: change this 180 to a const or something else
-		for (int angle=0; angle<180; angle++)
+		for (int angle=0; angle < laserThread->getAngle(LASER1); angle++)
 		{
 			// if obstacle detected
 			if ( ((int) (laserThread->getLaserScannerValue(LASER1, angle)*100)) < minObstacleDistanceLaserScanner)
@@ -221,7 +220,7 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
-		for (int angle=0; angle<laserThread->getAngle(LASER1); angle++)
+		for (int angle=0; angle < laserThread->getAngle(LASER1); angle++)
 		{
 			// check only lines with no obstacles (FREEWAY)!
 			if (laserThread->getFlag(LASER1, angle) == FREEWAY)
@@ -259,7 +258,7 @@ void ObstacleCheckThread::run()
 				//
 				if (
 					((laserThread->getFlag(LASER1, angle+1) == OBSTACLE) && (laserThread->getFlag(LASER1, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
-					((angle == 179) && (actualFreeAreaEnd == -1))
+					((angle == (laserThread->getAngle(LASER1) - 1)) && (actualFreeAreaEnd == -1))
 				   )
 				{
 					// store current free area end
@@ -330,7 +329,7 @@ void ObstacleCheckThread::run()
 		// Calculate the width of the estimated drive-tru direction/area with the 'Kosinussatz'
 		// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
 		//--------------------------------------------------------------------------------------
-		if ((largestFreeAreaStart>0) && (largestFreeAreaEnd<180)) // FIXME: what if we have more than 180° or less 0°? See whole class!
+		if ((largestFreeAreaStart > 0) && (largestFreeAreaEnd < laserThread->getAngle(LASER1)))
 		{
 			// b and c are the sides of the triangle
 			b = laserThread->getLaserScannerValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
@@ -353,7 +352,7 @@ void ObstacleCheckThread::run()
 			
 			// calculate
 			// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
-			width = sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI/180.0) );
+			width = sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserThread->getAngle(LASER1)) );
 		}
 		else
 		{
@@ -415,8 +414,7 @@ void ObstacleCheckThread::run()
 		// If obstacle in front of the laser scanner,
 		// set a flag at the corresponding angles
 		//---------------------------------------------------------
-		// TODO: change this 180 to a const or something else
-		for (int angle=0; angle<180; angle++)
+		for (int angle=0; angle < laserThread->getAngle(LASER2); angle++)
 		{
 			// if obstacle detected
 			if ( ((int) (laserThread->getLaserScannerValue(LASER2, angle)*100)) < minObstacleDistanceLaserScanner)
@@ -453,7 +451,7 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
-		for (int angle=0; angle<laserThread->getAngle(LASER2); angle++)
+		for (int angle=0; angle < laserThread->getAngle(LASER2); angle++)
 		{
 			// check only lines with no obstacles (FREEWAY)!
 			if (laserThread->getFlag(LASER2, angle) == FREEWAY)
@@ -491,7 +489,7 @@ void ObstacleCheckThread::run()
 				//
 				if (
 					((laserThread->getFlag(LASER2, angle+1) == OBSTACLE) && (laserThread->getFlag(LASER2, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
-					((angle == 179) && (actualFreeAreaEnd == -1))
+					((angle == (laserThread->getAngle(LASER2) - 1)) && (actualFreeAreaEnd == -1))
 				   )
 				{
 					// store current free area end
