@@ -103,7 +103,7 @@ Direcs::Direcs(bool bConsoleMode)
 	{
 		consoleGui = new ConsoleGui();
 //		myEvent = new Events();
-		// install an event filter to grab CTRL+C
+		// TODO: install an event filter to grab CTRL+C
 //  		consoleGui->installEventFilter(myEvent);
 //			this->installEventFilter(myEvent);
 	}

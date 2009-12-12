@@ -33,6 +33,42 @@
   <value type="QString" >Qt4ProjectManager.Qt4RunConfiguration</value>
  </data>
  <data>
+  <variable>RunConfiguration1-Arguments</variable>
+  <valuelist type="QVariantList" />
+ </data>
+ <data>
+  <variable>RunConfiguration1-Executable</variable>
+  <value type="QString" ></value>
+ </data>
+ <data>
+  <variable>RunConfiguration1-RunConfiguration.name</variable>
+  <value type="QString" >Benutzerdefinierte ausführbare Datei</value>
+ </data>
+ <data>
+  <variable>RunConfiguration1-UseTerminal</variable>
+  <value type="bool" >false</value>
+ </data>
+ <data>
+  <variable>RunConfiguration1-UserEnvironmentChanges</variable>
+  <valuelist type="QVariantList" />
+ </data>
+ <data>
+  <variable>RunConfiguration1-UserName</variable>
+  <value type="QString" ></value>
+ </data>
+ <data>
+  <variable>RunConfiguration1-UserSetName</variable>
+  <value type="bool" >false</value>
+ </data>
+ <data>
+  <variable>RunConfiguration1-WorkingDirectory</variable>
+  <value type="QString" >$BUILDDIR</value>
+ </data>
+ <data>
+  <variable>RunConfiguration1-type</variable>
+  <value type="QString" >ProjectExplorer.CustomExecutableRunConfiguration</value>
+ </data>
+ <data>
   <variable>activeRunConfiguration</variable>
   <value type="int" >0</value>
  </data>
@@ -45,6 +81,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <value key="QtVersionId" type="int" >2</value>
+   <value key="addQDumper" type="" ></value>
    <value key="buildDirectory" type="QString" >/home/markus/develop/direcs/direcs</value>
   </valuemap>
  </data>
@@ -53,7 +90,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-QKdugvqZ9P,guid=b5b58c0d3a16e9fbc30697544b222406</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-HVJ6XMNQSH,guid=a10184f44da38931b6035a8c4b239025</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -75,16 +112,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2830,unix/pcmarkus:/tmp/.ICE-unix/2830</value>
+    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2807,unix/pcmarkus:/tmp/.ICE-unix/2807</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2780</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-CbDIDG2720/agent.2720</value>
+    <value type="QString" >SSH_AGENT_PID=2754</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-PWLbYK2694/agent.2694</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260528645.445990-854279094</value>
+    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260621860.29104-1872084598</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
@@ -104,7 +141,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-QKdugvqZ9P,guid=b5b58c0d3a16e9fbc30697544b222406</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-HVJ6XMNQSH,guid=a10184f44da38931b6035a8c4b239025</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -126,16 +163,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2830,unix/pcmarkus:/tmp/.ICE-unix/2830</value>
+    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2807,unix/pcmarkus:/tmp/.ICE-unix/2807</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2780</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-CbDIDG2720/agent.2720</value>
+    <value type="QString" >SSH_AGENT_PID=2754</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-PWLbYK2694/agent.2694</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260528645.445990-854279094</value>
+    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260621860.29104-1872084598</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
