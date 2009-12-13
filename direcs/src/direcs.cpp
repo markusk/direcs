@@ -151,6 +151,7 @@ void Direcs::init()
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashTextColor = Qt::white;
 	}
+	forceShutdown = false;
 	inifile1->setFilename("direcs.ini");
 	logfile->setFilename("direcs.log");
 	// TODO: direcs->setLogFileName("direcs.log");
@@ -387,11 +388,15 @@ void Direcs::init()
 		if (!consoleMode)
 		{
 			// file not found-Msg
-			QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file %1 not found!\nIni-File perhaps not in the same directory?").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
+			QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file %1 not found!\nFile perhaps not in the same directory?\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
 			msgbox.exec();
+			forceShutdown = true; // don't ask for AreYouSure, later when shutting down
+			emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
+
+			// call my own exit routine
+			shutdown();
 		}
 
-		emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
 	}
 	else
 	{
@@ -960,14 +965,17 @@ void Direcs::shutdown()
 		{
 			if (!consoleMode)
 			{
-				// ask user if he really wants to exit.
-				if (QMessageBox::question(0, "Leaving program...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+				if (forceShutdown==false) // this is true, if no ini-file was found at startup
 				{
-					//---------
-					// if NO
-					//---------
-					// don't leave! :-)
-					return;
+					// ask user if he really wants to exit.
+					if (QMessageBox::question(0, "Exiting...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+					{
+						//---------
+						// if NO
+						//---------
+						// don't leave! :-)
+						return;
+					}
 				}
 			}
 			// TODO: ask for exit on console!
@@ -2562,6 +2570,11 @@ void Direcs::readSettings()
 			}
 		}
 	}
+
+	//---------------------------------------------------------------------
+	// Create the laser lines and pixmaps in the GUI and place them nicely
+	//---------------------------------------------------------------------
+	gui->initLaserStuff();
 
 	//---------------------------------------------------------------------
 	// read setting
