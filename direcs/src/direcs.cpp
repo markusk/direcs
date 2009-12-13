@@ -926,7 +926,10 @@ void Direcs::shutdown()
 		// save check box status
 		if (!consoleMode)
 		{
-			inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
+			if (forceShutdown==false) // don't write this setting when we have a forced shutdown (so the ini-file with only one line won't be created anymore)
+			{
+				inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
+			}
 	
 	
 			if (settingsDialog->getCheckBoxSaveSettings() == Qt::Checked)

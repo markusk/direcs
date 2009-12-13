@@ -38,11 +38,11 @@
  </data>
  <data>
   <variable>RunConfiguration1-Executable</variable>
-  <value type="QString" ></value>
+  <value type="QString" >/home/markus/develop/direcs/direcs/bin/direcs</value>
  </data>
  <data>
   <variable>RunConfiguration1-RunConfiguration.name</variable>
-  <value type="QString" >Benutzerdefinierte ausführbare Datei</value>
+  <value type="QString" >direcs</value>
  </data>
  <data>
   <variable>RunConfiguration1-UseTerminal</variable>
@@ -54,11 +54,11 @@
  </data>
  <data>
   <variable>RunConfiguration1-UserName</variable>
-  <value type="QString" ></value>
+  <value type="QString" >direcs</value>
  </data>
  <data>
   <variable>RunConfiguration1-UserSetName</variable>
-  <value type="bool" >false</value>
+  <value type="bool" >true</value>
  </data>
  <data>
   <variable>RunConfiguration1-WorkingDirectory</variable>
@@ -70,7 +70,7 @@
  </data>
  <data>
   <variable>activeRunConfiguration</variable>
-  <value type="int" >0</value>
+  <value type="int" >1</value>
  </data>
  <data>
   <variable>activebuildconfiguration</variable>
