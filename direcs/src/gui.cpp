@@ -1833,16 +1833,11 @@ void Gui::initLaserView()
 	// REAR laser
 	//--------------
 	// rotate every laser line by one degree
-	for (int i=0, angle=90; i<laserLineListRear->size(); i++, angle--) // FIXME: what if we have more than 180°?!
+	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
+	// (Rotate laser line counterclockwise by the half of the laserAngle)
+	for (int i=0, angle = -(laserscannerAngleRear/2); i<laserLineListRear->size(); i++, angle++)
 	{
-		// reset transform or rotation
-		laserLineListRear->at(i)->resetTransform();
-
-		// rotate every line by one degree
 		laserLineListRear->at(i)->rotate(angle);
-
-		// set position of each line
-		laserLineListRear->at(i)->setPos((x - laserLineListRear->at(i)->line().length()), y);
 	}
 
 
@@ -1852,19 +1847,12 @@ void Gui::initLaserView()
 	//--------------
 	// FRONT laser
 	//--------------
-	int winkel = laserscannerAngleFront - 180;
-
 	// rotate every laser line by one degree
-	for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle--) // FIXME: what if we have more than 180°?!
+	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
+	// (Rotate laser line counterclockwise by 180 degrees and further by the half of the laserAngle)
+	for (int i=0, angle = -(180 + (laserscannerAngleFront/2)); i<laserLineListFront->size(); i++, angle++)
 	{
-		// reset transform or rotation
-		laserLineListFront->at(i)->resetTransform();
-
-		// rotate every line by one degree
 		laserLineListFront->at(i)->rotate(angle);
-
-		// set position of each line
-		laserLineListFront->at(i)->setPos((x - laserLineListFront->at(i)->line().length()), y);
 	}
 
 
@@ -2190,7 +2178,6 @@ void Gui::createLaserScannerObjects()
 		scene->addItem(line);
 	}
 
-// FIXME: remove this coment which is for testing purposes only!!
 	//-------------------------------------
 	// create the REAR laser line list
 	//-------------------------------------
@@ -2216,7 +2203,6 @@ void Gui::createLaserScannerObjects()
 		// add line to scene
 		scene->addItem(line);
 	}
-//
 
 	//=======================================================
 	// add robot picture2
