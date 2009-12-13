@@ -126,16 +126,7 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
-	createLaserScannerObjects();
-	createLaserDistanceObjects();
-	createLaserWidthObjects();
-
-
-	//----------------------------------------------------------------------------------
-	// get the mouse position, when the robot position is to be changed
-	//----------------------------------------------------------------------------------
-	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
-	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
+	// -> the laser lines and pixmap init sutff is now done AFTER the laser settings are read in the direcs main class!
 
 
 	//----------------------------------
@@ -1107,7 +1098,7 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		qreal y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
 		// reset transform or rotation
 		widthLeftCircle->resetTransform();
-		// rotate every line by one degree
+		// rotate circle
 		widthLeftCircle->rotate(largestFreeAreaStart);
 		// set position of each line
 		//widthLeftCircle->setPos((x - laserLineListFront->at(i)->line().length()), y);
@@ -1841,6 +1832,7 @@ void Gui::initLaserView()
 	//--------------
 	// REAR laser
 	//--------------
+	// rotate every laser line by one degree
 	for (int i=0, angle=90; i<laserLineListRear->size(); i++, angle--) // FIXME: what if we have more than 180°?!
 	{
 		// reset transform or rotation
@@ -1856,9 +1848,13 @@ void Gui::initLaserView()
 
 	y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
 
+
 	//--------------
 	// FRONT laser
 	//--------------
+	int winkel = laserscannerAngleFront - 180;
+
+	// rotate every laser line by one degree
 	for (int i=0, angle=-90; i<laserLineListFront->size(); i++, angle--) // FIXME: what if we have more than 180°?!
 	{
 		// reset transform or rotation
@@ -2067,13 +2063,15 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 
 void Gui::setLaserscannerAngle(short int laserscanner, int angle)
 {
-		switch (laserScanner)
+		switch (laserscanner)
 		{
-			case LASER1:
+		case LASER1:
 			laserscannerAngleFront = angle;
+			return;
 			break;
 		case LASER2:
 			laserscannerAngleRear = angle;
+			return;
 			break;
 		}
 
@@ -2169,10 +2167,9 @@ void Gui::createLaserScannerObjects()
 	//-------------------------------------
 	// create the FRONT laser line list
 	//-------------------------------------
-	// FIXME: check if always 180 lines!
-	// create 180 laser lines (0 to 179) FIXME: what if we have an other range?!
-		for (int i=0; i<180; i++) // TEST TEST TEST nur eine Linie, FRONT Laser
-//	for (int i=-90; i<90; i++)
+	// create all laser lines(e.g.180 or 270, one for each degree)
+	// the rotation will be done in the initLaserView() !
+	for (int i=0; i<laserscannerAngleFront; i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
@@ -2182,9 +2179,6 @@ void Gui::createLaserScannerObjects()
 		// set the laser line color
 		//line->setPen(QPen(colorLaserFreeWay, 3));
 		line->setPen(QPen(colorLaserFreeWay));
-
-		// set position of each line
-// 		line->rotate(i);
 
 		// put one layer up (layer 3).
 		line->setZValue(3);
@@ -2196,13 +2190,13 @@ void Gui::createLaserScannerObjects()
 		scene->addItem(line);
 	}
 
-/*
+// FIXME: remove this coment which is for testing purposes only!!
 	//-------------------------------------
 	// create the REAR laser line list
 	//-------------------------------------
-	// TODO: check if always 180 lines!
-	// create 180 laser lines (0 to 179)
-	for (int i=90; i>-90; i--)
+	// create all laser lines(e.g.180 or 270, one for each degree)
+	// the rotation will be done in the initLaserView() !
+	for (int i=0; i<laserscannerAngleRear; i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
@@ -2213,9 +2207,6 @@ void Gui::createLaserScannerObjects()
 		// the length (and position) of the laser line in pixel
 		line->setLine(0,0,0,0);
 
-		// set position of each line
-// 		line->rotate(i);
-
 		// put one layer up (layer 3).
 		line->setZValue(3);
 
@@ -2225,7 +2216,7 @@ void Gui::createLaserScannerObjects()
 		// add line to scene
 		scene->addItem(line);
 	}
-*/
+//
 
 	//=======================================================
 	// add robot picture2
@@ -2365,6 +2356,21 @@ void Gui::createLaserWidthObjects()
 	
 	// add the item to the scene
 	scene->addItem(widthLeftCircle); // fixme
+}
+
+
+void Gui::initLaserStuff()
+{
+	// called after all the laser settings have been read in the direcs mail class!
+	createLaserScannerObjects();
+	createLaserDistanceObjects();
+	createLaserWidthObjects();
+
+	//----------------------------------------------------------------------------------
+	// get the mouse position, when the robot position is to be changed
+	//----------------------------------------------------------------------------------
+	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
+	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
 }
 
 

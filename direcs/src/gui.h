@@ -114,6 +114,12 @@ class Gui : public QMainWindow
 		*/
 		void initLaserView();
 
+		/**
+		This creates all the pixmaps, laser objects etc.
+		Has to be called AFTER the laserType and angles are known (read from an ini-file) or so.
+		*/
+		void initLaserStuff();
+
 
 	public slots:
 		/**
