@@ -638,7 +638,14 @@ void LaserThread::setLaserscannerType(short int laserScanner, QString laserType)
 					}
 					else
 					{
-						qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER1");
+						if (laserType=="none")
+						{
+							laserscannerTypeFront = NONE;
+						}
+						else
+						{
+							qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER1");
+						}
 					}
 				}
 			}
@@ -646,23 +653,30 @@ void LaserThread::setLaserscannerType(short int laserScanner, QString laserType)
 		case LASER2:
 			if (laserType=="LMS")
 			{
-				laserscannerTypeFront = LMS;
+				laserscannerTypeRear = LMS;
 			}
 			else
 			{
 				if (laserType=="PLS")
 				{
-					laserscannerTypeFront = PLS;
+					laserscannerTypeRear = PLS;
 				}
 				else
 				{
 					if (laserType=="S300")
 					{
-						laserscannerTypeFront = S300;
+						laserscannerTypeRear = S300;
 					}
 					else
 					{
-						qDebug("laser type not yet supported (LaserThreadd::setLaserscannerType, LASER1");
+						if (laserType=="none")
+						{
+							laserscannerTypeRear = NONE;
+						}
+						else
+						{
+							qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER2");
+						}
 					}
 				}
 			}
@@ -729,7 +743,7 @@ void LaserThread::setLaserscannerAngle(short int laserScanner, int angle)
 			//qDebug("list size laserScannerFlagsRear, Laser%d: %d", laserScanner, laserScannerFlagsRear.size());
 			break;
 		default:
-			qDebug("laser number not yet supported  (LaserThreadd::setLaserscannerAngle");
+			qDebug("laser number not yet supported  (LaserThread::setLaserscannerAngle");
 			break;
 		}
 }
@@ -739,7 +753,7 @@ int LaserThread::getAngle(short int laserScanner)
 {
 		switch (laserScanner)
 		{
-			case LASER1:
+		case LASER1:
 			return laserscannerAngleFront;
 			break;
 		case LASER2:
@@ -788,14 +802,17 @@ bool LaserThread::isConnected(short int laserScanner)
 			}
 			else
 			{
-				qDebug("ERROR: Unsupported laser typ in laserThread.cpp chosen!");
+				if (laserscannerTypeFront != NONE)
+				{
+					qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
+				}
 				laserScannerFrontIsConnected = false;
 				return false;
 			}
 		}
 		break;
 	case LASER2:
-		if (laserscannerTypeFront == PLS)
+		if (laserscannerTypeRear == PLS)
 		{
 			// try to start the laser module LASER2
 			if (laser->direcs_laser_start(laserScanner) == 0)
@@ -811,7 +828,7 @@ bool LaserThread::isConnected(short int laserScanner)
 		}
 		else
 		{
-			if (laserscannerTypeFront == S300)
+			if (laserscannerTypeRear == S300)
 			{
 				// TODO: S300 stuff
 				qDebug("Support for S300 as rear laser scanner not implemented yet");
@@ -820,7 +837,10 @@ bool LaserThread::isConnected(short int laserScanner)
 			}
 			else
 			{
-				qDebug("ERROR: Unsupported laser typ in laserThread.cpp chosen!");
+				if (laserscannerTypeRear != NONE)
+				{
+					qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
+				}
 				laserScannerRearIsConnected = false;
 				return false;
 			}

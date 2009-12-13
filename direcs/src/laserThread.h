@@ -162,7 +162,8 @@ class LaserThread : public QThread
 		static const unsigned char HOKUYO_URG = 2; // this is not in use, but according to laser.h, direcs_laser_laser_type_t
 		static const unsigned char SIMULATED_LASER = 3; // this is not in use, but according to laser.h, direcs_laser_laser_type_t
 		static const unsigned char S300 = 4; // this is temporary
-		
+		static const unsigned char NONE = 255;
+
 		QList <float> laserScannerValuesFront;  /// The measured distances from the front laser scanner.
 		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
 		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.
