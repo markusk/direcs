@@ -62,7 +62,7 @@
  </data>
  <data>
   <variable>RunConfiguration1-WorkingDirectory</variable>
-  <value type="QString" >$BUILDDIR</value>
+  <value type="QString" >/home/markus/develop/direcs/direcs/bin</value>
  </data>
  <data>
   <variable>RunConfiguration1-type</variable>
@@ -90,7 +90,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-aiY8GV8sYm,guid=89e61660d2a2880b7e894d9a4b24cbf9</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-3OnK5LyEms,guid=ae2e27321c07a317bc9ba9aa4b254f01</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -112,16 +112,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2822,unix/pcmarkus:/tmp/.ICE-unix/2822</value>
+    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2846,unix/pcmarkus:/tmp/.ICE-unix/2846</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2748</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-hiIHZo2688/agent.2688</value>
+    <value type="QString" >SSH_AGENT_PID=2772</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-ivRKfF2712/agent.2712</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260702712.71190-1591855896</value>
+    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260736256.346938-1010478964</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
@@ -141,7 +141,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-aiY8GV8sYm,guid=89e61660d2a2880b7e894d9a4b24cbf9</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-3OnK5LyEms,guid=ae2e27321c07a317bc9ba9aa4b254f01</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -163,16 +163,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2822,unix/pcmarkus:/tmp/.ICE-unix/2822</value>
+    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2846,unix/pcmarkus:/tmp/.ICE-unix/2846</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2748</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-hiIHZo2688/agent.2688</value>
+    <value type="QString" >SSH_AGENT_PID=2772</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-ivRKfF2712/agent.2712</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260702712.71190-1591855896</value>
+    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1260736256.346938-1010478964</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >

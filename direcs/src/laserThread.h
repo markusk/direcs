@@ -135,6 +135,7 @@ class LaserThread : public QThread
 	private:
 		void getAndStoreLaserValuesFront(); // TODO: use one common getAndStoreLaserValue method!
 		void getAndStoreLaserValuesRear();  // TODO: use one common getAndStoreLaserValue method!
+		void setSimulationValues(); // Sets the laser line simulatiov values in the QList
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 		unsigned char laserscannerTypeFront;
@@ -168,7 +169,10 @@ class LaserThread : public QThread
 		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
 		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.
 		QList <int> laserScannerFlagsRear;  /// Some flags for each rear laser line (like "free way", "obstacle" etc.
-		
+
+		QList <float> simulatedValuesFront;  /// The simulated distances for the front laser scanner.
+		QList <float> simulatedValuesRear;  /// The simulated distances for the rear laser scanner.
+
 		/**
 		The names for addressing the laser scanner array
 		*/
