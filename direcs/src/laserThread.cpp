@@ -749,7 +749,7 @@ int LaserThread::getAngle(short int laserScanner)
 
 		qDebug("laser number not yet supported  (LaserThreadd::getAngle");
 		return 0;
-	}
+}
 
 
 bool LaserThread::isConnected(short int laserScanner)
