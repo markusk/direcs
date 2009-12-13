@@ -2461,6 +2461,7 @@ void Direcs::readSettings()
 								break;
 							default:
 								laserThread->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+								gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
 								emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront));
 								break;
 							}
@@ -2551,6 +2552,7 @@ void Direcs::readSettings()
 								break;
 							default:
 								laserThread->setLaserscannerAngle(LASER2, laserscannerAngleRear);
+								gui->setLaserscannerAngle(LASER2, laserscannerAngleRear);
 								emit message(QString("Rear laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleRear));
 								break;
 							}

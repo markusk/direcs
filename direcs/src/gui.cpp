@@ -32,6 +32,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	consoleMode = false;
 	laserXPos = 0; // correct value is set in the initLaserView()!!
 	laserYPos = 0; // correct value is set in the initLaserView()!!
+	laserscannerAngleFront = 0;
+	laserscannerAngleRear = 0;
 
 	// define some nice green and red colors
 	labelFillColorGreen = QColor(64, 255, 64);
@@ -2063,6 +2065,22 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 }
 
 
+void Gui::setLaserscannerAngle(short int laserscanner, int angle)
+{
+		switch (laserScanner)
+		{
+			case LASER1:
+			laserscannerAngleFront = angle;
+			break;
+		case LASER2:
+			laserscannerAngleRear = angle;
+			break;
+		}
+
+		qDebug("laser number not yet supported  (Gui::setLaserscannerAngle");
+}
+
+
 void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 {
 	int zoomValue = ui.sliderZoom->value();
@@ -2151,9 +2169,10 @@ void Gui::createLaserScannerObjects()
 	//-------------------------------------
 	// create the FRONT laser line list
 	//-------------------------------------
-	// TODO: check if always 180 lines!
+	// FIXME: check if always 180 lines!
 	// create 180 laser lines (0 to 179) FIXME: what if we have an other range?!
-	for (int i=-90; i<90; i++)
+		for (int i=0; i<180; i++) // TEST TEST TEST nur eine Linie, FRONT Laser
+//	for (int i=-90; i<90; i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
@@ -2177,7 +2196,7 @@ void Gui::createLaserScannerObjects()
 		scene->addItem(line);
 	}
 
-
+/*
 	//-------------------------------------
 	// create the REAR laser line list
 	//-------------------------------------
@@ -2206,7 +2225,7 @@ void Gui::createLaserScannerObjects()
 		// add line to scene
 		scene->addItem(line);
 	}
-
+*/
 
 	//=======================================================
 	// add robot picture2

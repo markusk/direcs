@@ -237,7 +237,14 @@ class Gui : public QMainWindow
 		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
 		*/
 		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
-		
+
+		/**
+		Gets the angle of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 180 or 270 degrees)
+		@param laserScanner can be LASER1 or LASER2
+		@param angle in degrees
+		*/
+		void setLaserscannerAngle(short int laserscanner, int angle);
+
 		/**
 		Zoom into the graphicsView/scene, if the mouse wheel was used.
 		*/
@@ -449,6 +456,8 @@ class Gui : public QMainWindow
 		QColor colorHelpLine;
 		QColor colorHelpLineText;
 		QColor colorGraphicsSceneBackground;
+		int laserscannerAngleFront; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
+		int laserscannerAngleRear; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
 		QPen laserLinePen;
 		int lastZoom;
 		qreal startScale;
