@@ -344,15 +344,19 @@ void LaserThread::setSimulationMode(bool status)
 		numReadingsRear = laserscannerAngleRear;
 
 		// sim value init
-		// the distances
+		setSimulationValues();
+
+		// copy sim values into the distances values
 		for (int i=0; i<laserScannerValuesFront.size()-1; i++)
 		{
-			laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
+			// laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
+			laserScannerValuesFront[i] = simulatedValuesFront.at(i);
 		}
 
 		for (int i=0; i<laserScannerValuesRear.size()-1; i++)
 		{
-			laserScannerValuesRear[i] = 2.30; //(i+1) / 100;
+			// laserScannerValuesRear[i] = 2.30; //(i+1) / 100;
+			laserScannerValuesRear[i] = simulatedValuesRear.at(i);
 		}
 
 		// for refreshing the gui (deleting simulated laser lines)
@@ -677,7 +681,7 @@ bool LaserThread::isConnected(short int laserScanner)
 }
 
 
-LaserThread::setSimulationValues()
+void LaserThread::setSimulationValues()
 {
 	// fill the simulation value array with some nice values
 	simulatedValuesFront[0]	= 0.25;		simulatedValuesRear[0]	= 0.25;
