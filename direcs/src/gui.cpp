@@ -1088,10 +1088,19 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		// test test test
 		// test test test
 		// get the coordinates of the regarding laser lines (free area)
+
 		QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
 		QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
 	
-		
+
+		static QPointF pointLast;
+		if (pointLast != pointB)
+		{
+			pointLast = pointB;
+			appendLog( QString("<font color=\"#0000FF\">Kreis x=%1, y=%2</font>").arg(pointB.x()).arg(pointB.y()) );
+		}
+
+
 		
 		// test 2
 		// test 2
@@ -1850,7 +1859,8 @@ void Gui::initLaserView()
 	// rotate every laser line by one degree
 	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
 	// (Rotate laser line counterclockwise by 180 degrees and further by the half of the laserAngle)
-	for (int i=0, angle = -(180 + (laserscannerAngleFront/2)); i<laserLineListFront->size(); i++, angle++)
+	for (int i=0, angle = 0; i<laserLineListFront->size(); i++, angle++)
+// org:	for (int i=0, angle = -(180 + (laserscannerAngleFront/2)); i<laserLineListFront->size(); i++, angle++)
 	{
 		laserLineListFront->at(i)->rotate(angle);
 	}
@@ -1944,6 +1954,12 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 	}
 
 
+// TEST TEST TEST
+// TEST TEST TEST
+// TEST TEST TEST
+qreal x = 0.0;
+qreal y = 0.0;
+
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
@@ -1957,14 +1973,26 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
 		// set tool tip of the line to the distance
-		// Org: laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+// Org: laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 		
 		// convert from polar to Cartesian coordinates
 		// minus the current "middle position" of the robot within the gui frame
 		// FIXME: fix this conversion to the correct values!
 		int xKart = qRound( laserLineLength * cos(i) ) - laserXPos;
 		int yKart = qRound( laserLineLength * sin(i) ) - laserYPos;
-		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(xKart).arg(yKart) );
+
+
+// TEST TEST TEST
+// TEST TEST TEST
+// TEST TEST TEST
+		x = laserLineListFront->at(i)->scenePos().x();
+		y = laserLineListFront->at(i)->scenePos().y();
+
+// org:		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(xKart).arg(yKart) );
+		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(x).arg(y) );
+// TEST TEST TEST
+// TEST TEST TEST
+// TEST TEST TEST
 	}
 }
 
@@ -2221,6 +2249,8 @@ void Gui::createLaserScannerObjects()
 
 	// put one layer up (layer 4).
 	pixmapBot2->setZValue(4);
+	pixmapBot1->setVisible(false);
+	pixmapBot2->setVisible(false);
 }
 
 

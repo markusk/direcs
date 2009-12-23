@@ -684,16 +684,16 @@ bool LaserThread::isConnected(short int laserScanner)
 void LaserThread::setSimulationValues()
 {
 	// fill the simulation value array with some nice values
-	simulatedValuesFront[0]	= 0.25;		simulatedValuesRear[0]	= 0.25;
-	simulatedValuesFront[1]	= 0.25;		simulatedValuesRear[1]	= 0.25;
-	simulatedValuesFront[2]	= 0.25;		simulatedValuesRear[2]	= 0.25;
-	simulatedValuesFront[3]	= 0.25;		simulatedValuesRear[3]	= 0.25;
-	simulatedValuesFront[4]	= 0.25;		simulatedValuesRear[4]	= 0.25;
-	simulatedValuesFront[5]	= 0.25;		simulatedValuesRear[5]	= 0.25;
-	simulatedValuesFront[6]	= 0.25;		simulatedValuesRear[6]	= 0.25;
-	simulatedValuesFront[7]	= 0.25;		simulatedValuesRear[7]	= 0.25;
-	simulatedValuesFront[8]	= 0.25;		simulatedValuesRear[8]	= 0.25;
-	simulatedValuesFront[9]	= 0.25;		simulatedValuesRear[9]	= 0.25;
+	simulatedValuesFront[0]	= 2.07;		simulatedValuesRear[0]	= 0.25;
+	simulatedValuesFront[1]	= 2.07;		simulatedValuesRear[1]	= 0.25;
+	simulatedValuesFront[2]	= 2.07;		simulatedValuesRear[2]	= 0.25;
+	simulatedValuesFront[3]	= 2.07;		simulatedValuesRear[3]	= 0.25;
+	simulatedValuesFront[4]	= 2.07;		simulatedValuesRear[4]	= 0.25;
+	simulatedValuesFront[5]	= 2.07;		simulatedValuesRear[5]	= 0.25;
+	simulatedValuesFront[6]	= 2.07;		simulatedValuesRear[6]	= 0.25;
+	simulatedValuesFront[7]	= 2.07;		simulatedValuesRear[7]	= 0.25;
+	simulatedValuesFront[8]	= 2.07;		simulatedValuesRear[8]	= 0.25;
+	simulatedValuesFront[9]	= 2.07;		simulatedValuesRear[9]	= 0.25;
 	simulatedValuesFront[10]	= 1.5;		simulatedValuesRear[10]	= 0.25;
 	simulatedValuesFront[11]	= 1.5;		simulatedValuesRear[11]	= 0.25;
 	simulatedValuesFront[12]	= 1.5;		simulatedValuesRear[12]	= 1.5;
