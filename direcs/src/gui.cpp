@@ -1084,36 +1084,6 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	if (width != -1)
 	{
 		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 1).append(" cm"));
-		
-		// test test test
-		// test test test
-		// get the coordinates of the regarding laser lines (free area)
-
-		QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
-		QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
-	
-
-		static QPointF pointLast;
-		if (pointLast != pointB)
-		{
-			pointLast = pointB;
-			appendLog( QString("<font color=\"#0000FF\">Kreis x=%1, y=%2</font>").arg(pointB.x()).arg(pointB.y()) );
-		}
-
-
-		
-		// test 2
-		// test 2
-		qreal y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
-		// reset transform or rotation
-		widthLeftCircle->resetTransform();
-		// rotate circle
-		widthLeftCircle->rotate(largestFreeAreaStart);
-		// set position of each line
-		//widthLeftCircle->setPos((x - laserLineListFront->at(i)->line().length()), y);
-		
-		// set the circle position!
-		widthLeftCircle->setPos( (pointB.x() - laserLineListFront->at(largestFreeAreaStart)->line().length() - (widthCirclesWidth/2)), (pointB.y() - (widthCirclesWidth/2)) ); // TODO: set pos
 	}
 	else
 	{
@@ -1978,8 +1948,9 @@ qreal y = 0.0;
 		// convert from polar to Cartesian coordinates
 		// minus the current "middle position" of the robot within the gui frame
 		// FIXME: fix this conversion to the correct values!
-		int xKart = qRound( laserLineLength * cos(i) ) - laserXPos;
-		int yKart = qRound( laserLineLength * sin(i) ) - laserYPos;
+        // WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
+        qreal xKart = laserLineLength * cos( (double) i / 360.0 * 2.0 * M_PI  );// - laserXPos;
+        qreal yKart = laserLineLength * sin( (double) i / 360.0 * 2.0 * M_PI  );// - laserYPos;
 
 
 // TEST TEST TEST
@@ -1989,10 +1960,42 @@ qreal y = 0.0;
 		y = laserLineListFront->at(i)->scenePos().y();
 
 // org:		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(xKart).arg(yKart) );
-		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(x).arg(y) );
+        laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / %3 Pixel / x=%4, y=%5 / xKart=%6, yKart=%7").arg(laserScannerValues[i]).arg(i).arg(laserLineLength).arg(x).arg(y).arg(xKart ).arg(yKart) );
 // TEST TEST TEST
 // TEST TEST TEST
 // TEST TEST TEST
+
+
+        // test test test
+        // test test test
+        // get the coordinates of the regarding laser lines (free area)
+/*
+        QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
+        QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
+
+
+        static QPointF pointLast;
+        if (pointLast != pointB)
+        {
+            pointLast = pointB;
+            appendLog( QString("<font color=\"#0000FF\">Kreis x=%1, y=%2</font>").arg(pointB.x()).arg(pointB.y()) );
+        }
+*/
+
+
+        // test 2
+        // test 2
+        qreal y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
+        // reset transform or rotation
+        widthLeftCircle->resetTransform();
+        // rotate circle
+//        widthLeftCircle->rotate(largestFreeAreaStart);
+        // set position of each line
+        //widthLeftCircle->setPos((x - laserLineListFront->at(i)->line().length()), y);
+
+        // set the circle position!
+// last:        widthLeftCircle->setPos( (pointB.x() - laserLineListFront->at(largestFreeAreaStart)->line().length() - (widthCirclesWidth/2)), (pointB.y() - (widthCirclesWidth/2)) ); // TODO: set pos
+        widthLeftCircle->setPos( x - (widthCirclesWidth/2), y - (widthCirclesWidth/2) ); // TODO: set pos
 	}
 }
 
@@ -2350,7 +2353,7 @@ void Gui::createLaserDistanceObjects()
 
 void Gui::createLaserWidthObjects()
 {
-	widthCirclesWidth = 50;  // TODO: which radius?
+    widthCirclesWidth = 20;  // TODO: which radius?
 		
 	widthLeftCircle = new QGraphicsEllipseItem();
 	widthRightCircle = new QGraphicsEllipseItem();

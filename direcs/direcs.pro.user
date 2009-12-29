@@ -90,42 +90,36 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-KVTE61uBiM,guid=0a112a1bf1509582f19bcf464b2e0cdc</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Ai5A19K3oC,guid=6bdb497a125f12099a6ab7124b3a58b3</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
     <value type="QString" >DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString" >DVDCSS_CACHE=/home/markus/.dvdcss/</value>
-    <value type="QString" >DVDCSS_METHOD=key</value>
-    <value type="QString" >DVDCSS_RAW_DEVICE=/dev/rdvd</value>
-    <value type="QString" >DVDCSS_VERBOSE=0</value>
     <value type="QString" >GS_LIB=/home/markus/.fonts</value>
     <value type="QString" >GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/markus/.gtkrc-2.0:/home/markus/.gtkrc-2.0-kde4:/home/markus/.kde/share/config/gtkrc-2.0</value>
     <value type="QString" >GTK_RC_FILES=/etc/gtk/gtkrc:/home/markus/.gtkrc::/home/markus/.kde/share/config/gtkrc</value>
     <value type="QString" >HOME=/home/markus</value>
     <value type="QString" >KDE_FULL_SESSION=true</value>
     <value type="QString" >KDE_MULTIHEAD=false</value>
-    <value type="QString" >KDE_NO_IPV6=TRUE</value>
     <value type="QString" >KDE_SESSION_UID=1000</value>
     <value type="QString" >KDE_SESSION_VERSION=4</value>
     <value type="QString" >LANG=de_DE.UTF-8</value>
-    <value type="QString" >LANGUAGE=de_DE:de:en_GB:en</value>
     <value type="QString" >LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString" >LOGNAME=markus</value>
-    <value type="QString" >PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games</value>
+    <value type="QString" >PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/games</value>
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2744,unix/pcmarkus:/tmp/.ICE-unix/2744</value>
+    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/3158,unix/thinkpad:/tmp/.ICE-unix/3158</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2672</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-hQQuwa2612/agent.2612</value>
+    <value type="QString" >SSH_AGENT_PID=3056</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-nCOGez3013/agent.3013</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1261309147.373694-672215953</value>
+    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262114994.931722-1646707914</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
@@ -145,42 +139,36 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-KVTE61uBiM,guid=0a112a1bf1509582f19bcf464b2e0cdc</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Ai5A19K3oC,guid=6bdb497a125f12099a6ab7124b3a58b3</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
     <value type="QString" >DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString" >DVDCSS_CACHE=/home/markus/.dvdcss/</value>
-    <value type="QString" >DVDCSS_METHOD=key</value>
-    <value type="QString" >DVDCSS_RAW_DEVICE=/dev/rdvd</value>
-    <value type="QString" >DVDCSS_VERBOSE=0</value>
     <value type="QString" >GS_LIB=/home/markus/.fonts</value>
     <value type="QString" >GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/markus/.gtkrc-2.0:/home/markus/.gtkrc-2.0-kde4:/home/markus/.kde/share/config/gtkrc-2.0</value>
     <value type="QString" >GTK_RC_FILES=/etc/gtk/gtkrc:/home/markus/.gtkrc::/home/markus/.kde/share/config/gtkrc</value>
     <value type="QString" >HOME=/home/markus</value>
     <value type="QString" >KDE_FULL_SESSION=true</value>
     <value type="QString" >KDE_MULTIHEAD=false</value>
-    <value type="QString" >KDE_NO_IPV6=TRUE</value>
     <value type="QString" >KDE_SESSION_UID=1000</value>
     <value type="QString" >KDE_SESSION_VERSION=4</value>
     <value type="QString" >LANG=de_DE.UTF-8</value>
-    <value type="QString" >LANGUAGE=de_DE:de:en_GB:en</value>
     <value type="QString" >LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString" >LOGNAME=markus</value>
-    <value type="QString" >PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games</value>
+    <value type="QString" >PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/games</value>
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/pcmarkus:@/tmp/.ICE-unix/2744,unix/pcmarkus:/tmp/.ICE-unix/2744</value>
+    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/3158,unix/thinkpad:/tmp/.ICE-unix/3158</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2672</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-hQQuwa2612/agent.2612</value>
+    <value type="QString" >SSH_AGENT_PID=3056</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-nCOGez3013/agent.3013</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=8d994f45c031837579c2497ab17e7800-1261309147.373694-672215953</value>
+    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262114994.931722-1646707914</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
