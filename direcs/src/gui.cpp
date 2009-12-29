@@ -1948,9 +1948,9 @@ qreal y = 0.0;
 		// convert from polar to Cartesian coordinates
 		// minus the current "middle position" of the robot within the gui frame
 		// FIXME: fix this conversion to the correct values!
-        // WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
-        qreal xKart = laserLineLength * cos( (double) i / 360.0 * 2.0 * M_PI  );// - laserXPos;
-        qreal yKart = laserLineLength * sin( (double) i / 360.0 * 2.0 * M_PI  );// - laserYPos;
+		// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
+		qreal xKart = laserLineLength * cos( (double) i / 360.0 * 2.0 * M_PI  );// - laserXPos;
+		qreal yKart = laserLineLength * sin( (double) i / 360.0 * 2.0 * M_PI  );// - laserYPos;
 
 
 // TEST TEST TEST
@@ -1966,36 +1966,34 @@ qreal y = 0.0;
 // TEST TEST TEST
 
 
-        // test test test
-        // test test test
-        // get the coordinates of the regarding laser lines (free area)
+		// test test test
+		// test test test
+		// get the coordinates of the regarding laser lines (free area)
 /*
-        QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
-        QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
+		QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
+		QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
 
 
-        static QPointF pointLast;
-        if (pointLast != pointB)
-        {
-            pointLast = pointB;
-            appendLog( QString("<font color=\"#0000FF\">Kreis x=%1, y=%2</font>").arg(pointB.x()).arg(pointB.y()) );
-        }
-*/
+		static QPointF pointLast;
+		if (pointLast != pointB)
+		{
+			pointLast = pointB;
+			appendLog( QString("<font color=\"#0000FF\">Kreis x=%1, y=%2</font>").arg(pointB.x()).arg(pointB.y()) );
+		}
+		*/
 
 
-        // test 2
-        // test 2
-        qreal y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
-        // reset transform or rotation
-        widthLeftCircle->resetTransform();
-        // rotate circle
-//        widthLeftCircle->rotate(largestFreeAreaStart);
-        // set position of each line
-        //widthLeftCircle->setPos((x - laserLineListFront->at(i)->line().length()), y);
-
-        // set the circle position!
+		// test 2
+		// test 2
+//		qreal y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
+		// set the circle position!
 // last:        widthLeftCircle->setPos( (pointB.x() - laserLineListFront->at(largestFreeAreaStart)->line().length() - (widthCirclesWidth/2)), (pointB.y() - (widthCirclesWidth/2)) ); // TODO: set pos
-        widthLeftCircle->setPos( x - (widthCirclesWidth/2), y - (widthCirclesWidth/2) ); // TODO: set pos
+		widthLeftCircle->setPos( x - (widthCirclesWidth/2), y - (widthCirclesWidth/2) /*+ laserLineListFront->at(0)->line().length()*/ ); // TODO: set pos
+
+		// reset transform or rotation
+		widthLeftCircle->resetTransform();
+		// rotate circle
+//		widthLeftCircle->rotate(i);
 	}
 }
 
