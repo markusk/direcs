@@ -2032,8 +2032,19 @@ static qreal widthLinePosY1 = 0.0;
 
 				//--------------------------------------------------------------------
 				// draw the width line
-				// (corrected by the circle radius, to get the middle of the circle)
 				//--------------------------------------------------------------------
+				// TODO: calculate the correct position
+				if (laserLineListFront->at(mLargestFreeAreaStartFront)->line().length() < laserLineListFront->at(mLargestFreeAreaEndFront)->line().length())
+				{
+					if (laserLineListFront->at(mLargestFreeAreaStartFront)->line().length() > laserLineListFront->at(mLargestFreeAreaEndFront)->line().length())
+					{
+					}
+					else
+					{
+						// lenth of both lines is the same
+					}
+				}
+				// draw it
 				widthLine->setLine(widthLinePosX1, widthLinePosY1, xKart + (widthCirclesWidth/2), yKart +  (widthCirclesWidth/2));
 			}
 		}
@@ -2293,8 +2304,8 @@ void Gui::createLaserScannerObjects()
 
 	// put one layer up (layer 4).
 	pixmapBot2->setZValue(4);
-	pixmapBot1->setVisible(false);
-	pixmapBot2->setVisible(false);
+//	pixmapBot1->setVisible(false); // just for testing
+//	pixmapBot2->setVisible(false);
 }
 
 
