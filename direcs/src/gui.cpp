@@ -2001,7 +2001,7 @@ int angle = 0;
 // TEST TEST TEST
 
 
-		if (i==0)
+		if (i==38)
 		{
 			angle = i;											// FIXME  fixed angle !!
 			r = laserLineListFront->at(angle)->line().length(); // FIXME  fixed angle !!
@@ -2010,6 +2010,10 @@ int angle = 0;
 			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
 			xKart = r * sin( angle * M_PI / 180 );
 			yKart = r * cos( angle * M_PI / 180 );
+
+			// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
+			// (difference between real world and computer)
+			xKart = xKart * -1;
 
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
