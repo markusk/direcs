@@ -145,6 +145,7 @@ Gui::~Gui()
 	
 	delete widthLeftCircle;
 	delete widthRightCircle;
+	delete widthLine;
 
 	// empty QList
 	while (!laserDistanceTextFront->isEmpty())
@@ -1937,6 +1938,8 @@ int r = 0;
 qreal xKart;
 qreal yKart;
 int angle = 0;
+static qreal widthLinePosX1 = 0.0;
+static qreal widthLinePosY1 = 0.0;
 
 
 	//---------------------------------------------------------------------------
@@ -1996,9 +1999,15 @@ int angle = 0;
 
 			// set the circle position!
 			widthLeftCircle->setPos(xKart, yKart);
+
+			// store this positions for the width line
+			// corrected by the circle radius, to get the middle of the circle
+			widthLinePosX1 = xKart +  (widthCirclesWidth/2);
+			widthLinePosY1 = yKart +  (widthCirclesWidth/2);
 		}
 		else
 		{
+			// draw the next (right) width circle
 			if (i == mLargestFreeAreaEndFront)
 			{
 				angle = i;
@@ -2019,6 +2028,13 @@ int angle = 0;
 
 				// set the circle position!
 				widthRightCircle->setPos(xKart, yKart);
+
+
+				//--------------------------------------------------------------------
+				// draw the width line
+				// (corrected by the circle radius, to get the middle of the circle)
+				//--------------------------------------------------------------------
+				widthLine->setLine(widthLinePosX1, widthLinePosY1, xKart + (widthCirclesWidth/2), yKart +  (widthCirclesWidth/2));
 			}
 		}
 	}
@@ -2382,7 +2398,8 @@ void Gui::createLaserWidthObjects()
 		
 	widthLeftCircle = new QGraphicsEllipseItem();
 	widthRightCircle = new QGraphicsEllipseItem();
-	
+	widthLine = new QGraphicsLineItem();
+
 	// set the start angle of the circle
 	widthLeftCircle->setStartAngle(0*16);
 	widthRightCircle->setStartAngle(0*16);
@@ -2393,10 +2410,12 @@ void Gui::createLaserWidthObjects()
 	// set the color
 	widthLeftCircle->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 	widthRightCircle->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthLine->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 
 	// setting to the lowest layer level
 	widthLeftCircle->setZValue(1);
 	widthRightCircle->setZValue(1);
+	widthLine->setZValue(1);
 
 	// draw a circle to see the coordinates for the 'drive-tru width'
 	// change the width and height
@@ -2406,6 +2425,7 @@ void Gui::createLaserWidthObjects()
 	// add the item to the scene
 	scene->addItem(widthLeftCircle); // fixme
 	scene->addItem(widthRightCircle); // fixme
+	scene->addItem(widthLine); // fixme
 }
 
 

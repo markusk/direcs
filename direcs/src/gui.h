@@ -483,8 +483,9 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QPixmap pixmap; // for IplImageToQImage()
-		QGraphicsEllipseItem *widthLeftCircle; /// shows the width for the robots drive-tru
+		QGraphicsEllipseItem *widthLeftCircle;  /// shows the width for the robots drive-tru
 		QGraphicsEllipseItem *widthRightCircle; /// shows the width for the robots drive-tru
+		QGraphicsLineItem *widthLine;           /// shows the width for the robots drive-tru
 		qreal widthCirclesWidth; /// the width of the robots drive-tru circles
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
