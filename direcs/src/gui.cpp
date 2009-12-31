@@ -1074,6 +1074,10 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
+	// store the values in the class local for refreshLaserView()
+	mLargestFreeAreaStartFront = largestFreeAreaStart;
+	mLargestFreeAreaEndFront = largestFreeAreaEnd;
+
 	// TODO: do all this stuff for the rear scanner?
 	ui.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
 //	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
@@ -1089,36 +1093,6 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	{
 		ui.lblLaserFrontFreeWidth->setText("oo");
 	}
-
-
-	// TEST TEST TEST
-	// TEST TEST TEST
-	// TEST TEST TEST
-
-	// set the circle position!
-
-	// reset transform or rotation
-//	widthLeftCircle->resetTransform();
-
-	// rotate circle
-//	widthLeftCircle->rotate(largestFreeAreaEnd);
-/*
-	// Rotate an item 45 degrees around (x, y).
-	int angle = largestFreeAreaEnd -1;
-
-	qreal x = laserLineListFront->at(angle)->scenePos().x();
-	qreal y = laserLineListFront->at(angle)->scenePos().y();
-
-//	widthLeftCircle->setTransform(QTransform().translate(x, y).rotate(angle).translate(-x, -y));;
-
-	int r = laserLineListFront->at(angle)->line().length();
-
-	qreal xKart = r * cos( 360.0 / (2.0 * M_PI / (double) angle )  );
-	qreal yKart = r * sin( 360.0 / (2.0 * M_PI / (double) angle )  );
-
-
-	widthLeftCircle->setPos(xKart, yKart);
-	*/
 }
 
 
@@ -2001,10 +1975,11 @@ int angle = 0;
 // TEST TEST TEST
 
 
-		if (i==38)
+		// draw the first (left) width circle
+		if (i == mLargestFreeAreaStartFront)
 		{
-			angle = i;											// FIXME  fixed angle !!
-			r = laserLineListFront->at(angle)->line().length(); // FIXME  fixed angle !!
+			angle = i;
+			r = laserLineListFront->at(angle)->line().length();
 
 			// convert from polar to kartesic coordinates
 			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
@@ -2020,8 +1995,31 @@ int angle = 0;
 			yKart += y - (widthCirclesWidth/2);
 
 			// set the circle position!
-//			widthLeftCircle->setPos( x - (widthCirclesWidth/2), y - (widthCirclesWidth/2) + laserLineListFront->at(i)->line().length() );
 			widthLeftCircle->setPos(xKart, yKart);
+		}
+		else
+		{
+			if (i == mLargestFreeAreaEndFront)
+			{
+				angle = i;
+				r = laserLineListFront->at(angle)->line().length();
+
+				// convert from polar to kartesic coordinates
+				// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
+				xKart = r * sin( angle * M_PI / 180 );
+				yKart = r * cos( angle * M_PI / 180 );
+
+				// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
+				// (difference between real world and computer)
+				xKart = xKart * -1;
+
+				// add the "start coordinates" (the laser line origin)
+				xKart += x - (widthCirclesWidth/2);
+				yKart += y - (widthCirclesWidth/2);
+
+				// set the circle position!
+				widthRightCircle->setPos(xKart, yKart);
+			}
 		}
 	}
 }
@@ -2385,23 +2383,29 @@ void Gui::createLaserWidthObjects()
 	widthLeftCircle = new QGraphicsEllipseItem();
 	widthRightCircle = new QGraphicsEllipseItem();
 	
-		// set the start angle of the circle
-	widthLeftCircle->setStartAngle(0*16); // TODO: all the right circle stuff!
+	// set the start angle of the circle
+	widthLeftCircle->setStartAngle(0*16);
+	widthRightCircle->setStartAngle(0*16);
 	// set the span angle of the circle
 	widthLeftCircle->setSpanAngle(360*16);
+	widthRightCircle->setSpanAngle(360*16);
 
 	// set the color
 	widthLeftCircle->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthRightCircle->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 
 	// setting to the lowest layer level
 	widthLeftCircle->setZValue(1);
-	
+	widthRightCircle->setZValue(1);
+
 	// draw a circle to see the coordinates for the 'drive-tru width'
 	// change the width and height
 	widthLeftCircle->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
-	
+	widthRightCircle->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
+
 	// add the item to the scene
 	scene->addItem(widthLeftCircle); // fixme
+	scene->addItem(widthRightCircle); // fixme
 }
 
 

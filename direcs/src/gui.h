@@ -462,8 +462,12 @@ class Gui : public QMainWindow
 		QColor colorHelpLine;
 		QColor colorHelpLineText;
 		QColor colorGraphicsSceneBackground;
-		int laserscannerAngleFront; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
-		int laserscannerAngleRear; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
+		int laserscannerAngleFront; /// this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
+		int laserscannerAngleRear; /// this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
+		int mLargestFreeAreaStartFront; /// this stores the free area angle from the front laser. Got it from @sa showLaserFrontAngles()
+		int mLargestFreeAreaEndFront;   /// this stores the free area angle from the front laser. Got it from @sa showLaserFrontAngles()
+		int mLargestFreeAreaStartRear;  /// this stores the free area angle from the rear  laser. Got it from @sa showLaserFrontAngles()
+		int mLargestFreeAreaEndRear;    /// this stores the free area angle from the rear  laser. Got it from @sa showLaserFrontAngles()
 		QPen laserLinePen;
 		int lastZoom;
 		qreal startScale;
