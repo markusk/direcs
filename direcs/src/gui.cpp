@@ -1089,6 +1089,36 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	{
 		ui.lblLaserFrontFreeWidth->setText("oo");
 	}
+
+
+	// TEST TEST TEST
+	// TEST TEST TEST
+	// TEST TEST TEST
+
+	// set the circle position!
+
+	// reset transform or rotation
+//	widthLeftCircle->resetTransform();
+
+	// rotate circle
+//	widthLeftCircle->rotate(largestFreeAreaEnd);
+/*
+	// Rotate an item 45 degrees around (x, y).
+	int angle = largestFreeAreaEnd -1;
+
+	qreal x = laserLineListFront->at(angle)->scenePos().x();
+	qreal y = laserLineListFront->at(angle)->scenePos().y();
+
+//	widthLeftCircle->setTransform(QTransform().translate(x, y).rotate(angle).translate(-x, -y));;
+
+	int r = laserLineListFront->at(angle)->line().length();
+
+	qreal xKart = r * cos( 360.0 / (2.0 * M_PI / (double) angle )  );
+	qreal yKart = r * sin( 360.0 / (2.0 * M_PI / (double) angle )  );
+
+
+	widthLeftCircle->setPos(xKart, yKart);
+	*/
 }
 
 
@@ -1929,6 +1959,11 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 // TEST TEST TEST
 qreal x = 0.0;
 qreal y = 0.0;
+int r = 0;
+qreal xKart;
+qreal yKart;
+int angle = 0;
+
 
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
@@ -1966,34 +2001,24 @@ qreal y = 0.0;
 // TEST TEST TEST
 
 
-		// test test test
-		// test test test
-		// get the coordinates of the regarding laser lines (free area)
-/*
-		QPointF pointB = laserLineListFront->at(largestFreeAreaStart)->scenePos();
-		QPointF pointC = laserLineListFront->at(largestFreeAreaEnd)->scenePos();
-
-
-		static QPointF pointLast;
-		if (pointLast != pointB)
+		if (i==0)
 		{
-			pointLast = pointB;
-			appendLog( QString("<font color=\"#0000FF\">Kreis x=%1, y=%2</font>").arg(pointB.x()).arg(pointB.y()) );
+			angle = i;											// FIXME  fixed angle !!
+			r = laserLineListFront->at(angle)->line().length(); // FIXME  fixed angle !!
+
+			// convert from polar to kartesic coordinates
+			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
+			xKart = r * sin( angle * M_PI / 180 );
+			yKart = r * cos( angle * M_PI / 180 );
+
+			// add the "start coordinates" (the laser line origin)
+			xKart += x - (widthCirclesWidth/2);
+			yKart += y - (widthCirclesWidth/2);
+
+			// set the circle position!
+//			widthLeftCircle->setPos( x - (widthCirclesWidth/2), y - (widthCirclesWidth/2) + laserLineListFront->at(i)->line().length() );
+			widthLeftCircle->setPos(xKart, yKart);
 		}
-		*/
-
-
-		// test 2
-		// test 2
-//		qreal y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
-		// set the circle position!
-// last:        widthLeftCircle->setPos( (pointB.x() - laserLineListFront->at(largestFreeAreaStart)->line().length() - (widthCirclesWidth/2)), (pointB.y() - (widthCirclesWidth/2)) ); // TODO: set pos
-		widthLeftCircle->setPos( x - (widthCirclesWidth/2), y - (widthCirclesWidth/2) /*+ laserLineListFront->at(0)->line().length()*/ ); // TODO: set pos
-
-		// reset transform or rotation
-		widthLeftCircle->resetTransform();
-		// rotate circle
-//		widthLeftCircle->rotate(i);
 	}
 }
 
