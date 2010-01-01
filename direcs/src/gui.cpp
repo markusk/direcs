@@ -2105,6 +2105,11 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			}
 		}
 	}
+
+	// make the width objects visible
+	widthLeftCircle->setVisible(true);
+	widthRightCircle->setVisible(true);
+	widthLine->setVisible(true);
 }
 
 
@@ -2489,10 +2494,15 @@ void Gui::createLaserWidthObjects()
 	widthLeftCircle->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
 	widthRightCircle->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
 
+	// make them unvisible untill we have a change in thre laser line length (other method of this class)
+	widthLeftCircle->setVisible(false);
+	widthRightCircle->setVisible(false);
+	widthLine->setVisible(false);
+
 	// add the item to the scene
-	scene->addItem(widthLeftCircle); // fixme
-	scene->addItem(widthRightCircle); // fixme
-	scene->addItem(widthLine); // fixme
+	scene->addItem(widthLeftCircle);
+	scene->addItem(widthRightCircle);
+	scene->addItem(widthLine);
 }
 
 
