@@ -2081,7 +2081,7 @@ static qreal widthLinePosY2 = 0.0;
 				yKart += y - (widthCirclesWidth/2);
 
 				// set the circle position!
-				widthRightCircle->setPos(xKart, yKart);
+//				widthRightCircle->setPos(xKart, yKart);
 
 
 				//--------------------------------------------------------------------
@@ -2123,6 +2123,9 @@ static qreal widthLinePosY2 = 0.0;
 
 				// draw it
 				widthLine->setLine(widthLinePosX1, widthLinePosY1, widthLinePosX2, widthLinePosY2);
+
+				// set the circle position!
+				widthRightCircle->setPos( widthLinePosX2 - (widthCirclesWidth/2), widthLinePosY2 - (widthCirclesWidth/2) );
 			}
 		}
 	}
