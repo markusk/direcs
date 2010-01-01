@@ -34,6 +34,10 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	laserYPos = 0; // correct value is set in the initLaserView()!!
 	laserscannerAngleFront = 0;
 	laserscannerAngleRear = 0;
+	mLargestFreeAreaStartFront = 0;
+	mLargestFreeAreaEndFront = 0;
+	mLargestFreeAreaStartRear = 0;
+	mLargestFreeAreaEndRear = 0;
 
 	// define some nice green and red colors
 	labelFillColorGreen = QColor(64, 255, 64);
@@ -1075,11 +1079,28 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
-	// store the values in the class local for refreshLaserView()
-	mLargestFreeAreaStartFront = largestFreeAreaStart;
-	mLargestFreeAreaEndFront = largestFreeAreaEnd;
-
 	// TODO: do all this stuff for the rear scanner?
+
+	// store the values in the class local for refreshLaserView()
+	if (largestFreeAreaStart == -1)
+	{
+		mLargestFreeAreaStartFront = 0;
+	}
+	else
+	{
+		mLargestFreeAreaStartFront = largestFreeAreaStart;
+	}
+
+	if (largestFreeAreaEnd == -1)
+	{
+		mLargestFreeAreaEndFront = 0;
+	}
+	else
+	{
+		mLargestFreeAreaEndFront = largestFreeAreaEnd;
+	}
+
+
 	ui.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
 //	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
 	ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
@@ -1950,6 +1971,7 @@ static qreal widthLinePosY2 = 0.0;
 	// /get the data from 180° to 0° (right to left!!)
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
+//qDebug() << "laserLineListFront->size:" << laserLineListFront->size() << "mLargestFreeAreaStartFront:" << mLargestFreeAreaStartFront << "mLargestFreeAreaEndFront:" << mLargestFreeAreaEndFront;
 		// get value from laser and
 		// draw the lines at every 1°
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
@@ -1984,7 +2006,7 @@ static qreal widthLinePosY2 = 0.0;
 		if (i == mLargestFreeAreaStartFront)
 		{
 			angle = i;
-
+//
 			r = laserLineListFront->at(angle)->line().length();
 
 			// convert from polar to kartesic coordinates
@@ -1999,9 +2021,7 @@ static qreal widthLinePosY2 = 0.0;
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
 			yKart += y - (widthCirclesWidth/2);
-
-			// set the circle position!
-			widthLeftCircle->setPos(xKart, yKart);
+//
 
 			// TODO: calculate the correct position
 			// check which line of the free area is longer and store the positions for the drive trough line!
@@ -2035,6 +2055,9 @@ static qreal widthLinePosY2 = 0.0;
 			// corrected by the circle radius, to get the middle of the circle
 			widthLinePosX1 = xKart +  (widthCirclesWidth/2);
 			widthLinePosY1 = yKart +  (widthCirclesWidth/2);
+
+			// set the circle position!
+			widthLeftCircle->setPos(widthLinePosX1, widthLinePosY1);
 		}
 		else
 		{
