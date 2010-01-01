@@ -1909,8 +1909,19 @@ void Gui::initLaserView()
 
 void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
 {
+	qreal x = 0.0;
+	qreal y = 0.0;
+	int r = 0;
+	qreal xKart;
+	qreal yKart;
+	int angle = 0;
+	static qreal widthLinePosX1 = 0.0;
+	static qreal widthLinePosX2 = 0.0;
+	static qreal widthLinePosY1 = 0.0;
+	static qreal widthLinePosY2 = 0.0;
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
+
 
 	//----------------------------------------------------------------------------------------
 	// Change the laser lines (color and length)
@@ -1950,28 +1961,12 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 	}
 
 
-// TEST TEST TEST
-// TEST TEST TEST
-// TEST TEST TEST
-qreal x = 0.0;
-qreal y = 0.0;
-int r = 0;
-qreal xKart;
-qreal yKart;
-int angle = 0;
-static qreal widthLinePosX1 = 0.0;
-static qreal widthLinePosX2 = 0.0;
-static qreal widthLinePosY1 = 0.0;
-static qreal widthLinePosY2 = 0.0;
-
-
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
 	// /get the data from 180° to 0° (right to left!!)
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
-//qDebug() << "laserLineListFront->size:" << laserLineListFront->size() << "mLargestFreeAreaStartFront:" << mLargestFreeAreaStartFront << "mLargestFreeAreaEndFront:" << mLargestFreeAreaEndFront;
 		// get value from laser and
 		// draw the lines at every 1°
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
@@ -1979,34 +1974,22 @@ static qreal widthLinePosY2 = 0.0;
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
 		// set tool tip of the line to the distance
-// Org: laserLineListFront->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
-		
+		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+
 		// convert from polar to Cartesian coordinates
 		// minus the current "middle position" of the robot within the gui frame
-		// FIXME: fix this conversion to the correct values!
 		// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
-		qreal xKart = laserLineLength * cos( (double) i / 360.0 * 2.0 * M_PI  );// - laserXPos;
-		qreal yKart = laserLineLength * sin( (double) i / 360.0 * 2.0 * M_PI  );// - laserYPos;
+		xKart = laserLineLength * cos( (double) i / 360.0 * 2.0 * M_PI  );
+		yKart = laserLineLength * sin( (double) i / 360.0 * 2.0 * M_PI  );
 
-
-// TEST TEST TEST
-// TEST TEST TEST
-// TEST TEST TEST
 		x = laserLineListFront->at(i)->scenePos().x();
 		y = laserLineListFront->at(i)->scenePos().y();
-
-// org:		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / Flag=%3 / %4 Pixel / x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(xKart).arg(yKart) );
-        laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m  / %2 deg / %3 Pixel / x=%4, y=%5 / xKart=%6, yKart=%7").arg(laserScannerValues[i]).arg(i).arg(laserLineLength).arg(x).arg(y).arg(xKart ).arg(yKart) );
-// TEST TEST TEST
-// TEST TEST TEST
-// TEST TEST TEST
 
 
 		// draw the first (left) width circle
 		if (i == mLargestFreeAreaStartFront)
 		{
 			angle = i;
-//
 			r = laserLineListFront->at(angle)->line().length();
 
 			// convert from polar to kartesic coordinates
@@ -2021,9 +2004,7 @@ static qreal widthLinePosY2 = 0.0;
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
 			yKart += y - (widthCirclesWidth/2);
-//
 
-			// TODO: calculate the correct position
 			// check which line of the free area is longer and store the positions for the drive trough line!
 			if (laserLineListFront->at(mLargestFreeAreaStartFront)->line().length() < laserLineListFront->at(mLargestFreeAreaEndFront)->line().length())
 			{
@@ -2080,15 +2061,10 @@ static qreal widthLinePosY2 = 0.0;
 				xKart += x - (widthCirclesWidth/2);
 				yKart += y - (widthCirclesWidth/2);
 
-				// set the circle position!
-//				widthRightCircle->setPos(xKart, yKart);
-
 
 				//--------------------------------------------------------------------
 				// draw the width line
 				//--------------------------------------------------------------------
-
-				// TODO: calculate the correct position
 				// check which line of the free area is longer and store the positions for the drive trough line!
 				if (laserLineListFront->at(mLargestFreeAreaStartFront)->line().length() < laserLineListFront->at(mLargestFreeAreaEndFront)->line().length())
 				{
