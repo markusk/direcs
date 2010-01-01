@@ -1939,7 +1939,9 @@ qreal xKart;
 qreal yKart;
 int angle = 0;
 static qreal widthLinePosX1 = 0.0;
+static qreal widthLinePosX2 = 0.0;
 static qreal widthLinePosY1 = 0.0;
+static qreal widthLinePosY2 = 0.0;
 
 
 	//---------------------------------------------------------------------------
@@ -1982,6 +1984,7 @@ static qreal widthLinePosY1 = 0.0;
 		if (i == mLargestFreeAreaStartFront)
 		{
 			angle = i;
+
 			r = laserLineListFront->at(angle)->line().length();
 
 			// convert from polar to kartesic coordinates
@@ -2000,7 +2003,35 @@ static qreal widthLinePosY1 = 0.0;
 			// set the circle position!
 			widthLeftCircle->setPos(xKart, yKart);
 
+			// TODO: calculate the correct position
+			// check which line of the free area is longer and store the positions for the drive trough line!
+			if (laserLineListFront->at(mLargestFreeAreaStartFront)->line().length() < laserLineListFront->at(mLargestFreeAreaEndFront)->line().length())
+			{
+				// lenth of both lines is the same or the other one is shorter
+				r = laserLineListFront->at(mLargestFreeAreaStartFront)->line().length();
+			}
+			else
+			{
+				// lenth of both lines is the same or the other one is shorter
+				r = laserLineListFront->at(mLargestFreeAreaEndFront)->line().length();
+			}
+
+			// convert from polar to kartesic coordinates
+			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
+			xKart = r * sin( angle * M_PI / 180 );
+			yKart = r * cos( angle * M_PI / 180 );
+
+			// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
+			// (difference between real world and computer)
+			xKart = xKart * -1;
+
+			// add the "start coordinates" (the laser line origin)
+			xKart += x - (widthCirclesWidth/2);
+			yKart += y - (widthCirclesWidth/2);
+
+			//------------------------------------------------------------------
 			// store this positions for the width line
+			//------------------------------------------------------------------
 			// corrected by the circle radius, to get the middle of the circle
 			widthLinePosX1 = xKart +  (widthCirclesWidth/2);
 			widthLinePosY1 = yKart +  (widthCirclesWidth/2);
@@ -2033,19 +2064,42 @@ static qreal widthLinePosY1 = 0.0;
 				//--------------------------------------------------------------------
 				// draw the width line
 				//--------------------------------------------------------------------
+
 				// TODO: calculate the correct position
+				// check which line of the free area is longer and store the positions for the drive trough line!
 				if (laserLineListFront->at(mLargestFreeAreaStartFront)->line().length() < laserLineListFront->at(mLargestFreeAreaEndFront)->line().length())
 				{
-					if (laserLineListFront->at(mLargestFreeAreaStartFront)->line().length() > laserLineListFront->at(mLargestFreeAreaEndFront)->line().length())
-					{
-					}
-					else
-					{
-						// lenth of both lines is the same
-					}
+					// lenth of both lines is the same or the other one is shorter
+					r = laserLineListFront->at(mLargestFreeAreaStartFront)->line().length();
 				}
+				else
+				{
+					// lenth of both lines is the same or the other one is shorter
+					r = laserLineListFront->at(mLargestFreeAreaEndFront)->line().length();
+				}
+
+				// convert from polar to kartesic coordinates
+				// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
+				xKart = r * sin( angle * M_PI / 180 );
+				yKart = r * cos( angle * M_PI / 180 );
+
+				// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
+				// (difference between real world and computer)
+				xKart = xKart * -1;
+
+				// add the "start coordinates" (the laser line origin)
+				xKart += x - (widthCirclesWidth/2);
+				yKart += y - (widthCirclesWidth/2);
+
+				//------------------------------------------------------------------
+				// store this positions for the width line
+				//------------------------------------------------------------------
+				// corrected by the circle radius, to get the middle of the circle
+				widthLinePosX2 = xKart +  (widthCirclesWidth/2);
+				widthLinePosY2 = yKart +  (widthCirclesWidth/2);
+
 				// draw it
-				widthLine->setLine(widthLinePosX1, widthLinePosY1, xKart + (widthCirclesWidth/2), yKart +  (widthCirclesWidth/2));
+				widthLine->setLine(widthLinePosX1, widthLinePosY1, widthLinePosX2, widthLinePosY2);
 			}
 		}
 	}
