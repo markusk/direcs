@@ -129,7 +129,7 @@
     <value type="QString" >-r</value>
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/usr/bin/qmake-qt4</value>
-   <value key="abstractProcess.enabled" type="bool" >false</value>
+   <value key="abstractProcess.enabled" type="bool" >true</value>
    <value key="abstractProcess.workingDirectory" type="QString" >/home/markus/develop/direcs/direcs</value>
    <value key="buildConfiguration" type="int" >0</value>
   </valuemap>

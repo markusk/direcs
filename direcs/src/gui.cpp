@@ -1855,8 +1855,7 @@ void Gui::initLaserView()
 	// rotate every laser line by one degree
 	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
 	// (Rotate laser line counterclockwise by 180 degrees and further by the half of the laserAngle)
-	for (int i=0, angle = 0; i<laserLineListFront->size(); i++, angle++)
-// org:	for (int i=0, angle = -(180 + (laserscannerAngleFront/2)); i<laserLineListFront->size(); i++, angle++)
+	for (int i=0, angle = -(180 + (laserscannerAngleFront/2)); i<laserLineListFront->size(); i++, angle++)
 	{
 		laserLineListFront->at(i)->rotate(angle);
 	}
