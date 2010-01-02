@@ -151,6 +151,10 @@ Gui::~Gui()
 	delete widthRightCircleFront;
 	delete widthLineFront;
 
+	delete widthLeftCircleRear;
+	delete widthRightCircleRear;
+	delete widthLineRear;
+
 	// empty QList
 	while (!laserDistanceTextFront->isEmpty())
 	{
@@ -2467,42 +2471,72 @@ void Gui::createLaserDistanceObjects()
 void Gui::createLaserWidthObjects()
 {
     widthCirclesWidth = 20;  // TODO: which radius?
-		
+
 	widthLeftCircleFront = new QGraphicsEllipseItem();
 	widthRightCircleFront = new QGraphicsEllipseItem();
 	widthLineFront = new QGraphicsLineItem();
 
-	// set the start angle of the circle
+	widthLeftCircleRear = new QGraphicsEllipseItem();
+	widthRightCircleRear = new QGraphicsEllipseItem();
+	widthLineRear = new QGraphicsLineItem();
+
+	// set the start angle of the front laser circle
 	widthLeftCircleFront->setStartAngle(0*16);
 	widthRightCircleFront->setStartAngle(0*16);
 	// set the span angle of the circle
 	widthLeftCircleFront->setSpanAngle(360*16);
 	widthRightCircleFront->setSpanAngle(360*16);
 
+	// set the start angle of the rear laser circle
+	widthLeftCircleRear->setStartAngle(0*16);
+	widthRightCircleRear->setStartAngle(0*16);
+	// set the span angle of the circle
+	widthLeftCircleRear->setSpanAngle(360*16);
+	widthRightCircleRear->setSpanAngle(360*16);
+
 	// set the color
 	widthLeftCircleFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 	widthRightCircleFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 	widthLineFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+
+	widthLeftCircleRear->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthRightCircleRear->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthLineRear->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 
 	// setting to the lowest layer level
 	widthLeftCircleFront->setZValue(1);
 	widthRightCircleFront->setZValue(1);
 	widthLineFront->setZValue(1);
 
+	widthLeftCircleRear->setZValue(1);
+	widthRightCircleRear->setZValue(1);
+	widthLineRear->setZValue(1);
+
 	// draw a circle to see the coordinates for the 'drive-tru width'
 	// change the width and height
 	widthLeftCircleFront->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
 	widthRightCircleFront->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
+
+	widthLeftCircleRear->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
+	widthRightCircleRear->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
 
 	// make them unvisible untill we have a change in thre laser line length (other method of this class)
 	widthLeftCircleFront->setVisible(false);
 	widthRightCircleFront->setVisible(false);
 	widthLineFront->setVisible(false);
 
+	widthLeftCircleRear->setVisible(false);
+	widthRightCircleRear->setVisible(false);
+	widthLineRear->setVisible(false);
+
 	// add the item to the scene
 	scene->addItem(widthLeftCircleFront);
 	scene->addItem(widthRightCircleFront);
 	scene->addItem(widthLineFront);
+
+	scene->addItem(widthLeftCircleRear);
+	scene->addItem(widthRightCircleRear);
+	scene->addItem(widthLineRear);
 }
 
 
