@@ -147,9 +147,9 @@ Gui::~Gui()
 	delete pixmapBot2;
 	delete pixmapBot1;
 	
-	delete widthLeftCircle;
-	delete widthRightCircle;
-	delete widthLine;
+	delete widthLeftCircleFront;
+	delete widthRightCircleFront;
+	delete widthLineFront;
 
 	// empty QList
 	while (!laserDistanceTextFront->isEmpty())
@@ -1914,10 +1914,10 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 	qreal xKart;
 	qreal yKart;
 	int angle = 0;
-	static qreal widthLinePosX1 = 0.0;
-	static qreal widthLinePosX2 = 0.0;
-	static qreal widthLinePosY1 = 0.0;
-	static qreal widthLinePosY2 = 0.0;
+	static qreal widthLineFrontPosX1 = 0.0;
+	static qreal widthLineFrontPosX2 = 0.0;
+	static qreal widthLineFrontPosY1 = 0.0;
+	static qreal widthLineFrontPosY2 = 0.0;
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 
@@ -1972,9 +1972,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
-		// set tool tip of the line to the distance
-		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
-
 		// convert from polar to Cartesian coordinates
 		// minus the current "middle position" of the robot within the gui frame
 		// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
@@ -1983,6 +1980,10 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 
 		x = laserLineListFront->at(i)->scenePos().x();
 		y = laserLineListFront->at(i)->scenePos().y();
+
+		// set tool tip of the line to the distance
+//		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel  /  ScenePos x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(x).arg(y) );
 
 
 		// draw the first (left) width circle
@@ -2033,11 +2034,11 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			// store this positions for the width line
 			//------------------------------------------------------------------
 			// corrected by the circle radius, to get the middle of the circle
-			widthLinePosX1 = xKart +  (widthCirclesWidth/2);
-			widthLinePosY1 = yKart +  (widthCirclesWidth/2);
+			widthLineFrontPosX1 = xKart +  (widthCirclesWidth/2);
+			widthLineFrontPosY1 = yKart +  (widthCirclesWidth/2);
 
 			// set the circle position!
-			widthLeftCircle->setPos(xKart, yKart);
+			widthLeftCircleFront->setPos(xKart, yKart);
 		}
 		else
 		{
@@ -2093,22 +2094,22 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 				// store this positions for the width line
 				//------------------------------------------------------------------
 				// corrected by the circle radius, to get the middle of the circle
-				widthLinePosX2 = xKart +  (widthCirclesWidth/2);
-				widthLinePosY2 = yKart +  (widthCirclesWidth/2);
+				widthLineFrontPosX2 = xKart +  (widthCirclesWidth/2);
+				widthLineFrontPosY2 = yKart +  (widthCirclesWidth/2);
 
 				// draw it
-				widthLine->setLine(widthLinePosX1, widthLinePosY1, widthLinePosX2, widthLinePosY2);
+				widthLineFront->setLine(widthLineFrontPosX1, widthLineFrontPosY1, widthLineFrontPosX2, widthLineFrontPosY2);
 
 				// set the circle position!
-				widthRightCircle->setPos( widthLinePosX2 - (widthCirclesWidth/2), widthLinePosY2 - (widthCirclesWidth/2) );
+				widthRightCircleFront->setPos( widthLineFrontPosX2 - (widthCirclesWidth/2), widthLineFrontPosY2 - (widthCirclesWidth/2) );
 			}
 		}
 	}
 
 	// make the width objects visible
-	widthLeftCircle->setVisible(true);
-	widthRightCircle->setVisible(true);
-	widthLine->setVisible(true);
+	widthLeftCircleFront->setVisible(true);
+	widthRightCircleFront->setVisible(true);
+	widthLineFront->setVisible(true);
 }
 
 
@@ -2365,7 +2366,7 @@ void Gui::createLaserScannerObjects()
 	// put one layer up (layer 4).
 	pixmapBot2->setZValue(4);
 //	pixmapBot1->setVisible(false); // just for testing
-//	pixmapBot2->setVisible(false);
+//	pixmapBot2->setVisible(false); // just for testing
 }
 
 
@@ -2467,41 +2468,41 @@ void Gui::createLaserWidthObjects()
 {
     widthCirclesWidth = 20;  // TODO: which radius?
 		
-	widthLeftCircle = new QGraphicsEllipseItem();
-	widthRightCircle = new QGraphicsEllipseItem();
-	widthLine = new QGraphicsLineItem();
+	widthLeftCircleFront = new QGraphicsEllipseItem();
+	widthRightCircleFront = new QGraphicsEllipseItem();
+	widthLineFront = new QGraphicsLineItem();
 
 	// set the start angle of the circle
-	widthLeftCircle->setStartAngle(0*16);
-	widthRightCircle->setStartAngle(0*16);
+	widthLeftCircleFront->setStartAngle(0*16);
+	widthRightCircleFront->setStartAngle(0*16);
 	// set the span angle of the circle
-	widthLeftCircle->setSpanAngle(360*16);
-	widthRightCircle->setSpanAngle(360*16);
+	widthLeftCircleFront->setSpanAngle(360*16);
+	widthRightCircleFront->setSpanAngle(360*16);
 
 	// set the color
-	widthLeftCircle->setPen(QPen(Qt::blue)); // TODO: define circle the color!
-	widthRightCircle->setPen(QPen(Qt::blue)); // TODO: define circle the color!
-	widthLine->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthLeftCircleFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthRightCircleFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthLineFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 
 	// setting to the lowest layer level
-	widthLeftCircle->setZValue(1);
-	widthRightCircle->setZValue(1);
-	widthLine->setZValue(1);
+	widthLeftCircleFront->setZValue(1);
+	widthRightCircleFront->setZValue(1);
+	widthLineFront->setZValue(1);
 
 	// draw a circle to see the coordinates for the 'drive-tru width'
 	// change the width and height
-	widthLeftCircle->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
-	widthRightCircle->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
+	widthLeftCircleFront->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
+	widthRightCircleFront->setRect(0, 0, widthCirclesWidth, widthCirclesWidth);
 
 	// make them unvisible untill we have a change in thre laser line length (other method of this class)
-	widthLeftCircle->setVisible(false);
-	widthRightCircle->setVisible(false);
-	widthLine->setVisible(false);
+	widthLeftCircleFront->setVisible(false);
+	widthRightCircleFront->setVisible(false);
+	widthLineFront->setVisible(false);
 
 	// add the item to the scene
-	scene->addItem(widthLeftCircle);
-	scene->addItem(widthRightCircle);
-	scene->addItem(widthLine);
+	scene->addItem(widthLeftCircleFront);
+	scene->addItem(widthRightCircleFront);
+	scene->addItem(widthLineFront);
 }
 
 
