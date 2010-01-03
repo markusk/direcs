@@ -483,12 +483,14 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QPixmap pixmap; // for IplImageToQImage()
-		QGraphicsEllipseItem *widthLeftCircleFront;  /// shows the width for the robots drive-tru for the front laser
-		QGraphicsEllipseItem *widthRightCircleFront; /// shows the width for the robots drive-tru for the front laser
-		QGraphicsLineItem *widthLineFront;           /// shows the width for the robots drive-tru for the front laser
-		QGraphicsEllipseItem *widthLeftCircleRear;   /// shows the width for the robots drive-tru for the rear laser
-		QGraphicsEllipseItem *widthRightCircleRear;  /// shows the width for the robots drive-tru for the rear laser
-		QGraphicsLineItem *widthLineRear;            /// shows the width for the robots drive-tru for the rear laser
+		QGraphicsEllipseItem *widthLeftCircleFront;  /// shows the width for the robots drive-trough for the front laser
+		QGraphicsEllipseItem *widthRightCircleFront; /// shows the width for the robots drive-trough for the front laser
+		QGraphicsLineItem *widthLineFront;           /// shows the width for the robots drive-trough for the front laser
+		QGraphicsSimpleTextItem *widthTextFront;     /// shows the width for the robots drive-trough for the front laser
+		QGraphicsEllipseItem *widthLeftCircleRear;   /// shows the width for the robots drive-trough for the rear laser
+		QGraphicsEllipseItem *widthRightCircleRear;  /// shows the width for the robots drive-trough for the rear laser
+		QGraphicsLineItem *widthLineRear;            /// shows the width for the robots drive-trough for the rear laser
+		QGraphicsSimpleTextItem *widthTextRear;      /// shows the width for the robots drive-trough for the rear laser
 		qreal widthCirclesWidth; /// the width of the robots drive-tru circles
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.

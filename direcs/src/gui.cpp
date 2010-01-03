@@ -150,10 +150,12 @@ Gui::~Gui()
 	delete widthLeftCircleFront;
 	delete widthRightCircleFront;
 	delete widthLineFront;
+	delete widthTextFront;
 
 	delete widthLeftCircleRear;
 	delete widthRightCircleRear;
 	delete widthLineRear;
+	delete widthTextRear;
 
 	// empty QList
 	while (!laserDistanceTextFront->isEmpty())
@@ -1119,6 +1121,9 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	{
 		ui.lblLaserFrontFreeWidth->setText("oo");
 	}
+
+	// show the same width in the scene
+	widthTextFront->setText( ui.lblLaserFrontFreeWidth->text() );
 }
 
 
@@ -2140,41 +2145,18 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 
 		laserLineListRear->at(i)->setLine(0, 0, 0, laserLineLength);
 
-		// convert from polar to Cartesian coordinates
-		// minus the current "middle position" of the robot within the gui frame
-		// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
-		xKart = laserLineLength * cos( (double) i / 360.0 * 2.0 * M_PI  );
-		yKart = laserLineLength * sin( (double) i / 360.0 * 2.0 * M_PI  );
+		// set tool tip of the line to the distance
+		laserLineListRear->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 
+		// get the current scene positions of the laser line
 		x = laserLineListRear->at(i)->scenePos().x();
 		y = laserLineListRear->at(i)->scenePos().y();
 
-		// set tool tip of the line to the distance
-		//laserLinList->at(i)->setToolTip(QString("%1 m / %2 Pixel").arg(laserScannerValues[i]).arg(laserLineLength));
-		//laserLineListRear->at(i)->setToolTip(QString("%1 m (%2 deg)").arg(laserScannerValues[i]).arg(i));
-		laserLineListRear->at(i)->setToolTip( QString("%1 m  / %2 deg / Flag=%3").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]) );
-//		laserLineListRear->at(i)->setToolTip(QString("x=%1 y=%2 (%3 deg)").arg(pos.x()).arg(pos.y()).arg(i+1));
-
-
-
-		// draw the first (left) width circle
+		// draw the first (left) width circle / get the firt coordinate for the width line
 		if (i == mLargestFreeAreaStartRear)
 		{
-			angle = i;
-			r = laserLineListFront->at(angle)->line().length();
-
-			// convert from polar to kartesic coordinates
-			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
-			xKart = r * sin( angle * M_PI / 180 );
-			yKart = r * cos( angle * M_PI / 180 );
-
-			// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-			// (difference between real world and computer)
-			xKart = xKart * -1;
-
-			// add the "start coordinates" (the laser line origin)
-			xKart += x - (widthCirclesWidth/2);
-			yKart += y - (widthCirclesWidth/2);
+			angle = i;// - qRound(laserscannerAngleRear/2); // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
+			r = laserLineListRear->at(i)->line().length(); // here we have use 'i' instead of 'angle'. i is the current 'original angle'!
 
 			// check which line of the free area is longer and store the positions for the drive trough line!
 			if (laserLineListRear->at(mLargestFreeAreaStartRear)->line().length() < laserLineListRear->at(mLargestFreeAreaEndRear)->line().length())
@@ -2189,13 +2171,13 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 			}
 
 			// convert from polar to kartesic coordinates
+			// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
 			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
 			xKart = r * sin( angle * M_PI / 180 );
 			yKart = r * cos( angle * M_PI / 180 );
 
-			// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-			// (difference between real world and computer)
-			xKart = xKart * -1;
+			// bring it to the correct quadrant in the coord. system
+			xKart *= -1;
 
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
@@ -2213,67 +2195,51 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 		}
 		else
 		{
+			// in all other cases
 			// draw the next (right) width circle
-			if (i == mLargestFreeAreaEndRear)
+			angle = i - qRound(laserscannerAngleRear/2); // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
+			r = laserLineListRear->at(i)->line().length(); // here we have use 'i' instead of 'angle'. i is the current 'original angle'!
+
+			//--------------------------------------------------------------------
+			// draw the width line
+			//--------------------------------------------------------------------
+			// check which line of the free area is longer and store the positions for the drive trough line!
+			if (laserLineListRear->at(mLargestFreeAreaStartRear)->line().length() < laserLineListRear->at(mLargestFreeAreaEndRear)->line().length())
 			{
-				angle = i;
-				r = laserLineListRear->at(angle)->line().length();
-
-				// convert from polar to kartesic coordinates
-				// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
-				xKart = r * sin( angle * M_PI / 180 );
-				yKart = r * cos( angle * M_PI / 180 );
-
-				// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-				// (difference between real world and computer)
-				xKart = xKart * -1;
-
-				// add the "start coordinates" (the laser line origin)
-				xKart += x - (widthCirclesWidth/2);
-				yKart += y - (widthCirclesWidth/2);
-
-
-				//--------------------------------------------------------------------
-				// draw the width line
-				//--------------------------------------------------------------------
-				// check which line of the free area is longer and store the positions for the drive trough line!
-				if (laserLineListRear->at(mLargestFreeAreaStartRear)->line().length() < laserLineListRear->at(mLargestFreeAreaEndRear)->line().length())
-				{
-					// lenth of both lines is the same or the other one is shorter
-					r = laserLineListRear->at(mLargestFreeAreaStartRear)->line().length();
-				}
-				else
-				{
-					// lenth of both lines is the same or the other one is shorter
-					r = laserLineListRear->at(mLargestFreeAreaEndRear)->line().length();
-				}
-
-				// convert from polar to kartesic coordinates
-				// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
-				xKart = r * sin( angle * M_PI / 180 );
-				yKart = r * cos( angle * M_PI / 180 );
-
-				// make x negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-				// (difference between real world and computer)
-				xKart = xKart * -1;
-
-				// add the "start coordinates" (the laser line origin)
-				xKart += x - (widthCirclesWidth/2);
-				yKart += y - (widthCirclesWidth/2);
-
-				//------------------------------------------------------------------
-				// store this positions for the width line
-				//------------------------------------------------------------------
-				// corrected by the circle radius, to get the middle of the circle
-				widthLineRearPosX2 = xKart +  (widthCirclesWidth/2);
-				widthLineRearPosY2 = yKart +  (widthCirclesWidth/2);
-
-				// draw it
-				widthLineRear->setLine(widthLineRearPosX1, widthLineRearPosY1, widthLineRearPosX2, widthLineRearPosY2);
-
-				// set the circle position!
-				widthRightCircleRear->setPos( widthLineRearPosX2 - (widthCirclesWidth/2), widthLineRearPosY2 - (widthCirclesWidth/2) );
+				// lenth of both lines is the same or the other one is shorter
+				r = laserLineListRear->at(mLargestFreeAreaStartRear)->line().length();
 			}
+			else
+			{
+				// lenth of both lines is the same or the other one is shorter
+				r = laserLineListRear->at(mLargestFreeAreaEndRear)->line().length();
+			}
+
+			// convert from polar to kartesic coordinates
+			// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
+			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
+			xKart = r * sin( angle * M_PI / 180 );
+			yKart = r * cos( angle * M_PI / 180 );
+
+			// bring it to the correct quadrant in the coord. system
+			xKart *= -1;
+
+			// add the "start coordinates" (the laser line origin)
+			xKart += x - (widthCirclesWidth/2);
+			yKart += y - (widthCirclesWidth/2);
+
+			//------------------------------------------------------------------
+			// store this positions for the width line
+			//------------------------------------------------------------------
+			// corrected by the circle radius, to get the middle of the circle
+			widthLineRearPosX2 = xKart +  (widthCirclesWidth/2);
+			widthLineRearPosY2 = yKart +  (widthCirclesWidth/2);
+
+			// draw it
+			widthLineRear->setLine(widthLineRearPosX1, widthLineRearPosY1, widthLineRearPosX2, widthLineRearPosY2);
+
+			// set the circle position!
+			widthRightCircleRear->setPos( widthLineRearPosX2 - (widthCirclesWidth/2), widthLineRearPosY2 - (widthCirclesWidth/2) );
 		}
 	} // for i
 
@@ -2573,15 +2539,18 @@ void Gui::createLaserDistanceObjects()
 
 void Gui::createLaserWidthObjects()
 {
-    widthCirclesWidth = 20;  // TODO: which radius?
+	widthCirclesWidth = 10;  // TODO: which radius?
 
+	// create the objects
 	widthLeftCircleFront = new QGraphicsEllipseItem();
 	widthRightCircleFront = new QGraphicsEllipseItem();
 	widthLineFront = new QGraphicsLineItem();
+	widthTextFront = new QGraphicsSimpleTextItem();
 
 	widthLeftCircleRear = new QGraphicsEllipseItem();
 	widthRightCircleRear = new QGraphicsEllipseItem();
 	widthLineRear = new QGraphicsLineItem();
+	widthTextRear = new QGraphicsSimpleTextItem();
 
 	// set the start angle of the front laser circle
 	widthLeftCircleFront->setStartAngle(0*16);
@@ -2601,19 +2570,23 @@ void Gui::createLaserWidthObjects()
 	widthLeftCircleFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 	widthRightCircleFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 	widthLineFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthTextFront->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 
 	widthLeftCircleRear->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 	widthRightCircleRear->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 	widthLineRear->setPen(QPen(Qt::blue)); // TODO: define circle the color!
+	widthTextRear->setPen(QPen(Qt::blue)); // TODO: define circle the color!
 
 	// setting to the lowest layer level
 	widthLeftCircleFront->setZValue(1);
 	widthRightCircleFront->setZValue(1);
 	widthLineFront->setZValue(1);
+	widthTextFront->setZValue(1);
 
 	widthLeftCircleRear->setZValue(1);
 	widthRightCircleRear->setZValue(1);
 	widthLineRear->setZValue(1);
+	widthTextRear->setZValue(1);
 
 	// draw a circle to see the coordinates for the 'drive-tru width'
 	// change the width and height
@@ -2636,10 +2609,12 @@ void Gui::createLaserWidthObjects()
 	scene->addItem(widthLeftCircleFront);
 	scene->addItem(widthRightCircleFront);
 	scene->addItem(widthLineFront);
+	scene->addItem(widthTextFront);
 
 	scene->addItem(widthLeftCircleRear);
 	scene->addItem(widthRightCircleRear);
 	scene->addItem(widthLineRear);
+	scene->addItem(widthTextRear);
 }
 
 
