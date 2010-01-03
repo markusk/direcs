@@ -90,7 +90,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-PNYOoVCs2y,guid=5e68fac8fe94bc48d0f880084b407c78</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-VCHCilqrqu,guid=bda867f0396976c12b8fce7c4b40c74c</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -110,16 +110,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/2858,unix/thinkpad:/tmp/.ICE-unix/2858</value>
+    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/2871,unix/thinkpad:/tmp/.ICE-unix/2871</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2762</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-nAcYKj2719/agent.2719</value>
+    <value type="QString" >SSH_AGENT_PID=2769</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-LYFIYu2726/agent.2726</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262517367.714915-1385285959</value>
+    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262536524.14019-55098763</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
@@ -139,7 +139,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-PNYOoVCs2y,guid=5e68fac8fe94bc48d0f880084b407c78</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-VCHCilqrqu,guid=bda867f0396976c12b8fce7c4b40c74c</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -159,16 +159,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/2858,unix/thinkpad:/tmp/.ICE-unix/2858</value>
+    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/2871,unix/thinkpad:/tmp/.ICE-unix/2871</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2762</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-nAcYKj2719/agent.2719</value>
+    <value type="QString" >SSH_AGENT_PID=2769</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-LYFIYu2726/agent.2726</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262517367.714915-1385285959</value>
+    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262536524.14019-55098763</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >

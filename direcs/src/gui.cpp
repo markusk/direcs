@@ -1115,7 +1115,10 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	// show width in cm with one decimal place (Nachkommastelle)
 	if (width != -1)
 	{
-		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 1).append(" cm"));
+		// CONVERT the WIDTH to METERS!!
+		width /= 100;
+		// show the text with 2 decimals (Nachkommastellen)
+		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 2).append(" m"));
 	}
 	else
 	{
@@ -2025,6 +2028,10 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 
 			// set the circle position!
 			widthLeftCircleFront->setPos(xKart, yKart);
+
+			// set the width text to this circle
+			// place it a bit above the circle
+			widthTextFront->setPos(xKart, yKart - widthCirclesWidth * 2 );
 		}
 		else
 		{
@@ -2155,7 +2162,7 @@ void Gui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags
 		// draw the first (left) width circle / get the firt coordinate for the width line
 		if (i == mLargestFreeAreaStartRear)
 		{
-			angle = i;// - qRound(laserscannerAngleRear/2); // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
+			angle = i - qRound(laserscannerAngleRear/2); // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
 			r = laserLineListRear->at(i)->line().length(); // here we have use 'i' instead of 'angle'. i is the current 'original angle'!
 
 			// check which line of the free area is longer and store the positions for the drive trough line!
