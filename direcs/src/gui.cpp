@@ -1986,25 +1986,19 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		y = laserLineListFront->at(i)->scenePos().y();
 
 		// set tool tip of the line to the distance
-//		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
-		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel  /  ScenePos x=%5, y=%6").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength).arg(x).arg(y) );
+		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 
 
 		// draw the first (left) width circle
 		if (i == mLargestFreeAreaStartFront)
 		{
-			angle = 180 - (laserscannerAngleFront/2) + i + 90; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
+			angle = 180 - qRound(laserscannerAngleFront/2) + i + 90	; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
 			r = laserLineListFront->at(i)->line().length(); // here we have use 'i' instead of 'angle'. i is the current 'original angle'!
 
 			// convert from polar to kartesic coordinates
 			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
 			xKart = r * cos( angle * M_PI / 180 );
 			yKart = r * sin( angle * M_PI / 180 );
-
-			// make x and y negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-			// (difference between real world and computer)
-//			xKart = xKart * -1;
-//			yKart = yKart * -1;
 
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
@@ -2027,11 +2021,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			xKart = r * cos( angle * M_PI / 180 );
 			yKart = r * sin( angle * M_PI / 180 );
 
-			// make x and y negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-			// (difference between real world and computer)
-//			xKart = xKart * -1;
-//			yKart = yKart * -1;
-
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
 			yKart += y - (widthCirclesWidth/2);
@@ -2051,18 +2040,13 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			// draw the next (right) width circle
 			if (i == mLargestFreeAreaEndFront)
 			{
-				angle = 180 - (laserscannerAngleFront/2) + i + 90; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
+				angle = 180 - qRound(laserscannerAngleFront/2) + i + 90	; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
 				r = laserLineListFront->at(i)->line().length(); // here we have use 'i' instead of 'angle'. i is the current 'original angle'!
 
 				// convert from polar to kartesic coordinates
 				// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
 				xKart = r * cos( angle * M_PI / 180 );
 				yKart = r * sin( angle * M_PI / 180 );
-
-				// make x and y negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-				// (difference between real world and computer)
-//				xKart = xKart * -1;
-//				yKart = yKart * -1;
 
 				// add the "start coordinates" (the laser line origin)
 				xKart += x - (widthCirclesWidth/2);
@@ -2088,11 +2072,6 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 				// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
 				xKart = r * cos( angle * M_PI / 180 );
 				yKart = r * sin( angle * M_PI / 180 );
-
-				// make x and y negative because of a different x, y and angle orientation than in a normal kartesic coordination system!
-				// (difference between real world and computer)
-//				xKart = xKart * -1;
-//				yKart = yKart * -1;
 
 				// add the "start coordinates" (the laser line origin)
 				xKart += x - (widthCirclesWidth/2);
