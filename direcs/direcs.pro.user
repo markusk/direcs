@@ -90,7 +90,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-q5xOdf7QJ5,guid=156246b5670f1eae1db688dd4b3ddc1b</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-IUFQN96mfZ,guid=aa8f21ef0dd4eb491ff7d7d04b3fdb69</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -110,16 +110,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/3037,unix/thinkpad:/tmp/.ICE-unix/3037</value>
+    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/2865,unix/thinkpad:/tmp/.ICE-unix/2865</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2935</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-fBJIWb2892/agent.2892</value>
+    <value type="QString" >SSH_AGENT_PID=2767</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-BfSPZP2724/agent.2724</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262345243.77724-1287900530</value>
+    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262476137.244350-813518689</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
@@ -129,7 +129,7 @@
     <value type="QString" >-r</value>
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/usr/bin/qmake-qt4</value>
-   <value key="abstractProcess.enabled" type="bool" >true</value>
+   <value key="abstractProcess.enabled" type="bool" >false</value>
    <value key="abstractProcess.workingDirectory" type="QString" >/home/markus/develop/direcs/direcs</value>
    <value key="buildConfiguration" type="int" >0</value>
   </valuemap>
@@ -139,7 +139,7 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-q5xOdf7QJ5,guid=156246b5670f1eae1db688dd4b3ddc1b</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-IUFQN96mfZ,guid=aa8f21ef0dd4eb491ff7d7d04b3fdb69</value>
     <value type="QString" >DESKTOP_SESSION=default</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -159,16 +159,16 @@
     <value type="QString" >PWD=/home/markus</value>
     <value type="QString" >QTDIR=/usr</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/markus/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/3037,unix/thinkpad:/tmp/.ICE-unix/3037</value>
+    <value type="QString" >SESSION_MANAGER=local/thinkpad:@/tmp/.ICE-unix/2865,unix/thinkpad:/tmp/.ICE-unix/2865</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=0</value>
-    <value type="QString" >SSH_AGENT_PID=2935</value>
-    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-fBJIWb2892/agent.2892</value>
+    <value type="QString" >SSH_AGENT_PID=2767</value>
+    <value type="QString" >SSH_AUTH_SOCK=/tmp/ssh-BfSPZP2724/agent.2724</value>
     <value type="QString" >USER=markus</value>
     <value type="QString" >WINDOWPATH=7</value>
     <value type="QString" >XCURSOR_THEME=oxy-black</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262345243.77724-1287900530</value>
+    <value type="QString" >XDG_SESSION_COOKIE=916ec0808c50b7129f4adc354a258f8b-1262476137.244350-813518689</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
