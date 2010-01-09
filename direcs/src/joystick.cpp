@@ -41,6 +41,7 @@ void Joystick::stop()
 
 void Joystick::run()
 {
+#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 	axes = 2;
 	buttons = 2;
 	axisButtonNumber = 0;
@@ -137,18 +138,21 @@ void Joystick::run()
 	}
 
 	stopped = false;
+#endif
 }
 
 
 bool Joystick::isConnected()
 {
+#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 	if ((fd = open(joystickPort.toAscii(), O_RDONLY)) < 0)
 	{
 		emit emitMessage( QString(QString("No joystick found at %1").arg(joystickPort)).toAscii() );
 		stopped = true;
 		return false;
 	}
-	
+
+#endif
 	return true;
 }
 

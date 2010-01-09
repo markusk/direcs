@@ -26,10 +26,12 @@
 #include <unistd.h>
 #include <string.h>
 
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/serial.h>
+#endif
 
 #define DEFAULT_LASER_RATE		38400
 #define DEFAULT_LASER_PORT		"/dev/ttyS0"
@@ -167,9 +169,11 @@ class SickS300 : public QObject
 		struct termios oldtio;
 		int read_mode;
 
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 		#ifdef HAVE_HI_SPEED_SERIAL
 		struct serial_struct old_serial;
 		#endif
+#endif
 };
 
 #endif

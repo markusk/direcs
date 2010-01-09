@@ -39,7 +39,13 @@
 #ifdef CYGWIN
 #include <sys/socket.h>
 #else
+
+#ifndef Q_WS_MAC // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_UNIX
 #include <linux/serial.h>
+#endif
+#endif
+
 #endif
 
 #define READ_TIMEOUT          250000      /* less than 1e6 */

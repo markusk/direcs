@@ -21,6 +21,7 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
+#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -32,9 +33,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
-
 #include <linux/input.h>
 #include <linux/joystick.h>
+#endif
 
 #define NAME_LENGTH 128
 
@@ -93,6 +94,7 @@ class Joystick : public QThread
 	private:
 		volatile bool stopped;
 		QString joystickPort;
+#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 		int fd, i;
 		unsigned char axes;
 		unsigned char buttons;
@@ -105,7 +107,7 @@ class Joystick : public QThread
 		struct js_event js;
 		short int axisButtonNumber;
 		short int axisButtonValue;
-
+#endif
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
