@@ -86,9 +86,9 @@ unix {
 
 	INCLUDEPATH += /usr/include/qwt-qt4 \
 				/usr/local/include/opencv \
-				/opt/local/include \
-				/usr/include/sys \
-				/opt/local/var/macports/software/qt4-mac/4.6.0_0+darwin_10/opt/local/libexec/qt4-mac/include
+#				/opt/local/include \
+#				/usr/include/sys \
+				/opt/local/libexec/qt4-mac/include/
 
     CONFIG -= release
 

@@ -137,8 +137,13 @@ int SickS300::closeTerm()
 
 int SickS300::changeTermSpeed(int speed)
 {
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 	struct termios term;
+#else
+	Q_UNUSED(speed);
+#endif
 
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 #ifdef HAVE_HI_SPEED_SERIAL
 	struct serial_struct serial;
 
@@ -268,7 +273,9 @@ int SickS300::changeTermSpeed(int speed)
 
 		case 500000:
 			//PLAYER_MSG0(2, "terminal speed to 500000");
+#endif
 
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 #ifdef HAVE_HI_SPEED_SERIAL    
 			if (ioctl(laser_fd, TIOCGSERIAL, &old_serial) < 0)
 			{
@@ -315,7 +322,7 @@ int SickS300::changeTermSpeed(int speed)
 			qDebug("unknown speed %d", speed);
 			return -1;
 	}
-	
+#endif
 	return 0;
 }
 

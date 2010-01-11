@@ -166,11 +166,11 @@ class SickS300 : public QObject
 		int port_rate;
 		const char *device_name;
 		int laser_fd;
-		struct termios oldtio;
 		int read_mode;
-
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
-		#ifdef HAVE_HI_SPEED_SERIAL
+		struct termios oldtio;
+
+#ifdef HAVE_HI_SPEED_SERIAL
 		struct serial_struct old_serial;
 		#endif
 #endif

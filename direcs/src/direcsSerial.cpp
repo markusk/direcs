@@ -469,6 +469,7 @@ int DirecsSerial::closeAtmelPort()
 
 int DirecsSerial::setLowLatency(int fd)
 {
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 	#ifdef CYGWIN
 	fd = fd;
 	return -1;
@@ -496,4 +497,8 @@ int DirecsSerial::setLowLatency(int fd)
 	}
 	return result;
 	#endif
+#else
+	Q_UNUSED(fd);
+	return -1;
+#endif
 }

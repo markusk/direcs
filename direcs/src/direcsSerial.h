@@ -40,10 +40,8 @@
 #include <sys/socket.h>
 #else
 
-#ifndef Q_WS_MAC // currently supported only under linux (no MAC OS, Windoze at the moment)
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 #include <linux/serial.h>
-#endif
 #endif
 
 #endif
