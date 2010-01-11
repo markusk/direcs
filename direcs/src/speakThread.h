@@ -22,7 +22,9 @@
 #define SPEAKTHREAD_H
 
 //-------------------------------------------------------------------
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 #include "speak_lib.h"
+#endif
 #include <QThread>
 //-------------------------------------------------------------------
 

@@ -54,7 +54,7 @@
  </data>
  <data>
   <variable>RunConfiguration1-Executable</variable>
-  <value type="QString">/home/markus/develop/direcs/direcs/bin/direcs</value>
+  <value type="QString">/Users/markus/develop/direcs/direcs/bin/direcs.app</value>
  </data>
  <data>
   <variable>RunConfiguration1-RunConfiguration.name</variable>
@@ -96,7 +96,7 @@
   <variable>buildConfiguration-Release</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-   <value key="QtVersionId" type="int">2</value>
+   <value key="QtVersionId" type="int">0</value>
    <value key="ToolChain" type="int">0</value>
    <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">0</value>
@@ -113,8 +113,8 @@
     <value type="QString">DISPLAY=/tmp/launch-R8x6ug/:0</value>
     <value type="QString">HOME=/Users/markus</value>
     <value type="QString">LOGNAME=markus</value>
-    <value type="QString">PATH=/Developer/Tools/Qt:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
-    <value type="QString">QTDIR=/usr/local/Qt4.6</value>
+    <value type="QString">PATH=/opt/local/libexec/qt4-mac/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
+    <value type="QString">QTDIR=/opt/local/libexec/qt4-mac</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SSH_AUTH_SOCK=/tmp/launch-Q0a1SB/Listeners</value>
     <value type="QString">TMPDIR=/var/folders/pr/prPiGSfSGzy7hY-Q6CQmwU+++TI/-Tmp-/</value>
@@ -128,7 +128,7 @@
     <value type="QString">-r</value>
     <value type="QString">CONFIG+=release</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString">/usr/bin/qmake</value>
+   <value key="abstractProcess.command" type="QString">/opt/local/libexec/qt4-mac/bin/qmake</value>
    <value key="abstractProcess.enabled" type="bool">false</value>
    <value key="abstractProcess.workingDirectory" type="QString">/Users/markus/develop/direcs/direcs</value>
    <value key="buildConfiguration" type=""></value>
@@ -144,8 +144,8 @@
     <value type="QString">DISPLAY=/tmp/launch-R8x6ug/:0</value>
     <value type="QString">HOME=/Users/markus</value>
     <value type="QString">LOGNAME=markus</value>
-    <value type="QString">PATH=/Developer/Tools/Qt:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
-    <value type="QString">QTDIR=/usr/local/Qt4.6</value>
+    <value type="QString">PATH=/opt/local/libexec/qt4-mac/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
+    <value type="QString">QTDIR=/opt/local/libexec/qt4-mac</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SSH_AUTH_SOCK=/tmp/launch-Q0a1SB/Listeners</value>
     <value type="QString">TMPDIR=/var/folders/pr/prPiGSfSGzy7hY-Q6CQmwU+++TI/-Tmp-/</value>
@@ -175,8 +175,8 @@
     <value type="QString">DISPLAY=/tmp/launch-R8x6ug/:0</value>
     <value type="QString">HOME=/Users/markus</value>
     <value type="QString">LOGNAME=markus</value>
-    <value type="QString">PATH=/Developer/Tools/Qt:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
-    <value type="QString">QTDIR=/usr/local/Qt4.6</value>
+    <value type="QString">PATH=/opt/local/libexec/qt4-mac/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
+    <value type="QString">QTDIR=/opt/local/libexec/qt4-mac</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SSH_AUTH_SOCK=/tmp/launch-Q0a1SB/Listeners</value>
     <value type="QString">TMPDIR=/var/folders/pr/prPiGSfSGzy7hY-Q6CQmwU+++TI/-Tmp-/</value>

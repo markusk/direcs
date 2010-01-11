@@ -22,7 +22,9 @@
 #define GUI_H
 
 
-#include "cv.h" // for type IplImage (camThread)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+	#include "cv.h" // for type IplImage (camThread)
+#endif
 //-------------------------------------------------------------------
 #include <QtGui>
 #include <QtOpenGL>
@@ -130,6 +132,7 @@ class Gui : public QMainWindow
 		 */
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
 
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 		/**
 		Shows the new picture from the cam (live).
 		@param frame
@@ -137,6 +140,7 @@ class Gui : public QMainWindow
 		*/
 		void setCamImage(IplImage* frame);
 		//void setCamImage(QImage* image);
+#endif
 
 		/**
 		Show some face track data in the GUI.

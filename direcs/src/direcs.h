@@ -42,9 +42,7 @@
 #include "joystick.h"
 #include "head.h"
 #include "camThread.h"
-#ifdef Q_OS_UNIX
-	#include "speakThread.h"
-#endif
+#include "speakThread.h"
 //-------------------------------------------------------------------
 #include <QObject>
 #include <QtDebug>

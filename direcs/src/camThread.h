@@ -28,8 +28,10 @@
 #include <QString>
 #include <QtDebug> // for a more convenient use of qDebug
 //-------------------------------------------------------------------
-#include "cv.h"
-#include "highgui.h"
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+	#include "cv.h"
+	#include "highgui.h"
+#endif
 #include <stdio.h>
 #include <ctype.h>
 //-------------------------------------------------------------------
@@ -117,13 +119,15 @@ class CamThread : public QThread
 
 	
 	signals:
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 		/**
 		@param *imgPtr is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
 		void camDataComplete(IplImage* imgPtr);
 		//void camDataComplete(QImage* image);
-		
+#endif
+
 		/**
 		Disables checkBoxes in the GUI
 		*/
@@ -150,8 +154,10 @@ class CamThread : public QThread
 
 
 	private:
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 		QImage * IplImageToQImage(const IplImage * iplImage); //! Converts an OpenCV iplImage into a nice QImage :-)
-		
+#endif
+
 		bool initDone;
 		bool cameraIsOn;
 		bool faceDetectionIsEnabled;
@@ -159,8 +165,15 @@ class CamThread : public QThread
 		QVector <KOORD_T> detectedFaces; /** the coordinates of the last n detected faces */
 		int cameraDevice;
 		QString haarClassifierCascadeFilename;
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 		CvScalar hsv2rgb( float hue );
 		IplImage *imgPtr;
+		CvCapture *capture;
+		CvMemStorage *storage;
+		CvHaarClassifierCascade *cascade;
+		IplImage *gray;
+		IplImage *small_img;
+#endif
 		/* ----------
 		QImage *qimage; // for IplImageToQImage()
 		IplImage* tchannel0;
@@ -173,11 +186,6 @@ class CamThread : public QThread
 		int width;
 		int height;
 		int pixeldepth;
-		CvCapture *capture;
-		CvMemStorage *storage;
-		CvHaarClassifierCascade *cascade;
-		IplImage *gray;
-		IplImage *small_img;
 		bool contactAlarmTop;
 		bool contactAlarmBottom;
 		bool contactAlarmLeft;

@@ -1254,6 +1254,7 @@ void Gui::setCamImageData(int width, int height, int pixeldepth)
 }
 
 
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 //void Gui::setCamImage(QImage* image)
 void Gui::setCamImage(IplImage* frame)
 {
@@ -1271,6 +1272,7 @@ void Gui::setCamImage(IplImage* frame)
 	}
 */
 }
+#endif
 
 
 void Gui::saveCamImage(void)

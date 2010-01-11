@@ -110,10 +110,16 @@ unix|macx {
 
 
 macx {
-	message("MAC OS: Removing espeak usage, since this is not ported for lib usage yet!")
+	message("Processing MAC OS scope...")
+	message("Removing espeak support.")
 	LIBS -=		-lespeak \
 				-lqwt-qt4
-	message("MAC OS: Changing qwt lib name. Has to be installed via macports!")
+
+	message("Removing OpenCV support.")
+	LIBS -=		-lcv \
+				-lhighgui
+
+	message("Changing qwt lib name. Has to be installed via macports!")
 	LIBS +=		-lqwt
 }
 

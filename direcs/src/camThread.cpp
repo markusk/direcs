@@ -30,11 +30,13 @@ CamThread::CamThread() : QThread()
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
 	cameraDevice = -2; // -2, because of -1 is a default device!
-	imgPtr = new IplImage();
 	contactAlarmTop = false;
 	contactAlarmBottom = false;
 	contactAlarmLeft = false;
 	contactAlarmRight = false;
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+	imgPtr = new IplImage();
+#endif
 
 	// size and init the vector
 	detectedFaces.resize(FACEARRAYSIZE);
@@ -57,6 +59,7 @@ void CamThread::stop()
 
 void CamThread::run()
 {
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 	int i=0;
 	CvSeq *faces;
 	CvRect *faceRectangle;
@@ -277,6 +280,7 @@ void CamThread::run()
 	}
 	
 	stopped = false;
+#endif
 }
 
 
@@ -350,6 +354,7 @@ void CamThread::setCameraDevice(int device)
 
 bool CamThread::init()
 {
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 	if (initDone == false)
 	{
 		// do only *one* init!
@@ -416,6 +421,9 @@ bool CamThread::init()
 		}
 	}
 	return true;
+#else
+	return false;
+#endif
 }
 
 
@@ -447,6 +455,7 @@ void CamThread::test()
 }
 
 
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
 {
 	//
@@ -541,3 +550,4 @@ QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
 */
         return qImage;
 }
+#endif
