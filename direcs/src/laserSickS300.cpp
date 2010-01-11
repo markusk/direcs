@@ -322,8 +322,10 @@ int SickS300::changeTermSpeed(int speed)
 			qDebug("unknown speed %d", speed);
 			return -1;
 	}
-#endif
 	return 0;
+#else
+	return -1;
+#endif
 }
 
 
@@ -517,6 +519,7 @@ ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 
 int SickS300::openTerm()
 {
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 	laser_fd = open(device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
 	
 	if (laser_fd < 0)
@@ -548,6 +551,7 @@ int SickS300::openTerm()
 	// Make sure queue is empty
 	//
 	tcflush(laser_fd, TCIOFLUSH);
+#endif
 
 	return 0;
 }
@@ -555,6 +559,7 @@ int SickS300::openTerm()
 
 int SickS300::readContinuousTelegram(float *ranges)
 {
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 	unsigned char buffer[LASER_MAX_BUFFER_SIZE];
 	int n_count;
 	int i;
@@ -752,11 +757,17 @@ int SickS300::readContinuousTelegram(float *ranges)
 	qDebug("9,continuous telegram succesfully received");
 
 	return 0;
+#else
+	Q_UNUSED(ranges);
+
+	return -1;
+#endif
 }
 
 
 int SickS300::readRequestTelegram(float *ranges)
 {
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 	const char header_start_buff[]={0x00,0x00,0x00,0x00};
 	unsigned char buffer[1522];
 	int n_count;
@@ -815,6 +826,11 @@ int SickS300::readRequestTelegram(float *ranges)
 	}
 
 	return 0;
+#else
+	Q_UNUSED(ranges);
+
+	return -1;
+#endif
 }
 
 /* mk not nedded?

@@ -16,8 +16,8 @@ CONFIG += debug \
 
 TEMPLATE = app
 
-unix {
-    message("Processing UNIX scope...")
+unix|macx {
+	message("Processing UNIX/MAC OS scope...")
     HEADERS +=	aboutDialog.h \
 				camThread.h \
 				circuit.h \
@@ -92,12 +92,14 @@ unix {
 
     CONFIG -= release
 
-    LIBS += -L/usr/lib \
-  -L/usr/local/lib \
-  -lespeak \
-  -lqwt-qt4 \
-  -lcv \
-  -lhighgui
+	LIBS +=		-L/usr/lib \
+				-L/usr/local/lib \
+				-L/opt/local/lib \
+				-lespeak \
+				-lqwt-qt4 \
+				-lcv \
+				-lhighgui
+
     OBJECTS_DIR = ../tmp
 
     MOC_DIR = ../tmp
@@ -105,6 +107,15 @@ unix {
     QMAKE_CXXFLAGS_RELEASE += -pg
 
 }
+
+
+macx {
+	message("MAC OS: Removing espeak usage, since this is not ported for lib usage yet!")
+	LIBS -=		-lespeak \
+				-lqwt-qt4
+	LIBS +=		-lqwt
+}
+
 
 win32 {
     message("Processing win32 scope...")
