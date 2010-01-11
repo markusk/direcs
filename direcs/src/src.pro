@@ -86,7 +86,7 @@ unix {
 
 	INCLUDEPATH += /usr/include/qwt-qt4 \
 				/usr/local/include/opencv \
-#				/opt/local/include \
+				/opt/local/include \
 #				/usr/include/sys \
 				/opt/local/libexec/qt4-mac/include/
 
