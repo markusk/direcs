@@ -26,7 +26,7 @@ SpeakThread::SpeakThread()
 	stopped = false;
 	saySomething = false;
 	
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 	// Synchronous playback
 	// 0 ms length sound buffer for SynthCallBack
 	// default location for espeak-data directory
@@ -40,7 +40,7 @@ SpeakThread::SpeakThread()
 
 SpeakThread::~SpeakThread()
 {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 	espeak_Terminate();
 #endif
 	saySomething = false;
@@ -72,7 +72,7 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 		
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 		if (saySomething == true)
 		{
 			saySomething = false;
@@ -93,7 +93,7 @@ void SpeakThread::run()
 
 void SpeakThread::speak(QString text)
 {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 	// store the text in the class member
 	textToSpeak = text;
 	// enbale the run method to speak :-)
@@ -105,33 +105,42 @@ void SpeakThread::speak(QString text)
 		// shut up
 		espeak_Cancel();
 	}
+#else
+	Q_UNUSED(text);
 #endif
 }
 
 
 void SpeakThread::setLanguage(QString language)
 {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 	espeak_SetVoiceByName(language.toAscii());
+#else
+	Q_UNUSED(language);
 #endif
 }
 
 
 void SpeakThread::setRate(int value)
 {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 	espeak_SetParameter(espeakRATE, value, 0);
+#else
+	Q_UNUSED(value);
 #endif
 }
 
 
 void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
 	voice_spec->gender=gender;
 	voice_spec->age = age;
 	espeak_SetVoiceByProperties(voice_spec);
+#else
+	Q_UNUSED(gender);
+	Q_UNUSED(age);
 #endif
 }
 

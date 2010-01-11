@@ -113,6 +113,7 @@ macx {
 	message("MAC OS: Removing espeak usage, since this is not ported for lib usage yet!")
 	LIBS -=		-lespeak \
 				-lqwt-qt4
+	message("MAC OS: Changing qwt lib name. Has to be installed via macports!")
 	LIBS +=		-lqwt
 }
 
