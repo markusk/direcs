@@ -884,6 +884,10 @@ void Direcs::init()
 
 			// call my own exit routine
 			shutdown();
+
+			// here we're back from the shutdown method, so bye bye
+			// QCoreApplication::exit(-1); does not work!
+			exit(1); // FIXME: works, but doesn't call the destructor :-(
 		}
 	}
 }
@@ -1358,12 +1362,17 @@ void Direcs::shutdown()
 	emit message("TODO: Last circuit init...");
 // 	circuit1->initCircuit(); // FIXME: what, if the robote serial communication hangs here? timeout check?
 
-	//-----------------------------
-	// close serial port to mc
-	//-----------------------------
-	emit message("Closing serial port to microcontroller...");
-	interface1->closeComPort();
-	
+
+	if (forceShutdown==false) // don't close a serial port when we have a forced shutdown
+	{
+		//-----------------------------
+		// close serial port to mc
+		//-----------------------------
+		emit message("Closing serial port to microcontroller...");
+		interface1->closeComPort();
+	}
+
+
 	//-----------------------------
 	// last log file message
 	//-----------------------------
@@ -1385,14 +1394,13 @@ void Direcs::shutdown()
 		if (aboutDialog->isVisible())
 			aboutDialog->close();
 	}
-	
+
 	
 	if (consoleMode)
 	{
 		// In the gui mode the quit is done automatically by the close signal.
-		// This following line automaticall calls the Direcs destructor.
-		 // QCoreApplication::quit(); // does'nt work! returns from this method and doesn't wuit immediately!
-		QCoreApplication::exit(-1); // does'nt work! returns from this method and doesn't wuit immediately!
+		// In the Console mode, the following line automaticall calls the Direcs destructor.
+		QCoreApplication::quit();
 	}
 }
 
