@@ -17,7 +17,7 @@ CONFIG += debug \
 TEMPLATE = app
 
 unix|macx {
-	message("Processing UNIX/MAC OS scope...")
+	message("Processing UNIX scope...")
     HEADERS +=	aboutDialog.h \
 				camThread.h \
 				circuit.h \
@@ -84,17 +84,18 @@ unix|macx {
     QT +=		network \
 				opengl
 
-	INCLUDEPATH += /usr/include/qwt-qt4 \
-				/usr/local/include/opencv \
+	INCLUDEPATH += /opt/local/include/opencv \
 				/opt/local/include \
-#				/usr/include/sys \
-				/opt/local/libexec/qt4-mac/include/
+				/opt/local/libexec/qt4-mac/include \
+				/usr/include/qwt-qt4 \
+				/usr/local/include/opencv
 
     CONFIG -= release
 
-	LIBS +=		-L/usr/lib \
-				-L/usr/local/lib \
+	LIBS +=		-L/opt/local/lib \
 				-L/opt/local/lib \
+				-L/usr/lib \
+				-L/usr/local/lib \
 				-lespeak \
 				-lqwt-qt4 \
 				-lcv \
