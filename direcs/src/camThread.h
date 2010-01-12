@@ -29,9 +29,10 @@
 #include <QtDebug> // for a more convenient use of qDebug
 //-------------------------------------------------------------------
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
-	#include "cv.h"
-	#include "highgui.h"
+	#include <cv.h>
+	#include <highgui.h>
 #endif
+
 #include <stdio.h>
 #include <ctype.h>
 //-------------------------------------------------------------------
