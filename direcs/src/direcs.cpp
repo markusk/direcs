@@ -186,17 +186,12 @@ void Direcs::init()
 	endSpeedMotor4Reached = false;
 
 
-	//--------------------------------------------------------------------------
-	// check which OS we have
-	//--------------------------------------------------------------------------
-	#ifdef Q_WS_LINUX
-	qDebug("Linux OS detected.");
-	logfile->appendLog("Linux OS detected.");
-	#endif
-
-	#ifdef Q_WS_UNIX
-	qDebug("UNIX OS detected.");
-	logfile->appendLog("UNIX OS detected.");
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	// check which OS we have. ACTUALLY we check for the WINDOW system, since the OS check doesn't worked (unix was recognized under mac os x)
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	#ifdef Q_WS_X11
+	qDebug("LINUX/UNIX OS detected (X11).");
+	logfile->appendLog("LINUX/UNIX OS detected (X11).");
 	#endif
 
 	#ifdef Q_WS_MAC
@@ -204,7 +199,7 @@ void Direcs::init()
 	logfile->appendLog("MAC OS detected.");
 	#endif
 
-	#ifdef Q_WS_WIN32
+	#ifdef Q_WS_WIN
 	qDebug("Windows OS detected.");
 	logfile->appendLog("Windows OS detected.");
 	#endif
