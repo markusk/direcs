@@ -1987,16 +1987,16 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
 		// set tool tip of the line to the distance
-		laserLineListFront->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+		laserLineListFront->at(i)->setToolTip( QString("%1 deg  /  %2 m  /  Flag=%3  /  %4 Pixel").arg(i).arg(laserScannerValues[i]).arg(laserScannerFlags[i]).arg(laserLineLength) );
 
 		// get the current scene positions of the laser line
 		x = laserLineListFront->at(i)->scenePos().x();
 		y = laserLineListFront->at(i)->scenePos().y();
-
+/*
 		// draw the first (left) width circle / get the firt coordinate for the width line
 		if (i == mLargestFreeAreaStartFront)
 		{
-			angle = 180 - qRound(laserscannerAngleFront/2) + i + 90	; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
+			angle = 270 - qRound(laserscannerAngleFront / 2) + i; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
 			r = laserLineListFront->at(i)->line().length(); // here we have use 'i' instead of 'angle'. i is the current 'original angle'!
 
 			// check which line of the free area is longer and store the positions for the drive trough line!
@@ -2016,6 +2016,13 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			// sin and cos are swapped here because of a different x, y and angle orientation than in a normal kartesic coordination system!
 			xKart = r * cos( angle * M_PI / 180 );
 			yKart = r * sin( angle * M_PI / 180 );
+
+			if ( (i < 90) && (laserscannerAngleFront > 180) )
+			{
+				// here we are in the quadrant where x is negative and y is postive
+				// so we have to change the leading sign
+				xKart *= -1;
+			}
 
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
@@ -2039,7 +2046,7 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 		{
 			// in all other cases
 			// draw the next (right) width circle
-			angle = 180 - qRound(laserscannerAngleFront/2) + i + 90	; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
+			angle = 270 - qRound(laserscannerAngleFront / 2) + i; // we're not starting at 0 degrees; we have an offset! (s.a. initLaserView (rotate loop)
 			r = laserLineListFront->at(i)->line().length(); // here we have use 'i' instead of 'angle'. i is the current 'original angle'!
 
 			//--------------------------------------------------------------------
@@ -2063,6 +2070,13 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			xKart = r * cos( angle * M_PI / 180 );
 			yKart = r * sin( angle * M_PI / 180 );
 
+			if ( (i < 90) && (laserscannerAngleFront > 180) )
+			{
+				// here we are in the quadrant where x is negative and y is postive
+				// so we have to change the leading sign
+				xKart *= -1;
+			}
+
 			// add the "start coordinates" (the laser line origin)
 			xKart += x - (widthCirclesWidth/2);
 			yKart += y - (widthCirclesWidth/2);
@@ -2080,6 +2094,7 @@ void Gui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlag
 			// set the circle position!
 			widthRightCircleFront->setPos( widthLineFrontPosX2 - (widthCirclesWidth/2), widthLineFrontPosY2 - (widthCirclesWidth/2) );
 		}
+*/
 	}
 
 	// make the width objects visible
