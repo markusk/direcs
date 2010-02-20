@@ -73,6 +73,9 @@ bool Logfile::checkFiles()
 
 void Logfile::appendLog(QString text, bool CR)
 {
+	Q_UNUSED(CR); // temporarily not in use
+
+
 	if (logFilename == "not_set")
 	{
 		qDebug("logFilename not set!");

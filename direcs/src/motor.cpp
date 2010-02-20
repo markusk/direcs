@@ -921,6 +921,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 void Motor::setMaximumSpeed(int speed)
 {
 	// FIXME: set the maximum speed for the robot / in this class!
+	Q_UNUSED(speed);
 }
 
 
