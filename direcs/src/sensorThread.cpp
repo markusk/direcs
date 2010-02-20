@@ -456,17 +456,17 @@ contacts temporarily removed from robot!! */
 		
 		if (simulationMode)
 		{
-			// now we're sleeping 500ms because we're only simulating.
+			// now we're sleeping additional 500ms because we're only simulating.
 			msleep(500);
-			
+
 			// send an (simulated) optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
 			{
-	 			emit heartbeat(GREEN);
+				emit heartbeat(GREEN);
 			}
 			else
 			{
-	 			emit heartbeat(LEDOFF);
+				emit heartbeat(LEDOFF);
 			}
 			heartbeatToggle = !heartbeatToggle;
 		}
