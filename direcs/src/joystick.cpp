@@ -152,8 +152,11 @@ bool Joystick::isConnected()
 		return false;
 	}
 
-#endif
+	// joystick is connected
 	return true;
+
+#endif
+	return false; // we return false. Noy joystick supported -> NO jystick "connected"!
 }
 
 

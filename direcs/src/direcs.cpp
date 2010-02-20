@@ -216,7 +216,12 @@ void Direcs::init()
 
 	#ifdef Q_WS_WIN
 	qDebug("Windows OS detected.");
-	logfile->appendLog("Windows OS detected.");
+	logfile->appendLog("Windows OS detected with Q_WS_WIN.");
+	#endif
+
+	#ifdef Q_OS_WIN
+	qDebug("Windows OS detected.");
+	logfile->appendLog("Windows OS detected with Q_OS_WIN.");
 	#endif
 
 	//--------------------------------------------------------------------------
@@ -589,15 +594,17 @@ void Direcs::init()
 		//-----------------------------------------------------------
 		// check if a joystick is connected
 		//-----------------------------------------------------------
-		// start the joystick thread
-		if (joystick->isRunning() == false)
+		if (joystick->isConnected())
 		{
-			emit splashMessage("Starting joystick thread...");
-			emit message("Starting joystick thread...", false);
-			joystick->start();
-			emit message("Joystick thread started.");
+			// start the joystick thread
+			if (joystick->isRunning() == false)
+			{
+				emit splashMessage("Starting joystick thread...");
+				emit message("Starting joystick thread...", false);
+				joystick->start();
+				emit message("Joystick thread started.");
+			}
 		}
-
 
 		if (!consoleMode)
 		{
