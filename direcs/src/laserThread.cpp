@@ -39,13 +39,17 @@ LaserThread::LaserThread()
 		simulatedValuesFront.append(0);
 		simulatedValuesRear.append(0);
 	}
-
-	setSimulationValues();
 }
 
 
 LaserThread::~LaserThread()
 {
+	while (!simulatedValuesFront.isEmpty())
+		simulatedValuesFront.removeLast();
+
+	while (!simulatedValuesRear.isEmpty())
+		simulatedValuesRear.removeLast();
+
 	// laserScannerFrontIsConnected is set in the isConnected method!
 	if (laserScannerFrontIsConnected || laserScannerRearIsConnected)
 	{
@@ -344,19 +348,26 @@ void LaserThread::setSimulationMode(bool status)
 		numReadingsRear = laserscannerAngleRear;
 
 		// sim value init
+		// now, that we know, how many laserlines we have, this should be safe to call here.
 		setSimulationValues();
 
 		// copy sim values into the distances values
 		for (int i=0; i<laserScannerValuesFront.size()-1; i++)
 		{
+			// the distances
 			// laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
 			laserScannerValuesFront[i] = simulatedValuesFront.at(i);
+			// the flags
+			laserScannerFlagsFront[i] = OBSTACLE;
 		}
 
 		for (int i=0; i<laserScannerValuesRear.size()-1; i++)
 		{
+			// the distances
 			// laserScannerValuesRear[i] = 2.30; //(i+1) / 100;
 			laserScannerValuesRear[i] = simulatedValuesRear.at(i);
+			// the flags
+			laserScannerFlagsRear[i] = OBSTACLE;
 		}
 
 		// for refreshing the gui (deleting simulated laser lines)
@@ -764,7 +775,7 @@ void LaserThread::setSimulationValues()
 	simulatedValuesFront[77]	= 4.5;		simulatedValuesRear[77]	= 4.5;
 	simulatedValuesFront[78]	= 4.5;		simulatedValuesRear[78]	= 4.5;
 	simulatedValuesFront[79]	= 4.5;		simulatedValuesRear[79]	= 4.5;
-	simulatedValuesFront[80]	= 5.0;		simulatedValuesRear[80]	= 4.5;
+	simulatedValuesFront[80]	= 5.0;		simulatedValuesRear[80]	= 5.0;
 	simulatedValuesFront[81]	= 5.0;		simulatedValuesRear[81]	= 5.0;
 	simulatedValuesFront[82]	= 5.0;		simulatedValuesRear[82]	= 5.0;
 	simulatedValuesFront[83]	= 5.0;		simulatedValuesRear[83]	= 5.0;
@@ -1003,44 +1014,44 @@ void LaserThread::setSimulationValues()
 	simulatedValuesFront[316]	= 3.00;		simulatedValuesRear[316]	= 3.00;
 	simulatedValuesFront[317]	= 3.00;		simulatedValuesRear[317]	= 3.00;
 	simulatedValuesFront[318]	= 3.00;		simulatedValuesRear[318]	= 3.00;
-	simulatedValuesFront[319]	= 0.10;		simulatedValuesRear[319]	= 0.10;
-	simulatedValuesFront[320]	= 0.10;		simulatedValuesRear[320]	= 0.10;
-	simulatedValuesFront[321]	= 0.10;		simulatedValuesRear[321]	= 0.10;
-	simulatedValuesFront[322]	= 0.10;		simulatedValuesRear[322]	= 0.10;
-	simulatedValuesFront[323]	= 0.10;		simulatedValuesRear[323]	= 0.10;
-	simulatedValuesFront[324]	= 0.10;		simulatedValuesRear[324]	= 0.10;
-	simulatedValuesFront[325]	= 0.10;		simulatedValuesRear[325]	= 0.10;
-	simulatedValuesFront[326]	= 0.10;		simulatedValuesRear[326]	= 0.10;
-	simulatedValuesFront[327]	= 0.10;		simulatedValuesRear[327]	= 0.10;
-	simulatedValuesFront[328]	= 0.10;		simulatedValuesRear[328]	= 0.10;
-	simulatedValuesFront[329]	= 0.10;		simulatedValuesRear[329]	= 0.10;
-	simulatedValuesFront[330]	= 0.10;		simulatedValuesRear[330]	= 0.10;
-	simulatedValuesFront[331]	= 0.10;		simulatedValuesRear[331]	= 0.10;
-	simulatedValuesFront[332]	= 0.10;		simulatedValuesRear[332]	= 0.10;
-	simulatedValuesFront[333]	= 0.10;		simulatedValuesRear[333]	= 0.10;
-	simulatedValuesFront[334]	= 0.10;		simulatedValuesRear[334]	= 0.10;
-	simulatedValuesFront[335]	= 0.10;		simulatedValuesRear[335]	= 0.10;
-	simulatedValuesFront[336]	= 0.10;		simulatedValuesRear[336]	= 0.10;
-	simulatedValuesFront[337]	= 0.10;		simulatedValuesRear[337]	= 0.10;
-	simulatedValuesFront[338]	= 0.10;		simulatedValuesRear[338]	= 0.10;
-	simulatedValuesFront[339]	= 0.40;		simulatedValuesRear[339]	= 0.40;
-	simulatedValuesFront[340]	= 0.40;		simulatedValuesRear[340]	= 0.40;
-	simulatedValuesFront[341]	= 0.40;		simulatedValuesRear[341]	= 0.40;
-	simulatedValuesFront[342]	= 0.40;		simulatedValuesRear[342]	= 0.40;
-	simulatedValuesFront[343]	= 0.40;		simulatedValuesRear[343]	= 0.40;
-	simulatedValuesFront[344]	= 0.40;		simulatedValuesRear[344]	= 0.40;
-	simulatedValuesFront[345]	= 0.40;		simulatedValuesRear[345]	= 0.40;
-	simulatedValuesFront[346]	= 0.40;		simulatedValuesRear[346]	= 0.40;
-	simulatedValuesFront[347]	= 0.40;		simulatedValuesRear[347]	= 0.40;
-	simulatedValuesFront[348]	= 0.40;		simulatedValuesRear[348]	= 0.40;
-	simulatedValuesFront[349]	= 0.40;		simulatedValuesRear[349]	= 0.40;
-	simulatedValuesFront[350]	= 0.40;		simulatedValuesRear[350]	= 0.40;
-	simulatedValuesFront[351]	= 0.40;		simulatedValuesRear[351]	= 0.40;
-	simulatedValuesFront[352]	= 0.40;		simulatedValuesRear[352]	= 0.40;
-	simulatedValuesFront[353]	= 0.40;		simulatedValuesRear[353]	= 0.40;
-	simulatedValuesFront[354]	= 0.40;		simulatedValuesRear[354]	= 0.40;
-	simulatedValuesFront[355]	= 0.40;		simulatedValuesRear[355]	= 0.40;
-	simulatedValuesFront[356]	= 0.40;		simulatedValuesRear[356]	= 0.40;
-	simulatedValuesFront[359]	= 0.40;		simulatedValuesRear[359]	= 0.40;
+	simulatedValuesFront[319]	= 5.10;		simulatedValuesRear[319]	= 5.10;
+	simulatedValuesFront[320]	= 5.10;		simulatedValuesRear[320]	= 5.10;
+	simulatedValuesFront[321]	= 5.10;		simulatedValuesRear[321]	= 5.10;
+	simulatedValuesFront[322]	= 5.10;		simulatedValuesRear[322]	= 5.10;
+	simulatedValuesFront[323]	= 5.10;		simulatedValuesRear[323]	= 5.10;
+	simulatedValuesFront[324]	= 5.10;		simulatedValuesRear[324]	= 5.10;
+	simulatedValuesFront[325]	= 5.10;		simulatedValuesRear[325]	= 5.10;
+	simulatedValuesFront[326]	= 5.10;		simulatedValuesRear[326]	= 5.10;
+	simulatedValuesFront[327]	= 5.10;		simulatedValuesRear[327]	= 5.10;
+	simulatedValuesFront[328]	= 5.10;		simulatedValuesRear[328]	= 5.10;
+	simulatedValuesFront[329]	= 5.10;		simulatedValuesRear[329]	= 5.10;
+	simulatedValuesFront[330]	= 5.10;		simulatedValuesRear[330]	= 5.10;
+	simulatedValuesFront[331]	= 5.10;		simulatedValuesRear[331]	= 5.10;
+	simulatedValuesFront[332]	= 5.10;		simulatedValuesRear[332]	= 5.10;
+	simulatedValuesFront[333]	= 5.10;		simulatedValuesRear[333]	= 5.10;
+	simulatedValuesFront[334]	= 5.10;		simulatedValuesRear[334]	= 5.10;
+	simulatedValuesFront[335]	= 5.10;		simulatedValuesRear[335]	= 5.10;
+	simulatedValuesFront[336]	= 5.10;		simulatedValuesRear[336]	= 5.10;
+	simulatedValuesFront[337]	= 5.10;		simulatedValuesRear[337]	= 5.10;
+	simulatedValuesFront[338]	= 5.10;		simulatedValuesRear[338]	= 5.10;
+	simulatedValuesFront[339]	= 6.40;		simulatedValuesRear[339]	= 6.40;
+	simulatedValuesFront[340]	= 6.40;		simulatedValuesRear[340]	= 6.40;
+	simulatedValuesFront[341]	= 6.40;		simulatedValuesRear[341]	= 6.40;
+	simulatedValuesFront[342]	= 6.40;		simulatedValuesRear[342]	= 6.40;
+	simulatedValuesFront[343]	= 6.40;		simulatedValuesRear[343]	= 6.40;
+	simulatedValuesFront[344]	= 6.40;		simulatedValuesRear[344]	= 6.40;
+	simulatedValuesFront[345]	= 6.40;		simulatedValuesRear[345]	= 6.40;
+	simulatedValuesFront[346]	= 6.40;		simulatedValuesRear[346]	= 6.40;
+	simulatedValuesFront[347]	= 6.40;		simulatedValuesRear[347]	= 6.40;
+	simulatedValuesFront[348]	= 6.40;		simulatedValuesRear[348]	= 6.40;
+	simulatedValuesFront[349]	= 6.40;		simulatedValuesRear[349]	= 6.40;
+	simulatedValuesFront[350]	= 6.40;		simulatedValuesRear[350]	= 6.40;
+	simulatedValuesFront[351]	= 6.40;		simulatedValuesRear[351]	= 6.40;
+	simulatedValuesFront[352]	= 6.40;		simulatedValuesRear[352]	= 6.40;
+	simulatedValuesFront[353]	= 6.40;		simulatedValuesRear[353]	= 6.40;
+	simulatedValuesFront[354]	= 6.40;		simulatedValuesRear[354]	= 6.40;
+	simulatedValuesFront[355]	= 6.40;		simulatedValuesRear[355]	= 6.40;
+	simulatedValuesFront[356]	= 6.40;		simulatedValuesRear[356]	= 6.40;
+	simulatedValuesFront[359]	= 6.40;		simulatedValuesRear[359]	= 6.40;
 }                                                       
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
