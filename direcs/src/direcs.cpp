@@ -185,7 +185,30 @@ void Direcs::init()
 	endSpeedMotor3Reached = false;
 	endSpeedMotor4Reached = false;
 
-	
+
+	//--------------------------------------------------------------------------
+	// check which OS we have
+	//--------------------------------------------------------------------------
+	#ifdef Q_WS_LINUX
+	qDebug("Linux OS detected.");
+	logfile->appendLog("Linux OS detected.");
+	#endif
+
+	#ifdef Q_WS_UNIX
+	qDebug("UNIX OS detected.");
+	logfile->appendLog("UNIX OS detected.");
+	#endif
+
+	#ifdef Q_WS_MAC
+	qDebug("MAC OS detected.");
+	logfile->appendLog("MAC OS detected.");
+	#endif
+
+	#ifdef Q_WS_WIN32
+	qDebug("Windows OS detected.");
+	logfile->appendLog("Windows OS detected.");
+	#endif
+
 	//--------------------------------------------------------------------------
 	// show the splash screen
 	//--------------------------------------------------------------------------
