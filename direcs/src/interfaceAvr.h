@@ -21,6 +21,8 @@
 #ifndef INTERFACEAVR_H
 #define INTERFACEAVR_H
 
+#include <QtGlobal> // for Q_OS_* Makro!
+
 //-------------------------------------------------------------------
 #ifdef Q_WS_WIN // On windows systems use qextserialport (I had problems with this under linux!)
 	#include "qextserialport.h"

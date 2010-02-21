@@ -21,6 +21,7 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include <QtGlobal> // for Q_OS_* Makro!
 
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
 	#include "cv.h" // for type IplImage (camThread)

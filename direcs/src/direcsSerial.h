@@ -35,6 +35,7 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 
+#include <QtGlobal> // for Q_OS_* Makro!
 
 #ifdef CYGWIN
 #include <sys/socket.h>

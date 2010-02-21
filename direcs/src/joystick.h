@@ -21,6 +21,8 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
+#include <QtGlobal> // for Q_OS_* Makro!
+
 #ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 #include <sys/ioctl.h>
 #include <sys/time.h>

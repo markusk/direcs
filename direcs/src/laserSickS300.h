@@ -26,6 +26,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <QtGlobal> // for Q_OS_* Makro!
+
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 #include <termios.h>
 #include <fcntl.h>

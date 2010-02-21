@@ -22,6 +22,7 @@
 #define CAMTHREAD_H
 
 //-------------------------------------------------------------------
+#include <QtGlobal> // for Q_OS_* Makro!
 #include <QImage>
 #include <QtGui> // for QMessage
 #include <QTime>
