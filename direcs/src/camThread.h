@@ -121,13 +121,15 @@ class CamThread : public QThread
 
 	
 	signals:
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifndef Q_OS_MAC   // currently supported only under linux (no MAC OS and Windoze at the moment) -> strange Q_OS_LINUX brings a linker error here!
+#ifndef Q_OS_WIN32 // currently supported only under linux (no MAC OS and Windoze at the moment)
 		/**
 		@param *imgPtr is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
 		void camDataComplete(IplImage* imgPtr);
 		//void camDataComplete(QImage* image);
+#endif
 #endif
 
 		/**
