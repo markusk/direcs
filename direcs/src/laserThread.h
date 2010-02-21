@@ -170,8 +170,8 @@ class LaserThread : public QThread
 		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.
 		QList <int> laserScannerFlagsRear;  /// Some flags for each rear laser line (like "free way", "obstacle" etc.
 
-		QList <float> simulatedValuesFront;  /// The simulated distances for the front laser scanner.
-		QList <float> simulatedValuesRear;  /// The simulated distances for the rear laser scanner.
+		float simulationValuesFront[360];  /// The simulated distances for the front laser scanner.
+		float simulationValuesRear[360];   /// The simulated distances for the rear laser scanner.
 
 		/**
 		The names for addressing the laser scanner array
