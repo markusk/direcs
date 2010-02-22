@@ -121,16 +121,15 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">Apple_PubSub_Socket_Render=/tmp/launch-eH0oAg/Render</value>
+    <value type="QString">Apple_PubSub_Socket_Render=/tmp/launch-f023zL/Render</value>
     <value type="QString">COMMAND_MODE=legacy</value>
-    <value type="QString">DISPLAY=/tmp/launch-rlvmBu/:0</value>
-    <value type="QString">GPG_AGENT_INFO=/Users/markus/.gnupg/S.gpg-agent:170:1</value>
+    <value type="QString">DISPLAY=/tmp/launch-WDHror/:0</value>
     <value type="QString">HOME=/Users/markus</value>
     <value type="QString">LOGNAME=markus</value>
     <value type="QString">PATH=/opt/local/libexec/qt4-mac/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
     <value type="QString">QTDIR=/opt/local/libexec/qt4-mac</value>
     <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/launch-kMG6vM/Listeners</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/launch-H5ewP0/Listeners</value>
     <value type="QString">TMPDIR=/var/folders/pr/prPiGSfSGzy7hY-Q6CQmwU+++TI/-Tmp-/</value>
     <value type="QString">USER=markus</value>
     <value type="QString">__CF_USER_TEXT_ENCODING=0x1F5:0:3</value>
@@ -156,16 +155,15 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">Apple_PubSub_Socket_Render=/tmp/launch-eH0oAg/Render</value>
+    <value type="QString">Apple_PubSub_Socket_Render=/tmp/launch-f023zL/Render</value>
     <value type="QString">COMMAND_MODE=legacy</value>
-    <value type="QString">DISPLAY=/tmp/launch-rlvmBu/:0</value>
-    <value type="QString">GPG_AGENT_INFO=/Users/markus/.gnupg/S.gpg-agent:170:1</value>
+    <value type="QString">DISPLAY=/tmp/launch-WDHror/:0</value>
     <value type="QString">HOME=/Users/markus</value>
     <value type="QString">LOGNAME=markus</value>
     <value type="QString">PATH=/opt/local/libexec/qt4-mac/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</value>
     <value type="QString">QTDIR=/opt/local/libexec/qt4-mac</value>
     <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/launch-kMG6vM/Listeners</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/launch-H5ewP0/Listeners</value>
     <value type="QString">TMPDIR=/var/folders/pr/prPiGSfSGzy7hY-Q6CQmwU+++TI/-Tmp-/</value>
     <value type="QString">USER=markus</value>
     <value type="QString">__CF_USER_TEXT_ENCODING=0x1F5:0:3</value>

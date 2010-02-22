@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>978</height>
+    <height>1066</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -281,7 +281,7 @@
      <x>0</x>
      <y>0</y>
      <width>1676</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -2029,7 +2029,7 @@
     <string>E&amp;xit</string>
    </property>
    <property name="shortcut">
-    <string>Alt+X</string>
+    <string>Ctrl+X</string>
    </property>
   </action>
   <action name="actionLaser_View">
@@ -2104,7 +2104,7 @@
     <string>Drive</string>
    </property>
    <property name="shortcut">
-    <string>Alt+D</string>
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionReset">
@@ -2116,7 +2116,7 @@
     <string>Reset</string>
    </property>
    <property name="shortcut">
-    <string>Alt+R</string>
+    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionRemote">
@@ -2153,7 +2153,7 @@
     <string>Simulate</string>
    </property>
    <property name="shortcut">
-    <string>Alt+S</string>
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionAll">
@@ -2165,7 +2165,7 @@
     <string>All</string>
    </property>
    <property name="shortcut">
-    <string>Alt+A</string>
+    <string>Ctrl+A</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -2204,6 +2204,7 @@
    <class>QwtPlot</class>
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>QtGLContext</class>
