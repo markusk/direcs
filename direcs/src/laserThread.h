@@ -165,13 +165,13 @@ class LaserThread : public QThread
 		static const unsigned char S300 = 4; // this is temporary
 		static const unsigned char NONE = 255;
 
-		QList <float> laserScannerValuesFront;  /// The measured distances from the front laser scanner.
-		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
-		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.
-		QList <int> laserScannerFlagsRear;  /// Some flags for each rear laser line (like "free way", "obstacle" etc.
+		float laserScannerValuesFront[360]; /// The measured distances from the front laser scanner.
+		float laserScannerValuesRear[360];  /// The measured distances from the rear laser scanner.
+		int laserScannerFlagsFront[360];    /// Some flags for each front laser line (like "free way", "obstacle" etc.)
+		int laserScannerFlagsRear[360];     /// Some flags for each rear laser line (like "free way", "obstacle" etc.)
 
-		float simulationValuesFront[360];  /// The simulated distances for the front laser scanner.
-		float simulationValuesRear[360];   /// The simulated distances for the rear laser scanner.
+		float simulationValuesFront[360];   /// The simulated distances for the front laser scanner.
+		float simulationValuesRear[360];    /// The simulated distances for the rear laser scanner.
 
 		/**
 		The names for addressing the laser scanner array

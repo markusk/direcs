@@ -32,9 +32,16 @@ LaserThread::LaserThread()
 	laserscannerAngleFront = 0;
 	laserscannerAngleRear = 0;
 
-	// initialisation of 360 laser simulation values (QList). Add a QList-value. One for each angle
+	// initialisation of all max. possible 360 laser and laser simulation values
 	for (int i=0; i<360; i++)
 	{
+		// the distances
+		laserScannerValuesFront[i] = 0;
+		laserScannerValuesRear[i]  = 0;
+		// the flags
+		laserScannerFlagsFront[i] = OBSTACLE;
+		laserScannerFlagsRear[i]  = OBSTACLE;
+
 		// add a 0 m laser distance
 		simulationValuesFront[i] = 0;
 		simulationValuesRear[i]  = 0;
@@ -274,10 +281,10 @@ float LaserThread::getLaserScannerValue(short int laserScanner, int angle)
 	switch(laserScanner)
 	{
 		case LASER1:
-			return laserScannerValuesFront.at(angle);
+			return laserScannerValuesFront[angle];
 			break;
 		case LASER2:
-			return laserScannerValuesRear.at(angle);
+			return laserScannerValuesRear[angle];
 			break;
 	}
 	
@@ -297,10 +304,10 @@ float LaserThread::getFlag(short int laserScanner, int angle)
 	switch(laserScanner)
 	{
 		case LASER1:
-			return laserScannerFlagsFront.at(angle);
+			return laserScannerFlagsFront[angle];
 			break;
 		case LASER2:
-			return laserScannerFlagsRear.at(angle);
+			return laserScannerFlagsRear[angle];
 			break;
 	}
 	
@@ -345,7 +352,7 @@ void LaserThread::setSimulationMode(bool status)
 		setSimulationValues();
 
 		// copy sim values into the distances values
-		for (int i=0; i<laserScannerValuesFront.size()-1; i++)
+		for (int i=0; i<360; i++)
 		{
 			// the distances
 			// laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
@@ -354,7 +361,7 @@ void LaserThread::setSimulationMode(bool status)
 			laserScannerFlagsFront[i] = OBSTACLE;
 		}
 
-		for (int i=0; i<laserScannerValuesRear.size()-1; i++)
+		for (int i=0; i<360; i++)
 		{
 			// the distances
 			// laserScannerValuesRear[i] = 2.30; //(i+1) / 100;
@@ -370,7 +377,7 @@ void LaserThread::setSimulationMode(bool status)
 	else
 	{
 		// initialisation
-		for (int i=0; i<laserScannerValuesFront.size()-1; i++)
+		for (int i=0; i<360; i++)
 		{
 			// the distances
 			laserScannerValuesFront[i] = 0;
@@ -378,7 +385,7 @@ void LaserThread::setSimulationMode(bool status)
 			laserScannerFlagsFront[i] = OBSTACLE;
 		}
 
-		for (int i=0; i<laserScannerValuesRear.size()-1; i++)
+		for (int i=0; i<360; i++)
 		{
 			// the distances
 			laserScannerValuesRear[i] = 0;
@@ -545,6 +552,7 @@ void LaserThread::setLaserscannerAngle(short int laserScanner, int angle)
 			case LASER1:
 			// store value in the class member
 			laserscannerAngleFront = angle;
+			/* this was for the old QList code:
 			// initialisation of the laser values list (QList). Add a QList-value. One  for eache angle
 			for (int i=0; i<angle; i++)
 			{
@@ -553,12 +561,12 @@ void LaserThread::setLaserscannerAngle(short int laserScanner, int angle)
 				// add a 0 flag
 				laserScannerFlagsFront.append(0);
 			}
-			//qDebug("list size laserScannerValuesFront, Laser%d: %d", laserScanner, laserScannerValuesFront.size());
-			//qDebug("list size laserScannerFlagsFront, Laser%d: %d", laserScanner, laserScannerFlagsFront.size());
+			*/
 			break;
 		case LASER2:
 			// store value in the class member
 			laserscannerAngleRear = angle;
+			/* this was for the old QList code:
 			// initialisation of the laser values list (QList). Add a QList-value. One  for eache angle
 			for (int i=0; i<angle; i++)
 			{
@@ -567,8 +575,7 @@ void LaserThread::setLaserscannerAngle(short int laserScanner, int angle)
 				// add a 0 flag
 				laserScannerFlagsRear.append(0);
 			}
-			//qDebug("list size laserScannerValuesRear, Laser%d: %d", laserScanner, laserScannerValuesRear.size());
-			//qDebug("list size laserScannerFlagsRear, Laser%d: %d", laserScanner, laserScannerFlagsRear.size());
+			*/
 			break;
 		default:
 			qDebug("laser number not yet supported  (LaserThread::setLaserscannerAngle");
