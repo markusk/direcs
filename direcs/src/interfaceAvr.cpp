@@ -23,10 +23,10 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	#ifdef Q_WS_WIN
-	serialPort = new QextSerialPort();
+	#ifdef Q_OS_LINUX
+		serialPort = new DirecsSerial();
 	#else
-	serialPort = new DirecsSerial();
+		serialPort = new QextSerialPort();
 	#endif
 }
 
@@ -39,42 +39,18 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-#ifdef Q_WS_WIN
-	if (serialPort->open(QIODevice::ReadWrite) == false)
-	{
-		// this tells other classes that the robot is OFF!
-		emit robotState(false);
-		
-		return false;
-	}
+	qDebug() << "searching fo the serial port named " << comPort;
+#ifdef Q_OS_LINUX // Linux uses direcsSerial:
 
-	// open a serial port ("COM1" for example on Windows) using qextserialport
-	serialPort->setBaudRate(BAUD9600);
-	
-	// Setting of flow control HAS to be AFTER opening an port!
-	// If not, a memory access error occurs!
-	serialPort->setFlowControl(FLOW_OFF);
-	serialPort->setParity(PAR_NONE);
-	serialPort->setDataBits(DATA_8);
-	serialPort->setStopBits(STOP_1);
-	
-	// Flushes all pending I/O to the serial port
-	serialPort->flush();
-
-	return true;
-	
-#else // Linux uses direcsSerial:
-	
 	// for QString to char* conversion
 	QByteArray ba = comPort.toLatin1();
-
 
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-		
+
 		return false;
 	}
 
@@ -88,20 +64,44 @@ bool InterfaceAvr::openComPort(QString comPort)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-		
+
 		return false;
 	}
+#else // other OSes use qextserialport
+	if (serialPort->open(QIODevice::ReadWrite) == false) // FIXME: which comport?
+	{
+		// this tells other classes that the robot is OFF!
+		emit robotState(false);
+
+		return false;
+	}
+
+	// open a serial port ("COM1" for example on Windows, or /dev/ttyUSB0 on UNIX) using qextserialport
+	serialPort->setBaudRate(BAUD9600);
+
+	// Setting of flow control HAS to be AFTER opening an port!
+	// If not, a memory access error occurs!
+	serialPort->setFlowControl(FLOW_OFF);
+	serialPort->setParity(PAR_NONE);
+	serialPort->setDataBits(DATA_8);
+	serialPort->setStopBits(STOP_1);
+
+	// Flushes all pending I/O to the serial port
+	serialPort->flush();
+
+	return true;
+
 #endif
 }
 
 
 void InterfaceAvr::closeComPort()
 {
-#ifdef Q_WS_WIN
-	serialPort->close();
-#else
+#ifdef Q_OS_LINUX
 	// using direcsSerial
 	serialPort->closeAtmelPort();
+#else
+	serialPort->close();
 #endif
 }
 
@@ -110,14 +110,13 @@ bool InterfaceAvr::sendChar(unsigned char character)
 {
 // 	static int receiveErrorCounter = 0;
 
-
-#ifdef Q_WS_WIN
-	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
-	if (serialPort->putChar(character) == false)
-	//	if (serialPort->write(&character, 1) == -1)
-#else
+#ifdef Q_OS_LINUX
 	// send one byte to the serial port with direcsSerial
 	if (serialPort->writeAtmelPort(&character) <= 0)
+#else
+	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
+	if (serialPort->putChar(character) == false)
+		//	if (serialPort->write(&character, 1) == -1)
 #endif
 	{
 // 		receiveErrorCounter++;
@@ -138,20 +137,20 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
-#ifdef Q_WS_WIN
-	// QextSerialPort code, when using Windows
-	return serialPort->getChar(character);
-#else
+#ifdef Q_OS_LINUX
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
 	if (serialPort->readAtmelPort(character, 1) != 1)
 	{
 		// ERROR
- 		emit emitMessage("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, InterfaceAvr)!<font>");
+		emit emitMessage("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, InterfaceAvr)!<font>");
 		return false;
 	}
-	
+
 	return true;
+#else
+	// QextSerialPort code, when using Mac or Windows
+	return serialPort->getChar( (char*) character);
 #endif
 }
 

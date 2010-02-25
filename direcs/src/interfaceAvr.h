@@ -24,11 +24,11 @@
 #include <QtGlobal> // for Q_OS_* Makro!
 
 //-------------------------------------------------------------------
-#ifdef Q_WS_WIN // On windows systems use qextserialport (I had problems with this under linux!)
+#ifdef Q_OS_LINUX // Use my own serial stuff only under Linux
+	#include "direcsSerial.h" // LINUX systems use my own serial port class
+#else // on Mac and Windows we use qexserial project
 	#include "qextserialport.h"
 	class QextSerialPort; // forward declarations because of circular includes!
-#else
-	#include "direcsSerial.h" // LINUX systems use my own serial port class
 #endif
 
 #include <QFile>
@@ -44,7 +44,7 @@ This class is used for the low level communication between the robots microcontr
 */
 class InterfaceAvr : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 	
 	public:
 		InterfaceAvr();
@@ -106,10 +106,10 @@ class InterfaceAvr : public QObject
 
 	
 	private:
-#ifdef Q_WS_WIN
-		QextSerialPort *serialPort;
-#else
+#ifdef Q_OS_LINUX
 		DirecsSerial *serialPort;
+#else
+		QextSerialPort *serialPort;
 #endif
 		static const bool ON  = true;   /** For robot is "ON" */
 		static const bool OFF = false;  /** For robot is "OFF" */

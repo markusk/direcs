@@ -122,6 +122,12 @@ macx {
 
 	message("Changing qwt lib name. Has to be installed via macports!")
 	LIBS +=		-lqwt
+
+	message("Using qextserialport stuff.")
+	LIBS +=		-lqextserialportd
+
+	HEADERS += 	qextserialport.h \
+				qextserialport_global.h
 }
 
 
