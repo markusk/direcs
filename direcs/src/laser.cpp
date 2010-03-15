@@ -914,18 +914,29 @@ int Laser::cBaudrate(int baudrate)
 
 void Laser::sick_set_serial_params(sick_laser_p laser)
 {
+	// TODO: error handling with return codes for almost each of this commands
 	struct termios  ctio;
+
 	
-	tcgetattr(laser->dev.fd, &ctio); /* save current port settings */
+	// Get current port settings
+	tcgetattr(laser->dev.fd, &ctio);
+
 	ctio.c_iflag = iSoftControl(laser->dev.swf) | iParity(laser->dev.parity);
 	ctio.c_oflag = 0;
-	ctio.c_cflag = CREAD | cFlowControl(laser->dev.hwf || laser->dev.swf) | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
+	// TODO: check if that under Mac OS C added "CLOCAL" also works under linux!!
+	ctio.c_cflag = CREAD | CLOCAL | cFlowControl(laser->dev.hwf || laser->dev.swf) | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
 	ctio.c_lflag = 0;
 	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
 	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
+
+	// set the baudrate
 	cfsetispeed(&ctio, (speed_t)cBaudrate(laser->dev.baudrate));
 	cfsetospeed(&ctio, (speed_t)cBaudrate(laser->dev.baudrate));
+
+
 	tcflush(laser->dev.fd, TCIFLUSH);
+
+	// Cause the new options to take effect immediately.
 	tcsetattr(laser->dev.fd, TCSANOW, &ctio);
 }
 
@@ -1001,7 +1012,7 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 	QByteArray ba = laser->dev.ttyport.toLatin1();
 	
 	
-	if((laser->dev.fd = open(ba.data(), O_RDWR | O_NOCTTY, 0)) < 0)
+	if((laser->dev.fd = open(ba.data(), O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0) // TODO: check if this still works with Linux!
 	{
 		return(-1);
 	}
