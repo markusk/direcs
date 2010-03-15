@@ -80,17 +80,14 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 
 	// serial port config and flush also done in openAtmelPort!
-	if (serialPort->openAtmelPort( ba.data() ) != -1)
-	{
-		return true;
-	}
-	else
+	if (serialPort->openAtmelPort( ba.data() ) == -1)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-		
 		return false;
 	}
+
+	return true;
 #endif
 }
 
