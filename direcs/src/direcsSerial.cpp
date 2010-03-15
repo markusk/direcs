@@ -23,7 +23,7 @@
 
 DirecsSerial::DirecsSerial()
 {
-	dev_fd = 0; // the file descriptor !!
+	dev_fd = -1; // the file descriptor !!
 }
 
 
@@ -36,34 +36,73 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 {
 	// This method is only used for the atmel serial port!
 	// *Not* for the laser scanners!
-	if ((dev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0)) < 0)
-	{
-		return (-1);
-	}
-	
-	/*
-	Original code in sick_serial_conect:
-	#ifdef DIRECS_LASER_LOW_LATENCY
-		serialPort->setLowLatency(laser->dev.fd);
-	#endif
-	*/
-	
+	struct termios  options;
 
-	// Contents of sick_set_serial_params(laser) placed here:
-	struct termios  ctio;
-		
-	tcgetattr(dev_fd, &ctio); /* save current port settings */
-	ctio.c_iflag = IXON | IGNPAR; // Looks like IXON is default
-	ctio.c_oflag = 0;
-	//                   |  SW flow control  |  Parity 0  |  8 Databits  |  1 StopBit
-	ctio.c_cflag = CREAD |  CLOCAL           |  0         |  CS8         |  1;
-	ctio.c_lflag = 0;
-	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
-	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
-	cfsetispeed(&ctio, (speed_t) B9600);
-	cfsetospeed(&ctio, (speed_t) B9600);
-	tcflush(dev_fd, TCIFLUSH); // Flushes all pending I/O to the serial port
-	tcsetattr(dev_fd, TCSANOW, &ctio);
+
+	// This is now from http://developer.apple.com/mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
+	dev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK); // TODO: check if this works under Linux!!
+
+	if (dev_fd == -1)
+	{
+		return -1;
+	}
+
+	// Note that open() follows POSIX semantics: multiple open() calls to
+	// the same file will succeed unless the TIOCEXCL ioctl is issued.
+	// This will prevent additional opens except by root-owned processes.
+	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
+	if (ioctl(dev_fd, TIOCEXCL) == -1)
+	{
+		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
+		return -1;
+	}
+
+	// Now that the device is open, clear the O_NONBLOCK flag so
+	// subsequent I/O will block.
+	// See fcntl(2) ("man 2 fcntl") for details.
+	if (fcntl(dev_fd, F_SETFL, 0) == -1)
+	{
+		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
+		return -1;
+	}
+
+	// Get current port settings
+	// TODO: Save the current settings in the class AND restore default settings later when exiting!
+	tcgetattr(dev_fd, &options);
+
+	/*
+	options.c_lflag = 0;
+	options.c_cc[VTIME] = 0;     // inter-character timer unused
+	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
+	*/
+
+	// set speed to 9600 Baud (input and output)
+	cfsetspeed(&options, B9600);
+
+	/*
+	options.c_iflag = IXON | IGNPAR; // Looks like IXON is default
+	options.c_oflag = 0;
+	*/
+
+	// The CLOCAL setting is needed for MAC OS X 10.6 !!
+	options.c_cflag |= CLOCAL;		 	// Local line - do not change "owner" of port. @sa: http://www.easysw.com/~mike/serial/serial.html#3_1_1
+
+	// 8N1
+	options.c_cflag &= ~PARENB;
+	options.c_cflag &= ~CSTOPB;
+	options.c_cflag &= ~CSIZE;
+	options.c_cflag |= CS8;
+
+	// Disable hardware flow control:
+	options.c_cflag &= ~CRTSCTS;
+
+	/*
+	// Flushes all pending I/O to the serial port
+	tcflush(dev_fd, TCIFLUSH);
+	*/
+
+	// Cause the new options to take effect immediately.
+	tcsetattr(dev_fd, TCSANOW, &options);
 	
 	return (dev_fd);
 }
