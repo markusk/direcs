@@ -39,7 +39,7 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN // Windows uses direcsSerial:
 	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
 		// this tells other classes that the robot is OFF!
@@ -63,7 +63,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 	return true;
 	
-#else // Linux uses direcsSerial:
+#else // Linux and MAC OS use direcsSerial:
 	
 	// for QString to char* conversion
 	QByteArray ba = comPort.toLatin1();
@@ -72,6 +72,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
+		emit emitMessage("<font color=\"#FF0000\">Datei/Pfad zum seriellen Port nicht gefunden! Roby angeschlossen und eingeschaltet?</font>");
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
 		
@@ -108,11 +109,11 @@ bool InterfaceAvr::sendChar(unsigned char character)
 // 	static int receiveErrorCounter = 0;
 
 
-#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN // on windows use this:
 	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
 	if (serialPort->putChar(character) == false)
 	//	if (serialPort->write(&character, 1) == -1)
-#else
+#else // on Linux and Mac OS use this:
 	// send one byte to the serial port with direcsSerial
 	if (serialPort->writeAtmelPort(&character) <= 0)
 #endif
