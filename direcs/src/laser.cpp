@@ -917,6 +917,34 @@ void Laser::sick_set_serial_params(sick_laser_p laser)
 	// TODO: error handling with return codes for almost each of this commands
 	struct termios  ctio;
 
+
+	//--------------------------
+	//--------------------------
+	//--------------------------
+	// Note that open() follows POSIX semantics: multiple open() calls to
+	// the same file will succeed unless the TIOCEXCL ioctl is issued.
+	// This will prevent additional opens except by root-owned processes.
+	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
+
+	if (ioctl(laser->dev.fd, TIOCEXCL) == -1)
+	{
+		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
+		// TODO: return -1
+	}
+
+	// Now that the device is open, clear the O_NONBLOCK flag so
+	// subsequent I/O will block.
+	// See fcntl(2) ("man 2 fcntl") for details.
+
+	if (fcntl(laser->dev.fd, F_SETFL, 0) == -1)
+	{
+		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
+		// TODO: return -1
+	}
+	//--------------------------
+	//--------------------------
+	//--------------------------
+
 	
 	// Get current port settings
 	tcgetattr(laser->dev.fd, &ctio);
