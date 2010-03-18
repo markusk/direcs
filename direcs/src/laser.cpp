@@ -912,60 +912,35 @@ int Laser::cBaudrate(int baudrate)
 }
 
 
-void Laser::sick_set_serial_params(sick_laser_p laser)
+int Laser::sick_set_serial_params(sick_laser_p laser)
 {
-	// TODO: error handling with return codes for almost each of this commands
 	struct termios  ctio;
 
 
-	//--------------------------
-	//--------------------------
-	//--------------------------
-	// Note that open() follows POSIX semantics: multiple open() calls to
-	// the same file will succeed unless the TIOCEXCL ioctl is issued.
-	// This will prevent additional opens except by root-owned processes.
-	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
-
-	if (ioctl(laser->dev.fd, TIOCEXCL) == -1)
-	{
-		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
-		// TODO: return -1
-	}
-
-	// Now that the device is open, clear the O_NONBLOCK flag so
-	// subsequent I/O will block.
-	// See fcntl(2) ("man 2 fcntl") for details.
-
-	if (fcntl(laser->dev.fd, F_SETFL, 0) == -1)
-	{
-		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
-		// TODO: return -1
-	}
-	//--------------------------
-	//--------------------------
-	//--------------------------
-
-	
 	// Get current port settings
 	tcgetattr(laser->dev.fd, &ctio);
-
-	ctio.c_iflag = iSoftControl(laser->dev.swf) | iParity(laser->dev.parity);
-	ctio.c_oflag = 0;
-	// TODO: check if that under Mac OS C added "CLOCAL" also works under linux!!
-	ctio.c_cflag = CREAD | CLOCAL | cFlowControl(laser->dev.hwf || laser->dev.swf) | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
-	ctio.c_lflag = 0;
-	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
-	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
 
 	// set the baudrate
 	cfsetispeed(&ctio, (speed_t)cBaudrate(laser->dev.baudrate));
 	cfsetospeed(&ctio, (speed_t)cBaudrate(laser->dev.baudrate));
 
+	ctio.c_iflag = iSoftControl(laser->dev.swf) | iParity(laser->dev.parity);
+	ctio.c_oflag = 0;
+	//org:	ctio.c_cflag = CREAD | cFlowControl(laser->dev.hwf || laser->dev.swf) | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
+	ctio.c_cflag =         CREAD | CLOCAL                                         | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
+	ctio.c_cflag &= ~CRTSCTS; // disable HW flow control!! // TODO: check if that also works under linux!
+	ctio.c_lflag = 0;
+	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
+	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
 
-	tcflush(laser->dev.fd, TCIFLUSH);
+
+	// tcflush(laser->dev.fd, TCIFLUSH); // TODO: test if that still works under linux (disabled the flush!!)
 
 	// Cause the new options to take effect immediately.
 	tcsetattr(laser->dev.fd, TCSANOW, &ctio);
+
+	// okay
+	return 0;
 }
 
 
@@ -1042,14 +1017,40 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 	
 	if((laser->dev.fd = open(ba.data(), O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0) // TODO: check if this still works with Linux!
 	{
-		return(-1);
+		return -1;
 	}
-	
+
+
+	// Note that open() follows POSIX semantics: multiple open() calls to
+	// the same file will succeed unless the TIOCEXCL ioctl is issued.
+	// This will prevent additional opens except by root-owned processes.
+	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
+	if (ioctl(laser->dev.fd, TIOCEXCL) == -1)
+	{
+		qDebug("Error setting TIOCEXCL on /dev/tty... - %s(%d).", strerror(errno), errno);
+		return -1;
+	}
+	qDebug("TIOCEXCL set succesfully.");
+
+	// Now that the device is open, clear the O_NONBLOCK flag so
+	// subsequent I/O will block.
+	// See fcntl(2) ("man 2 fcntl") for details.
+	if (fcntl(laser->dev.fd, F_SETFL, 0) == -1)
+	{
+		qDebug("Error clearing O_NONBLOCK - %s(%d).", strerror(errno), errno);
+		return -1;
+	}
+	qDebug("O_NONBLOCK cleared successfully.");
+
+
 	#ifdef DIRECS_LASER_LOW_LATENCY
 	serialPort->setLowLatency(laser->dev.fd);
 	#endif
 	
-	sick_set_serial_params(laser);
+	if (sick_set_serial_params(laser) == -1)
+	{
+		return -1;
+	}
 	
 	return(laser->dev.fd);
 }

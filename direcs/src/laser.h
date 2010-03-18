@@ -390,7 +390,12 @@ class Laser : public QObject
 		int cFlowControl(int flowcontrol);
 		int cParity(parity_t par);
 		int cBaudrate(int baudrate);
-		void sick_set_serial_params(sick_laser_p laser);
+
+		/**
+		@return -1 in case of error
+		*/
+		int sick_set_serial_params(sick_laser_p laser);
+
 		int kernel_minimum_version( int a, int b, int c );
 		void sick_set_baudrate(sick_laser_p laser, int brate);
 		
