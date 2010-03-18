@@ -961,50 +961,56 @@ int Laser::kernel_minimum_version( int a, int b, int c )
 void Laser::sick_set_baudrate(sick_laser_p laser, int brate)
 {
 	struct termios  ctio;
+
 	
+	tcgetattr(laser->dev.fd, &ctio); /* get current port settings */
+
+
 	#if !defined(CYGWIN) && !defined(__APPLE__)
 	
 	#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,20)
 	struct serial_struct  serinfo;
 	#endif
 	
-	tcgetattr(laser->dev.fd, &ctio); /* save current port settings */
-	
 	#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,20)
-	if (brate==500000 && kernel_minimum_version(2,4,20)) {
+	if (brate==500000 && kernel_minimum_version(2,4,20))
+	{
 		cfsetispeed ( &ctio, (speed_t) cBaudrate(38400) );
 		cfsetospeed ( &ctio, (speed_t) cBaudrate(38400) );
 		serinfo.reserved_char[0] = 0;
-		if (ioctl(laser->dev.fd, TIOCGSERIAL, &serinfo) < 0) {
-		fprintf(stderr," cannot get serial info\n");
-		close(laser->dev.fd);
-		// Markus shutdown_laser(1);
+		if (ioctl(laser->dev.fd, TIOCGSERIAL, &serinfo) < 0)
+		{
+			fprintf(stderr," cannot get serial info\n");
+			close(laser->dev.fd);
+			// Markus shutdown_laser(1);
 		}
-		serinfo.flags =
-		( serinfo.flags & ~ASYNC_SPD_MASK) | ASYNC_SPD_CUST;
+		serinfo.flags = ( serinfo.flags & ~ASYNC_SPD_MASK) | ASYNC_SPD_CUST;
 		serinfo.custom_divisor =  serinfo.baud_base / brate;
-		if (ioctl(laser->dev.fd, TIOCSSERIAL, &serinfo) < 0) {
-		fprintf(stderr," cannot set serial info\n");
-		close(laser->dev.fd);
-		// Markus shutdown_laser(1);
+		if (ioctl(laser->dev.fd, TIOCSSERIAL, &serinfo) < 0)
+		{
+			fprintf(stderr," cannot set serial info\n");
+			close(laser->dev.fd);
+			// Markus shutdown_laser(1);
 		}
-	} else {
+	}
+	else
+	{
 		cfsetispeed ( &ctio, (speed_t) cBaudrate(brate) );
 		cfsetospeed ( &ctio, (speed_t) cBaudrate(brate) );
 	}
 	#else 
-	cfsetispeed(&ctio, (speed_t)cBaudrate(brate));
-	cfsetospeed(&ctio, (speed_t)cBaudrate(brate));
+	cfsetispeed( &ctio, (speed_t) cBaudrate(brate) );
+	cfsetospeed( &ctio, (speed_t) cBaudrate(brate) );
 	#endif
 	
 	#else
 	
-	cfsetispeed(&ctio, (speed_t)cBaudrate(brate));
-	cfsetospeed(&ctio, (speed_t)cBaudrate(brate));
+	cfsetispeed( &ctio, (speed_t) cBaudrate(brate) );
+	cfsetospeed( &ctio, (speed_t) cBaudrate(brate) );
 	
 	#endif
-	
-	tcflush(laser->dev.fd, TCIFLUSH);
+
+	// tcflush(laser->dev.fd, TCIFLUSH); // TODO: check if that really is needed! (linux an mac)
 	tcsetattr(laser->dev.fd, TCSANOW, &ctio);
 }
 
@@ -1712,6 +1718,7 @@ int Laser::sick_start_laser(sick_laser_p laser)
 	if(brate != laser->settings.set_baudrate)
 	{
 		emit(message("Setting Laser Scanner in config mode..."));
+		qDebug("Setting Laser Scanner in config mode...");
 		while(!sick_set_config_mode(laser))
 		{
 		};
