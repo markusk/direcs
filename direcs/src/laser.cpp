@@ -1717,10 +1717,19 @@ int Laser::sick_start_laser(sick_laser_p laser)
 
 	if(brate != laser->settings.set_baudrate)
 	{
+		int errorCounter = 0;
+
 		emit(message("Setting Laser Scanner in config mode..."));
 		qDebug("Setting Laser Scanner in config mode...");
 		while(!sick_set_config_mode(laser))
 		{
+			if (++errorCounter > 3) // TODO: MK which value is a good one here?
+			{
+				emit(message("Error setting Laser Scanner in config mode!"));
+				qDebug("Error setting Laser Scanner in config mode!");
+				return -1;
+			}
+
 		};
 		
 		emit(message(QString("Setting Laser Scanner baudrate to %1...").arg(laser->settings.set_baudrate)));
