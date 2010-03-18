@@ -6,7 +6,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = direcs
 PROJECT_NUMBER         = 0.8
-OUTPUT_DIRECTORY       = /home/markus/develop/direcs/direcs/doc
+OUTPUT_DIRECTORY       = /Users/markus/develop/direcs/direcs/doc
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -25,7 +25,7 @@ ABBREVIATE_BRIEF       = "The $name class" \
 ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
-STRIP_FROM_PATH        = /home/markus/develop/direcs
+STRIP_FROM_PATH        = /Users/markus/develop/direcs
 STRIP_FROM_INC_PATH    = 
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = NO
@@ -95,7 +95,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /home/markus/develop/direcs/direcs/src
+INPUT                  = /Users/markus/develop/direcs/direcs/src
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \
@@ -144,7 +144,7 @@ FILE_PATTERNS          = *.c \
                          *.xpm \
                          *.dox
 RECURSIVE              = YES
-EXCLUDE                = /home/markus/develop/direcs/direcs/src/test
+EXCLUDE                = /Users/markus/develop/direcs/direcs/src/test
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *.moc \
                          moc*.* \
@@ -155,7 +155,7 @@ EXCLUDE_SYMBOLS        =
 EXAMPLE_PATH           = 
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = /home/markus/develop/direcs/direcs/images
+IMAGE_PATH             = /Users/markus/develop/direcs/direcs/images
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 
 FILTER_SOURCE_FILES    = NO
