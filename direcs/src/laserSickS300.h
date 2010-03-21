@@ -28,15 +28,17 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+#endif
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
 #include <linux/serial.h>
 #endif
 
 #define DEFAULT_LASER_RATE		38400
-#define DEFAULT_LASER_PORT		"/dev/ttyS0"
+#define DEFAULT_LASER_PORT		"/dev/tty.USA19Hfa141P1.1"
 #define DEFAULT_LASER_SAMPLES	381
 #define LASER_MAX_BUFFER_SIZE	1024
 #define DEFAULT_LASER_MODE		"continuous"	// by default, try continuous mode
@@ -44,7 +46,7 @@
 #define LASER_CONTINUOUS_MODE	1
 #define LASER_REQUEST_MODE		2
 
-#define HAVE_HI_SPEED_SERIAL	1
+// #define HAVE_HI_SPEED_SERIAL	1 // TODO: disabled! check if that is needed!!
 
 #include <QtGlobal>
 #include <QString>
@@ -169,7 +171,7 @@ class SickS300 : public QObject
 		const char *device_name;
 		int laser_fd;
 		int read_mode;
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
 		struct termios oldtio;
 
 #ifdef HAVE_HI_SPEED_SERIAL

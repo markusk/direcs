@@ -40,8 +40,8 @@ SickS300::SickS300()
 {
 	port_rate = DEFAULT_LASER_RATE;		// TODO: put these settings to the ini-file
 	device_name = DEFAULT_LASER_PORT;	// TODO: put these settings to the ini-file
-// 	read_mode = LASER_CONTINUOUS_MODE;	// TODO: put these settings to the ini-file
-	read_mode = LASER_REQUEST_MODE;		// TODO: put these settings to the ini-file
+	read_mode = LASER_CONTINUOUS_MODE;	// TODO: put these settings to the ini-file
+//	read_mode = LASER_REQUEST_MODE;		// TODO: put these settings to the ini-file
 	
 	
 	if (read_mode == LASER_CONTINUOUS_MODE)
@@ -137,13 +137,13 @@ int SickS300::closeTerm()
 
 int SickS300::changeTermSpeed(int speed)
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
 	struct termios term;
 #else
 	Q_UNUSED(speed);
 #endif
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
 #ifdef HAVE_HI_SPEED_SERIAL
 	struct serial_struct serial;
 
@@ -275,8 +275,8 @@ int SickS300::changeTermSpeed(int speed)
 			//PLAYER_MSG0(2, "terminal speed to 500000");
 #endif
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
-#ifdef HAVE_HI_SPEED_SERIAL    
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
+#ifdef HAVE_HI_SPEED_SERIAL
 			if (ioctl(laser_fd, TIOCGSERIAL, &old_serial) < 0)
 			{
 				qDebug("error on TIOCGSERIAL ioctl");
@@ -490,6 +490,7 @@ int SickS300::init()
 		}
 	} // for(;;)
 mk */
+		return 0; // TODO: check if this is correct!
 }
 
 
@@ -519,7 +520,8 @@ ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 
 int SickS300::openTerm()
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
+	qDebug("Opening serial port %s...", (char*) device_name);
 	laser_fd = open(device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
 	
 	if (laser_fd < 0)
@@ -559,7 +561,7 @@ int SickS300::openTerm()
 
 int SickS300::readContinuousTelegram(float *ranges)
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
 	unsigned char buffer[LASER_MAX_BUFFER_SIZE];
 	int n_count;
 	int i;
@@ -767,7 +769,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 
 int SickS300::readRequestTelegram(float *ranges)
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
 	const char header_start_buff[]={0x00,0x00,0x00,0x00};
 	unsigned char buffer[1522];
 	int n_count;
