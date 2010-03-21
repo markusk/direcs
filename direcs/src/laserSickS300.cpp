@@ -415,7 +415,7 @@ int SickS300::init()
 		}
 		
 		qDebug("7, token requested");
-		n_count = readBytes(laser_fd,buffer,4);
+		n_count = readBytes(buffer, 4);
 		
 		if (n_count!=4 || (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00))
 		{
@@ -494,8 +494,10 @@ mk */
 }
 
 
-ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
+// org: ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
+int SickS300::readBytes(unsigned char *buf, int nChars)
 {
+	/*
 	size_t i;
 	int res,b;
 
@@ -515,6 +517,50 @@ ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 	}
 
 	return res;
+	*/
+
+	// - - - - - - code from readAtmelPort from here:  - - - - - - - - -
+	//
+	// Original code from method readPort
+	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
+	//
+	int amountRead = 0, bytes_read = 0;
+	struct timeval t;
+	fd_set set;
+	int err;
+
+	while (nChars > 0)
+	{
+		t.tv_sec = 0;
+		t.tv_usec = READ_TIMEOUT;
+		FD_ZERO(&set);
+		FD_SET(laser_fd, &set);
+
+		err = select(laser_fd + 1, &set, NULL, NULL, &t);
+		if (err == 0)
+		{
+			return -2;
+		}
+
+		// read from the serial device
+		amountRead = read(laser_fd, buf, nChars);
+
+		if(amountRead < 0 && errno != EWOULDBLOCK)
+		{
+			return -1;
+		}
+		else
+		{
+			if(amountRead > 0)
+			{
+				bytes_read += amountRead;
+				nChars -= amountRead;
+				buf += amountRead;
+			}
+		}
+	}
+
+	return bytes_read;
 }
 
 
@@ -621,7 +667,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	* 4 byte reply header
 	* 2 byte block numbbre (0x00 0x00 for data output)
 	*/
-	n_count = readBytes(laser_fd,buffer,1);
+	n_count = readBytes(buffer, 1);
 	if (n_count<1)
 	{
 		qDebug("Could not read header");
@@ -638,7 +684,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	
 	while (n_count!=-1 && n_count!=0 && !parsed)
 	{
-		n_count = readBytes(laser_fd,buffer,1);
+		n_count = readBytes(buffer, 1);
 		count_answer++;
 		if (buffer[0]==0x00)
 		{
@@ -662,7 +708,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 
 	/* read size of telegram */
 	telegram_size=0;
-	n_count = readBytes(laser_fd,buffer,2);
+	n_count = readBytes(buffer, 2);
 	if (n_count==2)
 	{
 		telegram_size=(buffer[0] << 8) | buffer[1];
@@ -681,7 +727,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 
 	/* remaining header */
 	/* coordination flag */
-	n_count = readBytes(laser_fd,buffer,1);
+	n_count = readBytes(buffer, 1);
 	if (n_count==1 && buffer[0]==0xFF)
 	{
 		telegram_size--;
@@ -693,7 +739,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* device code */
-	n_count = readBytes(laser_fd,buffer,1);
+	n_count = readBytes(buffer, 1);
 	if (n_count==1 && buffer[0]==0x07)
 	{
 		telegram_size--;
@@ -705,7 +751,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* protocol version */
-	n_count = readBytes(laser_fd,buffer,2);
+	n_count = readBytes(buffer, 2);
 	if (n_count==2 && buffer[0]==0x02 && buffer[1]==0x01)
 	{
 		telegram_size-=2;
@@ -717,7 +763,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* status */
-	n_count = readBytes(laser_fd,buffer,2);
+	n_count = readBytes(buffer, 2);
 	if (n_count==2 && buffer[0]==0x00 && (buffer[1]==0x00 || buffer[1]==0x01))
 	{
 		telegram_size-=2;
@@ -729,7 +775,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* timestamp */
-	n_count = readBytes(laser_fd,buffer,4);
+	n_count = readBytes(buffer, 4);
 	if (n_count==4)
 	{
 		telegram_size-=4;
@@ -740,7 +786,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	}
 	
 	/* telegram number */
-	n_count = readBytes(laser_fd,buffer,2);
+	n_count = readBytes(buffer, 2);
 	if (n_count==2)
 	{
 		telegram_size-=2;
@@ -754,7 +800,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	* bb bb flag
 	* 11 11 id for measurement data from angular range 1
 	*/
-	n_count = readBytes(laser_fd,buffer,4);
+	n_count = readBytes(buffer, 4);
 	if (n_count!=4)
 	{
 		return -1;
@@ -764,7 +810,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 
 	/* read data */
 	// cout << "reading data: " << telegram_size-2 << " bytes, " << (telegram_size-2)/2 << " samples" << endl;
-	n_count = readBytes(laser_fd,buffer,telegram_size-2);
+	n_count = readBytes(buffer, telegram_size-2);
 	if (n_count!=telegram_size-2)
 	{
 		return -1;
@@ -781,7 +827,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	telegram_size-=(telegram_size-2);
 
 	/* read crc */
-	n_count = readBytes(laser_fd,buffer,2);
+	n_count = readBytes(buffer, 2);
 	if (n_count==2)
 	{
 		telegram_size-=2;
@@ -813,7 +859,7 @@ int SickS300::readRequestTelegram(float *ranges)
 
 	/* read answer header , 4 bytes of 0x00*/
 	qDebug("READING answer header");
-	n_count = readBytes(laser_fd, buffer, 4);
+	n_count = readBytes(buffer, 4);
 
 	// check if answer is right (4x 0x00)
 	if (n_count!=4 || (strncmp((const char *)buffer,header_start_buff,4)!=0))
@@ -825,7 +871,7 @@ int SickS300::readRequestTelegram(float *ranges)
 	
 	/* read repeated header, 6 bytes */
 	qDebug("READING repeated header");
-	n_count = readBytes(laser_fd, buffer, 6);// FIXME: ths leads to an endless loop!!
+	n_count = readBytes(buffer, 6);// FIXME: tihs leads to an endless loop!!
 	if (n_count!=6)
 	{
 		qDebug("repeated header expected");
@@ -834,7 +880,7 @@ int SickS300::readRequestTelegram(float *ranges)
 
 	/* block 12 monitoring data */
 	qDebug("READING monitoring data");
-	n_count = read(laser_fd,buffer,2);
+	n_count = readBytes(buffer, 2);
 	if (n_count!=2)
 	{
 		qDebug("monitoring data expected");
@@ -842,7 +888,7 @@ int SickS300::readRequestTelegram(float *ranges)
 	}
 
 	/* read data */
-	n_count = readBytes(laser_fd,buffer,1522);
+	n_count = readBytes(buffer, 1522);
 	if (n_count!=1522)
 	{
 		qDebug("insuficient number of bytes retrieved");
@@ -856,7 +902,7 @@ int SickS300::readRequestTelegram(float *ranges)
 	}
 
 	/* read crc */
-	n_count = readBytes(laser_fd,buffer,2);
+	n_count = readBytes(buffer, 2);
 	if (n_count!=2)
 	{
 		qDebug("crc code expected");

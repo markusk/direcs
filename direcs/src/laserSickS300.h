@@ -48,6 +48,8 @@
 
 // #define HAVE_HI_SPEED_SERIAL	1 // TODO: disabled! check if that is needed!!
 
+#define READ_TIMEOUT          250000      // less than 1e6 (from direcsSerialPort)
+
 #include <QtGlobal>
 #include <QString>
 #include <QDebug>
@@ -145,8 +147,9 @@ class SickS300 : public QObject
 		
 		int changeTermSpeed(int speed);
 		
-		ssize_t readBytes(int fd, unsigned char *buf, size_t count);
-		
+		// org: ssize_t readBytes(int fd, unsigned char *buf, size_t count);
+		int readBytes(unsigned char *buf, int nChars);
+
 		int readContinuousTelegram(float *ranges);
 		
 		int readRequestTelegram(float *ranges);
