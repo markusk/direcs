@@ -504,7 +504,7 @@ ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 	
 	for(i=0;i<count;i++)
 	{
-		b=read(fd,buf+i,1);
+		b=read(fd,buf+i,1); // FIXME: hier hängt es auf dem Mac !
 		
 		if(b!=1)
 		{
@@ -521,8 +521,14 @@ ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
 int SickS300::openTerm()
 {
 #ifndef Q_OS_WIN32 // currently supported under linux and MAC OS (no Windoze at the moment)
+	struct termios options;
+
+
 	qDebug("Opening serial port %s...", (char*) device_name);
-	laser_fd = open(device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
+	// org: laser_fd = open(device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
+
+	// This is now from http://developer.apple.com/mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
+	laser_fd = open(device_name, O_RDWR | O_NOCTTY | O_NONBLOCK); // TODO: check if this works under Linux!!
 	
 	if (laser_fd < 0)
 	{
@@ -530,29 +536,59 @@ int SickS300::openTerm()
 		return -1;
 	}
 
-	// set the serial port speed to 9600 to match the laser
-	// later we can ramp the speed up to the SICK's 38K
-	//
-	struct termios term;
-	if( tcgetattr( laser_fd, &term ) < 0 )
+	// Note that open() follows POSIX semantics: multiple open() calls to
+	// the same file will succeed unless the TIOCEXCL ioctl is issued.
+	// This will prevent additional opens except by root-owned processes.
+	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
+	if (ioctl(laser_fd, TIOCEXCL) == -1)
+	{
+		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
+		return -1;
+	}
+
+	// Now that the device is open, clear the O_NONBLOCK flag so
+	// subsequent I/O will block.
+	// See fcntl(2) ("man 2 fcntl") for details.
+	if (fcntl(laser_fd, F_SETFL, 0) == -1)
+	{
+		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
+		return -1;
+	}
+
+	// Get current port settings
+	if (tcgetattr(laser_fd, &options) < 0)
 	{
 		qDebug("Unable to get serial port attributes");
 		return -1;
 	}
 
-	cfmakeraw( &term );
-	cfsetispeed( &term, B9600 );
-	cfsetospeed( &term, B9600 );
+	// set the serial port speed to 9600 to match the laser
+	// later we can ramp the speed up to the SICK's 38K
+	// cfmakeraw( &options ); // TODO: check if that is needed
+	cfsetispeed(&options, B9600);
+	cfsetospeed(&options, B9600);
 
-	if( tcsetattr( laser_fd, TCSAFLUSH, &term ) < 0 )
+	// The CLOCAL setting is needed for MAC OS X 10.6 !!
+	options.c_cflag |= CLOCAL;		 	// Local line - do not change "owner" of port. @sa: http://www.easysw.com/~mike/serial/serial.html#3_1_1
+
+	// 8N1
+	options.c_cflag &= ~PARENB;
+	options.c_cflag &= ~CSTOPB;
+	options.c_cflag &= ~CSIZE;
+	options.c_cflag |= CS8;
+
+	// Disable hardware flow control:
+	options.c_cflag &= ~CRTSCTS;
+
+	// Make sure queue is empty
+	// tcflush(laser_fd, TCIOFLUSH);
+
+	// Cause the new options to take effect immediately.
+	if (tcsetattr(laser_fd, TCSAFLUSH, &options ) < 0)
 	{
 		qDebug("1, Unable to set serial port attributes");
 		return -1;
 	}
-
-	// Make sure queue is empty
-	//
-	tcflush(laser_fd, TCIOFLUSH);
 #endif
 
 	return 0;
