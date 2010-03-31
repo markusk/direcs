@@ -37,11 +37,11 @@
 #include <linux/serial.h>
 #endif
 
-#define DEFAULT_LASER_RATE		38400
+#define DEFAULT_LASER_RATE		9600
 #define DEFAULT_LASER_PORT		"/dev/tty.USA19Hfa141P1.1"
 #define DEFAULT_LASER_SAMPLES	381
 #define LASER_MAX_BUFFER_SIZE	1024
-#define DEFAULT_LASER_MODE		"continuous"	// by default, try continuous mode
+#define DEFAULT_LASER_MODE		"request"
 
 #define LASER_CONTINUOUS_MODE	1
 #define LASER_REQUEST_MODE		2
@@ -64,9 +64,8 @@ class SickS300 : public QObject
 	
 	public:
 		/**
-		Constructor.  Retrieve options from the configuration file and do any pre-Setup() setup.
+		Constructor
 		*/
-		// org: SickS300(ConfigFile* cf, int section);
 		SickS300();
 		
 		/**
@@ -77,29 +76,18 @@ class SickS300 : public QObject
 		/**
 		Set up the device.  Return 0 if things go well, and -1 otherwise.
 		*/
-		int setup(); // mk: why virtual?
+		int setup();
 		
 		/**
 		Shutdown the device
 		*/
 		int shutdown();
-		
-		/**
-		Process messages here.  Send a response if necessary, using Publish().
-		This method will be invoked on each incoming message.
-		If you handle the message successfully, return 0.  Otherwise,
-		return -1, and a NACK will be sent for you, if a response is required.
-		*/
-		// org: int ProcessMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data);
-		// mk FIXME: später		int processMessage(player_msghdr * hdr, void * data);
-		// mk: MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
+
 
 	private:
-		// mk 2 start new
-		// This is from player-3.0.0/libplayerinterface/player_interfaces.h
-		/** @brief Data: scan (@ref PLAYER_LASER_DATA_SCAN)
-		
-		The basic laser data packet.  */
+		/** @brief Data: scan
+		The basic laser data packet.
+		*/
 		typedef struct player_laser_data
 		{
 			/** Start and end angles for the laser scan [rad].  */
@@ -125,7 +113,7 @@ class SickS300 : public QObject
 			// org uint32_t id;
 			unsigned int id;
 		} player_laser_data_t;
-		// mk 2 end new
+
 		
 		/**
 		Initialises the laser scanner communication.
@@ -154,21 +142,6 @@ class SickS300 : public QObject
 		
 		int readRequestTelegram(float *ranges);
 
-		//-- mk ab hier neu
-		// TODO: maybe not needed? // Create and return a new instance of this driver
-		// Driver* SickS300_Init(ConfigFile* cf, int section); 
-
-		// TODO: maybe not needed? 
-		// void SickS300_Register(DriverTable* table);
-
-		/*  mk: TODO: not needed?
-		Extra stuff for building a shared object.
-		extern "C"
-		{
-			int player_driver_init(DriverTable* table)
-		*/
-		//-- mk ende hier
-	
 		player_laser_data_t data; /// the scan data, including the measuread lengths!
 		int port_rate;
 		const char *device_name;

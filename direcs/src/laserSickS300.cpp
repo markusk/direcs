@@ -1,5 +1,5 @@
 /*************************************************************************
-*   Copyright (C) 2009 by Markus Knapp                                  *
+*   Copyright (C) 2010 by Markus Knapp                                  *
 *   www.direcs.de                                                       *
 *                                                                       *
 *   This file is part of direcs.                                        *
@@ -20,28 +20,13 @@
 
 #include "laserSickS300.h"
 
-/* mk not needed?
-Driver* SickS3000_Init(ConfigFile* cf, int section)
-{
-	// Create and return a new instance of this driver
-	return((Driver*)(new SickS3000(cf, section)));
-}
 
-void SickS3000_Register(DriverTable* table)
-{
-	table->AddDriver("sicks3000", SickS3000_Init);
-}
-*/
-
-
-// org1: SickS3000::SickS3000(ConfigFile* cf, int section) : Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN, PLAYER_LASER_CODE)
-// org2: SickS3000::SickS3000(ConfigFile* cf, int section)
 SickS300::SickS300()
 {
 	port_rate = DEFAULT_LASER_RATE;		// TODO: put these settings to the ini-file
 	device_name = DEFAULT_LASER_PORT;	// TODO: put these settings to the ini-file
-	read_mode = LASER_CONTINUOUS_MODE;	// TODO: put these settings to the ini-file
-//	read_mode = LASER_REQUEST_MODE;		// TODO: put these settings to the ini-file
+//	read_mode = LASER_CONTINUOUS_MODE;	// TODO: put these settings to the ini-file
+	read_mode = LASER_REQUEST_MODE;		// TODO: put these settings to the ini-file
 	
 	
 	if (read_mode == LASER_CONTINUOUS_MODE)
@@ -86,13 +71,19 @@ int SickS300::setup()
 		return -1;
 	}
 
+	qDebug("Serial port configured.");
+
 	// change term speed
 	if (changeTermSpeed(port_rate) != 0)
+	{
+		qDebug("Error chaning serial port speed to %d baud.", port_rate);
 		return -1;
+	}
 
-	qDebug("Sick S300 ready");
+	qDebug("Serial port to SICK S300 opened and port speed changed.");
+	qDebug("Now initializing the laser (get token etc.)...");
 
-	// Initialise the laser scanner communication
+	// Initialise the laser scanner communication (Get token, wait for answer)
 	return init();
 	
 	// Start the device thread; spawns a new thread and executes
@@ -329,69 +320,21 @@ int SickS300::changeTermSpeed(int speed)
 }
 
 
-/* mk: FIXME: spÃ¤ter...
-// org: int SickS3000::processMessage(MessageQueue* resp_queue, player_msghdr * hdr, void * data)
-int SickS300::processMessage(player_msghdr * hdr, void * data)
-{
-	// Process messages here.  Send a response if necessary, using Publish().
-	// If you handle the message successfully, return 0.  Otherwise,
-	// return -1, and a NACK will be sent for you, if a response is required.
-	qDebug("7, ProcessMessage: some message arrived");
-
-	assert(hdr);
-	assert(data);
-
-	if(Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ, PLAYER_LASER_REQ_SET_CONFIG, device_addr))
-	{
-		qDebug("7, ProcessMessage: message type:  PLAYER_LASER_REQ_SET_CONFIG");
-		return 0;
-	}
-
-	if(Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ, PLAYER_LASER_REQ_GET_CONFIG, device_addr))
-	{
-		qDebug("7, ProcessMessage: message type: PLAYER_LASER_REQ_GET_CONFIG");
-		return 0;
-	}
-
-	if(Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ, PLAYER_LASER_REQ_GET_GEOM, device_addr))
-	{
-		qDebug("7, ProcessMessage: message type:  PLAYER_LASER_REQ_GET_GEOM ");
-		player_laser_geom_t geom;
-		geom.pose.px = 0.0;
-		geom.pose.py = 0.0;
-		geom.pose.pa = 
-		//355*M_PI/180;
-		0.0;
-		geom.size.sl = 0.25;
-		geom.size.sw = 0.25;
-	
-		// mk: to ged rid of the MessageQueue. MessageQueue is a class defined in player-3.0.0/libplayercore/message.h
-		// FIXME: publish to where now? emmit?
-		this->Publish(device_addr, resp_queue, PLAYER_MSGTYPE_RESP_ACK, PLAYER_LASER_REQ_GET_GEOM, (void*)&geom, sizeof(geom), NULL);
-		
-		return 0;
-	}
-
-	return -1;
-}
-*/
-
-
 int SickS300::init()
 {
-	const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
-	const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07};
+	const unsigned char get_token_buf[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0}; // siehe Seite 14 "Get Token"
+	const unsigned char read_data_buf[]={0x00,0x00,0x45,0x44,0x0c,0x00,0x02,0xfe,0xff,0x07}; // siehe Seite 14 "Read Scandata (block 12)"
 	
 	unsigned char buffer[LASER_MAX_BUFFER_SIZE];
-	int n_count;
+	int n_count = 0;
 	
-	/* mk org:
+	/* org:
 	data.min_angle=-5*M_PI/180;
-	data.max_angle=180*M_PI/180; // 190 degrees: angle from -5ï¿½ to 185ï¿½
+	data.max_angle=180*M_PI/180; // 190 degrees: angle from -5 to 185
 	data.resolution=0.5*M_PI/180;
-	// mk end */
+	*/
 	
-	// mk new:
+	// new:
 	data.min_angle=-45*M_PI/270;
 	data.max_angle=225*M_PI/270; // 270 degrees: angle from -45 deg to 225 deg
 	data.resolution=0.5*M_PI/270;
@@ -405,47 +348,51 @@ int SickS300::init()
 	if (read_mode==LASER_REQUEST_MODE)
 	{
 		/* request token */
-		qDebug("Requesting token because we're in the request mode...");
-		n_count=write(laser_fd,get_token_buf,20);
+		qDebug("Requesting token from laser because we're in the request mode...");
+		n_count = write(laser_fd, get_token_buf, 20);
 		
-		if (n_count!=20)
+		if (n_count != 20)
 		{
 			qDebug("error sending request token");
 			return -1;
 		}
 		
-		qDebug("7, token requested");
+		qDebug("Sending token request OKAY.");
+		qDebug("Now waiting for answer from laser (should be 00 00 00 00)...");
+
 		n_count = readBytes(buffer, 4);
 		
-		if (n_count!=4 || (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00))
+		if (n_count != 4)
 		{
-			qDebug("error getting request token");
+			qDebug("Error getting request token. Number of received bytes was %d instead of 4.", n_count);
 			return -1;
 		}
-		else
+
+		if (buffer[0]!=0x00 && buffer[1]!=0x00 && buffer[2]!=0x00 && buffer[3]!=0x00)
 		{
-			qDebug("7, got token");
+			qDebug("Error getting request token. Received 4 bytes were not 00 00 00 00.");
+			return -1;
 		}
+
+		qDebug("Got correct answer / the token. :-)");
 	}
-	
-	
-	/// FIXME: this is a first test
-	// try to read some data
 
 	
-/* FIXME: uncomment this
+	// ********************************************************************
+	// ********************************************************************
+	// ********************************************************************
+	/// FIXME: this is a first test
+	// try to read some data
+	// ********************************************************************
+	// ********************************************************************
+	// ********************************************************************
+
+	
+/* FIXME: make a nice thread / loop of that
 	// The main loop; interact with the device here
 	for(;;)
 	{
-		// test if we are supposed to cancel
-		pthread_testcancel();
-		
-		// Process incoming messages.  SickS300::ProcessMessage() is
-		// called on each message.
-		// mk FIXME: spÃ¤ter ProcessMessages();
 */
-		// Interact with the device, and push out the resulting data, using
-		// Driver::Publish()
 		if (read_mode==LASER_CONTINUOUS_MODE)
 		{
 			if (readContinuousTelegram(data.ranges)<0)
@@ -454,33 +401,32 @@ int SickS300::init()
 			}
 			else
 			{
-				// FIXME: Make data available
-				// this->Publish(device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
-				qDebug("### continuous telegram read successfully! :-) ###");
+				qDebug("Continuous telegram read successfully! :-)");
 			}
 		}
-		else // working on request mode
+		else // working in request mode
 		{
-			// request scan data (block 12)
-			n_count=write(laser_fd,read_data_buf,10);
+			// Laser command:
+			// Read scan data (Block 12)
+			n_count = write(laser_fd, read_data_buf, 10);
 			
 			if (n_count!=10)
 			{
-				qDebug("error requesting scan data");
+				qDebug("Error requesting scan data from laser");
 			}
 			
-			if (readRequestTelegram(data.ranges)<0)
+			if (readRequestTelegram(data.ranges) < 0)
 			{
 				qDebug("error reading request telegram");
 			}
 			else
 			{
 				// Make data available
-				// mk FIXME: spÃ¤ter	    this->Publish(device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
-				qDebug("### request telegram read successfully! :-) ###");
+				// TODO: emit the data!   // this->Publish(device_addr, NULL, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, (void*)&data, sizeof(data), NULL);
+				qDebug("Request telegram read successfully! :-)");
 			}
 		}
-/* mk	
+/*
 		data.id++;
 	
 		// Sleep (you might, for example, block on a read() instead)
@@ -494,21 +440,20 @@ mk */
 }
 
 
-// org: ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t count)
+// org: ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t nChars)
 int SickS300::readBytes(unsigned char *buf, int nChars)
 {
-	/*
-	size_t i;
-	int res,b;
+	/* org:
+	size_t i = 0;
+	int res = 0;
+	int b = 0;
 
 
-	res=0;
-	
-	for(i=0;i<count;i++)
+	for (i=0; i < nChars; i++)
 	{
-		b=read(fd,buf+i,1); // FIXME: hier hängt es auf dem Mac !
+		b = read(fd, buf+i, 1); // FIXME: hier hängt es auf dem Mac !
 		
-		if(b!=1)
+		if (b != 1)
 		{
 			return b;
 		}
@@ -520,14 +465,10 @@ int SickS300::readBytes(unsigned char *buf, int nChars)
 	*/
 
 	// - - - - - - code from readAtmelPort from here:  - - - - - - - - -
-	//
-	// Original code from method readPort
-	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
-	//
 	int amountRead = 0, bytes_read = 0;
 	struct timeval t;
 	fd_set set;
-	int err;
+	int err = -1;
 
 	while (nChars > 0)
 	{
@@ -571,9 +512,6 @@ int SickS300::openTerm()
 
 
 	qDebug("Opening serial port %s...", (char*) device_name);
-	// org: laser_fd = open(device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
-
-	// This is now from http://developer.apple.com/mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
 	laser_fd = open(device_name, O_RDWR | O_NOCTTY | O_NONBLOCK); // TODO: check if this works under Linux!!
 	
 	if (laser_fd < 0)
@@ -667,7 +605,7 @@ int SickS300::readContinuousTelegram(float *ranges)
 	* 4 byte reply header
 	* 2 byte block numbbre (0x00 0x00 for data output)
 	*/
-	n_count = readBytes(buffer, 1);
+	n_count = readBytes(buffer, 1); // FIXME: we have an error here, when using continous mode on the Mac. *****************************************************
 	if (n_count<1)
 	{
 		qDebug("Could not read header");
@@ -857,26 +795,34 @@ int SickS300::readRequestTelegram(float *ranges)
 	int n_count;
 	int i;
 
-	/* read answer header , 4 bytes of 0x00*/
+
 	qDebug("READING answer header");
+
+	// read answer header from laser, 4 bytes of 0x00
+	// (this is the anssaer from the last command before calling this method!)
 	n_count = readBytes(buffer, 4);
 
 	// check if answer is right (4x 0x00)
 	if (n_count!=4 || (strncmp((const char *)buffer,header_start_buff,4)!=0))
 	{
-		qDebug("header start expected (4x 0x00)");
+		qDebug("ERROR: Laser did not answer 0x00 0x00 0x00 0x00.)");
 		return -1;
 	}
-	qDebug("answer header was okay");
+
+	qDebug("Laser answer was 00 00 00. So it was OKAY. :-)");
 	
-	/* read repeated header, 6 bytes */
-	qDebug("READING repeated header");
-	n_count = readBytes(buffer, 6);// FIXME: tihs leads to an endless loop!!
+
+	qDebug("Now reading repeated header...");
+
+	// read repeated header from laser, 6 bytes (0C 00 02 FE FF 07)
+	n_count = readBytes(buffer, 6);// FIXME: we have an error here, when using request mode on the Mac. *****************************************************
 	if (n_count!=6)
 	{
-		qDebug("repeated header expected");
+		qDebug("Error reading repeated header.");
 		return -1;
 	}
+
+	qDebug("Now reading monitoring data...");
 
 	/* block 12 monitoring data */
 	qDebug("READING monitoring data");
@@ -886,6 +832,7 @@ int SickS300::readRequestTelegram(float *ranges)
 		qDebug("monitoring data expected");
 		return -1;
 	}
+
 
 	/* read data */
 	n_count = readBytes(buffer, 1522);
@@ -916,17 +863,3 @@ int SickS300::readRequestTelegram(float *ranges)
 	return -1;
 #endif
 }
-
-/* mk not nedded?
-extern "C"
-{
-	int player_driver_init(DriverTable* table)
-	{
-		qDebug("SickS300 driver initializing");
-		SickS300_Register(table);
-		qDebug("SickS300 driver done");
-		
-		return 0;
-	}
-}
-*/
