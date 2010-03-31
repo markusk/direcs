@@ -37,8 +37,9 @@
 #include <linux/serial.h>
 #endif
 
-#define DEFAULT_LASER_RATE		9600
-#define DEFAULT_LASER_PORT		"/dev/tty.USA19Hfa141P1.1"
+#define DEFAULT_LASER_RATE		115200
+#define DEFAULT_LASER_PORT		"/dev/tty.USA19Hfa141P1.1" // Keyspan
+//#define DEFAULT_LASER_PORT		"/dev/tty.PL2303-000013FD" // Prolific
 #define DEFAULT_LASER_SAMPLES	381
 #define LASER_MAX_BUFFER_SIZE	1024
 #define DEFAULT_LASER_MODE		"request"
@@ -46,7 +47,7 @@
 #define LASER_CONTINUOUS_MODE	1
 #define LASER_REQUEST_MODE		2
 
-// #define HAVE_HI_SPEED_SERIAL	1 // TODO: disabled! check if that is needed!!
+// #define HAVE_HI_SPEED_SERIAL	1 // TODO: disabled! Looks like this is needed only for serial lines with 500k baud.
 
 #define READ_TIMEOUT          250000      // less than 1e6 (from direcsSerialPort)
 
@@ -135,7 +136,6 @@ class SickS300 : public QObject
 		
 		int changeTermSpeed(int speed);
 		
-		// org: ssize_t readBytes(int fd, unsigned char *buf, size_t count);
 		int readBytes(unsigned char *buf, int nChars);
 
 		int readContinuousTelegram(float *ranges);

@@ -440,7 +440,6 @@ mk */
 }
 
 
-// org: ssize_t SickS300::readBytes(int fd, unsigned char *buf, size_t nChars)
 int SickS300::readBytes(unsigned char *buf, int nChars)
 {
 	/* org:
@@ -451,7 +450,7 @@ int SickS300::readBytes(unsigned char *buf, int nChars)
 
 	for (i=0; i < nChars; i++)
 	{
-		b = read(fd, buf+i, 1); // FIXME: hier hängt es auf dem Mac !
+		b = read(laser_fd, buf+i, 1); // FIXME: hier hängt es auf dem Mac !
 		
 		if (b != 1)
 		{
