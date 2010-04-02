@@ -23,7 +23,7 @@
 
 DirecsSerial::DirecsSerial()
 {
-	dev_fd = -1; // the file descriptor !!
+	mDev_fd = -1; // the file descriptor !!
 }
 
 
@@ -32,17 +32,17 @@ DirecsSerial::~DirecsSerial()
 }
 
 
-int DirecsSerial::openAtmelPort(char *dev_name)
+int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 {
-	// This method is only used for the atmel serial port!
-	// *Not* for the laser scanners!
 	struct termios  options;
+	int spd = -1;
+	int newbaud = 0;
 
 
 	// This is now from http://developer.apple.com/mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
-	dev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK); // TODO: check if this works under Linux!!
+	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK); // TODO: check if this works under Linux!!
 
-	if (dev_fd == -1)
+	if (mDev_fd == -1)
 	{
 		return -1;
 	}
@@ -51,7 +51,7 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	// the same file will succeed unless the TIOCEXCL ioctl is issued.
 	// This will prevent additional opens except by root-owned processes.
 	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
-	if (ioctl(dev_fd, TIOCEXCL) == -1)
+	if (ioctl(mDev_fd, TIOCEXCL) == -1)
 	{
 		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
 		return -1;
@@ -60,7 +60,7 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	// Now that the device is open, clear the O_NONBLOCK flag so
 	// subsequent I/O will block.
 	// See fcntl(2) ("man 2 fcntl") for details.
-	if (fcntl(dev_fd, F_SETFL, 0) == -1)
+	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
 		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
@@ -68,7 +68,7 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 
 	// Get current port settings
 	// TODO: Save the current settings in the class AND restore default settings later when exiting!
-	tcgetattr(dev_fd, &options);
+	tcgetattr(mDev_fd, &options);
 
 	/*
 	options.c_lflag = 0;
@@ -76,8 +76,78 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
 	*/
 
-	// set speed to 9600 Baud (input and output)
-	cfsetspeed(&options, B9600);
+	// this part is originally from setparms:
+	newbaud = (baudrate/100);
+
+	switch(newbaud)
+	{
+		case 0:
+		#ifdef B0
+			spd = B0;	   break;
+		#else
+			spd = 0;  	   break;
+		#endif
+		case 3:
+			spd = B300;	   break;
+		case 6:
+			spd = B600;	   break;
+		case 12:
+			spd = B1200;   break;
+		case 24:
+			spd = B2400;   break;
+		case 48:
+			spd = B4800;   break;
+		case 96:
+			spd = B9600;   break;
+		#ifdef B19200
+		case 192:
+			spd = B19200;  break;
+		#else
+		#ifdef EXTA
+		case 192:
+			spd = EXTA;    break;
+		#else
+		case 192:
+			spd = B9600;   break;
+		#endif
+		#endif
+		#ifdef B38400
+		case 384:
+			spd = B38400;  break;
+		#else
+		#ifdef EXTB
+		case 384:
+			spd = EXTB;    break;
+		#else
+		case 384:
+			spd = B9600;   break;
+		#endif
+		#endif
+		#ifdef B57600
+		case 576:
+			spd = B57600;  break;
+		#endif
+		#ifdef B115200
+		case 1152:
+			spd = B115200; break;
+		#endif
+		#ifdef B500000
+		case 5000:
+			spd = B500000; break;
+		#endif
+	}
+
+	// set speed (input and output)
+	if(spd != -1)
+	{
+		cfsetospeed(&options, (speed_t) spd);
+		cfsetispeed(&options, (speed_t) spd);
+	}
+	else
+	{
+		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
+	}
+
 
 	/*
 	options.c_iflag = IXON | IGNPAR; // Looks like IXON is default
@@ -85,7 +155,7 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	*/
 
 	// The CLOCAL setting is needed for MAC OS X 10.6 !!
-	options.c_cflag |= CLOCAL;		 	// Local line - do not change "owner" of port. @sa: http://www.easysw.com/~mike/serial/serial.html#3_1_1
+	options.c_cflag |= CLOCAL;		 	// Local line - do not change "owner" of port. @sa http://www.easysw.com/~mike/serial/serial.html#3_1_1
 
 	// 8N1
 	options.c_cflag &= ~PARENB;
@@ -102,9 +172,9 @@ int DirecsSerial::openAtmelPort(char *dev_name)
 	*/
 
 	// Cause the new options to take effect immediately.
-	tcsetattr(dev_fd, TCSANOW, &options);
+	tcsetattr(mDev_fd, TCSANOW, &options);
 	
-	return (dev_fd);
+	return (mDev_fd);
 }
 
 
@@ -131,6 +201,8 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 {
 	int spd = -1;
 	int newbaud = 0;
+
+
 	#ifdef _POSIX
 	struct termios tty;
 	tcgetattr(fd, &tty);
@@ -323,7 +395,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 			tty.c_cflag |= CSTOPB;
 			break;
 		case 1:
-			tty.c_cflag &= ~CSTOPB; // deleting the bis is setitng it to 1 STOP BIT ?!??
+			tty.c_cflag &= ~CSTOPB; // deleting the bis is setting it to 1 STOP BIT!
 			break;
 	}
 	
@@ -347,12 +419,22 @@ void DirecsSerial::configurePort(int dev_fd, int baudrate, char parity)
 	setParms(dev_fd, baudrate, parity, 8, 0, 0);
 }
 
-
 long DirecsSerial::numChars(int dev_fd)
 {
 	long available = 0;
 	
 	if(ioctl(dev_fd, FIONREAD, &available) == 0)
+		return available;
+	else
+		return -1;
+}
+
+
+long DirecsSerial::numChars()
+{
+	long available = 0;
+
+	if(ioctl(mDev_fd, FIONREAD, &available) == 0)
 		return available;
 	else
 		return -1;
@@ -408,7 +490,7 @@ int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 
 int DirecsSerial::writeAtmelPort(unsigned char *c)
 {
-	int n = write(dev_fd, c, 1);
+	int n = write(mDev_fd, c, 1);
 	
 	if (n < 0)
 	{
@@ -440,16 +522,16 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		t.tv_sec = 0;
 		t.tv_usec = READ_TIMEOUT;
 		FD_ZERO(&set);
-		FD_SET(dev_fd, &set);
+		FD_SET(mDev_fd, &set);
 		
-		err = select(dev_fd + 1, &set, NULL, NULL, &t);
+		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
 		if (err == 0)
 		{
 			return -2;
 		}
 	
 		// read from the serial device
-		amountRead = read(dev_fd, buf, nChars);
+		amountRead = read(mDev_fd, buf, nChars);
 		
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
@@ -502,7 +584,7 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 
 int DirecsSerial::closeAtmelPort()
 {
-  return close(dev_fd);
+  return close(mDev_fd);
 }
 
 

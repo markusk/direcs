@@ -69,23 +69,24 @@ class DirecsSerial : public QObject
 		~DirecsSerial();
 	
 		/**
-		Open a connection to the serial line. This method is only used for the atmel serial port! *Not* for the laser scanners!
-		The serial port settings (9600,8,N,1) for the atmel serial port are set in this method, too!!
+		Open a connection to the serial line. This method is only used for the Atmel serial port *and* for the SICK laser S300!
+		The serial port settings (8,N,1) for the serial port are set in this method, too!!
 		
 		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
+		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
 		@return the file descriptor if everything is fine, -1 in case of an error.
 		**/
-		int openAtmelPort(char *dev_name);
-		
+		int openAtmelPort(char *dev_name, int baudrate);
+
 		/**
 		Sets the parameters for (a connected) serial line.
-		
+
 		@param dev_fd The file descriptor associated to the serial line.
 		@param baudrate The baud rate to use (e.g. 9600, 19200, etc.).
 		@param parity The parity bit can be 0, E, M or S (parityOdd, parityEven, parityM or parityS)
 		**/
 		void configurePort(int dev_fd, int baudrate, char parity);
-		
+
 		/**
 		Returns the number of availabe bytes
 		
@@ -93,7 +94,15 @@ class DirecsSerial : public QObject
 		@return number of available bytes or -1 in case of an error.
 		**/
 		long numChars(int dev_fd);
-		
+
+		/**
+		Returns the number of availabe bytes.
+		This method is provided for convenience and uses the internal member for the file descriptor. It needs no parameters!
+
+		@return number of available bytes or -1 in case of an error.
+		**/
+		long numChars();
+
 		/**
 		Clears the buffer of the serial line.
 		
@@ -162,8 +171,7 @@ class DirecsSerial : public QObject
 		@param swf The flow control
 		@param stopb The stop bits (default=0). This parameter is optional!
 		*/
-		void setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb = 0);
-		
+		void setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb = 0);	
 		
 		/**
 		Avtivates the low latency mode for the serial line.
@@ -187,7 +195,7 @@ class DirecsSerial : public QObject
 		void setRTS(int fd  __attribute__ ((unused)));
 		#endif
 		
-		int dev_fd; //! the file descriptor of the serial port
+		int mDev_fd; //! the file descriptor of the serial port
 		
 		
 		static const char parityOdd = 1;  /// @sa setParms() @sa configurePort()
