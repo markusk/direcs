@@ -50,7 +50,7 @@ SpeakThread::~SpeakThread()
 
 void SpeakThread::stop()
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	// check if already speaking
 	if (espeak_IsPlaying() == 1)
 	{

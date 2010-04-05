@@ -17,7 +17,7 @@ CONFIG += debug \
 TEMPLATE = app
 
 unix|macx {
-	message("Processing UNIX scope...")
+	message("Processing UNIX / MAC OS scope...")
     HEADERS +=	aboutDialog.h \
 				camThread.h \
 				circuit.h \
@@ -79,9 +79,7 @@ unix|macx {
 				joystickDialog.ui \
 				settingsDialog.ui
 
-    DEFINES =	_TTY_POSIX_
-
-    QT +=		network \
+	QT +=		network \
 				opengl
 
 	INCLUDEPATH += /opt/local/include/opencv \
@@ -120,53 +118,24 @@ macx {
 	LIBS -=		-lcv \
 				-lhighgui
 
-	message("Changing qwt lib name. Has to be installed via macports!")
+	message("Changing qwt lib name. Has to be installed via macports.")
 	LIBS +=		-lqwt
 }
 
 
 win32 {
-    message("Processing win32 scope...")
-    HEADERS +=	aboutDialog.h \
-			camThread.h \
-			compassWidget.h \
-			consoleGui.h \
-			gui.h \
-			joystickDialog.h \
-			laserScene.h \
-			plotThread.h \
-			qextserialbase.h \
-			qextserialport.h \
-			QtGLContext.h \
-			settingsDialog.h \
-			speakThread.h \
-			win_qextserialport.h
+	message("****************************")
+	message("Sorry guys, no Win* support!")
+	message("****************************")
+	HEADERS =
 
-    SOURCES +=	aboutDialog.cpp \
-			camThread.cpp \
-			compassWidget.cpp \
-			consoleGui.cpp \
-			gui.cpp \
-			joystickDialog.cpp \
-			laserScene.cpp \
-			plotThread.cpp \
-			QtGLContext.cpp \
-			settingsDialog.cpp \
-			speakThread.cpp
+	SOURCES =
 
-    FORMS +=	mainWindow.ui \
-			aboutDialog.ui \
-			joystickDialog.ui \
-			settingsDialog.ui
+	FORMS =
 
-    DEFINES =	_TTY_WIN_ QWT_DLL QT_DLL
+	DEFINES =
 
-    QT +=		network \
-			opengl
-
-    LIBS +=		-L/usr/lib \
-			-L/usr/local/lib \
-			-lqwt-qt4
+	LIBS =
 }
 
 arm {

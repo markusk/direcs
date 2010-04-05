@@ -34,7 +34,7 @@ CamThread::CamThread() : QThread()
 	contactAlarmBottom = false;
 	contactAlarmLeft = false;
 	contactAlarmRight = false;
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	imgPtr = new IplImage();
 #endif
 
@@ -59,7 +59,7 @@ void CamThread::stop()
 
 void CamThread::run()
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	int i=0;
 	CvSeq *faces;
 	CvRect *faceRectangle;
@@ -354,7 +354,7 @@ void CamThread::setCameraDevice(int device)
 
 bool CamThread::init()
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	if (initDone == false)
 	{
 		// do only *one* init!
@@ -455,7 +455,7 @@ void CamThread::test()
 }
 
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
 {
 	//

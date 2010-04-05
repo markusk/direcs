@@ -41,7 +41,7 @@
 #include <sys/socket.h>
 #else
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 #include <linux/serial.h>
 #endif
 

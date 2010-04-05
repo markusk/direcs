@@ -24,7 +24,7 @@
 #include <QtGlobal> // for Q_OS_* Makro!
 
 //-------------------------------------------------------------------
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 #include "speak_lib.h"
 #endif
 #include <QThread>

@@ -95,7 +95,7 @@ Direcs::Direcs(bool bConsoleMode)
 	// create the objects
 	//------------------------------------------------------------------
 	logfile = new Logfile();
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	speakThread = new SpeakThread();
 #endif
 	
@@ -189,11 +189,6 @@ void Direcs::init()
 	//-----------------------------------------------------------------------------------------------------------------------------------------
 	// check which OS we have. ACTUALLY we check for the WINDOW system, since the OS check doesn't worked (unix was recognized under mac os x)
 	//-----------------------------------------------------------------------------------------------------------------------------------------
-	#ifdef Q_WS_X11
-	qDebug("X11 detected with Q_WS_X11.");
-	logfile->appendLog("X11 detected with Q_WS_X11.");
-	#endif
-
 	#ifdef Q_OS_UNIX
 	qDebug("UNIX OS detected with Q_OS_UNIX.");
 	logfile->appendLog("UNIX OS detected with Q_OS_UNIX.");
@@ -204,9 +199,9 @@ void Direcs::init()
 	logfile->appendLog("Linux OS detected with Q_OS_LINUX.");
 	#endif
 
-	#ifdef Q_WS_MAC
-	qDebug("MAC OS detected with Q_WS_MAC.");
-	logfile->appendLog("MAC OS detected with Q_WS_MAC.");
+	#ifdef Q_WS_X11
+	qDebug("X11 detected with Q_WS_X11.");
+	logfile->appendLog("X11 detected with Q_WS_X11.");
 	#endif
 
 	#ifdef Q_OS_MAC
@@ -214,14 +209,9 @@ void Direcs::init()
 	logfile->appendLog("MAC OS detected with Q_OS_MAC.");
 	#endif
 
-	#ifdef Q_WS_WIN
-	qDebug("Windows OS detected.");
-	logfile->appendLog("Windows OS detected with Q_WS_WIN.");
-	#endif
-
-	#ifdef Q_OS_WIN
-	qDebug("Windows OS detected.");
-	logfile->appendLog("Windows OS detected with Q_OS_WIN.");
+	#ifdef Q_WS_MAC
+	qDebug("MAC OS detected with Q_WS_MAC.");
+	logfile->appendLog("MAC OS detected with Q_WS_MAC.");
 	#endif
 
 	//--------------------------------------------------------------------------
@@ -405,7 +395,7 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		// say a text
 		//----------------------------------------------------------------------------
-		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
 
 		if (!consoleMode)
@@ -656,7 +646,7 @@ void Direcs::init()
 			//----------------------------------------------------------------------------
 			connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 			//----------------------------------------------------------------------------
 			// connect camDataComplete from the cam thread to signal "setCamImage"
 			// (Whenever the image is complete, the image is shown in the GUI)
@@ -1116,7 +1106,7 @@ void Direcs::shutdown()
 		}
 
 
-		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		//--------------------------------
 		// quit the speakThread
 		//--------------------------------
@@ -1451,7 +1441,7 @@ Direcs::~Direcs()
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
 	delete logfile;
-	#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+	#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	delete speakThread;
 	#endif
 	delete laserThread;
@@ -4221,7 +4211,7 @@ void Direcs::test()
 		toggle = ON;
 		//head->look("LEFT");
 		emit sendNetworkString("ON");
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		speakThread->setLanguage("en");
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
 		// Say some text;
@@ -4234,7 +4224,7 @@ void Direcs::test()
 		toggle = OFF;
 		emit sendNetworkString("OFF");
 		
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		speakThread->setLanguage("de");
 		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;

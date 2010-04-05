@@ -23,11 +23,7 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	#ifdef Q_WS_WIN
-	serialPort = new QextSerialPort();
-	#else
 	serialPort = new DirecsSerial();
-	#endif
 }
 
 
@@ -39,32 +35,6 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-#ifdef Q_WS_WIN // Windows uses direcsSerial:
-	if (serialPort->open(QIODevice::ReadWrite) == false)
-	{
-		// this tells other classes that the robot is OFF!
-		emit robotState(false);
-		
-		return false;
-	}
-
-	// open a serial port ("COM1" for example on Windows) using qextserialport
-	serialPort->setBaudRate(BAUD9600);
-	
-	// Setting of flow control HAS to be AFTER opening an port!
-	// If not, a memory access error occurs!
-	serialPort->setFlowControl(FLOW_OFF);
-	serialPort->setParity(PAR_NONE);
-	serialPort->setDataBits(DATA_8);
-	serialPort->setStopBits(STOP_1);
-	
-	// Flushes all pending I/O to the serial port
-	serialPort->flush();
-
-	return true;
-	
-#else // Linux and MAC OS use direcsSerial:
-	
 	// for QString to char* conversion
 	QByteArray ba = comPort.toLatin1();
 
@@ -89,18 +59,13 @@ bool InterfaceAvr::openComPort(QString comPort)
 	}
 
 	return true;
-#endif
 }
 
 
 void InterfaceAvr::closeComPort()
 {
-#ifdef Q_WS_WIN
-	serialPort->close();
-#else
 	// using direcsSerial
 	serialPort->closeAtmelPort();
-#endif
 }
 
 
@@ -109,14 +74,8 @@ bool InterfaceAvr::sendChar(unsigned char character)
 // 	static int receiveErrorCounter = 0;
 
 
-#ifdef Q_WS_WIN // on windows use this:
-	// TODO: which line one was Original?!?? None of it! Original was writeData ?!??
-	if (serialPort->putChar(character) == false)
-	//	if (serialPort->write(&character, 1) == -1)
-#else // on Linux and Mac OS use this:
 	// send one byte to the serial port with direcsSerial
 	if (serialPort->writeAtmelPort(&character) <= 0)
-#endif
 	{
 // 		receiveErrorCounter++;
  		emit emitMessage("<font color=\"#FF0000\">ERROR writing sserial port (sendChar, InterfaceAvr)!<font>");
@@ -136,10 +95,6 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
-#ifdef Q_WS_WIN
-	// QextSerialPort code, when using Windows
-	return serialPort->getChar(character);
-#else
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
 	if (serialPort->readAtmelPort(character, 1) != 1)
@@ -150,7 +105,6 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	}
 	
 	return true;
-#endif
 }
 
 

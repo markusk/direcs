@@ -23,7 +23,7 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	#include "cv.h" // for type IplImage (camThread)
 #endif
 //-------------------------------------------------------------------
@@ -133,7 +133,7 @@ class Gui : public QMainWindow
 		 */
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		/**
 		Shows the new picture from the cam (live).
 		@param frame

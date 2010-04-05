@@ -29,7 +29,7 @@
 #include <QString>
 #include <QtDebug> // for a more convenient use of qDebug
 //-------------------------------------------------------------------
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	#include <cv.h>
 	#include <highgui.h>
 #endif
@@ -121,8 +121,8 @@ class CamThread : public QThread
 
 	
 	signals:
-#ifndef Q_OS_MAC   // currently supported only under linux (no MAC OS and Windoze at the moment) -> strange Q_OS_LINUX brings a linker error here!
-#ifndef Q_OS_WIN32 // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifndef Q_OS_MAC   // currently supported only under linux (no MAC OS at the moment) -> strange Q_OS_LINUX brings a linker error here!
+#ifndef Q_OS_WIN32 // currently supported only under linux (no MAC OS at the moment)
 		/**
 		@param *imgPtr is a pointer to the camera image
 		@sa Gui::setCamImage()
@@ -158,7 +158,7 @@ class CamThread : public QThread
 
 
 	private:
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		QImage * IplImageToQImage(const IplImage * iplImage); //! Converts an OpenCV iplImage into a nice QImage :-)
 #endif
 
@@ -169,7 +169,7 @@ class CamThread : public QThread
 		QVector <KOORD_T> detectedFaces; /** the coordinates of the last n detected faces */
 		int cameraDevice;
 		QString haarClassifierCascadeFilename;
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS and Windoze at the moment)
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		CvScalar hsv2rgb( float hue );
 		IplImage *imgPtr;
 		CvCapture *capture;

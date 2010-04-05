@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2010 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -23,18 +23,11 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-//-------------------------------------------------------------------
-#ifdef Q_WS_WIN // On windows systems use qextserialport (I had problems with this under linux!)
-	#include "qextserialport.h"
-	class QextSerialPort; // forward declarations because of circular includes!
-#else
-	#include "direcsSerial.h" // LINUX systems use my own serial port class
-#endif
+#include "direcsSerial.h"
 
 #include <QFile>
 #include <QObject>
 #include <QDebug>
-//-------------------------------------------------------------------
 
 
 /**
@@ -106,11 +99,8 @@ class InterfaceAvr : public QObject
 
 	
 	private:
-#ifdef Q_WS_WIN
-		QextSerialPort *serialPort;
-#else
 		DirecsSerial *serialPort;
-#endif
+
 		static const bool ON  = true;   /** For robot is "ON" */
 		static const bool OFF = false;  /** For robot is "OFF" */
 };
