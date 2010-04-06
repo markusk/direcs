@@ -56,18 +56,22 @@ class SickS300 : public QObject
 
 		/**
 		  */
-		int readRequestTelegram(float *ranges);
+		int readRequestTelegram(float *laserScannerValues);
 
 		/**
 		  */
 		int readContinuousTelegram(float *ranges);
 
 		/**
-		Opens a serial port/device. On POSIX systems this looks like "/dev/tty4" or "/dev/ttyUSB0". On Windows systems it's like "COM1".
-		@param comPort is the serial port
+		  Sets the serial port. Has to be set before using @sa openComPort. On POSIX systems this looks like "/dev/tty4" or "/dev/ttyUSB0".
+		  */
+		void setDevicePort(QString serialPort);
+
+		/**
+		Opens a serial port/device. On POSIX systems this looks like "/dev/tty4" or "/dev/ttyUSB0".
 		@return true on access or false if an error occured.
 		*/
-		bool openComPort(QString comPort);
+		bool openComPort();
 
 		/**
 		Closes the serial port
@@ -101,6 +105,7 @@ class SickS300 : public QObject
 	private:
 		DirecsSerial *serialPort;
 		int baudRate;
+		QString laserSerialPort; /// the path to the serial device. e.g. /dev/ttyUSB0
 		/** @brief Data: scan
 		The basic laser data packet.
 		*/

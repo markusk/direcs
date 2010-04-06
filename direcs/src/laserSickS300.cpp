@@ -29,6 +29,8 @@ SickS300::SickS300()
 	// creating the serial port object
 	serialPort = new DirecsSerial();
 
+	laserSerialPort = "NOTSET";
+
 	// -----------------------------------------------------------------------------------------
 	// The scanner S300 has a half degree resolution! and a field of view (fov) of 270 degrees!
 	// -----------------------------------------------------------------------------------------
@@ -67,17 +69,29 @@ SickS300::~SickS300()
 }
 
 
-bool SickS300::openComPort(QString comPort)
+void SickS300::setDevicePort(QString serialPort)
+{
+	laserSerialPort = serialPort;
+}
+
+
+bool SickS300::openComPort()
 {
 	// for QString to char* conversion
-	QByteArray ba = comPort.toLatin1();
+	QByteArray ba = laserSerialPort.toLatin1();
 
+
+	// check if serial port was set
+	if (laserSerialPort == "NOTSET")
+	{
+		emit emitMessage("<font color=\"#FF0000\">Serial port not set! (SickS300::openComPortd)</font>");
+		return false;
+	}
 
 	// check if file (serial port) exists
-	if (QFile::exists(comPort) == false)
+	if (QFile::exists(laserSerialPort) == false)
 	{
-		emit emitMessage("<font color=\"#FF0000\">Datei zum seriellen Port nicht gefunden!</font>");
-
+		emit emitMessage( QString("<font color=\"#FF0000\">Path %1 not found!</font>").arg(laserSerialPort) );
 		return false;
 	}
 
@@ -220,7 +234,7 @@ int SickS300::setup()
 }
 
 
-int SickS300::readRequestTelegram(float *ranges)
+int SickS300::readRequestTelegram(float *laserScannerValues)
 {
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
 	// 00 00
@@ -239,7 +253,6 @@ int SickS300::readRequestTelegram(float *ranges)
 	unsigned char answer = 255;
 	unsigned int i = 0;
 	float angle = 0;
-	Q_UNUSED(ranges);
 
 
 	// send "get scan data" to laser
@@ -356,6 +369,8 @@ int SickS300::readRequestTelegram(float *ranges)
 	for (i=0; i<LASERSAMPLES; i++)
 	{
 		scanResult[i] = (float) ( ((scanData[2*i+1] & 0x1f)<<8) | scanData[2*i] );
+		// copy to the pointer array (parameter!) TODO: remove the temporary array!
+		laserScannerValues[i] = scanResult[i];
 
 		angle += 0.5;
 
