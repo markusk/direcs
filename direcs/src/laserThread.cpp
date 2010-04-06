@@ -33,6 +33,7 @@ LaserThread::LaserThread()
 	laserscannerAngleRear = 0;
 
 	// initialisation of all max. possible 360 laser and laser simulation values
+	// if we have a laser with half-degree resolution we have 2x360=740 values!
 	for (int i=0; i<360; i++)
 	{
 		// the distances
@@ -65,6 +66,7 @@ LaserThread::~LaserThread()
 		{
 		if ((laserscannerTypeFront == S300) || ((laserscannerTypeRear == S300)) )
 			{
+				// closing com port etc. is done in the laser class destructor
 				delete laserS300;
 			}
 		}
@@ -131,7 +133,8 @@ void LaserThread::run()
 			{
 				if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
 				{
-					// TODO: add S300 stuff
+					// TODO: add support for 2 lasers...
+					laserS300->readRequestTelegram(&laserScannerValuesFront[0]);
 				}
 			}
 		}
@@ -412,7 +415,14 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 		}
 		else
 		{
-			// TODO: add S300 stuff
+			if (laserscannerTypeFront == S300)
+			{
+				laserS300->setDevicePort(serialPort);
+			}
+			else
+			{
+				qDebug("laser type not supported (LaserThreadd::setSerialPort");
+			}
 		}
 		break;
 	case LASER2:
@@ -423,7 +433,8 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 		}
 		else
 		{
-			// TODO: add S300 stuff
+			// TODO: support two S300 lasers
+			qDebug("Only one laser S300 currently supported! (LaserThreadd::setSerialPort");
 		}
 		break;
 	default:
@@ -540,6 +551,10 @@ void LaserThread::setLaserscannerType(short int laserScanner, QString laserType)
 		{
 			laserS300 = new SickS300();
 
+			// let the splash screen from the direcs class show laser init messages
+			// (connect the signal from the laser class to the signal from this class)
+			connect(laserS300, SIGNAL(emitMessage(QString)), this, SIGNAL(message(QString)));
+
 			return;
 		}
 }
@@ -624,12 +639,14 @@ bool LaserThread::isConnected(short int laserScanner)
 		{
 			if (laserscannerTypeFront == S300)
 			{
-				// S300 stuff
-				// connect to serial port etc.
-				if (laserS300->setup() == 0) // FIXME: what if we have 2 scanners?
+				// TODO: Support two S300 scanners
+				if (laserS300->openComPort() == true)
 				{
-					laserScannerFrontIsConnected = true;
-					return true;
+					if (laserS300->setup() == 0)
+					{
+						laserScannerFrontIsConnected = true;
+						return true;
+					}
 				}
 
 				laserScannerFrontIsConnected = false;
@@ -666,7 +683,7 @@ bool LaserThread::isConnected(short int laserScanner)
 			if (laserscannerTypeRear == S300)
 			{
 				// TODO: S300 stuff
-				qDebug("Support for S300 as rear laser scanner not implemented yet");
+				qDebug("Support for a second S300 as rear laser scanner not implemented yet");
 				laserScannerRearIsConnected = false;
 				return false;
 			}
