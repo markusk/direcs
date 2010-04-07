@@ -45,21 +45,21 @@ class LaserThread : public QThread
 		/**
 		@return the (last) measuread value (distance) in meters(!)
 		*/
-		float getLaserScannerValue(short int laserScanner, int angle);
+		float getValue(short int laserScanner, int angle);
 		
 		/**
 		@param laserScanner can be LASER1 or LASER2
 		@param angle is the wanted angle in degrees
 		@returns the laser scanner line flag (the flag shows if there is an obstacle at this line or not)
 		*/
-		float getFlag(short int laserScanner, int angle);
+		int getFlag(short int laserScanner, int angle);
 		
 		/**
 		Sets the type of the laser
 		@param laserScanner can be LASER1 or LASER2
 		@param laserType can be PLS or S300 (others possible, but not implemented completely. @sa Laser::direcs_laser_laser_type_t )
 		*/
-		void setLaserscannerType(short int laserScanner, QString laserType);
+		void setType(short int laserScanner, QString laserType);
 
 		/**
 		This method sets the a flag for each laser line (angle) which represents a free way, an obstackle etc.
@@ -87,11 +87,18 @@ class LaserThread : public QThread
 		void setMounting(short int laserScanner, QString mounting);
 
 		/**
-		Defines the angle of the laserscanner. e.g. 180 or 270 degrees
+		Defines the angle of the laserscanner e.g. 180 or 270 degrees.
 		@param laserScanner can be LASER1 or LASER2
 		@param angle is the angle
 		*/
-		void setLaserscannerAngle(short int laserScanner, int angle);
+		void setAngle(short int laserScanner, int angle);
+
+		/**
+		Defines the resolution of the laserscanner e.g. 0.5 or 1.0 degrees.
+		@param laserScanner can be LASER1 or LASER2
+		@param resolution can be 0.5 or 1.00 degree
+		*/
+		void setResolution(short int laserScanner, float resolution);
 
 		/**
 		Returns the physical angle of the laserscanner in degrees, e.g. 180 or 270.
@@ -99,6 +106,13 @@ class LaserThread : public QThread
 		@return the angle in degrees
 		*/
 		int getAngle(short int laserScanner);
+
+		/**
+		Returns the physical resolution of the laserscanner in degrees, e.g. 1.0 or 0.5.
+		@param laserScanner can be LASER1 or LASER2
+		@return the resolution in degrees
+		*/
+		float getResolution(short int laserScanner);
 
 		/**
 		Returns the state of a connected laser scanner.
@@ -149,6 +163,8 @@ class LaserThread : public QThread
 		QString mountingLaserscannerRear; /// cane be "normal" or "flipped"
 		int laserscannerAngleFront; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees
 		int laserscannerAngleRear; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees
+		int laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
+		int laserscannerResolutionRear;  /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
 
 		Laser *laser; // the object for the PLS or LMS laserscanner
 		SickS300 *laserS300; // the object for the S300 laserscanner
@@ -165,19 +181,20 @@ class LaserThread : public QThread
 		static const unsigned char S300 = 4; // this is temporary
 		static const unsigned char NONE = 255;
 
-		float laserScannerValuesFront[360]; /// The measured distances from the front laser scanner.
-		float laserScannerValuesRear[360];  /// The measured distances from the rear laser scanner.
-		int laserScannerFlagsFront[360];    /// Some flags for each front laser line (like "free way", "obstacle" etc.)
-		int laserScannerFlagsRear[360];     /// Some flags for each rear laser line (like "free way", "obstacle" etc.)
+		QVector <float> laserScannerValuesFront; /// The measured distances from the front laser scanner.
+		QVector <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
 
-		float simulationValuesFront[360];   /// The simulated distances for the front laser scanner.
-		float simulationValuesRear[360];    /// The simulated distances for the rear laser scanner.
+		QVector <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.)
+		QVector <int> laserScannerFlagsRear;   /// Some flags for each rear laser line (like "free way", "obstacle" etc.)
+
+		QVector <float> simulationValuesFront;   /// The simulated distances for the front laser scanner.
+		QVector <float> simulationValuesRear;    /// The simulated distances for the rear laser scanner.
 
 		/**
 		The names for addressing the laser scanner array
 		*/
-		static const unsigned char DISTANCE = 0;
-		static const unsigned char FLAG = 1;
+//		static const unsigned char DISTANCE = 0;
+//		static const unsigned char FLAG = 1;
 
 		/**
 		For the integrated DIRECS laser module

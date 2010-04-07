@@ -31,22 +31,8 @@ LaserThread::LaserThread()
 	numReadingsRear = 0;
 	laserscannerAngleFront = 0;
 	laserscannerAngleRear = 0;
-
-	// initialisation of all max. possible 360 laser and laser simulation values
-	// if we have a laser with half-degree resolution we have 2x360=740 values!
-	for (int i=0; i<360; i++)
-	{
-		// the distances
-		laserScannerValuesFront[i] = 0;
-		laserScannerValuesRear[i]  = 0;
-		// the flags
-		laserScannerFlagsFront[i] = OBSTACLE;
-		laserScannerFlagsRear[i]  = OBSTACLE;
-
-		// add a 0 m laser distance
-		simulationValuesFront[i] = 0;
-		simulationValuesRear[i]  = 0;
-	}
+	laserscannerResolutionFront = 0.0;
+	laserscannerResolutionRear = 0.0;
 }
 
 
@@ -270,7 +256,7 @@ void LaserThread::getAndStoreLaserValuesRear()
 }
 
 
-float LaserThread::getLaserScannerValue(short int laserScanner, int angle)
+float LaserThread::getValue(short int laserScanner, int angle)
 {
 	// These values were NOT converted at any point in this method!
 	
@@ -295,7 +281,7 @@ float LaserThread::getLaserScannerValue(short int laserScanner, int angle)
 }
 
 
-float LaserThread::getFlag(short int laserScanner, int angle)
+int LaserThread::getFlag(short int laserScanner, int angle)
 {
 	if ((angle < 0) || ((laserScanner==LASER1) &&  (angle > laserscannerAngleFront)) || ((laserScanner==LASER2) &&  (angle > laserscannerAngleRear)) )
 	{
@@ -461,7 +447,7 @@ void LaserThread::setMounting(short int laserScanner, QString mounting)
 }
 
 
-void LaserThread::setLaserscannerType(short int laserScanner, QString laserType)
+void LaserThread::setType(short int laserScanner, QString laserType)
 {
 		switch (laserScanner)
 		{
@@ -560,42 +546,77 @@ void LaserThread::setLaserscannerType(short int laserScanner, QString laserType)
 }
 
 
-void LaserThread::setLaserscannerAngle(short int laserScanner, int angle)
+void LaserThread::setAngle(short int laserScanner, int angle)
 {
 		switch (laserScanner)
 		{
 			case LASER1:
-			// store value in the class member
-			laserscannerAngleFront = angle;
-			/* this was for the old QList code:
-			// initialisation of the laser values list (QList). Add a QList-value. One  for eache angle
-			for (int i=0; i<angle; i++)
-			{
-				// add a 0 m laser distance
-				laserScannerValuesFront.append(0);
+				// store value in the class member
+				laserscannerAngleFront = angle;
+
+				// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
+				laserScannerValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
 				// add a 0 flag
-				laserScannerFlagsFront.append(0);
-			}
-			*/
+				laserScannerFlagsFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+				// initialisation of the laser simulation values list (QVector)
+				simulationValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+				break;
+			case LASER2:
+				// store value in the class member
+				laserscannerAngleRear = angle;
+
+				// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
+				laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+				// add a 0 flag
+				laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+				// initialisation of the laser simulation values list (QVector)
+				simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+				break;
+			default:
+				qDebug("laser number not yet supported  (LaserThread::setLaserscannerAngle");
+				break;
+		}
+}
+
+
+void LaserThread::setResolution(short int laserScanner, float resolution)
+{
+	switch (laserScanner)
+	{
+		case LASER1:
+			// store value in the class member
+			laserscannerResolutionFront = resolution;
+
+			// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
+			laserScannerValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+			// add a 0 flag
+			laserScannerFlagsFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+			// initialisation of the laser simulation values list (QVector)
+			simulationValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
 			break;
 		case LASER2:
 			// store value in the class member
-			laserscannerAngleRear = angle;
-			/* this was for the old QList code:
-			// initialisation of the laser values list (QList). Add a QList-value. One  for eache angle
-			for (int i=0; i<angle; i++)
-			{
-				// add a 0 m laser distance
-				laserScannerValuesRear.append(0);
-				// add a 0 flag
-				laserScannerFlagsRear.append(0);
-			}
-			*/
+			laserscannerResolutionRear = resolution;
+
+			// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
+			laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+			// add a 0 flag
+			laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+			// initialisation of the laser simulation values list (QVector)
+			simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
 			break;
 		default:
-			qDebug("laser number not yet supported  (LaserThread::setLaserscannerAngle");
+			qDebug("laser number not yet supported  (LaserThread::setLaserscannerResolution");
 			break;
-		}
+	}
 }
 
 
@@ -612,6 +633,23 @@ int LaserThread::getAngle(short int laserScanner)
 		}
 
 		qDebug("laser number not yet supported  (LaserThreadd::getAngle");
+		return 0;
+}
+
+
+float LaserThread::getResolution(short int laserScanner)
+{
+		switch (laserScanner)
+		{
+		case LASER1:
+			return laserscannerResolutionFront;
+			break;
+		case LASER2:
+			return laserscannerResolutionRear;
+			break;
+		}
+
+		qDebug("laser number not yet supported  (LaserThreadd::getResolution");
 		return 0;
 }
 
@@ -712,16 +750,16 @@ bool LaserThread::isConnected(short int laserScanner)
 void LaserThread::setSimulationValues()
 {
 	// fill the simulation value array with some nice values
-	simulationValuesFront[0]	= 2.07;		simulationValuesRear[0]	= 0.25;
-	simulationValuesFront[1]	= 2.07;		simulationValuesRear[1]	= 0.25;
-	simulationValuesFront[2]	= 2.07;		simulationValuesRear[2]	= 0.25;
-	simulationValuesFront[3]	= 2.07;		simulationValuesRear[3]	= 0.25;
-	simulationValuesFront[4]	= 2.07;		simulationValuesRear[4]	= 0.25;
-	simulationValuesFront[5]	= 2.07;		simulationValuesRear[5]	= 0.25;
-	simulationValuesFront[6]	= 2.07;		simulationValuesRear[6]	= 0.25;
-	simulationValuesFront[7]	= 2.07;		simulationValuesRear[7]	= 0.25;
-	simulationValuesFront[8]	= 2.07;		simulationValuesRear[8]	= 0.25;
-	simulationValuesFront[9]	= 2.07;		simulationValuesRear[9]	= 0.25;
+	simulationValuesFront[0]	= 2.07;		simulationValuesRear[0]		= 0.25;
+	simulationValuesFront[1]	= 2.07;		simulationValuesRear[1]		= 0.25;
+	simulationValuesFront[2]	= 2.07;		simulationValuesRear[2]		= 0.25;
+	simulationValuesFront[3]	= 2.07;		simulationValuesRear[3]		= 0.25;
+	simulationValuesFront[4]	= 2.07;		simulationValuesRear[4]		= 0.25;
+	simulationValuesFront[5]	= 2.07;		simulationValuesRear[5]		= 0.25;
+	simulationValuesFront[6]	= 2.07;		simulationValuesRear[6]		= 0.25;
+	simulationValuesFront[7]	= 2.07;		simulationValuesRear[7]		= 0.25;
+	simulationValuesFront[8]	= 2.07;		simulationValuesRear[8]		= 0.25;
+	simulationValuesFront[9]	= 2.07;		simulationValuesRear[9]		= 0.25;
 	simulationValuesFront[10]	= 1.5;		simulationValuesRear[10]	= 0.25;
 	simulationValuesFront[11]	= 1.5;		simulationValuesRear[11]	= 0.25;
 	simulationValuesFront[12]	= 1.5;		simulationValuesRear[12]	= 1.5;
@@ -1070,7 +1108,367 @@ void LaserThread::setSimulationValues()
 	simulationValuesFront[355]	= 6.40;		simulationValuesRear[355]	= 6.40;
 	simulationValuesFront[356]	= 6.40;		simulationValuesRear[356]	= 6.40;
 	simulationValuesFront[357]	= 6.40;		simulationValuesRear[357]	= 6.40;
-	simulationValuesFront[358]	= 6.40;		simulationValuesRear[35]	= 6.40;
+	simulationValuesFront[358]	= 6.40;		simulationValuesRear[358]	= 6.40;
 	simulationValuesFront[359]	= 6.40;		simulationValuesRear[359]	= 6.40;
+	simulationValuesFront[360] = 4.00;		simulationValuesRear[360] = 2.00;
+	simulationValuesFront[361] = 4.00;		simulationValuesRear[361] = 2.00;
+	simulationValuesFront[362] = 4.00;		simulationValuesRear[362] = 2.00;
+	simulationValuesFront[363] = 4.00;		simulationValuesRear[363] = 2.00;
+	simulationValuesFront[364] = 4.00;		simulationValuesRear[364] = 2.00;
+	simulationValuesFront[365] = 4.00;		simulationValuesRear[365] = 2.00;
+	simulationValuesFront[366] = 4.00;		simulationValuesRear[366] = 2.00;
+	simulationValuesFront[367] = 4.00;		simulationValuesRear[367] = 2.00;
+	simulationValuesFront[368] = 4.00;		simulationValuesRear[368] = 2.00;
+	simulationValuesFront[369] = 4.00;		simulationValuesRear[369] = 2.00;
+	simulationValuesFront[370] = 4.00;		simulationValuesRear[370] = 2.00;
+	simulationValuesFront[371] = 4.00;		simulationValuesRear[371] = 2.00;
+	simulationValuesFront[372] = 4.00;		simulationValuesRear[372] = 2.00;
+	simulationValuesFront[373] = 4.00;		simulationValuesRear[373] = 2.00;
+	simulationValuesFront[374] = 4.00;		simulationValuesRear[374] = 2.00;
+	simulationValuesFront[375] = 4.00;		simulationValuesRear[375] = 2.00;
+	simulationValuesFront[376] = 4.00;		simulationValuesRear[376] = 2.00;
+	simulationValuesFront[377] = 4.00;		simulationValuesRear[377] = 2.00;
+	simulationValuesFront[378] = 4.00;		simulationValuesRear[378] = 2.00;
+	simulationValuesFront[379] = 4.00;		simulationValuesRear[379] = 2.00;
+	simulationValuesFront[380] = 4.00;		simulationValuesRear[380] = 2.00;
+	simulationValuesFront[381] = 4.00;		simulationValuesRear[381] = 2.00;
+	simulationValuesFront[382] = 3.00;		simulationValuesRear[382] = 4.00;
+	simulationValuesFront[383] = 3.00;		simulationValuesRear[383] = 4.00;
+	simulationValuesFront[384] = 3.00;		simulationValuesRear[384] = 4.00;
+	simulationValuesFront[385] = 3.00;		simulationValuesRear[385] = 4.00;
+	simulationValuesFront[386] = 3.00;		simulationValuesRear[386] = 4.00;
+	simulationValuesFront[387] = 3.00;		simulationValuesRear[387] = 4.00;
+	simulationValuesFront[388] = 3.00;		simulationValuesRear[388] = 4.00;
+	simulationValuesFront[389] = 3.00;		simulationValuesRear[389] = 4.00;
+	simulationValuesFront[390] = 3.00;		simulationValuesRear[390] = 4.00;
+	simulationValuesFront[391] = 3.00;		simulationValuesRear[391] = 4.00;
+	simulationValuesFront[392] = 3.00;		simulationValuesRear[392] = 4.00;
+	simulationValuesFront[393] = 3.00;		simulationValuesRear[393] = 4.00;
+	simulationValuesFront[394] = 3.00;		simulationValuesRear[394] = 4.00;
+	simulationValuesFront[395] = 3.00;		simulationValuesRear[395] = 4.00;
+	simulationValuesFront[396] = 3.00;		simulationValuesRear[396] = 4.00;
+	simulationValuesFront[397] = 3.00;		simulationValuesRear[397] = 4.00;
+	simulationValuesFront[398] = 3.00;		simulationValuesRear[398] = 4.00;
+	simulationValuesFront[399] = 3.00;		simulationValuesRear[399] = 4.00;
+	simulationValuesFront[400] = 3.00;		simulationValuesRear[400] = 4.00;
+	simulationValuesFront[401] = 3.00;		simulationValuesRear[401] = 4.00;
+	simulationValuesFront[402] = 3.00;		simulationValuesRear[402] = 4.00;
+	simulationValuesFront[403] = 3.00;		simulationValuesRear[403] = 4.00;
+	simulationValuesFront[404] = 3.00;		simulationValuesRear[404] = 4.00;
+	simulationValuesFront[405] = 3.00;		simulationValuesRear[405] = 4.00;
+	simulationValuesFront[406] = 3.00;		simulationValuesRear[406] = 4.00;
+	simulationValuesFront[407] = 3.00;		simulationValuesRear[407] = 4.00;
+	simulationValuesFront[408] = 3.00;		simulationValuesRear[408] = 4.00;
+	simulationValuesFront[409] = 3.00;		simulationValuesRear[409] = 4.00;
+	simulationValuesFront[410] = 3.00;		simulationValuesRear[410] = 4.00;
+	simulationValuesFront[411] = 3.00;		simulationValuesRear[411] = 4.00;
+	simulationValuesFront[412] = 3.00;		simulationValuesRear[412] = 4.00;
+	simulationValuesFront[413] = 3.00;		simulationValuesRear[413] = 4.00;
+	simulationValuesFront[414] = 3.00;		simulationValuesRear[414] = 4.00;
+	simulationValuesFront[415] = 3.00;		simulationValuesRear[415] = 4.00;
+	simulationValuesFront[416] = 3.00;		simulationValuesRear[416] = 4.00;
+	simulationValuesFront[417] = 3.00;		simulationValuesRear[417] = 4.00;
+	simulationValuesFront[418] = 3.00;		simulationValuesRear[418] = 4.00;
+	simulationValuesFront[419] = 3.00;		simulationValuesRear[419] = 4.00;
+	simulationValuesFront[420] = 3.00;		simulationValuesRear[420] = 4.00;
+	simulationValuesFront[421] = 3.00;		simulationValuesRear[421] = 4.00;
+	simulationValuesFront[422] = 3.00;		simulationValuesRear[422] = 4.00;
+	simulationValuesFront[423] = 3.00;		simulationValuesRear[423] = 4.00;
+	simulationValuesFront[424] = 3.00;		simulationValuesRear[424] = 4.00;
+	simulationValuesFront[425] = 3.00;		simulationValuesRear[425] = 4.00;
+	simulationValuesFront[426] = 3.00;		simulationValuesRear[426] = 4.00;
+	simulationValuesFront[427] = 3.00;		simulationValuesRear[427] = 4.00;
+	simulationValuesFront[428] = 3.00;		simulationValuesRear[428] = 4.00;
+	simulationValuesFront[429] = 3.00;		simulationValuesRear[429] = 4.00;
+	simulationValuesFront[430] = 3.00;		simulationValuesRear[430] = 4.00;
+	simulationValuesFront[431] = 3.00;		simulationValuesRear[431] = 4.00;
+	simulationValuesFront[432] = 3.00;		simulationValuesRear[432] = 4.00;
+	simulationValuesFront[433] = 2.00;		simulationValuesRear[433] = 5.00;
+	simulationValuesFront[434] = 2.00;		simulationValuesRear[434] = 5.00;
+	simulationValuesFront[435] = 2.00;		simulationValuesRear[435] = 5.00;
+	simulationValuesFront[436] = 2.00;		simulationValuesRear[436] = 5.00;
+	simulationValuesFront[437] = 2.00;		simulationValuesRear[437] = 5.00;
+	simulationValuesFront[438] = 2.00;		simulationValuesRear[438] = 5.00;
+	simulationValuesFront[439] = 2.00;		simulationValuesRear[439] = 5.00;
+	simulationValuesFront[440] = 2.00;		simulationValuesRear[440] = 5.00;
+	simulationValuesFront[441] = 2.00;		simulationValuesRear[441] = 5.00;
+	simulationValuesFront[442] = 2.00;		simulationValuesRear[442] = 5.00;
+	simulationValuesFront[443] = 2.00;		simulationValuesRear[443] = 5.00;
+	simulationValuesFront[444] = 2.00;		simulationValuesRear[444] = 5.00;
+	simulationValuesFront[445] = 2.00;		simulationValuesRear[445] = 5.00;
+	simulationValuesFront[446] = 2.00;		simulationValuesRear[446] = 5.00;
+	simulationValuesFront[447] = 2.00;		simulationValuesRear[447] = 5.00;
+	simulationValuesFront[448] = 2.00;		simulationValuesRear[448] = 5.00;
+	simulationValuesFront[449] = 2.00;		simulationValuesRear[449] = 5.00;
+	simulationValuesFront[450] = 2.00;		simulationValuesRear[450] = 5.00;
+	simulationValuesFront[451] = 2.00;		simulationValuesRear[451] = 5.00;
+	simulationValuesFront[452] = 2.00;		simulationValuesRear[452] = 5.00;
+	simulationValuesFront[453] = 2.00;		simulationValuesRear[453] = 5.00;
+	simulationValuesFront[454] = 2.00;		simulationValuesRear[454] = 5.00;
+	simulationValuesFront[455] = 2.00;		simulationValuesRear[455] = 5.00;
+	simulationValuesFront[456] = 2.00;		simulationValuesRear[456] = 5.00;
+	simulationValuesFront[457] = 2.00;		simulationValuesRear[457] = 5.00;
+	simulationValuesFront[458] = 2.00;		simulationValuesRear[458] = 5.00;
+	simulationValuesFront[459] = 2.00;		simulationValuesRear[459] = 5.00;
+	simulationValuesFront[460] = 2.00;		simulationValuesRear[460] = 5.00;
+	simulationValuesFront[461] = 2.00;		simulationValuesRear[461] = 5.00;
+	simulationValuesFront[462] = 2.00;		simulationValuesRear[462] = 5.00;
+	simulationValuesFront[463] = 2.00;		simulationValuesRear[463] = 5.00;
+	simulationValuesFront[464] = 2.00;		simulationValuesRear[464] = 5.00;
+	simulationValuesFront[465] = 2.00;		simulationValuesRear[465] = 5.00;
+	simulationValuesFront[466] = 2.00;		simulationValuesRear[466] = 5.00;
+	simulationValuesFront[467] = 2.00;		simulationValuesRear[467] = 5.00;
+	simulationValuesFront[468] = 2.00;		simulationValuesRear[468] = 5.00;
+	simulationValuesFront[469] = 2.00;		simulationValuesRear[469] = 5.00;
+	simulationValuesFront[470] = 2.00;		simulationValuesRear[470] = 5.00;
+	simulationValuesFront[471] = 2.00;		simulationValuesRear[471] = 5.00;
+	simulationValuesFront[472] = 2.00;		simulationValuesRear[472] = 5.00;
+	simulationValuesFront[473] = 2.00;		simulationValuesRear[473] = 5.00;
+	simulationValuesFront[474] = 2.00;		simulationValuesRear[474] = 5.00;
+	simulationValuesFront[475] = 2.00;		simulationValuesRear[475] = 5.00;
+	simulationValuesFront[476] = 2.00;		simulationValuesRear[476] = 5.00;
+	simulationValuesFront[477] = 2.00;		simulationValuesRear[477] = 5.00;
+	simulationValuesFront[478] = 2.00;		simulationValuesRear[478] = 5.00;
+	simulationValuesFront[479] = 2.00;		simulationValuesRear[479] = 5.00;
+	simulationValuesFront[480] = 2.00;		simulationValuesRear[480] = 5.00;
+	simulationValuesFront[481] = 2.00;		simulationValuesRear[481] = 5.00;
+	simulationValuesFront[482] = 2.00;		simulationValuesRear[482] = 5.00;
+	simulationValuesFront[483] = 2.00;		simulationValuesRear[483] = 5.00;
+	simulationValuesFront[484] = 2.00;		simulationValuesRear[484] = 5.00;
+	simulationValuesFront[485] = 2.00;		simulationValuesRear[485] = 5.00;
+	simulationValuesFront[486] = 2.00;		simulationValuesRear[486] = 5.00;
+	simulationValuesFront[487] = 2.00;		simulationValuesRear[487] = 5.00;
+	simulationValuesFront[488] = 2.00;		simulationValuesRear[488] = 5.00;
+	simulationValuesFront[489] = 2.00;		simulationValuesRear[489] = 5.00;
+	simulationValuesFront[490] = 2.00;		simulationValuesRear[490] = 5.00;
+	simulationValuesFront[491] = 2.00;		simulationValuesRear[491] = 5.00;
+	simulationValuesFront[492] = 2.00;		simulationValuesRear[492] = 5.00;
+	simulationValuesFront[493] = 2.00;		simulationValuesRear[493] = 5.00;
+	simulationValuesFront[494] = 2.00;		simulationValuesRear[494] = 5.00;
+	simulationValuesFront[495] = 2.00;		simulationValuesRear[495] = 5.00;
+	simulationValuesFront[496] = 2.00;		simulationValuesRear[496] = 5.00;
+	simulationValuesFront[497] = 2.00;		simulationValuesRear[497] = 5.00;
+	simulationValuesFront[498] = 2.00;		simulationValuesRear[498] = 5.00;
+	simulationValuesFront[499] = 2.00;		simulationValuesRear[499] = 5.00;
+	simulationValuesFront[500] = 2.00;		simulationValuesRear[500] = 5.00;
+	simulationValuesFront[501] = 2.00;		simulationValuesRear[501] = 5.00;
+	simulationValuesFront[502] = 2.00;		simulationValuesRear[502] = 5.00;
+	simulationValuesFront[503] = 2.00;		simulationValuesRear[503] = 5.00;
+	simulationValuesFront[504] = 2.00;		simulationValuesRear[504] = 5.00;
+	simulationValuesFront[505] = 2.00;		simulationValuesRear[505] = 5.00;
+	simulationValuesFront[506] = 2.00;		simulationValuesRear[506] = 5.00;
+	simulationValuesFront[507] = 2.00;		simulationValuesRear[507] = 5.00;
+	simulationValuesFront[508] = 2.00;		simulationValuesRear[508] = 5.00;
+	simulationValuesFront[509] = 2.00;		simulationValuesRear[509] = 5.00;
+	simulationValuesFront[510] = 2.00;		simulationValuesRear[510] = 5.00;
+	simulationValuesFront[511] = 2.00;		simulationValuesRear[511] = 5.00;
+	simulationValuesFront[512] = 2.00;		simulationValuesRear[512] = 5.00;
+	simulationValuesFront[513] = 2.00;		simulationValuesRear[513] = 5.00;
+	simulationValuesFront[514] = 2.00;		simulationValuesRear[514] = 5.00;
+	simulationValuesFront[515] = 2.00;		simulationValuesRear[515] = 5.00;
+	simulationValuesFront[516] = 2.00;		simulationValuesRear[516] = 5.00;
+	simulationValuesFront[517] = 2.00;		simulationValuesRear[517] = 5.00;
+	simulationValuesFront[518] = 2.00;		simulationValuesRear[518] = 5.00;
+	simulationValuesFront[519] = 2.00;		simulationValuesRear[519] = 5.00;
+	simulationValuesFront[520] = 2.00;		simulationValuesRear[520] = 5.00;
+	simulationValuesFront[521] = 2.00;		simulationValuesRear[521] = 5.00;
+	simulationValuesFront[522] = 2.00;		simulationValuesRear[522] = 5.00;
+	simulationValuesFront[523] = 2.00;		simulationValuesRear[523] = 5.00;
+	simulationValuesFront[524] = 2.00;		simulationValuesRear[524] = 5.00;
+	simulationValuesFront[525] = 2.00;		simulationValuesRear[525] = 5.00;
+	simulationValuesFront[526] = 2.00;		simulationValuesRear[526] = 5.00;
+	simulationValuesFront[527] = 2.00;		simulationValuesRear[527] = 5.00;
+	simulationValuesFront[528] = 2.00;		simulationValuesRear[528] = 5.00;
+	simulationValuesFront[529] = 2.00;		simulationValuesRear[529] = 5.00;
+	simulationValuesFront[530] = 2.00;		simulationValuesRear[530] = 5.00;
+	simulationValuesFront[531] = 2.00;		simulationValuesRear[531] = 5.00;
+	simulationValuesFront[532] = 2.00;		simulationValuesRear[532] = 5.00;
+	simulationValuesFront[533] = 2.00;		simulationValuesRear[533] = 5.00;
+	simulationValuesFront[534] = 2.00;		simulationValuesRear[534] = 5.00;
+	simulationValuesFront[535] = 2.00;		simulationValuesRear[535] = 5.00;
+	simulationValuesFront[536] = 2.00;		simulationValuesRear[536] = 5.00;
+	simulationValuesFront[537] = 2.00;		simulationValuesRear[537] = 5.00;
+	simulationValuesFront[538] = 2.00;		simulationValuesRear[538] = 5.00;
+	simulationValuesFront[539] = 2.00;		simulationValuesRear[539] = 5.00;
+	simulationValuesFront[540] = 2.00;		simulationValuesRear[540] = 5.00;
+	simulationValuesFront[541] = 2.00;		simulationValuesRear[541] = 5.00;
+	simulationValuesFront[542] = 2.00;		simulationValuesRear[542] = 5.00;
+	simulationValuesFront[543] = 2.00;		simulationValuesRear[543] = 5.00;
+	simulationValuesFront[544] = 2.00;		simulationValuesRear[544] = 5.00;
+	simulationValuesFront[545] = 2.00;		simulationValuesRear[545] = 5.00;
+	simulationValuesFront[546] = 2.00;		simulationValuesRear[546] = 5.00;
+	simulationValuesFront[547] = 2.00;		simulationValuesRear[547] = 5.00;
+	simulationValuesFront[548] = 2.00;		simulationValuesRear[548] = 5.00;
+	simulationValuesFront[549] = 2.00;		simulationValuesRear[549] = 5.00;
+	simulationValuesFront[550] = 2.00;		simulationValuesRear[550] = 5.00;
+	simulationValuesFront[551] = 2.00;		simulationValuesRear[551] = 5.00;
+	simulationValuesFront[552] = 2.00;		simulationValuesRear[552] = 5.00;
+	simulationValuesFront[553] = 2.00;		simulationValuesRear[553] = 5.00;
+	simulationValuesFront[554] = 2.00;		simulationValuesRear[554] = 5.00;
+	simulationValuesFront[555] = 2.00;		simulationValuesRear[555] = 5.00;
+	simulationValuesFront[556] = 2.00;		simulationValuesRear[556] = 5.00;
+	simulationValuesFront[557] = 2.00;		simulationValuesRear[557] = 5.00;
+	simulationValuesFront[558] = 2.00;		simulationValuesRear[558] = 5.00;
+	simulationValuesFront[559] = 2.00;		simulationValuesRear[559] = 5.00;
+	simulationValuesFront[560] = 2.00;		simulationValuesRear[560] = 5.00;
+	simulationValuesFront[561] = 2.00;		simulationValuesRear[561] = 5.00;
+	simulationValuesFront[562] = 2.00;		simulationValuesRear[562] = 5.00;
+	simulationValuesFront[563] = 2.00;		simulationValuesRear[563] = 5.00;
+	simulationValuesFront[564] = 2.00;		simulationValuesRear[564] = 5.00;
+	simulationValuesFront[565] = 2.00;		simulationValuesRear[565] = 5.00;
+	simulationValuesFront[566] = 2.00;		simulationValuesRear[566] = 5.00;
+	simulationValuesFront[567] = 2.00;		simulationValuesRear[567] = 5.00;
+	simulationValuesFront[568] = 2.00;		simulationValuesRear[568] = 5.00;
+	simulationValuesFront[569] = 2.00;		simulationValuesRear[569] = 5.00;
+	simulationValuesFront[570] = 2.00;		simulationValuesRear[570] = 5.00;
+	simulationValuesFront[571] = 2.00;		simulationValuesRear[571] = 5.00;
+	simulationValuesFront[572] = 2.00;		simulationValuesRear[572] = 5.00;
+	simulationValuesFront[573] = 2.00;		simulationValuesRear[573] = 5.00;
+	simulationValuesFront[574] = 2.00;		simulationValuesRear[574] = 5.00;
+	simulationValuesFront[575] = 2.00;		simulationValuesRear[575] = 5.00;
+	simulationValuesFront[576] = 2.00;		simulationValuesRear[576] = 5.00;
+	simulationValuesFront[577] = 2.00;		simulationValuesRear[577] = 5.00;
+	simulationValuesFront[578] = 2.00;		simulationValuesRear[578] = 5.00;
+	simulationValuesFront[579] = 2.00;		simulationValuesRear[579] = 5.00;
+	simulationValuesFront[580] = 2.00;		simulationValuesRear[580] = 5.00;
+	simulationValuesFront[581] = 2.00;		simulationValuesRear[581] = 5.00;
+	simulationValuesFront[582] = 1.00;		simulationValuesRear[582] = 6.00;
+	simulationValuesFront[583] = 1.00;		simulationValuesRear[583] = 6.00;
+	simulationValuesFront[584] = 1.00;		simulationValuesRear[584] = 6.00;
+	simulationValuesFront[585] = 1.00;		simulationValuesRear[585] = 6.00;
+	simulationValuesFront[586] = 1.00;		simulationValuesRear[586] = 6.00;
+	simulationValuesFront[587] = 1.00;		simulationValuesRear[587] = 6.00;
+	simulationValuesFront[588] = 1.00;		simulationValuesRear[588] = 6.00;
+	simulationValuesFront[589] = 1.00;		simulationValuesRear[589] = 6.00;
+	simulationValuesFront[590] = 1.00;		simulationValuesRear[590] = 6.00;
+	simulationValuesFront[591] = 1.00;		simulationValuesRear[591] = 6.00;
+	simulationValuesFront[592] = 1.00;		simulationValuesRear[592] = 6.00;
+	simulationValuesFront[593] = 1.00;		simulationValuesRear[593] = 6.00;
+	simulationValuesFront[594] = 1.00;		simulationValuesRear[594] = 6.00;
+	simulationValuesFront[595] = 1.00;		simulationValuesRear[595] = 6.00;
+	simulationValuesFront[596] = 1.00;		simulationValuesRear[596] = 6.00;
+	simulationValuesFront[597] = 1.00;		simulationValuesRear[597] = 6.00;
+	simulationValuesFront[598] = 1.00;		simulationValuesRear[598] = 6.00;
+	simulationValuesFront[599] = 1.00;		simulationValuesRear[599] = 6.00;
+	simulationValuesFront[600] = 1.00;		simulationValuesRear[600] = 6.00;
+	simulationValuesFront[601] = 1.00;		simulationValuesRear[601] = 6.00;
+	simulationValuesFront[602] = 1.00;		simulationValuesRear[602] = 6.00;
+	simulationValuesFront[603] = 1.00;		simulationValuesRear[603] = 6.00;
+	simulationValuesFront[604] = 1.00;		simulationValuesRear[604] = 6.00;
+	simulationValuesFront[605] = 1.00;		simulationValuesRear[605] = 6.00;
+	simulationValuesFront[606] = 1.00;		simulationValuesRear[606] = 6.00;
+	simulationValuesFront[607] = 1.00;		simulationValuesRear[607] = 6.00;
+	simulationValuesFront[608] = 1.00;		simulationValuesRear[608] = 6.00;
+	simulationValuesFront[609] = 1.00;		simulationValuesRear[609] = 6.00;
+	simulationValuesFront[610] = 1.00;		simulationValuesRear[610] = 6.00;
+	simulationValuesFront[611] = 1.00;		simulationValuesRear[611] = 6.00;
+	simulationValuesFront[612] = 1.00;		simulationValuesRear[612] = 6.00;
+	simulationValuesFront[613] = 1.00;		simulationValuesRear[613] = 6.00;
+	simulationValuesFront[614] = 1.00;		simulationValuesRear[614] = 6.00;
+	simulationValuesFront[615] = 1.00;		simulationValuesRear[615] = 6.00;
+	simulationValuesFront[616] = 1.00;		simulationValuesRear[616] = 6.00;
+	simulationValuesFront[617] = 1.00;		simulationValuesRear[617] = 6.00;
+	simulationValuesFront[618] = 1.00;		simulationValuesRear[618] = 6.00;
+	simulationValuesFront[619] = 1.00;		simulationValuesRear[619] = 6.00;
+	simulationValuesFront[620] = 1.00;		simulationValuesRear[620] = 6.00;
+	simulationValuesFront[621] = 1.00;		simulationValuesRear[621] = 6.00;
+	simulationValuesFront[622] = 1.00;		simulationValuesRear[622] = 6.00;
+	simulationValuesFront[623] = 1.00;		simulationValuesRear[623] = 6.00;
+	simulationValuesFront[624] = 1.00;		simulationValuesRear[624] = 6.00;
+	simulationValuesFront[625] = 1.00;		simulationValuesRear[625] = 6.00;
+	simulationValuesFront[626] = 1.00;		simulationValuesRear[626] = 6.00;
+	simulationValuesFront[627] = 1.00;		simulationValuesRear[627] = 6.00;
+	simulationValuesFront[628] = 1.00;		simulationValuesRear[628] = 6.00;
+	simulationValuesFront[629] = 1.00;		simulationValuesRear[629] = 6.00;
+	simulationValuesFront[630] = 1.00;		simulationValuesRear[630] = 6.00;
+	simulationValuesFront[631] = 1.00;		simulationValuesRear[631] = 6.00;
+	simulationValuesFront[632] = 1.00;		simulationValuesRear[632] = 6.00;
+	simulationValuesFront[633] = 1.00;		simulationValuesRear[633] = 6.00;
+	simulationValuesFront[634] = 1.00;		simulationValuesRear[634] = 6.00;
+	simulationValuesFront[635] = 1.00;		simulationValuesRear[635] = 6.00;
+	simulationValuesFront[636] = 1.00;		simulationValuesRear[636] = 6.00;
+	simulationValuesFront[637] = 1.00;		simulationValuesRear[637] = 6.00;
+	simulationValuesFront[638] = 1.00;		simulationValuesRear[638] = 6.00;
+	simulationValuesFront[639] = 1.00;		simulationValuesRear[639] = 6.00;
+	simulationValuesFront[640] = 1.00;		simulationValuesRear[640] = 6.00;
+	simulationValuesFront[641] = 1.00;		simulationValuesRear[641] = 6.00;
+	simulationValuesFront[642] = 1.00;		simulationValuesRear[642] = 6.00;
+	simulationValuesFront[643] = 1.00;		simulationValuesRear[643] = 6.00;
+	simulationValuesFront[644] = 1.00;		simulationValuesRear[644] = 6.00;
+	simulationValuesFront[645] = 1.00;		simulationValuesRear[645] = 6.00;
+	simulationValuesFront[646] = 1.00;		simulationValuesRear[646] = 6.00;
+	simulationValuesFront[647] = 1.00;		simulationValuesRear[647] = 6.00;
+	simulationValuesFront[648] = 1.00;		simulationValuesRear[648] = 6.00;
+	simulationValuesFront[649] = 1.00;		simulationValuesRear[649] = 6.00;
+	simulationValuesFront[650] = 1.00;		simulationValuesRear[650] = 6.00;
+	simulationValuesFront[651] = 1.00;		simulationValuesRear[651] = 6.00;
+	simulationValuesFront[652] = 1.00;		simulationValuesRear[652] = 6.00;
+	simulationValuesFront[653] = 1.00;		simulationValuesRear[653] = 6.00;
+	simulationValuesFront[654] = 1.00;		simulationValuesRear[654] = 6.00;
+	simulationValuesFront[655] = 1.00;		simulationValuesRear[655] = 6.00;
+	simulationValuesFront[656] = 1.00;		simulationValuesRear[656] = 6.00;
+	simulationValuesFront[657] = 1.00;		simulationValuesRear[657] = 6.00;
+	simulationValuesFront[658] = 1.00;		simulationValuesRear[658] = 6.00;
+	simulationValuesFront[659] = 1.00;		simulationValuesRear[659] = 6.00;
+	simulationValuesFront[660] = 1.00;		simulationValuesRear[660] = 6.00;
+	simulationValuesFront[661] = 1.00;		simulationValuesRear[661] = 6.00;
+	simulationValuesFront[662] = 1.00;		simulationValuesRear[662] = 6.00;
+	simulationValuesFront[663] = 1.00;		simulationValuesRear[663] = 6.00;
+	simulationValuesFront[664] = 1.00;		simulationValuesRear[664] = 6.00;
+	simulationValuesFront[665] = 1.00;		simulationValuesRear[665] = 6.00;
+	simulationValuesFront[666] = 1.00;		simulationValuesRear[666] = 6.00;
+	simulationValuesFront[667] = 1.00;		simulationValuesRear[667] = 6.00;
+	simulationValuesFront[668] = 1.00;		simulationValuesRear[668] = 6.00;
+	simulationValuesFront[669] = 1.00;		simulationValuesRear[669] = 6.00;
+	simulationValuesFront[670] = 1.00;		simulationValuesRear[670] = 6.00;
+	simulationValuesFront[671] = 1.00;		simulationValuesRear[671] = 6.00;
+	simulationValuesFront[672] = 1.00;		simulationValuesRear[672] = 6.00;
+	simulationValuesFront[673] = 1.00;		simulationValuesRear[673] = 6.00;
+	simulationValuesFront[674] = 1.00;		simulationValuesRear[674] = 6.00;
+	simulationValuesFront[675] = 1.00;		simulationValuesRear[675] = 6.00;
+	simulationValuesFront[676] = 1.00;		simulationValuesRear[676] = 6.00;
+	simulationValuesFront[677] = 1.00;		simulationValuesRear[677] = 6.00;
+	simulationValuesFront[678] = 1.00;		simulationValuesRear[678] = 6.00;
+	simulationValuesFront[679] = 1.00;		simulationValuesRear[679] = 6.00;
+	simulationValuesFront[680] = 1.00;		simulationValuesRear[680] = 6.00;
+	simulationValuesFront[681] = 1.00;		simulationValuesRear[681] = 6.00;
+	simulationValuesFront[682] = 1.00;		simulationValuesRear[682] = 6.00;
+	simulationValuesFront[683] = 1.00;		simulationValuesRear[683] = 6.00;
+	simulationValuesFront[684] = 1.00;		simulationValuesRear[684] = 6.00;
+	simulationValuesFront[685] = 1.00;		simulationValuesRear[685] = 6.00;
+	simulationValuesFront[686] = 1.00;		simulationValuesRear[686] = 6.00;
+	simulationValuesFront[687] = 1.00;		simulationValuesRear[687] = 6.00;
+	simulationValuesFront[688] = 1.00;		simulationValuesRear[688] = 6.00;
+	simulationValuesFront[689] = 1.00;		simulationValuesRear[689] = 6.00;
+	simulationValuesFront[690] = 1.00;		simulationValuesRear[690] = 6.00;
+	simulationValuesFront[691] = 1.00;		simulationValuesRear[691] = 6.00;
+	simulationValuesFront[692] = 1.00;		simulationValuesRear[692] = 6.00;
+	simulationValuesFront[693] = 1.00;		simulationValuesRear[693] = 6.00;
+	simulationValuesFront[694] = 1.00;		simulationValuesRear[694] = 6.00;
+	simulationValuesFront[695] = 1.00;		simulationValuesRear[695] = 6.00;
+	simulationValuesFront[696] = 1.00;		simulationValuesRear[696] = 6.00;
+	simulationValuesFront[697] = 1.00;		simulationValuesRear[697] = 6.00;
+	simulationValuesFront[698] = 1.00;		simulationValuesRear[698] = 6.00;
+	simulationValuesFront[699] = 1.00;		simulationValuesRear[699] = 6.00;
+	simulationValuesFront[700] = 1.00;		simulationValuesRear[700] = 6.00;
+	simulationValuesFront[701] = 1.00;		simulationValuesRear[701] = 6.00;
+	simulationValuesFront[702] = 1.00;		simulationValuesRear[702] = 6.00;
+	simulationValuesFront[703] = 1.00;		simulationValuesRear[703] = 6.00;
+	simulationValuesFront[704] = 1.00;		simulationValuesRear[704] = 6.00;
+	simulationValuesFront[705] = 1.00;		simulationValuesRear[705] = 6.00;
+	simulationValuesFront[706] = 1.00;		simulationValuesRear[706] = 6.00;
+	simulationValuesFront[707] = 1.00;		simulationValuesRear[707] = 6.00;
+	simulationValuesFront[708] = 1.00;		simulationValuesRear[708] = 6.00;
+	simulationValuesFront[709] = 1.00;		simulationValuesRear[709] = 6.00;
+	simulationValuesFront[710] = 1.00;		simulationValuesRear[710] = 6.00;
+	simulationValuesFront[711] = 1.00;		simulationValuesRear[711] = 6.00;
+	simulationValuesFront[712] = 1.00;		simulationValuesRear[712] = 6.00;
+	simulationValuesFront[713] = 1.00;		simulationValuesRear[713] = 6.00;
+	simulationValuesFront[714] = 1.00;		simulationValuesRear[714] = 6.00;
+	simulationValuesFront[715] = 1.00;		simulationValuesRear[715] = 6.00;
+	simulationValuesFront[716] = 1.00;		simulationValuesRear[716] = 6.00;
+	simulationValuesFront[717] = 1.00;		simulationValuesRear[717] = 6.00;
+	simulationValuesFront[718] = 1.00;		simulationValuesRear[718] = 6.00;
+	simulationValuesFront[719] = 1.00;		simulationValuesRear[719] = 6.00;
 }                                                       
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

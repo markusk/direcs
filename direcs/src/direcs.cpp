@@ -2437,20 +2437,20 @@ void Direcs::readSettings()
 
 	if (typeLaserscannerFront == "error2")
 	{
-		laserThread->setLaserscannerType(LASER1, "none");
+		laserThread->setType(LASER1, "none");
 		emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (typeLaserscannerFront == "error1")
 		{
-			laserThread->setLaserscannerType(LASER1, "none");
+			laserThread->setType(LASER1, "none");
 			emit message("<font color=\"#FF0000\">Value \"typeLaserscannerFront\" not found in ini-file!</font>");
 		}
 		else
 		{
 			// everything okay
-			laserThread->setLaserscannerType(LASER1, typeLaserscannerFront);
+			laserThread->setType(LASER1, typeLaserscannerFront);
 			emit message(QString("Front laser scanner type set to <b>%1</b>.").arg(typeLaserscannerFront));
 
 
@@ -2511,7 +2511,7 @@ void Direcs::readSettings()
 								emit message("<font color=\"#FF0000\">Value \"laserscannerAngleFront\"not found in ini-file!</font>");
 								break;
 							default:
-								laserThread->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+								laserThread->setAngle(LASER1, laserscannerAngleFront);
 								gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
 								emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront));
 								break;
@@ -2529,20 +2529,20 @@ void Direcs::readSettings()
 
 	if (typeLaserscannerRear == "error2")
 	{
-		laserThread->setLaserscannerType(LASER2, "none");
+		laserThread->setType(LASER2, "none");
 		emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 	}
 	else
 	{
 		if (typeLaserscannerRear == "error1")
 		{
-			laserThread->setLaserscannerType(LASER2, "none");
+			laserThread->setType(LASER2, "none");
 			emit message("<font color=\"#FF0000\">Value \"typeLaserscannerRear\" not found in ini-file!</font>");
 		}
 		else
 		{
 			// everything okay
-			laserThread->setLaserscannerType(LASER2, typeLaserscannerRear);
+			laserThread->setType(LASER2, typeLaserscannerRear);
 			emit message(QString("Rear laser scanner type set to <b>%1</b>.").arg(typeLaserscannerRear));
 
 			//---------------------------------------------------------------------
@@ -2602,7 +2602,7 @@ void Direcs::readSettings()
 								emit message("<font color=\"#FF0000\">Value \"laserscannerAngleRear\"not found in ini-file!</font>");
 								break;
 							default:
-								laserThread->setLaserscannerAngle(LASER2, laserscannerAngleRear);
+								laserThread->setAngle(LASER2, laserscannerAngleRear);
 								gui->setLaserscannerAngle(LASER2, laserscannerAngleRear);
 								emit message(QString("Rear laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleRear));
 								break;

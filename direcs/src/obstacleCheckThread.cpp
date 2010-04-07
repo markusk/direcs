@@ -186,7 +186,7 @@ void ObstacleCheckThread::run()
 		for (int angle=0; angle < laserThread->getAngle(LASER1); angle++)
 		{
 			// if obstacle detected
-			if ( ((int) (laserThread->getLaserScannerValue(LASER1, angle)*100)) < minObstacleDistanceLaserScanner)
+			if ( ((int) (laserThread->getValue(LASER1, angle)*100)) < minObstacleDistanceLaserScanner)
 			{
 				//-----------------------------
 				// set the "obstacle flag"
@@ -332,8 +332,8 @@ void ObstacleCheckThread::run()
 		if ((largestFreeAreaStart > 0) && (largestFreeAreaEnd < laserThread->getAngle(LASER1)))
 		{
 			// b and c are the sides of the triangle
-			b = laserThread->getLaserScannerValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
-			c = laserThread->getLaserScannerValue(LASER1, largestFreeAreaEnd) * 100; // converted in cm, here!
+			b = laserThread->getValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
+			c = laserThread->getValue(LASER1, largestFreeAreaEnd) * 100; // converted in cm, here!
 			alpha = (largestFreeAreaEnd - largestFreeAreaStart);
 			
 			// to get the 'true drive-tru width':
@@ -417,7 +417,7 @@ void ObstacleCheckThread::run()
 		for (int angle=0; angle < laserThread->getAngle(LASER2); angle++)
 		{
 			// if obstacle detected
-			if ( ((int) (laserThread->getLaserScannerValue(LASER2, angle)*100)) < minObstacleDistanceLaserScanner)
+			if ( ((int) (laserThread->getValue(LASER2, angle)*100)) < minObstacleDistanceLaserScanner)
 			{
 				//-----------------------------
 				// set the "obstacle flag"
