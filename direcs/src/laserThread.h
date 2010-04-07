@@ -115,7 +115,7 @@ class LaserThread : public QThread
 		float getResolution(short int laserScanner);
 
 		/**
-		Returns the state of a connected laser scanner.
+		Returns the state of a connected laser scanner. This method also does some init stuff for all the important mebers like the QVectors (laser values etc.).
 		@param laserScanner can be LASER1 or LASER2
 		@return true, if connected
 		*/
@@ -130,10 +130,16 @@ class LaserThread : public QThread
 
 
 	signals:
-		/// Emits a pointer to the array with the 180 front laser values (distances)
-		void laserDataCompleteFront(float *laserScannerValuesFront, int *laserScannerFlagsFront);
-		/// Emits a pointer to the array with the 180 rear laser values (distances)
-		void laserDataCompleteRear(float *laserScannerValuesRear, int *laserScannerFlagsRear);
+		/**
+		Emits a list containing all front laser values (distances) and their flags.
+		*/
+		void laserDataCompleteFront(QVector <float> laserScannerValuesFront, QVector <int> laserScannerFlagsFront);
+
+		/**
+		Emits a list containing all rear laser values (distances) and their flags.
+		*/
+		void laserDataCompleteRear(QVector <float> laserScannerValuesRear, QVector <int> laserScannerFlagsRear);
+
 		/**
 		Emits a info messge to a slot.
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...

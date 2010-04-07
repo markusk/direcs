@@ -72,6 +72,13 @@ void LaserThread::run()
 {
 	int laserValue = 0;
 
+
+	// check if all necessary values wer set / members are initialised
+	if ( (laserScannerFrontIsConnected && laserScannerValuesFront.isEmpty()) && (laserScannerRearIsConnected && laserScannerValuesRear.isEmpty()))
+	{
+		// don't thread
+		stopped = true;
+	}
 	
 	// check if all 180 beams were read
 	numReadingsFront = 0;
@@ -101,17 +108,17 @@ void LaserThread::run()
 				{
 				case LASER1:
 					getAndStoreLaserValuesFront();
-					emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
+					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
 					break;
 				case LASER2:
 					getAndStoreLaserValuesRear();
-					emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
+					emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
 					break;
 				case (LASER1+LASER2):
 					getAndStoreLaserValuesFront();
-					emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
+					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
 					getAndStoreLaserValuesRear();
-					emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
+					emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
 					break;
 				}
 			}
@@ -134,8 +141,8 @@ void LaserThread::run()
 			//====================================================================
 			//  e m i t  Signal
 			//====================================================================
-			emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
-			emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
+			emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+			emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
 		}
 	}
 	stopped = false;
@@ -341,7 +348,7 @@ void LaserThread::setSimulationMode(bool status)
 		setSimulationValues();
 
 		// copy sim values into the distances values
-		for (int i=0; i<360; i++)
+		for (int i=0; i<laserScannerValuesFront.count(); i++)
 		{
 			// the distances
 			// laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
@@ -350,7 +357,7 @@ void LaserThread::setSimulationMode(bool status)
 			laserScannerFlagsFront[i] = OBSTACLE;
 		}
 
-		for (int i=0; i<360; i++)
+		for (int i=0; i<laserScannerValuesRear.count(); i++)
 		{
 			// the distances
 			// laserScannerValuesRear[i] = 2.30; //(i+1) / 100;
@@ -360,13 +367,13 @@ void LaserThread::setSimulationMode(bool status)
 		}
 
 		// for refreshing the gui (deleting simulated laser lines)
-		emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
-		emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
+		emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+		emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
 	}
 	else
 	{
 		// initialisation
-		for (int i=0; i<360; i++)
+		for (int i=0; i<laserScannerValuesFront.count(); i++)
 		{
 			// the distances
 			laserScannerValuesFront[i] = 0;
@@ -374,7 +381,7 @@ void LaserThread::setSimulationMode(bool status)
 			laserScannerFlagsFront[i] = OBSTACLE;
 		}
 
-		for (int i=0; i<360; i++)
+		for (int i=0; i<laserScannerValuesRear.count(); i++)
 		{
 			// the distances
 			laserScannerValuesRear[i] = 0;
@@ -383,8 +390,8 @@ void LaserThread::setSimulationMode(bool status)
 		}
 
 		// for refreshing the gui (deleting simulated laser lines)
-		emit laserDataCompleteFront(&laserScannerValuesFront[0], &laserScannerFlagsFront[0]);
-		emit laserDataCompleteRear(&laserScannerValuesRear[0], &laserScannerFlagsRear[0]);
+		emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+		emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
 	}
 }
 
@@ -553,28 +560,10 @@ void LaserThread::setAngle(short int laserScanner, int angle)
 			case LASER1:
 				// store value in the class member
 				laserscannerAngleFront = angle;
-
-				// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
-				laserScannerValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-				// add a 0 flag
-				laserScannerFlagsFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-				// initialisation of the laser simulation values list (QVector)
-				simulationValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
 				break;
 			case LASER2:
 				// store value in the class member
 				laserscannerAngleRear = angle;
-
-				// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
-				laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-				// add a 0 flag
-				laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-				// initialisation of the laser simulation values list (QVector)
-				simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
 				break;
 			default:
 				qDebug("laser number not yet supported  (LaserThread::setLaserscannerAngle");
@@ -590,28 +579,10 @@ void LaserThread::setResolution(short int laserScanner, float resolution)
 		case LASER1:
 			// store value in the class member
 			laserscannerResolutionFront = resolution;
-
-			// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
-			laserScannerValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-			// add a 0 flag
-			laserScannerFlagsFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-			// initialisation of the laser simulation values list (QVector)
-			simulationValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
 			break;
 		case LASER2:
 			// store value in the class member
 			laserscannerResolutionRear = resolution;
-
-			// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
-			laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-			// add a 0 flag
-			laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
-
-			// initialisation of the laser simulation values list (QVector)
-			simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
 			break;
 		default:
 			qDebug("laser number not yet supported  (LaserThread::setLaserscannerResolution");
@@ -659,6 +630,27 @@ bool LaserThread::isConnected(short int laserScanner)
 	switch (laserScanner)
 	{
 	case LASER1:
+		// check if all necessary values have been initialised
+		if (laserscannerAngleFront==0)
+		{
+			qDebug("Front laser angle not set before calling LaserThread::isConnecteed()!");
+			return false;
+		}
+		if (laserscannerResolutionFront==0)
+		{
+			qDebug("Front laser resolution not set before calling LaserThread::isConnecteed()!");
+			return false;
+		}
+
+		// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
+		laserScannerValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront));
+
+		// add a 0 flag
+		laserScannerFlagsFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront));
+
+		// initialisation of the laser simulation values list (QVector)
+		simulationValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront));
+
 		if (laserscannerTypeFront == PLS)
 		{
 			// try to start the laser module LASER1
@@ -702,6 +694,27 @@ bool LaserThread::isConnected(short int laserScanner)
 		}
 		break;
 	case LASER2:
+		// check if all necessary values have been initialised
+		if (laserscannerAngleRear==0)
+		{
+			qDebug("Rear laser angle not set before calling LaserThread::isConnecteed()!");
+			return false;
+		}
+		if (laserscannerResolutionRear==0)
+		{
+			qDebug("Rear laser resolution not set before calling LaserThread::isConnecteed()!");
+			return false;
+		}
+
+		// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
+		laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+		// add a 0 flag
+		laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
+		// initialisation of the laser simulation values list (QVector)
+		simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+
 		if (laserscannerTypeRear == PLS)
 		{
 			// try to start the laser module LASER2
