@@ -228,7 +228,7 @@ int SickS300::setup()
 }
 
 
-int SickS300::readRequestTelegram(QVector <float> laserScannerValues)
+int SickS300::readRequestTelegram(QList <float> laserScannerValues)
 {
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
 	// 00 00

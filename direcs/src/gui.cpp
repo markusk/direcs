@@ -1920,7 +1920,7 @@ void Gui::initLaserView()
 }
 
 
-void Gui::refreshLaserViewFront(QVector <float> laserScannerValues, QVector <int> laserScannerFlags)
+void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> laserScannerFlags)
 {
 	qreal x = 0.0;
 	qreal y = 0.0;
@@ -2104,7 +2104,7 @@ void Gui::refreshLaserViewFront(QVector <float> laserScannerValues, QVector <int
 }
 
 
-void Gui::refreshLaserViewRear(QVector <float> laserScannerValues, QVector <int> laserScannerFlags)
+void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> laserScannerFlags)
 {
 	qreal x = 0.0;
 	qreal y = 0.0;

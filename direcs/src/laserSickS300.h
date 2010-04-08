@@ -56,7 +56,7 @@ class SickS300 : public QObject
 
 		/**
 		  */
-		int readRequestTelegram(QVector <float> laserScannerValues);
+		int readRequestTelegram(QList <float> laserScannerValues);
 
 		/**
 		  */

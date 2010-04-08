@@ -731,8 +731,8 @@ void Direcs::init()
 			// connect laserThread signal to "dataReceived"
 			// (Whenever data were received, the data are shown in the GUI)
 			//----------------------------------------------------------------------------
-			connect(laserThread, SIGNAL( laserDataCompleteFront(QVector <float>, QVector <int>) ), gui, SLOT( refreshLaserViewFront(QVector <float>, QVector <int>) ));
-			connect(laserThread, SIGNAL( laserDataCompleteRear(QVector <float>, QVector <int>) ), gui, SLOT( refreshLaserViewRear(QVector <float>, QVector <int>) ));
+			connect(laserThread, SIGNAL( laserDataCompleteFront(QList <float>, QList <int>) ), gui, SLOT( refreshLaserViewFront(QList <float>, QList <int>) ));
+			connect(laserThread, SIGNAL( laserDataCompleteRear(QList <float>, QList <int>) ), gui, SLOT( refreshLaserViewRear(QList <float>, QList <int>) ));
 		}
 
 		//------------------------------------------------------------------------------

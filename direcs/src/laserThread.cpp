@@ -644,14 +644,23 @@ bool LaserThread::isConnected(short int laserScanner)
 			return false;
 		}
 
-		// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
-		laserScannerValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront));
+		// initialisation of the laser values list (QList). Create one object with length 0.0 for every laser line
+		for (int i=0; i<(laserscannerAngleFront/laserscannerResolutionFront); i++)
+		{
+			laserScannerValuesFront.append(0.0);
+		}
 
-		// add a 0 flag
-		laserScannerFlagsFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront));
+		// add a 0 flag for each line
+		for (int i=0; i<(laserscannerAngleFront/laserscannerResolutionFront); i++)
+		{
+			laserScannerFlagsFront.append(0);
+		}
 
-		// initialisation of the laser simulation values list (QVector)
-		simulationValuesFront.fill(0.0, (laserscannerAngleFront/laserscannerResolutionFront));
+		// initialisation of the laser simulation values list (QList)
+		for (int i=0; i<(laserscannerAngleFront/laserscannerResolutionFront); i++)
+		{
+			simulationValuesFront.append(0.0);
+		}
 
 		if (laserscannerTypeFront == PLS)
 		{
@@ -708,14 +717,23 @@ bool LaserThread::isConnected(short int laserScanner)
 			return false;
 		}
 
-		// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
-		laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear));
+		// initialisation of the laser values list (QList). Create one object with length 0.0 for every laser line
+		for (int i=0; i<(laserscannerAngleRear/laserscannerResolutionRear); i++)
+		{
+			laserScannerValuesRear.append(0.0);
+		}
 
-		// add a 0 flag
-		laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear));
+		// add a 0 flag for each line
+		for (int i=0; i<(laserscannerAngleRear/laserscannerResolutionRear); i++)
+		{
+			laserScannerFlagsRear.append(0);
+		}
 
-		// initialisation of the laser simulation values list (QVector)
-		simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear));
+		// initialisation of the laser simulation values list (QList)
+		for (int i=0; i<(laserscannerAngleRear/laserscannerResolutionRear); i++)
+		{
+			simulationValuesRear.append(0.0);
+		}
 
 		if (laserscannerTypeRear == PLS)
 		{

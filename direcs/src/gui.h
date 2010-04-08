@@ -237,12 +237,12 @@ class Gui : public QMainWindow
 		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/
-		void refreshLaserViewFront(QVector <float> laserScannerValues, QVector <int> laserScannerFlags);
+		void refreshLaserViewFront(QList <float> laserScannerValues, QList <int> laserScannerFlags);
 
 		/**
 		Refreshes the view of the lines from the rear laser scanner.
 		*/
-		void refreshLaserViewRear(QVector <float> laserScannerValues, QVector <int> laserScannerFlags);
+		void refreshLaserViewRear(QList <float> laserScannerValues, QList <int> laserScannerFlags);
 
 		/**
 		Change the robot position in the graphicsView/scene, if the robot is moved via mouse

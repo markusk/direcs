@@ -21,11 +21,10 @@
 #ifndef LASERTHREAD_H
 #define LASERTHREAD_H
 
-//-------------------------------------------------------------------
 #include "laser.h"
 #include "laserSickS300.h"
 #include <QThread>
-//-------------------------------------------------------------------
+
 
 /**
 \brief Handles all the Laser scanners.
@@ -115,7 +114,7 @@ class LaserThread : public QThread
 		float getResolution(short int laserScanner);
 
 		/**
-		Returns the state of a connected laser scanner. This method also does some init stuff for all the important mebers like the QVectors (laser values etc.).
+		Returns the state of a connected laser scanner. This method also does some init stuff for all the important mebers like the QList (laser values etc.).
 		@param laserScanner can be LASER1 or LASER2
 		@return true, if connected
 		*/
@@ -133,12 +132,12 @@ class LaserThread : public QThread
 		/**
 		Emits a list containing all front laser values (distances) and their flags.
 		*/
-		void laserDataCompleteFront(QVector <float> laserScannerValuesFront, QVector <int> laserScannerFlagsFront);
+		void laserDataCompleteFront(QList <float> laserScannerValuesFront, QList <int> laserScannerFlagsFront);
 
 		/**
 		Emits a list containing all rear laser values (distances) and their flags.
 		*/
-		void laserDataCompleteRear(QVector <float> laserScannerValuesRear, QVector <int> laserScannerFlagsRear);
+		void laserDataCompleteRear(QList <float> laserScannerValuesRear, QList <int> laserScannerFlagsRear);
 
 		/**
 		Emits a info messge to a slot.
@@ -187,14 +186,14 @@ class LaserThread : public QThread
 		static const unsigned char S300 = 4; // this is temporary
 		static const unsigned char NONE = 255;
 
-		QVector <float> laserScannerValuesFront; /// The measured distances from the front laser scanner.
-		QVector <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
+		QList <float> laserScannerValuesFront; /// The measured distances from the front laser scanner.
+		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
 
-		QVector <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.)
-		QVector <int> laserScannerFlagsRear;   /// Some flags for each rear laser line (like "free way", "obstacle" etc.)
+		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.)
+		QList <int> laserScannerFlagsRear;   /// Some flags for each rear laser line (like "free way", "obstacle" etc.)
 
-		QVector <float> simulationValuesFront;   /// The simulated distances for the front laser scanner.
-		QVector <float> simulationValuesRear;    /// The simulated distances for the rear laser scanner.
+		QList <float> simulationValuesFront;   /// The simulated distances for the front laser scanner.
+		QList <float> simulationValuesRear;    /// The simulated distances for the rear laser scanner.
 
 		/**
 		The names for addressing the laser scanner array
