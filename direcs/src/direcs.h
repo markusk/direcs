@@ -350,6 +350,7 @@ class Direcs : public QObject
 		bool endSpeedMotor3Reached;
 		bool endSpeedMotor4Reached;
 		unsigned int value;
+		float floatValue;
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		bool shutdownAlreadyCalled;
 		bool forceShutdown; /// this is set to true, when no ini-file was found at startup. This make the program leave without the stupid AreYouSure-Question.

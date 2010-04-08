@@ -2474,7 +2474,7 @@ void Direcs::readSettings()
 				{
 					// everything okay
 					laserThread->setSerialPort(LASER1, serialPortLaserscannerFront);
-					emit message(QString("Front laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerFront));
+					emit message(QString("Front laser scanner port set to <b>%1</b>.").arg(serialPortLaserscannerFront));
 
 					//---------------------------------------------------------------------
 					// read next laser setting
@@ -2514,6 +2514,21 @@ void Direcs::readSettings()
 								laserThread->setAngle(LASER1, laserscannerAngleFront);
 								gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
 								emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront));
+
+								//---------------------------------------------------------------------
+								// read next setting
+								floatValue = inifile1->readFloat("Config", "laserscannerResolutionFront");
+
+								if (floatValue == -1)
+								{
+									emit message("<font color=\"#FF0000\">Value \"laserscannerResolutionFront\" not found in ini-file!</font>");
+								}
+								else
+								{
+									laserThread->setResolution(LASER1, floatValue);
+									// FIXME: gui->setLaserscannerAngle(LASER1, floatValue);
+									emit message(QString("Front laser scanner resolution set to <b>%1</b>.").arg(floatValue));
+								}
 								break;
 							}
 						}
@@ -2565,7 +2580,7 @@ void Direcs::readSettings()
 				{
 					// everything okay
 					laserThread->setSerialPort(LASER2, serialPortLaserscannerRear);
-					emit message(QString("Rear laser scanner set to <b>%1</b>.").arg(serialPortLaserscannerRear));
+					emit message(QString("Rear laser scanner port set to <b>%1</b>.").arg(serialPortLaserscannerRear));
 
 					//---------------------------------------------------------------------
 					// read next laser setting
@@ -2605,6 +2620,21 @@ void Direcs::readSettings()
 								laserThread->setAngle(LASER2, laserscannerAngleRear);
 								gui->setLaserscannerAngle(LASER2, laserscannerAngleRear);
 								emit message(QString("Rear laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleRear));
+
+								//---------------------------------------------------------------------
+								// read next setting
+								floatValue = inifile1->readFloat("Config", "laserscannerResolutionRear");
+
+								if (floatValue == -1)
+								{
+									emit message("<font color=\"#FF0000\">Value \"laserscannerResolutionRear\" not found in ini-file!</font>");
+								}
+								else
+								{
+									laserThread->setResolution(LASER2, floatValue);
+									// FIXME: gui->setLaserscannerAngle(LASER2, floatValue);
+									emit message(QString("Rear laser scanner resolution set to <b>%1</b>.").arg(floatValue));
+								}
 								break;
 							}
 						}

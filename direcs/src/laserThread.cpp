@@ -28,11 +28,11 @@ LaserThread::LaserThread()
 	laserScannerRearIsConnected = false;
 	simulationMode = false;
 	numReadingsFront = 0;
-	numReadingsRear = 0;
-	laserscannerAngleFront = 0;
-	laserscannerAngleRear = 0;
-	laserscannerResolutionFront = 0.0;
-	laserscannerResolutionRear = 0.0;
+	numReadingsRear  = 0;
+	laserscannerAngleFront = -1;
+	laserscannerAngleRear  = -1;
+	laserscannerResolutionFront = -1.0;
+	laserscannerResolutionRear  = -1.0;
 }
 
 
@@ -631,12 +631,12 @@ bool LaserThread::isConnected(short int laserScanner)
 	{
 	case LASER1:
 		// check if all necessary values have been initialised
-		if (laserscannerAngleFront==0)
+		if (laserscannerAngleFront == -1)
 		{
 			qDebug("Front laser angle not set before calling LaserThread::isConnecteed()!");
 			return false;
 		}
-		if (laserscannerResolutionFront==0)
+		if (laserscannerResolutionFront == -1)
 		{
 			qDebug("Front laser resolution not set before calling LaserThread::isConnecteed()!");
 			return false;
@@ -695,25 +695,25 @@ bool LaserThread::isConnected(short int laserScanner)
 		break;
 	case LASER2:
 		// check if all necessary values have been initialised
-		if (laserscannerAngleRear==0)
+		if (laserscannerAngleRear == -1)
 		{
 			qDebug("Rear laser angle not set before calling LaserThread::isConnecteed()!");
 			return false;
 		}
-		if (laserscannerResolutionRear==0)
+		if (laserscannerResolutionRear == -1)
 		{
 			qDebug("Rear laser resolution not set before calling LaserThread::isConnecteed()!");
 			return false;
 		}
 
 		// initialisation of the laser values list (QVector). Create one object with length 0.0 for every laser line
-		laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+		laserScannerValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear));
 
 		// add a 0 flag
-		laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+		laserScannerFlagsRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear));
 
 		// initialisation of the laser simulation values list (QVector)
-		simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME: where to do this?
+		simulationValuesRear.fill(0.0, (laserscannerAngleRear/laserscannerResolutionRear));
 
 		if (laserscannerTypeRear == PLS)
 		{

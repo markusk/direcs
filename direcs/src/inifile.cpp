@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2010 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -72,6 +72,7 @@ bool Inifile::checkFiles()
 
 	if (mainIniFilename == "not_set")
 	{
+		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles().");
 		return false;
 	}
 	
@@ -120,7 +121,6 @@ void Inifile::writeSetting(QString group, QString name, int value)
 
 int Inifile::readSetting(QString group, QString name)
 {
-	
 	// check if ini-file is writable
 	if (settings->isWritable() == false)
 	{
@@ -138,7 +138,6 @@ int Inifile::readSetting(QString group, QString name)
 
 QString Inifile::readString(QString group, QString name)
 {
-	
 	// check if ini-file is writable
 	if (settings->isWritable() == false)
 	{
@@ -156,6 +155,18 @@ QString Inifile::readString(QString group, QString name)
 	// read value from ini-file
 	// return String 
 	return settings->value(iniSection, name).toString();
+}
+
+
+float Inifile::readFloat(QString group, QString name)
+{
+
+	// string for group+value in inifile
+	QString iniSection = group + "/" + name;
+
+	// read value from ini-file
+	// return the value or -1 on error.
+	return settings->value(iniSection, -1).toDouble();
 }
 
 

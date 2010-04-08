@@ -88,7 +88,19 @@ class Inifile : public QObject
 		@return The setting as a string.
 		*/
 		QString readString(QString group, QString name);
-		
+
+		/**
+		Reads a float value from an ini-file. The settings are read in the typical ini-file-format.\n
+		Example ini-file:\n
+		\n
+		[Config]\n
+		laserscannerResolutionFront=0.1
+		@param group is the group area in the file (e.g. \e Config).
+		@param name is the object to read (e.g. \e laserscannerResolutionFront).
+		@return The setting as a float
+		*/
+		float readFloat(QString group, QString name);
+
 		/**
 		Forces the ini.file to be written \e immediately. For example at program end.
 		*/
