@@ -213,22 +213,16 @@ int SickS300::setup()
 	emit emitMessage("Receiving answer...");
 	for (i=0; i<4; i++)
 	{
-		if (receiveChar(&answer) == true)
+		if (receiveChar(&answer) == false)
 		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
 			// error
-			if (answer == 255)
-			{
-
-				emit emitMessage("ERROR");
-				return -1;
-			}
+			emit emitMessage("ERROR");
+			return -1;
 		}
+
+		// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 	}
-	emit emitMessage("----------");
 	emit emitMessage("Setup OKAY");
-	emit emitMessage("----------");
 
 	return 0;
 }

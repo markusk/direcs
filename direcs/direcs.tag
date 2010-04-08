@@ -644,64 +644,9 @@
     <name>laserSickS300.h</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>laserSickS300_8h</filename>
-    <class kind="struct">SickS300::player_laser_data</class>
+    <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
+    <class kind="struct">SickS300::laserData</class>
     <class kind="class">SickS300</class>
-    <member kind="define">
-      <type>#define</type>
-      <name>DEFAULT_LASER_MODE</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>afe4fd0efff1d63a4683eab40aa78724e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>DEFAULT_LASER_PORT</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>afebc79c506d5e7e50da63ef7d173d3c0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>DEFAULT_LASER_RATE</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>aab85fd2b10bbf40e9816ebdd61432a1a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>DEFAULT_LASER_SAMPLES</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>ab8c4532ba5f7d8171f7df694f10715e0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>HAVE_HI_SPEED_SERIAL</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>ac47390e8db524ba7ac99609cab3bdc4a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LASER_CONTINUOUS_MODE</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>ac61292934fc755a9aa9bac8893f80034</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LASER_MAX_BUFFER_SIZE</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>a7165e9e54084c0543a1c4c277641d6fa</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LASER_REQUEST_MODE</name>
-      <anchorfile>laserSickS300_8h.html</anchorfile>
-      <anchor>acb173be73d2969869383a94d831b2914</anchor>
-      <arglist></arglist>
-    </member>
   </compound>
   <compound kind="file">
     <name>laserThread.cpp</name>
@@ -3658,6 +3603,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>float</type>
+      <name>floatValue</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a293d581e982dc5d15a489cd6e2512944</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>bool</type>
       <name>forceShutdown</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -4589,6 +4541,13 @@
       <type>long</type>
       <name>numChars</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>ad48df4c8f50ce278b32ce0281c5a3e25</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>numChars</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
       <anchor>a08b97d7107cf3f6e2715aa5a6a352bfe</anchor>
       <arglist>(int dev_fd)</arglist>
     </member>
@@ -4596,8 +4555,8 @@
       <type>int</type>
       <name>openAtmelPort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>ab8b6f4c5d19e2c1bc34569d26a4c842f</anchor>
-      <arglist>(char *dev_name)</arglist>
+      <anchor>ac23f4100ceb4ffd34442452aefc6f6d6</anchor>
+      <arglist>(char *dev_name, int baudrate)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -4657,9 +4616,9 @@
     </member>
     <member kind="variable" protection="private">
       <type>int</type>
-      <name>dev_fd</name>
+      <name>mDev_fd</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a0df7352f68aad0bc7c78db25570df90c</anchor>
+      <anchor>a9ca8597d128e288bcdb6d7ff22275463</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4902,8 +4861,8 @@
       <type>void</type>
       <name>refreshLaserViewFront</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a9660e3b78a58fe239f81ca9a34753bf8</anchor>
-      <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
+      <anchor>ac3a7ce03a910480a27fe4bfaf78586fb</anchor>
+      <arglist>(QVector&lt; float &gt; laserScannerValues, QVector&lt; int &gt; laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4916,8 +4875,8 @@
       <type>void</type>
       <name>refreshLaserViewRear</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>afb229f99efac2e5a33733f3d29db5c3f</anchor>
-      <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
+      <anchor>a7da4f87833be2555e662274bcae0d294</anchor>
+      <arglist>(QVector&lt; float &gt; laserScannerValues, QVector&lt; int &gt; laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -6745,6 +6704,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>float</type>
+      <name>readFloat</name>
+      <anchorfile>classInifile.html</anchorfile>
+      <anchor>a8a5db33cfd91f060526c878c65a16038</anchor>
+      <arglist>(QString group, QString name)</arglist>
+    </member>
+    <member kind="function">
       <type>int</type>
       <name>readSetting</name>
       <anchorfile>classInifile.html</anchorfile>
@@ -7821,10 +7787,10 @@
       <arglist>(sick_laser_p laser)</arglist>
     </member>
     <member kind="function" protection="private">
-      <type>void</type>
+      <type>int</type>
       <name>sick_set_serial_params</name>
       <anchorfile>classLaser.html</anchorfile>
-      <anchor>a750729442dd735bf84078ad5297a0218</anchor>
+      <anchor>a2b330d7528ed5b6b107c5fdcd8f26739</anchor>
       <arglist>(sick_laser_p laser)</arglist>
     </member>
     <member kind="function" protection="private">
@@ -8419,15 +8385,15 @@
       <type>void</type>
       <name>laserDataCompleteFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a5ae0a39cb9d3d6e9eb2dd2adf474fcc0</anchor>
-      <arglist>(float *laserScannerValuesFront, int *laserScannerFlagsFront)</arglist>
+      <anchor>aa721e0b020627e9aa4ce3e75a58ccb97</anchor>
+      <arglist>(QVector&lt; float &gt; laserScannerValuesFront, QVector&lt; int &gt; laserScannerFlagsFront)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
       <name>laserDataCompleteRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a618e1e825d8aab62f86c62db8bff2554</anchor>
-      <arglist>(float *laserScannerValuesRear, int *laserScannerFlagsRear)</arglist>
+      <anchor>acaa2b3f32ba130453abb174536dff6cc</anchor>
+      <arglist>(QVector&lt; float &gt; laserScannerValuesRear, QVector&lt; int &gt; laserScannerFlagsRear)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -8451,17 +8417,24 @@
       <arglist>(short int laserScanner)</arglist>
     </member>
     <member kind="function">
-      <type>float</type>
+      <type>int</type>
       <name>getFlag</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a4487f3201f1cbac01a2d3b31124b3149</anchor>
+      <anchor>a2b0945e84309edcd3ed1796b468a3c40</anchor>
       <arglist>(short int laserScanner, int angle)</arglist>
     </member>
     <member kind="function">
       <type>float</type>
-      <name>getLaserScannerValue</name>
+      <name>getResolution</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a6b69ba278e031b9d578da0f3deabdae3</anchor>
+      <anchor>afa3e874fa5dd5d0c9fcbba6d0d69ea31</anchor>
+      <arglist>(short int laserScanner)</arglist>
+    </member>
+    <member kind="function">
+      <type>float</type>
+      <name>getValue</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>af36c8669d17a12f09140c3581b68ee3f</anchor>
       <arglist>(short int laserScanner, int angle)</arglist>
     </member>
     <member kind="function">
@@ -8487,24 +8460,17 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>setFlag</name>
+      <name>setAngle</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a9db340f4349d4d8209f2014192c66a67</anchor>
-      <arglist>(short int laserScanner, int angle, int flag)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setLaserscannerAngle</name>
-      <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a8ede2e37d3ad8a58e55f55bcbf74e4d2</anchor>
+      <anchor>ab638a0ae7a6f2314967e728af79c8f84</anchor>
       <arglist>(short int laserScanner, int angle)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
-      <name>setLaserscannerType</name>
+      <name>setFlag</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ad1a17c2e6bbdc12895c9ad382d189fca</anchor>
-      <arglist>(short int laserScanner, QString laserType)</arglist>
+      <anchor>a9db340f4349d4d8209f2014192c66a67</anchor>
+      <arglist>(short int laserScanner, int angle, int flag)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -8515,10 +8481,24 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>setResolution</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>ae86ec9f864d795ab6762b8e998a6bbeb</anchor>
+      <arglist>(short int laserScanner, float resolution)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>setSerialPort</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>af5a93d16f3e2167689734b24f2fea893</anchor>
       <arglist>(short int laserScanner, QString serialPort)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setType</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>ab9e66a0ac72619bc9b73a8ef09b62d9e</anchor>
+      <arglist>(short int laserScanner, QString laserType)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -8584,18 +8564,18 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
+      <type>QVector&lt; int &gt;</type>
       <name>laserScannerFlagsFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ae1f79970e2bd6e64aa9ec53f339d3531</anchor>
-      <arglist>[360]</arglist>
+      <anchor>a68fb1f05ba3598d24268cce3410d232e</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
+      <type>QVector&lt; int &gt;</type>
       <name>laserScannerFlagsRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ac2d648399b97242296a8d6f066aee6cf</anchor>
-      <arglist>[360]</arglist>
+      <anchor>a54c0ee0c1aea1a74050a0d1b1a7c7390</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
@@ -8609,6 +8589,20 @@
       <name>laserScannerRearIsConnected</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>a8628ca87816183ff5cd23a24f48e616f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserscannerResolutionFront</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a17ef609e154cfc6bea9a94972940dbee</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserscannerResolutionRear</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>ae48b30861bb215fc766369d3982bd980</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -8626,18 +8620,18 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>float</type>
+      <type>QVector&lt; float &gt;</type>
       <name>laserScannerValuesFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a9972ae3bb1b87c6e6aabe8489a966877</anchor>
-      <arglist>[360]</arglist>
+      <anchor>acd62321058059150528e746e2ae10e57</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>float</type>
+      <type>QVector&lt; float &gt;</type>
       <name>laserScannerValuesRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ac3e4b20eb2300811a8a488fc255bc6e7</anchor>
-      <arglist>[360]</arglist>
+      <anchor>a62e6aef3144246f227b349ce37c00d1a</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>QString</type>
@@ -8675,38 +8669,24 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>float</type>
+      <type>QVector&lt; float &gt;</type>
       <name>simulationValuesFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>aa6611cfd99d4108636c002dbd9c86a5f</anchor>
-      <arglist>[360]</arglist>
+      <anchor>ab655ad0c947c4a9e18534bd1b799fdb2</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>float</type>
+      <type>QVector&lt; float &gt;</type>
       <name>simulationValuesRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>af38e262d1e520a91b0d7685a8ff34400</anchor>
-      <arglist>[360]</arglist>
+      <anchor>a4c97f929650dbba654e21ab284013287</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>volatile bool</type>
       <name>stopped</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>ace014c606e6ba9e30f55afd59182aaf2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>DISTANCE</name>
-      <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a87ee6318504163f01bd0b9a73d37c150</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>FLAG</name>
-      <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ab4245dddd23314f3f0b2b389ad498adb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -12318,19 +12298,68 @@
   <compound kind="class">
     <name>SickS300</name>
     <filename>classSickS300.html</filename>
-    <class kind="struct">SickS300::player_laser_data</class>
+    <class kind="struct">SickS300::laserData</class>
+    <member kind="signal">
+      <type>void</type>
+      <name>emitMessage</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a4c085156adf8ca5663f464f0327f24c0</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>closeComPort</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a143c67418d4d9504159450ab2bdf15e7</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>openComPort</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a0d66cf7965b0410d7cf30c570d8d6bda</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>readContinuousTelegram</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>ac73bdbebd937bd3c9e3258355a02e60b</anchor>
+      <arglist>(float *ranges)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>readRequestTelegram</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a5227fa429f14305be7ff8a2aad6810fd</anchor>
+      <arglist>(float *laserScannerValues)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>receiveChar</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>ab972e0b6b86fa98ee00f67ea091061af</anchor>
+      <arglist>(unsigned char *character)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>sendChar</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a481e0df3bcf7e64458bf3118c62ab75f</anchor>
+      <arglist>(unsigned char character)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setDevicePort</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a47aee5b3ac4501fb7bece6537c19ac36</anchor>
+      <arglist>(QString serialPort)</arglist>
+    </member>
     <member kind="function">
       <type>int</type>
       <name>setup</name>
       <anchorfile>classSickS300.html</anchorfile>
       <anchor>abd2c1b9e1c284b9bcb50f31dbef40d12</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>shutdown</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a2386213b2d5408493a96044df30d2c3e</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -12348,161 +12377,126 @@
       <arglist>()</arglist>
     </member>
     <member kind="typedef" protection="private">
-      <type>struct SickS300::player_laser_data</type>
-      <name>player_laser_data_t</name>
+      <type>struct SickS300::laserData</type>
+      <name>scanData</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>ad5189781cff1f0df4208fd392a13d5da</anchor>
+      <anchor>add9c6e54b110e01f20ccd964a8c71812</anchor>
       <arglist></arglist>
     </member>
-    <member kind="function" protection="private">
+    <member kind="variable" protection="private">
       <type>int</type>
-      <name>changeTermSpeed</name>
+      <name>baudRate</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>ab52ff1feb07c4234c88706deb21f287c</anchor>
-      <arglist>(int speed)</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>int</type>
-      <name>closeTerm</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a38698d0727b645af3368dec8f032ae30</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>int</type>
-      <name>init</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a1534d3f367ad20045b888625aa4145aa</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>int</type>
-      <name>openTerm</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a6d4a938bc98f34519d32061ace6cdfe3</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>ssize_t</type>
-      <name>readBytes</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a7fdcb43d00a74c2df0a4a16be8ab6418</anchor>
-      <arglist>(int fd, unsigned char *buf, size_t count)</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>int</type>
-      <name>readContinuousTelegram</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>ac73bdbebd937bd3c9e3258355a02e60b</anchor>
-      <arglist>(float *ranges)</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>int</type>
-      <name>readRequestTelegram</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a7a8d848c80ff0579aa26e83ea0ef3567</anchor>
-      <arglist>(float *ranges)</arglist>
+      <anchor>a03819b2c135ebb5a8972d49ec38d9894</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>player_laser_data_t</type>
+      <type>scanData</type>
       <name>data</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>ab840924f9e2190ea07ac28298999a999</anchor>
+      <anchor>a5caaf80f2b27e093a3b14e7a0122b4a1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>const char *</type>
-      <name>device_name</name>
+      <type>QString</type>
+      <name>laserSerialPort</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a98edbd56324b141fe513446b20e1e4e0</anchor>
+      <anchor>a92ade193ea9e73a7fd886cb03afafb52</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
-      <name>laser_fd</name>
+      <type>DirecsSerial *</type>
+      <name>serialPort</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>af1e34ccad279ef9fa25b54e75e0ab8a2</anchor>
+      <anchor>a8f065ef8fa739cb8e0ca8146e9e7ce33</anchor>
       <arglist></arglist>
     </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>port_rate</name>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned int</type>
+      <name>LASERSAMPLES</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a084ea13a18557ff099484dfe8f514d77</anchor>
+      <anchor>a486b7a5df9c7b822b0bc15ee16330e46</anchor>
       <arglist></arglist>
     </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>read_mode</name>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a4de9a8fe5418aceeb1e6db6c39b97aef</anchor>
+      <anchor>acd767431fb57b290671ffb5b29df5101</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>ac958f6663a97e1dadc2e490ab7b32c01</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>SickS300::player_laser_data</name>
-    <filename>structSickS300_1_1player__laser__data.html</filename>
+    <name>SickS300::laserData</name>
+    <filename>structSickS300_1_1laserData.html</filename>
     <member kind="variable">
       <type>unsigned int</type>
       <name>id</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a2d345f3398be7b391c5db71454ccaae9</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>a4337bca11136b9e02e135a91ab654b8c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned int *</type>
       <name>intensity</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a5a08edc5187e3dcb98b49ff2cf2581dc</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>aaba4fc733701bb65b567cac222b276e0</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned int</type>
       <name>intensity_count</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>ae5b000af00497117b1df885427967ff6</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>ae2eba312d9f7471702bcc2cf02b31554</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>float</type>
       <name>max_angle</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a0a97d12c40c527241f42dfa5ee85f2d7</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>a950b7714060aad1ede9ce5fd48f85a50</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>float</type>
       <name>max_range</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a9a1bdc9484eeb4cfb8d79e926807cb77</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>a7dc6cb9006a8a32986c969da89749a38</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>float</type>
       <name>min_angle</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a22bb3949fb9b8b6d3534d968972b5646</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>ae4522509365f77c4743cead36c26dc3c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>float *</type>
       <name>ranges</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a6571b8a9bbbe823ab980c30f2314eeaf</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>affd4cb34e0eaf350a77a9493d4615e54</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>unsigned int</type>
       <name>ranges_count</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a84484753a228d1a6c8fc03dd280ccc69</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>a016b9be61d61e3c252aaf70f3536ef48</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
       <type>float</type>
       <name>resolution</name>
-      <anchorfile>structSickS300_1_1player__laser__data.html</anchorfile>
-      <anchor>a6da486f734c96264566c85f727dc3b7a</anchor>
+      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
+      <anchor>a195aeada44249b00ecea9a30599ab3ac</anchor>
       <arglist></arglist>
     </member>
   </compound>
