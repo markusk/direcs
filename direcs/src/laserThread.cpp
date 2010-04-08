@@ -128,6 +128,7 @@ void LaserThread::run()
 				{
 					// TODO: add support for 2 lasers...
 					laserS300->readRequestTelegram(laserScannerValuesFront);
+					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
 				}
 			}
 		}
