@@ -343,6 +343,7 @@ void LaserThread::setSimulationMode(bool status)
 	{
 		numReadingsFront = laserscannerAngleFront;
 		numReadingsRear = laserscannerAngleRear;
+
 		// sim value init
 		// now, that we know, how many laserlines we have, this should be safe to call here.
 		setSimulationValues();
@@ -1303,6 +1304,7 @@ void LaserThread::setSimulationValues()
 	simulationValuesFront[537] = 2.00;		simulationValuesRear[537] = 5.00;
 	simulationValuesFront[538] = 2.00;		simulationValuesRear[538] = 5.00;
 	simulationValuesFront[539] = 2.00;		simulationValuesRear[539] = 5.00;
+/*
 	simulationValuesFront[540] = 2.00;		simulationValuesRear[540] = 5.00;
 	simulationValuesFront[541] = 2.00;		simulationValuesRear[541] = 5.00;
 	simulationValuesFront[542] = 2.00;		simulationValuesRear[542] = 5.00;
@@ -1483,5 +1485,6 @@ void LaserThread::setSimulationValues()
 	simulationValuesFront[717] = 1.00;		simulationValuesRear[717] = 6.00;
 	simulationValuesFront[718] = 1.00;		simulationValuesRear[718] = 6.00;
 	simulationValuesFront[719] = 1.00;		simulationValuesRear[719] = 6.00;
+*/
 }                                                       
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

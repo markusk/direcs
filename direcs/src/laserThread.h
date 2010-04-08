@@ -169,8 +169,8 @@ class LaserThread : public QThread
 		QString mountingLaserscannerRear; /// cane be "normal" or "flipped"
 		int laserscannerAngleFront; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees
 		int laserscannerAngleRear; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees
-		int laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
-		int laserscannerResolutionRear;  /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
+		float laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
+		float laserscannerResolutionRear;  /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
 
 		Laser *laser; // the object for the PLS or LMS laserscanner
 		SickS300 *laserS300; // the object for the S300 laserscanner
