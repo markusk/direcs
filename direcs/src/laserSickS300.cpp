@@ -243,10 +243,9 @@ int SickS300::readRequestTelegram(QVector <float> laserScannerValues)
 	const unsigned char readScandataCommand[]={0x00,0x00,0x45,0x44,0x0C,0x00,0x02,0x22,0xFF,0x07};
 
 	unsigned char scanData[LASERSAMPLES];
-	float scanResult[LASERSAMPLES];
 	unsigned char answer = 255;
 	unsigned int i = 0;
-	float angle = 0;
+	float angle = 0.0;
 
 
 	// send "get scan data" to laser
@@ -319,7 +318,7 @@ int SickS300::readRequestTelegram(QVector <float> laserScannerValues)
 		if (receiveChar(&answer) == true)
 		{
 			// emit emitMessage( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
-			// store the data
+			// store the data temporary because we get them separated by LowByte and HighByte
 			scanData[i] = answer;
 		}
 		else
@@ -359,18 +358,16 @@ int SickS300::readRequestTelegram(QVector <float> laserScannerValues)
 	emit emitMessage("OKAY");
 
 
-	// convert data from 2 x 8 Bit to 16 Bit values
+	// convert data from 2 x 16 Bit to one 16 Bit value
+	// and RETURN the distances
 	for (i=0; i<LASERSAMPLES; i++)
 	{
-		scanResult[i] = (float) ( ((scanData[2*i+1] & 0x1f)<<8) | scanData[2*i] );
-		// copy to the pointer array (parameter!) TODO: remove the temporary array!
-		laserScannerValues[i] = scanResult[i];
-
-		angle += 0.5;
-
-		if (angle <= 270.0 )
+		if (angle < 270.0)
 		{
-			emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
+			laserScannerValues[i] = (float) ( ((scanData[2*i+1] & 0x1f)<<8) | scanData[2*i] );
+			angle += 0.5;
+			// qDebug("Copied: no. %d from %d values at %f°. Distance %f cm", i, LASERSAMPLES, angle, laserScannerValues[i]);
+			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 		}
 	}
 
