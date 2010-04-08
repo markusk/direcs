@@ -531,7 +531,7 @@ void ConsoleGui::showPreferredDirection(QString direction)
 }
 
 
-void ConsoleGui::refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags)
+void ConsoleGui::refreshLaserViewFront(QVector <float> laserScannerValues, QVector <int> laserScannerFlags)
 {
 	// TODO:show value/state in console
 	Q_UNUSED(laserScannerValues);
@@ -539,7 +539,7 @@ void ConsoleGui::refreshLaserViewFront(float *laserScannerValues, int *laserScan
 }
 
 
-void ConsoleGui::refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags)
+void ConsoleGui::refreshLaserViewRear(QVector <float> laserScannerValues, QVector <int> laserScannerFlags)
 {
 	// TODO:show value/state in console
 	Q_UNUSED(laserScannerValues);

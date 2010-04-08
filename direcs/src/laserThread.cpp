@@ -127,7 +127,7 @@ void LaserThread::run()
 				if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
 				{
 					// TODO: add support for 2 lasers...
-					laserS300->readRequestTelegram(&laserScannerValuesFront[0]);
+					laserS300->readRequestTelegram(laserScannerValuesFront);
 				}
 			}
 		}

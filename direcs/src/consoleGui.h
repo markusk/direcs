@@ -101,12 +101,12 @@ class ConsoleGui : public QObject
 		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/
-		void refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags);
+		void refreshLaserViewFront(QVector <float> laserScannerValues, QVector <int> laserScannerFlags);
 		
 		/**
 		Refreshes the view of the lines from the rear laser scanner.
 		*/
-		void refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags);
+		void refreshLaserViewRear(QVector <float> laserScannerValues, QVector <int> laserScannerFlags);
 		
 		/**
 		Shows the angles of the free area where to drive in lables.
