@@ -61,6 +61,8 @@ SickS300::SickS300()
 
 SickS300::~SickS300()
 {
+//	QTime x;
+//	qDebug("S300 shut down @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 	emit emitMessage("Shutting laserscanner SICK S300 down");
 	closeComPort();
 	emit emitMessage("OKAY");
@@ -246,8 +248,11 @@ int SickS300::readRequestTelegram()
 	float angle = 0.0;
 
 
+//	QTime x;
+//	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
+
 	// send "get scan data" to laser
-	emit emitMessage("Sending 'get scan data'...");
+	// emit emitMessage("Sending 'get scan data'...");
 	for (i=0; i<sizeof(readScandataCommand); i++)
 	{
 		if (sendChar(readScandataCommand[i]) == false)
@@ -256,11 +261,11 @@ int SickS300::readRequestTelegram()
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	//emit emitMessage("OKAY");
 
 
 	// Reading answer, 4 byte (00 00 00 00)
-	emit emitMessage("Receiving answer...");
+	//emit emitMessage("Receiving answer...");
 	for (i=0; i<4; i++)
 	{
 		if (receiveChar(&answer) == true)
@@ -269,7 +274,7 @@ int SickS300::readRequestTelegram()
 
 			if (answer != 0)
 			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
+				emit emitMessage(QString("ERROR: answer byte no. %1 was 0x%2 instead 0x00").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
 				return -1;
 			}
 		}
@@ -280,11 +285,11 @@ int SickS300::readRequestTelegram()
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	//emit emitMessage("OKAY");
 
 
 	// reading repeated header, 6 byte (0C 00 02 22 FF 07)
-	emit emitMessage("Reading repeated header...");
+	//emit emitMessage("Reading repeated header...");
 	for (i=0; i<6; i++)
 	{
 		if (receiveChar(&answer) == true)
@@ -306,11 +311,11 @@ int SickS300::readRequestTelegram()
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	//emit emitMessage("OKAY");
 
 
 	// Reading scan data (the distances!), LASERSAMPLES bytes (@sa laserSickS300.h)
-	emit emitMessage("Now reading scan data (the distances)...");
+	//emit emitMessage("Now reading scan data (the distances)...");
 	for (i=0; i<LASERSAMPLES; i++)
 	{
 		if (receiveChar(&answer) == true)
@@ -326,16 +331,16 @@ int SickS300::readRequestTelegram()
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	//emit emitMessage("OKAY");
 
 
 	// Reading CRC, 4 bytes
-	emit emitMessage("Reading CRC...");
+	//emit emitMessage("Reading CRC...");
 	for (i=0; i<4; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
-			emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
 /*
 			// FIXME: check CRC !!
@@ -353,7 +358,7 @@ int SickS300::readRequestTelegram()
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	//emit emitMessage("OKAY");
 
 
 	// convert data from 2 x 16 Bit to one 16 Bit value
@@ -369,6 +374,7 @@ int SickS300::readRequestTelegram()
 		}
 	}
 
+//	qDebug("S300 scan end @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 	return 0;
 }
 

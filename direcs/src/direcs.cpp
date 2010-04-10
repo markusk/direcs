@@ -231,7 +231,12 @@ void Direcs::init()
 	// let the splash screen also show laser init messages
 	//--------------------------------------------------------------------------
 	connect(laserThread, SIGNAL(message(QString)), this, SLOT(showSplashMessage(QString)));
-	
+
+	//--------------------------------------------------------------------------
+	// let the GUI also show laser init messages
+	//--------------------------------------------------------------------------
+	connect(laserThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+
 	//--------------------------------------------------------------------------
 	// let some other classes know if we are in the console mode
 	//--------------------------------------------------------------------------
