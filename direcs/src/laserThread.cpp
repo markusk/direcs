@@ -127,7 +127,8 @@ void LaserThread::run()
 				if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
 				{
 					// TODO: add support for 2 lasers...
-					laserS300->readRequestTelegram(laserScannerValuesFront);
+					laserS300->readRequestTelegram();
+					getAndStoreLaserValuesFront();
 					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
 				}
 			}
@@ -201,7 +202,39 @@ void LaserThread::getAndStoreLaserValuesFront()
 	{
 		if (laserscannerTypeFront == S300)
 		{
-			// TODO: add S300 stuff
+			if (mountingLaserscannerFront == "normal")
+			{
+				// /get the data from 0° to 270° (left to right)
+				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
+				for (int angleIndex=0; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++)
+				{
+					// get value from laser
+					// store the value in an array in this thread
+					laserScannerValuesFront[angleIndex] = laserS300->getDistance(angleIndex);
+
+					// send value over the network
+					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( laserScannerValuesFront[angleIndex] ) );
+				}
+			}
+			else
+			{
+				// flip the data, due to a flipped mounting of the hardware!
+				//
+				// get the data from 0° to 270° (left to right)
+				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
+				// 'flip' will be increased every step - 1, so the data are stored from 270° to 0°
+				for (int angleIndex=0, flip=(laserscannerAngleFront/laserscannerResolutionFront)-1; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++, flip--)
+				{
+					// get value from laser
+					// store the value in an array in this thread
+					laserScannerValuesFront[flip] = laserS300->getDistance(angleIndex);
+
+					// send value over the network
+					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( laserScannerValuesFront[angleIndex] ) );
+				}
+			}
 		}
 	}
 }
