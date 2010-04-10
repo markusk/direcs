@@ -381,5 +381,6 @@ float SickS300::getDistance(int angleIndex)
 		return 0;
 	}
 
-	return distances[angleIndex];
+	// here we convert from cm to m (meters)!!
+	return (distances[angleIndex] / 100);
 }
