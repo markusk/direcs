@@ -2529,7 +2529,7 @@ void Direcs::readSettings()
 								else
 								{
 									laserThread->setResolution(LASER1, floatValue);
-									// FIXME: gui->setLaserscannerAngle(LASER1, floatValue);
+									gui->setLaserscannerResolution(LASER1, floatValue);
 									emit message(QString("Front laser scanner resolution set to <b>%1</b>.").arg(floatValue));
 								}
 								break;
@@ -2635,7 +2635,7 @@ void Direcs::readSettings()
 								else
 								{
 									laserThread->setResolution(LASER2, floatValue);
-									// FIXME: gui->setLaserscannerAngle(LASER2, floatValue);
+									gui->setLaserscannerResolution(LASER2, floatValue);
 									emit message(QString("Rear laser scanner resolution set to <b>%1</b>.").arg(floatValue));
 								}
 								break;

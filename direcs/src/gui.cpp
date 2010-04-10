@@ -34,6 +34,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	laserYPos = 0; // correct value is set in the initLaserView()!!
 	laserscannerAngleFront = 0;
 	laserscannerAngleRear = 0;
+	laserscannerResolutionFront = 0;
+	laserscannerResolutionRear = 0;
 	mLargestFreeAreaStartFront = 0;
 	mLargestFreeAreaEndFront = 0;
 	mLargestFreeAreaStartRear = 0;
@@ -1977,11 +1979,11 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
-	// /get the data from 180Â° to 0Â° (right to left!!)
+	// /get the data from 180° to 0° (right to left!!)
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
 		// get value from laser and
-		// draw the lines at every 1Â°
+		// draw the lines at every 1°
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
 
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
@@ -2305,6 +2307,24 @@ void Gui::setLaserscannerAngle(short int laserscanner, int angle)
 		}
 
 		qDebug("laser number not yet supported  (Gui::setLaserscannerAngle");
+}
+
+
+void Gui::setLaserscannerResolution(short int laserscanner, float resolution)
+{
+	switch (laserscanner)
+	{
+	case LASER1:
+		laserscannerResolutionFront = angle;
+		return;
+		break;
+	case LASER2:
+		laserscannerResolutionRear = angle;
+		return;
+		break;
+	}
+
+	qDebug("laser number not yet supported  (Gui::setLaserscannerAngle");
 }
 
 

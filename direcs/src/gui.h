@@ -257,6 +257,13 @@ class Gui : public QMainWindow
 		void setLaserscannerAngle(short int laserscanner, int angle);
 
 		/**
+		Gets the resolution of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 0.5 or 1.0 degrees)
+		@param laserScanner can be LASER1 or LASER2
+		@param angle in degrees
+		*/
+		void setLaserscannerResolution(short int laserscanner, float resolution);
+
+		/**
 		Zoom into the graphicsView/scene, if the mouse wheel was used.
 		*/
 		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
@@ -469,6 +476,8 @@ class Gui : public QMainWindow
 		QColor colorGraphicsSceneBackground;
 		int laserscannerAngleFront; /// this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
 		int laserscannerAngleRear; /// this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
+		int laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. @sa laserThread
+		int laserscannerResolutionRear; /// this values holds the resolution of the laserscanner. @sa laserThread
 		int mLargestFreeAreaStartFront; /// this stores the free area angle from the front laser. Got it from @sa showLaserFrontAngles()
 		int mLargestFreeAreaEndFront;   /// this stores the free area angle from the front laser. Got it from @sa showLaserFrontAngles()
 		int mLargestFreeAreaStartRear;  /// this stores the free area angle from the rear  laser. Got it from @sa showLaserFrontAngles()
