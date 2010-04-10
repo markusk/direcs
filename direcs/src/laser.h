@@ -347,6 +347,10 @@ class Laser : public QObject
 		int direcs_laser_run(void);
 		void shutdown_laser(int x);
 		int getLaserNumReadings(int laser);
+
+		/**
+		  @returns a measured distance in meter (m). The measured value is converted from cm to m here.
+		  */
 		float getLaserDistance(int laser, int angle);
 		void setDevicePort(short int laser, QString serialPort);
 		double direcs_radians_to_degrees(double theta);
