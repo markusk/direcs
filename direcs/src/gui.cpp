@@ -1926,6 +1926,7 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 {
 	qreal x = 0.0;
 	qreal y = 0.0;
+	/*
 	int r = 0;
 	qreal xKart;
 	qreal yKart;
@@ -1934,6 +1935,7 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	static qreal widthLineFrontPosX2 = 0.0;
 	static qreal widthLineFrontPosY1 = 0.0;
 	static qreal widthLineFrontPosY2 = 0.0;
+	*/
 	int laserLineLength = 0;
 	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
 
@@ -2315,16 +2317,16 @@ void Gui::setLaserscannerResolution(short int laserscanner, float resolution)
 	switch (laserscanner)
 	{
 	case LASER1:
-		laserscannerResolutionFront = angle;
+		laserscannerResolutionFront = resolution;
 		return;
 		break;
 	case LASER2:
-		laserscannerResolutionRear = angle;
+		laserscannerResolutionRear = resolution;
 		return;
 		break;
 	}
 
-	qDebug("laser number not yet supported  (Gui::setLaserscannerAngle");
+	qDebug("laser number not yet supported  (Gui::setLaserscannerResolution");
 }
 
 
