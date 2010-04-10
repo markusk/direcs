@@ -2692,15 +2692,15 @@
       <type>void</type>
       <name>refreshLaserViewFront</name>
       <anchorfile>classConsoleGui.html</anchorfile>
-      <anchor>af286f240fe0a86360c45b1125814e4be</anchor>
-      <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
+      <anchor>a1267059759b75efef8b6552be3b3101f</anchor>
+      <arglist>(QList&lt; float &gt; laserScannerValues, QList&lt; int &gt; laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>refreshLaserViewRear</name>
       <anchorfile>classConsoleGui.html</anchorfile>
-      <anchor>a705c7c72ce00ef67a56ede98ae1a6848</anchor>
-      <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
+      <anchor>ad6f45c769e700d31693f3eb4507f7b26</anchor>
+      <arglist>(QList&lt; float &gt; laserScannerValues, QList&lt; int &gt; laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4861,8 +4861,8 @@
       <type>void</type>
       <name>refreshLaserViewFront</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ac3a7ce03a910480a27fe4bfaf78586fb</anchor>
-      <arglist>(QVector&lt; float &gt; laserScannerValues, QVector&lt; int &gt; laserScannerFlags)</arglist>
+      <anchor>a7242f4a80df770c8532e20c9eeb1242f</anchor>
+      <arglist>(QList&lt; float &gt; laserScannerValues, QList&lt; int &gt; laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4875,8 +4875,8 @@
       <type>void</type>
       <name>refreshLaserViewRear</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a7da4f87833be2555e662274bcae0d294</anchor>
-      <arglist>(QVector&lt; float &gt; laserScannerValues, QVector&lt; int &gt; laserScannerFlags)</arglist>
+      <anchor>aea1307f8791f57ff3d54d8be3c466bf5</anchor>
+      <arglist>(QList&lt; float &gt; laserScannerValues, QList&lt; int &gt; laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -8385,15 +8385,15 @@
       <type>void</type>
       <name>laserDataCompleteFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>aa721e0b020627e9aa4ce3e75a58ccb97</anchor>
-      <arglist>(QVector&lt; float &gt; laserScannerValuesFront, QVector&lt; int &gt; laserScannerFlagsFront)</arglist>
+      <anchor>a9db22a5a3e58fa0d4c7166314e3d69bb</anchor>
+      <arglist>(QList&lt; float &gt; laserScannerValuesFront, QList&lt; int &gt; laserScannerFlagsFront)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
       <name>laserDataCompleteRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>acaa2b3f32ba130453abb174536dff6cc</anchor>
-      <arglist>(QVector&lt; float &gt; laserScannerValuesRear, QVector&lt; int &gt; laserScannerFlagsRear)</arglist>
+      <anchor>ade56d1c372501bdbb89ca9739ddd4cfd</anchor>
+      <arglist>(QList&lt; float &gt; laserScannerValuesRear, QList&lt; int &gt; laserScannerFlagsRear)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -8564,17 +8564,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QVector&lt; int &gt;</type>
+      <type>QList&lt; int &gt;</type>
       <name>laserScannerFlagsFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a68fb1f05ba3598d24268cce3410d232e</anchor>
+      <anchor>a9c570547b1e01d35a9958721df4e28c6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QVector&lt; int &gt;</type>
+      <type>QList&lt; int &gt;</type>
       <name>laserScannerFlagsRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a54c0ee0c1aea1a74050a0d1b1a7c7390</anchor>
+      <anchor>a5ace8f63b6716bc90cdfe5b233803b70</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -8620,17 +8620,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QVector&lt; float &gt;</type>
+      <type>QList&lt; float &gt;</type>
       <name>laserScannerValuesFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>acd62321058059150528e746e2ae10e57</anchor>
+      <anchor>ab298e805687be36b2f2211e197c9205b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QVector&lt; float &gt;</type>
+      <type>QList&lt; float &gt;</type>
       <name>laserScannerValuesRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a62e6aef3144246f227b349ce37c00d1a</anchor>
+      <anchor>a46146ce4efee22487d294c12094dfeb5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -8669,17 +8669,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QVector&lt; float &gt;</type>
+      <type>QList&lt; float &gt;</type>
       <name>simulationValuesFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ab655ad0c947c4a9e18534bd1b799fdb2</anchor>
+      <anchor>ab3b030ee467a0226369ba1adb35d47ab</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QVector&lt; float &gt;</type>
+      <type>QList&lt; float &gt;</type>
       <name>simulationValuesRear</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a4c97f929650dbba654e21ab284013287</anchor>
+      <anchor>aba89857549d8a61be9d43a1e5ceeb819</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -12331,8 +12331,8 @@
       <type>int</type>
       <name>readRequestTelegram</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a5227fa429f14305be7ff8a2aad6810fd</anchor>
-      <arglist>(float *laserScannerValues)</arglist>
+      <anchor>a4c948b235b2cf93c2781ce40510de8fb</anchor>
+      <arglist>(QList&lt; float &gt; laserScannerValues)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>

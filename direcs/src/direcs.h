@@ -50,6 +50,7 @@
 #include <QSocketNotifier>
 #include <QtGui>
 #include <QSplashScreen>
+#include <QMetaType>
 //-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
 #include <QtCore/QCoreApplication>

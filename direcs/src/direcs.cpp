@@ -731,6 +731,9 @@ void Direcs::init()
 			// connect laserThread signal to "dataReceived"
 			// (Whenever data were received, the data are shown in the GUI)
 			//----------------------------------------------------------------------------
+			qRegisterMetaType < QList <float> > ("QList <float>");
+			qRegisterMetaType < QList <int> > ("QList <int>");
+
 			connect(laserThread, SIGNAL( laserDataCompleteFront(QList <float>, QList <int>) ), gui, SLOT( refreshLaserViewFront(QList <float>, QList <int>) ));
 			connect(laserThread, SIGNAL( laserDataCompleteRear(QList <float>, QList <int>) ), gui, SLOT( refreshLaserViewRear(QList <float>, QList <int>) ));
 		}
