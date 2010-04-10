@@ -55,12 +55,10 @@ class SickS300 : public QObject
 		int setup();
 
 		/**
-		  */
-		int readRequestTelegram(QList <float> laserScannerValues);
-
-		/**
-		  */
-		int readContinuousTelegram(float *ranges);
+		Reads a telegram from the laser scanner in the request mode.
+		@return 0 if things go well, and -1 otherwise.
+		*/
+		int readRequestTelegram();
 
 		/**
 		  Sets the serial port. Has to be set before using @sa openComPort. On POSIX systems this looks like "/dev/tty4" or "/dev/ttyUSB0".
@@ -93,6 +91,13 @@ class SickS300 : public QObject
 		*/
 		bool receiveChar(unsigned char *character);
 
+		/**
+		Returns the measured distance of a specific laser angle index.
+		@param angleIndex is the number of the angle. Since we have a half degree resolution, an angeleIndex of 0 means 0.0 deg, 1 means 0.5, 2 means 1.0 degrees, and so on.
+		@returns the distance
+		*/
+		float getDistance(int angleIndex);
+
 
 	signals:
 		/**
@@ -106,34 +111,12 @@ class SickS300 : public QObject
 		DirecsSerial *serialPort;
 		int baudRate;
 		QString laserSerialPort; /// the path to the serial device. e.g. /dev/ttyUSB0
-		/** @brief Data: scan
-		The basic laser data packet.
-		*/
-		typedef struct laserData
-		{
-			/** Start and end angles for the laser scan [rad].  */
-			float min_angle;
-			/** Start and end angles for the laser scan [rad].  */
-			float max_angle;
-			/** Angular resolution [rad].  */
-			float resolution;
-			/** Maximum range [m]. */
-			float max_range;
-			/** Number of range readings.  */
-			unsigned int ranges_count;
-			/** Range readings [cm]. */
-			float *ranges;
-			/** Number of intensity readings */
-			unsigned int intensity_count;
-			/** Intensity readings. */
-			unsigned int *intensity;
-			/** A unique, increasing, ID for the scan */
-			unsigned int id;
-		} scanData;
-
-		scanData data; /// the scan data, including the measuread lengths!
 
 		static const unsigned int LASERSAMPLES = 1080;
+		unsigned char scanData[LASERSAMPLES];
+
+		float distances[540]; // 540 is the maximum of this laserscanner, because we have 270 degrees at a resolution of 0.5
+
 		static const bool ON  = true;   /// For laser is "ON"
 		static const bool OFF = false;  /// For laser is "OFF"
 };

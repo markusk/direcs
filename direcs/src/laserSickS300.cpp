@@ -228,7 +228,7 @@ int SickS300::setup()
 }
 
 
-int SickS300::readRequestTelegram(QList <float> laserScannerValues)
+int SickS300::readRequestTelegram()
 {
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
 	// 00 00
@@ -241,8 +241,6 @@ int SickS300::readRequestTelegram(QList <float> laserScannerValues)
 	// FF		coordination flag, always 0xFF
 	// 07		device address is always 0x07, when we have only one S300
 	const unsigned char readScandataCommand[]={0x00,0x00,0x45,0x44,0x0C,0x00,0x02,0x22,0xFF,0x07};
-
-	unsigned char scanData[LASERSAMPLES];
 	unsigned char answer = 255;
 	unsigned int i = 0;
 	float angle = 0.0;
@@ -364,12 +362,24 @@ int SickS300::readRequestTelegram(QList <float> laserScannerValues)
 	{
 		if (angle < 270.0)
 		{
-			laserScannerValues[i] = (float) ( ((scanData[2*i+1] & 0x1f)<<8) | scanData[2*i] );
-			angle += 0.5;
-			// qDebug("Copied: no. %d from %d values at %f°. Distance %f cm", i, LASERSAMPLES, angle, laserScannerValues[i]);
+			distances[i] = (float) ( ((scanData[2*i+1] & 0x1f)<<8) | scanData[2*i] );
+			// qDebug("Copied: no. %d from %d values at %f°. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
 			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
+			angle += 0.5;
 		}
 	}
 
 	return 0;
+}
+
+
+float SickS300::getDistance(int angleIndex)
+{
+	if ( (angleIndex<0) || (angleIndex>(270*2)) )
+	{
+		emit emitMessage(QString("ERROR: angle index with %1 out of range (0 - 549) (SickS300::getDistance)").arg(angleIndex));
+		return 0;
+	}
+
+	return distances[angleIndex];
 }
