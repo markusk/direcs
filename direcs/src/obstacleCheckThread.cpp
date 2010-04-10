@@ -220,7 +220,7 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
-		for (int angle=0; angle < laserThread->getAngle(LASER1); angle++)
+		for (int angle=0; angle < (laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)); angle++)
 		{
 			// check only lines with no obstacles (FREEWAY)!
 			if (laserThread->getFlag(LASER1, angle) == FREEWAY)
@@ -414,7 +414,7 @@ void ObstacleCheckThread::run()
 		// If obstacle in front of the laser scanner,
 		// set a flag at the corresponding angles
 		//---------------------------------------------------------
-		for (int angle=0; angle < laserThread->getAngle(LASER2); angle++)
+		for (int angle=0; angle < (laserThread->getAngle(LASER2) / laserThread->getResolution(LASER2)); angle++)
 		{
 			// if obstacle detected
 			if ( ((int) (laserThread->getValue(LASER2, angle)*100)) < minObstacleDistanceLaserScanner)
