@@ -299,21 +299,22 @@ void LaserThread::getAndStoreLaserValuesRear()
 
 float LaserThread::getValue(short int laserScanner, int angle)
 {
-	// These values were NOT converted at any point in this method!
-	
-	if ((angle < 0) || (laserScanner==LASER1 &&  (angle > laserscannerAngleFront)) || (laserScanner==LASER2 &&  (angle > laserscannerAngleRear)) )
-	{
-		qDebug("laser angle out of alowed range (LaserThread::getLaserScannerValue)");
-		return 0;
-	}
-	
-	
 	switch(laserScanner)
 	{
 		case LASER1:
+			if ( (angle < 0) || ((angle >= (laserscannerAngleFront/laserscannerResolutionFront) ) ) )
+			{
+				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getValue).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
+				return 0;
+			}
 			return laserScannerValuesFront[angle];
 			break;
 		case LASER2:
+			if ( (angle < 0) || ((angle >= (laserscannerAngleRear/laserscannerResolutionRear) ) ) )
+			{
+				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getValue).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
+				return 0;
+			}
 			return laserScannerValuesRear[angle];
 			break;
 	}
@@ -324,19 +325,22 @@ float LaserThread::getValue(short int laserScanner, int angle)
 
 int LaserThread::getFlag(short int laserScanner, int angle)
 {
-	if ((angle < 0) || ((laserScanner==LASER1) &&  (angle > laserscannerAngleFront)) || ((laserScanner==LASER2) &&  (angle > laserscannerAngleRear)) )
-	{
-		qDebug("laser angle out of alowed range (LaserThread::getLaserScannerFlag)");
-		return 0;
-	}
-
-	
 	switch(laserScanner)
 	{
 		case LASER1:
+			if ( (angle < 0) || ((angle >= (laserscannerAngleFront/laserscannerResolutionFront) ) ) )
+			{
+				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
+				return 0;
+			}
 			return laserScannerFlagsFront[angle];
 			break;
 		case LASER2:
+			if ( (angle < 0) || ((angle >= (laserscannerAngleRear/laserscannerResolutionRear) ) ) )
+			{
+				qDebug("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
+				return 0;
+			}
 			return laserScannerFlagsRear[angle];
 			break;
 	}
@@ -347,19 +351,22 @@ int LaserThread::getFlag(short int laserScanner, int angle)
 
 void LaserThread::setFlag(short int laserScanner, int angle, int flag)
 {
-	if ((angle < 0) || (laserScanner==LASER1 &&  (angle > laserscannerAngleFront)) || (laserScanner==LASER2 &&  (angle > laserscannerAngleRear)) )
-	{
-		qDebug("laser angle out of alowed range (LaserThread::setLaserScannerFlag)");
-		return;
-	}
-
-	
 	switch(laserScanner)
 	{
 		case LASER1:
+			if ( (angle < 0) || ((angle >= (laserscannerAngleFront/laserscannerResolutionFront) ) ) )
+			{
+//				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::setFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
+				break;
+			}
 			laserScannerFlagsFront[angle] = flag;
 			break;
 		case LASER2:
+			if ( (angle < 0) || ((angle >= (laserscannerAngleRear/laserscannerResolutionRear) ) ) )
+			{
+//				qDebug("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::setFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
+				break;
+			}
 			laserScannerFlagsRear[angle] = flag;
 			break;
 	}
@@ -436,37 +443,52 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 	switch (laserScanner)
 	{
 	case LASER1:
+		if (laserscannerTypeFront == NONE)
+		{
+			return;
+		}
+
 		if (laserscannerTypeFront == PLS)
 		{
 			// for laser.cpp:
 			laser->setDevicePort(laserScanner, serialPort);
+			return;
 		}
-		else
+
+		if (laserscannerTypeFront == S300)
 		{
-			if (laserscannerTypeFront == S300)
-			{
-				laserS300->setDevicePort(serialPort);
-			}
-			else
-			{
-				qDebug("laser type not supported (LaserThreadd::setSerialPort");
-			}
+			laserS300->setDevicePort(serialPort);
+			return;
 		}
+
+		qDebug("Laser1 type $d not supported (LaserThreadd::setSerialPort", laserscannerTypeFront);
+		return;
 		break;
 	case LASER2:
+		if (laserscannerTypeFront == NONE)
+		{
+			return;
+		}
+
 		if (laserscannerTypeRear == PLS)
 		{
 			// for laser.cpp:
 			laser->setDevicePort(laserScanner, serialPort);
+			return;
 		}
-		else
+
+		if (laserscannerTypeFront == S300)
 		{
 			// TODO: support two S300 lasers
-			qDebug("Only one laser S300 currently supported! (LaserThreadd::setSerialPort");
+			qDebug("Laser2 for S300 not yet supported (LaserThreadd::setSerialPort");
+			return;
 		}
+
+		qDebug("Laser2 type $d not supported (LaserThreadd::setSerialPort", laserscannerTypeRear);
+		return;
 		break;
 	default:
-		qDebug("laser number not yet supported (LaserThreadd::setSerialPort");
+		qDebug("Laser number $d not yet supported (LaserThreadd::setSerialPort", laserScanner);
 		break;
 	}
 }
