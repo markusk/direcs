@@ -1858,7 +1858,7 @@ void Gui::initLaserView()
 	// (Rotate laser line counterclockwise by the half of the laserAngle)
 	for (int i=0, angle = -(laserscannerAngleRear/2); i<laserLineListRear->size(); i++, angle++)
 	{
-		laserLineListRear->at(i)->rotate(angle);
+		laserLineListRear->at(i)->rotate(angle*laserscannerResolutionRear);
 	}
 
 
@@ -1873,7 +1873,7 @@ void Gui::initLaserView()
 	// (Rotate laser line counterclockwise by 180 degrees and further by the half of the laserAngle)
 	for (int i=0, angle = -(180 + (laserscannerAngleFront/2)); i<laserLineListFront->size(); i++, angle++)
 	{
-		laserLineListFront->at(i)->rotate(angle);
+		laserLineListFront->at(i)->rotate(angle*laserscannerResolutionFront);
 	}
 
 
@@ -2418,9 +2418,9 @@ void Gui::createLaserScannerObjects()
 	//-------------------------------------
 	// create the FRONT laser line list
 	//-------------------------------------
-	// create all laser lines(e.g.180 or 270, one for each degree)
+	// create all laser lines(e.g.180 or 270, one for each degree or half-degree)
 	// the rotation will be done in the initLaserView() !
-	for (int i=0; i<laserscannerAngleFront; i++)
+	for (int i=0; i<(laserscannerAngleFront/laserscannerResolutionFront); i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
@@ -2446,7 +2446,7 @@ void Gui::createLaserScannerObjects()
 	//-------------------------------------
 	// create all laser lines(e.g.180 or 270, one for each degree)
 	// the rotation will be done in the initLaserView() !
-	for (int i=0; i<laserscannerAngleRear; i++)
+	for (int i=0; i<(laserscannerAngleRear/laserscannerResolutionRear); i++)
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
