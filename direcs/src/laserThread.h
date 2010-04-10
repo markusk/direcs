@@ -176,7 +176,7 @@ class LaserThread : public QThread
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 150; // Default: 150 ms
+		static const unsigned long THREADSLEEPTIME = 1000; // Default: 150 ms
 		
 		// FIXME: put this to the ini-file or so. Fix also: read_parameters() in laser.cpp !!
 		static const unsigned char LMS = 0; // this is temporary
@@ -186,8 +186,8 @@ class LaserThread : public QThread
 		static const unsigned char S300 = 4; // this is temporary
 		static const unsigned char NONE = 255;
 
-		QList <float> laserScannerValuesFront; /// The measured distances from the front laser scanner.
-		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner.
+		QList <float> laserScannerValuesFront; /// The measured distances from the front laser scanner. This method also flippes the values when the laser is mounted flipped!
+		QList <float> laserScannerValuesRear;  /// The measured distances from the rear laser scanner. This method also flippes the values when the laser is mounted flipped!
 
 		QList <int> laserScannerFlagsFront;  /// Some flags for each front laser line (like "free way", "obstacle" etc.)
 		QList <int> laserScannerFlagsRear;   /// Some flags for each rear laser line (like "free way", "obstacle" etc.)
