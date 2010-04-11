@@ -127,9 +127,16 @@ void LaserThread::run()
 				if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
 				{
 					// TODO: add support for 2 lasers...
-					laserS300->readRequestTelegram();
-					getAndStoreLaserValuesFront();
-					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+					if (laserS300->readRequestTelegram() != -1)
+					{
+						getAndStoreLaserValuesFront();
+						emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+					}
+					else
+					{
+						stopped = true;
+						qDebug("ERROR reading data from S300. Thread stopped! :-(");
+					}
 				}
 			}
 		}
@@ -204,7 +211,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 		{
 			if (mountingLaserscannerFront == "normal")
 			{
-				// /get the data from 0° to 270° (left to right)
+				// /get the data from 0ï¿½ to 270ï¿½ (left to right)
 				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
 				for (int angleIndex=0; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++)
 				{
@@ -221,9 +228,9 @@ void LaserThread::getAndStoreLaserValuesFront()
 			{
 				// flip the data, due to a flipped mounting of the hardware!
 				//
-				// get the data from 0° to 270° (left to right)
+				// get the data from 0ï¿½ to 270ï¿½ (left to right)
 				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
-				// 'flip' will be increased every step - 1, so the data are stored from 270° to 0°
+				// 'flip' will be increased every step - 1, so the data are stored from 270ï¿½ to 0ï¿½
 				for (int angleIndex=0, flip=(laserscannerAngleFront/laserscannerResolutionFront)-1; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++, flip--)
 				{
 					// get value from laser
@@ -330,7 +337,7 @@ int LaserThread::getFlag(short int laserScanner, int angle)
 		case LASER1:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleFront/laserscannerResolutionFront) ) ) )
 			{
-				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
+//				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
 				return 0;
 			}
 			return laserScannerFlagsFront[angle];
@@ -338,7 +345,7 @@ int LaserThread::getFlag(short int laserScanner, int angle)
 		case LASER2:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleRear/laserscannerResolutionRear) ) ) )
 			{
-				qDebug("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
+//				qDebug("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
 				return 0;
 			}
 			return laserScannerFlagsRear[angle];
@@ -461,7 +468,7 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 			return;
 		}
 
-		qDebug("Laser1 type $d not supported (LaserThreadd::setSerialPort", laserscannerTypeFront);
+		qDebug("Laser1 type %d not supported (LaserThreadd::setSerialPort", laserscannerTypeFront);
 		return;
 		break;
 	case LASER2:
@@ -484,11 +491,11 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 			return;
 		}
 
-		qDebug("Laser2 type $d not supported (LaserThreadd::setSerialPort", laserscannerTypeRear);
+		qDebug("Laser2 type %d not supported (LaserThreadd::setSerialPort", laserscannerTypeRear);
 		return;
 		break;
 	default:
-		qDebug("Laser number $d not yet supported (LaserThreadd::setSerialPort", laserScanner);
+		qDebug("Laser number %d not yet supported (LaserThreadd::setSerialPort", laserScanner);
 		break;
 	}
 }
