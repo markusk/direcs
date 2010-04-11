@@ -251,6 +251,9 @@ int SickS300::readRequestTelegram()
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
+	// emit emitMessage("Clearing the serial input buffer");
+	serialPort->purgeRx();
+
 	// send "get scan data" to laser
 	// emit emitMessage("Sending 'get scan data'...");
 	for (i=0; i<sizeof(readScandataCommand); i++)
@@ -368,13 +371,164 @@ int SickS300::readRequestTelegram()
 		if (angle < 270.0)
 		{
 			distances[i] = (float) ( ((scanData[2*i+1] & 0x1f)<<8) | scanData[2*i] );
-			// qDebug("Copied: no. %d from %d values at %f°. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
+			// qDebug("Copied: no. %d from %d values at %fï¿½. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
 			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 			angle += 0.5;
 		}
 	}
 
 //	qDebug("S300 scan end @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
+	return 0;
+}
+
+
+int SickS300::readUnknownTelegram()
+{
+	// see also SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
+	// 00 00
+	// 45		0x45 means fetch telegram (request data)
+	// 44		0x44 means data typ: block access
+	// 0B		destination address, block 11 (0x0B) > > > > > > > I don't know what this block means! I logged it with a serial port logger!
+	// 00		source address
+	// 00 7B	size (this one was measured with a serial port analyser, using the original SICK software CDS.
+	// FF		coordination flag, always 0xFF
+	// 07		device address is always 0x07, when we have only one S300
+	const unsigned char unknownCommand[]={0x00,0x00,0x45,0x44,0x0B,0x00,0x00,0x7B,0xFF,0x07};
+	unsigned char answer = 255;
+	unsigned int i = 0;
+
+
+//	QTime x;
+//	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
+
+	// emit emitMessage("Clearing the serial input buffer");
+	serialPort->purgeRx();
+
+	// send "read block 0B" to laser
+	 emit emitMessage("Sending 'read block 0B'...");
+	for (i=0; i<sizeof(unknownCommand); i++)
+	{
+		if (sendChar(unknownCommand[i]) == false)
+		{
+			emit emitMessage( QString("ERROR sending byte no. %1.").arg(i+1) );
+			return -1;
+		}
+	}
+	emit emitMessage("OKAY");
+
+
+	// Reading answer, 4 byte (00 00 00 00)
+	emit emitMessage("Receiving answer...");
+	for (i=0; i<4; i++)
+	{
+		if (receiveChar(&answer) == true)
+		{
+			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+
+			if (answer != 0)
+			{
+				emit emitMessage(QString("ERROR: answer byte no. %1 was 0x%2 instead 0x00").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+				return -1;
+			}
+		}
+		else
+		{
+			// error
+			emit emitMessage(QString("ERROR receiving 00 00 00 00 answer at byte no. %1").arg(i+1));
+			return -1;
+		}
+	}
+	emit emitMessage("OKAY");
+
+
+	// reading repeated header, 6 byte (0B 00 00 7B FF 07)
+	emit emitMessage("Reading repeated header...");
+	for (i=0; i<6; i++)
+	{
+		if (receiveChar(&answer) == true)
+		{
+			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+
+/*
+			if (answer != 0)
+			{
+				emit emitMessage(QString("ERROR: answer byte no. %1 was not XXXX").arg(i+1)); // FIXME: check the repeated header
+				return -1;
+			}
+*/
+		}
+		else
+		{
+			// error
+			emit emitMessage(QString("ERROR receiving repeated header at byte no. %1").arg(i+1));
+			return -1;
+		}
+	}
+	emit emitMessage("OKAY");
+
+
+	// Reading resulting data (don't know, what they mead!)
+	emit emitMessage("Now reading resulting unknown data...");
+	for (i=0; i<236; i++) // why 240 steps?
+	{
+		if (receiveChar(&answer) == true)
+		{
+			// emit emitMessage( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
+			// store the data temporary because we get them separated by LowByte and HighByte
+			// unknownData[i] = answer;
+		}
+		else
+		{
+			// error
+			emit emitMessage(QString("ERROR receiving scan data at byte no. %1").arg(i+1));
+			return -1;
+		}
+	}
+	emit emitMessage("OKAY");
+
+
+	// Reading CRC, 4 bytes
+	emit emitMessage("Reading CRC...");
+	for (i=0; i<4; i++)
+	{
+		if (receiveChar(&answer) == true)
+		{
+			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+
+/*
+			// FIXME: check CRC !!
+			if (answer != 0)
+			{
+				emit emitMessage(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
+				return -1;
+			}
+*/
+		}
+		else
+		{
+			// error
+			emit emitMessage(QString("ERROR receiving CRC at byte no. %1").arg(i+1));
+			return -1;
+		}
+	}
+	emit emitMessage("OKAY");
+
+/*
+	// convert data from 2 x 16 Bit to one 16 Bit value
+	// and RETURN the data
+	for (i=0; i<LASERSAMPLES; i++)
+	{
+		if (angle < 270.0)
+		{
+			data[i] = (float) ( ((unknownData[2*i+1] & 0x1f)<<8) | unknownData[2*i] );
+			// qDebug("Copied: no. %d from %d values at %fï¿½. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
+			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
+			angle += 0.5;
+		}
+	}
+*/
+//	qDebug("S300 scan end @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
+
 	return 0;
 }
 
