@@ -110,7 +110,12 @@ class DirecsSerial : public QObject
 		@return number of bytes removed from the serial line.
 		**/
 		int clearInputBuffer(int dev_fd);
-		
+
+		/**
+		Clears the read buffer.
+		*/
+		void purgeRx();
+
 		/**
 		Writes data to the serial line
 		

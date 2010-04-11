@@ -464,6 +464,15 @@ int DirecsSerial::clearInputBuffer(int dev_fd)
 }
 
 
+void DirecsSerial::purgeRx()
+{
+		/**
+		Clears the read buffer.
+		 */
+		tcflush(mDev_fd, TCIFLUSH);
+}
+
+
 int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 {
 	int amountWritten = 0;
