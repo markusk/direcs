@@ -234,7 +234,7 @@ void ObstacleCheckThread::run()
 				//
 				if (
 					( (angle == 0) && (laserThread->getFlag(LASER1, angle+1) == FREEWAY) ) ||
-					( (laserThread->getFlag(LASER1, angle+1) == FREEWAY) && (laserThread->getFlag(LASER1, angle-1) == OBSTACLE) )
+					( (laserThread->getFlag(LASER1, angle+1) == FREEWAY) && (laserThread->getFlag(LASER1, angle-1) == OBSTACLE) ) // FIXME: angle-1 or +1 is out of range when using getFlag!!!
 				   )
 				{
 					// store current free area beginning
@@ -258,7 +258,7 @@ void ObstacleCheckThread::run()
 				//
 				if (
 					( (laserThread->getFlag(LASER1, angle+1) == OBSTACLE) && (laserThread->getFlag(LASER1, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
-					( (angle == (laserThread->getAngle(LASER1) - 1)) && (actualFreeAreaEnd == -1) )
+					( (angle == (laserThread->getAngle(LASER1) - 1)) && (actualFreeAreaEnd == -1) ) // FIXME: angle-1 or +1 is out of range when using getFlag!!!
 				   )
 				{
 					// store current free area end
