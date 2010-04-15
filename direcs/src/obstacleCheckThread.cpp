@@ -72,8 +72,8 @@ void ObstacleCheckThread::run()
 		// This value contains the sum of all SENSORx values!
 		sensorValue = NONE;
 		
-		// reset "drive to angle" to 90° -> FORWARD
-		centerOfFreeWay = 90;
+                // reset "drive to angle" to "middle of the number of laser lines" -> FORWARD
+                centerOfFreeWay = ( (laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)) / 2);
 	
 		
 		//-------------------------------------------------------------
@@ -183,7 +183,7 @@ void ObstacleCheckThread::run()
 		// If obstacle in front of the laser scanner,
 		// set a flag at the corresponding angles
 		//---------------------------------------------------------
-		for (int angle=0; angle < laserThread->getAngle(LASER1); angle++)
+                for (int angle=0; angle < (laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)); angle++)
 		{
 			// if obstacle detected
 			if ( ((int) (laserThread->getValue(LASER1, angle)*100)) < minObstacleDistanceLaserScanner)
@@ -258,7 +258,7 @@ void ObstacleCheckThread::run()
 				//
 				if (
 					( (laserThread->getFlag(LASER1, angle+1) == OBSTACLE) && (laserThread->getFlag(LASER1, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
-					( (angle == (laserThread->getAngle(LASER1) - 1)) && (actualFreeAreaEnd == -1) ) // FIXME: angle-1 or +1 is out of range when using getFlag!!!
+                                        ( (angle == ((laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)) - 1)) && (actualFreeAreaEnd == -1) ) // FIXME: angle-1 or +1 is out of range when using getFlag!!!
 				   )
 				{
 					// store current free area end
@@ -329,7 +329,7 @@ void ObstacleCheckThread::run()
 		// Calculate the width of the estimated drive-tru direction/area with the 'Kosinussatz'
 		// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
 		//--------------------------------------------------------------------------------------
-		if ((largestFreeAreaStart > 0) && (largestFreeAreaEnd < laserThread->getAngle(LASER1)))
+                if ( (largestFreeAreaStart > 0)  &&  ( largestFreeAreaEnd < (laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)) ))
 		{
 			// b and c are the sides of the triangle
 			b = laserThread->getValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
@@ -451,7 +451,7 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
-		for (int angle=0; angle < laserThread->getAngle(LASER2); angle++)
+                for (int angle=0; angle < laserThread->getAngle(LASER2) / laserThread->getResolution(LASER2); angle++)
 		{
 			// check only lines with no obstacles (FREEWAY)!
 			if (laserThread->getFlag(LASER2, angle) == FREEWAY)
@@ -489,7 +489,7 @@ void ObstacleCheckThread::run()
 				//
 				if (
 					((laserThread->getFlag(LASER2, angle+1) == OBSTACLE) && (laserThread->getFlag(LASER2, angle-1) == FREEWAY) && ((angle - actualFreeAreaStart) >= robotSlot - 1))  ||
-					((angle == (laserThread->getAngle(LASER2) - 1)) && (actualFreeAreaEnd == -1))
+                                        ((angle == ((laserThread->getAngle(LASER2) / laserThread->getResolution(LASER2)) - 1)) && (actualFreeAreaEnd == -1))
 				   )
 				{
 					// store current free area end
