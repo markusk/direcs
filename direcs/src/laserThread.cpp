@@ -174,7 +174,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 		{
 			if (mountingLaserscannerFront == "normal")
 			{
-				// /get the data from 0° to 180° (left to right)
+				// /get the data from 0 to 180 degrees (left to right)
 				for (int angle=0; angle<numReadingsFront; angle++)
 				{
 					// get value from laser
@@ -190,7 +190,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 			{
 				// flip the data, due to a flipped mounting of the hardware!
 				//
-				// get the data from 0° to 180° (left to right)
+				// get the data from 0 to 180 degrees (left to right)
 				// 'flip' will be increased every step - 1, so the data are stored from 180° to 0°
 				for (int angle=0, flip=numReadingsFront-1; angle<numReadingsFront; angle++, flip--)
 				{
@@ -211,7 +211,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 		{
 			if (mountingLaserscannerFront == "normal")
 			{
-				// /get the data from 0� to 270� (left to right)
+				// /get the data from 0 to 270 degrees (left to right)
 				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
 				for (int angleIndex=0; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++)
 				{
@@ -228,7 +228,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 			{
 				// flip the data, due to a flipped mounting of the hardware!
 				//
-				// get the data from 0� to 270� (left to right)
+				// get the data from 0 to 270 degrees (left to right)
 				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
 				// 'flip' will be increased every step - 1, so the data are stored from 270� to 0�
 				for (int angleIndex=0, flip=(laserscannerAngleFront/laserscannerResolutionFront)-1; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++, flip--)
