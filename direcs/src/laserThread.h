@@ -23,6 +23,7 @@
 
 #include "laser.h"
 #include "laserSickS300.h"
+#include "inifile.h" // for reading the sim values
 #include <QThread>
 
 
@@ -154,7 +155,7 @@ class LaserThread : public QThread
 	private:
 		void getAndStoreLaserValuesFront(); // TODO: use one common getAndStoreLaserValue method!
 		void getAndStoreLaserValuesRear();  // TODO: use one common getAndStoreLaserValue method!
-		void setSimulationValues(); // Sets the laser line simulatiov values in the QList
+		bool setSimulationValues(); // Sets the laser line simulatiov values in the QList
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 		unsigned char laserscannerTypeFront;
@@ -173,7 +174,8 @@ class LaserThread : public QThread
 
 		Laser *laser; // the object for the PLS or LMS laserscanner
 		SickS300 *laserS300; // the object for the S300 laserscanner
-		
+		Inifile *inifile1; //  for reading simulation values
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 250; // Default: 150 ms
