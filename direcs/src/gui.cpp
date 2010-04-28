@@ -1819,6 +1819,8 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 
 void Gui::initLaserView()
 {
+	int i = 0;
+	qreal angle = 0;
 	// for getting nice x and y position
 	qreal x = 0;
 	qreal y = 0;
@@ -1853,12 +1855,18 @@ void Gui::initLaserView()
 	//--------------
 	// REAR laser
 	//--------------
-	// rotate every laser line by one degree
+	// rotate every laser line by 'resolution' degree (e.g. 0.1 or 0.5 or 1.0)
 	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
 	// (Rotate laser line counterclockwise by the half of the laserAngle)
-	for (int i=0, angle = -(laserscannerAngleRear/2); i<laserLineListRear->size(); i++, angle++)
+	i = 0;
+	angle = -(laserscannerAngleRear/2);
+
+	while (i<laserLineListRear->size())
 	{
-		laserLineListRear->at(i)->rotate(angle*laserscannerResolutionRear);
+		laserLineListRear->at(i)->rotate(angle);
+
+		i++;
+		angle += laserscannerResolutionRear;
 	}
 
 
@@ -1871,11 +1879,16 @@ void Gui::initLaserView()
 	// rotate every laser line by one degree
 	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
 	// (Rotate laser line counterclockwise by 180 degrees and further by the half of the laserAngle)
-	for (int i=0, angle = -(180 + (laserscannerAngleFront/2)); i<laserLineListFront->size(); i++, angle++)
-	{
-		laserLineListFront->at(i)->rotate(angle*laserscannerResolutionFront);
-	}
+	i = 0;
+	angle = ( 180 - (laserscannerAngleFront/2) );
 
+	while (i<laserLineListFront->size())
+	{
+		laserLineListFront->at(i)->rotate(angle);
+
+		i++;
+		angle += laserscannerResolutionFront;
+	}
 
 	//==========================================================
 	// refresh the view with the actual zoom (after gui came up)
@@ -1991,7 +2004,7 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
 		// set tool tip of the line to the distance
-		laserLineListFront->at(i)->setToolTip( QString("%1 deg  /  %2 m  /  Flag=%3  /  %4 Pixel").arg(i).arg(laserScannerValues[i]).arg(laserScannerFlags[i]).arg(laserLineLength) );
+		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 
 		// get the current scene positions of the laser line
 		x = laserLineListFront->at(i)->scenePos().x();
@@ -2174,7 +2187,7 @@ void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> las
 		laserLineListRear->at(i)->setLine(0, 0, 0, laserLineLength);
 
 		// set tool tip of the line to the distance
-		laserLineListRear->at(i)->setToolTip( QString("%1 m  /  %2 deg  /  Flag=%3  /  %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+		laserLineListRear->at(i)->setToolTip( QString("REAR: %1 m / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
 
 		// get the current scene positions of the laser line
 		x = laserLineListRear->at(i)->scenePos().x();
