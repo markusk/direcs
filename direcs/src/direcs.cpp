@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2010 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -233,9 +233,16 @@ void Direcs::init()
 	connect(laserThread, SIGNAL(message(QString)), this, SLOT(showSplashMessage(QString)));
 
 	//--------------------------------------------------------------------------
-	// let the GUI also show laser init messages
+	// let the GUI (or console) also show laser init messages
 	//--------------------------------------------------------------------------
-	connect(laserThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+	if (consoleMode)
+	{
+		connect(laserThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
+	}
+	else
+	{
+		connect(laserThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+	}
 
 	//--------------------------------------------------------------------------
 	// let some other classes know if we are in the console mode
@@ -2520,7 +2527,14 @@ void Direcs::readSettings()
 								break;
 							default:
 								laserThread->setAngle(LASER1, laserscannerAngleFront);
-								gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+								if (consoleMode)
+								{
+									consoleGui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+								}
+								else
+								{
+									gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+								}
 								emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront));
 
 								//---------------------------------------------------------------------
@@ -2534,7 +2548,14 @@ void Direcs::readSettings()
 								else
 								{
 									laserThread->setResolution(LASER1, floatValue);
-									gui->setLaserscannerResolution(LASER1, floatValue);
+									if (consoleMode)
+									{
+										consoleGui->setLaserscannerResolution(LASER1, floatValue);
+									}
+									else
+									{
+										gui->setLaserscannerResolution(LASER1, floatValue);
+									}
 									emit message(QString("Front laser scanner resolution set to <b>%1</b>.").arg(floatValue));
 								}
 								break;
@@ -2626,7 +2647,14 @@ void Direcs::readSettings()
 								break;
 							default:
 								laserThread->setAngle(LASER2, laserscannerAngleRear);
-								gui->setLaserscannerAngle(LASER2, laserscannerAngleRear);
+								if (consoleMode)
+								{
+									consoleGui->setLaserscannerAngle(LASER2, laserscannerAngleRear);
+								}
+								else
+								{
+									gui->setLaserscannerAngle(LASER2, laserscannerAngleRear);
+								}
 								emit message(QString("Rear laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleRear));
 
 								//---------------------------------------------------------------------
@@ -2640,7 +2668,14 @@ void Direcs::readSettings()
 								else
 								{
 									laserThread->setResolution(LASER2, floatValue);
-									gui->setLaserscannerResolution(LASER2, floatValue);
+									if (consoleMode)
+									{
+										consoleGui->setLaserscannerResolution(LASER2, floatValue);
+									}
+									else
+									{
+										gui->setLaserscannerResolution(LASER2, floatValue);
+									}
 									emit message(QString("Rear laser scanner resolution set to <b>%1</b>.").arg(floatValue));
 								}
 								break;
@@ -2655,7 +2690,10 @@ void Direcs::readSettings()
 	//---------------------------------------------------------------------
 	// Create the laser lines and pixmaps in the GUI and place them nicely
 	//---------------------------------------------------------------------
-	gui->initLaserStuff();
+	if (!consoleMode)
+	{
+		gui->initLaserStuff();
+	}
 
 	//---------------------------------------------------------------------
 	// read setting

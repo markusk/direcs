@@ -123,6 +123,20 @@ class ConsoleGui : public QObject
 		*/
 		void showPreferredDirection(QString direction);
 
+		/**
+		Gets the angle of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 180 or 270 degrees)
+		@param laserScanner can be LASER1 or LASER2
+		@param angle in degrees
+		*/
+		void setLaserscannerAngle(short int laserscanner, int angle);
+
+		/**
+		Gets the resolution of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 0.5 or 1.0 degrees)
+		@param laserScanner can be LASER1 or LASER2
+		@param angle in degrees
+		*/
+		void setLaserscannerResolution(short int laserscanner, float resolution);
+
 
 	signals:
 		/**

@@ -545,3 +545,17 @@ void ConsoleGui::refreshLaserViewRear(QList <float> laserScannerValues, QList <i
 	Q_UNUSED(laserScannerValues);
 	Q_UNUSED(laserScannerFlags);
 }
+
+
+void ConsoleGui::setLaserscannerAngle(short int laserscanner, int angle)
+{
+	Q_UNUSED(laserscanner);
+	Q_UNUSED(angle);
+}
+
+
+void ConsoleGui::setLaserscannerResolution(short int laserscanner, float resolution)
+{
+	Q_UNUSED(laserscanner);
+	Q_UNUSED(resolution);
+}
