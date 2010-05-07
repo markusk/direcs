@@ -395,6 +395,7 @@ class Gui : public QMainWindow
 		void on_actionOdometrie_activated();
 		void on_actionVoltage_activated();
 		void on_actionCurrent_activated();
+		void on_actionState_activated();
 		void on_actionSettings_activated();
 		void on_actionLog_activated();
 		void on_actionJoystick_activated();

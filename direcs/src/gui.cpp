@@ -428,13 +428,20 @@ void Gui::on_actionTest_activated()
 void Gui::on_actionAll_activated()
 {
 	ui.dockNavigation->show();
-	ui.dockCamera->show();
 	ui.dockOdometrie->show();
 	ui.dockVoltage->show();
 	ui.dockCurrent->show();
+	ui.dockState->show();
 	ui.dockLog->show();
-// 	settingsDialog->show();
-// 	joystickDialog->show();
+
+	// 	settingsDialog->show();
+	// 	joystickDialog->show();
+
+	// only show the cam window, if the cam usage is enabled
+	if (ui.dockCamera->isEnabled())
+	{
+		ui.dockCamera->show();
+	}
 }
 
 
@@ -489,6 +496,18 @@ void Gui::on_actionCurrent_activated()
 	}
 }
 
+
+void Gui::on_actionState_activated()
+{
+	if (ui.dockState->isVisible())
+	{
+		ui.dockState->hide();
+	}
+	else
+	{
+		ui.dockState->show();
+	}
+}
 
 void Gui::on_actionSettings_activated()
 {

@@ -281,7 +281,7 @@
      <x>0</x>
      <y>0</y>
      <width>1676</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -308,6 +308,7 @@
     <addaction name="actionOdometrie"/>
     <addaction name="actionCurrent"/>
     <addaction name="actionVoltage"/>
+    <addaction name="actionState"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -351,6 +352,7 @@
    <addaction name="actionOdometrie"/>
    <addaction name="actionCurrent"/>
    <addaction name="actionVoltage"/>
+   <addaction name="actionState"/>
    <addaction name="actionAll"/>
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
@@ -2180,7 +2182,7 @@
   <action name="actionCurrent">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/battery-100.png</normaloff>:/images/images/battery-100.png</iconset>
+     <normaloff>:/images/images/battery-060.png</normaloff>:/images/images/battery-060.png</iconset>
    </property>
    <property name="text">
     <string>Current</string>
@@ -2196,6 +2198,15 @@
    </property>
    <property name="text">
     <string>Voltage</string>
+   </property>
+  </action>
+  <action name="actionState">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/led_green.gif</normaloff>:/images/images/led_green.gif</iconset>
+   </property>
+   <property name="text">
+    <string>State</string>
    </property>
   </action>
  </widget>
