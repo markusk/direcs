@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2010 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
