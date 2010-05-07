@@ -419,11 +419,15 @@ void LaserThread::setSimulationMode(bool status)
 
 bool LaserThread::isConnected(short int laserScanner)
 {
+	Q_UNUSED(laserScanner);
+	return false;
 }
 
 
 void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 {
+	Q_UNUSED(laserScanner);
+	Q_UNUSED(serialPort);
 }
 
 

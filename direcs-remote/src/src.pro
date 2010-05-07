@@ -32,8 +32,45 @@ QT += network \
 RESOURCES += ../direcs-remote.qrc
 CONFIG -= release
 
-INCLUDEPATH += /usr/include/qwt-qt4/
+INCLUDEPATH += /opt/local/include/opencv \
+			/opt/local/include \
+			/opt/local/libexec/qt4-mac/include \
+			/usr/include/qwt-qt4 \
+			/usr/local/include/opencv
 
+
+unix|macx {
 LIBS += -L/usr/local/lib \
   -lqwt-qt4
+}
 
+
+macx {
+	message("Processing MAC OS scope...")
+	message("Removing espeak support.")
+	LIBS -=		-lespeak \
+				-lqwt-qt4
+
+	message("Removing OpenCV support.")
+	LIBS -=		-lcv \
+				-lhighgui
+
+	message("Changing qwt lib name. Has to be installed via macports.")
+	LIBS +=		-lqwt
+}
+
+
+win32 {
+	message("****************************")
+	message("Sorry guys, no Win* support!")
+	message("****************************")
+	HEADERS =
+
+	SOURCES =
+
+	FORMS =
+
+	DEFINES =
+
+	LIBS =
+}
