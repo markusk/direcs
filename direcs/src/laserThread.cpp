@@ -189,7 +189,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 			
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( laserScannerValuesFront[angle] ) );
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( (int) (laserScannerValuesFront[angle]*100) ) );
 				}
 			}
 			else
@@ -206,7 +206,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 			
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( laserScannerValuesFront[angle] ) );
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( (int) (laserScannerValuesFront[angle]*100) ) );
 				}
 			}
 		}
@@ -227,7 +227,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( laserScannerValuesFront[angleIndex] ) );
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
 				}
 			}
 			else
@@ -245,7 +245,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( laserScannerValuesFront[angleIndex] ) );
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
 				}
 			}
 		}
@@ -278,7 +278,7 @@ void LaserThread::getAndStoreLaserValuesRear()
 
 					// send value over the network
 					// *1l23a42# means LASER2 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( laserScannerValuesRear[angle] ) );
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( (int) (laserScannerValuesRear[angle]*100) ) );
 				}
 			}
 			else
@@ -295,7 +295,7 @@ void LaserThread::getAndStoreLaserValuesRear()
 
 					// send value over the network
 					// *1l23a42# means LASER2 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( laserScannerValuesRear[angle] ) );
+					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( (int) (laserScannerValuesRear[angle]*100) ) );
 				}
 			}
 		}
