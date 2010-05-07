@@ -281,7 +281,7 @@
      <x>0</x>
      <y>0</y>
      <width>1676</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -302,13 +302,15 @@
     </property>
     <addaction name="actionAll"/>
     <addaction name="separator"/>
+    <addaction name="actionNavigation"/>
     <addaction name="actionCamera"/>
-    <addaction name="actionJoystick"/>
     <addaction name="actionLog"/>
-    <addaction name="actionOdometrie"/>
-    <addaction name="actionCurrent"/>
-    <addaction name="actionVoltage"/>
     <addaction name="actionState"/>
+    <addaction name="actionOdometrie"/>
+    <addaction name="actionVoltage"/>
+    <addaction name="actionCurrent"/>
+    <addaction name="separator"/>
+    <addaction name="actionJoystick"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -346,14 +348,15 @@
    <addaction name="actionTest"/>
    <addaction name="actionSimulate"/>
    <addaction name="separator"/>
+   <addaction name="actionNavigation"/>
    <addaction name="actionCamera"/>
-   <addaction name="actionJoystick"/>
    <addaction name="actionLog"/>
-   <addaction name="actionOdometrie"/>
-   <addaction name="actionCurrent"/>
-   <addaction name="actionVoltage"/>
    <addaction name="actionState"/>
+   <addaction name="actionOdometrie"/>
+   <addaction name="actionVoltage"/>
+   <addaction name="actionCurrent"/>
    <addaction name="actionAll"/>
+   <addaction name="actionJoystick"/>
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
    <addaction name="actionAbout"/>
@@ -2207,6 +2210,18 @@
    </property>
    <property name="text">
     <string>State</string>
+   </property>
+  </action>
+  <action name="actionNavigation">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/up.png</normaloff>:/images/images/up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Navigation</string>
+   </property>
+   <property name="toolTip">
+    <string>Navigation</string>
    </property>
   </action>
  </widget>
