@@ -445,15 +445,31 @@ void Gui::on_actionAll_activated()
 }
 
 
-void Gui::on_actionCamera_activated()
+void Gui::on_actionNavigation_activated()
 {
-	if (ui.dockCamera->isVisible())
+	if (ui.dockNavigation->isVisible())
 	{
-		ui.dockCamera->hide();
+		ui.dockNavigation->hide();
 	}
 	else
 	{
-		ui.dockCamera->show();
+		ui.dockNavigation->show();
+	}
+}
+
+
+void Gui::on_actionCamera_activated()
+{
+	if (ui.dockCamera->isEnabled())
+	{
+		if (ui.dockCamera->isVisible())
+		{
+			ui.dockCamera->hide();
+		}
+		else
+		{
+			ui.dockCamera->show();
+		}
 	}
 }
 

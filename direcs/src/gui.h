@@ -391,6 +391,7 @@ class Gui : public QMainWindow
 		Action if a menu item or a toolbar button is clicked
 		*/
 		void on_actionExit_activated();
+		void on_actionNavigation_activated();
 		void on_actionCamera_activated();
 		void on_actionOdometrie_activated();
 		void on_actionVoltage_activated();
