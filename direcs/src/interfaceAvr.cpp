@@ -95,12 +95,17 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
+	int result = 0;
+
+
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	if (serialPort->readAtmelPort(character, 1) != 1)
+	result = serialPort->readAtmelPort(character, 1);
+
+		if (result != 1)
 	{
 		// ERROR
- 		emit emitMessage("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, InterfaceAvr)!<font>");
+			emit emitMessage( QString("<font color=\"#FF0000\">ERROR '%1' at receiveChar::InterfaceAvr: !<font>").arg(strerror(result)) );
 		return false;
 	}
 	

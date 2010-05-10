@@ -505,6 +505,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 	{
 		// error
 		//qDebug("write() of n bytes failed!");
+		fprintf(stderr, "\nERROR at writeAtmelPort::DirecsSerial\n");
 	}
 	else
 	{
@@ -517,38 +518,49 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 
 int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 {
-	//
-	// Original code from method readPort
-	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
-	//
+	// (Almost) original code from method readPort
+	// But we use the class member dev_fd, instead of serial ports from laser scanner struct
 	int amountRead = 0, bytes_read = 0;
 	struct timeval t;
 	fd_set set;
 	int err;
+
 	
 	while (nChars > 0)
 	{
+		// has to be set within the while loop, before every select command!
 		t.tv_sec = 0;
 		t.tv_usec = READ_TIMEOUT;
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
 		
+		// are we ready for reading?
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
+
 		if (err == 0)
 		{
-			return -2;
+			// time limit expired
+			qDebug("ERROR %d (%s) at reatAtmelPort::DirecsSerial.", errno, strerror(errno));
+			return err;
 		}
 	
 		// read from the serial device
 		amountRead = read(mDev_fd, buf, nChars);
 		
-		if(amountRead < 0 && errno != EWOULDBLOCK)
+		if (amountRead < 0)
 		{
-			return -1;
+			qDebug("ERROR %d (%s) at reatAtmelPort::DirecsSerial.", errno, strerror(errno));
+			return amountRead;
+		}
+
+		if (errno == EWOULDBLOCK)
+		{
+			fprintf(stderr, "EWOULDBLOCK at reatAtmelPort::DirecsSerial received.\n");
 		}
 		else
 		{
-			if(amountRead > 0)
+			// success  :-)
+			if (amountRead > 0)
 			{
 				bytes_read += amountRead;
 				nChars -= amountRead;
@@ -556,6 +568,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 			}
 		}
 	}
+
 	return bytes_read;
 }
 
