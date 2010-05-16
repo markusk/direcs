@@ -165,6 +165,11 @@ class Gui : public QMainWindow
 		void disableFaceDetection();
 
 		/**
+		Disables the compass window in the GUI.
+		 */
+		void disableCompass();
+
+		/**
 		Enables/Disables some controls in the GUI if the robot, depending on the robots state.
 		@param state can be ON or OFF
 		@sa CameraThread::robotState()
@@ -391,7 +396,7 @@ class Gui : public QMainWindow
 		Action if a menu item or a toolbar button is clicked
 		*/
 		void on_actionExit_activated();
-		void on_actionNavigation_activated();
+		void on_actionCompass_activated();
 		void on_actionCamera_activated();
 		void on_actionOdometrie_activated();
 		void on_actionVoltage_activated();
