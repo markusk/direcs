@@ -255,13 +255,13 @@ void Gui::setRobotControls(bool state)
 void Gui::appendLog(QString text, bool CR, bool sayIt)
 {
 	// insert the text in the GUI
-	ui.textEditLog->insertHtml(text);
+	ui.textEditGlobalLog->insertHtml(text);
 
 	if (CR == TRUE) // default!
-		ui.textEditLog->insertHtml("<br>");
+		ui.textEditGlobalLog->insertHtml("<br>");
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	ui.textEditLog->ensureCursorVisible();
+	ui.textEditGlobalLog->ensureCursorVisible();
 
 
 	if (consoleMode)
@@ -285,8 +285,15 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 
 void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 {
+	QString newText;
+
+
+	// get the current date and time for a timestamp in the log
+	now = QDateTime::currentDateTime();
+	newText = QString("%1-%2-%3 %4:%5:%6 %7").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+
 	// insert the text
-	ui.textEditNetworkLog->insertHtml(text);
+	ui.textEditNetworkLog->insertHtml(newText);
 
 	if (CR == TRUE)
 	{
@@ -301,7 +308,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	if (consoleMode)
 	{
 		// remove HTML code
-		text = removeHtml(text);
+		text = removeHtml(newText);
 		// print text to console
 		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
 		QByteArray textForConsole = text.toLatin1();
@@ -313,6 +320,40 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	if (sayIt == true)
 	{
 		emit speak(text);
+	}
+}
+
+
+void Gui::appendSerialLog(QString text, bool CR)
+{
+	QString newText;
+
+
+	// get the current date and time for a timestimp in the log
+	now = QDateTime::currentDateTime();
+	newText = QString("%1-%2-%3 %4:%5:%6 %7").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+
+	// insert the text
+	ui.textEditSerialLog->insertHtml(newText);
+
+	if (CR == TRUE)
+	{
+		// insert a line break
+		ui.textEditSerialLog->insertHtml("<br>");
+	}
+
+	// Ensures that the cursor is visible by scrolling the text edit if necessary.
+	ui.textEditSerialLog->ensureCursorVisible();
+
+
+	if (consoleMode)
+	{
+		// remove HTML code
+		text = removeHtml(newText);
+		// print text to console
+		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+		QByteArray textForConsole = text.toLatin1();
+		qDebug("%s", textForConsole.data());
 	}
 }
 

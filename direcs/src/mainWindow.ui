@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>1066</height>
+    <height>1151</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>direcs - mobile robot system</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../direcs.qrc">
+   <iconset>
     <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
   </property>
   <property name="dockNestingEnabled">
@@ -173,7 +173,7 @@
                </font>
               </property>
               <property name="pixmap">
-               <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
+               <pixmap>:/images/images/middle.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -377,7 +377,7 @@
        <item>
         <widget class="QLabel" name="lblLEDHeartbeat">
          <property name="pixmap">
-          <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+          <pixmap>:/images/images/led_gray.gif</pixmap>
          </property>
         </widget>
        </item>
@@ -1012,7 +1012,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
+            <pixmap>:/images/images/battery-missing.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1071,7 +1071,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
+            <pixmap>:/images/images/battery-missing.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1589,7 +1589,7 @@
               <string>Save</string>
              </property>
              <property name="icon">
-              <iconset resource="../direcs.qrc">
+              <iconset>
                <normaloff>:/images/images/drive-harddisk.png</normaloff>:/images/images/drive-harddisk.png</iconset>
              </property>
             </widget>
@@ -1817,7 +1817,7 @@
                   </font>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
+                  <pixmap>:/images/images/middle.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -1988,19 +1988,32 @@
   </widget>
   <widget class="QDockWidget" name="dockLog">
    <property name="windowTitle">
-    <string>Log</string>
+    <string>Logs</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_10">
-    <layout class="QGridLayout" name="gridLayout_10">
-     <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
       <widget class="QSplitter" name="splitter">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
-       <widget class="QTextEdit" name="textEditLog">
+       <widget class="QTextEdit" name="textEditGlobalLog">
+        <property name="minimumSize">
+         <size>
+          <width>390</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEditSerialLog">
         <property name="minimumSize">
          <size>
           <width>390</width>
@@ -2027,7 +2040,7 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/system-shutdown.png</normaloff>:/images/images/system-shutdown.png</iconset>
    </property>
    <property name="text">
@@ -2039,7 +2052,7 @@
   </action>
   <action name="actionLaser_View">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/sick.png</normaloff>:/images/images/sick.png</iconset>
    </property>
    <property name="text">
@@ -2048,7 +2061,7 @@
   </action>
   <action name="actionCamera">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/camera-web.png</normaloff>:/images/images/camera-web.png</iconset>
    </property>
    <property name="text">
@@ -2057,7 +2070,7 @@
   </action>
   <action name="actionOdometrie">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/measure.png</normaloff>:/images/images/measure.png</iconset>
    </property>
    <property name="text">
@@ -2066,7 +2079,7 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/configure.png</normaloff>:/images/images/configure.png</iconset>
    </property>
    <property name="text">
@@ -2075,7 +2088,7 @@
   </action>
   <action name="actionLog">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/text-plain.png</normaloff>:/images/images/text-plain.png</iconset>
    </property>
    <property name="text">
@@ -2084,7 +2097,7 @@
   </action>
   <action name="actionJoystick">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/input-gaming.png</normaloff>:/images/images/input-gaming.png</iconset>
    </property>
    <property name="text">
@@ -2102,7 +2115,7 @@
   </action>
   <action name="actionDrive">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
    </property>
    <property name="text">
@@ -2114,7 +2127,7 @@
   </action>
   <action name="actionReset">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/draw-eraser.png</normaloff>:/images/images/draw-eraser.png</iconset>
    </property>
    <property name="text">
@@ -2129,7 +2142,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/network-wireless.png</normaloff>:/images/images/network-wireless.png</iconset>
    </property>
    <property name="text">
@@ -2138,7 +2151,7 @@
   </action>
   <action name="actionTest">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/media-flash.png</normaloff>:/images/images/media-flash.png</iconset>
    </property>
    <property name="text">
@@ -2150,7 +2163,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/utilities-system-monitor.png</normaloff>
      <normalon>:/images/images/utilities-system-monitor-active.png</normalon>:/images/images/utilities-system-monitor.png</iconset>
    </property>
@@ -2163,7 +2176,7 @@
   </action>
   <action name="actionAll">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/window-duplicate.png</normaloff>:/images/images/window-duplicate.png</iconset>
    </property>
    <property name="text">
@@ -2175,7 +2188,7 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/help-about.png</normaloff>:/images/images/help-about.png</iconset>
    </property>
    <property name="text">
@@ -2184,7 +2197,7 @@
   </action>
   <action name="actionCurrent">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/battery-060.png</normaloff>:/images/images/battery-060.png</iconset>
    </property>
    <property name="text">
@@ -2196,7 +2209,7 @@
   </action>
   <action name="actionVoltage">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/battery-100.png</normaloff>:/images/images/battery-100.png</iconset>
    </property>
    <property name="text">
@@ -2205,7 +2218,7 @@
   </action>
   <action name="actionState">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/led_green.gif</normaloff>:/images/images/led_green.gif</iconset>
    </property>
    <property name="text">
@@ -2214,7 +2227,7 @@
   </action>
   <action name="actionCompass">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/up.png</normaloff>:/images/images/up.png</iconset>
    </property>
    <property name="text">
@@ -2245,8 +2258,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../direcs.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

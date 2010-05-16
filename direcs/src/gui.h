@@ -240,6 +240,13 @@ class Gui : public QMainWindow
 		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
 
 		/**
+		Append text to the serial log in the main window
+		@param text is the text to be displayed.
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		*/
+		void appendSerialLog(QString text, bool CR);
+
+		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/
 		void refreshLaserViewFront(QList <float> laserScannerValues, QList <int> laserScannerFlags);
@@ -515,6 +522,8 @@ class Gui : public QMainWindow
 		qreal widthCirclesWidth; /// the width of the robots drive-tru circles
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
+		QDateTime now; /// this is for the timestamp in the logs in the gui
+
 
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
