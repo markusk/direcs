@@ -72,6 +72,9 @@
       <property name="text">
        <string>About Qt</string>
       </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item>
