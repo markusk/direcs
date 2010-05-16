@@ -257,7 +257,7 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 	// insert the text in the GUI
 	ui.textEditGlobalLog->insertHtml(text);
 
-	if (CR == TRUE) // default!
+	if (CR == true) // default!
 		ui.textEditGlobalLog->insertHtml("<br>");
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
@@ -295,7 +295,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	// insert the text
 	ui.textEditNetworkLog->insertHtml(newText);
 
-	if (CR == TRUE)
+	if (CR == true) // default!
 	{
 		// insert a line break
 		ui.textEditNetworkLog->insertHtml("<br>");
@@ -324,7 +324,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 }
 
 
-void Gui::appendSerialLog(QString text)
+void Gui::appendSerialLog(QString text, bool CR)
 {
 	QString newText;
 
@@ -335,6 +335,12 @@ void Gui::appendSerialLog(QString text)
 
 	// insert the text
 	ui.textEditSerialLog->insertHtml(newText);
+
+	if (CR == true) // default!
+	{
+		// insert a line break
+		ui.textEditSerialLog->insertHtml("<br>");
+	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditSerialLog->ensureCursorVisible();

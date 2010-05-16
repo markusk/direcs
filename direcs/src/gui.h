@@ -145,8 +145,9 @@ class Gui : public QMainWindow
 		/**
 		Append text to the serial log in the main window
 		@param text is the text to be displayed.
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
 		*/
-		void appendSerialLog(QString text);
+		void appendSerialLog(QString text, bool CR=true);
 
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		/**
