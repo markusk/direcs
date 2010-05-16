@@ -66,7 +66,13 @@ class Circuit : public QObject
 		This signal emits the robot (circuit) state to all connected slots, to tell them if the robot is ON or OFF
 		@param state can be ON or OFF
 		*/
-		void robotState(bool state);
+		void robotState(bool state);	
+
+		/**
+		Sends a string to the GUI log.
+		@param text is the message to be emitted
+		*/
+		void emitMessage(QString text);
 
 
 	private:
