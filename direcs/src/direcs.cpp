@@ -1040,8 +1040,8 @@ void Direcs::shutdown()
 		}
 
 		
-		emit message("TODO: Stop driving!");
-// 		drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
+		emit message("STOPPING drive!");
+		drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
 
 
 		// TODO: a universal quit-threads-method
