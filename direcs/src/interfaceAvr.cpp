@@ -76,6 +76,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 
 	// send one byte to the serial port with direcsSerial
+	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
 	result = serialPort->writeAtmelPort(&character);
 
 	if (result < 0)
@@ -112,6 +113,7 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 		return false;
 	}
 	
+	// emit emitMessage( QString("Received '%1'.").arg(result) ); // this makes the program to slow and than to crash!!
 	return true;
 }
 
@@ -167,5 +169,6 @@ bool InterfaceAvr::receiveInt(int *value)
 	// (add the LS-Byte to the MS-Byte)
 	*value = (intValue + character);
 
+	// emit emitMessage( QString("Received int '%1'.").arg(*value) ); // this makes the program to slow and than to crash!!
 	return true;
 }
