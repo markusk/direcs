@@ -290,7 +290,8 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 
 	// get the current date and time for a timestamp in the log
 	now = QDateTime::currentDateTime();
-	newText = QString("%1-%2-%3 %4:%5:%6 %7").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+	// with DATE: newText = QString("%1-%2-%3 %4:%5:%6 %7").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+	newText = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
 
 	// insert the text
 	ui.textEditNetworkLog->insertHtml(newText);
@@ -331,7 +332,8 @@ void Gui::appendSerialLog(QString text, bool CR)
 
 	// get the current date and time for a timestimp in the log
 	now = QDateTime::currentDateTime();
-	newText = QString("%1-%2-%3 %4:%5:%6 %7").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+	// with DATE: newText = QString("%1-%2-%3 %4:%5:%6 %7").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+	newText = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
 
 	// insert the text
 	ui.textEditSerialLog->insertHtml(newText);
