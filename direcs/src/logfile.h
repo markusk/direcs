@@ -71,6 +71,7 @@ class Logfile : public QObject
 		QString logFilename;
 		QFile file;
 		QString programPath;
+		QDateTime now; /// this is for the timestamp in the log
 };
 
 #endif

@@ -98,7 +98,7 @@ void Logfile::appendLog(QString text, bool CR)
 	// to the last HTML ">" found
 
 	
-	QDateTime now = QDateTime::currentDateTime(); // get the current date and time
+	now = QDateTime::currentDateTime(); // get the current date and time
 	QTextStream out(&file);
 	out << now.toString("yyyy") << "-" << now.toString("MM") << "-" << now.toString("dd") << " " << now.toString("hh") << ":" << now.toString("mm") << ":" << now.toString("ss") << " " << text << "\n";
 }
@@ -110,7 +110,7 @@ void Logfile::setFilename(QString filename)
 	logFilename = filename;
 	file.setFileName(filename);
 	
-	if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) // TODO: append every time?!??!!
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
 	{
 		qDebug("Error opening logfile!");
 		return;
