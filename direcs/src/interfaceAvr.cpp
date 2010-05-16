@@ -42,7 +42,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
-		emit emitMessage("<font color=\"#FF0000\">Datei/Pfad zum seriellen Port nicht gefunden! Roby angeschlossen und eingeschaltet?</font>");
+		emit emitMessage(QString("<font color=\"#FF0000\">ERROR: File %1 not found (InterfaceAvr::openComPort)!</font>").arg(comPort));
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
 		
@@ -78,7 +78,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	if (serialPort->writeAtmelPort(&character) <= 0)
 	{
 // 		receiveErrorCounter++;
- 		emit emitMessage("<font color=\"#FF0000\">ERROR writing sserial port (sendChar, InterfaceAvr)!<font>");
+		emit emitMessage("<font color=\"#FF0000\">ERROR writing sserial port (InterfaceAvr::sendChar)!<font>");
 
 // 		// MASSIVE COMMUNICATION ERROR!
 // 		if (receiveErrorCounter >= 4)

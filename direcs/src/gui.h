@@ -133,6 +133,21 @@ class Gui : public QMainWindow
 		 */
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
 
+		/**
+		Append text to the network log in the main window
+		@param text is the text to be displayed.
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
+		@sa appendLog()
+		*/
+		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
+
+		/**
+		Append text to the serial log in the main window
+		@param text is the text to be displayed.
+		*/
+		void appendSerialLog(QString text);
+
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		/**
 		Shows the new picture from the cam (live).
@@ -229,22 +244,6 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData6(double *xval, double *yval, int size);
-
-		/**
-		Append text to the network log in the main window
-		@param text is the text to be displayed.
-		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
-		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
-		@sa appendLog()
-		*/
-		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
-
-		/**
-		Append text to the serial log in the main window
-		@param text is the text to be displayed.
-		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
-		*/
-		void appendSerialLog(QString text, bool CR);
 
 		/**
 		Refreshes the view of the lines from the front laser scanner.

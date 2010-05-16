@@ -324,7 +324,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 }
 
 
-void Gui::appendSerialLog(QString text, bool CR)
+void Gui::appendSerialLog(QString text)
 {
 	QString newText;
 
@@ -335,12 +335,6 @@ void Gui::appendSerialLog(QString text, bool CR)
 
 	// insert the text
 	ui.textEditSerialLog->insertHtml(newText);
-
-	if (CR == TRUE)
-	{
-		// insert a line break
-		ui.textEditSerialLog->insertHtml("<br>");
-	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditSerialLog->ensureCursorVisible();

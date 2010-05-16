@@ -451,17 +451,17 @@ void Direcs::init()
 
 
 		//----------------------------------------------------------------------------
-		// let the GUI show messages in the log (e.g. when special buttons pressed)
+		// let the GUI show messages in the log docks
 		//----------------------------------------------------------------------------
 		if (!consoleMode)
 		{
 			connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
+			connect(interface1, SIGNAL(emitMessage(QString)), gui, SLOT(appendSerialLog(QString)));
 		}
 		else
 		{
 			connect(joystick, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
+			connect(interface1, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendSerialLog(QString)));
 		}
 
 		// also emit messages to the logfile
@@ -484,25 +484,26 @@ void Direcs::init()
 			//********************
 			//* The robot is OFF *
 			//********************
-			//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
-			emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
+			// Error message will be send via signals to the GUI or Console!
+			emit message("<font color=\"#FF0000\">The robot is OFF!</font>");
+			logfile->appendLog("ERROR: The robot is OFF!");
 
-			/*
-		not in use. Don't show a message box
-		if (!consoleMode)
-		{
-			// show a warning dialog!
-			QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
-			msgbox.exec();
-		}
-		*/
+			/* not in use. Don't show a message box
+			if (!consoleMode)
+			{
+				// show a warning dialog!
+				QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+				msgbox.exec();
+			}
+			*/
 		}
 		else
 		{
 			//*******************
 			//* The robot is ON *
 			//*******************
-			emit message("Serial port opened.");
+			emit message("The robot is ON.");
+			logfile->appendLog("The robot is ON.");
 
 
 			//-------------------------------------------------------
@@ -525,6 +526,7 @@ void Direcs::init()
 			if (circuit1->initCircuit() == true)
 			{
 				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
+				logfile->appendLog("Robot is ON and answers.");
 
 				//-------------------------------------------------------
 				// set the read motor speed
@@ -585,6 +587,7 @@ void Direcs::init()
 			} // init was successfull
 			else
 			{
+				logfile->appendLog("Robot is OFF! Please turn it ON!");
 				emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 				emit message("Heartbeat thread NOT started!");
 				emit message("Sensor thread NOT started!");
