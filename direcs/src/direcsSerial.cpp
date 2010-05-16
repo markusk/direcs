@@ -505,6 +505,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 	{
 		// error
 		//qDebug("write() of n bytes failed!");
+		return errno;
 	}
 	else
 	{
