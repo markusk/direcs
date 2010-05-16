@@ -536,7 +536,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
 		if (err == 0)
 		{
-			return -2;
+			return errno;
 		}
 	
 		// read from the serial device
@@ -544,7 +544,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
-			return -1;
+			return errno;
 		}
 		else
 		{

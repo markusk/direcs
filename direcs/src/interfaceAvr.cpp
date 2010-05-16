@@ -102,10 +102,10 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	// Must return 1 (1 character succussfull read)!
 	result = serialPort->readAtmelPort(character, 1);
 
-		if (result != 1)
+	if (result != 1)
 	{
 		// ERROR
-			emit emitMessage( QString("<font color=\"#FF0000\">ERROR '%1' at receiveChar::InterfaceAvr: !<font>").arg(strerror(result)) );
+		emit emitMessage( QString("<font color=\"#FF0000\">ERROR '%1' (receiveChar::InterfaceAvr)!<font>").arg(strerror(result)) );
 		return false;
 	}
 	
