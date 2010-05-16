@@ -481,11 +481,12 @@ void Direcs::init()
 
 		if (interface1->openComPort(serialPortMicrocontroller) == false)
 		{
-			//********************
-			//* The robot is OFF *
-			//********************
+			//*****************************
+			//* ERROR opening serial port *
+			//*****************************
 			// Error message will be send via signals to the GUI or Console!
 			emit message("<font color=\"#FF0000\">The robot is OFF!</font>");
+			gui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
 			logfile->appendLog("ERROR: The robot is OFF!");
 
 			/* not in use. Don't show a message box
@@ -499,11 +500,12 @@ void Direcs::init()
 		}
 		else
 		{
-			//*******************
-			//* The robot is ON *
-			//*******************
-			emit message("The robot is ON.");
-			logfile->appendLog("The robot is ON.");
+			//**********************
+			//* Serial port opened *
+			//**********************
+			emit message("Serial port opened.");
+			gui->appendSerialLog("Serial port opened.");
+			logfile->appendLog("Serial port opened.");
 
 
 			//-------------------------------------------------------
@@ -1170,6 +1172,7 @@ void Direcs::shutdown()
 		if (netThread->isRunning() == true)
 		{
 			emit message("Stopping network thread...");
+			gui->appendNetworkLog("Stopping network thread...");
 			emit splashMessage("Stopping network thread...");
 
 			// my own stop routine :-)
@@ -3385,6 +3388,7 @@ void Direcs::enableRemoteControlListening(bool state)
 		if (netThread->isRunning() == false)
 		{
 			emit message("Starting network thread...", false);
+			gui->appendNetworkLog("Starting network thread...");
 			netThread->start();
 			emit message("Network thread started.");
 		}
@@ -3394,6 +3398,7 @@ void Direcs::enableRemoteControlListening(bool state)
 		if (netThread->isRunning() == true)
 		{
 			emit message("Stopping network thread...", false);
+			gui->appendNetworkLog("Stopping network thread...");
 			netThread->stop();
 			emit message("Network thread stopped.");
 		}
