@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2010 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -38,15 +38,22 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	int spd = -1;
 	int newbaud = 0;
 
-
+#ifdef Q_OS_MAC
 	// This is now from http://developer.apple.com/mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
-	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK); // TODO: check if this works under Linux!!
+	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK);
+#endif
 
-	if (mDev_fd == -1)
+#ifdef Q_OS_LINUX
+	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);
+#endif
+
+	if (mDev_fd < 0)
 	{
-		return -1;
+		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
+		return errno;
 	}
 
+#ifdef Q_OS_MAC
 	// Note that open() follows POSIX semantics: multiple open() calls to
 	// the same file will succeed unless the TIOCEXCL ioctl is issued.
 	// This will prevent additional opens except by root-owned processes.
@@ -65,16 +72,39 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
+#endif
 
 	// Get current port settings
 	// TODO: Save the current settings in the class AND restore default settings later when exiting!
 	tcgetattr(mDev_fd, &options);
 
-	/*
+	options.c_iflag = IXON | IGNPAR; // Looks like IXON is default
+	options.c_oflag = 0;
+
+#ifdef Q_OS_MAC
+	// The CLOCAL setting is needed for MAC OS X 10.6 !!
+	options.c_cflag |= CLOCAL;		 	// Local line - do not change "owner" of port. @sa http://www.easysw.com/~mike/serial/serial.html#3_1_1
+#endif
+
+#ifdef Q_OS_LINUX
+	// start linux:                    N     8   1
+	options.c_cflag = CREAD | CLOCAL | 0 | CS8 | 1;
+#endif
+
 	options.c_lflag = 0;
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
-	*/
+
+/* linux:
+	// 8N1
+	options.c_cflag &= ~PARENB;
+	options.c_cflag &= ~CSTOPB;
+	options.c_cflag &= ~CSIZE;
+	options.c_cflag |= CS8;
+
+	// Disable hardware flow control:
+	options.c_cflag &= ~CRTSCTS;
+*/
 
 	// this part is originally from setparms:
 	newbaud = (baudrate/100);
@@ -140,36 +170,16 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// set speed (input and output)
 	if(spd != -1)
 	{
-		cfsetospeed(&options, (speed_t) spd);
 		cfsetispeed(&options, (speed_t) spd);
+		cfsetospeed(&options, (speed_t) spd);
 	}
 	else
 	{
 		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
 	}
 
-
-	/*
-	options.c_iflag = IXON | IGNPAR; // Looks like IXON is default
-	options.c_oflag = 0;
-	*/
-
-	// The CLOCAL setting is needed for MAC OS X 10.6 !!
-	options.c_cflag |= CLOCAL;		 	// Local line - do not change "owner" of port. @sa http://www.easysw.com/~mike/serial/serial.html#3_1_1
-
-	// 8N1
-	options.c_cflag &= ~PARENB;
-	options.c_cflag &= ~CSTOPB;
-	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
-
-	// Disable hardware flow control:
-	options.c_cflag &= ~CRTSCTS;
-
-	/*
 	// Flushes all pending I/O to the serial port
-	tcflush(dev_fd, TCIFLUSH);
-	*/
+	tcflush(mDev_fd, TCIFLUSH);
 
 	// Cause the new options to take effect immediately.
 	tcsetattr(mDev_fd, TCSANOW, &options);
@@ -503,9 +513,8 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 	
 	if (n < 0)
 	{
-		// error
-		//qDebug("write() of n bytes failed!");
-		return errno;
+	    qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
+	    return errno;
 	}
 	else
 	{
@@ -537,7 +546,8 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
 		if (err == 0)
 		{
-			return errno;
+		    qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
+		    return errno;
 		}
 	
 		// read from the serial device
@@ -545,7 +555,8 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
-			return errno;
+		    qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
+		    return errno;
 		}
 		else
 		{
