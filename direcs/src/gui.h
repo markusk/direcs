@@ -484,12 +484,18 @@ class Gui : public QMainWindow
 		JoystickDialog *joystickDialog; // just a pointer to the object created in the direcs class!
 		AboutDialog *aboutDialog;       // just a pointer to the object created in the direcs class!
 #ifndef BUILDFORROBOT
+		QwtPlot *qwtPlotVoltage1; // this object will be added to the GUI layout if we don't build on the robot directly!
+		QwtPlot *qwtPlotVoltage2; // this object will be added to the GUI layout if we don't build on the robot directly!
+		QwtPlot *qwtPlotCurrent1; // this object will be added to the GUI layout if we don't build on the robot directly!
+		QwtPlot *qwtPlotCurrent2; // this object will be added to the GUI layout if we don't build on the robot directly!
+		QwtPlot *qwtPlotCurrent3; // this object will be added to the GUI layout if we don't build on the robot directly!
+		QwtPlot *qwtPlotCurrent4; // this object will be added to the GUI layout if we don't build on the robot directly!
+		QwtPlotCurve curveVoltage1;
+		QwtPlotCurve curveVoltage2;
 		QwtPlotCurve curveCurrent1;
 		QwtPlotCurve curveCurrent2;
 		QwtPlotCurve curveCurrent3;
 		QwtPlotCurve curveCurrent4;
-		QwtPlotCurve curveVoltage1;
-		QwtPlotCurve curveVoltage2;
 // 		QwtCompassMagnetNeedle needle;
 #endif
 		QPixmap cameraPicToSave;
