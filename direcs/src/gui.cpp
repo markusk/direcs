@@ -145,14 +145,6 @@ infrared Sensors temporarily removed from robot!!
 
 Gui::~Gui()
 {
-#ifndef BUILDFORROBOT
-	delete qwtPlotVoltage2;
-	delete qwtPlotVoltage1;
-
-	delete qwtPlotCurrent2;
-	delete qwtPlotCurrent1;
-#endif
-
 	delete pixmapBot2;
 	delete pixmapBot1;
 	
@@ -1410,10 +1402,10 @@ void Gui::setPlotData1(double *xval, double *yval, int size)
 	curveCurrent1.setData(xval, yval, size);
 
 	// attach data to curve
-	curveCurrent1.attach(qwtPlotCurrent1);
+	curveCurrent1.attach(&qwtPlotCurrent1);
 
 	// after changing the values, replot the curve
-	qwtPlotCurrent1->replot();
+	qwtPlotCurrent1.replot();
 }
 #endif
 
@@ -1429,10 +1421,10 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 	curveCurrent2.setData(xval, yval, size);
 
 	// attach data to curve
-	curveCurrent2.attach(qwtPlotCurrent1); // add curve to qwtPlot 1 !!
+	curveCurrent2.attach(&qwtPlotCurrent1); // add curve to qwtPlot 1 !!
 
 	// after changing the values, replot the curve
-	qwtPlotCurrent1->replot(); // replot qwtPlot 1 !!
+	qwtPlotCurrent1.replot(); // replot qwtPlot 1 !!
 }
 #endif
 
@@ -1448,10 +1440,10 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 	curveCurrent3.setData(xval, yval, size);
 
 	// attach data to curve
-	curveCurrent3.attach(qwtPlotCurrent2); // curve 3 to qwtPlot 2
+	curveCurrent3.attach(&qwtPlotCurrent2); // curve 3 to qwtPlot 2
 
 	// after changing the values, replot the curve
-	qwtPlotCurrent2->replot();
+	qwtPlotCurrent2.replot();
 }
 #endif
 
@@ -1467,10 +1459,10 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 	curveCurrent4.setData(xval, yval, size);
 
 	// attach data to curve
-	curveCurrent4.attach(qwtPlotCurrent2); // curve 4 to qwtPlot 2
+	curveCurrent4.attach(&qwtPlotCurrent2); // curve 4 to qwtPlot 2
 
 	// after changing the values, replot the curve
-	qwtPlotCurrent2->replot();  // replot qwtPlot 2 !!
+	qwtPlotCurrent2.replot();  // replot qwtPlot 2 !!
 }
 #endif
 
@@ -1486,10 +1478,10 @@ void Gui::setPlotData5(double *xval, double *yval, int size)
 	curveVoltage1.setData(xval, yval, size);
 
 	// attach data to curve
-	curveVoltage1.attach(qwtPlotVoltage1);
+	curveVoltage1.attach(&qwtPlotVoltage1);
 
 	// after changing the values, replot the curve
-	qwtPlotVoltage1->replot();
+	qwtPlotVoltage1.replot();
 }
 #endif
 
@@ -1505,10 +1497,10 @@ void Gui::setPlotData6(double *xval, double *yval, int size)
 	curveVoltage2.setData(xval, yval, size);
 
 	// attach data to curve
-	curveVoltage2.attach(qwtPlotVoltage2);
+	curveVoltage2.attach(&qwtPlotVoltage2);
 
 	// after changing the values, replot the curve
-	qwtPlotVoltage2->replot();
+	qwtPlotVoltage2.replot();
 }
 #endif
 
@@ -2801,11 +2793,11 @@ void Gui::initLaserStuff()
 void Gui::initPlots()
 {
 	// create to qwt plot objects and place them in the GUI
-	qwtPlotVoltage1 = new QwtPlot(ui.widgetVoltage1);
-	qwtPlotVoltage2 = new QwtPlot(ui.widgetVoltage2);
+	qwtPlotVoltage1.setParent(ui.widgetVoltage1);
+	qwtPlotVoltage2.setParent(ui.widgetVoltage2);
 
-	qwtPlotCurrent1 = new QwtPlot(ui.widgetCurrent1and2);
-	qwtPlotCurrent2 = new QwtPlot(ui.widgetCurrent3and4);
+	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
+	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
 
 	QwtText plotTitle;
 	// get the current application font
@@ -2818,9 +2810,9 @@ void Gui::initPlots()
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
 	// set this font for the plot widget
-	qwtPlotCurrent1->setAxisFont(QwtPlot::xBottom, applicationFont);
-	qwtPlotCurrent1->setAxisFont(QwtPlot::yLeft, applicationFont);
-	qwtPlotCurrent1->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	qwtPlotCurrent1.setAxisFont(QwtPlot::xBottom, applicationFont);
+	qwtPlotCurrent1.setAxisFont(QwtPlot::yLeft, applicationFont);
+	qwtPlotCurrent1.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
 	// set title and font of plot widget
 	fontSize = applicationFont.pointSize();
@@ -2829,11 +2821,11 @@ void Gui::initPlots()
 	applicationFont.setPointSize(++fontSize);
 	applicationFont.setBold(true);
 	plotTitle.setFont(applicationFont);
-	qwtPlotCurrent1->setTitle(plotTitle);
+	qwtPlotCurrent1.setTitle(plotTitle);
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec)
-	qwtPlotCurrent1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	qwtPlotCurrent1.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
 	curveCurrent1.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent1.setPen(QPen(labelFillColorBlue));
@@ -2847,9 +2839,9 @@ void Gui::initPlots()
 	applicationFont = QApplication::font();
 	
 	// set this font for the plot widget
-	qwtPlotCurrent2->setAxisFont(QwtPlot::xBottom, applicationFont);
-	qwtPlotCurrent2->setAxisFont(QwtPlot::yLeft, applicationFont);
-	qwtPlotCurrent2->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	qwtPlotCurrent2.setAxisFont(QwtPlot::xBottom, applicationFont);
+	qwtPlotCurrent2.setAxisFont(QwtPlot::yLeft, applicationFont);
+	qwtPlotCurrent2.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
 	// set title and font of plot widget
 	fontSize = applicationFont.pointSize();
@@ -2858,11 +2850,11 @@ void Gui::initPlots()
 	applicationFont.setPointSize(++fontSize);
 	applicationFont.setBold(true);
 	plotTitle.setFont(applicationFont);
-	qwtPlotCurrent2->setTitle(plotTitle);
+	qwtPlotCurrent2.setTitle(plotTitle);
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec)
-	qwtPlotCurrent2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	qwtPlotCurrent2.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
 	curveCurrent2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent2.setPen(QPen(labelFillColorRed));
@@ -2890,9 +2882,9 @@ void Gui::initPlots()
 	// get the current application font
 	applicationFont = QApplication::font();
 	// set this font for the plot widget
-	qwtPlotVoltage1->setAxisFont(QwtPlot::xBottom, applicationFont);
-	qwtPlotVoltage1->setAxisFont(QwtPlot::yLeft, applicationFont);
-	qwtPlotVoltage1->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	qwtPlotVoltage1.setAxisFont(QwtPlot::xBottom, applicationFont);
+	qwtPlotVoltage1.setAxisFont(QwtPlot::yLeft, applicationFont);
+	qwtPlotVoltage1.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
 	// set title and font of plot widget
 	fontSize = applicationFont.pointSize();
@@ -2901,15 +2893,15 @@ void Gui::initPlots()
 	applicationFont.setPointSize(++fontSize);
 	applicationFont.setBold(true);
 	plotTitle.setFont(applicationFont);
-	qwtPlotVoltage1->setTitle(plotTitle);
+	qwtPlotVoltage1.setTitle(plotTitle);
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
-	qwtPlotVoltage1->setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE1, 2.0); // TODO: put a nice step value here, to ini or to config mene
+	qwtPlotVoltage1.setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE1, 2.0); // TODO: put a nice step value here, to ini or to config mene
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec)
-	qwtPlotVoltage1->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	qwtPlotVoltage1.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
 	curveVoltage1.setRenderHint(QwtPlotItem::RenderAntialiased);
  	curveVoltage1.setPen(QPen(labelFillColorBlue));
@@ -2922,9 +2914,9 @@ void Gui::initPlots()
 	// get the current application font
 	applicationFont = QApplication::font();
 	// set this font for the plot widget
-	qwtPlotVoltage2->setAxisFont(QwtPlot::xBottom, applicationFont);
-	qwtPlotVoltage2->setAxisFont(QwtPlot::yLeft, applicationFont);
-	qwtPlotVoltage2->setAxisFont(QwtPlot::axisCnt, applicationFont);
+	qwtPlotVoltage2.setAxisFont(QwtPlot::xBottom, applicationFont);
+	qwtPlotVoltage2.setAxisFont(QwtPlot::yLeft, applicationFont);
+	qwtPlotVoltage2.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
 	// set title and font of plot widget
 	fontSize = applicationFont.pointSize();
@@ -2933,15 +2925,15 @@ void Gui::initPlots()
 	applicationFont.setPointSize(++fontSize);
 	applicationFont.setBold(true);
 	plotTitle.setFont(applicationFont);
-	qwtPlotVoltage2->setTitle(plotTitle);
+	qwtPlotVoltage2.setTitle(plotTitle);
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
-	qwtPlotVoltage2->setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE2, 4.0); // TODO: put a nice step value here, to ini or to config mene
+	qwtPlotVoltage2.setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE2, 4.0); // TODO: put a nice step value here, to ini or to config mene
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec)
-	qwtPlotVoltage2->setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	qwtPlotVoltage2.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
 
 	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveVoltage2.setPen(QPen(labelFillColorBlue));
@@ -2949,11 +2941,11 @@ void Gui::initPlots()
 
 
 	// resize qwt plot items to the correct underlying frame size
-	qwtPlotVoltage1->setGeometry( ui.widgetVoltage1->rect() );
-	qwtPlotVoltage2->setGeometry( ui.widgetVoltage2->rect() );
+	qwtPlotVoltage1.setGeometry( ui.widgetVoltage1->rect() );
+	qwtPlotVoltage2.setGeometry( ui.widgetVoltage2->rect() );
 
-	qwtPlotCurrent1->setGeometry( ui.widgetCurrent1and2->rect() );
-	qwtPlotCurrent2->setGeometry( ui.widgetCurrent1and2->rect() );
+	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
+	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
 }
 #endif
 
