@@ -145,11 +145,13 @@ infrared Sensors temporarily removed from robot!!
 
 Gui::~Gui()
 {
+#ifndef BUILDFORROBOT
 	delete qwtPlotVoltage2;
 	delete qwtPlotVoltage1;
 
 	delete qwtPlotCurrent2;
 	delete qwtPlotCurrent1;
+#endif
 
 	delete pixmapBot2;
 	delete pixmapBot1;
