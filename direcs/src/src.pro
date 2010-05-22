@@ -123,6 +123,23 @@ macx {
 }
 
 
+message( Checking if hostname is robot... )
+HOSTNAME = $$system(hostname)
+message( Hostname is $$HOSTNAME )
+
+contains( HOSTNAME, [rR]obot ) {
+	 message( Configuring for robot build... )
+	 DEFINES += BUILDFORROBOT
+	 # remove qwt (plot) stuff
+	 message( Removing plot stuff (qwt)..." )
+	 INCLUDEPATH -= /usr/include/qwt-qt4
+	 HEADERS     -= plotThread.h
+	 SOURCES     -= plotThread.cpp
+	 LIBS        -= -lqwt
+	 message( Robot configuration finished. )
+}
+
+
 win32 {
 	message("****************************")
 	message("Sorry guys, no Win* support!")
