@@ -64,7 +64,7 @@ DEBUG =
 
 # List any extra directories to look for include files here.
 #     Each directory must be seperated by a space.
-EXTRAINCDIRS = 
+EXTRAINCDIRS = /opt/local/avr/include
 
 
 # Compiler flag to set the C Standard level.
