@@ -78,8 +78,10 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// TODO: Save the current settings in the class AND restore default settings later when exiting!
 	tcgetattr(mDev_fd, &options);
 
+#ifdef Q_OS_LINUX
 	options.c_iflag = IXON | IGNPAR; // Looks like IXON is default
 	options.c_oflag = 0;
+#endif
 
 #ifdef Q_OS_MAC
 	// The CLOCAL setting is needed for MAC OS X 10.6 !!
@@ -95,7 +97,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
 
-/* linux:
+#ifdef Q_OS_MAC
 	// 8N1
 	options.c_cflag &= ~PARENB;
 	options.c_cflag &= ~CSTOPB;
@@ -104,7 +106,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 	// Disable hardware flow control:
 	options.c_cflag &= ~CRTSCTS;
-*/
+#endif
 
 	// this part is originally from setparms:
 	newbaud = (baudrate/100);
