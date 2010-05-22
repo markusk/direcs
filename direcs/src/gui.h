@@ -38,18 +38,17 @@
 #include "QtGLContext.h"
 #include "compassWidget.h"
 #include "ui_mainWindow.h"
-//-------------------------------------------------------------------
+
+#ifndef BUILDFORROBOT
 #include <qwt_plot_layout.h>
 #include <qwt_plot_curve.h>
 #include <qwt_scale_draw.h>
 #include <qwt_scale_widget.h>
 #include <qwt_legend.h>
 #include <qwt_legend_item.h>
-//-------------------------------------------------------------------
 // #include <qwt_compass.h>
 #include <qwt_dial_needle.h>
-//-------------------------------------------------------------------
-
+#endif
 
 
 /**
@@ -192,6 +191,7 @@ class Gui : public QMainWindow
 		 */
 		void setRobotControls(bool state);
 
+#ifndef BUILDFORROBOT
 		/**
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -200,7 +200,9 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData1(double *xval, double *yval, int size);
+#endif
 
+#ifndef BUILDFORROBOT
 		/**
 		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -209,7 +211,9 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData2(double *xval, double *yval, int size);
+#endif
 
+#ifndef BUILDFORROBOT
 		/**
 		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -218,7 +222,9 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData3(double *xval, double *yval, int size);
+#endif
 
+#ifndef BUILDFORROBOT
 		/**
 		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -227,7 +233,9 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData4(double *xval, double *yval, int size);
+#endif
 
+#ifndef BUILDFORROBOT
 		/**
 		Shows the actual plot data (e.g. measured voltage from sensor 1). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -236,7 +244,9 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData5(double *xval, double *yval, int size);
+#endif
 
+#ifndef BUILDFORROBOT
 		/**
 		Shows the actual plot data (e.g. measured voltage from sensor 2). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
@@ -245,6 +255,7 @@ class Gui : public QMainWindow
 		@sa PlotThread()
 		*/
 		void setPlotData6(double *xval, double *yval, int size);
+#endif
 
 		/**
 		Refreshes the view of the lines from the front laser scanner.
@@ -447,7 +458,9 @@ class Gui : public QMainWindow
 
 	private:
 		void init();
+#ifndef BUILDFORROBOT
 		void initPlots();
+#endif
 // 		void initCompass();
 		void initCompassView();
 		
@@ -470,6 +483,7 @@ class Gui : public QMainWindow
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the direcs class!
 		JoystickDialog *joystickDialog; // just a pointer to the object created in the direcs class!
 		AboutDialog *aboutDialog;       // just a pointer to the object created in the direcs class!
+#ifndef BUILDFORROBOT
 		QwtPlotCurve curveCurrent1;
 		QwtPlotCurve curveCurrent2;
 		QwtPlotCurve curveCurrent3;
@@ -477,6 +491,7 @@ class Gui : public QMainWindow
 		QwtPlotCurve curveVoltage1;
 		QwtPlotCurve curveVoltage2;
 // 		QwtCompassMagnetNeedle needle;
+#endif
 		QPixmap cameraPicToSave;
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;

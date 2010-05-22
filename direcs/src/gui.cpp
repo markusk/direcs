@@ -119,10 +119,12 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
 
+#ifndef BUILDFORROBOT
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
 	initPlots();
+#endif
 
 	//----------------------------------------------------------------------------
 	// Compass stuff
@@ -1393,6 +1395,7 @@ void Gui::saveCamImage(void)
 }
 
 
+#ifndef BUILDFORROBOT
 void Gui::setPlotData1(double *xval, double *yval, int size)
 {
 	//---------------
@@ -1408,8 +1411,10 @@ void Gui::setPlotData1(double *xval, double *yval, int size)
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot();
 }
+#endif
 
 
+#ifndef BUILDFORROBOT
 void Gui::setPlotData2(double *xval, double *yval, int size)
 {
 	//---------------
@@ -1425,8 +1430,10 @@ void Gui::setPlotData2(double *xval, double *yval, int size)
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent1->replot(); // replot qwtPlot 1 !!
 }
+#endif
 
 
+#ifndef BUILDFORROBOT
 void Gui::setPlotData3(double *xval, double *yval, int size)
 {
 	//---------------
@@ -1442,8 +1449,10 @@ void Gui::setPlotData3(double *xval, double *yval, int size)
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();
 }
+#endif
 
 
+#ifndef BUILDFORROBOT
 void Gui::setPlotData4(double *xval, double *yval, int size)
 {
 	//---------------
@@ -1459,8 +1468,10 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 	// after changing the values, replot the curve
 	ui.qwtPlotCurrent2->replot();  // replot qwtPlot 2 !!
 }
+#endif
 
 
+#ifndef BUILDFORROBOT
 void Gui::setPlotData5(double *xval, double *yval, int size)
 {
 	//---------------
@@ -1476,8 +1487,10 @@ void Gui::setPlotData5(double *xval, double *yval, int size)
 	// after changing the values, replot the curve
 	ui.qwtPlotVoltage1->replot();
 }
+#endif
 
 
+#ifndef BUILDFORROBOT
 void Gui::setPlotData6(double *xval, double *yval, int size)
 {
 	//---------------
@@ -1493,6 +1506,7 @@ void Gui::setPlotData6(double *xval, double *yval, int size)
 	// after changing the values, replot the curve
 	ui.qwtPlotVoltage2->replot();
 }
+#endif
 
 
 void Gui::on_btnPower1_toggled(bool checked)
@@ -2779,6 +2793,7 @@ void Gui::initLaserStuff()
 }
 
 
+#ifndef BUILDFORROBOT
 void Gui::initPlots()
 {
 	QwtText plotTitle;
@@ -2916,6 +2931,7 @@ void Gui::initPlots()
 	curveVoltage2.setPen(QPen(labelFillColorBlue));
 // 	curveVoltage2.setBrush(labelFillColorBlue); // this fills the area under the line
 }
+#endif
 
 
 /*

@@ -27,7 +27,11 @@
 #include "joystickDialog.h"
 #include "settingsDialog.h"
 #include "aboutDialog.h"
-#include "plotThread.h"
+
+#ifndef BUILDFORROBOT
+	#include "plotThread.h"
+#endif
+
 #include "circuit.h"
 #include "interfaceAvr.h"
 //#include "heartbeat.h"
@@ -292,7 +296,11 @@ class Direcs : public QObject
 		SettingsDialog *settingsDialog; /// The settings dialog
 		JoystickDialog *joystickDialog; /// The joystick dialog
 		AboutDialog *aboutDialog;       /// The about dialog
+
+#ifndef BUILDFORROBOT
 		PlotThread *plotThread;
+#endif
+
 		QSplashScreen *splash;
 #ifndef _ARM_ // only include on _non_ ARM environments!
 		Qt::Alignment splashPosition; 	/// The splash screen position

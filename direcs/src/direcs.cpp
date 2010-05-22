@@ -126,10 +126,14 @@ Direcs::Direcs(bool bConsoleMode)
 	servos = new Servo(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
+
+#ifndef BUILDFORROBOT
 	if (!consoleMode)
 	{
 		plotThread = new PlotThread(sensorThread);
 	}
+#endif
+
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
 	if (!consoleMode)
@@ -434,7 +438,7 @@ void Direcs::init()
 		emit splashMessage("Reading settings...");
 		readSettings();
 
-
+#ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
 			//----------------------------------------------------------------------------
@@ -448,7 +452,7 @@ void Direcs::init()
 			connect(plotThread, SIGNAL( plotDataComplete5(double *, double *, int) ), gui, SLOT( setPlotData5(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete6(double *, double *, int) ), gui, SLOT( setPlotData6(double *, double *, int) ));
 		}
-
+#endif
 
 		//----------------------------------------------------------------------------
 		// let the GUI show messages in the log docks
@@ -573,6 +577,7 @@ void Direcs::init()
 					emit message("Sensor thread started.");
 				}
 
+#ifndef BUILDFORROBOT
 				if (!consoleMode)
 				{
 					//-----------------------------------------------------------
@@ -586,6 +591,7 @@ void Direcs::init()
 						emit message("Plot thread started.");
 					}
 				}
+#endif
 			} // init was successfull
 			else
 			{
@@ -1245,6 +1251,7 @@ void Direcs::shutdown()
 		}
 
 		
+#ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
 			//--------------------------------
@@ -1285,6 +1292,7 @@ void Direcs::shutdown()
 				}
 			}
 		}
+#endif
 
 
 		//--------------------------------
@@ -1472,10 +1480,14 @@ Direcs::~Direcs()
 		delete camThread;
 	}
 	delete joystick;
+
+#ifndef BUILDFORROBOT
 	if (!consoleMode)
 	{
 		delete plotThread;
 	}
+#endif
+
 	delete inifile1;
 	delete obstCheckThread;
 	delete servos;
@@ -4236,6 +4248,7 @@ void Direcs::setSimulationMode(bool status)
 			emit message("Started.");
 		}
 
+#ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
 			if (plotThread->isRunning() == false)
@@ -4245,6 +4258,7 @@ void Direcs::setSimulationMode(bool status)
 				emit message("Started.");
 			}
 		}
+#endif
 
 		if (obstCheckThread->isRunning() == false)
 		{
