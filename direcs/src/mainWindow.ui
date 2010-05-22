@@ -996,17 +996,17 @@
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QFrame" name="framePlotVoltage1">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+        <widget class="QWidget" name="widgetVoltage1" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="layoutVoltage1">
          <item>
           <widget class="QLabel" name="lblBattery1">
            <property name="text">
@@ -1050,18 +1050,18 @@
      <item row="0" column="1">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QFrame" name="framePlotVoltage2">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+        <widget class="QWidget" name="widgetVoltage2" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_9">
-         <item row="0" column="0">
+        <layout class="QHBoxLayout" name="layoutVoltage2">
+         <item>
           <widget class="QLabel" name="lblBattery2">
            <property name="text">
             <string/>
@@ -1074,7 +1074,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item>
           <widget class="QLabel" name="lblVoltage2">
            <property name="font">
             <font>
@@ -1114,16 +1114,9 @@
    <widget class="QWidget" name="dockWidgetContents_5">
     <layout class="QGridLayout" name="gridLayout_5">
      <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="layoutCurrent1">
        <item>
-        <widget class="QFrame" name="framePlotCurrent1">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-        </widget>
+        <widget class="QWidget" name="widgetCurrent1" native="true"/>
        </item>
        <item>
         <widget class="QLabel" name="lblCurrent1">
@@ -1151,16 +1144,9 @@
       </layout>
      </item>
      <item row="0" column="1">
-      <layout class="QVBoxLayout" name="verticalLayout_9">
+      <layout class="QVBoxLayout" name="layoutCurrent2">
        <item>
-        <widget class="QFrame" name="framePlotCurrent2">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-        </widget>
+        <widget class="QWidget" name="widgetCurrent2" native="true"/>
        </item>
        <item>
         <widget class="QLabel" name="lblCurrent2">
