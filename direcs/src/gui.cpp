@@ -148,11 +148,8 @@ Gui::~Gui()
 	delete qwtPlotVoltage2;
 	delete qwtPlotVoltage1;
 
-	delete qwtPlotCurrent4;
-	delete qwtPlotCurrent3;
 	delete qwtPlotCurrent2;
 	delete qwtPlotCurrent1;
-
 
 	delete pixmapBot2;
 	delete pixmapBot1;
@@ -2804,10 +2801,9 @@ void Gui::initPlots()
 	// create to qwt plot objects and place them in the GUI
 	qwtPlotVoltage1 = new QwtPlot(ui.widgetVoltage1);
 	qwtPlotVoltage2 = new QwtPlot(ui.widgetVoltage2);
-	qwtPlotCurrent1 = new QwtPlot(ui.widgetCurrent1);
-	qwtPlotCurrent2 = new QwtPlot(ui.widgetCurrent1);
-	qwtPlotCurrent3 = new QwtPlot(ui.widgetCurrent2);
-	qwtPlotCurrent4 = new QwtPlot(ui.widgetCurrent2);
+
+	qwtPlotCurrent1 = new QwtPlot(ui.widgetCurrent1and2);
+	qwtPlotCurrent2 = new QwtPlot(ui.widgetCurrent3and4);
 
 	QwtText plotTitle;
 	// get the current application font
@@ -2817,7 +2813,7 @@ void Gui::initPlots()
 	
 	
 	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 1 + 2
+	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
 	// set this font for the plot widget
 	qwtPlotCurrent1->setAxisFont(QwtPlot::xBottom, applicationFont);
@@ -2843,9 +2839,9 @@ void Gui::initPlots()
 
 
 	//--------------------------------------
-	// plot curve "MOTOR CURRENT" 3 + 4
+	// plot curve "MOTOR CURRENT" 2
 	//--------------------------------------
-	// get the current application font
+	// get the current application font again
 	applicationFont = QApplication::font();
 	
 	// set this font for the plot widget
@@ -2870,12 +2866,17 @@ void Gui::initPlots()
 	curveCurrent2.setPen(QPen(labelFillColorRed));
 // 	curveCurrent2.setBrush(labelFillColorRed); // this fills the area under the line
 
+
+	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3
+	//--------------------------------------
 	curveCurrent3.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent3.setPen(QPen(labelFillColorBlue));
 // 	curveCurrent3.setBrush(labelFillColorBlue); // this fills the area under the line
 
+	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 4
+	//--------------------------------------
 	curveCurrent4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent4.setPen(QPen(labelFillColorRed));
 // 	curveCurrent4.setBrush(labelFillColorRed); // this fills the area under the line
@@ -2948,6 +2949,9 @@ void Gui::initPlots()
 	// resize qwt plot items to the correct underlying frame size
 	qwtPlotVoltage1->setGeometry( ui.widgetVoltage1->rect() );
 	qwtPlotVoltage2->setGeometry( ui.widgetVoltage2->rect() );
+
+	qwtPlotCurrent1->setGeometry( ui.widgetCurrent1and2->rect() );
+	qwtPlotCurrent2->setGeometry( ui.widgetCurrent1and2->rect() );
 }
 #endif
 
