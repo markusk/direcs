@@ -2799,33 +2799,24 @@ void Gui::initPlots()
 	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
 	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
 
-	QwtText plotTitle;
 	// get the current application font
 	QFont applicationFont = QApplication::font();
-	int fontSize = 0;
-	QColor col;
 	
 	
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
-	// set this font for the plot widget
+	// set the font for the plot widget
 	qwtPlotCurrent1.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotCurrent1.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotCurrent1.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
-	// set title and font of plot widget
-	fontSize = applicationFont.pointSize();
-	plotTitle = QString("Motor 1 + 2");
-	// increase title by 2 points
-	applicationFont.setPointSize(++fontSize);
-	applicationFont.setBold(true);
-	plotTitle.setFont(applicationFont);
-	qwtPlotCurrent1.setTitle(plotTitle);
+	// set title
+	qwtPlotCurrent1.setTitle("Motor 1 + 2");
 	
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec)
-	qwtPlotCurrent1.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// min (0.0), time (60.0 sec), step width 0=auto
+	qwtPlotCurrent1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveCurrent1.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent1.setPen(QPen(labelFillColorBlue));
@@ -2838,23 +2829,17 @@ void Gui::initPlots()
 	// get the current application font again
 	applicationFont = QApplication::font();
 	
-	// set this font for the plot widget
+	// set the font for the plot widget
 	qwtPlotCurrent2.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotCurrent2.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotCurrent2.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
-	// set title and font of plot widget
-	fontSize = applicationFont.pointSize();
-	plotTitle = QString("Motor 3 + 4");
-	// increase title by 2 points
-	applicationFont.setPointSize(++fontSize);
-	applicationFont.setBold(true);
-	plotTitle.setFont(applicationFont);
-	qwtPlotCurrent2.setTitle(plotTitle);
+	// set title
+	qwtPlotCurrent2.setTitle("Motor 3 + 4");
 
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec)
-	qwtPlotCurrent2.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// time (60 sec), step width 10
+	qwtPlotCurrent2.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveCurrent2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent2.setPen(QPen(labelFillColorRed));
@@ -2886,22 +2871,16 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotVoltage1.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
-	// set title and font of plot widget
-	fontSize = applicationFont.pointSize();
-	plotTitle = QString("12 V Battery");
-	// increase title by 2 points
-	applicationFont.setPointSize(++fontSize);
-	applicationFont.setBold(true);
-	plotTitle.setFont(applicationFont);
-	qwtPlotVoltage1.setTitle(plotTitle);
+	// set title
+	qwtPlotVoltage1.setTitle("12 V Battery");
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
-	qwtPlotVoltage1.setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE1, 2.0); // TODO: put a nice step value here, to ini or to config mene
+	qwtPlotVoltage1.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTVOLTAGE1);
 	
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec)
-	qwtPlotVoltage1.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// time (60 sec), step width 10
+	qwtPlotVoltage1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveVoltage1.setRenderHint(QwtPlotItem::RenderAntialiased);
  	curveVoltage1.setPen(QPen(labelFillColorBlue));
@@ -2918,22 +2897,16 @@ void Gui::initPlots()
 	qwtPlotVoltage2.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotVoltage2.setAxisFont(QwtPlot::axisCnt, applicationFont);
 	
-	// set title and font of plot widget
-	fontSize = applicationFont.pointSize();
-	plotTitle = QString("24 V Battery");
-	// increase title by 2 points
-	applicationFont.setPointSize(++fontSize);
-	applicationFont.setBold(true);
-	plotTitle.setFont(applicationFont);
-	qwtPlotVoltage2.setTitle(plotTitle);
+	// set title
+	qwtPlotVoltage2.setTitle("24 V Battery");
 	
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
-	qwtPlotVoltage2.setAxisScale(QwtPlot::yLeft, 0, MAXIMUMPLOTVOLTAGE2, 4.0); // TODO: put a nice step value here, to ini or to config mene
+	qwtPlotVoltage2.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTVOLTAGE2);
 	
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec)
-	qwtPlotVoltage2.setAxisScale(QwtPlot::xBottom, 0, 60.0, 10);
+	// time (60 sec), step width 10
+	qwtPlotVoltage2.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveVoltage2.setPen(QPen(labelFillColorBlue));
@@ -2946,6 +2919,9 @@ void Gui::initPlots()
 
 	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
 	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
+
+
+	qDebug("widget width=%d / height=%d", ui.widgetVoltage1->width(), ui.widgetVoltage1->height() );
 }
 #endif
 

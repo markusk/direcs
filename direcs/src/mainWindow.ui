@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>direcs - mobile robot system</string>
+   <string>direcs</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../direcs.qrc">
-    <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
+    <normaloff>:/images/images/direcs_256x256.png</normaloff>:/images/images/direcs_256x256.png</iconset>
   </property>
   <property name="dockNestingEnabled">
    <bool>true</bool>
@@ -997,11 +997,11 @@
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QWidget" name="widgetVoltage1" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>161</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -1051,11 +1051,11 @@
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
         <widget class="QWidget" name="widgetVoltage2" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>161</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -1116,7 +1116,14 @@
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QWidget" name="widgetCurrent1and2" native="true"/>
+        <widget class="QWidget" name="widgetCurrent1and2" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>161</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -1173,7 +1180,14 @@
      <item row="0" column="1">
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
-        <widget class="QWidget" name="widgetCurrent3and4" native="true"/>
+        <widget class="QWidget" name="widgetCurrent3and4" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>161</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -2114,7 +2128,7 @@
   <action name="actionDrive">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
+     <normaloff>:/images/images/direcs_256x256.png</normaloff>:/images/images/direcs_256x256.png</iconset>
    </property>
    <property name="text">
     <string>Drive</string>
