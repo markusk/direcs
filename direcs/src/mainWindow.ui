@@ -996,17 +996,12 @@
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QwtPlot" name="qwtPlotVoltage1">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>180</height>
-          </size>
+        <widget class="QFrame" name="framePlotVoltage1">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="font">
-          <font>
-           <family>Verdana</family>
-          </font>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
         </widget>
        </item>
@@ -1055,17 +1050,12 @@
      <item row="0" column="1">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QwtPlot" name="qwtPlotVoltage2">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>180</height>
-          </size>
+        <widget class="QFrame" name="framePlotVoltage2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="font">
-          <font>
-           <family>Verdana</family>
-          </font>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
         </widget>
        </item>
@@ -1126,92 +1116,74 @@
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QwtPlot" name="qwtPlotCurrent1">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>180</height>
-          </size>
+        <widget class="QFrame" name="framePlotCurrent1">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="font">
-          <font>
-           <family>Verdana</family>
-          </font>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_14">
-         <item row="0" column="0">
-          <widget class="QLabel" name="lblCurrent1">
-           <property name="font">
-            <font>
-             <pointsize>24</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string>0 mA</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QLabel" name="lblCurrent1">
+         <property name="font">
+          <font>
+           <pointsize>24</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="text">
+          <string>0 mA</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
      <item row="0" column="1">
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
-        <widget class="QwtPlot" name="qwtPlotCurrent2">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>180</height>
-          </size>
+        <widget class="QFrame" name="framePlotCurrent2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="font">
-          <font>
-           <family>Verdana</family>
-          </font>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_17">
-         <item row="0" column="0">
-          <widget class="QLabel" name="lblCurrent2">
-           <property name="font">
-            <font>
-             <pointsize>24</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string>0 mA</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QLabel" name="lblCurrent2">
+         <property name="font">
+          <font>
+           <pointsize>24</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="text">
+          <string>0 mA</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -2227,12 +2199,6 @@
   </action>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>QwtPlot</class>
-   <extends>QFrame</extends>
-   <header>qwt_plot.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>QtGLContext</class>
    <extends>QWidget</extends>
