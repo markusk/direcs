@@ -120,6 +120,8 @@ macx {
 
 	message("Changing qwt lib name. Has to be installed via macports.")
 	LIBS +=		-lqwt
+
+	ICON = ../images/direcs.icns
 }
 
 
@@ -128,10 +130,11 @@ HOSTNAME = $$system(hostname)
 message( Hostname is $$HOSTNAME )
 
 contains( HOSTNAME, [rR]obot ) {
-	 message( Configuring for robot build... )
+# contains( HOSTNAME, imac ) {
+	 message( *** Configuring for robot build... *** )
 	 DEFINES += BUILDFORROBOT
 	 # remove qwt (plot) stuff
-	 message( Removing plot stuff (qwt)..." )
+	 message( Removing plot stuff (qwt)... )
 	 INCLUDEPATH -= /usr/include/qwt-qt4
 	 HEADERS     -= plotThread.h
 	 SOURCES     -= plotThread.cpp
