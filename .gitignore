@@ -19,6 +19,7 @@ Makefile
 direcs/bin/direcs
 direcs/tmp/
 direcs/src/test/hellogl
+direcs.log
 
 direcs-avrsim/bin/
   
