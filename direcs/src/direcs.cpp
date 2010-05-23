@@ -194,28 +194,28 @@ void Direcs::init()
 	// check which OS we have. ACTUALLY we check for the WINDOW system, since the OS check doesn't worked (unix was recognized under mac os x)
 	//-----------------------------------------------------------------------------------------------------------------------------------------
 	#ifdef Q_OS_UNIX
-	qDebug("UNIX OS detected with Q_OS_UNIX.");
-	logfile->appendLog("UNIX OS detected with Q_OS_UNIX.");
+	qDebug("UNIX OS detected.");
+	logfile->appendLog("UNIX OS detected.");
 	#endif
 
 	#ifdef Q_OS_LINUX
-	qDebug("Linux OS detected with Q_OS_LINUX.");
-	logfile->appendLog("Linux OS detected with Q_OS_LINUX.");
+	qDebug("Linux OS detected.");
+	logfile->appendLog("Linux OS detected.");
 	#endif
 
 	#ifdef Q_WS_X11
-	qDebug("X11 detected with Q_WS_X11.");
-	logfile->appendLog("X11 detected with Q_WS_X11.");
+	qDebug("X11 detected.");
+	logfile->appendLog("X11 detected.");
 	#endif
 
 	#ifdef Q_OS_MAC
-	qDebug("MAC OS detected with Q_OS_MAC.");
-	logfile->appendLog("MAC OS detected with Q_OS_MAC.");
+	qDebug("MAC OS detected.");
+	logfile->appendLog("MAC OS detected.");
 	#endif
 
 	#ifdef Q_WS_MAC
-	qDebug("MAC OS detected with Q_WS_MAC.");
-	logfile->appendLog("MAC OS detected with Q_WS_MAC.");
+	qDebug("MAC OS WS detected.");
+	logfile->appendLog("MAC OS WS detected.");
 	#endif
 
 	//--------------------------------------------------------------------------
