@@ -39,7 +39,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	int newbaud = 0;
 
 
-#ifdef Q_OS_LINUX
      // mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);	// 2010-05-23: not needed for Atmel and SICK laser S300!
 	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK);
 
@@ -60,30 +59,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
-#endif
-
-#ifdef Q_OS_MAC
-	// s.a. http://developer.apple.com/mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
-	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK);
-
-	// Note that open() follows POSIX semantics: multiple open() calls to
-	// the same file will succeed unless the TIOCEXCL ioctl is issued.
-	// This will prevent additional opens except by root-owned processes.
-	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
-	if (ioctl(mDev_fd, TIOCEXCL) == -1)
-	{
-		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
-		return -1;
-	}
-
-	// Now that the device is open, clear the O_NONBLOCK flag so subsequent I/O will block.
-	// See fcntl(2) ("man 2 fcntl") for details.
-	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
-	{
-		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
-		return -1;
-	}
-#endif
 
 	if (mDev_fd < 0)
 	{
@@ -94,12 +69,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// Get current port settings
 	tcgetattr(mDev_fd, &options);
 
-#ifdef Q_OS_LINUX
-//	options.c_iflag = IXON | IGNPAR;	// 2010-05-23: not needed for Atmel and SICK laser S300!
-//	options.c_oflag = 0;			// 2010-05-23: not needed for Atmel and SICK laser S300!
-
-	//
-//	options.c_cflag = CREAD | CLOCAL;	// 2010-05-23: not needed for Atmel and SICK laser S300!
+	// this setting is needed for Mac OS! But works under Linux, too!
 	options.c_cflag |= CLOCAL;
 
 	// 8N1
@@ -110,22 +80,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 	// Disable hardware flow control:
 	options.c_cflag &= ~CRTSCTS;
-#endif
-
-#ifdef Q_OS_MAC
-	// The CLOCAL setting is needed for MAC OS X 10.6 !!
-	// CLOCAL means 'Local line' - do not change "owner" of port. @sa http://www.easysw.com/~mike/serial/serial.html#3_1_1
-	options.c_cflag |= CLOCAL;
-
-	// 8N1
-	options.c_cflag &= ~PARENB;
-	options.c_cflag &= ~CSTOPB;
-	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
-
-	// Disable hardware flow control:
-	options.c_cflag &= ~CRTSCTS;
-#endif
 
 	options.c_lflag = 0;
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
@@ -203,8 +157,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
 	}
 
-	// Flushes all pending I/O to the serial port
-	// Clears only the read buffer!
+	// Flushes all pending I/O to the serial port. This clears only the read buffer!
 	tcflush(mDev_fd, TCIFLUSH);
 
 	// Cause the new options to take effect immediately.
