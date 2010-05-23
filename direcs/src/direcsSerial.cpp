@@ -40,7 +40,8 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 
 #ifdef Q_OS_LINUX
-	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);
+     // mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);
+	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY);	// 2010-05-23: ",0" not needed for Atmel and SICK laser S300!
 #endif
 
 #ifdef Q_OS_MAC
@@ -76,8 +77,8 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	tcgetattr(mDev_fd, &options);
 
 #ifdef Q_OS_LINUX
-	options.c_iflag = IXON | IGNPAR; // Looks like IXON is default
-	options.c_oflag = 0;
+//	options.c_iflag = IXON | IGNPAR;	// 2010-05-23: not needed for Atmel and SICK laser S300!
+//	options.c_oflag = 0;			// 2010-05-23: not needed for Atmel and SICK laser S300!
 
 	//                                 N     8   1
 	options.c_cflag = CREAD | CLOCAL | 0 | CS8 | 1;
