@@ -16,7 +16,7 @@ moc_*.cpp
 
 Makefile
 
-direcs/bin/
+direcs/bin/direcs
 direcs/tmp/
 direcs/src/test/hellogl
 
