@@ -2919,9 +2919,6 @@ void Gui::initPlots()
 
 	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
 	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
-
-
-	qDebug("widget width=%d / height=%d", ui.widgetVoltage1->width(), ui.widgetVoltage1->height() );
 }
 #endif
 
