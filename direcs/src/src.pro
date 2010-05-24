@@ -16,6 +16,8 @@ CONFIG += debug \
 
 TEMPLATE = app
 
+DEFINES += ACTIVELASERVIEW
+
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
     HEADERS +=	aboutDialog.h \
@@ -129,16 +131,22 @@ message( Checking if hostname is robot... )
 HOSTNAME = $$system(hostname)
 message( Hostname is $$HOSTNAME )
 
+
 contains( HOSTNAME, [rR]obot ) {
-# contains( HOSTNAME, imac ) {
+#contains( HOSTNAME, imac ) {
 	 message( *** Configuring for robot build... *** )
 	 DEFINES += BUILDFORROBOT
-	 # remove qwt (plot) stuff
+	 DEFINES += LASERVIEW
+
 	 message( Removing plot stuff (qwt)... )
 	 INCLUDEPATH -= /usr/include/qwt-qt4
 	 HEADERS     -= plotThread.h
 	 SOURCES     -= plotThread.cpp
 	 LIBS        -= -lqwt
+
+	 message( Removing active laser view... )
+	 DEFINES -= ACTIVELASERVIEW
+
 	 message( Robot configuration finished. )
 }
 

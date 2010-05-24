@@ -29,25 +29,36 @@
 //-------------------------------------------------------------------
 #include <QtGui>
 #include <QtOpenGL>
-#include <QGraphicsScene> // for OpenGL (Laser lines)
+
+#ifdef ACTIVELASERVIEW
+	#include <QGraphicsScene> // for OpenGL (Laser lines)
+#endif
+
 //-------------------------------------------------------------------
 #include "joystickDialog.h"
 #include "settingsDialog.h"
 #include "aboutDialog.h"
-#include "laserScene.h"
-#include "QtGLContext.h"
+
+#ifdef ACTIVELASERVIEW
+	#include "laserScene.h"
+#endif
+
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
+	#include "QtGLContext.h"
+#endif
+
 #include "compassWidget.h"
 #include "ui_mainWindow.h"
 
 #ifndef BUILDFORROBOT
-#include <qwt_plot_layout.h>
-#include <qwt_plot_curve.h>
-#include <qwt_scale_draw.h>
-#include <qwt_scale_widget.h>
-#include <qwt_legend.h>
-#include <qwt_legend_item.h>
-// #include <qwt_compass.h>
-#include <qwt_dial_needle.h>
+	#include <qwt_plot_layout.h>
+	#include <qwt_plot_curve.h>
+	#include <qwt_scale_draw.h>
+	#include <qwt_scale_widget.h>
+	#include <qwt_legend.h>
+	#include <qwt_legend_item.h>
+	// #include <qwt_compass.h>
+	#include <qwt_dial_needle.h>
 #endif
 
 
@@ -111,6 +122,7 @@ class Gui : public QMainWindow
 		*/
 		void setCamImageData(int width, int height, int pixeldepth);
 
+#ifdef ACTIVELASERVIEW
 		/**
 		Initialise the laser view (find the middle of the now fresh shown control etc.)
 		*/
@@ -121,6 +133,7 @@ class Gui : public QMainWindow
 		Has to be called AFTER the laserType and angles are known (read from an ini-file) or so.
 		*/
 		void initLaserStuff();
+#endif
 
 
 	public slots:
@@ -257,6 +270,7 @@ class Gui : public QMainWindow
 		void setPlotData6(double *xval, double *yval, int size);
 #endif
 
+#ifdef ACTIVELASERVIEW
 		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/
@@ -271,6 +285,7 @@ class Gui : public QMainWindow
 		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
 		*/
 		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
+#endif
 
 		/**
 		Gets the angle of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 180 or 270 degrees)
@@ -286,10 +301,12 @@ class Gui : public QMainWindow
 		*/
 		void setLaserscannerResolution(short int laserscanner, float resolution);
 
+#ifdef ACTIVELASERVIEW
 		/**
 		Zoom into the graphicsView/scene, if the mouse wheel was used.
 		*/
 		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
+#endif
 
 		/**
 		Shows the angles of the free area where to drive in lables.
@@ -437,7 +454,11 @@ class Gui : public QMainWindow
 		void on_btnResetMovement2_clicked();
 		//void on_ckeckBoxSaveSettings_stateChanged(int state);
 		void on_btnSavePicture_clicked();
+
+#ifdef ACTIVELASERVIEW
 		void on_sliderZoom_valueChanged(int);
+#endif
+
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);
@@ -464,12 +485,14 @@ class Gui : public QMainWindow
 // 		void initCompass();
 		void initCompassView();
 		
+#ifdef ACTIVELASERVIEW
 		/**
 		Creates all objects, lines, scene, view etc.
 		*/
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
 		void createLaserWidthObjects();
+#endif
 
 		/**
 		Removes HTML code from a given string.
@@ -515,6 +538,8 @@ class Gui : public QMainWindow
 		int mLargestFreeAreaEndFront;   /// this stores the free area angle from the front laser. Got it from @sa showLaserFrontAngles()
 		int mLargestFreeAreaStartRear;  /// this stores the free area angle from the rear  laser. Got it from @sa showLaserFrontAngles()
 		int mLargestFreeAreaEndRear;    /// this stores the free area angle from the rear  laser. Got it from @sa showLaserFrontAngles()
+
+#ifdef ACTIVELASERVIEW
 		QPen laserLinePen;
 		int lastZoom;
 		qreal startScale;
@@ -529,7 +554,6 @@ class Gui : public QMainWindow
 		QList <QGraphicsSimpleTextItem*> *laserDistanceTextRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
-		QPixmap pixmap; // for IplImageToQImage()
 		QGraphicsEllipseItem *widthLeftCircleFront;  /// shows the width for the robots drive-trough for the front laser
 		QGraphicsEllipseItem *widthRightCircleFront; /// shows the width for the robots drive-trough for the front laser
 		QGraphicsLineItem *widthLineFront;           /// shows the width for the robots drive-trough for the front laser
@@ -539,6 +563,10 @@ class Gui : public QMainWindow
 		QGraphicsLineItem *widthLineRear;            /// shows the width for the robots drive-trough for the rear laser
 		QGraphicsSimpleTextItem *widthTextRear;      /// shows the width for the robots drive-trough for the rear laser
 		qreal widthCirclesWidth; /// the width of the robots drive-tru circles
+#endif
+
+		QPixmap pixmap; // for IplImageToQImage()
+
 	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui

@@ -30,8 +30,12 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 	robotIsOn = false;
 	consoleMode = false;
+
+#ifdef ACTIVELASERVIEW
 	laserXPos = 0; // correct value is set in the initLaserView()!!
 	laserYPos = 0; // correct value is set in the initLaserView()!!
+#endif
+
 	laserscannerAngleFront = 0;
 	laserscannerAngleRear = 0;
 	laserscannerResolutionFront = 0;
@@ -131,7 +135,7 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
-	// -> the laser lines and pixmap init sutff is now done AFTER the laser settings are read in the direcs main class!
+	// -> the laser lines and pixmap init stuff is now done AFTER the laser settings are read in the direcs main class!
 
 
 	//----------------------------------
@@ -145,6 +149,7 @@ infrared Sensors temporarily removed from robot!!
 
 Gui::~Gui()
 {
+#ifdef ACTIVELASERVIEW
 	delete pixmapBot2;
 	delete pixmapBot1;
 	
@@ -202,6 +207,7 @@ Gui::~Gui()
 	delete laserLineListRear;
 
 	delete scene;
+#endif
 }
 
 
@@ -1204,8 +1210,11 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		ui.lblLaserFrontFreeWidth->setText("oo");
 	}
 
+
+#ifdef ACTIVELASERVIEW
 	// show the same width in the scene
 	widthTextFront->setText( ui.lblLaserFrontFreeWidth->text() );
+#endif
 }
 
 
@@ -1741,6 +1750,7 @@ void Gui::on_actionSimulate_activated()
 }
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::on_sliderZoom_valueChanged(int value)
 {
 	qreal x = 0;
@@ -1875,6 +1885,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		laserDistanceTextRear->at(i)->setText(text.left(text.indexOf(".") + 3) + "m");
 	}
 }
+#endif
 
 
 void Gui::on_checkBoxMirror_stateChanged(int state)
@@ -1914,6 +1925,7 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 }
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::initLaserView()
 {
 	int i = 0;
@@ -2030,8 +2042,10 @@ void Gui::initLaserView()
 	// zoom into the laser lines by default factor
 	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 }
+#endif
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> laserScannerFlags)
 {
 	qreal x = 0.0;
@@ -2216,8 +2230,10 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	widthRightCircleFront->setVisible(true);
 	widthLineFront->setVisible(true);
 }
+#endif
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> laserScannerFlags)
 {
 	qreal x = 0.0;
@@ -2386,8 +2402,10 @@ void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> las
 	widthRightCircleRear->setVisible(true);
 	widthLineRear->setVisible(true);
 }
+#endif
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	//qreal diff = laserFrontYPos - laserRearYPos;
@@ -2402,6 +2420,7 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 	// refresh laserView
 	on_sliderZoom_valueChanged(ui.sliderZoom->value());
 }
+#endif
 
 
 void Gui::setLaserscannerAngle(short int laserscanner, int angle)
@@ -2440,6 +2459,7 @@ void Gui::setLaserscannerResolution(short int laserscanner, float resolution)
 }
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 {
 	int zoomValue = ui.sliderZoom->value();
@@ -2457,8 +2477,10 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 	// refresh laserView (set zoom slider)
 	ui.sliderZoom->setValue(zoomValue);
 }
+#endif
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::createLaserScannerObjects()
 {
 	// the start position for the pos. calculation
@@ -2597,8 +2619,10 @@ void Gui::createLaserScannerObjects()
 //	pixmapBot1->setVisible(false); // just for testing
 //	pixmapBot2->setVisible(false); // just for testing
 }
+#endif
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::createLaserDistanceObjects()
 {
 	// set colors
@@ -2691,8 +2715,10 @@ void Gui::createLaserDistanceObjects()
 		scene->addItem(text);
 	}
 }
+#endif
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::createLaserWidthObjects()
 {
 	widthCirclesWidth = 10;  // TODO: which radius?
@@ -2772,8 +2798,10 @@ void Gui::createLaserWidthObjects()
 	scene->addItem(widthLineRear);
 	scene->addItem(widthTextRear);
 }
+#endif
 
 
+#ifdef ACTIVELASERVIEW
 void Gui::initLaserStuff()
 {
 	// called after all the laser settings have been read in the direcs mail class!
@@ -2787,6 +2815,7 @@ void Gui::initLaserStuff()
 	connect(scene, SIGNAL( robotPositionChanged(QGraphicsSceneMouseEvent *) ), this, SLOT( setRobotPosition(QGraphicsSceneMouseEvent *) ));
 	connect(scene, SIGNAL( wheelZoom(QGraphicsSceneWheelEvent *) ), this, SLOT( zoomLaserView(QGraphicsSceneWheelEvent *) ));
 }
+#endif
 
 
 #ifndef BUILDFORROBOT

@@ -748,6 +748,7 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		connect(this, SIGNAL(sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ));
 
+#ifdef ACTIVELASERVIEW
 		if (!consoleMode)
 		{
 			//----------------------------------------------------------------------------
@@ -760,6 +761,7 @@ void Direcs::init()
 			connect(laserThread, SIGNAL( laserDataCompleteFront(QList <float>, QList <int>) ), gui, SLOT( refreshLaserViewFront(QList <float>, QList <int>) ));
 			connect(laserThread, SIGNAL( laserDataCompleteRear(QList <float>, QList <int>) ), gui, SLOT( refreshLaserViewRear(QList <float>, QList <int>) ));
 		}
+#endif
 
 		//------------------------------------------------------------------------------
 		// connect laserThread signal to networkThread
@@ -924,8 +926,10 @@ void Direcs::init()
 				QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 			}
 
+#ifdef ACTIVELASERVIEW
 			// one time init for the laser view
 			gui->initLaserView();
+#endif
 		}
 	} // ini-file found
 	else
@@ -2705,6 +2709,7 @@ void Direcs::readSettings()
 		}
 	}
 
+#ifdef ACTIVELASERVIEW
 	//---------------------------------------------------------------------
 	// Create the laser lines and pixmaps in the GUI and place them nicely
 	//---------------------------------------------------------------------
@@ -2712,6 +2717,7 @@ void Direcs::readSettings()
 	{
 		gui->initLaserStuff();
 	}
+#endif
 
 	//---------------------------------------------------------------------
 	// read setting
