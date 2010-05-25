@@ -60,6 +60,9 @@ void ObstacleCheckThread::stop()
 
 void ObstacleCheckThread::run()
 {
+	float middleOfLaser = 0;
+
+
 	//  start "threading"...
 	while (!stopped)
 	{
@@ -329,7 +332,7 @@ void ObstacleCheckThread::run()
 		// Calculate the width of the estimated drive-tru direction/area with the 'Kosinussatz'
 		// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
 		//--------------------------------------------------------------------------------------
-                if ( (largestFreeAreaStart > 0)  &&  ( largestFreeAreaEnd < (laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)) ))
+		if ( (largestFreeAreaStart > 0)  &&  ( largestFreeAreaEnd < (laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)) ))
 		{
 			// b and c are the sides of the triangle
 			b = laserThread->getValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
@@ -365,7 +368,13 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// Emit the result for the GUI
 		//----------------------------------------------------------------------------
-		emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWay, width);
+
+		// since this signal is only used to display the values in the gui,
+		// the values are multiplied by the resolution to have the correct value in degrees!
+		emit newDrivingAngleSet((largestFreeAreaStart * laserThread->getResolution(LASER1)), (largestFreeAreaEnd * laserThread->getResolution(LASER1)), (centerOfFreeWay * laserThread->getResolution(LASER1)), width);
+
+		// get the middle of the laser (when we have 180 deg, the middle is as 90 deg)
+		middleOfLaser = (laserThread->getAngle(LASER1) / laserThread->getResolution(LASER1)) / 2;
 
 		if (centerOfFreeWay == -1)
 		{
@@ -377,8 +386,8 @@ void ObstacleCheckThread::run()
 			// value within the tolerance range (deviation to 90 deg.)?
 			if (
 				// FIXME: why -1 ?!? But works so far!
-				( (centerOfFreeWay < 90) && (centerOfFreeWay >= (90 - straightForwardDeviation - 1)) ) ||
-				( (centerOfFreeWay > 90) && (centerOfFreeWay <= (90 + straightForwardDeviation - 1)) )
+				( (centerOfFreeWay < middleOfLaser) && (centerOfFreeWay >= (middleOfLaser - straightForwardDeviation - 1)) ) ||
+				( (centerOfFreeWay > middleOfLaser) && (centerOfFreeWay <= (middleOfLaser + straightForwardDeviation - 1)) )
 			   )
 			{
 				// NO obstacle
@@ -386,14 +395,14 @@ void ObstacleCheckThread::run()
 			}
 			else
 			{
-				if ( (centerOfFreeWay < 90) && (centerOfFreeWay > -1) )
+				if ( (centerOfFreeWay < middleOfLaser) && (centerOfFreeWay > -1) )
 				{
 					// obstacle LEFT
 					emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
 				}
 				else
 				{
-					if (centerOfFreeWay > 90)
+					if (centerOfFreeWay > middleOfLaser)
 					{
 						// obstacle RIGHT
 						emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
