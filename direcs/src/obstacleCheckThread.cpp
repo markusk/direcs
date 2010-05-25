@@ -386,8 +386,8 @@ void ObstacleCheckThread::run()
 			// value within the tolerance range (deviation to 90 deg.)?
 			if (
 				// FIXME: why -1 ?!? But works so far!
-				( (centerOfFreeWay < middleOfLaser) && (centerOfFreeWay >= (middleOfLaser - straightForwardDeviation - 1)) ) ||
-				( (centerOfFreeWay > middleOfLaser) && (centerOfFreeWay <= (middleOfLaser + straightForwardDeviation - 1)) )
+				( (centerOfFreeWay < middleOfLaser) && (centerOfFreeWay >= (middleOfLaser - (straightForwardDeviation/laserThread->getResolution(LASER1)) - 1)) ) ||
+				( (centerOfFreeWay > middleOfLaser) && (centerOfFreeWay <= (middleOfLaser + (straightForwardDeviation/laserThread->getResolution(LASER1)) - 1)) )
 			   )
 			{
 				// NO obstacle

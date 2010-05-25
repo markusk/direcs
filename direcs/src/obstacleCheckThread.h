@@ -64,6 +64,7 @@ class ObstacleCheckThread : public QThread
 
 		/*!
 		This slot sets the deviation to 90 degrees when the robot drives forward.
+		When the laser angle is 180 degrees, the middle is 90 degrees, at 270 degrees it's 135.
 		@param deviation is the angle in degrees.
 		*/
 		void setStraightForwardDeviation(int deviation);
