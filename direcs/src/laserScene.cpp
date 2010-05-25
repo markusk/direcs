@@ -48,7 +48,7 @@ void LaserScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	if (mouseEvent->buttons() & Qt::LeftButton)
 	{
 		// Notify the gui about position update
-		qDebug("dragging...");
+		// qDebug("dragging...");
 		emit robotPositionChanged(mouseEvent);
 		mouseEvent->accept();
 	}
