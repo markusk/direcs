@@ -397,15 +397,15 @@ void ObstacleCheckThread::run()
 			{
 				if ( (centerOfFreeWay < middleOfLaser) && (centerOfFreeWay > -1) )
 				{
-					// obstacle LEFT
-					emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
+					// free way left  ->  obstacle RIGHT
+					emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
 				}
 				else
 				{
 					if (centerOfFreeWay > middleOfLaser)
 					{
-						// obstacle RIGHT
-						emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
+						// free way right  ->  obstacle LEFT
+						emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
 					}
 				}
 			}
