@@ -205,7 +205,7 @@ int SickS300::setup()
 	{
 		if (sendChar(getTokenCommand[i]) == false)
 		{
-			emit emitMessage( QString("ERROR sending byte no. %1 (SickS300::setup).").arg(i+1) );
+			emit emitMessage( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (SickS300::setup).</font>").arg(i+1) );
 			return -1;
 		}
 	}
@@ -218,7 +218,7 @@ int SickS300::setup()
 		if (receiveChar(&answer) == false)
 		{
 			// error
-			emit emitMessage("ERROR");
+			emit emitMessage("<font color=\"#FF0000\">ERROR</font>");
 			return -1;
 		}
 
@@ -260,7 +260,7 @@ int SickS300::readRequestTelegram()
 	{
 		if (sendChar(readScandataCommand[i]) == false)
 		{
-			emit emitMessage( QString("ERROR sending byte no. %1 (SickS300::readRequestTelegram).").arg(i+1) );
+			emit emitMessage( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1) );
 			return -1;
 		}
 	}
@@ -277,14 +277,14 @@ int SickS300::readRequestTelegram()
 
 			if (answer != 0)
 			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram)").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+				emit emitMessage(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
 				return -1;
 			}
 		}
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::readRequestTelegram)").arg(i+1));
+			emit emitMessage(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
 			return -1;
 		}
 	}
@@ -310,7 +310,7 @@ int SickS300::readRequestTelegram()
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram)").arg(i+1));
+			emit emitMessage(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
 			return -1;
 		}
 	}
@@ -330,7 +330,7 @@ int SickS300::readRequestTelegram()
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving scan data at byte no. %1 (SickS300::readRequestTelegram)").arg(i+1));
+			emit emitMessage(QString("<font color=\"#FF0000\">ERROR receiving scan data at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
 			return -1;
 		}
 	}
@@ -357,7 +357,7 @@ int SickS300::readRequestTelegram()
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving CRC at byte no. %1 (SickS300::readRequestTelegram)").arg(i+1));
+			emit emitMessage(QString("<font color=\"#FF0000\">ERROR receiving CRC at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
 			return -1;
 		}
 	}
@@ -374,6 +374,13 @@ int SickS300::readRequestTelegram()
 			// qDebug("Copied: no. %d from %d values at %f�. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
 			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 			angle += 0.5;
+
+			// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to 0.0 meters!
+			// (This is due to a bug when reading angle 0, which results in a lenght of 2048 cm)
+			if (distances[i] > LASERMAXLENGTH)
+			{
+				distances[i] = 0.0;
+			}
 		}
 	}
 

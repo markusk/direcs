@@ -122,6 +122,8 @@ class SickS300 : public QObject
 		static const unsigned int LASERSAMPLES = 1080;
 		unsigned char scanData[LASERSAMPLES];
 
+		static const float LASERMAXLENGTH = 2000; /// if a measured laser distance is greater than this value in cm, it will be set to 0 cm! (This is due to a bug when reading angle 0)
+
 		float distances[540]; // 540 is the maximum of this laserscanner, because we have 270 degrees at a resolution of 0.5
 
 		static const bool ON  = true;   /// For laser is "ON"
