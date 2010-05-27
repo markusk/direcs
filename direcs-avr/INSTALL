@@ -4,7 +4,22 @@ The manual way
 avr-gcc FILENAME.c -c -o FILENAME.o -Os -g -mmcu=atmega2560
 avr-gcc FILENAME.o -o FILENAME.elf -mmcu=atmega2560
 avr-objcopy -j .text -j .data -O ihex FILENAME.elf FILENAME.hex
+
+
+for parallel port programmer
+----------------------------
 avrdude -p m64 -c stk200 -e -U flash:w:FILENAME.hex
+
+
+new (testet with V5.10-1) for Atmega2560 with usb flash programmer (fischl.de)
+------------------------------------------------------------------------------
+avrdude -p m2560 -c usbasp -P usb -e -U flash:w:main.hex
+
+On error:
+avrdude: Warning: cannot query manufacturer for device: error sending control message: Operation not permitted
+avrdude: error: could not find USB device "USBasp" with vid=0x16c0 pid=0x5dc
+
+try last command as with su/sudo!
 
 
 
