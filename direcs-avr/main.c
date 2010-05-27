@@ -509,24 +509,20 @@ int main(void)
 			case BOTSTART:
 			case BOTFORWARD:
 				// MOTOR 1 CLOCKWISE
-				// delete Motor1 A bit
-				PORTL &= ~(1<<PIN0);
-				// set Motor1 B bit
-				PORTL |= (1<<PIN1);
 				// MOTOR 2 COUNTERCLOCKWISE
-				// set Motor2 A bit
-				PORTL |= (1<<PIN2);
-				// delete Motor2 B bit
-				PORTL &= ~(1<<PIN3);
 				// MOTOR 3 CLOCKWISE
-				// delete Motor3 A bit
-				PORTL &= ~(1<<PIN6);
-				// set Motor3 B bit
-				PORTL |= (1<<PIN7);
 				// MOTOR 4 COUNTERCLOCKWISE
+				// set Motor1 B bit
+				// set Motor2 A bit
+				// set Motor3 B bit
 				// set Motor4 A bit
+				PORTL |= (1<<PIN1) | (1<<PIN2) | (1<<PIN7);
 				PORTD |= (1<<PIN6);
+				// delete Motor1 A bit
+				// delete Motor2 B bit
+				// delete Motor3 A bit
 				// delete Motor4 B bit
+				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
 				PORTD &= ~(1<<PIN7);
 				break;
 				
