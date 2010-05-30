@@ -24,6 +24,10 @@ InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
 	serialPort = new DirecsSerial();
+
+	// let the error messages from the direcsSerial object be transferred to the GUI
+	// (connect the signal from the interface class to the signal from this class)
+	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 

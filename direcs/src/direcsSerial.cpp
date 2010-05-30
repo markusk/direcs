@@ -48,6 +48,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
 	if (ioctl(mDev_fd, TIOCEXCL) == -1)
 	{
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 setting TIOCEXCL on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
 		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
@@ -56,12 +57,14 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// See fcntl(2) ("man 2 fcntl") for details.
 	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
 		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
 
 	if (mDev_fd < 0)
 	{
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
 		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
@@ -154,6 +157,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	}
 	else
 	{
+		emit message(QString("<font color=\"#FF0000\">ERROR: Wrong value for speed parameter at DirecsSerial::openAtmelPort!</font>"));
 		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
 	}
 
@@ -163,6 +167,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// Cause the new options to take effect immediately.
 	tcsetattr(mDev_fd, TCSANOW, &options);
 	
+	emit message("Serial device openend.");
 	return (mDev_fd);
 }
 
@@ -492,8 +497,9 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 	
 	if (n < 0)
 	{
-	    qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
-	    return errno;
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 writing to serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
+		return errno;
 	}
 	else
 	{
@@ -525,7 +531,8 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
 		if (err == 0)
 		{
-		    qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
+			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+			qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 		    return errno;
 		}
 	
@@ -534,7 +541,8 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
-		    qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
+			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+			qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
 		    return errno;
 		}
 		else
