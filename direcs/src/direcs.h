@@ -372,7 +372,7 @@ class Direcs : public QObject
 		static const unsigned int SPLASHTIME  = 2000;
 
 		/// The time between one de/increase of the motor speed (to its minimum/maximum) and the next in ms
-		static const unsigned int DRIVINGSPEEDINCREASER = 200;
+		static const unsigned int DRIVINGSPEEDINCREASER = 10;
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */

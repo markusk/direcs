@@ -2170,7 +2170,7 @@ void Direcs::drive(const unsigned char command)
 			motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
 			
 			resetDrivingSpeedTimer();
-			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
+			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER); // TODO: put that to a slider in the config menu / file.   TODO 2: make this speed increaser optional!
 			
 			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
