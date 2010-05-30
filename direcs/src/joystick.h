@@ -73,10 +73,11 @@ class Joystick : public QThread
 
 	signals:
 		/**
-		Sends a string to the GUI log.
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		@param text is the message to be emitted
 		*/
-		void emitMessage(QString text);
+		void message(QString text);
 		
 		/**
 		Emits a signal when an joystick move event occured.

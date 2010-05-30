@@ -459,18 +459,18 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		if (!consoleMode)
 		{
-			connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(emitMessage(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 		}
 		else
 		{
-			connect(joystick, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendSerialLog(QString)));
+			connect(joystick, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
+			connect(interface1, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
 		}
 
 		// also emit messages to the logfile
-		// 	connect(interface1, SIGNAL(emitMessage(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
-		connect(joystick, SIGNAL(emitMessage(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error
+		// 	connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
+		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
