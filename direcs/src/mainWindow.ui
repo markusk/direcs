@@ -136,7 +136,7 @@
                </font>
               </property>
               <property name="text">
-               <string>0 cm</string>
+               <string>oo</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -776,7 +776,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelRevolutions1_2">
+              <widget class="QLabel" name="labelRevolutions3">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -807,7 +807,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelDrivenDistance1_2">
+              <widget class="QLabel" name="labelDrivenDistance3">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -826,7 +826,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="btnResetMovement1_2">
+          <widget class="QPushButton" name="btnResetMovement3">
            <property name="font">
             <font>
              <family>Verdana</family>
@@ -916,7 +916,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelRevolutions1_3">
+              <widget class="QLabel" name="labelRevolutions4">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -947,7 +947,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelDrivenDistance1_3">
+              <widget class="QLabel" name="labelDrivenDistance4">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -966,7 +966,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="btnResetMovement1_3">
+          <widget class="QPushButton" name="btnResetMovement4">
            <property name="font">
             <font>
              <family>Verdana</family>
