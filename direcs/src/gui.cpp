@@ -238,7 +238,9 @@ void Gui::setRobotControls(bool state)
 	ui.actionReset->setEnabled(state);
 	ui.btnResetMovement1->setEnabled(state);
 	ui.btnResetMovement2->setEnabled(state);
-	
+	ui.btnResetMovement3->setEnabled(state);
+	ui.btnResetMovement4->setEnabled(state);
+
 	if (!robotIsOn)
 	{
 		// TODO: test if this really is needed. Is the heartbeaet in the sensorthread sufficient?
@@ -464,6 +466,28 @@ void Gui::on_btnResetMovement2_clicked()
 	// reset labels
 	ui.labelDrivenDistance2->setText("0 cm");
 	ui.labelRevolutions2->setText("0");
+}
+
+
+void Gui::on_btnResetMovement3_clicked()
+{
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR3);
+
+	// reset labels
+	ui.labelDrivenDistance3->setText("0 cm");
+	ui.labelRevolutions3->setText("0");
+}
+
+
+void Gui::on_btnResetMovement4_clicked()
+{
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR4);
+
+	// reset labels
+	ui.labelDrivenDistance4->setText("0 cm");
+	ui.labelRevolutions4->setText("0");
 }
 
 
@@ -739,7 +763,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 {
 	// show distance value in centimeters in a text label
 	// erwartet den value als distance (z.B. in cm)!
-	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR2))
+	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR4))
 	{
 		qDebug("ERROR gui, showDrivenDistance: wrong motor sensor number");
 		return;
@@ -754,6 +778,14 @@ void Gui::showDrivenDistance(int sensor, int distance)
 			break;
 		case MOTORSENSOR2:
 			ui.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
+			return;
+			break;
+		case MOTORSENSOR3:
+			ui.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
+			return;
+			break;
+		case MOTORSENSOR4:
+			ui.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
 			return;
 			break;
 	}
