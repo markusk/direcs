@@ -40,7 +40,8 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 
 	centerOfFreeWay = -1;
 	
-	robotSlot = 1;
+	robotSlot = 1;      // 1 degree
+	robotSlotWidth = 1; // 1 cm
 	straightForwardDeviation = 0;
 	
 	// init of the laser scanner flags is now done in the laserThread
@@ -587,6 +588,12 @@ void ObstacleCheckThread::setMinObstacleDistanceLaser(int distance)
 void ObstacleCheckThread::setRobotSlot(int angle)
 {
 	robotSlot = angle;
+}
+
+
+void ObstacleCheckThread::setRobotSlotWidth(int width)
+{
+	robotSlotWidth = width;
 }
 
 

@@ -65,10 +65,15 @@ class SettingsDialog : public QDialog
 		int getSliderObstacleLaserScannerValue();
 		
 		/**
-		@return The angle to which the robot has to fit between.
+		@return The angle in degrees to which the robot has to fit between.
 		*/
 		int getSliderRobotSlotValue();
-		
+
+		/**
+		@return The width of a possible robot slot in centimeters (cm) where to drive through.
+		*/
+		int getSliderRobotSlotWidth();
+
 		/**
 		@return The slider value of the deviation to drive forward (deviation to 90 degrees).
 		*/
@@ -116,7 +121,13 @@ class SettingsDialog : public QDialog
 		@param angle is the minimum angle in degrees.
 		*/
 		void setSliderRobotSlot(int angle);
-		
+
+		/**
+		Sets the slider value of the robot slot, where it has to fit through.
+		@param width is the minimum width in centimeters (cm).
+		*/
+		void setSliderRobotSlotWidth(int width);
+
 		/**
 		Sets the slider value of the deviation to drive forward (deviation to 90 degrees).
 		@param angle is the maximum angle in degrees.
@@ -143,25 +154,35 @@ class SettingsDialog : public QDialog
 		void setMaximumSpeed(int speed);
 		
 		/**
-		This slot sets the angle, where the robots has to fit thru
+		This signal emits the angle, where the robots has to fit through.
+		@sa ObstacleCheckThread
 		*/
 		void setRobotSlot(int angle);
-		
+
 		/**
-		This slot sets the deviation to 90 degrees when the robot drives forward.
+		This signal emits the width in centimeters (cm), where the robots has to fit through.
+		@sa ObstacleCheckThread
+		*/
+		void setRobotSlotWidth(int width);
+
+		/**
+		This signal emit the deviation to 90 degrees when the robot drives forward.
 		@param deviation is the angle in degrees.
+		@sa ObstacleCheckThread
 		*/
 		void setStraightForwardDeviation(int deviation);
 		
 		/**
-		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
+		This signal emits set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
 		@param distance in centimeters
+		@sa ObstacleCheckThread
 		*/
 		void setMinObstacleDistance(int distance);
 		
 		/**
-		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
+		This signal emits the minimum distance, which the robot needs. Used by the Laser scanner.
 		@param distance in centimeters
+		@sa ObstacleCheckThread
 		 */
 		void setMinObstacleDistanceLaser(int distance);
 
