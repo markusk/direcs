@@ -313,7 +313,7 @@ class Gui : public QMainWindow
 		@param largestFreeAreaStart
 		@param largestFreeAreaEnd
 		@param centerOfFreeWay
-		@param width of the estimated drive-tru area
+		@param width of the estimated drive-trough area
 		*/
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width);
 
