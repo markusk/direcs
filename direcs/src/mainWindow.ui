@@ -143,6 +143,21 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QLabel" name="lblRobotSlotWidth">
+              <property name="font">
+               <font>
+                <family>Verdana</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>&gt; 84 cm</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -221,51 +236,6 @@
              <number>1</number>
             </property>
            </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="_12">
-            <item>
-             <layout class="QHBoxLayout" name="_13">
-              <item>
-               <widget class="QLabel" name="label_34">
-                <property name="font">
-                 <font>
-                  <family>Verdana</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Zoom:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="labelLaserTop">
-                <property name="font">
-                 <font>
-                  <family>Verdana</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>41</width>
-                <height>22</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
           </item>
          </layout>
         </item>
@@ -409,8 +379,8 @@
   <widget class="QDockWidget" name="dockOdometrie">
    <property name="minimumSize">
     <size>
-     <width>468</width>
-     <height>278</height>
+     <width>470</width>
+     <height>282</height>
     </size>
    </property>
    <property name="windowTitle">
