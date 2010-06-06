@@ -1232,10 +1232,13 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	// show width in cm with one decimal place (Nachkommastelle)
 	if (width != -1)
 	{
-		// CONVERT the WIDTH to METERS!!
-		width /= 100;
-		// show the text with 2 decimals (Nachkommastellen)
-		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 2).append(" m"));
+//		// CONVERT the WIDTH to METERS!!
+//		width /= 100;
+//		// show the text with 2 decimals (Nachkommastellen)
+//		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 2).append(" m"));
+
+		// show the text with 0 decimals (Nachkommastellen)
+		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
 	}
 	else
 	{
