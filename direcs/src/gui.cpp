@@ -1202,6 +1202,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
+	int configuredRobotSlotWidth = settingsDialog->getSliderRobotSlotWidth();
 	// TODO: do all this stuff for the rear scanner?
 
 	// store the values in the class local for refreshLaserView()
@@ -1239,10 +1240,23 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 
 		// show the text with 0 decimals (Nachkommastellen)
 		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
+
+		// show the currently configured robot slot with with a prepended '>' or '<'
+		if ( width > configuredRobotSlotWidth)
+		{
+			ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+		}
+		else
+		{
+			ui.lblRobotSlotWidth->setText( QString("< %1 cm").arg(configuredRobotSlotWidth) );
+		}
 	}
 	else
 	{
 		ui.lblLaserFrontFreeWidth->setText("oo");
+
+		// show the currently configured robot slot with with a prepended '>' or '<'
+		ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
 	}
 
 
@@ -1795,7 +1809,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 
 	// show the zoom value in a label
-	ui.labelLaserTop->setText(tr("%1").arg(value));
+	// ui.labelLaserTop->setText(tr("%1").arg(value));
 
 
 	// rescale the robot pixmap to the last scale
