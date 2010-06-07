@@ -100,6 +100,10 @@
 #define SENSORMOTOR1			38 // ADC14
 #define SENSORMOTOR2			39 // ADC15
 
+// just nice to have
+#define OFF						0
+#define ON						1
+
 
 #include <avr/io.h>
 //#include <avr/interrupt.h> // (no longer needed since avr-libc 1.4)
@@ -124,6 +128,9 @@
 // the prototypes
 //
 int main(void);
+
+void redLED(uint8_t state);
+void yellowLED(uint8_t state);
 
 
 #endif

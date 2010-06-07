@@ -755,6 +755,42 @@ int main(void)
 	return 0;
 }
 
+
+void redLED(uint8_t state)
+{
+	if (state == ON)
+	{
+		// red LED on
+		// (low active!)
+		PORTD &= ~(1<<PIN5);
+	}
+	else
+	{
+		// red LED off
+		// (low active!)
+		PORTD |= (1<<PIN5);
+	}
+
+}
+
+
+void yellowLED(uint8_t state)
+{
+	if (state == ON)
+	{
+		// yellow LED on
+		// (low active!)
+		PORTC &= ~(1<<PIN0);
+	}
+	else
+	{
+		// yellow LED off
+		// (low active!)
+		PORTC |= (1<<PIN0);
+	}
+}
+
+
 /*
 SIGNAL(PCINT1_vect)
 {
