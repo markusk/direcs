@@ -67,10 +67,12 @@ int main(void)
 	// switch some bits on port E to output [2 more servos]
 	DDRE |= (1 << DDE3) | (1 << DDE4);
 	
-	// red LED on (low active!)
-	PORTD &= ~(1<<PIN5);
-	// yelow LED off (low active -> turn bit high!)
-	PORTC |= (1<<PIN0);
+	// red LED on. Now we know, that the program runs.
+	redLED(ON);
+
+	// yelow LED off
+	yellowLED(OFF);
+
 	// flashlight off
 	PORTC |= (1<<PIN0);
 	// yelow LED off (low active -> turn bit high!)
@@ -224,8 +226,8 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				// flashlight off
 				PORTC &= ~(1<<PIN1);
-				// red LED off (low active!)
-				PORTD |= (1<<PIN5);
+				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+				redLED(OFF);
 				
 // 				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
 // 				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
@@ -728,25 +730,6 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-				
-// 			default:
-// 				//
-// 				// yellow 'traffic' LED
-// 				//
-// 				if (yellowLEDtoggle == 0)
-// 				{
-// 					yellowLEDtoggle = 1;
-// 					// yelow LED on (low active!)
-// 					PORTC &= ~(1<<PIN0);
-// 				}
-// 				else
-// 				{
-// 					yellowLEDtoggle = 0;
-// 					// yelow LED off (low active!)
-// 					PORTC |= (1<<PIN0);
-// 				}
-// 				break;
-
 		}
 	} // while (1)
 
