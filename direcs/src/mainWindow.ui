@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>1151</height>
+    <height>1204</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -379,7 +379,7 @@
   <widget class="QDockWidget" name="dockOdometrie">
    <property name="minimumSize">
     <size>
-     <width>481</width>
+     <width>503</width>
      <height>482</height>
     </size>
    </property>
@@ -391,45 +391,29 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="1" column="0">
-      <layout class="QVBoxLayout" name="name8">
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
-        <layout class="QHBoxLayout" name="_14">
-         <item>
-          <widget class="QPushButton" name="btnPower1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>MOTOR 1  -  BR</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="btnPower4">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Front Left  -  4</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnDirection1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+        <widget class="QPushButton" name="btnDirection4">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -448,13 +432,13 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="name7">
+        <layout class="QHBoxLayout" name="name5">
          <item>
-          <layout class="QVBoxLayout" name="_15">
+          <layout class="QVBoxLayout" name="_25">
            <item>
-            <layout class="QHBoxLayout" name="_16">
+            <layout class="QHBoxLayout" name="_26">
              <item>
-              <widget class="QLabel" name="textLabel1_2">
+              <widget class="QLabel" name="textLabel1_5">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -466,7 +450,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelRevolutions1">
+              <widget class="QLabel" name="labelRevolutions4">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -483,9 +467,9 @@
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="_17">
+            <layout class="QHBoxLayout" name="_27">
              <item>
-              <widget class="QLabel" name="textLabel1">
+              <widget class="QLabel" name="textLabel1_6">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -497,7 +481,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelDrivenDistance1">
+              <widget class="QLabel" name="labelDrivenDistance4">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -516,147 +500,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="btnResetMovement1">
-           <property name="font">
-            <font>
-             <family>Verdana</family>
-            </font>
-           </property>
-           <property name="text">
-            <string>Reset</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="1">
-      <layout class="QVBoxLayout" name="name9">
-       <item>
-        <layout class="QHBoxLayout" name="_18">
-         <item>
-          <widget class="QPushButton" name="btnPower2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>MOTOR 2  -  BL</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnDirection2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>FORWARD</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="name6">
-         <item>
-          <layout class="QVBoxLayout" name="_19">
-           <item>
-            <layout class="QHBoxLayout" name="_20">
-             <item>
-              <widget class="QLabel" name="textLabel2_7">
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="text">
-                <string>Revolutions:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="labelRevolutions2">
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="_21">
-             <item>
-              <widget class="QLabel" name="textLabel2_6">
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="text">
-                <string>Distance:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="labelDrivenDistance2">
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="text">
-                <string>0 cm</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnResetMovement2">
+          <widget class="QPushButton" name="btnResetMovement4">
            <property name="font">
             <font>
              <family>Verdana</family>
@@ -677,12 +521,6 @@
         <layout class="QHBoxLayout" name="_22">
          <item>
           <widget class="QPushButton" name="btnPower3">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -693,7 +531,7 @@
             <bool>true</bool>
            </property>
            <property name="text">
-            <string>MOTOR 3  -  FR</string>
+            <string>Front Right  -  3</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -704,12 +542,6 @@
        </item>
        <item>
         <widget class="QPushButton" name="btnDirection3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
          <property name="font">
           <font>
            <weight>75</weight>
@@ -811,18 +643,12 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="name11">
+     <item row="1" column="0">
+      <layout class="QVBoxLayout" name="name9">
        <item>
-        <layout class="QHBoxLayout" name="_24">
+        <layout class="QHBoxLayout" name="_18">
          <item>
-          <widget class="QPushButton" name="btnPower4">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QPushButton" name="btnPower2">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -833,7 +659,7 @@
             <bool>true</bool>
            </property>
            <property name="text">
-            <string>MOTOR 4  -  FL</string>
+            <string>Back Left  -  2</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -843,13 +669,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="btnDirection4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+        <widget class="QPushButton" name="btnDirection2">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -868,13 +688,13 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="name5">
+        <layout class="QHBoxLayout" name="name6">
          <item>
-          <layout class="QVBoxLayout" name="_25">
+          <layout class="QVBoxLayout" name="_19">
            <item>
-            <layout class="QHBoxLayout" name="_26">
+            <layout class="QHBoxLayout" name="_20">
              <item>
-              <widget class="QLabel" name="textLabel1_5">
+              <widget class="QLabel" name="textLabel2_7">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -886,7 +706,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelRevolutions4">
+              <widget class="QLabel" name="labelRevolutions2">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -903,9 +723,9 @@
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="_27">
+            <layout class="QHBoxLayout" name="_21">
              <item>
-              <widget class="QLabel" name="textLabel1_6">
+              <widget class="QLabel" name="textLabel2_6">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -917,7 +737,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="labelDrivenDistance4">
+              <widget class="QLabel" name="labelDrivenDistance2">
                <property name="font">
                 <font>
                  <family>Verdana</family>
@@ -936,7 +756,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="btnResetMovement4">
+          <widget class="QPushButton" name="btnResetMovement2">
            <property name="font">
             <font>
              <family>Verdana</family>
@@ -950,6 +770,147 @@
         </layout>
        </item>
       </layout>
+     </item>
+     <item row="1" column="1">
+      <layout class="QVBoxLayout" name="name8">
+       <item>
+        <layout class="QHBoxLayout" name="_14">
+         <item>
+          <widget class="QPushButton" name="btnPower1">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Back Right  -  1</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnDirection1">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>FORWARD</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="name7">
+         <item>
+          <layout class="QVBoxLayout" name="_15">
+           <item>
+            <layout class="QHBoxLayout" name="_16">
+             <item>
+              <widget class="QLabel" name="textLabel1_2">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Revolutions:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="labelRevolutions1">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="_17">
+             <item>
+              <widget class="QLabel" name="textLabel1">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Distance:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="labelDrivenDistance1">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>0 cm</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnResetMovement1">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+            </font>
+           </property>
+           <property name="text">
+            <string>Reset</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="1">
+      <spacer name="verticalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
@@ -1085,6 +1046,19 @@
      </item>
      <item row="1" column="0">
       <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="0">
+      <spacer name="verticalSpacer_6">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -1250,6 +1224,19 @@
      </item>
      <item row="1" column="0">
       <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="0">
+      <spacer name="verticalSpacer_5">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
