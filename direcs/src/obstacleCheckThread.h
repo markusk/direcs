@@ -121,7 +121,10 @@ class ObstacleCheckThread : public QThread
 		int largestFreeAreaEnd;
 		
 		int centerOfFreeWay;
-		
+
+		float laserResolution; /// stores the laser resolution when getting the value from the laser thread
+		float laserAngle; /// stores the laser angle when getting the value from the laser thread
+
 		double width;
 		double b;
 		double c;
@@ -140,7 +143,7 @@ class ObstacleCheckThread : public QThread
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 250; // 100 ! original !
+		static const unsigned long THREADSLEEPTIME = 250; // 250 ! original !
 		
 		// Give the sensors some names
 		//
