@@ -375,11 +375,13 @@ int SickS300::readRequestTelegram()
 			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 			angle += 0.5;
 
-			// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to 0.0 meters!
+			// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to the maximum of possible "free" meters!
 			// (This is due to a bug when reading angle 0, which results in a lenght of 2048 cm)
+			//
+			// This value was set to 0.0 m in the past, but doesn't help if we have a 0m line in the middle of "free" lines when navigation...!!
 			if (distances[i] > LASERMAXLENGTH)
 			{
-				distances[i] = 0.0;
+				distances[i] = LASERMAXLENGTH;
 			}
 		}
 	}
