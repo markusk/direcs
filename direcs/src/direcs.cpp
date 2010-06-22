@@ -1099,6 +1099,46 @@ void Direcs::shutdown()
 
 
 		//--------------------------------
+		// quit the obstacle check thread
+		//--------------------------------
+		//qDebug("Starting to stop the obstacle check thread NOW!");
+		if (obstCheckThread->isRunning() == true)
+		{
+			emit message("Stopping obstacle check thread...");
+			emit splashMessage("Stopping obstacle check thread...");
+
+			// my own stop routine :-)
+			obstCheckThread->stop();
+
+			// slowing thread down
+			obstCheckThread->setPriority(QThread::IdlePriority);
+			obstCheckThread->quit();
+
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((obstCheckThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+			if (obstCheckThread->isFinished() == true)
+			{
+				emit message("Obstacle check thread stopped.");
+			}
+			else
+			{
+				emit message("ERROR: Terminating obstacle check thread because it doesn't answer...");
+				emit splashMessage("Terminating obstacle check thread because it doesn't answer...");
+				obstCheckThread->terminate();
+				obstCheckThread->wait(1000);
+				emit message("Obstacle check thread terminated.");
+			}
+		}
+
+
+		//--------------------------------
 		// quit the laserThread
 		//--------------------------------
 		if (laserThread->isRunning() == true)
@@ -1298,46 +1338,6 @@ void Direcs::shutdown()
 			}
 		}
 #endif
-
-
-		//--------------------------------
-		// quit the obstacle check thread
-		//--------------------------------
-		//qDebug("Starting to stop the obstacle check thread NOW!");
-		if (obstCheckThread->isRunning() == true)
-		{
-			emit message("Stopping obstacle check thread...");
-			emit splashMessage("Stopping obstacle check thread...");
-
-			// my own stop routine :-)
-			obstCheckThread->stop();
-
-			// slowing thread down
-			obstCheckThread->setPriority(QThread::IdlePriority);
-			obstCheckThread->quit();
-
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-			QTime t;
-			t.start();
-			do
-			{
-			} while ((obstCheckThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-			if (obstCheckThread->isFinished() == true)
-			{
-				emit message("Obstacle check thread stopped.");
-			}
-			else
-			{
-				emit message("ERROR: Terminating obstacle check thread because it doesn't answer...");
-				emit splashMessage("Terminating obstacle check thread because it doesn't answer...");
-				obstCheckThread->terminate();
-				obstCheckThread->wait(1000);
-				emit message("Obstacle check thread terminated.");
-			}
-		}
 
 
 		//--------------------------
