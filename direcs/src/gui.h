@@ -320,6 +320,7 @@ class Gui : public QMainWindow
 		/**
 		Shows the preferred driving direction in a lable.
 		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
+		@sa Direcs::logicalUnit
 		*/
 		void showPreferredDirection(QString direction);
 
