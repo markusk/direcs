@@ -525,6 +525,8 @@ int main(void)
 				// delete Motor4 B bit
 				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
 				PORTD &= ~(1<<PIN7);
+				// turn red LED ON, so we know, that all instructions were executed successfully!
+				// redLED(ON);
 				break;
 				
 			case BOTBACKWARD:
@@ -624,6 +626,8 @@ int main(void)
 				PORTD &= ~(1<<PIN6);
 				// delete Motor4 B bit
 				PORTD &= ~(1<<PIN7);
+				// turn red LED OFF, so we know, that all instructions were executed successfully!
+				// redLED(OFF);
 				break;
 				
 				//-------------------------------
