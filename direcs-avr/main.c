@@ -199,18 +199,17 @@ int main(void)
 		value = UsartReceive();
 		
 		// toggling the red LED on and off with every received serial commmand
-		if (redLEDtoggle==0)
+		if (redLEDtoggle == 0)
 		{
-			redLEDtoggle=1;
-			// red LED on (low active!)
-			PORTD &= ~(1<<PIN5);
+			redLEDtoggle = 1;
 		}
 		else
 		{
-			redLEDtoggle=0;
-			// red LED off (low active!)
-			PORTD |= (1<<PIN5);
+			redLEDtoggle = 0;
 		}
+ 
+		// switch LED
+		redLED(redLEDtoggle);
 
 		switch (value)
 		{
