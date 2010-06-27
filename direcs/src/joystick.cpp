@@ -104,7 +104,7 @@ void Joystick::run()
 		
 		if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event))
 		{
-			emit emitMessage("Error reading joystick device!");
+			emit message("Error reading joystick device!");
 			// no 'return' here, try further!
 		}
 		else
@@ -113,7 +113,7 @@ void Joystick::run()
 			switch(js.type)
 			{
 				case JS_EVENT_INIT:
-					emit emitMessage("Joystick initialised.");
+					emit message("Joystick initialised.");
 					break;
 				case JS_EVENT_BUTTON:
 					axisButtonNumber = js.number;
@@ -147,7 +147,7 @@ bool Joystick::isConnected()
 #ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
 	if ((fd = open(joystickPort.toAscii(), O_RDONLY)) < 0)
 	{
-		emit emitMessage( QString(QString("No joystick found at %1").arg(joystickPort)).toAscii() );
+		emit message( QString(QString("No joystick found at %1").arg(joystickPort)).toAscii() );
 		stopped = true;
 		return false;
 	}
