@@ -26,9 +26,12 @@ Joystick::Joystick()
 {
 	stopped = false;
 
-#ifdef Q_OS_MAC // joystick support for Mac OS:
+	#ifdef Q_OS_MAC // joystick support for Mac OS:
+	YsJoyReaderSetUpJoystick(numJoystick,joystick,maxNumJoystick);
+	YsJoyReaderLoadJoystickCalibrationInfo(numJoystick,joystick);
+
 	numJoystick = 0;
-#endif
+	#endif
 }
 
 
@@ -45,7 +48,52 @@ void Joystick::stop()
 
 void Joystick::run()
 {
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+	#ifdef Q_OS_MAC // joystick support for Mac OS:
+	int i = 0;
+	int j = 0;
+
+
+	//
+	//  start "threading"...
+	//
+	while (!stopped)
+	{
+		// let the thread sleep some time
+		// for having more time for the other threads
+		msleep(THREADSLEEPTIME);
+
+		for(i=0; i<numJoystick; i++)
+		{
+			joystick[i].Read();
+
+			printf("Joy[%d]",i);
+			for(j=0; j<YsJoyReaderMaxNumAxis; j++)
+			{
+				if(joystick[i].axis[j].exist!=0)
+				{
+					printf(" Ax%d:%+5.2lf",j,joystick[i].axis[j].GetCalibratedValue());
+				}
+			}
+			for(j=0; j<YsJoyReaderMaxNumButton; j++)
+			{
+				if(joystick[i].button[j].exist!=0)
+				{
+					printf(" Bt%d:%d",j,joystick[i].button[j].value);
+				}
+			}
+			for(j=0; j<YsJoyReaderMaxNumHatSwitch; j++)
+			{
+				if(joystick[i].hatSwitch[j].exist!=0)
+				{
+					printf(" POV%d:%d",j,joystick[i].hatSwitch[j].value);
+				}
+			}
+			printf("\n");
+		}
+	}
+	#endif
+
+	#ifdef Q_OS_LINUX // joystick support for Linux:
 	axes = 2;
 	buttons = 2;
 	axisButtonNumber = 0;
@@ -140,15 +188,15 @@ void Joystick::run()
 			}
 		}
 	}
+#endif
 
 	stopped = false;
-#endif
 }
 
 
 bool Joystick::isConnected()
 {
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX // joystick support for Linux:
 	if ((fd = open(joystickPort.toAscii(), O_RDONLY)) < 0)
 	{
 		emit message( QString(QString("No joystick found at %1").arg(joystickPort)).toAscii() );
@@ -160,7 +208,12 @@ bool Joystick::isConnected()
 	return true;
 
 #endif
-	return false; // we return false. Noy joystick supported -> NO jystick "connected"!
+
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+	return true;
+#endif
+
+	return false; // we return false. Noy joystick supported -> NO joystick "connected"!
 }
 
 
