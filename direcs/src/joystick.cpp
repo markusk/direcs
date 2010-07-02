@@ -25,6 +25,10 @@
 Joystick::Joystick()
 {
 	stopped = false;
+
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+	numJoystick = 0;
+#endif
 }
 
 
@@ -165,7 +169,7 @@ void Joystick::setPort(QString port)
 	joystickPort = port;
 }
 
-
+/*
 #ifdef Q_OS_MAC // joystick support for Mac OS:
 YsJoyReaderElement::YsJoyReaderElement()
 {
@@ -741,3 +745,4 @@ int YsJoyReaderLoadJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[])
 	return 0;
 }
 #endif // mac os
+*/

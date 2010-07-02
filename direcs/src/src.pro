@@ -123,10 +123,12 @@ macx {
 	message("Changing qwt lib name. Has to be installed via macports.")
 	LIBS +=		-lqwt
 
-	message( Adding additional joystick stuff... )
+	message( Adding joystick stuff... )
 	LIBS +=		-framework IOKit \
 				-framework Foundation
-	SOURCES     += ysjoyreader-objc.m
+	HEADERS     += ysjoyreader.h
+	SOURCES     += ysjoyreader.cpp \
+				   ysjoyreader-objc.m
 
 	ICON = ../images/direcs.icns
 }

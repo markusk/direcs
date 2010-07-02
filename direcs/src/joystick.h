@@ -37,6 +37,8 @@
 #endif
 
 #ifdef Q_OS_MAC // joystick support for Mac OS:
+#include "ysjoyreader.h"
+
 #include <ctype.h>
 #include <sys/errno.h>
 #include <sysexits.h>
@@ -125,13 +127,21 @@ class Joystick : public QThread
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
+
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+		int numJoystick;
+		static const int maxNumJoystick = 4;
+		YsJoyReader joystick[maxNumJoystick]; // the Mac OS joystick object
+#endif
 };
 
 
+/*
 #ifdef Q_OS_MAC // joystick support for Mac OS:
 static const int YsJoyReaderMaxNumAxis = 6;
 static const int YsJoyReaderMaxNumButton = 32;
 static const int YsJoyReaderMaxNumHatSwitch = 4;
+#endif
 
 class YsJoyReaderElement
 {
@@ -214,5 +224,5 @@ FILE *YsJoyReaderOpenJoystickCalibrationFile(const char mode[]);
 int YsJoyReaderSaveJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[]);
 int YsJoyReaderLoadJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[]);
 #endif // mac os
-
+*/
 #endif
