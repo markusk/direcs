@@ -66,29 +66,27 @@ void Joystick::run()
 		{
 			joystick[i].Read();
 
-			printf("Joy[%d]",i);
 			for(j=0; j<YsJoyReaderMaxNumAxis; j++)
 			{
 				if(joystick[i].axis[j].exist!=0)
 				{
-					printf(" Ax%d:%+5.2lf",j,joystick[i].axis[j].GetCalibratedValue());
+					emit message( QString("Joystick %3, Axis %1 = %2").arg(j).arg(joystick[i].axis[j].GetCalibratedValue()).arg(i) );
 				}
 			}
 			for(j=0; j<YsJoyReaderMaxNumButton; j++)
 			{
 				if(joystick[i].button[j].exist!=0)
 				{
-					printf(" Bt%d:%d",j,joystick[i].button[j].value);
+					emit message( QString("Button %1 = %2").arg(j).arg(joystick[i].button[j].value) );
 				}
 			}
 			for(j=0; j<YsJoyReaderMaxNumHatSwitch; j++)
 			{
 				if(joystick[i].hatSwitch[j].exist!=0)
 				{
-					printf(" POV%d:%d",j,joystick[i].hatSwitch[j].value);
+					emit message( QString("POV %1 = %2").arg(j).arg(joystick[i].hatSwitch[j].value) );
 				}
 			}
-			printf("\n");
 		}
 	}
 	#endif
