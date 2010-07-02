@@ -27,10 +27,10 @@ Joystick::Joystick()
 	stopped = false;
 
 	#ifdef Q_OS_MAC // joystick support for Mac OS:
-	YsJoyReaderSetUpJoystick(numJoystick,joystick,maxNumJoystick);
-	YsJoyReaderLoadJoystickCalibrationInfo(numJoystick,joystick);
-
 	numJoystick = 0;
+
+	YsJoyReaderSetUpJoystick(numJoystick, joystick,maxNumJoystick);
+	YsJoyReaderLoadJoystickCalibrationInfo(numJoystick, joystick);
 	#endif
 }
 
