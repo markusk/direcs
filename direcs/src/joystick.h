@@ -23,21 +23,30 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX // joystick support for linux:
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include <stdlib.h>
 #include <stdint.h>
 #include <linux/input.h>
 #include <linux/joystick.h>
 #endif
+
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+#include <ctype.h>
+#include <sys/errno.h>
+#include <sysexits.h>
+#include <IOKit/hid/IOHIDLib.h>
+#endif
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 #define NAME_LENGTH 128
 
@@ -97,7 +106,8 @@ class Joystick : public QThread
 	private:
 		volatile bool stopped;
 		QString joystickPort;
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+
+#ifdef Q_OS_LINUX // joystick support for linux:
 		int fd, i;
 		unsigned char axes;
 		unsigned char buttons;
@@ -111,6 +121,13 @@ class Joystick : public QThread
 		short int axisButtonNumber;
 		short int axisButtonValue;
 #endif
+
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+		static const int YsJoyReaderMaxNumAxis = 6;
+		static const int YsJoyReaderMaxNumButton = 32;
+		static const int YsJoyReaderMaxNumHatSwitch = 4;
+#endif
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
