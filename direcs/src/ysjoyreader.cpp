@@ -169,7 +169,7 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 			IOHIDElementType elemType=IOHIDElementGetType(elem);
 			unsigned int usage=IOHIDElementGetUsage(elem);
 			unsigned int usagePage=IOHIDElementGetUsagePage(elem);
-
+/*
 			printf("Element %3d",j);
 			switch(elemType)
 			{
@@ -197,7 +197,7 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 			}
 
 			printf("  Usage %3d  UsagePage %3d\n",usage,usagePage);
-
+*/
 			if(kHIDPage_GenericDesktop==usagePage)
 			{
 				switch(usage)
