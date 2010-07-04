@@ -98,7 +98,13 @@ class Joystick : public QThread
 		@param buttonState is the buttons state (true when button is down)
 		*/
 		void joystickButtonPressed(int axisNumber, bool buttonState);
-		
+
+		/**
+		Emits a signal when a POV / hat switch joystick button-pressed event occured.
+		@param buttonsState is the buttons state (normally 0 to 8 on a POV / hat switch)
+		*/
+		void joystickPOVButtonPressed(int buttonsState);
+
 
 	private:
 		volatile bool stopped;

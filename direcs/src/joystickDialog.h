@@ -42,9 +42,14 @@ class JoystickDialog : public QDialog
 
 	public slots:
 		/**
-		Shows the joystick button states when pressed.
+		Shows the "standard" joystick button states when pressed.
 		*/
 		void showJoystickButtons(int buttonNumber, bool buttonState);
+
+		/**
+		Shows the POV / Hat Switch joystick buttons states when pressed.
+		*/
+		void showJoystickPOVButtons(int buttonsState);
 
 		/**
 		Shows the joystick values when it moves.

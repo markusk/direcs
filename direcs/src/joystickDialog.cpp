@@ -90,6 +90,68 @@ void JoystickDialog::showJoystickButtons(int buttonNumber, bool buttonState)
 }
 
 
+void JoystickDialog::showJoystickPOVButtons(int buttonsState)
+{
+	switch (buttonsState)
+	{
+	case 0:
+		ui.radioBtnJoy4Left->setChecked(false);
+		ui.radioBtnJoy4Right->setChecked(false);
+		ui.radioBtnJoy5Up->setChecked(false);
+		ui.radioBtnJoy5Down->setChecked(false);
+		break;
+	case 1: // up
+		ui.radioBtnJoy4Left->setChecked(false);
+		ui.radioBtnJoy4Right->setChecked(false);
+		ui.radioBtnJoy5Up->setChecked(true);
+		ui.radioBtnJoy5Down->setChecked(false);
+		break;
+	case 2: // up right
+		ui.radioBtnJoy4Left->setChecked(false);
+		ui.radioBtnJoy4Right->setChecked(true);
+		ui.radioBtnJoy5Up->setChecked(true);
+		ui.radioBtnJoy5Down->setChecked(false);
+		break;
+	case 3: // right
+		ui.radioBtnJoy4Left->setChecked(false);
+		ui.radioBtnJoy4Right->setChecked(true);
+		ui.radioBtnJoy5Up->setChecked(false);
+		ui.radioBtnJoy5Down->setChecked(false);
+		break;
+	case 4: // down right
+		ui.radioBtnJoy4Left->setChecked(false);
+		ui.radioBtnJoy4Right->setChecked(true);
+		ui.radioBtnJoy5Up->setChecked(false);
+		ui.radioBtnJoy5Down->setChecked(true);
+		break;
+	case 5: // down
+		ui.radioBtnJoy4Left->setChecked(false);
+		ui.radioBtnJoy4Right->setChecked(false);
+		ui.radioBtnJoy5Up->setChecked(false);
+		ui.radioBtnJoy5Down->setChecked(true);
+		break;
+	case 6: // down left
+		ui.radioBtnJoy4Left->setChecked(true);
+		ui.radioBtnJoy4Right->setChecked(false);
+		ui.radioBtnJoy5Up->setChecked(false);
+		ui.radioBtnJoy5Down->setChecked(true);
+		break;
+	case 7: // left
+		ui.radioBtnJoy4Left->setChecked(true);
+		ui.radioBtnJoy4Right->setChecked(false);
+		ui.radioBtnJoy5Up->setChecked(false);
+		ui.radioBtnJoy5Down->setChecked(false);
+		break;
+	case 8: // up left
+		ui.radioBtnJoy4Left->setChecked(true);
+		ui.radioBtnJoy4Right->setChecked(false);
+		ui.radioBtnJoy5Up->setChecked(true);
+		ui.radioBtnJoy5Down->setChecked(false);
+		break;
+	}
+}
+
+
 void JoystickDialog::showJoystickAxes(int axisNumber, int axisValue)
 {
 	// TODO: put axis numbers to ini-file
@@ -99,10 +161,12 @@ void JoystickDialog::showJoystickAxes(int axisNumber, int axisValue)
 			// X axis
 			ui.sliderJoystickX->setValue(axisValue);
 			break;
+
 		case JOYSTICKAXISY2:
 			// Y axis
 			ui.sliderJoystickY->setValue(axisValue);
 			break;
+
 		case JOYSTICKAXISY5:
 			// Y axis "buttons"
 			// up
@@ -123,6 +187,7 @@ void JoystickDialog::showJoystickAxes(int axisNumber, int axisValue)
 				ui.radioBtnJoy5Down->setChecked(false);
 			}
 			break;
+
 		case JOYSTICKAXISX4:
 			// X axis "buttons"
 			// left

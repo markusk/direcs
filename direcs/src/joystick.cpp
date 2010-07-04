@@ -89,9 +89,6 @@ void Joystick::run()
 				{
 					if (joystick[currentJoystick].button[buttonOrAxis].exist != 0)
 					{
-
-						// emit message( QString("Button %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].button[buttonOrAxis].value) );
-
 						if (joystick[currentJoystick].button[buttonOrAxis].value == 1)
 						{
 							emit joystickButtonPressed(buttonOrAxis, true);
@@ -103,22 +100,16 @@ void Joystick::run()
 					}
 				}
 
+
+				//
 				// POV (Hat Switch)
+				//
 				for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumHatSwitch; buttonOrAxis++)
 				{
-					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist!=0)
+					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist != 0)
 					{
-						// emit message( QString("POV %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].hatSwitch[buttonOrAxis].value) );
-						/* TODO: butoon or axis ?!?
-					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].value == 1)
-					{
-						emit joystickButtonPressed(buttonOrAxis, true);
-					}
-					else
-					{
-						emit joystickButtonPressed(buttonOrAxis, false);
-					}
-*/
+						// emits the value 0 to 8 to the JoystickDialog
+						emit joystickPOVButtonPressed(joystick[currentJoystick].hatSwitch[buttonOrAxis].value);
 					}
 				}
 			}
