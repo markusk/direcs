@@ -1,10 +1,30 @@
-#ifndef YSMACOSXJOYSTICK_IS_INCLUDED
-#define YSMACOSXJOYSTICK_IS_INCLUDED
+/*************************************************************************
+ *   Copyright (C) 2010 by Markus Knapp                                  *
+ *   www.direcs.de                                                       *
+ *                                                                       *
+ *   This file is part of direcs.                                        *
+ *                                                                       *
+ *   direcs is free software: you can redistribute it and/or modify it   *
+ *   under the terms of the GNU General Public License as published      *
+ *   by the Free Software Foundation, version 3 of the License.          *
+ *                                                                       *
+ *   direcs is distributed in the hope that it will be useful,           *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of      *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the        *
+ *   GNU General Public License for more details.                        *
+ *                                                                       *
+ *   You should have received a copy of the GNU General Public License   *
+ *   along with direcs. If not, see <http://www.gnu.org/licenses/>.      *
+ *                                                                       *
+ *************************************************************************/
+
+#ifndef MACOSXJOYSTICK_IS_INCLUDED
+#define MACOSXJOYSTICK_IS_INCLUDED
 /* { */
 
-const int YsJoyReaderMaxNumAxis=6;
-const int YsJoyReaderMaxNumButton=32;
-const int YsJoyReaderMaxNumHatSwitch=4;
+const int JoyReaderMaxNumAxis=6;
+const int JoyReaderMaxNumButton=32;
+const int JoyReaderMaxNumHatSwitch=4;
 
 #include <stdio.h>
 #include <unistd.h>
@@ -16,24 +36,24 @@ const int YsJoyReaderMaxNumHatSwitch=4;
 #include <QDebug>
 
 
-class YsJoyReaderElement
+class JoyReaderElement
 {
 public:
 	int exist;
 	IOHIDElementRef elem;
 	int value;
 
-	YsJoyReaderElement();
+	JoyReaderElement();
 };
 
-class YsJoyReaderAxis : public YsJoyReaderElement
+class JoyReaderAxis : public JoyReaderElement
 {
 public:
 	int min,max;
 	int scaledMin,scaledMax;
 	int calibCenter,calibMin,calibMax;
 
-	YsJoyReaderAxis();
+	JoyReaderAxis();
 	double GetCalibratedValue(void) const;
 
 	void CaptureCenter(void);
@@ -42,16 +62,16 @@ public:
 	void CenterFromMinMax(void);
 };
 
-class YsJoyReaderButton : public YsJoyReaderElement
+class JoyReaderButton : public JoyReaderElement
 {
 public:
-	YsJoyReaderButton();
+	JoyReaderButton();
 };
 
-class YsJoyReaderHatSwitch : public YsJoyReaderElement
+class JoyReaderHatSwitch : public JoyReaderElement
 {
 public:
-	YsJoyReaderHatSwitch();
+	JoyReaderHatSwitch();
 	int valueNeutral;
 	int value0Deg;
 	int value90Deg;
@@ -60,7 +80,7 @@ public:
 	int GetDiscreteValue(void) const;
 };
 
-class  YsJoyReader
+class  JoyReader
 {
 public:
 	static IOHIDManagerRef hidManager;
@@ -70,11 +90,11 @@ public:
 	IOHIDDeviceRef hidDev;
 	char regPath[512];
 
-	YsJoyReaderAxis axis[YsJoyReaderMaxNumAxis];
-	YsJoyReaderButton button[YsJoyReaderMaxNumButton];
-	YsJoyReaderHatSwitch hatSwitch[YsJoyReaderMaxNumHatSwitch];
+	JoyReaderAxis axis[JoyReaderMaxNumAxis];
+	JoyReaderButton button[JoyReaderMaxNumButton];
+	JoyReaderHatSwitch hatSwitch[JoyReaderMaxNumHatSwitch];
 
-	YsJoyReader();
+	JoyReader();
 	int SetUpInterface(int joyId,IOHIDDeviceRef hidDev);
 	void Read(void);
 	void ReleaseInterface(void);
@@ -86,18 +106,18 @@ protected:
 	void AddAxis(int axisId,IOHIDElementRef elem,int min,int max,int scaledMin,int scaledMax);
 
 public:
-	static int SetUpJoystick(int &nJoystick,YsJoyReader joystick[],int maxNumJoystick);
+	static int SetUpJoystick(int &nJoystick,JoyReader joystick[],int maxNumJoystick);
 };
 
 
 
 
-int YsJoyReaderSetUpJoystick(int &nJoystick,YsJoyReader joystick[],int maxNumJoystick);
+int JoyReaderSetUpJoystick(int &nJoystick,JoyReader joystick[],int maxNumJoystick);
 
-FILE *YsJoyReaderOpenJoystickCalibrationFile(const char mode[]);
+FILE *JoyReaderOpenJoystickCalibrationFile(const char mode[]);
 
-int YsJoyReaderSaveJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[]);
-int YsJoyReaderLoadJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[]);
+int JoyReaderSaveJoystickCalibrationInfo(int nJoystick,JoyReader joystick[]);
+int JoyReaderLoadJoystickCalibrationInfo(int nJoystick,JoyReader joystick[]);
 
 /* } */
 #endif

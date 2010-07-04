@@ -128,7 +128,7 @@ macx {
 				-framework Foundation
 	HEADERS     += joyreaderMacOS.h
 	SOURCES     += joyreaderMacOS.cpp \
-				   ysjoyreader-objc.m
+				   joyreaderMacOS-objc.m
 
 	ICON = ../images/direcs.icns
 }

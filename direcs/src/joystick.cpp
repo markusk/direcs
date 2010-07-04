@@ -72,7 +72,7 @@ void Joystick::run()
 				//
 				// Axes
 				//
-				for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumAxis; buttonOrAxis++)
+				for (buttonOrAxis=0; buttonOrAxis<JoyReaderMaxNumAxis; buttonOrAxis++)
 				{
 					if (joystick[currentJoystick].axis[buttonOrAxis].exist != 0)
 					{
@@ -85,7 +85,7 @@ void Joystick::run()
 				//
 				// Buttons
 				//
-				for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumButton; buttonOrAxis++)
+				for (buttonOrAxis=0; buttonOrAxis<JoyReaderMaxNumButton; buttonOrAxis++)
 				{
 					if (joystick[currentJoystick].button[buttonOrAxis].exist != 0)
 					{
@@ -104,7 +104,7 @@ void Joystick::run()
 				//
 				// POV (Hat Switch)
 				//
-				for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumHatSwitch; buttonOrAxis++)
+				for (buttonOrAxis=0; buttonOrAxis<JoyReaderMaxNumHatSwitch; buttonOrAxis++)
 				{
 					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist != 0)
 					{
@@ -234,8 +234,8 @@ bool Joystick::isConnected()
 #endif
 
 #ifdef Q_OS_MAC // joystick support for Mac OS:
-	YsJoyReaderSetUpJoystick(numJoysticks, joystick, maxNumJoystick);
-	YsJoyReaderLoadJoystickCalibrationInfo(numJoysticks, joystick);
+	JoyReaderSetUpJoystick(numJoysticks, joystick, maxNumJoystick);
+	JoyReaderLoadJoystickCalibrationInfo(numJoysticks, joystick);
 
 	if (numJoysticks != 0)
 	{

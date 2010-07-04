@@ -132,7 +132,7 @@ class Joystick : public QThread
 #ifdef Q_OS_MAC // joystick support for Mac OS:
 		int numJoysticks; // the number of recognised joysticks
 		static const int maxNumJoystick = 4;
-		YsJoyReader joystick[maxNumJoystick]; // the Mac OS joystick object
+		JoyReader joystick[maxNumJoystick]; // the Mac OS joystick object
 #endif
 };
 
