@@ -27,10 +27,10 @@ Joystick::Joystick()
 	stopped = false;
 
 	#ifdef Q_OS_MAC // joystick support for Mac OS:
-	numJoystick = 0;
+	numJoysticks = 0;
 
-	YsJoyReaderSetUpJoystick(numJoystick, joystick, maxNumJoystick);
-	YsJoyReaderLoadJoystickCalibrationInfo(numJoystick, joystick);
+	YsJoyReaderSetUpJoystick(numJoysticks, joystick, maxNumJoystick);
+	YsJoyReaderLoadJoystickCalibrationInfo(numJoysticks, joystick);
 	#endif
 }
 
@@ -49,8 +49,8 @@ void Joystick::stop()
 void Joystick::run()
 {
 	#ifdef Q_OS_MAC // joystick support for Mac OS:
-	int i = 0;
-	int j = 0;
+	int currentJoystick = 0;
+	int buttonOrAxis = 0;
 
 
 	//
@@ -61,41 +61,53 @@ void Joystick::run()
 		// let the thread sleep some time for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-		for (i=0; i<numJoystick; i++)
+		for (currentJoystick=0; currentJoystick<numJoysticks; currentJoystick++)
 		{
 			// read joysticks state
-			joystick[i].Read();
+			joystick[currentJoystick].Read();
 
-			for (j=0; j<YsJoyReaderMaxNumAxis; j++)
+			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumAxis; buttonOrAxis++)
 			{
-				if (joystick[i].axis[j].exist!=0)
+				if (joystick[currentJoystick].axis[buttonOrAxis].exist != 0)
 				{
-//					emit message( QString("Joystick %3, Axis %1 = %2").arg(j).arg(joystick[i].axis[j].GetCalibratedValue()).arg(i) );
+					// we convert, round and multiply with 32767 the original value here to have a nive int from range -32767 to +32767 for the GUI
+					emit joystickMoved(buttonOrAxis, (int) qRound(joystick[currentJoystick].axis[buttonOrAxis].GetCalibratedValue() * 32767) );
+					//  emit message( QString("Joystick%1, Axis%2 = %3 / %4)").arg(currentJoystick).arg(buttonOrAxis).arg( (int) qRound(value*32767) ).arg(value) );
 				}
 			}
 
-			for (j=0; j<YsJoyReaderMaxNumButton; j++)
+			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumButton; buttonOrAxis++)
 			{
-				if (joystick[i].button[j].exist != 0)
+				if (joystick[currentJoystick].button[buttonOrAxis].exist != 0)
 				{
 
-					// emit message( QString("Button %1 = %2").arg(j).arg(joystick[i].button[j].value) );
-					if (joystick[i].button[j].value == 1)
+					// emit message( QString("Button %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].button[buttonOrAxis].value) );
+					if (joystick[currentJoystick].button[buttonOrAxis].value == 1)
 					{
-						emit joystickButtonPressed(j, true);
+						emit joystickButtonPressed(buttonOrAxis, true);
 					}
 					else
 					{
-						emit joystickButtonPressed(j, false);
+						emit joystickButtonPressed(buttonOrAxis, false);
 					}
 				}
 			}
 
-			for (j=0; j<YsJoyReaderMaxNumHatSwitch; j++)
+			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumHatSwitch; buttonOrAxis++)
 			{
-				if (joystick[i].hatSwitch[j].exist!=0)
+				if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist!=0)
 				{
-//					emit message( QString("POV %1 = %2").arg(j).arg(joystick[i].hatSwitch[j].value) );
+					// emit message( QString("POV %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].hatSwitch[buttonOrAxis].value) );
+/* TODO: butoon or axis ?!?
+					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].value == 1)
+					{
+						emit joystickButtonPressed(buttonOrAxis, true);
+					}
+					else
+					{
+						emit joystickButtonPressed(buttonOrAxis, false);
+					}
+*/
 				}
 			}
 		}
