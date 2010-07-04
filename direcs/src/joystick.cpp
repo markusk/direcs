@@ -28,9 +28,6 @@ Joystick::Joystick()
 
 	#ifdef Q_OS_MAC // joystick support for Mac OS:
 	numJoysticks = 0;
-
-	YsJoyReaderSetUpJoystick(numJoysticks, joystick, maxNumJoystick);
-	YsJoyReaderLoadJoystickCalibrationInfo(numJoysticks, joystick);
 	#endif
 }
 
@@ -62,55 +59,57 @@ void Joystick::run()
 		msleep(THREADSLEEPTIME);
 
 
-		for (currentJoystick=0; currentJoystick<numJoysticks; currentJoystick++)
+		if (numJoysticks != 0)
 		{
-			//
-			// read joysticks state
-			//
-			joystick[currentJoystick].Read();
-
-
-			//
-			// Axes
-			//
-			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumAxis; buttonOrAxis++)
+			for (currentJoystick=0; currentJoystick<numJoysticks; currentJoystick++)
 			{
-				if (joystick[currentJoystick].axis[buttonOrAxis].exist != 0)
+				//
+				// read joysticks state
+				//
+				joystick[currentJoystick].Read();
+
+
+				//
+				// Axes
+				//
+				for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumAxis; buttonOrAxis++)
 				{
-					// we convert, round and multiply with 32767 the original value here to have a nive int from range -32767 to +32767 for the GUI
-					emit joystickMoved(buttonOrAxis, (int) qRound(joystick[currentJoystick].axis[buttonOrAxis].GetCalibratedValue() * 32767) );
-				}
-			}
-
-
-			//
-			// Buttons
-			//
-			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumButton; buttonOrAxis++)
-			{
-				if (joystick[currentJoystick].button[buttonOrAxis].exist != 0)
-				{
-
-					// emit message( QString("Button %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].button[buttonOrAxis].value) );
-
-					if (joystick[currentJoystick].button[buttonOrAxis].value == 1)
+					if (joystick[currentJoystick].axis[buttonOrAxis].exist != 0)
 					{
-						emit joystickButtonPressed(buttonOrAxis, true);
-					}
-					else
-					{
-						emit joystickButtonPressed(buttonOrAxis, false);
+						// we convert, round and multiply with 32767 the original value here to have a nive int from range -32767 to +32767 for the GUI
+						emit joystickMoved(buttonOrAxis, (int) qRound(joystick[currentJoystick].axis[buttonOrAxis].GetCalibratedValue() * 32767) );
 					}
 				}
-			}
 
-			// POV (Hat Switch)
-			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumHatSwitch; buttonOrAxis++)
-			{
-				if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist!=0)
+
+				//
+				// Buttons
+				//
+				for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumButton; buttonOrAxis++)
 				{
-					// emit message( QString("POV %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].hatSwitch[buttonOrAxis].value) );
-/* TODO: butoon or axis ?!?
+					if (joystick[currentJoystick].button[buttonOrAxis].exist != 0)
+					{
+
+						// emit message( QString("Button %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].button[buttonOrAxis].value) );
+
+						if (joystick[currentJoystick].button[buttonOrAxis].value == 1)
+						{
+							emit joystickButtonPressed(buttonOrAxis, true);
+						}
+						else
+						{
+							emit joystickButtonPressed(buttonOrAxis, false);
+						}
+					}
+				}
+
+				// POV (Hat Switch)
+				for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumHatSwitch; buttonOrAxis++)
+				{
+					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist!=0)
+					{
+						// emit message( QString("POV %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].hatSwitch[buttonOrAxis].value) );
+						/* TODO: butoon or axis ?!?
 					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].value == 1)
 					{
 						emit joystickButtonPressed(buttonOrAxis, true);
@@ -120,10 +119,11 @@ void Joystick::run()
 						emit joystickButtonPressed(buttonOrAxis, false);
 					}
 */
+					}
 				}
 			}
-		}
-	}
+		} // numJoysticks
+	} // while
 	#endif
 
 	#ifdef Q_OS_LINUX // joystick support for Linux:
@@ -243,7 +243,15 @@ bool Joystick::isConnected()
 #endif
 
 #ifdef Q_OS_MAC // joystick support for Mac OS:
-	return true; // TODO: check if a joystick is found!
+	YsJoyReaderSetUpJoystick(numJoysticks, joystick, maxNumJoystick);
+	YsJoyReaderLoadJoystickCalibrationInfo(numJoysticks, joystick);
+
+	if (numJoysticks != 0)
+	{
+		return true;
+	}
+
+	return false;
 #endif
 
 	return false; // we return false. Noy joystick supported -> NO joystick "connected"!
