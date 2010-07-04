@@ -121,21 +121,13 @@ class Joystick : public QThread
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 1000; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 500; // Default: 25 ms
 
 #ifdef Q_OS_MAC // joystick support for Mac OS:
 		int numJoysticks; // the number of recognised joysticks
 		static const int maxNumJoystick = 4;
 		YsJoyReader joystick[maxNumJoystick]; // the Mac OS joystick object
 #endif
-
-		// TODO: put axis numbers to ini-file
-		/// Joystick axis numbers
-		/// @sa JoystickDialog()
-		static const int JOYSTICKAXISY = 2;
-		static const int JOYSTICKAXISX = 3;
-		static const int JOYSTICKAXIS2X = 4;
-		static const int JOYSTICKAXIS2Y = 5;
 };
 
 #endif
