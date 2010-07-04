@@ -127,7 +127,7 @@ macx {
 	LIBS +=		-framework IOKit \
 				-framework Foundation
 	HEADERS     += joyreaderMacOS.h
-	SOURCES     += ysjoyreader.cpp \
+	SOURCES     += joyreaderMacOS.cpp \
 				   ysjoyreader-objc.m
 
 	ICON = ../images/direcs.icns
