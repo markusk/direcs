@@ -160,7 +160,7 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 		int nElem=(int)CFArrayGetCount(elemAry);
 		int isMouse=0,isJoystick=0,isKeyboard=0,isGamePad=0;
 
-		qDebug("This HID Device has %d elements.",nElem);
+//		qDebug("This HID Device has %d elements.",nElem);
 
 		int j;
 		for(j=0; j<nElem; j++)
@@ -211,11 +211,11 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 					isKeyboard=1;
 					break;
 				case kHIDUsage_GD_Joystick:
-					qDebug("    Can function as Joystick");
+					qDebug("Found a Joystick.");
 					isJoystick=1;
 					break;
 				case kHIDUsage_GD_GamePad:
-					qDebug("    Can function as GamePad");
+					qDebug("Found a GamePad.");
 					isGamePad=1;
 					break;
 				}
@@ -321,6 +321,7 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 			return 1;
 
 		}
+
 		CFRelease(elemAry);
 	}
 
@@ -437,7 +438,7 @@ int YsJoyReader::SetUpJoystick(int &nJoystick,YsJoyReader joystick[],int maxNumJ
 
 		CFIndex nDev=CFArrayGetCount(devArray);
 
-		qDebug("Looking for joysticks: %d HID devices found...", (int) nDev);
+		qDebug("%d HID devices found. Looking for joysticks...", (int) nDev);
 
 		CFRelease(copyOfDevices);
 
@@ -454,6 +455,9 @@ int YsJoyReader::SetUpJoystick(int &nJoystick,YsJoyReader joystick[],int maxNumJ
 			}
 		}
 	}
+
+
+	qDebug("%d joystick(s) found.", nJoystick);
 
 	return nJoystick;
 }
