@@ -58,33 +58,44 @@ void Joystick::run()
 	//
 	while (!stopped)
 	{
-		// let the thread sleep some time
-		// for having more time for the other threads
+		// let the thread sleep some time for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-		for(i=0; i<numJoystick; i++)
+		for (i=0; i<numJoystick; i++)
 		{
+			// read joysticks state
 			joystick[i].Read();
 
-			for(j=0; j<YsJoyReaderMaxNumAxis; j++)
+			for (j=0; j<YsJoyReaderMaxNumAxis; j++)
 			{
-				if(joystick[i].axis[j].exist!=0)
+				if (joystick[i].axis[j].exist!=0)
 				{
-					emit message( QString("Joystick %3, Axis %1 = %2").arg(j).arg(joystick[i].axis[j].GetCalibratedValue()).arg(i) );
+//					emit message( QString("Joystick %3, Axis %1 = %2").arg(j).arg(joystick[i].axis[j].GetCalibratedValue()).arg(i) );
 				}
 			}
-			for(j=0; j<YsJoyReaderMaxNumButton; j++)
+
+			for (j=0; j<YsJoyReaderMaxNumButton; j++)
 			{
-				if(joystick[i].button[j].exist!=0)
+				if (joystick[i].button[j].exist != 0)
 				{
-					emit message( QString("Button %1 = %2").arg(j).arg(joystick[i].button[j].value) );
+
+//					emit message( QString("Button %1 = %2").arg(j).arg(joystick[i].button[j].value) );
+					if (joystick[i].button[j].value == 1)
+					{
+						emit joystickButtonPressed(j, true);
+					}
+					else
+					{
+						emit joystickButtonPressed(j, false);
+					}
 				}
 			}
-			for(j=0; j<YsJoyReaderMaxNumHatSwitch; j++)
+
+			for (j=0; j<YsJoyReaderMaxNumHatSwitch; j++)
 			{
-				if(joystick[i].hatSwitch[j].exist!=0)
+				if (joystick[i].hatSwitch[j].exist!=0)
 				{
-					emit message( QString("POV %1 = %2").arg(j).arg(joystick[i].hatSwitch[j].value) );
+//					emit message( QString("POV %1 = %2").arg(j).arg(joystick[i].hatSwitch[j].value) );
 				}
 			}
 		}
