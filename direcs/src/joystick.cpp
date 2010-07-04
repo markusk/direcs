@@ -29,7 +29,7 @@ Joystick::Joystick()
 	#ifdef Q_OS_MAC // joystick support for Mac OS:
 	numJoystick = 0;
 
-	YsJoyReaderSetUpJoystick(numJoystick, joystick,maxNumJoystick);
+	YsJoyReaderSetUpJoystick(numJoystick, joystick, maxNumJoystick);
 	YsJoyReaderLoadJoystickCalibrationInfo(numJoystick, joystick);
 	#endif
 }
@@ -79,7 +79,7 @@ void Joystick::run()
 				if (joystick[i].button[j].exist != 0)
 				{
 
-//					emit message( QString("Button %1 = %2").arg(j).arg(joystick[i].button[j].value) );
+					// emit message( QString("Button %1 = %2").arg(j).arg(joystick[i].button[j].value) );
 					if (joystick[i].button[j].value == 1)
 					{
 						emit joystickButtonPressed(j, true);
