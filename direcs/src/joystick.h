@@ -37,7 +37,7 @@
 #endif
 
 #ifdef Q_OS_MAC // joystick support for Mac OS:
-#include "ysjoyreader.h"
+#include "joyreaderMacOS.h"
 #endif
 
 #include <unistd.h>

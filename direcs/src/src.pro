@@ -126,7 +126,7 @@ macx {
 	message( Adding joystick stuff... )
 	LIBS +=		-framework IOKit \
 				-framework Foundation
-	HEADERS     += ysjoyreader.h
+	HEADERS     += joyreaderMacOS.h
 	SOURCES     += ysjoyreader.cpp \
 				   ysjoyreader-objc.m
 
