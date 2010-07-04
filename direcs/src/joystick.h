@@ -127,7 +127,7 @@ class Joystick : public QThread
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 500; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 250; // Default: 25 ms
 
 #ifdef Q_OS_MAC // joystick support for Mac OS:
 		int numJoysticks; // the number of recognised joysticks
