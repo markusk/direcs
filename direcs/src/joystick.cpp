@@ -61,27 +61,38 @@ void Joystick::run()
 		// let the thread sleep some time for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
+
 		for (currentJoystick=0; currentJoystick<numJoysticks; currentJoystick++)
 		{
+			//
 			// read joysticks state
+			//
 			joystick[currentJoystick].Read();
 
+
+			//
+			// Axes
+			//
 			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumAxis; buttonOrAxis++)
 			{
 				if (joystick[currentJoystick].axis[buttonOrAxis].exist != 0)
 				{
 					// we convert, round and multiply with 32767 the original value here to have a nive int from range -32767 to +32767 for the GUI
 					emit joystickMoved(buttonOrAxis, (int) qRound(joystick[currentJoystick].axis[buttonOrAxis].GetCalibratedValue() * 32767) );
-					//  emit message( QString("Joystick%1, Axis%2 = %3 / %4)").arg(currentJoystick).arg(buttonOrAxis).arg( (int) qRound(value*32767) ).arg(value) );
 				}
 			}
 
+
+			//
+			// Buttons
+			//
 			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumButton; buttonOrAxis++)
 			{
 				if (joystick[currentJoystick].button[buttonOrAxis].exist != 0)
 				{
 
 					// emit message( QString("Button %1 = %2").arg(buttonOrAxis).arg(joystick[currentJoystick].button[buttonOrAxis].value) );
+
 					if (joystick[currentJoystick].button[buttonOrAxis].value == 1)
 					{
 						emit joystickButtonPressed(buttonOrAxis, true);
@@ -93,6 +104,7 @@ void Joystick::run()
 				}
 			}
 
+			// POV (Hat Switch)
 			for (buttonOrAxis=0; buttonOrAxis<YsJoyReaderMaxNumHatSwitch; buttonOrAxis++)
 			{
 				if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist!=0)
