@@ -95,15 +95,15 @@ void JoystickDialog::showJoystickAxes(int axisNumber, int axisValue)
 	// TODO: put axis numbers to ini-file
 	switch (axisNumber)
 	{
-		case JOYSTICKAXISX:
+		case JOYSTICKAXISX3:
 			// X axis
 			ui.sliderJoystickX->setValue(axisValue);
 			break;
-		case JOYSTICKAXISY:
+		case JOYSTICKAXISY2:
 			// Y axis
 			ui.sliderJoystickY->setValue(axisValue);
 			break;
-		case JOYSTICKAXIS2Y:
+		case JOYSTICKAXISY5:
 			// Y axis "buttons"
 			// up
 			if (axisValue < 0)
@@ -123,7 +123,7 @@ void JoystickDialog::showJoystickAxes(int axisNumber, int axisValue)
 				ui.radioBtnJoy5Down->setChecked(false);
 			}
 			break;
-		case JOYSTICKAXIS2X:
+		case JOYSTICKAXISX4:
 			// X axis "buttons"
 			// left
 			if (axisValue < 0)
