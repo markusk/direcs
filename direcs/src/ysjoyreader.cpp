@@ -160,13 +160,13 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 		int nElem=(int)CFArrayGetCount(elemAry);
 		int isMouse=0,isJoystick=0,isKeyboard=0,isGamePad=0;
 
-		printf("This HID Device has %d elements.\n",nElem);
+		qDebug("This HID Device has %d elements.",nElem);
 
 		int j;
 		for(j=0; j<nElem; j++)
 		{
 			IOHIDElementRef elem=(IOHIDElementRef)CFArrayGetValueAtIndex(elemAry,j);
-			IOHIDElementType elemType=IOHIDElementGetType(elem);
+//			IOHIDElementType elemType=IOHIDElementGetType(elem);
 			unsigned int usage=IOHIDElementGetUsage(elem);
 			unsigned int usagePage=IOHIDElementGetUsagePage(elem);
 /*
@@ -203,19 +203,19 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 				switch(usage)
 				{
 				case kHIDUsage_GD_Mouse:
-					printf("    Can function as mouse\n");
+//					printf("    Can function as mouse\n");
 					isMouse=1;
 					break;
 				case kHIDUsage_GD_Keyboard:
-					printf("    Can function as Keyboard\n");
+//					printf("    Can function as Keyboard\n");
 					isKeyboard=1;
 					break;
 				case kHIDUsage_GD_Joystick:
-					printf("    Can function as Joystick\n");
+					qDebug("    Can function as Joystick");
 					isJoystick=1;
 					break;
 				case kHIDUsage_GD_GamePad:
-					printf("    Can function as GamePad\n");
+					qDebug("    Can function as GamePad");
 					isGamePad=1;
 					break;
 				}
@@ -261,38 +261,38 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 						case kHIDUsage_GD_GamePad:
 							break;
 						case kHIDUsage_GD_X:
-							printf("    This element is for X-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for X-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							AddAxis(nAxis++,elem,min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Y:
-							printf("    This element is for Y-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Y-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							AddAxis(nAxis++,elem,min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Z:
-							printf("    This element is for Z-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Z-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							AddAxis(nAxis++,elem,min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Rx:
-							printf("    This element is for Rx-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Rx-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							AddAxis(nAxis++,elem,min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Ry:
-							printf("    This element is for Ry-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Ry-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							AddAxis(nAxis++,elem,min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Rz:
-							printf("    This element is for Rz-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Rz-Axis (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							AddAxis(nAxis++,elem,min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Slider:
-							printf("    This element is for Slider (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Slider (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							AddAxis(nAxis++,elem,min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Wheel:
-							printf("    This element is for Wheel (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Wheel (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							break;
 						case kHIDUsage_GD_Hatswitch:
-							printf("    This element is for Hatswitch (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
+//							printf("    This element is for Hatswitch (%d->%d) Scaled(%d->%d)\n",min,max,scaledMin,scaledMax);
 							if(nHat<YsJoyReaderMaxNumHatSwitch)
 							{
 								hatSwitch[nHat].exist=1;
@@ -304,7 +304,7 @@ int YsJoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 						}
 						break;
 					case kHIDPage_Button:
-						printf("    This element is for Button %d\n",usage-1);
+//						printf("    This element is for Button %d\n",usage-1);
 						usage--;
 						if(0<=usage && usage<YsJoyReaderMaxNumButton)
 						{
@@ -437,7 +437,7 @@ int YsJoyReader::SetUpJoystick(int &nJoystick,YsJoyReader joystick[],int maxNumJ
 
 		CFIndex nDev=CFArrayGetCount(devArray);
 
-		printf("%d devices found\n",(int)nDev);
+		qDebug("Looking for joysticks: %d HID devices found...", (int) nDev);
 
 		CFRelease(copyOfDevices);
 

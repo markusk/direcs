@@ -13,7 +13,7 @@ const int YsJoyReaderMaxNumHatSwitch=4;
 #include <sys/errno.h>
 #include <sysexits.h>
 #include <IOKit/hid/IOHIDLib.h>
-
+#include <QDebug>
 
 
 class YsJoyReaderElement
