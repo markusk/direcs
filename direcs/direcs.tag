@@ -208,6 +208,125 @@
     <class kind="class">InterfaceAvr</class>
   </compound>
   <compound kind="file">
+    <name>joyreaderMacOS-objc.m</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>joyreaderMacOS-objc_8m</filename>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFileC</name>
+      <anchorfile>joyreaderMacOS-objc_8m.html</anchorfile>
+      <anchor>a7edc3816dba6dbb202ba887478af2a00</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>joyreaderMacOS.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>joyreaderMacOS_8cpp</filename>
+    <includes id="joyreaderMacOS_8h" name="joyreaderMacOS.h" local="yes" imported="no">joyreaderMacOS.h</includes>
+    <member kind="function">
+      <type>void</type>
+      <name>CFSetCopyCallBack</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>aa59629b4a12431d928995cca239a66c2</anchor>
+      <arglist>(const void *value, void *context)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderLoadJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a57cae5be8844e593d4465b07e645c121</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFile</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>ac28086a930dc38bac0f518f8abcd17ef</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFileC</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a7edc3816dba6dbb202ba887478af2a00</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSaveJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a99ba270883928d9e4574b7de6c9179b2</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSetUpJoystick</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a29294c6de9370e93c5a3693a4bd448e2</anchor>
+      <arglist>(int &amp;nJoystick, JoyReader joystick[], int maxNumJoystick)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>joyreaderMacOS.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>joyreaderMacOS_8h</filename>
+    <class kind="class">JoyReader</class>
+    <class kind="class">JoyReaderAxis</class>
+    <class kind="class">JoyReaderButton</class>
+    <class kind="class">JoyReaderElement</class>
+    <class kind="class">JoyReaderHatSwitch</class>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderLoadJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a57cae5be8844e593d4465b07e645c121</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFile</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>ac28086a930dc38bac0f518f8abcd17ef</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSaveJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a99ba270883928d9e4574b7de6c9179b2</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSetUpJoystick</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a29294c6de9370e93c5a3693a4bd448e2</anchor>
+      <arglist>(int &amp;nJoystick, JoyReader joystick[], int maxNumJoystick)</arglist>
+    </member>
+    <member kind="variable">
+      <type>const int</type>
+      <name>JoyReaderMaxNumAxis</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a825e14c1507fcb859f8954628962ff01</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const int</type>
+      <name>JoyReaderMaxNumButton</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>ab81eb61c3b360fcef9c922fd51279662</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const int</type>
+      <name>JoyReaderMaxNumHatSwitch</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a9385c0701861ce232afd7269a7bbb08d</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>joystick.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>joystick_8cpp</filename>
@@ -6784,6 +6903,316 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>JoyReader</name>
+    <filename>classJoyReader.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>JoyReader</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>ae685eb0f189d01e5935634bcbed03ba5</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>Read</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a14e4007003de8b4a5a678fa654383722</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>ReadCalibInfoFile</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>adc136feacba8f2ad961e6e39025e6bc4</anchor>
+      <arglist>(FILE *fp)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>ReleaseInterface</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a453f7150b45e8e5d1f407f3caaed55c4</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>SetUpInterface</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a42eb0ecedec0b212460bbec24d6f0155</anchor>
+      <arglist>(int joyId, IOHIDDeviceRef hidDev)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>WriteCalibInfoFile</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a9277fa16e131d886213bdbb8df115f1e</anchor>
+      <arglist>(FILE *fp) const </arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static int</type>
+      <name>SetUpJoystick</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>aa0996955f56dcb0f6296a002a571a76c</anchor>
+      <arglist>(int &amp;nJoystick, JoyReader joystick[], int maxNumJoystick)</arglist>
+    </member>
+    <member kind="variable">
+      <type>JoyReaderAxis</type>
+      <name>axis</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a0eca4786e89c2053e2eb78ee524eed9a</anchor>
+      <arglist>[JoyReaderMaxNumAxis]</arglist>
+    </member>
+    <member kind="variable">
+      <type>JoyReaderButton</type>
+      <name>button</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>aaa4555c92a58a31c0ddc56177ec1cb92</anchor>
+      <arglist>[JoyReaderMaxNumButton]</arglist>
+    </member>
+    <member kind="variable">
+      <type>JoyReaderHatSwitch</type>
+      <name>hatSwitch</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a3231e8d9031b6448f2b86822cb095451</anchor>
+      <arglist>[JoyReaderMaxNumHatSwitch]</arglist>
+    </member>
+    <member kind="variable">
+      <type>IOHIDDeviceRef</type>
+      <name>hidDev</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>abc934e448b00ac8f1f6d0dce5f8ea6a9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>joyId</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a0becbeb16fce379261f316e856442f80</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>char</type>
+      <name>regPath</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>accc7f4a563bcf85185533ab3380dc172</anchor>
+      <arglist>[512]</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static CFMutableArrayRef</type>
+      <name>devArray</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>abeb1faa73cce957fb12271dd3d843a3b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static IOHIDManagerRef</type>
+      <name>hidManager</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>ab27c44fba790ad61481aaa09d73666a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>AddAxis</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a30fb00a9009bc58b3370a9ece7c6b68b</anchor>
+      <arglist>(int axisId, IOHIDElementRef elem, int min, int max, int scaledMin, int scaledMax)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderAxis</name>
+    <filename>classJoyReaderAxis.html</filename>
+    <base>JoyReaderElement</base>
+    <member kind="function">
+      <type>void</type>
+      <name>BeginCaptureMinMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a29054165eda348340c799a1ae416eca7</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>CaptureCenter</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a99f38f4d6a74b3c28ad9def1d46c0aad</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>CaptureMinMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>ab24f733b7432924a6e2152044ab4b7cd</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>CenterFromMinMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a5ef2bff8983208d40583edcfa5c4a010</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>GetCalibratedValue</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a27594b92158e6396342b2f4daab7ba33</anchor>
+      <arglist>(void) const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderAxis</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a4fc9bec0e3239d982b4c936b713fe87b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>calibCenter</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a6e24a7c7b6e74a39a12c821af9c31202</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>calibMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>aaa125ed4af60073b8d7bb291bb4e781d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>calibMin</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a38ecbe4718f3384f1eb76a9a5ca859c9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>max</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a58257d84e80eb8df32597aab00c978e5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>min</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>ae57e2e78d8f5fe000620483ee9bab23a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>scaledMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>adc1e7bf0e18f02b960ab065e6c05b76e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>scaledMin</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a88486c721e228a03f403b0a8b902c7c2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderButton</name>
+    <filename>classJoyReaderButton.html</filename>
+    <base>JoyReaderElement</base>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderButton</name>
+      <anchorfile>classJoyReaderButton.html</anchorfile>
+      <anchor>a002a9cfb449247174cb53fac43c019d4</anchor>
+      <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderElement</name>
+    <filename>classJoyReaderElement.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderElement</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>IOHIDElementRef</type>
+      <name>elem</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>exist</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderHatSwitch</name>
+    <filename>classJoyReaderHatSwitch.html</filename>
+    <base>JoyReaderElement</base>
+    <member kind="function">
+      <type>int</type>
+      <name>GetDiscreteValue</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a0f96d25dc0014ef3213319610425f905</anchor>
+      <arglist>(void) const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderHatSwitch</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>ae03b04d18d0afbe4e3defa3328b01352</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value0Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a8f1f81e983e84af50e5c36ed352cf4b1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value180Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a38ff1efe77ef47c65239becfa6574380</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value270Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a6c41452931e07234fca3dc7f980e82b3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value90Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a7e13fd0cb5091c19c627593512025359</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>valueNeutral</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>ac43e66ab9b1b912be4917c15246bb1ff</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>Joystick</name>
     <filename>classJoystick.html</filename>
     <member kind="signal">
@@ -6799,6 +7228,13 @@
       <anchorfile>classJoystick.html</anchorfile>
       <anchor>aa13c6fe31d0236e22779b62b1fcbcd2b</anchor>
       <arglist>(int axisNumber, int axisValue)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>joystickPOVButtonPressed</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a70d194aba79630e96ae157d168b91b7e</anchor>
+      <arglist>(int buttonsState)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -6888,6 +7324,13 @@
       <anchor>a66e91c16efbdf471070c406e93714c6a</anchor>
       <arglist>(int buttonNumber, bool buttonState)</arglist>
     </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>showJoystickPOVButtons</name>
+      <anchorfile>classJoystickDialog.html</anchorfile>
+      <anchor>a97b0b4bc5cf6910824d8748500f63be8</anchor>
+      <arglist>(int buttonsState)</arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>JoystickDialog</name>
@@ -6904,30 +7347,30 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2X</name>
+      <name>JOYSTICKAXISX3</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>a81539670930fa6f5df3a3e1ac604a6c3</anchor>
+      <anchor>a857f153633f213b0c4a957ebd434fe96</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2Y</name>
+      <name>JOYSTICKAXISX4</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>aa9fcb86c2518f44233b614f36715d749</anchor>
+      <anchor>a73e8e1ffda7a55e5722dfcbf4325cb94</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISX</name>
+      <name>JOYSTICKAXISY2</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>adbe2aa573acdceb74017d405e8611da0</anchor>
+      <anchor>aec61f2597a7bb8df58106c8c1d42d4d6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISY</name>
+      <name>JOYSTICKAXISY5</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>acde88da0d56d15806ffbe84f7b67dd65</anchor>
+      <anchor>a76733b94e048c5beb295aeb39eb25242</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -9646,6 +10089,20 @@
       <name>largestFreeAreaStart</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>a7955b2eb3d6e8832ee6e221d71b157b8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserAngle</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a0878a6e943f3b7ed636a3641dae0282c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserResolution</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a2d1f158153e88324962bd5fdaa89653f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -12755,6 +13212,9 @@
     <file>inifile.h</file>
     <file>interfaceAvr.cpp</file>
     <file>interfaceAvr.h</file>
+    <file>joyreaderMacOS-objc.m</file>
+    <file>joyreaderMacOS.cpp</file>
+    <file>joyreaderMacOS.h</file>
     <file>joystick.cpp</file>
     <file>joystick.h</file>
     <file>joystickDialog.cpp</file>
