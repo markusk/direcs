@@ -108,8 +108,42 @@ void Joystick::run()
 				{
 					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist != 0)
 					{
-						// emits the value 0 to 8 to the JoystickDialog
+						// emits the value 0 to 8 to Gui::JoystickDialog
 						emit joystickPOVButtonPressed(joystick[currentJoystick].hatSwitch[buttonOrAxis].value);
+
+
+						// the following is a workaround for Mac only since we cannon identify the POV under Linux and therefor we would need a different Direcs::executeJoystickCommand
+						// so here we're emitting another signal for this Slot (which is for drive-by-joystick). And this is the POV button layout:
+						//
+						//            1
+						//          8   2
+						//        7   0   3
+						//          6   4
+						//            5
+						//
+						switch (joystick[currentJoystick].hatSwitch[buttonOrAxis].value)
+						{
+						case 0:
+							// no POV button pressed
+							emit joystickMoved(JOYSTICKAXISY5, 0);
+							break;
+						case 1:
+							// Y axis, UP, drive forward
+							emit joystickMoved(JOYSTICKAXISY5, -32767);
+							break;
+						case 3:
+							// x axis, RIGHT, drive right
+							emit joystickMoved(JOYSTICKAXISX4, 32767);
+							break;
+						case 5:
+							// Y axis, DOWN, drive backward
+							emit joystickMoved(JOYSTICKAXISY5, 32767);
+							break;
+						case 7:
+							// x axis, LEFT, drive left
+							emit joystickMoved(JOYSTICKAXISX4, -32767);
+							break;
+						}
 					}
 				}
 			}

@@ -101,7 +101,15 @@ class Joystick : public QThread
 
 		/**
 		Emits a signal when a POV / hat switch joystick button-pressed event occured.
-		@param buttonsState is the buttons state (normally 0 to 8 on a POV / hat switch)
+		@param buttonsState is the buttons state (normally 0 to 8 on a POV / hat switch)\n
+		\n
+		And this is the POV button layout:\n
+		\n
+					1\n
+				  8   2\n
+				7   0   3\n
+				  6   4\n
+					5\n
 		*/
 		void joystickPOVButtonPressed(int buttonsState);
 
@@ -129,6 +137,13 @@ class Joystick : public QThread
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 250; // Default: 25 ms
 
+		/// Joystick axis numbers
+		/// @sa JoystickDialog()
+		/// @sa Direcs::ExecuteJoyStickCommand()
+		static const int JOYSTICKAXISY2 = 2; // ok
+		static const int JOYSTICKAXISX3 = 3; // ok
+		static const int JOYSTICKAXISX4 = 4;
+		static const int JOYSTICKAXISY5 = 5;
 #ifdef Q_OS_MAC // joystick support for Mac OS:
 		int numJoysticks; // the number of recognised joysticks
 		static const int maxNumJoystick = 4;
