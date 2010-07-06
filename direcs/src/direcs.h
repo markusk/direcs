@@ -475,10 +475,11 @@ class Direcs : public QObject
 
 		// TODO: put axis numbers to ini-file
 		/// Joystick axis numbers
-		static const int JOYSTICKAXISY = 2;
-		static const int JOYSTICKAXISX = 3;
-		static const int JOYSTICKAXIS2X = 4;
-		static const int JOYSTICKAXIS2Y = 5;
+		/// @sa Joystick()
+		static const int JOYSTICKAXISY2 = 2; // ok
+		static const int JOYSTICKAXISX3 = 3; // ok
+		static const int JOYSTICKAXISX4 = 4;
+		static const int JOYSTICKAXISY5 = 5;
 		/// Joystick conversion divisor. Converts the joystick axis value to the robot speed.
 		static const int JOYSTICKDIVISOR = 128;
 

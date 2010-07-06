@@ -471,7 +471,7 @@ void Direcs::init()
 
 		// also emit messages to the logfile
 		// 	connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
-		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error
+//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -784,7 +784,7 @@ void Direcs::init()
 		}
 
 		connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
-		connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool))); // check that for Mac OS POV buttons !!!
+		connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
 		if (!consoleMode)
 		{
@@ -3585,7 +3585,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// Y axis
 	//
-	if (axisNumber == JOYSTICKAXISY)
+	if (axisNumber == JOYSTICKAXISY2)
 	{
 		//------
 		// down
@@ -3712,7 +3712,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// X axis
 	//
-	if (axisNumber == JOYSTICKAXISX)
+	if (axisNumber == JOYSTICKAXISX3)
 	{
 		//-------
 		// right
@@ -3803,7 +3803,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// Y axis "buttons"
 	//
-	if (axisNumber == JOYSTICKAXIS2Y)
+	if (axisNumber == JOYSTICKAXISY5)
 	{
 		//==================
 		// servo test mode
@@ -3951,7 +3951,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// X axis "buttons"
 	//
-	if (axisNumber == JOYSTICKAXIS2X)
+	if (axisNumber == JOYSTICKAXISX4)
 	{
 		//==================
 		// servo test mode
