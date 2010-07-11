@@ -391,10 +391,16 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0">
+     <item row="1" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
         <widget class="QPushButton" name="btnPower4">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <weight>75</weight>
@@ -414,6 +420,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="btnDirection4">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <weight>75</weight>
@@ -515,12 +527,18 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="1">
+     <item row="1" column="1">
       <layout class="QVBoxLayout" name="name10">
        <item>
         <layout class="QHBoxLayout" name="_22">
          <item>
           <widget class="QPushButton" name="btnPower3">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>64</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -542,6 +560,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="btnDirection3">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <weight>75</weight>
@@ -643,12 +667,18 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <layout class="QVBoxLayout" name="name9">
        <item>
         <layout class="QHBoxLayout" name="_18">
          <item>
           <widget class="QPushButton" name="btnPower2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>64</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -670,6 +700,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="btnDirection2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <weight>75</weight>
@@ -771,12 +807,18 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <layout class="QVBoxLayout" name="name8">
        <item>
         <layout class="QHBoxLayout" name="_14">
          <item>
           <widget class="QPushButton" name="btnPower1">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>64</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -798,6 +840,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="btnDirection1">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <weight>75</weight>
@@ -899,7 +947,7 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="0">
       <spacer name="verticalSpacer_7">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
