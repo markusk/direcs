@@ -154,6 +154,10 @@ contains( HOSTNAME, [rR]obot ) {
 	 message( Removing active laser view... )
 	 DEFINES -= ACTIVELASERVIEW
 
+	 message( Building RELEASE version (no debugging!)... )
+	 CONFIG -= debug
+	 CONFIG += release
+
 	 message( Robot configuration finished. )
 }
 

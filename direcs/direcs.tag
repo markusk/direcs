@@ -4134,30 +4134,30 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2X</name>
+      <name>JOYSTICKAXISX3</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a20710c24687130ec562cd96ceef94bad</anchor>
+      <anchor>ae8999529a7723f9a4b83a8b9806ea449</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2Y</name>
+      <name>JOYSTICKAXISX4</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a9c0a7b9e00c9886f051cf6b127b6bf52</anchor>
+      <anchor>aeea5872d4778916e324529aec3d09072</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISX</name>
+      <name>JOYSTICKAXISY2</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a50c9754b4aad491f3a754cd2dfae27be</anchor>
+      <anchor>ae05ef7b8593f44c46bc82f436d3abe39</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISY</name>
+      <name>JOYSTICKAXISY5</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>aafd3dcbe92f234a0260b6dd658f8015e</anchor>
+      <anchor>ae56af2da3c7784a7d1758880ac8290a9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -7297,6 +7297,34 @@
       <name>stopped</name>
       <anchorfile>classJoystick.html</anchorfile>
       <anchor>ad269fa8f1641ef86dc5c55dd9ad49a0f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISX3</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a3220eb735761290d9e1e4a7b85f0d4a0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISX4</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a501c1f70880ca327f7a9ad92d2ec6610</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISY2</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a975ad391932af65e8a340853c59da151</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISY5</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>afd1176831563c48d12fd97b75ad3371f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
