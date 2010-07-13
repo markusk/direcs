@@ -22,6 +22,16 @@
 #define DIRECS_H
 
 //-------------------------------------------------------------------
+#include <QtGlobal> // for Q_OS_* Makro!
+#include <QObject>
+#include <QtDebug>
+#include <QMutex>
+#include <QSocketNotifier>
+#include <QtGui>
+#include <QSplashScreen>
+#include <QMetaType>
+#include <QtCore/QCoreApplication>
+//-------------------------------------------------------------------
 #include "consoleGui.h"
 #include "gui.h"
 #include "joystickDialog.h"
@@ -48,16 +58,7 @@
 #include "camThread.h"
 #include "speakThread.h"
 //-------------------------------------------------------------------
-#include <QObject>
-#include <QtDebug>
-#include <QMutex>
-#include <QSocketNotifier>
-#include <QtGui>
-#include <QSplashScreen>
-#include <QMetaType>
-//-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
-#include <QtCore/QCoreApplication>
 using namespace std;
 
 struct CleanExit
