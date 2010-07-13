@@ -491,7 +491,14 @@ void Direcs::init()
 			//*****************************
 			// Error message will be send via signals to the GUI or Console!
 			emit message("<font color=\"#FF0000\">The robot is OFF!</font>");
-			gui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
+			if (consoleMode)
+			{
+				consoleGui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
+			}
+			else
+			{
+				gui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
+			}
 			logfile->appendLog("ERROR: The robot is OFF!");
 
 			/* not in use. Don't show a message box
@@ -509,7 +516,14 @@ void Direcs::init()
 			//* Serial port opened *
 			//**********************
 			emit message("Serial port opened.");
-			gui->appendSerialLog("Serial port opened.");
+			if (consoleMode)
+			{
+				consoleGui->appendSerialLog("Serial port opened.");
+			}
+			else
+			{
+				gui->appendSerialLog("Serial port opened.");
+			}
 			logfile->appendLog("Serial port opened.");
 
 
