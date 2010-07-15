@@ -330,7 +330,7 @@ class Direcs : public QObject
 		QString typeLaserscannerRear;  // PLS, LMS, S300. just for reading the value here. @sa laserThread
 		int laserscannerAngleFront; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
 		int laserscannerAngleRear; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
-		QString mountingLaserscanner; // just for reading the value here. @sa laserThread
+		QString laserscannerMounting; // just for reading the value here. @sa laserThread
 		QString commaSeparator;
 		QTimer *drivingSpeedTimer;
 		//bool robotIsOn; /// Stores the robots (circuits) state.ON or OFF
