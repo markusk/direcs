@@ -98,6 +98,15 @@ class ConsoleGui : public QObject
 		*/
 		void appendNetworkLog(QString text, bool CR=true, bool sayIt=false);
 
+
+		/**
+		Append text to the serial log in the main window
+		@param text is the text to be displayed.
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		@sa appendLog()
+		*/
+		void appendSerialLog(QString text, bool CR=true);
+
 		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/

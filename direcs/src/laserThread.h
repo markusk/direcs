@@ -141,8 +141,9 @@ class LaserThread : public QThread
 		void laserDataCompleteRear(QList <float> laserScannerValuesRear, QList <int> laserScannerFlagsRear);
 
 		/**
-		Emits a info messge to a slot.
+		Emits a info or error message to a slot.
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		@param text is the message to be emitted
 		*/
 		void message(QString text);
 		

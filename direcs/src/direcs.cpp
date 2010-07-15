@@ -367,7 +367,8 @@ void Direcs::init()
 		// set the robot slot, when signal comes from Gui
 		//--------------------------------------------------------------------------
 		connect(settingsDialog, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
-	
+		connect(settingsDialog, SIGNAL(setRobotSlotWidth(int)), obstCheckThread, SLOT(setRobotSlotWidth(int)));
+
 		//--------------------------------------------------------------------------
 		// set the straight forward deviation, when signal comes from Gui
 		//--------------------------------------------------------------------------
@@ -459,18 +460,18 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		if (!consoleMode)
 		{
-			connect(joystick, SIGNAL(emitMessage(QString)), gui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(emitMessage(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 		}
 		else
 		{
-			connect(joystick, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(emitMessage(QString)), consoleGui, SLOT(appendSerialLog(QString)));
+			connect(joystick, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
+			connect(interface1, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
 		}
 
 		// also emit messages to the logfile
-		// 	connect(interface1, SIGNAL(emitMessage(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
-		connect(joystick, SIGNAL(emitMessage(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error
+		// 	connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
+//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -490,7 +491,14 @@ void Direcs::init()
 			//*****************************
 			// Error message will be send via signals to the GUI or Console!
 			emit message("<font color=\"#FF0000\">The robot is OFF!</font>");
-			gui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
+			if (consoleMode)
+			{
+				consoleGui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
+			}
+			else
+			{
+				gui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
+			}
 			logfile->appendLog("ERROR: The robot is OFF!");
 
 			/* not in use. Don't show a message box
@@ -508,7 +516,14 @@ void Direcs::init()
 			//* Serial port opened *
 			//**********************
 			emit message("Serial port opened.");
-			gui->appendSerialLog("Serial port opened.");
+			if (consoleMode)
+			{
+				consoleGui->appendSerialLog("Serial port opened.");
+			}
+			else
+			{
+				gui->appendSerialLog("Serial port opened.");
+			}
 			logfile->appendLog("Serial port opened.");
 
 
@@ -777,6 +792,9 @@ void Direcs::init()
 		{
 			connect(joystick, SIGNAL(joystickMoved(int, int)), joystickDialog, SLOT(showJoystickAxes(int, int)));
 			connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), joystickDialog, SLOT(showJoystickButtons(int, bool)));
+#ifdef Q_OS_MAC // for Mac OS only:
+			connect(joystick, SIGNAL(joystickPOVButtonPressed(int)), joystickDialog, SLOT(showJoystickPOVButtons(int)));
+#endif
 		}
 
 		connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
@@ -1098,6 +1116,46 @@ void Direcs::shutdown()
 
 
 		//--------------------------------
+		// quit the obstacle check thread
+		//--------------------------------
+		//qDebug("Starting to stop the obstacle check thread NOW!");
+		if (obstCheckThread->isRunning() == true)
+		{
+			emit message("Stopping obstacle check thread...");
+			emit splashMessage("Stopping obstacle check thread...");
+
+			// my own stop routine :-)
+			obstCheckThread->stop();
+
+			// slowing thread down
+			obstCheckThread->setPriority(QThread::IdlePriority);
+			obstCheckThread->quit();
+
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((obstCheckThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+			if (obstCheckThread->isFinished() == true)
+			{
+				emit message("Obstacle check thread stopped.");
+			}
+			else
+			{
+				emit message("ERROR: Terminating obstacle check thread because it doesn't answer...");
+				emit splashMessage("Terminating obstacle check thread because it doesn't answer...");
+				obstCheckThread->terminate();
+				obstCheckThread->wait(1000);
+				emit message("Obstacle check thread terminated.");
+			}
+		}
+
+
+		//--------------------------------
 		// quit the laserThread
 		//--------------------------------
 		if (laserThread->isRunning() == true)
@@ -1297,46 +1355,6 @@ void Direcs::shutdown()
 			}
 		}
 #endif
-
-
-		//--------------------------------
-		// quit the obstacle check thread
-		//--------------------------------
-		//qDebug("Starting to stop the obstacle check thread NOW!");
-		if (obstCheckThread->isRunning() == true)
-		{
-			emit message("Stopping obstacle check thread...");
-			emit splashMessage("Stopping obstacle check thread...");
-
-			// my own stop routine :-)
-			obstCheckThread->stop();
-
-			// slowing thread down
-			obstCheckThread->setPriority(QThread::IdlePriority);
-			obstCheckThread->quit();
-
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-			QTime t;
-			t.start();
-			do
-			{
-			} while ((obstCheckThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-			if (obstCheckThread->isFinished() == true)
-			{
-				emit message("Obstacle check thread stopped.");
-			}
-			else
-			{
-				emit message("ERROR: Terminating obstacle check thread because it doesn't answer...");
-				emit splashMessage("Terminating obstacle check thread because it doesn't answer...");
-				obstCheckThread->terminate();
-				obstCheckThread->wait(1000);
-				emit message("Obstacle check thread terminated.");
-			}
-		}
 
 
 		//--------------------------
@@ -2052,13 +2070,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-			/* TODO: this is a test mode for sending only -one- serial command to the mc
+//			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
-			*/
-			motors->motorControl(ALLMOTORS, SAME, command);
+//			*/
+//			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case BACKWARD:
@@ -2070,13 +2088,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-			/* TODO: this is a test mode for sending only -one- serial command to the mc
+//			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
-			*/
-			motors->motorControl(ALLMOTORS, SAME, command);
+//			*/
+//			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case LEFT:
@@ -2088,13 +2106,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-			/* //TODO: this is a test mode for sending only -one- serial command to the mc
+//			/* //TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
- 			*/
- 			motors->motorControl(ALLMOTORS, SAME, command);
+// 			*/
+// 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case RIGHT:
@@ -2106,13 +2124,13 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-			/* //TODO: this is a test mode for sending only -one- serial command to the mc
+//			/* //TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
- 			*/
- 			motors->motorControl(ALLMOTORS, SAME, command);
+// 			*/
+// 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
 		case TURNLEFT:
@@ -2170,7 +2188,7 @@ void Direcs::drive(const unsigned char command)
 			motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
 			
 			resetDrivingSpeedTimer();
-			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
+			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER); // TODO: put that to a slider in the config menu / file.   TODO 2: make this speed increaser optional!
 			
 			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
@@ -2961,6 +2979,32 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
+	int robotSlotWidth = inifile1->readSetting("Config", "robotSlotWidth");
+
+	switch (robotSlotWidth)
+	{
+		case -2:
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			break;
+		case -1:
+			emit message("<font color=\"#FF0000\">Value \"robotSlotWidth\"not found in ini-file!</font>");
+			break;
+		default:
+			if (!consoleMode)
+			{
+				// set slider to the read value
+				settingsDialog->setSliderRobotSlotWidth(robotSlotWidth);
+			}
+
+			// tell it the obstacle check thread
+			obstCheckThread->setRobotSlotWidth(robotSlotWidth);
+			// show text
+			emit message(QString("Robot slot width set to <b>%1 cm.</b>").arg(robotSlotWidth));
+			break;
+	}
+
+	//---------------------------------------------------------------------
+	// read setting
 	int straightForwardDeviation = inifile1->readSetting("Config", "straightForwardDeviation");
 
 	switch (straightForwardDeviation)
@@ -3555,7 +3599,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// Y axis
 	//
-	if (axisNumber == JOYSTICKAXISY)
+	if (axisNumber == JOYSTICKAXISY2)
 	{
 		//------
 		// down
@@ -3682,7 +3726,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// X axis
 	//
-	if (axisNumber == JOYSTICKAXISX)
+	if (axisNumber == JOYSTICKAXISX3)
 	{
 		//-------
 		// right
@@ -3773,7 +3817,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// Y axis "buttons"
 	//
-	if (axisNumber == JOYSTICKAXIS2Y)
+	if (axisNumber == JOYSTICKAXISY5)
 	{
 		//==================
 		// servo test mode
@@ -3921,7 +3965,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 	//
 	// X axis "buttons"
 	//
-	if (axisNumber == JOYSTICKAXIS2X)
+	if (axisNumber == JOYSTICKAXISX4)
 	{
 		//==================
 		// servo test mode

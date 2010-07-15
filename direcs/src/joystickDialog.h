@@ -42,9 +42,14 @@ class JoystickDialog : public QDialog
 
 	public slots:
 		/**
-		Shows the joystick button states when pressed.
+		Shows the "standard" joystick button states when pressed.
 		*/
 		void showJoystickButtons(int buttonNumber, bool buttonState);
+
+		/**
+		Shows the POV / Hat Switch joystick buttons states when pressed.
+		*/
+		void showJoystickPOVButtons(int buttonsState);
 
 		/**
 		Shows the joystick values when it moves.
@@ -64,10 +69,11 @@ class JoystickDialog : public QDialog
 
 		// TODO: put axis numbers to ini-file
 		/// Joystick axis numbers
-		static const int JOYSTICKAXISY = 2;
-		static const int JOYSTICKAXISX = 3;
-		static const int JOYSTICKAXIS2X = 4;
-		static const int JOYSTICKAXIS2Y = 5;
+		/// @sa Joystick()
+		static const int JOYSTICKAXISY2 = 2; // ok
+		static const int JOYSTICKAXISX3 = 3; // ok
+		static const int JOYSTICKAXISX4 = 4;
+		static const int JOYSTICKAXISY5 = 5;
 };
 
 #endif

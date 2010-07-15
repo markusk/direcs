@@ -67,10 +67,12 @@ int main(void)
 	// switch some bits on port E to output [2 more servos]
 	DDRE |= (1 << DDE3) | (1 << DDE4);
 	
-	// red LED on (low active!)
-	PORTD &= ~(1<<PIN5);
-	// yelow LED off (low active -> turn bit high!)
-	PORTC |= (1<<PIN0);
+	// red LED on. Now we know, that the program runs.
+	redLED(ON);
+
+	// yelow LED off
+	yellowLED(OFF);
+
 	// flashlight off
 	PORTC |= (1<<PIN0);
 	// yelow LED off (low active -> turn bit high!)
@@ -197,18 +199,17 @@ int main(void)
 		value = UsartReceive();
 		
 		// toggling the red LED on and off with every received serial commmand
-		if (redLEDtoggle==0)
+		if (redLEDtoggle == 0)
 		{
-			redLEDtoggle=1;
-			// red LED on (low active!)
-			PORTD &= ~(1<<PIN5);
+			redLEDtoggle = 1;
 		}
 		else
 		{
-			redLEDtoggle=0;
-			// red LED off (low active!)
-			PORTD |= (1<<PIN5);
+			redLEDtoggle = 0;
 		}
+ 
+		// switch LED
+		redLED(redLEDtoggle);
 
 		switch (value)
 		{
@@ -224,8 +225,8 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				// flashlight off
 				PORTC &= ~(1<<PIN1);
-				// red LED off (low active!)
-				PORTD |= (1<<PIN5);
+				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+				redLED(OFF);
 				
 // 				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
 // 				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
@@ -524,6 +525,8 @@ int main(void)
 				// delete Motor4 B bit
 				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
 				PORTD &= ~(1<<PIN7);
+				// turn red LED ON, so we know, that all instructions were executed successfully!
+				// redLED(ON);
 				break;
 				
 			case BOTBACKWARD:
@@ -623,6 +626,8 @@ int main(void)
 				PORTD &= ~(1<<PIN6);
 				// delete Motor4 B bit
 				PORTD &= ~(1<<PIN7);
+				// turn red LED OFF, so we know, that all instructions were executed successfully!
+				// redLED(OFF);
 				break;
 				
 				//-------------------------------
@@ -728,25 +733,6 @@ int main(void)
 				// send LS-Byte
 				UsartTransmit( (uint8_t)(value) );
 				break;
-				
-// 			default:
-// 				//
-// 				// yellow 'traffic' LED
-// 				//
-// 				if (yellowLEDtoggle == 0)
-// 				{
-// 					yellowLEDtoggle = 1;
-// 					// yelow LED on (low active!)
-// 					PORTC &= ~(1<<PIN0);
-// 				}
-// 				else
-// 				{
-// 					yellowLEDtoggle = 0;
-// 					// yelow LED off (low active!)
-// 					PORTC |= (1<<PIN0);
-// 				}
-// 				break;
-
 		}
 	} // while (1)
 
@@ -754,6 +740,42 @@ int main(void)
 	// this line is never reached!
 	return 0;
 }
+
+
+void redLED(uint8_t state)
+{
+	if (state == ON)
+	{
+		// red LED on
+		// (low active!)
+		PORTD &= ~(1<<PIN5);
+	}
+	else
+	{
+		// red LED off
+		// (low active!)
+		PORTD |= (1<<PIN5);
+	}
+
+}
+
+
+void yellowLED(uint8_t state)
+{
+	if (state == ON)
+	{
+		// yellow LED on
+		// (low active!)
+		PORTC &= ~(1<<PIN0);
+	}
+	else
+	{
+		// yellow LED off
+		// (low active!)
+		PORTC |= (1<<PIN0);
+	}
+}
+
 
 /*
 SIGNAL(PCINT1_vect)

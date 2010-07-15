@@ -88,6 +88,34 @@ void ConsoleGui::appendNetworkLog(QString text, bool CR, bool sayIt)
 }
 
 
+void ConsoleGui::appendSerialLog(QString text, bool CR)
+{
+	Q_UNUSED(CR);
+	QByteArray textForConsole;
+
+	//------------------------------
+	// remove HTML tags from string
+	//------------------------------
+	int start= -1;
+	do
+	{
+		// search for the first HTML "<"
+		start = text.indexOf("<");
+
+		if (start != 1)
+		{
+			text.remove(start, text.indexOf(">") + 1 - start );
+		}
+	} while (text.contains(">"));
+	// till the last HTML ">" is found
+
+	// print text to console
+	// qDebug() << text; is NOT used, because it adds quotation marks to all strings
+	textForConsole = text.toLatin1();
+	qDebug("%s", textForConsole.data());
+}
+
+
 
 
 void ConsoleGui::showDistanceGraphical(int sensor, int distance)

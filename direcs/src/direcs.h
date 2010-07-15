@@ -22,6 +22,16 @@
 #define DIRECS_H
 
 //-------------------------------------------------------------------
+#include <QtGlobal> // for Q_OS_* Makro!
+#include <QObject>
+#include <QtDebug>
+#include <QMutex>
+#include <QSocketNotifier>
+#include <QtGui>
+#include <QSplashScreen>
+#include <QMetaType>
+#include <QtCore/QCoreApplication>
+//-------------------------------------------------------------------
 #include "consoleGui.h"
 #include "gui.h"
 #include "joystickDialog.h"
@@ -48,16 +58,7 @@
 #include "camThread.h"
 #include "speakThread.h"
 //-------------------------------------------------------------------
-#include <QObject>
-#include <QtDebug>
-#include <QMutex>
-#include <QSocketNotifier>
-#include <QtGui>
-#include <QSplashScreen>
-#include <QMetaType>
-//-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
-#include <QtCore/QCoreApplication>
 using namespace std;
 
 struct CleanExit
@@ -372,7 +373,7 @@ class Direcs : public QObject
 		static const unsigned int SPLASHTIME  = 2000;
 
 		/// The time between one de/increase of the motor speed (to its minimum/maximum) and the next in ms
-		static const unsigned int DRIVINGSPEEDINCREASER = 200;
+		static const unsigned int DRIVINGSPEEDINCREASER = 10;
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
@@ -475,10 +476,11 @@ class Direcs : public QObject
 
 		// TODO: put axis numbers to ini-file
 		/// Joystick axis numbers
-		static const int JOYSTICKAXISY = 2;
-		static const int JOYSTICKAXISX = 3;
-		static const int JOYSTICKAXIS2X = 4;
-		static const int JOYSTICKAXIS2Y = 5;
+		/// @sa Joystick()
+		static const int JOYSTICKAXISY2 = 2; // ok
+		static const int JOYSTICKAXISX3 = 3; // ok
+		static const int JOYSTICKAXISX4 = 4;
+		static const int JOYSTICKAXISY5 = 5;
 		/// Joystick conversion divisor. Converts the joystick axis value to the robot speed.
 		static const int JOYSTICKDIVISOR = 128;
 

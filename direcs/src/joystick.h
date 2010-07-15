@@ -23,21 +23,27 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX // joystick support for linux:
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include <stdlib.h>
 #include <stdint.h>
 #include <linux/input.h>
 #include <linux/joystick.h>
 #endif
+
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+#include "joyreaderMacOS.h"
+#endif
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 #define NAME_LENGTH 128
 
@@ -73,10 +79,11 @@ class Joystick : public QThread
 
 	signals:
 		/**
-		Sends a string to the GUI log.
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		@param text is the message to be emitted
 		*/
-		void emitMessage(QString text);
+		void message(QString text);
 		
 		/**
 		Emits a signal when an joystick move event occured.
@@ -91,12 +98,27 @@ class Joystick : public QThread
 		@param buttonState is the buttons state (true when button is down)
 		*/
 		void joystickButtonPressed(int axisNumber, bool buttonState);
-		
+
+		/**
+		Emits a signal when a POV / hat switch joystick button-pressed event occured.
+		@param buttonsState is the buttons state (normally 0 to 8 on a POV / hat switch)\n
+		\n
+		And this is the POV button layout:\n
+		\n
+					1\n
+				  8   2\n
+				7   0   3\n
+				  6   4\n
+					5\n
+		*/
+		void joystickPOVButtonPressed(int buttonsState);
+
 
 	private:
 		volatile bool stopped;
 		QString joystickPort;
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+
+#ifdef Q_OS_LINUX // joystick support for linux:
 		int fd, i;
 		unsigned char axes;
 		unsigned char buttons;
@@ -110,8 +132,23 @@ class Joystick : public QThread
 		short int axisButtonNumber;
 		short int axisButtonValue;
 #endif
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 250; // Default: 25 ms
+
+		/// Joystick axis numbers
+		/// @sa JoystickDialog()
+		/// @sa Direcs::ExecuteJoyStickCommand()
+		static const int JOYSTICKAXISY2 = 2; // ok
+		static const int JOYSTICKAXISX3 = 3; // ok
+		static const int JOYSTICKAXISX4 = 4;
+		static const int JOYSTICKAXISY5 = 5;
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+		int numJoysticks; // the number of recognised joysticks
+		static const int maxNumJoystick = 4;
+		JoyReader joystick[maxNumJoystick]; // the Mac OS joystick object
+#endif
 };
+
 #endif

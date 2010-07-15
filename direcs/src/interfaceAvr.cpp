@@ -24,6 +24,10 @@ InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
 	serialPort = new DirecsSerial();
+
+	// let the error messages from the direcsSerial object be transferred to the GUI
+	// (connect the signal from the interface class to the signal from this class)
+	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
@@ -42,7 +46,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
-		emit emitMessage(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(comPort));
+		emit message(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(comPort));
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
 		
@@ -82,7 +86,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	if (result < 0)
 	{
 // 		receiveErrorCounter++;
-		emit emitMessage( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
+		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
 
 // 		// MASSIVE COMMUNICATION ERROR!
 // 		if (receiveErrorCounter >= 4)
@@ -109,7 +113,7 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	if (result != 1)
 	{
 		// ERROR
-		emit emitMessage( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );
+		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );
 		return false;
 	}
 	

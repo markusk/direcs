@@ -49,7 +49,12 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlot, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxRobotSlot, SIGNAL(valueChanged(int)), ui.sliderRobotSlot, SLOT(setValue(int)));
-	
+
+	// change the value of a spinBox when the value of the corresponding slider changes
+	connect(ui.sliderRobotSlotWidth, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlotWidth, SLOT(setValue(int)));
+	// and vice versa
+	connect(ui.spinBoxRobotSlotWidth, SIGNAL(valueChanged(int)), ui.sliderRobotSlotWidth, SLOT(setValue(int)));
+
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
 	// and vice versa
@@ -70,7 +75,8 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	//----------------------------------
 	// emit the signal from the widget to obstacleCheckThread via Direcs!
 	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlot(int)));
-	
+	connect(ui.sliderRobotSlotWidth, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlotWidth(int)));
+
 	// emit the signal from Gui to obstacleCheckThread via Direcs!
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), SIGNAL(setStraightForwardDeviation(int)));
 	
@@ -126,6 +132,12 @@ int SettingsDialog::getSliderObstacleLaserScannerValue()
 int SettingsDialog::getSliderRobotSlotValue()
 {
 	return ui.sliderRobotSlot->value();
+}
+
+
+int SettingsDialog::getSliderRobotSlotWidth()
+{
+	return ui.sliderRobotSlotWidth->value();
 }
 
 
@@ -255,6 +267,12 @@ void SettingsDialog::setSliderObstacleLaserScannerValue(int value)
 void SettingsDialog::setSliderRobotSlot(int angle)
 {
 	ui.sliderRobotSlot->setValue(angle);
+}
+
+
+void SettingsDialog::setSliderRobotSlotWidth(int width)
+{
+	ui.sliderRobotSlotWidth->setValue(width);
 }
 
 

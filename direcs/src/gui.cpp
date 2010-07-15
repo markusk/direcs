@@ -63,13 +63,6 @@ void Gui::init()
 	// remote control is enabled by default. @sa Direcs::init()
 	ui.actionRemote->setChecked(true);
 
-	// set battery power labels to green
-// 	ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
-// 	ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
-	
-// 	ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
-// 	ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
-
 	//----------------------------------------------------------------------------
 	// Voltage stuff (progressBars)
 	//----------------------------------------------------------------------------
@@ -100,15 +93,7 @@ infrared Sensors temporarily removed from robot!!
 	ui.progressBarSensor8->raise();
 */
 
-	/*
-	// "fill" the battery power labels (autofill is true)
-	ui.lblBatteryPower1->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.lblBatteryPower2->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.lblBatteryPower3->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.lblBatteryPower4->setPalette(QPalette(QColor(255, 255, 255)));
-	*/
 
-	
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face detect check box changes, set the detection mode
 	//----------------------------------------------------------------------------------
@@ -238,7 +223,9 @@ void Gui::setRobotControls(bool state)
 	ui.actionReset->setEnabled(state);
 	ui.btnResetMovement1->setEnabled(state);
 	ui.btnResetMovement2->setEnabled(state);
-	
+	ui.btnResetMovement3->setEnabled(state);
+	ui.btnResetMovement4->setEnabled(state);
+
 	if (!robotIsOn)
 	{
 		// TODO: test if this really is needed. Is the heartbeaet in the sensorthread sufficient?
@@ -428,20 +415,11 @@ void Gui::on_actionReset_activated()
 	ui.progressBarSensor16->setValue(0);
 	*/
 
-	// set labels back in default position
-	ui.btnPower1->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use which color here?
-	ui.btnPower2->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.btnPower3->setPalette(QPalette(QColor(255, 255, 255)));
-	ui.btnPower4->setPalette(QPalette(QColor(255, 255, 255)));
-
+	// reset labels
 	ui.btnDirection1->setText("FORWARD");
-	ui.btnDirection1->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.btnDirection2->setText("FORWARD");
-	ui.btnDirection2->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.btnDirection3->setText("FORWARD");
-	ui.btnDirection3->setPalette(QPalette(QColor(255, 255, 255)));
 	ui.btnDirection4->setText("FORWARD");
-	ui.btnDirection4->setPalette(QPalette(QColor(255, 255, 255)));
 }
 
 
@@ -464,6 +442,28 @@ void Gui::on_btnResetMovement2_clicked()
 	// reset labels
 	ui.labelDrivenDistance2->setText("0 cm");
 	ui.labelRevolutions2->setText("0");
+}
+
+
+void Gui::on_btnResetMovement3_clicked()
+{
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR3);
+
+	// reset labels
+	ui.labelDrivenDistance3->setText("0 cm");
+	ui.labelRevolutions3->setText("0");
+}
+
+
+void Gui::on_btnResetMovement4_clicked()
+{
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR4);
+
+	// reset labels
+	ui.labelDrivenDistance4->setText("0 cm");
+	ui.labelRevolutions4->setText("0");
 }
 
 
@@ -739,7 +739,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 {
 	// show distance value in centimeters in a text label
 	// erwartet den value als distance (z.B. in cm)!
-	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR2))
+	if ((sensor < MOTORSENSOR1) || (sensor > MOTORSENSOR4))
 	{
 		qDebug("ERROR gui, showDrivenDistance: wrong motor sensor number");
 		return;
@@ -754,6 +754,14 @@ void Gui::showDrivenDistance(int sensor, int distance)
 			break;
 		case MOTORSENSOR2:
 			ui.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
+			return;
+			break;
+		case MOTORSENSOR3:
+			ui.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
+			return;
+			break;
+		case MOTORSENSOR4:
+			ui.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
 			return;
 			break;
 	}
@@ -779,8 +787,6 @@ void Gui::showVoltage(int sensor, float voltage)
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE1)
 			{
-// 				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorRed));
-// 				ui.lblVoltage1->setPalette(QPalette(labelFillColorRed));
 				// change icon
 				if (voltage > 0.0)
 				{
@@ -793,8 +799,6 @@ void Gui::showVoltage(int sensor, float voltage)
 			}
 			else
 			{
-// 				ui.groupBoxBattery1->setPalette(QPalette(labelFillColorGreen));
-// 				ui.lblVoltage1->setPalette(QPalette(labelFillColorGreen));
 				// change icon
 				ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
 			}
@@ -808,8 +812,6 @@ void Gui::showVoltage(int sensor, float voltage)
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE2)
 			{
-// 				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorRed));
-// 				ui.lblVoltage2->setPalette(QPalette(labelFillColorRed));
 				// change icon
 				if (voltage > 0.0)
 				{
@@ -822,8 +824,6 @@ void Gui::showVoltage(int sensor, float voltage)
 			}
 			else
 			{
-// 				ui.groupBoxBattery2->setPalette(QPalette(labelFillColorGreen));
-// 				ui.lblVoltage2->setPalette(QPalette(labelFillColorGreen));
 				// change icon
 				ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
 			}
@@ -1051,12 +1051,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (power)
 			{
 				case ON:
-					ui.btnPower1->setPalette(QPalette(labelFillColorGreen));
-					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnPower1->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
-					ui.btnPower1->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.btnDirection1->setPalette(QPalette(QColor(255, 255, 255)));
+//					ui.btnPower1->setPalette( QApplication::palette() );
+//					ui.btnDirection1->setPalette( QApplication::palette() );
 					break;
 			}
 
@@ -1064,11 +1064,11 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case CLOCKWISE:
 					ui.btnDirection1->setText("BACKWARD");
-					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
 					ui.btnDirection1->setText("FORWARD");
-					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -1081,12 +1081,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (power)
 			{
 				case ON:
-					ui.btnPower2->setPalette(QPalette(labelFillColorGreen));
-					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnPower2->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
-					ui.btnPower2->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.btnDirection2->setPalette(QPalette(QColor(255, 255, 255)));
+//					ui.btnPower2->setPalette( QApplication::palette() );
+//					ui.btnDirection2->setPalette( QApplication::palette() );
 					break;
 			}
 
@@ -1094,11 +1094,11 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case CLOCKWISE:
 					ui.btnDirection2->setText("BACKWARD");
-					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
 					ui.btnDirection2->setText("FORWARD");
-					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -1111,12 +1111,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (power)
 			{
 				case ON:
-					ui.btnPower3->setPalette(QPalette(labelFillColorGreen));
-					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnPower3->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
-					ui.btnPower3->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.btnDirection3->setPalette(QPalette(QColor(255, 255, 255)));
+//					ui.btnPower3->setPalette( QApplication::palette() );
+//					ui.btnDirection3->setPalette( QApplication::palette() );
 					break;
 			}
 
@@ -1124,11 +1124,11 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case CLOCKWISE:
 					ui.btnDirection3->setText("BACKWARD");
-					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
 					ui.btnDirection3->setText("FORWARD");
-					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -1141,12 +1141,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			switch (power)
 			{
 				case ON:
-					ui.btnPower4->setPalette(QPalette(labelFillColorGreen));
-					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnPower4->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case OFF:
-					ui.btnPower4->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-					ui.btnDirection4->setPalette(QPalette(QColor(255, 255, 255)));
+//					ui.btnPower4->setPalette( QApplication::palette() );
+//					ui.btnDirection4->setPalette( QApplication::palette() );
 					break;
 			}
 
@@ -1154,11 +1154,11 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 			{
 				case CLOCKWISE:
 					ui.btnDirection4->setText("BACKWARD");
-					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case COUNTERCLOCKWISE:
 					ui.btnDirection4->setText("FORWARD");
-					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
+//					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					break;
 				case SAME:
 					break;
@@ -1170,6 +1170,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
+	int configuredRobotSlotWidth = settingsDialog->getSliderRobotSlotWidth();
 	// TODO: do all this stuff for the rear scanner?
 
 	// store the values in the class local for refreshLaserView()
@@ -1200,14 +1201,30 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	// show width in cm with one decimal place (Nachkommastelle)
 	if (width != -1)
 	{
-		// CONVERT the WIDTH to METERS!!
-		width /= 100;
-		// show the text with 2 decimals (Nachkommastellen)
-		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 2).append(" m"));
+//		// CONVERT the WIDTH to METERS!!
+//		width /= 100;
+//		// show the text with 2 decimals (Nachkommastellen)
+//		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 2).append(" m"));
+
+		// show the text with 0 decimals (Nachkommastellen)
+		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
+
+		// show the currently configured robot slot with with a prepended '>' or '<'
+		if ( width > configuredRobotSlotWidth)
+		{
+			ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+		}
+		else
+		{
+			ui.lblRobotSlotWidth->setText( QString("< %1 cm").arg(configuredRobotSlotWidth) );
+		}
 	}
 	else
 	{
 		ui.lblLaserFrontFreeWidth->setText("oo");
+
+		// show the currently configured robot slot with with a prepended '>' or '<'
+		ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
 	}
 
 
@@ -1519,8 +1536,6 @@ void Gui::on_btnPower1_toggled(bool checked)
 	if (checked)
 	{
 		// motor on
-		ui.btnPower1->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnDirection1->isChecked())
 		{
 			emit drive(MOTOR1BW);
@@ -1533,7 +1548,6 @@ void Gui::on_btnPower1_toggled(bool checked)
 	else
 	{
 		// motor off
-		ui.btnPower1->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR1OFF);
 	}
 }
@@ -1544,8 +1558,6 @@ void Gui::on_btnPower2_toggled(bool checked)
 	if (checked)
 	{
 		// motor on
-		ui.btnPower2->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnDirection2->isChecked())
 		{
 			emit drive(MOTOR2BW);
@@ -1558,7 +1570,6 @@ void Gui::on_btnPower2_toggled(bool checked)
 	else
 	{
 		// motor off
-		ui.btnPower2->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR2OFF);
 	}
 }
@@ -1569,8 +1580,6 @@ void Gui::on_btnPower3_toggled(bool checked)
 	if (checked)
 	{
 		// motor on
-		ui.btnPower3->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnDirection3->isChecked())
 		{
 			emit drive(MOTOR3BW);
@@ -1583,7 +1592,6 @@ void Gui::on_btnPower3_toggled(bool checked)
 	else
 	{
 		// motor off
-		ui.btnPower3->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR3OFF);
 	}
 }
@@ -1594,8 +1602,6 @@ void Gui::on_btnPower4_toggled(bool checked)
 	if (checked)
 	{
 		// motor on
-		ui.btnPower4->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnDirection4->isChecked())
 		{
 			emit drive(MOTOR4BW);
@@ -1608,7 +1614,6 @@ void Gui::on_btnPower4_toggled(bool checked)
 	else
 	{
 		// motor off
-		ui.btnPower4->setPalette(QPalette(QColor(255, 255, 255))); // TODO: use default gray instead of white!
 		emit drive(MOTOR4OFF);
 	}
 }
@@ -1619,8 +1624,6 @@ void Gui::on_btnDirection1_toggled(bool checked)
 	if (checked)
 	{
 		// backward
-		ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnPower1->isChecked())
 		{
 			emit drive(MOTOR1BW);
@@ -1629,8 +1632,6 @@ void Gui::on_btnDirection1_toggled(bool checked)
 	else
 	{
 		// forward
-		ui.btnDirection1->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-		
 		if (ui.btnPower1->isChecked())
 		{
 			emit drive(MOTOR1FW);
@@ -1644,8 +1645,6 @@ void Gui::on_btnDirection2_toggled(bool checked)
 	if (checked)
 	{
 		// backward
-		ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnPower2->isChecked())
 		{
 			emit drive(MOTOR1BW);
@@ -1654,8 +1653,6 @@ void Gui::on_btnDirection2_toggled(bool checked)
 	else
 	{
 		// forward
-		ui.btnDirection2->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-		
 		if (ui.btnPower2->isChecked())
 		{
 			emit drive(MOTOR2FW);
@@ -1669,8 +1666,6 @@ void Gui::on_btnDirection3_toggled(bool checked)
 	if (checked)
 	{
 		// backward
-		ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnPower3->isChecked())
 		{
 			emit drive(MOTOR3BW);
@@ -1679,8 +1674,6 @@ void Gui::on_btnDirection3_toggled(bool checked)
 	else
 	{
 		// forward
-		ui.btnDirection3->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-		
 		if (ui.btnPower3->isChecked())
 		{
 			emit drive(MOTOR3FW);
@@ -1694,8 +1687,6 @@ void Gui::on_btnDirection4_toggled(bool checked)
 	if (checked)
 	{
 		// backward
-		ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
-		
 		if (ui.btnPower4->isChecked())
 		{
 			emit drive(MOTOR4BW);
@@ -1704,8 +1695,6 @@ void Gui::on_btnDirection4_toggled(bool checked)
 	else
 	{
 		// forward
-		ui.btnDirection4->setPalette(QPalette(QColor(255, 255, 255))); // TODO: which color instead of white
-		
 		if (ui.btnPower4->isChecked())
 		{
 			emit drive(MOTOR4FW);
@@ -1760,7 +1749,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 
 	// show the zoom value in a label
-	ui.labelLaserTop->setText(tr("%1").arg(value));
+	// ui.labelLaserTop->setText(tr("%1").arg(value));
 
 
 	// rescale the robot pixmap to the last scale

@@ -313,13 +313,14 @@ class Gui : public QMainWindow
 		@param largestFreeAreaStart
 		@param largestFreeAreaEnd
 		@param centerOfFreeWay
-		@param width of the estimated drive-tru area
+		@param width of the estimated drive-trough area
 		*/
 		void showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width);
 
 		/**
 		Shows the preferred driving direction in a lable.
 		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
+		@sa Direcs::logicalUnit
 		*/
 		void showPreferredDirection(QString direction);
 
@@ -452,6 +453,8 @@ class Gui : public QMainWindow
 	private slots:
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
+		void on_btnResetMovement3_clicked();
+		void on_btnResetMovement4_clicked();
 		//void on_ckeckBoxSaveSettings_stateChanged(int state);
 		void on_btnSavePicture_clicked();
 
@@ -630,6 +633,8 @@ class Gui : public QMainWindow
 
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
+		static const short int MOTORSENSOR3 = 2;
+		static const short int MOTORSENSOR4 = 3;
 
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;

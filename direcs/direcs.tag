@@ -141,8 +141,6 @@
     <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
     <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
     <includes id="aboutDialog_8h" name="aboutDialog.h" local="yes" imported="no">aboutDialog.h</includes>
-    <includes id="laserScene_8h" name="laserScene.h" local="yes" imported="no">laserScene.h</includes>
-    <includes id="QtGLContext_8h" name="QtGLContext.h" local="yes" imported="no">QtGLContext.h</includes>
     <includes id="compassWidget_8h" name="compassWidget.h" local="yes" imported="no">compassWidget.h</includes>
     <class kind="class">Gui</class>
   </compound>
@@ -208,6 +206,125 @@
     <filename>interfaceAvr_8h</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
     <class kind="class">InterfaceAvr</class>
+  </compound>
+  <compound kind="file">
+    <name>joyreaderMacOS-objc.m</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>joyreaderMacOS-objc_8m</filename>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFileC</name>
+      <anchorfile>joyreaderMacOS-objc_8m.html</anchorfile>
+      <anchor>a7edc3816dba6dbb202ba887478af2a00</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>joyreaderMacOS.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>joyreaderMacOS_8cpp</filename>
+    <includes id="joyreaderMacOS_8h" name="joyreaderMacOS.h" local="yes" imported="no">joyreaderMacOS.h</includes>
+    <member kind="function">
+      <type>void</type>
+      <name>CFSetCopyCallBack</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>aa59629b4a12431d928995cca239a66c2</anchor>
+      <arglist>(const void *value, void *context)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderLoadJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a57cae5be8844e593d4465b07e645c121</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFile</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>ac28086a930dc38bac0f518f8abcd17ef</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFileC</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a7edc3816dba6dbb202ba887478af2a00</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSaveJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a99ba270883928d9e4574b7de6c9179b2</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSetUpJoystick</name>
+      <anchorfile>joyreaderMacOS_8cpp.html</anchorfile>
+      <anchor>a29294c6de9370e93c5a3693a4bd448e2</anchor>
+      <arglist>(int &amp;nJoystick, JoyReader joystick[], int maxNumJoystick)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>joyreaderMacOS.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>joyreaderMacOS_8h</filename>
+    <class kind="class">JoyReader</class>
+    <class kind="class">JoyReaderAxis</class>
+    <class kind="class">JoyReaderButton</class>
+    <class kind="class">JoyReaderElement</class>
+    <class kind="class">JoyReaderHatSwitch</class>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderLoadJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a57cae5be8844e593d4465b07e645c121</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>FILE *</type>
+      <name>JoyReaderOpenJoystickCalibrationFile</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>ac28086a930dc38bac0f518f8abcd17ef</anchor>
+      <arglist>(const char mode[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSaveJoystickCalibrationInfo</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a99ba270883928d9e4574b7de6c9179b2</anchor>
+      <arglist>(int nJoystick, JoyReader joystick[])</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>JoyReaderSetUpJoystick</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a29294c6de9370e93c5a3693a4bd448e2</anchor>
+      <arglist>(int &amp;nJoystick, JoyReader joystick[], int maxNumJoystick)</arglist>
+    </member>
+    <member kind="variable">
+      <type>const int</type>
+      <name>JoyReaderMaxNumAxis</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a825e14c1507fcb859f8954628962ff01</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const int</type>
+      <name>JoyReaderMaxNumButton</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>ab81eb61c3b360fcef9c922fd51279662</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const int</type>
+      <name>JoyReaderMaxNumHatSwitch</name>
+      <anchorfile>joyreaderMacOS_8h.html</anchorfile>
+      <anchor>a9385c0701861ce232afd7269a7bbb08d</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>joystick.cpp</name>
@@ -645,7 +762,6 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>laserSickS300_8h</filename>
     <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
-    <class kind="struct">SickS300::laserData</class>
     <class kind="class">SickS300</class>
   </compound>
   <compound kind="file">
@@ -660,6 +776,7 @@
     <filename>laserThread_8h</filename>
     <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
     <includes id="laserSickS300_8h" name="laserSickS300.h" local="yes" imported="no">laserSickS300.h</includes>
+    <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
     <class kind="class">LaserThread</class>
   </compound>
   <compound kind="file">
@@ -2230,6 +2347,13 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>emitMessage</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>aa97204ff505f7b6a92141915d7db3c18</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>robotState</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a250854aff90477205cc17206ab9c3652</anchor>
@@ -2701,6 +2825,20 @@
       <anchorfile>classConsoleGui.html</anchorfile>
       <anchor>ad6f45c769e700d31693f3eb4507f7b26</anchor>
       <arglist>(QList&lt; float &gt; laserScannerValues, QList&lt; int &gt; laserScannerFlags)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLaserscannerAngle</name>
+      <anchorfile>classConsoleGui.html</anchorfile>
+      <anchor>afec4f23d8c4a734f16ba8634dc226568</anchor>
+      <arglist>(short int laserscanner, int angle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLaserscannerResolution</name>
+      <anchorfile>classConsoleGui.html</anchorfile>
+      <anchor>ab4b07d9628d2129ce9bd4615bf1d1ca2</anchor>
+      <arglist>(short int laserscanner, float resolution)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -3996,30 +4134,30 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2X</name>
+      <name>JOYSTICKAXISX3</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a20710c24687130ec562cd96ceef94bad</anchor>
+      <anchor>ae8999529a7723f9a4b83a8b9806ea449</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2Y</name>
+      <name>JOYSTICKAXISX4</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a9c0a7b9e00c9886f051cf6b127b6bf52</anchor>
+      <anchor>aeea5872d4778916e324529aec3d09072</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISX</name>
+      <name>JOYSTICKAXISY2</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a50c9754b4aad491f3a754cd2dfae27be</anchor>
+      <anchor>ae05ef7b8593f44c46bc82f436d3abe39</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISY</name>
+      <name>JOYSTICKAXISY5</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>aafd3dcbe92f234a0260b6dd658f8015e</anchor>
+      <anchor>ae56af2da3c7784a7d1758880ac8290a9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4509,6 +4647,13 @@
   <compound kind="class">
     <name>DirecsSerial</name>
     <filename>classDirecsSerial.html</filename>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>ae6396aa5ce5d14d0748d342afe73f835</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
     <member kind="function">
       <type>int</type>
       <name>clearInputBuffer</name>
@@ -4557,6 +4702,13 @@
       <anchorfile>classDirecsSerial.html</anchorfile>
       <anchor>ac23f4100ceb4ffd34442452aefc6f6d6</anchor>
       <arglist>(char *dev_name, int baudrate)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>purgeRx</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>a6eac0106a1db263c9440e686a920c816</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -4838,9 +4990,23 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>appendSerialLog</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aac71a62a662ff9b17fb6277dddd6eb20</anchor>
+      <arglist>(QString text, bool CR=true)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>disableCamera</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a514a620397a3eedf2f9789eda780c4ba</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>disableCompass</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ad48fa1f2346fccc5afdb3656e8a49372</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="slot">
@@ -4859,24 +5025,10 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>refreshLaserViewFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a7242f4a80df770c8532e20c9eeb1242f</anchor>
-      <arglist>(QList&lt; float &gt; laserScannerValues, QList&lt; int &gt; laserScannerFlags)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>refreshLaserViewRear</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>afb229f99efac2e5a33733f3d29db5c3f</anchor>
       <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>refreshLaserViewRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aea1307f8791f57ff3d54d8be3c466bf5</anchor>
-      <arglist>(QList&lt; float &gt; laserScannerValues, QList&lt; int &gt; laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4891,6 +5043,13 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>a35b8eea007e6dab7fabf155259dc98bc</anchor>
       <arglist>(short int laserscanner, int angle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLaserscannerResolution</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ac300653db7c7f48cac3e35f52a8eee27</anchor>
+      <arglist>(short int laserscanner, float resolution)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4957,13 +5116,6 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>setRobotPosition</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>afae9bee62ab4dc720aaf2f53369331df</anchor>
-      <arglist>(QGraphicsSceneMouseEvent *mouseEvent)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>showCompassData</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a4012904ea53b9314c800a93801004a03</anchor>
@@ -5010,13 +5162,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>ac222754552bafb16f80e86df5b7770a0</anchor>
       <arglist>(QString direction)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>zoomLaserView</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a94685c726c39963a7f769545cf831ac2</anchor>
-      <arglist>(QGraphicsSceneWheelEvent *wheelEvent)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -5174,20 +5319,6 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>initLaserStuff</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ac8c977410045e5e615439b4f1a23fda1</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>initLaserView</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a02bbcdef63bb227bfbde2f01b54b79bd</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>setCamImageData</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>ae72a1ab8522c3deb3b60f3d54aff5c0c</anchor>
@@ -5293,6 +5424,13 @@
     </member>
     <member kind="slot" protection="protected">
       <type>void</type>
+      <name>on_actionCompass_activated</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aa6a468b28a49d6b9cbbce093df81488f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="protected">
+      <type>void</type>
       <name>on_actionCurrent_activated</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>ae24609b32d5057f08b0c4ce9eec91c2d</anchor>
@@ -5359,6 +5497,13 @@
       <name>on_actionSimulate_activated</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a30d134efd1a0f20fbb972bc027dcd49c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="protected">
+      <type>void</type>
+      <name>on_actionState_activated</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>afee2519306e46c05d9f0a8911a0f343a</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="slot" protection="protected">
@@ -5454,6 +5599,20 @@
     </member>
     <member kind="slot" protection="private">
       <type>void</type>
+      <name>on_btnResetMovement3_clicked</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aa54429178d536e783e24662f94b66130</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>on_btnResetMovement4_clicked</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ac2f96e5c83a373ab0f38f75ee19def01</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
       <name>on_btnSavePicture_clicked</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a0f028ee5ebc9826fa0003c10ccd7328d</anchor>
@@ -5482,13 +5641,6 @@
     </member>
     <member kind="slot" protection="private">
       <type>void</type>
-      <name>on_sliderZoom_valueChanged</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ac3d8d8f0370969d35bc2181ad0f5175c</anchor>
-      <arglist>(int)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
       <name>saveCamImage</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a1f9211fbbe2e4d42c728813b10d304b8</anchor>
@@ -5503,30 +5655,9 @@
     </member>
     <member kind="function" protection="private">
       <type>void</type>
-      <name>createLaserDistanceObjects</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a499b536c2938b98965bbbf681db16736</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>void</type>
       <name>createLaserScannerObjects</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a8e6dd3b29999de41a196aa773ff34053</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>void</type>
-      <name>createLaserScannerObjects</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a8e6dd3b29999de41a196aa773ff34053</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>void</type>
-      <name>createLaserWidthObjects</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a59a0ab4017aaa13c4b7e3d950bcec0e7</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" protection="private">
@@ -5705,55 +5836,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QList&lt; QGraphicsEllipseItem * &gt; *</type>
-      <name>laserDistanceLineListFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a5c0d87e6536d27fdda607c5e678dda4c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QList&lt; QGraphicsEllipseItem * &gt; *</type>
-      <name>laserDistanceLineListRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aa8f99a855df96c248cfc01e9598f28e0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QList&lt; QGraphicsSimpleTextItem * &gt; *</type>
-      <name>laserDistanceTextFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aaa6b2972164cedcb7edab37d8afca0b1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QList&lt; QGraphicsSimpleTextItem * &gt; *</type>
-      <name>laserDistanceTextRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a03d86e41e1cf751fa19caed49be582e5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QList&lt; QGraphicsLineItem * &gt; *</type>
-      <name>laserLineListFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a9e678bd77cc7d8339cf73900bfed8ba1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QList&lt; QGraphicsLineItem * &gt; *</type>
-      <name>laserLineListRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a4715932eb743c69c3aac665c1880ce37</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QPen</type>
-      <name>laserLinePen</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a9ab94baa2db6a5bee1be3e1e4fd7e22a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>int</type>
       <name>laserscannerAngleFront</name>
       <anchorfile>classGui.html</anchorfile>
@@ -5768,24 +5850,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>qreal</type>
-      <name>laserXPos</name>
+      <type>float</type>
+      <name>laserscannerResolutionFront</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a0ad880e776c8f1c62b0cbdef5904e776</anchor>
+      <anchor>a3d749685c38b7c006a4736d1bdf3af83</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>qreal</type>
-      <name>laserYPos</name>
+      <type>float</type>
+      <name>laserscannerResolutionRear</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>af35f116e8b82ff045b6d2eb2f4d10eae</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>lastZoom</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a1f2a9619757ed317e0ccfe859bbce2ac</anchor>
+      <anchor>a06631a75d6349f5f8bab193799870f70</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -5817,6 +5892,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QDateTime</type>
+      <name>now</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a3fdad4519d9a10450cb3debdad0527b6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>QPixmap</type>
       <name>pixmap</name>
       <anchorfile>classGui.html</anchorfile>
@@ -5824,17 +5906,31 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QGraphicsPixmapItem *</type>
-      <name>pixmapBot1</name>
+      <type>QwtPlot</type>
+      <name>qwtPlotCurrent1</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a2944f3693168e40e9f768fcc76d797d4</anchor>
+      <anchor>a2c64ea2f70ec5962294a130da78e693e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QGraphicsPixmapItem *</type>
-      <name>pixmapBot2</name>
+      <type>QwtPlot</type>
+      <name>qwtPlotCurrent2</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a9b3cf973260035ae06b9108d39436cf2</anchor>
+      <anchor>ad6e869cd5f86fcf880b7d642f6cb6d2f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlot</type>
+      <name>qwtPlotVoltage1</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ab51a3ab07a17b0f232730b6c4d5a4c97</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlot</type>
+      <name>qwtPlotVoltage2</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aae70570b6d0723d1715e143767b40b53</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -5845,13 +5941,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QGraphicsScene *</type>
-      <name>scene</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ad3202ef7852a1ee7f6d20a71e1feb0d9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>SettingsDialog *</type>
       <name>settingsDialog</name>
       <anchorfile>classGui.html</anchorfile>
@@ -5859,80 +5948,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>qreal</type>
-      <name>startScale</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a0dee3114c4e79685d6518b805669bd3b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>Ui::mainWindow</type>
       <name>ui</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a8fcadbbe5e95e759b8e5ebae7e226b6c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>qreal</type>
-      <name>widthCirclesWidth</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a92a989e09d7a557a32f5c46df4d26c58</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsEllipseItem *</type>
-      <name>widthLeftCircleFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a0d8abe7ca7e932b36b9130eec9cdd632</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsEllipseItem *</type>
-      <name>widthLeftCircleRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ace08950b523318232a76b192c9bc2b71</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsLineItem *</type>
-      <name>widthLineFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a58ddfb206fdd845a833f6cbb0b8d768c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsLineItem *</type>
-      <name>widthLineRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a1d6071a8748dd3a62e6bf3c33864aeb2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsEllipseItem *</type>
-      <name>widthRightCircleFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a6e44f9779faa7b71b74e284c4d5296c7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsEllipseItem *</type>
-      <name>widthRightCircleRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a529123908018f230ad4af36d82c7aad7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsSimpleTextItem *</type>
-      <name>widthTextFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a4622972161f9bc0c232ea5fb7dbe822c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QGraphicsSimpleTextItem *</type>
-      <name>widthTextRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a6dc4e6cd07e7b353df3676a291b446bf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6255,6 +6274,20 @@
       <name>MOTORSENSOR2</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a5d1837695a8edfc5dd349052a58ffcf1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>MOTORSENSOR3</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ac0373845b029828820091f4884b25aae</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>MOTORSENSOR4</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a9455a88e13f54bfcf5b8d200c7a57865</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6779,9 +6812,9 @@
     <filename>classInterfaceAvr.html</filename>
     <member kind="signal">
       <type>void</type>
-      <name>emitMessage</name>
+      <name>message</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>af5ef98a2b141b84336a14978205bdce6</anchor>
+      <anchor>af2065a20f61b955efe4e20a2b60c86d4</anchor>
       <arglist>(QString text)</arglist>
     </member>
     <member kind="signal">
@@ -6870,15 +6903,318 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>JoyReader</name>
+    <filename>classJoyReader.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>JoyReader</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>ae685eb0f189d01e5935634bcbed03ba5</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>Read</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a14e4007003de8b4a5a678fa654383722</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>ReadCalibInfoFile</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>adc136feacba8f2ad961e6e39025e6bc4</anchor>
+      <arglist>(FILE *fp)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>ReleaseInterface</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a453f7150b45e8e5d1f407f3caaed55c4</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>SetUpInterface</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a42eb0ecedec0b212460bbec24d6f0155</anchor>
+      <arglist>(int joyId, IOHIDDeviceRef hidDev)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>WriteCalibInfoFile</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a9277fa16e131d886213bdbb8df115f1e</anchor>
+      <arglist>(FILE *fp) const </arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static int</type>
+      <name>SetUpJoystick</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>aa0996955f56dcb0f6296a002a571a76c</anchor>
+      <arglist>(int &amp;nJoystick, JoyReader joystick[], int maxNumJoystick)</arglist>
+    </member>
+    <member kind="variable">
+      <type>JoyReaderAxis</type>
+      <name>axis</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a0eca4786e89c2053e2eb78ee524eed9a</anchor>
+      <arglist>[JoyReaderMaxNumAxis]</arglist>
+    </member>
+    <member kind="variable">
+      <type>JoyReaderButton</type>
+      <name>button</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>aaa4555c92a58a31c0ddc56177ec1cb92</anchor>
+      <arglist>[JoyReaderMaxNumButton]</arglist>
+    </member>
+    <member kind="variable">
+      <type>JoyReaderHatSwitch</type>
+      <name>hatSwitch</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a3231e8d9031b6448f2b86822cb095451</anchor>
+      <arglist>[JoyReaderMaxNumHatSwitch]</arglist>
+    </member>
+    <member kind="variable">
+      <type>IOHIDDeviceRef</type>
+      <name>hidDev</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>abc934e448b00ac8f1f6d0dce5f8ea6a9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>joyId</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a0becbeb16fce379261f316e856442f80</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>char</type>
+      <name>regPath</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>accc7f4a563bcf85185533ab3380dc172</anchor>
+      <arglist>[512]</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static CFMutableArrayRef</type>
+      <name>devArray</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>abeb1faa73cce957fb12271dd3d843a3b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static IOHIDManagerRef</type>
+      <name>hidManager</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>ab27c44fba790ad61481aaa09d73666a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>AddAxis</name>
+      <anchorfile>classJoyReader.html</anchorfile>
+      <anchor>a30fb00a9009bc58b3370a9ece7c6b68b</anchor>
+      <arglist>(int axisId, IOHIDElementRef elem, int min, int max, int scaledMin, int scaledMax)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderAxis</name>
+    <filename>classJoyReaderAxis.html</filename>
+    <base>JoyReaderElement</base>
+    <member kind="function">
+      <type>void</type>
+      <name>BeginCaptureMinMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a29054165eda348340c799a1ae416eca7</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>CaptureCenter</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a99f38f4d6a74b3c28ad9def1d46c0aad</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>CaptureMinMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>ab24f733b7432924a6e2152044ab4b7cd</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>CenterFromMinMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a5ef2bff8983208d40583edcfa5c4a010</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>GetCalibratedValue</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a27594b92158e6396342b2f4daab7ba33</anchor>
+      <arglist>(void) const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderAxis</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a4fc9bec0e3239d982b4c936b713fe87b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>calibCenter</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a6e24a7c7b6e74a39a12c821af9c31202</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>calibMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>aaa125ed4af60073b8d7bb291bb4e781d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>calibMin</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a38ecbe4718f3384f1eb76a9a5ca859c9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>max</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a58257d84e80eb8df32597aab00c978e5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>min</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>ae57e2e78d8f5fe000620483ee9bab23a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>scaledMax</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>adc1e7bf0e18f02b960ab065e6c05b76e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>scaledMin</name>
+      <anchorfile>classJoyReaderAxis.html</anchorfile>
+      <anchor>a88486c721e228a03f403b0a8b902c7c2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderButton</name>
+    <filename>classJoyReaderButton.html</filename>
+    <base>JoyReaderElement</base>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderButton</name>
+      <anchorfile>classJoyReaderButton.html</anchorfile>
+      <anchor>a002a9cfb449247174cb53fac43c019d4</anchor>
+      <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderElement</name>
+    <filename>classJoyReaderElement.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderElement</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>IOHIDElementRef</type>
+      <name>elem</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>exist</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>JoyReaderHatSwitch</name>
+    <filename>classJoyReaderHatSwitch.html</filename>
+    <base>JoyReaderElement</base>
+    <member kind="function">
+      <type>int</type>
+      <name>GetDiscreteValue</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a0f96d25dc0014ef3213319610425f905</anchor>
+      <arglist>(void) const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderHatSwitch</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>ae03b04d18d0afbe4e3defa3328b01352</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value0Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a8f1f81e983e84af50e5c36ed352cf4b1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value180Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a38ff1efe77ef47c65239becfa6574380</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value270Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a6c41452931e07234fca3dc7f980e82b3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value90Deg</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>a7e13fd0cb5091c19c627593512025359</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>valueNeutral</name>
+      <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
+      <anchor>ac43e66ab9b1b912be4917c15246bb1ff</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>Joystick</name>
     <filename>classJoystick.html</filename>
-    <member kind="signal">
-      <type>void</type>
-      <name>emitMessage</name>
-      <anchorfile>classJoystick.html</anchorfile>
-      <anchor>ad7891ce6e3ffbd95443dd74c7b8c893d</anchor>
-      <arglist>(QString text)</arglist>
-    </member>
     <member kind="signal">
       <type>void</type>
       <name>joystickButtonPressed</name>
@@ -6892,6 +7228,20 @@
       <anchorfile>classJoystick.html</anchorfile>
       <anchor>aa13c6fe31d0236e22779b62b1fcbcd2b</anchor>
       <arglist>(int axisNumber, int axisValue)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>joystickPOVButtonPressed</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a70d194aba79630e96ae157d168b91b7e</anchor>
+      <arglist>(int buttonsState)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a878f46e73011bfc1651af90ee0ec4410</anchor>
+      <arglist>(QString text)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -6950,6 +7300,34 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISX3</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a3220eb735761290d9e1e4a7b85f0d4a0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISX4</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a501c1f70880ca327f7a9ad92d2ec6610</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISY2</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>a975ad391932af65e8a340853c59da151</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>JOYSTICKAXISY5</name>
+      <anchorfile>classJoystick.html</anchorfile>
+      <anchor>afd1176831563c48d12fd97b75ad3371f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const unsigned long</type>
       <name>THREADSLEEPTIME</name>
       <anchorfile>classJoystick.html</anchorfile>
@@ -6974,6 +7352,13 @@
       <anchor>a66e91c16efbdf471070c406e93714c6a</anchor>
       <arglist>(int buttonNumber, bool buttonState)</arglist>
     </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>showJoystickPOVButtons</name>
+      <anchorfile>classJoystickDialog.html</anchorfile>
+      <anchor>a97b0b4bc5cf6910824d8748500f63be8</anchor>
+      <arglist>(int buttonsState)</arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>JoystickDialog</name>
@@ -6990,30 +7375,30 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2X</name>
+      <name>JOYSTICKAXISX3</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>a81539670930fa6f5df3a3e1ac604a6c3</anchor>
+      <anchor>a857f153633f213b0c4a957ebd434fe96</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXIS2Y</name>
+      <name>JOYSTICKAXISX4</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>aa9fcb86c2518f44233b614f36715d749</anchor>
+      <anchor>a73e8e1ffda7a55e5722dfcbf4325cb94</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISX</name>
+      <name>JOYSTICKAXISY2</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>adbe2aa573acdceb74017d405e8611da0</anchor>
+      <anchor>aec61f2597a7bb8df58106c8c1d42d4d6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
-      <name>JOYSTICKAXISY</name>
+      <name>JOYSTICKAXISY5</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
-      <anchor>acde88da0d56d15806ffbe84f7b67dd65</anchor>
+      <anchor>a76733b94e048c5beb295aeb39eb25242</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -8529,11 +8914,18 @@
       <arglist>()</arglist>
     </member>
     <member kind="function" protection="private">
-      <type>void</type>
+      <type>bool</type>
       <name>setSimulationValues</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ac11116aaab5a242b9827aadf369b9b23</anchor>
+      <anchor>aa2f070cd22120f57e6e10d35a38d5615</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Inifile *</type>
+      <name>inifile1</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a6d224fef2e2756bc6dea64471d03e269</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>Laser *</type>
@@ -8838,6 +9230,13 @@
       <name>logFilename</name>
       <anchorfile>classLogfile.html</anchorfile>
       <anchor>a6815d3937b2458c829e8b405123a1baa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QDateTime</type>
+      <name>now</name>
+      <anchorfile>classLogfile.html</anchorfile>
+      <anchor>ae8f3972230580edbd76c12678c60821b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -9603,6 +10002,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>setRobotSlotWidth</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a0fcfc20d27579ece95e5eac26cc3c90a</anchor>
+      <arglist>(int width)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setSimulationMode</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>a3cdd3b6a253e33749a0860f9f433fd05</anchor>
@@ -9714,6 +10120,20 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserAngle</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a0878a6e943f3b7ed636a3641dae0282c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserResolution</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a2d1f158153e88324962bd5fdaa89653f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>LaserThread *</type>
       <name>laserThread</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
@@ -9739,6 +10159,13 @@
       <name>robotSlot</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>a21bc45e106322880f241e0f1141c4aae</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>robotSlotWidth</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a19dad6b9e0d5e4370f6fb9fc4eeb1044</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -12086,6 +12513,13 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>setRobotSlotWidth</name>
+      <anchorfile>classSettingsDialog.html</anchorfile>
+      <anchor>a37c904a8bbcc6b6f75e397133458d922</anchor>
+      <arglist>(int width)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>setStraightForwardDeviation</name>
       <anchorfile>classSettingsDialog.html</anchorfile>
       <anchor>a66b707ec3aebfa1fe6be4b3392b8eacc</anchor>
@@ -12138,6 +12572,13 @@
       <name>getSliderRobotSlotValue</name>
       <anchorfile>classSettingsDialog.html</anchorfile>
       <anchor>a4b4c6dfa8e39b1afad7592f97b47698e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getSliderRobotSlotWidth</name>
+      <anchorfile>classSettingsDialog.html</anchorfile>
+      <anchor>ab6da3f6ca1980ee8bdcf876acb7187da</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -12195,6 +12636,13 @@
       <anchorfile>classSettingsDialog.html</anchorfile>
       <anchor>a578c896e09a1c5d4b52e8043c381e2e9</anchor>
       <arglist>(int angle)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setSliderRobotSlotWidth</name>
+      <anchorfile>classSettingsDialog.html</anchorfile>
+      <anchor>a8cea3b576d700f6f8248f3c327d18d89</anchor>
+      <arglist>(int width)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -12298,7 +12746,6 @@
   <compound kind="class">
     <name>SickS300</name>
     <filename>classSickS300.html</filename>
-    <class kind="struct">SickS300::laserData</class>
     <member kind="signal">
       <type>void</type>
       <name>emitMessage</name>
@@ -12314,6 +12761,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>float</type>
+      <name>getDistance</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a6443908b76d9f92637392f0fe485630b</anchor>
+      <arglist>(int angleIndex)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>openComPort</name>
       <anchorfile>classSickS300.html</anchorfile>
@@ -12322,17 +12776,17 @@
     </member>
     <member kind="function">
       <type>int</type>
-      <name>readContinuousTelegram</name>
+      <name>readRequestTelegram</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>ac73bdbebd937bd3c9e3258355a02e60b</anchor>
-      <arglist>(float *ranges)</arglist>
+      <anchor>a436ec7f0f5ced5fe90c152dc4604ad2e</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>int</type>
-      <name>readRequestTelegram</name>
+      <name>readUnknownTelegram</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a4c948b235b2cf93c2781ce40510de8fb</anchor>
-      <arglist>(QList&lt; float &gt; laserScannerValues)</arglist>
+      <anchor>a624c6a3a985fd987ae1444678472c6d6</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -12376,13 +12830,6 @@
       <anchor>aa2afa09724ff957e39e6786a59684f68</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="typedef" protection="private">
-      <type>struct SickS300::laserData</type>
-      <name>scanData</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>add9c6e54b110e01f20ccd964a8c71812</anchor>
-      <arglist></arglist>
-    </member>
     <member kind="variable" protection="private">
       <type>int</type>
       <name>baudRate</name>
@@ -12391,11 +12838,11 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>scanData</type>
-      <name>data</name>
+      <type>float</type>
+      <name>distances</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a5caaf80f2b27e093a3b14e7a0122b4a1</anchor>
-      <arglist></arglist>
+      <anchor>a2b4886f4d00627b0db72691f37d2b374</anchor>
+      <arglist>[540]</arglist>
     </member>
     <member kind="variable" protection="private">
       <type>QString</type>
@@ -12405,10 +12852,24 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>unsigned char</type>
+      <name>scanData</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>aa2d161e40c78f6098bee7fa825c79a59</anchor>
+      <arglist>[LASERSAMPLES]</arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>DirecsSerial *</type>
       <name>serialPort</name>
       <anchorfile>classSickS300.html</anchorfile>
       <anchor>a8f065ef8fa739cb8e0ca8146e9e7ce33</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const float</type>
+      <name>LASERMAXLENGTH</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a24a805217e506b632efb2647827eb6fc</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -12430,73 +12891,6 @@
       <name>ON</name>
       <anchorfile>classSickS300.html</anchorfile>
       <anchor>ac958f6663a97e1dadc2e490ab7b32c01</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>SickS300::laserData</name>
-    <filename>structSickS300_1_1laserData.html</filename>
-    <member kind="variable">
-      <type>unsigned int</type>
-      <name>id</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>a4337bca11136b9e02e135a91ab654b8c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>unsigned int *</type>
-      <name>intensity</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>aaba4fc733701bb65b567cac222b276e0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>unsigned int</type>
-      <name>intensity_count</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>ae2eba312d9f7471702bcc2cf02b31554</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>float</type>
-      <name>max_angle</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>a950b7714060aad1ede9ce5fd48f85a50</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>float</type>
-      <name>max_range</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>a7dc6cb9006a8a32986c969da89749a38</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>float</type>
-      <name>min_angle</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>ae4522509365f77c4743cead36c26dc3c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>float *</type>
-      <name>ranges</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>affd4cb34e0eaf350a77a9493d4615e54</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>unsigned int</type>
-      <name>ranges_count</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>a016b9be61d61e3c252aaf70f3536ef48</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>float</type>
-      <name>resolution</name>
-      <anchorfile>structSickS300_1_1laserData.html</anchorfile>
-      <anchor>a195aeada44249b00ecea9a30599ab3ac</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -12846,6 +13240,9 @@
     <file>inifile.h</file>
     <file>interfaceAvr.cpp</file>
     <file>interfaceAvr.h</file>
+    <file>joyreaderMacOS-objc.m</file>
+    <file>joyreaderMacOS.cpp</file>
+    <file>joyreaderMacOS.h</file>
     <file>joystick.cpp</file>
     <file>joystick.h</file>
     <file>joystickDialog.cpp</file>

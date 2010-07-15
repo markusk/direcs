@@ -25,6 +25,10 @@
 Joystick::Joystick()
 {
 	stopped = false;
+
+	#ifdef Q_OS_MAC // joystick support for Mac OS:
+	numJoysticks = 0;
+	#endif
 }
 
 
@@ -41,7 +45,113 @@ void Joystick::stop()
 
 void Joystick::run()
 {
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+	#ifdef Q_OS_MAC // joystick support for Mac OS:
+	int currentJoystick = 0;
+	int buttonOrAxis = 0;
+
+
+	//
+	//  start "threading"...
+	//
+	while (!stopped)
+	{
+		// let the thread sleep some time for having more time for the other threads
+		msleep(THREADSLEEPTIME);
+
+
+		if (numJoysticks != 0)
+		{
+			for (currentJoystick=0; currentJoystick<numJoysticks; currentJoystick++)
+			{
+				//
+				// read joysticks state
+				//
+				joystick[currentJoystick].Read();
+
+
+				//
+				// Axes
+				//
+				for (buttonOrAxis=0; buttonOrAxis<JoyReaderMaxNumAxis; buttonOrAxis++)
+				{
+					if (joystick[currentJoystick].axis[buttonOrAxis].exist != 0)
+					{
+						// we convert, round and multiply with 32767 the original value here to have a nive int from range -32767 to +32767 for the GUI
+						emit joystickMoved(buttonOrAxis, (int) qRound(joystick[currentJoystick].axis[buttonOrAxis].GetCalibratedValue() * 32767) );
+					}
+				}
+
+
+				//
+				// Buttons
+				//
+				for (buttonOrAxis=0; buttonOrAxis<JoyReaderMaxNumButton; buttonOrAxis++)
+				{
+					if (joystick[currentJoystick].button[buttonOrAxis].exist != 0)
+					{
+						if (joystick[currentJoystick].button[buttonOrAxis].value == 1)
+						{
+							emit joystickButtonPressed(buttonOrAxis, true);
+						}
+						else
+						{
+							emit joystickButtonPressed(buttonOrAxis, false);
+						}
+					}
+				}
+
+
+				//
+				// POV (Hat Switch)
+				//
+				for (buttonOrAxis=0; buttonOrAxis<JoyReaderMaxNumHatSwitch; buttonOrAxis++)
+				{
+					if (joystick[currentJoystick].hatSwitch[buttonOrAxis].exist != 0)
+					{
+						// emits the value 0 to 8 to Gui::JoystickDialog
+						emit joystickPOVButtonPressed(joystick[currentJoystick].hatSwitch[buttonOrAxis].value);
+
+
+						// the following is a workaround for Mac only since we cannon identify the POV under Linux and therefor we would need a different Direcs::executeJoystickCommand
+						// so here we're emitting another signal for this Slot (which is for drive-by-joystick). And this is the POV button layout:
+						//
+						//            1
+						//          8   2
+						//        7   0   3
+						//          6   4
+						//            5
+						//
+						switch (joystick[currentJoystick].hatSwitch[buttonOrAxis].value)
+						{
+						case 0:
+							// no POV button pressed
+							emit joystickMoved(JOYSTICKAXISY5, 0);
+							break;
+						case 1:
+							// Y axis, UP, drive forward
+							emit joystickMoved(JOYSTICKAXISY5, -32767);
+							break;
+						case 3:
+							// x axis, RIGHT, drive right
+							emit joystickMoved(JOYSTICKAXISX4, 32767);
+							break;
+						case 5:
+							// Y axis, DOWN, drive backward
+							emit joystickMoved(JOYSTICKAXISY5, 32767);
+							break;
+						case 7:
+							// x axis, LEFT, drive left
+							emit joystickMoved(JOYSTICKAXISX4, -32767);
+							break;
+						}
+					}
+				}
+			}
+		} // numJoysticks
+	} // while
+	#endif
+
+	#ifdef Q_OS_LINUX // joystick support for Linux:
 	axes = 2;
 	buttons = 2;
 	axisButtonNumber = 0;
@@ -104,7 +214,7 @@ void Joystick::run()
 		
 		if (read(fd, &js, sizeof(struct js_event)) != sizeof(struct js_event))
 		{
-			emit emitMessage("Error reading joystick device!");
+			emit message("Error reading joystick device!");
 			// no 'return' here, try further!
 		}
 		else
@@ -113,7 +223,7 @@ void Joystick::run()
 			switch(js.type)
 			{
 				case JS_EVENT_INIT:
-					emit emitMessage("Joystick initialised.");
+					emit message("Joystick initialised.");
 					break;
 				case JS_EVENT_BUTTON:
 					axisButtonNumber = js.number;
@@ -136,18 +246,18 @@ void Joystick::run()
 			}
 		}
 	}
+#endif
 
 	stopped = false;
-#endif
 }
 
 
 bool Joystick::isConnected()
 {
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX // joystick support for Linux:
 	if ((fd = open(joystickPort.toAscii(), O_RDONLY)) < 0)
 	{
-		emit emitMessage( QString(QString("No joystick found at %1").arg(joystickPort)).toAscii() );
+		emit message( QString(QString("No joystick found at %1").arg(joystickPort)).toAscii() );
 		stopped = true;
 		return false;
 	}
@@ -156,7 +266,20 @@ bool Joystick::isConnected()
 	return true;
 
 #endif
-	return false; // we return false. Noy joystick supported -> NO jystick "connected"!
+
+#ifdef Q_OS_MAC // joystick support for Mac OS:
+	JoyReaderSetUpJoystick(numJoysticks, joystick, maxNumJoystick);
+	JoyReaderLoadJoystickCalibrationInfo(numJoysticks, joystick);
+
+	if (numJoysticks != 0)
+	{
+		return true;
+	}
+
+	return false;
+#endif
+
+	return false; // we return false. Noy joystick supported -> NO joystick "connected"!
 }
 
 

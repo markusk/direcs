@@ -52,30 +52,35 @@ class ObstacleCheckThread : public QThread
 		
 	
 	public slots:
-		/*!
+		/**
 		This slot enables or disables the simulation mode.
 		*/
 		void setSimulationMode(bool status);
 		
-		/*!
-		This slot sets the angle, where the robots has to fit thru
+		/**
+		This slot sets the angle, where the robots has to fit through.
 		*/
 		void setRobotSlot(int angle);
 
-		/*!
+		/**
+		This slot sets the width in centimeters (cm), where the robots has to fit through.
+		*/
+		void setRobotSlotWidth(int width);
+
+		/**
 		This slot sets the deviation to 90 degrees when the robot drives forward.
 		When the laser angle is 180 degrees, the middle is 90 degrees, at 270 degrees it's 135.
 		@param deviation is the angle in degrees.
 		*/
 		void setStraightForwardDeviation(int deviation);
 		
-		/*!
+		/**
 		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
 		@param distance in centimeters
 		*/
 		void setMinObstacleDistance(int distance);
 		
-		/*!
+		/**
 		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
 		@param distance in centimeters
 		 */
@@ -116,17 +121,19 @@ class ObstacleCheckThread : public QThread
 		int largestFreeAreaEnd;
 		
 		int centerOfFreeWay;
-		
+
+		float laserResolution; /// stores the laser resolution when getting the value from the laser thread
+		float laserAngle; /// stores the laser angle when getting the value from the laser thread
+
 		double width;
 		double b;
 		double c;
 		double alpha;
 		
-		/*! defines the minimum slot in degrees, where the robot has to fit through */
-		int robotSlot;
-		
-		/*! and this is the deviation to 90 degrees, when driving forward */
-		int straightForwardDeviation;
+		int robotSlot; /// defines the minimum slot in degrees, where the robot has to fit through
+		int robotSlotWidth; /// defines the minimum slot in centimeters (cm), where the robot has to fit through
+
+		int straightForwardDeviation; /// and this is the deviation to 90 degrees, when driving forward
 	
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
@@ -136,7 +143,7 @@ class ObstacleCheckThread : public QThread
 		
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 250; // 100 ! original !
+		static const unsigned long THREADSLEEPTIME = 250; // 250 ! original !
 		
 		// Give the sensors some names
 		//

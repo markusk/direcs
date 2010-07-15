@@ -123,6 +123,13 @@ macx {
 	message("Changing qwt lib name. Has to be installed via macports.")
 	LIBS +=		-lqwt
 
+	message( Adding joystick stuff... )
+	LIBS +=		-framework IOKit \
+				-framework Foundation
+	HEADERS     += joyreaderMacOS.h
+	SOURCES     += joyreaderMacOS.cpp \
+				   joyreaderMacOS-objc.m
+
 	ICON = ../images/direcs.icns
 }
 
@@ -146,6 +153,10 @@ contains( HOSTNAME, [rR]obot ) {
 
 	 message( Removing active laser view... )
 	 DEFINES -= ACTIVELASERVIEW
+
+	 message( Building RELEASE version (no debugging!)... )
+	 CONFIG -= debug
+	 CONFIG += release
 
 	 message( Robot configuration finished. )
 }
