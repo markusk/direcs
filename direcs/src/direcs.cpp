@@ -2536,25 +2536,25 @@ void Direcs::readSettings()
 
 					//---------------------------------------------------------------------
 					// read next laser setting
-					mountingLaserscanner = inifile1->readString("Config", "mountingLaserscannerFront");
+					laserscannerMounting = inifile1->readString("Config", "laserscannerMountingFront");
 
-					if (mountingLaserscanner == "error2")
+					if (laserscannerMounting == "error2")
 					{
 						laserThread->setMounting(LASER1, "normal");
 						emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 					}
 					else
 					{
-						if (mountingLaserscanner == "error1")
+						if (laserscannerMounting == "error1")
 						{
 							laserThread->setMounting(LASER1, "normal");
-							emit message("<font color=\"#FF0000\">Value \"mountingLaserscannerFront\" not found in ini-file!</font>");
+							emit message("<font color=\"#FF0000\">Value \"laserscannerMountingFront\" not found in ini-file!</font>");
 						}
 						else
 						{
 							// everything okay
-							laserThread->setMounting(LASER1, mountingLaserscanner);
-							emit message(QString("Front laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
+							laserThread->setMounting(LASER1, laserscannerMounting);
+							emit message(QString("Front laser scanner mounting set to <b>%1</b>.").arg(laserscannerMounting));
 
 							//---------------------------------------------------------------------
 							// read next setting
@@ -2656,25 +2656,25 @@ void Direcs::readSettings()
 
 					//---------------------------------------------------------------------
 					// read next laser setting
-					mountingLaserscanner = inifile1->readString("Config", "mountingLaserscannerRear");
+					laserscannerMounting = inifile1->readString("Config", "laserscannerMountingRear");
 
-					if (mountingLaserscanner == "error2")
+					if (laserscannerMounting == "error2")
 					{
 						laserThread->setMounting(LASER2, "normal");
 						emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 					}
 					else
 					{
-						if (mountingLaserscanner == "error1")
+						if (laserscannerMounting == "error1")
 						{
 							laserThread->setMounting(LASER2, "normal");
-							emit message("<font color=\"#FF0000\">Value \"mountingLaserscannerRear\" not found in ini-file!</font>");
+							emit message("<font color=\"#FF0000\">Value \"laserscannerMountingRear\" not found in ini-file!</font>");
 						}
 						else
 						{
 							// everything okay
-							laserThread->setMounting(LASER2, mountingLaserscanner);
-							emit message(QString("Rear laser scanner mounting set to <b>%1</b>.").arg(mountingLaserscanner));
+							laserThread->setMounting(LASER2, laserscannerMounting);
+							emit message(QString("Rear laser scanner mounting set to <b>%1</b>.").arg(laserscannerMounting));
 
 							//---------------------------------------------------------------------
 							// read next setting
