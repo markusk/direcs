@@ -47,7 +47,8 @@
 
 #endif
 
-#define READ_TIMEOUT          250000      /* less than 1e6 */
+#define READ_TIMEOUT          250000      /// the timout for serial reading in miro seconds! s.a. 'select' command in @sa readAtmelPort
+#define READ_TIMEOUT_ATMEL    500000      /// the timout for serial reading in miro seconds! s.a. 'select' command in @sa readAtmelPort
 #define _POSIX
 
 #include <QtGlobal>

@@ -523,16 +523,19 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	
 	while (nChars > 0)
 	{
+		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
 		t.tv_sec = 0;
-		t.tv_usec = READ_TIMEOUT;
+		t.tv_usec = READ_TIMEOUT_ATMEL;
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
 		
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
+
+		// check if time limit expired (select=0)
 		if (err == 0)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-			qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
+			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 		    return errno;
 		}
 	
@@ -542,7 +545,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-			qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
+			// qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
 		    return errno;
 		}
 		else
