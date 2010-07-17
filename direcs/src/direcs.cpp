@@ -1240,7 +1240,10 @@ void Direcs::shutdown()
 		if (netThread->isRunning() == true)
 		{
 			emit message("Stopping network thread...");
-			gui->appendNetworkLog("Stopping network thread...");
+			if (!consoleMode)
+			{
+				gui->appendNetworkLog("Stopping network thread...");
+			}
 			emit splashMessage("Stopping network thread...");
 
 			// my own stop routine :-)
@@ -3450,7 +3453,10 @@ void Direcs::enableRemoteControlListening(bool state)
 		if (netThread->isRunning() == false)
 		{
 			emit message("Starting network thread...", false);
-			gui->appendNetworkLog("Starting network thread...");
+			if (!consoleMode)
+			{
+				gui->appendNetworkLog("Starting network thread...");
+			}
 			netThread->start();
 			emit message("Network thread started.");
 		}
@@ -3460,7 +3466,10 @@ void Direcs::enableRemoteControlListening(bool state)
 		if (netThread->isRunning() == true)
 		{
 			emit message("Stopping network thread...", false);
-			gui->appendNetworkLog("Stopping network thread...");
+			if (!consoleMode)
+			{
+				gui->appendNetworkLog("Stopping network thread...");
+			}
 			netThread->stop();
 			emit message("Network thread stopped.");
 		}
