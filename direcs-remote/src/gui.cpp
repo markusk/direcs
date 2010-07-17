@@ -488,6 +488,20 @@ void Gui::showMotorCurrent(int motor, int value)
 }
 
 
+void Gui::showVoltage(int voltage, float value)
+{
+	switch (voltage)
+	{
+	case 0:
+		ui.lblVoltage1->setText(QString("%1").setNum(value, 'f', 2).append(" Volt"));
+		break;
+	case 1:
+		ui.lblVoltage2->setText(QString("%1").setNum(value, 'f', 2).append(" Volt"));
+		break;
+	}
+}
+
+
 void Gui::on_sliderZoom_valueChanged(int value)
 {
 	qreal x = 0;

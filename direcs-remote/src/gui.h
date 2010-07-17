@@ -62,6 +62,11 @@ class Gui : public QMainWindow
 		void showMotorCurrent(int motor, int value);
 
 		/**
+		  Shows the received voltages
+		  */
+		void showVoltage(int voltage, float value);
+
+		/**
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).

@@ -43,7 +43,12 @@ class DirecsRemote : public QObject
 		Emits values read from the network to show them in the gui
 		*/
 		void showMotorCurrent(int motor, int value);
-		
+
+		/**
+		Emits values read from the network to show them in the gui
+		*/
+		void showVoltage(int voltage, float value);
+
 		/**
 		Emits motor current values, read from the network, to the plotThread (which emits them to the gui)
 		*/
@@ -60,7 +65,15 @@ class DirecsRemote : public QObject
 		Parses the network string for sensor values and emits them to the gui.
 		*/
 		void parseNetworkString(QString text);
-		
+
+		/**
+		Converts a read voltage value from a sensor to a value in Volt (V).
+		@param voltage is the number of the voltage (0, 1, 2...)
+		@param value is the value to be converted!
+		@return The voltage in Volt.
+		*/
+		float convertToVolt(int voltage, int value);
+
 		Gui *gui;
 		PlotThread *plotThread;
 		LaserThread *laserThread;
@@ -105,5 +118,15 @@ class DirecsRemote : public QObject
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+
+		static const short int VOLTAGESENSOR1 = 0;
+		static const short int VOLTAGESENSOR2 = 1;
+
+		/**
+		Defines the conversion factor for the voltage sensors to convert the sensor value in a "real world" value.
+		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57.0 results in 12 V.
+		*/
+		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.000;
+		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125;
 };
 #endif

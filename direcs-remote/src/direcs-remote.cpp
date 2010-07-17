@@ -42,8 +42,13 @@ DirecsRemote::DirecsRemote()
 	
 	// show received motor current values in gui
 	connect(this, SIGNAL(showMotorCurrent(int, int)), gui, SLOT(showMotorCurrent(int, int)));
+
+	// show received voltages in gui
+	connect(this, SIGNAL(showVoltage(int, float)), gui, SLOT(showVoltage(int, float)));
+
 	// emit motor current values to plot thread
 	connect(this, SIGNAL(plotValueReceived(int, int)), plotThread, SLOT(setPlotValue(int, int)));
+
 	// emit laser scanner values to laser thread
 	connect(this, SIGNAL(laserValueReceived(int, int, float)), laserThread, SLOT(setLaserValue(int, int, float)));
 	
@@ -330,7 +335,39 @@ void DirecsRemote::parseNetworkString(QString text)
 		
 		return;
 	}
-	
+
+
+	// v = voltage
+	// *0v42# means 'voltage 0 with 42 Volt'
+	if ( text.contains("v") )
+	{
+		start = text.indexOf("v") + 1;
+		// string always end with a '#'
+		count = text.indexOf("#") - start;
+		text2 = text.mid( start, count );
+
+		// convert value to int
+		iValue = text2.toInt(&okay);
+
+		// check which volatage was in string ' *0v... '
+		if ( text.startsWith( QString("*%1").arg(0) ) )
+		{
+			emit ( showVoltage(0, convertToVolt(0, iValue)) );
+//			emit ( plotValueReceived(0, iValue) );
+			return;
+		}
+
+		// check which volatage was in string ' *0v... '
+		if ( text.startsWith( QString("*%1").arg(1) ) )
+		{
+			emit ( showVoltage(1, convertToVolt(1, iValue)) );
+//			emit ( plotValueReceived(1, iValue) );
+			return;
+		}
+
+		return;
+	}
+
 	
 	// l = laser scanner value
 	// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
@@ -367,4 +404,23 @@ void DirecsRemote::parseNetworkString(QString text)
 		
 		return;
 	}
+}
+
+
+float DirecsRemote::convertToVolt(int voltage, int value)
+{
+	switch (voltage)
+	{
+	case 0:
+		// convert the measured value to Volt (V)
+		return ( value / CONVERSIONFACTORVOLTAGESENSOR1 );
+		break;
+	case 1:
+		// convert the measured value to Volt (V)
+		return ( value / CONVERSIONFACTORVOLTAGESENSOR2 );
+		break;
+	}
+
+	// wrong voltage number selected
+	return -1;
 }
