@@ -493,7 +493,9 @@ void Direcs::init()
 			emit message("<font color=\"#FF0000\">The robot is OFF!</font>");
 			if (consoleMode)
 			{
-				consoleGui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
+				consoleGui->appendSerialLog("<font color=\"#FF0000\">+++++++++++++++++++++</font>");
+				consoleGui->appendSerialLog("<font color=\"#FF0000\">+ The robot is OFF! +</font>");
+				consoleGui->appendSerialLog("<font color=\"#FF0000\">+++++++++++++++++++++</font>");
 			}
 			else
 			{
