@@ -20,7 +20,7 @@ DEFINES += ACTIVELASERVIEW
 
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
-    HEADERS +=	aboutDialog.h \
+	HEADERS +=	aboutDialog.h \
 				camThread.h \
 				circuit.h \
 				compassWidget.h \
@@ -48,7 +48,7 @@ unix|macx {
 				speakThread.h \
 	logfile.h
 
-    SOURCES +=	aboutDialog.cpp \
+	SOURCES +=	aboutDialog.cpp \
 				camThread.cpp \
 				circuit.cpp \
 				compassWidget.cpp \
@@ -76,7 +76,7 @@ unix|macx {
 				speakThread.cpp \
 	logfile.cpp
 
-    FORMS +=	mainWindow.ui \
+	FORMS +=	mainWindow.ui \
 				aboutDialog.ui \
 				joystickDialog.ui \
 				settingsDialog.ui
@@ -88,12 +88,12 @@ unix|macx {
 				/opt/local/include \
 				/opt/local/libexec/qt4-mac/include \
 				/usr/include/qwt-qt4 \
+				/opt/local/include/qwt \
 				/usr/local/include/opencv
 
-    CONFIG -= release
+	CONFIG -= release
 
 	LIBS +=		-L/opt/local/lib \
-				-L/opt/local/lib \
 				-L/usr/lib \
 				-L/usr/local/lib \
 				-lespeak \
@@ -101,11 +101,11 @@ unix|macx {
 				-lcv \
 				-lhighgui
 
-    OBJECTS_DIR = ../tmp
+	OBJECTS_DIR = ../tmp
 
-    MOC_DIR = ../tmp
-    QMAKE_CXXFLAGS_DEBUG += -pg
-    QMAKE_CXXFLAGS_RELEASE += -pg
+	MOC_DIR = ../tmp
+	QMAKE_CXXFLAGS_DEBUG += -pg
+	QMAKE_CXXFLAGS_RELEASE += -pg
 
 }
 
@@ -178,6 +178,6 @@ win32 {
 }
 
 arm {
-    message("Processing ARM scope...")
-    QMAKE_LFLAGS =	-L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
+	message("Processing ARM scope...")
+	QMAKE_LFLAGS =	-L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
 }

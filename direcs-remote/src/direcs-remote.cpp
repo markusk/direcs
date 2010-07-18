@@ -8,12 +8,12 @@ int main(int argc, char *argv[])
 {
 	Q_UNUSED(argc);
 	Q_UNUSED(argv);
-	
+
 	// Initialize the resource file
 	//Q_INIT_RESOURCE(direcs-remote);
-	
+
 	QApplication app(argc, argv);
- 
+
 	// create DirecsRemote class object
 	DirecsRemote *m = new DirecsRemote();
 
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 DirecsRemote::DirecsRemote()
 {
 	QLocale::setDefault(QLocale::German);
-	
+
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
@@ -33,13 +33,13 @@ DirecsRemote::DirecsRemote()
 	plotThread = new PlotThread();
 	laserThread = new LaserThread();
 	network = new Network();
-	
+
 	udpSocketReceiver = new QUdpSocket(this);
 	udpSocketReceiver->bind( gui->getPort() + 1 );
 
 	// do something with the network received data, when complete
 	connect(udpSocketReceiver, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-	
+
 	// show received motor current values in gui
 	connect(this, SIGNAL(showMotorCurrent(int, int)), gui, SLOT(showMotorCurrent(int, int)));
 
@@ -51,14 +51,14 @@ DirecsRemote::DirecsRemote()
 
 	// emit laser scanner values to laser thread
 	connect(this, SIGNAL(laserValueReceived(int, int, float)), laserThread, SLOT(setLaserValue(int, int, float)));
-	
+
 	//----------------------------------------------------------------------------
 	// connect laserThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
 	connect(laserThread, SIGNAL( laserDataCompleteFront(float *, int *) ), gui, SLOT( refreshLaserViewFront(float *, int *) ));
 	connect(laserThread, SIGNAL( laserDataCompleteRear(float *, int *) ), gui, SLOT( refreshLaserViewRear(float *, int *) ));
-	
+
 	//----------------------------------------------------------------------------
 	// connect plotThread signal to "setPlotData"
 	// (Whenever the plot thread has new data, the data are show in the GUI)
@@ -67,25 +67,25 @@ DirecsRemote::DirecsRemote()
 	connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
 	connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
 	connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
-	
+
 	//----------------------------------------------------------------------------
 	// connect networkThread signal to "dataReceived"
 	// (Whenever data were received, the data are shown in the GUI)
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( commandIssued(QString) ), this, SLOT( sendNetworkCommand(QString) ));
-	
+
 	//----------------------------------------------------------------------------
 	// connect signal dataComplete from the network class to the gui slot
 	// (Whenever the image is complete, the image is shown in the GUI)
 	//----------------------------------------------------------------------------
 	connect(network, SIGNAL( dataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
-	
+
 	//----------------------------------------------------------------------------
 	// connect signal cameraUrlChanged from the gui to the network class slot
 	// (Whenever the image url is changed, the try to load the image from there
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( cameraUrlChanged(QString) ), network, SLOT ( setUrl(QString) ) );
-	
+
 	//-----------------------------------------------------------
 	// start the plot thread ("clock" for plotting the curves)
 	//-----------------------------------------------------------
@@ -95,19 +95,19 @@ DirecsRemote::DirecsRemote()
 		plotThread->start();
 		//gui->appendLog("Plot thread started.");
 	}
-	
+
 	// TODO: nice exit point and error message
 	if (!QGLFormat::hasOpenGL())
 	{
 		qDebug("This system has no OpenGL support!");
 		// TODO: exit?!?
 	}
-	
+
 	//-----------------------------------------------------------
 	// one time init for the laser view
 	//-----------------------------------------------------------
 	gui->initLaserView();
-	
+
 	//--------------------------------------------------------------
 	// start the laser thread ("clock" for taking the laser values
 	//--------------------------------------------------------------
@@ -117,7 +117,7 @@ DirecsRemote::DirecsRemote()
 		laserThread->start();
 		//gui->appendLog("Laser thread started.");
 	}
-	
+
 	/*
 	//------------------------------------------------------------------
 	// for getting the screen resolution
@@ -182,7 +182,7 @@ DirecsRemote::~DirecsRemote()
 			qDebug("Laser thread terminated.");
 		}
 	}
-	
+
 	//--------------------------------
 	// quit the plotThread
 	//--------------------------------
@@ -235,15 +235,15 @@ void DirecsRemote::processPendingDatagrams()
 		QByteArray datagram;
 		datagram.resize(udpSocketReceiver->pendingDatagramSize());
 		udpSocketReceiver->readDatagram(datagram.data(), datagram.size());
-		
+
 		//====================================================================
 		//  e m i t  Signal
 		//====================================================================
 		// emit dataReceived(tr("%1").arg(datagram.data()));
-		
+
 		// show received datagram in the gui log
 		QString text = datagram.data();
-		
+
 		// sensor data received
 		if (text.startsWith("*") )
 		{
@@ -283,15 +283,15 @@ void DirecsRemote::parseNetworkString(QString text)
 	/*
 	// show the first 10 network strings (DEBUG)
 	static int n = 0;
-	
+
 	if (n<10)
 	{
 		n++;
 		qDebug() << "string=" << text;
 	}
 	*/
-	
-	
+
+
 	// m = motor sensor value
 	// *0m42# means 'motorsensor1 with 42 mA'
 	if ( text.contains("m") )
@@ -300,10 +300,10 @@ void DirecsRemote::parseNetworkString(QString text)
 		// string always end with a '#'
 		count = text.indexOf("#") - start;
 		text2 = text.mid( start, count );
-		
+
 		// convert value to int
 		iValue = text2.toInt(&okay);
-		
+
 		// check which motor sensor was in string ' *0m... '
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR1) ) )
 		{
@@ -311,28 +311,28 @@ void DirecsRemote::parseNetworkString(QString text)
 			emit ( plotValueReceived(MOTORSENSOR1, iValue) );
 			return;
 		}
-			
+
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR2) ) )
 		{
 // 			emit ( showMotorCurrent(MOTORSENSOR2, value) );
 			emit ( plotValueReceived(MOTORSENSOR2, iValue) );
 			return;
 		}
-			
+
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR3) ) )
 		{
 // 			emit ( showMotorCurrent(MOTORSENSOR3, value) );
 			emit ( plotValueReceived(MOTORSENSOR3, iValue) );
 			return;
 		}
-			
+
 		if ( text.startsWith( QString("*%1").arg(MOTORSENSOR4) ) )
 		{
 // 			emit ( showMotorCurrent(MOTORSENSOR4, value) );
 			emit ( plotValueReceived(MOTORSENSOR4, iValue) );
 			return;
 		}
-		
+
 		return;
 	}
 
@@ -368,7 +368,7 @@ void DirecsRemote::parseNetworkString(QString text)
 		return;
 	}
 
-	
+
 	// l = laser scanner value
 	// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
 	if ( text.contains("l") )
@@ -380,7 +380,7 @@ void DirecsRemote::parseNetworkString(QString text)
 		text2 = text.mid( start, count );
 		// convert value to int
 		iValue = text2.toInt(&okay);
-		
+
 		// get the CENTIMETERS
 		start = text.indexOf("a") + 1;
 		// angle value always end with a 'a'
@@ -388,20 +388,20 @@ void DirecsRemote::parseNetworkString(QString text)
 		text2 = text.mid( start, count );
 		// convert value to ***float**
 		fValue = text2.toFloat(&okay);
-		
+
 		// check which laser scanner was in string ' *0l... '
 		if ( text.startsWith( QString("*%1").arg(LASER1) ) )
 		{
 			emit ( laserValueReceived(LASER1, iValue, fValue) );
 			return;
 		}
-		
+
 		if ( text.startsWith( QString("*%1").arg(LASER2) ) )
 		{
 			emit ( laserValueReceived(LASER2, iValue, fValue) );
 			return;
 		}
-		
+
 		return;
 	}
 }

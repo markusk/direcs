@@ -4,11 +4,11 @@
 Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 {
 	direcsremote1 = m;
-	
+
 	robotDrives = false;
 	laserXPos = 0; // correct value is set in the initLaserView()
 	laserYPos = 0; // correct value is set in the initLaserView()
-	
+
 	// define some nice green and red colors
 	labelFillColorGreen = QColor(64, 255, 64);
 	labelFillColorRed   = QColor(255, 64, 64);
@@ -18,36 +18,36 @@ Gui::Gui(DirecsRemote *m, QMainWindow *parent) : QMainWindow(parent)
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
-	
+
 	// get the motor speed from the GUI
 	speedMotor1 = ui.spinBoxSpeed1->value();
 	speedMotor2 = ui.spinBoxSpeed2->value();
-	
-	
+
+
 	//----------------------------------------------------------------------------
 	// set web address of the robot
 	//----------------------------------------------------------------------------
 	ui.lineEditWebAddress->setText("http://robotwlan/");
-	
+
 	webView = new QWebView(ui.widgetWeb);
 	// load the URL
 	webView->load(QUrl(ui.lineEditWebAddress->text()));
 	webView->show();
-	
+
 	// When the web address field was leaved or enter pressed, call the "go" button slot! :-)
 	connect(ui.lineEditWebAddress, SIGNAL( editingFinished() ), this, SLOT( on_btnGo_clicked() ) );
-	
+
 
 	//----------------------------------------------------------------------------
 	// set web address of the 'motion' camera
 	//----------------------------------------------------------------------------
 	ui.lineEditWebAddressCamera->setText("http://robotwlan:8081/");
 	on_btnGo_clicked();
-	
+
 	// When the camera address field was leaved or enter pressed, call the "go" button slot! :-)
 	connect(ui.lineEditWebAddressCamera, SIGNAL( editingFinished() ), this, SLOT( on_btnGoCamera_clicked() ) );
-	
-	
+
+
 	//----------------------------------------------------------------------------
 	// Plot stuff
 	//----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ Gui::~Gui()
 	delete laserLineListRear;
 
 	delete scene;
-	
+
 	delete direcsremote1;
 }
 
@@ -211,7 +211,7 @@ void Gui::on_spinBoxSpeed1_valueChanged(int value)
 		//
 		// increase speed
 		//
-		
+
 		// store the new speed
 		speedMotor1 = value;
 		emit commandIssued("increasespeedmotor1");
@@ -221,7 +221,7 @@ void Gui::on_spinBoxSpeed1_valueChanged(int value)
 		//
 		// reduce speed
 		//
-		
+
 		// store the new speed
 		speedMotor1 = value;
 		emit commandIssued("reducespeedmotor1");
@@ -236,7 +236,7 @@ void Gui::on_spinBoxSpeed2_valueChanged(int value)
 		//
 		// increase speed
 		//
-		
+
 		// store the new speed
 		speedMotor2 = value;
 		emit commandIssued("increasespeedmotor2");
@@ -246,7 +246,7 @@ void Gui::on_spinBoxSpeed2_valueChanged(int value)
 		//
 		// reduce speed
 		//
-		
+
 		// store the new speed
 		speedMotor2 = value;
 		emit commandIssued("reducespeedmotor2");
@@ -273,9 +273,9 @@ void Gui::appendLog(QString text, bool sayIt)
 
 	// insert a line break
 	ui.textEdit1->insertHtml("<br>");
-	
+
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	ui.textEdit1->ensureCursorVisible(); 
+	ui.textEdit1->ensureCursorVisible();
 
 
 	// say the message via MS speech.lib
@@ -470,6 +470,9 @@ void Gui::initPlots()
 
 void Gui::showMotorCurrent(int motor, int value)
 {
+	Q_UNUSED(value);
+
+
 	switch (motor)
 	{
 		case MOTORSENSOR1:

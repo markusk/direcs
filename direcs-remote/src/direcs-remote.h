@@ -19,25 +19,25 @@ class QUdpSocket;
 
 class DirecsRemote : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 
 	public:
 		DirecsRemote();
 		~DirecsRemote();
-		void testPort(int function);
-	
+
+
 	public slots:
 		void sendNetworkCommand(QString command);
-	
-	
+
+
 	private slots:
 		/**
 		This slot is automatically called by the framework, in the case of pending datagrams.
 		*/
 		void processPendingDatagrams();
 
-	
+
 	signals:
 		/**
 		Emits values read from the network to show them in the gui
@@ -53,7 +53,7 @@ class DirecsRemote : public QObject
 		Emits motor current values, read from the network, to the plotThread (which emits them to the gui)
 		*/
 		void plotValueReceived(int motor, int value);
-		
+
 		/**
 		Emits laser scanner current values, read from the network, to the laserThread (which emits them to the gui)
 		*/
@@ -94,15 +94,15 @@ class DirecsRemote : public QObject
 		static const short int SENSOR6 = 32;
 		static const short int SENSOR7 = 64;
 		static const short int SENSOR8 = 128;
-		
+
 		// ultrasonic sensor
 		static const short int SENSOR16 = 256;
-		
+
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 		static const short int MOTORSENSOR3 = 2;
 		static const short int MOTORSENSOR4 = 3;
-		
+
 		/**
 		 Give the contacts for the pan tilt cam end positions some nice names
 		 */
@@ -110,7 +110,7 @@ class DirecsRemote : public QObject
 		static const unsigned char CONTACT2 = 1;
 		static const unsigned char CONTACT3 = 2;
 		static const unsigned char CONTACT4 = 3;
-		
+
 		/**
 		*/
 		static const short int LASER1 = 1;
