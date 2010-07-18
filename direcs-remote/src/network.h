@@ -40,7 +40,7 @@ TODO: to be filled with content.
 */
 class Network : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		Network();
@@ -52,32 +52,31 @@ class Network : public QObject
 		Emits a QImage to the GUI, which was received over the network.
 		*/
 		void dataComplete(QImage* image);
-		
+
 		/**
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
-		
-		
+
+
 	public slots:
 		/**
 		Takes the URL for loading the file.
 		*/
 		void setUrl(QString url);
 
-	
+
 	private slots:
 		void downloadFile();
 		void cancelDownload();
 		void httpRequestFinished(int requestId, bool error);
 		void readResponseHeader(const QHttpResponseHeader &responseHeader);
-		void slotAuthenticationRequired(const QString &, quint16, QAuthenticator *);
 		#ifndef QT_NO_OPENSSL
 		void sslErrors(const QList<QSslError> &errors);
 		#endif
 		void takeData();
-	
- 
+
+
 	private:
 		QHttp *http;
 		QByteArray data;

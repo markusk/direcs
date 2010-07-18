@@ -23,20 +23,19 @@
 
 Network::Network()
 {
-    http = new QHttp(this);
+	http = new QHttp(this);
 
 	connect(http, SIGNAL(requestFinished(int, bool)), this, SLOT(httpRequestFinished(int, bool)));
 	connect(http, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)), this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
-	connect(http, SIGNAL(authenticationRequired(const QString &, quint16, QAuthenticator *)), this, SLOT(slotAuthenticationRequired(const QString &, quint16, QAuthenticator *)));
 	#ifndef QT_NO_OPENSSL
 	connect(http, SIGNAL(sslErrors(const QList<QSslError> &)), this, SLOT(sslErrors(const QList<QSslError> &)));
 	#endif
 	connect(http, SIGNAL( readyRead(const QHttpResponseHeader &) ), this, SLOT( takeData() ));
-	
+
 	// the camera image
 	image = new QImage();
-	
-	
+
+
 	// start 'download'
 	//downloadFile();
 }
@@ -53,10 +52,10 @@ void Network::downloadFile()
 {
 	QUrl url( addressToOpen );
 
-	
+
 	// https mode or not
 	QHttp::ConnectionMode mode = url.scheme().toLower() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
-	
+
 	// set the HTTP server
 	http->setHost(url.host(), mode, url.port() == -1 ? 0 : url.port());
 
@@ -64,13 +63,13 @@ void Network::downloadFile()
 		http->setUser(url.userName(), url.password());
 
 	httpRequestAborted = false;
-	
+
 	QByteArray path = QUrl::toPercentEncoding(url.path(), "!$&'()*+,;=:@/");
-	
+
 	if (path.isEmpty())
 		path = "/";
-	
-	
+
+
 	//------------------------------------------------------------------------------
 	// no file given as second parameter, so we get a readyRead Signal,
 	// every time new data is available!
@@ -92,7 +91,7 @@ void Network::httpRequestFinished(int requestId, bool error)
 {
 	if (requestId != httpGetId)
 		return;
-	
+
 	if (httpRequestAborted)
 	{
 		return;
@@ -101,7 +100,7 @@ void Network::httpRequestFinished(int requestId, bool error)
 	if (requestId != httpGetId)
 		return;
 
-	
+
 	if (error)
 	{
 		//QMessageBox::information(this, tr("HTTP"), tr("Download failed: %1.").arg(http->errorString()));
@@ -134,23 +133,6 @@ void Network::readResponseHeader(const QHttpResponseHeader &responseHeader)
 }
 
 
-void Network::slotAuthenticationRequired(const QString &hostName, quint16, QAuthenticator *authenticator)
-{
-	/*
-	QDialog dlg;
-	Ui::Dialog ui;
-	ui.setupUi(&dlg);
-	dlg.adjustSize();
-	ui.siteDescription->setText(tr("%1 at %2").arg(authenticator->realm()).arg(hostName));
-
-	if (dlg.exec() == QDialog::Accepted) {
-		authenticator->setUser(ui.userEdit->text());
-		authenticator->setPassword(ui.passwordEdit->text());
-	}
-	*/
-}
-
-
 #ifndef QT_NO_OPENSSL
 void Network::sslErrors(const QList<QSslError> &errors)
 {
@@ -177,14 +159,14 @@ void Network::takeData()
 {
 	// read ALL available data
 	data = http->readAll();
-	
-	
+
+
 	// start of new frame
 	if (data.startsWith("--BoundaryString"))
 	{
 		/*
-		From the original 'motion' source code		
-		
+		From the original 'motion' source code
+
 		// the following string has an extra 16 chars at end for length
 		const char jpeghead[] = "--BoundaryString\r\n"								// 18
 								"Content-type: image/jpeg\r\n"						// 26
@@ -193,16 +175,16 @@ void Network::takeData()
 																					//-----
 																					// 75
 																					//=====
-		
+
 		http://www.lavrsen.dk/twiki/bin/view/Motion/WebHome
 		*/
-		
+
 		// Sow we remove the first 75 chars!
 		data.remove(0, 75);
-		
+
 		// put data to a QImage
 		image->loadFromData(data);
-		
+
 		// emit image to the GUI
 		emit( dataComplete(image) );
 	}

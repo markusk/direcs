@@ -258,15 +258,10 @@ void DirecsRemote::processPendingDatagrams()
 }
 
 
-void DirecsRemote::testPort(int function)
-{
-}
-
-
 void DirecsRemote::sendNetworkCommand(QString command)
 {
 	gui->appendLog(command);
-	
+
 	QByteArray datagram = command.toAscii();
 	udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, gui->getPort());
 }
