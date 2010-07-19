@@ -12,9 +12,13 @@ moc_*.cpp
 *.lst
 *.map
 *.sym
+*.app
 .directory
 
+
 Makefile
+Makefile.Debug
+Makefile.Release
 
 direcs/bin/direcs
 direcs/tmp/
@@ -23,7 +27,7 @@ direcs.log
 
 direcs-avrsim/bin/
   
-direcs-remote/bin/
+direcs-remote/bin/direcs-remote
 
 direcs/src/Makefile.Debug
 direcs/src/Makefile.Release
