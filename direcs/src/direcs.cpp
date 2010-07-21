@@ -934,7 +934,7 @@ void Direcs::init()
 				gui->show();
 
 				// delete the splash screen
-				QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+				//QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 			}
 			else
 			{
@@ -943,13 +943,15 @@ void Direcs::init()
 				gui->showMaximized();
 
 				// delete the splash screen
-				QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+				// QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 			}
 
 #ifdef ACTIVELASERVIEW
 			// one time init for the laser view
 			gui->initLaserView();
 #endif
+			// delete the splash screen
+			finishSplash();
 		}
 	} // ini-file found
 	else
