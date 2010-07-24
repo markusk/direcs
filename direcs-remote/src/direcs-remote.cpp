@@ -118,7 +118,7 @@ DirecsRemote::DirecsRemote()
 		//gui->appendLog("Laser thread started.");
 	}
 
-	/*
+
 	//------------------------------------------------------------------
 	// for getting the screen resolution
 	//------------------------------------------------------------------
@@ -139,12 +139,9 @@ DirecsRemote::DirecsRemote()
 	else
 	{
 		// resolution too smal for this window. Maximizing...
-	*/
 		// show the main window
 		gui->showMaximized();
-	/*
 	}
-	*/
 }
 
 
