@@ -39,7 +39,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	int newbaud = 0;
 
 
-     // mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);	// 2010-05-23: not needed for Atmel and SICK laser S300!
+	 // mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);	// 2010-05-23: not needed for Atmel and SICK laser S300!
 	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK);
 
 	// Note that open() follows POSIX semantics: multiple open() calls to
@@ -49,7 +49,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (ioctl(mDev_fd, TIOCEXCL) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 setting TIOCEXCL on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
+//		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
 
@@ -58,14 +58,14 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
+//		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
 
 	if (mDev_fd < 0)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
+//		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
 
@@ -158,7 +158,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	else
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR: Wrong value for speed parameter at DirecsSerial::openAtmelPort!</font>"));
-		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
+//		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
 	}
 
 	// Flushes all pending I/O to the serial port. This clears only the read buffer!
@@ -166,7 +166,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 	// Cause the new options to take effect immediately.
 	tcsetattr(mDev_fd, TCSANOW, &options);
-	
+
 	emit message("Serial device openend.");
 	return (mDev_fd);
 }
@@ -180,7 +180,7 @@ void DirecsSerial::setRTS(int fd  __attribute__ ((unused)))
 {
 	#if defined(TIOCM_RTS) && defined(TIOCMODG)
 	int mcs = 0;
-	
+
 	ioctl(fd, TIOCMODG, &mcs);
 	mcs |= TIOCM_RTS;
 	ioctl(fd, TIOCMODS, &mcs);
@@ -204,8 +204,8 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	struct sgttyb tty;
 	ioctl(fd, TIOCGETP, &tty);
 	#endif
-	
-	
+
+
 	/* We generate mark and space parity ourself. */
 	if(bits == 7 && (par == parityM || par == parityS))
 		bits = 8;
@@ -215,7 +215,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 // 	if((newbaud = (atol(baudr) / 100)) == 0 && baudr[0] != '0')
 // 		newbaud = -1;
 	newbaud = (baudr/100);
-	
+
 	switch(newbaud)
 	{
 		case 0:
@@ -224,7 +224,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 		#else
 			spd = 0;  	   break;
 		#endif
-		case 3:	
+		case 3:
 			spd = B300;	   break;
 		case 6:
 			spd = B600;	   break;
@@ -237,7 +237,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 		case 96:
 			spd = B9600;   break;
 		#ifdef B19200
-		case 192:	
+		case 192:
 			spd = B19200;  break;
 		#else
 		#ifdef EXTA
@@ -246,8 +246,8 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 		#else
 		case 192:
 			spd = B9600;   break;
-		#endif	
-		#endif	
+		#endif
+		#endif
 		#ifdef B38400
 		case 384:
 			spd = B38400;  break;
@@ -256,12 +256,12 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 		case 384:
 			spd = EXTB;    break;
 		#else
-		case 384:	
+		case 384:
 			spd = B9600;   break;
 		#endif
-		#endif	
+		#endif
 		#ifdef B57600
-		case 576:	
+		case 576:
 			spd = B57600;  break;
 		#endif
 		#ifdef B115200
@@ -273,28 +273,28 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 			spd = B500000; break;
 		#endif
 	}
-	
+
 	#if defined (_BSD43) && !defined(_POSIX)
 	if(spd != -1)
 		tty.sg_ispeed = tty.sg_ospeed = spd;
-	
+
 	/* Number of bits is ignored */
 	tty.sg_flags = RAW | TANDEM;
-	
+
 	if(par == parityEven) // even
 		tty.sg_flags |= EVENP;
 	else if(par == parityOdd) // odd
 		tty.sg_flags |= ODDP;
 	else
 		tty.sg_flags |= PASS8 | ANYP; //
-	
+
 	ioctl(fd, TIOCSETP, &tty);
 	#ifdef TIOCSDTR
 	/*  huh? - MvS */
 	ioctl(fd, TIOCSDTR, 0);
 	#endif
 	#endif
-	
+
 	#if defined (_V7) && !defined(_POSIX)
 	if(spd != -1) tty.sg_ispeed = tty.sg_ospeed = spd;
 	tty.sg_flags = RAW;
@@ -304,7 +304,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 		tty.sg_flags |= ODDP;
 	ioctl(fd, TIOCSETP, &tty);
 	#endif
-	
+
 	#ifdef _POSIX
 	if(spd != -1)
 	{
@@ -330,7 +330,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 			tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8;
 			break;
 	}
-	
+
 	/* Set into raw, no echo mode */
 	#if !defined(_DGUX_SOURCE)
 	tty.c_iflag &= ~(IGNBRK | IGNCR | INLCR | ICRNL | /* IUCLC | */ IXANY | IXON | IXOFF | INPCK | ISTRIP);
@@ -346,7 +346,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	#endif
 	tty.c_cc[VMIN] = 1;
 	tty.c_cc[VTIME] = 5;
-	
+
 	/* Flow control. */
 	if(hwf)
 	{
@@ -360,7 +360,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 		tty.c_cflag &= ~CRTSCTS;
 		tty.c_cflag |= CLOCAL;
 	}
-	
+
 	if(swf)
 	{
 		// Enable software flow control (outgoing and incoming)
@@ -371,15 +371,15 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 		// Disable software flow control (outgoing and incoming)
 		tty.c_iflag &= ~(IXON | IXOFF);
 	}
-	
+
 	// set the PARITY
 	tty.c_cflag &= ~(PARENB | PARODD); // delete parity bit and odd bit, so we have PARITY=N here
-	
+
 	if(par == parityEven)
 		tty.c_cflag |= PARENB; // Parity=EVEN
 	else if(par == parityOdd)
 		tty.c_cflag |= PARODD; // Parity=ODD
-	
+
 
 
 	/* The stop bit */
@@ -392,11 +392,11 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 			tty.c_cflag &= ~CSTOPB; // deleting the bis is setting it to 1 STOP BIT!
 			break;
 	}
-	
-	
+
+
 	/* Set the new settings for the serial port NOW! */
 	tcsetattr(fd, TCSANOW, &tty);
-	
+
 	setRTS(fd);
 	#ifdef _DGUX_SOURCE
 	serial_sethwf(fd, hwf);
@@ -409,14 +409,14 @@ void DirecsSerial::configurePort(int dev_fd, int baudrate, char parity)
 {
 	if (baudrate == 55555)
 		baudrate = 57600;
-	
+
 	setParms(dev_fd, baudrate, parity, 8, 0, 0);
 }
 
 long DirecsSerial::numChars(int dev_fd)
 {
 	long available = 0;
-	
+
 	if(ioctl(dev_fd, FIONREAD, &available) == 0)
 		return available;
 	else
@@ -437,23 +437,23 @@ long DirecsSerial::numChars()
 
 int DirecsSerial::clearInputBuffer(int dev_fd)
 {
-	int max_serial_buffer_size = 16384; 
-	unsigned char buffer[max_serial_buffer_size]; 
+	int max_serial_buffer_size = 16384;
+	unsigned char buffer[max_serial_buffer_size];
 	int val = 0;
 	int val_total = 0;
-	
+
 	val_total = numChars(dev_fd);
 	val = val_total;
-	
+
 	while (val > max_serial_buffer_size)
 	{
 		read(dev_fd, &buffer, max_serial_buffer_size);
 		val -= max_serial_buffer_size;
 	}
-	
-	if(val > 0) 
+
+	if(val > 0)
 		read(dev_fd, &buffer, val);
-	
+
 	return(val_total);
 }
 
@@ -470,14 +470,14 @@ void DirecsSerial::purgeRx()
 int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 {
 	int amountWritten = 0;
-	
+
 	while(nChars > 0)
 	{
 		amountWritten = write(dev_fd, buf, nChars);
 		if(amountWritten < 0) {
 		if(errno == EWOULDBLOCK) {
 			fprintf(stderr, "\nWARNING: writeN: EWOULDBLOCK: trying again!\n");
-		} 
+		}
 		else {
 			return -1;
 		}
@@ -494,18 +494,18 @@ int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 int DirecsSerial::writeAtmelPort(unsigned char *c)
 {
 	int n = write(mDev_fd, c, 1);
-	
+
 	if (n < 0)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 writing to serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
+//		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
 	else
 	{
 		//qDebug("%1 byte(s) written.", n);
 	}
-	
+
 	return n;
 }
 
@@ -520,7 +520,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	struct timeval t;
 	fd_set set;
 	int err;
-	
+
 	while (nChars > 0)
 	{
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
@@ -528,7 +528,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		t.tv_usec = READ_TIMEOUT_ATMEL;
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
-		
+
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
 
 		// check if time limit expired (select=0)
@@ -536,17 +536,17 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
 			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
-		    return errno;
+			return errno;
 		}
-	
+
 		// read from the serial device
 		amountRead = read(mDev_fd, buf, nChars);
-		
+
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
 			// qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
-		    return errno;
+			return errno;
 		}
 		else
 		{
@@ -568,7 +568,7 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 	struct timeval t;
 	fd_set set;
 	int err;
-	
+
 	while(nChars > 0)
 	{
 		t.tv_sec = 0;
@@ -578,7 +578,7 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 		err = select(dev_fd + 1, &set, NULL, NULL, &t);
 		if(err == 0)
 		return -2;
-	
+
 		amountRead = read(dev_fd, buf, nChars);
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		return -1;
@@ -606,11 +606,11 @@ int DirecsSerial::setLowLatency(int fd)
 	fd = fd;
 	return -1;
 	#else
-	
-	struct serial_struct serial; 
+
+	struct serial_struct serial;
 	int result;
 	result=ioctl(fd, TIOCGSERIAL, &serial);
-	
+
 	if (result)
 	{
 		qDebug("Cannot get the serial attributes for low latency serial mode. Switching to normal mode");
@@ -620,7 +620,7 @@ int DirecsSerial::setLowLatency(int fd)
 	{
 		serial.flags |= ASYNC_LOW_LATENCY;
 		serial.xmit_fifo_size = 1;
-		ioctl(fd, TIOCSSERIAL, &serial); 
+		ioctl(fd, TIOCSSERIAL, &serial);
 		if (result)
 		{
 			qDebug("Cannot activeate low latency mode. Switching to normal mode");
