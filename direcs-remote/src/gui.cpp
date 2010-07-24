@@ -1187,3 +1187,20 @@ void Gui::setCamImage(QImage* image)
 {
 	ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
 }
+
+
+void Gui::setLEDHeartbeat(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
+	}
+}

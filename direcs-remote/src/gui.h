@@ -40,12 +40,12 @@ class Gui : public QMainWindow
 	public:
 		Gui(DirecsRemote *m, QMainWindow *parent = 0);
 		~Gui();
-		
+
 		/**
 		Reads the network port for the UDPSocket
 		*/
 		int getPort();
-		
+
 		/**
 		Puts text in to a log
 		*/
@@ -56,8 +56,8 @@ class Gui : public QMainWindow
 		This method HAS to be called AFTER showing the gui the first time to show the objects correctly!
 		*/
 		void initLaserView();
-	
-	
+
+
 	public slots:
 		void showMotorCurrent(int motor, int value);
 
@@ -106,17 +106,17 @@ class Gui : public QMainWindow
 		Refreshes the view of the lines from the front laser scanner.
 		*/
 		void refreshLaserViewFront(float *laserScannerValues, int *laserScannerFlags);
-		
+
 		/**
 		Refreshes the view of the lines from the rear laser scanner.
 		*/
 		void refreshLaserViewRear(float *laserScannerValues, int *laserScannerFlags);
-		
+
 		/**
 		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
 		*/
 		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
-		
+
 		/**
 		Zoom into the graphicsView/scene, if the mouse wheel was used.
 		*/
@@ -135,22 +135,28 @@ class Gui : public QMainWindow
 		@param direction can be FORWARD, BACKWARD, LEFT or RIGHT
 		*/
 		void showPreferredDirection(QString direction);
-		
+
 		/**
 		Shows the camera image from the network class
 		*/
 		void setCamImage(QImage* image);
-	
-	
+
+		/**
+		Turns the GUI heartbeat/state LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDHeartbeat(unsigned char state);
+
+
 	protected:
 		void closeEvent();
-	
-	
+
+
 	signals:
 		void commandIssued(QString command);
 		void cameraUrlChanged(QString url);
-	
-	
+
+
 	private slots:
 		void on_btnClear_clicked();
 		//void on_btnExit_clicked();
@@ -178,7 +184,7 @@ class Gui : public QMainWindow
 		*/
 		void createLaserScannerObjects();
 		void createLaserDistanceObjects();
-		
+
 		Ui::mainWindow ui;
 		DirecsRemote *direcsremote1;
 		QWebView *webView;
@@ -217,7 +223,7 @@ class Gui : public QMainWindow
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		QPixmap pixmap; // for IplImageToQImage()
-		
+
 		// Give the infrared sensors some names
 		//
 		// DONT CHANGE THIS NUMBERS!
@@ -231,15 +237,15 @@ class Gui : public QMainWindow
 		static const short int SENSOR6 = 32;
 		static const short int SENSOR7 = 64;
 		static const short int SENSOR8 = 128;
-		
+
 		// ultrasonic sensor
 		static const short int SENSOR16 = 256;
-		
+
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 		static const short int MOTORSENSOR3 = 2;
 		static const short int MOTORSENSOR4 = 3;
-		
+
 		/**
 		 Give the contacts for the pan tilt cam end positions some nice names
 		 */
@@ -247,7 +253,7 @@ class Gui : public QMainWindow
 		static const unsigned char CONTACT2 = 1;
 		static const unsigned char CONTACT3 = 2;
 		static const unsigned char CONTACT4 = 3;
-		
+
 		static const float AMPERESMAXPLOTCURVE1 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 1
 		static const float AMPERESMAXPLOTCURVE2 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 2
 		static const float AMPERESSTEPPLOTCURVE1 = 500.0; /// The step value for the y axis for plot curve number 1
@@ -298,5 +304,12 @@ class Gui : public QMainWindow
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+
+		/**
+		The GUI LED colors
+		*/
+		static const unsigned char LEDOFF	= 0;
+		static const unsigned char RED		= 1;
+		static const unsigned char GREEN	= 2;
 };
 #endif
