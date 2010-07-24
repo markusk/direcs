@@ -141,7 +141,9 @@ message( Hostname is $$HOSTNAME )
 
 contains( HOSTNAME, [rR]obot ) {
 #contains( HOSTNAME, imac ) {
+	 message( ************************************** )
 	 message( *** Configuring for robot build... *** )
+	 message( ************************************** )
 	 DEFINES += BUILDFORROBOT
 	 DEFINES += LASERVIEW
 
