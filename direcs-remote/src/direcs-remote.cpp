@@ -86,6 +86,12 @@ DirecsRemote::DirecsRemote()
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( cameraUrlChanged(QString) ), network, SLOT ( setUrl(QString) ) );
 
+	//----------------------------------------------------------------------------
+	// connect sensor signals to "show that the robot is still alive"
+	// (Whenever a specifiv sensor data is received, show the result in the GUI)
+	//----------------------------------------------------------------------------
+	connect(this, SIGNAL( heartbeat(unsigned char)), gui, SLOT( setLEDHeartbeat(unsigned char) ) );
+
 	//-----------------------------------------------------------
 	// start the plot thread ("clock" for plotting the curves)
 	//-----------------------------------------------------------
@@ -391,6 +397,34 @@ void DirecsRemote::parseNetworkString(QString text)
 		if ( text.startsWith( QString("*%1").arg(LASER2) ) )
 		{
 			emit ( laserValueReceived(LASER2, iValue, fValue) );
+			return;
+		}
+
+	}
+
+	// h = heartbeat
+	// *0h1# means 'heartbeat no. 0 is HIGH'
+	if ( text.contains("h") )
+	{
+		start = text.indexOf("h") + 1;
+		// string always end with a '#'
+		count = text.indexOf("#") - start;
+		text2 = text.mid( start, count );
+
+		// convert value to int
+		iValue = text2.toInt(&okay);
+
+		// check which heratbeat number was in string ' *0h... '
+		if ( text.startsWith( QString("*%1").arg(0) ) )
+		{
+			if (iValue==0)
+			{
+				emit heartbeat(GREEN);
+			}
+			else
+			{
+				emit heartbeat(LEDOFF);
+			}
 			return;
 		}
 

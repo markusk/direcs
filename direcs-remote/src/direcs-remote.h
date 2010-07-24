@@ -59,6 +59,12 @@ class DirecsRemote : public QObject
 		*/
 		void laserValueReceived(int laserScanner, int angle, float value);
 
+		/**
+		This signal is emitted every TODO: seconds, when a specific value over the network was received.
+		@sa Gui::setLEDHeartbeat()
+		*/
+		void heartbeat(unsigned char state);
+
 
 	private:
 		/**
@@ -128,5 +134,12 @@ class DirecsRemote : public QObject
 		*/
 		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.000;
 		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125;
+
+		/**
+		This is for the @sa heartbeat signal (the GUI LED colors)
+		*/
+		static const unsigned char LEDOFF	= 0;
+		static const unsigned char RED		= 1;
+		static const unsigned char GREEN	= 2;
 };
 #endif
