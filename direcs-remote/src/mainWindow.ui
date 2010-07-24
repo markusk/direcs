@@ -455,8 +455,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/images/images/underFootOne.png</normaloff>:/images/images/underFootOne.png</iconset>
+          <iconset resource="../direcs-remote.qrc">
+           <normaloff>:/images/images/DSC07494_front_256x256.png</normaloff>:/images/images/DSC07494_front_256x256.png</iconset>
          </property>
          <property name="iconSize">
           <size>

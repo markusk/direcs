@@ -191,7 +191,7 @@ void Gui::on_btnStartStop_clicked()
 	{
 		// stop driving
 		emit commandIssued("stop");
-		ui.btnStartStop->setIcon(QIcon(":/images/images/underFootOne.png"));
+		ui.btnStartStop->setIcon(QIcon(":/images/images/DSC07494_front_256x256.png"));
 		robotDrives = false;
 	}
 }
