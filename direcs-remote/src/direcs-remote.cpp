@@ -417,15 +417,27 @@ void DirecsRemote::parseNetworkString(QString text)
 		// check which heratbeat number was in string ' *0h... '
 		if ( text.startsWith( QString("*%1").arg(0) ) )
 		{
+			// heartbeat low
 			if (iValue==0)
 			{
-				emit heartbeat(GREEN);
-			}
-			else
-			{
 				emit heartbeat(LEDOFF);
+				return;
 			}
-			return;
+
+			// heartbeat high
+			if (iValue==1)
+			{
+				emit heartbeat(GREEN);
+				return;
+			}
+
+			// heartbeat dead (sensor thread ended at the robot app
+			if (iValue==2)
+			{
+				emit heartbeat(RED);
+				return;
+			}
+
 		}
 
 		return;

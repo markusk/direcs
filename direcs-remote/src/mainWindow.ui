@@ -836,7 +836,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../direcs-remote.qrc">:/images/images/led_gray.gif</pixmap>
+          <pixmap resource="../direcs-remote.qrc">:/images/images/led_red.gif</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
