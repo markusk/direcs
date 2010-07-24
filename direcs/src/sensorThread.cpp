@@ -137,12 +137,25 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 
 SensorThread::~SensorThread()
 {
+	// send "off" or "shutdown" heartbeat signal over network to remote app
+	emit heartbeat(RED);
+
+	// send heartbeat over the network
+	// *0h2# means 'heartbeat no. 0 is DEAD'
+	emit sendNetworkString("*0h2#");
 }
 
 
 void SensorThread::stop()
 {
 	stopped = true;
+
+	// send "off" or "shutdown" heartbeat signal over network to remote app
+	emit heartbeat(RED);
+
+	// send heartbeat over the network
+	// *0h2# means 'heartbeat no. 0 is DEAD'
+	emit sendNetworkString("*0h2#");
 }
 
 
