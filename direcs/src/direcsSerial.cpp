@@ -534,7 +534,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		// check if time limit expired (select=0)
 		if (err == 0)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
 		}
@@ -542,9 +542,12 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		// read from the serial device
 		amountRead = read(mDev_fd, buf, nChars);
 
+qDebug("amountRead=%d", amountRead);
+
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR %1 reading from serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when reading from serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+// FIXME: was, wenn return 0 ?!?!?
 			// qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
 		}
