@@ -434,6 +434,10 @@ void DirecsRemote::parseNetworkString(QString text)
 			// heartbeat dead (sensor thread ended at the robot app
 			if (iValue==2)
 			{
+				// set voltage to 0.0 Volt
+				gui->showVoltage(0, 0.0);
+				gui->showVoltage(1, 0.0);
+
 				emit heartbeat(RED);
 				return;
 			}
