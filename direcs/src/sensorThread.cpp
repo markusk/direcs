@@ -32,13 +32,13 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	// Array for storing the measured values from the infrared sensors
 	iRSensorValue[SENSOR1] = 0;
 	iRSensorValue[SENSOR2] = 0;
- 	iRSensorValue[SENSOR3] = 0;
+	iRSensorValue[SENSOR3] = 0;
 	iRSensorValue[SENSOR4] = 0;
 	iRSensorValue[SENSOR5] = 0;
 	iRSensorValue[SENSOR6] = 0;
 // 	iRSensorValue[SENSOR7] = 0; -> now voltage 12 V (measuring the power supply / accumulators), sensor 1 !!
 // 	iRSensorValue[SENSOR8] = 0; -> now voltage 24 V (measuring the power supply / accumulators)  sensor 2 !!
-	
+
 	// Array for storing the measured voltage values
 	voltageSensorValue[VOLTAGESENSOR1] = 0;
 	voltageSensorValue[VOLTAGESENSOR2] = 0;
@@ -130,7 +130,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRDistance[37] = 227;
 	iRDistance[38] = 217;
 	iRDistance[39] = 210;
-	
+
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
 
@@ -161,7 +161,7 @@ void SensorThread::run()
 		{
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
-			
+
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -184,7 +184,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-			
+
 /* FIXME: deactivated due to errors. when activated, voltage sensor values are 0 or something stupid else!
 			//---------------
 			// motor sensors
@@ -198,7 +198,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR1).arg(getMAmpere(MOTORSENSOR1)));
-			
+
 			if (readMotorSensor(MOTORSENSOR2) == false)
 			{
 				// Unlock the mutex.
@@ -210,7 +210,7 @@ void SensorThread::run()
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
 */
 			/* TODO: implement reading of motor sensors 3 and 4 !
-			
+
 			if (readMotorSensor(MOTORSENSOR3) == false)
 			{
 				// Unlock the mutex.
@@ -231,16 +231,24 @@ void SensorThread::run()
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
 			*/
-			
+
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
 			{
-	 			emit heartbeat(GREEN);
+				emit heartbeat(GREEN);
+
+				// send heartbeat over the network
+				// *0h1# means 'heartbeat no. 0 is HIGH'
+				emit sendNetworkString("*0h1#");
 			}
 			else
 			{
-	 			emit heartbeat(LEDOFF);
+				emit heartbeat(LEDOFF);
+
+				// send heartbeat over the network
+				// *0h1# means 'heartbeat no. 0 is LOW'
+				emit sendNetworkString("*0h0#");
 			}
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
@@ -254,7 +262,7 @@ void SensorThread::run()
 				// mutex->unlock();
 				// stop();
 			}
-			
+
 			if (readDrivenDistance(MOTORDISTANCE2) == false)
 			{
 				// Unlock the mutex.
@@ -300,7 +308,7 @@ void SensorThread::run()
 
 			// Only *after* all axes were read:
 			calculateHeading();
-			
+
 			// emit ALL compass axes values
 			emit compassDataComplete(xAxis, yAxis, zAxis, heading);
 
@@ -355,7 +363,7 @@ void SensorThread::run()
 			// infrared sensors 7 and 8 are now the voltage sensors!
 */
 /*			ultrasonic Sensors temporarily removed from robot!!
-			
+
 			//---------------------
 			// ulatrasonic sensors
 			//---------------------
@@ -387,7 +395,7 @@ void SensorThread::run()
 					emit contactAlarm(LEFT, true);
 				}
 			}
-			
+
 			// read value of contact 2 (cam pan R)
 			if (readContact(CONTACT2) == false)
 			{
@@ -407,7 +415,7 @@ void SensorThread::run()
 					emit contactAlarm(RIGHT, true);
 				}
 			}
-			
+
 			// read value of contact 3 (cam tilt L/TOP)
 			if (readContact(CONTACT3) == false)
 			{
@@ -427,7 +435,7 @@ void SensorThread::run()
 					emit contactAlarm(TOP, true);
 				}
 			}
-			
+
 			// read value of contact 4 (cam tilt R/BOTTOM)
 			if (readContact(CONTACT4) == false)
 			{
@@ -448,12 +456,12 @@ void SensorThread::run()
 				}
 			}
 contacts temporarily removed from robot!! */
-			
+
 			// Unlock the mutex.
 			mutex->unlock();
 
 		} // simulation = false
-		
+
 		if (simulationMode)
 		{
 			// now we're sleeping additional 500ms because we're only simulating.
@@ -470,7 +478,7 @@ contacts temporarily removed from robot!! */
 			}
 			heartbeatToggle = !heartbeatToggle;
 		}
-		
+
 		//  e m i t  Signal
 		emit sensorDataComplete();
 	}
@@ -545,7 +553,7 @@ float SensorThread::getVoltage(int sensor)
 		return 0;
 	}
 
-	
+
 	// return the converted measured value in Volt (V)
 	return convertToVolt(sensor);
 }
@@ -771,7 +779,7 @@ void SensorThread::setSimulationMode(bool state)
 	{
 		if (robotState==OFF)
 			emit heartbeat(RED);
-		
+
 		iRSensorValue[SENSOR1] = 0;
 		iRSensorValue[SENSOR2] = 0;
 		iRSensorValue[SENSOR3] = 0;
@@ -792,7 +800,7 @@ void SensorThread::setSimulationMode(bool state)
 		{
 			motorSensorValue[i] = 0;
 		}
-		
+
 		voltageSensorValue[VOLTAGESENSOR1] = 0;
 		voltageSensorValue[VOLTAGESENSOR2] = 0;
 
@@ -851,7 +859,7 @@ float SensorThread::convertToDegree(int sensorValue)
 	{
 		// delete the 'sign' bit
 		sensorValue -= 32768;
-		
+
 		// convert into negative
 		sensorValue = sensorValue * -1;
 	}
@@ -870,22 +878,22 @@ void SensorThread::calculateHeading(void)
 	{
 		heading = M_PI/2;
 	}
-	
+
 	if (xAxis == 0 && yAxis > 0)
 	{
-		heading = 3*M_PI/2; 
+		heading = 3*M_PI/2;
 	}
-	
+
 	if (xAxis < 0)
 	{
 		heading = M_PI - atan(float(yAxis)/float(xAxis));
 	}
-	
+
 	if (xAxis > 0 && yAxis < 0)
 	{
-		heading = -atan(float(yAxis)/float(xAxis)); 
+		heading = -atan(float(yAxis)/float(xAxis));
 	}
-	
+
 	if (xAxis > 0 && yAxis > 0)
 	{
 		heading = 2*M_PI - atan(float(yAxis)/float(xAxis));
@@ -901,7 +909,7 @@ float SensorThread::convertToVolt(int sensor)
 		return 0;
 	}
 
-	
+
 	if (sensor == VOLTAGESENSOR1)
 	{
 		// convert the measured value to Volt (V)
@@ -913,7 +921,7 @@ float SensorThread::convertToVolt(int sensor)
 		// convert the measured value to Volt (V)
 		return ( voltageSensorValue[sensor] / CONVERSIONFACTORVOLTAGESENSOR2 );
 	}
-	
+
 	return -1.0;
 }
 
@@ -921,7 +929,7 @@ float SensorThread::convertToVolt(int sensor)
 bool SensorThread::readInfraredSensor(short int sensor)
 {
 	int value = 0;
-	
+
 	switch (sensor)
 	{
 		case SENSOR1:
@@ -935,7 +943,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 1");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR1] = value;
 				return true;
@@ -957,7 +965,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 2");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR2] = value;
 				return true;
@@ -979,7 +987,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 3");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR3] = value;
 				return true;
@@ -1001,7 +1009,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 4");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR4] = value;
 				return true;
@@ -1023,7 +1031,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 5");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR5] = value;
 				return true;
@@ -1045,7 +1053,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 6");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR6] = value;
 				return true;
@@ -1067,7 +1075,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 7");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR7] = value;
 				return true;
@@ -1089,7 +1097,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 					qDebug("ERROR reading infrared sensor 8");
 					return false;
 				}
-	
+
 				// store measured value
 				iRSensorValue[SENSOR8] = value;
 				return true;
@@ -1101,7 +1109,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			break;
 	}
-	
+
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readInfraredSensor()");
 	return false;
@@ -1111,7 +1119,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 bool SensorThread::readUltrasonicSensor(short int sensor)
 {
 	int value = 0;
-	
+
 	switch (sensor)
 	{
 		case SENSOR16:
@@ -1125,7 +1133,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 					qDebug("ERROR reading ultrasonic sensor 1");
 					return false;
 				}
-	
+
 				// store measured value
 				usSensorValue[ULTRASONICSENSOR1] = value;
 				return true;
@@ -1137,7 +1145,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 			}
 			break;
 	}
-	
+
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readUltrasonicSensor()");
 	return false;
@@ -1147,7 +1155,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 bool SensorThread::readVoltageSensor(short int sensor)
 {
 	int value = 0;
-	
+
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
@@ -1161,7 +1169,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 					qDebug("ERROR reading voltage sensor 1");
 					return false;
 				}
-	
+
 				// store measured value
 				voltageSensorValue[VOLTAGESENSOR1] = value;
 				return true;
@@ -1183,7 +1191,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 					qDebug("ERROR reading voltage sensor 2");
 					return false;
 				}
-	
+
 				// store measured value
 				voltageSensorValue[VOLTAGESENSOR2] = value;
 				return true;
@@ -1195,7 +1203,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			}
 			break;
 	}
-	
+
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
 	return false;
@@ -1205,7 +1213,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 bool SensorThread::readMotorSensor(short int sensor)
 {
 	int value = 0;
-	
+
 	switch (sensor)
 	{
 		case MOTORSENSOR1:
@@ -1219,7 +1227,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					qDebug("ERROR reading motor sensor 1");
 					return false;
 				}
-	
+
 				// store measured value
 				voltageSensorValue[MOTORSENSOR1] = value;
 				return true;
@@ -1241,7 +1249,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					qDebug("ERROR reading motor sensor 2");
 					return false;
 				}
-	
+
 				// store measured value
 				voltageSensorValue[MOTORSENSOR2] = value;
 				return true;
@@ -1264,7 +1272,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					voltageSensorValue[MOTORSENSOR3] = 0;
 					return false;
 				}
-	
+
 				// store measured value
 				voltageSensorValue[MOTORSENSOR3] = value;
 				return true;
@@ -1288,7 +1296,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					voltageSensorValue[MOTORSENSOR4] = 0;
 					return false;
 				}
-	
+
 				// store measured value
 				voltageSensorValue[MOTORSENSOR4] = value;
 				return true;
@@ -1301,7 +1309,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 			*/
 			break;
 	}
-	
+
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
 	return false;
@@ -1311,7 +1319,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 bool SensorThread::readDrivenDistance(short int sensor)
 {
 	int value = 0;
-	
+
 	switch (sensor)
 	{
 		case MOTORDISTANCE1:
@@ -1325,7 +1333,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 					qDebug("ERROR reading driven distance 1");
 					return false;
 				}
-	
+
 				// store measured value
 				drivenDistance[MOTORDISTANCE1] = value;
 				return true;
@@ -1347,7 +1355,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 					qDebug("ERROR reading driven distance 2");
 					return false;
 				}
-	
+
 				// store measured value
 				drivenDistance[MOTORDISTANCE2] = value;
 				return true;
@@ -1359,7 +1367,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 			}
 			break;
 	}
-	
+
 	// this line should be never reached
 	qDebug("WARNING: wrong motor distance number in readDrivenDistance()");
 	return false;
@@ -1369,7 +1377,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 bool SensorThread::readCompassAxis(short int axis)
 {
 	int value = 0;
-	
+
 	switch (axis)
 	{
 		case XAXIS:
@@ -1383,7 +1391,7 @@ bool SensorThread::readCompassAxis(short int axis)
 					qDebug("ERROR reading x axis");
 					return false;
 				}
-	
+
 				// convert the value to degrees and store the value in the class member
 				xAxis =  convertToDegree(value);
 				//qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
@@ -1406,7 +1414,7 @@ bool SensorThread::readCompassAxis(short int axis)
 					qDebug("ERROR reading y axis");
 					return false;
 				}
-	
+
 				// convert the value to degrees and store the value in the class member
 				yAxis =  convertToDegree(value);
 				//qDebug("From Atmel=%d / yAxis=%f", value, yAxis);
@@ -1429,7 +1437,7 @@ bool SensorThread::readCompassAxis(short int axis)
 					qDebug("ERROR reading z axis");
 					return false;
 				}
-	
+
 				// convert the value to degrees and store the value in the class member
 				zAxis =  convertToDegree(value);
 				// qDebug("From Atmel=%d / zAxis=%f", value, zAxis);
@@ -1442,7 +1450,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			}
 			break;
 	}
-	
+
 	// this line should be never reached
 	qDebug("WARNING: wrong compass axis number in readCompassAxis()");
 	return false;
@@ -1452,7 +1460,7 @@ bool SensorThread::readCompassAxis(short int axis)
 bool SensorThread::readContact(short int contact)
 {
 	int value = 0;
-	
+
 	switch (contact)
 	{
 		case CONTACT1:
@@ -1466,7 +1474,7 @@ bool SensorThread::readContact(short int contact)
 					qDebug("ERROR reading contact");
 					return false;
 				}
-	
+
 				contactValue[CONTACT1] = value;
 				return true;
 			}
@@ -1487,7 +1495,7 @@ bool SensorThread::readContact(short int contact)
 					qDebug("ERROR reading contact");
 					return false;
 				}
-	
+
 				contactValue[CONTACT2] = value;
 				return true;
 			}
@@ -1508,7 +1516,7 @@ bool SensorThread::readContact(short int contact)
 					qDebug("ERROR reading contact");
 					return false;
 				}
-	
+
 				contactValue[CONTACT3] = value;
 				return true;
 			}
@@ -1529,7 +1537,7 @@ bool SensorThread::readContact(short int contact)
 					qDebug("ERROR reading contact");
 					return false;
 				}
-	
+
 				contactValue[CONTACT4] = value;
 				return true;
 			}
@@ -1540,7 +1548,7 @@ bool SensorThread::readContact(short int contact)
 			}
 			break;
 	}
-	
+
 	// this line should be never reached
 	qDebug("WARNING: wrong contact number in readContact()");
 	return false;
