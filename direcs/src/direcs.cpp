@@ -24,14 +24,14 @@
 int main(int argc, char *argv[])
 {
 	bool consoleMode = false;
-	
-	
+
+
 	// Check for command-line argument "console".
 	// A deeper argument check will be done later within the class Direcs!
 	if (argc > 1)
 	{
 		qDebug() << argc - 1 << "argument(s) passed...";
-		
+
 		for (int i=1; i<argc; i++)
 		{
 			// now search for the "console" parameter (case insensitive)
@@ -42,25 +42,25 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	
-	
+
+
 	if (consoleMode)
 	{
 		//----------------------
 		// CREATE A CONSOLE APP
 		//----------------------
-		
+
 		// The QCoreApplication class provides an event loop for console Qt applications.
 		QCoreApplication app(argc, argv);
 
 		CleanExit cleanExit;
-		
+
 		// create Direcs class object
- 		Direcs d(consoleMode);
+		Direcs d(consoleMode);
 
 		// init direcs
 		d.init();
-		
+
 		return app.exec();
 	}
 	else
@@ -68,19 +68,19 @@ int main(int argc, char *argv[])
 		//----------------------
 		// CREATE A GUI APP
 		//----------------------
-		
+
 		// Initialize the resource file
 		Q_INIT_RESOURCE(direcs);
-	
+
 		// The QApplication class manages the GUI application's control flow and main settings.
 		QApplication app(argc, argv);
-	
+
 		// create the Direcs class object
- 		Direcs d(consoleMode);
-		
+		Direcs d(consoleMode);
+
 		// init direcs
 		d.init();
-		
+
 		return app.exec();
 	}
 }
@@ -90,7 +90,7 @@ Direcs::Direcs(bool bConsoleMode)
 {
 	// store mode from main method
 	consoleMode = bConsoleMode;
-	
+
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
@@ -98,7 +98,7 @@ Direcs::Direcs(bool bConsoleMode)
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	speakThread = new SpeakThread();
 #endif
-	
+
 	if (consoleMode)
 	{
 		consoleGui = new ConsoleGui();
@@ -142,7 +142,7 @@ Direcs::Direcs(bool bConsoleMode)
 	}
 	joystick = new Joystick();
 	head = new Head(servos);
-	
+
 	drivingSpeedTimer = new QTimer();
 }
 
@@ -225,7 +225,7 @@ void Direcs::init()
 	{
 		splash->show();
 	}
-	
+
 	//--------------------------------------------------------------------------
 	// show splash messages in the splash screen
 	//--------------------------------------------------------------------------
@@ -252,16 +252,16 @@ void Direcs::init()
 	// let some other classes know if we are in the console mode
 	//--------------------------------------------------------------------------
 	// TODO: not in use anymore! connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
-	
+
 	/*
 	not in use at the moment...
-	
+
 	//--------------------------------------------------------------------------------
 	// create the commmand line arguments list
 	//--------------------------------------------------------------------------------
 	arguments = QCoreApplication::arguments();
 	int count = arguments.count() - 1;
-	
+
 	// check if arguments were passed on the command-line
 	if (count > 0)
 	{
@@ -270,7 +270,7 @@ void Direcs::init()
 		checkArguments();
 	}
 	*/
-	
+
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
 	// For example: 1.234,00 EUR
@@ -289,7 +289,7 @@ void Direcs::init()
 	{
 		connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
 	}
-	
+
 	//--------------------------------------------------------------------------
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
@@ -315,7 +315,7 @@ void Direcs::init()
 	{
 		connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
 	}
-	
+
 	// also set the robot to OFF, when there are problems with the circuit
 	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
@@ -334,7 +334,7 @@ void Direcs::init()
 		// shutdown is also called, when the gui is closed
 		//--------------------------------------------------------------------------
 		connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
-	
+
 		//--------------------------------------------------------------------------
 		// call (a) test method(s) when clicking the test button
 		//--------------------------------------------------------------------------
@@ -357,12 +357,12 @@ void Direcs::init()
 		// set the motor speed, when signal comes from Gui
 		//--------------------------------------------------------------------------
 		connect(settingsDialog, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
-		
+
 		//--------------------------------------------------------------------------
 		// set the maximum robot speed, when signal comes from Gui
 		//--------------------------------------------------------------------------
 		connect(settingsDialog, SIGNAL(setMaximumSpeed(int)), motors, SLOT(setMaximumSpeed(int)));
-	
+
 		//--------------------------------------------------------------------------
 		// set the robot slot, when signal comes from Gui
 		//--------------------------------------------------------------------------
@@ -373,12 +373,12 @@ void Direcs::init()
 		// set the straight forward deviation, when signal comes from Gui
 		//--------------------------------------------------------------------------
 		connect(settingsDialog, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
-	
+
 		//--------------------------------------------------------------------------
 		// set the minimum distance, when signal comes from Gui
 		//--------------------------------------------------------------------------
 		connect(settingsDialog, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
-	
+
 		//--------------------------------------------------------------------------
 		// set the minimum laser distance, when signal comes from Gui
 		//--------------------------------------------------------------------------
@@ -388,13 +388,13 @@ void Direcs::init()
 		// let the GUI show servo messages in the log
 		//--------------------------------------------------------------------------
 		connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-	
+
 		//-------------------------------------------------------------------------------------
 		// disable face detection in the GUI, on error with loading haar cascade in CamThread
 		// Must be before readSettings!
 		//-------------------------------------------------------------------------------------
 		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() ));
-	
+
 		//-------------------------------------------------------------------------------------
 		// disable camera controls in the GUI, on error opeing the camera in the CamThread
 		// Must be before readSettings!
@@ -989,13 +989,13 @@ void Direcs::shutdown()
 			//-----------------------------------------
 			if (settingsDialog->isVisible())
 				settingsDialog->hide();
-			
+
 			if (joystickDialog->isVisible())
 				joystickDialog->hide();
-			
+
 			if (aboutDialog->isVisible())
 				aboutDialog->hide();
-			
+
 			splash->show();
 			emit splashMessage("Shutting down...");
 		}
@@ -1017,13 +1017,13 @@ void Direcs::shutdown()
 			{
 				inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
 			}
-	
-	
+
+
 			if (settingsDialog->getCheckBoxSaveSettings() == Qt::Checked)
 			{
 				emit message("Writing settings...");
 				emit splashMessage("Writing settings...");
-	
+
 				// save gui slider values
 				inifile1->writeSetting("Config", "motor1Speed", settingsDialog->getSliderMotorSpeed(1));
 				inifile1->writeSetting("Config", "motor2Speed", settingsDialog->getSliderMotorSpeed(2));
@@ -1033,18 +1033,18 @@ void Direcs::shutdown()
 				inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", settingsDialog->getSliderObstacleLaserScannerValue());
 				inifile1->writeSetting("Config", "robotSlot", settingsDialog->getSliderRobotSlotValue());
 				inifile1->writeSetting("Config", "straightForwardDeviation", settingsDialog->getSliderStraightForwardDeviationValue());
-	
+
 				// save check box status
 				inifile1->writeSetting("Config", "saveOnExit", settingsDialog->getCheckBoxSaveSettings());
-	
+
 				// Later...
 				//
 				//noHardwareErrorMessages
 				//exitDialog
-	
+
 				// force writing *immediately*
 				inifile1->sync();
-	
+
 				emit message("Settings written.");
 			}
 		}
@@ -1071,7 +1071,7 @@ void Direcs::shutdown()
 			// TODO: ask for exit on console!
 		}
 
-		
+
 		emit message("STOPPING drive!");
 		drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
 
@@ -1086,14 +1086,14 @@ void Direcs::shutdown()
 			{
 				emit message("Stopping camera thread...");
 				emit splashMessage("Stopping camera thread...");
-	
+
 				// my own stop routine :-)
 				camThread->stop();
-	
+
 				// slowing thread down
 				camThread->setPriority(QThread::IdlePriority);
 				camThread->quit();
-	
+
 				//-------------------------------------------
 				// start measuring time for timeout ckecking
 				//-------------------------------------------
@@ -1102,7 +1102,7 @@ void Direcs::shutdown()
 				do
 				{
 				} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
-	
+
 				if (camThread->isFinished() == true)
 				{
 					emit message("Camera thread stopped.");
@@ -1319,7 +1319,7 @@ void Direcs::shutdown()
 			}
 		}
 
-		
+
 #ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
@@ -1330,14 +1330,14 @@ void Direcs::shutdown()
 			{
 				emit message("Stopping Plot thread...");
 				emit splashMessage("Stopping Plot thread...");
-	
+
 				// my own stop routine :-)
 				plotThread->stop();
-	
+
 				// slowing thread down
 				plotThread->setPriority(QThread::IdlePriority);
 				plotThread->quit();
-	
+
 				//-------------------------------------------
 				// start measuring time for timeout ckecking
 				//-------------------------------------------
@@ -1346,7 +1346,7 @@ void Direcs::shutdown()
 				do
 				{
 				} while ((plotThread->isFinished() == false) && (t.elapsed() <= 2000));
-	
+
 				if (plotThread->isFinished() == true)
 				{
 					emit message("Plot thread stopped.");
@@ -1475,15 +1475,15 @@ void Direcs::shutdown()
 	{
 		if (settingsDialog->isVisible())
 			settingsDialog->close();
-		
+
 		if (joystickDialog->isVisible())
 			joystickDialog->close();
-		
+
 		if (aboutDialog->isVisible())
 			aboutDialog->close();
 	}
 
-	
+
 	if (consoleMode)
 	{
 		// In the gui mode the quit is done automatically by the close signal.
@@ -1531,9 +1531,9 @@ Direcs::~Direcs()
 		delete joystickDialog;
 		delete settingsDialog;
 	}
-	
+
 	qDebug("Bye.");
-	
+
 	if (consoleMode)
 	{
 		delete consoleGui;
@@ -1581,7 +1581,7 @@ void Direcs::showSplashMessage(QString text)
 	else
 	{
 		QByteArray textForConsole;
-	
+
 		//------------------------------
 		// remove HTML tags from string
 		//------------------------------
@@ -1590,14 +1590,14 @@ void Direcs::showSplashMessage(QString text)
 		{
 			// search for the first HTML "<"
 			start = text.indexOf("<");
-	
+
 			if (start != 1)
 			{
 				text.remove(start, text.indexOf(">") + 1 - start );
 			}
 		} while (text.contains(">"));
 		// till the last HTML ">" is found
-	
+
 		// print text to console
 		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
 		textForConsole = text.toLatin1();
@@ -1810,14 +1810,14 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 	if (!consoleMode)
 	{
 		Q_UNUSED (faces) // not in use, at the moment
-	
+
 		// TODO: put values to consts or ini
 		int xLevelRight = (camThread->imageWidth()  / 2) + faceRadius;
 		int xLevelLeft  = (camThread->imageWidth()  / 2) - faceRadius;
 		int yLevelUp    = (camThread->imageHeight() / 2) - faceRadius;
 		int yLevelDown  = (camThread->imageHeight() / 2) + faceRadius;
-	
-	
+
+
 		// track nowhere (face is in the middle) or faceRadius is 0 -> no faces detected
 		if (
 				(faceRadius==0) || ((faceX > xLevelLeft) && ((faceX < xLevelRight)) && (faceY > yLevelUp) && (faceY < yLevelDown) ) ||
@@ -1827,7 +1827,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			//head->look("FORWARD");
 			//head->look("NORMAL");
 			emit showFaceTrackDirection("NONE");
-	
+
 			if (faceTrackingIsEnabled)
 			{
 				/*
@@ -1837,12 +1837,12 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			}
 			return;
 		}
-	
-	
+
+
 		// face detected :-)
 		//head->look("CURIOUS");
-	
-	
+
+
 		// track left
 		if ( (faceX < xLevelLeft) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 		{
@@ -1857,7 +1857,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			emit showFaceTrackDirection("LEFT");
 			return;
 		}
-	
+
 		// track right
 		if ( (faceX > xLevelRight) && (faceY > yLevelUp) && (faceY < yLevelDown) )
 		{
@@ -1872,7 +1872,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			emit showFaceTrackDirection("RIGHT");
 			return;
 		}
-	
+
 		// track up
 		if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY < yLevelUp) )
 		{
@@ -1887,7 +1887,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			emit showFaceTrackDirection("UP");
 			return;
 		}
-	
+
 		// track up left
 		if ( (faceX < xLevelLeft) && (faceY < yLevelUp) )
 		{
@@ -1902,7 +1902,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			emit showFaceTrackDirection("UPLEFT");
 			return;
 		}
-	
+
 		// track up right
 		if ( (faceX > xLevelLeft) && (faceY < yLevelUp) )
 		{
@@ -1917,7 +1917,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			emit showFaceTrackDirection("UPRIGHT");
 			return;
 		}
-	
+
 		// track down
 		if ( (faceX > xLevelLeft) && (faceX < xLevelRight) && (faceY > yLevelDown) )
 		{
@@ -1932,7 +1932,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			emit showFaceTrackDirection("DOWN");
 			return;
 		}
-	
+
 		// track down left
 		if ( (faceX < xLevelLeft) && (faceY > yLevelDown) )
 		{
@@ -1947,7 +1947,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			emit showFaceTrackDirection("DOWNLEFT");
 			return;
 		}
-	
+
 		// track down right
 		if ( (faceX > xLevelRight) && (faceY > yLevelDown) )
 		{
@@ -1983,7 +1983,7 @@ void Direcs::showSensorData()
 		gui->showDistanceGraphical(SENSOR7, sensorThread->getDistance(SENSOR7));
 		gui->showDistanceGraphical(SENSOR8, sensorThread->getDistance(SENSOR8));
 		gui->showDistanceGraphical(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
-	
+
 		//-------------------------------------------------------
 		// show distance value in a text label (in centimeters!)
 		//-------------------------------------------------------
@@ -1997,13 +1997,13 @@ void Direcs::showSensorData()
 		gui->showDistance(SENSOR8, sensorThread->getDistance(SENSOR8));
 		gui->showDistance(SENSOR16, sensorThread->getUsSensorValue(SENSOR16));
 		*/
-	
+
 		//--------------------------------------------------------------
 		// show driven distance value in a text label (in centimeters!)
 		//--------------------------------------------------------------
 		gui->showDrivenDistance( MOTORSENSOR1, sensorThread->getDrivenDistance(MOTORSENSOR1) );
 		gui->showDrivenDistance( MOTORSENSOR2, sensorThread->getDrivenDistance(MOTORSENSOR2) );
-	
+
 		//-------------------------------------------------------
 		// show voltage value in a text label
 		//-------------------------------------------------------
@@ -2018,10 +2018,10 @@ void Direcs::showSensorData()
 	//-------------------------------------------------------
 	// TODO: is this the best place for the following lines?
 	static bool marker=false; // TODO: do this with a timer or something, for repeating it
-	
+
 	if (sensorThread->getVoltage(VOLTAGESENSOR1) < MINIMUMVOLTAGE1)
 	{
-		
+
 		if (!marker)
 		{
 			marker = true;
@@ -2033,10 +2033,10 @@ void Direcs::showSensorData()
 	{
 		marker = false;
 	}
-	
+
 	if (sensorThread->getVoltage(VOLTAGESENSOR2) < MINIMUMVOLTAGE2)
 	{
-		
+
 		if (!marker)
 		{
 			marker = true;
@@ -2055,17 +2055,17 @@ void Direcs::showSensorData()
 void Direcs::drive(const unsigned char command)
 {
 	static unsigned char lastCommand = 255;
-	
-	
+
+
 	// if its the same command, do nothing
 	if (command == lastCommand)
 	{
 		return;
 	}
-	
+
 	// store the current command
 	lastCommand = command;
-	
+
 	switch (command)
 	{
 		case FORWARD:
@@ -2188,15 +2188,15 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
 			}
-			
+/*	FIXME: to much data over serial port?!?
 			motors->setMotorSpeed(MOTOR1, 0); // TODO: check if this works
 			motors->setMotorSpeed(MOTOR2, 0); // TODO: check if this works
 			motors->setMotorSpeed(MOTOR3, 0); // TODO: check if this works
 			motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
-			
+
 			resetDrivingSpeedTimer();
 			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER); // TODO: put that to a slider in the config menu / file.   TODO 2: make this speed increaser optional!
-			
+*/
 			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			motors->motorControl(MOTOR2, ON, CLOCKWISE);
@@ -2208,7 +2208,9 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case WAIT:
 			emit message("WAIT");
+/*	FIXME: to much data over serial port?!?
 			resetDrivingSpeedTimer();
+*/
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
@@ -2222,9 +2224,9 @@ void Direcs::drive(const unsigned char command)
 			motors->motorControl(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
 			motors->motorControl(MOTOR4, OFF, SAME);
- 			*/
- 			motors->motorControl(ALLMOTORS, SAME, command);
-			
+			*/
+			motors->motorControl(ALLMOTORS, SAME, command);
+
 			//
 			// Don't stop the motThread (PWM)!
 			// Only switching motors off!
@@ -2233,7 +2235,9 @@ void Direcs::drive(const unsigned char command)
 			break;
 		case STOP:
 			emit message("STOP");
+/*	FIXME: to much data over serial port?!?
 			resetDrivingSpeedTimer();
+*/
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
@@ -2386,7 +2390,7 @@ void Direcs::increaseDrivingSpeed(void)
 	{
 		endSpeedMotor1Reached = true;
 	}
-	
+
 	currentSpeed2 = motors->getMotorSpeed(MOTOR2);
 	if (currentSpeed2 < maximumSpeed)
 	{
@@ -2398,7 +2402,7 @@ void Direcs::increaseDrivingSpeed(void)
 	{
 		endSpeedMotor2Reached = true;
 	}
-	
+
 	currentSpeed3 = motors->getMotorSpeed(MOTOR3);
 	if (currentSpeed3 < maximumSpeed)
 	{
@@ -2410,7 +2414,7 @@ void Direcs::increaseDrivingSpeed(void)
 	{
 		endSpeedMotor3Reached = true;
 	}
-	
+
 	currentSpeed4 = motors->getMotorSpeed(MOTOR4);
 	if (currentSpeed4 < maximumSpeed)
 	{
@@ -2422,7 +2426,7 @@ void Direcs::increaseDrivingSpeed(void)
 	{
 		endSpeedMotor4Reached = true;
 	}
-	
+
 	// all motors at their end speed? // TODO: check if end speed is refreshed in this class, when changed via gui!!
 	if (endSpeedMotor1Reached && endSpeedMotor2Reached && endSpeedMotor3Reached && endSpeedMotor4Reached)
 	{
@@ -2439,7 +2443,7 @@ void Direcs::readSettings()
 	//---------------------------------------------------------------------
 	emit message("Reading settings...");
 
-	
+
 	//---------------------------------------------------------------------
 	// read setting
 	switch (inifile1->readSetting("Config", "writeLogFile"))
@@ -2746,26 +2750,26 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-    switch (inifile1->readSetting("Config", "useCamera"))
+	switch (inifile1->readSetting("Config", "useCamera"))
 	{
 		case -2:
 			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			break;
 		case -1:
-            emit message("<font color=\"#FF0000\">Value \"useCamera\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"useCamera\"not found in ini-file!</font>");
 			break;
 		case 0:
-            useCamera = false;
+			useCamera = false;
 			if (!consoleMode)
 			{
 				// turning "off" camera
 				camThread->setCameraDevice(-2);
 				gui->disableCamera();
 			}
-            emit message("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
-            break;
+			emit message("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
+			break;
 		case 1:
-            useCamera = true;
+			useCamera = true;
 			break;
 	}
 
@@ -2776,7 +2780,7 @@ void Direcs::readSettings()
 			//---------------------------------------------------------------------
 			// read setting
 			int cameraDevice = inifile1->readSetting("Config", "cameraDevice");
-	
+
 			if (cameraDevice == -2)
 			{
 				camThread->setCameraDevice(-2);
@@ -2796,14 +2800,14 @@ void Direcs::readSettings()
 					//
 					// set it in the cam thread
 					camThread->setCameraDevice(cameraDevice);
-	
+
 					emit message(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
-	
-	
+
+
 					//---------------------------------------------------------------------
 					// read setting
 					QString haarClassifierCascade = inifile1->readString("Config", "haarClassifierCascade");
-	
+
 					if (haarClassifierCascade == "error2")
 					{
 						camThread->setCascadePath("none");
@@ -2825,7 +2829,7 @@ void Direcs::readSettings()
 							camThread->setCascadePath(haarClassifierCascade);
 							emit message(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
 							emit splashMessage("Initialising camera...");
-	
+
 							// initialise the cam
 							if (camThread->init())
 							{
@@ -2924,7 +2928,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderObstacleValue(minObstacleDistance);
 			}
-			
+
 			// tell the  obstacle check thread the distance
 			obstCheckThread->setMinObstacleDistance(minObstacleDistance);
 			// show text
@@ -2950,7 +2954,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner);
 			}
-			
+
 			// tell it the obstacle check thread
 			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
 			// show text
@@ -2976,7 +2980,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderRobotSlot(robotSlot);
 			}
-			
+
 			// tell it the obstacle check thread
 			obstCheckThread->setRobotSlot(robotSlot);
 			// show text
@@ -3028,7 +3032,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderStraightForwardDeviation(straightForwardDeviation);
 			}
-			
+
 			// tell it the obstacle check thread
 			obstCheckThread->setStraightForwardDeviation(straightForwardDeviation);
 			// show text
@@ -3087,7 +3091,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(1, mot1Speed);
 			}
-			
+
 			// show text
 			emit message(QString("Motor1 speed set to <b>%1</b>.").arg(mot1Speed));
 			break;
@@ -3119,7 +3123,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(2, mot2Speed);
 			}
-			
+
 			// show text
 			emit message(QString("Motor2 speed set to <b>%1</b>.").arg(mot2Speed));
 			break;
@@ -3151,7 +3155,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(3, mot3Speed);
 			}
-			
+
 			// show text
 			emit message(QString("Motor3 speed set to <b>%1</b>.").arg(mot3Speed));
 			break;
@@ -3183,7 +3187,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderMotorSpeed(4, mot4Speed);
 			}
-			
+
 			// show text
 			emit message(QString("Motor4 speed set to <b>%1</b>.").arg(mot4Speed));
 			break;
@@ -3215,7 +3219,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderMinimumSpeed(minimumSpeed);
 			}
-			
+
 			// show text
 			emit message(QString("Minimum speed speed set to <b>%1</b>.").arg(minimumSpeed));
 			break;
@@ -3247,7 +3251,7 @@ void Direcs::readSettings()
 				// set slider to the read value
 				settingsDialog->setSliderMaximumSpeed(maximumSpeed);
 			}
-			
+
 			// show text
 			emit message(QString("Maximum speed speed set to <b>%1</b>.").arg(maximumSpeed));
 			break;
@@ -3540,12 +3544,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(1) + 1;
 			motors->setMotorSpeed(1, newSpeed);
-			
+
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(1, newSpeed);
 			}
-			
+
 			return;
 		}
 
@@ -3556,12 +3560,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(2) + 1;
 			motors->setMotorSpeed(2, newSpeed);
-			
+
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(2, newSpeed);
 			}
-			
+
 			return;
 		}
 
@@ -3572,12 +3576,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(1) - 1;
 			motors->setMotorSpeed(1, newSpeed);
-			
+
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(1, newSpeed);
 			}
-			
+
 			return;
 		}
 
@@ -3588,12 +3592,12 @@ void Direcs::executeRemoteCommand(QString command)
 
 			int newSpeed = motors->getMotorSpeed(2) - 1;
 			motors->setMotorSpeed(2, newSpeed);
-			
+
 			if (!consoleMode)
 			{
 				settingsDialog->setSliderMotorSpeed(2, newSpeed);
 			}
-			
+
 			return;
 		}
 
@@ -3628,7 +3632,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				//
 				// DRIVE backward
 				//
-				
+
 				if (!consoleMode)
 				{
 					//speed = (axisValue / JOYSTICKDIVISOR);
@@ -4377,20 +4381,20 @@ void Direcs::test()
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
- 		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 #endif
 	}
 	else
 	{
 		toggle = OFF;
 		emit sendNetworkString("OFF");
-		
+
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		speakThread->setLanguage("de");
 		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
- 		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
 #endif
 	}
 		//head->look("RIGHT");
