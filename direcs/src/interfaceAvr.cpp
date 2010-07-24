@@ -49,7 +49,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 		emit message(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(comPort));
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-		
+
 		return false;
 	}
 
@@ -96,7 +96,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 // 		}
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -113,10 +113,10 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 	if (result != 1)
 	{
 		// ERROR
-		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );
+		// emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );  < error message already emitted from readAtmelPort!
 		return false;
 	}
-	
+
 	// emit emitMessage( QString("Received '%1'.").arg(result) ); // this makes the program to slow and than to crash!!
 	return true;
 }
@@ -168,7 +168,7 @@ bool InterfaceAvr::receiveInt(int *value)
 		return false;
 	}
 
-	
+
 	// build the int value
 	// (add the LS-Byte to the MS-Byte)
 	*value = (intValue + character);
