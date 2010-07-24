@@ -523,6 +523,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 
 	while (nChars > 0)
 	{
+/*
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
 		t.tv_sec = 2;
 		t.tv_usec = READ_TIMEOUT_ATMEL;
@@ -538,12 +539,10 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
 		}
-
+*/
 		// read from the serial device
 		amountRead = read(mDev_fd, buf, nChars);
 
-if (amountRead<=0)
-qDebug("amountRead=%d", amountRead);
 
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
