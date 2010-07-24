@@ -327,8 +327,8 @@ class Direcs : public QObject
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
-		QString typeLaserscannerFront; // PLS, LMS, S300. just for reading the value here. @sa laserThread
-		QString typeLaserscannerRear;  // PLS, LMS, S300. just for reading the value here. @sa laserThread
+		QString laserscannerTypeFront; // PLS, LMS, S300. just for reading the value here. @sa laserThread
+		QString laserscannerTypeRear;  // PLS, LMS, S300. just for reading the value here. @sa laserThread
 		int laserscannerAngleFront; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
 		int laserscannerAngleRear; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
 		QString laserscannerMounting; // just for reading the value here. @sa laserThread
