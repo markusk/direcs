@@ -497,7 +497,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 
 	if (n < 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR %1 writing to serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when writing to serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 //		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
@@ -523,7 +523,6 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 
 	while (nChars > 0)
 	{
-/*
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
 		t.tv_sec = 2;
 		t.tv_usec = READ_TIMEOUT_ATMEL;
@@ -539,7 +538,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
 		}
-*/
+
 		// read from the serial device
 		amountRead = read(mDev_fd, buf, nChars);
 
