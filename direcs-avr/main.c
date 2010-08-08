@@ -73,6 +73,9 @@ int main(void)
 	// yelow LED off
 	yellowLED(OFF);
 
+	// green LED off
+	greenLED(OFF);
+
 	// flashlight off
 	PORTC |= (1<<PIN0);
 	// yelow LED off (low active -> turn bit high!)
@@ -674,12 +677,12 @@ int main(void)
 			case FLASHLIGHT_ON:
 				// set flashlight bit
 				PORTC |= (1<<PIN1);
-				PORTC &= ~(1<<PIN0); // < yellow led
+				yellowLED(ON);
 				break;
 			case FLASHLIGHT_OFF:
 				// delete flashlight bit
 				PORTC &= ~(1<<PIN1);
-				PORTC |= (1<<PIN0); // < yellow led
+				yellowLED(OFF);
 				break;
 
 			//-------------------------------
@@ -756,7 +759,6 @@ void redLED(uint8_t state)
 		// (low active!)
 		PORTD |= (1<<PIN5);
 	}
-
 }
 
 
@@ -773,6 +775,23 @@ void yellowLED(uint8_t state)
 		// yellow LED off
 		// (low active!)
 		PORTC |= (1<<PIN0);
+	}
+}
+
+
+void greenLED(uint8_t state)
+{
+	if (state == ON)
+	{
+		// green LED on
+		// (low active!)
+		PORTC &= ~(1<<PIN4);
+	}
+	else
+	{
+		// green LED off
+		// (low active!)
+		PORTC |= (1<<PIN4);
 	}
 }
 

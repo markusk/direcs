@@ -131,6 +131,7 @@ int main(void);
 
 void redLED(uint8_t state);
 void yellowLED(uint8_t state);
+void greenLED(uint8_t state);
 
 
 #endif
