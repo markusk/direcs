@@ -1,4 +1,5 @@
 #include "usart.h"
+#include "main.h"
 
 
 void UsartInit(void)
@@ -39,6 +40,17 @@ unsigned char UsartReceive(void)
 	while(!(UCSR3A & (1<<RXC3)))
 	{
 		// TODO: what is with timeout?
+		
+		
+		// check if USB is connected and turn green LED on or off
+		if (bit_is_set(PINE, PIN5))
+		{
+			greenLED(ON);
+		}
+		else
+		{
+			greenLED(OFF);
+		}
 	}
 	
 	return UDR3;

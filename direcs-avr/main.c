@@ -201,6 +201,7 @@ int main(void)
 		//-----------------------------------------
 		value = UsartReceive();
 		
+		
 		// toggling the red LED on and off with every received serial commmand
 		if (redLEDtoggle == 0)
 		{
@@ -214,6 +215,7 @@ int main(void)
 		// switch LED
 		redLED(redLEDtoggle);
 
+		
 		switch (value)
 		{
 			case INIT:
