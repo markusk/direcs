@@ -2,7 +2,7 @@
 #define ULTRA_H
 
 #include <avr/io.h>
-#include <avr/delay.h>
+#include <util/delay.h>
 
 
 uint16_t ultraschall_messung(void);

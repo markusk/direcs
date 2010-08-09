@@ -33,7 +33,7 @@
 
 #include <avr/io.h>
 #include <string.h>
-#include <avr/delay.h>
+#include <util/delay.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
