@@ -77,7 +77,7 @@ int main(void)
 	greenLED(OFF);
 
 	// flashlight off
-	PORTC |= (1<<PIN0);
+	relais(OFF);
 	// yelow LED off (low active -> turn bit high!)
 	PORTC &= ~(1<<PIN1);
 
@@ -229,7 +229,7 @@ int main(void)
 				PORTD &= ~(1<<PIN6);
 				PORTD &= ~(1<<PIN7);
 				// flashlight off
-				PORTC &= ~(1<<PIN1);
+				relais(OFF);
 				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
 				redLED(OFF);
 				
@@ -677,13 +677,11 @@ int main(void)
 
 			//-------------------------------
 			case FLASHLIGHT_ON:
-				// set flashlight bit
-				PORTC |= (1<<PIN1);
+				relais(ON);
 				yellowLED(ON);
 				break;
 			case FLASHLIGHT_OFF:
-				// delete flashlight bit
-				PORTC &= ~(1<<PIN1);
+				relais(OFF);
 				yellowLED(OFF);
 				break;
 
@@ -795,6 +793,28 @@ void greenLED(uint8_t state)
 		// (low active!)
 		PORTC |= (1<<PIN4);
 	}
+}
+
+
+void relais(uint8_t state)
+{
+/*
+ 
+ TURNED OFF DUE TO timeout ERRORS AT SELECT() STATEMENT AT readAtmelPort at direcs::direcsSerial() !!
+ 
+	if (state == ON)
+	{
+		// relais on
+		// (low active!)
+		PORTC &= ~(1<<PIN1);
+	}
+	else
+	{
+		// relais off
+		// (low active!)
+		PORTC |= (1<<PIN1);
+	}
+ */
 }
 
 
