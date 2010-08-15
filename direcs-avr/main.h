@@ -107,7 +107,7 @@
 
 #include <avr/io.h>
 #include <inttypes.h>
-#include <avr/interrupt.h>
+#include <avr/interrupt.h> // @sa /usr/local/CrossPack-AVR/avr/include/avr/iom2560.h and -> iomxx0_1.h for Atmega2560
 #include <stdlib.h> // für utoa und itoa
 #include <util/delay.h>
 

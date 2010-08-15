@@ -36,7 +36,7 @@ It also gives read/write access to this data.
 */
 class SensorThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		SensorThread(InterfaceAvr *i, QMutex *m);
@@ -137,7 +137,7 @@ class SensorThread : public QThread
 		@sa Gui::simulate()
 		*/
 		void setSimulationMode(bool state);
-		
+
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
 		When the class knows this, unnecessary communication with the interface can be avoided.
@@ -163,7 +163,7 @@ class SensorThread : public QThread
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
-		
+
 		/**
 		This signal is emitted when all compass values were read.
 		@param x is the x axis value
@@ -173,7 +173,7 @@ class SensorThread : public QThread
 		@sa Direcs::showCompassData() SensorThread::calculateHeading()
 		*/
 		void compassDataComplete(float x, float y, float z, float heading);
-		
+
 		/**
 		This signal is emitted every TODO: seconds, when a specific value from the microcontroller was received.
 		@sa Gui::setLEDHeartbeat()
@@ -189,7 +189,7 @@ class SensorThread : public QThread
 		@return The given value in degrees (0 to 360).
 		*/
 		float convertToDegree(int sensorValue);
-		
+
 		/**
 		Translates the x and y data from the 3D compass into a single orientation reading.
 		*/
@@ -229,34 +229,34 @@ class SensorThread : public QThread
 		@return true on success, false on error
 		*/
 		bool readMotorSensor(short int sensor);
-		
+
 		/**
 		Reads a driven distance value from the microcontroller
 		@param sensor is the sensor number (MOTORDISTANCE1 to MOTORDISTANCE2)
 		@return true on success, false on error
 		*/
 		bool readDrivenDistance(short int sensor);
-		
+
 		/**
 		Reads an axis value from the 3D compass from the microcontroller
 		@param axis is the axis number (XAXIS, YAXIS or ZAXIS)
 		@return true on success, false on error
 		*/
 		bool readCompassAxis(short int axis);
-		
+
 		/**
 		Reads a contact value from the microcontroller (end contacts, when puhsing something or so)
 		@param contact is the contact number (CONTACT1 to CONTACT4)
 		@return true on success, false on error
 		*/
 		bool readContact(short int contact);
-		
+
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
-	
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 500; // Default: 100 ms
@@ -306,7 +306,7 @@ class SensorThread : public QThread
 		*/
 		static const unsigned char USSENSORARRAYSIZE = 1;
 		int usSensorValue[USSENSORARRAYSIZE];
-		
+
 		static const short int ULTRASONICSENSOR1 = 0;
 
 		/**
@@ -349,7 +349,7 @@ class SensorThread : public QThread
 		float yAxis;
 		float zAxis;
 		float heading;
-		
+
 		static const short int XAXIS = 0;
 		static const short int YAXIS = 1;
 		static const short int ZAXIS = 2;
@@ -404,7 +404,7 @@ class SensorThread : public QThread
 		static const unsigned char READ_CONTACT2 = 71;
 		static const unsigned char READ_CONTACT3 = 72;
 		static const unsigned char READ_CONTACT4 = 73;
-		
+
 		/**
 		This is for the @sa heartbeat signal (the GUI LED colors)
 		*/

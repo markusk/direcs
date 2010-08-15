@@ -300,7 +300,7 @@ int main(void)
 				UsartTransmit( (uint8_t)(value) );
 				break;
 
-			case READ_SENSOR_7:
+			case READ_SENSOR_7: // voltage 12 V
 				// read value from the analog digital converter (ADC)
 				value = readADC(SENSOR7);
 				// send MS-Byte
@@ -309,7 +309,7 @@ int main(void)
 				UsartTransmit( (uint8_t)(value) );
 				break;
 
-			case READ_SENSOR_8:
+			case READ_SENSOR_8: // voltage 24V
 				// read value from the analog digital converter (ADC)
 				value = readADC(SENSOR8);
 				// send MS-Byte
@@ -799,7 +799,7 @@ void greenLED(uint8_t state)
 
 
 /*
-SIGNAL(PCINT1_vect)
+SIGNAL(PCINT1_vect) // todo: replace this old SIGNAL by ISR with correct _vect name!!
 {
 	//
 	// The circumference of one wheel is 428 mm (42,8 cm).
@@ -861,7 +861,7 @@ SIGNAL(PCINT1_vect)
 }
 */
 /*
-SIGNAL(PCINT2_vect)
+SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect name!!
 {
 	//----------------------------
 	// if Cam Pan L switch set
