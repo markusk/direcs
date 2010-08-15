@@ -1168,6 +1168,8 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 bool SensorThread::readVoltageSensor(short int sensor)
 {
 	int value = 0;
+//	unsigned char cValue = 0;
+
 
 	switch (sensor)
 	{
@@ -1177,19 +1179,21 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			{
 				// receive the 16 Bit answer from the MC
 				if (interface1->receiveInt(&value) == false)
+//				if (interface1->receiveChar(&cValue) == false)
 				{
 					voltageSensorValue[VOLTAGESENSOR1] = 0;
-					qDebug("ERROR reading voltage sensor 1");
+					//qDebug("ERROR reading voltage sensor 1");
 					return false;
 				}
 
 				// store measured value
 				voltageSensorValue[VOLTAGESENSOR1] = value;
+//				voltageSensorValue[VOLTAGESENSOR1] = (int) cValue;
 				return true;
 			}
 			else
 			{
-				qDebug("ERROR reading voltage sensor 1");
+				//qDebug("ERROR reading voltage sensor 1");
 				return false;
 			}
 			break;
@@ -1199,19 +1203,21 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			{
 				// receive the 16 Bit answer from the MC
 				if (interface1->receiveInt(&value) == false)
+//				if (interface1->receiveChar(&cValue) == false)
 				{
 					voltageSensorValue[VOLTAGESENSOR2] = 0;
-					qDebug("ERROR reading voltage sensor 2");
+					//qDebug("ERROR reading voltage sensor 2");
 					return false;
 				}
 
 				// store measured value
 				voltageSensorValue[VOLTAGESENSOR2] = value;
+//				voltageSensorValue[VOLTAGESENSOR2] = (int) cValue;
 				return true;
 			}
 			else
 			{
-				qDebug("ERROR reading voltage sensor 2");
+				//qDebug("ERROR reading voltage sensor 2");
 				return false;
 			}
 			break;
