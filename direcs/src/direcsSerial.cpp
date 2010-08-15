@@ -524,7 +524,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	while (nChars > 0)
 	{
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
-		t.tv_sec = 2;
+		t.tv_sec = 0;
 		t.tv_usec = READ_TIMEOUT_ATMEL;
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
