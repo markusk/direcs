@@ -953,7 +953,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR1] = 0;
-					qDebug("ERROR reading infrared sensor 1");
+					//qDebug("ERROR reading infrared sensor 1");
 					return false;
 				}
 
@@ -963,7 +963,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 1");
+				//qDebug("ERROR reading infrared sensor 1");
 				return false;
 			}
 			break;
@@ -975,7 +975,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR2] = 0;
-					qDebug("ERROR reading infrared sensor 2");
+					//qDebug("ERROR reading infrared sensor 2");
 					return false;
 				}
 
@@ -985,7 +985,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 2");
+				//qDebug("ERROR reading infrared sensor 2");
 				return false;
 			}
 			break;
@@ -997,7 +997,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR3] = 0;
-					qDebug("ERROR reading infrared sensor 3");
+					//qDebug("ERROR reading infrared sensor 3");
 					return false;
 				}
 
@@ -1007,7 +1007,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 3");
+				//qDebug("ERROR reading infrared sensor 3");
 				return false;
 			}
 			break;
@@ -1019,7 +1019,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR4] = 0;
-					qDebug("ERROR reading infrared sensor 4");
+					//qDebug("ERROR reading infrared sensor 4");
 					return false;
 				}
 
@@ -1029,7 +1029,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 4");
+				//qDebug("ERROR reading infrared sensor 4");
 				return false;
 			}
 			break;
@@ -1041,7 +1041,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR5] = 0;
-					qDebug("ERROR reading infrared sensor 5");
+					//qDebug("ERROR reading infrared sensor 5");
 					return false;
 				}
 
@@ -1051,7 +1051,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 5");
+				//qDebug("ERROR reading infrared sensor 5");
 				return false;
 			}
 			break;
@@ -1063,7 +1063,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR6] = 0;
-					qDebug("ERROR reading infrared sensor 6");
+					//qDebug("ERROR reading infrared sensor 6");
 					return false;
 				}
 
@@ -1073,7 +1073,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 6");
+				//qDebug("ERROR reading infrared sensor 6");
 				return false;
 			}
 			break;
@@ -1085,7 +1085,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR7] = 0;
-					qDebug("ERROR reading infrared sensor 7");
+					//qDebug("ERROR reading infrared sensor 7");
 					return false;
 				}
 
@@ -1095,7 +1095,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 7");
+				//qDebug("ERROR reading infrared sensor 7");
 				return false;
 			}
 			break;
@@ -1107,7 +1107,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					iRSensorValue[SENSOR8] = 0;
-					qDebug("ERROR reading infrared sensor 8");
+					//qDebug("ERROR reading infrared sensor 8");
 					return false;
 				}
 
@@ -1117,7 +1117,7 @@ bool SensorThread::readInfraredSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading infrared sensor 8");
+				//qDebug("ERROR reading infrared sensor 8");
 				return false;
 			}
 			break;
@@ -1143,7 +1143,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					usSensorValue[ULTRASONICSENSOR1] = 0;
-					qDebug("ERROR reading ultrasonic sensor 1");
+					//qDebug("ERROR reading ultrasonic sensor 1");
 					return false;
 				}
 
@@ -1153,7 +1153,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading ultrasonic sensor 1");
+				//qDebug("ERROR reading ultrasonic sensor 1");
 				return false;
 			}
 			break;
@@ -1243,7 +1243,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					voltageSensorValue[MOTORSENSOR1] = 0;
-					qDebug("ERROR reading motor sensor 1");
+					//qDebug("ERROR reading motor sensor 1");
 					return false;
 				}
 
@@ -1253,7 +1253,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading motor sensor 1");
+				//qDebug("ERROR reading motor sensor 1");
 				return false;
 			}
 			break;
@@ -1265,7 +1265,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					voltageSensorValue[MOTORSENSOR2] = 0;
-					qDebug("ERROR reading motor sensor 2");
+					//qDebug("ERROR reading motor sensor 2");
 					return false;
 				}
 
@@ -1275,7 +1275,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading motor sensor 2");
+				//qDebug("ERROR reading motor sensor 2");
 				return false;
 			}
 			break;
@@ -1322,7 +1322,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading motor sensor 4");
+				//qDebug("ERROR reading motor sensor 4");
 				return false;
 			}
 			*/
@@ -1349,7 +1349,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					drivenDistance[MOTORDISTANCE1] = 0;
-					qDebug("ERROR reading driven distance 1");
+					//qDebug("ERROR reading driven distance 1");
 					return false;
 				}
 
@@ -1359,7 +1359,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading driven distance 1");
+				//qDebug("ERROR reading driven distance 1");
 				return false;
 			}
 			break;
@@ -1371,7 +1371,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 				if (interface1->receiveInt(&value) == false)
 				{
 					drivenDistance[MOTORDISTANCE2] = 0;
-					qDebug("ERROR reading driven distance 2");
+					//qDebug("ERROR reading driven distance 2");
 					return false;
 				}
 
@@ -1381,7 +1381,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 			}
 			else
 			{
-				qDebug("ERROR reading driven distance 2");
+				//qDebug("ERROR reading driven distance 2");
 				return false;
 			}
 			break;
@@ -1407,7 +1407,7 @@ bool SensorThread::readCompassAxis(short int axis)
 				if (interface1->receiveInt(&value) == false)
 				{
 					xAxis = 0;
-					qDebug("ERROR reading x axis");
+					//qDebug("ERROR reading x axis");
 					return false;
 				}
 
@@ -1418,7 +1418,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			}
 			else
 			{
-				qDebug("ERROR reading x axis");
+				//qDebug("ERROR reading x axis");
 				return false;
 			}
 			break;
@@ -1430,7 +1430,7 @@ bool SensorThread::readCompassAxis(short int axis)
 				if (interface1->receiveInt(&value) == false)
 				{
 					yAxis = 0;
-					qDebug("ERROR reading y axis");
+					//qDebug("ERROR reading y axis");
 					return false;
 				}
 
@@ -1441,7 +1441,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			}
 			else
 			{
-				qDebug("ERROR reading y axis");
+				//qDebug("ERROR reading y axis");
 				return false;
 			}
 			break;
@@ -1453,7 +1453,7 @@ bool SensorThread::readCompassAxis(short int axis)
 				if (interface1->receiveInt(&value) == false)
 				{
 					zAxis = 0;
-					qDebug("ERROR reading z axis");
+					//qDebug("ERROR reading z axis");
 					return false;
 				}
 
@@ -1464,7 +1464,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			}
 			else
 			{
-				qDebug("ERROR reading z axis");
+				//qDebug("ERROR reading z axis");
 				return false;
 			}
 			break;
@@ -1490,7 +1490,7 @@ bool SensorThread::readContact(short int contact)
 				if (interface1->receiveInt(&value) == false)
 				{
 					contactValue[CONTACT1] = 0;
-					qDebug("ERROR reading contact");
+					//qDebug("ERROR reading contact");
 					return false;
 				}
 
@@ -1499,7 +1499,7 @@ bool SensorThread::readContact(short int contact)
 			}
 			else
 			{
-				qDebug("ERROR reading contact");
+				//qDebug("ERROR reading contact");
 				return false;
 			}
 			break;
@@ -1511,7 +1511,7 @@ bool SensorThread::readContact(short int contact)
 				if (interface1->receiveInt(&value) == false)
 				{
 					contactValue[CONTACT2] = 0;
-					qDebug("ERROR reading contact");
+					//qDebug("ERROR reading contact");
 					return false;
 				}
 
@@ -1520,7 +1520,7 @@ bool SensorThread::readContact(short int contact)
 			}
 			else
 			{
-				qDebug("ERROR reading contact");
+				//qDebug("ERROR reading contact");
 				return false;
 			}
 			break;
@@ -1532,7 +1532,7 @@ bool SensorThread::readContact(short int contact)
 				if (interface1->receiveInt(&value) == false)
 				{
 					contactValue[CONTACT3] = 0;
-					qDebug("ERROR reading contact");
+					//qDebug("ERROR reading contact");
 					return false;
 				}
 
@@ -1541,7 +1541,7 @@ bool SensorThread::readContact(short int contact)
 			}
 			else
 			{
-				qDebug("ERROR reading contact");
+				//qDebug("ERROR reading contact");
 				return false;
 			}
 			break;
@@ -1553,7 +1553,7 @@ bool SensorThread::readContact(short int contact)
 				if (interface1->receiveInt(&value) == false)
 				{
 					contactValue[CONTACT4] = 0;
-					qDebug("ERROR reading contact");
+					//qDebug("ERROR reading contact");
 					return false;
 				}
 
@@ -1562,7 +1562,7 @@ bool SensorThread::readContact(short int contact)
 			}
 			else
 			{
-				qDebug("ERROR reading contact");
+				//qDebug("ERROR reading contact");
 				return false;
 			}
 			break;
