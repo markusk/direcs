@@ -32,7 +32,6 @@ int main(void)
 
     char stringbuffer[64];  // Allgemeiner Puffer für Strings
     uint8_t buffer_full=0;  // noch ein Flag, aber nur in der Hauptschleife
-    char * charpointer;     // Hilfszeiger
 	//-----------------------------------------------------
 	//-----------------------------------------------------
 
@@ -242,10 +241,6 @@ int main(void)
 			strcat(stringbuffer, "\n\r");           
 			put_string(stringbuffer); // zurücksenden
 			buffer_full=0; // Buffer ist wieder verfügbar
-			// Alle Zeichen per LED morsen
-			charpointer = stringbuffer;
-
-			while(*charpointer) morse(*charpointer++);
 		}
     }
 
@@ -1013,27 +1008,4 @@ SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 void long_delay(uint16_t ms)
 {
     for (; ms>0; ms--) _delay_ms(1);
-}
-
-
-void morse(uint8_t data)
-{
-	uint8_t i;
-	
-	// Startbit, immer 0
-	redLED(OFF);                    // LED aus
-	long_delay(BITZEIT);
-	
-	for(i=0; i<8; i++)
-	{
-		if (data & 0x01)            // Prüfe Bit #0
-			redLED(ON);             // LED an
-		else
-			redLED(OFF);            // LED aus
-		long_delay(BITZEIT);        
-		data >>= 1;                 // nächstes Bit auf Bit #0 schieben
-	}
-	// Stopbit, immer 1
-	redLED(ON);                     // LED an
-	long_delay(BITZEIT);
 }

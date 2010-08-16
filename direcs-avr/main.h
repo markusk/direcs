@@ -137,7 +137,4 @@ void relais(uint8_t state);
 // lange, variable Wartezeit, Einheit in Millisekunden
 void long_delay(uint16_t ms);
 
-// Ein Byte im RS232 Format auf eine LED ausgeben
-void morse(uint8_t data);
-
 #endif
