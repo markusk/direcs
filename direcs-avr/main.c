@@ -29,6 +29,10 @@ int main(void)
 	//-----------------------------------------------------
 	uart_rx_flag = 0;	// Flag, String komplett empfangen
 	uart_tx_flag = 1;	// Flag, String komplett gesendet
+
+    char stringbuffer[64];  // Allgemeiner Puffer für Strings
+    uint8_t buffer_full=0;  // noch ein Flag, aber nur in der Hauptschleife
+    char * charpointer;     // Hilfszeiger
 	//-----------------------------------------------------
 	//-----------------------------------------------------
 
@@ -157,11 +161,6 @@ int main(void)
 	PRR0 &= ~(1<<PRSPI);
 	init_spi();
 
-	//----------------------------------------------------------------------------
-	// enable global interrupts
-	//----------------------------------------------------------------------------
-	sei();
-
 	// initialize the PWM timer (with compare value 100)  [this is the motor speed!]
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 100 * 64 µs = 6400 µs = 6,4 ms
@@ -196,6 +195,61 @@ int main(void)
 // 	startPWMServo(5);
 // 	startPWMServo(6);
 
+
+	//-----------------------------------------------------
+	//-----------------------------------------------------
+
+	// UART 3 konfigurieren
+	UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
+	UBRR3L = (unsigned char) USART_BAUD_SELECT;
+	UCSR3B = (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
+
+	// Stringpuffer initialisieren
+	stringbuffer[0] = '\n';
+	stringbuffer[1] = '\r';
+ 
+	//----------------------------------------------------------------------------
+	// enable global interrupts
+	//----------------------------------------------------------------------------
+	sei();
+	
+	// Endlose Hauptschleife
+	while(1)
+	{
+		
+		// "Sinnvolle" CPU Tätigkeit 
+		PORTD &= ~(1<<PD5);
+		long_delay(300);
+		PORTD |= (1<<PD5);
+		long_delay(300);
+		
+		// Wurde ein kompletter String empfangen 
+		// und der Buffer ist leer?
+		if (uart_rx_flag==1 && buffer_full==0) {    
+			// ja, dann String lesen, 
+			// die ersten zwei Zeichen 
+			// aber nicht überschreiben
+			get_string(stringbuffer+2);             
+			buffer_full=1;
+		}
+		
+		// Ist letzte Stringsendung abgeschlossen 
+		// und ein neuer String verfügbar?
+		if (uart_tx_flag==1 && buffer_full==1) {    
+			// Newline + Carrige return anfügen
+			strcat(stringbuffer, "\n\r");           
+			put_string(stringbuffer); // zurücksenden
+			buffer_full=0; // Buffer ist wieder verfügbar
+			// Alle Zeichen per LED morsen
+			charpointer = stringbuffer;
+			while(*charpointer) morse(*charpointer++);
+		}
+    }
+
+	//-----------------------------------------------------
+	//-----------------------------------------------------
+
+/*
 	// initialize USART (serial port)
 	UsartInit();
 
@@ -745,7 +799,7 @@ int main(void)
 				break;
 		}
 	} // while (1)
-
+*/
 
 	// this line is never reached!
 	return 0;
