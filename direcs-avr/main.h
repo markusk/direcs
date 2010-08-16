@@ -131,5 +131,8 @@ void greenLED(uint8_t state);
 
 void relais(uint8_t state);
 
+// lange, variable Wartezeit, Einheit in Millisekunden
+void long_delay(uint16_t ms);
+
 
 #endif
