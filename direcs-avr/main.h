@@ -104,6 +104,9 @@
 #define OFF						0
 #define ON						1
 
+// "Morsedauer" für ein Bit in Millisekunden
+#define BITZEIT 100     
+
 
 #include <avr/io.h>
 #include <inttypes.h>
@@ -134,5 +137,7 @@ void relais(uint8_t state);
 // lange, variable Wartezeit, Einheit in Millisekunden
 void long_delay(uint16_t ms);
 
+// Ein Byte im RS232 Format auf eine LED ausgeben
+void morse(uint8_t data);
 
 #endif
