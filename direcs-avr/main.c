@@ -105,17 +105,17 @@ int main(void)
 	// motor 4
 	PORTD &= ~(1<<PIN6);
 	PORTD &= ~(1<<PIN7);
-
+/*
 	// turn OFF "power saving mode" for ADC (analof digital converters)!
 	// (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
-
+*/
 	//-------------------------------------------------------------
 	// no interrupts please!
 	// this is *here* for setting the interrupt control registers
 	//-------------------------------------------------------------
 	cli();
-
+/*
 	
 	// switch some bits on port J to input
 	//
@@ -194,7 +194,7 @@ int main(void)
 // 	startPWMServo(4);
 // 	startPWMServo(5);
 // 	startPWMServo(6);
-
+*/
 
 	//-----------------------------------------------------
 	//-----------------------------------------------------
@@ -202,7 +202,7 @@ int main(void)
 	// UART 3 konfigurieren
 	UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
 	UBRR3L = (unsigned char) USART_BAUD_SELECT;
-	UCSR3B = (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
+	UCSR3B |= (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
 
 	// Stringpuffer initialisieren
 	stringbuffer[0] = '\n';
@@ -218,14 +218,15 @@ int main(void)
 	{
 		
 		// "Sinnvolle" CPU Tätigkeit 
-		PORTD &= ~(1<<PD5);
+		redLED(ON);
 		long_delay(300);
-		PORTD |= (1<<PD5);
+		redLED(OFF);
 		long_delay(300);
 		
 		// Wurde ein kompletter String empfangen 
 		// und der Buffer ist leer?
-		if (uart_rx_flag==1 && buffer_full==0) {    
+		if (uart_rx_flag==1 && buffer_full==0)
+		{
 			// ja, dann String lesen, 
 			// die ersten zwei Zeichen 
 			// aber nicht überschreiben
@@ -235,13 +236,15 @@ int main(void)
 		
 		// Ist letzte Stringsendung abgeschlossen 
 		// und ein neuer String verfügbar?
-		if (uart_tx_flag==1 && buffer_full==1) {    
+		if (uart_tx_flag==1 && buffer_full==1)
+		{
 			// Newline + Carrige return anfügen
 			strcat(stringbuffer, "\n\r");           
 			put_string(stringbuffer); // zurücksenden
 			buffer_full=0; // Buffer ist wieder verfügbar
 			// Alle Zeichen per LED morsen
 			charpointer = stringbuffer;
+
 			while(*charpointer) morse(*charpointer++);
 		}
     }
@@ -1015,21 +1018,22 @@ void long_delay(uint16_t ms)
 
 void morse(uint8_t data)
 {
-    uint8_t i;
- 
-    // Startbit, immer 0
-    PORTD &= ~(1 << PD5);           // LED aus
-    long_delay(BITZEIT);
- 
-    for(i=0; i<8; i++) {
-        if (data & 0x01)            // Prüfe Bit #0
-            redLED(ON);             // LED an
-        else
-            redLED(OFF);            // LED aus
-        long_delay(BITZEIT);        
-        data >>= 1;                 // nächstes Bit auf Bit #0 schieben
-    }
-    // Stopbit, immer 1
-    redLED(ON);                     // LED an
-    long_delay(BITZEIT);
+	uint8_t i;
+	
+	// Startbit, immer 0
+	redLED(OFF);                    // LED aus
+	long_delay(BITZEIT);
+	
+	for(i=0; i<8; i++)
+	{
+		if (data & 0x01)            // Prüfe Bit #0
+			redLED(ON);             // LED an
+		else
+			redLED(OFF);            // LED aus
+		long_delay(BITZEIT);        
+		data >>= 1;                 // nächstes Bit auf Bit #0 schieben
+	}
+	// Stopbit, immer 1
+	redLED(ON);                     // LED an
+	long_delay(BITZEIT);
 }

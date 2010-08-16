@@ -108,13 +108,13 @@ void get_string(char *daten)
 // hier werden Daten vom PC empfangen und in einem String zwischengespeichert
 // Wird ein Stringterminator empfangen, wird ein Flag gesetzt, welches dem 
 // Hauptprogramm den kompletten Empfang signalisiert
-ISR(USART3_RXC_vect)
+ISR(USART3_RX_vect)
 {
     static uint8_t uart_rx_cnt;     // Zähler für empfangene Zeichen
     uint8_t data;
  
     // Daten auslesen, dadurch wird das Interruptflag gelöscht              
-    data = UDRE3;
+    data = UDR3;
     
     // Ist Puffer frei für neue Daten?
     if (!uart_rx_flag)
@@ -159,5 +159,8 @@ ISR(USART3_UDRE_vect)
         uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
         uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
     }
-    else UDR3 = data;               // nein, Daten senden
+    else
+    {
+    	UDR3 = data;               // nein, Daten senden
+    }
 }
