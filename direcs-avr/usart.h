@@ -16,6 +16,9 @@
 
 #include <avr/io.h>
 
+// beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
+// volatile uint8_t wert;
+
 
 	 void UsartInit(void);
 	 void UsartTransmit(uint16_t c);

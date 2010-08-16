@@ -4,12 +4,19 @@
 
 void UsartInit(void)
 {
+	// no interrupts please!  this is *here* for setting the interrupt control registers.
+//	cli();
+	
 	// Enable UART 3
 	//
 	// RXCIE: cause interrupt when a character is received from the UART
-	UCSR3B |= /*(1 << RXCIE3) |*/ (1 << RXEN3) | (1 << TXEN3);
+	UCSR3B |= /*(1 << RXCIE3) | */(1 << RXEN3) | (1 << TXEN3);
+
 	// TXCIE: cause interrupt when a character is sent from the UART
-	/*UCSR3B &= ~(1 << TXCIE3);*/
+	// UCSR3B &= ~(1 << TXCIE3);
+
+	// enable global interrupts
+//	sei();
 	
 	UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
 	UBRR3L = (unsigned char) USART_BAUD_SELECT;
@@ -41,7 +48,6 @@ unsigned char UsartReceive(void)
 	{
 		// TODO: what is with timeout?
 		
-		
 		// check if USB is connected and turn green LED on or off
 		if (bit_is_set(PINE, PIN5))
 		{
@@ -55,3 +61,17 @@ unsigned char UsartReceive(void)
 	
 	return UDR3;
 }
+
+/*
+ISR(USART3_UDRE_vect)
+{
+	// UART RX 3 complete interrupt
+	// this reoutine is executed, when the Receive Complete Interrupt Enable (RXCIE3) is set.
+	//
+	// all available data have must be read. Otherwise a new interrupt occur oce this interrupt routine is left!
+
+
+	// Daten auslesen, dadurch wird das Interruptflag gelöscht
+	uart_rx_data = UDRE3;
+}
+*/
