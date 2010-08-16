@@ -75,3 +75,17 @@ ISR(USART3_UDRE_vect)
 	uart_rx_data = UDRE3;
 }
 */
+
+
+void put_string(char *daten)
+{
+	if (uart_tx_flag == 1)
+	{
+		// String daten ind en Sendepuffer kopieren
+		strcpy(uart_tx_buffer, daten);      
+		// Flag für 'Senden ist komplett' löschen, 
+		uart_tx_flag = 0;                    
+		// UDRE Interrupt einschalten, los gehts
+		UCSR3B |= (1<<UDRIE3); 
+   }
+}

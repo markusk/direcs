@@ -15,15 +15,31 @@
 
 
 #include <avr/io.h>
+#include <string.h>
 
+
+// Puffergrösse in Bytes, RX und TX sind gleich gross
+#define uart_buffer_size 32
+
+// some global variables for ISR routines
 // beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
-// volatile uint8_t wert;
+volatile uint8_t uart_rx_flag; // Flag, String komplett empfangen
+volatile uint8_t uart_tx_flag; // Flag, String komplett gesendet
+char uart_rx_buffer[uart_buffer_size]; // Empfangspuffer
+char uart_tx_buffer[uart_buffer_size]; // Sendepuffer
 
 
 	 void UsartInit(void);
 	 void UsartTransmit(uint16_t c);
 	 void UsartTransmitString(unsigned char *string);
 unsigned char UsartReceive(void);
+
+
+// einen String senden
+// vor Aufruf der Funktion muss man prüfen, ob uart_t_flag==1 ist
+// nur dann kann ein neuer String gesendet werden
+void put_string(char *daten);
+
 
 
 #endif

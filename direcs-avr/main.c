@@ -24,6 +24,15 @@ uint16_t rightDistanceCounter = 0;
 
 int main(void)
 {
+	//-----------------------------------------------------
+	// new usart test
+	//-----------------------------------------------------
+	uart_rx_flag = 0;	// Flag, String komplett empfangen
+	uart_tx_flag = 1;	// Flag, String komplett gesendet
+	//-----------------------------------------------------
+	//-----------------------------------------------------
+
+	
 	uint8_t redLEDtoggle = 0;
 	// stores the serial received command
 	uint16_t value = 0;
