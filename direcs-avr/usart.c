@@ -102,3 +102,39 @@ void get_string(char *daten)
       uart_rx_flag = 0;                    
    }
 }
+
+
+// UART RX complete interrupt
+// hier werden Daten vom PC empfangen und in einem String zwischengespeichert
+// Wird ein Stringterminator empfangen, wird ein Flag gesetzt, welches dem 
+// Hauptprogramm den kompletten Empfang signalisiert
+ISR(USART3_RXC_vect)
+{
+    static uint8_t uart_rx_cnt;     // Zähler für empfangene Zeichen
+    uint8_t data;
+ 
+    // Daten auslesen, dadurch wird das Interruptflag gelöscht              
+    data = UDRE3;
+    
+    // Ist Puffer frei für neue Daten?
+    if (!uart_rx_flag)
+    {
+        // ja, ist Ende des Strings (RETURN) erreicht?
+        if (data=='\r')
+        {
+            // ja, dann String terminieren
+            uart_rx_buffer[uart_rx_cnt]=0;
+            // Flag für 'Empfangspuffer voll' setzen
+            uart_rx_flag=1;
+            // Zähler zurücksetzen
+            uart_rx_cnt=0;
+        }
+        else if (uart_rx_cnt<(uart_buffer_size-1))
+        {     
+            // Daten in Puffer speichern
+            // aber durch if() Pufferüberlauf vermeiden
+            uart_rx_buffer[uart_rx_cnt]=data;
+            uart_rx_cnt++; // Zähler erhöhen
+        }
+    }
+}
