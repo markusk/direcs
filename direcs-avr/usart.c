@@ -138,3 +138,26 @@ ISR(USART3_RXC_vect)
         }
     }
 }
+
+
+// UART TX data register empty interrupt
+// hier werden neue Daten in das UART-Senderegister geladen
+ISR(USART3_UDRE_vect)
+{
+    // Zeiger auf Sendepuffer
+    static char* uart_tx_p = uart_tx_buffer;
+    uint8_t data;
+ 
+    // zu sendendes Zeichen lesen,
+    // Zeiger auf Sendepuffer erhöhen
+    data = *uart_tx_p++;
+    
+    // Ende des nullterminierten Strings erreicht?
+    if (data==0 )
+    {
+        UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
+        uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
+        uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
+    }
+    else UDR3 = data;               // nein, Daten senden
+}
