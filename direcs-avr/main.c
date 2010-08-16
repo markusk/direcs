@@ -78,8 +78,6 @@ int main(void)
 
 	// flashlight off
 	relais(OFF);
-	// yelow LED off (low active -> turn bit high!)
-	PORTC &= ~(1<<PIN1);
 
 	// turn all drive motor bits off (except PWM bits)
 	// motor 1
