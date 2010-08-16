@@ -41,5 +41,10 @@ unsigned char UsartReceive(void);
 void put_string(char *daten);
 
 
+// einen empfangenen String kopieren
+// vor Aufruf der Funktion muss man prüfen, ob uart_rx_flag==1 ist
+// anderenfalls ist der RX Buffer noch ungültig
+void get_string(char *daten);
+
 
 #endif

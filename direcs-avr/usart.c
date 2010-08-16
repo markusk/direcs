@@ -89,3 +89,16 @@ void put_string(char *daten)
 		UCSR3B |= (1<<UDRIE3); 
    }
 }
+
+
+void get_string(char *daten)
+{
+ 
+   if (uart_rx_flag==1)
+   {
+      // String kopieren
+      strcpy(daten, uart_rx_buffer);      
+      // Flag löschen
+      uart_rx_flag = 0;                    
+   }
+}
