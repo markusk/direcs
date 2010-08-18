@@ -25,6 +25,7 @@
 // beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
 volatile uint8_t uart_rx_flag; // Flag, String komplett empfangen
 volatile uint8_t uart_tx_flag; // Flag, String komplett gesendet
+
 char uart_rx_buffer[uart_buffer_size]; // Empfangspuffer
 char uart_tx_buffer[uart_buffer_size]; // Sendepuffer
 

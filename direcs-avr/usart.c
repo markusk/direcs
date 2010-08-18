@@ -161,7 +161,6 @@ ISR(USART3_UDRE_vect)
     // Zeiger auf Sendepuffer
     static char* uart_tx_p = uart_tx_buffer;
     uint8_t data;
-//    static uint8_t uart_tx_cnt = 0;     // Zähler für gesendete Zeichen (Pufferüberlaufschutz)
  
     // zu sendendes Zeichen lesen,
     // Zeiger auf Sendepuffer erhöhen
@@ -169,17 +168,14 @@ ISR(USART3_UDRE_vect)
     
     // Ende des nullterminierten Strings erreicht?
     // oder maxim. Anzahl Zeichen gesendet (zuvor war Pufferüberlauf)
-//    if ( (data == 0) || (uart_tx_cnt >= uart_buffer_size-1) )
     if (data == 0)
     {
         UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
         uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
         uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
-//    	uart_tx_cnt = 0;			// Zähler zurücksetzen
     }
     else
     {
     	UDR3 = data;                // nein, Daten senden
-//    	uart_tx_cnt++;				// Zähler erhöhen
     }
 }
