@@ -30,17 +30,12 @@ int main(void)
 	uart_rx_flag = 0;	// Flag, String komplett empfangen
 	uart_tx_flag = 1;	// Flag, String komplett gesendet
 
+	// stores the serial received command
     char stringbuffer[64];  // Allgemeiner Puffer für Strings
-    uint8_t buffer_full=0;  // noch ein Flag, aber nur in der Hauptschleife
 
 	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
 	//-----------------------------------------------------
 	//-----------------------------------------------------
-
-	
-//	uint8_t redLEDtoggle = 0;
-	// stores the serial received command
-	uint16_t value = 0;
 
 	leftWheelCounter = 0;
 	rightWheelCounter = 0;
@@ -207,8 +202,8 @@ int main(void)
 	UCSR3B |= (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
 
 	// Stringpuffer initialisieren
-	stringbuffer[0] = '\n';
-	stringbuffer[1] = '\r';
+//	stringbuffer[0] = '\n';
+//	stringbuffer[1] = '\r';
  
 	//----------------------------------------------------------------------------
 	// enable global interrupts
@@ -227,15 +222,45 @@ int main(void)
 		
 		// Wurde ein kompletter String empfangen 
 		// und der Buffer ist leer?
-		if (uart_rx_flag==1 && buffer_full==0)
+		if (uart_rx_flag == 1)
 		{
 			// ja, dann String lesen, 
 			// die ersten zwei Zeichen 
 			// aber nicht überschreiben
-			get_string(stringbuffer+2);             
-			buffer_full=1;
+			get_string(stringbuffer);
+
 		}
+
 		
+		if (strcmp(stringbuffer, "@") == 0)
+		{
+			// turn all drive motor bits off (except PWM bits)
+			PORTL &= ~(1<<PIN0);
+			PORTL &= ~(1<<PIN1);
+			PORTL &= ~(1<<PIN2);
+			PORTL &= ~(1<<PIN3);
+			PORTL &= ~(1<<PIN6);
+			PORTL &= ~(1<<PIN7);
+			PORTD &= ~(1<<PIN6);
+			PORTD &= ~(1<<PIN7);
+			// flashlight off
+			relais(OFF);
+			// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+			redLED(OFF);
+			
+			// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+			// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+			// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+			// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+			// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+			// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+			
+			// "answer" with "@" [Ascii Dezimal @ = 64]
+			// this answer is used to see if the robot is "on"
+//	to do:	UsartTransmit( (uint8_t)(64) );
+		}
+
+/*
 		// Ist letzte Stringsendung abgeschlossen 
 		// und ein neuer String verfügbar?
 		if (uart_tx_flag==1 && buffer_full==1)
@@ -245,6 +270,7 @@ int main(void)
 			put_string(stringbuffer); // zurücksenden
 			buffer_full=0; // Buffer ist wieder verfügbar
 		}
+*/
     }
 
 	//-----------------------------------------------------
