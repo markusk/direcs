@@ -32,11 +32,13 @@ int main(void)
 
     char stringbuffer[64];  // Allgemeiner Puffer für Strings
     uint8_t buffer_full=0;  // noch ein Flag, aber nur in der Hauptschleife
+
+	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
 	//-----------------------------------------------------
 	//-----------------------------------------------------
 
 	
-	uint8_t redLEDtoggle = 0;
+//	uint8_t redLEDtoggle = 0;
 	// stores the serial received command
 	uint16_t value = 0;
 
@@ -218,10 +220,10 @@ int main(void)
 	{
 		
 		// "Sinnvolle" CPU Tätigkeit 
-		redLED(ON);
-		long_delay(100);
-		redLED(OFF);
-		long_delay(100);
+//		redLED(ON);
+//		long_delay(100);
+//		redLED(OFF);
+//		long_delay(100);
 		
 		// Wurde ein kompletter String empfangen 
 		// und der Buffer ist leer?

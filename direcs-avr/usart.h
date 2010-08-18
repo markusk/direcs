@@ -16,6 +16,7 @@
 
 #include <avr/io.h>
 #include <string.h>
+#include "main.h" // for LED methods
 
 
 // Puffergrösse in Bytes, RX und TX sind gleich gross
@@ -28,6 +29,8 @@ volatile uint8_t uart_tx_flag; // Flag, String komplett gesendet
 
 char uart_rx_buffer[uart_buffer_size]; // Empfangspuffer
 char uart_tx_buffer[uart_buffer_size]; // Sendepuffer
+
+volatile uint8_t redLEDtoggle;
 
 
 	 void UsartInit(void);

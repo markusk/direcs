@@ -93,14 +93,14 @@ void put_string(char *daten)
 
 void get_string(char *daten)
 {
- 
-   if (uart_rx_flag==1)
-   {
-      // String kopieren
-      strcpy(daten, uart_rx_buffer);      
-      // Flag löschen
-      uart_rx_flag = 0;                    
-   }
+	if (uart_rx_flag==1)
+	{
+		// String kopieren
+		strcpy(daten, uart_rx_buffer);      
+		// Flag löschen
+		uart_rx_flag = 0;                    
+		redLED(OFF);
+	}
 }
 
 
@@ -114,11 +114,24 @@ ISR(USART3_RX_vect)
     uint8_t data;
 
  
- 	// Pufferüberlauf-Anzeige
-	//greenLED(OFF);
     // Daten auslesen, dadurch wird das Interruptflag gelöscht              
     data = UDR3;
-    
+ 
+	// toggling the red LED on and off with every received serial commmand
+	if (redLEDtoggle == 0)
+	{
+		redLEDtoggle = 1;
+	}
+	else
+	{
+		redLEDtoggle = 0;
+	}
+	
+	redLED(redLEDtoggle);
+
+ 	// Pufferüberlauf-Anzeige
+	//greenLED(OFF);
+ 
     // Ist Puffer frei für neue Daten?
     if (!uart_rx_flag)
     {
