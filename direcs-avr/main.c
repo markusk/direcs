@@ -219,9 +219,9 @@ int main(void)
 		
 		// "Sinnvolle" CPU Tätigkeit 
 		redLED(ON);
-		long_delay(500);
+		long_delay(100);
 		redLED(OFF);
-		long_delay(500);
+		long_delay(100);
 		
 		// Wurde ein kompletter String empfangen 
 		// und der Buffer ist leer?
