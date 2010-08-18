@@ -201,6 +201,7 @@ int main(void)
 	// UART 3 konfigurieren
 	UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
 	UBRR3L = (unsigned char) USART_BAUD_SELECT;
+	// enable UART3 and Interrupts for RX and TX
 	UCSR3B |= (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
 
 	// Stringpuffer initialisieren

@@ -120,7 +120,7 @@ ISR(USART3_RX_vect)
     if (!uart_rx_flag)
     {
         // ja, ist Ende des Strings (RETURN) erreicht?
-        if (data=='\r')
+        if  (data=='\r')
         {
             // ja, dann String terminieren
             uart_rx_buffer[uart_rx_cnt]=0;
@@ -129,13 +129,27 @@ ISR(USART3_RX_vect)
             // Zähler zurücksetzen
             uart_rx_cnt=0;
         }
-        else if (uart_rx_cnt<(uart_buffer_size-1))
-        {     
-            // Daten in Puffer speichern
-            // aber durch if() Pufferüberlauf vermeiden
-            uart_rx_buffer[uart_rx_cnt]=data;
-            uart_rx_cnt++; // Zähler erhöhen
-        }
+        else
+        {
+			if (uart_rx_cnt < (uart_buffer_size-1))
+			{     
+				// Daten in Puffer speichern
+				// aber durch if() Pufferüberlauf vermeiden
+				uart_rx_buffer[uart_rx_cnt] = data;
+				uart_rx_cnt++; // Zähler erhöhen
+			}
+			else
+			{
+				// Puffer ist vollgelaufen !
+				//
+				// ja, dann String terminieren
+				uart_rx_buffer[uart_rx_cnt - 1] = 0;
+	            // Flag für 'Empfangspuffer voll' setzen
+	            uart_rx_flag = 1;
+	            // Zähler zurücksetzen
+	            uart_rx_cnt = 0;
+			}
+		}
     }
 }
 
@@ -147,20 +161,25 @@ ISR(USART3_UDRE_vect)
     // Zeiger auf Sendepuffer
     static char* uart_tx_p = uart_tx_buffer;
     uint8_t data;
+//    static uint8_t uart_tx_cnt = 0;     // Zähler für gesendete Zeichen (Pufferüberlaufschutz)
  
     // zu sendendes Zeichen lesen,
     // Zeiger auf Sendepuffer erhöhen
     data = *uart_tx_p++;
     
     // Ende des nullterminierten Strings erreicht?
-    if (data==0 )
+    // oder maxim. Anzahl Zeichen gesendet (zuvor war Pufferüberlauf)
+//    if ( (data == 0) || (uart_tx_cnt >= uart_buffer_size-1) )
+    if (data == 0)
     {
         UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
         uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
         uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
+//    	uart_tx_cnt = 0;			// Zähler zurücksetzen
     }
     else
     {
-    	UDR3 = data;               // nein, Daten senden
+    	UDR3 = data;                // nein, Daten senden
+//    	uart_tx_cnt++;				// Zähler erhöhen
     }
 }
