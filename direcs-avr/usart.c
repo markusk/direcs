@@ -112,7 +112,10 @@ ISR(USART3_RX_vect)
 {
     static uint8_t uart_rx_cnt;     // Zähler für empfangene Zeichen
     uint8_t data;
+
  
+ 	// Pufferüberlauf-Anzeige
+	//greenLED(OFF);
     // Daten auslesen, dadurch wird das Interruptflag gelöscht              
     data = UDR3;
     
@@ -142,6 +145,8 @@ ISR(USART3_RX_vect)
 			{
 				// Puffer ist vollgelaufen !
 				//
+			 	// Pufferüberlauf-Anzeige
+				// greenLED(ON);
 				// ja, dann String terminieren
 				uart_rx_buffer[uart_rx_cnt - 1] = 0;
 	            // Flag für 'Empfangspuffer voll' setzen
@@ -158,24 +163,24 @@ ISR(USART3_RX_vect)
 // hier werden neue Daten in das UART-Senderegister geladen
 ISR(USART3_UDRE_vect)
 {
-    // Zeiger auf Sendepuffer
-    static char* uart_tx_p = uart_tx_buffer;
-    uint8_t data;
- 
-    // zu sendendes Zeichen lesen,
-    // Zeiger auf Sendepuffer erhöhen
-    data = *uart_tx_p++;
-    
-    // Ende des nullterminierten Strings erreicht?
-    // oder maxim. Anzahl Zeichen gesendet (zuvor war Pufferüberlauf)
-    if (data == 0)
-    {
-        UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
-        uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
-        uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
-    }
-    else
-    {
-    	UDR3 = data;                // nein, Daten senden
-    }
+	// Zeiger auf Sendepuffer
+	static char* uart_tx_p = uart_tx_buffer;
+	uint8_t data;
+	
+	// zu sendendes Zeichen lesen,
+	// Zeiger auf Sendepuffer erhöhen
+	data = *uart_tx_p++;
+	
+	// Ende des nullterminierten Strings erreicht?
+	if (data == 0)
+	{
+		UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
+		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
+		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
+		uart_rx_flag = 0;           // Flag löschen, bereit für nächsten Empfang!
+	}
+	else
+	{
+		UDR3 = data;                // nein, Daten senden
+	}
 }
