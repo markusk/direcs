@@ -255,9 +255,9 @@ int main(void)
 			// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
 			// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 			
-			// "answer" with "@" [Ascii Dezimal @ = 64]
+			// answer with "ok"
 			// this answer is used to see if the robot is "on"
-//	to do:	UsartTransmit( (uint8_t)(64) );
+			put_string("ok\0");
 		}
 
 /*
