@@ -214,19 +214,10 @@ int main(void)
 	while(1)
 	{
 		
-		// "Sinnvolle" CPU Tätigkeit 
-//		redLED(ON);
-//		long_delay(100);
-//		redLED(OFF);
-//		long_delay(100);
-		
-		// Wurde ein kompletter String empfangen 
-		// und der Buffer ist leer?
+		// Wurde ein kompletter String empfangen und ist der Buffer ist leer?
 		if (uart_rx_flag == 1)
 		{
-			// ja, dann String lesen, 
-			// die ersten zwei Zeichen 
-			// aber nicht überschreiben
+			// ja, dann String lesen 
 			get_string(stringbuffer);
 
 		}
@@ -258,6 +249,8 @@ int main(void)
 			// answer with "ok"
 			// this answer is used to see if the robot is "on"
 			put_string("ok\0");
+			// empty stringbuffer
+			strcpy(stringbuffer, "");
 		}
 
 /*
