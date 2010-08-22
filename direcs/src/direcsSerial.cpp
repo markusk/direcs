@@ -594,6 +594,23 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
+int DirecsSerial::readAtmelString(QString *string)
+{
+	unsigned char buffer;
+	int bytesread = 0;
+
+
+	while (bytesread == 0)
+	{
+		// read one char
+		bytesread = readAtmelPort(buffer, 1);
+	}
+
+
+	return bytesread;
+}
+
+
 
 int DirecsSerial::closeAtmelPort()
 {

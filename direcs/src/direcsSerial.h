@@ -151,11 +151,21 @@ class DirecsSerial : public QObject
 		Reads data from the serial line
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
 
-		@param *buf Pointer to unsiged char buffer for the data to be written
+		@param *buf Pointer to unsigned char buffer for the data to be read.
 		@param nChars Number of bytes to be written (<= size of the buffer array).
 		@return The number of bytes read.
 		 */
 		int readAtmelPort(unsigned char *buf, int nChars);
+
+
+		/**
+		Reads a string from the serial line. String has to be terminated with "\0".
+		This method is only used for the Atmel serial port!
+
+		@param *string is a pointer to a QString which will contain the string read.
+		@return The number of bytes read.
+		 */
+		int readAtmelString(QString *string);
 
 
 		/**
