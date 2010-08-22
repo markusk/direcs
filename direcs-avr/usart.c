@@ -116,6 +116,8 @@ ISR(USART3_RX_vect)
  
     // Daten auslesen, dadurch wird das Interruptflag gelöscht              
     data = UDR3;
+
+	greenLED(OFF);
  
 	// toggling the red LED on and off with every received serial commmand
 	if (redLEDtoggle == 0)
@@ -180,6 +182,21 @@ ISR(USART3_UDRE_vect)
 	static char* uart_tx_p = uart_tx_buffer;
 	uint8_t data;
 	
+
+/* 
+	// toggling the red LED on and off with every received serial commmand
+	if (greenLEDtoggle == 0)
+	{
+		greenLEDtoggle = 1;
+	}
+	else
+	{
+		greenLEDtoggle = 0;
+	}
+	
+	greenLED(greenLEDtoggle);
+*/
+
 	// zu sendendes Zeichen lesen,
 	// Zeiger auf Sendepuffer erhöhen
 	data = *uart_tx_p++;
@@ -191,9 +208,11 @@ ISR(USART3_UDRE_vect)
 		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
 		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
 		uart_rx_flag = 0;           // Flag löschen, bereit für nächsten Empfang!
+//		greenLED(ON);
 	}
 	else
 	{
+		greenLED(ON);
 		UDR3 = data;                // nein, Daten senden
 	}
 }

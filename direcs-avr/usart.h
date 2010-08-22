@@ -31,6 +31,7 @@ char uart_rx_buffer[uart_buffer_size]; // Empfangspuffer
 char uart_tx_buffer[uart_buffer_size]; // Sendepuffer
 
 volatile uint8_t redLEDtoggle;
+volatile uint8_t greenLEDtoggle;
 
 
 	 void UsartInit(void);
