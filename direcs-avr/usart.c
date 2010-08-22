@@ -77,6 +77,15 @@ ISR(USART3_UDRE_vect)
 */
 
 
+void setStarter(uint8_t startr)
+{
+//	static uint8_t initDone = 0;
+	
+	// this terminates a string with a '#'
+	starter = startr;
+}
+
+
 void setTerminator(uint8_t termi)
 {
 //	static uint8_t initDone = 0;

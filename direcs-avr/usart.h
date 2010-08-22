@@ -27,6 +27,7 @@
 volatile uint8_t uart_rx_flag; // Flag, String komplett empfangen
 volatile uint8_t uart_tx_flag; // Flag, String komplett gesendet
 
+volatile uint8_t starter;    // this marks the beginning of a received string. which is '*' at the moment.
 volatile uint8_t terminator; // this marks the end of a string. which is '#' at the moment.
 
 char uart_rx_buffer[uart_buffer_size]; // Empfangspuffer
@@ -42,7 +43,9 @@ volatile uint8_t greenLEDtoggle;
 unsigned char UsartReceive(void);
 
 
-// set terminator
+// set string starter
+void setStarter(uint8_t startr);
+// set string terminator
 void setTerminator(uint8_t termi);
 
 

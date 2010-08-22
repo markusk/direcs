@@ -29,6 +29,7 @@ int main(void)
 	//-----------------------------------------------------
 	uart_rx_flag = 0;	// Flag, String komplett empfangen
 	uart_tx_flag = 1;	// Flag, String komplett gesendet
+	setStarter(42);    //42 = '*'
 	setTerminator(35); //35 = '#'
 
 	// stores the serial received command
