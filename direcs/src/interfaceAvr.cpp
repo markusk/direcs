@@ -124,25 +124,31 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 bool InterfaceAvr::receiveString(QString *string)
 {
-	unsigned char *character;
+	unsigned char character;
 	int result = 0;
 
 
 	do
 	{
+		qDebug("readAtmelPort...");
 		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readAtmelPort(character, 1);
+		result = serialPort->readAtmelPort(&character, 1);
 
-		// append received char to string
-		string->append(*character);
+		if (result==1)
+		{
+			// append received char to string
+			string+= character;
+		}
 
-	} while ( (result != 1) && (string->endsWith('0')) );
+	} while ( (result == 1) && (string->endsWith('0')) );
 
 	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
 		return false;
 	}
+
+	string->append('\0');
 
 	return true;
 }
