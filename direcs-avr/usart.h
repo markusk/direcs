@@ -27,6 +27,8 @@
 volatile uint8_t uart_rx_flag; // Flag, String komplett empfangen
 volatile uint8_t uart_tx_flag; // Flag, String komplett gesendet
 
+volatile uint8_t terminator; // this marks the end of a string. which is '#' at the moment.
+
 char uart_rx_buffer[uart_buffer_size]; // Empfangspuffer
 char uart_tx_buffer[uart_buffer_size]; // Sendepuffer
 
@@ -38,6 +40,10 @@ volatile uint8_t greenLEDtoggle;
 	 void UsartTransmit(uint16_t c);
 	 void UsartTransmitString(unsigned char *string);
 unsigned char UsartReceive(void);
+
+
+// set terminator
+void setTerminator(uint8_t termi);
 
 
 // einen String senden

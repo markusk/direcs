@@ -77,6 +77,15 @@ ISR(USART3_UDRE_vect)
 */
 
 
+void setTerminator(uint8_t termi)
+{
+//	static uint8_t initDone = 0;
+	
+	// this terminates a string with a '#'
+	terminator = termi;
+}
+
+
 void put_string(char *daten)
 {
 	if (uart_tx_flag == 1)
