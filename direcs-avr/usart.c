@@ -229,15 +229,6 @@ ISR(USART3_UDRE_vect)
 		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
 		uart_rx_flag = 0;           // Flag löschen, bereit für nächsten Empfang!
 	}
-
-	// Ende des nullterminierten Strings erreicht?
-	if (data == terminator)
-	{
-		UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
-		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
-		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
-		uart_rx_flag = 0;           // Flag löschen, bereit für nächsten Empfang!
-	}
 	else
 	{
 		UDR3 = data;                // nein, Daten senden
