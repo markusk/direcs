@@ -38,32 +38,36 @@ Circuit::~Circuit()
 
 bool Circuit::initCircuit()
 {
+	QString answer = "error";
+
+
 	if (robotIsOn) // maybe robot is already recognized as OFF by the interface class!
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
-	
+
 		//-------------------------------------------------------
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
 		if (interface1->sendChar(INIT) == true)
 		{
-			// check if the robot answers with "@"
-			unsigned char answer = 0;
-			interface1->receiveChar(&answer);
-	
-			// everthing's fine :-)
-			if (answer == INITANSWER)
+			// check if the robot answers with "ok"
+			if (interface1->receiveString(&QString) == true)
 			{
-				// Unlock the mutex
-				mutex->unlock();
-				firstInitDone = true;
-				robotIsOn = true;
-				emit robotState(true);
-				return true;
+
+				// everthing's fine :-)
+				if (answer == "ok")
+				{
+					// Unlock the mutex
+					mutex->unlock();
+					firstInitDone = true;
+					robotIsOn = true;
+					emit robotState(true);
+					return true;
+				}
 			}
 		}
-	
+
 		// Unlock the mutex.
 		mutex->unlock();
 
@@ -73,7 +77,7 @@ bool Circuit::initCircuit()
 		emit robotState(false);
 		return false;
 	}
-	
+
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	return false;
 }
