@@ -37,46 +37,53 @@ This class is used for the low level communication between the robots microcontr
 */
 class InterfaceAvr : public QObject
 {
-    Q_OBJECT
-	
+	Q_OBJECT
+
 	public:
 		InterfaceAvr();
 		~InterfaceAvr();
-		
+
 		/**
 		Opens a serial port/device. On POSIX systems this looks like "/dev/tty4" oder "/dev/ttyUSB0". On Windows systems it's like "COM1".
 		@param comPort is the serial port
 		@return true on access or false if an error occured, while opening the device.
 		*/
 		bool openComPort(QString comPort);
-		
+
 		/**
 		Closes the serial port
 		*/
 		void closeComPort();
-		
+
 		/**
 		Sends a character to the serial port/device.
 		@param character
 		@return true on access or false if an error occured.
 		*/
 		bool sendChar(unsigned char character);
-		
+
 		/**
 		Receives a character from the serial port/device.
 		@param character
 		@return true on access or false if an error occured.
 		*/
 		bool receiveChar(unsigned char *character);
-		
+
+		/**
+		Receives a string from the serial port/device.
+		@param *string
+		@return true on access or false if an error occured.
+		*/
+		bool receiveString(QString *string);
+
 		/**
 		Receives an integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).
 		@param *value
 		@return true on access or false if an error occured.
 		*/
 		bool receiveInt(int *value);
-	
-	
+
+
 	signals:
 		/**
 		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
@@ -84,13 +91,13 @@ class InterfaceAvr : public QObject
 		@param state can be ON or OFF
 		*/
 		void robotState(bool state);
-		
+
 		/**
 		This signal is emmited, when too much errors occur while receiving or sending to the serial port.
 		@sa Direcs::showExitDialog()
 		*/
 		void tooMuchErrors();
-		
+
 		/**
 		Emits a info or error message to a slot.
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
@@ -98,7 +105,7 @@ class InterfaceAvr : public QObject
 		*/
 		void message(QString text);
 
-	
+
 	private:
 		DirecsSerial *serialPort;
 

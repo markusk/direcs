@@ -159,16 +159,6 @@ class DirecsSerial : public QObject
 
 
 		/**
-		Reads a string from the serial line. String has to be terminated with "\0".
-		This method is only used for the Atmel serial port!
-
-		@param *string is a pointer to a QString which will contain the string read.
-		@return The number of bytes read.
-		 */
-		int readAtmelString(QString *string);
-
-
-		/**
 		Closes the serial port.
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
 

@@ -122,6 +122,32 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 }
 
 
+bool InterfaceAvr::receiveString(QString *string)
+{
+	unsigned char *character;
+	int result = 0;
+
+
+	do
+	{
+		// reading one char. Must return 1 (one character succussfull read).
+		result = serialPort->readAtmelPort(character, 1);
+
+		// append received char to string
+		string->append(*character);
+
+	} while ( (result != 1) && (string->endsWith('0')) );
+
+	if (result != 1)
+	{
+		// ERROR (error message already emitted from readAtmelPort!)
+		return false;
+	}
+
+	return true;
+}
+
+
 bool InterfaceAvr::receiveInt(int *value)
 {
 // 	static int receiveErrorCounter = 0;
