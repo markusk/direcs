@@ -135,7 +135,11 @@ ISR(USART3_RX_vect)
     // Daten auslesen, dadurch wird das Interruptflag gelöscht              
     data = UDR3;
 
-	greenLED(OFF);
+	// Ende des nullterminierten Strings erreicht?
+	if (data == starter)
+	{
+		greenLED(ON);
+	}
  
 	// toggling the red LED on and off with every received serial commmand
 	if (redLEDtoggle == 0)
@@ -149,22 +153,21 @@ ISR(USART3_RX_vect)
 	
 	redLED(redLEDtoggle);
 
- 	// Pufferüberlauf-Anzeige
-	//greenLED(OFF);
  
     // Ist Puffer frei für neue Daten?
     if (!uart_rx_flag)
     {
         // ja, ist Ende des Strings (RETURN) erreicht?
-        if  (data == terminator) // 35='#'
+        if  (data == terminator) // '#'
         {
-			greenLED(ON);
             // ja, dann String terminieren
             uart_rx_buffer[uart_rx_cnt] = terminator;
             // Flag für 'Empfangspuffer voll' setzen
             uart_rx_flag=1;
             // Zähler zurücksetzen
             uart_rx_cnt=0;
+			// green LED off
+			greenLED(OFF);
         }
         else
         {
@@ -225,11 +228,18 @@ ISR(USART3_UDRE_vect)
 		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
 		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
 		uart_rx_flag = 0;           // Flag löschen, bereit für nächsten Empfang!
-//		greenLED(ON);
+	}
+
+	// Ende des nullterminierten Strings erreicht?
+	if (data == terminator)
+	{
+		UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
+		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
+		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
+		uart_rx_flag = 0;           // Flag löschen, bereit für nächsten Empfang!
 	}
 	else
 	{
-		greenLED(ON);
 		UDR3 = data;                // nein, Daten senden
 	}
 }
