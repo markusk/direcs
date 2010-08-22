@@ -147,10 +147,11 @@ ISR(USART3_RX_vect)
     if (!uart_rx_flag)
     {
         // ja, ist Ende des Strings (RETURN) erreicht?
-        if  (data=='\r')
+        if  (data == terminator) // 35='#'
         {
+			greenLED(ON);
             // ja, dann String terminieren
-            uart_rx_buffer[uart_rx_cnt]=0;
+            uart_rx_buffer[uart_rx_cnt] = terminator;
             // Flag für 'Empfangspuffer voll' setzen
             uart_rx_flag=1;
             // Zähler zurücksetzen
@@ -167,12 +168,10 @@ ISR(USART3_RX_vect)
 			}
 			else
 			{
-				// Puffer ist vollgelaufen !
+				// Puffer ist vollgelaufen!
 				//
-			 	// Pufferüberlauf-Anzeige
-				// greenLED(ON);
-				// ja, dann String terminieren
-				uart_rx_buffer[uart_rx_cnt - 1] = 0;
+				// String terminieren
+				uart_rx_buffer[uart_rx_cnt - 1] = terminator;
 	            // Flag für 'Empfangspuffer voll' setzen
 	            uart_rx_flag = 1;
 	            // Zähler zurücksetzen
@@ -211,7 +210,7 @@ ISR(USART3_UDRE_vect)
 	data = *uart_tx_p++;
 	
 	// Ende des nullterminierten Strings erreicht?
-	if (data == 0)
+	if (data == terminator)
 	{
 		UCSR3B &= ~(1<<UDRIE3);     // ja, dann UDRE Interrupt ausschalten
 		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen

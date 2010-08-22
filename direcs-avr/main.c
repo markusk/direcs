@@ -29,6 +29,7 @@ int main(void)
 	//-----------------------------------------------------
 	uart_rx_flag = 0;	// Flag, String komplett empfangen
 	uart_tx_flag = 1;	// Flag, String komplett gesendet
+	setTerminator(35); //35 = '#'
 
 	// stores the serial received command
     char stringbuffer[64];  // Allgemeiner Puffer für Strings
@@ -248,7 +249,7 @@ int main(void)
 				
 				// answer with "ok"
 				// this answer is used to see if the robot is "on"
-				put_string("ok\0");
+				put_string("ok#");
 				// empty stringbuffer
 				// strcpy(stringbuffer, "");
 			}
