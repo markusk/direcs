@@ -101,6 +101,9 @@ void put_string(char *daten)
 	{
 		// String daten ind en Sendepuffer kopieren
 		strcpy(uart_tx_buffer, daten);      
+		// replace string terminator \0 by my own terminator
+		// this terminator is checked when the string is send.
+		uart_tx_buffer[strlen(uart_tx_buffer)] = terminator;
 		// Flag für 'Senden ist komplett' löschen, 
 		uart_tx_flag = 0;                    
 		// UDRE Interrupt einschalten, los gehts
