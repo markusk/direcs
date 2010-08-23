@@ -119,7 +119,8 @@ void get_string(char *daten)
 // Hauptprogramm den kompletten Empfang signalisiert
 ISR(USART3_RX_vect)
 {
-	static uint8_t uart_rx_cnt;     // Zähler für empfangene Zeichen
+	static uint8_t uart_rx_cnt;     	// Zähler für empfangene Zeichen
+	static uint8_t string_started = 0;	// Sind wir jetzt im String?
 	uint8_t data;
 
  
@@ -142,20 +143,24 @@ ISR(USART3_RX_vect)
 	// Ist Puffer frei für neue Daten?
 	if (!uart_rx_flag)
 	{
-		// string nur speichern, wenn mit 'starter' begonnen!
+		// Puffer voll?
 		if (uart_rx_cnt < (uart_buffer_size-1))
 		{     
-			if (data == starter)
+			// string start
+			// string speichern, wenn mit 'starter' begonnen!
+			if  (data == starter)
 			{
+				string_started = 1;
 				greenLED(ON);
-				// Daten in Puffer speichern, aber Pufferüberlauf vermeiden
+				// Daten in Puffer speichern
 				uart_rx_cnt = 0;
 				uart_rx_buffer[uart_rx_cnt] = data;
 				uart_rx_cnt++; // Zähler erhöhen
 				return;
 			}
 
-			// ja, ist Ende des Strings (RETURN) erreicht?
+			// string stop
+			// Ist das Ende des Strings (RETURN) erreicht?
 			if (data == terminator)
 			{
 				// ja, dann String terminieren
@@ -166,6 +171,17 @@ ISR(USART3_RX_vect)
 				uart_rx_cnt = 0;
 				// green LED off
 				greenLED(OFF);
+				string_started = 0;
+				return;
+			}
+
+			// string middle
+			// string nur speichern, wenn zuvor der starter mal war.
+			if  (string_started == 1)
+			{
+				// Daten in Puffer speichern
+				uart_rx_buffer[uart_rx_cnt] = data;
+				uart_rx_cnt++; // Zähler erhöhen
 				return;
 			}
 		}
@@ -179,6 +195,7 @@ ISR(USART3_RX_vect)
 			uart_rx_flag = 1;
 			// Zähler zurücksetzen
 			uart_rx_cnt = 0;
+			string_started = 0;
 		}
 	}
 }
