@@ -62,20 +62,6 @@ unsigned char UsartReceive(void)
 	return UDR3;
 }
 
-/*
-ISR(USART3_UDRE_vect)
-{
-	// UART RX 3 complete interrupt
-	// this reoutine is executed, when the Receive Complete Interrupt Enable (RXCIE3) is set.
-	//
-	// all available data have must be read. Otherwise a new interrupt occur oce this interrupt routine is left!
-
-
-	// Daten auslesen, dadurch wird das Interruptflag gelöscht
-	uart_rx_data = UDRE3;
-}
-*/
-
 
 void setStarter(uint8_t startr)
 {
