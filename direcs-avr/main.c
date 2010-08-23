@@ -202,10 +202,6 @@ int main(void)
 	UBRR3L = (unsigned char) USART_BAUD_SELECT;
 	// enable UART3 and Interrupts for RX and TX
 	UCSR3B |= (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
-
-	// Stringpuffer initialisieren
-//	stringbuffer[0] = '\n';
-//	stringbuffer[1] = '\r';
  
 	//----------------------------------------------------------------------------
 	// enable global interrupts
@@ -222,10 +218,13 @@ int main(void)
 			// ja, dann String lesen 
 			get_string(stringbuffer);
 
+
 			//--------------------------
 			// check what was received
 			//--------------------------
-			if (strcmp(stringbuffer, "@") == 0)
+
+			// INIT
+			if (strncmp(stringbuffer, "*@#", 3) == 0)
 			{
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
@@ -254,20 +253,9 @@ int main(void)
 				// empty stringbuffer
 				// strcpy(stringbuffer, "");
 			}
+
 		}
 
-
-/*
-		// Ist letzte Stringsendung abgeschlossen 
-		// und ein neuer String verfügbar?
-		if (uart_tx_flag==1 && buffer_full==1)
-		{
-			// Newline + Carrige return anfügen
-			strcat(stringbuffer, "\n\r");           
-			put_string(stringbuffer); // zurücksenden
-			buffer_full=0; // Buffer ist wieder verfügbar
-		}
-*/
     }
 
 	//-----------------------------------------------------
