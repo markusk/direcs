@@ -118,6 +118,8 @@ void get_string(char *daten)
 	{
 		// String kopieren
 		strcpy(daten, uart_rx_buffer);      
+		// add a usual string terminator
+		daten[strlen(daten)] = '\0';
 		// Flag löschen
 		uart_rx_flag = 0;                    
 		redLED(OFF);
@@ -131,19 +133,13 @@ void get_string(char *daten)
 // Hauptprogramm den kompletten Empfang signalisiert
 ISR(USART3_RX_vect)
 {
-    static uint8_t uart_rx_cnt;     // Zähler für empfangene Zeichen
-    uint8_t data;
+	static uint8_t uart_rx_cnt;     // Zähler für empfangene Zeichen
+	uint8_t data;
 
  
-    // Daten auslesen, dadurch wird das Interruptflag gelöscht              
-    data = UDR3;
+	// Daten auslesen, dadurch wird das Interruptflag gelöscht              
+	data = UDR3;
 
-	// Ende des nullterminierten Strings erreicht?
-	if (data == starter)
-	{
-		greenLED(ON);
-	}
- 
 	// toggling the red LED on and off with every received serial commmand
 	if (redLEDtoggle == 0)
 	{
@@ -156,44 +152,49 @@ ISR(USART3_RX_vect)
 	
 	redLED(redLEDtoggle);
 
- 
-    // Ist Puffer frei für neue Daten?
-    if (!uart_rx_flag)
-    {
-        // ja, ist Ende des Strings (RETURN) erreicht?
-        if  (data == terminator) // '#'
-        {
-            // ja, dann String terminieren
-            uart_rx_buffer[uart_rx_cnt] = terminator;
-            // Flag für 'Empfangspuffer voll' setzen
-            uart_rx_flag=1;
-            // Zähler zurücksetzen
-            uart_rx_cnt=0;
-			// green LED off
-			greenLED(OFF);
-        }
-        else
-        {
-			if (uart_rx_cnt < (uart_buffer_size-1))
-			{     
-				// Daten in Puffer speichern
-				// aber durch if() Pufferüberlauf vermeiden
+
+	// Ist Puffer frei für neue Daten?
+	if (!uart_rx_flag)
+	{
+		// string nur speichern, wenn mit 'starter' begonnen!
+		if (uart_rx_cnt < (uart_buffer_size-1))
+		{     
+			if (data == starter)
+			{
+				greenLED(ON);
+				// Daten in Puffer speichern, aber Pufferüberlauf vermeiden
+				uart_rx_cnt = 0;
 				uart_rx_buffer[uart_rx_cnt] = data;
 				uart_rx_cnt++; // Zähler erhöhen
+				return;
 			}
-			else
+
+			// ja, ist Ende des Strings (RETURN) erreicht?
+			if (data == terminator)
 			{
-				// Puffer ist vollgelaufen!
-				//
-				// String terminieren
-				uart_rx_buffer[uart_rx_cnt - 1] = terminator;
-	            // Flag für 'Empfangspuffer voll' setzen
-	            uart_rx_flag = 1;
-	            // Zähler zurücksetzen
-	            uart_rx_cnt = 0;
+				// ja, dann String terminieren
+				uart_rx_buffer[uart_rx_cnt] = terminator;
+				// Flag für 'Empfangspuffer voll' setzen
+				uart_rx_flag = 1;
+				// Zähler zurücksetzen
+				uart_rx_cnt = 0;
+				// green LED off
+				greenLED(OFF);
+				return;
 			}
 		}
-    }
+		else
+		{
+			// Puffer ist vollgelaufen!
+			//
+//				// String terminieren
+//				uart_rx_buffer[uart_rx_cnt - 1] = terminator; //   < < < < prüfen!! nicht speichern!!
+			// Flag für 'Empfangspuffer voll' setzen
+			uart_rx_flag = 1;
+			// Zähler zurücksetzen
+			uart_rx_cnt = 0;
+		}
+	}
 }
 
 
