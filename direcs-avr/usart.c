@@ -188,14 +188,17 @@ ISR(USART3_RX_vect)
 		else
 		{
 			// Puffer ist vollgelaufen!
-			//
-//				// String terminieren
-//				uart_rx_buffer[uart_rx_cnt - 1] = terminator; //   < < < < prüfen!! nicht speichern!!
+			// (Gleicher code wie terminator empfangen!)
+			// ja, dann String terminieren
+			uart_rx_buffer[uart_rx_cnt] = terminator;
 			// Flag für 'Empfangspuffer voll' setzen
 			uart_rx_flag = 1;
 			// Zähler zurücksetzen
 			uart_rx_cnt = 0;
+			// green LED off
+			greenLED(OFF);
 			string_started = 0;
+			return;
 		}
 	}
 }
