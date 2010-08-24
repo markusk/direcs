@@ -249,9 +249,7 @@ int main(void)
 				
 				// answer with "ok"
 				// this answer is used to see if the robot is "on"
-				put_string("ok#");
-				// empty stringbuffer
-				// strcpy(stringbuffer, "");
+				put_string("*ok#");
 			}
 
 		}
