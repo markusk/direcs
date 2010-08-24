@@ -251,7 +251,29 @@ int main(void)
 				// this answer is used to see if the robot is "on"
 				put_string("*ok#");
 			}
+			
+			
+			//----------------
+			// READ_SENSOR_7
+			// voltage 12 V
+			//----------------
+			if (strcmp(stringbuffer, "*s7#") == 0)
+			{
+				// read value from the analog digital converter (ADC)
+//				value = readADC(SENSOR7);
+value = 1;
 
+				// convert int to ascii		
+				itoa(value, stringbuffer, 5);
+				// append #
+				strcat(stringbuffer, terminator);
+
+				// send answer
+				put_string("*#");
+				put_string(stringbuffer);
+				put_string("#");
+			}
+			
 		}
     }
 
