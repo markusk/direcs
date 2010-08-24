@@ -127,7 +127,6 @@ bool InterfaceAvr::receiveString(QString &string)
 	int result = 0;
 	unsigned char character;
 	QByteArray ba;
-	QString helper;
 
 
 	do
@@ -150,10 +149,7 @@ bool InterfaceAvr::receiveString(QString &string)
 	}
 
 	// copy chars to QString to pointer to return the QString
-	helper = QString::fromUtf8(ba.data(), ba.length());
-	string = helper;
-
-	qDebug() << "Answer from robots Atmel:" << string;
+	string = QString::fromUtf8(ba.data(), ba.length());
 
 	return true;
 }
