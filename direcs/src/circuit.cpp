@@ -49,13 +49,12 @@ bool Circuit::initCircuit()
 		//-------------------------------------------------------
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
-		qDebug("sending '*'...");
+
+		// sending *@# ...");
 		if (interface1->sendChar('*') == true)
 		{
-			qDebug("sending '%c'...", INIT);
 			if (interface1->sendChar(INIT) == true)
 			{
-				qDebug("sending 'CR'...");
 				if (interface1->sendChar('#') == true)
 				{
 					// check if the robot answers with "ok"
@@ -63,7 +62,7 @@ bool Circuit::initCircuit()
 					{
 
 						// everthing's fine :-)
-						if ( answer.startsWith("ok#") )
+						if ( answer == "*ok#" )
 						{
 							// Unlock the mutex
 							mutex->unlock();
