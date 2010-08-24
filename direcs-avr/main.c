@@ -259,60 +259,16 @@ int main(void)
 	//-----------------------------------------------------
 
 /*
-	// initialize USART (serial port)
-	UsartInit();
-
 
 	while(1)
 	{
-		//-----------------------------------------
-		// waiting "endlessly" for serial data...
-		// react on the received command
-		//-----------------------------------------
-		value = UsartReceive();
-		
-		
-		// toggling the red LED on and off with every received serial commmand
-		if (redLEDtoggle == 0)
-		{
-			redLEDtoggle = 1;
-		}
-		else
-		{
-			redLEDtoggle = 0;
-		}
- 
-		// switch LED
-		redLED(redLEDtoggle);
 
 		
 		switch (value)
 		{
+
 			case INIT:
-				// turn all drive motor bits off (except PWM bits)
-				PORTL &= ~(1<<PIN0);
-				PORTL &= ~(1<<PIN1);
-				PORTL &= ~(1<<PIN2);
-				PORTL &= ~(1<<PIN3);
-				PORTL &= ~(1<<PIN6);
-				PORTL &= ~(1<<PIN7);
-				PORTD &= ~(1<<PIN6);
-				PORTD &= ~(1<<PIN7);
-				// flashlight off
-				relais(OFF);
-				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
-				redLED(OFF);
-				
-// 				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-// 				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-// 				setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-// 				setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-// 				setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-// 				setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-				
-				// "answer" with "@" [Ascii Dezimal @ = 64]
-				// this answer is used to see if the robot is "on"
-				UsartTransmit( (uint8_t)(64) );
+				// updated!
 				break;
 
 			//-------------------------------
