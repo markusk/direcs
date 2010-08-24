@@ -74,7 +74,7 @@ class InterfaceAvr : public QObject
 		@param *string
 		@return true on access or false if an error occured.
 		*/
-		bool receiveString(QString *string);
+		bool receiveString(QString &string);
 
 		/**
 		Receives an integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).
