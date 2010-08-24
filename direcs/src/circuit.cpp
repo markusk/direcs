@@ -41,7 +41,7 @@ bool Circuit::initCircuit()
 	QString answer = "error";
 
 
-	if (robotIsOn) // maybe robot is already recognized as OFF by the interface class!
+	if (robotIsOn) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
@@ -49,21 +49,40 @@ bool Circuit::initCircuit()
 		//-------------------------------------------------------
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
-		if (interface1->sendChar(INIT) == true)
+		qDebug("sending '*'...");
+		if (interface1->sendChar('*') == true)
 		{
-			// check if the robot answers with "ok"
-			if (interface1->receiveString(&QString) == true)
+			qDebug("sending '%c'...", INIT);
+			if (interface1->sendChar(INIT) == true)
 			{
-
-				// everthing's fine :-)
-				if (answer == "ok")
+				qDebug("sending 'CR'...");
+				if (interface1->sendChar('#') == true)
 				{
-					// Unlock the mutex
-					mutex->unlock();
-					firstInitDone = true;
-					robotIsOn = true;
-					emit robotState(true);
-					return true;
+					// check if the robot answers with "ok"
+					if ( interface1->receiveString( answer ) == true)
+					{
+
+						// everthing's fine :-)
+						if ( answer.startsWith("ok#") )
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							firstInitDone = true;
+							/*
+	 // t e s t
+						robotIsOn = true;
+						emit robotState(true);
+						return true;
+	*/
+
+							//---- test -----
+							qDebug(">>>   Roboter antwortet korrekt. :-)   <<<");
+							robotIsOn = false;
+							emit robotState(false);
+							return false;
+							//---- test -----
+						}
+					}
 				}
 			}
 		}
