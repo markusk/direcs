@@ -24,9 +24,7 @@ uint16_t rightDistanceCounter = 0;
 
 int main(void)
 {
-	//-----------------------------------------------------
-	// new usart test
-	//-----------------------------------------------------
+	// usart stuff
 	uart_rx_flag = 0;	// Flag, String komplett empfangen
 	uart_tx_flag = 1;	// Flag, String komplett gesendet
 	setStarter(42);    //42 = '*'
@@ -36,8 +34,9 @@ int main(void)
     char stringbuffer[64];  // Allgemeiner Puffer für Strings
 
 	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
-	//-----------------------------------------------------
-	//-----------------------------------------------------
+
+	// just a value for e.g. reading the ADCs
+	uint16_t value = 0;
 
 	leftWheelCounter = 0;
 	rightWheelCounter = 0;
@@ -113,7 +112,7 @@ int main(void)
 	// this is *here* for setting the interrupt control registers
 	//-------------------------------------------------------------
 	cli();
-/*
+
 	
 	// switch some bits on port J to input
 	//
@@ -130,7 +129,7 @@ int main(void)
 	// Bit2 = Cam R Pan Endswitch
 	// Bit3 = Cam L Pan Endswitch
 	//DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
-
+/*
 	//----------------------------------------------------------------------------
 	// Set the "Pin Change Interrupt Control Register"
 	// -> any change on any enabled PCINT15:8 pin will now cause an interrupt!
@@ -218,12 +217,13 @@ int main(void)
 			// ja, dann String lesen 
 			get_string(stringbuffer);
 
-
 			//--------------------------
 			// check what was received
 			//--------------------------
 
+			//----------------
 			// INIT
+			//----------------
 			if (strcmp(stringbuffer, "*@#") == 0)
 			{
 				// turn all drive motor bits off (except PWM bits)
