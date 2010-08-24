@@ -37,28 +37,27 @@ volatile uint8_t redLEDtoggle;
 volatile uint8_t greenLEDtoggle;
 
 
-	 void UsartInit(void);
-	 void UsartTransmit(uint16_t c);
-	 void UsartTransmitString(unsigned char *string);
-unsigned char UsartReceive(void);
-
-
 // set string starter
 void setStarter(uint8_t startr);
+
 // set string terminator
 void setTerminator(uint8_t termi);
-
 
 // einen String senden
 // vor Aufruf der Funktion muss man prüfen, ob uart_t_flag==1 ist
 // nur dann kann ein neuer String gesendet werden
 void put_string(char *daten);
 
-
 // einen empfangenen String kopieren
 // vor Aufruf der Funktion muss man prüfen, ob uart_rx_flag==1 ist
 // anderenfalls ist der RX Buffer noch ungültig
 void get_string(char *daten);
 
+/*
+	 void UsartInit(void);
+	 void UsartTransmit(uint16_t c);
+	 void UsartTransmitString(unsigned char *string);
+unsigned char UsartReceive(void);
+*/
 
 #endif
