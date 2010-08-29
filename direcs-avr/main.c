@@ -261,17 +261,21 @@ int main(void)
 			{
 				// read value from the analog digital converter (ADC)
 //				value = readADC(SENSOR7);
-value = 1;
+value = 42;
 
-				// convert int to ascii		
-				itoa(value, stringbuffer, 5);
+				// convert int to ascii (to Basis 10)
+				itoa(value, stringbuffer, 10);
 				// append #
-				strcat(stringbuffer, terminator);
+//				strcat(stringbuffer, terminator);
+
+				// replace string terminator \0 by my own terminator
+				// this terminator is checked when the string is send.
+				stringbuffer[strlen(stringbuffer)] = terminator;
 
 				// send answer
-				put_string("*#");
+//				put_string("*#");
 				put_string(stringbuffer);
-				put_string("#");
+//				put_string("#");
 			}
 			
 		}
