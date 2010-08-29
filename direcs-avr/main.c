@@ -31,7 +31,7 @@ int main(void)
 	setTerminator(35); //35 = '#'
 
 	// stores the serial received command
-    char stringbuffer[64];  // Allgemeiner Puffer für Strings
+    unsigned char stringbuffer[64];  // Allgemeiner Puffer für Strings
 
 	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
 
