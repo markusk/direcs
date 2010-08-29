@@ -1178,14 +1178,12 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			// read sensor
 			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
-				// check if the robot answers with "ok"
-				if ( interface1->receiveString(answer) == true)
+				// check if the robot answers with asnwer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-
-					// everthing's fine :-)
-					if (answer.contains("#"))             //   < < < < < <    t e s t
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
 					{
-						qDebug("> > >  readVoltageSensor1 okay! answer okay!");
 						return true;
 					}
 				}
