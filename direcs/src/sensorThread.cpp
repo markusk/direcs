@@ -1169,14 +1169,27 @@ bool SensorThread::readVoltageSensor(short int sensor)
 {
 	int value = 0;
 //	unsigned char cValue = 0;
+	QString answer = "error";
 
 
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
 			// read sensor
-			if (interface1->sendChar(READ_SENSOR_8) == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
+			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
+				// check if the robot answers with "ok"
+				if ( interface1->receiveString(answer) == true)
+				{
+
+					// everthing's fine :-)
+					if (answer.contains("#"))             //   < < < < < <    t e s t
+					{
+						qDebug("> > >  readVoltageSensor1 okay! answer okay!");
+						return true;
+					}
+				}
+/*
 				// receive the 16 Bit answer from the MC
 				if (interface1->receiveInt(&value) == false)
 //				if (interface1->receiveChar(&cValue) == false)
