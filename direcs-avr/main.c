@@ -359,7 +359,7 @@ int main(void)
 				UsartTransmit( (uint8_t)(value) );
 				break;
 
-			case READ_SENSOR_8: // voltage 24V
+			case READ_SENSOR_8: // voltage 12V
 				// read value from the analog digital converter (ADC)
 				value = readADC(SENSOR8);
 				// send MS-Byte
