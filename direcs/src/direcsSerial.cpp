@@ -49,7 +49,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (ioctl(mDev_fd, TIOCEXCL) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 setting TIOCEXCL on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-		emit message(QString("<font color=\"#FF0000\">Serial port already opened ???</font>"));
+		emit message(QString("<font color=\"#FF0000\">Serial port already opened?</font>"));
 		return -1;
 	}
 
