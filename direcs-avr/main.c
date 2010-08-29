@@ -102,11 +102,11 @@ int main(void)
 	// motor 4
 	PORTD &= ~(1<<PIN6);
 	PORTD &= ~(1<<PIN7);
-/*
+
 	// turn OFF "power saving mode" for ADC (analof digital converters)!
 	// (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
-*/
+
 	//-------------------------------------------------------------
 	// no interrupts please!
 	// this is *here* for setting the interrupt control registers
@@ -148,7 +148,7 @@ int main(void)
 	// activate the pins which can cause an interrupt
 	// At this time use only the FORWARD sensor to generate an interrupt
 	PCMSK2 =  (1 << PCINT16) | (1 << PCINT17) | (1 << PCINT18) | (1 << PCINT19);
-
+*/
 	//----------------------------------------------------------------------------
 	// initialzie SPI stuff
 	//----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ int main(void)
 // 	startPWMServo(4);
 // 	startPWMServo(5);
 // 	startPWMServo(6);
-*/
+
 
 	//-----------------------------------------------------
 	//-----------------------------------------------------
@@ -254,14 +254,14 @@ int main(void)
 			
 			
 			//----------------
-			// READ_SENSOR_7
+			// READ_SENSOR_8
 			// voltage 12 V
 			//----------------
-			if (strcmp(stringbuffer, "*s7#") == 0)
+			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
 				// read value from the analog digital converter (ADC)
-//				value = readADC(SENSOR7);
-value = 42;
+				value = readADC(SENSOR8);
+
 				// start the new string to send with a '*'
 				stringbuffer[0] = starter;
 
