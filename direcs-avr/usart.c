@@ -45,13 +45,14 @@ void get_string(char *daten)
 	if (uart_rx_flag==1)
 	{
 		// String kopieren
-		strcpy(daten, uart_rx_buffer);      
+		strcpy(daten, uart_rx_buffer); // FIXME: geht das bis zum \0, was bei meinem string fehlt?????
 
 		// add a usual string terminator
 		// daten[strlen(daten)] = '\0';
 
 		// Flag löschen
-		uart_rx_flag = 0;                    
+		uart_rx_flag = 0;
+
 		redLED(OFF);
 	}
 }
@@ -96,15 +97,17 @@ ISR(USART3_RX_vect)
 			{
 				string_started = 1;
 				greenLED(ON);
-				// Daten in Puffer speichern
+				// da string startet, zähler auf 0!
 				uart_rx_cnt = 0;
+				// Daten in Puffer speichern
 				uart_rx_buffer[uart_rx_cnt] = data;
-				uart_rx_cnt++; // Zähler erhöhen
+				// Zähler erhöhen
+				uart_rx_cnt++;
 				return;
 			}
 
 			// string stop
-			// Ist das Ende des Strings (RETURN) erreicht?
+			// Ist das Ende des Strings (terminator) erreicht?
 			if (data == terminator)
 			{
 				// ja, dann String terminieren
@@ -115,6 +118,7 @@ ISR(USART3_RX_vect)
 				uart_rx_cnt = 0;
 				// green LED off
 				greenLED(OFF);
+				// reset flag
 				string_started = 0;
 				return;
 			}
@@ -125,7 +129,8 @@ ISR(USART3_RX_vect)
 			{
 				// Daten in Puffer speichern
 				uart_rx_buffer[uart_rx_cnt] = data;
-				uart_rx_cnt++; // Zähler erhöhen
+				// Zähler erhöhen
+				uart_rx_cnt++;
 				return;
 			}
 		}
