@@ -262,20 +262,18 @@ int main(void)
 				// read value from the analog digital converter (ADC)
 //				value = readADC(SENSOR7);
 value = 42;
+				// start the new string to send with a '*'
+				stringbuffer[0] = starter;
 
 				// convert int to ascii (to Basis 10)
-				itoa(value, stringbuffer, 10);
-				// append #
-//				strcat(stringbuffer, terminator);
+				// (but don't overwrite the first char which is the 'starter' *.)
+				itoa(value, stringbuffer+1, 10);
 
-				// replace string terminator \0 by my own terminator
-				// this terminator is checked when the string is send.
+				// add m string terminator '#' at the end of the buffer
 				stringbuffer[strlen(stringbuffer)] = terminator;
 
 				// send answer
-//				put_string("*#");
 				put_string(stringbuffer);
-//				put_string("#");
 			}
 			
 		}
