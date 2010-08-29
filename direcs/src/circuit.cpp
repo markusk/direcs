@@ -62,20 +62,11 @@ bool Circuit::initCircuit()
 				{
 					// Unlock the mutex
 					mutex->unlock();
-					firstInitDone = true;
-	/*
-	 // t e s t
-						robotIsOn = true;
-						emit robotState(true);
-						return true;
-	*/
 
-					//---- test -----
-					qDebug(">>>   Roboter antwortet korrekt. :-)   <<<");
-					robotIsOn = false;
-					emit robotState(false);
-					return false;
-					//---- test -----
+					firstInitDone = true;
+					robotIsOn = true;
+					emit robotState(true);
+					return true;
 				}
 			}
 		}
