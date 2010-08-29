@@ -141,7 +141,6 @@ bool InterfaceAvr::sendString(QString string)
 		if (sendChar(terminator) == true)
 		{
 			// success
-			qDebug() << ">>>   String " << string << "sent. :-)   <<<";
 			return true;
 		}
 	}
