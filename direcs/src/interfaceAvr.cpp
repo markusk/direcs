@@ -122,6 +122,32 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 }
 
 
+bool InterfaceAvr::sendString(QString string)
+{
+	// send starter
+	if (sendChar(starter) == true)
+	{
+		// send the string
+		for (int i=0; i<string.length(); i++)
+		{
+			// char by char
+			if (sendChar( string.at(i).toAscii() ) == true)
+			{
+				// send terminator
+				if (sendChar(terminator) == true)
+				{
+					// success
+					qDebug() << ">>>   String " << string << "sent. :-)   <<<";
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+
 bool InterfaceAvr::receiveString(QString &string)
 {
 	int result = 0;

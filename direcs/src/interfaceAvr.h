@@ -70,8 +70,17 @@ class InterfaceAvr : public QObject
 		bool receiveChar(unsigned char *character);
 
 		/**
-		Receives a string from the serial port/device.
-		@param &string
+		Sends a string to the serial port/device. When sending it prepends a start char and appends a terminator char wich the corresponting receiving Atmel expects.
+		Example: *s8# sends the command 's8' to the receiver.
+		@param string is the information to send - without starter and terminator!
+		@return true on access or false if an error occured.
+		*/
+		bool sendString(QString string);
+
+		/**
+		Receives a string from the serial port/device. It expects a starter at the beginning and a termintator at the end of the string which is currently defined as a const.
+		Example: With *42# the 42 is the 'string' here.
+		@param &string is the complete result - including the starter and the terminator!
 		@return true on access or false if an error occured.
 		*/
 		bool receiveString(QString &string);
@@ -109,8 +118,11 @@ class InterfaceAvr : public QObject
 	private:
 		DirecsSerial *serialPort;
 
-		static const bool ON  = true;   /** For robot is "ON" */
-		static const bool OFF = false;  /** For robot is "OFF" */
+		static const bool ON  = true;   /// For robot is "ON"
+		static const bool OFF = false;  /// For robot is "OFF"
+
+		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
+		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
 };
 
 #endif
