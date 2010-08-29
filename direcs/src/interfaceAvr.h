@@ -92,6 +92,15 @@ class InterfaceAvr : public QObject
 		*/
 		bool receiveInt(int *value);
 
+		/**
+		Returns an integer value which comes from a former recevied string.
+		Example: With *42# the 42 is the 'string' here.
+		@param string
+		@param &value is the int value when the conversion was successfull.
+		@return true on access or false if an error occured.
+		*/
+		bool convertStringToInt(QString string, int &value);
+
 
 	signals:
 		/**

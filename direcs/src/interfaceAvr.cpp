@@ -243,3 +243,26 @@ bool InterfaceAvr::receiveInt(int *value)
 	// emit emitMessage( QString("Received int '%1'.").arg(*value) ); // this makes the program to slow and than to crash!!
 	return true;
 }
+
+
+bool InterfaceAvr::convertStringToInt(QString string, int &value)
+{
+	bool conversion = false;
+
+
+	// remove starter
+	string = string.remove(starter);
+	// remove terminator
+	string = string.remove(terminator);
+
+	// convert to int
+	value = string.toInt(&conversion);
+
+	if (conversion)
+	{
+		return true;
+	}
+
+	value = 0;
+	return false;
+}
