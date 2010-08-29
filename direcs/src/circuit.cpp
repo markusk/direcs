@@ -50,38 +50,32 @@ bool Circuit::initCircuit()
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
 
-		// sending *@# ...");
-		if (interface1->sendChar('*') == true)
+		// sending INIT command  * @ #
+		if (interface1->sendString("*@#") == true)
 		{
-			if (interface1->sendChar(INIT) == true)
+			// check if the robot answers with "ok"
+			if ( interface1->receiveString(answer) == true)
 			{
-				if (interface1->sendChar('#') == true)
-				{
-					// check if the robot answers with "ok"
-					if ( interface1->receiveString( answer ) == true)
-					{
 
-						// everthing's fine :-)
-						if ( answer == "*ok#" )
-						{
-							// Unlock the mutex
-							mutex->unlock();
-							firstInitDone = true;
-							/*
+				// everthing's fine :-)
+				if (answer == "*ok#")
+				{
+					// Unlock the mutex
+					mutex->unlock();
+					firstInitDone = true;
+	/*
 	 // t e s t
 						robotIsOn = true;
 						emit robotState(true);
 						return true;
 	*/
 
-							//---- test -----
-							qDebug(">>>   Roboter antwortet korrekt. :-)   <<<");
-							robotIsOn = false;
-							emit robotState(false);
-							return false;
-							//---- test -----
-						}
-					}
+					//---- test -----
+					qDebug(">>>   Roboter antwortet korrekt. :-)   <<<");
+					robotIsOn = false;
+					emit robotState(false);
+					return false;
+					//---- test -----
 				}
 			}
 		}
