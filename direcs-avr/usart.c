@@ -4,8 +4,6 @@
 
 void setStarter(uint8_t startr)
 {
-//	static uint8_t initDone = 0;
-	
 	// this terminates a string with a '#'
 	starter = startr;
 }
@@ -13,8 +11,6 @@ void setStarter(uint8_t startr)
 
 void setTerminator(uint8_t termi)
 {
-//	static uint8_t initDone = 0;
-	
 	// this terminates a string with a '#'
 	terminator = termi;
 }
@@ -25,7 +21,7 @@ void put_string(char *daten)
 	if (uart_tx_flag == 1)
 	{
 		// String daten ind en Sendepuffer kopieren
-		strcpy(uart_tx_buffer, daten);      
+		strcpy(uart_tx_buffer, daten);
 
 		// replace string terminator \0 by my own terminator
 		// this terminator is checked when the string is send.
@@ -161,20 +157,6 @@ ISR(USART3_UDRE_vect)
 	static char* uart_tx_p = uart_tx_buffer;
 	uint8_t data;
 	
-
-/* 
-	// toggling the red LED on and off with every received serial commmand
-	if (greenLEDtoggle == 0)
-	{
-		greenLEDtoggle = 1;
-	}
-	else
-	{
-		greenLEDtoggle = 0;
-	}
-	
-	greenLED(greenLEDtoggle);
-*/
 
 	// zu sendendes Zeichen lesen,
 	// Zeiger auf Sendepuffer erhöhen
