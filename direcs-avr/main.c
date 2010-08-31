@@ -250,10 +250,19 @@ int main(void)
 			}
 			
 		
-			//----------------
-			// READ_SENSOR_8
-			// voltage 12 V
-			//----------------
+			//-----------------------------
+			// READ_SENSOR_7 (24 V supply)
+			//------------------------------
+			if (strcmp(stringbuffer, "*s7#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR7) );
+			}
+			
+		
+			//-----------------------------
+			// READ_SENSOR_8 (12 V supply)
+			//------------------------------
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
 				// read ADC and send answer over serial port

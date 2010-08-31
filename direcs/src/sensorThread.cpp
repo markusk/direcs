@@ -1177,7 +1177,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			// read sensor
 			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
-				// check if the robot answers with asnwer. e.g. "*42#"
+				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
@@ -1196,27 +1196,24 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			break;
 		case VOLTAGESENSOR2:
 			// read sensor
-			if (interface1->sendChar(READ_SENSOR_7) == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
+			if (interface1->sendString("s7") == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
-//				if (interface1->receiveChar(&cValue) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[VOLTAGESENSOR2] = 0;
-					//qDebug("ERROR reading voltage sensor 2");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						voltageSensorValue[VOLTAGESENSOR2] = value;
+						return true;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[VOLTAGESENSOR2] = value;
-//				voltageSensorValue[VOLTAGESENSOR2] = (int) cValue;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading voltage sensor 2");
-				return false;
-			}
+			// error
+			voltageSensorValue[VOLTAGESENSOR2] = 0;
+			return false;
 			break;
 	}
 
