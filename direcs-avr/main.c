@@ -264,7 +264,7 @@ int main(void)
 				// read value from the analog digital converter (ADC)
 				value = readADC(SENSOR8);
 
-				// start the new string to send with a '*'
+				// start the answer string to send with a '*'
 				stringbuffer[0] = starter;
 
 				// convert int to ascii (to Basis 10)
