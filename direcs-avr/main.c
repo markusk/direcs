@@ -252,13 +252,15 @@ int main(void)
 				put_string("*ok#");
 			}
 			
-			
+		
 			//----------------
 			// READ_SENSOR_8
 			// voltage 12 V
 			//----------------
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
+				uint8_t length = 0;
+				
 				// read value from the analog digital converter (ADC)
 				value = readADC(SENSOR8);
 
@@ -269,15 +271,21 @@ int main(void)
 				// (but don't overwrite the first char which is the 'starter' *.)
 				itoa(value, stringbuffer+1, 10);
 
+				// get the length of the string
+				length = strlen(stringbuffer);
+
 				// add m string terminator '#' at the end of the buffer
-				stringbuffer[strlen(stringbuffer)] = terminator;
+				stringbuffer[length] = terminator;
+
+				// String mit \0 terminieren
+				stringbuffer[length+1] = 0;
 
 				// send answer
 				put_string(stringbuffer);
 			}
 			
-		}
-    }
+		} // RXcompleted
+    } // while (1)
 
 	//-----------------------------------------------------
 	//-----------------------------------------------------
