@@ -18,17 +18,13 @@ void setTerminator(uint8_t termi)
 
 void put_string(char *daten)
 {
-	if (uart_tx_flag == 1)
+	if (TXcompleted == 1)
 	{
 		// String daten ind en Sendepuffer kopieren
 		strcpy(uart_tx_buffer, daten);
 
-		// replace string terminator \0 by my own terminator
-		// this terminator is checked when the string is send.
-		// uart_tx_buffer[strlen(uart_tx_buffer)] = terminator;
-
 		// Flag für 'Senden ist komplett' löschen, 
-		uart_tx_flag = 0;                    
+		TXcompleted = 0;                    
 
 		// UDRE Interrupt einschalten, los gehts
 		UCSR3B |= (1<<UDRIE3); 
@@ -42,9 +38,6 @@ void get_string(char *daten)
 	{
 		// String kopieren
 		strcpy(daten, uart_rx_buffer);
-
-		// add a usual string terminator
-		// daten[strlen(daten)] = '\0';
 
 		// Flag löschen
 		RXcompleted = 0;
@@ -170,7 +163,7 @@ ISR(USART3_UDRE_vect)
 		
 		UCSR3B &= ~(1<<UDRIE3);     // dann UDRE Interrupt ausschalten
 		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
-		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
+		TXcompleted = 1;           // Flag setzen, Übertragung beeendet
 		RXcompleted = 0;           // Flag löschen, bereit für nächsten Empfang!
 	}
 	else

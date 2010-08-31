@@ -26,7 +26,7 @@ int main(void)
 {
 	// usart stuff
 	RXcompleted = 0;	// Flag, String komplett empfangen
-	uart_tx_flag = 1;	// Flag, String komplett gesendet
+	TXcompleted = 1;	// Flag, String komplett gesendet
 	setStarter(42);    //42 = '*'
 	setTerminator(35); //35 = '#'
 

@@ -25,7 +25,7 @@
 // some global variables for ISR routines
 // beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
 volatile uint8_t RXcompleted; // Flag, String komplett empfangen
-volatile uint8_t uart_tx_flag; // Flag, String komplett gesendet
+volatile uint8_t TXcompleted; // Flag, String komplett gesendet
 
 volatile uint8_t starter;    // this marks the beginning of a received string. which is '*' at the moment.
 volatile uint8_t terminator; // this marks the end of a string. which is '#' at the moment.
