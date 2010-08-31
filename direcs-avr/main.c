@@ -30,9 +30,6 @@ int main(void)
 	setStarter(42);    //42 = '*'
 	setTerminator(35); //35 = '#'
 
-	// stores the serial received command
-    char stringbuffer[64];  // Allgemeiner Puffer für Strings
-
 	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
 
 	// just a value for e.g. reading the ADCs
@@ -259,29 +256,8 @@ int main(void)
 			//----------------
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
-				uint8_t length = 0;
-				
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR8);
-
-				// start the answer string to send with a '*'
-				stringbuffer[0] = starter;
-
-				// convert int to ascii (to Basis 10)
-				// (but don't overwrite the first char which is the 'starter' *.)
-				itoa(value, stringbuffer+1, 10);
-
-				// get the length of the string
-				length = strlen(stringbuffer);
-
-				// add m string terminator '#' at the end of the buffer
-				stringbuffer[length] = terminator;
-
-				// String mit \0 terminieren
-				stringbuffer[length+1] = 0;
-
-				// send answer
-				put_string(stringbuffer);
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR8) );
 			}
 			
 		} // RXcompleted
@@ -800,6 +776,31 @@ int main(void)
 
 	// this line is never reached!
 	return 0;
+}
+
+
+void sendUInt(uint16_t value)
+{
+	uint8_t length = 0;
+	
+	// start the answer string to send with a '*'
+	stringbuffer[0] = starter;
+
+	// convert int to ascii (to Basis 10)
+	// (but don't overwrite the first char which is the 'starter' *.)
+	itoa(value, stringbuffer+1, 10);
+
+	// get the length of the string
+	length = strlen(stringbuffer);
+
+	// add m string terminator '#' at the end of the buffer
+	stringbuffer[length] = terminator;
+
+	// String mit \0 terminieren
+	stringbuffer[length+1] = 0;
+
+	// send answer
+	put_string(stringbuffer);
 }
 
 
