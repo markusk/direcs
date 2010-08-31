@@ -50,8 +50,8 @@ bool Circuit::initCircuit()
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
 
-		// sending INIT command  * @ #
-		if (interface1->sendString("*@#") == true)
+		// sending RESET (INIT) command
+		if (interface1->sendString("*re#") == true)
 		{
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer) == true)
