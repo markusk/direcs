@@ -25,13 +25,13 @@ uint16_t rightDistanceCounter = 0;
 int main(void)
 {
 	// usart stuff
-	uart_rx_flag = 0;	// Flag, String komplett empfangen
+	RXcompleted = 0;	// Flag, String komplett empfangen
 	uart_tx_flag = 1;	// Flag, String komplett gesendet
 	setStarter(42);    //42 = '*'
 	setTerminator(35); //35 = '#'
 
 	// stores the serial received command
-    unsigned char stringbuffer[64];  // Allgemeiner Puffer für Strings
+    char stringbuffer[64];  // Allgemeiner Puffer für Strings
 
 	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
 
@@ -212,9 +212,9 @@ int main(void)
 	{
 		
 		// Wurde ein kompletter String empfangen und ist der Buffer ist leer?
-		if (uart_rx_flag == 1)
+		if (RXcompleted == 1)
 		{
-			// ja, dann String lesen 
+			// ja, dann String lesen und uart_rx_flag löschen
 			get_string(stringbuffer);
 
 			//--------------------------

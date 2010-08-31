@@ -38,16 +38,16 @@ void put_string(char *daten)
 
 void get_string(char *daten)
 {
-	if (uart_rx_flag==1)
+	if (RXcompleted == 1)
 	{
 		// String kopieren
-		strcpy(daten, uart_rx_buffer); // FIXME: geht das bis zum \0, was bei meinem string fehlt?????
+		strcpy(daten, uart_rx_buffer);
 
 		// add a usual string terminator
 		// daten[strlen(daten)] = '\0';
 
 		// Flag löschen
-		uart_rx_flag = 0;
+		RXcompleted = 0;
 
 		redLED(OFF);
 	}
@@ -60,7 +60,7 @@ void get_string(char *daten)
 // Hauptprogramm den kompletten Empfang signalisiert
 ISR(USART3_RX_vect)
 {
-	static uint8_t uart_rx_cnt;     	// Zähler für empfangene Zeichen
+	static uint8_t counter = 0;    	// Zähler für empfangene Zeichen
 	static uint8_t string_started = 0;	// Sind wir jetzt im String?
 	uint8_t data;
 
@@ -82,23 +82,24 @@ ISR(USART3_RX_vect)
 
 
 	// Ist Puffer frei für neue Daten?
-	if (!uart_rx_flag)
+	if (RXcompleted == 0)
 	{
 		// Puffer voll?
-		if (uart_rx_cnt < (uart_buffer_size-1))
+		if (counter < (uart_buffer_size-1))
 		{     
 			// string start
 			// string speichern, wenn mit 'starter' begonnen!
 			if  (data == starter)
 			{
-				string_started = 1;
 				greenLED(ON);
 				// da string startet, zähler auf 0!
-				uart_rx_cnt = 0;
+				counter = 0;
 				// Daten in Puffer speichern
-				uart_rx_buffer[uart_rx_cnt] = data;
+				uart_rx_buffer[counter] = data;
 				// Zähler erhöhen
-				uart_rx_cnt++;
+				counter++;
+				// string has started
+				string_started = 1;
 				return;
 			}
 
@@ -107,11 +108,13 @@ ISR(USART3_RX_vect)
 			if (data == terminator)
 			{
 				// ja, dann String terminieren
-				uart_rx_buffer[uart_rx_cnt] = terminator;
+				uart_rx_buffer[counter] = terminator;
+				// String terminieren
+				uart_rx_buffer[counter+1] = 0;
 				// Flag für 'Empfangspuffer voll' setzen
-				uart_rx_flag = 1;
+				RXcompleted = 1;
 				// Zähler zurücksetzen
-				uart_rx_cnt = 0;
+				counter = 0;
 				// green LED off
 				greenLED(OFF);
 				// reset flag
@@ -124,24 +127,22 @@ ISR(USART3_RX_vect)
 			if  (string_started == 1)
 			{
 				// Daten in Puffer speichern
-				uart_rx_buffer[uart_rx_cnt] = data;
+				uart_rx_buffer[counter] = data;
 				// Zähler erhöhen
-				uart_rx_cnt++;
+				counter++;
 				return;
 			}
 		}
 		else
 		{
 			// Puffer ist vollgelaufen!
-			// (Gleicher code wie terminator empfangen!)
-			// ja, dann String terminieren
-			uart_rx_buffer[uart_rx_cnt] = terminator;
-			// Flag für 'Empfangspuffer voll' setzen
-			uart_rx_flag = 1;
+			// Flag auf 'Empfangspuffer wurde geleert' zurücksetzen
+			RXcompleted = 0;
 			// Zähler zurücksetzen
-			uart_rx_cnt = 0;
+			counter = 0;
 			// green LED off
 			greenLED(OFF);
+			// reset flag
 			string_started = 0;
 			return;
 		}
@@ -163,81 +164,17 @@ ISR(USART3_UDRE_vect)
 	data = *uart_tx_p++;
 	
 	// Ende des nullterminierten Strings erreicht?
-	if (data == terminator)
+	if (data == 0)
 	{
 		UDR3 = data;                // Terminator noch senden!
 		
 		UCSR3B &= ~(1<<UDRIE3);     // dann UDRE Interrupt ausschalten
 		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
 		uart_tx_flag = 1;           // Flag setzen, Übertragung beeendet
-		uart_rx_flag = 0;           // Flag löschen, bereit für nächsten Empfang!
+		RXcompleted = 0;           // Flag löschen, bereit für nächsten Empfang!
 	}
 	else
 	{
 		UDR3 = data;                // nein, Daten senden
 	}
 }
-
-/*
-void UsartInit(void)
-{
-	// no interrupts please!  this is *here* for setting the interrupt control registers.
-//	cli();
-	
-	// Enable UART 3
-	//
-	// RXCIE: would cause interrupt when a character is received from the UART
-	//	UCSR3B |= (1 << RXCIE3) | (1 << RXEN3) | (1 << TXEN3);
-	
-	UCSR3B |= (1 << RXEN3) | (1 << TXEN3);
-
-	// TXCIE: cause interrupt when a character is sent from the UART
-	// UCSR3B &= ~(1 << TXCIE3);
-
-	// enable global interrupts
-//	sei();
-	
-	UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
-	UBRR3L = (unsigned char) USART_BAUD_SELECT;
-}
-
-
-void UsartTransmit(uint16_t c)
-{
-	while(!(UCSR3A & (1<<UDRE3))) {}
-	
-	UDR3 = c;
-}
-
-
-void UsartTransmitString(unsigned char *string)
-{
-	while(!(UCSR3A & (1<<UDRE3))) {}
-	
-	while(*string)
-	{
-		UsartTransmit(*string++);
-	}
-}
-
-
-unsigned char UsartReceive(void)
-{
-	while(!(UCSR3A & (1<<RXC3)))
-	{
-		// TODO: what is with timeout?
-		
-		// check if USB is connected and turn green LED on or off
-		if (bit_is_set(PINE, PIN5))
-		{
-			greenLED(ON);
-		}
-		else
-		{
-			greenLED(OFF);
-		}
-	}
-	
-	return UDR3;
-}
-*/
