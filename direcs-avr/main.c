@@ -224,7 +224,7 @@ int main(void)
 			//----------------
 			// INIT
 			//----------------
-			if (strcmp(stringbuffer, "*@#") == 0)
+			if (strcmp(stringbuffer, "*re#") == 0)
 			{
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
