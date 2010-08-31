@@ -30,8 +30,8 @@ volatile uint8_t TXcompleted; // Flag, String komplett gesendet
 volatile uint8_t starter;    // this marks the beginning of a received string. which is '*' at the moment.
 volatile uint8_t terminator; // this marks the end of a string. which is '#' at the moment.
 
-char uart_rx_buffer[uart_buffer_size]; // Empfangspuffer
-char uart_tx_buffer[uart_buffer_size]; // Sendepuffer
+char uart_rx_buffer[uart_buffer_size+1]; // Empfangspuffer (+1 wg. zusätzlichem \0 in ISR RX)
+char uart_tx_buffer[uart_buffer_size+1]; // Sendepuffer    (+1 wg. zusätzlichem \0 in ISR RX)
 
 volatile uint8_t redLEDtoggle;
 volatile uint8_t greenLEDtoggle;
@@ -52,12 +52,5 @@ void put_string(char *daten);
 // vor Aufruf der Funktion muss man prüfen, ob uart_rx_flag==1 ist
 // anderenfalls ist der RX Buffer noch ungültig
 void get_string(char *daten);
-
-/*
-	 void UsartInit(void);
-	 void UsartTransmit(uint16_t c);
-	 void UsartTransmitString(unsigned char *string);
-unsigned char UsartReceive(void);
-*/
 
 #endif
