@@ -1329,52 +1329,50 @@ bool SensorThread::readMotorSensor(short int sensor)
 bool SensorThread::readDrivenDistance(short int sensor)
 {
 	int value = 0;
+	QString answer = "error";
+
 
 	switch (sensor)
 	{
 		case MOTORDISTANCE1:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_DISTANCE1) == true)
+			if (interface1->sendString("md1") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					drivenDistance[MOTORDISTANCE1] = 0;
-					//qDebug("ERROR reading driven distance 1");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						drivenDistance[MOTORDISTANCE1] = value;
+					}
 				}
+			}
 
-				// store measured value
-				drivenDistance[MOTORDISTANCE1] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading driven distance 1");
-				return false;
-			}
+			// error
+			drivenDistance[MOTORDISTANCE1] = 0;
+			return false;
 			break;
 		case MOTORDISTANCE2:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_DISTANCE2) == true)
+			if (interface1->sendString("md2") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					drivenDistance[MOTORDISTANCE2] = 0;
-					//qDebug("ERROR reading driven distance 2");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						drivenDistance[MOTORDISTANCE2] = value;
+					}
 				}
+			}
 
-				// store measured value
-				drivenDistance[MOTORDISTANCE2] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading driven distance 2");
-				return false;
-			}
+			// error
+			drivenDistance[MOTORDISTANCE2] = 0;
+			return false;
 			break;
 	}
 
