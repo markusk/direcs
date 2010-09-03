@@ -1231,100 +1231,96 @@ bool SensorThread::readMotorSensor(short int sensor)
 	{
 		case MOTORSENSOR1:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR1) == true)
+			if (interface1->sendString("ms1") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR1] = 0;
-					//qDebug("ERROR reading motor sensor 1");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR1] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR1] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading motor sensor 1");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR1] = 0;
+			return false;
 			break;
 		case MOTORSENSOR2:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR2) == true)
+			if (interface1->sendString("ms2") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR2] = 0;
-					//qDebug("ERROR reading motor sensor 2");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR2] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR2] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading motor sensor 2");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR2] = 0;
+			return false;
 			break;
 		case MOTORSENSOR3:
 			qDebug("ERROR reading motor sensor 3 not implented yet!!"); // TODO implement reading motor sensor 3
 			/*
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR3) == true)
+			if (interface1->sendString("ms3") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR3] = 0;
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR3] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR3] = value;
-				return true;
-			}
-			else
-			{
-				qDebug("ERROR reading motor sensor 3");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR3] = 0;
+			return false;
+			break;
 			*/
 			break;
 		case MOTORSENSOR4:
 			qDebug("ERROR reading motor sensor 4 not implented yet!!"); // TODO implement reading motor sensor 4
 			/*
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR4) == true)
+			if (interface1->sendString("ms4") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR4] = 0;
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR4] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR4] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading motor sensor 4");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR4] = 0;
+			return false;
+			break;
 			*/
 			break;
 	}
 
 	// this line should be never reached
-	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+	qDebug("WARNING: wrong sensor number in readMotorSensor()");
 	return false;
 }
 
