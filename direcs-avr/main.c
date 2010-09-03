@@ -335,6 +335,20 @@ int main(void)
 				sendUInt( readMicromag(READ_AXIS_Z) );
 			}
 			
+			// READ_MOTOR_SENSOR1
+			if (strcmp(stringbuffer, "*ms1#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSORMOTOR1) );
+			}
+			
+			// READ_MOTOR_SENSOR2
+			if (strcmp(stringbuffer, "*ms2#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSORMOTOR2) );
+			}
+			
 		} // RXcompleted
     } // while (1)
 
@@ -349,24 +363,6 @@ int main(void)
 		
 		switch (value)
 		{
-
-			case READ_MOTOR_SENSOR1:
-				// motor sensor
-				value = readADC(SENSORMOTOR1);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_MOTOR_SENSOR2:
-				// motor sensor
-				value = readADC(SENSORMOTOR2);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
 
 			case READ_MOTOR_DISTANCE1:
 				// driven distance of motor 1 (encoder)
