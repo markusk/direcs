@@ -313,6 +313,27 @@ int main(void)
 				// read ADC and send answer over serial port
 				sendUInt( ultraschall_messung() );
 			}
+		
+			// READ_AXIS_X
+			if (strcmp(stringbuffer, "*cx#") == 0)
+			{
+				// read x axis from the micromag3 sensor and send answer over serial port
+				sendUInt( readMicromag(READ_AXIS_X) );
+			}
+		
+			// READ_AXIS_Y
+			if (strcmp(stringbuffer, "*cy#") == 0)
+			{
+				// read y axis from the micromag3 sensor and send answer over serial port
+				sendUInt( readMicromag(READ_AXIS_Y) );
+			}
+		
+			// READ_AXIS_Z
+			if (strcmp(stringbuffer, "*cz#") == 0)
+			{
+				// read z axis from the micromag3 sensor and send answer over serial port
+				sendUInt( readMicromag(READ_AXIS_Z) );
+			}
 			
 		} // RXcompleted
     } // while (1)
