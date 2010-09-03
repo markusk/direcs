@@ -1390,77 +1390,70 @@ bool SensorThread::readDrivenDistance(short int sensor)
 bool SensorThread::readCompassAxis(short int axis)
 {
 	int value = 0;
+	QString answer = "error";
+
 
 	switch (axis)
 	{
 		case XAXIS:
 			// read sensor
-			if (interface1->sendChar(READ_AXIS_X) == true)
+			if (interface1->sendString("cx") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					xAxis = 0;
-					//qDebug("ERROR reading x axis");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// convert the value to degrees and store the value in the class member
+						xAxis =  convertToDegree(value);
+					}
 				}
+			}
 
-				// convert the value to degrees and store the value in the class member
-				xAxis =  convertToDegree(value);
-				//qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading x axis");
-				return false;
-			}
+			// error
+			xAxis =  0;
+			return false;
 			break;
 		case YAXIS:
 			// read sensor
-			if (interface1->sendChar(READ_AXIS_Y) == true)
+			if (interface1->sendString("cy") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					yAxis = 0;
-					//qDebug("ERROR reading y axis");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// convert the value to degrees and store the value in the class member
+						yAxis =  convertToDegree(value);
+					}
 				}
+			}
 
-				// convert the value to degrees and store the value in the class member
-				yAxis =  convertToDegree(value);
-				//qDebug("From Atmel=%d / yAxis=%f", value, yAxis);
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading y axis");
-				return false;
-			}
+			// error
+			yAxis =  0;
+			return false;
 			break;
 		case ZAXIS:
 			// read sensor
-			if (interface1->sendChar(READ_AXIS_Z) == true)
+			if (interface1->sendString("cz") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					zAxis = 0;
-					//qDebug("ERROR reading z axis");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// convert the value to degrees and store the value in the class member
+						zAxis =  convertToDegree(value);
+					}
 				}
+			}
 
-				// convert the value to degrees and store the value in the class member
-				zAxis =  convertToDegree(value);
-				// qDebug("From Atmel=%d / zAxis=%f", value, zAxis);
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading z axis");
-				return false;
-			}
+			// error
+			zAxis =  0;
+			return false;
 			break;
 	}
 
