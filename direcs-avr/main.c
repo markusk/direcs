@@ -349,6 +349,20 @@ int main(void)
 				sendUInt( readADC(SENSORMOTOR2) );
 			}
 			
+			// READ_MOTOR_DISTANCE1
+			if (strcmp(stringbuffer, "*md1#") == 0)
+			{
+				// send driven distance of motor 1 encoder over serial port
+				sendUInt( rightDistanceCounter );
+			}
+			
+			// READ_MOTOR_DISTANCE2
+			if (strcmp(stringbuffer, "*md2#") == 0)
+			{
+				// send driven distance of motor 2 encoder over serial port
+				sendUInt( leftDistanceCounter );
+			}
+			
 		} // RXcompleted
     } // while (1)
 
