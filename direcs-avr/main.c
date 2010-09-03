@@ -732,33 +732,6 @@ int main(void)
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
 				break;
-
-			case READ_AXIS_X:
-				// read x axis from the micromag3 sensor
-				value = readMicromag(READ_AXIS_X);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_AXIS_Y:
-				// read x axis from the micromag3 sensor
-				value = readMicromag(READ_AXIS_Y);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_AXIS_Z:
-				// read x axis from the micromag3 sensor
-				value = readMicromag(READ_AXIS_Z);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
 		}
 	} // while (1)
 */
