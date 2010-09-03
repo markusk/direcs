@@ -100,9 +100,6 @@ int main(void)
 	PORTD &= ~(1<<PIN6);
 	PORTD &= ~(1<<PIN7);
 
-	// turn OFF "power saving mode" for ADC (analof digital converters)!
-	// (turn on power for ADC)
-	PRR0 &= ~(1<<PRADC);
 
 	//-------------------------------------------------------------
 	// no interrupts please!
@@ -110,6 +107,11 @@ int main(void)
 	//-------------------------------------------------------------
 	cli();
 
+	// init AD converter with Interrrupt etc.
+	// initADC();
+
+	// turn OFF "power saving mode" for AD converter (turn on power for ADC)
+	PRR0 &= ~(1<<PRADC);
 	
 	// switch some bits on port J to input
 	//
@@ -153,6 +155,7 @@ int main(void)
 	// turn OFF "power saving mode" for SPI (serial peripheral interface)!
 	// (turn on power for SPI)
 	PRR0 &= ~(1<<PRSPI);
+	
 	init_spi();
 
 	// initialize the PWM timer (with compare value 100)  [this is the motor speed!]
@@ -218,9 +221,7 @@ int main(void)
 			// check what was received
 			//--------------------------
 
-			//----------------
-			// INIT
-			//----------------
+			// RESET / INIT
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
 				// turn all drive motor bits off (except PWM bits)
@@ -249,20 +250,14 @@ int main(void)
 				put_string("*ok#");
 			}
 			
-		
-			//-----------------------------
 			// READ_SENSOR_7 (24 V supply)
-			//------------------------------
 			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR7) );
 			}
-			
 		
-			//-----------------------------
 			// READ_SENSOR_8 (12 V supply)
-			//------------------------------
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
 				// read ADC and send answer over serial port
@@ -337,24 +332,6 @@ int main(void)
 			case READ_SENSOR_6:
 				// read value from the analog digital converter (ADC)
 				value = readADC(SENSOR6);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_7: // voltage 12 V
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR7);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_8: // voltage 12V
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR8);
 				// send MS-Byte
 				UsartTransmit( (uint8_t)(value >> 8) );
 				// send LS-Byte
