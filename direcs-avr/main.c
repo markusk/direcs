@@ -32,9 +32,6 @@ int main(void)
 
 	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
 
-	// just a value for e.g. reading the ADCs
-	uint16_t value = 0;
-
 	leftWheelCounter = 0;
 	rightWheelCounter = 0;
 
@@ -363,6 +360,28 @@ int main(void)
 				sendUInt( leftDistanceCounter );
 			}
 			
+			// RESET_MOTOR_DISTANCE1
+			if (strcmp(stringbuffer, "*id1#") == 0)
+			{
+				// init driven distance of motor 1 (encoder)
+				rightDistanceCounter = 0;
+				rightWheelCounter = 0;
+
+				// answer with "ok"
+				put_string("*ok#");
+			}
+			
+			// RESET_MOTOR_DISTANCE2
+			if (strcmp(stringbuffer, "*id2#") == 0)
+			{
+				// init driven distance of motor 2 (encoder)
+				leftDistanceCounter = 0;
+				leftWheelCounter = 0;
+
+				// answer with "ok"
+				put_string("*ok#");
+			}
+			
 		} // RXcompleted
     } // while (1)
 
@@ -377,37 +396,6 @@ int main(void)
 		
 		switch (value)
 		{
-
-			case READ_MOTOR_DISTANCE1:
-				// driven distance of motor 1 (encoder)
-				value = rightDistanceCounter;
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_MOTOR_DISTANCE2:
-				// driven distance of motor 2 (encoder)
-				value = leftDistanceCounter;
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case RESET_MOTOR_DISTANCE1:
-				// reset driven distance of motor 1 (encoder)
-				rightDistanceCounter = 0;
-				rightWheelCounter = 0;
-				break;
-
-			case RESET_MOTOR_DISTANCE2:
-				// reset driven distance of motor 1 (encoder)
-				leftDistanceCounter = 0;
-				leftWheelCounter = 0;
-				break;
-
 			//-------------------------------
 			case MOTOR1_OFF:
 				// delete Motor1 A bit

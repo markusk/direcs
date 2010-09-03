@@ -127,8 +127,9 @@ class SensorThread : public QThread
 		/**
 		Resets the driven distance to 0.
 		@param sensor is the sensor number.
+		@return true on success, false on error
 		*/
-		void resetDrivenDistance(int sensor);
+		bool resetDrivenDistance(int sensor);
 
 		/**
 		This slot enables or disables the simulation mode.

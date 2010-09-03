@@ -283,6 +283,7 @@ void SensorThread::run()
 				// stop();
 			}
 
+
 			//-------------------------------------------
 			// read value from magnetic sensor / compass
 			//-------------------------------------------
@@ -658,44 +659,67 @@ int SensorThread::getDrivenDistance(int sensor)
 }
 
 
-void SensorThread::resetDrivenDistance(int sensor)
+bool SensorThread::resetDrivenDistance(int sensor)
 {
+	QString answer = "error";
+
+
 	if ((sensor < MOTORSENSOR1) || (sensor > DRIVENDISTANCEARRAYSIZE-1))
 	{
-		qDebug("ERROR: wrong motor sensor");
-		return;
+		qDebug("ERROR: wrong motor sensor '%d' at resetDrivenDistance()", sensor);
+		return false;
 	}
 
 	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 	mutex->lock();
 
-	//------------------------------------------------------
-	// reset
-	//------------------------------------------------------
 	switch (sensor)
 	{
 		case MOTORSENSOR1:
-			if (interface1->sendChar(RESET_MOTOR_DISTANCE1) == false)
+			// send command 'init distance 1'
+			if (interface1->sendString("id1") == true)
 			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
-				return;
+				// check if the robot answers with "ok"
+				if ( interface1->receiveString(answer) == true)
+				{
+					if (answer == "*ok#")
+					{
+						// Unlock the mutex
+						mutex->unlock();
+						return true;
+					}
+				}
 			}
+
+			// error
+			mutex->unlock();
+			return false;
 			break;
 		case MOTORSENSOR2:
-			if (interface1->sendChar(RESET_MOTOR_DISTANCE2) == false)
+			// send command 'init distance 2'
+			if (interface1->sendString("id2") == true)
 			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
-				return;
+				// check if the robot answers with "ok"
+				if ( interface1->receiveString(answer) == true)
+				{
+					if (answer == "*ok#")
+					{
+						// Unlock the mutex
+						mutex->unlock();
+						return true;
+					}
+				}
 			}
+
+			// error
+			mutex->unlock();
+			return false;
 			break;
 	}
 
 	// Unlocks the mutex.
 	mutex->unlock();
+	return false;
 }
 
 
