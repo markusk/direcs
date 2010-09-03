@@ -820,9 +820,10 @@ void greenLED(uint8_t state)
 void relais(uint8_t state)
 {
 /*
- 
- TURNED OFF DUE TO timeout ERRORS AT SELECT() STATEMENT AT readAtmelPort at direcs::direcsSerial() !!
- 
+	//
+	//  this is turned OFF due to problems with serial port, when activatin it. Maybe port defect?!
+	//
+	
 	if (state == ON)
 	{
 		// relais on
@@ -835,7 +836,7 @@ void relais(uint8_t state)
 		// (low active!)
 		PORTC |= (1<<PIN1);
 	}
- */
+*/
 }
 
 
