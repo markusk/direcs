@@ -250,6 +250,48 @@ int main(void)
 				put_string("*ok#");
 			}
 			
+			// READ_SENSOR_1
+			if (strcmp(stringbuffer, "*s1#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR1) );
+			}
+			
+			// READ_SENSOR_2
+			if (strcmp(stringbuffer, "*s2#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR2) );
+			}
+			
+			// READ_SENSOR_3
+			if (strcmp(stringbuffer, "*s3#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR3) );
+			}
+			
+			// READ_SENSOR_4
+			if (strcmp(stringbuffer, "*s4#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR4) );
+			}
+			
+			// READ_SENSOR_5
+			if (strcmp(stringbuffer, "*s5#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR5) );
+			}
+			
+			// READ_SENSOR_6
+			if (strcmp(stringbuffer, "*s6#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR6) );
+			}
+			
 			// READ_SENSOR_7 (24 V supply)
 			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
@@ -262,6 +304,13 @@ int main(void)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR8) );
+			}
+			
+			// READ_SENSOR_16
+			if (strcmp(stringbuffer, "*s16#") == 0)
+			{
+				// read ADC and send answer over serial port
+				sendUInt( readADC(SENSOR16) );
 			}
 			
 		} // RXcompleted
