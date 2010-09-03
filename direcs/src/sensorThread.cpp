@@ -1226,6 +1226,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 bool SensorThread::readMotorSensor(short int sensor)
 {
 	int value = 0;
+	QString answer = "error";
 
 	switch (sensor)
 	{
