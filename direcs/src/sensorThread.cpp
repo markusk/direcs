@@ -198,7 +198,7 @@ void SensorThread::run()
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
 
-/* FIXME: deactivated due to errors. when activated, voltage sensor values are 0 or something stupid else!
+
 			//---------------
 			// motor sensors
 			//---------------
@@ -221,8 +221,8 @@ void SensorThread::run()
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
-*/
-			/* TODO: implement reading of motor sensors 3 and 4 !
+
+/* TODO: implement reading of motor sensors 3 and 4 !
 
 			if (readMotorSensor(MOTORSENSOR3) == false)
 			{
@@ -243,7 +243,7 @@ void SensorThread::run()
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
-			*/
+*/
 
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
