@@ -307,10 +307,11 @@ int main(void)
 			}
 			
 			// READ_SENSOR_16
+			// ultra sonic sensor !!
 			if (strcmp(stringbuffer, "*s16#") == 0)
 			{
 				// read ADC and send answer over serial port
-				sendUInt( readADC(SENSOR16) );
+				sendUInt( ultraschall_messung() );
 			}
 			
 		} // RXcompleted
@@ -327,74 +328,6 @@ int main(void)
 		
 		switch (value)
 		{
-
-			case INIT:
-				// updated!
-				break;
-
-			//-------------------------------
-			case READ_SENSOR_1:
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR1);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_2:
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR2);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_3:
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR3);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_4:
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR4);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_5:
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR5);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_6:
-				// read value from the analog digital converter (ADC)
-				value = readADC(SENSOR6);
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
-
-			case READ_SENSOR_16:
-				// ultra sonic sensor !!
-				value = ultraschall_messung();
-				// send MS-Byte
-				UsartTransmit( (uint8_t)(value >> 8) );
-				// send LS-Byte
-				UsartTransmit( (uint8_t)(value) );
-				break;
 
 			case READ_MOTOR_SENSOR1:
 				// motor sensor
