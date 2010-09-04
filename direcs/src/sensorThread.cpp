@@ -269,14 +269,14 @@ void SensorThread::run()
 			//-----------------
 			// driven distance
 			//-----------------
-			if (readDrivenDistance(MOTORDISTANCE1) == false)
+			if (readDrivenDistance(DRIVENDISTANCE1) == false)
 			{
 				// Unlock the mutex.
 				// mutex->unlock();
 				// stop();
 			}
 
-			if (readDrivenDistance(MOTORDISTANCE2) == false)
+			if (readDrivenDistance(DRIVENDISTANCE2) == false)
 			{
 				// Unlock the mutex.
 				// mutex->unlock();
@@ -1358,9 +1358,9 @@ bool SensorThread::readDrivenDistance(short int sensor)
 
 	switch (sensor)
 	{
-		case MOTORDISTANCE1:
+		case DRIVENDISTANCE1:
 			// read sensor
-			if (interface1->sendString("md1") == true)
+			if (interface1->sendString("dd1") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer) == true)
@@ -1369,18 +1369,18 @@ bool SensorThread::readDrivenDistance(short int sensor)
 					if (interface1->convertStringToInt(answer, value))
 					{
 						// store measured value
-						drivenDistance[MOTORDISTANCE1] = value;
+						drivenDistance[DRIVENDISTANCE1] = value;
 					}
 				}
 			}
 
 			// error
-			drivenDistance[MOTORDISTANCE1] = 0;
+			drivenDistance[DRIVENDISTANCE1] = 0;
 			return false;
 			break;
-		case MOTORDISTANCE2:
+		case DRIVENDISTANCE2:
 			// read sensor
-			if (interface1->sendString("md2") == true)
+			if (interface1->sendString("dd2") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer) == true)
@@ -1389,19 +1389,19 @@ bool SensorThread::readDrivenDistance(short int sensor)
 					if (interface1->convertStringToInt(answer, value))
 					{
 						// store measured value
-						drivenDistance[MOTORDISTANCE2] = value;
+						drivenDistance[DRIVENDISTANCE2] = value;
 					}
 				}
 			}
 
 			// error
-			drivenDistance[MOTORDISTANCE2] = 0;
+			drivenDistance[DRIVENDISTANCE2] = 0;
 			return false;
 			break;
 	}
 
 	// this line should be never reached
-	qDebug("WARNING: wrong motor distance number in readDrivenDistance()");
+	qDebug("WARNING: wrong 'driven distance'' number in readDrivenDistance()");
 	return false;
 }
 

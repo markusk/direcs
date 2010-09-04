@@ -327,8 +327,8 @@ class SensorThread : public QThread
 		static const unsigned char DRIVENDISTANCEARRAYSIZE = 2;
 		int drivenDistance[DRIVENDISTANCEARRAYSIZE];
 
-		static const short int MOTORDISTANCE1 = 0;
-		static const short int MOTORDISTANCE2 = 1;
+		static const short int DRIVENDISTANCE1 = 0;
+		static const short int DRIVENDISTANCE2 = 1;
 
 		/**
 		Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.
