@@ -497,7 +497,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 
 	if (n < 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when writing to serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when writing to serial device at DirecsSerial::writeAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 //		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
