@@ -52,7 +52,7 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 	// startup the GUI
 	ui.setupUi(this);
-	
+
 	// do the rest of my init stuff
 	init();
 }
@@ -68,7 +68,7 @@ void Gui::init()
 	//----------------------------------------------------------------------------
 // 	ui.progressBarVoltage1->setRange(0, MAXIMUMVOLTAGE1);
 // 	ui.progressBarVoltage2->setRange(0, MAXIMUMVOLTAGE2);
-	
+
 	// set maximum in cm AND raise the widget (make it topmost)!
 	/*
 	ui.progressBarSensor1->setMaximum(SENSORPROGRESSBARMAXIR);
@@ -137,7 +137,7 @@ Gui::~Gui()
 #ifdef ACTIVELASERVIEW
 	delete pixmapBot2;
 	delete pixmapBot1;
-	
+
 	delete widthLeftCircleFront;
 	delete widthRightCircleFront;
 	delete widthLineFront;
@@ -232,7 +232,7 @@ void Gui::setRobotControls(bool state)
 		// set the state LED to red
 		setLEDHeartbeat(RED);
 	}
-	
+
 	/*
 	TODO: still needed? state already checked in motorControl at lower level. :-)
 	ui.btnPower1->setEnabled(state);
@@ -428,9 +428,9 @@ void Gui::on_btnResetMovement1_clicked()
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR1);
 
- 	// reset labels
+	// reset labels
 	ui.labelDrivenDistance1->setText("0 cm");
- 	ui.labelRevolutions1->setText("0");
+	ui.labelRevolutions1->setText("0");
 }
 
 
@@ -683,7 +683,7 @@ void Gui::showDistanceGraphical(int sensor, int distance)
 {
 	Q_UNUSED(sensor);
 	Q_UNUSED(distance);
-	
+
 /*
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
@@ -783,7 +783,7 @@ void Gui::showVoltage(int sensor, float voltage)
 		case VOLTAGESENSOR1:
 			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
 // 			ui.progressBarVoltage1->setValue(voltage);
-			
+
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE1)
 			{
@@ -802,13 +802,13 @@ void Gui::showVoltage(int sensor, float voltage)
 				// change icon
 				ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
 			}
-			
+
 			return;
 			break;
 		case VOLTAGESENSOR2:
 			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
 //			ui.progressBarVoltage2->setValue(voltage);
-				
+
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE2)
 			{
@@ -827,7 +827,7 @@ void Gui::showVoltage(int sensor, float voltage)
 				// change icon
 				ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
 			}
-			
+
 			return;
 			break;
 	}
@@ -838,8 +838,8 @@ void Gui::showAlarm(short int sensor, bool state)
 {
 	Q_UNUSED(sensor);
 	Q_UNUSED(state);
-	
-/*	
+
+/*
 	if ((sensor < SENSOR1) || (sensor > SENSOR16))
 	{
 		qDebug("error in showAlarm! sensorValue=%d", sensor);
@@ -1196,8 +1196,8 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	ui.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
 //	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
 	ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
-	
-	
+
+
 	// show width in cm with one decimal place (Nachkommastelle)
 	if (width != -1)
 	{
@@ -1778,7 +1778,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	pixmapBot1->setPos(x, y);
 	pixmapBot2->setPos(x, y);
 
-	
+
 	//------------------------------------------------------
 	// change the x and y position of the FRONT laser lines
 	//------------------------------------------------------
@@ -1943,13 +1943,13 @@ void Gui::initLaserView()
 	// (horicontal and vertical middle of the view)
 	laserXPos = (ui.graphicsViewLaser->width()  / 2);
 	laserYPos = (ui.graphicsViewLaser->height() / 2);
-	
+
 
 	// init laser y pos at startup!
 	x = laserXPos;
 	y = laserYPos; // INITIALLASERYPOSFRONT has no effect here, only in on_sliderZoom_valueChanged !!
 
-	
+
 	//--------------
 	// REAR laser
 	//--------------
@@ -2819,8 +2819,8 @@ void Gui::initPlots()
 
 	// get the current application font
 	QFont applicationFont = QApplication::font();
-	
-	
+
+
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 1
 	//--------------------------------------
@@ -2828,10 +2828,10 @@ void Gui::initPlots()
 	qwtPlotCurrent1.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotCurrent1.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotCurrent1.setAxisFont(QwtPlot::axisCnt, applicationFont);
-	
+
 	// set title
 	qwtPlotCurrent1.setTitle("Motor 1 + 2");
-	
+
 	// Set axis scale (instead of using autoscale, which is default)
 	// min (0.0), time (60.0 sec), step width 0=auto
 	qwtPlotCurrent1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
@@ -2846,12 +2846,12 @@ void Gui::initPlots()
 	//--------------------------------------
 	// get the current application font again
 	applicationFont = QApplication::font();
-	
+
 	// set the font for the plot widget
 	qwtPlotCurrent2.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotCurrent2.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotCurrent2.setAxisFont(QwtPlot::axisCnt, applicationFont);
-	
+
 	// set title
 	qwtPlotCurrent2.setTitle("Motor 3 + 4");
 
@@ -2877,8 +2877,8 @@ void Gui::initPlots()
 	curveCurrent4.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveCurrent4.setPen(QPen(labelFillColorRed));
 // 	curveCurrent4.setBrush(labelFillColorRed); // this fills the area under the line
-	
-	
+
+
 	//--------------------------------------
 	// plot curve "VOLTAGE 1"
 	//--------------------------------------
@@ -2888,23 +2888,23 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotVoltage1.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotVoltage1.setAxisFont(QwtPlot::axisCnt, applicationFont);
-	
+
 	// set title
 	qwtPlotVoltage1.setTitle("12 V Battery");
-	
+
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
 	qwtPlotVoltage1.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTVOLTAGE1);
-	
+
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec), step width 10
 	qwtPlotVoltage1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveVoltage1.setRenderHint(QwtPlotItem::RenderAntialiased);
- 	curveVoltage1.setPen(QPen(labelFillColorBlue));
+	curveVoltage1.setPen(QPen(labelFillColorBlue));
 // 	curveVoltage1.setBrush(labelFillColorBlue); // this fills the area under the line
-	
-	
+
+
 	//--------------------------------------
 	// plot curve "MOTOR VOLTAGE" 3 + 4
 	//--------------------------------------
@@ -2914,14 +2914,14 @@ void Gui::initPlots()
 	qwtPlotVoltage2.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotVoltage2.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotVoltage2.setAxisFont(QwtPlot::axisCnt, applicationFont);
-	
+
 	// set title
 	qwtPlotVoltage2.setTitle("24 V Battery");
-	
+
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
 	qwtPlotVoltage2.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTVOLTAGE2);
-	
+
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec), step width 10
 	qwtPlotVoltage2.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
@@ -3007,9 +3007,9 @@ void Gui::showCompassData(float x, float y, float z, float heading)
 	ui.lblCompassY->setText( QString("%1").setNum(y, 'f', 1).append(" deg") );
 	ui.lblCompassZ->setText( QString("%1").setNum(z, 'f', 1).append(" deg") );
 	ui.lblCompassHeading->setText( QString("%1").setNum(heading, 'f', 1).append(" deg") );
-	
+
 // 	ui.qwtCompass->setValue(x);
-	
+
 	// set the 3D OpenGL compass!
 	ui.frameCompass->setAllRotations(x, y, z); // TODO: and what to do with the 'heading'?
 }
@@ -3068,6 +3068,6 @@ QString Gui::removeHtml(QString text)
 		text.remove(start, text.indexOf(">") - start + 1);
 	} while (text.contains(">"));
 	// till the last HTML ">" is found
-	
+
 	return text;
 }

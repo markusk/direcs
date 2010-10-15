@@ -337,7 +337,7 @@ class Gui : public QMainWindow
 		@param z is the z axis value
 		@param heading is the heading of the compass
 		*/
- 		void showCompassData(float x, float y, float z, float heading);
+		void showCompassData(float x, float y, float z, float heading);
 
 		/**
 		Turns the GUI heartbeat/state LED red, green or off.
@@ -493,7 +493,7 @@ class Gui : public QMainWindow
 #endif
 // 		void initCompass();
 		void initCompassView();
-		
+
 #ifdef ACTIVELASERVIEW
 		/**
 		Creates all objects, lines, scene, view etc.
@@ -576,7 +576,7 @@ class Gui : public QMainWindow
 
 		QPixmap pixmap; // for IplImageToQImage()
 
-	    CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
+		CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui
 
@@ -584,7 +584,7 @@ class Gui : public QMainWindow
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */
-		
+
 //		static const float AMPERESMAXPLOTCURVE1 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 1
 //		static const float AMPERESMAXPLOTCURVE2 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 2
 //		static const float AMPERESSTEPPLOTCURVE1 = 500.0; /// The step value for the y axis for plot curve number 1
@@ -644,13 +644,13 @@ class Gui : public QMainWindow
 
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
-		
+
 		static const float MINIMUMVOLTAGE1 = 10.80; // TODO: put min. voltage 1 in the ini-file
 		static const float MINIMUMVOLTAGE2 = 21.60; // TODO: put min. voltage 2 in the ini-file
-		
+
 		static const float MAXIMUMVOLTAGE1 = 12.00; /// for progress bars TODO: put max. voltage 1 in the ini-file
 		static const float MAXIMUMVOLTAGE2 = 24.00; /// for progress bars TODO: put max. voltage 2 in the ini-file
-		
+
 		static const float MAXIMUMPLOTVOLTAGE1 = 13.00; /// for plot widgets TODO: put to ini-file
 		static const float MAXIMUMPLOTVOLTAGE2 = 26.00; /// for plot widgets TODO: put to ini-file
 
@@ -700,7 +700,7 @@ class Gui : public QMainWindow
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
-		
+
 		/**
 		The GUI LED colors
 		*/
