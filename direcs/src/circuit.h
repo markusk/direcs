@@ -64,9 +64,15 @@ class Circuit : public QObject
 	signals:
 		/**
 		This signal emits the robot (circuit) state to all connected slots, to tell them if the robot is ON or OFF
-		@param state can be ON or OFF
+		@param state can be true or false
 		*/
-		void robotState(bool state);	
+		void robotState(bool state);
+
+		/**
+		This signal emits the 3D compass module state; it checks if the module is connected to the Atmel board.
+		@param state can be true or false
+		*/
+		void compassState(bool state);
 
 		/**
 		Sends a string to the GUI log.
