@@ -347,6 +347,21 @@ int main(void)
 				sendUInt( ultraschall_messung() );
 			}
 		
+			// READ 3D COMPASS CONNECTION
+			if (strcmp(stringbuffer, "*cc#") == 0)
+			{
+				// check if micromag is connected to Atmel-Board (PB6 = high)
+				if ( bit_is_set(PINB,PIN6) )
+				{
+					put_string("*ok#");
+				}
+				else
+				{
+					// not connected.
+					put_string("*er#");
+				}
+			}
+		
 			// READ_AXIS_X
 			if (strcmp(stringbuffer, "*cx#") == 0)
 			{
