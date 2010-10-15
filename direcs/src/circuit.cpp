@@ -60,28 +60,8 @@ bool Circuit::initCircuit()
 				// everthing's fine :-)
 				if (answer == "*ok#")
 				{
-					// now check if the 3D compass sensor is connected to the Atmel board
-					if (interface1->sendString("*cc#") == true)
-					{
-						// check if the robot answers with "ok"
-						if ( interface1->receiveString(answer) == true)
-						{
-							// Unlock the mutex
-							mutex->unlock();
-							if (answer != "*ok#")
-							{
-								compassState = false;
-								//emit compassState(false);
-							}
-						}
-					}
-
 					// Unlock the mutex
 					mutex->unlock();
-
-					// compass okay
-					compassState = true;
-					//emit compassState(true);
 
 					// ciruit init okay
 					firstInitDone = true;
@@ -93,20 +73,57 @@ bool Circuit::initCircuit()
 			}
 		}
 
+		// Unlock the mutex.
+		mutex->unlock();
+
+	}
+
+	qDebug("INFO from initCircuit: Robot is OFF.");
+	firstInitDone = true;
+	circuitState = false;
+	emit robotState(false);
+
+	return false;
+}
+
+
+bool Circuit::initCompass()
+{
+	QString answer = "error";
+
+
+	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	{
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+
+		// check if the 3D compass sensor is connected to the Atmel board
+		if (interface1->sendString("*cc#") == true)
+		{
+			// check if the robot answers with "ok"
+			if ( interface1->receiveString(answer) == true)
+			{
+				if (answer == "*ok#")
+				{
+					// Unlock the mutex
+					mutex->unlock();
+
+					compassState = true;
+					//emit compassState(true);
+
+					return true;
+				}
+			}
+		}
 
 		// Unlock the mutex.
 		mutex->unlock();
 
-		qDebug("INFO from initCircuit: Robot is OFF.");
-		firstInitDone = true;
-		circuitState = false;
-		emit robotState(false);
-		compassState = false;
-
-		return false;
 	}
 
-	qDebug("INFO from initCircuit: Robot is OFF.");
+	compassState = false;
+	//emit compassState(false);
+
 	return false;
 }
 

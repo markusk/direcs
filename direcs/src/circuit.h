@@ -54,8 +54,14 @@ class Circuit : public QObject
 		/**
 		Initialises the robot's circuits. It also checks, if the robot is ON or OFF.
 		@return true, when the initialization was fine, so the robot is ON.
-		 */
+		*/
 		bool initCircuit();
+
+		/**
+		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
+		@return true, when connected.
+		*/
+		bool initCompass();
 
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
