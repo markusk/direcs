@@ -44,6 +44,11 @@ class Circuit : public QObject
 		*/
 		bool isConnected();
 
+		/**
+		@return The state of the compass module which is connected to the robots circuit (Atmel board).
+		*/
+		bool compassConnected();
+
 
 	public slots:
 		/**
@@ -68,11 +73,13 @@ class Circuit : public QObject
 		*/
 		void robotState(bool state);
 
-		/**
+		/*
+		/ **
 		This signal emits the 3D compass module state; it checks if the module is connected to the Atmel board.
 		@param state can be true or false
-		*/
+		* /
 		void compassState(bool state);
+		*/
 
 		/**
 		Sends a string to the GUI log.
@@ -86,8 +93,9 @@ class Circuit : public QObject
 		InterfaceAvr *interface1;
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
-		bool robotIsOn; // stores the robot state within this class
+		bool circuitState; // stores the robot state within this class
 		bool firstInitDone;
+		bool compassState; // stores the state of the compass module within this class
 
 		static const bool ON  = true;
 		static const bool OFF = false;
