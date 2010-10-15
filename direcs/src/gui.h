@@ -346,6 +346,12 @@ class Gui : public QMainWindow
 		void setLEDHeartbeat(unsigned char state);
 
 		/**
+		Turns the GUI compass state LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDCompass(unsigned char state);
+
+		/**
 		Turns the CONSOLE mode on or off.
 		If enabled, all log messages are passed to the console.
 		@param state can be true or false.

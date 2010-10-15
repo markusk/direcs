@@ -3032,6 +3032,23 @@ void Gui::setLEDHeartbeat(unsigned char state)
 }
 
 
+void Gui::setLEDCompass(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
+	}
+}
+
+
 void Gui::setConsoleMode(bool state)
 {
 	consoleMode = state;
