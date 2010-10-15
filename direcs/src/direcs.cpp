@@ -511,6 +511,13 @@ void Direcs::init()
 				msgbox.exec();
 			}
 			*/
+
+			if (!consoleMode)
+			{
+				// set GUI LED for compass module
+				// has to be OFF, since the Atmel circuit is OFF
+				gui->setLEDCompass(LEDOFF);
+			}
 		}
 		else
 		{
@@ -551,6 +558,24 @@ void Direcs::init()
 				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 				logfile->appendLog("Robot is ON and answers.");
 
+				// check compass module
+				if (circuit1->initCompass() == true)
+				{
+					gui->appendLog("3D compass module detected.");
+					if (!consoleMode)
+					{
+						gui->setLEDCompass(GREEN);
+					}
+				}
+				else
+				{
+					gui->appendLog("<font color=\"#FF0000\">3D compass module not connected!</font>");
+					if (!consoleMode)
+					{
+						gui->setLEDCompass(RED);
+					}
+				}
+
 				//-------------------------------------------------------
 				// set the read motor speed
 				//-------------------------------------------------------
@@ -564,24 +589,24 @@ void Direcs::init()
 				// move all servos in their default positions
 				//-------------------------------------------------------
 				/* TODO: temporarily deactivated (no servos mounted on the current robot)
-			servos->init();
-			emit message("Servos moved to default positions");
-			*/
+				servos->init();
+				emit message("Servos moved to default positions");
+				*/
 
 				// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
 				// start the heartbeat thread
 				//-----------------------------------------------------------
 				/*
-			if (heartbeat->isRunning() == false)
-			{
-				emit splashMessage("Starting heartbeat thread...");
+				if (heartbeat->isRunning() == false)
+				{
+					emit splashMessage("Starting heartbeat thread...");
 
-				emit message("Starting heartbeat thread...", false);
-				heartbeat->start();
-				emit message("Heartbeat thread started.");
-			}
-			*/
+					emit message("Starting heartbeat thread...", false);
+					heartbeat->start();
+					emit message("Heartbeat thread started.");
+				}
+				*/
 
 				//-----------------------------------------------------------
 				// start the sensor thread for reading the sensors)
