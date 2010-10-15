@@ -38,24 +38,24 @@ class Circuit : public QObject
 	public:
 		Circuit(InterfaceAvr *i, QMutex *m);
 		~Circuit();
-		
+
 		/**
 		@return The state of the robot (true when connected (and aswers), false when not).
 		*/
 		bool isConnected();
-		
-		
+
+
 	public slots:
 		/**
 		Initialises the robot's circuits. It also checks, if the robot is ON or OFF.
 		@return true, when the initialization was fine, so the robot is ON.
 		 */
 		bool initCircuit();
-		
+
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
 		When the class knows this, unnecessary communication with the interface can be avoided.
-		
+
 		@param state can be ON or OFF
 		 */
 		void setRobotState(bool state);
@@ -88,7 +88,7 @@ class Circuit : public QObject
 		static const unsigned char INITANSWER = 64;
 		bool robotIsOn; // stores the robot state within this class
 		bool firstInitDone;
-		
+
 		static const bool ON  = true;
 		static const bool OFF = false;
 };
