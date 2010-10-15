@@ -56,20 +56,40 @@ bool Circuit::initCircuit()
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer) == true)
 			{
-
 				// everthing's fine :-)
 				if (answer == "*ok#")
 				{
+					// now check if the 3D compass sensor is connected to the Atmel board
+					if (interface1->sendString("*cc#") == true)
+					{
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							if (answer != "*ok#")
+							{
+								emit compassState(false);
+							}
+						}
+					}
+
 					// Unlock the mutex
 					mutex->unlock();
 
+					// compass okay
+					emit compassState(true);
+
+					// ciruit init okay
 					firstInitDone = true;
 					robotIsOn = true;
 					emit robotState(true);
+
 					return true;
 				}
 			}
 		}
+
 
 		// Unlock the mutex.
 		mutex->unlock();
