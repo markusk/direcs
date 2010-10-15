@@ -1,27 +1,34 @@
 #include "main.h"
-
+
+
 
 #ifndef F_CPU
 #define F_CPU 		16000000
 #endif
-
+
+
 //#include "/usr/local/avr/include/avr/delay.h"
-
+
+
 
 uint8_t leftWheelCounter = 0;
 uint8_t rightWheelCounter = 0;
-
+
+
 //uint16_t leftRevolutionsCounter = 0;
 //uint16_t rightRevolutionsCounter = 0;
-
+
+
 uint16_t leftDistanceCounter = 0;
 uint16_t rightDistanceCounter = 0;
-
+
+
 //uint8_t camPanLSwitch = 0;
 //uint8_t camPanRSwitch = 0;
 //uint8_t camTiltLSwitch = 0;
 //uint8_t camTiltRSwitch = 0;
-
+
+
 int main(void)
 {
 	// usart stuff
@@ -29,22 +36,28 @@ int main(void)
 	TXcompleted = 1;	// Flag, String komplett gesendet
 	setStarter(42);    //42 = '*'
 	setTerminator(35); //35 = '#'
-
+
+
 	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
-
+
+
 	leftWheelCounter = 0;
 	rightWheelCounter = 0;
-
+
+
 //	leftRevolutionsCounter = 0;
 //	rightRevolutionsCounter = 0;
-
+
+
 	leftDistanceCounter = 0;
 	rightDistanceCounter = 0;
-
+
+
 	//-----------------
 	// I/O definitions
 	//-----------------
-
+
+
 	// switch port C bits to input / output
 	//
 	// Bit0 = yellow LED
@@ -59,16 +72,19 @@ int main(void)
 	
 	// switch some bits on port A to input (camera pan tilt end switches)
 	//DDRA &= ~((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3));
-
+
+
 	// switch port L (all PINS) to output [drive motor 1 to 3]
 	DDRL = 0xff;
-
+
+
 	// switch some bits on port D to output [read LED, motor 4]
 	DDRD |= (1 << DDD5) | (1 << DDD6) | (1 << DDD7);
 	
 	// switch some bits on port G to output [motor 4 pwm]
 	DDRG |= (1<<PIN5);
-
+
+
 	// switch port H (all PINS) to output [servos]
 	DDRH = 0xff;
 	// switch some bits on port E to output [2 more servos]
@@ -76,16 +92,20 @@ int main(void)
 	
 	// red LED on. Now we know, that the program runs.
 	redLED(ON);
-
+
+
 	// yelow LED off
 	yellowLED(OFF);
-
+
+
 	// green LED off
 	greenLED(OFF);
-
+
+
 	// flashlight off
 	relais(OFF);
-
+
+
 	// turn all drive motor bits off (except PWM bits)
 	// motor 1
 	PORTL &= ~(1<<PIN0);
@@ -99,17 +119,20 @@ int main(void)
 	// motor 4
 	PORTD &= ~(1<<PIN6);
 	PORTD &= ~(1<<PIN7);
-
+
+
 
 	//-------------------------------------------------------------
 	// no interrupts please!
 	// this is *here* for setting the interrupt control registers
 	//-------------------------------------------------------------
 	cli();
-
+
+
 	// init AD converter with Interrrupt etc.
 	// initADC();
-
+
+
 	// turn OFF "power saving mode" for AD converter (turn on power for ADC)
 	PRR0 &= ~(1<<PRADC);
 	
@@ -120,7 +143,8 @@ int main(void)
 	// Bit5 = Motor 2 Encoder 1
 	// Bit6 = Motor 2 Encoder 2
 	DDRJ &= ~((1 << DDJ3) | (1 << DDJ4) | (1 << DDJ5) | (1 << DDJ6));
-
+
+
 	// switch some bits on port K to input
 	//
 	// Bit0 = Cam R Tilt Endswitch
@@ -151,13 +175,15 @@ int main(void)
 	//----------------------------------------------------------------------------
 	// initialzie SPI stuff
 	//----------------------------------------------------------------------------
-
+
+
 	// turn OFF "power saving mode" for SPI (serial peripheral interface)!
 	// (turn on power for SPI)
 	PRR0 &= ~(1<<PRSPI);
 	
 	init_spi();
-
+
+
 	// initialize the PWM timer (with compare value 100)  [this is the motor speed!]
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 100 * 64 µs = 6400 µs = 6,4 ms
@@ -170,10 +196,12 @@ int main(void)
 	setPWMwidth(3, 100);
 	// drive motor 4
 	setPWMwidth(4, 100);
-
+
+
 	// start the motor PWM timers
  	startPWM();
-
+
+
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 12 * 64 µs = 768 µs ?!?
@@ -183,7 +211,8 @@ int main(void)
 // 	setServoPosition(4, 19); // <- exact position now in the mrs.ini!
 // 	setServoPosition(5, 24); // <- exact position now in the mrs.ini!
 // 	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-
+
+
 	// start the servo PWM timer
 // 	startPWMServo(1);
 // 	startPWMServo(2);
@@ -191,11 +220,13 @@ int main(void)
 // 	startPWMServo(4);
 // 	startPWMServo(5);
 // 	startPWMServo(6);
-
+
+
 
 	//-----------------------------------------------------
 	//-----------------------------------------------------
-
+
+
 	// UART 3 konfigurieren
 	UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
 	UBRR3L = (unsigned char) USART_BAUD_SELECT;
@@ -216,11 +247,13 @@ int main(void)
 		{
 			// ja, dann String lesen und uart_rx_flag löschen
 			get_string(stringbuffer);
-
+
+
 			//--------------------------
 			// check what was received
 			//--------------------------
-
+
+
 			// RESET / INIT
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
@@ -396,7 +429,8 @@ int main(void)
 				// init driven distance of motor 1 (encoder)
 				rightDistanceCounter = 0;
 				rightWheelCounter = 0;
-
+
+
 				// answer with "ok"
 				put_string("*ok#");
 			}
@@ -407,22 +441,27 @@ int main(void)
 				// init driven distance of motor 2 (encoder)
 				leftDistanceCounter = 0;
 				leftWheelCounter = 0;
-
+
+
 				// answer with "ok"
 				put_string("*ok#");
 			}
 			
 		} // RXcompleted
     } // while (1)
-
+
+
 	//-----------------------------------------------------
 	//-----------------------------------------------------
-
+
+
 /*
-
+
+
 	while(1)
 	{
-
+
+
 		
 		switch (value)
 		{
@@ -433,27 +472,31 @@ int main(void)
 				// delete Motor1 B bit
 				PORTL &= ~(1<<PIN1);
 				break;
-
+
+
 			case MOTOR1_CLOCKWISE:
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
 				// set Motor1 B bit
 				PORTL |= (1<<PIN1);
 				break;
-
+
+
 			case MOTOR1_COUNTERCLOCKWISE:
 				// set Motor1 A bit
 				PORTL |= (1<<PIN0);
 				// delete Motor1 B bit
 				PORTL &= ~(1<<PIN1);
 				break;
-
+
+
 			case MOTOR1_SPEED_SET:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setPWMwidth(1, value);
 				break;
-
+
+
 			//-------------------------------
 			case MOTOR2_OFF:
 				// delete Motor2 A bit
@@ -461,27 +504,31 @@ int main(void)
 				// delete Motor2 B bit
 				PORTL &= ~(1<<PIN3);
 				break;
-
+
+
 			case MOTOR2_CLOCKWISE:
 				// delete Motor2 A bit
 				PORTL &= ~(1<<PIN2);
 				// set Motor2 B bit
 				PORTL |= (1<<PIN3);
 				break;
-
+
+
 			case MOTOR2_COUNTERCLOCKWISE:
 				// set Motor2 A bit
 				PORTL |= (1<<PIN2);
 				// delete Motor2 B bit
 				PORTL &= ~(1<<PIN3);
 				break;
-
+
+
 			case MOTOR2_SPEED_SET:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setPWMwidth(2, value);
 				break;
-
+
+
 			//-------------------------------
 			case MOTOR3_OFF:
 				// delete Motor3 A bit
@@ -489,7 +536,8 @@ int main(void)
 				// delete Motor3 B bit
 				PORTL &= ~(1<<PIN7);
 				break;
-
+
+
 			case MOTOR3_CLOCKWISE: // cam pan R
 				// only, when end switch is clear
 // 				if ( bit_is_clear(PINK,PIN2) )
@@ -500,7 +548,8 @@ int main(void)
 					PORTL |= (1<<PIN7);
 // 				}
 				break;
-
+
+
 			case MOTOR3_COUNTERCLOCKWISE: // cam pan L
 				// only, when end switch is clear
 // 				if ( bit_is_clear(PINK,PIN3) )
@@ -511,13 +560,15 @@ int main(void)
 					PORTL &= ~(1<<PIN7);
 // 				}
 				break;
-
+
+
 			case MOTOR3_SPEED_SET:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setPWMwidth(3, value);
 				break;
-
+
+
 			//-------------------------------
 			case MOTOR4_OFF:
 				// delete Motor4 A bit
@@ -525,7 +576,8 @@ int main(void)
 				// delete Motor4 B bit
 				PORTD &= ~(1<<PIN7);
 				break;
-
+
+
 			case MOTOR4_CLOCKWISE: // cam tilt top
 				// only, when end switch is clear
 // 				if ( bit_is_clear(PINK,PIN1) )
@@ -536,7 +588,8 @@ int main(void)
 					PORTD |= (1<<PIN7);
 // 				}
 				break;
-
+
+
 			case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
 // 				if ( bit_is_clear(PINK,PIN0) )
 // 				{
@@ -546,7 +599,8 @@ int main(void)
 					PORTD &= ~(1<<PIN7);
 // 				}
 				break;
-
+
+
 			case MOTOR4_SPEED_SET:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
@@ -692,40 +746,46 @@ int main(void)
 				value = UsartReceive();
 				setServoPosition(1, value);
 				break;
-
+
+
 			case SET_SERVO2:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(2, value);
 				break;
-
+
+
 			case SET_SERVO3:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(3, value);
 				break;
-
+
+
 
 			case SET_SERVO4:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(4, value);
 				break;
-
+
+
 
 			case SET_SERVO5:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(5, value);
 				break;
-
+
+
 
 			case SET_SERVO6:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(6, value);
 				break;
-
+
+
 			//-------------------------------
 			case FLASHLIGHT_ON:
 				relais(ON);
@@ -735,26 +795,30 @@ int main(void)
 				relais(OFF);
 				yellowLED(OFF);
 				break;
-
+
+
 			//-------------------------------
 			case READ_CONTACT1:
 				// contact cam tilt R/BOTTOM
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN3) );
 				break;
-
+
+
 			case READ_CONTACT2:
 				// contact cam tilt L/TOP
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN2) );
 				break;
-
+
+
 			case READ_CONTACT3:
 				// contact cam pan R
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN1) );
 				break;
-
+
+
 			case READ_CONTACT4:
 				// contact cam pan L
 				// send 1 Byte (8 bit!)
@@ -763,11 +827,13 @@ int main(void)
 		}
 	} // while (1)
 */
-
+
+
 	// this line is never reached!
 	return 0;
 }
-
+
+
 
 void sendUInt(uint16_t value)
 {
@@ -775,24 +841,30 @@ void sendUInt(uint16_t value)
 	
 	// start the answer string to send with a '*'
 	stringbuffer[0] = starter;
-
+
+
 	// convert int to ascii (to Basis 10)
 	// (but don't overwrite the first char which is the 'starter' *.)
 	itoa(value, stringbuffer+1, 10);
-
+
+
 	// get the length of the string
 	length = strlen(stringbuffer);
-
+
+
 	// add m string terminator '#' at the end of the buffer
 	stringbuffer[length] = terminator;
-
+
+
 	// String mit \0 terminieren
 	stringbuffer[length+1] = 0;
-
+
+
 	// send answer
 	put_string(stringbuffer);
 }
-
+
+
 
 void redLED(uint8_t state)
 {
@@ -809,7 +881,8 @@ void redLED(uint8_t state)
 		PORTD |= (1<<PIN5);
 	}
 }
-
+
+
 
 void yellowLED(uint8_t state)
 {
@@ -826,7 +899,8 @@ void yellowLED(uint8_t state)
 		PORTC |= (1<<PIN0);
 	}
 }
-
+
+
 
 void greenLED(uint8_t state)
 {
@@ -843,7 +917,8 @@ void greenLED(uint8_t state)
 		PORTC |= (1<<PIN4);
 	}
 }
-
+
+
 
 void relais(uint8_t state)
 {
@@ -866,7 +941,8 @@ void relais(uint8_t state)
 	}
 */
 }
-
+
+
 
 /*
 SIGNAL(PCINT1_vect) // todo: replace this old SIGNAL by ISR with correct _vect name!!
@@ -879,10 +955,12 @@ SIGNAL(PCINT1_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 	//
 	// At each interrupt the wheel moves:  195 mm / 240 = 1,783 mm.
 	// For 10 mm (1 cm) we need:  10 mm / 1,783mm = 5,60747 interrupts  ->  After 6 interruupts the robot moves 10 mm (1 cm).
-
+
+
 
 	//static uint8_t value = 0;
-
+
+
 
 	//----------------------------
 	// if left wheel moves
@@ -890,12 +968,14 @@ SIGNAL(PCINT1_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 	if ( bit_is_set(PINJ,PIN3) )
 	{
 		leftWheelCounter++;
-
+
+
 		if (leftWheelCounter == 6)
 		{
 			leftDistanceCounter++;
 			leftWheelCounter = 0;
-
+
+
 			//
 			// TEST TEST TEST
 			//
@@ -914,14 +994,16 @@ SIGNAL(PCINT1_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 			//
 		}
 	}
-
+
+
 	//----------------------------
 	// if right wheel moves
 	//----------------------------
 	if ( bit_is_set(PINJ,PIN6) )
 	{
 		rightWheelCounter++;
-
+
+
 		if (rightWheelCounter == 6)
 		{
 			rightDistanceCounter++;
@@ -940,14 +1022,16 @@ SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 	{
 		// turn off MOTOR3 pan L bit (A)
 //		PORTL &= ~(1<<PIN6);
-
+
+
 //		camPanLSwitch = 1;
 	}
 	else
 	{
 //		camPanLSwitch = 0;
 	}
-
+
+
 	//----------------------------
 	// if Cam Pan R switch set
 	//----------------------------
@@ -955,14 +1039,16 @@ SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 	{
 		// turn off MOTOR3 pan R bit (B)
 //		PORTL &= ~(1<<PIN7);
-
+
+
 //		camPanRSwitch = 1;
 	}
 	else
 	{
 //		camPanRSwitch = 0;
 	}
-
+
+
 	//----------------------------
 	// if Cam Tilt L/TOP switch set
 	//----------------------------
@@ -970,14 +1056,16 @@ SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 	{
 		// turn off MOTOR4 tilt L bit (A)
 //		PORTD &= ~(1<<PIN6);
-
+
+
 //		camTiltLSwitch = 1;
 	}
 	else
 	{
 //		camTiltLSwitch = 0;
 	}
-
+
+
 	//----------------------------
 	// if Cam Tilt R/BOTTOM switch set
 	//----------------------------
@@ -985,7 +1073,8 @@ SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 	{
 		// turn off MOTOR4 tilt R bit (B)
 //		PORTD &= ~(1<<PIN7);
-
+
+
 //		camTiltRSwitch = 1;
 	}
 	else
@@ -994,7 +1083,8 @@ SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect n
 	}
 }
 */
-
+
+
 
 void long_delay(uint16_t ms)
 {
