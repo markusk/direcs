@@ -88,7 +88,7 @@ struct CleanExit
 */
 class Direcs : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 
 	public:
@@ -123,7 +123,7 @@ class Direcs : public QObject
 		@param command
 		*/
 		void drive(const unsigned char command);
-		
+
 		/**
 		Increases the driving speed to its maximum speed. This is used to have a smooth driveaway of the robot and works together with a timer.
 		*/
@@ -221,7 +221,7 @@ class Direcs : public QObject
 		@sa logicalUnit()
 		*/
 		void showPreferredDirection(QString direction);
-		
+
 		/**
 		Let the other classes know if we are in the console mode (activated via command-line argument)
 		@sa Gui::setConsoleMode()
@@ -274,7 +274,7 @@ class Direcs : public QObject
 		Reads all settings for the robot from an ini-file.
 		*/
 		void readSettings();
-		
+
 		/**
 		Checks the command-line arguments passed to the program.
 		*/
@@ -287,7 +287,7 @@ class Direcs : public QObject
 		*/
 		void resetDrivingSpeedTimer(void);
 
-		
+
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
 		//Events *myEvent; /// my event filter for grabbing ctrl+c in the console mode
@@ -451,7 +451,7 @@ class Direcs : public QObject
 		/// The voltage sensors
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
-		
+
 		/// The minimum voltages for an acoustic and optical alarm. @sa Gui::showVoltage
 		static const float MINIMUMVOLTAGE1 = 10.80; // TODO: put min. voltage 1 in the ini-file
 		static const float MINIMUMVOLTAGE2 = 21.60; // TODO: put min. voltage 2 in the ini-file
@@ -492,6 +492,13 @@ class Direcs : public QObject
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+
+		/**
+		The GUI LED colors
+		*/
+		static const unsigned char LEDOFF	= 0;
+		static const unsigned char RED		= 1;
+		static const unsigned char GREEN	= 2;
 };
 
 #endif
