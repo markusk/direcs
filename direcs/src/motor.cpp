@@ -29,13 +29,13 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	// Initialize the motor step counters
 	//steps1 = 0;
 	//steps2 = 0;
- 
+
 	// Initialize the motor revolutions counters
 	revolutions1 = 0;
 	revolutions2 = 0;
 	revolutions3 = 0;
 	revolutions4 = 0;
- 
+
 	// Initialize the distance to next objects in front of the robot
 	drivenDistance1 = 0;
 	drivenDistance2 = 0;
@@ -48,7 +48,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	motor3Speed = 20;
 	motor4Speed = 20;
 	motorSpeedAllMotors = 20;
-	
+
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
 
@@ -93,7 +93,7 @@ unsigned int Motor::getRevolutions(unsigned char motor)
 			return revolutions4;
 			break;
 	}
-	
+
 	return 0;
 }
 
@@ -115,7 +115,7 @@ double Motor::getDrivenDistance(unsigned char motor)
 			return drivenDistance4;
 			break;
 	}
-	
+
 	return 0;
 }
 
@@ -123,12 +123,12 @@ double Motor::getDrivenDistance(unsigned char motor)
 void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
 {
 	unsigned char command = BOTSTOP;
-	
+
 	if (robotState == ON)
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
-		
+
 		switch (motor)
 		{
 			//----------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						command = BOTWAIT;
 						break;
 				}
-					
+
 				// send command to bot
 				if (interface1->sendChar(command) == false)
 				{
@@ -223,18 +223,18 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						return;
 					}
 				}
-					
+
 				if (direction == SAME)
 				{
 					// don't change the direction (motor was only turned on or off)!
 				}
-		
+
 				// Unlocks the mutex
 				mutex->unlock();
-			
+
 				break;
-	
-	
+
+
 			//-------------------------
 			// Motor 2
 			//-------------------------
@@ -256,12 +256,12 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						return;
 					}
 				}
-		
+
 				//
 				//   A T T E N T I O N :
 				//
 				//   Because of the right-left reversed mounting of one of the motors
-				//   the control-logic for CLOCKWISE and COUNTERCLOCKWISE could be used 
+				//   the control-logic for CLOCKWISE and COUNTERCLOCKWISE could be used
 				//   reversed in this method. And only in this method!
 				//   Because of this reversed logic the commands could swapped here!
 				//   (counterclockwise = clockwise and vice versa)
@@ -291,18 +291,18 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						return;
 					}
 				}
-				
+
 				if (direction == SAME)
 				{
 					// don't change the direction (motor was only turned on or off)!
 				}
-				
+
 				// Unlocks the mutex
 				mutex->unlock();
-			
+
 				break;
-	
-	
+
+
 			//-------------------------
 			// Motor 3
 			//------------------------
@@ -348,18 +348,18 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						return;
 					}
 				}
-					
+
 				if (direction == SAME)
 				{
 					// don't change the direction (motor was only turned on or off)!
 				}
-		
+
 				// Unlocks the mutex
 				mutex->unlock();
-				
+
 				break;
-	
-	
+
+
 			//-------------------------
 			// Motor 4
 			//------------------------
@@ -416,18 +416,18 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						return;
 					}
 				}
-					
+
 				if (direction == SAME)
 				{
 					// don't change the direction (motor was only turned on or off)!
 				}
-		
+
 				// Unlocks the mutex
 				mutex->unlock();
-		
+
 				break;
-	
-	
+
+
 	/*
 			//-------------------------
 			// stepper 1
@@ -593,9 +593,9 @@ void Motor::parkStepper(unsigned char motor)
 void Motor::calculateMovement()
 {
 /* test
-	
+
 	// TODO: (not implemented in robot hardware and in avr code!)
-	
+
 	//--------------------------------------------------------------------------
 	// if motor 1 is ON, step counter + 1
 	//--------------------------------------------------------------------------
@@ -610,7 +610,7 @@ void Motor::calculateMovement()
 		// set the label text
 		ui.labelSteps1->setText(str);
 
-		
+
 		// Measure driven distance and display it
 		//
 		//  One motor-step = 1,8 -> 360 = 200 steps = one revolution
@@ -620,7 +620,7 @@ void Motor::calculateMovement()
 		//
 		// TODO: check the conversion value and make it a const!
 		drivenDistance1 += 0.1036725;
-		
+
 		//
 		// cut all digits after the comma / point
 		// for nice displaying the string in a label.
@@ -649,8 +649,8 @@ void Motor::calculateMovement()
 			ui.labelRevolutions1->setText(str);
 		}
 	} // Motor 1 on
-	
-	
+
+
 	//--------------------------------------------------------------------------
 	// if motor 2 is ON, step counter + 1
 	//--------------------------------------------------------------------------
@@ -661,7 +661,7 @@ void Motor::calculateMovement()
 		// set the label text
 		ui.labelSteps2->setText(str);
 
-		
+
 		// Measure driven distance and display it
 		//
 		//  One motor-step = 1,8 -> 360 = 200 steps = one revolution
@@ -671,7 +671,7 @@ void Motor::calculateMovement()
 		//
 		// TODO: check the conversion value and make it a const!
 		drivenDistance2 += 0.1036725;
-		
+
 		//
 		// cut all digits after the comma / point
 		// for nice displaying the string in a label.
@@ -701,7 +701,7 @@ void Motor::calculateMovement()
 
 		}
 	} // Motor 2 on
-test */	
+test */
 }
 
 
@@ -713,10 +713,10 @@ void Motor::resetMovementCounter(short int motor)
 		{
 			// Initialize the motor step counters
 			//steps1 = 0;
-		 
+
 			// Initialize the motor revolutions counters
 			revolutions1 = 0;
-		 
+
 			// Initialize the distance to next objects in front of the robot
 			drivenDistance1 = 0;
 			return;
@@ -726,10 +726,10 @@ void Motor::resetMovementCounter(short int motor)
 		{
 			// Initialize the motor step counters
 			//steps2 = 0;
-		 
+
 			// Initialize the motor revolutions counters
 			revolutions2 = 0;
-		 
+
 			// Initialize the distance to next objects in front of the robot
 			drivenDistance2 = 0;
 			return;
@@ -739,10 +739,10 @@ void Motor::resetMovementCounter(short int motor)
 		{
 			// Initialize the motor step counters
 			//steps3 = 0;
-		 
+
 			// Initialize the motor revolutions counters
 			revolutions3 = 0;
-		 
+
 			// Initialize the distance to next objects in front of the robot
 			drivenDistance3 = 0;
 			return;
@@ -752,10 +752,10 @@ void Motor::resetMovementCounter(short int motor)
 		{
 			// Initialize the motor step counters
 			//steps4 = 0;
-		 
+
 			// Initialize the motor revolutions counters
 			revolutions4 = 0;
-		 
+
 			// Initialize the distance to next objects in front of the robot
 			drivenDistance4 = 0;
 			return;
@@ -775,13 +775,13 @@ void Motor::setMotorSpeed(int motor, int speed)
 		{
 			speed = 0;
 		}
-		
+
 		if (speed > 255) // TODO: check if this max value is okay, since we have an int here now. sa: direcsAcr for max values!
 		{
 			speed = 255;
 		}
-		
-		
+
+
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 		switch (motor)
@@ -805,7 +805,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 						return;
 					}
 				}
-				else	
+				else
 				{
 					// Unlock the mutex.
 					mutex->unlock();
@@ -829,7 +829,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 						return;
 					}
 				}
-				else	
+				else
 				{
 					// Unlock the mutex.
 					mutex->unlock();
@@ -837,7 +837,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 					return;
 				}
 				break;
-				
+
 			case MOTOR2:
 				// store the speed
 				motor2Speed = speed;
@@ -853,7 +853,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 						return;
 					}
 				}
-				else	
+				else
 				{
 					// Unlock the mutex.
 					mutex->unlock();
@@ -861,7 +861,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 					return;
 				}
 				break;
-		
+
 			case MOTOR3:
 				// store the speed
 				motor3Speed = speed;
@@ -877,7 +877,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 						return;
 					}
 				}
-				else	
+				else
 				{
 					// Unlock the mutex.
 					mutex->unlock();
@@ -885,7 +885,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 					return;
 				}
 				break;
-				
+
 			case MOTOR4:
 				// store the speed
 				motor4Speed = speed;
@@ -901,7 +901,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 						return;
 					}
 				}
-				else	
+				else
 				{
 					// Unlock the mutex.
 					mutex->unlock();
@@ -910,7 +910,7 @@ void Motor::setMotorSpeed(int motor, int speed)
 				}
 				break;
 		} // switch
-		
+
 		// Unlock the mutex.
 		mutex->unlock();
 	} // robot is ON
@@ -941,7 +941,7 @@ int Motor::getMotorSpeed(int motor)
 			return motor4Speed;
 			break;
 	}
-	
+
 	return -1;
 }
 
@@ -952,10 +952,10 @@ void Motor::flashlight(bool state)
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
-		
+
 		if (state == ON)
 		{
-			
+
 			if (interface1->sendChar(FLASHLIGHT_ON) == false)
 			{
 				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
@@ -974,7 +974,7 @@ void Motor::flashlight(bool state)
 				return;
 			}
 		}
-		
+
 		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 		mutex->unlock();
 	} // robot is ON

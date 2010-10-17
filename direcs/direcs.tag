@@ -127,6 +127,13 @@
       <anchor>a18e13c9ac88403c42395bb0af487eb2d</anchor>
       <arglist></arglist>
     </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>READ_TIMEOUT_ATMEL</name>
+      <anchorfile>direcsSerial_8h.html</anchorfile>
+      <anchor>aada856e0556b3793dd5ca4f73d47b6c7</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>gui.cpp</name>
@@ -2339,10 +2346,24 @@
       <arglist>()</arglist>
     </member>
     <member kind="slot">
+      <type>bool</type>
+      <name>initCompass</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a18ce18db0e4c703bd7fd05891f0a943a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
       <type>void</type>
       <name>setRobotState</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a967d7fef9e9652d1e9cf84d35ce21f42</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>compassState</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>ae075af673584d7fdbee78d6dca290144</anchor>
       <arglist>(bool state)</arglist>
     </member>
     <member kind="signal">
@@ -2368,6 +2389,13 @@
     </member>
     <member kind="function">
       <type>bool</type>
+      <name>compassConnected</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a44db9d152a53666a0ef1138746bf5a37</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
       <name>isConnected</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a97d003f5dc42059649b895d405110b7c</anchor>
@@ -2379,6 +2407,20 @@
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a1134e16f26a878377f4d502bff111b9e</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>circuitState</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a0d13c86514aedeaa50f94d2967dc762f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>compassCircuitState</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a902f4c4c2ee18244a5a0f1cb9c97588d</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
@@ -2399,13 +2441,6 @@
       <name>mutex</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a3dba8e1656340fc0789d37491cfadfba</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>robotIsOn</name>
-      <anchorfile>classCircuit.html</anchorfile>
-      <anchor>a8b7692fb69b51bffbc72e6c5485f3ae4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -2811,6 +2846,13 @@
       <anchorfile>classConsoleGui.html</anchorfile>
       <anchor>afe1b7a1544c5d7399747498e9eac923b</anchor>
       <arglist>(QString text, bool CR=true, bool sayIt=false)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>appendSerialLog</name>
+      <anchorfile>classConsoleGui.html</anchorfile>
+      <anchor>a2c30eeabe9b1facd3f49f35f0b4297c2</anchor>
+      <arglist>(QString text, bool CR=true)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -3818,10 +3860,31 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>laserscannerMounting</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a255b1da99420a70044b0dd1936b773ab</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>bool</type>
       <name>laserScannerRearFound</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>ac07675dcd297c5b7a55ab73e0e7e68e1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>laserscannerTypeFront</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ac07f4214dd5b77ca841994b6224bff0d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>laserscannerTypeRear</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a241b4485fb91eb915114850b76caf7c1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3892,13 +3955,6 @@
       <name>motors</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a7e6751104b95e2ecbef4df02d8366720</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>mountingLaserscanner</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>abe1c750eb5a1da36a057607a8c570362</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -4056,20 +4112,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>typeLaserscannerFront</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a324e84f04d9525aa2fbe7a6aa68a492b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QString</type>
-      <name>typeLaserscannerRear</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a3e9e9d96338876494ce40d38101ed19b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>bool</type>
       <name>useCamera</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -4130,6 +4172,13 @@
       <name>FORWARD</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>aad74fe3aa6a92f431756a965d52bc1f8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>GREEN</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a6f5c17c735c804fdff0f55c160b7223a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4200,6 +4249,13 @@
       <name>LASER5</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a86368e13210cbcaeeac1b34ed37330c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>LEDOFF</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>aa8f770bf332301bc54d435bbcfa7e195</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4424,6 +4480,13 @@
       <name>READ_AXIS_Z</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a3135834bd3d8e8ac0e4e1ca625658534</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RED</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a4af079c6c47c144e0aa0bc5577374fa5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -5050,6 +5113,13 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>ac300653db7c7f48cac3e35f52a8eee27</anchor>
       <arglist>(short int laserscanner, float resolution)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLEDCompass</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aabcfdee1baa153d5bc055394b28f07e6</anchor>
+      <arglist>(unsigned char state)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -6839,6 +6909,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>convertStringToInt</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a09063dbc14dea9e0a6562689380fdd04</anchor>
+      <arglist>(QString string, int &amp;value)</arglist>
+    </member>
+    <member kind="function">
       <type></type>
       <name>InterfaceAvr</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
@@ -6868,10 +6945,24 @@
     </member>
     <member kind="function">
       <type>bool</type>
+      <name>receiveString</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a06730c6c7873ccfad0404345d5dc2c89</anchor>
+      <arglist>(QString &amp;string)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
       <name>sendChar</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
       <anchor>ab65e275f6616bba685a7df2b19e2eb0e</anchor>
       <arglist>(unsigned char character)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>sendString</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a1f537b5a5d758ec55ba21101e3eece4a</anchor>
+      <arglist>(QString string)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -6899,6 +6990,20 @@
       <name>ON</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
       <anchor>ac970e1c228d353e01969d70617625d9b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const char</type>
+      <name>starter</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a81fb58e2b981a8e77a2446c82910682a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const char</type>
+      <name>terminator</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a5bc0f549ac21710f88f5ad90fce53752</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11377,10 +11482,10 @@
     <name>SensorThread</name>
     <filename>classSensorThread.html</filename>
     <member kind="slot">
-      <type>void</type>
+      <type>bool</type>
       <name>resetDrivenDistance</name>
       <anchorfile>classSensorThread.html</anchorfile>
-      <anchor>ae19eaf3f93d668d187f91872429eec7d</anchor>
+      <anchor>a788f34cd7b30509c281ce5546820d7af</anchor>
       <arglist>(int sensor)</arglist>
     </member>
     <member kind="slot">
@@ -11783,6 +11888,20 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>DRIVENDISTANCE1</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>a98b191e46698fa82eacee6dade3a11f5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>DRIVENDISTANCE2</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>af7b08a2e32d110da488ae2ce6c776bca</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>DRIVENDISTANCEARRAYSIZE</name>
       <anchorfile>classSensorThread.html</anchorfile>
@@ -11815,20 +11934,6 @@
       <name>LEFT</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>a88c927f60115b9d35013f4aa34151220</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>MOTORDISTANCE1</name>
-      <anchorfile>classSensorThread.html</anchorfile>
-      <anchor>ae42fa7484d135270bef192fc2745201a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const short int</type>
-      <name>MOTORDISTANCE2</name>
-      <anchorfile>classSensorThread.html</anchorfile>
-      <anchor>a2ca34a5d17a8a3bcd090d08696843eb8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
