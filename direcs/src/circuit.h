@@ -79,13 +79,12 @@ class Circuit : public QObject
 		*/
 		void robotState(bool state);
 
-		/*
-		/ **
+		/**
 		This signal emits the 3D compass module state; it checks if the module is connected to the Atmel board.
+		Not in use, at the moment...
 		@param state can be true or false
-		* /
-		void compassState(bool state);
 		*/
+		void compassState(bool state);
 
 		/**
 		Sends a string to the GUI log.
@@ -101,7 +100,7 @@ class Circuit : public QObject
 		static const unsigned char INITANSWER = 64;
 		bool circuitState; // stores the robot state within this class
 		bool firstInitDone;
-		bool compassState; // stores the state of the compass module within this class
+		bool compassCircuitState; // stores the state of the compass module within this class
 
 		static const bool ON  = true;
 		static const bool OFF = false;

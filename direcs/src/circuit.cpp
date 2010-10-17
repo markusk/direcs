@@ -28,7 +28,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 
 	circuitState = true; // We think positive
 	firstInitDone = false;
-	compassState = false;
+	compassCircuitState = false;
 }
 
 
@@ -108,8 +108,8 @@ bool Circuit::initCompass()
 					// Unlock the mutex
 					mutex->unlock();
 
-					compassState = true;
-					//emit compassState(true);
+					compassCircuitState = true;
+					emit compassState(true);
 
 					return true;
 				}
@@ -121,8 +121,8 @@ bool Circuit::initCompass()
 
 	}
 
-	compassState = false;
-	//emit compassState(false);
+	compassCircuitState = false;
+	emit compassState(false);
 
 	return false;
 }
@@ -150,7 +150,7 @@ bool Circuit::compassConnected()
 		firstInitDone = true;
 	}
 
-	return compassState;
+	return compassCircuitState;
 }
 
 
