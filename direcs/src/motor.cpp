@@ -122,7 +122,8 @@ double Motor::getDrivenDistance(unsigned char motor)
 
 void Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
 {
-	unsigned char command = BOTSTOP;
+	QString command = "bst"; // stop robot
+
 
 	if (robotState == ON)
 	{
@@ -139,36 +140,45 @@ void Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				switch (direction)
 				{
 					case FORWARD:
-						command = BOTFORWARD;
+						// bot drive forward
+						command = "bdf";
 						break;
 					case BACKWARD:
-						command = BOTBACKWARD;
+						// bot drive backward
+						command = "bdb";
 						break;
 					case LEFT:
-						command = BOTLEFT;
+						// bot drive left
+						command = "bdl";
 						break;
 					case RIGHT:
-						command = BOTRIGHT;
+						// bot drive right
+						command = "bdr";
 						break;
 					case TURNLEFT:
-						command = BOTTURNLEFT;
+						// bot turn left
+						command = "btl";
 						break;
 					case TURNRIGHT:
-						command = BOTTURNRIGHT;
+						// bot turn right
+						command = "btr";
 						break;
 					case START:
-						command = BOTSTART;
+						// bot "go"
+						command = "bgo";
 						break;
 					case STOP:
-						command = BOTSTOP;
+						// bot stop
+						command = "bst";
 						break;
 					case WAIT:
-						command = BOTWAIT;
+						// bot wait
+						command = "bwa";
 						break;
 				}
 
 				// send command to bot
-				if (interface1->sendChar(command) == false)
+				if (interface1->sendString(command) == false)
 				{
 					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 					mutex->unlock();
