@@ -444,8 +444,6 @@ int main(void)
 				// init driven distance of motor 1 (encoder)
 				rightDistanceCounter = 0;
 				rightWheelCounter = 0;
-
-
 				// answer with "ok"
 				put_string("*ok#");
 			}
@@ -456,12 +454,100 @@ int main(void)
 				// init driven distance of motor 2 (encoder)
 				leftDistanceCounter = 0;
 				leftWheelCounter = 0;
-
-
 				// answer with "ok"
 				put_string("*ok#");
 			}
-			
+
+			// MOTOR1_OFF
+			if (strcmp(stringbuffer, "*mp1of#") == 0)
+			{
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR1_CLOCKWISE
+			if (strcmp(stringbuffer, "*md1cw#") == 0)
+			{
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// set Motor1 B bit
+				PORTL |= (1<<PIN1);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR1_COUNTERCLOCKWISE
+			if (strcmp(stringbuffer, "*md1cc#") == 0)
+			{
+				// set Motor1 A bit
+				PORTL |= (1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			/*
+			// MOTOR1_SPEED_SET
+			if (strcmp(stringbuffer, "*#") == 0)
+			{
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setPWMwidth(1, value);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+			*/
+
+			// MOTOR2_OFF
+			if (strcmp(stringbuffer, "*mp2of#") == 0)
+			{
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN3);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR2_CLOCKWISE
+			if (strcmp(stringbuffer, "*md2cw#") == 0)
+			{
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// set Motor2 B bit
+				PORTL |= (1<<PIN3);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR2_COUNTERCLOCKWISE
+			if (strcmp(stringbuffer, "*md2cc#") == 0)
+			{
+				// set Motor2 A bit
+				PORTL |= (1<<PIN2);
+				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN3);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			/*
+			// MOTOR2_SPEED_SET
+			if (strcmp(stringbuffer, "*#") == 0)
+			{
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setPWMwidth(2, value);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+			*/
+		
 		} // RXcompleted
     } // while (1)
 
@@ -471,77 +557,26 @@ int main(void)
 
 
 /*
-
-
 	while(1)
 	{
-
-
 		
 		switch (value)
 		{
-			//-------------------------------
 			case MOTOR1_OFF:
-				// delete Motor1 A bit
-				PORTL &= ~(1<<PIN0);
-				// delete Motor1 B bit
-				PORTL &= ~(1<<PIN1);
-				break;
-
 
 			case MOTOR1_CLOCKWISE:
-				// delete Motor1 A bit
-				PORTL &= ~(1<<PIN0);
-				// set Motor1 B bit
-				PORTL |= (1<<PIN1);
-				break;
-
 
 			case MOTOR1_COUNTERCLOCKWISE:
-				// set Motor1 A bit
-				PORTL |= (1<<PIN0);
-				// delete Motor1 B bit
-				PORTL &= ~(1<<PIN1);
-				break;
-
 
 			case MOTOR1_SPEED_SET:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(1, value);
-				break;
 
-
-			//-------------------------------
 			case MOTOR2_OFF:
-				// delete Motor2 A bit
-				PORTL &= ~(1<<PIN2);
-				// delete Motor2 B bit
-				PORTL &= ~(1<<PIN3);
-				break;
-
 
 			case MOTOR2_CLOCKWISE:
-				// delete Motor2 A bit
-				PORTL &= ~(1<<PIN2);
-				// set Motor2 B bit
-				PORTL |= (1<<PIN3);
-				break;
-
 
 			case MOTOR2_COUNTERCLOCKWISE:
-				// set Motor2 A bit
-				PORTL |= (1<<PIN2);
-				// delete Motor2 B bit
-				PORTL &= ~(1<<PIN3);
-				break;
-
 
 			case MOTOR2_SPEED_SET:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(2, value);
-				break;
 
 
 			//-------------------------------
