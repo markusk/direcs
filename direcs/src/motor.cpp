@@ -179,15 +179,23 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				}
 
 				// send command to bot
-				if (interface1->sendString(command) == false)
+				if (interface1->sendString(command) == true)
 				{
-					// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-					mutex->unlock();
-					//qDebug("ERROR sending to serial port (Motor)");
-					return;
+					// check if the robot answers with "ok"
+					if ( interface1->receiveString(answer) == true)
+					{
+						if (answer == "*ok#")
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							return true;
+						}
+					}
 				}
+				//qDebug("ERROR sending to serial port (MotorControl)");
 				// Unlocks the mutex
 				mutex->unlock();
+				return false;
 				break;
 			//-------------------------
 			// Motor 1
@@ -202,37 +210,67 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp1of") == false)
+					if (interface1->sendString("mp1of") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md1cw") == false)
+					if (interface1->sendString("md1cw") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md1cc") == false)
+					if (interface1->sendString("md1cc") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == SAME)
@@ -259,13 +297,23 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp2of") == false)
+					if (interface1->sendString("mp2of") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				//
@@ -282,25 +330,45 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md2cc") == false)
+					if (interface1->sendString("md2cc") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md2cw") == false)
+					if (interface1->sendString("md2cw") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == SAME)
@@ -327,37 +395,67 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp3of") == false)
+					if (interface1->sendString("mp3of") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md3cw") == false)
+					if (interface1->sendString("md3cw") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md3cc") == false)
+					if (interface1->sendString("md3cc") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == SAME)
@@ -384,13 +482,23 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp4of") == false)
+					if (interface1->sendString("mp4of") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				//
@@ -407,25 +515,45 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md4cc") == false)
+					if (interface1->sendString("md4cc") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md4cw") == false)
+					if (interface1->sendString("md4cw") == true)
 					{
-						// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == SAME)
@@ -447,40 +575,88 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				if (power == ON)
 				{
 					// turn on stepper 1
-					if (interface1->sendChar(STEPPER1_ON) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER1_ON) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 				else
 				{
 					// turn off stepper 1
-					if (interface1->sendChar(STEPPER1_OFF) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER1_OFF) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendChar(STEPPER1_CLOCKWISE) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER1_CLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendChar(STEPPER1_COUNTERCLOCKWISE) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER1_COUNTERCLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == SAME)
@@ -501,50 +677,110 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				if (power == ON)
 				{
 					// turn on stepper 2
-					if (interface1->sendChar(STEPPER2_ON) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER2_ON) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 				else
 				{
 					// turn off stepper 2
-					if (interface1->sendChar(STEPPER2_OFF) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER2_OFF) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (power == CLOCK)
 				{
 					// make a stepper with every enabled motor
-					if (interface1->sendChar(STEPPER_CLOCK) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER_CLOCK) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendChar(STEPPER2_CLOCKWISE) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER2_CLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendChar(STEPPER2_COUNTERCLOCKWISE) == false)        // FIXME: use sendString with a new nice string!
+					if (interface1->sendString(STEPPER2_COUNTERCLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						//qDebug("ERROR sending to serial port (Motor)");
-						//return;
+						// check if the robot answers with "ok"
+						if ( interface1->receiveString(answer) == true)
+						{
+							if (answer == "*ok#")
+							{
+								// Unlock the mutex
+								mutex->unlock();
+								return true;
+							}
+						}
 					}
+					//qDebug("ERROR sending to serial port (MotorControl)");
+					// Unlocks the mutex
+					mutex->unlock();
+					return false;
 				}
 
 				if (direction == SAME)
@@ -562,6 +798,9 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 		// Unlocks the mutex, if no case statement fits in the switch command
 		mutex->unlock();
 	} // robot is ON
+
+
+	return false;
 }
 
 
