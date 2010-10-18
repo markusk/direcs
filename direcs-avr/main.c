@@ -491,17 +491,19 @@ int main(void)
 				put_string("*ok#");
 			}
 
-			/*
 			// MOTOR1_SPEED_SET
-			if (strcmp(stringbuffer, "*#") == 0)
+			if (strncmp(stringbuffer, "*mv1", 4) == 0)
 			{
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(1, value);
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string and set speed
+				setPWMwidth(1, atoi(stringbuffer));
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*ok#"); // TODO: answer with 'value'? Like in *s1# ?
 			}
-			*/
 
 			// MOTOR2_OFF
 			if (strcmp(stringbuffer, "*mp2of#") == 0)
