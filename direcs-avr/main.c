@@ -547,6 +547,111 @@ int main(void)
 				put_string("*ok#");
 			}
 			*/
+
+			// MOTOR3_OFF
+			if (strcmp(stringbuffer, "*mp3of#") == 0)
+			{
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR3_CLOCKWISE // cam pan R
+			if (strcmp(stringbuffer, "*md3cw#") == 0)
+			{
+				// only, when end switch is clear
+				// if ( bit_is_clear(PINK,PIN2) )
+				// {
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// set Motor3 B bit
+				PORTL |= (1<<PIN7);
+				// }
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR3_COUNTERCLOCKWISE // cam pan L
+			if (strcmp(stringbuffer, "*md3cc#") == 0)
+			{
+				// only, when end switch is clear
+				// if ( bit_is_clear(PINK,PIN3) )
+				// {
+				// set Motor3 A bit
+				PORTL |= (1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// }
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			/*
+			// MOTOR3_SPEED_SET
+			if (strcmp(stringbuffer, "*#") == 0)
+			{
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setPWMwidth(3, value);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+			*/
+
+			// MOTOR4_OFF
+			if (strcmp(stringbuffer, "*mp4of#") == 0)
+			{
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR4_CLOCKWISE // cam tilt top
+			if (strcmp(stringbuffer, "*md4cw#") == 0)
+			{
+				// only, when end switch is clear
+				// if ( bit_is_clear(PINK,PIN1) )
+				// {
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				// }
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			// MOTOR4_COUNTERCLOCKWISE // cam tilt bottom
+			if (strcmp(stringbuffer, "*md4cc#") == 0)
+			{
+				// if ( bit_is_clear(PINK,PIN0) )
+				// {
+				// set Motor4 A bit
+				PORTD |= (1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+				// }
+				// answer with "ok"
+				put_string("*ok#");
+			}
+
+			/*
+			// MOTOR4_SPEED_SET
+			if (strcmp(stringbuffer, "*#") == 0)
+			{
+				// wait for the (second) value to set the pwm!
+				value = UsartReceive();
+				setPWMwidth(4, value);
+				// answer with "ok"
+				put_string("*ok#");
+			}
+			*/
 		
 		} // RXcompleted
     } // while (1)
@@ -578,84 +683,21 @@ int main(void)
 
 			case MOTOR2_SPEED_SET:
 
-
-			//-------------------------------
 			case MOTOR3_OFF:
-				// delete Motor3 A bit
-				PORTL &= ~(1<<PIN6);
-				// delete Motor3 B bit
-				PORTL &= ~(1<<PIN7);
-				break;
-
 
 			case MOTOR3_CLOCKWISE: // cam pan R
-				// only, when end switch is clear
-// 				if ( bit_is_clear(PINK,PIN2) )
-// 				{
-					// delete Motor3 A bit
-					PORTL &= ~(1<<PIN6);
-					// set Motor3 B bit
-					PORTL |= (1<<PIN7);
-// 				}
-				break;
-
 
 			case MOTOR3_COUNTERCLOCKWISE: // cam pan L
-				// only, when end switch is clear
-// 				if ( bit_is_clear(PINK,PIN3) )
-// 				{
-					// set Motor3 A bit
-					PORTL |= (1<<PIN6);
-					// delete Motor3 B bit
-					PORTL &= ~(1<<PIN7);
-// 				}
-				break;
-
 
 			case MOTOR3_SPEED_SET:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(3, value);
-				break;
 
-
-			//-------------------------------
 			case MOTOR4_OFF:
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// delete Motor4 B bit
-				PORTD &= ~(1<<PIN7);
-				break;
-
 
 			case MOTOR4_CLOCKWISE: // cam tilt top
-				// only, when end switch is clear
-// 				if ( bit_is_clear(PINK,PIN1) )
-// 				{
-					// delete Motor4 A bit
-					PORTD &= ~(1<<PIN6);
-					// set Motor4 B bit
-					PORTD |= (1<<PIN7);
-// 				}
-				break;
-
 
 			case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
-// 				if ( bit_is_clear(PINK,PIN0) )
-// 				{
-					// set Motor4 A bit
-					PORTD |= (1<<PIN6);
-					// delete Motor4 B bit
-					PORTD &= ~(1<<PIN7);
-// 				}
-				break;
-
 
 			case MOTOR4_SPEED_SET:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(4, value);
-				break;
 				
 			case SPEED_SET_ALLMOTORS:
 				// wait for the (second) value to set the pwm!
