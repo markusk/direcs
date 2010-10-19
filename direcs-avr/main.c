@@ -502,7 +502,7 @@ int main(void)
 				// get value from string and set speed
 				setPWMwidth(1, atoi(stringbuffer));
 				// answer with "ok"
-				put_string("*ok#"); // TODO: answer with 'value'? Like in *s1# ?
+				put_string("*mv1#");
 			}
 
 			// MOTOR2_OFF
