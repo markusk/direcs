@@ -282,63 +282,63 @@ int main(void)
 				// this answer is used to see if the robot is "on"
 				put_string("*ok#");
 			}
-			
+			else
 			// READ_SENSOR_1
 			if (strcmp(stringbuffer, "*s1#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR1) );
 			}
-			
+			else
 			// READ_SENSOR_2
 			if (strcmp(stringbuffer, "*s2#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR2) );
 			}
-			
+			else
 			// READ_SENSOR_3
 			if (strcmp(stringbuffer, "*s3#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR3) );
 			}
-			
+			else
 			// READ_SENSOR_4
 			if (strcmp(stringbuffer, "*s4#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR4) );
 			}
-			
+			else
 			// READ_SENSOR_5
 			if (strcmp(stringbuffer, "*s5#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR5) );
 			}
-			
+			else
 			// READ_SENSOR_6
 			if (strcmp(stringbuffer, "*s6#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR6) );
 			}
-			
+			else
 			// READ_SENSOR_7 (24 V supply)
 			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR7) );
 			}
-		
+			else
 			// READ_SENSOR_8 (12 V supply)
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR8) );
 			}
-			
+			else
 			// READ_SENSOR_16
 			// ultra sonic sensor !!
 			if (strcmp(stringbuffer, "*s16#") == 0)
@@ -346,7 +346,7 @@ int main(void)
 				// read ADC and send answer over serial port
 				sendUInt( ultraschall_messung() );
 			}
-		
+			else
 			// READ 3D COMPASS CONNECTION
 			if (strcmp(stringbuffer, "*cc#") == 0)
 			{
@@ -361,7 +361,7 @@ int main(void)
 					put_string("*er#");
 				}
 			}
-		
+			else
 			// READ_AXIS_X
 			if (strcmp(stringbuffer, "*cx#") == 0)
 			{
@@ -377,7 +377,7 @@ int main(void)
 					sendUInt(0);
 				}
 			}
-		
+			else
 			// READ_AXIS_Y
 			if (strcmp(stringbuffer, "*cy#") == 0)
 			{
@@ -393,7 +393,7 @@ int main(void)
 					sendUInt(0);
 				}
 			}
-		
+			else
 			// READ_AXIS_Z
 			if (strcmp(stringbuffer, "*cz#") == 0)
 			{
@@ -409,35 +409,35 @@ int main(void)
 					sendUInt(0);
 				}
 			}
-			
+			else
 			// READ_MOTOR_SENSOR1
 			if (strcmp(stringbuffer, "*ms1#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSORMOTOR1) );
 			}
-			
+			else
 			// READ_MOTOR_SENSOR2
 			if (strcmp(stringbuffer, "*ms2#") == 0)
 			{
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSORMOTOR2) );
 			}
-			
+			else
 			// READ_MOTOR_DISTANCE1
 			if (strcmp(stringbuffer, "*dd1#") == 0)
 			{
 				// send driven distance of motor 1 encoder over serial port
 				sendUInt( rightDistanceCounter );
 			}
-			
+			else
 			// READ_MOTOR_DISTANCE2
 			if (strcmp(stringbuffer, "*dd2#") == 0)
 			{
 				// send driven distance of motor 2 encoder over serial port
 				sendUInt( leftDistanceCounter );
 			}
-			
+			else
 			// RESET_MOTOR_DISTANCE1
 			if (strcmp(stringbuffer, "*id1#") == 0)
 			{
@@ -447,7 +447,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*ok#");
 			}
-			
+			else
 			// RESET_MOTOR_DISTANCE2
 			if (strcmp(stringbuffer, "*id2#") == 0)
 			{
@@ -457,7 +457,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*ok#");
 			}
-
+			else
 			// MOTOR1_OFF
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
@@ -468,7 +468,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mp1of#");
 			}
-
+			else
 			// MOTOR1_CLOCKWISE
 			if (strcmp(stringbuffer, "*md1cw#") == 0)
 			{
@@ -479,7 +479,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md1cw#");
 			}
-
+			else
 			// MOTOR1_COUNTERCLOCKWISE
 			if (strcmp(stringbuffer, "*md1cc#") == 0)
 			{
@@ -490,7 +490,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md1cc#");
 			}
-
+			else
 			// MOTOR1_SPEED_SET
 			if (strncmp(stringbuffer, "*mv1", 4) == 0)
 			{
@@ -504,7 +504,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv1#");
 			}
-
+			else
 			// MOTOR2_OFF
 			if (strcmp(stringbuffer, "*mp2of#") == 0)
 			{
@@ -515,7 +515,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mp2of#");
 			}
-
+			else
 			// MOTOR2_CLOCKWISE
 			if (strcmp(stringbuffer, "*md2cw#") == 0)
 			{
@@ -526,7 +526,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md2cw#");
 			}
-
+			else
 			// MOTOR2_COUNTERCLOCKWISE
 			if (strcmp(stringbuffer, "*md2cc#") == 0)
 			{
@@ -537,7 +537,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md2cc#");
 			}
-
+			else
 			// MOTOR2_SPEED_SET
 			if (strncmp(stringbuffer, "*mv2", 4) == 0)
 			{
@@ -551,7 +551,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv2#");
 			}
-
+			else
 			// MOTOR3_OFF
 			if (strcmp(stringbuffer, "*mp3of#") == 0)
 			{
@@ -562,7 +562,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mp3of#");
 			}
-
+			else
 			// MOTOR3_CLOCKWISE // cam pan R
 			if (strcmp(stringbuffer, "*md3cw#") == 0)
 			{
@@ -577,7 +577,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md3cw#");
 			}
-
+			else
 			// MOTOR3_COUNTERCLOCKWISE // cam pan L
 			if (strcmp(stringbuffer, "*md3cc#") == 0)
 			{
@@ -592,7 +592,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md3cc#");
 			}
-
+			else
 			// MOTOR3_SPEED_SET
 			if (strncmp(stringbuffer, "*mv3", 4) == 0)
 			{
@@ -606,7 +606,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv3#");
 			}
-
+			else
 			// MOTOR4_OFF
 			if (strcmp(stringbuffer, "*mp4of#") == 0)
 			{
@@ -617,7 +617,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mp4of#");
 			}
-
+			else
 			// MOTOR4_CLOCKWISE // cam tilt top
 			if (strcmp(stringbuffer, "*md4cw#") == 0)
 			{
@@ -632,7 +632,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md4cw#");
 			}
-
+			else
 			// MOTOR4_COUNTERCLOCKWISE // cam tilt bottom
 			if (strcmp(stringbuffer, "*md4cc#") == 0)
 			{
@@ -646,7 +646,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*md4cc#");
 			}
-
+			else
 			// MOTOR4_SPEED_SET
 			if (strncmp(stringbuffer, "*mv4", 4) == 0)
 			{
@@ -660,7 +660,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv4#");
 			}
-
+			else
 			// SPEED_SET_ALLMOTORS
 			if (strncmp(stringbuffer, "*mv0", 4) == 0)
 			{
