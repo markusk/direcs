@@ -466,7 +466,7 @@ int main(void)
 				// delete Motor1 B bit
 				PORTL &= ~(1<<PIN1);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*mp1of#");
 			}
 
 			// MOTOR1_CLOCKWISE
@@ -477,7 +477,7 @@ int main(void)
 				// set Motor1 B bit
 				PORTL |= (1<<PIN1);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md1cw#");
 			}
 
 			// MOTOR1_COUNTERCLOCKWISE
@@ -488,7 +488,7 @@ int main(void)
 				// delete Motor1 B bit
 				PORTL &= ~(1<<PIN1);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md1cc#");
 			}
 
 			// MOTOR1_SPEED_SET
@@ -513,7 +513,7 @@ int main(void)
 				// delete Motor2 B bit
 				PORTL &= ~(1<<PIN3);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*mp2of#");
 			}
 
 			// MOTOR2_CLOCKWISE
@@ -524,7 +524,7 @@ int main(void)
 				// set Motor2 B bit
 				PORTL |= (1<<PIN3);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md2cw#");
 			}
 
 			// MOTOR2_COUNTERCLOCKWISE
@@ -535,7 +535,7 @@ int main(void)
 				// delete Motor2 B bit
 				PORTL &= ~(1<<PIN3);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md2cc#");
 			}
 
 			// MOTOR2_SPEED_SET
@@ -560,7 +560,7 @@ int main(void)
 				// delete Motor3 B bit
 				PORTL &= ~(1<<PIN7);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*mp3of#");
 			}
 
 			// MOTOR3_CLOCKWISE // cam pan R
@@ -575,7 +575,7 @@ int main(void)
 				PORTL |= (1<<PIN7);
 				// }
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md3cw#");
 			}
 
 			// MOTOR3_COUNTERCLOCKWISE // cam pan L
@@ -590,7 +590,7 @@ int main(void)
 				PORTL &= ~(1<<PIN7);
 				// }
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md3cc#");
 			}
 
 			// MOTOR3_SPEED_SET
@@ -615,7 +615,7 @@ int main(void)
 				// delete Motor4 B bit
 				PORTD &= ~(1<<PIN7);
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*mp4of#");
 			}
 
 			// MOTOR4_CLOCKWISE // cam tilt top
@@ -630,7 +630,7 @@ int main(void)
 				PORTD |= (1<<PIN7);
 				// }
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md4cw#");
 			}
 
 			// MOTOR4_COUNTERCLOCKWISE // cam tilt bottom
@@ -644,7 +644,7 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				// }
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*md4cc#");
 			}
 
 			// MOTOR4_SPEED_SET
