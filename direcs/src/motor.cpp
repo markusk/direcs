@@ -181,10 +181,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				// send command to bot
 				if (interface1->sendString(command) == true)
 				{
-					// check if the robot answers with "ok"
-					if ( interface1->receiveString(answer) == true)
+					// check if the robot answers with the sent command
+					if (interface1->receiveString(answer) == true)
 					{
-						if (answer == "*ok#")
+						if (answer == command)
 						{
 							// Unlock the mutex
 							mutex->unlock();
@@ -197,6 +197,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				mutex->unlock();
 				return false;
 				break;
+
 			//-------------------------
 			// Motor 1
 			//-------------------------
@@ -212,10 +213,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn off the MOTOR -> break!
 					if (interface1->sendString("mp1of") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "mp1of")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -234,10 +235,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md1cw") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md1cw")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -256,10 +257,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md1cc") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md1cc")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -280,7 +281,6 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 
 				// Unlocks the mutex
 				mutex->unlock();
-
 				break;
 
 
@@ -299,10 +299,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn off the MOTOR -> break!
 					if (interface1->sendString("mp2of") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "mp2of")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -332,10 +332,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md2cc") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md2cc")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -354,10 +354,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md2cw") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md2cw")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -378,7 +378,6 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 
 				// Unlocks the mutex
 				mutex->unlock();
-
 				break;
 
 
@@ -397,10 +396,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn off the MOTOR -> break!
 					if (interface1->sendString("mp3of") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "mp3of")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -419,10 +418,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md3cw") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md3cw")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -441,10 +440,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md3cc") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md3cc")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -465,7 +464,6 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 
 				// Unlocks the mutex
 				mutex->unlock();
-
 				break;
 
 
@@ -484,10 +482,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn off the MOTOR -> break!
 					if (interface1->sendString("mp4of") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "mp4of")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -517,10 +515,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md4cc") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md4cc")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -539,10 +537,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString("md4cw") == true)
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == "md4cw")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -563,7 +561,6 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 
 				// Unlocks the mutex
 				mutex->unlock();
-
 				break;
 
 
@@ -577,10 +574,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn on stepper 1
 					if (interface1->sendString(STEPPER1_ON) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -598,10 +595,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn off stepper 1
 					if (interface1->sendString(STEPPER1_OFF) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -620,10 +617,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString(STEPPER1_CLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -642,10 +639,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString(STEPPER1_COUNTERCLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -679,10 +676,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn on stepper 2
 					if (interface1->sendString(STEPPER2_ON) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -700,10 +697,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// turn off stepper 2
 					if (interface1->sendString(STEPPER2_OFF) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -722,10 +719,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// make a stepper with every enabled motor
 					if (interface1->sendString(STEPPER_CLOCK) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -744,10 +741,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString(STEPPER2_CLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -766,10 +763,10 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// set the direction
 					if (interface1->sendString(STEPPER2_COUNTERCLOCKWISE) == true)        // FIXME: use sendString with a new nice string!
 					{
-						// check if the robot answers with "ok"
+						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*ok#")
+							if (answer == " fix this ")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -1017,6 +1014,9 @@ void Motor::resetMovementCounter(short int motor)
 
 bool Motor::setMotorSpeed(int motor, int speed)
 {
+	QString answer = "error";
+
+
 	if (robotState == ON)
 	{
 		if (speed < 0)
@@ -1157,6 +1157,10 @@ bool Motor::setMotorSpeed(int motor, int speed)
 		// Unlock the mutex.
 		mutex->unlock();
 	} // robot is ON
+
+
+	// robot is off
+	return false;
 }
 
 
