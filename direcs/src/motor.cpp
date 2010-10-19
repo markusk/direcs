@@ -1066,12 +1066,12 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor1Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("mv1%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv1%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer) == true)
 					{
-						if (answer == "mv1#")
+						if (answer == "*mv1#")
 						{
 							// Unlock the mutex
 							mutex->unlock();
@@ -1089,12 +1089,12 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor2Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("mv2%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv2%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer) == true)
 					{
-						if (answer == "mv2#")
+						if (answer == "*mv2#")
 						{
 							// Unlock the mutex
 							mutex->unlock();
@@ -1112,12 +1112,12 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor3Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("mv3%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv3%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer) == true)
 					{
-						if (answer == "mv3#")
+						if (answer == "*mv3#")
 						{
 							// Unlock the mutex
 							mutex->unlock();
@@ -1135,12 +1135,12 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor4Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("mv4%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv4%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer) == true)
 					{
-						if (answer == "mv4#")
+						if (answer == "*mv4#")
 						{
 							// Unlock the mutex
 							mutex->unlock();
