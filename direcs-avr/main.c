@@ -538,17 +538,19 @@ int main(void)
 				put_string("*ok#");
 			}
 
-			/*
 			// MOTOR2_SPEED_SET
-			if (strcmp(stringbuffer, "*#") == 0)
+			if (strncmp(stringbuffer, "*mv2", 4) == 0)
 			{
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(2, value);
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string and set speed
+				setPWMwidth(1, atoi(stringbuffer));
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*mv2#");
 			}
-			*/
 
 			// MOTOR3_OFF
 			if (strcmp(stringbuffer, "*mp3of#") == 0)
@@ -591,17 +593,19 @@ int main(void)
 				put_string("*ok#");
 			}
 
-			/*
 			// MOTOR3_SPEED_SET
-			if (strcmp(stringbuffer, "*#") == 0)
+			if (strncmp(stringbuffer, "*mv3", 4) == 0)
 			{
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(3, value);
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string and set speed
+				setPWMwidth(1, atoi(stringbuffer));
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*mv3#");
 			}
-			*/
 
 			// MOTOR4_OFF
 			if (strcmp(stringbuffer, "*mp4of#") == 0)
@@ -643,17 +647,19 @@ int main(void)
 				put_string("*ok#");
 			}
 
-			/*
 			// MOTOR4_SPEED_SET
-			if (strcmp(stringbuffer, "*#") == 0)
+			if (strncmp(stringbuffer, "*mv4", 4) == 0)
 			{
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(4, value);
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string and set speed
+				setPWMwidth(1, atoi(stringbuffer));
 				// answer with "ok"
-				put_string("*ok#");
+				put_string("*mv4#");
 			}
-			*/
 		
 		} // RXcompleted
     } // while (1)
