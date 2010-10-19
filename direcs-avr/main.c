@@ -547,7 +547,7 @@ int main(void)
 				stringbuffer[2] = '0';
 				stringbuffer[3] = '0';
 				// get value from string and set speed
-				setPWMwidth(1, atoi(stringbuffer));
+				setPWMwidth(2, atoi(stringbuffer));
 				// answer with "ok"
 				put_string("*mv2#");
 			}
@@ -602,7 +602,7 @@ int main(void)
 				stringbuffer[2] = '0';
 				stringbuffer[3] = '0';
 				// get value from string and set speed
-				setPWMwidth(1, atoi(stringbuffer));
+				setPWMwidth(3, atoi(stringbuffer));
 				// answer with "ok"
 				put_string("*mv3#");
 			}
@@ -656,7 +656,7 @@ int main(void)
 				stringbuffer[2] = '0';
 				stringbuffer[3] = '0';
 				// get value from string and set speed
-				setPWMwidth(1, atoi(stringbuffer));
+				setPWMwidth(4, atoi(stringbuffer));
 				// answer with "ok"
 				put_string("*mv4#");
 			}
