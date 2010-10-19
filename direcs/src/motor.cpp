@@ -1015,10 +1015,8 @@ void Motor::resetMovementCounter(short int motor)
 }
 
 
-void Motor::setMotorSpeed(int motor, int speed)
+bool Motor::setMotorSpeed(int motor, int speed)
 {
-	// FIXME: add a return code on serial error (false or so)
-
 	if (robotState == ON)
 	{
 		if (speed < 0)
@@ -1067,97 +1065,93 @@ void Motor::setMotorSpeed(int motor, int speed)
 			case MOTOR1:
 				// store the speed
 				motor1Speed = speed;
-				// send the command to the microcontroller (MOTOR 1)
-				if (interface1->sendChar(MOTOR1_SPEED_SET) == true)
+				// send command to microcontroller
+				if (interface1->sendString(QString("mv1%1#").arg(speed)) == true)
 				{
-					// send the value to the microcontroller
-					if (interface1->sendChar(speed) == false)
+					// check if the robot answers with "ok"
+					if ( interface1->receiveString(answer) == true)
 					{
-						// Unlock the mutex.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						if (answer == "mv1#")
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							return true;
+						}
 					}
 				}
-				else
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					//qDebug("ERROR sending to serial port (Motor)");
-					return;
-				}
+				//qDebug("ERROR sending to serial port (MotorControl)");
+				// Unlocks the mutex
+				mutex->unlock();
+				return false;
 				break;
 
 			case MOTOR2:
 				// store the speed
 				motor2Speed = speed;
-				// send the command to the microcontroller (MOTOR 2)
-				if (interface1->sendChar(MOTOR2_SPEED_SET) == true)
+				// send command to microcontroller
+				if (interface1->sendString(QString("mv2%1#").arg(speed)) == true)
 				{
-					// send the value to the microcontroller
-					if (interface1->sendChar(speed) == false)
+					// check if the robot answers with "ok"
+					if ( interface1->receiveString(answer) == true)
 					{
-						// Unlock the mutex.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						if (answer == "mv2#")
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							return true;
+						}
 					}
 				}
-				else
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					//qDebug("ERROR sending to serial port (Motor)");
-					return;
-				}
+				//qDebug("ERROR sending to serial port (MotorControl)");
+				// Unlocks the mutex
+				mutex->unlock();
+				return false;
 				break;
 
 			case MOTOR3:
 				// store the speed
 				motor3Speed = speed;
-				// send the command to the microcontroller (MOTOR 3)
-				if (interface1->sendChar(MOTOR3_SPEED_SET) == true)
+				// send command to microcontroller
+				if (interface1->sendString(QString("mv3%1#").arg(speed)) == true)
 				{
-					// send the value to the microcontroller
-					if (interface1->sendChar(speed) == false)
+					// check if the robot answers with "ok"
+					if ( interface1->receiveString(answer) == true)
 					{
-						// Unlock the mutex.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						if (answer == "mv3#")
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							return true;
+						}
 					}
 				}
-				else
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					//qDebug("ERROR sending to serial port (Motor)");
-					return;
-				}
+				//qDebug("ERROR sending to serial port (MotorControl)");
+				// Unlocks the mutex
+				mutex->unlock();
+				return false;
 				break;
 
 			case MOTOR4:
 				// store the speed
 				motor4Speed = speed;
-				// send the command to the microcontroller (MOTOR 4)
-				if (interface1->sendChar(MOTOR4_SPEED_SET) == true)
+				// send command to microcontroller
+				if (interface1->sendString(QString("mv4%1#").arg(speed)) == true)
 				{
-					// send the value to the microcontroller
-					if (interface1->sendChar(speed) == false)
+					// check if the robot answers with "ok"
+					if ( interface1->receiveString(answer) == true)
 					{
-						// Unlock the mutex.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						if (answer == "mv4#")
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							return true;
+						}
 					}
 				}
-				else
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					//qDebug("ERROR sending to serial port (Motor)");
-					return;
-				}
+				//qDebug("ERROR sending to serial port (MotorControl)");
+				// Unlocks the mutex
+				mutex->unlock();
+				return false;
 				break;
 		} // switch
 
