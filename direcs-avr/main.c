@@ -660,6 +660,23 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv4#");
 			}
+
+			// SPEED_SET_ALLMOTORS
+			if (strncmp(stringbuffer, "*mv0", 4) == 0)
+			{
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string and set speed
+				setPWMwidth(1, atoi(stringbuffer));
+				setPWMwidth(2, atoi(stringbuffer));
+				setPWMwidth(3, atoi(stringbuffer));
+				setPWMwidth(4, atoi(stringbuffer));
+				// answer with "ok"
+				put_string("*mv0#");
+			}
 		
 		} // RXcompleted
     } // while (1)
@@ -708,13 +725,6 @@ int main(void)
 			case MOTOR4_SPEED_SET:
 				
 			case SPEED_SET_ALLMOTORS:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setPWMwidth(1, value);
-				setPWMwidth(2, value);
-				setPWMwidth(3, value);
-				setPWMwidth(4, value);
-				break;
 				
 			//-------------------------------
 			case BOTSTART:

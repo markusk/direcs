@@ -1034,32 +1034,31 @@ bool Motor::setMotorSpeed(int motor, int speed)
 		mutex->lock();
 		switch (motor)
 		{
-			case ALLMOTORS:
+			case ALLMOTORS: // "motor 0"
 				// store the speed
 				motorSpeedAllMotors = speed;
 				motor1Speed = speed;
 				motor2Speed = speed;
 				motor3Speed = speed;
 				motor4Speed = speed;
-				// send the command to the microcontroller (MOTOR 1)
-				if (interface1->sendChar(SPEED_SET_ALLMOTORS) == true)
+				// send command to microcontroller
+				if (interface1->sendString(QString("*mv0%1#").arg(speed)) == true)
 				{
-					// send the value to the microcontroller
-					if (interface1->sendChar(speed) == false)
+					// check if the robot answers with "ok"
+					if ( interface1->receiveString(answer) == true)
 					{
-						// Unlock the mutex.
-						mutex->unlock();
-						//qDebug("ERROR sending to serial port (Motor)");
-						return;
+						if (answer == "*mv0#")
+						{
+							// Unlock the mutex
+							mutex->unlock();
+							return true;
+						}
 					}
 				}
-				else
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					//qDebug("ERROR sending to serial port (Motor)");
-					return;
-				}
+				//qDebug("ERROR sending to serial port (MotorControl)");
+				// Unlocks the mutex
+				mutex->unlock();
+				return false;
 				break;
 
 			case MOTOR1:
