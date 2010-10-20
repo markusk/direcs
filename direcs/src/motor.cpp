@@ -184,7 +184,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					// check if the robot answers with the sent command
 					if (interface1->receiveString(answer) == true)
 					{
-						if (answer == command)
+						if (answer == QString("*%1#").arg(command))
 						{
 							// Unlock the mutex
 							mutex->unlock();
@@ -216,7 +216,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "mp1of")
+							if (answer == "*mp1of#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -238,7 +238,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md1cw")
+							if (answer == "*md1cw#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -260,7 +260,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md1cc")
+							if (answer == "*md1cc#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -302,7 +302,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "mp2of")
+							if (answer == "*mp2of#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -335,7 +335,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md2cc")
+							if (answer == "*md2cc#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -357,7 +357,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md2cw")
+							if (answer == "*md2cw#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -399,7 +399,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "mp3of")
+							if (answer == "*mp3of#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -421,7 +421,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md3cw")
+							if (answer == "*md3cw#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -443,7 +443,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md3cc")
+							if (answer == "*md3cc#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -485,7 +485,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "mp4of")
+							if (answer == "*mp4of#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -518,7 +518,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md4cc")
+							if (answer == "*md4cc#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -540,7 +540,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "md4cw")
+							if (answer == "*md4cw#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
