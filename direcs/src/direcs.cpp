@@ -2111,6 +2111,7 @@ void Direcs::drive(const unsigned char command)
 //			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case BACKWARD:
 			emit message("BACKWARD");
 			if (!consoleMode)
@@ -2129,6 +2130,7 @@ void Direcs::drive(const unsigned char command)
 //			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case LEFT:
 			emit message("LEFT");
 			if (!consoleMode)
@@ -2147,6 +2149,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case RIGHT:
 			emit message("RIGHT");
 			if (!consoleMode)
@@ -2165,6 +2168,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case TURNLEFT:
 			emit message("TURNLEFT");
 			if (!consoleMode)
@@ -2183,6 +2187,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case TURNRIGHT:
 			emit message("TURNRIGHT");
 			if (!consoleMode)
@@ -2201,6 +2206,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case START:
 			robotDrives = true;
 			emit message("Starting to drive forward...");
@@ -2231,6 +2237,7 @@ void Direcs::drive(const unsigned char command)
 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case WAIT:
 			emit message("WAIT");
 /*	FIXME: to much data over serial port?!?
@@ -2258,6 +2265,7 @@ void Direcs::drive(const unsigned char command)
 			//
 			return;
 			break;
+
 		case STOP:
 			emit message("STOP");
 /*	FIXME: to much data over serial port?!?
@@ -2285,30 +2293,40 @@ void Direcs::drive(const unsigned char command)
 			robotDrives = false;
 			return;
 			break;
+
 		case MOTOR1FW: // for the test widget in the GUI!!
 			emit message("Motor 1 forward");
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
 			}
-			motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
+			if (!motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE))
+				emit message("ERROR motor 1 CCW");
+			return;
 			break;
+
 		case MOTOR1BW: // for the test widget in the GUI!!
 			emit message("Motor 1 backward");
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
 			}
-			motors->motorControl(MOTOR1, ON, CLOCKWISE);
+			if (!motors->motorControl(MOTOR1, ON, CLOCKWISE))
+				emit message("ERROR motor 1 CW");
+			return;
 			break;
+
 		case MOTOR1OFF: // for the test widget in the GUI!!
 			emit message("Motor 1 OFF");
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
 			}
-			motors->motorControl(MOTOR1, OFF, SAME);
+			if (!motors->motorControl(MOTOR1, OFF, SAME))
+				emit message("ERROR motor 1 OFF");
+			return;
 			break;
+
 		case MOTOR2FW: // for the test widget in the GUI!!
 			emit message("Motor 2 forward");
 			if (!consoleMode)
@@ -2316,7 +2334,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
 			}
 			motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
+			return;
 			break;
+
 		case MOTOR2BW: // for the test widget in the GUI!!
 			emit message("Motor 2 backward");
 			if (!consoleMode)
@@ -2324,7 +2344,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
 			}
 			motors->motorControl(MOTOR2, ON, CLOCKWISE);
+			return;
 			break;
+
 		case MOTOR2OFF: // for the test widget in the GUI!!
 			emit message("Motor 2 OFF");
 			if (!consoleMode)
@@ -2332,7 +2354,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR2, OFF, SAME);
 			}
 			motors->motorControl(MOTOR2, OFF, SAME);
+			return;
 			break;
+
 		case MOTOR3FW: // for the test widget in the GUI!!
 			emit message("Motor 3 forward");
 			if (!consoleMode)
@@ -2340,7 +2364,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
 			}
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			return;
 			break;
+
 		case MOTOR3BW: // for the test widget in the GUI!!
 			emit message("Motor 3 backward");
 			if (!consoleMode)
@@ -2348,7 +2374,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
 			}
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			return;
 			break;
+
 		case MOTOR3OFF: // for the test widget in the GUI!!
 			emit message("Motor 3 OFF");
 			if (!consoleMode)
@@ -2356,7 +2384,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, OFF, SAME);
 			}
 			motors->motorControl(MOTOR3, OFF, SAME);
+			return;
 			break;
+
 		case MOTOR4FW: // for the test widget in the GUI!!
 			emit message("Motor 4 forward");
 			if (!consoleMode)
@@ -2364,7 +2394,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
 			}
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+			return;
 			break;
+
 		case MOTOR4BW: // for the test widget in the GUI!!
 			emit message("Motor 4 backward");
 			if (!consoleMode)
@@ -2372,7 +2404,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
 			}
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			return;
 			break;
+
 		case MOTOR4OFF: // for the test widget in the GUI!!
 			emit message("Motor 4 OFF");
 			if (!consoleMode)
@@ -2380,6 +2414,7 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			motors->motorControl(MOTOR4, OFF, SAME);
+			return;
 			break;
 	}
 }
