@@ -1624,6 +1624,7 @@ void Gui::on_btnDirection1_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection1->setText("BACKWARD");
 		if (ui.btnPower1->isChecked())
 		{
 			emit drive(MOTOR1BW);
@@ -1632,6 +1633,7 @@ void Gui::on_btnDirection1_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection1->setText("FORWARD");
 		if (ui.btnPower1->isChecked())
 		{
 			emit drive(MOTOR1FW);
@@ -1645,6 +1647,7 @@ void Gui::on_btnDirection2_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection2->setText("BACKWARD");
 		if (ui.btnPower2->isChecked())
 		{
 			emit drive(MOTOR2BW);
@@ -1653,6 +1656,7 @@ void Gui::on_btnDirection2_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection2->setText("FORWARD");
 		if (ui.btnPower2->isChecked())
 		{
 			emit drive(MOTOR2FW);
@@ -1666,6 +1670,7 @@ void Gui::on_btnDirection3_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection3->setText("BACKWARD");
 		if (ui.btnPower3->isChecked())
 		{
 			emit drive(MOTOR3BW);
@@ -1674,6 +1679,7 @@ void Gui::on_btnDirection3_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection3->setText("FORWARD");
 		if (ui.btnPower3->isChecked())
 		{
 			emit drive(MOTOR3FW);
@@ -1687,6 +1693,7 @@ void Gui::on_btnDirection4_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection4->setText("BACKWARD");
 		if (ui.btnPower4->isChecked())
 		{
 			emit drive(MOTOR4BW);
@@ -1695,6 +1702,7 @@ void Gui::on_btnDirection4_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection4->setText("FORWARD");
 		if (ui.btnPower4->isChecked())
 		{
 			emit drive(MOTOR4FW);
