@@ -1647,7 +1647,7 @@ void Gui::on_btnDirection2_toggled(bool checked)
 		// backward
 		if (ui.btnPower2->isChecked())
 		{
-			emit drive(MOTOR1BW);
+			emit drive(MOTOR2BW);
 		}
 	}
 	else
