@@ -285,48 +285,51 @@ void SensorThread::run()
 			}
 
 
-			//-------------------------------------------
-			// read value from magnetic sensor / compass
-			//-------------------------------------------
-			if (readCompassAxis(XAXIS) == false)
+			// if initCircuit found out that the compas module is connected
+			if (compassState == true)
 			{
-				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				//-------------------------------------------
+				// read value from magnetic sensor / compass
+				//-------------------------------------------
+				if (readCompassAxis(XAXIS) == false)
+				{
+					// Unlock the mutex.
+					// mutex->unlock();
+					// stop();
+				}
+				// send value over the network
+				// *xc42# means axis x of the compass has 42°
+				// CONVERT TO INT! Only for displaying!
+				emit sendNetworkString( QString("*xc%1#").arg( (int) xAxis ));
+
+				if (readCompassAxis(YAXIS) == false)
+				{
+					// Unlock the mutex.
+					// mutex->unlock();
+					// stop();
+				}
+				// send value over the network
+				// *yc42# means axis y of the compass has 42°
+				// CONVERT TO INT! Only for displaying!
+				emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
+
+				if (readCompassAxis(ZAXIS) == false)
+				{
+					// Unlock the mutex.
+					// mutex->unlock();
+					// stop();
+				}
+				// send value over the network
+				// *zc42# means axis z of the compass has 42°
+				// CONVERT TO INT! Only for displaying!
+				emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
+
+				// Only *after* all axes were read:
+				calculateHeading();
+
+				// emit ALL compass axes values
+				emit compassDataComplete(xAxis, yAxis, zAxis, heading);
 			}
-			// send value over the network
-			// *xc42# means axis x of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*xc%1#").arg( (int) xAxis ));
-
-			if (readCompassAxis(YAXIS) == false)
-			{
-				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
-			}
-			// send value over the network
-			// *yc42# means axis y of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
-
-			if (readCompassAxis(ZAXIS) == false)
-			{
-				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
-			}
-			// send value over the network
-			// *zc42# means axis z of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
-
-			// Only *after* all axes were read:
-			calculateHeading();
-
-			// emit ALL compass axes values
-			emit compassDataComplete(xAxis, yAxis, zAxis, heading);
-
 
 /*			infrared Sensors temporarily removed from robot!!
 
