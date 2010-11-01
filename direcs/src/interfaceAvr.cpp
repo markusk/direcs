@@ -124,10 +124,14 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 bool InterfaceAvr::sendString(QString string)
 {
+//	QString debugstring;
+
+
 	// send starter
 	if (sendChar(starter) == true)
 	{
 		// send 'content' of string
+//		debugstring = "*";
 		for (int i=0; i<string.length(); i++)
 		{
 			// char by char
@@ -135,12 +139,15 @@ bool InterfaceAvr::sendString(QString string)
 			{
 				return false;
 			}
+//			debugstring.append(string.at(i));
 		}
 
 		// send terminator
 		if (sendChar(terminator) == true)
 		{
 			// success
+//			debugstring.append("#");
+//			emit message(debugstring);
 			return true;
 		}
 	}
