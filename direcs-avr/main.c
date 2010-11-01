@@ -904,6 +904,8 @@ int main(void)
 			case BOTBACKWARD:
 			case BOTLEFT:
 			case BOTRIGHT:
+			case BOTSTOP:
+			case BOTWAIT:
 
 				
 			case BOTTURNLEFT:
@@ -912,31 +914,6 @@ int main(void)
 			case BOTTURNRIGHT:
 				break;
 				
-			case BOTSTOP:
-			case BOTWAIT:
-				// MOTOR 1 OFF
-				// delete Motor1 A bit
-				PORTL &= ~(1<<PIN0);
-				// delete Motor1 B bit
-				PORTL &= ~(1<<PIN1);
-				// MOTOR 2 OFF
-				// delete Motor2 A bit
-				PORTL &= ~(1<<PIN2);
-				// delete Motor2 B bit
-				PORTL &= ~(1<<PIN3);
-				// MOTOR 3 OFF
-				// delete Motor3 A bit
-				PORTL &= ~(1<<PIN6);
-				// delete Motor3 B bit
-				PORTL &= ~(1<<PIN7);
-				// MOTOR 4 OFF
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// delete Motor4 B bit
-				PORTD &= ~(1<<PIN7);
-				// turn red LED OFF, so we know, that all instructions were executed successfully!
-				// redLED(OFF);
-				break;
 				
 				//-------------------------------
 			case SET_SERVO1:
@@ -945,13 +922,11 @@ int main(void)
 				setServoPosition(1, value);
 				break;
 
-
 			case SET_SERVO2:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(2, value);
 				break;
-
 
 			case SET_SERVO3:
 				// wait for the (second) value to set the pwm!
@@ -959,15 +934,11 @@ int main(void)
 				setServoPosition(3, value);
 				break;
 
-
-
 			case SET_SERVO4:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(4, value);
 				break;
-
-
 
 			case SET_SERVO5:
 				// wait for the (second) value to set the pwm!
@@ -975,14 +946,11 @@ int main(void)
 				setServoPosition(5, value);
 				break;
 
-
-
 			case SET_SERVO6:
 				// wait for the (second) value to set the pwm!
 				value = UsartReceive();
 				setServoPosition(6, value);
 				break;
-
 
 			//-------------------------------
 			case FLASHLIGHT_ON:
@@ -994,7 +962,6 @@ int main(void)
 				yellowLED(OFF);
 				break;
 
-
 			//-------------------------------
 			case READ_CONTACT1:
 				// contact cam tilt R/BOTTOM
@@ -1002,20 +969,17 @@ int main(void)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN3) );
 				break;
 
-
 			case READ_CONTACT2:
 				// contact cam tilt L/TOP
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN2) );
 				break;
 
-
 			case READ_CONTACT3:
 				// contact cam pan R
 				// send 1 Byte (8 bit!)
 				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN1) );
 				break;
-
 
 			case READ_CONTACT4:
 				// contact cam pan L
