@@ -206,7 +206,7 @@ void PlotThread::run()
 
 		// get the sensor value
 		// the last value (second 60) is the latest (the read value)!
-		yvalHeartbeat[SIZE-1] = 5;//sensThread->getVoltage(VOLTAGESENSOR2);
+		yvalHeartbeat[SIZE-1] = sensThread->getHeartbeatValue();
 
 		//--------------
 		//  e m i t
