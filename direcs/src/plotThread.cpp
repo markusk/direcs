@@ -39,13 +39,14 @@ PlotThread::PlotThread(SensorThread *s)
 		xval4[i] = i;
 		xval5[i] = i;
 		xval6[i] = i;
-		
+		xvalHeartbeat[i] = i;
+
 		yval1[i] = 0;
 		yval2[i] = 0;
 		yval3[i] = 0;
 		yval4[i] = 0;
 		yval5[i] = 0;
-		yval6[i] = 0;
+		yvalHeartbeat[i] = 0;
 	}
 }
 
@@ -191,6 +192,26 @@ void PlotThread::run()
 		//  e m i t
 		//--------------
 		emit plotDataComplete6(xval6, yval6, SIZE);
+
+
+		//------------------------------------------------------
+		// get values for heartbeat values
+		//------------------------------------------------------
+		// shift the values
+		// (and delete the first one)
+		for (int i=1; i<SIZE; i++)
+		{
+			yvalHeartbeat[i-1] = yvalHeartbeat[i];
+		}
+
+		// get the sensor value
+		// the last value (second 60) is the latest (the read value)!
+		yvalHeartbeat[SIZE-1] = 5;//sensThread->getVoltage(VOLTAGESENSOR2);
+
+		//--------------
+		//  e m i t
+		//--------------
+		emit plotDataCompleteHeartbeat(xvalHeartbeat, yvalHeartbeat, SIZE);
 	}
 	stopped = false;
 }

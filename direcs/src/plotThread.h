@@ -58,16 +58,17 @@ class PlotThread : public QThread
 		void plotDataComplete4(double *xval4, double *yval4, int size);
 		void plotDataComplete5(double *xval4, double *yval4, int size);
 		void plotDataComplete6(double *xval4, double *yval4, int size);
+		void plotDataCompleteHeartbeat(double *xval4, double *yval4, int size);
 
 
 	private:
 		SensorThread *sensThread;
 		volatile bool stopped;
-		
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 500; // Default: 1000 ms
-		
+
 		//====================================
 		// array holding the plot values
 		static const int SIZE = 60;
@@ -89,12 +90,15 @@ class PlotThread : public QThread
 		double xval6[SIZE];
 		double yval6[SIZE];
 		//====================================
-		
+		double xvalHeartbeat[SIZE];
+		double yvalHeartbeat[SIZE];
+		//====================================
+
 		static const short int MOTORSENSOR1 = 0;
 		static const short int MOTORSENSOR2 = 1;
 		static const short int MOTORSENSOR3 = 2;
 		static const short int MOTORSENSOR4 = 3;
-		
+
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
 };
