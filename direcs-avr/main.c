@@ -677,6 +677,62 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv0#");
 			}
+			else
+			// BOTSTOP
+			if (strcmp(stringbuffer, "*bst#") == 0)
+			{
+				// MOTOR 1 OFF
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// MOTOR 2 OFF
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN3);
+				// MOTOR 3 OFF
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// MOTOR 4 OFF
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+
+				// answer with "ok"
+				put_string("*bst#");
+			}
+			else
+			// BOTWAIT
+			if (strcmp(stringbuffer, "*bwa#") == 0)
+			{
+				// MOTOR 1 OFF
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// MOTOR 2 OFF
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN3);
+				// MOTOR 3 OFF
+				// delete Motor3 A bit
+				PORTL &= ~(1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// MOTOR 4 OFF
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+
+				// answer with "ok"
+				put_string("*bwa#");
+			}
 		
 		} // RXcompleted
     } // while (1)
@@ -693,37 +749,21 @@ int main(void)
 		switch (value)
 		{
 			case MOTOR1_OFF:
-
 			case MOTOR1_CLOCKWISE:
-
 			case MOTOR1_COUNTERCLOCKWISE:
-
 			case MOTOR1_SPEED_SET:
-
 			case MOTOR2_OFF:
-
 			case MOTOR2_CLOCKWISE:
-
 			case MOTOR2_COUNTERCLOCKWISE:
-
 			case MOTOR2_SPEED_SET:
-
 			case MOTOR3_OFF:
-
 			case MOTOR3_CLOCKWISE: // cam pan R
-
 			case MOTOR3_COUNTERCLOCKWISE: // cam pan L
-
 			case MOTOR3_SPEED_SET:
-
 			case MOTOR4_OFF:
-
 			case MOTOR4_CLOCKWISE: // cam tilt top
-
 			case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
-
 			case MOTOR4_SPEED_SET:
-				
 			case SPEED_SET_ALLMOTORS:
 				
 			//-------------------------------
