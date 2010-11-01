@@ -33,7 +33,7 @@
 /**
 \brief Provides the low level communication between the robots microcontroller and the laptop.
 
-This class is used for the low level communication between the robots microcontroller and the laptop. It is based on qextserialport for the serial communication.
+This class is used for the low level communication between the robots microcontroller and the laptop via a serial port, e.g. COM1 or /dev/ttyUSB0.
 */
 class InterfaceAvr : public QObject
 {
