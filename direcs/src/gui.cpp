@@ -2979,12 +2979,12 @@ void Gui::initPlots()
 	qwtPlotHeartbeat.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTHEARTBEAT, MAXIMUMPLOTHEARTBEAT);
 
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec), step width 10
-	qwtPlotHeartbeat.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
+	// time (60 sec), step width 2 secconds
+//	qwtPlotHeartbeat.setAxisScale(QwtPlot::xBottom, 0.0, 60.0, 20.0);
 
 	curveHeartbeat.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curveHeartbeat.setPen(QPen(labelFillColorGreen));
-//	curveHeartbeat.setBrush(labelFillColorGreen); // this fills the area under the line
+	curveHeartbeat.setPen(QPen(labelFillColorBlue));
+	curveHeartbeat.setBrush(labelFillColorBlue); // this fills the area under the line
 
 
 	//------------------------------------------------------------
