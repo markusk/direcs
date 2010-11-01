@@ -23,10 +23,10 @@
 PlotThread::PlotThread(SensorThread *s)
 {
 	stopped = false;
-	
+
 	// copy the pointer from the original object
 	sensThread = s;
-	
+
 	//----------------------------------------
 	// initialize array with values (x and y)
 	//----------------------------------------
@@ -72,8 +72,8 @@ void PlotThread::run()
 		// let the thread sleep some time
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-		
-		
+
+
 		//------------------------------------------------------
 		// get value from sensor motor 1
 		//------------------------------------------------------
@@ -83,11 +83,11 @@ void PlotThread::run()
 		{
 			yval1[i-1] = yval1[i];
 		}
-		
+
 		// get a motor sensor value
 		// the last value (second 60) is the latest (the read value)!
 		yval1[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR1);
-		
+
 		//--------------
 		//  e m i t
 		//--------------
@@ -103,7 +103,7 @@ void PlotThread::run()
 		{
 			yval2[i-1] = yval2[i];
 		}
-		
+
 		// get a motor sensor value
 		// the last value (second 60) is the latest (the read value)!
 		yval2[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR2);
@@ -123,7 +123,7 @@ void PlotThread::run()
 		{
 			yval3[i-1] = yval3[i];
 		}
-		
+
 		// get a motor sensor value
 		// the last value (second 60) is the latest (the read value)!
 		yval3[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR3);
@@ -143,7 +143,7 @@ void PlotThread::run()
 		{
 			yval4[i-1] = yval4[i];
 		}
-		
+
 		// get a motor sensor value
 		// the last value (second 60) is the latest (the read value)!
 		yval4[SIZE-1] = sensThread->getMAmpere(MOTORSENSOR4);
@@ -163,7 +163,7 @@ void PlotThread::run()
 		{
 			yval5[i-1] = yval5[i];
 		}
-		
+
 		// get the sensor value
 		// the last value (second 60) is the latest (the read value)!
 		yval5[SIZE-1] = sensThread->getVoltage(VOLTAGESENSOR1);
@@ -183,7 +183,7 @@ void PlotThread::run()
 		{
 			yval6[i-1] = yval6[i];
 		}
-		
+
 		// get the sensor value
 		// the last value (second 60) is the latest (the read value)!
 		yval6[SIZE-1] = sensThread->getVoltage(VOLTAGESENSOR2);
