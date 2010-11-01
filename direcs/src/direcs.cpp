@@ -476,7 +476,9 @@ void Direcs::init()
 
 		// also emit messages to the logfile
 		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
-//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
+
+		// TODO: check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
+		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -512,7 +514,9 @@ void Direcs::init()
 			if (!consoleMode)
 			{
 				// show a warning dialog!
-				QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+				QMessageBox msgbox(QMessageBox::Warning,	tr("Error with robots serial port"),
+															tr("Error opening serial port %1").arg(serialPortMicrocontroller),
+															QMessageBox::Ok | QMessageBox::Default);
 				msgbox.exec();
 			}
 			*/
@@ -705,7 +709,8 @@ void Direcs::init()
 		// connect sensor signals and write the heartbeat to the logfile
 		// (Whenever a specific sensor data is received, write this to the logfile)
 		//----------------------------------------------------------------------------
-		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );  // FIXME: this is too often!! Because of 10ms sensor thread!!
+		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );
+		// FIXME: this is too often!! Because of 10ms sensor thread!!
 
 
 		if (!consoleMode)
@@ -989,7 +994,10 @@ void Direcs::init()
 		if (!consoleMode)
 		{
 			// file not found-Msg
-			QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
+			QMessageBox msgbox(QMessageBox::Critical,
+							   tr("direcs"),
+							   tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()),
+							   QMessageBox::Ok | QMessageBox::Default);
 			msgbox.exec();
 			forceShutdown = true; // don't ask for AreYouSure, later when shutting down
 			emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
@@ -2231,7 +2239,9 @@ void Direcs::drive(const unsigned char command)
 			motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
 
 			resetDrivingSpeedTimer();
-			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER); // TODO: put that to a slider in the config menu / file.   TODO 2: make this speed increaser optional!
+			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
+			// TODO 1: put that to a slider in the config menu / file.
+			// TODO 2: make this speed increaser optional!
 */
 			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
@@ -4446,7 +4456,12 @@ void Direcs::test()
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
-		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.")
+				   .arg(now.toString("d"))
+				   .arg(now.toString("MMMM"))
+				   .arg(now.toString("yyyy"))
+				   .arg(now.toString("h"))
+				   .arg(now.toString("m")));
 #endif
 	}
 	else
@@ -4459,7 +4474,12 @@ void Direcs::test()
 		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
-		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.")
+				   .arg(now.toString("d"))
+				   .arg(now.toString("MMMM"))
+				   .arg(now.toString("yyyy"))
+				   .arg(now.toString("h"))
+				   .arg(now.toString("m")));
 #endif
 	}
 		//head->look("RIGHT");
