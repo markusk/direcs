@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>1424</height>
+    <height>1392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -334,12 +334,6 @@
    <addaction name="actionExit"/>
   </widget>
   <widget class="QDockWidget" name="dockState">
-   <property name="minimumSize">
-    <size>
-     <width>439</width>
-     <height>293</height>
-    </size>
-   </property>
    <property name="windowTitle">
     <string>State</string>
    </property>
@@ -391,8 +385,8 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>201</width>
-           <height>161</height>
+           <width>200</width>
+           <height>100</height>
           </size>
          </property>
         </widget>

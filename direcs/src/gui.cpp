@@ -2984,7 +2984,7 @@ void Gui::initPlots()
 
 	curveHeartbeat.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveHeartbeat.setPen(QPen(labelFillColorBlue));
-	curveHeartbeat.setBrush(labelFillColorBlue); // this fills the area under the line
+//	curveHeartbeat.setBrush(labelFillColorBlue); // this fills the area under the line
 
 
 	//------------------------------------------------------------
