@@ -49,7 +49,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (ioctl(mDev_fd, TIOCEXCL) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 setting TIOCEXCL on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-//		qDebug("Error setting TIOCEXCL on /dev/tty. ... - %s(%d).\n", strerror(errno), errno);
+		emit message(QString("<font color=\"#FF0000\">Serial port already opened?</font>"));
 		return -1;
 	}
 
@@ -497,7 +497,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 
 	if (n < 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when writing to serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when writing to serial device at DirecsSerial::writeAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 //		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
@@ -507,6 +507,36 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 	}
 
 	return n;
+}
+
+
+int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
+{
+	int amountRead = 0, bytes_read = 0;
+	struct timeval t;
+	fd_set set;
+	int err;
+
+	while(nChars > 0)
+	{
+		t.tv_sec = 0;
+		t.tv_usec = READ_TIMEOUT;
+		FD_ZERO(&set);
+		FD_SET(dev_fd, &set);
+		err = select(dev_fd + 1, &set, NULL, NULL, &t);
+		if(err == 0)
+		return -2;
+
+		amountRead = read(dev_fd, buf, nChars);
+		if(amountRead < 0 && errno != EWOULDBLOCK)
+		return -1;
+		else if(amountRead > 0) {
+		bytes_read += amountRead;
+		nChars -= amountRead;
+		buf += amountRead;
+		}
+	}
+	return bytes_read;
 }
 
 
@@ -562,37 +592,6 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	}
 	return bytes_read;
 }
-
-
-int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
-{
-	int amountRead = 0, bytes_read = 0;
-	struct timeval t;
-	fd_set set;
-	int err;
-
-	while(nChars > 0)
-	{
-		t.tv_sec = 0;
-		t.tv_usec = READ_TIMEOUT;
-		FD_ZERO(&set);
-		FD_SET(dev_fd, &set);
-		err = select(dev_fd + 1, &set, NULL, NULL, &t);
-		if(err == 0)
-		return -2;
-
-		amountRead = read(dev_fd, buf, nChars);
-		if(amountRead < 0 && errno != EWOULDBLOCK)
-		return -1;
-		else if(amountRead > 0) {
-		bytes_read += amountRead;
-		nChars -= amountRead;
-		buf += amountRead;
-		}
-	}
-	return bytes_read;
-}
-
 
 
 int DirecsSerial::closeAtmelPort()

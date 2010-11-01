@@ -122,13 +122,19 @@ class SensorThread : public QThread
 		*/
 		int getCompassValue(unsigned char axis);
 
+		/**
+		@return The heartbeat value which should look like high=5 or low=0 Volt.
+		*/
+		int getHeartbeatValue();
+
 
 	public slots:
 		/**
 		Resets the driven distance to 0.
 		@param sensor is the sensor number.
+		@return true on success, false on error
 		*/
-		void resetDrivenDistance(int sensor);
+		bool resetDrivenDistance(int sensor);
 
 		/**
 		This slot enables or disables the simulation mode.
@@ -144,6 +150,13 @@ class SensorThread : public QThread
 		@param state can be ON or OFF
 		*/
 		void setRobotState(bool state);
+
+		/**
+		This slots takes the compass circuit state, to know if the compas module is connected or not.
+		When the class knows this it is unnecessary to communicate with the interface.
+		@param state can be true or false
+		*/
+		void setCompassState(bool state);
 
 
 	signals:
@@ -256,10 +269,11 @@ class SensorThread : public QThread
 		volatile bool stopped;
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
+		bool compassState; // stores the robot state within this class
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 500; // Default: 100 ms
+		static const unsigned long THREADSLEEPTIME = 1000; // Default: 100 ms
 
 		// Give the infrared sensors some names
 		//
@@ -326,8 +340,13 @@ class SensorThread : public QThread
 		static const unsigned char DRIVENDISTANCEARRAYSIZE = 2;
 		int drivenDistance[DRIVENDISTANCEARRAYSIZE];
 
-		static const short int MOTORDISTANCE1 = 0;
-		static const short int MOTORDISTANCE2 = 1;
+		static const short int DRIVENDISTANCE1 = 0;
+		static const short int DRIVENDISTANCE2 = 1;
+
+		/**
+		Since a heartbeat can only high or low. we store only 1 value in this array. But we need an array for the plotThread.
+		*/
+		int heartbeatValue[1];
 
 		/**
 		Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.

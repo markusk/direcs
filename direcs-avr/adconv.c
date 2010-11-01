@@ -1,5 +1,38 @@
 #include "adconv.h"
 
+/*
+void initADC()
+{
+	// Den ADC aktivieren und Teilungsfaktor auf 64 stellen
+	//
+	// ADCSRA = AD Control and Status Register A
+	// ADEN = AD Enable
+	//
+	ADCSRA = (1<<ADEN) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
+
+	// Interne Referenzspannung verwenden (also 2,56 V)
+	ADMUX |= (1<<REFS1) | (1<<REFS0);
+
+	// Einen sog. Dummyreadout machen
+	ADCSRA |= (1<<ADSC);
+	
+	while (ADCSRA & (1<<ADSC))
+	{
+	};
+
+	// ADC wieder deaktivieren
+	ADCSRA &= ~(1<<ADEN);
+
+	// Den ADC aktivieren und Teilungsfaktor auf 64 stellen
+	//
+	// ADCSRA = AD Control and Status Register A
+	// ADEN = AD Enable
+	// ADSC = Start Conversion
+	// ADIE = ADC Interrupt Enable  < < < <
+	//
+	ADCSRA = (1<<ADSC) | (1<<ADIE) | (1<<ADEN) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
+}
+*/
 
 uint16_t readADC(unsigned char channel)
 {

@@ -122,6 +122,81 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 }
 
 
+bool InterfaceAvr::sendString(QString string)
+{
+//	QString debugstring;
+
+
+	// send starter
+	if (sendChar(starter) == true)
+	{
+		// send 'content' of string
+//		debugstring = "*";
+		for (int i=0; i<string.length(); i++)
+		{
+			// char by char
+			if (sendChar( string.at(i).toAscii() ) == false)
+			{
+				return false;
+			}
+//			debugstring.append(string.at(i));
+		}
+
+		// send terminator
+		if (sendChar(terminator) == true)
+		{
+			// success
+//			debugstring.append("#");
+//			emit message(debugstring);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+bool InterfaceAvr::receiveString(QString &string)
+{
+	int result = 0;
+	unsigned char character;
+	QByteArray ba;
+
+
+	do
+	{
+		// reading one char. Must return 1 (one character succussfull read).
+		result = serialPort->readAtmelPort(&character, 1);
+
+		if (result == 1)
+		{
+			// append received char to byte array
+			ba.append(character);
+		}
+
+	} while ( (result == 1) && (character != '#') );
+
+	if (result != 1)
+	{
+		// ERROR (error message already emitted from readAtmelPort!)
+		qDebug() << "error at receiveString";
+		return false;
+	}
+
+	// copy chars to QString to pointer to return the QString
+	string = QString::fromUtf8(ba.data(), ba.length());
+
+	// check result!
+	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
+	{
+		return true;
+	}
+
+
+	return false;
+}
+
+
 bool InterfaceAvr::receiveInt(int *value)
 {
 // 	static int receiveErrorCounter = 0;
@@ -175,4 +250,27 @@ bool InterfaceAvr::receiveInt(int *value)
 
 	// emit emitMessage( QString("Received int '%1'.").arg(*value) ); // this makes the program to slow and than to crash!!
 	return true;
+}
+
+
+bool InterfaceAvr::convertStringToInt(QString string, int &value)
+{
+	bool conversion = false;
+
+
+	// remove starter
+	string = string.remove(starter);
+	// remove terminator
+	string = string.remove(terminator);
+
+	// convert to int
+	value = string.toInt(&conversion);
+
+	if (conversion)
+	{
+		return true;
+	}
+
+	value = 0;
+	return false;
 }

@@ -151,7 +151,7 @@ class DirecsSerial : public QObject
 		Reads data from the serial line
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
 
-		@param *buf Pointer to unsiged char buffer for the data to be written
+		@param *buf Pointer to unsigned char buffer for the data to be read.
 		@param nChars Number of bytes to be written (<= size of the buffer array).
 		@return The number of bytes read.
 		 */

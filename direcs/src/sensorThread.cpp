@@ -43,6 +43,9 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	voltageSensorValue[VOLTAGESENSOR1] = 0;
 	voltageSensorValue[VOLTAGESENSOR2] = 0;
 
+	// for storing a virtual heartbeat value (high=5V)
+	heartbeatValue[0] = 0;
+
 	// initialisation
 	for (int i=0; i<USSENSORARRAYSIZE; i++)
 	{
@@ -132,6 +135,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRDistance[39] = 210;
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
+	compassState = false;
 }
 
 
@@ -198,7 +202,7 @@ void SensorThread::run()
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
 
-/* FIXME: deactivated due to errors. when activated, voltage sensor values are 0 or something stupid else!
+
 			//---------------
 			// motor sensors
 			//---------------
@@ -221,8 +225,8 @@ void SensorThread::run()
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
-*/
-			/* TODO: implement reading of motor sensors 3 and 4 !
+
+/* TODO: implement reading of motor sensors 3 and 4 !
 
 			if (readMotorSensor(MOTORSENSOR3) == false)
 			{
@@ -243,12 +247,14 @@ void SensorThread::run()
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR4).arg(getMAmpere(MOTORSENSOR4)));
-			*/
+*/
 
 			//====================================================================
 			// send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
 			{
+				// set plot value to high = 5 Volt
+				heartbeatValue[0] = 5;
 				emit heartbeat(GREEN);
 
 				// send heartbeat over the network
@@ -257,6 +263,8 @@ void SensorThread::run()
 			}
 			else
 			{
+				// set plot value to low = 0 Volt
+				heartbeatValue[0] = 4;
 				emit heartbeat(LEDOFF);
 
 				// send heartbeat over the network
@@ -269,62 +277,66 @@ void SensorThread::run()
 			//-----------------
 			// driven distance
 			//-----------------
-			if (readDrivenDistance(MOTORDISTANCE1) == false)
+			if (readDrivenDistance(DRIVENDISTANCE1) == false)
 			{
 				// Unlock the mutex.
 				// mutex->unlock();
 				// stop();
 			}
 
-			if (readDrivenDistance(MOTORDISTANCE2) == false)
+			if (readDrivenDistance(DRIVENDISTANCE2) == false)
 			{
 				// Unlock the mutex.
 				// mutex->unlock();
 				// stop();
 			}
 
-			//-------------------------------------------
-			// read value from magnetic sensor / compass
-			//-------------------------------------------
-			if (readCompassAxis(XAXIS) == false)
+
+			// if initCircuit found out that the compas module is connected
+			if (compassState == true)
 			{
-				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				//-------------------------------------------
+				// read value from magnetic sensor / compass
+				//-------------------------------------------
+				if (readCompassAxis(XAXIS) == false)
+				{
+					// Unlock the mutex.
+					// mutex->unlock();
+					// stop();
+				}
+				// send value over the network
+				// *xc42# means axis x of the compass has 42°
+				// CONVERT TO INT! Only for displaying!
+				emit sendNetworkString( QString("*xc%1#").arg( (int) xAxis ));
+
+				if (readCompassAxis(YAXIS) == false)
+				{
+					// Unlock the mutex.
+					// mutex->unlock();
+					// stop();
+				}
+				// send value over the network
+				// *yc42# means axis y of the compass has 42°
+				// CONVERT TO INT! Only for displaying!
+				emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
+
+				if (readCompassAxis(ZAXIS) == false)
+				{
+					// Unlock the mutex.
+					// mutex->unlock();
+					// stop();
+				}
+				// send value over the network
+				// *zc42# means axis z of the compass has 42°
+				// CONVERT TO INT! Only for displaying!
+				emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
+
+				// Only *after* all axes were read:
+				calculateHeading();
+
+				// emit ALL compass axes values
+				emit compassDataComplete(xAxis, yAxis, zAxis, heading);
 			}
-			// send value over the network
-			// *xc42# means axis x of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*xc%1#").arg( (int) xAxis ));
-
-			if (readCompassAxis(YAXIS) == false)
-			{
-				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
-			}
-			// send value over the network
-			// *yc42# means axis y of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*yc%1#").arg( (int) yAxis ));
-
-			if (readCompassAxis(ZAXIS) == false)
-			{
-				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
-			}
-			// send value over the network
-			// *zc42# means axis z of the compass has 42°
-			// CONVERT TO INT! Only for displaying!
-			emit sendNetworkString( QString("*zc%1#").arg( (int) zAxis ));
-
-			// Only *after* all axes were read:
-			calculateHeading();
-
-			// emit ALL compass axes values
-			emit compassDataComplete(xAxis, yAxis, zAxis, heading);
-
 
 /*			infrared Sensors temporarily removed from robot!!
 
@@ -658,44 +670,67 @@ int SensorThread::getDrivenDistance(int sensor)
 }
 
 
-void SensorThread::resetDrivenDistance(int sensor)
+bool SensorThread::resetDrivenDistance(int sensor)
 {
+	QString answer = "error";
+
+
 	if ((sensor < MOTORSENSOR1) || (sensor > DRIVENDISTANCEARRAYSIZE-1))
 	{
-		qDebug("ERROR: wrong motor sensor");
-		return;
+		qDebug("ERROR: wrong motor sensor '%d' at resetDrivenDistance()", sensor);
+		return false;
 	}
 
 	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 	mutex->lock();
 
-	//------------------------------------------------------
-	// reset
-	//------------------------------------------------------
 	switch (sensor)
 	{
 		case MOTORSENSOR1:
-			if (interface1->sendChar(RESET_MOTOR_DISTANCE1) == false)
+			// send command 'init distance 1'
+			if (interface1->sendString("id1") == true)
 			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
-				return;
+				// check if the robot answers with "ok"
+				if ( interface1->receiveString(answer) == true)
+				{
+					if (answer == "*ok#")
+					{
+						// Unlock the mutex
+						mutex->unlock();
+						return true;
+					}
+				}
 			}
+
+			// error
+			mutex->unlock();
+			return false;
 			break;
 		case MOTORSENSOR2:
-			if (interface1->sendChar(RESET_MOTOR_DISTANCE2) == false)
+			// send command 'init distance 2'
+			if (interface1->sendString("id2") == true)
 			{
-				// Unlock the mutex.
-				mutex->unlock();
-				qDebug("ERROR sending to serial port (SensorThread)");
-				return;
+				// check if the robot answers with "ok"
+				if ( interface1->receiveString(answer) == true)
+				{
+					if (answer == "*ok#")
+					{
+						// Unlock the mutex
+						mutex->unlock();
+						return true;
+					}
+				}
 			}
+
+			// error
+			mutex->unlock();
+			return false;
 			break;
 	}
 
 	// Unlocks the mutex.
 	mutex->unlock();
+	return false;
 }
 
 
@@ -861,6 +896,12 @@ void SensorThread::setRobotState(bool state)
 {
 	// store the state within this class
 	robotState = state;
+}
+
+void SensorThread::setCompassState(bool state)
+{
+	// store the state within this class
+	compassState = state;
 }
 
 
@@ -1168,58 +1209,52 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 bool SensorThread::readVoltageSensor(short int sensor)
 {
 	int value = 0;
-//	unsigned char cValue = 0;
+	QString answer = "error";
 
 
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
 			// read sensor
-			if (interface1->sendChar(READ_SENSOR_8) == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
+			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
-//				if (interface1->receiveChar(&cValue) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[VOLTAGESENSOR1] = 0;
-					//qDebug("ERROR reading voltage sensor 1");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						voltageSensorValue[VOLTAGESENSOR1] = value;
+						return true;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[VOLTAGESENSOR1] = value;
-//				voltageSensorValue[VOLTAGESENSOR1] = (int) cValue;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading voltage sensor 1");
-				return false;
-			}
+			// error
+			voltageSensorValue[VOLTAGESENSOR1] = 0;
+			return false;
 			break;
 		case VOLTAGESENSOR2:
 			// read sensor
-			if (interface1->sendChar(READ_SENSOR_7) == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
+			if (interface1->sendString("s7") == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
-//				if (interface1->receiveChar(&cValue) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[VOLTAGESENSOR2] = 0;
-					//qDebug("ERROR reading voltage sensor 2");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						voltageSensorValue[VOLTAGESENSOR2] = value;
+						return true;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[VOLTAGESENSOR2] = value;
-//				voltageSensorValue[VOLTAGESENSOR2] = (int) cValue;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading voltage sensor 2");
-				return false;
-			}
+			// error
+			voltageSensorValue[VOLTAGESENSOR2] = 0;
+			return false;
 			break;
 	}
 
@@ -1232,105 +1267,102 @@ bool SensorThread::readVoltageSensor(short int sensor)
 bool SensorThread::readMotorSensor(short int sensor)
 {
 	int value = 0;
+	QString answer = "error";
 
 	switch (sensor)
 	{
 		case MOTORSENSOR1:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR1) == true)
+			if (interface1->sendString("ms1") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR1] = 0;
-					//qDebug("ERROR reading motor sensor 1");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR1] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR1] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading motor sensor 1");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR1] = 0;
+			return false;
 			break;
 		case MOTORSENSOR2:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR2) == true)
+			if (interface1->sendString("ms2") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR2] = 0;
-					//qDebug("ERROR reading motor sensor 2");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR2] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR2] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading motor sensor 2");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR2] = 0;
+			return false;
 			break;
 		case MOTORSENSOR3:
 			qDebug("ERROR reading motor sensor 3 not implented yet!!"); // TODO implement reading motor sensor 3
 			/*
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR3) == true)
+			if (interface1->sendString("ms3") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR3] = 0;
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR3] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR3] = value;
-				return true;
-			}
-			else
-			{
-				qDebug("ERROR reading motor sensor 3");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR3] = 0;
+			return false;
+			break;
 			*/
 			break;
 		case MOTORSENSOR4:
 			qDebug("ERROR reading motor sensor 4 not implented yet!!"); // TODO implement reading motor sensor 4
 			/*
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_SENSOR4) == true)
+			if (interface1->sendString("ms4") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					voltageSensorValue[MOTORSENSOR4] = 0;
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						motorSensorValue[MOTORSENSOR4] = value;
+					}
 				}
+			}
 
-				// store measured value
-				voltageSensorValue[MOTORSENSOR4] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading motor sensor 4");
-				return false;
-			}
+			// error
+			motorSensorValue[MOTORSENSOR4] = 0;
+			return false;
+			break;
 			*/
 			break;
 	}
 
 	// this line should be never reached
-	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+	qDebug("WARNING: wrong sensor number in readMotorSensor()");
 	return false;
 }
 
@@ -1338,57 +1370,55 @@ bool SensorThread::readMotorSensor(short int sensor)
 bool SensorThread::readDrivenDistance(short int sensor)
 {
 	int value = 0;
+	QString answer = "error";
+
 
 	switch (sensor)
 	{
-		case MOTORDISTANCE1:
+		case DRIVENDISTANCE1:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_DISTANCE1) == true)
+			if (interface1->sendString("dd1") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					drivenDistance[MOTORDISTANCE1] = 0;
-					//qDebug("ERROR reading driven distance 1");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						drivenDistance[DRIVENDISTANCE1] = value;
+					}
 				}
+			}
 
-				// store measured value
-				drivenDistance[MOTORDISTANCE1] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading driven distance 1");
-				return false;
-			}
+			// error
+			drivenDistance[DRIVENDISTANCE1] = 0;
+			return false;
 			break;
-		case MOTORDISTANCE2:
+		case DRIVENDISTANCE2:
 			// read sensor
-			if (interface1->sendChar(READ_MOTOR_DISTANCE2) == true)
+			if (interface1->sendString("dd2") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					drivenDistance[MOTORDISTANCE2] = 0;
-					//qDebug("ERROR reading driven distance 2");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						drivenDistance[DRIVENDISTANCE2] = value;
+					}
 				}
+			}
 
-				// store measured value
-				drivenDistance[MOTORDISTANCE2] = value;
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading driven distance 2");
-				return false;
-			}
+			// error
+			drivenDistance[DRIVENDISTANCE2] = 0;
+			return false;
 			break;
 	}
 
 	// this line should be never reached
-	qDebug("WARNING: wrong motor distance number in readDrivenDistance()");
+	qDebug("WARNING: wrong 'driven distance'' number in readDrivenDistance()");
 	return false;
 }
 
@@ -1396,77 +1426,70 @@ bool SensorThread::readDrivenDistance(short int sensor)
 bool SensorThread::readCompassAxis(short int axis)
 {
 	int value = 0;
+	QString answer = "error";
+
 
 	switch (axis)
 	{
 		case XAXIS:
 			// read sensor
-			if (interface1->sendChar(READ_AXIS_X) == true)
+			if (interface1->sendString("cx") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					xAxis = 0;
-					//qDebug("ERROR reading x axis");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// convert the value to degrees and store the value in the class member
+						xAxis =  convertToDegree(value);
+					}
 				}
+			}
 
-				// convert the value to degrees and store the value in the class member
-				xAxis =  convertToDegree(value);
-				//qDebug("From Atmel=%d / xAxis=%f", value, xAxis);
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading x axis");
-				return false;
-			}
+			// error
+			xAxis =  0;
+			return false;
 			break;
 		case YAXIS:
 			// read sensor
-			if (interface1->sendChar(READ_AXIS_Y) == true)
+			if (interface1->sendString("cy") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					yAxis = 0;
-					//qDebug("ERROR reading y axis");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// convert the value to degrees and store the value in the class member
+						yAxis =  convertToDegree(value);
+					}
 				}
+			}
 
-				// convert the value to degrees and store the value in the class member
-				yAxis =  convertToDegree(value);
-				//qDebug("From Atmel=%d / yAxis=%f", value, yAxis);
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading y axis");
-				return false;
-			}
+			// error
+			yAxis =  0;
+			return false;
 			break;
 		case ZAXIS:
 			// read sensor
-			if (interface1->sendChar(READ_AXIS_Z) == true)
+			if (interface1->sendString("cz") == true)
 			{
-				// receive the 16 Bit answer from the MC
-				if (interface1->receiveInt(&value) == false)
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer) == true)
 				{
-					zAxis = 0;
-					//qDebug("ERROR reading z axis");
-					return false;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// convert the value to degrees and store the value in the class member
+						zAxis =  convertToDegree(value);
+					}
 				}
+			}
 
-				// convert the value to degrees and store the value in the class member
-				zAxis =  convertToDegree(value);
-				// qDebug("From Atmel=%d / zAxis=%f", value, zAxis);
-				return true;
-			}
-			else
-			{
-				//qDebug("ERROR reading z axis");
-				return false;
-			}
+			// error
+			zAxis =  0;
+			return false;
 			break;
 	}
 
@@ -1571,4 +1594,10 @@ bool SensorThread::readContact(short int contact)
 	// this line should be never reached
 	qDebug("WARNING: wrong contact number in readContact()");
 	return false;
+}
+
+
+int SensorThread::getHeartbeatValue()
+{
+	return heartbeatValue[0];
 }

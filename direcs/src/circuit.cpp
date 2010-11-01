@@ -26,8 +26,9 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	interface1 = i;
 	mutex = m;
 
-	robotIsOn = true; // We think positive
+	circuitState = true; // We think positive
 	firstInitDone = false;
+	compassCircuitState = false;
 }
 
 
@@ -38,43 +39,91 @@ Circuit::~Circuit()
 
 bool Circuit::initCircuit()
 {
-	if (robotIsOn) // maybe robot is already recognized as OFF by the interface class!
+	QString answer = "error";
+
+
+	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
-	
+
 		//-------------------------------------------------------
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
-		if (interface1->sendChar(INIT) == true)
+
+		// sending RESET (INIT) command
+		if (interface1->sendString("re") == true)
 		{
-			// check if the robot answers with "@"
-			unsigned char answer = 0;
-			interface1->receiveChar(&answer);
-	
-			// everthing's fine :-)
-			if (answer == INITANSWER)
+			// check if the robot answers with "ok"
+			if ( interface1->receiveString(answer) == true)
 			{
-				// Unlock the mutex
-				mutex->unlock();
-				firstInitDone = true;
-				robotIsOn = true;
-				emit robotState(true);
-				return true;
+				// everthing's fine :-)
+				if (answer == "*ok#")
+				{
+					// Unlock the mutex
+					mutex->unlock();
+
+					// ciruit init okay
+					firstInitDone = true;
+					circuitState = true;
+					emit robotState(true);
+
+					return true;
+				}
 			}
 		}
-	
+
 		// Unlock the mutex.
 		mutex->unlock();
 
-		qDebug("INFO from initCircuit: Robot is OFF.");
-		firstInitDone = true;
-		robotIsOn = false;
-		emit robotState(false);
-		return false;
 	}
-	
+
 	qDebug("INFO from initCircuit: Robot is OFF.");
+	firstInitDone = true;
+	circuitState = false;
+	emit robotState(false);
+
+	return false;
+}
+
+
+bool Circuit::initCompass()
+{
+	QString answer = "error";
+
+
+	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	{
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+
+		// check if the 3D compass sensor is connected to the Atmel board
+		if (interface1->sendString("cc") == true)
+		{
+			// check if the robot answers with "ok"
+			if ( interface1->receiveString(answer) == true)
+			{
+				if (answer == "*ok#")
+				{
+					// Unlock the mutex
+					mutex->unlock();
+
+					compassCircuitState = true;
+					emit compassState(true);
+
+					return true;
+				}
+			}
+		}
+
+		// Unlock the mutex.
+		mutex->unlock();
+
+	}
+
+	compassCircuitState = false;
+	emit compassState(false);
+
 	return false;
 }
 
@@ -88,12 +137,25 @@ bool Circuit::isConnected()
 		firstInitDone = true;
 	}
 
-	return robotIsOn;
+	return circuitState;
+}
+
+
+bool Circuit::compassConnected()
+{
+	// if not tried to init the robots (and compass) hardware, do this!
+	if (firstInitDone == false)
+	{
+		initCircuit();
+		firstInitDone = true;
+	}
+
+	return compassCircuitState;
 }
 
 
 void Circuit::setRobotState(bool state)
 {
 	// store the state within this class
-	robotIsOn = state;
+	circuitState = state;
 }

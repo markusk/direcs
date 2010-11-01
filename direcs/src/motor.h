@@ -35,23 +35,24 @@ The Motor class gives access to the motors of the robot.
 */
 class Motor : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		Motor(InterfaceAvr *i, QMutex *m);
 		~Motor();
-		
+
 		/**
 		Controls a motor (normal and stepper!).
 		@param motor is the motor number.
 		@param power can be ON or OFF.
 		@param direction can be CLOCKWISE or COUNTERCLOCKWISE.
-		
+		@return true on access (answer from Atmel was okay)
+
 		@sa makeSteps() for generating steps for stepper motors
 		*/
-		void motorControl(unsigned char motor, bool power, unsigned char direction);
-		
-		
+		bool motorControl(unsigned char motor, bool power, unsigned char direction);
+
+
 		/**
 		@return The speed of a motor.
 		@param motor is the motor number.
@@ -61,33 +62,33 @@ class Motor : public QObject
 		//bool isMotorActive();
 		//unsigned int getSteps1();
 		//unsigned int getSteps2();
-		
+
 		/**
 		@param motor is the motor number.
 		@return The revolutions made of a motor (stored in the microcontroller till power off).
 		*/
 		unsigned int getRevolutions(unsigned char motor);
-		
+
 		/**
 		Returns the driven distance, if the motor is a stepper motor!
 		@param motor is the motor number.
 		@return The driven distance in cm made of a whee1.
 		*/
 		double getDrivenDistance(unsigned char motor);
-		
+
 		/**
 		Resets the stored driven distances and made revolutions in this class and in the microcontroller.
 		@param motor is the motor number.
 		*/
 		void resetMovementCounter(short int motor);
-		
+
 		/**
 		Turns the flashlight ON or OFF.
 		@param state can be ON or OFF.
 		*/
 		// TODO: put it somewhere else...
 		void flashlight(bool state);
-		
+
 		/*
 		Generates steps for stepper motors.
 		@param steps are the number of steps.
@@ -101,24 +102,25 @@ class Motor : public QObject
 		Sets the speed of a motor.
 		@param motor is the motor number (MOTOR1, MOTOR2, MOTOR3, MOTOR4, ALLMOTORS).
 		@param speed is the speed (0 - 255).
+		®return true on success
 		 */
-		void setMotorSpeed(int motor, int speed);
-		
+		bool setMotorSpeed(int motor, int speed);
+
 		/**
 		Sets the maximum speed of alls motors (the robot).
 		@param speed is the speed (0 - 255).
 		 */
 		void setMaximumSpeed(int speed);
-		
+
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
 		When the class knows this, unnecessary communication with the interface can be avoided.
-		
+
 		@param state can be ON or OFF
 		 */
 		void setRobotState(bool state);
-		
-		
+
+
 	private:
 		void calculateMovement(); // TODO: check the conversion value and make it a const!
 
@@ -141,7 +143,7 @@ class Motor : public QObject
 		double drivenDistance2;
 		double drivenDistance3;
 		double drivenDistance4;
-		
+
 		static const char ON  = true;   /** For motor "ON" */
 		static const char OFF = false;  /** For motor "OFF" */
 		static const char CLOCK = 1;  /** For stepper motor steps (clock) */
@@ -166,7 +168,7 @@ class Motor : public QObject
 		static const unsigned char MOTOR3			= 30; //! Motor 3 (back left)
 		static const unsigned char MOTOR4			= 40; //! Motor 4 (back right)
 		static const unsigned char ALLMOTORS		= 90; //! used the hole robot gets one command for all motors (like 'forwardall'). This is so save transmissions on the serial line.
-		
+
 		/// Some driving directions for the robot. @sa Direcs::drive() [Slot]
 		static const unsigned char FORWARD		= 1;
 		static const unsigned char BACKWARD		= 2;
@@ -188,7 +190,7 @@ class Motor : public QObject
 		static const unsigned char MOTOR2A = BIT2;
 		static const unsigned char MOTOR2B = BIT3;
 		static const unsigned char MOTORCLOCK = BIT4;
-		
+
 		// the "serial" commands for the MC -> see "main.h" in the microcontroller source code (direcs-avr)!
 		static const unsigned char MOTOR1_OFF 				= 20;
 		static const unsigned char MOTOR1_CLOCKWISE 		= 21;
@@ -209,7 +211,7 @@ class Motor : public QObject
 
 		static const unsigned char MOTOR3_SPEED_SET			= 56;
 		static const unsigned char MOTOR4_SPEED_SET			= 57;
-		
+
 		static const unsigned char SPEED_SET_ALLMOTORS		= 60;
 
 		/// The serial driving commands for the robot
@@ -226,7 +228,7 @@ class Motor : public QObject
 		// static const unsigned char BOTDIAGONAL_FORWARD_RIGHT
 		// static const unsigned char BOTDIAGONAL_BACKWARD_LEFT
 		// static const unsigned char BOTDIAGONAL_BACKWARD_RIGHT
-		
+
 		static const unsigned char FLASHLIGHT_OFF 		= 40;
 		static const unsigned char FLASHLIGHT_ON 		= 41;
 

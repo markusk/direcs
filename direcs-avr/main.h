@@ -104,13 +104,15 @@
 #define OFF						0
 #define ON						1
 
+// "Morsedauer" für ein Bit in Millisekunden
+#define BITZEIT 100     
+
 
 #include <avr/io.h>
 #include <inttypes.h>
 #include <avr/interrupt.h> // @sa /usr/local/CrossPack-AVR/avr/include/avr/iom2560.h and -> iomxx0_1.h for Atmega2560
 #include <stdlib.h> // für utoa und itoa
 #include <util/delay.h>
-
 
 #include "usart.h"    // serial stuff
 #include "adconv.h"   // AD conversion
@@ -120,10 +122,17 @@
 #include "micromag.h" // 3D magnetic compass 'micromag3'
 
 
+// stores the serial received command and the string which will be sent as an answer
+char stringbuffer[64];
+
+
 //
 // the prototypes
 //
 int main(void);
+
+// sends a u int value over the serial line as ASCII
+void sendUInt(uint16_t value);
 
 void redLED(uint8_t state);
 void yellowLED(uint8_t state);
@@ -131,5 +140,7 @@ void greenLED(uint8_t state);
 
 void relais(uint8_t state);
 
+// lange, variable Wartezeit, Einheit in Millisekunden
+void long_delay(uint16_t ms);
 
 #endif

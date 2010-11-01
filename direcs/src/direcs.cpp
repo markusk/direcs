@@ -327,6 +327,10 @@ void Direcs::init()
 		connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
 	}
 
+	// let the sensorthread know, if only the compass is not connected
+	connect(circuit1,	SIGNAL( compassState(bool) ), sensorThread,	SLOT( setCompassState(bool) ));
+
+
 	if (!consoleMode)
 	{
 		//--------------------------------------------------------------------------
@@ -452,6 +456,7 @@ void Direcs::init()
 			connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete5(double *, double *, int) ), gui, SLOT( setPlotData5(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete6(double *, double *, int) ), gui, SLOT( setPlotData6(double *, double *, int) ));
+			connect(plotThread, SIGNAL( plotDataCompleteHeartbeat(double *, double *, int) ), gui, SLOT( setPlotDataHeartbeat(double*, double*, int) ));
 		}
 #endif
 
@@ -471,7 +476,9 @@ void Direcs::init()
 
 		// also emit messages to the logfile
 		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
-//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // TODO: check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
+
+		// TODO: check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
+		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -507,10 +514,19 @@ void Direcs::init()
 			if (!consoleMode)
 			{
 				// show a warning dialog!
-				QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+				QMessageBox msgbox(QMessageBox::Warning,	tr("Error with robots serial port"),
+															tr("Error opening serial port %1").arg(serialPortMicrocontroller),
+															QMessageBox::Ok | QMessageBox::Default);
 				msgbox.exec();
 			}
 			*/
+
+			if (!consoleMode)
+			{
+				// set GUI LED for compass module
+				// has to be OFF, since the Atmel circuit is OFF
+				gui->setLEDCompass(LEDOFF);
+			}
 		}
 		else
 		{
@@ -551,6 +567,24 @@ void Direcs::init()
 				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 				logfile->appendLog("Robot is ON and answers.");
 
+				// check compass module
+				if (circuit1->initCompass() == true)
+				{
+					gui->appendLog("3D compass module detected.");
+					if (!consoleMode)
+					{
+						gui->setLEDCompass(GREEN);
+					}
+				}
+				else
+				{
+					gui->appendLog("<font color=\"#FF0000\">3D compass module not connected!</font>");
+					if (!consoleMode)
+					{
+						gui->setLEDCompass(RED);
+					}
+				}
+
 				//-------------------------------------------------------
 				// set the read motor speed
 				//-------------------------------------------------------
@@ -564,24 +598,24 @@ void Direcs::init()
 				// move all servos in their default positions
 				//-------------------------------------------------------
 				/* TODO: temporarily deactivated (no servos mounted on the current robot)
-			servos->init();
-			emit message("Servos moved to default positions");
-			*/
+				servos->init();
+				emit message("Servos moved to default positions");
+				*/
 
 				// TODO: start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
 				// start the heartbeat thread
 				//-----------------------------------------------------------
 				/*
-			if (heartbeat->isRunning() == false)
-			{
-				emit splashMessage("Starting heartbeat thread...");
+				if (heartbeat->isRunning() == false)
+				{
+					emit splashMessage("Starting heartbeat thread...");
 
-				emit message("Starting heartbeat thread...", false);
-				heartbeat->start();
-				emit message("Heartbeat thread started.");
-			}
-			*/
+					emit message("Starting heartbeat thread...", false);
+					heartbeat->start();
+					emit message("Heartbeat thread started.");
+				}
+				*/
 
 				//-----------------------------------------------------------
 				// start the sensor thread for reading the sensors)
@@ -675,7 +709,8 @@ void Direcs::init()
 		// connect sensor signals and write the heartbeat to the logfile
 		// (Whenever a specific sensor data is received, write this to the logfile)
 		//----------------------------------------------------------------------------
-		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );  // FIXME: this is too often!! Because of 10ms sensor thread!!
+		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );
+		// FIXME: this is too often!! Because of 10ms sensor thread!!
 
 
 		if (!consoleMode)
@@ -959,7 +994,10 @@ void Direcs::init()
 		if (!consoleMode)
 		{
 			// file not found-Msg
-			QMessageBox msgbox(QMessageBox::Critical, tr("direcs"), tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()), QMessageBox::Ok | QMessageBox::Default);
+			QMessageBox msgbox(QMessageBox::Critical,
+							   tr("direcs"),
+							   tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()),
+							   QMessageBox::Ok | QMessageBox::Default);
 			msgbox.exec();
 			forceShutdown = true; // don't ask for AreYouSure, later when shutting down
 			emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
@@ -2086,6 +2124,7 @@ void Direcs::drive(const unsigned char command)
 //			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case BACKWARD:
 			emit message("BACKWARD");
 			if (!consoleMode)
@@ -2104,6 +2143,7 @@ void Direcs::drive(const unsigned char command)
 //			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case LEFT:
 			emit message("LEFT");
 			if (!consoleMode)
@@ -2122,6 +2162,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case RIGHT:
 			emit message("RIGHT");
 			if (!consoleMode)
@@ -2140,6 +2181,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case TURNLEFT:
 			emit message("TURNLEFT");
 			if (!consoleMode)
@@ -2158,6 +2200,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case TURNRIGHT:
 			emit message("TURNRIGHT");
 			if (!consoleMode)
@@ -2176,6 +2219,7 @@ void Direcs::drive(const unsigned char command)
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case START:
 			robotDrives = true;
 			emit message("Starting to drive forward...");
@@ -2195,7 +2239,9 @@ void Direcs::drive(const unsigned char command)
 			motors->setMotorSpeed(MOTOR4, 0); // TODO: check if this works
 
 			resetDrivingSpeedTimer();
-			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER); // TODO: put that to a slider in the config menu / file.   TODO 2: make this speed increaser optional!
+			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
+			// TODO 1: put that to a slider in the config menu / file.
+			// TODO 2: make this speed increaser optional!
 */
 			/* TODO: this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
@@ -2206,6 +2252,7 @@ void Direcs::drive(const unsigned char command)
 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
+
 		case WAIT:
 			emit message("WAIT");
 /*	FIXME: to much data over serial port?!?
@@ -2233,6 +2280,7 @@ void Direcs::drive(const unsigned char command)
 			//
 			return;
 			break;
+
 		case STOP:
 			emit message("STOP");
 /*	FIXME: to much data over serial port?!?
@@ -2260,30 +2308,40 @@ void Direcs::drive(const unsigned char command)
 			robotDrives = false;
 			return;
 			break;
+
 		case MOTOR1FW: // for the test widget in the GUI!!
 			emit message("Motor 1 forward");
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
 			}
-			motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE);
+			if (!motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE))
+				emit message("ERROR motor 1 CCW");
+			return;
 			break;
+
 		case MOTOR1BW: // for the test widget in the GUI!!
 			emit message("Motor 1 backward");
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
 			}
-			motors->motorControl(MOTOR1, ON, CLOCKWISE);
+			if (!motors->motorControl(MOTOR1, ON, CLOCKWISE))
+				emit message("ERROR motor 1 CW");
+			return;
 			break;
+
 		case MOTOR1OFF: // for the test widget in the GUI!!
 			emit message("Motor 1 OFF");
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
 			}
-			motors->motorControl(MOTOR1, OFF, SAME);
+			if (!motors->motorControl(MOTOR1, OFF, SAME))
+				emit message("ERROR motor 1 OFF");
+			return;
 			break;
+
 		case MOTOR2FW: // for the test widget in the GUI!!
 			emit message("Motor 2 forward");
 			if (!consoleMode)
@@ -2291,7 +2349,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
 			}
 			motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
+			return;
 			break;
+
 		case MOTOR2BW: // for the test widget in the GUI!!
 			emit message("Motor 2 backward");
 			if (!consoleMode)
@@ -2299,7 +2359,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
 			}
 			motors->motorControl(MOTOR2, ON, CLOCKWISE);
+			return;
 			break;
+
 		case MOTOR2OFF: // for the test widget in the GUI!!
 			emit message("Motor 2 OFF");
 			if (!consoleMode)
@@ -2307,7 +2369,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR2, OFF, SAME);
 			}
 			motors->motorControl(MOTOR2, OFF, SAME);
+			return;
 			break;
+
 		case MOTOR3FW: // for the test widget in the GUI!!
 			emit message("Motor 3 forward");
 			if (!consoleMode)
@@ -2315,7 +2379,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
 			}
 			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			return;
 			break;
+
 		case MOTOR3BW: // for the test widget in the GUI!!
 			emit message("Motor 3 backward");
 			if (!consoleMode)
@@ -2323,7 +2389,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
 			}
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			return;
 			break;
+
 		case MOTOR3OFF: // for the test widget in the GUI!!
 			emit message("Motor 3 OFF");
 			if (!consoleMode)
@@ -2331,7 +2399,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, OFF, SAME);
 			}
 			motors->motorControl(MOTOR3, OFF, SAME);
+			return;
 			break;
+
 		case MOTOR4FW: // for the test widget in the GUI!!
 			emit message("Motor 4 forward");
 			if (!consoleMode)
@@ -2339,7 +2409,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
 			}
 			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+			return;
 			break;
+
 		case MOTOR4BW: // for the test widget in the GUI!!
 			emit message("Motor 4 backward");
 			if (!consoleMode)
@@ -2347,7 +2419,9 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
 			}
 			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			return;
 			break;
+
 		case MOTOR4OFF: // for the test widget in the GUI!!
 			emit message("Motor 4 OFF");
 			if (!consoleMode)
@@ -2355,6 +2429,7 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			motors->motorControl(MOTOR4, OFF, SAME);
+			return;
 			break;
 	}
 }
@@ -4381,7 +4456,12 @@ void Direcs::test()
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
-		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.")
+				   .arg(now.toString("d"))
+				   .arg(now.toString("MMMM"))
+				   .arg(now.toString("yyyy"))
+				   .arg(now.toString("h"))
+				   .arg(now.toString("m")));
 #endif
 	}
 	else
@@ -4394,7 +4474,12 @@ void Direcs::test()
 		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
-		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.").arg(now.toString("d")).arg(now.toString("MMMM")).arg(now.toString("yyyy")).arg(now.toString("h")).arg(now.toString("m")));
+		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.")
+				   .arg(now.toString("d"))
+				   .arg(now.toString("MMMM"))
+				   .arg(now.toString("yyyy"))
+				   .arg(now.toString("h"))
+				   .arg(now.toString("m")));
 #endif
 	}
 		//head->look("RIGHT");

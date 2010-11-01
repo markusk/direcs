@@ -1531,6 +1531,25 @@ void Gui::setPlotData6(double *xval, double *yval, int size)
 #endif
 
 
+#ifndef BUILDFORROBOT
+void Gui::setPlotDataHeartbeat(double *xval, double *yval, int size)
+{
+	//---------------
+	// Heartbeat
+	//---------------
+
+	// set curve with data
+	curveHeartbeat.setData(xval, yval, size);
+
+	// attach data to curve
+	curveHeartbeat.attach(&qwtPlotHeartbeat);
+
+	// after changing the values, replot the curve
+	qwtPlotHeartbeat.replot();
+}
+#endif
+
+
 void Gui::on_btnPower1_toggled(bool checked)
 {
 	if (checked)
@@ -1624,6 +1643,7 @@ void Gui::on_btnDirection1_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection1->setText("BACKWARD");
 		if (ui.btnPower1->isChecked())
 		{
 			emit drive(MOTOR1BW);
@@ -1632,6 +1652,7 @@ void Gui::on_btnDirection1_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection1->setText("FORWARD");
 		if (ui.btnPower1->isChecked())
 		{
 			emit drive(MOTOR1FW);
@@ -1645,6 +1666,7 @@ void Gui::on_btnDirection2_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection2->setText("BACKWARD");
 		if (ui.btnPower2->isChecked())
 		{
 			emit drive(MOTOR2BW);
@@ -1653,6 +1675,7 @@ void Gui::on_btnDirection2_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection2->setText("FORWARD");
 		if (ui.btnPower2->isChecked())
 		{
 			emit drive(MOTOR2FW);
@@ -1666,6 +1689,7 @@ void Gui::on_btnDirection3_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection3->setText("BACKWARD");
 		if (ui.btnPower3->isChecked())
 		{
 			emit drive(MOTOR3BW);
@@ -1674,6 +1698,7 @@ void Gui::on_btnDirection3_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection3->setText("FORWARD");
 		if (ui.btnPower3->isChecked())
 		{
 			emit drive(MOTOR3FW);
@@ -1687,6 +1712,7 @@ void Gui::on_btnDirection4_toggled(bool checked)
 	if (checked)
 	{
 		// backward
+		ui.btnDirection4->setText("BACKWARD");
 		if (ui.btnPower4->isChecked())
 		{
 			emit drive(MOTOR4BW);
@@ -1695,6 +1721,7 @@ void Gui::on_btnDirection4_toggled(bool checked)
 	else
 	{
 		// forward
+		ui.btnDirection4->setText("FORWARD");
 		if (ui.btnPower4->isChecked())
 		{
 			emit drive(MOTOR4FW);
@@ -2813,9 +2840,11 @@ void Gui::initPlots()
 	// create to qwt plot objects and place them in the GUI
 	qwtPlotVoltage1.setParent(ui.widgetVoltage1);
 	qwtPlotVoltage2.setParent(ui.widgetVoltage2);
+	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
 
 	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
 	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
+	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
 
 	// get the current application font
 	QFont applicationFont = QApplication::font();
@@ -2928,15 +2957,46 @@ void Gui::initPlots()
 
 	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
 	curveVoltage2.setPen(QPen(labelFillColorBlue));
-// 	curveVoltage2.setBrush(labelFillColorBlue); // this fills the area under the line
+//	curveVoltage2.setBrush(labelFillColorBlue); // this fills the area under the line
 
 
+	//--------------------------------------
+	// plot curve "HEARTBEAT"
+	//--------------------------------------
+	// get the current application font
+	applicationFont = QApplication::font();
+	// set this font for the plot widget
+	qwtPlotHeartbeat.setAxisFont(QwtPlot::xBottom, applicationFont);
+	qwtPlotHeartbeat.setAxisFont(QwtPlot::yLeft, applicationFont);
+	qwtPlotHeartbeat.setAxisFont(QwtPlot::axisCnt, applicationFont);
+
+	// no title
+	//qwtPlotHeartbeat.setTitle("12 V Battery");
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// maximum voltage value at which the axis should and, and the steps between each divider
+	// stepwidth = MAXIMUMPLOTHEARTBEAT (last parameter)
+	qwtPlotHeartbeat.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTHEARTBEAT, MAXIMUMPLOTHEARTBEAT);
+
+	// Set axis scale (instead of using autoscale, which is default)
+	// time (60 sec), step width 2 secconds
+//	qwtPlotHeartbeat.setAxisScale(QwtPlot::xBottom, 0.0, 60.0, 20.0);
+
+	curveHeartbeat.setRenderHint(QwtPlotItem::RenderAntialiased);
+	curveHeartbeat.setPen(QPen(labelFillColorBlue));
+//	curveHeartbeat.setBrush(labelFillColorBlue); // this fills the area under the line
+
+
+	//------------------------------------------------------------
 	// resize qwt plot items to the correct underlying frame size
+	//------------------------------------------------------------
 	qwtPlotVoltage1.setGeometry( ui.widgetVoltage1->rect() );
 	qwtPlotVoltage2.setGeometry( ui.widgetVoltage2->rect() );
 
 	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
 	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
+
+	qwtPlotHeartbeat.setGeometry( ui.widgetHeartbeat->rect() );
 }
 #endif
 
@@ -3027,6 +3087,23 @@ void Gui::setLEDHeartbeat(unsigned char state)
 			break;
 		case LEDOFF:
 			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
+	}
+}
+
+
+void Gui::setLEDCompass(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }

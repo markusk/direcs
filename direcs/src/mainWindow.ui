@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>1204</height>
+    <height>1392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -343,23 +343,56 @@
    <widget class="QWidget" name="dockWidgetContents_2">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout_16">
+      <layout class="QHBoxLayout" name="horizontalLayout_19">
        <item>
-        <widget class="QLabel" name="lblLEDHeartbeat">
-         <property name="pixmap">
-          <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+        <layout class="QHBoxLayout" name="horizontalLayout_16">
+         <item>
+          <widget class="QLabel" name="lblLEDHeartbeat">
+           <property name="pixmap">
+            <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Heartbeat</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QWidget" name="widgetHeartbeat" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>100</height>
+          </size>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Heartbeat</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
+        <spacer name="horizontalSpacer_14">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -370,6 +403,37 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_18">
+         <item>
+          <widget class="QLabel" name="lblLEDCompass">
+           <property name="pixmap">
+            <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Compass</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_13">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>

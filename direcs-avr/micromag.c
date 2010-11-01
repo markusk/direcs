@@ -100,6 +100,10 @@ void init_spi(void)
 	PORT_SPI &= ~(1<<DD_RST);
 
 	// Set SLAVE SELECT, MOSI, SCK, RESET output, rest input (MOSI is output, means that the Atmel is the master!)
+	//
+	// !!  PB6 is used for checking if the micromag modul is connected. High = connected.  !!
+	// !!  See also main.c
+	//
 	DDR_SPI = (1 << DD_SS) | (1<<DD_MOSI) | (1<<DD_SCK) | (1<<DD_RST);
 
 	// Enable SPI, Master, set clock rate fck/128 -> 16 MHz/128 = 125 kHz
