@@ -270,6 +270,17 @@ class Gui : public QMainWindow
 		void setPlotData6(double *xval, double *yval, int size);
 #endif
 
+#ifndef BUILDFORROBOT
+		/**
+		Shows the actual plot data (heartbeat from the robot). This slot is called from the plot thread.
+		@param xval points to an array with the values for the x axis (usually the time line).
+		@param yval points to an array with the values for the y axis (usually the measured values).
+		@param size is the size of the array.
+		@sa PlotThread()
+		*/
+		void setPlotDataHeartbeat(double *xval, double *yval, int size);
+#endif
+
 #ifdef ACTIVELASERVIEW
 		/**
 		Refreshes the view of the lines from the front laser scanner.
@@ -520,12 +531,14 @@ class Gui : public QMainWindow
 		QwtPlot qwtPlotVoltage2; // this plot object will be added to the GUI layout if we don't build on the robot directly!
 		QwtPlot qwtPlotCurrent1; // this plot object will be added to the GUI layout if we don't build on the robot directly!
 		QwtPlot qwtPlotCurrent2; // this plot object will be added to the GUI layout if we don't build on the robot directly!
+		QwtPlot qwtPlotHeartbeat; // this plot object will be added to the GUI layout if we don't build on the robot directly!
 		QwtPlotCurve curveVoltage1;
 		QwtPlotCurve curveVoltage2;
 		QwtPlotCurve curveCurrent1;
 		QwtPlotCurve curveCurrent2;
 		QwtPlotCurve curveCurrent3;
 		QwtPlotCurve curveCurrent4;
+		QwtPlotCurve curveHeartbeat;
 // 		QwtCompassMagnetNeedle needle;
 #endif
 		QPixmap cameraPicToSave;
@@ -653,6 +666,8 @@ class Gui : public QMainWindow
 
 		static const float MAXIMUMPLOTVOLTAGE1 = 13.00; /// for plot widgets TODO: put to ini-file
 		static const float MAXIMUMPLOTVOLTAGE2 = 26.00; /// for plot widgets TODO: put to ini-file
+
+		static const float MAXIMUMPLOTHEARTBEAT = 5.00; /// theoratically 5.0 Volt for heartbeat "hight"
 
 		/**
 		Factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels at a default zoom level of 5 !!
