@@ -43,6 +43,9 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	voltageSensorValue[VOLTAGESENSOR1] = 0;
 	voltageSensorValue[VOLTAGESENSOR2] = 0;
 
+	// for storing a virtual heartbeat value (high=5V)
+	heartbeatValue[0] = 0;
+
 	// initialisation
 	for (int i=0; i<USSENSORARRAYSIZE; i++)
 	{
@@ -250,6 +253,8 @@ void SensorThread::run()
 			// send an optical heartbeat signal to the GUI
 			if (!heartbeatToggle)
 			{
+				// set plot value to high = 5 Volt
+				heartbeatValue[0] = 5;
 				emit heartbeat(GREEN);
 
 				// send heartbeat over the network
@@ -258,6 +263,8 @@ void SensorThread::run()
 			}
 			else
 			{
+				// set plot value to low = 0 Volt
+				heartbeatValue[0] = 0;
 				emit heartbeat(LEDOFF);
 
 				// send heartbeat over the network
@@ -1587,4 +1594,10 @@ bool SensorThread::readContact(short int contact)
 	// this line should be never reached
 	qDebug("WARNING: wrong contact number in readContact()");
 	return false;
+}
+
+
+int SensorThread::getHeartbeatValue()
+{
+	return heartbeatValue[0];
 }

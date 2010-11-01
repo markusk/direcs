@@ -122,6 +122,11 @@ class SensorThread : public QThread
 		*/
 		int getCompassValue(unsigned char axis);
 
+		/**
+		@return The heartbeat value which should look like high=5 or low=0 Volt.
+		*/
+		int getHeartbeatValue();
+
 
 	public slots:
 		/**
@@ -337,6 +342,11 @@ class SensorThread : public QThread
 
 		static const short int DRIVENDISTANCE1 = 0;
 		static const short int DRIVENDISTANCE2 = 1;
+
+		/**
+		Since a heartbeat can only high or low. we store only 1 value in this array. But we need an array for the plotThread.
+		*/
+		int heartbeatValue[1];
 
 		/**
 		Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.
