@@ -456,6 +456,7 @@ void Direcs::init()
 			connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete5(double *, double *, int) ), gui, SLOT( setPlotData5(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete6(double *, double *, int) ), gui, SLOT( setPlotData6(double *, double *, int) ));
+			connect(plotThread, SIGNAL( plotDataCompleteHeartbeat(double *, double *, int) ), gui, SLOT( setPlotDataHeartbeat(double*, double*, int) ));
 		}
 #endif
 
