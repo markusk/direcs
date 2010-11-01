@@ -837,6 +837,34 @@ int main(void)
 				// answer with "ok"
 				put_string("*bdl#");
 			}
+			else
+			// BOTRIGHT = "bot drive right"
+			if (strcmp(stringbuffer, "*bdr#") == 0)
+			{
+				// MOTOR 1 CLOCKWISE
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// set Motor1 B bit
+				PORTL |= (1<<PIN1);
+				// MOTOR 2 CLOCKWISE
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// set Motor2 B bit
+				PORTL |= (1<<PIN3);
+				// MOTOR 3 COUNTERCLOCKWISE
+				// set Motor3 A bit
+				PORTL |= (1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// MOTOR 4 COUNTERCLOCKWISE
+				// set Motor4 A bit
+				PORTD |= (1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
+
+				// answer with "ok"
+				put_string("*bdr#");
+			}
 		
 		} // RXcompleted
     } // while (1)
@@ -875,30 +903,8 @@ int main(void)
 			case BOTFORWARD:
 			case BOTBACKWARD:
 			case BOTLEFT:
-
-				
 			case BOTRIGHT:
-				// MOTOR 1 CLOCKWISE
-				// delete Motor1 A bit
-				PORTL &= ~(1<<PIN0);
-				// set Motor1 B bit
-				PORTL |= (1<<PIN1);
-				// MOTOR 2 CLOCKWISE
-				// delete Motor2 A bit
-				PORTL &= ~(1<<PIN2);
-				// set Motor2 B bit
-				PORTL |= (1<<PIN3);
-				// MOTOR 3 COUNTERCLOCKWISE
-				// set Motor3 A bit
-				PORTL |= (1<<PIN6);
-				// delete Motor3 B bit
-				PORTL &= ~(1<<PIN7);
-				// MOTOR 4 COUNTERCLOCKWISE
-				// set Motor4 A bit
-				PORTD |= (1<<PIN6);
-				// delete Motor4 B bit
-				PORTD &= ~(1<<PIN7);
-				break;
+
 				
 			case BOTTURNLEFT:
 				break;
