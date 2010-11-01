@@ -327,6 +327,10 @@ void Direcs::init()
 		connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
 	}
 
+	// let the sensorthread know, if only the compass is not connected
+	connect(circuit1,	SIGNAL( compassState(bool) ), sensorThread,	SLOT( setCompassState(bool) ));
+
+
 	if (!consoleMode)
 	{
 		//--------------------------------------------------------------------------

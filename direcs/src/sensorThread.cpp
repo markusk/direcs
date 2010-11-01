@@ -132,6 +132,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRDistance[39] = 210;
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
+	compassState = false;
 }
 
 
@@ -885,6 +886,12 @@ void SensorThread::setRobotState(bool state)
 {
 	// store the state within this class
 	robotState = state;
+}
+
+void SensorThread::setCompassState(bool state)
+{
+	// store the state within this class
+	compassState = state;
 }
 
 

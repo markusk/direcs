@@ -146,6 +146,13 @@ class SensorThread : public QThread
 		*/
 		void setRobotState(bool state);
 
+		/**
+		This slots takes the compass circuit state, to know if the compas module is connected or not.
+		When the class knows this it is unnecessary to communicate with the interface.
+		@param state can be true or false
+		*/
+		void setCompassState(bool state);
+
 
 	signals:
 		/**
@@ -257,6 +264,7 @@ class SensorThread : public QThread
 		volatile bool stopped;
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
+		bool compassState; // stores the robot state within this class
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
