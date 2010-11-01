@@ -733,6 +733,54 @@ int main(void)
 				// answer with "ok"
 				put_string("*bwa#");
 			}
+			else
+			// BOTSTART = "bot go"
+			if (strcmp(stringbuffer, "*bgo#") == 0)
+			{
+				// MOTOR 1 CLOCKWISE
+				// MOTOR 2 COUNTERCLOCKWISE
+				// MOTOR 3 CLOCKWISE
+				// MOTOR 4 COUNTERCLOCKWISE
+				// set Motor1 B bit
+				// set Motor2 A bit
+				// set Motor3 B bit
+				// set Motor4 A bit
+				PORTL |= (1<<PIN1) | (1<<PIN2) | (1<<PIN7);
+				PORTD |= (1<<PIN6);
+				// delete Motor1 A bit
+				// delete Motor2 B bit
+				// delete Motor3 A bit
+				// delete Motor4 B bit
+				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
+				PORTD &= ~(1<<PIN7);
+
+				// answer with "ok"
+				put_string("*bgo#");
+			}
+			else
+			// BOTFORWARD = "bot drive forward"
+			if (strcmp(stringbuffer, "*bdf#") == 0)
+			{
+				// MOTOR 1 CLOCKWISE
+				// MOTOR 2 COUNTERCLOCKWISE
+				// MOTOR 3 CLOCKWISE
+				// MOTOR 4 COUNTERCLOCKWISE
+				// set Motor1 B bit
+				// set Motor2 A bit
+				// set Motor3 B bit
+				// set Motor4 A bit
+				PORTL |= (1<<PIN1) | (1<<PIN2) | (1<<PIN7);
+				PORTD |= (1<<PIN6);
+				// delete Motor1 A bit
+				// delete Motor2 B bit
+				// delete Motor3 A bit
+				// delete Motor4 B bit
+				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
+				PORTD &= ~(1<<PIN7);
+
+				// answer with "ok"
+				put_string("*bdf#");
+			}
 		
 		} // RXcompleted
     } // while (1)
@@ -765,29 +813,11 @@ int main(void)
 			case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
 			case MOTOR4_SPEED_SET:
 			case SPEED_SET_ALLMOTORS:
-				
-			//-------------------------------
+			case BOTSTOP:
+			case BOTWAIT:
 			case BOTSTART:
 			case BOTFORWARD:
-				// MOTOR 1 CLOCKWISE
-				// MOTOR 2 COUNTERCLOCKWISE
-				// MOTOR 3 CLOCKWISE
-				// MOTOR 4 COUNTERCLOCKWISE
-				// set Motor1 B bit
-				// set Motor2 A bit
-				// set Motor3 B bit
-				// set Motor4 A bit
-				PORTL |= (1<<PIN1) | (1<<PIN2) | (1<<PIN7);
-				PORTD |= (1<<PIN6);
-				// delete Motor1 A bit
-				// delete Motor2 B bit
-				// delete Motor3 A bit
-				// delete Motor4 B bit
-				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
-				PORTD &= ~(1<<PIN7);
-				// turn red LED ON, so we know, that all instructions were executed successfully!
-				// redLED(ON);
-				break;
+
 				
 			case BOTBACKWARD:
 				// MOTOR 1 COUNTERCLOCKWISE
