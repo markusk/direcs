@@ -49,6 +49,7 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	labelFillColorGreen = QColor(64, 255, 64);
 	labelFillColorRed   = QColor(255, 64, 64);
 	labelFillColorBlue  = QColor(64, 64, 255);
+	gridColor = QColor(Qt::black);
 
 	// startup the GUI
 	ui.setupUi(this);
@@ -2866,8 +2867,10 @@ void Gui::initPlots()
 	qwtPlotCurrent1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveCurrent1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// set curve color
 	curveCurrent1.setPen(QPen(labelFillColorBlue));
-// 	curveCurrent1.setBrush(labelFillColorBlue); // this fills the area under the line
+	// fill the area below the curve
+	// curveCurrent1.setBrush(labelFillColorBlue);
 
 
 	//--------------------------------------
@@ -2889,23 +2892,29 @@ void Gui::initPlots()
 	qwtPlotCurrent2.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveCurrent2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// set curve color
 	curveCurrent2.setPen(QPen(labelFillColorRed));
-// 	curveCurrent2.setBrush(labelFillColorRed); // this fills the area under the line
+	// fill the area below the curve
+	// curveCurrent2.setBrush(labelFillColorRed);
 
 
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 3
 	//--------------------------------------
 	curveCurrent3.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// set curve color
 	curveCurrent3.setPen(QPen(labelFillColorBlue));
-// 	curveCurrent3.setBrush(labelFillColorBlue); // this fills the area under the line
+	// fill the area below the curve
+	// curveCurrent3.setBrush(labelFillColorBlue);
 
 	//--------------------------------------
 	// plot curve "MOTOR CURRENT" 4
 	//--------------------------------------
 	curveCurrent4.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// set curve color
 	curveCurrent4.setPen(QPen(labelFillColorRed));
-// 	curveCurrent4.setBrush(labelFillColorRed); // this fills the area under the line
+	// fill the area below the curve
+	// curveCurrent4.setBrush(labelFillColorRed);
 
 
 	//--------------------------------------
@@ -2917,6 +2926,13 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotVoltage1.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotVoltage1.setAxisFont(QwtPlot::axisCnt, applicationFont);
+
+	// add a grid
+	gridVoltage1.attach(&qwtPlotVoltage1);
+	gridVoltage1.setPen( QPen(QColor(gridColor), 0.0, Qt::DotLine) );
+
+	// set background color
+	//qwtPlotVoltage1.setCanvasBackground(QColor(Qt::black));
 
 	// set title
 	qwtPlotVoltage1.setTitle("12 V Battery");
@@ -2930,12 +2946,14 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveVoltage1.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// set curve color
 	curveVoltage1.setPen(QPen(labelFillColorBlue));
-// 	curveVoltage1.setBrush(labelFillColorBlue); // this fills the area under the line
+	// fill the area below the curve
+	// curveVoltage1.setBrush(labelFillColorBlue);
 
 
 	//--------------------------------------
-	// plot curve "MOTOR VOLTAGE" 3 + 4
+	// plot curve "VOLTAGE 2"
 	//--------------------------------------
 	// get the current application font
 	applicationFont = QApplication::font();
@@ -2943,6 +2961,13 @@ void Gui::initPlots()
 	qwtPlotVoltage2.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotVoltage2.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotVoltage2.setAxisFont(QwtPlot::axisCnt, applicationFont);
+
+	// add a grid
+	gridVoltage2.attach(&qwtPlotVoltage2);
+	gridVoltage2.setPen( QPen(QColor(gridColor), 0.0, Qt::DotLine) );
+
+	// set background color
+	//qwtPlotVoltage2.setCanvasBackground(QColor(Qt::black));
 
 	// set title
 	qwtPlotVoltage2.setTitle("24 V Battery");
@@ -2956,8 +2981,10 @@ void Gui::initPlots()
 	qwtPlotVoltage2.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
+	// set curve color
 	curveVoltage2.setPen(QPen(labelFillColorBlue));
-//	curveVoltage2.setBrush(labelFillColorBlue); // this fills the area under the line
+	// fill the area below the curve
+	// curveVoltage2.setBrush(labelFillColorBlue);
 
 
 	//--------------------------------------

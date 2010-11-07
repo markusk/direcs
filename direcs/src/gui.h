@@ -53,6 +53,7 @@
 #ifndef BUILDFORROBOT
 	#include <qwt_plot_layout.h>
 	#include <qwt_plot_curve.h>
+	#include <qwt_plot_grid.h>
 	#include <qwt_scale_draw.h>
 	#include <qwt_scale_widget.h>
 	#include <qwt_legend.h>
@@ -539,12 +540,16 @@ class Gui : public QMainWindow
 		QwtPlotCurve curveCurrent3;
 		QwtPlotCurve curveCurrent4;
 		QwtPlotCurve curveHeartbeat;
+		QwtPlotGrid gridVoltage1;
+		QwtPlotGrid gridVoltage2;
+		QwtPlotGrid gridHeartbeat;
 // 		QwtCompassMagnetNeedle needle;
 #endif
 		QPixmap cameraPicToSave;
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
 		QColor labelFillColorBlue;
+		QColor gridColor;
 		QColor colorLaserObstacle;
 		QColor colorLaserFreeWay;
 		QColor colorLaserPreferredDrivingDirection;
