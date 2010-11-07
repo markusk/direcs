@@ -352,16 +352,34 @@ class Gui : public QMainWindow
 		void showCompassData(float x, float y, float z, float heading);
 
 		/**
-		Turns the GUI heartbeat/state LED red, green or off.
+		Turns the heartbeat/state GUI LED red, green or off.
 		@param state can be RED, GREEN or OFF.
 		*/
 		void setLEDHeartbeat(unsigned char state);
 
 		/**
-		Turns the GUI compass state LED red, green or off.
+		Turns the GUI compass LED red, green or off.
 		@param state can be RED, GREEN or OFF.
 		*/
 		void setLEDCompass(unsigned char state);
+
+		/**
+		Turns the joystick GUI LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDJoystick(unsigned char state);
+
+		/**
+		Turns the camera GUI LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDCamera(unsigned char state);
+
+		/**
+		Turns the network GUI LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDNetwork(unsigned char state);
 
 		/**
 		Turns the CONSOLE mode on or off.

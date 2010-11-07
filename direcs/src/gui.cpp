@@ -3144,6 +3144,57 @@ void Gui::setLEDCompass(unsigned char state)
 }
 
 
+void Gui::setLEDJoystick(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
+	}
+}
+
+
+void Gui::setLEDCamera(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
+	}
+}
+
+
+void Gui::setLEDNetwork(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
+	}
+}
+
+
 void Gui::setConsoleMode(bool state)
 {
 	consoleMode = state;
