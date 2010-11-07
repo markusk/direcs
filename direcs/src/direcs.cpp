@@ -660,6 +660,10 @@ void Direcs::init()
 		//-----------------------------------------------------------
 		if (joystick->isConnected())
 		{
+			// set GUI LED
+			if (!consoleMode)
+				gui->setLEDJoystick(GREEN);
+
 			// start the joystick thread
 			if (joystick->isRunning() == false)
 			{
@@ -668,6 +672,12 @@ void Direcs::init()
 				joystick->start();
 				emit message("Joystick thread started.");
 			}
+		}
+		else
+		{
+			// set GUI LED
+			if (!consoleMode)
+				gui->setLEDJoystick(LEDOFF);
 		}
 
 		if (!consoleMode)
