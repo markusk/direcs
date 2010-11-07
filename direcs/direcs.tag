@@ -152,18 +152,6 @@
     <class kind="class">Gui</class>
   </compound>
   <compound kind="file">
-    <name>gui_arm.cpp</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>gui__arm_8cpp</filename>
-    <includes id="gui__arm_8h" name="gui_arm.h" local="yes" imported="no">gui_arm.h</includes>
-  </compound>
-  <compound kind="file">
-    <name>gui_arm.h</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>gui__arm_8h</filename>
-    <class kind="class">Gui</class>
-  </compound>
-  <compound kind="file">
     <name>head.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>head_8cpp</filename>
@@ -851,572 +839,6 @@
     <class kind="class">PlotThread</class>
   </compound>
   <compound kind="file">
-    <name>posix_qextserialport.h</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>posix__qextserialport_8h</filename>
-    <includes id="qextserialbase_8h" name="qextserialbase.h" local="yes" imported="no">qextserialbase.h</includes>
-    <class kind="class">Posix_QextSerialPort</class>
-  </compound>
-  <compound kind="file">
-    <name>qextserialbase.h</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>qextserialbase_8h</filename>
-    <class kind="struct">_PortSettings</class>
-    <class kind="class">QextSerialBase</class>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_BREAK_CONDITION</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a19bf37831728ff3d4e4cd896f90d1ec8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_BUFFER_OVERRUN</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a6fe68fa1ebcf4b57f197a3f4197aa4ff</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_CAUGHT_NON_BLOCKED_SIGNAL</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a38fe9ecbec8c1ef8ae913c829c5fdcfe</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_FRAMING_ERROR</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a762322ccbcd786286ff049ad159481b8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_INVALID_DEVICE</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a2bdea3e664206ef35c0a092dac553cae</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_INVALID_FD</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a2abf2bf23007ebc781ab5b0b165c3436</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_IO_ERROR</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a3b76bea6be89989cf24e4576d8a51a48</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_NO_ERROR</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>aa1f0dfda864fa9d2630645f233e1fdb4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_NO_MEMORY</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>af38d07f1af1bfdc44efa5c2ba5f4e1fb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_PORT_TIMEOUT</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a2b4bd10fa885cf9b82ef3ebb0c1ff266</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_READ_FAILED</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a193a92bab0339d238bc2cb398df9bba9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_RECEIVE_OVERFLOW</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a057242de580197703ea39d48c94e3e88</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_RECEIVE_PARITY_ERROR</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a069d1d0863b70b907afb4ad3003c075f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_TRANSMIT_OVERFLOW</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a6d11119247071eadf061186234c7df8d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>E_WRITE_FAILED</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ad1fd3402e19645e257825928ef932869</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LOCK_MUTEX</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a301635981a1c72bb6916fe420670560f</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_CTS</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a83fc3db4bb8889b2c07f1665f1540b11</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_DCD</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>afd03add890f7d053482e0fd8113be790</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_DSR</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a3b54cdd81a74bd55e93a134364f422fb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_DTR</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a4e5cfd3a911530446f459d9a4407247f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_RI</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a774d5d294f10ce8178b4a0abfd3f795a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_RTS</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ae97aed572f33c519589b8747b0a8165f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_SR</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a5202e173ceac9088b9fe53a37d84a8b1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>LS_ST</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ad53af40a7a037fe3413faf4ebbf530eb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>TTY_PORTABILITY_WARNING</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>af8809f6099edfccc43866b97baecc337</anchor>
-      <arglist>(s)</arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>TTY_WARNING</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a444a6a5b44e2621f5c3cb10e5ce058e5</anchor>
-      <arglist>(s)</arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>UNLOCK_MUTEX</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ad8a6dd978fe92b143b15c9643e05b8b1</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="typedef">
-      <type>enum _BaudRateType</type>
-      <name>BaudRateType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a144aa559c986c7aafa4dfe894d63d4da</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>enum _DataBitsType</type>
-      <name>DataBitsType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>aa0be000e6dc9bb35b8525546bf85d206</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>enum _FlowType</type>
-      <name>FlowType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a95773b8a905f0cbaa7b68b67ec4252db</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>enum _NamingConvention</type>
-      <name>NamingConvention</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ad7ee3396be7887b05d5581592d3c11a8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>enum _ParityType</type>
-      <name>ParityType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>af5dbbc19263088a48c7a01b9254d6719</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>struct _PortSettings</type>
-      <name>PortSettings</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a89f2e054e194d4924fd8a058e6865617</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>enum _StopBitsType</type>
-      <name>StopBitsType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a7d75bd6211a18c272413dc204a703a88</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>_BaudRateType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD50</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a0721b0e666074772b33c2ff05f03f6e2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD75</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a1cd023b44dceb4b59798e5203534b65b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD110</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a10174371591f621ab26540af3ac992a4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD134</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a192cb47e215d8642f3e26cd877eb904e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD150</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904ae7b4b2d0b7e6e309e57c64364328aff8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD200</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a1eff76dffd9e137cbfd3b0563e17348b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD300</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a41f8610ff3d721295c8692d6331bbc86</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD600</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a2a05e5b7c7d350afe149a629af7f07a4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD1200</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a86057a69b2752b06b4302ae83c36e7a2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD1800</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a1815c0670961c2e5c20cfbd81954d3f1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD2400</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a0e653cf3163c75f11560ad0616049076</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD4800</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a1de6d151ff739cebfa6f3aab0d76ec9e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD9600</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a782c55daa9030c53e266213401c3707a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD14400</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904ad208c844993c394ce55ed88a7da71d31</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD19200</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a16d650adf414e7a4fceb3f72661a0420</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD38400</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a56bb974293e65da8c97422abd0c514b7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD56000</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a6b00b8cf6939c8b517deada3110de1ce</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD57600</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a0e6f70f222bc4d91276a4a934ef66c48</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD76800</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a9a7f6b7993e77c3603399cb0a58987be</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD115200</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a54a5ab3e880bc1722d455e420c0351e6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD128000</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a35d815a00139f06782b178b82f355f04</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>BAUD256000</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>abca0272419e823ceaf8f702e66d48904a2149280b354c383e6af48949ce3b807f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>_DataBitsType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a4323be92b7801daaf65c07afa80b0e1e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DATA_5</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a4323be92b7801daaf65c07afa80b0e1eabdcd3759eeee2ffb002bbd8816afc5cc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DATA_6</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a4323be92b7801daaf65c07afa80b0e1ea26d01dd98519521e747c3716b95b039f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DATA_7</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a4323be92b7801daaf65c07afa80b0e1eac0ea91406eb909c082025299d879eed5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DATA_8</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a4323be92b7801daaf65c07afa80b0e1ea719dc653cb3f7c9fbf6c8b8c36d78a9f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>_FlowType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a088153090a7439b1964e366c7585a3b3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>FLOW_OFF</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a088153090a7439b1964e366c7585a3b3ad4c112d4c8487384e429edeb50b01f6e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>FLOW_HARDWARE</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a088153090a7439b1964e366c7585a3b3a37eb6a580629a080ce39792149cf4976</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>FLOW_XONXOFF</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>a088153090a7439b1964e366c7585a3b3a0d28447e3d97e184d5582f874d3dd92f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>_NamingConvention</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>WIN_NAMES</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2a9cf5f25a349b0221d19f4426c6b291f0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>IRIX_NAMES</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2a5976e2bc06bc1760e9d6cdc847888534</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>HPUX_NAMES</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2ac18cd3077fdfe16ccd394358c61d2b21</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>SUN_NAMES</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2acd9ef2a2954fab2bcecb73251a4f7270</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>DIGITAL_NAMES</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2a777096b65c86bda9730984939945c1fd</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>FREEBSD_NAMES</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2af295939a7a4047a1e80ca61d5663bb1e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>LINUX_NAMES</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab94fabd37397619e3b5b0922ff41fff2a6db6275766f3dd87f1662075d062e934</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>_ParityType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab6003fc734aec159767817ba749cd5cf</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PAR_NONE</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab6003fc734aec159767817ba749cd5cfae0df16cbf90ff8b05d96d37094b3980a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PAR_ODD</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab6003fc734aec159767817ba749cd5cfa53059ce3f8053f409937ff89a90afee9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PAR_EVEN</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab6003fc734aec159767817ba749cd5cfadcf0e7e3469256fa6eadd03f93e9a5aa</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PAR_MARK</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab6003fc734aec159767817ba749cd5cfa8e6eade7ff411bc2d325be080ce4ad10</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>PAR_SPACE</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>ab6003fc734aec159767817ba749cd5cfa1dd539202244b7b46ea83c168d3a447d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumeration">
-      <name>_StopBitsType</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>adabe044901e1994c4ec63a1c7f618959</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>STOP_1</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>adabe044901e1994c4ec63a1c7f618959a5a97cec5fc7aa14a4caae4b53d97fcfc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>STOP_1_5</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>adabe044901e1994c4ec63a1c7f618959ad5199e453f150adf605f4aa44254d31b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>STOP_2</name>
-      <anchorfile>qextserialbase_8h.html</anchorfile>
-      <anchor>adabe044901e1994c4ec63a1c7f618959a9d9d66053c21f5142750606c4af19b61</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>qextserialport.h</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>qextserialport_8h</filename>
-    <includes id="win__qextserialport_8h" name="win_qextserialport.h" local="yes" imported="no">win_qextserialport.h</includes>
-    <class kind="class">QextSerialPort</class>
-    <member kind="define">
-      <type>#define</type>
-      <name>QextBaseType</name>
-      <anchorfile>qextserialport_8h.html</anchorfile>
-      <anchor>a08dd61f1403f6c1d554b82ce7600bfbf</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>QtGLContext.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>QtGLContext_8cpp</filename>
@@ -1965,66 +1387,6 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8h</filename>
     <class kind="class">SpeakThread</class>
-  </compound>
-  <compound kind="file">
-    <name>win_qextserialport.h</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>win__qextserialport_8h</filename>
-    <includes id="qextserialbase_8h" name="qextserialbase.h" local="yes" imported="no">qextserialbase.h</includes>
-    <class kind="class">Win_QextSerialPort</class>
-  </compound>
-  <compound kind="struct">
-    <name>_PortSettings</name>
-    <filename>struct__PortSettings.html</filename>
-    <member kind="variable">
-      <type>BaudRateType</type>
-      <name>BaudRate</name>
-      <anchorfile>struct__PortSettings.html</anchorfile>
-      <anchor>aea4fd44b828e18d59c104d7235065d6b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>DataBitsType</type>
-      <name>DataBits</name>
-      <anchorfile>struct__PortSettings.html</anchorfile>
-      <anchor>a3b8440e0b6725e344c28995683a45c05</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>FlowType</type>
-      <name>FlowControl</name>
-      <anchorfile>struct__PortSettings.html</anchorfile>
-      <anchor>acbe0294e2d614406a7a567088051997d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>ParityType</type>
-      <name>Parity</name>
-      <anchorfile>struct__PortSettings.html</anchorfile>
-      <anchor>a88351bb498f9a78af58ed68a113e16f3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>StopBitsType</type>
-      <name>StopBits</name>
-      <anchorfile>struct__PortSettings.html</anchorfile>
-      <anchor>ac38a82e4ecdc567b5278d6ccdfbc69ee</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>ulong</type>
-      <name>Timeout_Millisec</name>
-      <anchorfile>struct__PortSettings.html</anchorfile>
-      <anchor>a7c616df72bdc8d28735e95f4817b76a4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>ulong</type>
-      <name>Timeout_Sec</name>
-      <anchorfile>struct__PortSettings.html</anchorfile>
-      <anchor>ab48c1339bdddc8362dac76650daa8579</anchor>
-      <arglist></arglist>
-    </member>
   </compound>
   <compound kind="class">
     <name>AboutDialog</name>
@@ -5032,20 +4394,6 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>appendLog</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a3a7ba597de98c24f2d3fef95a87ba6d0</anchor>
-      <arglist>(QString text, bool CR=true, bool sayIt=false)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>appendNetworkLog</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a2fa0fff1cae68e8e85c74f439e4f4cb7</anchor>
-      <arglist>(QString text, bool CR=true, bool sayIt=false)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>appendNetworkLog</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a2fa0fff1cae68e8e85c74f439e4f4cb7</anchor>
@@ -5078,20 +4426,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>a879b018073c869d6c66e93a0f97186c0</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>refreshLaserViewFront</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a9660e3b78a58fe239f81ca9a34753bf8</anchor>
-      <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>refreshLaserViewRear</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>afb229f99efac2e5a33733f3d29db5c3f</anchor>
-      <arglist>(float *laserScannerValues, int *laserScannerFlags)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -5172,10 +4506,10 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>setRobotControls</name>
+      <name>setPlotDataHeartbeat</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a16020df7f6cc720a8c36561d83c5d1ec</anchor>
-      <arglist>(bool state)</arglist>
+      <anchor>a40c63a42d25cb95df55a08e6d7b390b5</anchor>
+      <arglist>(double *xval, double *yval, int size)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -5209,13 +4543,6 @@
       <type>void</type>
       <name>showLaserFrontAngles</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ae9fd3f772d839eea2f5c490828c5c311</anchor>
-      <arglist>(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>showLaserFrontAngles</name>
-      <anchorfile>classGui.html</anchorfile>
       <anchor>a31735af86aab72b009f013d327786af8</anchor>
       <arglist>(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)</arglist>
     </member>
@@ -5225,20 +4552,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>ac222754552bafb16f80e86df5b7770a0</anchor>
       <arglist>(QString direction)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>showPreferredDirection</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ac222754552bafb16f80e86df5b7770a0</anchor>
-      <arglist>(QString direction)</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>drive</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>adeadc75e73e0e0f3ebaf44217bab9c45</anchor>
-      <arglist>(const unsigned char command)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -5270,30 +4583,9 @@
     </member>
     <member kind="signal">
       <type>void</type>
-      <name>enableRemoteControlListening</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a1e9ad885280690a7565e85d35c183c6b</anchor>
-      <arglist>(bool state)</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
       <name>initCircuit</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>aca40ebafd97214b72c5bbf26bf28355d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>initCircuit</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aca40ebafd97214b72c5bbf26bf28355d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>initServos</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a953ae5151f6154952f7c9b557f14373f</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="signal">
@@ -5312,31 +4604,10 @@
     </member>
     <member kind="signal">
       <type>void</type>
-      <name>resetDrivenDistance</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a03f3f8c2e27605b6e96f2c8ec9dabde9</anchor>
-      <arglist>(int sensor)</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
       <name>shutdown</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>ada58feae70f01eb9cacc012d4b2f7d56</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>shutdown</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ada58feae70f01eb9cacc012d4b2f7d56</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>simulate</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>adc572fe913d4aafb92a57dcd4ee14f32</anchor>
-      <arglist>(bool state)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -5354,30 +4625,9 @@
     </member>
     <member kind="signal">
       <type>void</type>
-      <name>speak</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ae9ee6d7ba99be194a580bd734b3fcc26</anchor>
-      <arglist>(QString text)</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
       <name>test</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a588226e185e5a2b60be455301ee6c63d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>test</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a588226e185e5a2b60be455301ee6c63d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Gui</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ab2655dbb6d3a91d7e90cb83dad6c0450</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -5403,20 +4653,6 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>showAlarm</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a3e39b4a62def8238cb3f7c2eb10f481e</anchor>
-      <arglist>(short int sensor, bool state)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>showDistanceGraphical</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a86d1bddf051989ebf381ff01cbd4674b</anchor>
-      <arglist>(int sensor, int distance)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>showDistanceGraphical</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a86d1bddf051989ebf381ff01cbd4674b</anchor>
@@ -5428,20 +4664,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>afc544b6af6462545c60f3faabce4f86b</anchor>
       <arglist>(int sensor, int distance)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>showDrivenDistance</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>afc544b6af6462545c60f3faabce4f86b</anchor>
-      <arglist>(int sensor, int distance)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>showMotorStatus</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>af89c21d71ce6cf0b45941099759f06e7</anchor>
-      <arglist>(unsigned char motor, bool power, unsigned char direction)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -5456,13 +4678,6 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>a0faa603062a7f1a2cec5f415e8e6273d</anchor>
       <arglist>(int sensor, float voltage)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>~Gui</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a4fd8485d226f9b8a2ac2d81d7f0f3598</anchor>
-      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -5718,20 +4933,6 @@
     </member>
     <member kind="function" protection="private">
       <type>void</type>
-      <name>createLaserDistanceObjects</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a499b536c2938b98965bbbf681db16736</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>void</type>
-      <name>createLaserScannerObjects</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a8e6dd3b29999de41a196aa773ff34053</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="private">
-      <type>void</type>
       <name>init</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a3ceef24f39fa8c1ca0497d391889e7f1</anchor>
@@ -5865,6 +5066,13 @@
     </member>
     <member kind="variable" protection="private">
       <type>QwtPlotCurve</type>
+      <name>curveHeartbeat</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a8d0541f3e7f5f949241f909dccb65f37</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlotCurve</type>
       <name>curveVoltage1</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a1f2718c6e2d761d9e46a6ff4452d9248</anchor>
@@ -5991,6 +5199,13 @@
     </member>
     <member kind="variable" protection="private">
       <type>QwtPlot</type>
+      <name>qwtPlotHeartbeat</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a8fcf9e092ceceaa682716d6a1fe859e8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlot</type>
       <name>qwtPlotVoltage1</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>ab51a3ab07a17b0f232730b6c4d5a4c97</anchor>
@@ -6025,66 +5240,38 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const float</type>
-      <name>AMPERESMAXPLOTCURVE1</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>af72f3cd2151f925d06e5baccae8cea54</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const float</type>
-      <name>AMPERESMAXPLOTCURVE2</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a15213db5578f912c5bd983e375f614b2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const float</type>
-      <name>AMPERESSTEPPLOTCURVE1</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a9f9febd376c976b24b14fd22fa91dddd</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const float</type>
-      <name>AMPERESSTEPPLOTCURVE2</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a5e5ac98846353be9c3b4595606367b9b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>CENTEROFLARGESTFREEWAY</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>adb88ad323b38d74dc15ef30dfe4f5ba9</anchor>
+      <anchor>a269da7ef387dc4b5a39b4ddfbeea8681</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>CLOCKWISE</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aed235ea8f4f54bf4097245e9cb9f4279</anchor>
+      <anchor>a7cc3b48653b6d087bc662620583a585a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>COUNTERCLOCKWISE</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>af4f7d4045a6d61083ca9de9355a1740c</anchor>
+      <anchor>a39a25f6920692a94918b0e1be3644228</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>FITTOFRAMEFACTOR</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a0eb4561488ec78ae0d68b83451ea2b89</anchor>
+      <anchor>a18233f32cdf9e41d5ae86d931f7e93b6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>FREEWAY</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>af554432c080223a44002869fe5b0d155</anchor>
+      <anchor>a0641c07e2d89365aa100c89f05a351e6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6098,77 +5285,77 @@
       <type>static const int</type>
       <name>INITIALLASERYPOSFRONT</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a5a5eb8eeabce786a9791465b1d0a8c64</anchor>
+      <anchor>a5d0fe5de9cfb6989ae73b7ad8f49fb38</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>INITIALLASERYPOSREAR</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a56ce1bb909f82ec0fb55ad2eec5ead9b</anchor>
+      <anchor>a8b5e25ecc5403738abe5de76e182116a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>LARGESTFREEWAY</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a0b0fde1c1249628b88b8e555c94f3a56</anchor>
+      <anchor>adf37d30cc0112ffa5f7ddd5799a7e5de</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>LASER1</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aeeffc875cd8b8ebdbeb045fe4bf6e016</anchor>
+      <anchor>adbd64b30238070b5b43880ac14933a98</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>LASER2</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a77cb244e7a2641f7a9a4be084cc5abcd</anchor>
+      <anchor>a36040cd4463aa6766964218b049c7d55</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>LASER3</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ad090b987bc57374d8beafa160d77ecd4</anchor>
+      <anchor>ac1631a66ec7aaf3e0d29111793116da7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>LASER4</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a5c485207d7776d5fd75ab73e01d0451f</anchor>
+      <anchor>aefa9d5338fc6854c416eadefb8f2438b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>LASER5</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a9978797e27ef4627bc269b6b2fc9aa1e</anchor>
+      <anchor>a4bfc1a2ce55cbd8a951e59163e7dd000</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>LASERDISTANCECIRCLES</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a1e6f787dbd32eafa1f40ab1308d84683</anchor>
+      <anchor>a46f67500194869c56681940341021892</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>LASERDISTANCEDISTANCE</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ac33f83878fdd78d4bdf5a15ac00ea1d5</anchor>
+      <anchor>a5d4ddcc963c7b3b427685b8bb55817d7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>LASERDISTANCEFIRSTCIRCLE</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a6de777e0ad9733abdd47a76b5fc2a00e</anchor>
+      <anchor>a051bdbb688c63637b0a87746a1ee6fff</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6176,6 +5363,13 @@
       <name>LEDOFF</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a2ef05766d07ed4f058e48a157be8d63e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const float</type>
+      <name>MAXIMUMPLOTHEARTBEAT</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a6efaaab6dc2b42fb53d0e719a6197292</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6224,126 +5418,126 @@
       <type>static const unsigned char</type>
       <name>MOTOR1</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a1e2258fe0a245d1bdd0bcb1f7d348bcf</anchor>
+      <anchor>a3ba1f9d883d744c1582274d47772cafc</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR1BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ab963e46c45c1ec877eb2a3b2f579df20</anchor>
+      <anchor>ac5f92a308ccafd371778a2dc1a14bc00</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR1FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aaaba0fdb01bd4365af4a0a7027fcbcdb</anchor>
+      <anchor>a7a10c6f251987f205c26fd0e06d4e038</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR1OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ae2a371222db9211b770199b2c9757ab3</anchor>
+      <anchor>a4a2963c36935ab5b66d6e05269ff488b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR2</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a2981530c2dbd28e5f14eac91da704cda</anchor>
+      <anchor>ac7391aacc5fbd55081635213d69ed477</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR2BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a43ebe2a838312c8720d190fcf9e3f98b</anchor>
+      <anchor>a26c08ed9fd8e58219e76cf2b0c53349d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR2FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>acb52101c8c8597ac31df2f04039653a9</anchor>
+      <anchor>af6de3ba8723cf564c57d2e2bdbd2960c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR2OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a3b36444b6f191e48bda846e392514e8e</anchor>
+      <anchor>a22b879a3c7c439df8eb5b7ad49aa60e4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR3</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a2ed53eedc91a4f46b6244432f35cca49</anchor>
+      <anchor>a84f64a2c5b73f0adbc97c4a5a768e15a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR3BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aca03c25d3e1f79126b6139caff1daaaa</anchor>
+      <anchor>a57f60e187b4db634df3a1c52c4781d69</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR3FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a692191741e5a6d93aac1e73bdff4ef6f</anchor>
+      <anchor>ae3be1e68ded7e711f1c55cd44e2a055a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR3OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>af8fe80e98f2a0a65684a08e28d2ece01</anchor>
+      <anchor>a8607a886899ef63f516f515350ce2508</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR4</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ae2d7f10ee0cc8ddb96295d21aa091696</anchor>
+      <anchor>aff9c6f3941d13dddcd451e0a1c4ee27a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR4BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ac14ecf7daa4c39b8ca4f938572f6deab</anchor>
+      <anchor>a91de7d22ec58805c2941fc5ca87427af</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR4FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>abe18e5712f129bc05a65d77e1d965ee6</anchor>
+      <anchor>a74a4bf8a25cbc50b9a7d43634e52eb00</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTOR4OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a77bc037376a7299979ca283d656448c4</anchor>
+      <anchor>a3e1616886b70d742501b6af851fdc699</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>MOTORSENSOR1</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a77c2c6b3b4bbfd59f3f2fcb7244189c0</anchor>
+      <anchor>ad0a83bdafa7172192be12b3d28fd4301</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>MOTORSENSOR2</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a5d1837695a8edfc5dd349052a58ffcf1</anchor>
+      <anchor>a172b724173e48fbd4f7135a37b40a758</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6364,28 +5558,28 @@
       <type>static const short int</type>
       <name>NONE</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aa5f3255e61ff534311b04a9c9a4078fc</anchor>
+      <anchor>a65e5038a9b3c58a2a2037e9bd18f5117</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>OBSTACLE</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>abf9259f58e87106a1253503b60470ad9</anchor>
+      <anchor>a9d8cfe47d5b063bdd788279a284944a4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const bool</type>
       <name>OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a0a7e13f55dd0c24bb83ea8cb88465ccc</anchor>
+      <anchor>a878064227e2aa78b088b9a6d91b9f364</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const bool</type>
       <name>ON</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a827872fa665e5892af7bfe01d8dea4db</anchor>
+      <anchor>abd4157f83efe9a2a7fa730a2af05ac91</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6399,105 +5593,105 @@
       <type>static const unsigned char</type>
       <name>SAME</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a5ee3248dd25b3d7595e3997d04691453</anchor>
+      <anchor>ade3aaedc2e411b560f673c0e7ee37d07</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR1</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aedb1582fa4545b8a33107d9ebd8ba8e5</anchor>
+      <anchor>a588fe1888c8bb29325c540305310f290</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR16</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a81ab0f440aff4cc94df4cd4289aaed48</anchor>
+      <anchor>a50da7c925a3bb850b9d491f2ede7a259</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR2</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ad64697545cb148c5bc916e9b5f298a77</anchor>
+      <anchor>a5bab9c58a92db4da262e2d68a96c0e6e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR3</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a5b75f1abaabc4043e75e94d2d3e7cf7d</anchor>
+      <anchor>a66d1ecf174397fd22b52d3b17b09f794</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR4</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a2141abdfad6236325be1c66c0fd4b1a2</anchor>
+      <anchor>ae35437929bbd8eedfa3bf72c77995bc9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR5</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a1312b670547855b28ee7059851db6d10</anchor>
+      <anchor>ab61609a8795105f6c28dad8aeb03b56a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR6</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a998821bf319aa3d9b6ed94c27f142095</anchor>
+      <anchor>a00735ca46d4c26b13b70b78cfa8f7b4c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR7</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>abb9ea064fa90c295876da75ae4d8e537</anchor>
+      <anchor>a842b0a3ee4221758555e3ddfe5c828a6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>SENSOR8</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aa6e10c79906adaab5858d58301cd9ed0</anchor>
+      <anchor>a5405519fb7f34285a34be34ff0202853</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>SENSORPROGRESSBARMAXIR</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ad12ba384be756fc830d728eba9142705</anchor>
+      <anchor>a1fe15d73a693819421b15497ee69665f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>SENSORPROGRESSBARMAXUS</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a2c030ffed2a46ca4166501d4b383ac34</anchor>
+      <anchor>ab58d11ad6d281fba737c3f7cc890662d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>START</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ab546fe4a50a6e37441ddd3a5efb08593</anchor>
+      <anchor>a21abca2f35b19b268ad46dccb4e8e608</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>STARTZOOMLEVEL</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>afe8a30af42815c70d3e34fa75e7d7d64</anchor>
+      <anchor>ae3674ede477f06b819d5bcddc1d43f3e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>STOP</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a5c46c326362b112ec1c7c8a8aad781cd</anchor>
+      <anchor>abf87fb7ce331c464db716e6920c2d028</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9363,10 +8557,10 @@
       <arglist>(int speed)</arglist>
     </member>
     <member kind="slot">
-      <type>void</type>
+      <type>bool</type>
       <name>setMotorSpeed</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>aba184ab7772ff11d8ceff18299bb4343</anchor>
+      <anchor>accb3c92e44664405304c93873a099c20</anchor>
       <arglist>(int motor, int speed)</arglist>
     </member>
     <member kind="slot">
@@ -9412,10 +8606,10 @@
       <arglist>(InterfaceAvr *i, QMutex *m)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>bool</type>
       <name>motorControl</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a06314a242203b58ea5bf449a4ac63831</anchor>
+      <anchor>a5178528359d0527644147d37d5e81538</anchor>
       <arglist>(unsigned char motor, bool power, unsigned char direction)</arglist>
     </member>
     <member kind="function">
@@ -10522,6 +9716,13 @@
       <anchor>afecbb64d76e3112e98301e4753f24229</anchor>
       <arglist>(double *xval4, double *yval4, int size)</arglist>
     </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>plotDataCompleteHeartbeat</name>
+      <anchorfile>classPlotThread.html</anchorfile>
+      <anchor>afc602d518be8c2b69d846dc19af1b75d</anchor>
+      <arglist>(double *xval4, double *yval4, int size)</arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>PlotThread</name>
@@ -10608,6 +9809,13 @@
     </member>
     <member kind="variable" protection="private">
       <type>double</type>
+      <name>xvalHeartbeat</name>
+      <anchorfile>classPlotThread.html</anchorfile>
+      <anchor>aded22f8198d713a9b0f5171aa01da9eb</anchor>
+      <arglist>[SIZE]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>double</type>
       <name>yval1</name>
       <anchorfile>classPlotThread.html</anchorfile>
       <anchor>a62c82974fcd144269534a88219ec66d1</anchor>
@@ -10646,6 +9854,13 @@
       <name>yval6</name>
       <anchorfile>classPlotThread.html</anchorfile>
       <anchor>a5911241445deae64fc9737fb13028720</anchor>
+      <arglist>[SIZE]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>double</type>
+      <name>yvalHeartbeat</name>
+      <anchorfile>classPlotThread.html</anchorfile>
+      <anchor>a7fccbe2cdfc22b778800c868d6eb566a</anchor>
       <arglist>[SIZE]</arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -10703,558 +9918,6 @@
       <anchorfile>classPlotThread.html</anchorfile>
       <anchor>ac159aaab2412717fd29cb32a2d3e1805</anchor>
       <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>Posix_QextSerialPort</name>
-    <filename>classPosix__QextSerialPort.html</filename>
-    <base>QextSerialBase</base>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>bytesAvailable</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a7545a927a327a4cc71954cdd6153d918</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>close</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a1a25f47c57b6330bd0eba4884e507523</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>flush</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a9cd779827a2deb430865d15d9f9bd776</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>getChar</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a33653b5cb8691ef824faa91e4a443a5a</anchor>
-      <arglist>(char *c)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual ulong</type>
-      <name>lineStatus</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a1625aa0479a2524e4d14c24d113b650d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>open</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>ae224dd26bb045d22f5b70f016f4ad011</anchor>
-      <arglist>(OpenMode mode=0)</arglist>
-    </member>
-    <member kind="function">
-      <type>Posix_QextSerialPort &amp;</type>
-      <name>operator=</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a03ad18b4dd907e4bfd66f564c6698d33</anchor>
-      <arglist>(const Posix_QextSerialPort &amp;s)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Posix_QextSerialPort</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a574b415cde61cf693449338aef692211</anchor>
-      <arglist>(const QString &amp;name, const PortSettings &amp;settings)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Posix_QextSerialPort</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a8ade17fa6605245162661b75b9e71105</anchor>
-      <arglist>(const PortSettings &amp;settings)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Posix_QextSerialPort</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a07e9e48ffb75ad02b3cfaeb14ccbf384</anchor>
-      <arglist>(const QString &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Posix_QextSerialPort</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>ac409b3d891500be663894c9910749390</anchor>
-      <arglist>(const Posix_QextSerialPort &amp;s)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Posix_QextSerialPort</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>ae6e0dda91cd654352c26686e88a416ff</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>putChar</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a70cfe0ddedbe9b89cde6a6a7ca068b2a</anchor>
-      <arglist>(char c)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>readData</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a8689478ea33b21d93674e7763500be6f</anchor>
-      <arglist>(char *data, qint64 maxSize)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setBaudRate</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>aa381dead5691f53cd5a7e46c047617bd</anchor>
-      <arglist>(BaudRateType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setDataBits</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a241f7429a251f3cf56c2a81e7bc2da41</anchor>
-      <arglist>(DataBitsType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setDtr</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a6655b6b4522ca1036950304db9897b68</anchor>
-      <arglist>(bool set=true)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setFlowControl</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a53736a0e771b45f670256c4654049b4e</anchor>
-      <arglist>(FlowType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setParity</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>aabfec4d1f51f70ee19103b3a65c3190a</anchor>
-      <arglist>(ParityType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setRts</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a40e8e5d33f45e8de286c79bdaf9ea299</anchor>
-      <arglist>(bool set=true)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setStopBits</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>adf6a98c5e0b51a3cdbd96bdb46ba198b</anchor>
-      <arglist>(StopBitsType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setTimeout</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a4e19d9132e0b07464ae229c595a0e8b4</anchor>
-      <arglist>(ulong=0, ulong=0)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>size</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a43f714cc4f59e9d766f5ea4b6b15635d</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>translateError</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>aa515f7b9b06cd30d49944f43406a7d81</anchor>
-      <arglist>(ulong error)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>ungetChar</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>af7077e568e154b176c6adb7315816155</anchor>
-      <arglist>(char c)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>writeData</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a927c6fbee7852b78c34b746f2131238c</anchor>
-      <arglist>(const char *data, qint64 maxSize)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual</type>
-      <name>~Posix_QextSerialPort</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a2ee76ef46c18f0eb7cdff9efa8842c76</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>struct termios</type>
-      <name>Posix_CommConfig</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a4946a554d3cfcd190b4df72f6f44f6eb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>struct timeval</type>
-      <name>Posix_Copy_Timeout</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>ae5813ea1fd76c8c5a8948c4085d3e84e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>QFile *</type>
-      <name>Posix_File</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>ac4fcc5ae9850c3bc9952a13e4ef82273</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>struct timeval</type>
-      <name>Posix_Timeout</name>
-      <anchorfile>classPosix__QextSerialPort.html</anchorfile>
-      <anchor>a0a876397917fbf082b56ae43ab2b4b7b</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>QextSerialBase</name>
-    <filename>classQextSerialBase.html</filename>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>atEnd</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a2a073b06559b1b52b0aa1622080a8282</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual BaudRateType</type>
-      <name>baudRate</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a3b1b8bc8aae0ae95eacb768d376a5230</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>bytesAvailable</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a819a441e50eb9565077a577dd5761687</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>close</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a2a4aea428bc05a88f86849bb7478c082</anchor>
-      <arglist>()=0</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>construct</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>aa576b712003a90a9897ff6b22ab0f3c2</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual DataBitsType</type>
-      <name>dataBits</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a26455210b60ca825c9551ddd09428bdd</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual FlowType</type>
-      <name>flowControl</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a37b410a25530b1bfd83b4936696ac484</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>flush</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a58df9d786aa70dfe9f547d4118103f39</anchor>
-      <arglist>()=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual bool</type>
-      <name>getChar</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a204eb61395e803ffb04274c37adc90b4</anchor>
-      <arglist>(char *c)=0</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>isOpen</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>aeaa6af8fcc39719df424aa92ca780c2b</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual ulong</type>
-      <name>lastError</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a5728adee70c62a231c6d29bb54a2e81f</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual ulong</type>
-      <name>lineStatus</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a28b87dd41160a61e2953dca38aa332d6</anchor>
-      <arglist>()=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual bool</type>
-      <name>open</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>ae7fadc74c97f903f6b499e6155236b3e</anchor>
-      <arglist>(OpenMode mode=0)=0</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual ParityType</type>
-      <name>parity</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>ae783d337d80fee91d6e064af4e935043</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual QString</type>
-      <name>portName</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a924cd89932d45c60b908ec5b54f5c572</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual bool</type>
-      <name>putChar</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>aceab4a6e39cbd3ccd059dc7e9fca4d19</anchor>
-      <arglist>(char c)=0</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>QextSerialBase</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a136b187c6684be0bac22e616b053f7b7</anchor>
-      <arglist>(const QString &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>QextSerialBase</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>aba0fc6d8b5c675c91ebff90fc6415748</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual qint64</type>
-      <name>readData</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>ad36903893a43ad4468e25243117dea73</anchor>
-      <arglist>(char *data, qint64 maxSize)=0</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>readLine</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a3d267326a9000f3a99f84639fa7fa9ba</anchor>
-      <arglist>(char *data, qint64 maxSize)</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setBaudRate</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a05b59a48366ae452bf8e033f83402543</anchor>
-      <arglist>(BaudRateType)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setDataBits</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a651f67ec7818b55c0053b47546c56ab5</anchor>
-      <arglist>(DataBitsType)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setDtr</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a14c7fc36f9e7b7e5a9e798c2c1b35505</anchor>
-      <arglist>(bool set=true)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setFlowControl</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a976c031b3a51bc71abe7804953e0d366</anchor>
-      <arglist>(FlowType)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setParity</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>ad57f8cb19a8a48012c1f607155eddedf</anchor>
-      <arglist>(ParityType)=0</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setPortName</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>aa2fa8370e8c9bc6a69563f49efb77f00</anchor>
-      <arglist>(const QString &amp;name)</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setRts</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>aaa23d343095f16e7d7b37e7b61022b3a</anchor>
-      <arglist>(bool set=true)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setStopBits</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>afafca39575da5ab668671bff89fdd4bc</anchor>
-      <arglist>(StopBitsType)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>setTimeout</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a02812d40f1b114983ca9c25ea83d159d</anchor>
-      <arglist>(ulong, ulong)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual qint64</type>
-      <name>size</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a86fc9d6239b7d136a9d80b93a727e093</anchor>
-      <arglist>() const =0</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual StopBitsType</type>
-      <name>stopBits</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a82191fe9cc079555efeb40d7dc772bb2</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>translateError</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>aa9c2e9272cff3bd576560335308a8033</anchor>
-      <arglist>(ulong error)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>ungetChar</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>ad4564cb1b1fdfb317e6a12cb5b351adf</anchor>
-      <arglist>(char c)=0</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual qint64</type>
-      <name>writeData</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a39a3aaff93640b767fd44dd7ce705e01</anchor>
-      <arglist>(const char *data, qint64 maxSize)=0</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual</type>
-      <name>~QextSerialBase</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>ac6a30dd787c28036dbf54bb2804e5680</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>ulong</type>
-      <name>lastErr</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a31816951ba89902fa1dfdb6f18b80f41</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>QString</type>
-      <name>port</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a7459f3818391091877c88595a48a950a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>bool</type>
-      <name>portOpen</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>add0393f4063e7d61fdcc9dfadcb423f9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>PortSettings</type>
-      <name>Settings</name>
-      <anchorfile>classQextSerialBase.html</anchorfile>
-      <anchor>a2d796e3080f78ff63e821f528439db57</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>QextSerialPort</name>
-    <filename>classQextSerialPort.html</filename>
-    <member kind="function">
-      <type>QextSerialPort &amp;</type>
-      <name>operator=</name>
-      <anchorfile>classQextSerialPort.html</anchorfile>
-      <anchor>a28e03b58b5631e8dfc6bacdb2c463c9c</anchor>
-      <arglist>(const QextSerialPort &amp;)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>QextSerialPort</name>
-      <anchorfile>classQextSerialPort.html</anchorfile>
-      <anchor>a207af0672a6a954e6621933e93b9923e</anchor>
-      <arglist>(const QextSerialPort &amp;s)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>QextSerialPort</name>
-      <anchorfile>classQextSerialPort.html</anchorfile>
-      <anchor>a4b30a03285f32254076bf2ee6e579709</anchor>
-      <arglist>(const QString &amp;name, PortSettings const &amp;s)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>QextSerialPort</name>
-      <anchorfile>classQextSerialPort.html</anchorfile>
-      <anchor>a3227cce266f97fc6066239a301fdc251</anchor>
-      <arglist>(PortSettings const &amp;s)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>QextSerialPort</name>
-      <anchorfile>classQextSerialPort.html</anchorfile>
-      <anchor>ad134e1a6ec2d0ebc4c48660d057999e5</anchor>
-      <arglist>(const QString &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>QextSerialPort</name>
-      <anchorfile>classQextSerialPort.html</anchorfile>
-      <anchor>a6aba59fc97222d64653f94c491747ffd</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual</type>
-      <name>~QextSerialPort</name>
-      <anchorfile>classQextSerialPort.html</anchorfile>
-      <anchor>ade18ba025da5d9a1bdeda45e378d7a75</anchor>
-      <arglist>()</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -11490,6 +10153,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>setCompassState</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>ada5404454a2d8b5f95a64335a5942346</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setRobotState</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>ad8f15b54eb1653e5a926de95cc06ccaf</anchor>
@@ -11578,6 +10248,13 @@
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>ab5631f7e5eb5f83927d4daec7881e695</anchor>
       <arglist>(int sensor)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getHeartbeatValue</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>a3ea3dbc3f5683dce27091470b548a1b3</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -11713,6 +10390,13 @@
       <arglist>(short int sensor)</arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>compassState</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>a19904e5a2574cda7500d4488c35fb1bc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>char</type>
       <name>contactValue</name>
       <anchorfile>classSensorThread.html</anchorfile>
@@ -11732,6 +10416,13 @@
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>ac5c567ebf7a25f735aec5029942b39f8</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>heartbeatValue</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>ab25904e6acced343b8b9263c8bb07766</anchor>
+      <arglist>[1]</arglist>
     </member>
     <member kind="variable" protection="private">
       <type>InterfaceAvr *</type>
@@ -13094,221 +11785,6 @@
       <arglist></arglist>
     </member>
   </compound>
-  <compound kind="class">
-    <name>Win_QextSerialPort</name>
-    <filename>classWin__QextSerialPort.html</filename>
-    <base>QextSerialBase</base>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>bytesAvailable</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a2a0178755262efecbbb6b33882557a53</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>close</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a2acfb52a3868f397e00c3e27aff9430d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>flush</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>aa0807a25dd860456cb9ceb86f23ce1bc</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>getChar</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a20b2a1c5b67cb1b7674039e50f6f3d32</anchor>
-      <arglist>(char *c)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual unsigned long</type>
-      <name>lineStatus</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a680c8d9a96f4f1c8c2352ee4852ae1f3</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>open</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>afb67edc7663928f29b07d0959a5f4529</anchor>
-      <arglist>(OpenMode mode=0)</arglist>
-    </member>
-    <member kind="function">
-      <type>Win_QextSerialPort &amp;</type>
-      <name>operator=</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>ac06db0dfd8ee9ff32f0146c955d315cc</anchor>
-      <arglist>(Win_QextSerialPort const &amp;s)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>putChar</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a483c379c28f5c1378ae9dc7b7f13e636</anchor>
-      <arglist>(char c)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>readData</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a4076b0eef05c6fbcc199ad241cb6d786</anchor>
-      <arglist>(char *data, qint64 maxSize)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setBaudRate</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a9862cac1b101ae5ff2f2fa6ada0f3270</anchor>
-      <arglist>(BaudRateType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setDataBits</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a786c84a915d0eaf8585ceacdfb0123c4</anchor>
-      <arglist>(DataBitsType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setDtr</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a9b85b664b4e6ef83355c8cc220ee7a56</anchor>
-      <arglist>(bool set=true)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setFlowControl</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a3ebe2a53575ece86a36deb96c1a71950</anchor>
-      <arglist>(FlowType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setParity</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a6c5969578d976f6e3f31d8dbed832b81</anchor>
-      <arglist>(ParityType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setRts</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a50b14c6401ac4b0fa432cc50b5a5ba62</anchor>
-      <arglist>(bool set=true)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setStopBits</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a5d2370137e18e9a1557f134eb59f3f16</anchor>
-      <arglist>(StopBitsType)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>setTimeout</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a0370601df91e0376e17209612c0d5c9d</anchor>
-      <arglist>(unsigned long=0, unsigned long=0)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>size</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a4834c4712a26014e07eb28a60cc51372</anchor>
-      <arglist>() const </arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>translateError</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>ade2f62d7c94c8b5a58357f8dedb6a1cc</anchor>
-      <arglist>(unsigned long)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>ungetChar</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a810733b183c9353e7faa26a54a7ba73a</anchor>
-      <arglist>(char c)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Win_QextSerialPort</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a5701350b1c29e6187e4f50946b88a855</anchor>
-      <arglist>(const QString &amp;name, const PortSettings &amp;settings)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Win_QextSerialPort</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a8eebc2f042fe2b9b782fcac8cee7689c</anchor>
-      <arglist>(const PortSettings &amp;settings)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Win_QextSerialPort</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>ab88b54d3b5d528b75b7a5fbfe83ca673</anchor>
-      <arglist>(const QString &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Win_QextSerialPort</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>aa2968038a33b91c0f21e43f2a267a35c</anchor>
-      <arglist>(Win_QextSerialPort const &amp;s)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Win_QextSerialPort</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a3f96ad148dd04e48d2251d85866f2bb7</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual qint64</type>
-      <name>writeData</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>af19e3f91521f067153ec4cd1fa67ea0a</anchor>
-      <arglist>(const char *data, qint64 maxSize)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual</type>
-      <name>~Win_QextSerialPort</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>a3ccf56b7795903500f3aa11e1ad33c87</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>COMMCONFIG</type>
-      <name>Win_CommConfig</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>aa51a3047aa92b01531219215bb415dbb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>COMMTIMEOUTS</type>
-      <name>Win_CommTimeouts</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>aa3909dbcf96493e43d79e075e626d68b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>HANDLE</type>
-      <name>Win_Handle</name>
-      <anchorfile>classWin__QextSerialPort.html</anchorfile>
-      <anchor>af6dae6bb1c6b51e766e551bc11f1721d</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
   <compound kind="dir">
     <name>direcs/</name>
     <path>/Users/markus/develop/direcs/direcs/</path>
@@ -13335,8 +11811,6 @@
     <file>direcsSerial.h</file>
     <file>gui.cpp</file>
     <file>gui.h</file>
-    <file>gui_arm.cpp</file>
-    <file>gui_arm.h</file>
     <file>head.cpp</file>
     <file>head.h</file>
     <file>heartbeat.cpp</file>
@@ -13370,9 +11844,6 @@
     <file>obstacleCheckThread.h</file>
     <file>plotThread.cpp</file>
     <file>plotThread.h</file>
-    <file>posix_qextserialport.h</file>
-    <file>qextserialbase.h</file>
-    <file>qextserialport.h</file>
     <file>QtGLContext.cpp</file>
     <file>QtGLContext.h</file>
     <file>sensorThread.cpp</file>
@@ -13384,6 +11855,5 @@
     <file>speak_lib.h</file>
     <file>speakThread.cpp</file>
     <file>speakThread.h</file>
-    <file>win_qextserialport.h</file>
   </compound>
 </tagfile>
