@@ -2859,6 +2859,10 @@ void Gui::initPlots()
 	qwtPlotCurrent1.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotCurrent1.setAxisFont(QwtPlot::axisCnt, applicationFont);
 
+	// add a grid
+	gridCurrent1.attach(&qwtPlotCurrent1);
+	gridCurrent1.setPen( QPen(QColor(gridColor), 0.0, Qt::DotLine) );
+
 	// set title
 	qwtPlotCurrent1.setTitle("Motor 1 + 2");
 
@@ -2883,6 +2887,10 @@ void Gui::initPlots()
 	qwtPlotCurrent2.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotCurrent2.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotCurrent2.setAxisFont(QwtPlot::axisCnt, applicationFont);
+
+	// add a grid
+	gridCurrent2.attach(&qwtPlotCurrent2);
+	gridCurrent2.setPen( QPen(QColor(gridColor), 0.0, Qt::DotLine) );
 
 	// set title
 	qwtPlotCurrent2.setTitle("Motor 3 + 4");

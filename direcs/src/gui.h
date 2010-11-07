@@ -560,6 +560,8 @@ class Gui : public QMainWindow
 		QwtPlotCurve curveHeartbeat;
 		QwtPlotGrid gridVoltage1;
 		QwtPlotGrid gridVoltage2;
+		QwtPlotGrid gridCurrent1;
+		QwtPlotGrid gridCurrent2;
 		QwtPlotGrid gridHeartbeat;
 // 		QwtCompassMagnetNeedle needle;
 #endif
