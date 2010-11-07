@@ -2965,13 +2965,19 @@ void Gui::initPlots()
 	//--------------------------------------
 	// get the current application font
 	applicationFont = QApplication::font();
-	// set this font for the plot widget
 	qwtPlotHeartbeat.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotHeartbeat.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotHeartbeat.setAxisFont(QwtPlot::axisCnt, applicationFont);
+	// disable axes (not needed)
+	qwtPlotHeartbeat.enableAxis(QwtPlot::xBottom, false);
+	qwtPlotHeartbeat.enableAxis(QwtPlot::yLeft, false);
 
-	// no title
-	//qwtPlotHeartbeat.setTitle("12 V Battery");
+	// add a grid
+	gridHeartbeat.attach(&qwtPlotHeartbeat);
+	gridHeartbeat.setPen( QPen(QColor(gridColor), 0.0, Qt::DotLine) );
+
+	// set background color
+	// qwtPlotHeartbeat.setCanvasBackground(QColor(Qt::black));
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
@@ -2980,11 +2986,13 @@ void Gui::initPlots()
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// time (60 sec), step width 2 secconds
-//	qwtPlotHeartbeat.setAxisScale(QwtPlot::xBottom, 0.0, 60.0, 20.0);
+	qwtPlotHeartbeat.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveHeartbeat.setRenderHint(QwtPlotItem::RenderAntialiased);
-	curveHeartbeat.setPen(QPen(labelFillColorBlue));
-//	curveHeartbeat.setBrush(labelFillColorBlue); // this fills the area under the line
+	// set curve color
+	curveHeartbeat.setPen(QPen(labelFillColorRed));
+	// fill the area below the curve
+	// curveHeartbeat.setBrush(labelFillColorBlue);
 
 
 	//------------------------------------------------------------

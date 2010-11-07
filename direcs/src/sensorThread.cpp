@@ -264,7 +264,7 @@ void SensorThread::run()
 			else
 			{
 				// set plot value to low = 0 Volt
-				heartbeatValue[0] = 4;
+				heartbeatValue[0] = 12;
 				emit heartbeat(LEDOFF);
 
 				// send heartbeat over the network

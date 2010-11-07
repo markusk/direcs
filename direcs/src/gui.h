@@ -667,7 +667,7 @@ class Gui : public QMainWindow
 		static const float MAXIMUMPLOTVOLTAGE1 = 13.00; /// for plot widgets TODO: put to ini-file
 		static const float MAXIMUMPLOTVOLTAGE2 = 26.00; /// for plot widgets TODO: put to ini-file
 
-		static const float MAXIMUMPLOTHEARTBEAT = 5.00; /// theoratically 5.0 Volt for heartbeat "hight"
+		static const float MAXIMUMPLOTHEARTBEAT = 12.00; /// theoratically 12 Volt for heartbeat "high" @sa SensorThread::run
 
 		/**
 		Factor for fitting 6 meters (measured from the laser scanner) into a frame with a height of 270 pixels at a default zoom level of 5 !!
