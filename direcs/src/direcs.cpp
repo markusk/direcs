@@ -902,6 +902,10 @@ void Direcs::init()
 		{
 			if (laserScannerFrontFound)
 			{
+				if (!consoleMode)
+				{
+					gui->setLEDLaser(GREEN);
+				}
 				emit message("Front laser scanner found.");
 			}
 			else
@@ -950,6 +954,12 @@ void Direcs::init()
 		else
 		{
 			emit message("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
+
+			if (!consoleMode)
+			{
+				// choose a red instead of a off LED since this looks more important
+				gui->setLEDLaser(RED);
+			}
 		}
 
 

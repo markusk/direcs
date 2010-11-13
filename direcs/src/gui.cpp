@@ -3203,6 +3203,23 @@ void Gui::setLEDNetwork(unsigned char state)
 }
 
 
+void Gui::setLEDLaser(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			break;
+		case GREEN:
+			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			break;
+		case LEDOFF:
+			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			break;
+	}
+}
+
+
 void Gui::setConsoleMode(bool state)
 {
 	consoleMode = state;

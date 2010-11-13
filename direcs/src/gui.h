@@ -382,6 +382,12 @@ class Gui : public QMainWindow
 		void setLEDNetwork(unsigned char state);
 
 		/**
+		Turns the lase scanner GUI LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDLaser(unsigned char state);
+
+		/**
 		Turns the CONSOLE mode on or off.
 		If enabled, all log messages are passed to the console.
 		@param state can be true or false.
