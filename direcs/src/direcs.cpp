@@ -677,7 +677,7 @@ void Direcs::init()
 		{
 			// set GUI LED
 			if (!consoleMode)
-				gui->setLEDJoystick(LEDOFF);
+				gui->setLEDJoystick(RED);
 		}
 
 		if (!consoleMode)
