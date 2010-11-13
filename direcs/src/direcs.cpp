@@ -854,6 +854,8 @@ void Direcs::init()
 			//-----------------------------------------------------------
 			if (camThread->isConnected())
 			{
+				gui->setLEDCamera(GREEN);
+
 				if (camThread->isRunning() == false)
 				{
 					emit message("Starting camera thread...", false);
@@ -869,6 +871,7 @@ void Direcs::init()
 			}
 			else
 			{
+				gui->setLEDCamera(RED);
 				emit message("Camera thread NOT started!");
 			}
 		}
