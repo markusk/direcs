@@ -678,6 +678,8 @@ void Direcs::init()
 			// set GUI LED
 			if (!consoleMode)
 				gui->setLEDJoystick(RED);
+
+			emit message("Joystick thread NOT started.");
 		}
 
 		if (!consoleMode)
