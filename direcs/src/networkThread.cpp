@@ -24,7 +24,7 @@ NetworkThread::NetworkThread()
 {
 	stopped = false;
 	networkPort = 0;
-	
+
 	udpSocket = new QUdpSocket(this);
 }
 
@@ -46,24 +46,24 @@ void NetworkThread::run()
 	//------------------------------------------------------------
 	// description
 	//------------------------------------------------------------
-	
+
 	//
 	//  start "threading"...
 	//
-	
+
 	emit dataReceived(tr("Listening on port %1...").arg(networkPort));
-	
+
 	while (!stopped)
 	{
-		
+
 		// let the thread sleep some time
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-		
+
 		//
 		// do somethin...
 		//
-		
+
 		//====================================================================
 		//  e m i t  Signal
 		//====================================================================
@@ -80,7 +80,7 @@ void NetworkThread::processPendingDatagrams()
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
 		udpSocket->readDatagram(datagram.data(), datagram.size());
-		
+
 		//====================================================================
 		//  e m i t  Signal
 		//====================================================================
@@ -103,12 +103,19 @@ void NetworkThread::sendNetworkCommand(QString text)
 }
 
 
-void NetworkThread::setPort(unsigned int port)
+bool NetworkThread::setPort(unsigned int port)
 {
+	// store port locally
 	networkPort = port;
-	
-	udpSocket->bind(networkPort);
 
-	// do something with the network received data, when complete
-	connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
+	// bind the socket to the given port
+	if (udpSocket->bind(networkPort) == true)
+	{
+		// do something with the network received data, when completely received
+		connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
+		return true;
+	}
+
+	// error
+	return false;
 }

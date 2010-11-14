@@ -29,34 +29,37 @@
 class QUdpSocket;
 
 /**
-\brief Handles the network access (e.g. WLAN) to the robot.
+\brief Handles the network access to the robot (e.g. via WLAN).
 
-It opens an udpSocket and listens on a port. When data are received, the signal \e dataReceived is emitted.
+It opens an UDP socket and listens on a port. When data are received, the signal \e dataReceived is emitted.
+UDP  used, since the sending of the data does not need to be very reliable.
 */
 class NetworkThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		NetworkThread();
 		~NetworkThread();
-		
+
 		/**
 		Stops the thread.
 		*/
 		void stop();
-		
+
 		/**
 		Starts the thread.
 		*/
 		virtual void run();
-		
+
 		/**
 		Sets the network port
+		@param port is the network port where the class receives data. Sending will be done on this port increased by one!
+		@return true on success, false on error
 		*/
-		void setPort(unsigned int port);
-	
-	
+		bool setPort(unsigned int port);
+
+
 	public slots:
 		/**
 		Sends a string over the network
@@ -82,7 +85,7 @@ class NetworkThread : public QThread
 		QUdpSocket *udpSocket;
 		volatile bool stopped;
 		unsigned int networkPort;
-		
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 1000; // Default: 25 ms  (old: 5 ms)
