@@ -3763,6 +3763,10 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 
 
+/*
+			// ###############################################################################
+			// disabled since the head is not in use use!
+			// ###############################################################################
 			//==================
 			// eye test mode
 			//==================
@@ -3775,6 +3779,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
+*/
 
 			return;
 		}
@@ -3812,6 +3817,10 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 
 
+/*
+			// ###############################################################################
+			// disabled since the head is not in use use!
+			// ###############################################################################
 			//==================
 			// eye test mode
 			//==================
@@ -3826,6 +3835,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
+*/
 
 			return;
 		}
@@ -3981,6 +3991,10 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		}
 
 
+/*
+		// ###############################################################################
+		// disabled since this would use the motor 3 and 4 which are now in different use!
+		// ###############################################################################
 		//==================
 		// camera test mode
 		//==================
@@ -4018,7 +4032,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 			return;
 		} // cam test mode [tilt]
+*/
 
+/*
+		// ###############################################################################
+		// disabled since the head is not in use use!
+		// ###############################################################################
 		//==================
 		// eye test mode
 		//==================
@@ -4046,6 +4065,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 			}
 		}
+*/
 
 		//==================
 		// drive test mode
@@ -4122,6 +4142,10 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			return;
 		} // servo test mode
 
+/*
+		// ###############################################################################
+		// disabled since this would use the motor 3 and 4 which are now in different use!
+		// ###############################################################################
 		//==================
 		// camera test mode
 		//==================
@@ -4159,7 +4183,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 			return;
 		} // cam test mode [pan]
+*/
 
+/*
+		// ###############################################################################
+		// disabled since the head is not in use use!
+		// ###############################################################################
 		//==================
 		// eye test mode
 		//==================
@@ -4185,6 +4214,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 			}
 		}
+*/
 
 		//==================
 		// drive test mode
@@ -4269,17 +4299,23 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle0 == false)
 				{
-					eyeTestMode=true;
-					emit message("<font color=\"#0000FF\">Eye test mode ON.</front>");
-					emit speak("Eye test mode.");
+					// ###############################################################################
+					// disabled since the head is not in use use!
+					// ###############################################################################
+//					eyeTestMode=true;
+//					emit message("<font color=\"#0000FF\">Eye test mode ON.</front>");
+//					emit speak("Eye test mode.");
 				}
 				else
 				{
-					eyeTestMode=false;
-					head->look("FORWARD");
-					head->look("NORMAL");
-					emit message("<font color=\"#0000FF\">Eye test mode OFF.</front>");
-					emit speak("Eye test mode disabled.");
+					// ###############################################################################
+					// disabled since the head is not in use use!
+					// ###############################################################################
+//					eyeTestMode=false;
+//					head->look("FORWARD");
+//					head->look("NORMAL");
+//					emit message("<font color=\"#0000FF\">Eye test mode OFF.</front>");
+//					emit speak("Eye test mode disabled.");
 				}
 				toggle0 = !toggle0;
 			}
@@ -4289,16 +4325,16 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle1 == false)
 				{
-					servoTestMode = true;
-					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
-					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
-					emit speak("Servo test mode");
+//					servoTestMode = true;
+//					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
+//					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
+//					emit speak("Servo test mode");
 				}
 				else
 				{
-					servoTestMode = false;
-					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
-					emit speak("Servo test mode disabled");
+//					servoTestMode = false;
+//					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
+//					emit speak("Servo test mode disabled");
 				}
 				toggle1 = !toggle1;
 			}
@@ -4378,15 +4414,18 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle11 == false)
 				{
-					cameraTestMode = true;
-					emit message("<font color=\"#0000FF\">Camera test mode ON.</front>");
-					emit speak("Camerea test mode.");
+					// ###############################################################################
+					// disabled since this would use the motor 3 and 4 which are now in different use!
+					// ###############################################################################
+//					cameraTestMode = true;
+//					emit message("<font color=\"#0000FF\">Camera test mode ON.</front>");
+//					emit speak("Camerea test mode.");
 				}
 				else
 				{
-					cameraTestMode = false;
-					emit message("<font color=\"#0000FF\">Camera test mode OFF.</front>");
-					emit speak("Camerea test mode disabled.");
+//					cameraTestMode = false;
+//					emit message("<font color=\"#0000FF\">Camera test mode OFF.</front>");
+//					emit speak("Camerea test mode disabled.");
 				}
 				toggle11 = !toggle11;
 			}
