@@ -4391,6 +4391,10 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			//
 			if (buttonState==true)
 			{
+/*
+				//###################
+				// Test drive mode
+				//###################
 				if (toggle10 == false)
 				{
 					testDriveMode = true;
@@ -4404,6 +4408,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 					emit speak("Test drive mode disabled.");
 				}
 				toggle10 = !toggle10;
+*/
 			}
 			break;
 		case 11:
