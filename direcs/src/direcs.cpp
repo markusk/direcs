@@ -4285,7 +4285,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 	static bool toggle1 = false;
 	//static bool toggle2 = false;
 	//static bool toggle3 = false;
-	static bool toggle4 = false;
+	//static bool toggle4 = false;
 	//static bool toggle5 = false;
 	static bool toggle10 = false;
 	static bool toggle11 = false;
@@ -4344,22 +4344,6 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 		case 3: // 4 on js
 			break;
 		case 4: // 5 on js
-			if (buttonState==true)
-			{
-				if (toggle4 == false)
-				{
-					mecanumDriveMode=true;
-					emit message("<font color=\"#0000FF\">Mecanum test mode enabled.</front>");
-					emit speak("Mecanum test mode.");
-				}
-				else
-				{
-					mecanumDriveMode=false;
-					emit message("<font color=\"#0000FF\">Mecanum test mode disabled.</front>");
-					emit speak("Mecanum test mode disabled.");
-				}
-				toggle4 = !toggle4;
-			}
 			break;
 		case 5: // 6 on js
 			break;
@@ -4391,24 +4375,19 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			//
 			if (buttonState==true)
 			{
-/*
-				//###################
-				// Test drive mode
-				//###################
 				if (toggle10 == false)
 				{
-					testDriveMode = true;
-					emit message("<font color=\"#0000FF\">Test drive mode ON.</front>");
-					emit speak("Test drive mode.");
+					mecanumDriveMode=true;
+					emit message("<font color=\"#0000FF\">Mecanum test mode enabled.</front>");
+					emit speak("Mecanum test mode.");
 				}
 				else
 				{
-					testDriveMode = false;
-					emit message("<font color=\"#0000FF\">Test drive mode OFF.</front>");
-					emit speak("Test drive mode disabled.");
+					mecanumDriveMode=false;
+					emit message("<font color=\"#0000FF\">Mecanum test mode disabled.</front>");
+					emit speak("Mecanum test mode disabled.");
 				}
 				toggle10 = !toggle10;
-*/
 			}
 			break;
 		case 11:
