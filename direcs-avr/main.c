@@ -869,34 +869,6 @@ int main(void)
 			// TURNLEFT = "bot turn left"
 			if (strcmp(stringbuffer, "*btl#") == 0)
 			{
-				// MOTOR 1 COUNTERCLOCKWISE
-				// set Motor1 A bit
-				PORTL |= (1<<PIN0);
-				// delete Motor1 B bit
-				PORTL &= ~(1<<PIN1);
-				// MOTOR 2 CLOCKWISE
-				// delete Motor2 A bit
-				PORTL &= ~(1<<PIN2);
-				// set Motor2 B bit
-				PORTL |= (1<<PIN3);
-				// MOTOR 3 COUNTERCLOCKWISE
-				// set Motor3 A bit
-				PORTL |= (1<<PIN6);
-				// delete Motor3 B bit
-				PORTL &= ~(1<<PIN7);
-				// MOTOR 4 CLOCKWISE
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// set Motor4 B bit
-				PORTD |= (1<<PIN7);
-
-				// answer with "ok"
-				put_string("*btl#");
-			}
-			else
-			// TURNRIGHT = "bot turn right"
-			if (strcmp(stringbuffer, "*btr#") == 0)
-			{
 				// MOTOR 1 CLOCKWISE
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
@@ -917,6 +889,34 @@ int main(void)
 				PORTD |= (1<<PIN6);
 				// delete Motor4 B bit
 				PORTD &= ~(1<<PIN7);
+
+				// answer with "ok"
+				put_string("*btl#");
+			}
+			else
+			// TURNRIGHT = "bot turn right"
+			if (strcmp(stringbuffer, "*btr#") == 0)
+			{
+				// MOTOR 1 COUNTERCLOCKWISE
+				// set Motor1 A bit
+				PORTL |= (1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// MOTOR 2 CLOCKWISE
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// set Motor2 B bit
+				PORTL |= (1<<PIN3);
+				// MOTOR 3 COUNTERCLOCKWISE
+				// set Motor3 A bit
+				PORTL |= (1<<PIN6);
+				// delete Motor3 B bit
+				PORTL &= ~(1<<PIN7);
+				// MOTOR 4 CLOCKWISE
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
 
 				// answer with "ok"
 				put_string("*btr#");
