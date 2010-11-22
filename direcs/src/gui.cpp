@@ -3016,11 +3016,10 @@ void Gui::initPlots()
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
-	// stepwidth = MAXIMUMPLOTHEARTBEAT (last parameter)
-	qwtPlotHeartbeat.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTHEARTBEAT, MAXIMUMPLOTHEARTBEAT);
+	qwtPlotHeartbeat.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTHEARTBEAT);
 
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec), step width 2 secconds
+	// time (60 sec)
 	qwtPlotHeartbeat.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveHeartbeat.setRenderHint(QwtPlotItem::RenderAntialiased);
