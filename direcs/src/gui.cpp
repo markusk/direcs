@@ -3014,6 +3014,9 @@ void Gui::initPlots()
 	// set background color
 	// qwtPlotHeartbeat.setCanvasBackground(QColor(Qt::black));
 
+	// set title
+	qwtPlotHeartbeat.setTitle("Heartbeat");
+
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
 	// stepwidth = MAXIMUMPLOTHEARTBEAT (last parameter)
