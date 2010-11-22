@@ -2841,10 +2841,10 @@ void Gui::initPlots()
 	// create to qwt plot objects and place them in the GUI
 	qwtPlotVoltage1.setParent(ui.widgetVoltage1);
 	qwtPlotVoltage2.setParent(ui.widgetVoltage2);
-	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
 
 	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
 	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
+
 	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
 
 	// get the current application font
