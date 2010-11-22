@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1676</width>
-    <height>1392</height>
+    <height>1340</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -478,6 +478,7 @@
              <height>161</height>
             </size>
            </property>
+           <zorder>label_7</zorder>
           </widget>
          </item>
          <item>
@@ -488,7 +489,7 @@
             </font>
            </property>
            <property name="text">
-            <string>TextLabel</string>
+            <string> </string>
            </property>
           </widget>
          </item>

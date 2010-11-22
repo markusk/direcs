@@ -314,7 +314,7 @@ class SensorThread : public QThread
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
 
-		static const int MAXIMUMPLOTHEARTBEAT = 12; /// theoratically 12 Volt for heartbeat "high" @sa Gui::initPlot
+		static const int MAXIMUMPLOTHEARTBEAT = 5; /// theoratically 5 Volt for heartbeat "high" @sa Gui::initPlot
 
 		/**
 		Defines the size of the usSensorValue[] array

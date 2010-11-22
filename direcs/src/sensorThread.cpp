@@ -254,7 +254,7 @@ void SensorThread::run()
 			if (!heartbeatToggle)
 			{
 				// set plot value to high = 5 Volt
-				heartbeatValue[0] = 5;
+				heartbeatValue[0] = MAXIMUMPLOTHEARTBEAT;
 				emit heartbeat(GREEN);
 
 				// send heartbeat over the network
@@ -264,7 +264,7 @@ void SensorThread::run()
 			else
 			{
 				// set plot value to low = 0 Volt
-				heartbeatValue[0] = 12;
+				heartbeatValue[0] = 0;
 				emit heartbeat(LEDOFF);
 
 				// send heartbeat over the network
