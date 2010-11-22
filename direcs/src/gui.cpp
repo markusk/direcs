@@ -2867,7 +2867,7 @@ void Gui::initPlots()
 	qwtPlotCurrent1.setTitle("Motor 1 + 2");
 
 	// Set axis scale (instead of using autoscale, which is default)
-	// min (0.0), time (60.0 sec), step width 0=auto
+	// min (0.0), time (60.0 sec)
 	qwtPlotCurrent1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveCurrent1.setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -2896,7 +2896,7 @@ void Gui::initPlots()
 	qwtPlotCurrent2.setTitle("Motor 3 + 4");
 
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec), step width 10
+	// time (60 sec)
 	qwtPlotCurrent2.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveCurrent2.setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -2950,7 +2950,7 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTVOLTAGE1);
 
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec), step width 10
+	// time (60 sec)
 	qwtPlotVoltage1.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveVoltage1.setRenderHint(QwtPlotItem::RenderAntialiased);
@@ -2985,7 +2985,7 @@ void Gui::initPlots()
 	qwtPlotVoltage2.setAxisScale(QwtPlot::yLeft, 0.0, MAXIMUMPLOTVOLTAGE2);
 
 	// Set axis scale (instead of using autoscale, which is default)
-	// time (60 sec), step width 10
+	// time (60 sec)
 	qwtPlotVoltage2.setAxisScale(QwtPlot::xBottom, 0.0, 60.0);
 
 	curveVoltage2.setRenderHint(QwtPlotItem::RenderAntialiased);
