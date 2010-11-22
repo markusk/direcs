@@ -3003,9 +3003,6 @@ void Gui::initPlots()
 	qwtPlotHeartbeat.setAxisFont(QwtPlot::xBottom, applicationFont);
 	qwtPlotHeartbeat.setAxisFont(QwtPlot::yLeft, applicationFont);
 	qwtPlotHeartbeat.setAxisFont(QwtPlot::axisCnt, applicationFont);
-	// disable axes (not needed)
-	qwtPlotHeartbeat.enableAxis(QwtPlot::xBottom, false);
-	qwtPlotHeartbeat.enableAxis(QwtPlot::yLeft, false);
 
 	// add a grid
 	gridHeartbeat.attach(&qwtPlotHeartbeat);
