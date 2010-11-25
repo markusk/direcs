@@ -37,13 +37,13 @@
 class SickS300 : public QObject
 {
 	Q_OBJECT
-	
+
 	public:
 		/**
 		Constructor
 		*/
 		SickS300();
-		
+
 		/**
 		Destructor
 		*/
@@ -108,10 +108,11 @@ class SickS300 : public QObject
 
 	signals:
 		/**
-		Sends a string to the GUI log.
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		@param text is the message to be emitted
 		*/
-		void emitMessage(QString text);
+		void message(QString text);
 
 
 	private:
