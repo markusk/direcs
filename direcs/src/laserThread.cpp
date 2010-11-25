@@ -85,11 +85,11 @@ void LaserThread::run()
 		// don't thread
 		stopped = true;
 	}
-	
+
 	// check if all 180 beams were read
 	numReadingsFront = 0;
 	numReadingsRear = 0;
-	
+
 	//
 	//  start "threading"...
 	//
@@ -98,7 +98,7 @@ void LaserThread::run()
 		// let the thread sleep some time
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-		
+
 		if (
 			((simulationMode==false) && (laserScannerFrontIsConnected == true)) ||
 			((simulationMode==false) && (laserScannerRearIsConnected == true))
@@ -170,11 +170,11 @@ void LaserThread::getAndStoreLaserValuesFront()
 	{
 		// check if all 180 beams were read (in the laser module)
 		numReadingsFront = laser->getLaserNumReadings(LASER1);
-		
+
 		// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
 		if (numReadingsFront > laserscannerAngleFront)
 			numReadingsFront = laserscannerAngleFront;
-		
+
 		// if YES
 		if (numReadingsFront > 0)
 		{
@@ -186,7 +186,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 					// get value from laser
 					// store the value in an array in this thread
 					laserScannerValuesFront[angle] = laser->getLaserDistance(LASER1, angle);
-			
+
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
 					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( (int) (laserScannerValuesFront[angle]*100) ) );
@@ -203,7 +203,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 					// get value from laser
 					// store the value in an array in this thread
 					laserScannerValuesFront[flip] = laser->getLaserDistance(LASER1, angle);
-			
+
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
 					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( (int) (laserScannerValuesFront[angle]*100) ) );
@@ -331,7 +331,7 @@ float LaserThread::getValue(short int laserScanner, int angle)
 			return laserScannerValuesRear[angle];
 			break;
 	}
-	
+
 	return 0;
 }
 
@@ -357,7 +357,7 @@ int LaserThread::getFlag(short int laserScanner, int angle)
 			return laserScannerFlagsRear[angle];
 			break;
 	}
-	
+
 	return 0;
 }
 
@@ -383,7 +383,7 @@ void LaserThread::setFlag(short int laserScanner, int angle, int flag)
 			laserScannerFlagsRear[angle] = flag;
 			break;
 	}
-	
+
 	return;
 }
 
@@ -647,9 +647,9 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 		{
 			laserS300 = new SickS300();
 
-			// let the splash screen from the direcs class show laser init messages
+			// let the splash screen and the GUI / log file from the direcs class show laser init messages
 			// (connect the signal from the laser class to the signal from this class)
-			connect(laserS300, SIGNAL(emitMessage(QString)), this, SIGNAL(message(QString)));
+			connect(laserS300, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 
 			return;
 		}
