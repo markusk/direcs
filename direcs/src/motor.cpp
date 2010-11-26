@@ -1193,8 +1193,11 @@ int Motor::getMotorSpeed(int motor)
 }
 
 
-void Motor::flashlight(bool state)
+bool Motor::flashlight(bool state)
 {
+	QString answer = "error";
+
+
 	if (robotState == ON)
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -1202,29 +1205,53 @@ void Motor::flashlight(bool state)
 
 		if (state == ON)
 		{
-
-			if (interface1->sendChar(FLASHLIGHT_ON) == false)
+			// send command to microcontroller
+			if (interface1->sendString("*f0on#") == true)
 			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				// check if the robot answers with "ok"
+				if ( interface1->receiveString(answer) == true)
+				{
+					if (answer == "*f0on")
+					{
+						// Unlock the mutex
+						mutex->unlock();
+						return true;
+					}
+				}
 			}
+			//qDebug("ERROR sending to serial port (flashlight)");
+			// Unlocks the mutex
+			mutex->unlock();
+			return false;
 		}
 		else
 		{
-			if (interface1->sendChar(FLASHLIGHT_OFF) == false)
+			// send command to microcontroller
+			if (interface1->sendString("*f0of#") == true)
 			{
-				// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
-				mutex->unlock();
-				//qDebug("ERROR sending to serial port (Motor)");
-				return;
+				// check if the robot answers with "ok"
+				if ( interface1->receiveString(answer) == true)
+				{
+					if (answer == "*f0of")
+					{
+						// Unlock the mutex
+						mutex->unlock();
+						return true;
+					}
+				}
 			}
+			//qDebug("ERROR sending to serial port (flashlight)");
+			// Unlocks the mutex
+			mutex->unlock();
+			return false;
 		}
 
 		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
 		mutex->unlock();
 	} // robot is ON
+
+
+	return false;
 }
 
 

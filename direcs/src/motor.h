@@ -87,7 +87,7 @@ class Motor : public QObject
 		@param state can be ON or OFF.
 		*/
 		// TODO: put it somewhere else...
-		void flashlight(bool state);
+		bool flashlight(bool state);
 
 		/*
 		Generates steps for stepper motors.

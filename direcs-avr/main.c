@@ -458,6 +458,22 @@ int main(void)
 				put_string("*ok#");
 			}
 			else
+			// FLASHLIGHT ON
+			if (strcmp(stringbuffer, "*f0on#") == 0)
+			{
+				relais(ON);
+				yellowLED(ON);
+				put_string("*f0on#");
+			}
+			else
+			// FLASHLIGHT OFF
+			if (strcmp(stringbuffer, "*f0of#") == 0)
+			{
+				relais(OFF);
+				yellowLED(OFF);
+				put_string("*f0of#");
+			}
+			else
 			// MOTOR1_OFF
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
@@ -963,6 +979,8 @@ int main(void)
 			case BOTWAIT:
 			case BOTTURNLEFT:
 			case BOTTURNRIGHT:
+			case FLASHLIGHT_ON:
+			case FLASHLIGHT_OFF:
 		
 				
 			case SET_SERVO1:
@@ -1001,17 +1019,6 @@ int main(void)
 				setServoPosition(6, value);
 				break;
 
-			//-------------------------------
-			case FLASHLIGHT_ON:
-				relais(ON);
-				yellowLED(ON);
-				break;
-			case FLASHLIGHT_OFF:
-				relais(OFF);
-				yellowLED(OFF);
-				break;
-
-			//-------------------------------
 			case READ_CONTACT1:
 				// contact cam tilt R/BOTTOM
 				// send 1 Byte (8 bit!)
@@ -1069,7 +1076,6 @@ void sendUInt(uint16_t value)
 }
 
 
-
 void redLED(uint8_t state)
 {
 	if (state == ON)
@@ -1087,7 +1093,6 @@ void redLED(uint8_t state)
 }
 
 
-
 void yellowLED(uint8_t state)
 {
 	if (state == ON)
@@ -1103,7 +1108,6 @@ void yellowLED(uint8_t state)
 		PORTC |= (1<<PIN0);
 	}
 }
-
 
 
 void greenLED(uint8_t state)
