@@ -174,7 +174,7 @@ void Direcs::init()
 	robotRemoteMode = false;
 	servoTestMode = false;
 	testDriveMode = false;
-	mecanumDriveMode = false; // if false, a joytick move to the right, lets the robot "turn right". If true, the robots "moves right" - without turning around itself.
+	mecanumDriveMode = false; // if false, a joystick move to the right, lets the robot "turn right". If true, the robots "moves right" - without turning around itself.
 	eyeTestMode = false;
 	currentTestServo = SERVO1;
 	useCamera = false;
