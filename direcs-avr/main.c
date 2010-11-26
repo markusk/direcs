@@ -1123,27 +1123,18 @@ void greenLED(uint8_t state)
 }
 
 
-
 void relais(uint8_t state)
 {
-/*
-	//
-	//  this is turned OFF due to problems with serial port, when activatin it. Maybe port defect?!
-	//
-	
 	if (state == ON)
 	{
 		// relais on
-		// (low active!)
-		PORTC &= ~(1<<PIN1);
+		PORTC |= (1<<PIN1);
 	}
 	else
 	{
 		// relais off
-		// (low active!)
-		PORTC |= (1<<PIN1);
+		PORTC &= ~(1<<PIN1);
 	}
-*/
 }
 
 
