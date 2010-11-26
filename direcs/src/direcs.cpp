@@ -174,7 +174,7 @@ void Direcs::init()
 	robotRemoteMode = false;
 	servoTestMode = false;
 	testDriveMode = false;
-	mecanumDriveMode = false;
+	mecanumDriveMode = false; // if false, a joytick move to the right, lets the robot "turn right". If true, the robots "moves right" - without turning around itself.
 	eyeTestMode = false;
 	currentTestServo = SERVO1;
 	useCamera = false;
@@ -4226,8 +4226,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			if (mecanumDriveMode)
 			{
-				// do a right turn in a circle!
-				drive(TURNRIGHT);
+				// moving to the right, without turning
+				drive(RIGHT);
 			}
 			else
 			{
@@ -4237,7 +4237,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 					drive(START);
 				}
 
-				drive(RIGHT);
+				// do a right turn in a circle!
+				drive(TURNRIGHT);
 			}
 			return;
 		}
@@ -4249,8 +4250,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			if (mecanumDriveMode)
 			{
-				// do a right turn in a circle!
-				drive(TURNLEFT);
+				// moving to the right, without turning
+				drive(LEFT);
 			}
 			else
 			{
@@ -4260,7 +4261,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 					drive(START);
 				}
 
-				drive(LEFT);
+				// do a left turn in a circle!
+				drive(TURNLEFT);
 			}
 			return;
 		}
