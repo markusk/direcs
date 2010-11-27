@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1679</width>
-    <height>1076</height>
+    <width>1664</width>
+    <height>1206</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -250,7 +250,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1679</width>
+     <width>1664</width>
      <height>22</height>
     </rect>
    </property>
@@ -511,6 +511,9 @@
              <property name="pixmap">
               <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
             </widget>
            </item>
            <item>
@@ -530,6 +533,9 @@
             <widget class="QLabel" name="lblLEDBackLeft2">
              <property name="pixmap">
               <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -564,6 +570,9 @@
              <property name="pixmap">
               <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
             </widget>
            </item>
            <item>
@@ -583,6 +592,9 @@
             <widget class="QLabel" name="lblLEDBackRight1">
              <property name="pixmap">
               <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -1230,6 +1242,12 @@
         <layout class="QHBoxLayout" name="horizontalLayout_15">
          <item>
           <widget class="CompassWidget" name="frameCompass" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>200</height>
+            </size>
+           </property>
            <property name="palette">
             <palette>
              <active>
