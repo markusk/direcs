@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1680</width>
-    <height>1234</height>
+    <width>1679</width>
+    <height>1076</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -250,7 +250,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1680</width>
+     <width>1679</width>
      <height>22</height>
     </rect>
    </property>
@@ -341,7 +341,7 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QGridLayout" name="gridLayout_7">
+    <layout class="QGridLayout" name="gridLayout_17">
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
@@ -435,15 +435,8 @@
       </layout>
      </item>
      <item row="0" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_16">
-       <item>
-        <widget class="QLabel" name="labelBelowHeartbeatSpacer">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
+      <layout class="QGridLayout" name="gridLayout_16">
+       <item row="0" column="0">
         <spacer name="horizontalSpacer_15">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -456,39 +449,63 @@
          </property>
         </spacer>
        </item>
-       <item>
-        <widget class="QWidget" name="widgetHeartbeat" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>305</width>
-           <height>161</height>
-          </size>
-         </property>
-        </widget>
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_13">
+         <item>
+          <widget class="QWidget" name="widgetHeartbeat" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>305</width>
+             <height>161</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelBelowHeartbeatSpacer">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item>
+       <item row="0" column="2">
         <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>13</width>
+           <height>17</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_10">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_18">
+       <item row="0" column="3">
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_10">
            <item>
             <widget class="QLabel" name="lblLEDFrontLeft4">
              <property name="pixmap">
@@ -497,20 +514,20 @@
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_13">
+            <spacer name="verticalSpacer_5">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="lblLEDFrontRight3">
+            <widget class="QLabel" name="lblLEDBackLeft2">
              <property name="pixmap">
               <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
              </property>
@@ -518,7 +535,7 @@
            </item>
           </layout>
          </item>
-         <item>
+         <item row="0" column="1">
           <widget class="QLabel" name="stateRobotPicture">
            <property name="maximumSize">
             <size>
@@ -540,24 +557,24 @@
            </property>
           </widget>
          </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_19">
+         <item row="0" column="2">
+          <layout class="QVBoxLayout" name="verticalLayout_12">
            <item>
-            <widget class="QLabel" name="lblLEDBackLeft2">
+            <widget class="QLabel" name="lblLEDFrontRight3">
              <property name="pixmap">
               <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_14">
+            <spacer name="verticalSpacer_6">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
@@ -572,9 +589,6 @@
           </layout>
          </item>
         </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_12"/>
        </item>
       </layout>
      </item>
