@@ -507,6 +507,7 @@ class Gui : public QMainWindow
 		void on_checkBoxMirror_stateChanged(int);
 		void on_checkBoxFaceDetection_stateChanged(int);
 		void on_checkBoxFaceTracking_stateChanged(int);
+/*
 		void on_btnPower1_toggled(bool);
 		void on_btnPower2_toggled(bool);
 		void on_btnPower3_toggled(bool);
@@ -515,7 +516,7 @@ class Gui : public QMainWindow
 		void on_btnDirection2_toggled(bool);
 		void on_btnDirection3_toggled(bool);
 		void on_btnDirection4_toggled(bool);
-
+*/
 		/**
 		Saves the current picture to disk (one time shot).
 		*/

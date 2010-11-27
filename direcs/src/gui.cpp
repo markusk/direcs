@@ -417,10 +417,12 @@ void Gui::on_actionReset_activated()
 	*/
 
 	// reset labels
+/*
 	ui.btnDirection1->setText("FORWARD");
 	ui.btnDirection2->setText("FORWARD");
 	ui.btnDirection3->setText("FORWARD");
 	ui.btnDirection4->setText("FORWARD");
+*/
 }
 
 
@@ -1058,18 +1060,21 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case OFF:
 //					ui.btnPower1->setPalette( QApplication::palette() );
 //					ui.btnDirection1->setPalette( QApplication::palette() );
+					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.btnDirection1->setText("BACKWARD");
+//					ui.btnDirection1->setText("BACKWARD");
 //					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.btnDirection1->setText("FORWARD");
+//					ui.btnDirection1->setText("FORWARD");
 //					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					break;
 				case SAME:
 					break;
@@ -1088,18 +1093,21 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case OFF:
 //					ui.btnPower2->setPalette( QApplication::palette() );
 //					ui.btnDirection2->setPalette( QApplication::palette() );
+					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.btnDirection2->setText("BACKWARD");
+//					ui.btnDirection2->setText("BACKWARD");
 //					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.btnDirection2->setText("FORWARD");
+//					ui.btnDirection2->setText("FORWARD");
 //					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					break;
 				case SAME:
 					break;
@@ -1118,18 +1126,21 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case OFF:
 //					ui.btnPower3->setPalette( QApplication::palette() );
 //					ui.btnDirection3->setPalette( QApplication::palette() );
+					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.btnDirection3->setText("BACKWARD");
+//					ui.btnDirection3->setText("BACKWARD");
 //					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.btnDirection3->setText("FORWARD");
+//					ui.btnDirection3->setText("FORWARD");
 //					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					break;
 				case SAME:
 					break;
@@ -1148,18 +1159,21 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 				case OFF:
 //					ui.btnPower4->setPalette( QApplication::palette() );
 //					ui.btnDirection4->setPalette( QApplication::palette() );
+					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					break;
 			}
 
 			switch (direction)
 			{
 				case CLOCKWISE:
-					ui.btnDirection4->setText("BACKWARD");
+//					ui.btnDirection4->setText("BACKWARD");
 //					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
 				case COUNTERCLOCKWISE:
-					ui.btnDirection4->setText("FORWARD");
+//					ui.btnDirection4->setText("FORWARD");
 //					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
+					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					break;
 				case SAME:
 					break;
@@ -1550,7 +1564,7 @@ void Gui::setPlotDataHeartbeat(double *xval, double *yval, int size)
 }
 #endif
 
-
+/*
 void Gui::on_btnPower1_toggled(bool checked)
 {
 	if (checked)
@@ -1729,7 +1743,7 @@ void Gui::on_btnDirection4_toggled(bool checked)
 		}
 	}
 }
-
+*/
 
 void Gui::on_actionRemote_activated()
 {
@@ -2846,6 +2860,8 @@ void Gui::initPlots()
 	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
 
 	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
+//	ui.widgetHeartbeat->resize(205, 100); // 305 x 161
+//	qwtPlotHeartbeat.resize(205, 100);
 
 	// get the current application font
 	QFont applicationFont = QApplication::font();
