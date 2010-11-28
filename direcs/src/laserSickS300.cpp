@@ -224,7 +224,7 @@ int SickS300::setup()
 
 		// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 	}
-	emit message("Setup OKAY");
+	emit message("Sick laser S300 setup OKAY");
 
 	return 0;
 }
