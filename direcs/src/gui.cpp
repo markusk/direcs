@@ -116,7 +116,7 @@ infrared Sensors temporarily removed from robot!!
 	// Compass stuff
 	//----------------------------------------------------------------------------
 // 	initCompass(); // this is for the 2D compass. Not in use at the moment.
-	disableCompass();
+//	disableCompass();
 
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)

@@ -142,12 +142,12 @@ void CompassWidget::initializeGL()
 	glEnable(GL_BLEND); // erforderlich, wenn Materialien durchsichtig sind
 	//----------------------- pfeile -------------------------
 
-	cyl_radius = 0.02;
-	cyl_height = 0.20;
+	cyl_radius = 0.03;
+	cyl_height = 0.30;
 
-	cubeWidth  = 0.30;
+	cubeWidth  = 0.40;
 	cubeHeight = 0.18;
-	cubeDepth  = 0.30;
+	cubeDepth  = 0.40;
 
 	xAxisCylinder = gluNewQuadric();
 	yAxisCylinder = gluNewQuadric();

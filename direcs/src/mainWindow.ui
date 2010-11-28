@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1679</width>
-    <height>1034</height>
+    <height>1058</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_10">
-    <item row="0" column="0">
+    <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QGraphicsView" name="graphicsViewLaser">
@@ -1258,12 +1258,6 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockCompass">
-   <property name="maximumSize">
-    <size>
-     <width>411</width>
-     <height>524287</height>
-    </size>
-   </property>
    <property name="windowTitle">
     <string>Compass</string>
    </property>
@@ -1271,117 +1265,300 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_8">
-    <layout class="QGridLayout" name="gridLayout_6">
+    <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_15">
-         <item>
-          <widget class="CompassWidget" name="frameCompass" native="true">
-           <property name="palette">
-            <palette>
-             <active>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>255</red>
-                 <green>255</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Window">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </active>
-             <inactive>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>255</red>
-                 <green>255</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Window">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </inactive>
-             <disabled>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Window">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>0</red>
-                 <green>0</green>
-                 <blue>0</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </disabled>
-            </palette>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
            <item>
-            <widget class="QLabel" name="label18_12">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
+            <widget class="CompassWidget" name="frameCompass" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>160</width>
+               <height>160</height>
+              </size>
              </property>
-             <property name="text">
-              <string>X:</string>
+             <property name="maximumSize">
+              <size>
+               <width>160</width>
+               <height>160</height>
+              </size>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>255</red>
+                   <green>255</green>
+                   <blue>255</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>0</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>255</red>
+                   <green>255</green>
+                   <blue>255</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>0</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>0</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>0</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_11">
            <item>
-            <widget class="QLabel" name="lblCompassX">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label18_12">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>X:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblCompassX">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>0 deg</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <item>
+              <widget class="QLabel" name="label18_13">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Y:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblCompassY">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>0 deg</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_13">
+             <item>
+              <widget class="QLabel" name="label18_14">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Z:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_20">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblCompassZ">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>0 deg</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_14">
+             <item>
+              <widget class="QLabel" name="label18_15">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Heading:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_21">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblCompassHeading">
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>0 deg</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
              </property>
-             <property name="text">
-              <string>0 deg</string>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
+            </spacer>
            </item>
           </layout>
          </item>
@@ -1392,141 +1569,26 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>13</width>
+             <width>40</width>
              <height>20</height>
             </size>
            </property>
           </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_12">
-           <item>
-            <widget class="QLabel" name="label18_13">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>Y:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblCompassY">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>0 deg</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>18</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_13">
-           <item>
-            <widget class="QLabel" name="label18_14">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>Z:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblCompassZ">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>0 deg</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>18</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_14">
-           <item>
-            <widget class="QLabel" name="label18_15">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>Heading:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblCompassHeading">
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>0 deg</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </item>
         </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -1987,19 +2049,6 @@
              </property>
             </spacer>
            </item>
-           <item row="1" column="1">
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
           </layout>
          </item>
         </layout>
@@ -2024,12 +2073,6 @@
         <enum>Qt::Vertical</enum>
        </property>
        <widget class="QTextEdit" name="textEditGlobalLog">
-        <property name="minimumSize">
-         <size>
-          <width>390</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="font">
          <font>
           <family>Verdana</family>
@@ -2037,12 +2080,6 @@
         </property>
        </widget>
        <widget class="QTextEdit" name="textEditSerialLog">
-        <property name="minimumSize">
-         <size>
-          <width>390</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="font">
          <font>
           <family>Verdana</family>
