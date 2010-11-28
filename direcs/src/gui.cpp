@@ -222,10 +222,12 @@ void Gui::setRobotControls(bool state)
 	// set the controls
 	ui.actionDrive->setEnabled(state);
 	ui.actionReset->setEnabled(state);
+	/*
 	ui.btnResetMovement1->setEnabled(state);
 	ui.btnResetMovement2->setEnabled(state);
 	ui.btnResetMovement3->setEnabled(state);
 	ui.btnResetMovement4->setEnabled(state);
+	*/
 
 	if (!robotIsOn)
 	{
@@ -426,6 +428,35 @@ void Gui::on_actionReset_activated()
 }
 
 
+void Gui::on_actionResetDrivenDistance_activated()
+{
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR1);
+	// reset labels
+	ui.labelDrivenDistance1->setText("0 cm");
+	ui.labelRevolutions1->setText("0");
+
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR2);
+	// reset labels
+	ui.labelDrivenDistance2->setText("0 cm");
+	ui.labelRevolutions2->setText("0");
+
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR3);
+	// reset labels
+	ui.labelDrivenDistance3->setText("0 cm");
+	ui.labelRevolutions3->setText("0");
+
+	// reset counter
+	emit resetDrivenDistance(MOTORSENSOR4);
+	// reset labels
+	ui.labelDrivenDistance4->setText("0 cm");
+	ui.labelRevolutions4->setText("0");
+}
+
+
+/*
 void Gui::on_btnResetMovement1_clicked()
 {
 	// reset counter
@@ -468,7 +499,7 @@ void Gui::on_btnResetMovement4_clicked()
 	ui.labelDrivenDistance4->setText("0 cm");
 	ui.labelRevolutions4->setText("0");
 }
-
+*/
 
 void Gui::on_actionTest_activated()
 {
@@ -479,7 +510,6 @@ void Gui::on_actionTest_activated()
 void Gui::on_actionAll_activated()
 {
 	ui.dockCompass->show();
-	ui.dockOdometrie->show();
 	ui.dockVoltage->show();
 	ui.dockCurrent->show();
 	ui.dockState->show();
@@ -521,19 +551,6 @@ void Gui::on_actionCamera_activated()
 		{
 			ui.dockCamera->show();
 		}
-	}
-}
-
-
-void Gui::on_actionOdometrie_activated()
-{
-	if (ui.dockOdometrie->isVisible())
-	{
-		ui.dockOdometrie->hide();
-	}
-	else
-	{
-		ui.dockOdometrie->show();
 	}
 }
 

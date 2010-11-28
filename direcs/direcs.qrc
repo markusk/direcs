@@ -19,7 +19,6 @@
         <file>images/down.png</file>
         <file>images/downleft.png</file>
         <file>images/downright.png</file>
-        <file>images/draw-eraser.png</file>
         <file>images/drive-harddisk.png</file>
         <file>images/help-about.png</file>
         <file>images/input-gaming.png</file>
@@ -31,7 +30,6 @@
         <file>images/media-flash.png</file>
         <file>images/middle.png</file>
         <file>images/network-wireless.png</file>
-        <file>images/reload.png</file>
         <file>images/right.png</file>
         <file>images/sick.png</file>
         <file>images/sickfront.png</file>
@@ -45,5 +43,6 @@
         <file>images/utilities-system-monitor-active.png</file>
         <file>images/utilities-system-monitor.png</file>
         <file>images/window-duplicate.png</file>
+        <file>images/system-reboot.png</file>
     </qresource>
 </RCC>

@@ -476,7 +476,6 @@ class Gui : public QMainWindow
 		void on_actionExit_activated();
 		void on_actionCompass_activated();
 		void on_actionCamera_activated();
-		void on_actionOdometrie_activated();
 		void on_actionVoltage_activated();
 		void on_actionCurrent_activated();
 		void on_actionState_activated();
@@ -493,10 +492,13 @@ class Gui : public QMainWindow
 
 
 	private slots:
+		void on_actionResetDrivenDistance_activated();
+/*
 		void on_btnResetMovement1_clicked();
 		void on_btnResetMovement2_clicked();
 		void on_btnResetMovement3_clicked();
 		void on_btnResetMovement4_clicked();
+*/
 		//void on_ckeckBoxSaveSettings_stateChanged(int state);
 		void on_btnSavePicture_clicked();
 
