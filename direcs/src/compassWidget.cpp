@@ -59,6 +59,12 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	xAxisColor = Qt::red;
 	yAxisColor = Qt::green;
 	zAxisColor = Qt::blue;
+
+	/*
+	// get color from main window background
+	// So the background color of the OpenGL widget will be like the background color of the main application!
+	TODO: buggy. brings a dark gray background?!??  backgroundColor = QApplication::palette().base().color();
+	*/
 	backgroundColor = Qt::black;
 }
 
