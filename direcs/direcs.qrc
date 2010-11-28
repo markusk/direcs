@@ -44,5 +44,6 @@
         <file>images/utilities-system-monitor.png</file>
         <file>images/window-duplicate.png</file>
         <file>images/system-reboot.png</file>
+        <file>images/applications-internet.png</file>
     </qresource>
 </RCC>
