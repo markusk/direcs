@@ -114,6 +114,12 @@ class SickS300 : public QObject
 		*/
 		void message(QString text);
 
+		/**
+		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
+		@param errorlevel needs to be defined. Temporariliy we use -1 in case of error.
+		*/
+		void systemerror(int errorlevel);
+
 
 	private:
 		DirecsSerial *serialPort;
