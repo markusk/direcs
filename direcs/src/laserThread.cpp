@@ -141,7 +141,7 @@ void LaserThread::run()
 					else
 					{
 						stopped = true;
-						emit message("ERROR reading data from S300. Thread stopped! :-(");
+						emit message("ERROR reading S300 data. Laser thread stopped!");
 					}
 				}
 			}
