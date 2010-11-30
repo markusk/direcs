@@ -467,11 +467,13 @@ void Direcs::init()
 		{
 			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 		}
 		else
 		{
 			connect(joystick, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
+			connect(obstCheckThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 		}
 
 		// also emit messages to the logfile
