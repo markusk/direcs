@@ -833,6 +833,9 @@ void Direcs::init()
 		//------------------------------------------------------------------------------
 		connect(laserThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
 
+		// whenever there is an error in the laser sensor, stop the obstacle check thread!
+		connect(laserThread, SIGNAL( systemerror(int) ), obstCheckThread, SLOT( systemerrorcatcher(int) ) );
+
 		//----------------------------------------------------------------------------
 		// connect joystick signals to "show joystick data"
 		// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
