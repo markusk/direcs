@@ -42,21 +42,21 @@ class SensorThread;
 */
 class ObstacleCheckThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		ObstacleCheckThread(SensorThread *s, LaserThread *l);
 		~ObstacleCheckThread();
 		void stop();
 		virtual void run();
-		
-	
+
+
 	public slots:
 		/**
 		This slot enables or disables the simulation mode.
 		*/
 		void setSimulationMode(bool status);
-		
+
 		/**
 		This slot sets the angle, where the robots has to fit through.
 		*/
@@ -73,18 +73,23 @@ class ObstacleCheckThread : public QThread
 		@param deviation is the angle in degrees.
 		*/
 		void setStraightForwardDeviation(int deviation);
-		
+
 		/**
 		This slot set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
 		@param distance in centimeters
 		*/
 		void setMinObstacleDistance(int distance);
-		
+
 		/**
 		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
 		@param distance in centimeters
-		 */
+		*/
 		void setMinObstacleDistanceLaser(int distance);
+
+		/**
+		This slot catches all signals from the signal @sa systemerror
+		*/
+		void systemerrorcatcher(int errorlevel);
 
 
 	signals:
@@ -94,7 +99,7 @@ class ObstacleCheckThread : public QThread
 		@param timestamp is the timestmap when the signal was emitted.
 		*/
 		void obstacleDetected(int sensors, QDateTime timestamp);
-		
+
 		/**
 		Emits a signal to set the angle where the robot can drive through.
 		@param largestFreeAreaStart is the start angle of the largest free area.
@@ -103,6 +108,13 @@ class ObstacleCheckThread : public QThread
 		@param width of the estimated drive-tru area
 		*/
 		void newDrivingAngleSet(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width);
+
+		/**
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		@param text is the message to be emitted
+		*/
+		void message(QString text);
 
 
 	private:
@@ -113,13 +125,13 @@ class ObstacleCheckThread : public QThread
 		int minObstacleDistanceLaserScanner;
 		unsigned char sensorValue;
 		bool simulationMode;
-		
+
 		int actualFreeAreaStart;
 		int actualFreeAreaEnd;
-		
+
 		int largestFreeAreaStart;
 		int largestFreeAreaEnd;
-		
+
 		int centerOfFreeWay;
 
 		float laserResolution; /// stores the laser resolution when getting the value from the laser thread
@@ -129,22 +141,22 @@ class ObstacleCheckThread : public QThread
 		double b;
 		double c;
 		double alpha;
-		
+
 		int robotSlot; /// defines the minimum slot in degrees, where the robot has to fit through
 		int robotSlotWidth; /// defines the minimum slot in centimeters (cm), where the robot has to fit through
 
 		int straightForwardDeviation; /// and this is the deviation to 90 degrees, when driving forward
-	
+
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
 		static const int LARGESTFREEWAY = 2;
 		static const int CENTEROFLARGESTFREEWAY = 3;
-		
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 250; // 250 ! original !
-		
+
 		// Give the sensors some names
 		//
 		// DONT CHANGE THIS NUMBERS!
@@ -159,18 +171,18 @@ class ObstacleCheckThread : public QThread
 		static const short int SENSOR6 = 32;
 		static const short int SENSOR7 = 64;
 		static const short int SENSOR8 = 128;
-		
+
 		// ultrasonic sensor
 		static const short int SENSOR16 = 256;
-		
+
 		// TODO: make these values nicer
 		static const short int OBSTACLEFRONTLEFT = 512;
 		static const short int OBSTACLEFRONTRIGHT = 1024;
 		static const short int OBSTACLESEVERYWHEREINFRONT = 2048;
-		
+
 		// Value if no sensor has a value to react
 		static const short int NONE = 0;
-		
+
 		// the laser scanners
 		static const short int LASER1 = 1;
 		static const short int LASER2 = 2;

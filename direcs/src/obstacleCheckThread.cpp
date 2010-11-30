@@ -23,15 +23,15 @@
 ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 {
 	stopped = false;
-	
+
 	// copy the pointer from the original SensorThread object
 	sensThread = s;
 	laserThread = l;
-	
+
 	minObstacleDistance = 0;
 	minObstacleDistanceLaserScanner = 0;
 	sensorValue = NONE;
-	
+
 	actualFreeAreaStart = -1;
 	actualFreeAreaEnd = -1;
 
@@ -39,11 +39,11 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	largestFreeAreaEnd = -1;
 
 	centerOfFreeWay = -1;
-	
+
 	robotSlot = 1;      // 1 degree
 	robotSlotWidth = 1; // 1 cm
 	straightForwardDeviation = 0;
-	
+
 	laserResolution = 0.0;
 	laserAngle = 0;
 
@@ -75,7 +75,7 @@ void ObstacleCheckThread::run()
 		// for having a bit more time fo the other threads!
 		//-------------------------------------------------
 		msleep(THREADSLEEPTIME);
-		
+
 		// This value contains the sum of all SENSORx values!
 		sensorValue = NONE;
 
@@ -96,8 +96,8 @@ void ObstacleCheckThread::run()
 
 		// reset "drive to angle" to "middle of the number of laser lines" -> FORWARD
 		centerOfFreeWay = ( (laserAngle / laserResolution) / 2);
-	
-		
+
+
 		//-------------------------------------------------------------
 		// if obstacle in front of sensor 1
 		// (measured distance is smaller than the minObStacleDistance)
@@ -107,8 +107,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR1;
 		}
-	
-	
+
+
 		//-----------------------------------
 		// if obstacle in front of sensor 2
 		//-----------------------------------
@@ -117,8 +117,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR2;
 		}
-	
-	
+
+
 		//-----------------------------------
 		// if obstacle in front of sensor 3
 		//-----------------------------------
@@ -127,8 +127,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR3;
 		}
-		
-		
+
+
 		//-----------------------------------
 		// if obstacle in front of sensor 4
 		//-----------------------------------
@@ -137,8 +137,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR4;
 		}
-		
-		
+
+
 		//-----------------------------------
 		// if obstacle in front of sensor 5
 		//-----------------------------------
@@ -147,8 +147,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR5;
 		}
-		
-		
+
+
 		//-----------------------------------
 		// if obstacle in front of sensor 6
 		//-----------------------------------
@@ -157,8 +157,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR6;
 		}
-		
-		
+
+
 		//-----------------------------------
 		// if obstacle in front of sensor 7
 		//-----------------------------------
@@ -167,8 +167,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR7;
 		}
-		
-		
+
+
 		//-----------------------------------
 		// if obstacle in front of sensor 8
 		//-----------------------------------
@@ -177,9 +177,9 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR8;
 		}
-	
+
 		//=======================================================================================================
-	
+
 		//---------------------------------------------------------
 		// if obstacle in front of sensor 16 (ultra sonic sensor!)
 		//---------------------------------------------------------
@@ -188,8 +188,8 @@ void ObstacleCheckThread::run()
 			// Add the sensor value to the return value
 			sensorValue += SENSOR16;
 		}
-	
-	
+
+
 		//=======================================================================================================
 		//
 		//   First  e m i t  of the sensor data
@@ -197,8 +197,8 @@ void ObstacleCheckThread::run()
 		//qDebug("obstacleCheckThread:  emit sensorValue: %d", sensorValue);
 //		emit obstacleDetected(sensorValue, QDateTime::currentDateTime());
 		//=======================================================================================================
-	
-		
+
+
 		//---------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP I
 		//---------------------------------------------------------
@@ -264,7 +264,7 @@ void ObstacleCheckThread::run()
 					actualFreeAreaStart = angle;
 					//qDebug("angle=%d / actualFreeAreaStart=%d", angle, actualFreeAreaStart);
 				}
-				
+
 				// If current angle has "free" sight (no obstacles) [checked with instruction before!]
 				// AND next angle is NOT free
 				// AND the angle before current is free
@@ -286,7 +286,7 @@ void ObstacleCheckThread::run()
 				{
 					// store current free area end
 					actualFreeAreaEnd = angle;
-					
+
 					// if current free area is larger than the last, store it
 					// AND the robot fits through this angle!
 					if ( (largestFreeAreaEnd - largestFreeAreaStart) < (actualFreeAreaEnd - actualFreeAreaStart) )
@@ -298,9 +298,9 @@ void ObstacleCheckThread::run()
 				}
 			}
 		}
-		
-		
-		
+
+
+
 		//------------------------------------------------------------
 		// Then tag the *largest* free area, if multiple were found
 		// (to show it in the GUI and to know, where to drive)
@@ -324,20 +324,20 @@ void ObstacleCheckThread::run()
 				}
 			}
 		}
-	
-		
+
+
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP III
 		//----------------------------------------------------------------------------
 		// Find the center of the largest free area for the robot
 		//----------------------------------------------------------------------------
-		
+
 		// free area found  :-)
 		if (largestFreeAreaEnd != -1)
 		{
 			// find the center of the largest free area
 			centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
-			
+
 			// set flag to "light green"
 			laserThread->setFlag(LASER1, centerOfFreeWay, CENTEROFLARGESTFREEWAY);
 		}
@@ -345,7 +345,7 @@ void ObstacleCheckThread::run()
 		{
 		}
 
-		
+
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP III a
 		//--------------------------------------------------------------------------------------
@@ -358,7 +358,7 @@ void ObstacleCheckThread::run()
 			b = laserThread->getValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
 			c = laserThread->getValue(LASER1, largestFreeAreaEnd) * 100; // converted in cm, here!
 			alpha = (largestFreeAreaEnd - largestFreeAreaStart);
-			
+
 			// to get the 'true drive-tru width':
 			// make the triangle to be one with same-length-sides of b and c
 			if (c < b)
@@ -372,7 +372,7 @@ void ObstacleCheckThread::run()
 					c = b;
 				}
 			}
-			
+
 			// calculate
 			// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
 			width = sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngle) );
@@ -381,7 +381,7 @@ void ObstacleCheckThread::run()
 		{
 			width = -1;
 		}
-		
+
 
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP IV
@@ -431,9 +431,9 @@ void ObstacleCheckThread::run()
 				}
 			}
 		}
-		
-		
-		
+
+
+
 		//================================= START LASER 2 =========================================
 		//================================= START LASER 2 =========================================
 		//================================= START LASER 2 =========================================
@@ -451,7 +451,7 @@ void ObstacleCheckThread::run()
 			laserAngle = 0;
 		}
 
-		
+
 		//---------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP I
 		//---------------------------------------------------------
@@ -491,7 +491,7 @@ void ObstacleCheckThread::run()
 		largestFreeAreaEnd   = -1;
 
 		centerOfFreeWay = -1;
-	
+
 		//--------------------------------------------------------------------------------
 		// First find the largest free area (the one, with the widest "free sight" angle)
 		//--------------------------------------------------------------------------------
@@ -516,7 +516,7 @@ void ObstacleCheckThread::run()
 					actualFreeAreaStart = angle;
 					//qDebug("angle=%d / actualFreeAreaStart=%d", angle, actualFreeAreaStart);
 				}
-				
+
 				// If current angle has "free" sight (no obstacles)
 				// AND next angle is NOT free
 				// AND the angle before current is free
@@ -538,7 +538,7 @@ void ObstacleCheckThread::run()
 				{
 					// store current free area end
 					actualFreeAreaEnd = angle;
-					
+
 					// if current free area is larger than the last, store it
 					// AND the robot fits through this angle!
 					if ( (largestFreeAreaEnd - largestFreeAreaStart) < (actualFreeAreaEnd - actualFreeAreaStart) )
@@ -550,9 +550,9 @@ void ObstacleCheckThread::run()
 				}
 			}
 		}
-		
-		
-		
+
+
+
 		//------------------------------------------------------------
 		// Then tag the *largest* free area, if multiple were found
 		// (to show it in the GUI and to know, where to drive)
@@ -576,20 +576,20 @@ void ObstacleCheckThread::run()
 				}
 			}
 		}
-	
-		
+
+
 		//----------------------------------------------------------------------------
 		// LASER SCANNER DATA ANALYSIS - STEP III
 		//----------------------------------------------------------------------------
 		// Find the center of the largest free area for the robot
 		//----------------------------------------------------------------------------
-		
+
 		// free area found  :-)
 		if (largestFreeAreaEnd != -1)
 		{
 			// find the center of the largest free area
 			centerOfFreeWay = largestFreeAreaEnd - qRound( (largestFreeAreaEnd - largestFreeAreaStart) / 2);
-			
+
 			// set flag to "light green"
 			laserThread->setFlag(LASER2, centerOfFreeWay, CENTEROFLARGESTFREEWAY);
 		}
@@ -600,9 +600,9 @@ void ObstacleCheckThread::run()
 		//================================= END LASER 2 =========================================
 		//================================= END LASER 2 =========================================
 		//================================= END LASER 2 =========================================
-		
+
 	} // while
-	
+
 	stopped = false;
 }
 
@@ -641,19 +641,34 @@ void ObstacleCheckThread::setSimulationMode(bool status)
 {
 	simulationMode = status;
 	/*
-	
+
 	if (simulationMode == true)
 	{
 		// some nice simulation values
-		
+
 	}
 	else
 	{
 		// initialisation
-		
-		
+
+
 		// for refreshing the gui
 		obstacleDetected(NONE);
 	}
 	*/
+}
+
+
+void ObstacleCheckThread::systemerrorcatcher(int errorlevel)
+{
+	if (errorlevel == -1)
+	{
+		// obstacles EVERYWHERE IN FRONT
+		emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime()); // todo: signal for rear laser!
+
+		emit message("<font color=\"#FF0000\">Error received from other module. Stopping obstacle check thread!</font>");
+
+		// stop this thread
+		stop();
+	}
 }
