@@ -651,6 +651,9 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 			// (connect the signal from the laser class to the signal from this class)
 			connect(laserS300, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 
+			// forward system error signals from the S300 by this class signal
+			connect(laserS300, SIGNAL(systemerror(int)), this, SIGNAL(systemerror(int)));
+
 			return;
 		}
 }
