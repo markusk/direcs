@@ -412,6 +412,10 @@ int SickS300::readRequestTelegram()
 		{
 			// error
 			emit message(QString("<font color=\"#FF0000\">ERROR receiving CRC at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
