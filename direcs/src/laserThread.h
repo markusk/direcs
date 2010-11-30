@@ -34,26 +34,26 @@ It checks, if they are connected, accesses them and emits all read data via Sign
 */
 class LaserThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		LaserThread();
 		~LaserThread();
 		void stop();
 		virtual void run();
-		
+
 		/**
 		@return the (last) measuread value (distance) in meters(!)
 		*/
 		float getValue(short int laserScanner, int angle);
-		
+
 		/**
 		@param laserScanner can be LASER1 or LASER2
 		@param angle is the wanted angle in degrees
 		@returns the laser scanner line flag (the flag shows if there is an obstacle at this line or not)
 		*/
 		int getFlag(short int laserScanner, int angle);
-		
+
 		/**
 		Sets the type of the laser
 		@param laserScanner can be LASER1 or LASER2
@@ -69,7 +69,7 @@ class LaserThread : public QThread
 		@sa ObstacleCheckThread
 		*/
 		void setFlag(short int laserScanner, int angle, int flag);
-		
+
 		/**
 		Sets the serial port for a laser scanner.
 		@param laserScanner can be LASER1 or LASER2
@@ -77,7 +77,7 @@ class LaserThread : public QThread
 		@sa setDevicePort, read_parameters, laser.h
 		*/
 		void setSerialPort(short int laserScanner, QString serialPort);
-		
+
 		/**
 		Sets the mounting for a laser scanner to flip the data for example from 0-179 to 179-0, when the laser scanner is mounted flipped.
 		@param laserScanner can be LASER1 or LASER2
@@ -120,8 +120,8 @@ class LaserThread : public QThread
 		@return true, if connected
 		*/
 		bool isConnected(short int laserScanner);
-	
-	
+
+
 	public slots:
 		/**
 		This slot enables or disables the simulation mode.
@@ -146,11 +146,17 @@ class LaserThread : public QThread
 		@param text is the message to be emitted
 		*/
 		void message(QString text);
-		
+
 		/**
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
+
+		/**
+		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
+		@param errorlevel needs to be defined. Temporariliy we use -1 in case of error.
+		*/
+		void systemerror(int errorlevel);
 
 
 	private:
@@ -180,7 +186,7 @@ class LaserThread : public QThread
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 250; // Default: 250 ms
-		
+
 		// FIXME: put this to the ini-file or so. Fix also: read_parameters() in laser.cpp !!
 		static const unsigned char LMS = 0; // this is temporary
 		static const unsigned char PLS = 1; // this is temporary
