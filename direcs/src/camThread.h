@@ -28,6 +28,7 @@
 #include <QTime>
 #include <QString>
 #include <QtDebug> // for a more convenient use of qDebug
+#include <QFile>
 //-------------------------------------------------------------------
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	#include <cv.h>
@@ -142,7 +143,6 @@ class CamThread : public QThread
 		 */
 		void disableCamera();
 
-
 		/**
 		This signal is emmited when a face was detected in the camera image
 		
@@ -155,6 +155,13 @@ class CamThread : public QThread
 		@sa Direcs::faceTracking()
 		*/
 		void faceDetected(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
+
+                /**
+                Emits a info or error message to a slot.
+                This slot can be used to display a text on a splash screen, log file, to print it to a console...
+                @param text is the message to be emitted
+                */
+                void message(QString text);
 
 
 	private:
