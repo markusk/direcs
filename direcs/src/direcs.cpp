@@ -3548,13 +3548,19 @@ void Direcs::readSettings()
 			if (netThread->setPort(value) == true)
 			{
 				emit message(QString("Setting network port to <b>%1</b>.").arg(value));
-				gui->setLEDNetwork(GREEN);
+				if (!consoleMode)
+				{
+					gui->setLEDNetwork(GREEN);
+				}
 			}
 			else
 			{
 				// Error
 				emit message(QString("<font color=\"#FF0000\">Error setting network to port <b>%1</b>.</font>").arg(value));
-				gui->setLEDNetwork(RED);
+				if (!consoleMode)
+				{
+					gui->setLEDNetwork(RED);
+				}
 			}
 			break;
 	}
