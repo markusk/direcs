@@ -4510,6 +4510,19 @@ void Direcs::checkArguments()
 }
 
 
+void Direcs::systemerrorcatcher(int errorlevel)
+{
+	if (errorlevel == -1) // error with laserscanner thread
+	{
+		if (!consoleMode)
+		{
+			// turn GUI laser LED red
+			gui->setLEDLaser(RED);
+		}
+	}
+}
+
+
 void Direcs::test()
 {
 	static bool toggle = OFF;

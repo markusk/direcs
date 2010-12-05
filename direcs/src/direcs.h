@@ -210,6 +210,11 @@ class Direcs : public QObject
 		void shutdown();
 
 		/**
+		This slot catches all signals from the signal @sa systemerror
+		*/
+		void systemerrorcatcher(int errorlevel);
+
+		/**
 		The method for the test button in the GUI.
 		 */
 		void test();
