@@ -69,6 +69,42 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		return errno;
 	}
 
+
+	// - - -- - -- - -- - -- -
+	// - - -- - -- - -- - -- -
+	// - - -- - -- - -- - -- -
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+	if (baudrate == 38400)
+	{
+		// we should check and reset the AYSNC_SPD_CUST flag
+		// since if it's set and we request 38400, we're likely
+		// to get another baud rate instead (based on custom_divisor)
+		// this way even if the previous user doesn't reset the
+		// port correctly, we'll end up with the right speed we want
+// org player:		if (ioctl(mDev_fd, TIOCGSERIAL, &serial) < 0)
+		if (ioctl(mDev_fd, TIOCGSERIAL) < 0)
+		{
+			//RETURN_ERROR(1, "error on TIOCGSERIAL in beginning");
+			qDebug("ioctl() failed while trying to get serial port info");
+		}
+		else
+		{
+			options.flags &= ~ASYNC_SPD_CUST;
+			options.custom_divisor = 0;
+// org: player			if (ioctl(mDev_fd, TIOCSSERIAL, &serial) < 0)
+			if (ioctl(mDev_fd, TIOCSSERIAL) < 0)
+			{
+				//RETURN_ERROR(1, "error on TIOCSSERIAL in beginning");
+				qDebug("ioctl() failed while trying to set serial port info");
+			}
+		}
+	} // high speed baudrate 38400
+#endif
+	// - - -- - -- - -- - -- -
+	// - - -- - -- - -- - -- -
+	// - - -- - -- - -- - -- -
+
+
 	// Get current port settings
 	tcgetattr(mDev_fd, &options);
 
