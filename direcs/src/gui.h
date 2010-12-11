@@ -141,10 +141,11 @@ class Gui : public QMainWindow
 		/**
 		Appends text to the main log in the main window.
 		@param text is the text to be displayed.
-		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
-		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional.
+		@param sayIt If true, the text is also spoken (default=false). This parameter is optional.
+		@param addTimestamp If true, the a timestamp is added in front of the text. This parameter is optional.
 		 */
-		void appendLog(QString text, bool CR=true, bool sayIt=false);
+		void appendLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/**
 		Append text to the network log in the main window

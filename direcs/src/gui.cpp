@@ -246,9 +246,18 @@ void Gui::setRobotControls(bool state)
 }
 
 
-void Gui::appendLog(QString text, bool CR, bool sayIt)
+void Gui::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 {
-	// insert the text in the GUI
+	if (addTimestamp == true)
+	{
+		// get the current date and time for a timestimp in the log
+		now = QDateTime::currentDateTime();
+
+		// prepend timestamp
+		text = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+	}
+
+	// insert the new text in the GUI
 	ui.textEditGlobalLog->insertHtml(text);
 
 	if (CR == true) // default!
