@@ -237,7 +237,19 @@ int SickS300::setup()
 	emit message("Receiving answer...");
 	for (i=0; i<4; i++)
 	{
-		if (receiveChar(&answer) == false)
+		if (receiveChar(&answer) == true)
+		{
+			if (answer != 0)
+			{
+				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
+				return -1;
+			}
+		}
+		else
 		{
 			// error
 			emit message("<font color=\"#FF0000\">ERROR</font>");
