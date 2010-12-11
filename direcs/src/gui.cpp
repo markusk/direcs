@@ -1377,17 +1377,17 @@ void Gui::disableFaceDetection()
 
 void Gui::disableCamera()
 {
-	appendLog("Camera disabled!");
+	appendLog("Camera window disabled!");
 	ui.dockCamera->setEnabled(false);
-	ui.dockCamera->hide();
+	// ui.dockCamera->hide();
 }
 
 
 void Gui::disableCompass()
 {
 	appendLog("Compass window disabled!");
-//	ui.dockCompass->setEnabled(false);
-	ui.dockCompass->hide();
+	ui.dockCompass->setEnabled(false);
+	// ui.dockCompass->hide();
 }
 
 

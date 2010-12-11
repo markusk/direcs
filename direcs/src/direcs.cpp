@@ -479,7 +479,7 @@ void Direcs::init()
 			connect(obstCheckThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 		}
 
-		// also emit messages to the logfile
+		// also emit interface class messages to the logfile
 		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
 
 		// TODO: check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
@@ -531,6 +531,7 @@ void Direcs::init()
 				// set GUI LED for compass module
 				// has to be OFF, since the Atmel circuit is OFF
 				gui->setLEDCompass(LEDOFF);
+				gui->disableCompass();
 			}
 		}
 		else
@@ -882,6 +883,7 @@ void Direcs::init()
 			else
 			{
 				gui->setLEDCamera(RED);
+				gui->disableCamera();
 				emit message("Camera thread NOT started!");
 			}
 		}
