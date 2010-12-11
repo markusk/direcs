@@ -73,7 +73,10 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// - - -- - -- - -- - -- -
 	// - - -- - -- - -- - -- -
 	// - - -- - -- - -- - -- -
+/*
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+	struct serial_struct serial;
+
 	if (baudrate == 38400)
 	{
 		// we should check and reset the AYSNC_SPD_CUST flag
@@ -81,25 +84,27 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		// to get another baud rate instead (based on custom_divisor)
 		// this way even if the previous user doesn't reset the
 		// port correctly, we'll end up with the right speed we want
-// org player:		if (ioctl(mDev_fd, TIOCGSERIAL, &serial) < 0)
-		if (ioctl(mDev_fd, TIOCGSERIAL) < 0)
+		if (ioctl(mDev_fd, TIOCGSERIAL, &serial) < 0)
 		{
 			//RETURN_ERROR(1, "error on TIOCGSERIAL in beginning");
 			qDebug("ioctl() failed while trying to get serial port info");
+//			return -1;
 		}
 		else
 		{
-			options.flags &= ~ASYNC_SPD_CUST;
-			options.custom_divisor = 0;
-// org: player			if (ioctl(mDev_fd, TIOCSSERIAL, &serial) < 0)
-			if (ioctl(mDev_fd, TIOCSSERIAL) < 0)
+			serial.flags &= ~ASYNC_SPD_CUST;
+			serial.custom_divisor = 48; // 48 for serial usb converters?
+
+			if (ioctl(mDev_fd, TIOCSSERIAL, &serial) < 0)
 			{
 				//RETURN_ERROR(1, "error on TIOCSSERIAL in beginning");
 				qDebug("ioctl() failed while trying to set serial port info");
+//				return -1;
 			}
 		}
 	} // high speed baudrate 38400
 #endif
+*/
 	// - - -- - -- - -- - -- -
 	// - - -- - -- - -- - -- -
 	// - - -- - -- - -- - -- -
