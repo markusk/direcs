@@ -4450,6 +4450,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>setLEDCamera</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aec425ad44248d1e791100a46ab136e98</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setLEDCompass</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>aabcfdee1baa153d5bc055394b28f07e6</anchor>
@@ -4460,6 +4467,27 @@
       <name>setLEDHeartbeat</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a5ff3e9c25f3ed1324eb0e1bf97fd00d0</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLEDJoystick</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a8bcd5c8a52dbde8884298b3c5e653a51</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLEDLaser</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a1524ac6d9d31b26c94b376946e3dcd57</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLEDNetwork</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a1389b3e57d088ad46030cdc4f5a157e2</anchor>
       <arglist>(unsigned char state)</arglist>
     </member>
     <member kind="slot">
@@ -4751,13 +4779,6 @@
     </member>
     <member kind="slot" protection="protected">
       <type>void</type>
-      <name>on_actionOdometrie_activated</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a48e4bbff7c1606e1da05ea1c31b27959</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot" protection="protected">
-      <type>void</type>
       <name>on_actionRemote_activated</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a75e17fa14484f11d5b91111fb95c1f7e</anchor>
@@ -4814,86 +4835,9 @@
     </member>
     <member kind="slot" protection="private">
       <type>void</type>
-      <name>on_btnDirection1_toggled</name>
+      <name>on_actionResetDrivenDistance_activated</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a3bfa4827672f36be5c60a7579e84ecdc</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnDirection2_toggled</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>af99bd17b76f9f047aecf1cdf5e334279</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnDirection3_toggled</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ac87a1df3a11c6b9c7f978592b0d76efb</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnDirection4_toggled</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a60025fb890cafe16e233088c7dbff9c8</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnPower1_toggled</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a3f4b340893c1b79f3cb28817ca4986a9</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnPower2_toggled</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aac17177719c0a55549e5eb8a877bace3</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnPower3_toggled</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a8c3b1f26f5fef3b519e56f7ba6b9b600</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnPower4_toggled</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a825001718c017883cbeaf6212c0370e3</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnResetMovement1_clicked</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a629ede4418dc64661c4e4d8373f63eae</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnResetMovement2_clicked</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a38f6394291247c15fdf3ebc7cf8e6205</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnResetMovement3_clicked</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aa54429178d536e783e24662f94b66130</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot" protection="private">
-      <type>void</type>
-      <name>on_btnResetMovement4_clicked</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ac2f96e5c83a373ab0f38f75ee19def01</anchor>
+      <anchor>a0b929792626db2b3c52b605a77599f8e</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="slot" protection="private">
@@ -5083,6 +5027,48 @@
       <name>curveVoltage2</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a1faa7a2ca1bf1b58de791f8b7642339f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
+      <name>gridColor</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>adad4217836826a731de2f037315cae5b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlotGrid</type>
+      <name>gridCurrent1</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a2cdb73c52ceef767d89687d217d60981</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlotGrid</type>
+      <name>gridCurrent2</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>adfbe02c57b53cd28e180515ed446d8a7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlotGrid</type>
+      <name>gridHeartbeat</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a3a74e2eec380a7d9f1806001e13d4496</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlotGrid</type>
+      <name>gridVoltage1</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a0d3a29ff5a275ee5e197780d266fa3ed</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QwtPlotGrid</type>
+      <name>gridVoltage2</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aae88334c0c4d55b077a6c3e9016a12b3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -8093,6 +8079,13 @@
       <anchor>ad718118f7065602d94512b86ac2a5c4b</anchor>
       <arglist>(QString text)</arglist>
     </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>systemerror</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>af7830163439458ee7a202887b7e2eec2</anchor>
+      <arglist>(int errorlevel)</arglist>
+    </member>
     <member kind="function">
       <type>int</type>
       <name>getAngle</name>
@@ -8571,10 +8564,10 @@
       <arglist>(bool state)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>bool</type>
       <name>flashlight</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a02ba87f4d1c5c5db37188e109f1ddea5</anchor>
+      <anchor>a783ea8e1e02d712b284342c8769fa29c</anchor>
       <arglist>(bool state)</arglist>
     </member>
     <member kind="function">
@@ -9219,10 +9212,10 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>bool</type>
       <name>setPort</name>
       <anchorfile>classNetworkThread.html</anchorfile>
-      <anchor>a980af370dd379471c74d74681015e24c</anchor>
+      <anchor>a7ddb37cd7b760d5db47389723a477630</anchor>
       <arglist>(unsigned int port)</arglist>
     </member>
     <member kind="function">
@@ -9319,6 +9312,20 @@
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>aec86a7362668ea3c7512f180251f2123</anchor>
       <arglist>(int deviation)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>systemerrorcatcher</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a161a362e8a371ccb1f16779f4d8939a1</anchor>
+      <arglist>(int errorlevel)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a55ca027002e2c65eae91345c1637228f</anchor>
+      <arglist>(QString text)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -10628,6 +10635,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MAXIMUMPLOTHEARTBEAT</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>a94ff940f55e83274d3a52e31c02c10e6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const short int</type>
       <name>MOTORSENSOR1</name>
       <anchorfile>classSensorThread.html</anchorfile>
@@ -11544,10 +11558,17 @@
     <filename>classSickS300.html</filename>
     <member kind="signal">
       <type>void</type>
-      <name>emitMessage</name>
+      <name>message</name>
       <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a4c085156adf8ca5663f464f0327f24c0</anchor>
+      <anchor>a9858c104a949532c2a29f19877a0e048</anchor>
       <arglist>(QString text)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>systemerror</name>
+      <anchorfile>classSickS300.html</anchorfile>
+      <anchor>a57c66cffe2c5e3f756992aeedd3ab4b1</anchor>
+      <arglist>(int errorlevel)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
