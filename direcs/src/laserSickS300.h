@@ -126,7 +126,7 @@ class SickS300 : public QObject
 		int baudRate;
 		QString laserSerialPort; /// the path to the serial device. e.g. /dev/ttyUSB0
 
-		static const unsigned int LASERSAMPLES = 1080;
+		static const unsigned int LASERSAMPLES = 1082;
 		unsigned char scanData[LASERSAMPLES];
 
 		static const float LASERMAXLENGTH = 2000; /// if a measured laser distance is greater than this value in cm, it will be set to 0 cm! (This is due to a bug when reading angle 0)

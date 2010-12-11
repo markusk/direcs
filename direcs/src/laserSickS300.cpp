@@ -315,10 +315,9 @@ int SickS300::readRequestTelegram()
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
-			// check if bit no. 4 (error indicator) is 0x00
-			if ((i==3) && (answer != 0x00))
+			// check if every answer bit is 0x00
+			// the last byte (no 4) contains the error code if != 0.
+			if (answer != 0x00)
 			{
 				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
 
@@ -358,7 +357,7 @@ int SickS300::readRequestTelegram()
 	else
 	{
 		// error
-		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 1 (SickS300::readRequestTelegram).</font>");
 		emit systemerror(-1);
 		return -1;
 	}
@@ -368,7 +367,7 @@ int SickS300::readRequestTelegram()
 
 		if (answer != 0x00)
 		{
-			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit message(QString("ERROR: answer byte no.2 was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
 			emit systemerror(-1);
 			return -1;
 		}
@@ -376,7 +375,7 @@ int SickS300::readRequestTelegram()
 	else
 	{
 		// error
-		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 2 (SickS300::readRequestTelegram).</font>");
 		emit systemerror(-1);
 		return -1;
 	}
@@ -386,7 +385,7 @@ int SickS300::readRequestTelegram()
 
 		if (answer != 0x02)
 		{
-			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x02.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit message(QString("ERROR: answer byte no.3 was 0x%1 instead of 0x02.").arg( answer, 2, 16, QLatin1Char('0') ));
 			emit systemerror(-1);
 			return -1;
 		}
@@ -394,7 +393,7 @@ int SickS300::readRequestTelegram()
 	else
 	{
 		// error
-		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 3 (SickS300::readRequestTelegram).</font>");
 		emit systemerror(-1);
 		return -1;
 	}
@@ -404,7 +403,7 @@ int SickS300::readRequestTelegram()
 
 		if (answer != 0x22)
 		{
-			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x22.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit message(QString("ERROR: answer byte no.4 was 0x%1 instead of 0x22.").arg( answer, 2, 16, QLatin1Char('0') ));
 			emit systemerror(-1);
 			return -1;
 		}
@@ -412,7 +411,7 @@ int SickS300::readRequestTelegram()
 	else
 	{
 		// error
-		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 4 (SickS300::readRequestTelegram).</font>");
 		emit systemerror(-1);
 		return -1;
 	}
@@ -422,7 +421,7 @@ int SickS300::readRequestTelegram()
 
 		if (answer != 0xFF)
 		{
-			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0xFF.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit message(QString("ERROR: answer byte no.5 was 0x%1 instead of 0xFF.").arg( answer, 2, 16, QLatin1Char('0') ));
 			emit systemerror(-1);
 			return -1;
 		}
@@ -430,7 +429,7 @@ int SickS300::readRequestTelegram()
 	else
 	{
 		// error
-		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 5 (SickS300::readRequestTelegram).</font>");
 		emit systemerror(-1);
 		return -1;
 	}
@@ -440,7 +439,7 @@ int SickS300::readRequestTelegram()
 
 		if (answer != 0x07)
 		{
-			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x07.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit message(QString("ERROR: answer byte no.6 was 0x%1 instead of 0x07.").arg( answer, 2, 16, QLatin1Char('0') ));
 			emit systemerror(-1);
 			return -1;
 		}
@@ -448,7 +447,47 @@ int SickS300::readRequestTelegram()
 	else
 	{
 		// error
-		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 6 (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+
+	//-----------------------------------------------------
+	// reading 2 unknow bytes, 6 byte (usually 0x00 0x08 ??)
+	//-----------------------------------------------------
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x00)
+		{
+			emit message(QString("ERROR: 1st answer byte was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving 1st 'unknown byte' (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x08)
+		{
+			emit message(QString("ERROR: 2nd answer byte was 0x%1 instead of 0x08.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving 2nd 'unknown byte' (SickS300::readRequestTelegram).</font>");
 		emit systemerror(-1);
 		return -1;
 	}
@@ -468,7 +507,7 @@ int SickS300::readRequestTelegram()
 		else
 		{
 			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving scan data at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving scan data at byte no. %1 from %2 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(LASERSAMPLES+1));
 
 			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
 			emit systemerror(-1);
@@ -479,9 +518,10 @@ int SickS300::readRequestTelegram()
 	//emit message("OKAY");
 
 
-	// Reading CRC, 4 bytes
-	//emit message("Reading CRC...");
-	for (i=0; i<4; i++)
+	//----------------------
+	// Reading CRC, 2 bytes
+	//----------------------
+	for (i=0; i<2; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
@@ -514,8 +554,10 @@ int SickS300::readRequestTelegram()
 	//emit message("OKAY");
 
 
+	//----------------------------------------------------
 	// convert data from 2 x 16 Bit to one 16 Bit value
 	// and RETURN the distances
+	//----------------------------------------------------
 	for (i=0; i<LASERSAMPLES; i++)
 	{
 		if (angle < 270.0)
@@ -525,6 +567,7 @@ int SickS300::readRequestTelegram()
 			// emit message( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 			angle += 0.5;
 
+			/*
 			// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to the maximum of possible "free" meters!
 			// (This is due to a bug when reading angle 0, which results in a lenght of 2048 cm)
 			//
@@ -533,6 +576,7 @@ int SickS300::readRequestTelegram()
 			{
 				distances[i] = LASERMAXLENGTH;
 			}
+			*/
 		}
 	}
 
