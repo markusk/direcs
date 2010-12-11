@@ -140,7 +140,8 @@ message( Hostname is $$HOSTNAME )
 
 
 contains( HOSTNAME, [rR]obot ) {
-#contains( HOSTNAME, imac ) {
+#contains( HOSTNAME, iMac ) {
+#contains( HOSTNAME, debianmac ) {
 	 message( ************************************** )
 	 message( *** Configuring for robot build... *** )
 	 message( ************************************** )
