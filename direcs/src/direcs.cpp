@@ -842,6 +842,9 @@ void Direcs::init()
 		// whenever there is an error in the laser sensor, stop the obstacle check thread!
 		connect(laserThread, SIGNAL( systemerror(int) ), obstCheckThread, SLOT( systemerrorcatcher(int) ) );
 
+		// whenever there is an error in the laser sensor, turn the laser GUI LED off
+		connect(laserThread, SIGNAL( systemerror(int) ), gui, SLOT( systemerrorcatcher(int) ) );
+
 		// write laser thread messages to logfile, too
 		connect(laserThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 

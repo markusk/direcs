@@ -3274,3 +3274,13 @@ QString Gui::removeHtml(QString text)
 
 	return text;
 }
+
+
+void Gui::systemerrorcatcher(int errorlevel)
+{
+	if (errorlevel == -1)
+	{
+		// turn GUI LED laser to red
+		setLEDLaser(RED);
+	}
+}

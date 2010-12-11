@@ -394,6 +394,11 @@ class Gui : public QMainWindow
 		*/
 		void setConsoleMode(bool state);
 
+		/**
+		This slot catches all signals from the signal @sa systemerror
+		*/
+		void systemerrorcatcher(int errorlevel);
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);
