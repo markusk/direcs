@@ -317,7 +317,8 @@ int SickS300::readRequestTelegram()
 		{
 			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
-			if (answer != 0)
+			// check if bit no. 4 (error indicator) is 0x00
+			if ((i==3) && (answer != 0x00))
 			{
 				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
 
@@ -341,42 +342,121 @@ int SickS300::readRequestTelegram()
 	//emit message("OKAY");
 
 
+	//-----------------------------------------------------
 	// reading repeated header, 6 byte (0C 00 02 22 FF 07)
-	//emit message("Reading repeated header...");
-	for (i=0; i<6; i++)
+	//-----------------------------------------------------
+	if (receiveChar(&answer) == true)
 	{
-		if (receiveChar(&answer) == true)
+
+		if (answer != 0x0C)
 		{
-			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
-/*
-			if (answer != 0)
-			{
-				emit message(QString("ERROR: answer byte no. %1 was not XXXX").arg(i+1)); // FIXME: check the repeated header
-
-				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
-				emit systemerror(-1);
-
-				return -1;
-			}
-*/
-		}
-		else
-		{
-			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
-
-			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x0C.").arg( answer, 2, 16, QLatin1Char('0') ));
 			emit systemerror(-1);
-
 			return -1;
 		}
 	}
-	//emit message("OKAY");
+	else
+	{
+		// error
+		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x00)
+		{
+			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x02)
+		{
+			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x02.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x22)
+		{
+			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x22.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0xFF)
+		{
+			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0xFF.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x07)
+		{
+			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x07.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message(QString("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		emit systemerror(-1);
+		return -1;
+	}
 
 
+	//-------------------------------------------------------------------------------
 	// Reading scan data (the distances!), LASERSAMPLES bytes (@sa laserSickS300.h)
-	//emit message("Now reading scan data (the distances)...");
+	//-------------------------------------------------------------------------------
 	for (i=0; i<LASERSAMPLES; i++)
 	{
 		if (receiveChar(&answer) == true)
