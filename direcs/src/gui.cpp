@@ -550,8 +550,8 @@ void Gui::on_actionCompass_activated()
 
 void Gui::on_actionCamera_activated()
 {
-	if (ui.dockCamera->isEnabled())
-	{
+//	if (ui.dockCamera->isEnabled())
+//	{
 		if (ui.dockCamera->isVisible())
 		{
 			ui.dockCamera->hide();
@@ -560,7 +560,7 @@ void Gui::on_actionCamera_activated()
 		{
 			ui.dockCamera->show();
 		}
-	}
+//	}
 }
 
 
