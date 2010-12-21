@@ -459,12 +459,13 @@ int DirecsSerial::clearInputBuffer(int dev_fd)
 }
 
 
-void DirecsSerial::purgeRx()
+int DirecsSerial::purgeRx()
 {
 		/**
 		Clears the read buffer.
+		TCIFLUSH = Flush data received but not read.
 		 */
-		tcflush(mDev_fd, TCIFLUSH);
+		return tcflush(mDev_fd, TCIFLUSH);
 }
 
 

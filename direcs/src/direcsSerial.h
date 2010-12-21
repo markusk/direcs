@@ -114,8 +114,9 @@ class DirecsSerial : public QObject
 
 		/**
 		Clears the read buffer.
+		@return Upon successful completion, this function returns zero.
 		*/
-		void purgeRx();
+		int purgeRx();
 
 		/**
 		Writes data to the serial line
