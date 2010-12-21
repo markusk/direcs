@@ -284,13 +284,24 @@ int SickS300::readRequestTelegram()
 	unsigned char answer = 255;
 	unsigned int i = 0;
 	float angle = 0.0;
+	int result = -1;
 
 
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
-	// emit message("Clearing the serial input buffer");
-	serialPort->purgeRx();
+	// flushing serial input buffer
+	result = serialPort->purgeRx();
+
+	if (result != 0)
+	{
+		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+		emit systemerror(-1);
+
+		return -1;
+	}
 
 	// send "get scan data" to laser
 	// emit message("Sending 'get scan data'...");
@@ -599,13 +610,24 @@ int SickS300::readUnknownTelegram()
 	const unsigned char unknownCommand[]={0x00,0x00,0x45,0x44,0x0B,0x00,0x00,0x7B,0xFF,0x07};
 	unsigned char answer = 255;
 	unsigned int i = 0;
+	int result = -1;
 
 
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
-	// emit message("Clearing the serial input buffer");
-	serialPort->purgeRx();
+	// flushing serial input buffer
+	result = serialPort->purgeRx();
+
+	if (result != 0)
+	{
+		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+		emit systemerror(-1);
+
+		return -1;
+	}
 
 	// send "read block 0B" to laser
 	 emit message("Sending 'read block 0B'...");
