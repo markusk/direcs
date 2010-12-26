@@ -14,6 +14,7 @@ moc_*.cpp
 *.sym
 *.app
 .directory
+.DS_Store
 
 
 Makefile
@@ -36,3 +37,5 @@ direcs/doc/
 direcs-avr/.dep/
 direcs-avr/Debug/
 direcs-avr/test/.dep
+
+test/bin
