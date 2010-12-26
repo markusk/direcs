@@ -58,14 +58,12 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-//		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
 
 	if (mDev_fd < 0)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-//		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
 
@@ -439,7 +437,7 @@ long DirecsSerial::numChars(int dev_fd)
 {
 	long available = 0;
 
-	if(ioctl(dev_fd, FIONREAD, &available) == 0)
+	if (ioctl(dev_fd, FIONREAD, &available) == 0)
 		return available;
 	else
 		return -1;
@@ -450,7 +448,7 @@ long DirecsSerial::numChars()
 {
 	long available = 0;
 
-	if(ioctl(mDev_fd, FIONREAD, &available) == 0)
+	if (ioctl(mDev_fd, FIONREAD, &available) == 0)
 		return available;
 	else
 		return -1;
@@ -587,8 +585,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		// check if time limit expired (select=0)
 		if (err == 0)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
-			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using select() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 			return errno;
 		}
 
@@ -598,9 +595,8 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 
 		if(amountRead < 0 && errno != EWOULDBLOCK)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when reading from serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 // FIXME: was, wenn return 0 ?!?!?
-			// qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
 		}
 		else
