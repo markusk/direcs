@@ -24,10 +24,11 @@
 
 int main(int argc, char *argv[])
 {
-      Q_INIT_RESOURCE(application);
-      QApplication app(argc, argv);
-      test * mw = new test();
-      mw->show();
-      return app.exec();
+	  Q_INIT_RESOURCE(application);
+	  QApplication app(argc, argv);
+	  test * mw = new test();
+	  mw->show();
+	  mw->resize(800, 600);
+	  return app.exec();
 }
 
