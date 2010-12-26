@@ -29,6 +29,9 @@ SickS300::SickS300()
 	// creating the serial port object
 	serialPort = new DirecsSerial();
 
+	// forwarding error messages from serialport to gui
+	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+
 	laserSerialPort = "NOTSET";
 
 	// -----------------------------------------------------------------------------------------
