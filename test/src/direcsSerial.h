@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2010 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -47,7 +47,8 @@
 
 #endif
 
-#define READ_TIMEOUT          250000      /* less than 1e6 */
+#define READ_TIMEOUT          250000      /// the timout for serial reading in micro seconds! s.a. 'select' command in @sa readAtmelPort
+#define READ_TIMEOUT_ATMEL    250000      /// the timout for serial reading in micro seconds! s.a. 'select' command in @sa readAtmelPort
 #define _POSIX
 
 #include <QtGlobal>
@@ -62,16 +63,16 @@ This class is used to communicate with the laser scanners and with the robot (wi
 */
 class DirecsSerial : public QObject
 {
-    Q_OBJECT
-	
+	Q_OBJECT
+
 	public:
 		DirecsSerial();
 		~DirecsSerial();
-	
+
 		/**
 		Open a connection to the serial line. This method is only used for the Atmel serial port *and* for the SICK laser S300!
 		The serial port settings (8,N,1) for the serial port are set in this method, too!!
-		
+
 		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
 		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
 		@return the file descriptor if everything is fine, -1 in case of an error.
@@ -89,7 +90,7 @@ class DirecsSerial : public QObject
 
 		/**
 		Returns the number of availabe bytes
-		
+
 		@param dev_fd returns the file descriptor associated to the serial line
 		@return number of available bytes or -1 in case of an error.
 		**/
@@ -105,7 +106,7 @@ class DirecsSerial : public QObject
 
 		/**
 		Clears the buffer of the serial line.
-		
+
 		@param *dev_fd returns the file descriptor associated to the serial line
 		@return number of bytes removed from the serial line.
 		**/
@@ -113,59 +114,60 @@ class DirecsSerial : public QObject
 
 		/**
 		Clears the read buffer.
+		@return Upon successful completion, this function returns zero.
 		*/
-		void purgeRx();
+		int purgeRx();
 
 		/**
 		Writes data to the serial line
-		
+
 		@param dev_fd The file descriptor associated to the serial line.
 		@param *buf Pointer to unsiged char buffer to the data to be send over the serial line
 		@param nChars Number of bytes in buf
 		@return The number of bytes sent to the serial line.
 		**/
 		int writePort(int dev_fd, unsigned char *buf, int nChars);
-		
+
 		/**
 		Writes data to the serial line.
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
-		
+
 		@param *c Pointer to unsiged char buffer to the data to be send over the serial line
 		@return The number of bytes sent to the serial line.
 		 */
 		int writeAtmelPort(unsigned char *c);
-		
+
 		/**
 		Reads data from the serial line
-		
+
 		@param dev_fd The file descriptor associated to the serial line.
 		@param *buf Pointer to unsiged char buffer for the data to be read
 		@param nChars Number of bytes to be read (<= size of the buffer array).
 		@return The number of bytes written.
 		**/
 		int readPort(int dev_fd, unsigned char *buf, int nChars);
-		
-		
+
+
 		/**
 		Reads data from the serial line
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
-		
-		@param *buf Pointer to unsiged char buffer for the data to be written
+
+		@param *buf Pointer to unsigned char buffer for the data to be read.
 		@param nChars Number of bytes to be written (<= size of the buffer array).
 		@return The number of bytes read.
 		 */
 		int readAtmelPort(unsigned char *buf, int nChars);
-		
-		
+
+
 		/**
 		Closes the serial port.
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
-		
+
 		@return the results reported by close.
 		**/
 		int closeAtmelPort();
-		
-		
+
+
 		/**
 		Sets the serial port parameters
 		@param fd The file descriptor associated to the serial port.
@@ -176,18 +178,26 @@ class DirecsSerial : public QObject
 		@param swf The flow control
 		@param stopb The stop bits (default=0). This parameter is optional!
 		*/
-		void setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb = 0);	
-		
+		void setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb = 0);
+
 		/**
 		Avtivates the low latency mode for the serial line.
 		This works with real serial devices, USB-to-RS232 often does not work.
 		In this case, the system continues in the standard operational mode.
 		Note: Low latency does not run with cygwin.
-		
+
 		@param fd The file descriptor associated to the serial line.
 		@return 0=successful switched to low latency mode. 0=continue in normal mode.
 		**/
 		int setLowLatency(int fd);
+
+
+	signals:
+		/**
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		*/
+		void message(QString text);
 
 
 	private:
@@ -199,15 +209,15 @@ class DirecsSerial : public QObject
 		#else
 		void setRTS(int fd  __attribute__ ((unused)));
 		#endif
-		
+
 		int mDev_fd; //! the file descriptor of the serial port
-		
-		
+
+
 		static const char parityOdd = 1;  /// @sa setParms() @sa configurePort()
 		static const char parityEven = 2; /// @sa setParms() @sa configurePort()
 		static const char parityM = 3;    /// @sa setParms() @sa configurePort()
 		static const char parityS = 4;    /// @sa setParms() @sa configurePort()
-		
+
 		static const char bitsM = 1  ;    /// @sa setParms() @sa configurePort()
 		static const char bitsS = 2;      /// @sa setParms() @sa configurePort()
 };

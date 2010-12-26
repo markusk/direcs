@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2010 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -38,24 +38,35 @@ class Circuit : public QObject
 	public:
 		Circuit(InterfaceAvr *i, QMutex *m);
 		~Circuit();
-		
+
 		/**
 		@return The state of the robot (true when connected (and aswers), false when not).
 		*/
 		bool isConnected();
-		
-		
+
+		/**
+		@return The state of the compass module which is connected to the robots circuit (Atmel board).
+		*/
+		bool compassConnected();
+
+
 	public slots:
 		/**
 		Initialises the robot's circuits. It also checks, if the robot is ON or OFF.
 		@return true, when the initialization was fine, so the robot is ON.
-		 */
+		*/
 		bool initCircuit();
-		
+
+		/**
+		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
+		@return true, when connected.
+		*/
+		bool initCompass();
+
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
 		When the class knows this, unnecessary communication with the interface can be avoided.
-		
+
 		@param state can be ON or OFF
 		 */
 		void setRobotState(bool state);
@@ -64,9 +75,22 @@ class Circuit : public QObject
 	signals:
 		/**
 		This signal emits the robot (circuit) state to all connected slots, to tell them if the robot is ON or OFF
-		@param state can be ON or OFF
+		@param state can be true or false
 		*/
 		void robotState(bool state);
+
+		/**
+		This signal emits the 3D compass module state; it checks if the module is connected to the Atmel board.
+		Not in use, at the moment...
+		@param state can be true or false
+		*/
+		void compassState(bool state);
+
+		/**
+		Sends a string to the GUI log.
+		@param text is the message to be emitted
+		*/
+		void emitMessage(QString text);
 
 
 	private:
@@ -74,9 +98,10 @@ class Circuit : public QObject
 		InterfaceAvr *interface1;
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
-		bool robotIsOn; // stores the robot state within this class
+		bool circuitState; // stores the robot state within this class
 		bool firstInitDone;
-		
+		bool compassCircuitState; // stores the state of the compass module within this class
+
 		static const bool ON  = true;
 		static const bool OFF = false;
 };

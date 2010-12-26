@@ -37,13 +37,13 @@
 class SickS300 : public QObject
 {
 	Q_OBJECT
-	
+
 	public:
 		/**
 		Constructor
 		*/
 		SickS300();
-		
+
 		/**
 		Destructor
 		*/
@@ -108,10 +108,17 @@ class SickS300 : public QObject
 
 	signals:
 		/**
-		Sends a string to the GUI log.
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		@param text is the message to be emitted
 		*/
-		void emitMessage(QString text);
+		void message(QString text);
+
+		/**
+		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
+		@param errorlevel needs to be defined. Temporariliy we use -1 in case of error.
+		*/
+		void systemerror(int errorlevel);
 
 
 	private:
@@ -119,8 +126,10 @@ class SickS300 : public QObject
 		int baudRate;
 		QString laserSerialPort; /// the path to the serial device. e.g. /dev/ttyUSB0
 
-		static const unsigned int LASERSAMPLES = 1080;
+		static const unsigned int LASERSAMPLES = 1082;
 		unsigned char scanData[LASERSAMPLES];
+
+		static const float LASERMAXLENGTH = 2000; /// if a measured laser distance is greater than this value in cm, it will be set to 0 cm! (This is due to a bug when reading angle 0)
 
 		float distances[540]; // 540 is the maximum of this laserscanner, because we have 270 degrees at a resolution of 0.5
 

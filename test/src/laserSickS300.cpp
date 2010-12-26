@@ -23,7 +23,7 @@
 
 SickS300::SickS300()
 {
-	// don't know why, but my scanner only worked with this fixed baudrate of 38400.
+	// The S300 Standard works only with a fixed baudrate of 38400 thru the diagnostic port.
 	baudRate = 38400;
 
 	// creating the serial port object
@@ -55,7 +55,7 @@ SickS300::SickS300()
 	}
 	*/
 
-	emit emitMessage(QString("Using baudrate of %1 baud.").arg(baudRate));
+	emit message(QString("Using baudrate of %1 baud.").arg(baudRate));
 }
 
 
@@ -63,9 +63,9 @@ SickS300::~SickS300()
 {
 //	QTime x;
 //	qDebug("S300 shut down @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
-	emit emitMessage("Shutting laserscanner SICK S300 down");
+	emit message("Shutting laserscanner SICK S300 down");
 	closeComPort();
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 	delete serialPort;
 }
@@ -86,14 +86,22 @@ bool SickS300::openComPort()
 	// check if serial port was set
 	if (laserSerialPort == "NOTSET")
 	{
-		emit emitMessage("<font color=\"#FF0000\">Serial port not set! (SickS300::openComPortd)</font>");
+		emit message("<font color=\"#FF0000\">Serial port not set! (SickS300::openComPortd)</font>");
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+		emit systemerror(-1);
+
 		return false;
 	}
 
 	// check if file (serial port) exists
 	if (QFile::exists(laserSerialPort) == false)
 	{
-		emit emitMessage( QString("<font color=\"#FF0000\">Path %1 not found!</font>").arg(laserSerialPort) );
+		emit message( QString("<font color=\"#FF0000\">Path %1 not found!</font>").arg(laserSerialPort) );
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+		emit systemerror(-1);
+
 		return false;
 	}
 
@@ -101,6 +109,10 @@ bool SickS300::openComPort()
 	// serial port config (57600, no HWFLCTRL, 8N1) and flush also done in openAtmelPort!
 	if (serialPort->openAtmelPort( ba.data(), baudRate ) == -1)
 	{
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+		emit systemerror(-1);
+
 		return false;
 	}
 
@@ -115,22 +127,26 @@ int SickS300::closeComPort()
 	unsigned int i = 0;
 
 
-	emit emitMessage("Shutting down Sick S300:");
+	emit message("Shutting down Sick S300:");
 
 	// send "release token" to laser
-	emit emitMessage("Sending 'release token'...");
+	emit message("Sending 'release token'...");
 	for (i=0; i<sizeof(releaseTokenCommand); i++)
 	{
 		if (sendChar(releaseTokenCommand[i]) == false)
 		{
-			emit emitMessage( QString("ERROR sending byte no. %1.").arg(i) );
+			emit message( QString("ERROR sending byte no. %1.").arg(i) );
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 
-	emit emitMessage("Receiving answer...");
+	emit message("Receiving answer...");
 	unsigned char answer = 255;
 
 	// getting anser 0x00 0x00 0x00 0x00
@@ -138,17 +154,19 @@ int SickS300::closeComPort()
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
 			// error
 			if (answer == 255)
 			{
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+				emit systemerror(-1);
 
-				emit emitMessage("ERROR");
+				emit message("ERROR getting answer from laser.");
 			}
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 	// close serial port
 	serialPort->closeAtmelPort();
@@ -165,7 +183,7 @@ bool SickS300::sendChar(unsigned char character)
 	// send one byte to the serial port with direcsSerial
 	if (serialPort->writeAtmelPort(&character) <= 0)
 	{
-		emit emitMessage("<font color=\"#FF0000\">ERROR writing serial port (sendChar, SickS300)!<font>");
+		emit message("<font color=\"#FF0000\">ERROR writing serial port (sendChar, SickS300)!<font>");
 
 		return false;
 	}
@@ -181,7 +199,7 @@ bool SickS300::receiveChar(unsigned char *character)
 	if (serialPort->readAtmelPort(character, 1) != 1)
 	{
 		// ERROR
-		emit emitMessage("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, SickS300)!<font>");
+		emit message("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, SickS300)!<font>");
 		return false;
 	}
 
@@ -197,34 +215,54 @@ int SickS300::setup()
 	unsigned int i = 0;
 
 
-	emit emitMessage("Initialising Sick S300:");
+	emit message("Initialising Sick S300:");
 
 	// send "get token" to laser
-	emit emitMessage("Sending 'get token'...");
+	emit message("Sending 'get token'...");
 	for (i=0; i<sizeof(getTokenCommand); i++)
 	{
 		if (sendChar(getTokenCommand[i]) == false)
 		{
-			emit emitMessage( QString("ERROR sending byte no. %1.").arg(i+1) );
+			emit message( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (SickS300::setup).</font>").arg(i+1) );
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 	// getting anser 0x00 0x00 0x00 0x00
-	emit emitMessage("Receiving answer...");
+	emit message("Receiving answer...");
 	for (i=0; i<4; i++)
 	{
-		if (receiveChar(&answer) == false)
+		if (receiveChar(&answer) == true)
+		{
+			if (answer != 0)
+			{
+				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
+				return -1;
+			}
+		}
+		else
 		{
 			// error
-			emit emitMessage("ERROR");
+			emit message("<font color=\"#FF0000\">ERROR</font>");
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+			emit systemerror(-1);
+
 			return -1;
 		}
 
-		// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+		// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 	}
-	emit emitMessage("Setup OKAY");
+	emit message("Sick laser S300 setup OKAY");
 
 	return 0;
 }
@@ -246,110 +284,269 @@ int SickS300::readRequestTelegram()
 	unsigned char answer = 255;
 	unsigned int i = 0;
 	float angle = 0.0;
+	int result = -1;
 
 
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
-	emit emitMessage("Clearing the serial input buffer");
-	serialPort->purgeRx();
+	// flushing serial input buffer
+	result = serialPort->purgeRx();
+
+	if (result != 0)
+	{
+		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+		emit systemerror(-1);
+
+		return -1;
+	}
 
 	// send "get scan data" to laser
-	// emit emitMessage("Sending 'get scan data'...");
+	// emit message("Sending 'get scan data'...");
 	for (i=0; i<sizeof(readScandataCommand); i++)
 	{
 		if (sendChar(readScandataCommand[i]) == false)
 		{
-			emit emitMessage( QString("ERROR sending byte no. %1.").arg(i+1) );
+			emit message( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1) );
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	//emit emitMessage("OKAY");
+	//emit message("OKAY");
 
 
 	// Reading answer, 4 byte (00 00 00 00)
-	//emit emitMessage("Receiving answer...");
+	//emit message("Receiving answer...");
 	for (i=0; i<4; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
-			if (answer != 0)
+			// check if every answer bit is 0x00
+			// the last byte (no 4) contains the error code if != 0.
+			if (answer != 0x00)
 			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was 0x%2 instead 0x00").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
 				return -1;
 			}
 		}
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving 00 00 00 00 answer at byte no. %1").arg(i+1));
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	//emit emitMessage("OKAY");
+	//emit message("OKAY");
 
 
+	//-----------------------------------------------------
 	// reading repeated header, 6 byte (0C 00 02 22 FF 07)
-	//emit emitMessage("Reading repeated header...");
-	for (i=0; i<6; i++)
+	//-----------------------------------------------------
+	if (receiveChar(&answer) == true)
 	{
-		if (receiveChar(&answer) == true)
-		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
-/*
-			if (answer != 0)
-			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was not XXXX").arg(i+1)); // FIXME: check the repeated header
-				return -1;
-			}
-*/
-		}
-		else
+		if (answer != 0x0C)
 		{
-			// error
-			emit emitMessage(QString("ERROR receiving repeated header at byte no. %1").arg(i+1));
+			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x0C.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
 			return -1;
 		}
 	}
-	//emit emitMessage("OKAY");
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 1 (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x00)
+		{
+			emit message(QString("ERROR: answer byte no.2 was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 2 (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x02)
+		{
+			emit message(QString("ERROR: answer byte no.3 was 0x%1 instead of 0x02.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 3 (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x22)
+		{
+			emit message(QString("ERROR: answer byte no.4 was 0x%1 instead of 0x22.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 4 (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0xFF)
+		{
+			emit message(QString("ERROR: answer byte no.5 was 0x%1 instead of 0xFF.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 5 (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x07)
+		{
+			emit message(QString("ERROR: answer byte no.6 was 0x%1 instead of 0x07.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 6 (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
 
 
+	//-----------------------------------------------------
+	// reading 2 unknow bytes, 6 byte (usually 0x00 0x08 ??)
+	//-----------------------------------------------------
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x00)
+		{
+			emit message(QString("ERROR: 1st answer byte was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving 1st 'unknown byte' (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+	if (receiveChar(&answer) == true)
+	{
+
+		if (answer != 0x08)
+		{
+			emit message(QString("ERROR: 2nd answer byte was 0x%1 instead of 0x08.").arg( answer, 2, 16, QLatin1Char('0') ));
+			emit systemerror(-1);
+			return -1;
+		}
+	}
+	else
+	{
+		// error
+		emit message("<font color=\"#FF0000\">ERROR receiving 2nd 'unknown byte' (SickS300::readRequestTelegram).</font>");
+		emit systemerror(-1);
+		return -1;
+	}
+
+
+	//-------------------------------------------------------------------------------
 	// Reading scan data (the distances!), LASERSAMPLES bytes (@sa laserSickS300.h)
-	//emit emitMessage("Now reading scan data (the distances)...");
+	//-------------------------------------------------------------------------------
 	for (i=0; i<LASERSAMPLES; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
+			// emit message( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
 			// store the data temporary because we get them separated by LowByte and HighByte
 			scanData[i] = answer;
 		}
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving scan data at byte no. %1").arg(i+1));
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving scan data at byte no. %1 from %2 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(LASERSAMPLES+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	//emit emitMessage("OKAY");
+	//emit message("OKAY");
 
 
-	// Reading CRC, 4 bytes
-	//emit emitMessage("Reading CRC...");
-	for (i=0; i<4; i++)
+	//----------------------
+	// Reading CRC, 2 bytes
+	//----------------------
+	for (i=0; i<2; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
 /*
 			// FIXME: check CRC !!
 			if (answer != 0)
 			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
+				emit message(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
 				return -1;
 			}
 */
@@ -357,23 +554,40 @@ int SickS300::readRequestTelegram()
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving CRC at byte no. %1").arg(i+1));
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving CRC at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	//emit emitMessage("OKAY");
+	//emit message("OKAY");
 
 
+	//----------------------------------------------------
 	// convert data from 2 x 16 Bit to one 16 Bit value
 	// and RETURN the distances
+	//----------------------------------------------------
 	for (i=0; i<LASERSAMPLES; i++)
 	{
 		if (angle < 270.0)
 		{
 			distances[i] = (float) ( ((scanData[2*i+1] & 0x1f)<<8) | scanData[2*i] );
-			// qDebug("Copied: no. %d from %d values at %f°. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
-			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
+			// qDebug("Copied: no. %d from %d values at %fï¿½. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
+			// emit message( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 			angle += 0.5;
+
+			/*
+			// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to the maximum of possible "free" meters!
+			// (This is due to a bug when reading angle 0, which results in a lenght of 2048 cm)
+			//
+			// This value was set to 0.0 m in the past, but doesn't help if we have a 0m line in the middle of "free" lines when navigation...!!
+			if (distances[i] > LASERMAXLENGTH)
+			{
+				distances[i] = LASERMAXLENGTH;
+			}
+			*/
 		}
 	}
 
@@ -396,63 +610,90 @@ int SickS300::readUnknownTelegram()
 	const unsigned char unknownCommand[]={0x00,0x00,0x45,0x44,0x0B,0x00,0x00,0x7B,0xFF,0x07};
 	unsigned char answer = 255;
 	unsigned int i = 0;
+	int result = -1;
 
 
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
-	emit emitMessage("Clearing the serial input buffer");
-	serialPort->purgeRx();
+	// flushing serial input buffer
+	result = serialPort->purgeRx();
+
+	if (result != 0)
+	{
+		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+		emit systemerror(-1);
+
+		return -1;
+	}
 
 	// send "read block 0B" to laser
-	 emit emitMessage("Sending 'read block 0B'...");
+	 emit message("Sending 'read block 0B'...");
 	for (i=0; i<sizeof(unknownCommand); i++)
 	{
 		if (sendChar(unknownCommand[i]) == false)
 		{
-			emit emitMessage( QString("ERROR sending byte no. %1.").arg(i+1) );
+			emit message( QString("ERROR sending byte no. %1.").arg(i+1) );
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 
 	// Reading answer, 4 byte (00 00 00 00)
-	emit emitMessage("Receiving answer...");
+	emit message("Receiving answer...");
 	for (i=0; i<4; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
 			if (answer != 0)
 			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was 0x%2 instead 0x00").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+				emit message(QString("ERROR: answer byte no. %1 was 0x%2 instead 0x00").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
 				return -1;
 			}
 		}
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving 00 00 00 00 answer at byte no. %1").arg(i+1));
+			emit message(QString("ERROR receiving 00 00 00 00 answer at byte no. %1").arg(i+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 
 	// reading repeated header, 6 byte (0B 00 00 7B FF 07)
-	emit emitMessage("Reading repeated header...");
+	emit message("Reading repeated header...");
 	for (i=0; i<6; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
 /*
 			if (answer != 0)
 			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was not XXXX").arg(i+1)); // FIXME: check the repeated header
+				emit message(QString("ERROR: answer byte no. %1 was not XXXX").arg(i+1)); // FIXME: check the repeated header
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
 				return -1;
 			}
 */
@@ -460,46 +701,58 @@ int SickS300::readUnknownTelegram()
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving repeated header at byte no. %1").arg(i+1));
+			emit message(QString("ERROR receiving repeated header at byte no. %1").arg(i+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 
 	// Reading resulting data (don't know, what they mead!)
-	emit emitMessage("Now reading resulting unknown data...");
+	emit message("Now reading resulting unknown data...");
 	for (i=0; i<236; i++) // why 240 steps?
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
+			// emit message( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
 			// store the data temporary because we get them separated by LowByte and HighByte
 			// unknownData[i] = answer;
 		}
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving scan data at byte no. %1").arg(i+1));
+			emit message(QString("ERROR receiving scan data at byte no. %1").arg(i+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 
 	// Reading CRC, 4 bytes
-	emit emitMessage("Reading CRC...");
+	emit message("Reading CRC...");
 	for (i=0; i<4; i++)
 	{
 		if (receiveChar(&answer) == true)
 		{
-			// emit emitMessage(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
+			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 
 /*
 			// FIXME: check CRC !!
 			if (answer != 0)
 			{
-				emit emitMessage(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
+				emit message(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
 				return -1;
 			}
 */
@@ -507,11 +760,15 @@ int SickS300::readUnknownTelegram()
 		else
 		{
 			// error
-			emit emitMessage(QString("ERROR receiving CRC at byte no. %1").arg(i+1));
+			emit message(QString("ERROR receiving CRC at byte no. %1").arg(i+1));
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
 			return -1;
 		}
 	}
-	emit emitMessage("OKAY");
+	emit message("OKAY");
 
 /*
 	// convert data from 2 x 16 Bit to one 16 Bit value
@@ -521,8 +778,8 @@ int SickS300::readUnknownTelegram()
 		if (angle < 270.0)
 		{
 			data[i] = (float) ( ((unknownData[2*i+1] & 0x1f)<<8) | unknownData[2*i] );
-			// qDebug("Copied: no. %d from %d values at %f°. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
-			// emit emitMessage( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
+			// qDebug("Copied: no. %d from %d values at %fï¿½. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
+			// emit message( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 			angle += 0.5;
 		}
 	}
@@ -537,7 +794,7 @@ float SickS300::getDistance(int angleIndex)
 {
 	if ( (angleIndex<0) || (angleIndex>(270*2)) )
 	{
-		emit emitMessage(QString("ERROR: angle index with %1 out of range (0 - 549) (SickS300::getDistance)").arg(angleIndex));
+		emit message(QString("ERROR: angle index with %1 out of range (0 - 549) (SickS300::getDistance)").arg(angleIndex));
 		return 0;
 	}
 
