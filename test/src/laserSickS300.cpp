@@ -290,9 +290,6 @@ int SickS300::readRequestTelegram()
 	int result = -1;
 
 
-//	QTime x;
-//	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
-
 	// flushing serial input buffer
 	result = serialPort->purgeRx();
 
