@@ -44,14 +44,14 @@ class QTextEdit;
 
 class test:public QMainWindow
 {
-      Q_OBJECT
+	  Q_OBJECT
 
 public:
-      test();
-      ~test();
+	  test();
+	  ~test();
 
 protected:
-      void closeEvent(QCloseEvent *event);
+	  void closeEvent(QCloseEvent *event);
 
 public slots:
 	  void appendLog(QString message);
@@ -59,46 +59,48 @@ public slots:
 
 
 private slots:
-      void newFile();
-      void open();
-      bool save();
-      bool saveAs();
-      void about();
-      void documentWasModified();
-	  void testSlot();
+	  void newFile();
+	  void open();
+	  bool save();
+	  bool saveAs();
+	  void about();
+	  void documentWasModified();
+	  void testSlot();      //    < < < <   this is the test slot where all magic happens
 
 private:
-      void createActions();
-      void createMenus();
-      void createToolBars();
-      void createStatusBar();
-      void readSettings();
-      void writeSettings();
-      bool maybeSave();
-      void loadFile(const QString &fileName);
-      bool saveFile(const QString &fileName);
-      void setCurrentFile(const QString &fileName);
-      QString strippedName(const QString &fullFileName);
+	  void createActions();
+	  void createMenus();
+	  void createToolBars();
+	  void createStatusBar();
+	  void readSettings();
+	  void writeSettings();
+	  bool maybeSave();
+	  void loadFile(const QString &fileName);
+	  bool saveFile(const QString &fileName);
+	  void setCurrentFile(const QString &fileName);
+	  QString strippedName(const QString &fullFileName);
 
-      QTextEdit *textEdit;
-      QString curFile;
+	  QTextEdit *textEdit;
+	  QString curFile;
 
-      QMenu *fileMenu;
-      QMenu *editMenu;
-      QMenu *helpMenu;
-      QToolBar *fileToolBar;
-      QToolBar *editToolBar;
-      QAction *newAct;
-      QAction *openAct;
-      QAction *saveAct;
-      QAction *saveAsAct;
-      QAction *exitAct;
-      QAction *cutAct;
-      QAction *copyAct;
-      QAction *pasteAct;
-      QAction *aboutAct;
-      QAction *aboutQtAct;
-	  QAction *testAct;
+	  QMenu *fileMenu;
+	  QMenu *editMenu;
+	  QMenu *helpMenu;
+	  QMenu *testMenu;
+	  QToolBar *fileToolBar;
+	  QToolBar *editToolBar;
+	  QToolBar *testToolBar;
+	  QAction *newAct;
+	  QAction *openAct;
+	  QAction *saveAct;
+	  QAction *saveAsAct;
+	  QAction *exitAct;
+	  QAction *cutAct;
+	  QAction *copyAct;
+	  QAction *pasteAct;
+	  QAction *aboutAct;
+	  QAction *aboutQtAct;
+	  QAction *testAct;      //    < < < <   this is the test action for me and anyone who may need it ;-)  It calls the "testSlot" method.
 
 	  // QList <float> laserScannerValuesFront;  /// The measured distances from the front laser scanner.
 	  QList <float> pointerFloatList;
