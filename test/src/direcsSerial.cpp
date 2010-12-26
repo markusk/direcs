@@ -34,12 +34,114 @@ DirecsSerial::~DirecsSerial()
 
 int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 {
+	/*
 	struct termios  options;
 	int spd = -1;
 	int newbaud = 0;
+*/
 
 
-	 // mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);	// 2010-05-23: not needed for Atmel and SICK laser S300!
+	// + + + + +  sick old laser code start
+	// + + + + +  sick old laser code start
+	// + + + + +  sick old laser code start
+
+	Q_UNUSED(baudrate);
+
+	// for QString to char* conversion
+	QByteArray ba = dev_name;
+
+
+	if ( (mDev_fd = open(ba.data(), O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0) // TODO: check if this still works with Linux!
+	{
+		return -1;
+	}
+
+
+	// Note that open() follows POSIX semantics: multiple open() calls to
+	// the same file will succeed unless the TIOCEXCL ioctl is issued.
+	// This will prevent additional opens except by root-owned processes.
+	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
+	if (ioctl(mDev_fd, TIOCEXCL) == -1)
+	{
+		emit message(QString("Error setting TIOCEXCL on /dev/tty... - %1(%2).").arg(strerror(errno)).arg(errno));
+		return -1;
+	}
+	emit message("TIOCEXCL set succesfully.");
+
+	// Now that the device is open, clear the O_NONBLOCK flag so
+	// subsequent I/O will block.
+	// See fcntl(2) ("man 2 fcntl") for details.
+	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
+	{
+		emit message(QString("Error clearing O_NONBLOCK - %1(%2).").arg(strerror(errno)).arg(errno));
+		return -1;
+	}
+	emit message("O_NONBLOCK cleared successfully.");
+
+
+	//-----------------
+	// Orignal laser.h
+	//-----------------
+	#define DIRECS_LASER_USE_SELECT 1
+	#define DIRECS_LASER_LOW_LATENCY 1
+
+
+	#ifdef DIRECS_LASER_LOW_LATENCY
+	setLowLatency(mDev_fd);
+	#endif
+
+	//-----------------
+	// Original laser.cpp code now here: sick_set_serial_params(laser) inserted here:
+	//-----------------
+	struct termios  ctio;
+
+
+	// Get current port settings
+	tcgetattr(mDev_fd, &ctio);
+
+	// set the baudrate
+	cfsetispeed(&ctio, (speed_t) B38400 );
+	cfsetospeed(&ctio, (speed_t) B38400 );
+
+	// org laser.cpp: ctio.c_iflag = iSoftControl(laser->dev.swf) | iParity(laser->dev.parity);
+	// swf = 0 = IXOFF ?      [iSoftControl]
+	// parity = N = PARENB ?  [cParity]
+	ctio.c_iflag = IXOFF | IGNPAR;
+
+	ctio.c_oflag = 0;
+
+	// org laser.cpp: ctio.c_cflag =         CREAD | CLOCAL                       | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
+	// 8 Data byte = CS8  [cDataSize]
+	// ^ stop byte = 0 ?  [cStopSize]
+
+	ctio.c_cflag  = CREAD | CLOCAL | PARENB | CS8 | 0;
+	ctio.c_cflag &= ~CRTSCTS; // disable HW flow control!! // TODO: check if that also works under linux!
+	ctio.c_lflag = 0;
+	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
+	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
+
+
+	// Cause the new options to take effect immediately.
+	tcsetattr(mDev_fd, TCSANOW, &ctio);
+
+	//-----------------
+
+
+
+	emit message("Serial device openend.");
+	return(mDev_fd);
+
+
+	// + + + + +  sick old laser code end
+	// + + + + +  sick old laser code end
+	// + + + + +  sick old laser code end
+
+
+
+/* - - - - original:
+
+
+	// mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);	// 2010-05-23: not needed for Atmel and SICK laser S300!
 	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK);
 
 	// Note that open() follows POSIX semantics: multiple open() calls to
@@ -187,8 +289,10 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		return -1;
 	}
 
+
 	emit message("Serial device openend.");
 	return (mDev_fd);
+ - - - - original end */
 }
 
 
@@ -633,7 +737,7 @@ int DirecsSerial::setLowLatency(int fd)
 
 	if (result)
 	{
-		qDebug("Cannot get the serial attributes for low latency serial mode. Switching to normal mode");
+		emit message("ERROR: Cannot get the serial attributes for low latency serial mode. Switching to normal mode");
 		return result;
 	}
 	else
@@ -643,7 +747,7 @@ int DirecsSerial::setLowLatency(int fd)
 		ioctl(fd, TIOCSSERIAL, &serial);
 		if (result)
 		{
-			qDebug("Cannot activeate low latency mode. Switching to normal mode");
+			emit message("ERROR: Cannot activeate low latency mode. Switching to normal mode");
 			return result;
 		}
 	}
