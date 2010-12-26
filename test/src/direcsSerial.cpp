@@ -539,17 +539,26 @@ void DirecsSerial::configurePort(int dev_fd, int baudrate, char parity)
 
 long DirecsSerial::numChars(int dev_fd)
 {
-	long available = 0;
+	int available = 0;
 
-	if (ioctl(dev_fd, FIONREAD, &available) == 0)
+
+	int err = ioctl(dev_fd, FIONREAD, &available);
+	if (err == 0)
+	{
+		emit message(QString("Bytes available at readAtmelPort: %1").arg(available));
 		return available;
+	}
 	else
-		return -1;
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using ioctl() on serial device at DirecsSerial::numChars().</font>").arg(errno).arg(strerror(errno)));
+		return errno;
+	}
 }
 
 
 long DirecsSerial::numChars()
 {
+	int available = 0;
 	double timeout=0.1;
 	fd_set read_set;
 	struct timeval timer;
@@ -558,11 +567,9 @@ long DirecsSerial::numChars()
 	FD_ZERO(&read_set);
 	FD_SET(mDev_fd, &read_set);
 	select(mDev_fd + 1, &read_set, NULL, NULL, &timer);
-	long available = 0;
 
 
 	int err = ioctl(mDev_fd, FIONREAD, &available);
-
 	if (err == 0)
 	{
 		emit message(QString("Bytes available at readAtmelPort: %1").arg(available));
