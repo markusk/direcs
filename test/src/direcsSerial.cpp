@@ -674,6 +674,16 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	// ---------------------------------------------------------
 	// taken from sick_handle_laser():
 	// ---------------------------------------------------------
+	double timeout=0.1;
+	fd_set read_set;
+	struct timeval timer;
+	timer.tv_sec=(long)(floor(timeout));
+	timer.tv_usec=(long)((timeout-floor(timeout))*1000000);
+	FD_ZERO(&read_set);
+	FD_SET(mDev_fd, &read_set);
+	select(mDev_fd + 1, &read_set, NULL, NULL, &timer);
+
+
 	int bytes_available;
 	int leftover;
 
@@ -683,45 +693,52 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	emit message(QString("Bytes available at readAtmelPort: %1").arg(bytes_available));
 	// ---------------------------------------------------------
 
-
-	int amountRead = 0, bytes_read = 0;
-	struct timeval t;
-	fd_set set;
-	int err;
-
-	while (nChars > 0)
+	if (bytes_available > 0)
 	{
-		t.tv_sec = 0;
-		t.tv_usec = READ_TIMEOUT;
-		FD_ZERO(&set);
-		FD_SET(mDev_fd, &set);
 
-		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
-		if (err == 0)
-		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using select() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
-			return errno;
-		}
+		int amountRead = 0, bytes_read = 0;
+		struct timeval t;
+		fd_set set;
+		int err;
 
-		amountRead = read(mDev_fd, buf, nChars);
+		while (nChars > 0)
+		{
+			t.tv_sec = 0;
+			t.tv_usec = READ_TIMEOUT;
+			FD_ZERO(&set);
+			FD_SET(mDev_fd, &set);
 
-		if (amountRead < 0 && errno != EWOULDBLOCK)
-		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
-			// FIXME: was, wenn return 0 ?!?!?
-			return errno;
-		}
-		else
-		{
-			if(amountRead > 0)
+			err = select(mDev_fd + 1, &set, NULL, NULL, &t);
+			if (err == 0)
 			{
-				bytes_read += amountRead;
-				nChars -= amountRead;
-				buf += amountRead;
+				emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using select() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+				return errno;
+			}
+
+			amountRead = read(mDev_fd, buf, nChars);
+			emit message(QString("Read byte=0x%2").arg(*buf, 2, 16, QLatin1Char('0')));
+
+			if (amountRead < 0 && errno != EWOULDBLOCK)
+			{
+				emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+				// FIXME: was, wenn return 0 ?!?!?
+				return errno;
+			}
+			else
+			{
+				if(amountRead > 0)
+				{
+					bytes_read += amountRead;
+					nChars -= amountRead;
+					buf += amountRead;
+				}
 			}
 		}
+		return bytes_read;
 	}
-	return bytes_read;
+
+	// new due to analysis of sick_handle_laser in laser.cpp
+	return 0;
 
 	// + + + + +  sick old laser code end
 	// + + + + +  sick old laser code end
