@@ -254,8 +254,8 @@ int SickS300::setup()
 
 
 	// Reading answer, 4 byte (00 00 00 00)
-	emit message("Receiving answer...");
-	while (byteCounter < 4)
+	emit message("Receiving 00 00 00 00 answer...");
+	while (byteCounter >= 4)
 	{
 
 		// read what is available in the serial buffer
