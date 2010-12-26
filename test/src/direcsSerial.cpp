@@ -667,6 +667,55 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 
 int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 {
+	// + + + + +  sick old laser code start (from readPort of this class taken)
+	// + + + + +  sick old laser code start (from readPort of this class taken)
+	// + + + + +  sick old laser code start (from readPort of this class taken)
+
+	// ---------------------------------------------------------
+	// taken from sick_handle_laser():
+	// ---------------------------------------------------------
+	int bytes_available;
+	int leftover;
+
+	/* read what is available in the buffer */
+	bytes_available = numChars(mDev_fd);
+
+	emit message(QString("Bytes available at readAtmelPort: %1").arg(bytes_available));
+	// ---------------------------------------------------------
+
+
+	int amountRead = 0, bytes_read = 0;
+	struct timeval t;
+	fd_set set;
+	int err;
+
+	while(nChars > 0)
+	{
+		t.tv_sec = 0;
+		t.tv_usec = READ_TIMEOUT;
+		FD_ZERO(&set);
+		FD_SET(mDev_fd, &set);
+		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
+		if(err == 0)
+		return -2;
+
+		amountRead = read(mDev_fd, buf, nChars);
+		if(amountRead < 0 && errno != EWOULDBLOCK)
+		return -1;
+		else if(amountRead > 0) {
+		bytes_read += amountRead;
+		nChars -= amountRead;
+		buf += amountRead;
+		}
+	}
+	return bytes_read;
+
+	// + + + + +  sick old laser code end
+	// + + + + +  sick old laser code end
+	// + + + + +  sick old laser code end
+
+
+/*
 	//
 	// Original code from method readPort
 	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
@@ -714,6 +763,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		}
 	}
 	return bytes_read;
+*/
 }
 
 
