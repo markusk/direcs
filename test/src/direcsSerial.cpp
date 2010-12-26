@@ -550,12 +550,25 @@ long DirecsSerial::numChars(int dev_fd)
 
 long DirecsSerial::numChars()
 {
+	double timeout=0.1;
+	fd_set read_set;
+	struct timeval timer;
+	timer.tv_sec=(long)(floor(timeout));
+	timer.tv_usec=(long)((timeout-floor(timeout))*1000000);
+	FD_ZERO(&read_set);
+	FD_SET(mDev_fd, &read_set);
+	select(mDev_fd + 1, &read_set, NULL, NULL, &timer);
 	long available = 0;
 
+
 	if (ioctl(mDev_fd, FIONREAD, &available) == 0)
+	{
 		return available;
+	}
 	else
+	{
 		return -1;
+	}
 }
 
 
@@ -674,16 +687,6 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	// ---------------------------------------------------------
 	// taken from sick_handle_laser():
 	// ---------------------------------------------------------
-	double timeout=0.1;
-	fd_set read_set;
-	struct timeval timer;
-	timer.tv_sec=(long)(floor(timeout));
-	timer.tv_usec=(long)((timeout-floor(timeout))*1000000);
-	FD_ZERO(&read_set);
-	FD_SET(mDev_fd, &read_set);
-	select(mDev_fd + 1, &read_set, NULL, NULL, &timer);
-
-
 	int bytes_available;
 	int leftover;
 
