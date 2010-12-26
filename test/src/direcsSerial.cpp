@@ -87,7 +87,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 
 	#ifdef DIRECS_LASER_LOW_LATENCY
-	setLowLatency(mDev_fd);
+	setLowLatency();
 	#endif
 
 	//-----------------
@@ -678,7 +678,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	int leftover;
 
 	/* read what is available in the buffer */
-	bytes_available = numChars(mDev_fd);
+	bytes_available = numChars();
 
 	emit message(QString("Bytes available at readAtmelPort: %1").arg(bytes_available));
 	// ---------------------------------------------------------
@@ -689,23 +689,36 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	fd_set set;
 	int err;
 
-	while(nChars > 0)
+	while (nChars > 0)
 	{
 		t.tv_sec = 0;
 		t.tv_usec = READ_TIMEOUT;
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
+
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
-		if(err == 0)
-		return -2;
+		if (err == 0)
+		{
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using select() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			return errno;
+		}
 
 		amountRead = read(mDev_fd, buf, nChars);
-		if(amountRead < 0 && errno != EWOULDBLOCK)
-		return -1;
-		else if(amountRead > 0) {
-		bytes_read += amountRead;
-		nChars -= amountRead;
-		buf += amountRead;
+
+		if (amountRead < 0 && errno != EWOULDBLOCK)
+		{
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			// FIXME: was, wenn return 0 ?!?!?
+			return errno;
+		}
+		else
+		{
+			if(amountRead > 0)
+			{
+				bytes_read += amountRead;
+				nChars -= amountRead;
+				buf += amountRead;
+			}
 		}
 	}
 	return bytes_read;
@@ -783,21 +796,23 @@ int DirecsSerial::setLowLatency(int fd)
 
 	struct serial_struct serial;
 	int result;
-	result=ioctl(fd, TIOCGSERIAL, &serial);
+	result = ioctl(fd, TIOCGSERIAL, &serial);
 
 	if (result)
 	{
-		emit message("ERROR: Cannot get the serial attributes for low latency serial mode. Switching to normal mode");
+		emit message("<font color=\"#FF0000\">ERROR: Cannot get the serial attributes for low latency serial mode. Switching to normal mode</font>");
 		return result;
 	}
 	else
 	{
 		serial.flags |= ASYNC_LOW_LATENCY;
 		serial.xmit_fifo_size = 1;
-		ioctl(fd, TIOCSSERIAL, &serial);
+
+		result = ioctl(fd, TIOCSSERIAL, &serial);
+
 		if (result)
 		{
-			emit message("ERROR: Cannot activeate low latency mode. Switching to normal mode");
+			emit message("<font color=\"#FF0000\">ERROR: Cannot activeate low latency mode. Switching to normal mode</font>");
 			return result;
 		}
 	}
@@ -805,6 +820,43 @@ int DirecsSerial::setLowLatency(int fd)
 	#endif
 #else
 	Q_UNUSED(fd);
+	return -1;
+#endif
+}
+
+
+int DirecsSerial::setLowLatency()
+{
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+	#ifdef CYGWIN
+	return -1;
+	#else
+
+	struct serial_struct serial;
+	int result;
+	result = ioctl(mDev_fd, TIOCGSERIAL, &serial);
+
+	if (result)
+	{
+		emit message("<font color=\"#FF0000\">ERROR: Cannot get the serial attributes for low latency serial mode. Switching to normal mode</font>");
+		return result;
+	}
+	else
+	{
+		serial.flags |= ASYNC_LOW_LATENCY;
+		serial.xmit_fifo_size = 1;
+
+		result = ioctl(mDev_fd, TIOCSSERIAL, &serial);
+
+		if (result)
+		{
+			emit message("<font color=\"#FF0000\">ERROR: Cannot activeate low latency mode. Switching to normal mode</font>");
+			return result;
+		}
+	}
+	return result;
+	#endif
+#else
 	return -1;
 #endif
 }
