@@ -219,6 +219,7 @@ int SickS300::setup()
 	int result = -1;
 	int bytes_available = 0;
 	int byteCounter = 4;
+	int errorcounter= 0;
 
 
 	emit message("Initialising Sick S300:");
@@ -263,12 +264,19 @@ int SickS300::setup()
 
 		if (bytes_available <= 0)
 		{
-			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
-			emit systemerror(-1);
+			errorcounter++;
 
-			emit message("<font color=\"#FF0000\">ERROR: No bytes available at setup().</font>");
+			if (errorcounter >= 10)
+			{
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
 
-			return -1;
+				emit message("<font color=\"#FF0000\">ERROR: No bytes available at setup().</font>");
+
+				return -1;
+			}
+
+			emit message("trying again...");
 		}
 
 
