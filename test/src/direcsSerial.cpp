@@ -71,7 +71,11 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 
 	// Get current port settings
-	tcgetattr(mDev_fd, &options);
+	if (tcgetattr(mDev_fd, &options))
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR getting serial port attributes at DirecsSerial::openAtmelPort!</font>"));
+		return -1;
+	}
 
 	// this setting is needed for Mac OS! But works under Linux, too!
 	options.c_cflag |= CLOCAL;
@@ -153,20 +157,37 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// set speed (input and output)
 	if(spd != -1)
 	{
-		cfsetispeed(&options, (speed_t) spd);
-		cfsetospeed(&options, (speed_t) spd);
+		if (cfsetispeed(&options, (speed_t) spd) != 0)
+		{
+			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port input speed at DirecsSerial::openAtmelPort!</font>"));
+			return -1;
+		}
+
+		if (cfsetospeed(&options, (speed_t) spd) != 0)
+		{
+			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port output speed at DirecsSerial::openAtmelPort!</font>"));
+			return -1;
+		}
 	}
 	else
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR: Wrong value for speed parameter at DirecsSerial::openAtmelPort!</font>"));
-//		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
+		return -1;
 	}
 
 	// Flushes all pending I/O to the serial port. This clears only the read buffer!
-	tcflush(mDev_fd, TCIFLUSH);
+	if (tcflush(mDev_fd, TCIFLUSH) != 0)
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR fluhsing serial input buffer at DirecsSerial::openAtmelPort!</font>"));
+		return -1;
+	}
 
 	// Cause the new options to take effect immediately.
-	tcsetattr(mDev_fd, TCSANOW, &options);
+	if (tcsetattr(mDev_fd, TCSANOW, &options) != 0)
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR setting serial port attributes at DirecsSerial::openAtmelPort!</font>"));
+		return -1;
+	}
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
