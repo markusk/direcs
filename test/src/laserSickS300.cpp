@@ -216,10 +216,25 @@ int SickS300::setup()
 	const unsigned char getTokenCommand[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
 	unsigned char answer = 255;
 	unsigned int i = 0;
-	int bytes_available;
+	int result = -1;
+	int bytes_available = 0;
+	int byteCounter = 4;
 
 
 	emit message("Initialising Sick S300:");
+	emit message("Flushing serial input buffer first.");
+	result = serialPort->purgeRx();
+
+	if (result != 0)
+	{
+		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::setup).</font>");
+
+		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+		emit systemerror(-1);
+
+		return -1;
+	}
+
 
 	// send "get token" to laser
 	emit message("Sending 'get token'...");
@@ -240,13 +255,24 @@ int SickS300::setup()
 
 	// Reading answer, 4 byte (00 00 00 00)
 	emit message("Receiving answer...");
-	for (i=0; i<4; i++)
+	while (byteCounter < 4)
 	{
 
 		// read what is available in the serial buffer
 		bytes_available = serialPort->numChars();
 
-		if (bytes_available > 0)
+		if (bytes_available <= 0)
+		{
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
+
+			emit message("<font color=\"#FF0000\">ERROR: No bytes available at setup().</font>");
+
+			return -1;
+		}
+
+
+		while (bytes_available > 0)
 		{
 			if (receiveChar(&answer) == true)
 			{
@@ -262,21 +288,21 @@ int SickS300::setup()
 
 					return -1;
 				}
-				else
-				{
-					// error
-					emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::setup).</font>").arg(i+1));
-
-					// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
-					emit systemerror(-1);
-
-					return -1;
-				}
 			}
-		}
-		else
-		{
-			emit message("<font color=\"#FF0000\">ERROR: no bytes available to read at setup().</font>");
+			else
+			{
+				// error
+				emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::setup).</font>").arg(i+1));
+
+				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+				emit systemerror(-1);
+
+				return -1;
+			}
+
+			// counter - 1
+			bytes_available--;
+			byteCounter++;
 		}
 	}
 	emit message("Sick laser S300 setup OKAY");
