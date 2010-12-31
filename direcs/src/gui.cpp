@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2010 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -2162,11 +2162,11 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
-	// /get the data from 180° to 0° (right to left!!)
+	// /get the data from 180 to 0 (right to left!!)
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
 		// get value from laser and
-		// draw the lines at every 1°
+		// draw the lines at every 1
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
 
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);

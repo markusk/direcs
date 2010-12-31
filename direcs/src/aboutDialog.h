@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2010 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -33,7 +33,7 @@
 class AboutDialog : public QDialog
 {
 	Q_OBJECT
-	
+
 	public:
 		AboutDialog(QWidget* parent = 0, Qt::WFlags fl = 0);
 
@@ -49,7 +49,7 @@ class AboutDialog : public QDialog
 		Event handler for the "About Qt" button.
 		*/
 		void on_btnAboutQt_clicked(bool checked);
-		
+
 	private:
 		Ui::aboutDialog ui;
 };
