@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>editcopy.xpm</file>
+        <file>editcut.xpm</file>
+        <file>filenew.xpm</file>
+        <file>fileopen.xpm</file>
+        <file>editpaste.xpm</file>
+        <file>filesave.xpm</file>
+        <file>utilities-system-monitor-active.png</file>
+    </qresource>
+</RCC>
