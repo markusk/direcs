@@ -27,8 +27,47 @@
 #include <QCloseEvent>
 #include <QFileDialog>
 
+
+int main(int argc, char *argv[])
+{
+	// Check for command-line argument "console".
+	// A deeper argument check will be done later within the class Direcs!
+	if (argc > 1)
+	{
+		qDebug() << argc - 1 << "argument(s) passed...";
+
+		for (int i=1; i<argc; i++)
+		{
+			// now search for the "console" parameter (case insensitive)
+			if (strcasecmp(argv[i], "hello") == 0)
+			{
+				qDebug() << "hello world";
+			}
+		}
+	}
+
+	// Initialize the resource file
+	Q_INIT_RESOURCE(application);
+
+	// The QApplication class manages the GUI application's control flow and main settings.
+	QApplication app(argc, argv);
+
+	// create the kinect class object
+	kinect * mw = new kinect();
+
+	mw->show();
+
+	return app.exec();
+}
+
+
 kinect::kinect()
 {
+	gui = new Gui();
+
+	gui->show();
+
+
 	textEdit = new QTextEdit;
 	setCentralWidget(textEdit);
 
@@ -81,6 +120,7 @@ kinect::kinect()
 
 kinect::~kinect()
 {
+	delete gui;
 }
 
 

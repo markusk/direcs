@@ -2,7 +2,6 @@ QT += opengl
 QT += core \
 	gui
 SOURCES += kinect.cpp \
-	main.cpp \
 	QKinect.cpp \
 	RGBWindow.cpp \
     gui.cpp

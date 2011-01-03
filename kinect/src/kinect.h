@@ -40,6 +40,7 @@
 //---------------------------------------------------------------------------------------------------
 #include "QKinect.h"
 #include "RGBWindow.h"
+#include "gui.h"
 //---------------------------------------------------------------------------------------------------
 
 
@@ -105,6 +106,8 @@ private:
 	QAction *aboutAct;
 	QAction *aboutQtAct;
 	QAction *kinectAct;      //    < < < <   this is the kinect action for me and anyone who may need it ;-)  It calls the "kinectSlot" method.
+
+	Gui *gui;
 
 	//---------------------------------------------------------------------------------------------------
 	/// @brief the mid area our windows are placed into
