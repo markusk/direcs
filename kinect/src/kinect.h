@@ -39,7 +39,7 @@
 #include <QPixmap>
 //---------------------------------------------------------------------------------------------------
 #include "QKinect.h"
-#include "RGBWindow.h"
+//#include "RGBWindow.h"  <- now in  gui.h  !
 #include "gui.h"
 //---------------------------------------------------------------------------------------------------
 
@@ -114,10 +114,12 @@ private:
 	QMdiArea *m_mdiArea;
 	/// @brief pointer to our kinect object not really used in this one
 	QKinect *m_kinect;
+	/*
 	/// @brief our rgb drawing window
 	RGBWindow *m_rgb;
 	/// @brief our depth drawing window
 	RGBWindow *m_depth;
+	*/
 };
 
 #endif
