@@ -79,18 +79,7 @@ kinect::~kinect()
 }
 
 
-void kinect::createActions()
-{
-/*
-	kinectAct = new QAction(QIcon(":/utilities-system-monitor-active.png"), tr("&Test"), this);
-	kinectAct->setShortcut(tr("Ctrl+T"));
-	kinectAct->setStatusTip(tr("Test"));
-	connect(kinectAct, SIGNAL(triggered()), this, SLOT(kinectSlot()));
-*/
-}
-
-
 void kinect::kinectSlot()
 {
-//	gui->appendLog("click");
+	gui->appendLog("test");
 }

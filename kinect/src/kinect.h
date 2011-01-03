@@ -62,8 +62,6 @@ private slots:
 
 
 private:
-	void createActions();
-	QAction *kinectAct;      //    < < < <   this is the kinect action for me and anyone who may need it ;-)  It calls the "kinectSlot" method.
 	Gui *gui;
 
 	/// @brief the mid area our windows are placed into
