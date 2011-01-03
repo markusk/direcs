@@ -23,10 +23,10 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>660</x>
       <y>500</y>
-      <width>1291</width>
-      <height>511</height>
+      <width>641</width>
+      <height>471</height>
      </rect>
     </property>
    </widget>
@@ -163,6 +163,158 @@
     <property name="autoFillBackground">
      <bool>true</bool>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBoxLED">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>500</y>
+      <width>631</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>LED</string>
+    </property>
+    <widget class="QRadioButton" name="radioButtonLEDoff">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>102</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED off</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonLEDred">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>102</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED red</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonLEDgreen">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>102</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED green</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonLEDyellow">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>102</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED yellow</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonLEDflashRed">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED flash red</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonLEDflashGreen">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>180</y>
+       <width>121</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED flash green</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonLEDflashYellow">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>102</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED flash yellow</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBoxAngle">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>750</y>
+      <width>631</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Angle</string>
+    </property>
+    <widget class="QSpinBox" name="spinBoxAngle">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>91</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="suffix">
+      <string> deg</string>
+     </property>
+     <property name="minimum">
+      <number>-30</number>
+     </property>
+     <property name="maximum">
+      <number>30</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonResetAngle">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>30</y>
+       <width>114</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Reset</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
