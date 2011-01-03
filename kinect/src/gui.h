@@ -50,6 +50,9 @@ class Gui : public QMainWindow
 		 */
 		void appendLog(QString text, bool CR=true);
 
+	signals:
+		void shutdown();
+		void test();
 
 	protected:
 		void closeEvent(QCloseEvent *event);

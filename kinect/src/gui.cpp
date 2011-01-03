@@ -41,7 +41,7 @@ void Gui::closeEvent(QCloseEvent *event)
 	// no compiler warning "unused"
 	Q_UNUSED(event);
 
-	// emit shutdown();
+	emit shutdown();
 }
 
 
@@ -52,6 +52,7 @@ void Gui::on_actionExit_activated()
 
 void Gui::on_actionTest_activated()
 {
+	emit test();
 }
 
 

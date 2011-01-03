@@ -59,7 +59,7 @@ kinect::kinect()
 
 	gui->show();
 
-	createActions();
+	connect(gui, SIGNAL(test()), this, SLOT(kinectSlot()));
 
 
 	//---------------------------------------------------------------------------------------------------
