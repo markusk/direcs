@@ -56,12 +56,13 @@ kinect::kinect()
 	m_rgb= new RGBWindow(this);
 	m_rgb->setMode(0);
 	QMdiSubWindow *subWindow1 = new QMdiSubWindow;
-	subWindow1->setWidget(m_rgb);
+	subWindow1->setWidget(m_rgb); // < < < < < < < < < < < <
 	subWindow1->setAttribute(Qt::WA_DeleteOnClose);
 	subWindow1->setWindowTitle("RGB Output");
 	subWindow1->resize(640,480);
 	m_mdiArea->addSubWindow(subWindow1);
 	subWindow1->show();
+
 	/// create a window for our depth draw (1 = depth)
 	m_depth= new RGBWindow(this);
 	m_depth->setMode(1);

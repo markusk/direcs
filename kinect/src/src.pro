@@ -4,10 +4,12 @@ QT += core \
 SOURCES += kinect.cpp \
 	main.cpp \
 	QKinect.cpp \
-    RGBWindow.cpp
+	RGBWindow.cpp \
+    gui.cpp
 HEADERS += kinect.h \
 	QKinect.h \
-    RGBWindow.h
+	RGBWindow.h \
+    gui.h
 TEMPLATE = app
 CONFIG += warn_on \
 	thread \
@@ -15,7 +17,9 @@ CONFIG += warn_on \
 TARGET = kinect
 DESTDIR = ../bin
 RESOURCES = application.qrc
-FORMS +=
+
+FORMS += mainWindow.ui
+
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
 INCLUDEPATH+= /usr/local/include/libfreenect \
