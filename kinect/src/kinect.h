@@ -47,36 +47,25 @@ class QAction;
 class QMenu;
 class QTextEdit;
 
-class kinect:public QMainWindow
+class kinect:public QObject
 {
 	Q_OBJECT
+
 
 public:
 	kinect();
 	~kinect();
 
-protected:
-	void closeEvent(QCloseEvent *event);
-
-public slots:
-	void appendLog(QString message);
-
 
 private slots:
-	void newFile();
-	void open();
-	bool save();
-	bool saveAs();
-	void about();
-	void documentWasModified();
 	void kinectSlot();      //    < < < <   this is the kinect slot where all magic happens
+
 
 private:
 	void createActions();
 	QAction *kinectAct;      //    < < < <   this is the kinect action for me and anyone who may need it ;-)  It calls the "kinectSlot" method.
 	Gui *gui;
 
-	//---------------------------------------------------------------------------------------------------
 	/// @brief the mid area our windows are placed into
 	QMdiArea *m_mdiArea;
 	/// @brief pointer to our kinect object not really used in this one
