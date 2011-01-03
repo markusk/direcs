@@ -47,6 +47,7 @@ void Gui::closeEvent(QCloseEvent *event)
 
 void Gui::on_actionExit_activated()
 {
+	close();
 }
 
 

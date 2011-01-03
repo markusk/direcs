@@ -57,6 +57,10 @@ public:
 	~kinect();
 
 
+public slots:
+	void shutdown();
+
+
 private slots:
 	void kinectSlot();      //    < < < <   this is the kinect slot where all magic happens
 

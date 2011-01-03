@@ -59,7 +59,11 @@ kinect::kinect()
 
 	gui->show();
 
+	// this is my test slot for whatever
 	connect(gui, SIGNAL(test()), this, SLOT(kinectSlot()));
+
+	// call this slot if the window is closed
+	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
 
 
 	//---------------------------------------------------------------------------------------------------
@@ -69,12 +73,16 @@ kinect::kinect()
 }
 
 
-kinect::~kinect()
+void kinect::shutdown()
 {
 	// shutdown kinect
 	qDebug("Shutting down camera.");
 	m_kinect->shutDownKinect();
+}
 
+
+kinect::~kinect()
+{
 	delete gui;
 }
 
