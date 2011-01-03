@@ -1,6 +1,10 @@
 SOURCES += kinect.cpp \
-    main.cpp
-HEADERS += kinect.h
+    main.cpp \
+    QKinect.cpp \
+    QKinectCaptureThread.cpp
+HEADERS += kinect.h \
+    QKinect.h \
+    QKinectCaptureThread.h
 TEMPLATE = app
 CONFIG += warn_on \
     thread \
