@@ -39,7 +39,6 @@
 #include <QPixmap>
 //---------------------------------------------------------------------------------------------------
 #include "QKinect.h"
-//#include "RGBWindow.h"  <- now in  gui.h  !
 #include "gui.h"
 //---------------------------------------------------------------------------------------------------
 
@@ -74,39 +73,7 @@ private slots:
 
 private:
 	void createActions();
-	void createMenus();
-	void createToolBars();
-	void createStatusBar();
-	void readSettings();
-	void writeSettings();
-	bool maybeSave();
-	void loadFile(const QString &fileName);
-	bool saveFile(const QString &fileName);
-	void setCurrentFile(const QString &fileName);
-	QString strippedName(const QString &fullFileName);
-
-	QTextEdit *textEdit;
-	QString curFile;
-
-	QMenu *fileMenu;
-	QMenu *editMenu;
-	QMenu *helpMenu;
-	QMenu *kinectMenu;
-	QToolBar *fileToolBar;
-	QToolBar *editToolBar;
-	QToolBar *kinectToolBar;
-	QAction *newAct;
-	QAction *openAct;
-	QAction *saveAct;
-	QAction *saveAsAct;
-	QAction *exitAct;
-	QAction *cutAct;
-	QAction *copyAct;
-	QAction *pasteAct;
-	QAction *aboutAct;
-	QAction *aboutQtAct;
 	QAction *kinectAct;      //    < < < <   this is the kinect action for me and anyone who may need it ;-)  It calls the "kinectSlot" method.
-
 	Gui *gui;
 
 	//---------------------------------------------------------------------------------------------------
@@ -114,12 +81,6 @@ private:
 	QMdiArea *m_mdiArea;
 	/// @brief pointer to our kinect object not really used in this one
 	QKinect *m_kinect;
-	/*
-	/// @brief our rgb drawing window
-	RGBWindow *m_rgb;
-	/// @brief our depth drawing window
-	RGBWindow *m_depth;
-	*/
 };
 
 #endif
