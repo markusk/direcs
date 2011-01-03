@@ -50,8 +50,10 @@ kinect::kinect()
 	m_mdiArea = new QMdiArea;
 	m_mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	m_mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-	setCentralWidget(m_mdiArea);
-	this->setWindowTitle(QString("Kinect Demo"));
+
+//	setCentralWidget(m_mdiArea);
+//	this->setWindowTitle(QString("Kinect Demo"));
+
 	// create a window for the RGB data (mode 0 = RGB draw)
 	m_rgb= new RGBWindow(this);
 	m_rgb->setMode(0);
@@ -84,6 +86,9 @@ kinect::~kinect()
 
 void kinect::closeEvent(QCloseEvent *event)
 {
+	// shutdown kinect
+	m_kinect->shutDownKinect();
+
 	Q_UNUSED(event);
 
 	/*

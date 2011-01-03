@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2011 by Markus Knapp   *
- *   www.direcs.de   *
+ *   Copyright (C) 2011 by Markus Knapp                                    *
+ *   www.direcs.de                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,10 +25,12 @@
 int main(int argc, char *argv[])
 {
 	  Q_INIT_RESOURCE(application);
-	  QApplication app(argc, argv);
-	  kinect * mw = new kinect();
-	  mw->show();
-	  mw->resize(640*2, 1080);
-	  return app.exec();
-}
 
+	  QApplication app(argc, argv);
+
+	  kinect * mw = new kinect();
+
+	  mw->show();
+
+	  return app.exec();
+  }
