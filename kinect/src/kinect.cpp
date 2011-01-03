@@ -46,6 +46,33 @@ kinect::kinect()
 	//---------------------------------------------------------------------------------------------------
 	m_kinect=QKinect::instance();
 
+	// create an MDI area for the two windows
+	m_mdiArea = new QMdiArea;
+	m_mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	m_mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	setCentralWidget(m_mdiArea);
+	this->setWindowTitle(QString("Kinect Demo"));
+	// create a window for the RGB data (mode 0 = RGB draw)
+	m_rgb= new RGBWindow(this);
+	m_rgb->setMode(0);
+	QMdiSubWindow *subWindow1 = new QMdiSubWindow;
+	subWindow1->setWidget(m_rgb);
+	subWindow1->setAttribute(Qt::WA_DeleteOnClose);
+	subWindow1->setWindowTitle("RGB Output");
+	subWindow1->resize(640,480);
+	m_mdiArea->addSubWindow(subWindow1);
+	subWindow1->show();
+	/// create a window for our depth draw (1 = depth)
+	m_depth= new RGBWindow(this);
+	m_depth->setMode(1);
+	QMdiSubWindow *subWindow2 = new QMdiSubWindow;
+	subWindow2->setWidget(m_depth);
+	subWindow2->setAttribute(Qt::WA_DeleteOnClose);
+	subWindow2->setWindowTitle("RGB Output");
+	subWindow2->resize(640,480);
+	m_mdiArea->addSubWindow(subWindow2);
+	subWindow2->show();
+	m_mdiArea->tileSubWindows();
 }
 
 

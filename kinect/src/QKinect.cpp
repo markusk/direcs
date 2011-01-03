@@ -60,11 +60,11 @@ void QKinectProcessEvents::run()
 //----------------------------------------------------------------------------------------------------------------------
 QKinect::~QKinect()
 {
-    // dtor is not called directly
+	// dtor is not called directly
 		if (s_instance)
-    {
-        delete s_instance;
-    }
+	{
+		delete s_instance;
+	}
 }
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief Get instance --------------------------------------------------------------------------------------------------------------
@@ -340,67 +340,69 @@ void QKinect::grabDepth(
 												uint32_t _timestamp
 											 )
 {
-// this method fills all the different depth buffers at once
-// modifed from the sample code glview and cppview.cpp
-/// lock our mutex
-QMutexLocker locker( &m_mutex );
-// cast the void pointer to the unint16_t the data is actually in
-uint16_t* depth = static_cast<uint16_t*>(_depth);
+	// this method fills all the different depth buffers at once
+	// modifed from the sample code glview and cppview.cpp
+	/// lock our mutex
+	QMutexLocker locker( &m_mutex );
+	// cast the void pointer to the unint16_t the data is actually in
+	uint16_t* depth = static_cast<uint16_t*>(_depth);
 
-// now loop and fill data buffers
-for( unsigned int i = 0 ; i < FREENECT_FRAME_PIX ; ++i)
-{
-	// first our two raw buffers the first will lose precision and may well
-	// be removed in the next iterations
-	m_bufferDepthRaw[i]=depth[i];
-	m_bufferDepthRaw16[i]=depth[i];
-	// now get the index into the gamma table
-	int pval = m_gamma[depth[i]];
-	// get the lower bit
-	int lb = pval & 0xff;
-	// shift right by 8 and determine which colour value to fill the
-	// array with based on the position
-	switch (pval>>8)
+	// now loop and fill data buffers
+	for( unsigned int i = 0 ; i < FREENECT_FRAME_PIX ; ++i)
 	{
-	case 0:
-		m_bufferDepth[3*i+0] = 255;
-		m_bufferDepth[3*i+1] = 255-lb;
-		m_bufferDepth[3*i+2] = 255-lb;
-		break;
-	case 1:
-		m_bufferDepth[3*i+0] = 255;
-		m_bufferDepth[3*i+1] = lb;
-		m_bufferDepth[3*i+2] = 0;
-		break;
-	case 2:
-		m_bufferDepth[3*i+0] = 255-lb;
-		m_bufferDepth[3*i+1] = 255;
-		m_bufferDepth[3*i+2] = 0;
-		break;
-	case 3:
-		m_bufferDepth[3*i+0] = 0;
-		m_bufferDepth[3*i+1] = 255;
-		m_bufferDepth[3*i+2] = lb;
-		break;
-	case 4:
-		m_bufferDepth[3*i+0] = 0;
-		m_bufferDepth[3*i+1] = 255-lb;
-		m_bufferDepth[3*i+2] = 255;
-		break;
-	case 5:
-		m_bufferDepth[3*i+0] = 0;
-		m_bufferDepth[3*i+1] = 0;
-		m_bufferDepth[3*i+2] = 255-lb;
-		break;
-	default:
-		m_bufferDepth[3*i+0] = 0;
-		m_bufferDepth[3*i+1] = 0;
-		m_bufferDepth[3*i+2] = 0;
-		break;
+		// first our two raw buffers the first will lose precision and may well
+		// be removed in the next iterations
+		m_bufferDepthRaw[i]=depth[i];
+		m_bufferDepthRaw16[i]=depth[i];
+		// now get the index into the gamma table
+		int pval = m_gamma[depth[i]];
+		// get the lower bit
+		int lb = pval & 0xff;
+		// shift right by 8 and determine which colour value to fill the
+		// array with based on the position
+		switch (pval>>8)
+		{
+		case 0:
+			m_bufferDepth[3*i+0] = 255;
+			m_bufferDepth[3*i+1] = 255-lb;
+			m_bufferDepth[3*i+2] = 255-lb;
+			break;
+		case 1:
+			m_bufferDepth[3*i+0] = 255;
+			m_bufferDepth[3*i+1] = lb;
+			m_bufferDepth[3*i+2] = 0;
+			break;
+		case 2:
+			m_bufferDepth[3*i+0] = 255-lb;
+			m_bufferDepth[3*i+1] = 255;
+			m_bufferDepth[3*i+2] = 0;
+			break;
+		case 3:
+			m_bufferDepth[3*i+0] = 0;
+			m_bufferDepth[3*i+1] = 255;
+			m_bufferDepth[3*i+2] = lb;
+			break;
+		case 4:
+			m_bufferDepth[3*i+0] = 0;
+			m_bufferDepth[3*i+1] = 255-lb;
+			m_bufferDepth[3*i+2] = 255;
+			break;
+		case 5:
+			m_bufferDepth[3*i+0] = 0;
+			m_bufferDepth[3*i+1] = 0;
+			m_bufferDepth[3*i+2] = 255-lb;
+			break;
+		default:
+			m_bufferDepth[3*i+0] = 0;
+			m_bufferDepth[3*i+1] = 0;
+			m_bufferDepth[3*i+2] = 0;
+			break;
+		}
 	}
-}
-// flag we have a new frame
-m_newDepthFrame = true;
+	// flag we have a new frame
+	m_newDepthFrame = true;
+
+	Q_UNUSED(_timestamp);
 }
 //----------------------------------------------------------------------------------------------------------------------
 void QKinect::grabVideo(
@@ -413,6 +415,8 @@ void QKinect::grabVideo(
 	uint8_t* rgb = static_cast<uint8_t*>(_video);
 	std::copy(rgb, rgb+FREENECT_VIDEO_RGB_SIZE, m_bufferVideo.begin());
 	m_newRgbFrame = true;
+
+	Q_UNUSED(_timestamp);
 }
 
 //----------------------------------------------------------------------------------------------------------------------

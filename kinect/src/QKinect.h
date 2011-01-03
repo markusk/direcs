@@ -398,6 +398,9 @@ private :
 		QKinect *kinect=QKinect::instance();
 		/// then call the grab method to fill the depth buffer and return it
 		kinect->grabDepth(_depth,_timestamp);
+
+		Q_UNUSED(_dev);
+		Q_UNUSED(_timestamp);
 	}
 	//----------------------------------------------------------------------------------------------------------------------
 	/// @brief this hooks into the feenet callback system an is the main way of
@@ -417,6 +420,9 @@ private :
 		QKinect *kinect=QKinect::instance();
 		/// then fill the video buffer
 		kinect->grabVideo(_video, _timestamp);
+
+		Q_UNUSED(_dev);
+		Q_UNUSED(_timestamp);
 	}
 
 };
