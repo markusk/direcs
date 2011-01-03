@@ -47,11 +47,10 @@ void Gui::closeEvent(QCloseEvent *event)
 
 void Gui::on_actionExit_activated()
 {
-	close();
 }
 
 
-void Gui::on_actionResetDrivenDistance_activated()
+void Gui::on_actionTest_activated()
 {
 }
 

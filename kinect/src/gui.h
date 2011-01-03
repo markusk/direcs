@@ -36,9 +36,11 @@ class Gui : public QMainWindow
 {
 	Q_OBJECT
 
+
 	public:
 		Gui(QMainWindow *parent = 0);
 		~Gui();
+
 
 	public slots:
 		/**
@@ -48,19 +50,14 @@ class Gui : public QMainWindow
 		 */
 		void appendLog(QString text, bool CR=true);
 
+
 	protected:
 		void closeEvent(QCloseEvent *event);
 
 
 	protected slots:
-		/**
-		Action if a menu item or a toolbar button is clicked
-		*/
 		void on_actionExit_activated();
-
-
-	private slots:
-		void on_actionResetDrivenDistance_activated();
+		void on_actionTest_activated();
 
 
 	private:
