@@ -26,6 +26,8 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	// startup the GUI
 	ui.setupUi(this);
 
+	/// set mode of left camera widget to depth draw (1 = depth)
+	ui.frameDepth->setMode(1);
 }
 
 
