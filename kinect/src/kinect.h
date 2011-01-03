@@ -39,6 +39,7 @@
 #include <QPixmap>
 //---------------------------------------------------------------------------------------------------
 #include "QKinect.h"
+#include "RGBWindow.h"
 //---------------------------------------------------------------------------------------------------
 
 
@@ -104,6 +105,14 @@ private:
 	  QAction *aboutAct;
 	  QAction *aboutQtAct;
 	  QAction *kinectAct;      //    < < < <   this is the kinect action for me and anyone who may need it ;-)  It calls the "kinectSlot" method.
+
+	//---------------------------------------------------------------------------------------------------
+	/// @brief pointer to our kinect object not really used in this one
+	QKinect *m_kinect;
+	/// @brief our rgb drawing window
+	RGBWindow *m_rgb;
+	/// @brief our depth drawing window
+	RGBWindow *m_depth;
 };
 
 #endif
