@@ -50,9 +50,15 @@ class Gui : public QMainWindow
 		 */
 		void appendLog(QString text, bool CR=true);
 
+
 	signals:
 		void shutdown();
 		void test();
+		void setLedOff();
+		void setRedLed();
+		void setGreenLed();
+		void setYellowLed();
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -61,6 +67,10 @@ class Gui : public QMainWindow
 	protected slots:
 		void on_actionExit_activated();
 		void on_actionTest_activated();
+		void on_radioButtonLEDoff_clicked(bool checked);
+		void on_radioButtonLEDred_clicked(bool checked);
+		void on_radioButtonLEDgreen_clicked(bool checked);
+		void on_radioButtonLEDyellow_clicked(bool checked);
 
 
 	private:

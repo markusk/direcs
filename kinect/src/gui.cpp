@@ -57,6 +57,34 @@ void Gui::on_actionTest_activated()
 }
 
 
+void Gui::on_radioButtonLEDoff_clicked(bool checked)
+{
+	if (checked)
+		emit setLedOff();
+}
+
+
+void Gui::on_radioButtonLEDred_clicked(bool checked)
+{
+	if (checked)
+		emit setRedLed();
+}
+
+
+void Gui::on_radioButtonLEDgreen_clicked(bool checked)
+{
+	if (checked)
+		emit setGreenLed();
+}
+
+
+void Gui::on_radioButtonLEDyellow_clicked(bool checked)
+{
+	if (checked)
+		emit setYellowLed();
+}
+
+
 void Gui::appendLog(QString text, bool CR)
 {
 	// get the current date and time for a timestimp in the log

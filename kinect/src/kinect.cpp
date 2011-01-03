@@ -70,6 +70,13 @@ kinect::kinect()
 	// kinect stuff
 	//---------------------------------------------------------------------------------------------------
 	m_kinect=QKinect::instance();
+
+
+	// the signals for the LED actions
+	connect(gui, SIGNAL(setLedOff()), m_kinect, SLOT(setLedOff()));
+	connect(gui, SIGNAL(setRedLed()), m_kinect, SLOT(setRedLed()));
+	connect(gui, SIGNAL(setGreenLed()), m_kinect, SLOT(setGreenLed()));
+	connect(gui, SIGNAL(setYellowLed()), m_kinect, SLOT(setYellowLed()));
 }
 
 
