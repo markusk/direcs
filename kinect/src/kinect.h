@@ -49,64 +49,66 @@ class QTextEdit;
 
 class kinect:public QMainWindow
 {
-	  Q_OBJECT
+	Q_OBJECT
 
 public:
-	  kinect();
-	  ~kinect();
+	kinect();
+	~kinect();
 
 protected:
-	  void closeEvent(QCloseEvent *event);
+	void closeEvent(QCloseEvent *event);
 
 public slots:
-	  void appendLog(QString message);
+	void appendLog(QString message);
 
 
 private slots:
-	  void newFile();
-	  void open();
-	  bool save();
-	  bool saveAs();
-	  void about();
-	  void documentWasModified();
-	  void kinectSlot();      //    < < < <   this is the kinect slot where all magic happens
+	void newFile();
+	void open();
+	bool save();
+	bool saveAs();
+	void about();
+	void documentWasModified();
+	void kinectSlot();      //    < < < <   this is the kinect slot where all magic happens
 
 private:
-	  void createActions();
-	  void createMenus();
-	  void createToolBars();
-	  void createStatusBar();
-	  void readSettings();
-	  void writeSettings();
-	  bool maybeSave();
-	  void loadFile(const QString &fileName);
-	  bool saveFile(const QString &fileName);
-	  void setCurrentFile(const QString &fileName);
-	  QString strippedName(const QString &fullFileName);
+	void createActions();
+	void createMenus();
+	void createToolBars();
+	void createStatusBar();
+	void readSettings();
+	void writeSettings();
+	bool maybeSave();
+	void loadFile(const QString &fileName);
+	bool saveFile(const QString &fileName);
+	void setCurrentFile(const QString &fileName);
+	QString strippedName(const QString &fullFileName);
 
-	  QTextEdit *textEdit;
-	  QString curFile;
+	QTextEdit *textEdit;
+	QString curFile;
 
-	  QMenu *fileMenu;
-	  QMenu *editMenu;
-	  QMenu *helpMenu;
-	  QMenu *kinectMenu;
-	  QToolBar *fileToolBar;
-	  QToolBar *editToolBar;
-	  QToolBar *kinectToolBar;
-	  QAction *newAct;
-	  QAction *openAct;
-	  QAction *saveAct;
-	  QAction *saveAsAct;
-	  QAction *exitAct;
-	  QAction *cutAct;
-	  QAction *copyAct;
-	  QAction *pasteAct;
-	  QAction *aboutAct;
-	  QAction *aboutQtAct;
-	  QAction *kinectAct;      //    < < < <   this is the kinect action for me and anyone who may need it ;-)  It calls the "kinectSlot" method.
+	QMenu *fileMenu;
+	QMenu *editMenu;
+	QMenu *helpMenu;
+	QMenu *kinectMenu;
+	QToolBar *fileToolBar;
+	QToolBar *editToolBar;
+	QToolBar *kinectToolBar;
+	QAction *newAct;
+	QAction *openAct;
+	QAction *saveAct;
+	QAction *saveAsAct;
+	QAction *exitAct;
+	QAction *cutAct;
+	QAction *copyAct;
+	QAction *pasteAct;
+	QAction *aboutAct;
+	QAction *aboutQtAct;
+	QAction *kinectAct;      //    < < < <   this is the kinect action for me and anyone who may need it ;-)  It calls the "kinectSlot" method.
 
 	//---------------------------------------------------------------------------------------------------
+	/// @brief the mid area our windows are placed into
+	QMdiArea *m_mdiArea;
 	/// @brief pointer to our kinect object not really used in this one
 	QKinect *m_kinect;
 	/// @brief our rgb drawing window
