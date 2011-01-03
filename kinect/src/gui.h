@@ -26,6 +26,9 @@
 #include <QtOpenGL>
 #include <QGraphicsScene>
 
+#include "RGBWindow.h"
+
+
 #include "ui_mainWindow.h"
 
 
