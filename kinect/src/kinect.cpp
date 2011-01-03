@@ -67,7 +67,7 @@ kinect::kinect()
 
 	gui->show();
 
-
+/*
 	textEdit = new QTextEdit;
 	setCentralWidget(textEdit);
 
@@ -78,20 +78,21 @@ kinect::kinect()
 	readSettings();
 	// connect(textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(documentWasModified()));
 	setCurrentFile("");
-
+*/
 
 	//---------------------------------------------------------------------------------------------------
 	// kinect stuff
 	//---------------------------------------------------------------------------------------------------
 	m_kinect=QKinect::instance();
 
+	/*
 	// create an MDI area for the two windows
 	m_mdiArea = new QMdiArea;
 	m_mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	m_mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
-//	setCentralWidget(m_mdiArea);
-//	this->setWindowTitle(QString("Kinect Demo"));
+	setCentralWidget(m_mdiArea);
+	this->setWindowTitle(QString("Kinect Demo"));
 
 	// create a window for the RGB data (mode 0 = RGB draw)
 	m_rgb= new RGBWindow(this);
@@ -115,6 +116,7 @@ kinect::kinect()
 	m_mdiArea->addSubWindow(subWindow2);
 	subWindow2->show();
 	m_mdiArea->tileSubWindows();
+	*/
 }
 
 
