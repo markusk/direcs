@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	  QApplication app(argc, argv);
 	  kinect * mw = new kinect();
 	  mw->show();
-	  mw->resize(800, 600);
+	  mw->resize(640*2, 1080);
 	  return app.exec();
 }
 
