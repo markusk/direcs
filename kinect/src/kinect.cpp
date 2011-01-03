@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// create the kinect class object
-	kinect k();
+	kinect * k = new kinect();
 
 	return app.exec();
 }
@@ -72,6 +72,7 @@ kinect::kinect()
 kinect::~kinect()
 {
 	// shutdown kinect
+	qDebug("Shutting down camera.");
 	m_kinect->shutDownKinect();
 
 	delete gui;
