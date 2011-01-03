@@ -4,11 +4,11 @@ QT += core \
 SOURCES += kinect.cpp \
 	QKinect.cpp \
 	RGBWindow.cpp \
-    gui.cpp
+	gui.cpp
 HEADERS += kinect.h \
 	QKinect.h \
 	RGBWindow.h \
-    gui.h
+	gui.h
 TEMPLATE = app
 CONFIG += warn_on \
 	thread \
@@ -17,7 +17,7 @@ TARGET = kinect
 DESTDIR = ../bin
 RESOURCES = application.qrc
 
-FORMS += mainWindow.ui
+FORMS += kinect.ui
 
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
