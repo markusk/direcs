@@ -29,7 +29,7 @@
 #include "RGBWindow.h"
 
 
-#include "ui_mainWindow.h"
+#include "ui_kinect.h"
 
 
 class Gui : public QMainWindow
