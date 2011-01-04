@@ -106,6 +106,12 @@ void Gui::on_radioButtonLEDflashYellow_clicked(bool checked)
 }
 
 
+void Gui::on_spinBoxAngle_valueChanged(int i)
+{
+	emit setAngle(i);
+}
+
+
 void Gui::appendLog(QString text, bool CR)
 {
 	// get the current date and time for a timestimp in the log
