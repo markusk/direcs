@@ -174,10 +174,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QGroupBox" name="groupBoxLED">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>500</y>
-      <width>631</width>
-      <height>241</height>
+      <x>30</x>
+      <y>510</y>
+      <width>271</width>
+      <height>211</height>
      </rect>
     </property>
     <property name="title">
@@ -238,8 +238,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QRadioButton" name="radioButtonLEDflashRed">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>150</y>
+       <x>130</x>
+       <y>60</y>
        <width>111</width>
        <height>20</height>
       </rect>
@@ -251,8 +251,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QRadioButton" name="radioButtonLEDflashGreen">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>180</y>
+       <x>130</x>
+       <y>90</y>
        <width>121</width>
        <height>20</height>
       </rect>
@@ -264,9 +264,9 @@ p, li { white-space: pre-wrap; }
     <widget class="QRadioButton" name="radioButtonLEDflashYellow">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>210</y>
-       <width>102</width>
+       <x>130</x>
+       <y>120</y>
+       <width>141</width>
        <height>20</height>
       </rect>
      </property>
@@ -278,10 +278,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QGroupBox" name="groupBoxAngle">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>750</y>
-      <width>631</width>
-      <height>221</height>
+      <x>30</x>
+      <y>730</y>
+      <width>271</width>
+      <height>231</height>
      </rect>
     </property>
     <property name="title">
