@@ -55,8 +55,6 @@ int main(int argc, char *argv[])
 
 Kinect::Kinect()
 {
-	kinectDetected = false;
-
 	gui = new Gui();
 
 	gui->show();
@@ -67,36 +65,40 @@ Kinect::Kinect()
 	// call this slot if the window is closed
 	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
 
-
-	// kinect stuff
-	connect(m_kinect, SIGNAL(kinectError()), this, SLOT(kinectState()));
-
+	// here we go
 	m_kinect = QKinect::instance();
 
+	// Kinect detected?
+	if (m_kinect->kinectDetected)
+	{
+		// the signals for the LED actions
+		connect(gui, SIGNAL(setLedOff()), m_kinect, SLOT(setLedOff()));
+		connect(gui, SIGNAL(setRedLed()), m_kinect, SLOT(setRedLed()));
+		connect(gui, SIGNAL(setGreenLed()), m_kinect, SLOT(setGreenLed()));
+		connect(gui, SIGNAL(setYellowLed()), m_kinect, SLOT(setYellowLed()));
+		connect(gui, SIGNAL(setRedLedFlash()), m_kinect, SLOT(setRedLedFlash()));
+		connect(gui, SIGNAL(setGreenLedFlash()), m_kinect, SLOT(setGreenLedFlash()));
+		connect(gui, SIGNAL(setYellowLedFlash()), m_kinect, SLOT(setYellowLedFlash()));
 
-	// the signals for the LED actions
-	connect(gui, SIGNAL(setLedOff()), m_kinect, SLOT(setLedOff()));
-	connect(gui, SIGNAL(setRedLed()), m_kinect, SLOT(setRedLed()));
-	connect(gui, SIGNAL(setGreenLed()), m_kinect, SLOT(setGreenLed()));
-	connect(gui, SIGNAL(setYellowLed()), m_kinect, SLOT(setYellowLed()));
-	connect(gui, SIGNAL(setRedLedFlash()), m_kinect, SLOT(setRedLedFlash()));
-	connect(gui, SIGNAL(setGreenLedFlash()), m_kinect, SLOT(setGreenLedFlash()));
-	connect(gui, SIGNAL(setYellowLedFlash()), m_kinect, SLOT(setYellowLedFlash()));
+		// the signal for setting the camera angle
+		connect(gui, SIGNAL(setAngle(double)), m_kinect, SLOT(setAngle(double)));
 
-	// the signal for setting the camera angle
-	connect(gui, SIGNAL(setAngle(double)), m_kinect, SLOT(setAngle(double)));
+		// the signal for resetting the camera angle
+		connect(gui, SIGNAL(resetAngle()), m_kinect, SLOT(resetAngle()));
 
-	// the signal for resetting the camera angle
-	connect(gui, SIGNAL(resetAngle()), m_kinect, SLOT(resetAngle()));
-
-	// the signal for setting the video mode
-	connect(gui, SIGNAL(setVideoMode(int)), m_kinect, SLOT(setVideoMode(int)));
+		// the signal for setting the video mode
+		connect(gui, SIGNAL(setVideoMode(int)), m_kinect, SLOT(setVideoMode(int)));
+	}
+	else
+	{
+		gui->appendLog("No Kinect detected.");
+	}
 }
 
 
 void Kinect::shutdown()
 {
-	if (m_kinect)
+	if (m_kinect->kinectDetected)
 	{
 		// shutdown kinect
 		qDebug("Shutting down camera.");
@@ -111,12 +113,6 @@ void Kinect::shutdown()
 Kinect::~Kinect()
 {
 	delete gui;
-}
-
-
-void Kinect::kinectState()
-{
-	kinectDetected = false;
 }
 
 

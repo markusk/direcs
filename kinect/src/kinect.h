@@ -49,13 +49,10 @@ public slots:
 
 private slots:
 	void kinectSlot();
-	void kinectState(); /// sets kinectDetected via signal from @sa QKinect class
 
 
 private:
 	Gui *gui;
-
-	bool kinectDetected; /// true if detected
 
 	/// @brief pointer to our kinect object not really used in this one
 	QKinect *m_kinect;

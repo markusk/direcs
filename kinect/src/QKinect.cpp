@@ -87,6 +87,8 @@ QKinect* QKinect::instance()
 //----------------------------------------------------------------------------------------------------------------------
 QKinect::QKinect() : QObject(0)
 {
+	kinectDetected = false;
+
 	// nothing to see here we just need a valid object pointer the init
 	// method does all the hard work
 	qDebug()<<"ctor called \n";
@@ -99,8 +101,7 @@ void QKinect::init()
 	{
 		qDebug()<<"freenect_init() failed\n";
 
-		// error
-		emit kinectError();
+		kinectDetected = false;
 
 		return;
 	}
@@ -124,8 +125,7 @@ void QKinect::init()
 	{
 		qDebug()<<"Could not open device\n";
 
-		// error
-		emit kinectError();
+		kinectDetected = false;
 
 		return;
 	}
@@ -157,6 +157,8 @@ void QKinect::init()
 	m_process->setActive();
 	m_process->start();
 	setGreenLed();
+
+	kinectDetected = true;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
