@@ -89,7 +89,10 @@ unix|macx {
 				/opt/local/libexec/qt4-mac/include \
 				/usr/include/qwt-qt4 \
 				/opt/local/include/qwt \
-				/usr/local/include/opencv
+				/usr/local/include/opencv \
+				/usr/local/include/libfreenect \
+				/usr/local/include \
+				/opt/local/include
 
 	CONFIG -= release
 
@@ -99,7 +102,8 @@ unix|macx {
 				-lespeak \
 				-lqwt-qt4 \
 				-lcv \
-				-lhighgui
+				-lhighgui \
+				-lfreenect
 
 	OBJECTS_DIR = ../tmp
 
@@ -107,6 +111,12 @@ unix|macx {
 	QMAKE_CXXFLAGS_DEBUG += -pg
 	QMAKE_CXXFLAGS_RELEASE += -pg
 
+	QMAKE_CXXFLAGS+= -msse -msse2 -msse3
+
+	linux-g++:QMAKE_CXXFLAGS +=  -march=native
+	linux-g++-64:QMAKE_CXXFLAGS +=  -march=native
+
+	message("See http://www.openkinect.org for details how to install libfreenect.")
 }
 
 
@@ -131,6 +141,9 @@ macx {
 				   joyreaderMacOS-objc.m
 
 	ICON = ../images/direcs.icns
+
+	QMAKE_CXXFLAGS+= -arch x86_64
+	INCLUDEPATH+=/usr/local/boost/
 }
 
 
@@ -186,3 +199,11 @@ arm {
 	message("***********************************")
 #	QMAKE_LFLAGS =	-L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
 }
+
+HEADERS += \
+	RGBWindow.h \
+	QKinect.h
+
+SOURCES += \
+	RGBWindow.cpp \
+	QKinect.cpp
