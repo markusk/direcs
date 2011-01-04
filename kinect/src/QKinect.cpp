@@ -150,6 +150,7 @@ void QKinect::init()
 	m_process = new QKinectProcessEvents(m_ctx);
 	m_process->setActive();
 	m_process->start();
+	setGreenLed();
 }
 
 //----------------------------------------------------------------------------------------------------------------------

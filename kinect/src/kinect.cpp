@@ -69,7 +69,7 @@ kinect::kinect()
 	//---------------------------------------------------------------------------------------------------
 	// kinect stuff
 	//---------------------------------------------------------------------------------------------------
-	m_kinect=QKinect::instance();
+	m_kinect = QKinect::instance();
 
 
 	// the signals for the LED actions
@@ -87,6 +87,9 @@ void kinect::shutdown()
 {
 	// shutdown kinect
 	qDebug("Shutting down camera.");
+
+	m_kinect->setLedOff();
+
 	m_kinect->shutDownKinect();
 }
 
