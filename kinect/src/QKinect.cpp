@@ -78,6 +78,7 @@ QKinect* QKinect::instance()
 		/// \note this could be made nicer to make it fully thread safe
 		s_instance->init();
 	}
+
 	// otherwise return the existing pointer
   return s_instance;
 }
@@ -91,13 +92,15 @@ QKinect::QKinect() : QObject(0)
 	qDebug()<<"ctor called \n";
 }
 //----------------------------------------------------------------------------------------------------------------------
-int QKinect::init()
+void QKinect::init()
 {
 	// first see if we can init the kinect
 	if (freenect_init(&m_ctx, NULL) < 0)
 	{
 		qDebug()<<"freenect_init() failed\n";
-		return EXIT_FAILURE;
+
+		// error
+		emit kinectError();
 	}
 	/// set loggin level make this programmable at some stage
 	freenect_set_log_level(m_ctx, FREENECT_LOG_DEBUG);
@@ -111,15 +114,17 @@ int QKinect::init()
 	m_bufferDepthRaw.resize(FREENECT_FRAME_PIX);
 	m_bufferDepthRaw16.resize(FREENECT_FRAME_PIX);
 	m_gamma.resize(2048);
+
 	/// open the device at present hard coded to device 0 as I only
 	/// have 1 kinect
 	/// \todo make this support multiple devices at some stage
 	if (freenect_open_device(m_ctx, &m_dev, m_userDeviceNumber) < 0)
 	{
 		qDebug()<<"Could not open device\n";
-		return EXIT_FAILURE;
-	}
 
+		// error
+		emit kinectError();
+	}
 
 	/// build the gamma table used for the depth to rgb conversion
 	/// taken from the demo programs
@@ -148,8 +153,6 @@ int QKinect::init()
 	m_process->setActive();
 	m_process->start();
 	setGreenLed();
-
-	return EXIT_SUCCESS;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
