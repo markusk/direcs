@@ -1,28 +1,26 @@
-/*
- * This file is part of the OpenKinect Project. http://www.openkinect.org
- *
- * Copyright (c) 2010 individual OpenKinect contributors. See the CONTRIB file
- * for details.
- *
- * This code is licensed to you under the terms of the Apache License, version
- * 2.0, or, at your option, the terms of the GNU General Public License,
- * version 2.0. See the APACHE20 and GPL2 files for the text of the licenses,
- * or the following URLs:
- * http://www.apache.org/licenses/LICENSE-2.0
- * http://www.gnu.org/licenses/gpl-2.0.txt
- *
- * If you redistribute this file in source form, modified or unmodified, you
- * may:
- *   1) Leave this header intact and distribute it under the same terms,
- *      accompanying it with the APACHE20 and GPL20 files, or
- *   2) Delete the Apache 2.0 clause and accompany it with the GPL2 file, or
- *   3) Delete the GPL v2 clause and accompany it with the APACHE20 file
- * In all cases you must keep the copyright notice intact and include a copy
- * of the CONTRIB file.
- *
- * Binary distributions must follow the binary distribution requirements of
- * either License.
- */
+/***************************************************************************
+ *  This file is part of the OpenKinect Project. http://www.openkinect.org *
+ *                                                                         *
+ *  Copyright (c) 2010 individual OpenKinect contributors.                 *
+ *  See the CONTRIB file for details.                                      *
+ *                                                                         *
+ *  This file is part of direcs.                                           *
+ *  www.direcs.de                                                          *
+ *                                                                         *
+ *  direcs is free software: you can redistribute it and/or modify it      *
+ *  under the terms of the GNU General Public License as published         *
+ *  by the Free Software Foundation, version 3 of the License.             *
+ *                                                                         *
+ *  direcs is distributed in the hope that it will be useful,              *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the           *
+ *  GNU General Public License for more details.                           *
+ *                                                                         *
+ *  You should have received a copy of the GNU General Public License      *
+ *  along with direcs. If not, see <http://www.gnu.org/licenses/>.         *
+ *                                                                         *
+ ***************************************************************************/
+
 #ifndef __RGB_WINDOW_H__
 #define __RGB_WINDOW_H__
 
@@ -30,6 +28,7 @@
 #include <QTime>
 #include "QKinect.h"
 #include <QTime>
+
 /// @file RGBWindow.h
 /// @brief a basic Qt GL window class for ngl demos
 /// @author Jonathan Macey
@@ -49,8 +48,8 @@ public :
   /// @brief Constructor for RGBWindow
   /// @param [in] _parent the parent window to create the GL context in
   RGBWindow(
-           QWidget *_parent
-          );
+		   QWidget *_parent
+		  );
 	~RGBWindow();
 	/// @brief a method to set the draw mode (RGB or Depth)
 	/// @param [in] _m the mode to use
@@ -80,9 +79,9 @@ protected:
   /// \note these are part of the Qt API so can't be changed to the coding standard
   /// so it can't be called resizeGL )
   void resizeGL(
-                const int _w,
-                const int _h
-               );
+				const int _w,
+				const int _h
+			   );
   /// @brief this is the main gl drawing routine which is called whenever the window needs to
   // be re-drawn
   void paintGL();
@@ -94,8 +93,8 @@ private :
   /// so it can't be called MouseMoveEvent )
 
   void mouseMoveEvent (
-                       QMouseEvent * _event
-                      );
+					   QMouseEvent * _event
+					  );
   /// @brief this method is called everytime the mouse button is pressed
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure
@@ -103,8 +102,8 @@ private :
   /// so it can't be called MousePressEvent )
 
   void mousePressEvent (
-                        QMouseEvent *_event
-                       );
+						QMouseEvent *_event
+					   );
 
   /// @brief this method is called everytime the mouse button is released
   /// inherited from QObject and overridden here.
@@ -112,13 +111,13 @@ private :
   /// \note these are part of the Qt API so can't be changed to the coding standard
   /// so it can't be called MousePressEvent )
   void mouseReleaseEvent (
-                          QMouseEvent *_event
-                         );
+						  QMouseEvent *_event
+						 );
   /// @brief called when the timer is triggered
 
   void timerEvent(
-                    QTimerEvent *_event
-                   );
+					QTimerEvent *_event
+				   );
 
 };
 

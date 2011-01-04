@@ -21,10 +21,6 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include <QtGlobal> // for Q_OS_* Makro!
-#include <QtGui>
-#include <QtOpenGL>
-#include <QGraphicsScene>
 
 #include "RGBWindow.h"
 

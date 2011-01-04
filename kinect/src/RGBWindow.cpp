@@ -1,37 +1,36 @@
-/*
- * This file is part of the OpenKinect Project. http://www.openkinect.org
- *
- * Copyright (c) 2010 individual OpenKinect contributors. See the CONTRIB file
- * for details.
- *
- * This code is licensed to you under the terms of the Apache License, version
- * 2.0, or, at your option, the terms of the GNU General Public License,
- * version 2.0. See the APACHE20 and GPL2 files for the text of the licenses,
- * or the following URLs:
- * http://www.apache.org/licenses/LICENSE-2.0
- * http://www.gnu.org/licenses/gpl-2.0.txt
- *
- * If you redistribute this file in source form, modified or unmodified, you
- * may:
- *   1) Leave this header intact and distribute it under the same terms,
- *      accompanying it with the APACHE20 and GPL20 files, or
- *   2) Delete the Apache 2.0 clause and accompany it with the GPL2 file, or
- *   3) Delete the GPL v2 clause and accompany it with the APACHE20 file
- * In all cases you must keep the copyright notice intact and include a copy
- * of the CONTRIB file.
- *
- * Binary distributions must follow the binary distribution requirements of
- * either License.
- */
+/***************************************************************************
+ *  This file is part of the OpenKinect Project. http://www.openkinect.org *
+ *                                                                         *
+ *  Copyright (c) 2010 individual OpenKinect contributors.                 *
+ *  See the CONTRIB file for details.                                      *
+ *                                                                         *
+ *  This file is part of direcs.                                           *
+ *  www.direcs.de                                                          *
+ *                                                                         *
+ *  direcs is free software: you can redistribute it and/or modify it      *
+ *  under the terms of the GNU General Public License as published         *
+ *  by the Free Software Foundation, version 3 of the License.             *
+ *                                                                         *
+ *  direcs is distributed in the hope that it will be useful,              *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the           *
+ *  GNU General Public License for more details.                           *
+ *                                                                         *
+ *  You should have received a copy of the GNU General Public License      *
+ *  along with direcs. If not, see <http://www.gnu.org/licenses/>.         *
+ *                                                                         *
+ ***************************************************************************/
+
 #include "RGBWindow.h"
 #include <iostream>
 #include <QDebug>
 #include <QKinect.h>
+
 //----------------------------------------------------------------------------------------------------------------------
 RGBWindow::RGBWindow(
 											QWidget *_parent
-                    ) :
-                    QGLWidget(_parent)
+					) :
+					QGLWidget(_parent)
 {
 
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
@@ -72,9 +71,9 @@ void RGBWindow::initializeGL()
 //This virtual function is called whenever the widget has been resized.
 // The new size is passed in width and height.
 void RGBWindow::resizeGL(
-                        int _w,
-                        int _h
-                       )
+						int _w,
+						int _h
+					   )
 {
 	glViewport(0,0,_w,_h);
 	glMatrixMode(GL_PROJECTION);
@@ -117,8 +116,8 @@ void RGBWindow::paintGL()
 
 //----------------------------------------------------------------------------------------------------------------------
 void RGBWindow::mouseMoveEvent (
-                               QMouseEvent * _event
-                              )
+							   QMouseEvent * _event
+							  )
 {
 
   updateGL();
@@ -127,16 +126,16 @@ void RGBWindow::mouseMoveEvent (
 
 //----------------------------------------------------------------------------------------------------------------------
 void RGBWindow::mousePressEvent (
-                                QMouseEvent * _event
-                               )
+								QMouseEvent * _event
+							   )
 {
 
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void RGBWindow::mouseReleaseEvent (
-                                  QMouseEvent * _event
-                                 )
+								  QMouseEvent * _event
+								 )
 {
   // this event is called when the mouse button is released
   // we then set Rotate to false
@@ -144,8 +143,8 @@ void RGBWindow::mouseReleaseEvent (
 }
 
 void RGBWindow::timerEvent(
-                          QTimerEvent *_event
-                         )
+						  QTimerEvent *_event
+						 )
 {
 	// re-draw GL
 	updateGL();
