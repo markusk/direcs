@@ -83,6 +83,7 @@ kinect::kinect()
 
 	// the signal for setting the camera angle
 	connect(gui, SIGNAL(setAngle(double)), m_kinect, SLOT(setAngle(double)));
+	connect(gui, SIGNAL(resetAngle()), m_kinect, SLOT(resetAngle(double)));
 }
 
 
