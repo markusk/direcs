@@ -61,6 +61,7 @@ class Gui : public QMainWindow
 		void setRedLedFlash();
 		void setGreenLedFlash();
 		void setYellowLedFlash();
+		void setVideoMode(int mode);
 		void setAngle(double i);
 		void resetAngle();
 
@@ -79,6 +80,9 @@ class Gui : public QMainWindow
 		void on_radioButtonLEDflashRed_clicked(bool checked);
 		void on_radioButtonLEDflashGreen_clicked(bool checked);
 		void on_radioButtonLEDflashYellow_clicked(bool checked);
+		void on_radioButtonVideoRGB_clicked(bool checked);
+		void on_radioButtonVideoYUVRGB_clicked(bool checked);
+		void on_radioButtonVideoIR8Bit_clicked(bool checked);
 		void on_spinBoxAngle_valueChanged(int i);
 		void on_pushButtonResetAngle_clicked();
 

@@ -106,6 +106,27 @@ void Gui::on_radioButtonLEDflashYellow_clicked(bool checked)
 }
 
 
+void Gui::on_radioButtonVideoRGB_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(0);
+}
+
+
+void Gui::on_radioButtonVideoYUVRGB_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(1);
+}
+
+
+void Gui::on_radioButtonVideoIR8Bit_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(2);
+}
+
+
 void Gui::on_spinBoxAngle_valueChanged(int i)
 {
 	emit setAngle(i);
