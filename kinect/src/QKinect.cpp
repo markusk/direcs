@@ -91,13 +91,13 @@ QKinect::QKinect() : QObject(0)
 	qDebug()<<"ctor called \n";
 }
 //----------------------------------------------------------------------------------------------------------------------
-void QKinect::init()
+int QKinect::init()
 {
 	// first see if we can init the kinect
 	if (freenect_init(&m_ctx, NULL) < 0)
 	{
 		qDebug()<<"freenect_init() failed\n";
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
 	/// set loggin level make this programmable at some stage
 	freenect_set_log_level(m_ctx, FREENECT_LOG_DEBUG);
@@ -117,7 +117,7 @@ void QKinect::init()
 	if (freenect_open_device(m_ctx, &m_dev, m_userDeviceNumber) < 0)
 	{
 		qDebug()<<"Could not open device\n";
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
 
 
@@ -148,6 +148,8 @@ void QKinect::init()
 	m_process->setActive();
 	m_process->start();
 	setGreenLed();
+
+	return EXIT_SUCCESS;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
