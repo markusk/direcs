@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// create the kinect class object
-	kinect * k = new kinect();
+	kinect k;
 
 	return app.exec();
 }
