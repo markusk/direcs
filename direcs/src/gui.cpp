@@ -56,6 +56,9 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 	// do the rest of my init stuff
 	init();
+
+	/// set mode of left camera widget to depth draw (1 = depth)
+	ui.frameCamera->setMode(1);
 }
 
 
@@ -1403,7 +1406,7 @@ void Gui::disableCompass()
 void Gui::setCamImageData(int width, int height, int pixeldepth)
 {
 	// tell the OpenGLContext the image data
-	ui.frameCamera->setImageData(width, height, pixeldepth);
+//	ui.frameCamera->setImageData(width, height, pixeldepth);
 	appendLog("Camera image width, height and pixel depth set.");
 }
 
@@ -1948,7 +1951,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 void Gui::on_checkBoxMirror_stateChanged(int state)
 {
 	// QtGL class!!
-	ui.frameCamera->enableMirrorMode(state);
+//	ui.frameCamera->enableMirrorMode(state);
 }
 
 

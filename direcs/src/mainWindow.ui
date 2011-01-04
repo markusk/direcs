@@ -1556,7 +1556,7 @@
      <item row="0" column="0">
       <layout class="QGridLayout" name="gridLayout_13">
        <item row="0" column="0">
-        <widget class="QtGLContext" name="frameCamera" native="true">
+        <widget class="RGBWindow" name="frameCamera" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1565,8 +1565,8 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>256</width>
-           <height>192</height>
+           <width>320</width>
+           <height>240</height>
           </size>
          </property>
          <property name="palette">
@@ -2270,9 +2270,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QtGLContext</class>
+   <class>RGBWindow</class>
    <extends>QWidget</extends>
-   <header>QtGLContext.h</header>
+   <header>RGBWindow.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
