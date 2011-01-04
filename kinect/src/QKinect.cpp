@@ -101,6 +101,8 @@ void QKinect::init()
 
 		// error
 		emit kinectError();
+
+		return;
 	}
 	/// set loggin level make this programmable at some stage
 	freenect_set_log_level(m_ctx, FREENECT_LOG_DEBUG);
@@ -124,6 +126,8 @@ void QKinect::init()
 
 		// error
 		emit kinectError();
+
+		return;
 	}
 
 	/// build the gamma table used for the depth to rgb conversion

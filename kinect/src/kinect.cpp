@@ -55,6 +55,8 @@ int main(int argc, char *argv[])
 
 Kinect::Kinect()
 {
+	kinectDetected = false;
+
 	gui = new Gui();
 
 	gui->show();
@@ -67,6 +69,8 @@ Kinect::Kinect()
 
 
 	// kinect stuff
+	connect(m_kinect, SIGNAL(kinectError()), this, SLOT(kinectState()));
+
 	m_kinect = QKinect::instance();
 
 
@@ -92,18 +96,27 @@ Kinect::Kinect()
 
 void Kinect::shutdown()
 {
-	// shutdown kinect
-	qDebug("Shutting down camera.");
+	if (m_kinect)
+	{
+		// shutdown kinect
+		qDebug("Shutting down camera.");
 
-	m_kinect->setLedOff();
+		m_kinect->setLedOff();
 
-	m_kinect->shutDownKinect();
+		m_kinect->shutDownKinect();
+	}
 }
 
 
 Kinect::~Kinect()
 {
 	delete gui;
+}
+
+
+void Kinect::kinectState()
+{
+	kinectDetected = false;
 }
 
 
