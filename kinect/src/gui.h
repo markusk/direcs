@@ -58,6 +58,9 @@ class Gui : public QMainWindow
 		void setRedLed();
 		void setGreenLed();
 		void setYellowLed();
+		void setRedLedFlash();
+		void setGreenLedFlash();
+		void setYellowLedFlash();
 
 
 	protected:
@@ -71,6 +74,9 @@ class Gui : public QMainWindow
 		void on_radioButtonLEDred_clicked(bool checked);
 		void on_radioButtonLEDgreen_clicked(bool checked);
 		void on_radioButtonLEDyellow_clicked(bool checked);
+		void on_radioButtonLEDflashRed_clicked(bool checked);
+		void on_radioButtonLEDflashGreen_clicked(bool checked);
+		void on_radioButtonLEDflashYellow_clicked(bool checked);
 
 
 	private:

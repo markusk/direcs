@@ -77,6 +77,9 @@ kinect::kinect()
 	connect(gui, SIGNAL(setRedLed()), m_kinect, SLOT(setRedLed()));
 	connect(gui, SIGNAL(setGreenLed()), m_kinect, SLOT(setGreenLed()));
 	connect(gui, SIGNAL(setYellowLed()), m_kinect, SLOT(setYellowLed()));
+	connect(gui, SIGNAL(setRedLedFlash()), m_kinect, SLOT(setRedLedFlash()));
+	connect(gui, SIGNAL(setGreenLedFlash()), m_kinect, SLOT(setGreenLedFlash()));
+	connect(gui, SIGNAL(setYellowLedFlash()), m_kinect, SLOT(setYellowLedFlash()));
 }
 
 
