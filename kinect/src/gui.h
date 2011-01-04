@@ -61,7 +61,7 @@ class Gui : public QMainWindow
 		void setRedLedFlash();
 		void setGreenLedFlash();
 		void setYellowLedFlash();
-		void setAngle(int i);
+		void setAngle(double i);
 
 
 	protected:

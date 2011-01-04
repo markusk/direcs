@@ -80,6 +80,9 @@ kinect::kinect()
 	connect(gui, SIGNAL(setRedLedFlash()), m_kinect, SLOT(setRedLedFlash()));
 	connect(gui, SIGNAL(setGreenLedFlash()), m_kinect, SLOT(setGreenLedFlash()));
 	connect(gui, SIGNAL(setYellowLedFlash()), m_kinect, SLOT(setYellowLedFlash()));
+
+	// the signal for setting the camera angle
+	connect(gui, SIGNAL(setAngle(double)), m_kinect, SLOT(setAngle(double)));
 }
 
 
