@@ -112,6 +112,14 @@ void Gui::on_spinBoxAngle_valueChanged(int i)
 }
 
 
+void Gui::on_pushButtonResetAngle_clicked()
+{
+	ui.spinBoxAngle->setValue(0);
+
+	emit resetAngle();
+}
+
+
 void Gui::appendLog(QString text, bool CR)
 {
 	// get the current date and time for a timestimp in the log

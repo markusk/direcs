@@ -62,6 +62,7 @@ class Gui : public QMainWindow
 		void setGreenLedFlash();
 		void setYellowLedFlash();
 		void setAngle(double i);
+		void resetAngle();
 
 
 	protected:
@@ -79,6 +80,7 @@ class Gui : public QMainWindow
 		void on_radioButtonLEDflashGreen_clicked(bool checked);
 		void on_radioButtonLEDflashYellow_clicked(bool checked);
 		void on_spinBoxAngle_valueChanged(int i);
+		void on_pushButtonResetAngle_clicked();
 
 
 	private:
