@@ -55,7 +55,7 @@
 #include "laserThread.h"
 #include "joystick.h"
 #include "head.h"
-#include "camThread.h"
+//#include "camThread.h"
 #include "speakThread.h"
 //-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
@@ -324,11 +324,12 @@ class Direcs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-		CamThread *camThread;
+		//CamThread *camThread; todo: kinect stuff
 		SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
 		Logfile *logfile;
+		QKinect *kinect; /// pointer to control the Kinect
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;

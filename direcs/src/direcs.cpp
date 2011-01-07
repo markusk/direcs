@@ -138,7 +138,9 @@ Direcs::Direcs(bool bConsoleMode)
 	netThread = new NetworkThread();
 	if (!consoleMode)
 	{
-		camThread = new CamThread();
+		// The Kinect camera
+		kinect = QKinect::instance();
+//		camThread = new CamThread();
 	}
 	joystick = new Joystick();
 	head = new Head(servos);
@@ -397,16 +399,16 @@ void Direcs::init()
 		// disable face detection in the GUI, on error with loading haar cascade in CamThread
 		// Must be before readSettings!
 		//-------------------------------------------------------------------------------------
-		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() ));
+//		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() )); todo: kinect stuff
 
 		//-------------------------------------------------------------------------------------
 		// disable camera controls in the GUI, on error opeing the camera in the CamThread
 		// Must be before readSettings!
 		//-------------------------------------------------------------------------------------
-		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() ));
+//		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() )); todo: kinect stuff
 
 		// send error messages to the gui
-		connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+//		connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString))); todo: kinect stuff
 	}
 
 
@@ -730,6 +732,9 @@ void Direcs::init()
 		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );
 		// FIXME: this is too often!! Because of 10ms sensor thread!!
 
+/*
+
+  todo: kinect stuff
 
 		if (!consoleMode)
 		{
@@ -737,7 +742,7 @@ void Direcs::init()
 			// connect sensor contact signals to "show contact alarm"
 			// (Whenever the an alarm contact was closed, show the result in the cam image)
 			//----------------------------------------------------------------------------
-			connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
+//			connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
 
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 			//----------------------------------------------------------------------------
@@ -768,7 +773,7 @@ void Direcs::init()
 			//----------------------------------------------------------------------------
 			connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
 		}
-
+*/
 
 		//----------------------------------------------------------------------------
 		// connect obstacle check (alarm!) sensor signal to "logical unit"
@@ -867,30 +872,42 @@ void Direcs::init()
 		if (!consoleMode)
 		{
 			//-----------------------------------------------------------
-			// check if camera is connected
+			// check if Kinect camera is connected
 			//-----------------------------------------------------------
-			if (camThread->isConnected())
+			if (kinect->kinectDetected)
 			{
+				// look a bit up
+				kinect->setAngle(5); // to do: put to ini file and settings dialog
+
+				// show kinect camera state in gui
 				gui->setLEDCamera(GREEN);
 
-				if (camThread->isRunning() == false)
-				{
-					emit message("Starting camera thread...", false);
-					camThread->start();
-					emit message("Camera thread started.");
-					if (camThread->isConnected())
-					{
-						emit message(QString("Camera resolution is %1x%2.").arg(camThread->imageWidth()).arg(camThread->imageHeight()));
-						// tell the gui the image size and depth
-						gui->setCamImageData(camThread->imageWidth(), camThread->imageHeight(), camThread->imagePixelDepth());
-					}
-				}
+				// the signals for the LED actions
+/*
+				connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
+				connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
+				connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
+				connect(gui, SIGNAL(setYellowLed()), kinect, SLOT(setYellowLed()));
+				connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
+				connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
+				connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));
+*/
+				// the signal for setting the camera angle
+				connect(gui, SIGNAL(setKinectAngle(double)), kinect, SLOT(setAngle(double)));
+
+				// the signal for resetting the camera angle
+				connect(gui, SIGNAL(resetKinectAngle()), kinect, SLOT(resetAngle()));
+
+				// the signal for setting the video mode
+//				connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
 			}
 			else
 			{
+				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
 				gui->disableCamera();
-				emit message("Camera thread NOT started!");
+				emit message("No Kinect detected.");
+
 			}
 		}
 
@@ -1160,39 +1177,16 @@ void Direcs::shutdown()
 		//--------------------------------
 		// quit the camThread
 		//--------------------------------
-		if (camThread->isRunning() == true)
+		if (kinect->kinectDetected)
 		{
-			emit message("Stopping camera thread...");
-			emit splashMessage("Stopping camera thread...");
+			emit message("Stopping Kinect camera...");
+			emit splashMessage("Stopping Kinect camera...");
 
-			// my own stop routine :-)
-			camThread->stop();
+			kinect->resetAngle();
 
-			// slowing thread down
-			camThread->setPriority(QThread::IdlePriority);
-			camThread->quit();
+			kinect->setLedOff();
 
-			//-------------------------------------------
-			// start measuring time for timeout ckecking
-			//-------------------------------------------
-			QTime t;
-			t.start();
-			do
-			{
-			} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
-
-			if (camThread->isFinished() == true)
-			{
-				emit message("Camera thread stopped.");
-			}
-			else
-			{
-				emit message("ERROR: Terminating camera thread because it doesn't answer...");
-				emit splashMessage("Terminating camera thread because it doesn't answer...");
-				camThread->terminate();
-				camThread->wait(1000);
-				emit message("Camera thread terminated.");
-			}
+			kinect->shutDownKinect();
 		}
 	}
 
@@ -1583,10 +1577,6 @@ Direcs::~Direcs()
 	#endif
 	delete laserThread;
 	delete netThread;
-	if (!consoleMode)
-	{
-		delete camThread;
-	}
 	delete joystick;
 
 #ifndef BUILDFORROBOT
@@ -1886,6 +1876,10 @@ void Direcs::enableFaceTracking(int state)
 
 void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
+/*
+
+todo: kinect stuff
+
 	if (!consoleMode)
 	{
 		Q_UNUSED (faces) // not in use, at the moment
@@ -1909,10 +1903,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 
 			if (faceTrackingIsEnabled)
 			{
-				/*
-				motors->motorControl(MOTOR3, OFF, SAME);
-				motors->motorControl(MOTOR4, OFF, SAME);
-				*/
+				//motors->motorControl(MOTOR3, OFF, SAME);
+				//motors->motorControl(MOTOR4, OFF, SAME);
 			}
 			return;
 		}
@@ -1928,10 +1920,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("LEFT");
-				/*
-				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR4, OFF, SAME);
-				*/
+				//motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				//motors->motorControl(MOTOR4, OFF, SAME);
 			}
 			emit showFaceTrackDirection("LEFT");
 			return;
@@ -1943,10 +1933,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("RIGHT");
-				/*
-				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				motors->motorControl(MOTOR4, OFF, SAME);
-				*/
+				//motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				//motors->motorControl(MOTOR4, OFF, SAME);
 			}
 			emit showFaceTrackDirection("RIGHT");
 			return;
@@ -1958,10 +1946,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("UP");
-				/*
-				motors->motorControl(MOTOR3, OFF, SAME);
-				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-				*/
+				//motors->motorControl(MOTOR3, OFF, SAME);
+				//motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			}
 			emit showFaceTrackDirection("UP");
 			return;
@@ -1973,10 +1959,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("UPLEFT");
-				/*
-				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-				*/
+				//motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				//motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			}
 			emit showFaceTrackDirection("UPLEFT");
 			return;
@@ -1988,10 +1972,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("UPRIGHT");
-				/*
-				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				motors->motorControl(MOTOR4, ON, CLOCKWISE);
-				*/
+				//motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				//motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			}
 			emit showFaceTrackDirection("UPRIGHT");
 			return;
@@ -2003,10 +1985,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("DOWN");
-				/*
-				motors->motorControl(MOTOR3, OFF, SAME);
-				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-				*/
+				//motors->motorControl(MOTOR3, OFF, SAME);
+				//motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 			}
 			emit showFaceTrackDirection("DOWN");
 			return;
@@ -2018,10 +1998,8 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("DOWNLEFT");
-				/*
-				motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
-				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-				*/
+				//motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+				//motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 			}
 			emit showFaceTrackDirection("DOWNLEFT");
 			return;
@@ -2033,15 +2011,14 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 			if (faceTrackingIsEnabled)
 			{
 				head->look("DOWNRIGHT");
-				/*
-				motors->motorControl(MOTOR3, ON, CLOCKWISE);
-				motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
-				*/
+				//motors->motorControl(MOTOR3, ON, CLOCKWISE);
+				//motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
 			}
 			emit showFaceTrackDirection("DOWNRIGHT");
 			return;
 		}
 	}
+*/
 }
 
 
@@ -2879,8 +2856,8 @@ void Direcs::readSettings()
 			if (!consoleMode)
 			{
 				// turning "off" camera
-				camThread->setCameraDevice(-2);
-				gui->disableCamera();
+				//camThread->setCameraDevice(-2);
+//				gui->disableCamera();
 			}
 			emit message("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
 			break;
@@ -2899,14 +2876,14 @@ void Direcs::readSettings()
 
 			if (cameraDevice == -2)
 			{
-				camThread->setCameraDevice(-2);
+				//camThread->setCameraDevice(-2); todo: kinect stuff
 				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
 				if (cameraDevice == -1)
 				{
-					camThread->setCameraDevice(-2);
+					//camThread->setCameraDevice(-2); todo: kinect stuff
 					emit message("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
 				}
 				else
@@ -2915,9 +2892,9 @@ void Direcs::readSettings()
 					// everything okay
 					//
 					// set it in the cam thread
-					camThread->setCameraDevice(cameraDevice);
+//					camThread->setCameraDevice(cameraDevice); todo: kinect stuff
 
-					emit message(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
+//					emit message(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
 
 
 					//---------------------------------------------------------------------
@@ -2926,14 +2903,14 @@ void Direcs::readSettings()
 
 					if (haarClassifierCascade == "error2")
 					{
-						camThread->setCascadePath("none");
+						//camThread->setCascadePath("none"); todo: kinect stuff
 						emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 					}
 					else
 					{
 						if (haarClassifierCascade == "error1")
 						{
-							camThread->setCascadePath("none");
+							//camThread->setCascadePath("none"); todo: kinect stuff
 							emit message("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
 						}
 						else
@@ -2942,10 +2919,12 @@ void Direcs::readSettings()
 							// everything okay
 							//
 							// set it in the cam thread
-							camThread->setCascadePath(haarClassifierCascade);
+							//camThread->setCascadePath(haarClassifierCascade); todo: kinect stuff
 							emit message(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
 							emit splashMessage("Initialising camera...");
 
+/*
+  todo: kinect stuff
 							// initialise the cam
 							if (camThread->init())
 							{
@@ -2955,6 +2934,7 @@ void Direcs::readSettings()
 							{
 								emit message("Error initialising camera.");
 							}
+*/
 						}
 					}
 					//---------------------------------------------------------------------
