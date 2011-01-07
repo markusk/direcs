@@ -58,7 +58,7 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	init();
 
 	/// set mode of left camera widget to depth draw (1 = depth)
-	ui.frameCamera->setMode(1);
+	ui.frameDepth->setMode(1);
 }
 
 
