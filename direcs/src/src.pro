@@ -1,9 +1,6 @@
-destplatform = $$(DESTPLATFORM)
-!isEmpty( destplatform )CONFIG += $$destplatform
+TARGET = direcs
 
-DESTDIR = .
-
-TARGET = ../bin/direcs
+DESTDIR = ../bin
 
 MOC_DIR = ../tmp
 
@@ -11,7 +8,8 @@ OBJECTS_DIR = ../tmp
 
 RESOURCES = ../direcs.qrc
 
-CONFIG += debug \
+CONFIG += warn_on \
+	thread \
 	qt
 
 TEMPLATE = app
@@ -46,7 +44,9 @@ unix|macx {
 				servo.h \
 				settingsDialog.h \
 				speakThread.h \
-	logfile.h
+				logfile.h \
+				RGBWindow.h \
+				QKinect.h
 
 	SOURCES +=	aboutDialog.cpp \
 				camThread.cpp \
@@ -74,7 +74,9 @@ unix|macx {
 				servo.cpp \
 				settingsDialog.cpp \
 				speakThread.cpp \
-	logfile.cpp
+				logfile.cpp \
+				RGBWindow.cpp \
+				QKinect.cpp
 
 	FORMS +=	mainWindow.ui \
 				aboutDialog.ui \
@@ -94,8 +96,6 @@ unix|macx {
 				/usr/local/include \
 				/opt/local/include
 
-	CONFIG -= release
-
 	LIBS +=		-L/opt/local/lib \
 				-L/usr/lib \
 				-L/usr/local/lib \
@@ -105,9 +105,6 @@ unix|macx {
 				-lhighgui \
 				-lfreenect
 
-	OBJECTS_DIR = ../tmp
-
-	MOC_DIR = ../tmp
 	QMAKE_CXXFLAGS_DEBUG += -pg
 	QMAKE_CXXFLAGS_RELEASE += -pg
 
@@ -192,18 +189,3 @@ win32 {
 
 	LIBS =
 }
-
-arm {
-	message("***********************************")
-	message("Sorry guys, no ARM support anymore!")
-	message("***********************************")
-#	QMAKE_LFLAGS =	-L/usr/local/Trolltech/QtEmbedded-4.4.1-arm/lib -L/home/markus/develop/nslu2/crosstool/gcc-3.4.5-glibc-2.3.6/armv5b-softfloat-linux/armv5b-softfloat-linux/lib
-}
-
-HEADERS += \
-	RGBWindow.h \
-	QKinect.h
-
-SOURCES += \
-	RGBWindow.cpp \
-	QKinect.cpp
