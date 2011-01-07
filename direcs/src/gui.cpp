@@ -1431,6 +1431,41 @@ void Gui::setCamImage(IplImage* frame)
 }
 #endif
 
+/*
+void Gui::on_btnKinectVideoRGB_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(0);
+}
+
+
+void Gui::on_btnKinectVideoYUVRGB_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(1);
+}
+
+
+void Gui::on_btnKinectVideoIR8Bit_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(2);
+}
+*/
+
+void Gui::on_spinBoxKinectAngle_valueChanged(int i)
+{
+	emit setKinectAngle(i);
+}
+
+
+void Gui::on_btnKinectResetAngle_clicked()
+{
+	ui.spinBoxKinectAngle->setValue(0);
+
+	emit resetKinectAngle();
+}
+
 
 void Gui::saveCamImage(void)
 {
