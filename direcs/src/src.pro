@@ -78,12 +78,12 @@ unix|macx {
 				RGBWindow.cpp \
 				QKinect.cpp
 
-	FORMS +=	mainWindow.ui \
+	FORMS +=		direcs.ui \
 				aboutDialog.ui \
 				joystickDialog.ui \
 				settingsDialog.ui
 
-	QT +=		network \
+	QT +=			network \
 				opengl
 
 	INCLUDEPATH += /opt/local/include/opencv \
