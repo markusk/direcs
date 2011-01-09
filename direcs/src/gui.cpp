@@ -3284,6 +3284,13 @@ void Gui::setLEDLaser(unsigned char state)
 }
 
 
+void Gui::showKinectAngle(double angle)
+{
+	// we do a type cast here since the original Kinect method uses 'double'.
+	ui.spinBoxKinectAngle->setValue((int) angle);
+}
+
+
 void Gui::setConsoleMode(bool state)
 {
 	consoleMode = state;

@@ -885,6 +885,7 @@ void Direcs::init()
 
 				// look a bit up
 				kinect->setAngle(5); // to do: put to ini file and settings dialog
+				gui->showKinectAngle(5);
 
 				// show kinect camera state in gui
 				gui->setLEDCamera(GREEN);

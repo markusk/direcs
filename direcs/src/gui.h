@@ -402,6 +402,12 @@ class Gui : public QMainWindow
 		*/
 		void systemerrorcatcher(int errorlevel);
 
+		/**
+		Shows the angle of the Kinect
+		@param angle is the angle in degrees
+		*/
+		void showKinectAngle(double angle);
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);
