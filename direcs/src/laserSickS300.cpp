@@ -295,7 +295,7 @@ int SickS300::readRequestTelegram()
 
 	if (result != 0)
 	{
-		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 flushing serial port (SickS300::readRequestTelegram).</font>").arg(result));
 
 		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
 		emit systemerror(-1);

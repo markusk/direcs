@@ -136,12 +136,7 @@ Direcs::Direcs(bool bConsoleMode)
 
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
-	if (!consoleMode)
-	{
-		// The Kinect camera
-		kinect = QKinect::instance();
-//		camThread = new CamThread();
-	}
+	// creation of kinect instance moved to init method to see something on the splash screen
 	joystick = new Joystick();
 	head = new Head(servos);
 
@@ -871,11 +866,23 @@ void Direcs::init()
 
 		if (!consoleMode)
 		{
+			emit splashMessage("Detecting Kinect camera...");
+			emit message("Detecting Kinect camera...", false);
+
+			//
+			// creation of Kinect Camera instance is not in the constructor, since this may need some time and we want to see that on the splash screen
+			//
+			kinect = QKinect::instance();
+			// camThread = new CamThread();
+
 			//-----------------------------------------------------------
 			// check if Kinect camera is connected
 			//-----------------------------------------------------------
 			if (kinect->kinectDetected)
 			{
+				emit splashMessage("Kinect found.");
+				emit message("Kinect camera found.", false);
+
 				// look a bit up
 				kinect->setAngle(5); // to do: put to ini file and settings dialog
 
@@ -903,6 +910,8 @@ void Direcs::init()
 			}
 			else
 			{
+				emit splashMessage("Kinect not found.");
+				emit message("Kinect camera not found.", false);
 				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
 				gui->disableCamera();
