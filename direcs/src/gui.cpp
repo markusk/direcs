@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2010 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -56,6 +56,9 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 	// do the rest of my init stuff
 	init();
+
+	/// set mode of left camera widget to depth draw (1 = depth)
+	ui.frameDepth->setMode(1);
 }
 
 
@@ -1403,7 +1406,7 @@ void Gui::disableCompass()
 void Gui::setCamImageData(int width, int height, int pixeldepth)
 {
 	// tell the OpenGLContext the image data
-	ui.frameCamera->setImageData(width, height, pixeldepth);
+//	ui.frameCamera->setImageData(width, height, pixeldepth);
 	appendLog("Camera image width, height and pixel depth set.");
 }
 
@@ -1427,6 +1430,41 @@ void Gui::setCamImage(IplImage* frame)
 */
 }
 #endif
+
+/*
+void Gui::on_btnKinectVideoRGB_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(0);
+}
+
+
+void Gui::on_btnKinectVideoYUVRGB_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(1);
+}
+
+
+void Gui::on_btnKinectVideoIR8Bit_clicked(bool checked)
+{
+	if (checked)
+		emit setVideoMode(2);
+}
+*/
+
+void Gui::on_spinBoxKinectAngle_valueChanged(int i)
+{
+	emit setKinectAngle(i);
+}
+
+
+void Gui::on_btnKinectResetAngle_clicked()
+{
+	ui.spinBoxKinectAngle->setValue(0);
+
+	emit resetKinectAngle();
+}
 
 
 void Gui::saveCamImage(void)
@@ -1948,7 +1986,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 void Gui::on_checkBoxMirror_stateChanged(int state)
 {
 	// QtGL class!!
-	ui.frameCamera->enableMirrorMode(state);
+//	ui.frameCamera->enableMirrorMode(state);
 }
 
 
@@ -2162,11 +2200,11 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	//---------------------------------------------------------------------------
 	// Second: change the *length* of each line!
 	//---------------------------------------------------------------------------
-	// /get the data from 180° to 0° (right to left!!)
+	// /get the data from 180 to 0 (right to left!!)
 	for (int i=0; i<laserLineListFront->size(); i++)
 	{
 		// get value from laser and
-		// draw the lines at every 1°
+		// draw the lines at every 1
 		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
 
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);

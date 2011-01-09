@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>utilities-system-monitor-active.png</file>
+    </qresource>
+</RCC>

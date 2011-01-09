@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2010 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -474,6 +474,18 @@ class Gui : public QMainWindow
 		 */
 		void test();
 
+		/**
+		 */
+		void setKinectVideoMode(int mode);
+
+		/**
+		 */
+		void setKinectAngle(double i);
+
+		/**
+		 */
+		void resetKinectAngle();
+
 
 	protected slots:
 		/**
@@ -525,6 +537,12 @@ class Gui : public QMainWindow
 		void on_btnDirection3_toggled(bool);
 		void on_btnDirection4_toggled(bool);
 */
+//		void on_btnKinectVideoRGB_clicked(bool checked);
+//		void on_btnKinectVideoYUVRGB_clicked(bool checked);
+//		void on_btnKinectVideoIR8Bit_clicked(bool checked);
+		void on_spinBoxKinectAngle_valueChanged(int i);
+		void on_btnKinectResetAngle_clicked();
+
 		/**
 		Saves the current picture to disk (one time shot).
 		*/

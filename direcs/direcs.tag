@@ -136,6 +136,18 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>direcsSerial__LMS300_Teil.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>direcsSerial____LMS300__Teil_8cpp</filename>
+    <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>direcsSerial__S300Atmel_Teil.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>direcsSerial____S300Atmel__Teil_8cpp</filename>
+    <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
+  </compound>
+  <compound kind="file">
     <name>gui.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>gui_8cpp</filename>
@@ -1471,6 +1483,13 @@
       <anchorfile>classCamThread.html</anchorfile>
       <anchor>a594a897b3f8e43c7e0f8a07ead2a9604</anchor>
       <arglist>(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a48914f559d474724242e43cea4d521be</anchor>
+      <arglist>(QString text)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -2901,6 +2920,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>systemerrorcatcher</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ac186f8152934d6967e0be93f89504bda</anchor>
+      <arglist>(int errorlevel)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>test</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a22ace1ac7a8601ad458aa8394d239ab2</anchor>
@@ -4129,10 +4155,10 @@
       <arglist>(char *dev_name, int baudrate)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>int</type>
       <name>purgeRx</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a6eac0106a1db263c9440e686a920c816</anchor>
+      <anchor>a6c44856e3d7498f38e3ee7160a0ca7ed</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -4389,8 +4415,8 @@
       <type>void</type>
       <name>appendLog</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a3a7ba597de98c24f2d3fef95a87ba6d0</anchor>
-      <arglist>(QString text, bool CR=true, bool sayIt=false)</arglist>
+      <anchor>a6ddf5cab70f8d110a05b0d534cca0b35</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4580,6 +4606,13 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>ac222754552bafb16f80e86df5b7770a0</anchor>
       <arglist>(QString direction)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>systemerrorcatcher</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a1db5c4ae8822880131bf6b13822a6c93</anchor>
+      <arglist>(int errorlevel)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -11830,6 +11863,8 @@
     <file>direcs.h</file>
     <file>direcsSerial.cpp</file>
     <file>direcsSerial.h</file>
+    <file>direcsSerial__LMS300_Teil.cpp</file>
+    <file>direcsSerial__S300Atmel_Teil.cpp</file>
     <file>gui.cpp</file>
     <file>gui.h</file>
     <file>head.cpp</file>

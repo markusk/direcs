@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2010 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -102,7 +102,7 @@ class Motor : public QObject
 		Sets the speed of a motor.
 		@param motor is the motor number (MOTOR1, MOTOR2, MOTOR3, MOTOR4, ALLMOTORS).
 		@param speed is the speed (0 - 255).
-		®return true on success
+		return true on success
 		 */
 		bool setMotorSpeed(int motor, int speed);
 

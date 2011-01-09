@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2010 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -55,7 +55,7 @@
 #include "laserThread.h"
 #include "joystick.h"
 #include "head.h"
-#include "camThread.h"
+//#include "camThread.h"
 #include "speakThread.h"
 //-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
@@ -324,11 +324,12 @@ class Direcs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-		CamThread *camThread;
+		//CamThread *camThread; todo: kinect stuff
 		SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
 		Logfile *logfile;
+		QKinect *kinect; /// pointer to control the Kinect
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
