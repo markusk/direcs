@@ -116,12 +116,6 @@ infrared Sensors temporarily removed from robot!!
 #endif
 
 	//----------------------------------------------------------------------------
-	// Compass stuff
-	//----------------------------------------------------------------------------
-// 	initCompass(); // this is for the 2D compass. Not in use at the moment.
-//	disableCompass();
-
-	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
 	//----------------------------------------------------------------------------
 	// -> the laser lines and pixmap init stuff is now done AFTER the laser settings are read in the direcs main class!
@@ -521,7 +515,6 @@ void Gui::on_actionTest_activated()
 
 void Gui::on_actionAll_activated()
 {
-	ui.dockCompass->show();
 	ui.dockVoltage->show();
 	ui.dockCurrent->show();
 	ui.dockState->show();
@@ -534,19 +527,6 @@ void Gui::on_actionAll_activated()
 	if (ui.dockCamera->isEnabled())
 	{
 		ui.dockCamera->show();
-	}
-}
-
-
-void Gui::on_actionCompass_activated()
-{
-	if (ui.dockCompass->isVisible())
-	{
-		ui.dockCompass->hide();
-	}
-	else
-	{
-		ui.dockCompass->show();
 	}
 }
 
@@ -1397,9 +1377,7 @@ void Gui::disableCamera()
 
 void Gui::disableCompass()
 {
-	appendLog("Compass window disabled!");
-	ui.dockCompass->setEnabled(false);
-	// ui.dockCompass->hide();
+	appendLog("to do");
 }
 
 

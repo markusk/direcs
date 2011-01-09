@@ -48,7 +48,7 @@
 #endif
 
 #include "compassWidget.h"
-#include "ui_mainWindow.h"
+#include "ui_direcs.h"
 
 #ifndef BUILDFORROBOT
 	#include <qwt_plot_layout.h>
@@ -492,7 +492,6 @@ class Gui : public QMainWindow
 		Action if a menu item or a toolbar button is clicked
 		*/
 		void on_actionExit_activated();
-		void on_actionCompass_activated();
 		void on_actionCamera_activated();
 		void on_actionVoltage_activated();
 		void on_actionCurrent_activated();
@@ -554,7 +553,6 @@ class Gui : public QMainWindow
 #ifndef BUILDFORROBOT
 		void initPlots();
 #endif
-// 		void initCompass();
 		void initCompassView();
 
 #ifdef ACTIVELASERVIEW
