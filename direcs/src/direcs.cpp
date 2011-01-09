@@ -875,6 +875,11 @@ void Direcs::init()
 			// creation of Kinect Camera instance is not in the constructor, since this may need some time and we want to see that on the splash screen
 			//
 			kinect = QKinect::instance();
+
+			// show Kinect messages in GUI
+			connect(kinect, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+			connect(kinect, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+
 			// camThread = new CamThread();
 
 			//-----------------------------------------------------------
