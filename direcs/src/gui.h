@@ -206,49 +206,51 @@ class Gui : public QMainWindow
 		 */
 		void setRobotControls(bool state);
 
+/*
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData1(double *xval, double *yval, int size);
 #endif
 
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData2(double *xval, double *yval, int size);
 #endif
 
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData3(double *xval, double *yval, int size);
 #endif
 
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData4(double *xval, double *yval, int size);
 #endif
+*/
 
 #ifndef BUILDFORROBOT
 		/**
@@ -494,7 +496,7 @@ class Gui : public QMainWindow
 		void on_actionExit_activated();
 		void on_actionCamera_activated();
 		void on_actionVoltage_activated();
-		void on_actionCurrent_activated();
+//		void on_actionCurrent_activated();
 		void on_actionState_activated();
 		void on_actionSettings_activated();
 		void on_actionLog_activated();

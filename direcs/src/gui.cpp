@@ -60,8 +60,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	/// set mode of left camera widget to depth draw (1 = depth)
 	ui.frameDepth->setMode(1);
 
-	/// disable the motor current dock since this is not in use right now
-	ui.dockCurrent->setVisible(false);
+	// disable the motor current docks since this is not in use right now
+	//ui.dockCurrent->setVisible(false);
 }
 
 
@@ -519,7 +519,7 @@ void Gui::on_actionTest_activated()
 void Gui::on_actionAll_activated()
 {
 	ui.dockVoltage->show();
-	ui.dockCurrent->show();
+//	ui.dockCurrent->show();
 	ui.dockState->show();
 	ui.dockLog->show();
 
@@ -563,6 +563,7 @@ void Gui::on_actionVoltage_activated()
 }
 
 
+/*
 void Gui::on_actionCurrent_activated()
 {
 	if (ui.dockCurrent->isVisible())
@@ -574,6 +575,7 @@ void Gui::on_actionCurrent_activated()
 		ui.dockCurrent->show();
 	}
 }
+*/
 
 
 void Gui::on_actionState_activated()
@@ -1477,6 +1479,7 @@ void Gui::saveCamImage(void)
 }
 
 
+/*
 #ifndef BUILDFORROBOT
 void Gui::setPlotData1(double *xval, double *yval, int size)
 {
@@ -1551,6 +1554,7 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 	qwtPlotCurrent2.replot();  // replot qwtPlot 2 !!
 }
 #endif
+*/
 
 
 #ifndef BUILDFORROBOT
@@ -2901,8 +2905,8 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setParent(ui.widgetVoltage1);
 	qwtPlotVoltage2.setParent(ui.widgetVoltage2);
 
-	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
-	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
+//	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
+//	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
 
 	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
 //	ui.widgetHeartbeat->resize(205, 100); // 305 x 161
@@ -3096,8 +3100,8 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setGeometry( ui.widgetVoltage1->rect() );
 	qwtPlotVoltage2.setGeometry( ui.widgetVoltage2->rect() );
 
-	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
-	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
+//	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
+//	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
 
 	qwtPlotHeartbeat.setGeometry( ui.widgetHeartbeat->rect() );
 }
