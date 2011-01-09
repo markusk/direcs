@@ -91,7 +91,7 @@ QKinect::QKinect() : QObject(0)
 
 	// nothing to see here we just need a valid object pointer the init
 	// method does all the hard work
-	qDebug()<<"ctor called \n";
+	//qDebug()<<"ctor called \n";
 }
 //----------------------------------------------------------------------------------------------------------------------
 void QKinect::init()
@@ -99,7 +99,7 @@ void QKinect::init()
 	// first see if we can init the kinect
 	if (freenect_init(&m_ctx, NULL) < 0)
 	{
-		qDebug()<<"freenect_init() failed\n";
+		emit message("freenect_init() failed");
 
 		kinectDetected = false;
 
@@ -107,9 +107,12 @@ void QKinect::init()
 	}
 	/// set loggin level make this programmable at some stage
 	freenect_set_log_level(m_ctx, FREENECT_LOG_DEBUG);
+
 	/// see how many devices we have
 	int nr_devices = freenect_num_devices (m_ctx);
-	qDebug()<<"Number of devices found: "<<nr_devices<<"\n";
+
+	emit message(QString("%1 Kinects found.").arg(nr_devices));
+
 	/// now allocate the buffers so we can fill them
 	m_userDeviceNumber = 0;
 	m_bufferDepth.resize(FREENECT_VIDEO_RGB_SIZE);
@@ -123,7 +126,7 @@ void QKinect::init()
 	/// \todo make this support multiple devices at some stage
 	if (freenect_open_device(m_ctx, &m_dev, m_userDeviceNumber) < 0)
 	{
-		qDebug()<<"Could not open device\n";
+		emit message("ERROR opening Kinect device.");
 
 		kinectDetected = false;
 
@@ -229,8 +232,11 @@ void QKinect::setVideoMode(
 		case 5 : { vm=FREENECT_VIDEO_YUV_RGB; break;}
 		case 6 : { vm=FREENECT_VIDEO_YUV_RAW; break;}
 	  */
-		default : qDebug()<<"index out of bounds for video mode\n";
-							vm=FREENECT_VIDEO_RGB;
+		default :
+		{
+			emit message("Kinect: index out of bounds for video mode");
+			vm = FREENECT_VIDEO_RGB;
+		}
 		break;
 	}
 	/// stop the video and set to new mode

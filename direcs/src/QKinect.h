@@ -252,10 +252,12 @@ public slots :
 	inline freenect_context *getContext(){return m_ctx;}
 
 signals:
-	//----------------------------------------------------------------------------------------------------------------------
-	/// @brief signal which will be emitted if camera could not be initialised
-	//----------------------------------------------------------------------------------------------------------------------
-	void kinectError();
+	/**
+	Emits a info or error message to a slot.
+	This slot can be used to display a text on a splash screen, log file, to print it to a console...
+	*/
+	void message(QString text);
+
 
 private :
 	//----------------------------------------------------------------------------------------------------------------------
