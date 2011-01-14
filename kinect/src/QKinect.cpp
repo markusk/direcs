@@ -487,3 +487,29 @@ void QKinect::toggleDepthState(bool _mode)
 	}
 }
 //----------------------------------------------------------------------------------------------------------------------
+
+
+float QKinect::getDistanceAt(int x, int y)
+{
+	return m_bufferDepthRaw16[y * FREENECT_FRAME_W + x];
+}
+
+
+ofPoint QKinect::getWorldCoordinateFor(int x, int y)
+{
+	//Based on http://graphics.stanford.edu/~mdfisher/Kinect.html
+	static const double fx_d = 1.0 / 5.9421434211923247e+02;
+	static const double fy_d = 1.0 / 5.9104053696870778e+02;
+	static const double cx_d = 3.3930780975300314e+02;
+	static const double cy_d = 2.4273913761751615e+02;
+
+//	ofxVec3f result;
+	ofPoint result;
+	const double depth = getDistanceAt(x,y)/100.0;
+	result.x = float((x - cx_d) * depth * fx_d);
+	result.y = float((y - cy_d) * depth * fy_d);
+	result.z = depth;
+
+	return result;
+}
+

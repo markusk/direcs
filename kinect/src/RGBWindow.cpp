@@ -133,8 +133,8 @@ void RGBWindow::paintGL()
 					mx = 1;
 					my = 1;
 					mz = 1;
-					// ofPoint cur = kinect.getWorldCoordinateFor(x, y);
-					glVertex3f(mx, my, mz);
+					ofPoint cur = kinect->getWorldCoordinateFor(x, y);
+					glVertex3f(cur.x, cur.y, cur.z);
 				}
 			}
 			// glEnd();
