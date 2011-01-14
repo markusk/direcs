@@ -207,7 +207,7 @@ void QKinect::setGreenLedFlash()
 //----------------------------------------------------------------------------------------------------------------------
 void QKinect::setYellowLedFlash()
 {
-	freenect_set_led(m_dev,LED_BLINK_YELLOW);
+	freenect_set_led(m_dev,LED_BLINK_RED_YELLOW);
 }
 //----------------------------------------------------------------------------------------------------------------------
 void QKinect::setVideoMode(
