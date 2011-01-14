@@ -47,12 +47,6 @@
 /// it needs to be a class so we can use the Qt thread system
 //----------------------------------------------------------------------------------------------------------------------
 
-typedef struct {
-	float x;
-	float y;
-	float z;
-} ofPoint;
-
 
 class QKinectProcessEvents : public QThread
 {
@@ -93,7 +87,6 @@ private :
 	/// be set before the thread is run with QThread::start
 	//----------------------------------------------------------------------------------------------------------------------
 	freenect_context *m_ctx;
-
 };
 
 
@@ -139,10 +132,6 @@ public :
 	/// @brief true if camera detected
 	//----------------------------------------------------------------------------------------------------------------------
 	bool kinectDetected;
-
-	float getDistanceAt(int x, int y);
-
-	ofPoint getWorldCoordinateFor(int x, int y);
 
 
 public slots :
