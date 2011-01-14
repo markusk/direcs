@@ -97,7 +97,7 @@ void RGBWindow::paintGL()
 	}
 	else if(m_mode == 1)
 	{
-		kinect->getDepth(m_rgb);
+//		kinect->getDepth(m_rgb);
 	}
 	glBindTexture(GL_TEXTURE_2D, m_rgbTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, 640, 480, 0, GL_RGB, GL_UNSIGNED_BYTE, &m_rgb[0]);
@@ -111,6 +111,37 @@ void RGBWindow::paintGL()
 		glTexCoord2f(1, 0); glVertex3f(640,0,0);
 		glTexCoord2f(1, 1); glVertex3f(640,480,0);
 		glTexCoord2f(0, 1); glVertex3f(0,480,0);
+
+
+		// - - - - - -
+		// drawPointClou
+
+		if(m_mode == 1)
+		{
+			// ofScale(400, 400, 400);
+			int w = 640;
+			int h = 480;
+			// ofRotateY(mouseX);
+			// already done above: float* distancePixels = kinect->getDepth();
+
+			glBegin(GL_POINTS);
+			int step = 2;
+			for (int y = 0; y < h; y += step)
+			{
+				for(int x = 0; x < w; x += step)
+				{
+					mx = 1;
+					my = 1;
+					mz = 1;
+					// ofPoint cur = kinect.getWorldCoordinateFor(x, y);
+					glVertex3f(mx, my, mz);
+				}
+			}
+			// glEnd();
+		}
+		// - - - - - -
+
+
 	glEnd();
 }
 

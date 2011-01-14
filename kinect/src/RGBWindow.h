@@ -63,6 +63,11 @@ private :
 	GLuint m_rgbTexture;
 	/// @brief the draw mode we are using
 	int m_mode;
+	/// @brief the image data to draw point cloud
+	std::vector<uint8_t> m_points;
+	GLfloat mx;
+	GLfloat my;
+	GLfloat mz;
 
 
 protected:
