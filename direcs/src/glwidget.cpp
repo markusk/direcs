@@ -1,8 +1,11 @@
 #include "glwidget.h"
 
-GLWidget::GLWidget() : QGLWidget(QGLFormat(QGL::SampleBuffers))
+
+GLWidget::GLWidget(QWidget *_parent)   : QGLWidget(_parent)
 {
-	setMinimumSize(640,480);
+//	setMinimumSize(640,480);
+	// re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
+	this->resize(_parent->size());
 }
 
 
