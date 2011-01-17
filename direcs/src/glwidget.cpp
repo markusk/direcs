@@ -71,7 +71,7 @@ void GLWidget::resizeGL(int w, int h)
 }
 
 
-void GLWidget::sendImage(Mat* img)
+void GLWidget::sendImage(cv::Mat* img)
 {
 	qframe = QImage((const unsigned char*)(img->data), img->cols, img->rows, img->step, QImage::Format_RGB888).rgbSwapped();
 	qframe = QGLWidget::convertToGLFormat(qframe);
