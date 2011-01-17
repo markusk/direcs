@@ -610,10 +610,12 @@ class Gui : public QMainWindow
 #endif
 		QPixmap cameraPicToSave;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		CvCapture *capture;
 //		Mat frame;
 		QTime timer;
 		bool cameraOpened;
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;

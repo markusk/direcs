@@ -6,6 +6,14 @@ GLWidget::GLWidget(QWidget *_parent)   : QGLWidget(_parent)
 //	setMinimumSize(640,480);
 	// re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
 	this->resize(_parent->size());
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	// contour finding stuff
+//	g_image    = NULL;
+	g_gray    = NULL;
+	g_thresh  = 100;
+	g_storage  = NULL;
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
 
@@ -53,13 +61,6 @@ void GLWidget::paintGL()
 		glFlush();
 	}
 	// qDebug() << "Drawing...";
-
-	// contour finding stuff
-	g_image    = NULL;
-	g_gray    = NULL;
-	g_thresh  = 100;
-	g_storage  = NULL;
-
 }
 
 
@@ -76,7 +77,32 @@ void GLWidget::resizeGL(int w, int h)
 
 void GLWidget::sendImage(cv::Mat* img)
 {
-	qframe = QImage((const unsigned char*)(img->data), img->cols, img->rows, img->step, QImage::Format_RGB888).rgbSwapped();
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	if ( g_storage==NULL )
+	{
+		g_gray = cvCreateImage( cvGetSize(img), 8, 1 );
+		g_storage = cvCreateMemStorage(0);
+	} else
+	{
+		cvClearMemStorage( g_storage );
+	}
+
+	CvSeq* contours = 0;
+	cvCvtColor( img, g_gray, CV_BGR2GRAY );
+	cvThreshold( g_gray, g_gray, g_thresh, 255, CV_THRESH_BINARY );
+	cvFindContours( g_gray, g_storage, &contours );
+	cvZero( g_gray );
+
+	if( contours )
+	{
+		cvDrawContours(g_gray, contours, cvScalarAll(255), cvScalarAll(255), 100);
+	}
+
+	//cvShowImage( "Contours", g_gray );
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	qframe = QImage((const unsigned char*)(g_gray->imageData), g_gray->width, g_gray->height, g_gray->widthStep, QImage::Format_RGB888).rgbSwapped();
 	qframe = QGLWidget::convertToGLFormat(qframe);
 	this->updateGL();
+
 }

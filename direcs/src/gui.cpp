@@ -3351,10 +3351,9 @@ void Gui::processCam()
 			// add brightness and contrast
 //			this->processFrame(frame);
 
-			ui.frameOpenCV->sendImage(&frame);
+			ui.frameOpenCV->sendImage( &frame );
 
-//			appendLog("Running....");
-			QTimer::singleShot(25, this, SLOT(processCam()));
+//			QTimer::singleShot(25, this, SLOT(processCam()));
 		}
 	}
 	return;

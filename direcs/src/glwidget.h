@@ -27,7 +27,7 @@ protected:
 private:
 	QImage qframe;
 
-	IplImage*    g_image;
+//	IplImage*    g_image;
 	IplImage*    g_gray;
 	int        g_thresh;
 	CvMemStorage*  g_storage;
