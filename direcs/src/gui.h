@@ -48,6 +48,8 @@
 #endif
 
 #include "compassWidget.h"
+#include <opencv/highgui.h>
+#include "glwidget.h"
 #include "ui_direcs.h"
 
 #ifndef BUILDFORROBOT
@@ -555,6 +557,8 @@ class Gui : public QMainWindow
 		*/
 		void saveCamImage(void);
 
+		void processCam();
+
 
 	private:
 		void init();
@@ -605,6 +609,12 @@ class Gui : public QMainWindow
 // 		QwtCompassMagnetNeedle needle;
 #endif
 		QPixmap cameraPicToSave;
+
+		CvCapture *capture;
+//		Mat frame;
+		QTime timer;
+		bool cameraOpened;
+
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
 		QColor labelFillColorBlue;
@@ -656,7 +666,7 @@ class Gui : public QMainWindow
 		CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui
-
+		cv::Mat frame;
 
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
