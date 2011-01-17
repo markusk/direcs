@@ -104,6 +104,7 @@ unix|macx {
 				-lespeak \
 				-lqwt-qt4 \
 				-lcv \
+				-lcxcore \
 				-lhighgui \
 				-lfreenect
 
@@ -124,10 +125,6 @@ macx {
 	message("Removing espeak support.")
 	LIBS -=		-lespeak \
 				-lqwt-qt4
-
-	message("Removing OpenCV support.")
-	LIBS -=		-lcv \
-				-lhighgui
 
 	message("Changing qwt lib name. Has to be installed via macports.")
 	LIBS +=		-lqwt
