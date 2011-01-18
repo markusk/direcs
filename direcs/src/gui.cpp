@@ -1411,6 +1411,7 @@ void Gui::setCamImageData(int width, int height, int pixeldepth)
 }
 
 
+/*
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 //void Gui::setCamImage(QImage* image)
 void Gui::setCamImage(IplImage* frame)
@@ -1421,15 +1422,17 @@ void Gui::setCamImage(IplImage* frame)
 	// try it with qimage instead of iplImage...
 	//ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
 
-/*
+/ *
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )
 	{
 		saveCamImage();
 	}
-*/
+* /
 }
 #endif
+*/
+
 
 /*
 void Gui::on_btnKinectVideoRGB_clicked(bool checked)
