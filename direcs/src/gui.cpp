@@ -67,7 +67,12 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 void Gui::init()
 {
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	cameraOpened = false;
+	// create to qwt plot objects and place them in the GUI
+	glwidget1.setParent(ui.frameOpenCV);
+#endif
+
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -212,11 +217,13 @@ Gui::~Gui()
 	delete scene;
 #endif
 
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	if (cameraOpened)
 	{
 		cvReleaseCapture( &capture );
 		cameraOpened = false;
 	}
+#endif
 }
 
 
@@ -537,10 +544,12 @@ void Gui::on_actionTest_activated()
 {
 	emit test();
 
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	capture = cvCreateCameraCapture(0);
 	cameraOpened = true;
 
 	this->processCam();
+#endif
 }
 
 
@@ -1422,6 +1431,7 @@ void Gui::setCamImageData(int width, int height, int pixeldepth)
 }
 
 
+/*
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 //void Gui::setCamImage(QImage* image)
 void Gui::setCamImage(IplImage* frame)
@@ -1432,15 +1442,17 @@ void Gui::setCamImage(IplImage* frame)
 	// try it with qimage instead of iplImage...
 	//ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
 
-/*
+/ *
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )
 	{
 		saveCamImage();
 	}
-*/
+* /
 }
 #endif
+*/
+
 
 /*
 void Gui::on_btnKinectVideoRGB_clicked(bool checked)
@@ -3355,6 +3367,7 @@ void Gui::systemerrorcatcher(int errorlevel)
 
 void Gui::processCam()
 {
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	if (cameraOpened)
 	{
 		timer.restart();
@@ -3372,4 +3385,5 @@ void Gui::processCam()
 		}
 	}
 	return;
+#endif
 }
