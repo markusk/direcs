@@ -48,7 +48,7 @@
 //#endif
 
 #include "compassWidget.h"
-#include "ui_mainWindow.h"
+#include "ui_direcs.h"
 
 #ifndef BUILDFORROBOT
 	#include <qwt_plot_layout.h>
@@ -208,49 +208,51 @@ class Gui : public QMainWindow
 		 */
 		void setRobotControls(bool state);
 
+/*
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData1(double *xval, double *yval, int size);
 #endif
 
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData2(double *xval, double *yval, int size);
 #endif
 
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData3(double *xval, double *yval, int size);
 #endif
 
 #ifndef BUILDFORROBOT
-		/**
+		/ **
 		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
 		@param xval points to an array with the values for the x axis (usually the time line).
 		@param yval points to an array with the values for the y axis (usually the measured values).
 		@param size is the size of the array.
 		@sa PlotThread()
-		*/
+		* /
 		void setPlotData4(double *xval, double *yval, int size);
 #endif
+*/
 
 #ifndef BUILDFORROBOT
 		/**
@@ -402,6 +404,12 @@ class Gui : public QMainWindow
 		*/
 		void systemerrorcatcher(int errorlevel);
 
+		/**
+		Shows the angle of the Kinect
+		@param angle is the angle in degrees
+		*/
+		void showKinectAngle(double angle);
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -494,10 +502,9 @@ class Gui : public QMainWindow
 		Action if a menu item or a toolbar button is clicked
 		*/
 		void on_actionExit_activated();
-		void on_actionCompass_activated();
 		void on_actionCamera_activated();
 		void on_actionVoltage_activated();
-		void on_actionCurrent_activated();
+//		void on_actionCurrent_activated();
 		void on_actionState_activated();
 		void on_actionSettings_activated();
 		void on_actionLog_activated();
@@ -556,7 +563,6 @@ class Gui : public QMainWindow
 #ifndef BUILDFORROBOT
 		void initPlots();
 #endif
-// 		void initCompass();
 		void initCompassView();
 
 #ifdef ACTIVELASERVIEW

@@ -33,39 +33,36 @@
 #include <cmath>
 #include <cassert>
 
+
 //----------------------------------------------------------------------------------------------------------------------
 QKinect *QKinect::s_instance = 0;// initialize pointer
 //----------------------------------------------------------------------------------------------------------------------
 
 
-//----------------------------------------------------------------------------------------------------------------------
 void QKinectProcessEvents::run()
 {
 	// loop while we are active and process the kinect event queue
 	while(m_active)
 	{
 		//qDebug()<<"process thread\n";
-		if(freenect_process_events(m_ctx) < 0)
+		if (freenect_process_events(m_ctx) < 0)
 		{
 			throw std::runtime_error("Cannot process freenect events");
 		}
 	}
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief Destructor ---------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------
+
 QKinect::~QKinect()
 {
 	// dtor is not called directly
-		if (s_instance)
+	if (s_instance)
 	{
 		delete s_instance;
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief Get instance --------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------
+
+
 QKinect* QKinect::instance()
 {
 	// this is the main singleton code first check to see if we exist
@@ -80,36 +77,40 @@ QKinect* QKinect::instance()
 	}
 
 	// otherwise return the existing pointer
-  return s_instance;
+	return s_instance;
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------
 QKinect::QKinect() : QObject(0)
 {
 	kinectDetected = false;
 
 	// nothing to see here we just need a valid object pointer the init
 	// method does all the hard work
-	qDebug()<<"ctor called \n";
+	//qDebug()<<"ctor called \n";
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::init()
 {
 	// first see if we can init the kinect
 	if (freenect_init(&m_ctx, NULL) < 0)
 	{
-		qDebug()<<"freenect_init() failed\n";
+		emit message("freenect_init() failed");
 
 		kinectDetected = false;
 
 		return;
 	}
+
 	/// set loggin level make this programmable at some stage
 	freenect_set_log_level(m_ctx, FREENECT_LOG_DEBUG);
+
 	/// see how many devices we have
 	int nr_devices = freenect_num_devices (m_ctx);
-	qDebug()<<"Number of devices found: "<<nr_devices<<"\n";
+
+	emit message(QString("%1 Kinects found.").arg(nr_devices));
+
 	/// now allocate the buffers so we can fill them
 	m_userDeviceNumber = 0;
 	m_bufferDepth.resize(FREENECT_VIDEO_RGB_SIZE);
@@ -123,7 +124,7 @@ void QKinect::init()
 	/// \todo make this support multiple devices at some stage
 	if (freenect_open_device(m_ctx, &m_dev, m_userDeviceNumber) < 0)
 	{
-		qDebug()<<"Could not open device\n";
+		emit message("ERROR opening Kinect device.");
 
 		kinectDetected = false;
 
@@ -138,20 +139,25 @@ void QKinect::init()
 		v = std::pow(v, 3)* 6;
 		m_gamma[i] = v*6*256;
 	}
+
 	/// init our flags
 	m_newRgbFrame=false;
 	m_newDepthFrame=false;
 	m_deviceActive=true;
+
 	// set our video formats to RGB by default
 	/// \todo make this more flexible at some stage
 	freenect_set_video_format(m_dev, FREENECT_VIDEO_RGB);
 	freenect_set_depth_format(m_dev, FREENECT_DEPTH_11BIT);
+
 	/// hook in the callbacks
 	freenect_set_depth_callback(m_dev, depthCallback);
 	freenect_set_video_callback(m_dev, videoCallback);
+
 	// start the video and depth sub systems
 	startVideo();
 	startDepth();
+
 	// set the thread to be active and start
 	m_process = new QKinectProcessEvents(m_ctx);
 	m_process->setActive();
@@ -161,7 +167,7 @@ void QKinect::init()
 	kinectDetected = true;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+
 void QKinect::shutDownKinect()
 {
 	/// stop the processing thread
@@ -174,47 +180,54 @@ void QKinect::shutDownKinect()
 	freenect_shutdown(m_ctx);
 
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::setLedOff()
 {
 	freenect_set_led(m_dev,LED_OFF);
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::setRedLed()
 {
 	freenect_set_led(m_dev,LED_RED);
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::setGreenLed()
 {
 	freenect_set_led(m_dev,LED_GREEN);
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::setYellowLed()
 {
 	freenect_set_led(m_dev,LED_YELLOW);
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::setRedLedFlash()
 {
 	freenect_set_led(m_dev,LED_BLINK_RED_YELLOW);
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::setGreenLedFlash()
 {
  freenect_set_led(m_dev,LED_BLINK_GREEN);
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::setYellowLedFlash()
 {
-	freenect_set_led(m_dev,LED_BLINK_YELLOW);
+	freenect_set_led(m_dev,LED_BLINK_RED_YELLOW);
 }
-//----------------------------------------------------------------------------------------------------------------------
-void QKinect::setVideoMode(
-													 int _mode
-													)
+
+
+void QKinect::setVideoMode(int _mode)
 {
 	freenect_video_format vm=FREENECT_VIDEO_RGB;
+
 	switch(_mode)
 	{
 		case 0 : { vm=FREENECT_VIDEO_RGB; break;}
@@ -229,25 +242,28 @@ void QKinect::setVideoMode(
 		case 5 : { vm=FREENECT_VIDEO_YUV_RGB; break;}
 		case 6 : { vm=FREENECT_VIDEO_YUV_RAW; break;}
 	  */
-		default : qDebug()<<"index out of bounds for video mode\n";
-							vm=FREENECT_VIDEO_RGB;
+		default :
+		{
+			emit message("Kinect: index out of bounds for video mode");
+			vm = FREENECT_VIDEO_RGB;
+		}
 		break;
 	}
+
 	/// stop the video and set to new mode
 	freenect_stop_video(m_dev);
 	freenect_set_video_format(m_dev, vm);
 	freenect_start_video(m_dev);
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::resetAngle()
 {
 	freenect_set_tilt_degs(m_dev,0);
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void QKinect::setAngle(
-											 double _angle
-											)
+
+void QKinect::setAngle(double _angle)
 {
 	// constrain the angle from -30 - +30
 	if(_angle > 30)
@@ -258,18 +274,17 @@ void QKinect::setAngle(
 	{
 		_angle=-30;
 	}
+
 	freenect_set_tilt_degs(m_dev,_angle);
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------
-bool QKinect::getRGB(
-										  std::vector<uint8_t> &o_buffer
-										)
+bool QKinect::getRGB(std::vector<uint8_t> &o_buffer)
 {
 	/// this grabs the rgb data we first need to lock our mutex
 	/// this will be unlocked on destruction of the locker
 	QMutexLocker locker( &m_mutex );
+
 	// do we have a new frame?
 	if(m_newRgbFrame)
 	{
@@ -280,18 +295,16 @@ bool QKinect::getRGB(
 	}
 	else
 	{
-	return false;
+		return false;
 	}
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------
-bool QKinect::getDepth(
-												std::vector<uint8_t> &o_buffer
-											)
+bool QKinect::getDepth(std::vector<uint8_t> &o_buffer)
 {
 	// this fills the depth buffer, first lock our mutex
 	QMutexLocker locker( &m_mutex );
+
 	if(m_newDepthFrame)
 	{
 		// swap data
@@ -304,13 +317,13 @@ bool QKinect::getDepth(
 		return false;
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------
-bool QKinect::getDepth16Bit(
-														 std::vector<uint16_t> &o_buffer
-													 )
+
+
+bool QKinect::getDepth16Bit(std::vector<uint16_t> &o_buffer)
 {
 	/// fill the 16 Bit data value first lock mutex
 	QMutexLocker locker( &m_mutex );
+
 	if(m_newDepthFrame)
 	{
 		// fill our buffer if avaliable
@@ -325,13 +338,11 @@ bool QKinect::getDepth16Bit(
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------
-bool QKinect::getDepthRaw(
-												  std::vector<uint8_t> &o_buffer
-												 )
+bool QKinect::getDepthRaw(std::vector<uint8_t> &o_buffer)
 {
 	//qDebug()<< "getDepth callback\n";
 	QMutexLocker locker( &m_mutex );
+
 	if(m_newDepthFrame)
 	{
 		o_buffer.swap(m_bufferDepthRaw);
@@ -343,30 +354,32 @@ bool QKinect::getDepthRaw(
 		return false;
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------
-void QKinect::grabDepth(
-												void *_depth,
-												uint32_t _timestamp
-											 )
+
+
+void QKinect::grabDepth(void *_depth, uint32_t _timestamp)
 {
 	// this method fills all the different depth buffers at once
 	// modifed from the sample code glview and cppview.cpp
 	/// lock our mutex
 	QMutexLocker locker( &m_mutex );
+
 	// cast the void pointer to the unint16_t the data is actually in
 	uint16_t* depth = static_cast<uint16_t*>(_depth);
 
 	// now loop and fill data buffers
-	for( unsigned int i = 0 ; i < FREENECT_FRAME_PIX ; ++i)
+	for (unsigned int i = 0; i < FREENECT_FRAME_PIX; ++i)
 	{
 		// first our two raw buffers the first will lose precision and may well
 		// be removed in the next iterations
 		m_bufferDepthRaw[i]=depth[i];
 		m_bufferDepthRaw16[i]=depth[i];
+
 		// now get the index into the gamma table
 		int pval = m_gamma[depth[i]];
+
 		// get the lower bit
 		int lb = pval & 0xff;
+
 		// shift right by 8 and determine which colour value to fill the
 		// array with based on the position
 		switch (pval>>8)
@@ -408,19 +421,19 @@ void QKinect::grabDepth(
 			break;
 		}
 	}
+
 	// flag we have a new frame
 	m_newDepthFrame = true;
 
 	Q_UNUSED(_timestamp);
 }
-//----------------------------------------------------------------------------------------------------------------------
-void QKinect::grabVideo(
-												void *_video,
-												uint32_t _timestamp
-											 )
+
+
+void QKinect::grabVideo(void *_video, uint32_t _timestamp)
 {
 	// lock our mutex and copy the data from the video buffer
 	QMutexLocker locker( &m_mutex );
+
 	uint8_t* rgb = static_cast<uint8_t*>(_video);
 	std::copy(rgb, rgb+FREENECT_VIDEO_RGB_SIZE, m_bufferVideo.begin());
 	m_newRgbFrame = true;
@@ -428,7 +441,7 @@ void QKinect::grabVideo(
 	Q_UNUSED(_timestamp);
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+
 void QKinect::startVideo()
 {
 	if(freenect_start_video(m_dev) < 0)
@@ -436,7 +449,8 @@ void QKinect::startVideo()
 		throw std::runtime_error("Cannot start RGB callback");
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::stopVideo()
 {
 	if(freenect_stop_video(m_dev) < 0)
@@ -444,7 +458,8 @@ void QKinect::stopVideo()
 		throw std::runtime_error("Cannot stop RGB callback");
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::startDepth()
 {
 	if(freenect_start_depth(m_dev) < 0)
@@ -453,7 +468,7 @@ void QKinect::startDepth()
 	}
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+
 void QKinect::stopDepth()
 {
 	if(freenect_stop_depth(m_dev) < 0)
@@ -462,7 +477,7 @@ void QKinect::stopDepth()
 	}
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+
 void QKinect::toggleVideoState(bool _mode)
 {
 	if(_mode ==true)
@@ -474,7 +489,8 @@ void QKinect::toggleVideoState(bool _mode)
 		stopVideo();
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 void QKinect::toggleDepthState(bool _mode)
 {
 	if(_mode == true)
@@ -486,4 +502,3 @@ void QKinect::toggleDepthState(bool _mode)
 		stopDepth();
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------

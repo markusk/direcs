@@ -47,6 +47,7 @@
 /// it needs to be a class so we can use the Qt thread system
 //----------------------------------------------------------------------------------------------------------------------
 
+
 class QKinectProcessEvents : public QThread
 {
 public :
@@ -86,8 +87,8 @@ private :
 	/// be set before the thread is run with QThread::start
 	//----------------------------------------------------------------------------------------------------------------------
 	freenect_context *m_ctx;
-
 };
+
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @class QKinect "QKinect.h"
@@ -435,7 +436,6 @@ private :
 		Q_UNUSED(_dev);
 		Q_UNUSED(_timestamp);
 	}
-
 };
 
 

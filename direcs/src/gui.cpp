@@ -59,6 +59,9 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 	/// set mode of left camera widget to depth draw (1 = depth)
 	ui.frameDepth->setMode(1);
+
+	// disable the motor current docks since this is not in use right now
+	//ui.dockCurrent->setVisible(false);
 }
 
 
@@ -114,12 +117,6 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------
 	initPlots();
 #endif
-
-	//----------------------------------------------------------------------------
-	// Compass stuff
-	//----------------------------------------------------------------------------
-// 	initCompass(); // this is for the 2D compass. Not in use at the moment.
-//	disableCompass();
 
 	//----------------------------------------------------------------------------
 	// Laser Scanner graphics Stuff (scene, view, lines, OpenGL etc.)
@@ -521,9 +518,8 @@ void Gui::on_actionTest_activated()
 
 void Gui::on_actionAll_activated()
 {
-	ui.dockCompass->show();
 	ui.dockVoltage->show();
-	ui.dockCurrent->show();
+//	ui.dockCurrent->show();
 	ui.dockState->show();
 	ui.dockLog->show();
 
@@ -534,19 +530,6 @@ void Gui::on_actionAll_activated()
 	if (ui.dockCamera->isEnabled())
 	{
 		ui.dockCamera->show();
-	}
-}
-
-
-void Gui::on_actionCompass_activated()
-{
-	if (ui.dockCompass->isVisible())
-	{
-		ui.dockCompass->hide();
-	}
-	else
-	{
-		ui.dockCompass->show();
 	}
 }
 
@@ -580,6 +563,7 @@ void Gui::on_actionVoltage_activated()
 }
 
 
+/*
 void Gui::on_actionCurrent_activated()
 {
 	if (ui.dockCurrent->isVisible())
@@ -591,6 +575,7 @@ void Gui::on_actionCurrent_activated()
 		ui.dockCurrent->show();
 	}
 }
+*/
 
 
 void Gui::on_actionState_activated()
@@ -1397,9 +1382,7 @@ void Gui::disableCamera()
 
 void Gui::disableCompass()
 {
-	appendLog("Compass window disabled!");
-	ui.dockCompass->setEnabled(false);
-	// ui.dockCompass->hide();
+	appendLog("to do");
 }
 
 
@@ -1499,6 +1482,7 @@ void Gui::saveCamImage(void)
 }
 
 
+/*
 #ifndef BUILDFORROBOT
 void Gui::setPlotData1(double *xval, double *yval, int size)
 {
@@ -1573,6 +1557,7 @@ void Gui::setPlotData4(double *xval, double *yval, int size)
 	qwtPlotCurrent2.replot();  // replot qwtPlot 2 !!
 }
 #endif
+*/
 
 
 #ifndef BUILDFORROBOT
@@ -2923,8 +2908,8 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setParent(ui.widgetVoltage1);
 	qwtPlotVoltage2.setParent(ui.widgetVoltage2);
 
-	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
-	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
+//	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
+//	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
 
 	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
 //	ui.widgetHeartbeat->resize(205, 100); // 305 x 161
@@ -3118,8 +3103,8 @@ void Gui::initPlots()
 	qwtPlotVoltage1.setGeometry( ui.widgetVoltage1->rect() );
 	qwtPlotVoltage2.setGeometry( ui.widgetVoltage2->rect() );
 
-	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
-	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
+//	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
+//	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
 
 	qwtPlotHeartbeat.setGeometry( ui.widgetHeartbeat->rect() );
 }
@@ -3299,6 +3284,13 @@ void Gui::setLEDLaser(unsigned char state)
 			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
+}
+
+
+void Gui::showKinectAngle(double angle)
+{
+	// we do a type cast here since the original Kinect method uses 'double'.
+	ui.spinBoxKinectAngle->setValue((int) angle);
 }
 
 

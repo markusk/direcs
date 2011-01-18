@@ -207,7 +207,7 @@ void QKinect::setGreenLedFlash()
 //----------------------------------------------------------------------------------------------------------------------
 void QKinect::setYellowLedFlash()
 {
-	freenect_set_led(m_dev,LED_BLINK_YELLOW);
+	freenect_set_led(m_dev,LED_BLINK_RED_YELLOW);
 }
 //----------------------------------------------------------------------------------------------------------------------
 void QKinect::setVideoMode(
@@ -474,6 +474,7 @@ void QKinect::toggleVideoState(bool _mode)
 		stopVideo();
 	}
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 void QKinect::toggleDepthState(bool _mode)
 {
@@ -486,4 +487,3 @@ void QKinect::toggleDepthState(bool _mode)
 		stopDepth();
 	}
 }
-//----------------------------------------------------------------------------------------------------------------------

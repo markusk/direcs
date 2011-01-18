@@ -136,12 +136,7 @@ Direcs::Direcs(bool bConsoleMode)
 
 	inifile1 = new Inifile();
 	netThread = new NetworkThread();
-	if (!consoleMode)
-	{
-		// The Kinect camera
-		kinect = QKinect::instance();
-//		camThread = new CamThread();
-	}
+	// creation of kinect instance moved to init method to see something on the splash screen
 	joystick = new Joystick();
 	head = new Head(servos);
 
@@ -455,10 +450,12 @@ void Direcs::init()
 			// connect plotThread signal to "setPlotData"
 			// (Whenever the plot thread has new data, the data are show in the GUI)
 			//----------------------------------------------------------------------------
+/* plot of motor currents disabled
 			connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
+*/
 			connect(plotThread, SIGNAL( plotDataComplete5(double *, double *, int) ), gui, SLOT( setPlotData5(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataComplete6(double *, double *, int) ), gui, SLOT( setPlotData6(double *, double *, int) ));
 			connect(plotThread, SIGNAL( plotDataCompleteHeartbeat(double *, double *, int) ), gui, SLOT( setPlotDataHeartbeat(double*, double*, int) ));
@@ -871,13 +868,31 @@ void Direcs::init()
 
 		if (!consoleMode)
 		{
+			emit splashMessage("Detecting Kinect camera...");
+			emit message("Detecting Kinect camera...", false);
+
+			//
+			// creation of Kinect Camera instance is not in the constructor, since this may need some time and we want to see that on the splash screen
+			//
+			kinect = QKinect::instance();
+
+			// show Kinect messages in GUI
+			connect(kinect, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+			connect(kinect, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+
+			// camThread = new CamThread();
+
 			//-----------------------------------------------------------
 			// check if Kinect camera is connected
 			//-----------------------------------------------------------
 			if (kinect->kinectDetected)
 			{
+				emit splashMessage("Kinect found.");
+				emit message("Kinect camera found.", false);
+
 				// look a bit up
 				kinect->setAngle(5); // to do: put to ini file and settings dialog
+				gui->showKinectAngle(5);
 
 				// show kinect camera state in gui
 				gui->setLEDCamera(GREEN);
@@ -900,9 +915,14 @@ void Direcs::init()
 
 				// the signal for setting the video mode
 //				connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
+
+				// create OpenCV object
+//				glWidget = new GLWidget();
 			}
 			else
 			{
+				emit splashMessage("Kinect not found.");
+				emit message("Kinect camera not found.", false);
 				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
 				gui->disableCamera();
@@ -1187,6 +1207,9 @@ void Direcs::shutdown()
 			kinect->setLedOff();
 
 			kinect->shutDownKinect();
+
+			// OpenCV object
+//			delete glWidget;
 		}
 	}
 
