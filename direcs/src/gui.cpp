@@ -3353,7 +3353,7 @@ void Gui::processCam()
 
 			ui.frameOpenCV->sendImage( &frame );
 
-//			QTimer::singleShot(25, this, SLOT(processCam()));
+			QTimer::singleShot(25, this, SLOT(processCam()));
 		}
 	}
 	return;

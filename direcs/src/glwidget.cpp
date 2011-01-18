@@ -77,10 +77,12 @@ void GLWidget::resizeGL(int w, int h)
 
 void GLWidget::sendImage(cv::Mat* img)
 {
+/*
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	if ( g_storage==NULL )
 	{
-		g_gray = cvCreateImage( cvGetSize(img), 8, 1 );
+//		g_gray = cvCreateImage( cvSize(FREENECT_FRAME_W, FREENECT_FRAME_H), 8, 1 );
+		g_gray = cvCreateImage( cvSize(640, 480), 8, 1 );
 		g_storage = cvCreateMemStorage(0);
 	} else
 	{
@@ -102,6 +104,8 @@ void GLWidget::sendImage(cv::Mat* img)
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	qframe = QImage((const unsigned char*)(g_gray->imageData), g_gray->width, g_gray->height, g_gray->widthStep, QImage::Format_RGB888).rgbSwapped();
+*/
+	qframe = QImage((const unsigned char*)(img->data), img->cols, img->rows, img->step, QImage::Format_RGB888).rgbSwapped();
 	qframe = QGLWidget::convertToGLFormat(qframe);
 	this->updateGL();
 
