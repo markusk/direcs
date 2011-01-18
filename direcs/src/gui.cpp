@@ -67,6 +67,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 void Gui::init()
 {
+	cameraOpened = false;
+
 	// remote control is enabled by default. @sa Direcs::init()
 	ui.actionRemote->setChecked(true);
 
@@ -194,6 +196,12 @@ Gui::~Gui()
 
 	delete scene;
 #endif
+
+	if (cameraOpened)
+	{
+		cvReleaseCapture( &capture );
+		cameraOpened = false;
+	}
 }
 
 
@@ -513,6 +521,11 @@ void Gui::on_btnResetMovement4_clicked()
 void Gui::on_actionTest_activated()
 {
 	emit test();
+
+	capture = cvCreateCameraCapture(0);
+	cameraOpened = true;
+
+	this->processCam();
 }
 
 
@@ -3325,4 +3338,26 @@ void Gui::systemerrorcatcher(int errorlevel)
 		// turn GUI LED laser to red
 		setLEDLaser(RED);
 	}
+}
+
+
+void Gui::processCam()
+{
+	if (cameraOpened)
+	{
+		timer.restart();
+
+		frame = cvQueryFrame( capture );
+
+		if (frame.data)
+		{
+			// add brightness and contrast
+//			this->processFrame(frame);
+
+			ui.frameOpenCV->sendImage( &frame );
+
+			QTimer::singleShot(25, this, SLOT(processCam()));
+		}
+	}
+	return;
 }

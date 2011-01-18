@@ -52,14 +52,6 @@ void GLWidget::paintGL()
 		//glColor4f(0.0f,1.0f,1.0f, 0.9f);
 		glFlush();
 	}
-	// qDebug() << "Drawing...";
-
-	// contour finding stuff
-	g_image    = NULL;
-	g_gray    = NULL;
-	g_thresh  = 100;
-	g_storage  = NULL;
-
 }
 
 
@@ -79,4 +71,5 @@ void GLWidget::sendImage(cv::Mat* img)
 	qframe = QImage((const unsigned char*)(img->data), img->cols, img->rows, img->step, QImage::Format_RGB888).rgbSwapped();
 	qframe = QGLWidget::convertToGLFormat(qframe);
 	this->updateGL();
+
 }
