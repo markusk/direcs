@@ -134,8 +134,8 @@ macx {
 				/usr/local/include/opencv2
 	INCLUDEPATH += /opt/local/include/opencv \
 				/usr/local/include/opencv
-	HEADERS += glwidget.h
-	HEADERS += glwidget.cpp
+#	HEADERS += glwidget.h
+#	HEADERS += glwidget.cpp
 
 	message("Changing qwt lib name. Has to be installed via macports.")
 	LIBS +=		-lqwt

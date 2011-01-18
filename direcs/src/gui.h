@@ -49,9 +49,9 @@
 
 #include "compassWidget.h"
 
-#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
+/*
 	#include "glwidget.h"
-#endif
+*/
 
 #include "ui_direcs.h"
 
@@ -616,13 +616,13 @@ class Gui : public QMainWindow
 		QPixmap cameraPicToSave;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
+/*
 		GLWidget glwidget1; // this object will be added to the GUI layout
 
 		CvCapture *capture;
 		QTime timer;
 		bool cameraOpened;
-#endif
+*/
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 		QColor labelFillColorRed;
@@ -676,9 +676,9 @@ class Gui : public QMainWindow
 		CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui
-#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
+/*
 		cv::Mat frame;
-#endif
+*/
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */
