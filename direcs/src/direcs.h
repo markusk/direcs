@@ -57,7 +57,11 @@
 #include "head.h"
 //#include "camThread.h"
 #include "speakThread.h"
-#include "glwidget.h"
+
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
+	#include "glwidget.h"
+#endif
+
 //-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
 using namespace std;

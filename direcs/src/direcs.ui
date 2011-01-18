@@ -114,7 +114,7 @@
      <x>0</x>
      <y>0</y>
      <width>1680</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuRobot">
@@ -1525,7 +1525,7 @@
       </widget>
      </item>
      <item row="2" column="0" colspan="2">
-      <widget class="GLWidget" name="frameOpenCV" native="true">
+      <widget class="QWidget" name="frameOpenCV" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -2095,12 +2095,6 @@
    <class>CompassWidget</class>
    <extends>QWidget</extends>
    <header>compassWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>GLWidget</class>
-   <extends>QWidget</extends>
-   <header>glwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

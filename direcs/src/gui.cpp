@@ -67,7 +67,11 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 void Gui::init()
 {
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	cameraOpened = false;
+	// create to qwt plot objects and place them in the GUI
+	glwidget1.setParent(ui.frameOpenCV);
+#endif
 
 	// remote control is enabled by default. @sa Direcs::init()
 	ui.actionRemote->setChecked(true);
@@ -197,11 +201,13 @@ Gui::~Gui()
 	delete scene;
 #endif
 
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	if (cameraOpened)
 	{
 		cvReleaseCapture( &capture );
 		cameraOpened = false;
 	}
+#endif
 }
 
 
@@ -522,10 +528,12 @@ void Gui::on_actionTest_activated()
 {
 	emit test();
 
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	capture = cvCreateCameraCapture(0);
 	cameraOpened = true;
 
 	this->processCam();
+#endif
 }
 
 
@@ -3343,6 +3351,7 @@ void Gui::systemerrorcatcher(int errorlevel)
 
 void Gui::processCam()
 {
+#ifdef Q_OS_MAC // FIXME: Using OpenCV 2.1 under Mac OS X only.
 	if (cameraOpened)
 	{
 		timer.restart();
@@ -3360,4 +3369,5 @@ void Gui::processCam()
 		}
 	}
 	return;
+#endif
 }
