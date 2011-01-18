@@ -48,7 +48,6 @@
 #endif
 
 #include "compassWidget.h"
-#include <opencv/highgui.h>
 #include "glwidget.h"
 #include "ui_direcs.h"
 
@@ -612,7 +611,6 @@ class Gui : public QMainWindow
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		CvCapture *capture;
-//		Mat frame;
 		QTime timer;
 		bool cameraOpened;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
