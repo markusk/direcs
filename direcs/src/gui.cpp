@@ -68,6 +68,21 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 void Gui::init()
 {
 	cameraOpened = false;
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+// get background color for compass widget
+//	QColor compassBackground = this->palette().window().color();
+//	QColor compassBackground = this->palette().light().color();
+
+	// change background color of compass gl object to background color from the main window
+//	ui.frameCompass->setBackgroundColor(compassBackground);  // doesn't work. Qt Bug?
+
+/*
+	QPalette pal = ui.mainWindow->palette();
+	pal.setColor(QPalette::Base, pal.color(QPalette::Window));
+	ui.frameCompass->setPalette(pal);
+*/
 
 	// remote control is enabled by default. @sa Direcs::init()
 	ui.actionRemote->setChecked(true);
