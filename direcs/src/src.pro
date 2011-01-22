@@ -46,7 +46,8 @@ unix|macx {
 				speakThread.h \
 				logfile.h \
 				RGBWindow.h \
-				QKinect.h
+				QKinect.h \
+				glwidget.h
 
 	SOURCES +=	aboutDialog.cpp \
 #				camThread.cpp \
@@ -76,7 +77,8 @@ unix|macx {
 				speakThread.cpp \
 				logfile.cpp \
 				RGBWindow.cpp \
-				QKinect.cpp
+				QKinect.cpp \
+				glwidget.cpp
 
 	FORMS +=	direcs.ui \
 				aboutDialog.ui \
@@ -119,9 +121,6 @@ macx {
 	message("Removing espeak support.")
 	LIBS -=		-lespeak \
 				-lqwt-qt4
-
-#	HEADERS += glwidget.h
-#	HEADERS += glwidget.cpp
 
 	message("Changing qwt lib name. Has to be installed via macports.")
 	LIBS +=		-lqwt

@@ -4,8 +4,11 @@
 #include <QGLWidget>
 #include <QtOpenGL>
 
-#include <opencv2/core/core_c.h>
-#include <opencv2/highgui/highgui_c.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+// using namespace cv;
 
 class GLWidget : public QGLWidget
 {
@@ -13,7 +16,14 @@ class GLWidget : public QGLWidget
 
 public:
 	GLWidget(QWidget *_parent);
+
 	void sendImage(cv::Mat *img);
+
+	/// Convert from Qt::QImage to cv::Mat
+	cv::Mat qimage2mat(const QImage& qimage);
+
+	/// Convert from cv::Mat to Qt::QImage
+	QImage mat2qimage(const cv::Mat& mat);
 
 
 protected:
