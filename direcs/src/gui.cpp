@@ -555,11 +555,41 @@ void Gui::on_actionTest_activated()
 	// OpenCV tests
 	//
 
+/*
+	kinect->getRGB(m_rgb);
+//	kinect->getDepth(m_rgb);
+
+	glBindTexture(GL_TEXTURE_2D, m_rgbTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, 640, 480, 0, GL_RGB, GL_UNSIGNED_BYTE, &m_rgb[0]);
+*/
+
+	// grab image from the kinect frame in the GUI
+	QImage qimage = ui.frameDepth->grabFrameBuffer();
+
+	// convert QImage to OpeneCV's cv::Mat
+	//
+	// http://permalink.gmane.org/gmane.comp.lib.opencv/37800
+	//
+	//Mat qimage2mat(const QImage& qimage) {
+
+	cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC4, (uchar*)qimage.bits(), qimage.bytesPerLine());
+	cv::Mat mat2 = cv::Mat(mat.rows, mat.cols, CV_8UC3 );
+	int from_to[] = { 0,0,  1,1,  2,2 };
+	cv::mixChannels( &mat, 1, &mat2, 1, from_to, 3 );
+
+	// result is now in 'mat2'
+
+// -- - -- --
+
+
 	mImage.release(); // reset picture
 
 	// load JPEG from disc
-	cv::Mat tmpImg = cv::imread( "puzzle.jpg" );
-	cv::cvtColor( tmpImg, mImage, CV_BGR2RGB);
+//	cv::Mat tmpImg = cv::imread( "puzzle.jpg" );
+//	cv::cvtColor( tmpImg, mImage, CV_BGR2RGB);
+
+	// depth image from Kinect now! (mat2)
+	cv::cvtColor( mat2, mImage, CV_BGR2RGB);
 
 	QImage tmp( (uchar*)mImage.data, mImage.cols, mImage.rows, mImage.step, QImage::Format_RGB888 );
 	ui.lblOpenCV->setPixmap( QPixmap::fromImage( tmp ) );

@@ -625,6 +625,10 @@ class Gui : public QMainWindow
 		bool cameraOpened;
 */
 		cv::Mat mImage; // OpenCV test
+
+		// kinect image (grabbed before in the QKinect class)
+		/// @brief the image data to draw put into a GL texture
+		std::vector<uint8_t> m_rgb;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 		QColor labelFillColorRed;
