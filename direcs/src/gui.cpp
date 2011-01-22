@@ -551,15 +551,29 @@ void Gui::on_actionTest_activated()
 	this->processCam();
 */
 
+	//
+	// OpenCV tests
+	//
+
 	mImage.release(); // reset picture
 
 	// load JPEG from disc
 	cv::Mat tmpImg = cv::imread( "puzzle.jpg" );
 	cv::cvtColor( tmpImg, mImage, CV_BGR2RGB);
 
-	// OpenCV test
 	QImage tmp( (uchar*)mImage.data, mImage.cols, mImage.rows, mImage.step, QImage::Format_RGB888 );
 	ui.lblOpenCV->setPixmap( QPixmap::fromImage( tmp ) );
+
+
+	if (mImage.data)
+	{
+		cv::Mat gray;
+		cv::cvtColor( mImage, gray, CV_RGB2GRAY );
+		cv::Canny( gray, gray, 10, 30, 3 );
+
+		QImage tmp( (uchar*)gray.data, gray.cols, gray.rows, gray.step, QImage::Format_Indexed8  );
+		ui.lblOpenCV->setPixmap( QPixmap::fromImage( tmp ) );
+	}
 }
 
 
