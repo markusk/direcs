@@ -36,7 +36,7 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <vector>
-#include <libfreenect.h>
+#include <libfreenect/libfreenect.h>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @class QKinectProcessEvents "QKinect.h"

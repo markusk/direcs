@@ -18,7 +18,6 @@ DEFINES += ACTIVELASERVIEW
 
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
-	message("No use of OpenCV !!!")
 	HEADERS +=	aboutDialog.h \
 #				camThread.h \
 				circuit.h \
@@ -87,24 +86,20 @@ unix|macx {
 	QT +=		network \
 				opengl
 
-	INCLUDEPATH += /opt/local/include/opencv2 \
-				/opt/local/include \
+	INCLUDEPATH += /opt/local/include \
 				/opt/local/libexec/qt4-mac/include \
 				/usr/include/qwt-qt4 \
 				/opt/local/include/qwt \
-				/usr/local/include/opencv2 \
-				/usr/local/include/libfreenect \
-				/usr/local/include \
-				/opt/local/include
+				/usr/local/include
 
 	LIBS +=		-L/opt/local/lib \
 				-L/usr/lib \
 				-L/usr/local/lib \
 				-lespeak \
 				-lqwt-qt4 \
-				-lfreenect
-#				-lopencv_core \
-#				-lopencv_highgui
+				-lfreenect \
+				-lopencv_core \
+				-lopencv_highgui
 
 	QMAKE_CXXFLAGS_DEBUG += -pg
 	QMAKE_CXXFLAGS_RELEASE += -pg
@@ -124,16 +119,6 @@ macx {
 	LIBS -=		-lespeak \
 				-lqwt-qt4
 
-	message("FIXME: Using OpenCV 2.1 here. Use OpenCV 2.2 !!")
-	LIBS -=		-lopencv_core \
-				-lopencv_highgui
-	LIBS +=		-lcv \
-				-lcxcore \
-				-lhighgui
-	INCLUDEPATH -= /opt/local/include/opencv2 \
-				/usr/local/include/opencv2
-	INCLUDEPATH += /opt/local/include/opencv \
-				/usr/local/include/opencv
 #	HEADERS += glwidget.h
 #	HEADERS += glwidget.cpp
 
