@@ -99,7 +99,8 @@ unix|macx {
 				-lqwt-qt4 \
 				-lfreenect \
 				-lopencv_core \
-				-lopencv_highgui
+				-lopencv_highgui \
+				-lopencv_imgproc
 
 	QMAKE_CXXFLAGS_DEBUG += -pg
 	QMAKE_CXXFLAGS_RELEASE += -pg

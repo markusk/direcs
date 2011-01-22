@@ -21,12 +21,13 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include <QtGlobal> // for Q_OS_* Makro!
-
-//#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-//	#include "cv.h" // for type IplImage (camThread)
-#//endif
 //-------------------------------------------------------------------
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+// using namespace cv;
+//-------------------------------------------------------------------
+#include <QtGlobal> // for Q_OS_* Makro!
 #include <QtGui>
 #include <QtOpenGL>
 
@@ -623,6 +624,7 @@ class Gui : public QMainWindow
 		QTime timer;
 		bool cameraOpened;
 */
+		cv::Mat mImage; // OpenCV test
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 		QColor labelFillColorRed;

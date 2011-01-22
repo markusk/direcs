@@ -550,6 +550,16 @@ void Gui::on_actionTest_activated()
 
 	this->processCam();
 */
+
+	mImage.release(); // reset picture
+
+	// load JPEG from disc
+	cv::Mat tmpImg = cv::imread( "puzzle.jpg" );
+	cv::cvtColor( tmpImg, mImage, CV_BGR2RGB);
+
+	// OpenCV test
+	QImage tmp( (uchar*)mImage.data, mImage.cols, mImage.rows, mImage.step, QImage::Format_RGB888 );
+	ui.lblOpenCV->setPixmap( QPixmap::fromImage( tmp ) );
 }
 
 
