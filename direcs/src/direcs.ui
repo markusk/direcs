@@ -1525,7 +1525,7 @@
       </widget>
      </item>
      <item row="2" column="0" colspan="2">
-      <widget class="QWidget" name="frameOpenCV" native="true">
+      <widget class="GLWidget" name="frameOpenCV" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -2123,6 +2123,12 @@
    <class>CompassWidget</class>
    <extends>QWidget</extends>
    <header>compassWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QWidget</extends>
+   <header>glwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

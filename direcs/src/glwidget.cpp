@@ -3,9 +3,15 @@
 
 GLWidget::GLWidget(QWidget *_parent)   : QGLWidget(_parent)
 {
-//	setMinimumSize(640,480);
+	//	setMinimumSize(640,480);
 	// re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
 	this->resize(_parent->size());
+
+	// start the timer to re-draw as quick as possible
+	startTimer(0);
+
+	// create space for our image data from the Kinect
+	m_rgb.resize(640*480*3);
 }
 
 
@@ -17,6 +23,35 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
+	//
+	// get picture data from kinect class
+	//
+	QKinect *kinect=QKinect::instance();
+/*
+	if(m_mode ==0)
+	{
+*/
+		kinect->getRGB(m_rgb);
+/*
+	}
+	else if(m_mode == 1)
+	{
+		kinect->getDepth(m_rgb);
+	}
+*/
+
+	cv::Mat depthMat(cv::Size(640,480), CV_16UC1);
+	cv::Mat rgbMat(cv::Size(640,480), CV_8UC3, cv::Scalar(0));
+
+	//copy to ocv_buf..
+	memcpy(rgbMat.data, &m_rgb[0], 640*480*3);
+
+	// convert to qimate
+	qframe = mat2qimage(rgbMat);
+
+	// qframe = QImage((const unsigned char*)(&m_rgb[0]), 640, 480, QImage::Format_RGB888);
+
+
 	glClear (GL_COLOR_BUFFER_BIT);
 	glClearColor (0.0,0.0,0.0,1.0);
 
@@ -74,6 +109,7 @@ void GLWidget::sendImage(cv::Mat* img)
 
 }
 
+
 cv::Mat GLWidget::qimage2mat(const QImage& qimage)
 {
 	cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC4, (uchar*)qimage.bits(), qimage.bytesPerLine());
@@ -91,4 +127,60 @@ QImage GLWidget::mat2qimage(const cv::Mat& mat)
 	cv::cvtColor(mat, rgb, CV_BGR2RGB);
 
 	return QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888);
+}
+
+
+void GLWidget::processOpenCV()
+{
+	QImage qimage = QImage((const unsigned char*)(&m_rgb[0]), 640, 480, QImage::Format_RGB888);
+
+	// - - - - - - - -
+	// - - - - - - - -
+	// - - - - - - - -
+
+
+	// grab image from the kinect frame in the GUI
+//	QImage qimage = ui.frameDepth->grabFrameBuffer();
+
+	// convert QImage to OpeneCV's cv::Mat
+	//
+	// http://permalink.gmane.org/gmane.comp.lib.opencv/37800
+	//
+	//Mat qimage2mat(const QImage& qimage) {
+
+	cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC4, (uchar*)qimage.bits(), qimage.bytesPerLine());
+	cv::Mat mat2 = cv::Mat(mat.rows, mat.cols, CV_8UC3 );
+	int from_to[] = { 0,0,  1,1,  2,2 };
+	cv::mixChannels( &mat, 1, &mat2, 1, from_to, 3 );
+
+	// result is now in 'mat2'
+
+	mImage.release(); // reset picture
+
+	// depth image from Kinect now! (mat2)
+	cv::cvtColor( mat2, mImage, CV_BGR2RGB);
+
+//	QImage tmp( (uchar*)mImage.data, mImage.cols, mImage.rows, mImage.step, QImage::Format_RGB888 );
+//	ui.lblOpenCV->setPixmap( QPixmap::fromImage( tmp ) );
+
+
+	if (mImage.data)
+	{
+		cv::Mat gray;
+		cv::cvtColor( mImage, gray, CV_RGB2GRAY );
+		cv::Canny( gray, gray, 10, 30, 3 );
+
+		// convert b/w Mat to QImage
+//		QImage tmp( (uchar*)gray.data, gray.cols, gray.rows, gray.step, QImage::Format_Indexed8  );
+
+		// send image to GUI
+//		ui.lblOpenCV->setPixmap( QPixmap::fromImage( tmp ) );
+	}
+}
+
+
+void GLWidget::timerEvent(QTimerEvent *_event)
+{
+	// re-draw GL
+	updateGL();
 }
