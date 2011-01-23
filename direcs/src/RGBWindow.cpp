@@ -34,7 +34,7 @@ RGBWindow::RGBWindow(QWidget *_parent) : QGLWidget(_parent)
 	this->resize(_parent->size());
 
 	// start the timer to re-draw as quick as possible
-	startTimer(0);
+	startTimer(50); // we slow that down cause of heavy CPU usage when this is 0 ms
 
 	// create space for our image data
 	m_rgb.resize(640*480*3);
