@@ -8,7 +8,7 @@ GLWidget::GLWidget(QWidget *_parent)   : QGLWidget(_parent)
 	this->resize(_parent->size());
 
 	// start the timer to re-draw as quick as possible
-	startTimer(0);
+	startTimer(500); // each 500 ms
 
 	// create space for our image data from the Kinect
 	m_rgb.resize(640*480*3);
