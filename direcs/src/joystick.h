@@ -50,26 +50,27 @@
 #include <QThread>
 
 /**
+\author Markus Knapp
 \brief This class is for controling the robot with a joystick.
 
 It opens a joystick device and emits signals on joystick movements or when a button is pressed.
 */
 class Joystick : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		Joystick();
 		~Joystick();
 		void stop();
 		virtual void run();
-		
+
 		/**
 		Sets the joystick port.
 		@param port is the joystick port (e.g. /dev/input/js0)
 		 */
 		void setPort(QString port);
-		
+
 		/**
 		Returns the state of a connected joystick.
 		@return true, if connected
@@ -84,14 +85,14 @@ class Joystick : public QThread
 		@param text is the message to be emitted
 		*/
 		void message(QString text);
-		
+
 		/**
 		Emits a signal when an joystick move event occured.
 		@param axisNumber is the number of the joysticks axis
 		@param axisValue is the axis value
 		*/
 		void joystickMoved(int axisNumber, int axisValue);
-		
+
 		/**
 		Emits a signal when an joystick button-pressed event occured.
 		@param axisNumber is the number of the joysticks button

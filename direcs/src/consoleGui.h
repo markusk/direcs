@@ -26,6 +26,7 @@
 
 
 /**
+\author Markus Knapp
 \brief The 'gui' class in the console mode.
 */
 class ConsoleGui : public QObject
@@ -80,7 +81,7 @@ class ConsoleGui : public QObject
 		@param state can be ON or OFF
 		 */
 		void setRobotControls(bool state);
-		
+
 		/**
 		Appends text to the main log in the main window.
 		@param text is the text to be displayed.
@@ -111,12 +112,12 @@ class ConsoleGui : public QObject
 		Refreshes the view of the lines from the front laser scanner.
 		*/
 		void refreshLaserViewFront(QList <float> laserScannerValues, QList <int> laserScannerFlags);
-		
+
 		/**
 		Refreshes the view of the lines from the rear laser scanner.
 		*/
 		void refreshLaserViewRear(QList <float> laserScannerValues, QList <int> laserScannerFlags);
-		
+
 		/**
 		Shows the angles of the free area where to drive in lables.
 		@param largestFreeAreaStart
@@ -205,8 +206,8 @@ class ConsoleGui : public QObject
 		void test();
 
 	private:
-/* 
-	TODO:	void closeEvent();
+/*
+	\todo	void closeEvent();
 		*/
 		/**
 		Creates all objects, lines, scene, view etc.
@@ -218,7 +219,7 @@ class ConsoleGui : public QObject
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */
-		
+
 		static const float AMPERESMAXPLOTCURVE1 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 1
 		static const float AMPERESMAXPLOTCURVE2 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 2
 		static const float AMPERESSTEPPLOTCURVE1 = 500.0; /// The step value for the y axis for plot curve number 1

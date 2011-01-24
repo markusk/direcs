@@ -28,6 +28,7 @@
 
 
 /**
+\author Markus Knapp
 \brief Dialog for showing the joystick axes and buttons.
 
 Dialog for showing information about the joystick movement and the pressed buttons.
@@ -35,7 +36,7 @@ Dialog for showing information about the joystick movement and the pressed butto
 class JoystickDialog : public QDialog
 {
 	Q_OBJECT
-	
+
 	public:
 		JoystickDialog(QWidget* parent = 0);
 
@@ -67,7 +68,7 @@ class JoystickDialog : public QDialog
 	private:
 		Ui::joystickDialog ui;
 
-		// TODO: put axis numbers to ini-file
+		// \todo put axis numbers to ini-file
 		/// Joystick axis numbers
 		/// @sa Joystick()
 		static const int JOYSTICKAXISY2 = 2; // ok

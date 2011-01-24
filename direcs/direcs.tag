@@ -97,7 +97,6 @@
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
     <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
     <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
-    <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
     <includes id="speakThread_8h" name="speakThread.h" local="yes" imported="no">speakThread.h</includes>
     <class kind="struct">CleanExit</class>
     <class kind="class">Direcs</class>
@@ -136,16 +135,17 @@
     </member>
   </compound>
   <compound kind="file">
-    <name>direcsSerial__LMS300_Teil.cpp</name>
+    <name>glwidget.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>direcsSerial____LMS300__Teil_8cpp</filename>
-    <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
+    <filename>glwidget_8cpp</filename>
+    <includes id="glwidget_8h" name="glwidget.h" local="yes" imported="no">glwidget.h</includes>
   </compound>
   <compound kind="file">
-    <name>direcsSerial__S300Atmel_Teil.cpp</name>
+    <name>glwidget.h</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>direcsSerial____S300Atmel__Teil_8cpp</filename>
-    <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
+    <filename>glwidget_8h</filename>
+    <includes id="QKinect_8h" name="QKinect.h" local="yes" imported="no">QKinect.h</includes>
+    <class kind="class">GLWidget</class>
   </compound>
   <compound kind="file">
     <name>gui.cpp</name>
@@ -397,6 +397,13 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>CBREAK</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>acd5bddee635eadaa90cb5eae04c7d251</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>CRC16_GEN_POL</name>
       <anchorfile>laser_8h.html</anchorfile>
       <anchor>a087c979734116b73cd94fd4f73abdeab</anchor>
@@ -593,6 +600,13 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>FALSE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>aa93f0eb578d23995850d61f7d61c55c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>INI</name>
       <anchorfile>laser_8h.html</anchorfile>
       <anchor>ab3d6f7cc7deaab046f7412f5b52b25f7</anchor>
@@ -617,6 +631,13 @@
       <name>LMS_PASSWORD</name>
       <anchorfile>laser_8h.html</anchorfile>
       <anchor>a856336d040b00743dc99649dbc2d5b68</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>M_PI</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>ae71449b1cc6e6250b91f539153a7a0d3</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -691,6 +712,20 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>MAXDOUBLE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>ace724a9256f4e65b352465e5feb24a21</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAXFLOAT</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a5e9e29217f6ec61105a4520ec5942225</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>NAK</name>
       <anchorfile>laser_8h.html</anchorfile>
       <anchor>a7ff3e502ffb5d509612c6c6741de45cc</anchor>
@@ -701,6 +736,13 @@
       <name>PLS_PASSWORD</name>
       <anchorfile>laser_8h.html</anchorfile>
       <anchor>a7772a0e1d97c97b635af4e4d53c26a87</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RAW</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a8cbc8c74f4ed0a3d6a415c8d37630e6b</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -740,9 +782,37 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>TIOCGETP</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a48cdfd4dc0eadfd6694466b21b232929</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>TIOCSETP</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>a9f4aefaeb94c4c17ead72493c9786394</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>TRUE</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>aa8cecfc5c5c054d2875c03e77b7be15d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>UKN</name>
       <anchorfile>laser_8h.html</anchorfile>
       <anchor>acab34ad4a1eef1ea50c1424981fa52ae</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>va_copy</name>
+      <anchorfile>laser_8h.html</anchorfile>
+      <anchor>ab1bc77186597ff91cc8ee54e7a56c23d</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -851,6 +921,19 @@
     <class kind="class">PlotThread</class>
   </compound>
   <compound kind="file">
+    <name>QKinect.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>QKinect_8cpp</filename>
+    <includes id="QKinect_8h" name="QKinect.h" local="no" imported="no">QKinect.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>QKinect.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>QKinect_8h</filename>
+    <class kind="class">QKinect</class>
+    <class kind="class">QKinectProcessEvents</class>
+  </compound>
+  <compound kind="file">
     <name>QtGLContext.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>QtGLContext_8cpp</filename>
@@ -861,6 +944,20 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>QtGLContext_8h</filename>
     <class kind="class">QtGLContext</class>
+  </compound>
+  <compound kind="file">
+    <name>RGBWindow.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>RGBWindow_8cpp</filename>
+    <includes id="RGBWindow_8h" name="RGBWindow.h" local="yes" imported="no">RGBWindow.h</includes>
+    <includes id="QKinect_8h" name="QKinect.h" local="no" imported="no">QKinect.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>RGBWindow.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>RGBWindow_8h</filename>
+    <includes id="QKinect_8h" name="QKinect.h" local="yes" imported="no">QKinect.h</includes>
+    <class kind="class">RGBWindow</class>
   </compound>
   <compound kind="file">
     <name>sensorThread.cpp</name>
@@ -2838,15 +2935,15 @@
       <type>void</type>
       <name>executeJoystickCommand</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a8bcb5c2166f7e17c7836e9a05dc8069d</anchor>
-      <arglist>(int buttonNumber, bool buttonState)</arglist>
+      <anchor>aaee8cbf555ca29e8be40133b0752abe7</anchor>
+      <arglist>(int axisNumber, int axisValue)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
       <name>executeJoystickCommand</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>aaee8cbf555ca29e8be40133b0752abe7</anchor>
-      <arglist>(int axisNumber, int axisValue)</arglist>
+      <anchor>a8bcb5c2166f7e17c7836e9a05dc8069d</anchor>
+      <arglist>(int buttonNumber, bool buttonState)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -3080,13 +3177,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>CamThread *</type>
-      <name>camThread</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a53e90b59b5542a3b962fbff3baf2ff38</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>Circuit *</type>
       <name>circuit1</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3224,6 +3314,13 @@
       <name>joystickDialog</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a217592e0e53a6f326f80f6c9e489109e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QKinect *</type>
+      <name>kinect</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>afdc846a7483f413810a7ce0c154c832e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -4137,15 +4234,15 @@
       <type>long</type>
       <name>numChars</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>ad48df4c8f50ce278b32ce0281c5a3e25</anchor>
-      <arglist>()</arglist>
+      <anchor>a08b97d7107cf3f6e2715aa5a6a352bfe</anchor>
+      <arglist>(int dev_fd)</arglist>
     </member>
     <member kind="function">
       <type>long</type>
       <name>numChars</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a08b97d7107cf3f6e2715aa5a6a352bfe</anchor>
-      <arglist>(int dev_fd)</arglist>
+      <anchor>ad48df4c8f50ce278b32ce0281c5a3e25</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -4409,6 +4506,94 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>GLWidget</name>
+    <filename>classGLWidget.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>GLWidget</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>a264cb1cd1225fc7be988ae78a3b0ef05</anchor>
+      <arglist>(QWidget *_parent)</arglist>
+    </member>
+    <member kind="function">
+      <type>QImage</type>
+      <name>mat2qimage</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>a244c7ed22bd0a8db330483ff0141bd97</anchor>
+      <arglist>(const cv::Mat &amp;mat)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>processOpenCV</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>ad6305b836878bfc39c528bcdf0fe51dc</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>cv::Mat</type>
+      <name>qimage2mat</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>af5f698c47a2e5de0ab40442eba9ce2b0</anchor>
+      <arglist>(const QImage &amp;qimage)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>sendImage</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>a5d6c4247cc7430e8178256461e712a30</anchor>
+      <arglist>(cv::Mat *img)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>initializeGL</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>a7fab13e8cc9fc0730ca54c08b2c923a7</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>paintGL</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>a640b5570cb2b37724fd5b58a77339c5e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>resizeGL</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>ac0d2a8ecf60907a81c0d73475d851025</anchor>
+      <arglist>(int width, int height)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>timerEvent</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>a65b9bee77873a15ce21b8bc6570af969</anchor>
+      <arglist>(QTimerEvent *_event)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint8_t &gt;</type>
+      <name>m_rgb</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>ac7bdc5dead0f3c373a8047b481b50c9c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>cv::Mat</type>
+      <name>mImage</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>a70ad5252c97139d2abdff07f36ec215f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QImage</type>
+      <name>qframe</name>
+      <anchorfile>classGLWidget.html</anchorfile>
+      <anchor>afd673fdc841316606f3fbbb9f968c36e</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>Gui</name>
     <filename>classGui.html</filename>
     <member kind="slot">
@@ -4518,34 +4703,6 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>setPlotData1</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ab2d8888747107818ca18ebab14bbdbc6</anchor>
-      <arglist>(double *xval, double *yval, int size)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>setPlotData2</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a5b31d6ac9b1483de19a22254c71be591</anchor>
-      <arglist>(double *xval, double *yval, int size)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>setPlotData3</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ad72f8feedaec0c685ce1df6c439b31f6</anchor>
-      <arglist>(double *xval, double *yval, int size)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
-      <name>setPlotData4</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a938a76716d27c179b272e9b012380cb0</anchor>
-      <arglist>(double *xval, double *yval, int size)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>setPlotData5</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a5209933acdee864aeb652e4a792bac22</anchor>
@@ -4592,6 +4749,13 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>ad22b9f6fe9aacdb789fc81d06689bc63</anchor>
       <arglist>(QString direction)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>showKinectAngle</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>af7c39d130472f894225d21ec4cbbbbad</anchor>
+      <arglist>(double angle)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4662,6 +4826,27 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>a03f3f8c2e27605b6e96f2c8ec9dabde9</anchor>
       <arglist>(int sensor)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>resetKinectAngle</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a391a1ed65473043c675fa7da7cdc2603</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>setKinectAngle</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a34396558942376ffc04c3a329192191d</anchor>
+      <arglist>(double i)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>setKinectVideoMode</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a91cd5960688bede0ed43e016e1eea59f</anchor>
+      <arglist>(int mode)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -4770,20 +4955,6 @@
     </member>
     <member kind="slot" protection="protected">
       <type>void</type>
-      <name>on_actionCompass_activated</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aa6a468b28a49d6b9cbbce093df81488f</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot" protection="protected">
-      <type>void</type>
-      <name>on_actionCurrent_activated</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ae24609b32d5057f08b0c4ce9eec91c2d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot" protection="protected">
-      <type>void</type>
       <name>on_actionDrive_activated</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a016b879a781b48e9d627540d7c3ede06</anchor>
@@ -4875,6 +5046,13 @@
     </member>
     <member kind="slot" protection="private">
       <type>void</type>
+      <name>on_btnKinectResetAngle_clicked</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a7480bfb5de593057c5d382a523d0b94e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
       <name>on_btnSavePicture_clicked</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a0f028ee5ebc9826fa0003c10ccd7328d</anchor>
@@ -4900,6 +5078,20 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>a49c01cf888eb42806b6eef3fb1d5de79</anchor>
       <arglist>(int)</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>on_spinBoxKinectAngle_valueChanged</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ab1da8e2b1694341c9ac760b9926a1ed7</anchor>
+      <arglist>(int i)</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>processCam</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aa22326f719030dc6e9e0fd52ea95bc24</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="slot" protection="private">
       <type>void</type>
@@ -5158,6 +5350,20 @@
       <name>laserscannerResolutionRear</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a06631a75d6349f5f8bab193799870f70</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint8_t &gt;</type>
+      <name>m_rgb</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a776486d2070bba4078cb305227a88fd5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>cv::Mat</type>
+      <name>mImage</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aefea306de060a4f8d94fc1b118c44b02</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -9961,6 +10167,406 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>QKinect</name>
+    <filename>classQKinect.html</filename>
+    <member kind="slot">
+      <type>freenect_context *</type>
+      <name>getContext</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a24342d707e2262c695cd1d683f93590f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
+      <name>getDepth</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a94ecdbf1fcf91c3044250cb0325f1df4</anchor>
+      <arglist>(std::vector&lt; uint8_t &gt; &amp;o_buffer)</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
+      <name>getDepth16Bit</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a920920dec6f64303e76c308a33c5cd53</anchor>
+      <arglist>(std::vector&lt; uint16_t &gt; &amp;o_buffer)</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
+      <name>getDepthRaw</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>acd39a8bada9f611317aefe9d312bd76f</anchor>
+      <arglist>(std::vector&lt; uint8_t &gt; &amp;o_buffer)</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
+      <name>getRGB</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a5807411f4fa926ad1072d2ba33c8a6ff</anchor>
+      <arglist>(std::vector&lt; uint8_t &gt; &amp;o_buffer)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>resetAngle</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ad3424a987360f66341bdde17dca94be9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setAngle</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a3dc78a61074cf5be9eddba9da4b38f4f</anchor>
+      <arglist>(double _angle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setGreenLed</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ac9102ad70b2d181443649d776452049f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setGreenLedFlash</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ae88addc2b77e1bc83151bd4034172aea</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLedOff</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>aa4eb9734cf8c95b923b7fa6e5918f839</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRedLed</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a7897c3c5175037185b09914f4734cfa9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRedLedFlash</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a5252777a373d88638c486c743fbef956</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setVideoMode</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a06ad44c3ffd8f39cd07b7c2683794d78</anchor>
+      <arglist>(int _mode)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setYellowLed</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a54c0bf01e51307bc4c4e8947af7986b2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setYellowLedFlash</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a78f32d83cb014cbd7b855bac496bd7f5</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>startDepth</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a620563744b0db620fb6e22dd8ef9c6bd</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>startVideo</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a23578d33dd055d0db94ba9476b64e3d3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>stopDepth</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a262abec795770d27fd5a04ae4dba5db6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>stopVideo</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a2babc58fdc76280374642f74613ad406</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>toggleDepthState</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>aa6d8e2a05c7e71b71d2fe2b72450387e</anchor>
+      <arglist>(bool _mode)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>toggleVideoState</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ada1c8358a6ff3e65cc8f84053e4cb185</anchor>
+      <arglist>(bool _mode)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a2b5adb018447c11038992db7eb6e0acf</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setUserDeviceNumber</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a729b53c7ff4e2192c9728f3e3245ae34</anchor>
+      <arglist>(int _m)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>shutDownKinect</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a208dd28d63a9f146c99cbdfc819a0782</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static QKinect *</type>
+      <name>instance</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a29b4333853954f0984d9c6ad9c09ee7d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>kinectDetected</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>aa074835f06c355bc89f74a4f79be2980</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>depthFunc</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a148bf00f57cb4729447d06f52d6e6113</anchor>
+      <arglist>(freenect_device *_dev, void *o_depth, uint32_t _timestamp)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>grabDepth</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ad36a778c78e5a5e574881b0c16f8edca</anchor>
+      <arglist>(void *_depth, uint32_t timestamp)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>grabVideo</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>aba45c8aaeef01a132aff82ba874d9f0c</anchor>
+      <arglist>(void *_video, uint32_t timestamp)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>init</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a9ac96330e6f531d173179bec9a371b58</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type></type>
+      <name>QKinect</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a1c71605f7b3b33705a4ccfc65e4e5246</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>rgbFunc</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a33938a99d2fa3e263900a01d37c7c313</anchor>
+      <arglist>(freenect_device *_dev, void *o_rgb, uint32_t _timestamp)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type></type>
+      <name>~QKinect</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a63a4001031ba4458d56dc415db5045e5</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private" static="yes">
+      <type>static void</type>
+      <name>depthCallback</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a3fc1eb18c2cca2f907b072f55ea9aa61</anchor>
+      <arglist>(freenect_device *_dev, void *_depth, uint32_t _timestamp=0)</arglist>
+    </member>
+    <member kind="function" protection="private" static="yes">
+      <type>static void</type>
+      <name>videoCallback</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a44720dba923c5669fe2fd474d022562e</anchor>
+      <arglist>(freenect_device *_dev, void *_video, uint32_t _timestamp=0)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint8_t &gt;</type>
+      <name>m_bufferDepth</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ac00c09b919e4b1c3f3148fe07423bc95</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint8_t &gt;</type>
+      <name>m_bufferDepthRaw</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>aae35b3f4ed930155dc4ba7cf912a1f71</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint16_t &gt;</type>
+      <name>m_bufferDepthRaw16</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a00be113bc034437886a0af6e0a16ed8c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint8_t &gt;</type>
+      <name>m_bufferVideo</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a79044ffb28baab63dd3dab26c1cf055b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>freenect_context *</type>
+      <name>m_ctx</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ae81bd5b0f43bb5244f2946f96eb1798f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>freenect_device *</type>
+      <name>m_dev</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a7366920522d0f1409c1ff672bf920982</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>m_deviceActive</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ac569efa3b1669694fe41fda1f7027c95</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint16_t &gt;</type>
+      <name>m_gamma</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a522cfd33da4e7aecd0a8d0b0a1cdcb49</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QMutex</type>
+      <name>m_mutex</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ac031fbf6aed2eb547fe06cd994618000</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>m_newDepthFrame</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a21c7ae4775acaa4e23cfc0901f02c1e0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>m_newRgbFrame</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>aa360242a6b8a072f3154e563a8c6b309</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QKinectProcessEvents *</type>
+      <name>m_process</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a085d0412ac73ea674b8976340c426124</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>m_stopDevice</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a9cc290131b5c4fdcc3b553f80d11580d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>m_userDeviceNumber</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>a9dc7f9633a4ce2b0d1a3336193460d86</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static QKinect *</type>
+      <name>s_instance</name>
+      <anchorfile>classQKinect.html</anchorfile>
+      <anchor>ab13d5157a978b97a478de3ac73de7696</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>QKinectProcessEvents</name>
+    <filename>classQKinectProcessEvents.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>QKinectProcessEvents</name>
+      <anchorfile>classQKinectProcessEvents.html</anchorfile>
+      <anchor>a3eed9b340d38476909c76cc57b4a544f</anchor>
+      <arglist>(freenect_context *_ctx)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setActive</name>
+      <anchorfile>classQKinectProcessEvents.html</anchorfile>
+      <anchor>a492cc55fcd53ffc1d4d2e4822c9234dc</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setInActive</name>
+      <anchorfile>classQKinectProcessEvents.html</anchorfile>
+      <anchor>a0b5a492232dcce352a77a183dab34cb4</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>run</name>
+      <anchorfile>classQKinectProcessEvents.html</anchorfile>
+      <anchor>a98e46ec84f280b7cb2b7ea17ef3b3e69</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>m_active</name>
+      <anchorfile>classQKinectProcessEvents.html</anchorfile>
+      <anchor>a5ee9f2067a92c34974a9431c845e1150</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>freenect_context *</type>
+      <name>m_ctx</name>
+      <anchorfile>classQKinectProcessEvents.html</anchorfile>
+      <anchor>adda9321c405fd24004fd07b35838403f</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>QtGLContext</name>
     <filename>classQtGLContext.html</filename>
     <member kind="signal">
@@ -10178,6 +10784,101 @@
       <name>textureGL</name>
       <anchorfile>classQtGLContext.html</anchorfile>
       <anchor>a119e18e76086267a340f824ff50cc360</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>RGBWindow</name>
+    <filename>classRGBWindow.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>RGBWindow</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>a10a9f3c207825cd2cc499f15431b9cfc</anchor>
+      <arglist>(QWidget *_parent)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setMode</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>af6657cba1fac05c632d0206b19f42177</anchor>
+      <arglist>(int _m)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~RGBWindow</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>ace0da7a1915909bb65c84d6ee64b1068</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>initializeGL</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>abd1c4aa7672053a2fafff287b2b2acb2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>paintGL</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>a8532dfe14e617f26c43fc99e24c5a69a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>resizeGL</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>a01f48a47fa1c048fcb287a7647aa886d</anchor>
+      <arglist>(const int _w, const int _h)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>mouseMoveEvent</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>a419af9affe3bad3dceda0599f5f97b4a</anchor>
+      <arglist>(QMouseEvent *_event)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>mousePressEvent</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>af51a0597d2605b63f08311cb989c96ba</anchor>
+      <arglist>(QMouseEvent *_event)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>mouseReleaseEvent</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>af1248db2434364d323e72be4f4025424</anchor>
+      <arglist>(QMouseEvent *_event)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>timerEvent</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>a0ef38352969d064c18b0c774e65d6d67</anchor>
+      <arglist>(QTimerEvent *_event)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>m_mode</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>a22d03cf906b97a8b3f39389047affac1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>std::vector&lt; uint8_t &gt;</type>
+      <name>m_rgb</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>a89cb3f3b2c7660194202478974db051c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GLuint</type>
+      <name>m_rgbTexture</name>
+      <anchorfile>classRGBWindow.html</anchorfile>
+      <anchor>ae327af32659231fa10a67d9d6b7398c8</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11863,8 +12564,8 @@
     <file>direcs.h</file>
     <file>direcsSerial.cpp</file>
     <file>direcsSerial.h</file>
-    <file>direcsSerial__LMS300_Teil.cpp</file>
-    <file>direcsSerial__S300Atmel_Teil.cpp</file>
+    <file>glwidget.cpp</file>
+    <file>glwidget.h</file>
     <file>gui.cpp</file>
     <file>gui.h</file>
     <file>head.cpp</file>
@@ -11900,8 +12601,12 @@
     <file>obstacleCheckThread.h</file>
     <file>plotThread.cpp</file>
     <file>plotThread.h</file>
+    <file>QKinect.cpp</file>
+    <file>QKinect.h</file>
     <file>QtGLContext.cpp</file>
     <file>QtGLContext.h</file>
+    <file>RGBWindow.cpp</file>
+    <file>RGBWindow.h</file>
     <file>sensorThread.cpp</file>
     <file>sensorThread.h</file>
     <file>servo.cpp</file>

@@ -28,7 +28,8 @@
 
 
 /**
-\brief Handles all the Laser scanners.
+\author Markus Knapp
+\brief Handles all Laser scanners.
 
 It checks, if they are connected, accesses them and emits all read data via Signal. It also provides a simulation mode.
 */
@@ -160,8 +161,8 @@ class LaserThread : public QThread
 
 
 	private:
-		void getAndStoreLaserValuesFront(); // TODO: use one common getAndStoreLaserValue method!
-		void getAndStoreLaserValuesRear();  // TODO: use one common getAndStoreLaserValue method!
+		void getAndStoreLaserValuesFront(); // \todo use one common getAndStoreLaserValue method!
+		void getAndStoreLaserValuesRear();  // \todo use one common getAndStoreLaserValue method!
 		bool setSimulationValues(); // Sets the laser line simulatiov values in the QList
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;

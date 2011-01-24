@@ -27,6 +27,7 @@
 #include "ui_settingsDialog.h"
 
 /**
+\author Markus Knapp
 \brief The dialog for all the programm settings.
 
 Dialog for showing the current settings or to let them change / interact with the main window.
@@ -34,36 +35,36 @@ Dialog for showing the current settings or to let them change / interact with th
 class SettingsDialog : public QDialog
 {
 	Q_OBJECT
-	
+
 	public:
 		SettingsDialog(QWidget* parent = 0);
-		
+
 		/**
 		@return The slider value of a motor speed.
 		@param motor is the motor number.
 		*/
 		int getSliderMotorSpeed(int motor);
-		
+
 		/**
 		@return The slider value of the minimum speed.
 		*/
 		int getSliderMinimumSpeed(void);
-		
+
 		/**
 		@return The slider value of the maximum speed.
 		*/
 		int getSliderMaximumSpeed(void);
-		
+
 		/**
 		@return The slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
 		*/
 		int getSliderObstacleValue();
-		
+
 		/**
 		@return The slider value of an obstacle distance for the laser scanner (when a alarm should be released).
 		*/
 		int getSliderObstacleLaserScannerValue();
-		
+
 		/**
 		@return The angle in degrees to which the robot has to fit between.
 		*/
@@ -78,44 +79,44 @@ class SettingsDialog : public QDialog
 		@return The slider value of the deviation to drive forward (deviation to 90 degrees).
 		*/
 		int getSliderStraightForwardDeviationValue();
-		
+
 		/**
 		@return The state of a Qt checkBox.
 		*/
 		Qt::CheckState getCheckBoxSaveSettings();
 		//Qt::CheckState getCheckBoxAutoSave();
-		
+
 		/**
 		Sets the slider MotorSpeed.
 		@param motor is the motor number.
 		@param value is the speed of the motor.
 		*/
 		void setSliderMotorSpeed(int motor, int value);
-		
+
 		/**
 		Sets the slider minimum speed.
 		@param speed is the minimum speed of the motors.
 		*/
 		void setSliderMinimumSpeed(int speed);
-		
+
 		/**
 		Sets the slider maximum speed.
 		@param speed is the maximum speed of the motors.
 		*/
 		void setSliderMaximumSpeed(int speed);
-		
+
 		/**
 		Sets the slider value of an obstacle distance for the infrared and ultrasonic sensors (when a alarm should be released).
 		@param value is distance in cm.
 		*/
 		void setSliderObstacleValue(int value);
-		
+
 		/**
 		Sets the slider value of an obstacle distance for the laser scanner (when a alarm should be released).
 		@param value is distance in cm.
 		*/
 		void setSliderObstacleLaserScannerValue(int value);
-		
+
 		/**
 		Sets the slider value of the robot slot, where it has to fit through.
 		@param angle is the minimum angle in degrees.
@@ -133,7 +134,7 @@ class SettingsDialog : public QDialog
 		@param angle is the maximum angle in degrees.
 		*/
 		void setSliderStraightForwardDeviation(int angle);
-		
+
 		/**
 		Checks or unckecks the SaveSettings checkbox, depending on the value read from the ini-file.
 		*/
@@ -152,7 +153,7 @@ class SettingsDialog : public QDialog
 		@param speed is the speed (0 - 255).
 		*/
 		void setMaximumSpeed(int speed);
-		
+
 		/**
 		This signal emits the angle, where the robots has to fit through.
 		@sa ObstacleCheckThread
@@ -171,14 +172,14 @@ class SettingsDialog : public QDialog
 		@sa ObstacleCheckThread
 		*/
 		void setStraightForwardDeviation(int deviation);
-		
+
 		/**
 		This signal emits set the minimum distance, which the robot needs. Used by the infrared and ultra sonic sensors.
 		@param distance in centimeters
 		@sa ObstacleCheckThread
 		*/
 		void setMinObstacleDistance(int distance);
-		
+
 		/**
 		This signal emits the minimum distance, which the robot needs. Used by the Laser scanner.
 		@param distance in centimeters
@@ -201,11 +202,11 @@ class SettingsDialog : public QDialog
 		Event handler for the "About Qt" button.
 		*/
 		//void on_btnAboutQt_clicked(bool checked);
-		
-		
+
+
 	private:
 		Ui::settingsDialog ui;
-		
+
 		static const unsigned char MOTOR1           = 10; //! Motor 1 (front left)
 		static const unsigned char MOTOR2           = 20; //! Motor 2 (front right)
 		static const unsigned char MOTOR3			= 30; //! Motor 3 (back left)

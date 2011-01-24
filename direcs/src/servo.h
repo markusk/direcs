@@ -30,28 +30,29 @@
 
 
 /**
+\author Markus Knapp
 \brief This class controls connected servos
 
 It has to be a thread because of communicating at the same time with the microcontroller via the class. @sa InterfaceAvr() !
 */
 class Servo : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		Servo(InterfaceAvr *i, QMutex *m);
 		~Servo();
-		
+
 		/**
 		Stops the thread.
 		*/
 		void stop();
-		
+
 		/**
 		Starts the thread.
 		*/
 		virtual void run();
-		
+
 		/**
 		Sets the servos maximum start, end and its default position.
 		@param servo is the servo number.
@@ -59,7 +60,7 @@ class Servo : public QThread
 		@param position is the position (0 - 255).
 		 */
 		void setServoPosition(int servo, unsigned char type, unsigned char position);
-		
+
 		/**
 		Returns the servo start, end, default or current position.
 		@param servo is the servo number.
@@ -76,12 +77,12 @@ class Servo : public QThread
 		@param position is the position (0 - 255).
 		 */
 		void moveServo(unsigned char servo, unsigned char position);
-		
+
 		/**
 		Moves all servos into their default positions.
 		 */
 		void init(void);
-		
+
 		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
 		When the class knows this, unnecessary communication with the interface can be avoided.
@@ -102,13 +103,13 @@ class Servo : public QThread
 		InterfaceAvr *interface1;
 		volatile bool stopped;
 		bool robotState; // stores the robot state within this class
-		
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
-		
+
 		//! defines the size of the servo[] arrays.
-		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in direcs.h !!!
+		static const unsigned char NUMBEROFSERVOS = 6; // \todo also defined in direcs.h !!!
 		int servoStartPosition[NUMBEROFSERVOS];
 		int servoEndPosition[NUMBEROFSERVOS];
 		int servoMinPosition[NUMBEROFSERVOS];
@@ -119,7 +120,7 @@ class Servo : public QThread
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
-		
+
 		//! the possible servo data
 		static const unsigned char SVSTART   = 0;
 		static const unsigned char SVEND     = 1;
@@ -127,7 +128,7 @@ class Servo : public QThread
 		static const unsigned char SVCURRENT = 3;
 		static const unsigned char SVMIN     = 4;
 		static const unsigned char SVMAX     = 5;
-		
+
 		//! the servo numbers
 		static const unsigned char SERVO1 = 0;
 		static const unsigned char SERVO2 = 1;

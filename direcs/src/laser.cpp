@@ -764,7 +764,7 @@ float Laser::getLaserDistance(int laser, int angle)
 
 void Laser::setDevicePort(short int laser, QString serialPort)
 {
-	// TODO: add support for laser 3 to 5
+	// \todo add support for laser 3 to 5
 	switch (laser)
 	{
 		case LASER1:
@@ -928,13 +928,13 @@ int Laser::sick_set_serial_params(sick_laser_p laser)
 	ctio.c_oflag = 0;
 	//org:	ctio.c_cflag = CREAD | cFlowControl(laser->dev.hwf || laser->dev.swf) | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
 	ctio.c_cflag =         CREAD | CLOCAL                                         | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
-	ctio.c_cflag &= ~CRTSCTS; // disable HW flow control!! // TODO: check if that also works under linux!
+	ctio.c_cflag &= ~CRTSCTS; // disable HW flow control!! // \todo check if that also works under linux!
 	ctio.c_lflag = 0;
 	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
 	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
 
 
-	// tcflush(laser->dev.fd, TCIFLUSH); // TODO: test if that still works under linux (disabled the flush!!)
+	// tcflush(laser->dev.fd, TCIFLUSH); // \todo test if that still works under linux (disabled the flush!!)
 
 	// Cause the new options to take effect immediately.
 	tcsetattr(laser->dev.fd, TCSANOW, &ctio);
@@ -1010,7 +1010,7 @@ void Laser::sick_set_baudrate(sick_laser_p laser, int brate)
 	
 	#endif
 
-	// tcflush(laser->dev.fd, TCIFLUSH); // TODO: check if that really is needed! (linux an mac)
+	// tcflush(laser->dev.fd, TCIFLUSH); // \todo check if that really is needed! (linux an mac)
 	tcsetattr(laser->dev.fd, TCSANOW, &ctio);
 }
 
@@ -1021,7 +1021,7 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 	QByteArray ba = laser->dev.ttyport.toLatin1();
 	
 	
-	if((laser->dev.fd = open(ba.data(), O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0) // TODO: check if this still works with Linux!
+	if((laser->dev.fd = open(ba.data(), O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0) // \todo check if this still works with Linux!
 	{
 		return -1;
 	}
@@ -1723,7 +1723,7 @@ int Laser::sick_start_laser(sick_laser_p laser)
 		qDebug("Setting Laser Scanner in config mode...");
 		while(!sick_set_config_mode(laser))
 		{
-			if (++errorCounter > 3) // TODO: MK which value is a good one here?
+			if (++errorCounter > 3) // \todo MK which value is a good one here?
 			{
 				emit(message("Error setting Laser Scanner in config mode!"));
 				qDebug("Error setting Laser Scanner in config mode!");
@@ -1963,7 +1963,7 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 			{
 				laser->processed_mark +=laser->packet_length;
 				leftover-=laser->packet_length;
-				// TODO: change std output
+				// \todo change std output
 				// fprintf(stderr,"D");
 			}
 		

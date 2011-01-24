@@ -28,6 +28,7 @@
 
 
 /**
+\author Markus Knapp
 \brief Dialog for showing information about the software.
 */
 class AboutDialog : public QDialog

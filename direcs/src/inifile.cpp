@@ -281,7 +281,7 @@ void Inifile::commandClock()
 			//str = QString("command: '%1'").arg(command);
 			//ui.textEdit1->append(str);
 			
-			// Find the "command" of the instruction to do.
+			// Find the "command" of the instruction \todo.
 			//
 			// copy the rest of the iniString from last blank till the end
 			str = iniString.mid(iniString.lastIndexOf(" ")+1);

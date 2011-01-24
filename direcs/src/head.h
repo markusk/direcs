@@ -26,26 +26,27 @@
 //-------------------------------------------------------------------
 
 /**
+\author Markus Knapp
 \brief Gives access to the robots head.
 
 The Head class gives access to the head of the robot. The head may turn right, up, down, smile, look left ... (to be defined/implemented).
 */
 class Head : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		Head(Servo *s);
 		~Head();
-		
+
 
 	public slots:
 		/**
 		@param direction where to look can be LEFT, RIGHT... or CURIOUS, NORMAL...
-		*/ 
+		*/
 		void look(QString direction);
-		
-		
+
+
 	private:
 		void eye(unsigned char whichEye, QString direction);
 		void eyebrow(unsigned char whichBrow, QString direction);
@@ -66,7 +67,7 @@ class Head : public QObject
 		static const unsigned char SVCURRENT = 3;
 		static const unsigned char SVMIN     = 4;
 		static const unsigned char SVMAX     = 5;
-		
+
 		//! the servo numbers
 		static const unsigned char SERVO1 = 0;
 		static const unsigned char SERVO2 = 1;

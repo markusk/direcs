@@ -31,7 +31,7 @@ ConsoleGui::~ConsoleGui()
 }
 
 /*
-TODO: void ConsoleGui::closeEvent()
+\todo void ConsoleGui::closeEvent()
 {
 	qDebug("closeEvent");
 	emit shutdown();

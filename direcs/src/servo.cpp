@@ -95,7 +95,7 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 			emit message("<font color=\"#FF0000\">Servo functions deactivated in the program [servo.cpp]!</font>");
 		}
 
-		/* TODO: temporarily deactivated (no servos mounted on the current robot)
+		/* \todo temporarily deactivated (no servos mounted on the current robot)
 		switch (servo)
 		{
 			case SERVO1:
@@ -287,7 +287,7 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 
 void Servo::init(void)
 {
-	/* TODO: temporarily deactivated (no servos mounted on the current robot)
+	/* \todo temporarily deactivated (no servos mounted on the current robot)
 	if (robotState == ON)
 	{
 		for (int servo=0; servo<NUMBEROFSERVOS; servo++)
