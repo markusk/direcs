@@ -301,7 +301,7 @@ class SensorThread : public QThread
 		//
 		// For example:  iRSensorValue[SENSOR4] = 0;
 		//
-		int iRSensorValue[SENSOR8+1]; // \todo array mit 129 Werten statt 8 für 8 Sensoren !!! Überleg dir was !!!
+		int iRSensorValue[SENSOR8+1]; /// \todo array mit 129 Werten statt 8 für 8 Sensoren !!!
 
 		/** defines the size of the iRDistance[] array !! */
 		static const unsigned char IRSENSORARRAYSIZE = 40;
@@ -415,8 +415,8 @@ class SensorThread : public QThread
 		static const unsigned char READ_MOTOR_DISTANCE1	= 30;
 		static const unsigned char READ_MOTOR_DISTANCE2	= 31;
 
-		static const short int RESET_MOTOR_DISTANCE1 = 32; // \todo why int instead of char? Where else?
-		static const short int RESET_MOTOR_DISTANCE2 = 33; // \todo why int instead of char? Where else?
+		static const short int RESET_MOTOR_DISTANCE1 = 32; /// \todo why int instead of char? Where else?
+		static const short int RESET_MOTOR_DISTANCE2 = 33; /// \todo why int instead of char? Where else?
 
 		static const unsigned char READ_AXIS_X = 61;
 		static const unsigned char READ_AXIS_Y = 62;

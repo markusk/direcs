@@ -68,7 +68,7 @@ class JoystickDialog : public QDialog
 	private:
 		Ui::joystickDialog ui;
 
-		// \todo put axis numbers to ini-file
+		/// \todo put axis numbers to ini-file
 		/// Joystick axis numbers
 		/// @sa Joystick()
 		static const int JOYSTICKAXISY2 = 2; // ok

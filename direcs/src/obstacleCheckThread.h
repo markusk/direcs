@@ -163,7 +163,7 @@ class ObstacleCheckThread : public QThread
 		// DONT CHANGE THIS NUMBERS!
 		// THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!
 		//
-		// \todo make these values nicer
+		/// \todo make these values nicer
 		static const short int SENSOR1 = 1;
 		static const short int SENSOR2 = 2;
 		static const short int SENSOR3 = 4;
@@ -176,7 +176,7 @@ class ObstacleCheckThread : public QThread
 		// ultrasonic sensor
 		static const short int SENSOR16 = 256;
 
-		// \todo make these values nicer
+		/// \todo make these values nicer
 		static const short int OBSTACLEFRONTLEFT = 512;
 		static const short int OBSTACLEFRONTRIGHT = 1024;
 		static const short int OBSTACLESEVERYWHEREINFRONT = 2048;

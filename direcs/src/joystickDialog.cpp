@@ -39,7 +39,7 @@ void JoystickDialog::showJoystickButtons(int buttonNumber, bool buttonState)
 	static bool toggle11 = false;
 
 
-	// \todo put button numbers to ini-file
+	/// \todo put button numbers to ini-file
 	switch (buttonNumber)
 	{
 		case 0:
@@ -154,7 +154,7 @@ void JoystickDialog::showJoystickPOVButtons(int buttonsState)
 
 void JoystickDialog::showJoystickAxes(int axisNumber, int axisValue)
 {
-	// \todo put axis numbers to ini-file
+	/// \todo put axis numbers to ini-file
 	switch (axisNumber)
 	{
 		case JOYSTICKAXISX3:

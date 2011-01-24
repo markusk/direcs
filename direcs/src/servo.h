@@ -109,7 +109,7 @@ class Servo : public QThread
 		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
 
 		//! defines the size of the servo[] arrays.
-		static const unsigned char NUMBEROFSERVOS = 6; // \todo also defined in direcs.h !!!
+		static const unsigned char NUMBEROFSERVOS = 6; /// \todo also defined in direcs.h !!!
 		int servoStartPosition[NUMBEROFSERVOS];
 		int servoEndPosition[NUMBEROFSERVOS];
 		int servoMinPosition[NUMBEROFSERVOS];

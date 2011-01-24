@@ -132,7 +132,7 @@ void LaserThread::run()
 			{
 				if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
 				{
-					// \todo add support for 2 lasers...
+					/// \todo add support for 2 lasers...
 					if (laserS300->readRequestTelegram() != -1)
 					{
 						getAndStoreLaserValuesFront();
@@ -304,7 +304,7 @@ void LaserThread::getAndStoreLaserValuesRear()
 	{
 		if (laserscannerTypeRear == S300)
 		{
-			// \todo add S300 stuff
+			/// \todo add S300 stuff
 		}
 	}
 }
@@ -525,7 +525,7 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 
 		if (laserscannerTypeFront == S300)
 		{
-			// \todo support two S300 lasers
+			/// \todo support two S300 lasers
 			qDebug("Laser2 for S300 not yet supported (LaserThreadd::setSerialPort");
 			return;
 		}
@@ -784,7 +784,7 @@ bool LaserThread::isConnected(short int laserScanner)
 		{
 			if (laserscannerTypeFront == S300)
 			{
-				// \todo Support two S300 scanners
+				/// \todo Support two S300 scanners
 				if (laserS300->openComPort() == true)
 				{
 					if (laserS300->setup() == 0)
@@ -857,7 +857,7 @@ bool LaserThread::isConnected(short int laserScanner)
 		{
 			if (laserscannerTypeRear == S300)
 			{
-				// \todo S300 stuff
+				/// \todo S300 stuff
 				qDebug("Support for a second S300 as rear laser scanner not implemented yet");
 				laserScannerRearIsConnected = false;
 				return false;

@@ -749,7 +749,7 @@ class Gui : public QMainWindow
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
 
-		static const float MINIMUMVOLTAGE1 = 10.80; // \todo put min. voltage 1 in the ini-file
+		static const float MINIMUMVOLTAGE1 = 10.80; /// \todo put min. voltage 1 in the ini-file
 		static const float MINIMUMVOLTAGE2 = 21.60; // \todo put min. voltage 2 in the ini-file
 
 		static const float MAXIMUMVOLTAGE1 = 12.00; /// for progress bars \todo put max. voltage 1 in the ini-file

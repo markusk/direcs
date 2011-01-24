@@ -261,13 +261,13 @@ void Gui::setRobotControls(bool state)
 
 	if (!robotIsOn)
 	{
-		// \todo test if this really is needed. Is the heartbeaet in the sensorthread sufficient?
+		/// \todo test if this really is needed. Is the heartbeaet in the sensorthread sufficient?
 		// set the state LED to red
 		setLEDHeartbeat(RED);
 	}
 
+	/// \todo still needed? state already checked in motorControl at lower level. :-)
 	/*
-	\todo still needed? state already checked in motorControl at lower level. :-)
 	ui.btnPower1->setEnabled(state);
 	ui.btnPower2->setEnabled(state);
 	ui.btnPower3->setEnabled(state);
@@ -1291,7 +1291,7 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
 	int configuredRobotSlotWidth = settingsDialog->getSliderRobotSlotWidth();
-	// \todo do all this stuff for the rear scanner?
+	/// \todo do all this stuff for the rear scanner?
 
 	// store the values in the class local for refreshLaserView()
 	if (largestFreeAreaStart == -1)
@@ -2112,7 +2112,7 @@ void Gui::initLaserView()
 	//--------------
 	// window init
 	//--------------
-	// \todo which values for which resolutions!?
+	/// \todo which values for which resolutions!?
 	//ui.splitLaserView->setSizes(QList<int>() << 1000 << 100);
 	// make dockLaserView wider
 	//ui.dockLaserView->resize(ui.graphicsViewLaser->width(), ui.dockLaserView->height());
@@ -2895,7 +2895,7 @@ void Gui::createLaserDistanceObjects()
 #ifdef ACTIVELASERVIEW
 void Gui::createLaserWidthObjects()
 {
-	widthCirclesWidth = 10;  // \todo which radius?
+	widthCirclesWidth = 10;  /// \todo which radius?
 
 	// create the objects
 	widthLeftCircleFront = new QGraphicsEllipseItem();
@@ -2923,15 +2923,15 @@ void Gui::createLaserWidthObjects()
 	widthRightCircleRear->setSpanAngle(360*16);
 
 	// set the color
-	widthLeftCircleFront->setPen(QPen(Qt::blue)); // \todo define circle the color!
-	widthRightCircleFront->setPen(QPen(Qt::blue)); // \todo define circle the color!
-	widthLineFront->setPen(QPen(Qt::blue)); // \todo define circle the color!
-	widthTextFront->setPen(QPen(Qt::blue)); // \todo define circle the color!
+	widthLeftCircleFront->setPen(QPen(Qt::blue)); /// \todo define the circle color
+	widthRightCircleFront->setPen(QPen(Qt::blue)); /// \todo define the circle color
+	widthLineFront->setPen(QPen(Qt::blue)); /// \todo define the circle color
+	widthTextFront->setPen(QPen(Qt::blue)); /// \todo define the circle color
 
-	widthLeftCircleRear->setPen(QPen(Qt::blue)); // \todo define circle the color!
-	widthRightCircleRear->setPen(QPen(Qt::blue)); // \todo define circle the color!
-	widthLineRear->setPen(QPen(Qt::blue)); // \todo define circle the color!
-	widthTextRear->setPen(QPen(Qt::blue)); // \todo define circle the color!
+	widthLeftCircleRear->setPen(QPen(Qt::blue)); /// \todo define the circle color
+	widthRightCircleRear->setPen(QPen(Qt::blue)); /// \todo define the circle color
+	widthLineRear->setPen(QPen(Qt::blue)); /// \todo define the circle color
+	widthTextRear->setPen(QPen(Qt::blue)); /// \todo define the circle color
 
 	// setting to the lowest layer level
 	widthLeftCircleFront->setZValue(1);
@@ -3272,7 +3272,7 @@ void Gui::showCompassData(float x, float y, float z, float heading)
 // 	ui.qwtCompass->setValue(x);
 
 	// set the 3D OpenGL compass!
-	ui.frameCompass->setAllRotations(x, y, z); // \todo and what to do with the 'heading'?
+	ui.frameCompass->setAllRotations(x, y, z); /// \todo and what to do with the 'heading'?
 }
 
 

@@ -161,8 +161,8 @@ class LaserThread : public QThread
 
 
 	private:
-		void getAndStoreLaserValuesFront(); // \todo use one common getAndStoreLaserValue method!
-		void getAndStoreLaserValuesRear();  // \todo use one common getAndStoreLaserValue method!
+		void getAndStoreLaserValuesFront(); /// \todo use one common getAndStoreLaserValue method!
+		void getAndStoreLaserValuesRear();  /// \todo use one common getAndStoreLaserValue method!
 		bool setSimulationValues(); // Sets the laser line simulatiov values in the QList
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;

@@ -103,7 +103,7 @@ Direcs::Direcs(bool bConsoleMode)
 	{
 		consoleGui = new ConsoleGui();
 //		myEvent = new Events();
-		// \todo install an event filter to grab CTRL+C
+		/// \todo install an event filter to grab CTRL+C
 //  		consoleGui->installEventFilter(myEvent);
 //			this->installEventFilter(myEvent);
 	}
@@ -120,7 +120,7 @@ Direcs::Direcs(bool bConsoleMode)
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
-//	\todo heartbeat = new Heartbeat(interface1, mutex);
+///	\todo heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
@@ -148,14 +148,14 @@ void Direcs::init()
 {
 	if (!consoleMode)
 	{
-		aboutDialog->setVersion("0.9"); // \todo put this at a nicer place // this is also shown in the about dialog
+		aboutDialog->setVersion("0.9"); /// \todo put this at a nicer place // this is also shown in the about dialog
 		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashTextColor = Qt::white;
 	}
 	forceShutdown = false;
 	inifile1->setFilename("direcs.ini");
 	logfile->setFilename("direcs.log");
-	// \todo direcs->setLogFileName("direcs.log");
+	/// \todo direcs->setLogFileName("direcs.log");
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 	laserscannerTypeFront= "error1";
@@ -248,7 +248,7 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	// let some other classes know if we are in the console mode
 	//--------------------------------------------------------------------------
-	// \todo not in use anymore! connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
+	/// \todo not in use anymore! connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
 
 	/*
 	not in use at the moment...
@@ -394,16 +394,16 @@ void Direcs::init()
 		// disable face detection in the GUI, on error with loading haar cascade in CamThread
 		// Must be before readSettings!
 		//-------------------------------------------------------------------------------------
-//		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() )); \todo kinect stuff
+///		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() )); \todo kinect stuff
 
 		//-------------------------------------------------------------------------------------
 		// disable camera controls in the GUI, on error opeing the camera in the CamThread
 		// Must be before readSettings!
 		//-------------------------------------------------------------------------------------
-//		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() )); \todo kinect stuff
+///		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() )); \todo kinect stuff
 
 		// send error messages to the gui
-//		connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString))); \todo kinect stuff
+///		connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString))); \todo kinect stuff
 	}
 
 
@@ -481,7 +481,7 @@ void Direcs::init()
 		// also emit interface class messages to the logfile
 		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
 
-		// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
+		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		//-------------------------------------------------------
@@ -602,12 +602,13 @@ void Direcs::init()
 				//-------------------------------------------------------
 				// move all servos in their default positions
 				//-------------------------------------------------------
-				/* \todo temporarily deactivated (no servos mounted on the current robot)
+				/// \todo temporarily deactivated (no servos mounted on the current robot)
+				/*
 				servos->init();
 				emit message("Servos moved to default positions");
 				*/
 
-				// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
+				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
 				// start the heartbeat thread
 				//-----------------------------------------------------------
@@ -729,10 +730,8 @@ void Direcs::init()
 		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );
 		// FIXME: this is too often!! Because of 10ms sensor thread!!
 
+ /// \todo kinect stuff
 /*
-
-  \todo kinect stuff
-
 		if (!consoleMode)
 		{
 			//----------------------------------------------------------------------------
@@ -891,7 +890,7 @@ void Direcs::init()
 				emit message("Kinect camera found.", false);
 
 				// look a bit up
-				kinect->setAngle(5); // \todo: put to ini file and settings dialog
+				kinect->setAngle(5); /// \todo: put to ini file and settings dialog
 				gui->showKinectAngle(5);
 
 				// show kinect camera state in gui
@@ -982,7 +981,7 @@ void Direcs::init()
 
 			if (!consoleMode)
 			{
-				// \todo nice exit point and error message
+				/// \todo nice exit point and error message
 				if (!QGLFormat::hasOpenGL())
 				{
 					qDebug() << "This system has no OpenGL support" << endl;
@@ -1183,7 +1182,7 @@ void Direcs::shutdown()
 				}
 			}
 		}
-		// \todo ask for exit on console!
+		/// \todo ask for exit on console!
 	}
 
 
@@ -1191,7 +1190,7 @@ void Direcs::shutdown()
 	drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
 
 
-	// \todo a universal quit-threads-method
+	/// \todo a universal quit-threads-method
 	if (!consoleMode)
 	{
 		//--------------------------------
@@ -1459,7 +1458,7 @@ void Direcs::shutdown()
 
 /*
 	//--------------------------
-	// \todo quit the heartbeat thread
+	/// \todo quit the heartbeat thread
 	//--------------------------
 	if (heartbeat->isRunning() == true)
 	{
@@ -2175,7 +2174,7 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-//			/* \todo this is a test mode for sending only -one- serial command to the mc
+///			/* \todo this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -2194,7 +2193,7 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-//			/* //\todo this is a test mode for sending only -one- serial command to the mc
+///			/* //\todo this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
@@ -2213,7 +2212,7 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-//			/* //\todo this is a test mode for sending only -one- serial command to the mc
+///			/* //\todo this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
@@ -2232,7 +2231,7 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-			/**/ //\todo this is a test mode for sending only -one- serial command to the mc
+			/**/ /// \todo this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
@@ -2251,12 +2250,11 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-			/**/ //\todo this is a test mode for sending only -one- serial command to the mc
+			/// \todo this is a test mode for sending only -one- serial command to the mc
 			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
 			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
 			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
-// 			*/
 // 			motors->motorControl(ALLMOTORS, SAME, command);
 			return;
 			break;
@@ -2274,17 +2272,18 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
 			}
 /*	FIXME: to much data over serial port?!?
-			motors->setMotorSpeed(MOTOR1, 0); // \todo check if this works
-			motors->setMotorSpeed(MOTOR2, 0); // \todo check if this works
-			motors->setMotorSpeed(MOTOR3, 0); // \todo check if this works
-			motors->setMotorSpeed(MOTOR4, 0); // \todo check if this works
+			motors->setMotorSpeed(MOTOR1, 0); /// \todo check if this works
+			motors->setMotorSpeed(MOTOR2, 0); /// \todo check if this works
+			motors->setMotorSpeed(MOTOR3, 0); /// \todo check if this works
+			motors->setMotorSpeed(MOTOR4, 0); /// \todo check if this works
 
 			resetDrivingSpeedTimer();
 			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
-			// TODO 1: put that to a slider in the config menu / file.
-			// TODO 2: make this speed increaser optional!
+			/// \TODO put that to a slider in the config menu / file.
+			/// \TODO make this speed increaser optional!
 */
-			/* \todo this is a test mode for sending only -one- serial command to the mc
+			/// \todo this is a test mode for sending only -one- serial command to the mc
+			/*
 			motors->motorControl(MOTOR1, ON, CLOCKWISE);
 			motors->motorControl(MOTOR2, ON, CLOCKWISE);
 			motors->motorControl(MOTOR3, ON, CLOCKWISE);
@@ -2307,7 +2306,8 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			// turning motors off
-			/* \todo this is a test mode for sending only -one- serial command to the mc
+			/// \todo this is a test mode for sending only -one- serial command to the mc
+			/*
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
@@ -2335,7 +2335,8 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			// turning motors off
-			/* \todo this is a test mode for sending only -one- serial command to the mc
+			//// \todo this is a test mode for sending only -one- serial command to the mc
+			/*
 			motors->motorControl(MOTOR1, OFF, SAME);
 			motors->motorControl(MOTOR2, OFF, SAME);
 			motors->motorControl(MOTOR3, OFF, SAME);
@@ -2491,7 +2492,7 @@ void Direcs::increaseDrivingSpeed(void)
 	int currentSpeed2 = 0;
 	int currentSpeed3 = 0;
 	int currentSpeed4 = 0;
-	int increaseInterval = qRound(maximumSpeed * 0.1); // increase interval is 10%. \todo start with which minimumSpeed?
+	int increaseInterval = qRound(maximumSpeed * 0.1); /// increase interval is 10%. \todo start with which minimumSpeed?
 
 
 	currentSpeed1 = motors->getMotorSpeed(MOTOR1);
@@ -2543,7 +2544,7 @@ void Direcs::increaseDrivingSpeed(void)
 		endSpeedMotor4Reached = true;
 	}
 
-	// all motors at their end speed? // \todo check if end speed is refreshed in this class, when changed via gui!!
+	// all motors at their end speed? /// \todo check if end speed is refreshed in this class, when changed via gui!!
 	if (endSpeedMotor1Reached && endSpeedMotor2Reached && endSpeedMotor3Reached && endSpeedMotor4Reached)
 	{
 		drivingSpeedTimer->stop();
@@ -2899,14 +2900,14 @@ void Direcs::readSettings()
 
 			if (cameraDevice == -2)
 			{
-				//camThread->setCameraDevice(-2); \todo kinect stuff
+				/// camThread->setCameraDevice(-2); \todo kinect stuff
 				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
 				if (cameraDevice == -1)
 				{
-					//camThread->setCameraDevice(-2); \todo kinect stuff
+					/// camThread->setCameraDevice(-2); \todo kinect stuff
 					emit message("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
 				}
 				else
@@ -2915,7 +2916,7 @@ void Direcs::readSettings()
 					// everything okay
 					//
 					// set it in the cam thread
-//					camThread->setCameraDevice(cameraDevice); \todo kinect stuff
+///					camThread->setCameraDevice(cameraDevice); \todo kinect stuff
 
 //					emit message(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
 
@@ -2926,14 +2927,14 @@ void Direcs::readSettings()
 
 					if (haarClassifierCascade == "error2")
 					{
-						//camThread->setCascadePath("none"); \todo kinect stuff
+						/// camThread->setCascadePath("none"); \todo kinect stuff
 						emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 					}
 					else
 					{
 						if (haarClassifierCascade == "error1")
 						{
-							//camThread->setCascadePath("none"); \todo kinect stuff
+							/// camThread->setCascadePath("none"); \todo kinect stuff
 							emit message("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
 						}
 						else
@@ -2942,12 +2943,12 @@ void Direcs::readSettings()
 							// everything okay
 							//
 							// set it in the cam thread
-							//camThread->setCascadePath(haarClassifierCascade); \todo kinect stuff
+							/// camThread->setCascadePath(haarClassifierCascade); \todo kinect stuff
 							emit message(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
 							emit splashMessage("Initialising camera...");
 
+///  \todo kinect stuff
 /*
-  \todo kinect stuff
 							// initialise the cam
 							if (camThread->init())
 							{
@@ -4102,7 +4103,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			if (robotDrives == false)
 			{
-				// \todo check if this makes sense...
+				/// \todo check if this makes sense...
 				drive(START);
 			}
 
@@ -4116,7 +4117,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 		{
 			if (robotDrives == false)
 			{
-				// \todo check if this makes sense...
+				/// \todo check if this makes sense...
 				drive(START);
 			}
 
@@ -4258,7 +4259,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (robotDrives == false)
 				{
-					// \todo check if this makes sense...
+					/// \todo check if this makes sense...
 					drive(START);
 				}
 
@@ -4282,7 +4283,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				if (robotDrives == false)
 				{
-					// \todo check if this makes sense...
+					/// \todo check if this makes sense...
 					drive(START);
 				}
 
@@ -4318,7 +4319,7 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 	static bool toggle11 = false;
 
 
-	// \todo put button numbers to ini-file
+	/// \todo put button numbers to ini-file
 	switch (buttonNumber)
 	{
 		case 0: // 1 on js
