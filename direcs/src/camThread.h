@@ -30,10 +30,8 @@
 #include <QtDebug> // for a more convenient use of qDebug
 #include <QFile>
 //-------------------------------------------------------------------
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-	#include <cv.h>
-	#include <highgui.h>
-#endif
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 #include <stdio.h>
 #include <ctype.h>
@@ -54,12 +52,12 @@ This class uses the Open Source Computer Vision Library for grabbing the picture
 */
 class CamThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		CamThread();
 		~CamThread();
-		
+
 		/**
 		@return true on success
 		*/
@@ -68,13 +66,13 @@ class CamThread : public QThread
 		/**
 		*/
 		bool isConnected(void);
-		
+
 		/**
 		Sets the path and filename to the haar classifier cascade.
 		@param haarClassifierCascade is the whole filename
 		 */
 		void setCascadePath(QString haarClassifierCascade);
-		
+
 		/**
 		Sets the camera device.
 		@param device is an integer value! 0 for the first vide device (e.g. /dev/video0). -2 if an error occured.
@@ -95,18 +93,18 @@ class CamThread : public QThread
 		Returns the image pixel depth of the camera. Retrieved in the constructor!
 		*/
 		int imagePixelDepth();
-		
+
 		void stop();
 		virtual void run();
 
-		
+
 	public slots:
 		/**
 		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.
 		@param state has to be Qt::Checked to enable the detection. All other states disable.
 		*/
 		void enableFaceDetection(int state);
-		
+
 		/**
 		Draws a red object in the camera image, when the camera hits the end switches (when panning and tilting).
 		@param position can be TOP, BOTTOM, LEFT, RIGHT
@@ -114,30 +112,26 @@ class CamThread : public QThread
 		@sa Gui::showContactAlarm()
 		 */
 		void drawContactAlarm(char position, bool state);
-		
+
 		/**
 		*/
 		void test();
 
 
-	
+
 	signals:
-#ifndef Q_OS_MAC   // currently supported only under linux (no MAC OS at the moment) -> strange Q_OS_LINUX brings a linker error here!
-#ifndef Q_OS_WIN32 // currently supported only under linux (no MAC OS at the moment)
 		/**
 		@param *imgPtr is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
 		void camDataComplete(IplImage* imgPtr);
 		//void camDataComplete(QImage* image);
-#endif
-#endif
 
 		/**
 		Disables checkBoxes in the GUI
 		*/
 		void disableFaceDetection();
-		
+
 		/**
 		Disables camera controls in the GUI
 		 */
@@ -145,7 +139,7 @@ class CamThread : public QThread
 
 		/**
 		This signal is emmited when a face was detected in the camera image
-		
+
 		@param faces is the total number of faces detected
 		@param faceX is the X coordinate to the middle of a detected face (0, if none)
 		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
@@ -156,18 +150,16 @@ class CamThread : public QThread
 		*/
 		void faceDetected(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 
-                /**
-                Emits a info or error message to a slot.
-                This slot can be used to display a text on a splash screen, log file, to print it to a console...
-                @param text is the message to be emitted
-                */
-                void message(QString text);
+				/**
+				Emits a info or error message to a slot.
+				This slot can be used to display a text on a splash screen, log file, to print it to a console...
+				@param text is the message to be emitted
+				*/
+				void message(QString text);
 
 
 	private:
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		QImage * IplImageToQImage(const IplImage * iplImage); //! Converts an OpenCV iplImage into a nice QImage :-)
-#endif
 
 		bool initDone;
 		bool cameraIsOn;
@@ -176,7 +168,6 @@ class CamThread : public QThread
 		QVector <KOORD_T> detectedFaces; /** the coordinates of the last n detected faces */
 		int cameraDevice;
 		QString haarClassifierCascadeFilename;
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		CvScalar hsv2rgb( float hue );
 		IplImage *imgPtr;
 		CvCapture *capture;
@@ -184,7 +175,7 @@ class CamThread : public QThread
 		CvHaarClassifierCascade *cascade;
 		IplImage *gray;
 		IplImage *small_img;
-#endif
+
 		/* ----------
 		QImage *qimage; // for IplImageToQImage()
 		IplImage* tchannel0;
@@ -202,19 +193,19 @@ class CamThread : public QThread
 		bool contactAlarmLeft;
 		bool contactAlarmRight;
 		volatile bool stopped;
-		
+
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
 		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
-		
+
 		static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480.
-		
+
 		// The position for the contact alarm in the camera image
 		static const char LEFT   = 0;
 		static const char RIGHT  = 1;
 		static const char TOP    = 2;
 		static const char BOTTOM = 3;
-		
+
 		static const int FACEARRAYSIZE = 24;
 };
 

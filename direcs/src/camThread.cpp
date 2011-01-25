@@ -34,9 +34,7 @@ CamThread::CamThread() : QThread()
 	contactAlarmBottom = false;
 	contactAlarmLeft = false;
 	contactAlarmRight = false;
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	imgPtr = new IplImage();
-#endif
 
 	// size and init the vector
 	detectedFaces.resize(FACEARRAYSIZE);
@@ -59,9 +57,8 @@ void CamThread::stop()
 
 void CamThread::run()
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	int i=0;
-	CvSeq *faces;
+//	CvSeq *faces;
 	CvRect *faceRectangle;
 	CvPoint faceCenter;
 	CvPoint rectStart;
@@ -140,6 +137,7 @@ void CamThread::run()
 			faceY = 0;
 			faceRadius = 0;
 
+			/*
 			// classifier cascade loaded in the init method
 			if ( (faceDetectionIsEnabled) && (cascade) )
 			{
@@ -177,15 +175,13 @@ void CamThread::run()
 						faceCenter.y = qRound((faceRectangle->y + faceRectangle->height*0.5)*scale);
 						faceRadius = qRound((faceRectangle->width + faceRectangle->height)*0.25*scale);
 
-/*
-						// first check, if the actual detected face is the same face (it is in the same area)
-						if 	(
-								// TODO: set pixel range/area to a percent basis of img size and/or radius
-								( (faceCenter.x > lastFaceX - 50) && ((faceCenter.x < lastFaceX + 50)) && (faceCenter.y > lastFaceY - 50) && (faceCenter.y < lastFaceY + 50)  ) ||
-								( (faceCenter.x == lastFaceX) && (faceCenter.y == lastFaceY) ) ||
-								( (lastFaceY==0) && (lastFaceX==0) ) // <- only first time
-							)
-*/
+//						// first check, if the actual detected face is the same face (it is in the same area)
+//						if 	(
+//								// TODO: set pixel range/area to a percent basis of img size and/or radius
+//								( (faceCenter.x > lastFaceX - 50) && ((faceCenter.x < lastFaceX + 50)) && (faceCenter.y > lastFaceY - 50) && (faceCenter.y < lastFaceY + 50)  ) ||
+//								( (faceCenter.x == lastFaceX) && (faceCenter.y == lastFaceY) ) ||
+//								( (lastFaceY==0) && (lastFaceX==0) ) // <- only first time
+//							)
 								// the rect coordinates
 								rectStart.x = faceRectangle->x*scale;
 								rectStart.y = faceRectangle->y*scale;
@@ -216,7 +212,7 @@ void CamThread::run()
 				emit faceDetected(faces->total, faceX, faceY, faceRadius, lastFaceX, lastFaceY);
 
 			} // detection enabled
-
+*/
 
 			//----------------------------------------
 			// draw 'end contact' alarm into image
@@ -272,15 +268,14 @@ void CamThread::run()
 		if (faceDetectionWasActive == true)
 		{
 			cvReleaseImage(&gray);
-		    cvReleaseImage(&small_img);
+			cvReleaseImage(&small_img);
 		}
 
-	    // release capture
+		// release capture
 		cvReleaseCapture(&capture);
 	}
 
 	stopped = false;
-#endif
 }
 
 
@@ -354,7 +349,6 @@ void CamThread::setCameraDevice(int device)
 
 bool CamThread::init()
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	if (initDone == false)
 	{
 		// do only *one* init!
@@ -363,16 +357,16 @@ bool CamThread::init()
 		// checking if the camera path exists
 		if (QFile::exists( QString("/dev/video%1").arg(cameraDevice) ) == false)
 		{
-		    emit message(QString("<font color=\"#FF0000\">ERROR: Path /dev/video%1 does not exist.</font>").arg(cameraDevice));
-		    width=0;
-		    height=0;
-		    pixeldepth = 0;
-		    cameraIsOn = false;
-		    stopped = true;
-		    // disable camera controls in the GUI
-		    emit disableCamera();
+			emit message(QString("<font color=\"#FF0000\">ERROR: Path /dev/video%1 does not exist.</font>").arg(cameraDevice));
+			width=0;
+			height=0;
+			pixeldepth = 0;
+			cameraIsOn = false;
+			stopped = true;
+			// disable camera controls in the GUI
+			emit disableCamera();
 
-		    return false;
+			return false;
 		}
 
 		//-----------------
@@ -436,9 +430,6 @@ bool CamThread::init()
 		}
 	}
 	return true;
-#else
-	return false;
-#endif
 }
 
 
@@ -470,21 +461,20 @@ void CamThread::test()
 }
 
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
 {
 	//
 	// stolen from: http://www.qtcentre.org/forum/f-qt-programming-2/t-mfc-program-in-qt-10779.html
 	//
 
-    uchar *qImageBuffer = NULL;
-    int width = iplImage->width;
+	uchar *qImageBuffer = NULL;
+	int width = iplImage->width;
 
 
-    int widthStep = iplImage->widthStep;
-    int height = iplImage->height;
+	int widthStep = iplImage->widthStep;
+	int height = iplImage->height;
 
-    switch (iplImage->depth) {
+	switch (iplImage->depth) {
 	case IPL_DEPTH_8U:
 
 	if (iplImage->nChannels == 1) {
@@ -498,43 +488,43 @@ QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
 
 	for (int y = 0; y < height; y++) {
 	// Copy line by line
-	    memcpy(QImagePtr, iplImagePtr, width);
-	    QImagePtr += width;
-	    iplImagePtr += widthStep;
+		memcpy(QImagePtr, iplImagePtr, width);
+		QImagePtr += width;
+		iplImagePtr += widthStep;
 	}
 
 	} else if (iplImage->nChannels == 3) {
 
-	    // OpenCV image is stored with 3 byte color pixels (3 channels).
+		// OpenCV image is stored with 3 byte color pixels (3 channels).
 	//  We convert it to a 32 bit depth QImage.
 
 
-	    qImageBuffer = (uchar *) malloc(width*height*4*sizeof(uchar));
-	    uchar *QImagePtr = qImageBuffer;
-	    const uchar *iplImagePtr = (const uchar *) iplImage->imageData;
+		qImageBuffer = (uchar *) malloc(width*height*4*sizeof(uchar));
+		uchar *QImagePtr = qImageBuffer;
+		const uchar *iplImagePtr = (const uchar *) iplImage->imageData;
 
-	    for (int y = 0; y < height; y++) {
+		for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 		// We cannot help but copy manually.
-		    QImagePtr[0] = iplImagePtr[0];
-		    QImagePtr[1] = iplImagePtr[1];
-		    QImagePtr[2] = iplImagePtr[2];
-		    QImagePtr[3] = 0;
-		    QImagePtr += 4;
-		    iplImagePtr += 3;
+			QImagePtr[0] = iplImagePtr[0];
+			QImagePtr[1] = iplImagePtr[1];
+			QImagePtr[2] = iplImagePtr[2];
+			QImagePtr[3] = 0;
+			QImagePtr += 4;
+			iplImagePtr += 3;
 		}
 
-	    iplImagePtr += widthStep-3*width;
-	    }
+		iplImagePtr += widthStep-3*width;
+		}
 
-	    } else {
+		} else {
 		qDebug("IplImageToQImage: image format is not supported : depth=8U and %d channels\n", iplImage->nChannels);
 
-	    }
+		}
 
-	    break;
+		break;
 	default:
-	    qDebug("IplImageToQImage: image format is not supported : depth=%d and %d channels\n", iplImage->depth, iplImage->nChannels);
+		qDebug("IplImageToQImage: image format is not supported : depth=%d and %d channels\n", iplImage->depth, iplImage->nChannels);
 
 	}
 
@@ -565,4 +555,3 @@ QImage * CamThread::IplImageToQImage(const IplImage * iplImage)
 */
 	return qImage;
 }
-#endif
