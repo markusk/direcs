@@ -869,7 +869,7 @@ void Direcs::init()
 		{
 			emit splashMessage("Detecting Kinect camera...");
 			emit message("Detecting Kinect camera...", false);
-
+/*
 			//
 			// creation of Kinect Camera instance is not in the constructor, since this may need some time and we want to see that on the splash screen
 			//
@@ -878,9 +878,10 @@ void Direcs::init()
 			// show Kinect messages in GUI
 			connect(kinect, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 			connect(kinect, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-
-			// camThread = new CamThread();
-
+*/
+			// The updated Kinect camera thread using OpenCV
+			camThread = new CamThread();
+/*
 			//-----------------------------------------------------------
 			// check if Kinect camera is connected
 			//-----------------------------------------------------------
@@ -897,16 +898,16 @@ void Direcs::init()
 				gui->setLEDCamera(GREEN);
 
 				// the signals for the LED actions
-/*
-				connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
-				connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
-				connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
-				connect(gui, SIGNAL(setYellowLed()), kinect, SLOT(setYellowLed()));
-				connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
-				connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
-				connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));
-*/
+
+//				connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
+//				connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
+//				connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
+//				connect(gui, SIGNAL(setYellowLed()), kinect, SLOT(setYellowLed()));
+//				connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
+//				connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
+//				connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));/
 				// the signal for setting the camera angle
+
 				connect(gui, SIGNAL(setKinectAngle(double)), kinect, SLOT(setAngle(double)));
 
 				// the signal for resetting the camera angle
@@ -928,6 +929,7 @@ void Direcs::init()
 				emit message("No Kinect detected.");
 
 			}
+*/
 		}
 
 
@@ -1196,6 +1198,7 @@ void Direcs::shutdown()
 		//--------------------------------
 		// quit the camThread
 		//--------------------------------
+/*
 		if (kinect->kinectDetected)
 		{
 			emit message("Stopping Kinect camera...");
@@ -1209,6 +1212,41 @@ void Direcs::shutdown()
 
 			// OpenCV object
 //			delete glWidget;
+		}
+*/
+		if (camThread->isRunning() == true)
+		{
+			emit message("Stopping camera thread...");
+			emit splashMessage("Stopping camera thread...");
+
+			// my own stop routine :-)
+			camThread->stop();
+
+			// slowing thread down
+			camThread->setPriority(QThread::IdlePriority);
+			camThread->quit();
+
+			//-------------------------------------------
+			// start measuring time for timeout ckecking
+			//-------------------------------------------
+			QTime t;
+			t.start();
+			do
+			{
+			} while ((camThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+			if (camThread->isFinished() == true)
+			{
+				emit message("Camera thread stopped.");
+			}
+			else
+			{
+				emit message("ERROR: Terminating camera thread because it doesn't answer...");
+				emit splashMessage("Terminating camera thread because it doesn't answer...");
+				camThread->terminate();
+				camThread->wait(1000);
+				emit message("Camera thread terminated.");
+			}
 		}
 	}
 
@@ -1618,6 +1656,7 @@ Direcs::~Direcs()
 	delete interface1;
 	if (!consoleMode)
 	{
+		delete camThread;
 		delete aboutDialog;
 		delete joystickDialog;
 		delete settingsDialog;

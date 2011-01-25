@@ -19,7 +19,7 @@ DEFINES += ACTIVELASERVIEW
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
 	HEADERS +=	aboutDialog.h \
-#				camThread.h \
+				camThread.h \
 				circuit.h \
 				compassWidget.h \
 				consoleGui.h \
@@ -50,7 +50,7 @@ unix|macx {
 				glwidget.h
 
 	SOURCES +=	aboutDialog.cpp \
-#				camThread.cpp \
+				camThread.cpp \
 				circuit.cpp \
 				compassWidget.cpp \
 				consoleGui.cpp \
