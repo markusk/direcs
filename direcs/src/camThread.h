@@ -56,6 +56,23 @@ class CamThread : public QThread
 		CamThread();
 		~CamThread();
 
+/*
+		MyFreenectDevice(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
+			m_buffer_depth(FREENECT_DEPTH_11BIT_SIZE),
+			m_buffer_rgb(FREENECT_VIDEO_RGB_SIZE),
+			m_gamma(2048),
+			m_new_rgb_frame(false),
+			m_new_depth_frame(false),
+			depthMat(Size(640,480),CV_16UC1), rgbMat(Size(640,480),CV_8UC3,Scalar(0)), ownMat(Size(640,480),CV_8UC3,Scalar(0))
+			{
+				for (unsigned int i = 0 ; i < 2048 ; i++)
+				{
+					float v = i/2048.0;
+					v = std::pow(v, 3)* 6;
+					m_gamma[i] = v*6*256;
+				}
+			}
+*/
 
 		// Do not call directly even in child
 		void VideoCallback(void* _rgb, uint32_t timestamp);
