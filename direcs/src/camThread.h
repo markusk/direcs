@@ -65,6 +65,8 @@ class CamThread : public QThread
 
 		bool getVideo(Mat& output);
 
+		bool getDepth(Mat& output);
+
 		/**
 		@return true on success
 		*/

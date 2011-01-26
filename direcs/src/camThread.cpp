@@ -69,13 +69,34 @@ void CamThread::DepthCallback(void* _depth, uint32_t timestamp)
 bool CamThread::getVideo(Mat& output)
 {
 	m_rgb_mutex.lock();
-	if(m_new_rgb_frame) {
+	if(m_new_rgb_frame)
+	{
 		cv::cvtColor(rgbMat, output, CV_RGB2BGR);
 		m_new_rgb_frame = false;
 		m_rgb_mutex.unlock();
 		return true;
-	} else {
+	}
+	else
+	{
 		m_rgb_mutex.unlock();
+		return false;
+	}
+}
+
+
+bool CamThread::getDepth(Mat& output)
+{
+	m_depth_mutex.lock();
+	if(m_new_depth_frame)
+	{
+		depthMat.copyTo(output);
+		m_new_depth_frame = false;
+		m_depth_mutex.unlock();
+		return true;
+	}
+	else
+	{
+		m_depth_mutex.unlock();
 		return false;
 	}
 }
