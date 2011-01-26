@@ -52,7 +52,18 @@ void CamThread::VideoCallback(void* _rgb, uint32_t timestamp)
 	rgbMat.data = rgb;
 	m_new_rgb_frame = true;
 	m_rgb_mutex.unlock();
-};
+}
+
+// Do not call directly even in child
+void CamThread::DepthCallback(void* _depth, uint32_t timestamp)
+{
+	std::cout << "Depth callback" << std::endl;
+	m_depth_mutex.lock();
+	uint16_t* depth = static_cast<uint16_t*>(_depth);
+	depthMat.data = (uchar*) depth;
+	m_new_depth_frame = true;
+	m_depth_mutex.unlock();
+}
 
 
 void CamThread::run()

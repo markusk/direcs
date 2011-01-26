@@ -61,6 +61,10 @@ class CamThread : public QThread
 		void VideoCallback(void* _rgb, uint32_t timestamp);
 
 
+		// Do not call directly even in child
+		void DepthCallback(void* _depth, uint32_t timestamp);
+
+
 		/**
 		@return true on success
 		*/
