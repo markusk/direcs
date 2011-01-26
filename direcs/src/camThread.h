@@ -60,10 +60,10 @@ class CamThread : public QThread
 		// Do not call directly even in child
 		void VideoCallback(void* _rgb, uint32_t timestamp);
 
-
 		// Do not call directly even in child
 		void DepthCallback(void* _depth, uint32_t timestamp);
 
+		bool getVideo(Mat& output);
 
 		/**
 		@return true on success
