@@ -37,14 +37,6 @@
 #include <ctype.h>
 //-------------------------------------------------------------------
 
-typedef struct
-{
-	int x;
-	int y;
-	int radius;
-	int rank;
-} KOORD_T;
-
 
 /*!
 \brief This class gets a live picture from a connected camera.
@@ -73,27 +65,6 @@ class CamThread : public QThread
 		 */
 		void setCascadePath(QString haarClassifierCascade);
 
-		/**
-		Sets the camera device.
-		@param device is an integer value! 0 for the first vide device (e.g. /dev/video0). -2 if an error occured.
-		 */
-		void setCameraDevice(int device);
-
-		/**
-		Returns the image height of the camera. Retrieved in the constructor!
-		*/
-		int imageHeight();
-
-		/**
-		Returns the image width of the camera. Retrieved in the constructor!
-		*/
-		int imageWidth();
-
-		/**
-		Returns the image pixel depth of the camera. Retrieved in the constructor!
-		*/
-		int imagePixelDepth();
-
 		void stop();
 		virtual void run();
 
@@ -104,19 +75,6 @@ class CamThread : public QThread
 		@param state has to be Qt::Checked to enable the detection. All other states disable.
 		*/
 		void enableFaceDetection(int state);
-
-		/**
-		Draws a red object in the camera image, when the camera hits the end switches (when panning and tilting).
-		@param position can be TOP, BOTTOM, LEFT, RIGHT
-		@param state can be true or false (for ON and OFF)disableFaceDetection
-		@sa Gui::showContactAlarm()
-		 */
-		void drawContactAlarm(char position, bool state);
-
-		/**
-		*/
-		void test();
-
 
 
 	signals:
@@ -150,63 +108,25 @@ class CamThread : public QThread
 		*/
 		void faceDetected(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 
-				/**
-				Emits a info or error message to a slot.
-				This slot can be used to display a text on a splash screen, log file, to print it to a console...
-				@param text is the message to be emitted
-				*/
-				void message(QString text);
+		/**
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		@param text is the message to be emitted
+		*/
+		void message(QString text);
 
 
 	private:
-		QImage * IplImageToQImage(const IplImage * iplImage); //! Converts an OpenCV iplImage into a nice QImage :-)
-
 		bool initDone;
 		bool cameraIsOn;
 		bool faceDetectionIsEnabled;
 		bool faceDetectionWasActive;
-		QVector <KOORD_T> detectedFaces; /** the coordinates of the last n detected faces */
-		int cameraDevice;
 		QString haarClassifierCascadeFilename;
-		CvScalar hsv2rgb( float hue );
-		IplImage *imgPtr;
-		CvCapture *capture;
-		CvMemStorage *storage;
-		CvHaarClassifierCascade *cascade;
-		IplImage *gray;
-		IplImage *small_img;
-
-		/* ----------
-		QImage *qimage; // for IplImageToQImage()
-		IplImage* tchannel0;
-		IplImage* tchannel1;
-		IplImage* tchannel2;
-		IplImage* tchannel3;
-		int bytesPerLine;
-		IplImage *imgPtrDest;
-		----------- */
-		int width;
-		int height;
-		int pixeldepth;
-		bool contactAlarmTop;
-		bool contactAlarmBottom;
-		bool contactAlarmLeft;
-		bool contactAlarmRight;
 		volatile bool stopped;
 
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
-		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
-
-		static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480.
-
-		// The position for the contact alarm in the camera image
-		static const char LEFT   = 0;
-		static const char RIGHT  = 1;
-		static const char TOP    = 2;
-		static const char BOTTOM = 3;
-
-		static const int FACEARRAYSIZE = 24;
+		static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
 };
 
 #endif
