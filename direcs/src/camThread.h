@@ -27,9 +27,9 @@
 #include <QImage>
 #include <QtDebug> // for a more convenient use of qDebug
 #include <QFile>
+#include <QMutex>
 //-------------------------------------------------------------------
 #include <libfreenect.hpp>
-
 #include <opencv/cv.h>
 #include <opencv/cxcore.h>
 #include <opencv/highgui.h>
@@ -37,7 +37,6 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <pthread.h>
 
 using namespace cv;
 using namespace std;
@@ -124,6 +123,17 @@ class CamThread : public QThread
 
 
 	private:
+		std::vector<uint8_t> m_buffer_depth;
+		std::vector<uint8_t> m_buffer_rgb;
+		std::vector<uint16_t> m_gamma;
+		Mat depthMat;
+		Mat rgbMat;
+		Mat ownMat;
+		mutable QMutex *m_rgb_mutex;
+		mutable QMutex *m_depth_mutex;
+		bool m_new_rgb_frame;
+		bool m_new_depth_frame;
+
 		bool initDone;
 		bool cameraIsOn;
 		bool faceDetectionIsEnabled;
