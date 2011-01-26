@@ -92,7 +92,8 @@ unix|macx {
 				/opt/local/libexec/qt4-mac/include \
 				/usr/include/qwt-qt4 \
 				/opt/local/include/qwt \
-				/usr/local/include
+				/usr/local/include \
+				/usr/local/include/libfreenect
 
 	LIBS +=		-L/opt/local/lib \
 				-L/usr/lib \

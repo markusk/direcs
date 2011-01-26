@@ -23,18 +23,25 @@
 
 //-------------------------------------------------------------------
 #include <QtGlobal> // for Q_OS_* Makro!
+#include <QThread>
 #include <QImage>
-#include <QtGui> // for QMessage
-#include <QTime>
-#include <QString>
 #include <QtDebug> // for a more convenient use of qDebug
 #include <QFile>
 //-------------------------------------------------------------------
+#include <libfreenect.hpp>
+
 #include <opencv/cv.h>
+#include <opencv/cxcore.h>
 #include <opencv/highgui.h>
 
-#include <stdio.h>
-#include <ctype.h>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <pthread.h>
+
+using namespace cv;
+using namespace std;
+
 //-------------------------------------------------------------------
 
 
