@@ -144,6 +144,11 @@ void CamThread::run()
 	{
 		if (cameraIsOn == true)
 		{
+			device.getVideo(rgbMat);
+			device.getDepth(depthMat);
+			cv::imshow("rgb", rgbMat);
+			depthMat.convertTo(depthf, CV_8UC1, 255.0/2048.0);
+			cv::imshow("depth",depthf);
 
 			// let the thread sleep some time
 			msleep(THREADSLEEPTIME);
@@ -151,6 +156,9 @@ void CamThread::run()
 		} // cameraIsOn
 	} // while !stopped
 
+
+//	cvDestroyWindow("rgb");
+//	cvDestroyWindow("depth");
 
 	stopped = false;
 }
