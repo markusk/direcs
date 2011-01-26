@@ -43,6 +43,17 @@ void CamThread::stop()
 	stopped = true;
 }
 
+// Do not call directly even in child
+void CamThread::VideoCallback(void* _rgb, uint32_t timestamp)
+{
+	std::cout << "RGB callback" << std::endl;
+	m_rgb_mutex.lock();
+	uint8_t* rgb = static_cast<uint8_t*>(_rgb);
+	rgbMat.data = rgb;
+	m_new_rgb_frame = true;
+	m_rgb_mutex.unlock();
+};
+
 
 void CamThread::run()
 {

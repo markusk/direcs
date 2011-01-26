@@ -45,8 +45,8 @@ using namespace std;
 
 
 /*!
-\brief This class gets a live picture from a connected camera.
-This class uses the Open Source Computer Vision Library for grabbing the pictures and also for face detection.
+\brief This class gets a live picture from a Kinect camera.
+This class uses the freenect library and the OpenCV library for grabbing pictures and also for face detection.
 */
 class CamThread : public QThread
 {
@@ -55,6 +55,11 @@ class CamThread : public QThread
 	public:
 		CamThread();
 		~CamThread();
+
+
+		// Do not call directly even in child
+		void VideoCallback(void* _rgb, uint32_t timestamp);
+
 
 		/**
 		@return true on success
@@ -129,8 +134,8 @@ class CamThread : public QThread
 		Mat depthMat;
 		Mat rgbMat;
 		Mat ownMat;
-		mutable QMutex *m_rgb_mutex;
-		mutable QMutex *m_depth_mutex;
+		mutable QMutex m_rgb_mutex;
+		mutable QMutex m_depth_mutex;
 		bool m_new_rgb_frame;
 		bool m_new_depth_frame;
 
