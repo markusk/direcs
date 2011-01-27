@@ -880,7 +880,16 @@ void Direcs::init()
 			connect(kinect, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 */
 			// The updated Kinect camera thread using OpenCV
-			camThread = new CamThread();
+			//camThread = new CamThread();
+//			camThread& device = freenect.createDevice<MyFreenectDevice>(0);
+
+			//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
+			//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
+
+			//	device.startVideo();
+			//	device.startDepth();
+
+//			camThread->init();
 /*
 			//-----------------------------------------------------------
 			// check if Kinect camera is connected
@@ -1214,6 +1223,7 @@ void Direcs::shutdown()
 //			delete glWidget;
 		}
 */
+		/*
 		if (camThread->isRunning() == true)
 		{
 			emit message("Stopping camera thread...");
@@ -1248,6 +1258,7 @@ void Direcs::shutdown()
 				emit message("Camera thread terminated.");
 			}
 		}
+		*/
 	}
 
 
