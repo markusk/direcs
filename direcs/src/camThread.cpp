@@ -20,7 +20,7 @@
 
 #include "camThread.h"
 
-
+/*
 CamThread::CamThread() : QThread()
 {
 	stopped = false;
@@ -36,6 +36,14 @@ CamThread::CamThread() : QThread()
 	Mat rgbMat(Size(640,480),CV_8UC3,Scalar(0));
 	Mat ownMat(Size(640,480),CV_8UC3,Scalar(0));
 
+	for (unsigned int i = 0 ; i < 2048 ; i++)
+	{
+		float v = i/2048.0;
+		v = std::pow(v, 3)* 6;
+		m_gamma[i] = v*6*256;
+	}
+
+
 //	Freenect::Freenect freenect;
 //	MyFreenectDevice& device = freenect.createDevice<MyFreenectDevice>(0);
 
@@ -45,7 +53,7 @@ CamThread::CamThread() : QThread()
 //	device.startVideo();
 //	device.startDepth();
 }
-
+*/
 
 CamThread::~CamThread()
 {
