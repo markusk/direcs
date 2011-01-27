@@ -48,16 +48,13 @@ using namespace std;
 \brief This class gets a live picture from a Kinect camera.
 This class uses the freenect library and the OpenCV library for grabbing pictures and also for face detection.
 */
-class CamThread : public QThread
+class CamThread : public QThread, public Freenect::FreenectDevice
 {
 	Q_OBJECT
 
 	public:
-		CamThread();
-		~CamThread();
-
-/*
-		MyFreenectDevice(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
+//		CamThread();
+		CamThread(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
 			m_buffer_depth(FREENECT_DEPTH_11BIT_SIZE),
 			m_buffer_rgb(FREENECT_VIDEO_RGB_SIZE),
 			m_gamma(2048),
@@ -72,7 +69,9 @@ class CamThread : public QThread
 					m_gamma[i] = v*6*256;
 				}
 			}
-*/
+
+		~CamThread();
+
 
 		// Do not call directly even in child
 		void VideoCallback(void* _rgb, uint32_t timestamp);
