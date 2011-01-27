@@ -44,14 +44,6 @@ CamThread::CamThread() : QThread()
 	}
 
 
-//	Freenect::Freenect freenect;
-//	MyFreenectDevice& device = freenect.createDevice<MyFreenectDevice>(0);
-
-//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
-//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
-
-//	device.startVideo();
-//	device.startDepth();
 }
 */
 
@@ -136,6 +128,13 @@ bool CamThread::getDepth(Mat& output)
 
 void CamThread::run()
 {
+	//	camThread& device = freenect.createDevice<MyFreenectDevice>(0);
+
+	//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
+	//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
+
+	//	device.startVideo();
+	//	device.startDepth();
 
 	if (initDone==false)
 	{
@@ -152,12 +151,13 @@ void CamThread::run()
 	{
 		if (cameraIsOn == true)
 		{
+/*
 			device.getVideo(rgbMat);
 			device.getDepth(depthMat);
 			cv::imshow("rgb", rgbMat);
 			depthMat.convertTo(depthf, CV_8UC1, 255.0/2048.0);
 			cv::imshow("depth",depthf);
-
+*/
 			// let the thread sleep some time
 			msleep(THREADSLEEPTIME);
 
