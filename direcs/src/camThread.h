@@ -52,6 +52,7 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 {
 	Q_OBJECT
 
+
 	public:
 		CamThread(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
 			m_buffer_depth(FREENECT_DEPTH_11BIT_SIZE),
@@ -59,7 +60,7 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 			m_gamma(2048),
 			m_new_rgb_frame(false),
 			m_new_depth_frame(false),
-			depthMat(Size(640,480),CV_16UC1), rgbMat(Size(640,480),CV_8UC3,Scalar(0)), ownMat(Size(640,480),CV_8UC3,Scalar(0))
+			depthMat(cv::Size(640,480),CV_16UC1), rgbMat(cv::Size(640,480), CV_8UC3,Scalar(0)), ownMat(cv::Size(640,480), CV_8UC3,cv::Scalar(0))
 		{
 			stopped = false;
 			initDone = false;;
@@ -68,11 +69,10 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 			faceDetectionWasActive = false;
 			haarClassifierCascadeFilename = "none";
 
-
-			Mat depthMat(Size(640,480),CV_16UC1);
-			Mat depthf  (Size(640,480),CV_8UC1);
-			Mat rgbMat(Size(640,480),CV_8UC3,Scalar(0));
-			Mat ownMat(Size(640,480),CV_8UC3,Scalar(0));
+			Mat depthMat(cv::Size(640,480), CV_16UC1);
+			Mat depthf(cv::Size(640,480), CV_8UC1);
+			Mat rgbMat(cv::Size(640,480), CV_8UC3, cv::Scalar(0));
+			Mat ownMat(cv::Size(640,480), CV_8UC3, cv::Scalar(0));
 
 			for (unsigned int i = 0 ; i < 2048 ; i++)
 			{
@@ -80,6 +80,17 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 				v = std::pow(v, 3)* 6;
 				m_gamma[i] = v*6*256;
 			}
+
+
+			Freenect::Freenect freenect;
+		//	MyFreenectDevice& device = freenect.createDevice<MyFreenectDevice>(0);
+
+		//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
+		//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
+
+		//	device.startVideo();
+		//	device.startDepth();
+		}
 
 		~CamThread();
 
@@ -164,11 +175,11 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 		std::vector<uint8_t> m_buffer_depth;
 		std::vector<uint8_t> m_buffer_rgb;
 		std::vector<uint16_t> m_gamma;
+		mutable QMutex m_rgb_mutex;
+		mutable QMutex m_depth_mutex;
 		Mat depthMat;
 		Mat rgbMat;
 		Mat ownMat;
-		mutable QMutex m_rgb_mutex;
-		mutable QMutex m_depth_mutex;
 		bool m_new_rgb_frame;
 		bool m_new_depth_frame;
 
