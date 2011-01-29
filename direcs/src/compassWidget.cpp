@@ -115,7 +115,9 @@ void CompassWidget::initializeGL()
 */
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);
-	qglClearColor(backgroundColor.dark());
+//	qglClearColor(backgroundColor.dark());
+	glClearColor(0.93f, 0.93f, 0.93f, 0.0f);			   // Grey Background
+
 	glClearDepth(1.0);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
@@ -426,4 +428,10 @@ QSize CompassWidget::minimumSizeHint() const
 QSize CompassWidget::sizeHint() const
 {
 	return QSize(800, 800);
+}
+
+
+void CompassWidget::setBackgroundColor(QColor col)
+{
+	backgroundColor = col;
 }

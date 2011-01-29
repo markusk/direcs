@@ -35,7 +35,7 @@ class CompassWidget : public QGLWidget
 	public:
 		CompassWidget(QWidget *parent = 0);
 		~CompassWidget();
-	
+
 		QSize minimumSizeHint() const;
 		QSize sizeHint() const;
 
@@ -43,15 +43,18 @@ class CompassWidget : public QGLWidget
 		void setXRotation(float angle);
 		void setYRotation(float angle);
 		void setZRotation(float angle);
-		
+
 		/**
 		This is an additional member function, provided for convenience.
-		
+
 		@param xAngle should be between 0.0 and 360.0
 		@param yAngle should be between 0.0 and 360.0
 		@param zAngle should be between 0.0 and 360.0
 		*/
 		void setAllRotations(float xAngle, float yAngle, float zAngle);
+
+		void setBackgroundColor(QColor col);
+
 
 	signals:
 		void xRotationChanged(float angle);
@@ -69,23 +72,23 @@ class CompassWidget : public QGLWidget
 
 	private:
 		void normalizeAngle(float *angle);
-	
+
 		GLUquadricObj* xAxisCylinder;
 		GLUquadricObj* yAxisCylinder;
 		GLUquadricObj* zAxisCylinder;
 		GLUquadricObj* xAxisCone;
 		GLUquadricObj* yAxisCone;
 		GLUquadricObj* zAxisCone;
-	
+
 		float xRot;
 		float yRot;
 		float zRot;
-		
+
 		int m_mouseLastX;
 		int m_mouseLastY;
 		double m_mouseAngleH;
 		double m_mouseAngleV;
-		
+
 		GLdouble cyl_radius;
 		GLdouble cyl_height;
 		GLdouble cubeWidth;
