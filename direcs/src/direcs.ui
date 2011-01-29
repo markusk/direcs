@@ -1525,7 +1525,7 @@
       </widget>
      </item>
      <item row="2" column="0" colspan="2">
-      <widget class="GLWidget" name="frameOpenCV" native="true">
+      <widget class="RGBWindow" name="frameOpenCV" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1583,34 +1583,6 @@
        <property name="autoFillBackground">
         <bool>true</bool>
        </property>
-       <widget class="QLabel" name="lblOpenCV">
-        <property name="geometry">
-         <rect>
-          <x>1</x>
-          <y>1</y>
-          <width>320</width>
-          <height>240</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>320</width>
-          <height>240</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
       </widget>
      </item>
      <item row="3" column="0">
@@ -2123,12 +2095,6 @@
    <class>CompassWidget</class>
    <extends>QWidget</extends>
    <header>compassWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>GLWidget</class>
-   <extends>QWidget</extends>
-   <header>glwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

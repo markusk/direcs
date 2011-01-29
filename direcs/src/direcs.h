@@ -58,8 +58,6 @@
 //#include "camThread.h"
 #include "speakThread.h"
 
-//	#include "glwidget.h"
-
 
 //-------------------------------------------------------------------
 #include <signal.h> // for SIGINT
@@ -334,7 +332,6 @@ class Direcs : public QObject
 		Head *head;
 		Logfile *logfile;
 		QKinect *kinect; /// pointer to control the Kinect
-//		GLWidget *glWidget; /// this is for the OpenCV stuff
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;

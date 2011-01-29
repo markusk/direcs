@@ -49,9 +49,6 @@
 
 #include "compassWidget.h"
 
-/*
-	#include "glwidget.h"
-*/
 
 #include "ui_direcs.h"
 
@@ -616,13 +613,6 @@ class Gui : public QMainWindow
 		QPixmap cameraPicToSave;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-/*
-		GLWidget glwidget1; // this object will be added to the GUI layout
-
-		CvCapture *capture;
-		QTime timer;
-		bool cameraOpened;
-*/
 		cv::Mat mImage; // OpenCV test
 
 		// kinect image (grabbed before in the QKinect class)

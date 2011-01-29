@@ -916,8 +916,6 @@ void Direcs::init()
 				// the signal for setting the video mode
 //				connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
 
-				// create OpenCV object
-//				glWidget = new GLWidget();
 			}
 			else
 			{
@@ -1207,9 +1205,6 @@ void Direcs::shutdown()
 			kinect->setLedOff();
 
 			kinect->shutDownKinect();
-
-			// OpenCV object
-//			delete glWidget;
 		}
 	}
 

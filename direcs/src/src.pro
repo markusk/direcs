@@ -46,8 +46,8 @@ unix|macx {
 				speakThread.h \
 				logfile.h \
 				RGBWindow.h \
-				QKinect.h \
-				glwidget.h
+				QKinect.h
+#				glwidget.h
 
 	SOURCES +=	aboutDialog.cpp \
 #				camThread.cpp \
@@ -77,8 +77,8 @@ unix|macx {
 				speakThread.cpp \
 				logfile.cpp \
 				RGBWindow.cpp \
-				QKinect.cpp \
-				glwidget.cpp
+				QKinect.cpp
+#				glwidget.cpp
 
 	FORMS +=	direcs.ui \
 				aboutDialog.ui \

@@ -67,15 +67,6 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 void Gui::init()
 {
-/*
-	cameraOpened = false;
-	// create to qwt plot objects and place them in the GUI
-	glwidget1.setParent(ui.frameOpenCV);
-*/
-
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
 // get background color for compass widget
 //	QColor compassBackground = this->palette().window().color();
 //	QColor compassBackground = this->palette().light().color();
@@ -563,6 +554,11 @@ void Gui::on_actionTest_activated()
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, 640, 480, 0, GL_RGB, GL_UNSIGNED_BYTE, &m_rgb[0]);
 */
 
+
+//	ui.frameOpenCV->processOpenCV();
+
+
+/*
 	// grab image from the kinect frame in the GUI
 	QImage qimage = ui.frameDepth->grabFrameBuffer();
 
@@ -604,6 +600,7 @@ void Gui::on_actionTest_activated()
 		QImage tmp( (uchar*)gray.data, gray.cols, gray.rows, gray.step, QImage::Format_Indexed8  );
 		ui.lblOpenCV->setPixmap( QPixmap::fromImage( tmp ) );
 	}
+*/
 }
 
 
