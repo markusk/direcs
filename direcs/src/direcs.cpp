@@ -1200,7 +1200,7 @@ void Direcs::shutdown()
 			emit message("Stopping Kinect camera...");
 			emit splashMessage("Stopping Kinect camera...");
 
-			kinect->resetAngle();
+			// kinect->resetAngle();
 
 			kinect->setLedOff();
 
