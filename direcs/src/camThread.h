@@ -23,43 +23,88 @@
 
 //-------------------------------------------------------------------
 #include <QtGlobal> // for Q_OS_* Makro!
+#include <QThread>
 #include <QImage>
-#include <QtGui> // for QMessage
-#include <QTime>
-#include <QString>
 #include <QtDebug> // for a more convenient use of qDebug
 #include <QFile>
+#include <QMutex>
 //-------------------------------------------------------------------
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-	#include <cv.h>
-	#include <highgui.h>
-#endif
+#include <libfreenect.hpp>
+#include <opencv/cv.h>
+#include <opencv/cxcore.h>
+#include <opencv/highgui.h>
 
-#include <stdio.h>
-#include <ctype.h>
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace cv;
+using namespace std;
+
 //-------------------------------------------------------------------
-
-typedef struct
-{
-	int x;
-	int y;
-	int radius;
-	int rank;
-} KOORD_T;
 
 
 /*!
-\brief This class gets a live picture from a connected camera.
-This class uses the Open Source Computer Vision Library for grabbing the pictures and also for face detection.
+\brief This class gets a live picture from a Kinect camera.
+This class uses the freenect library and the OpenCV library for grabbing pictures and also for face detection.
 */
-class CamThread : public QThread
+class CamThread : public QThread, public Freenect::FreenectDevice
 {
-    Q_OBJECT
+	Q_OBJECT
+
 
 	public:
-		CamThread();
+		CamThread(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
+			m_buffer_depth(FREENECT_DEPTH_11BIT_SIZE),
+			m_buffer_rgb(FREENECT_VIDEO_RGB_SIZE),
+			m_gamma(2048),
+			m_new_rgb_frame(false),
+			m_new_depth_frame(false),
+			depthMat(cv::Size(640,480),CV_16UC1), rgbMat(cv::Size(640,480), CV_8UC3,Scalar(0)), ownMat(cv::Size(640,480), CV_8UC3,cv::Scalar(0))
+		{
+			stopped = false;
+			initDone = false;;
+			cameraIsOn = false;
+			faceDetectionIsEnabled = false;
+			faceDetectionWasActive = false;
+			haarClassifierCascadeFilename = "none";
+
+			Mat depthMat(cv::Size(640,480), CV_16UC1);
+			Mat depthf(cv::Size(640,480), CV_8UC1);
+			Mat rgbMat(cv::Size(640,480), CV_8UC3, cv::Scalar(0));
+			Mat ownMat(cv::Size(640,480), CV_8UC3, cv::Scalar(0));
+
+			for (unsigned int i = 0 ; i < 2048 ; i++)
+			{
+				float v = i/2048.0;
+				v = std::pow(v, 3)* 6;
+				m_gamma[i] = v*6*256;
+			}
+
+
+			Freenect::Freenect freenect;
+		//	MyFreenectDevice& device = freenect.createDevice<MyFreenectDevice>(0);
+
+		//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
+		//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
+
+		//	device.startVideo();
+		//	device.startDepth();
+		}
+
 		~CamThread();
-		
+
+
+		// Do not call directly even in child
+		void VideoCallback(void* _rgb, uint32_t timestamp);
+
+		// Do not call directly even in child
+		void DepthCallback(void* _depth, uint32_t timestamp);
+
+		bool getVideo(Mat& output);
+
+		bool getDepth(Mat& output);
+
 		/**
 		@return true on success
 		*/
@@ -68,76 +113,38 @@ class CamThread : public QThread
 		/**
 		*/
 		bool isConnected(void);
-		
+
 		/**
 		Sets the path and filename to the haar classifier cascade.
 		@param haarClassifierCascade is the whole filename
 		 */
 		void setCascadePath(QString haarClassifierCascade);
-		
-		/**
-		Sets the camera device.
-		@param device is an integer value! 0 for the first vide device (e.g. /dev/video0). -2 if an error occured.
-		 */
-		void setCameraDevice(int device);
 
-		/**
-		Returns the image height of the camera. Retrieved in the constructor!
-		*/
-		int imageHeight();
-
-		/**
-		Returns the image width of the camera. Retrieved in the constructor!
-		*/
-		int imageWidth();
-
-		/**
-		Returns the image pixel depth of the camera. Retrieved in the constructor!
-		*/
-		int imagePixelDepth();
-		
 		void stop();
 		virtual void run();
 
-		
+
 	public slots:
 		/**
 		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.
 		@param state has to be Qt::Checked to enable the detection. All other states disable.
 		*/
 		void enableFaceDetection(int state);
-		
-		/**
-		Draws a red object in the camera image, when the camera hits the end switches (when panning and tilting).
-		@param position can be TOP, BOTTOM, LEFT, RIGHT
-		@param state can be true or false (for ON and OFF)disableFaceDetection
-		@sa Gui::showContactAlarm()
-		 */
-		void drawContactAlarm(char position, bool state);
-		
-		/**
-		*/
-		void test();
 
 
-	
 	signals:
-#ifndef Q_OS_MAC   // currently supported only under linux (no MAC OS at the moment) -> strange Q_OS_LINUX brings a linker error here!
-#ifndef Q_OS_WIN32 // currently supported only under linux (no MAC OS at the moment)
 		/**
 		@param *imgPtr is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
 		void camDataComplete(IplImage* imgPtr);
 		//void camDataComplete(QImage* image);
-#endif
-#endif
 
 		/**
 		Disables checkBoxes in the GUI
 		*/
 		void disableFaceDetection();
-		
+
 		/**
 		Disables camera controls in the GUI
 		 */
@@ -145,7 +152,7 @@ class CamThread : public QThread
 
 		/**
 		This signal is emmited when a face was detected in the camera image
-		
+
 		@param faces is the total number of faces detected
 		@param faceX is the X coordinate to the middle of a detected face (0, if none)
 		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
@@ -156,66 +163,36 @@ class CamThread : public QThread
 		*/
 		void faceDetected(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
 
-                /**
-                Emits a info or error message to a slot.
-                This slot can be used to display a text on a splash screen, log file, to print it to a console...
-                @param text is the message to be emitted
-                */
-                void message(QString text);
+		/**
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		@param text is the message to be emitted
+		*/
+		void message(QString text);
 
 
 	private:
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-		QImage * IplImageToQImage(const IplImage * iplImage); //! Converts an OpenCV iplImage into a nice QImage :-)
-#endif
+		std::vector<uint8_t> m_buffer_depth;
+		std::vector<uint8_t> m_buffer_rgb;
+		std::vector<uint16_t> m_gamma;
+		mutable QMutex m_rgb_mutex;
+		mutable QMutex m_depth_mutex;
+		Mat depthMat;
+		Mat rgbMat;
+		Mat ownMat;
+		bool m_new_rgb_frame;
+		bool m_new_depth_frame;
 
 		bool initDone;
 		bool cameraIsOn;
 		bool faceDetectionIsEnabled;
 		bool faceDetectionWasActive;
-		QVector <KOORD_T> detectedFaces; /** the coordinates of the last n detected faces */
-		int cameraDevice;
 		QString haarClassifierCascadeFilename;
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-		CvScalar hsv2rgb( float hue );
-		IplImage *imgPtr;
-		CvCapture *capture;
-		CvMemStorage *storage;
-		CvHaarClassifierCascade *cascade;
-		IplImage *gray;
-		IplImage *small_img;
-#endif
-		/* ----------
-		QImage *qimage; // for IplImageToQImage()
-		IplImage* tchannel0;
-		IplImage* tchannel1;
-		IplImage* tchannel2;
-		IplImage* tchannel3;
-		int bytesPerLine;
-		IplImage *imgPtrDest;
-		----------- */
-		int width;
-		int height;
-		int pixeldepth;
-		bool contactAlarmTop;
-		bool contactAlarmBottom;
-		bool contactAlarmLeft;
-		bool contactAlarmRight;
 		volatile bool stopped;
-		
+
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
-		//static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
-		
-		static const double scale = 1.7; // 1.3 is okay for 640*480 images, 1.8 for 640*480.
-		
-		// The position for the contact alarm in the camera image
-		static const char LEFT   = 0;
-		static const char RIGHT  = 1;
-		static const char TOP    = 2;
-		static const char BOTTOM = 3;
-		
-		static const int FACEARRAYSIZE = 24;
+		static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
 };
 
 #endif

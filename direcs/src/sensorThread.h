@@ -29,6 +29,7 @@
 //-------------------------------------------------------------------
 
 /**
+\author Markus Knapp
 \brief Responsible for getting all data from all sensors - except laserscanners.
 
 The SensorThread class is a thread, responsible for getting all data from all sensors (infrared, ultrasonic, motor current sensors, wheel encoders, voltage sensors and the 3D compass) and to store them.
@@ -188,7 +189,7 @@ class SensorThread : public QThread
 		void compassDataComplete(float x, float y, float z, float heading);
 
 		/**
-		This signal is emitted every TODO: seconds, when a specific value from the microcontroller was received.
+		This signal is emitted every \todo seconds, when a specific value from the microcontroller was received.
 		@sa Gui::setLEDHeartbeat()
 		@sa Logfile::writeHeartbeat()
 		*/
@@ -300,7 +301,7 @@ class SensorThread : public QThread
 		//
 		// For example:  iRSensorValue[SENSOR4] = 0;
 		//
-		int iRSensorValue[SENSOR8+1]; // ToDo: array mit 129 Werten statt 8 für 8 Sensoren !!! Überleg dir was !!!
+		int iRSensorValue[SENSOR8+1]; /// \todo array mit 129 Werten statt 8 für 8 Sensoren !!!
 
 		/** defines the size of the iRDistance[] array !! */
 		static const unsigned char IRSENSORARRAYSIZE = 40;
@@ -414,8 +415,8 @@ class SensorThread : public QThread
 		static const unsigned char READ_MOTOR_DISTANCE1	= 30;
 		static const unsigned char READ_MOTOR_DISTANCE2	= 31;
 
-		static const short int RESET_MOTOR_DISTANCE1 = 32; // TODO: why int instead of char? Where else?
-		static const short int RESET_MOTOR_DISTANCE2 = 33; // TODO: why int instead of char? Where else?
+		static const short int RESET_MOTOR_DISTANCE1 = 32; /// \todo why int instead of char? Where else?
+		static const short int RESET_MOTOR_DISTANCE2 = 33; /// \todo why int instead of char? Where else?
 
 		static const unsigned char READ_AXIS_X = 61;
 		static const unsigned char READ_AXIS_Y = 62;

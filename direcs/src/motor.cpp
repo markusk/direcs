@@ -830,7 +830,7 @@ void Motor::parkStepper(unsigned char motor)
 {
 	if (robotState == ON)
 	{
-		// TODO: park stepper correctly!! (temporarily not in use)
+		/// \todo park stepper correctly!! (temporarily not in use)
 		motorControl(STEPPER1, OFF, SAME);
 		motorControl(STEPPER2, OFF, SAME);
 	}
@@ -841,7 +841,7 @@ void Motor::calculateMovement()
 {
 /* test
 
-	// TODO: (not implemented in robot hardware and in avr code!)
+	/// \todo (not implemented in robot hardware and in avr code!)
 
 	//--------------------------------------------------------------------------
 	// if motor 1 is ON, step counter + 1
@@ -865,7 +865,7 @@ void Motor::calculateMovement()
 		//  Wheel circumference = PI*d = PI*66 mm = 207,345 mm
 		//  Distance per step: 207,345 mm / 200 steps = 1,036725 mm = 0,1036725 cm
 		//
-		// TODO: check the conversion value and make it a const!
+		/// \todo check the conversion value and make it a const!
 		drivenDistance1 += 0.1036725;
 
 		//
@@ -916,7 +916,7 @@ void Motor::calculateMovement()
 		//  Wheel circumference = PI*d = PI*66 mm = 207,345 mm
 		//  Distance per step: 207,345 mm / 200 steps = 1,036725 mm = 0,1036725 cm
 		//
-		// TODO: check the conversion value and make it a const!
+		/// \todo check the conversion value and make it a const!
 		drivenDistance2 += 0.1036725;
 
 		//
@@ -1024,7 +1024,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 			speed = 0;
 		}
 
-		if (speed > 255) // TODO: check if this max value is okay, since we have an int here now. sa: direcsAcr for max values!
+		if (speed > 255) /// \todo check if this max value is okay, since we have an int here now. sa: direcsAcr for max values!
 		{
 			speed = 255;
 		}

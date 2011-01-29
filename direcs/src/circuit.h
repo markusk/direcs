@@ -27,6 +27,7 @@
 //-------------------------------------------------------------------
 
 /**
+\author Markus Knapp
 \brief Delivers a initialisation for the robot's circuits
 
 This class delivers a initialisation for the robot's circuits and checks, if the robot is ON or OFF.

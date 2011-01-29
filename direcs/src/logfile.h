@@ -30,37 +30,38 @@
 //-------------------------------------------------------------------
 
 /**
+\author Markus Knapp
 \brief Handles the access to the global log-file.
 
 This class handles the access to the global log-file where all actions are stored if enabled in the ini-file.
 */
 class Logfile : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		Logfile();
 		~Logfile();
-		
+
 		/**
 		Sets the name of the log file.
 		@param filename
 		*/
 		void setFilename(QString filename);
-	
-		
+
+
 	public slots:
-		
+
 		/**
 		Appends text to the log file.
 		@param text is the text to be written.
 		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
 		 */
 		void appendLog(QString text, bool CR=true);
-		
+
 		/**
 		Write the received heartbeat signal from the hardware to the logfile.
-		TODO: Place somewhere else!
+		\todo Place somewhere else!
 		@param state is unused!
 		@sa SensorThread::heartbeat()
 		 */

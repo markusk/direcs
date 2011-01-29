@@ -31,14 +31,16 @@
 //-------------------------------------------------------------------
 
 
-/*!
-\brief Speaks a text with espeak.
+/**
+\author Markus Knapp
+\brief Speaks a text with espeak (Linux only).
 
-Also removes HTML-Tags from the text to speak.
+Also removes HTML-Tags from the text to speak in case of we got the text from a text edit field.
+If a text is already spoken, this former speach is stopped and the next text is about to speak.
 */
 class SpeakThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		SpeakThread();
@@ -60,15 +62,15 @@ class SpeakThread : public QThread
 
 	private:
 		QString removeHTML(QString string);
-		
+
 		volatile bool stopped;
 		bool saySomething; /// this is for the thread, which waits for something to say.
 		QString textToSpeak;
-		
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 600; // Default value: 600 ms
-		
+
 };
 
 #endif

@@ -29,6 +29,7 @@
 class QUdpSocket;
 
 /**
+\author Markus Knapp
 \brief Handles the network access to the robot (e.g. via WLAN).
 
 It opens an UDP socket and listens on a port. When data are received, the signal \e dataReceived is emitted.

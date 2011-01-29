@@ -186,7 +186,7 @@ void SensorThread::run()
 			{
 				// Unlock the mutex.
 				// mutex->unlock();
-				// stop(); // TODO: and what now? sa: other stop calls!
+				// stop(); /// \todo and what now? sa: other stop calls!
 			}
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -226,7 +226,8 @@ void SensorThread::run()
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
 
-/* TODO: implement reading of motor sensors 3 and 4 !
+/// \todo implement reading of motor sensors 3 and 4 !
+/*
 
 			if (readMotorSensor(MOTORSENSOR3) == false)
 			{

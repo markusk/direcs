@@ -28,6 +28,10 @@
 #include <math.h>
 
 
+/**
+\author Markus Knapp
+\brief Shows a 3D OpenGl kind of compass
+*/
 class CompassWidget : public QGLWidget
 {
 	Q_OBJECT

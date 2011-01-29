@@ -23,7 +23,7 @@
 Servo::Servo(InterfaceAvr *i, QMutex *m)
 {
 	stopped = false;
-	
+
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
@@ -38,7 +38,7 @@ Servo::Servo(InterfaceAvr *i, QMutex *m)
 		servoMaxPosition[servo] = 255;
 		servoPosition[servo] = servoDefaultPosition[servo];
 	}
-	
+
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 }
 
@@ -63,7 +63,7 @@ void Servo::run()
 		// let the thread sleep some time
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-		
+
 		// do something
 		// ...
 	}
@@ -76,26 +76,27 @@ void Servo::moveServo(unsigned char servo, unsigned char position)
 	if (robotState == ON)
 	{
 		//qDebug("moveServo%d to position %d. Start=%d / Default=%d / End=%d", servo, position, servoStartPosition[servo], servoDefaultPosition[servo], servoEndPosition[servo]);
-	
+
 		// *don't* move servo to a position out of the allowed range!!
 		if ( (position < servoMinPosition[servo]) || (position > servoMaxPosition[servo]) )
 		{
 			//emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
 			return;
 		}
-	
+
 		// store the newservo position
 		servoPosition[servo] = position;
-		
+
 		static bool toggle = false;
-			
+
 		if (!toggle)
 		{
 			toggle = !toggle;
 			emit message("<font color=\"#FF0000\">Servo functions deactivated in the program [servo.cpp]!</font>");
 		}
 
-		/* TODO: temporarily deactivated (no servos mounted on the current robot)
+		/// \todo temporarily deactivated (no servos mounted on the current robot)
+		/*
 		switch (servo)
 		{
 			case SERVO1:
@@ -287,7 +288,8 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 
 void Servo::init(void)
 {
-	/* TODO: temporarily deactivated (no servos mounted on the current robot)
+	/// \todo temporarily deactivated (no servos mounted on the current robot)
+	/*
 	if (robotState == ON)
 	{
 		for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -307,7 +309,7 @@ unsigned char Servo::getServoPosition(int servo, unsigned char type)
 		emit message(QString("<b><font color=\"#FF0000\">Servo%1 out of allowed range! (getServoPosition)</font>").arg(servo+1));
 		return 0;
 	}
-	
+
 
 	switch (type)
 	{

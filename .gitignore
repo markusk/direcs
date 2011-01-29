@@ -17,9 +17,9 @@ moc_*.cpp
 .DS_Store
 
 
-Makefile
-Makefile.Debug
-Makefile.Release
+direcs/Makefile
+direcs/src/Makefile
+
 
 direcs/bin/direcs
 direcs/tmp/

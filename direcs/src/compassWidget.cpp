@@ -63,7 +63,7 @@ CompassWidget::CompassWidget(QWidget *parent) : QGLWidget(parent)
 	/*
 	// get color from main window background
 	// So the background color of the OpenGL widget will be like the background color of the main application!
-	TODO: buggy. brings a dark gray background?!??  backgroundColor = QApplication::palette().base().color();
+	\todo buggy. brings a dark gray background?!??  backgroundColor = QApplication::palette().base().color();
 	*/
 	backgroundColor = Qt::black;
 }
@@ -236,7 +236,7 @@ void CompassWidget::paintGL()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
-	// TODO: should be located elsewhere
+	// \todo should be located elsewhere
 	static GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
 	static GLfloat mat_diffuse[] = {0.5, 0.5, 0.5, 1.0};
 	static GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
@@ -307,7 +307,7 @@ void CompassWidget::paintGL()
 void CompassWidget::resizeGL(int width, int height)
 {
 	int side = qMin(width, height);
-	glViewport((width - side) / 2, (height - side) / 2, side, side); // TODO: check this viewport stuff
+	glViewport((width - side) / 2, (height - side) / 2, side, side); // \todo check this viewport stuff
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

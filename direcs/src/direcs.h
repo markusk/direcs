@@ -55,7 +55,7 @@
 #include "laserThread.h"
 #include "joystick.h"
 #include "head.h"
-//#include "camThread.h"
+#include "camThread.h"
 #include "speakThread.h"
 
 
@@ -84,6 +84,7 @@ struct CleanExit
 
 
 /**
+\author Markus Knapp
 \brief The main class of the whole robot programm.
 
  All objects are created here. This method also starts the GUI and its splash screen.
@@ -318,7 +319,7 @@ class Direcs : public QObject
 #endif
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
-		// TODO: Heartbeat *heartbeat;
+		/// \todo Heartbeat *heartbeat;
 		SensorThread *sensorThread;
 		Motor *motors;
 		Servo *servos;
@@ -326,7 +327,7 @@ class Direcs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-		//CamThread *camThread; todo: kinect stuff
+		CamThread *camThread;
 		SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
@@ -461,11 +462,11 @@ class Direcs : public QObject
 		static const short int VOLTAGESENSOR2 = 1;
 
 		/// The minimum voltages for an acoustic and optical alarm. @sa Gui::showVoltage
-		static const float MINIMUMVOLTAGE1 = 10.80; // TODO: put min. voltage 1 in the ini-file
-		static const float MINIMUMVOLTAGE2 = 21.60; // TODO: put min. voltage 2 in the ini-file
+		static const float MINIMUMVOLTAGE1 = 10.80; /// \todo put min. voltage 1 in the ini-file
+		static const float MINIMUMVOLTAGE2 = 21.60; /// \todo put min. voltage 2 in the ini-file
 
 		/// The servos
-		static const unsigned char NUMBEROFSERVOS = 6; // TODO: also defined in servo.h !!!
+		static const unsigned char NUMBEROFSERVOS = 6; /// \todo also defined in servo.h !!!
 		/// the servo numbers
 		static const unsigned char SERVO1 = 0;
 		static const unsigned char SERVO2 = 1;
@@ -482,7 +483,7 @@ class Direcs : public QObject
 		static const unsigned char SVMIN     = 4;
 		static const unsigned char SVMAX     = 5;
 
-		// TODO: put axis numbers to ini-file
+		/// \todo put axis numbers to ini-file
 		/// Joystick axis numbers
 		/// @sa Joystick()
 		static const int JOYSTICKAXISY2 = 2; // ok

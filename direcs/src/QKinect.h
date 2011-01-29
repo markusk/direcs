@@ -40,7 +40,7 @@
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @class QKinectProcessEvents "QKinect.h"
-/// @author Jonathan Macey
+/// @author Jonathan Macey, Markus Knapp
 /// @version 1.0
 /// @date 20/12/10 Inital commit
 /// @brief this is the process event thread class

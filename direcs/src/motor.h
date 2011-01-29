@@ -29,6 +29,7 @@
 //-------------------------------------------------------------------
 
 /**
+\author Markus Knapp
 \brief Gives access to the motors of the robot.
 
 The Motor class gives access to the motors of the robot.
@@ -85,8 +86,8 @@ class Motor : public QObject
 		/**
 		Turns the flashlight ON or OFF.
 		@param state can be ON or OFF.
+		\todo put this somewhere else...
 		*/
-		// TODO: put it somewhere else...
 		bool flashlight(bool state);
 
 		/*
@@ -122,7 +123,7 @@ class Motor : public QObject
 
 
 	private:
-		void calculateMovement(); // TODO: check the conversion value and make it a const!
+		void calculateMovement(); /// \todo check the conversion value and make it a const!
 
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
