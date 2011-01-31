@@ -45,7 +45,7 @@ using namespace std;
 \brief This class gets data from a Kinect camera.
 This class uses the freenect library and the OpenCV library.
 */
-class DirecsKinect : public Freenect::FreenectDevice
+class DirecsKinect : public QObject, public Freenect::FreenectDevice
 {
 	Q_OBJECT
 
