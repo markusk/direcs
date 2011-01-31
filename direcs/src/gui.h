@@ -22,10 +22,6 @@
 #define GUI_H
 
 //-------------------------------------------------------------------
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-//-------------------------------------------------------------------
 #include <QtGlobal> // for Q_OS_* Makro!
 #include <QtGui>
 #include <QtOpenGL>
@@ -42,10 +38,6 @@
 #ifdef ACTIVELASERVIEW
 	#include "laserScene.h"
 #endif
-
-//#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-//	#include "QtGLContext.h"
-//#endif
 
 #include "compassWidget.h"
 
@@ -612,14 +604,6 @@ class Gui : public QMainWindow
 // 		QwtCompassMagnetNeedle needle;
 #endif
 		QPixmap cameraPicToSave;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		cv::Mat mImage; // OpenCV test
-
-		// kinect image (grabbed before in the QKinect class)
-		/// @brief the image data to draw put into a GL texture
-		std::vector<uint8_t> m_rgb;
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
