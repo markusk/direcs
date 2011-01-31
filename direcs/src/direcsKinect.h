@@ -50,7 +50,7 @@ class DirecsKinect : public QObject, public Freenect::FreenectDevice
 
 
 	public:
-		DirecsKinect(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
+		DirecsKinect(freenect_context *_ctx, int _index) : QObject(), Freenect::FreenectDevice(_ctx, _index),
 			m_buffer_depth(FREENECT_DEPTH_11BIT_SIZE),
 			m_buffer_rgb(FREENECT_VIDEO_RGB_SIZE),
 			m_gamma(2048),
