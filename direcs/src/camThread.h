@@ -40,6 +40,8 @@
 
 using namespace cv;
 using namespace std;
+
+#include "direcsKinect.h"
 //-------------------------------------------------------------------
 
 
@@ -126,9 +128,12 @@ class CamThread : public QThread
 	private:
 		mutable QMutex m_rgb_mutex;
 		mutable QMutex m_depth_mutex;
+/*
 		Mat depthMat;
+		Mat depthf;
 		Mat rgbMat;
 		Mat ownMat;
+*/
 		bool m_new_rgb_frame;
 		bool m_new_depth_frame;
 

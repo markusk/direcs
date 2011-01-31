@@ -20,32 +20,6 @@
 
 #include "direcsKinect.h"
 
-/*
-DirecsKinect::DirecsKinect() : QThread()
-{
-	stopped = false;
-	initDone = false;;
-	cameraIsOn = false;
-	faceDetectionIsEnabled = false;
-	faceDetectionWasActive = false;
-	haarClassifierCascadeFilename = "none";
-
-
-	Mat depthMat(Size(640,480),CV_16UC1);
-	Mat depthf  (Size(640,480),CV_8UC1);
-	Mat rgbMat(Size(640,480),CV_8UC3,Scalar(0));
-	Mat ownMat(Size(640,480),CV_8UC3,Scalar(0));
-
-	for (unsigned int i = 0 ; i < 2048 ; i++)
-	{
-		float v = i/2048.0;
-		v = std::pow(v, 3)* 6;
-		m_gamma[i] = v*6*256;
-	}
-
-
-}
-*/
 
 DirecsKinect::~DirecsKinect()
 {

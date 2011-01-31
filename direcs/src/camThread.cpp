@@ -23,27 +23,19 @@
 
 CamThread::CamThread() : QThread()
 {
-	stopped = false;
 	initDone = false;;
+
+	stopped = false;
 	cameraIsOn = false;
 	faceDetectionIsEnabled = false;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
-
-
-	Mat depthMat(Size(640,480),CV_16UC1);
-	Mat depthf  (Size(640,480),CV_8UC1);
-	Mat rgbMat(Size(640,480),CV_8UC3,Scalar(0));
-	Mat ownMat(Size(640,480),CV_8UC3,Scalar(0));
 }
 
 
 CamThread::~CamThread()
 {
 	stopped = true;
-
-//	device.stopVideo();
-//	device.stopDepth();
 }
 
 
@@ -55,45 +47,50 @@ void CamThread::stop()
 
 void CamThread::run()
 {
-	//	camThread& device = freenect.createDevice<MyFreenectDevice>(0);
-
-	//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
-	//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
-
-	//	device.startVideo();
-	//	device.startDepth();
 
 	if (initDone==false)
 	{
-		// first load haar classifier cascade etc. ...
-		if ( init() == true )
-		{
-			stopped = true;
-		}
+		Mat depthMat(Size(640,480),CV_16UC1);
+		Mat depthf(Size(640,480),CV_8UC1);
+		Mat rgbMat(Size(640,480),CV_8UC3,Scalar(0));
+		Mat ownMat(Size(640,480),CV_8UC3,Scalar(0));
+
+		Freenect::Freenect freenect;
+//		DirecsKinect& device = freenect.createDevice<DirecsKinect>(0);
+
+		namedWindow("rgb",CV_WINDOW_AUTOSIZE);
+		namedWindow("depth",CV_WINDOW_AUTOSIZE);
+
+//		device.startVideo();
+//		device.startDepth();
+		initDone = true;
 	}
 
 
 	//  start "threading"...
 	while (!stopped)
 	{
-		if (cameraIsOn == true)
-		{
-/*
-			device.getVideo(rgbMat);
-			device.getDepth(depthMat);
-			cv::imshow("rgb", rgbMat);
-			depthMat.convertTo(depthf, CV_8UC1, 255.0/2048.0);
-			cv::imshow("depth",depthf);
-*/
-			// let the thread sleep some time
-			msleep(THREADSLEEPTIME);
+//		if (cameraIsOn == true)
+//		{
+//		device.getVideo(rgbMat);
+//		device.getDepth(depthMat);
+//		cv::imshow("rgb", rgbMat);
+//		depthMat.convertTo(depthf, CV_8UC1, 255.0/2048.0);
+//		cv::imshow("depth",depthf);
 
-		} // cameraIsOn
+		// let the thread sleep some time
+		msleep(THREADSLEEPTIME);
+//		} // cameraIsOn
 	} // while !stopped
 
+	if (initDone)
+	{
+//			cvDestroyWindow("rgb");
+//			cvDestroyWindow("depth");
 
-//	cvDestroyWindow("rgb");
-//	cvDestroyWindow("depth");
+//			device.stopVideo();
+//			device.stopDepth();
+	}
 
 	stopped = false;
 }
@@ -135,6 +132,7 @@ void CamThread::setCascadePath(QString haarClassifierCascade)
 
 bool CamThread::init()
 {
+/*
 	if (initDone == false)
 	{
 		// do only *one* init!
@@ -154,4 +152,7 @@ bool CamThread::init()
 		cameraIsOn = true;
 
 	return true;
+*/
+
+	return false;
 }

@@ -76,16 +76,6 @@ class DirecsKinect : public QObject, public Freenect::FreenectDevice
 				v = std::pow(v, 3)* 6;
 				m_gamma[i] = v*6*256;
 			}
-
-
-		//	Freenect::Freenect freenect;
-		//	DirecsKinect& device = freenect.createDevice<DirecsKinect>(0);
-
-		//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
-		//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
-
-		//	device.startVideo();
-		//	device.startDepth();
 		}
 
 		~DirecsKinect();
@@ -168,11 +158,11 @@ class DirecsKinect : public QObject, public Freenect::FreenectDevice
 		std::vector<uint8_t> m_buffer_depth;
 		std::vector<uint8_t> m_buffer_rgb;
 		std::vector<uint16_t> m_gamma;
-		mutable QMutex m_rgb_mutex;
-		mutable QMutex m_depth_mutex;
 		Mat depthMat;
 		Mat rgbMat;
 		Mat ownMat;
+		mutable QMutex m_rgb_mutex;
+		mutable QMutex m_depth_mutex;
 		bool m_new_rgb_frame;
 		bool m_new_depth_frame;
 
@@ -181,11 +171,6 @@ class DirecsKinect : public QObject, public Freenect::FreenectDevice
 		bool faceDetectionIsEnabled;
 		bool faceDetectionWasActive;
 		QString haarClassifierCascadeFilename;
-		volatile bool stopped;
-
-		// Every thread sleeps some time, for having a bit more time for the other threads!
-		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
 };
 
 #endif
