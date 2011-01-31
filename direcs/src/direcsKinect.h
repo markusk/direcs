@@ -22,7 +22,6 @@
 #define DIRECSKINECT_H
 
 //-------------------------------------------------------------------
-#include <QtGlobal> // for Q_OS_* Makro!
 #include <QtDebug> // for a more convenient use of qDebug
 #include <QMutex>
 //-------------------------------------------------------------------
