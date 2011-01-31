@@ -57,8 +57,8 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	// do the rest of my init stuff
 	init();
 
-	/// set mode of left camera widget to depth draw (1 = depth)
-	ui.frameDepth->setMode(1);
+	// set mode of left camera widget to depth draw (1 = depth)
+	// ui.frameDepth->setMode(1);
 
 	// disable the motor current docks since this is not in use right now
 	//ui.dockCurrent->setVisible(false);

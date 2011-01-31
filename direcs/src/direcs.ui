@@ -1403,7 +1403,7 @@
    <widget class="QWidget" name="dockWidgetContents_9">
     <layout class="QGridLayout" name="gridLayout_11">
      <item row="0" column="0" colspan="2">
-      <widget class="RGBWindow" name="frameCamera" native="true">
+      <widget class="QWidget" name="frameCamera" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1464,7 +1464,7 @@
       </widget>
      </item>
      <item row="1" column="0" colspan="2">
-      <widget class="RGBWindow" name="frameDepth" native="true">
+      <widget class="QWidget" name="frameDepth" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1525,7 +1525,7 @@
       </widget>
      </item>
      <item row="2" column="0" colspan="2">
-      <widget class="RGBWindow" name="frameOpenCV" native="true">
+      <widget class="QWidget" name="frameOpenCV" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -2085,12 +2085,6 @@
   </action>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>RGBWindow</class>
-   <extends>QWidget</extends>
-   <header>RGBWindow.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>CompassWidget</class>
    <extends>QWidget</extends>

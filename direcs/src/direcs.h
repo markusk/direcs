@@ -55,6 +55,7 @@
 #include "laserThread.h"
 #include "joystick.h"
 #include "head.h"
+#include "direcsKinect.h"
 #include "camThread.h"
 #include "speakThread.h"
 
@@ -332,7 +333,6 @@ class Direcs : public QObject
 		Joystick *joystick;
 		Head *head;
 		Logfile *logfile;
-		QKinect *kinect; /// pointer to control the Kinect
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;

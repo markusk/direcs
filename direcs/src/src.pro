@@ -45,8 +45,9 @@ unix|macx {
 				settingsDialog.h \
 				speakThread.h \
 				logfile.h \
-				RGBWindow.h \
-				QKinect.h
+				direcsKinect.h
+#				RGBWindow.h \
+#				QKinect.h
 #				glwidget.h
 
 	SOURCES +=	aboutDialog.cpp \
@@ -76,8 +77,9 @@ unix|macx {
 				settingsDialog.cpp \
 				speakThread.cpp \
 				logfile.cpp \
-				RGBWindow.cpp \
-				QKinect.cpp
+				direcsKinect.cpp
+#				RGBWindow.cpp \
+#				QKinect.cpp
 #				glwidget.cpp
 
 	FORMS +=	direcs.ui \

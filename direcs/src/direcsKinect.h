@@ -18,15 +18,12 @@
  *                                                                       *
  *************************************************************************/
 
-#ifndef CAMTHREAD_H
-#define CAMTHREAD_H
+#ifndef DIRECSKINECT_H
+#define DIRECSKINECT_H
 
 //-------------------------------------------------------------------
 #include <QtGlobal> // for Q_OS_* Makro!
-#include <QThread>
-#include <QImage>
 #include <QtDebug> // for a more convenient use of qDebug
-#include <QFile>
 #include <QMutex>
 //-------------------------------------------------------------------
 #include <libfreenect.hpp>
@@ -45,16 +42,16 @@ using namespace std;
 
 
 /*!
-\brief This class gets a live picture from a Kinect camera.
-This class uses the freenect library and the OpenCV library for grabbing pictures and also for face detection.
+\brief This class gets data from a Kinect camera.
+This class uses the freenect library and the OpenCV library.
 */
-class CamThread : public QThread, public Freenect::FreenectDevice
+class DirecsKinect : public Freenect::FreenectDevice
 {
 	Q_OBJECT
 
 
 	public:
-		CamThread(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
+		DirecsKinect(freenect_context *_ctx, int _index) : Freenect::FreenectDevice(_ctx, _index),
 			m_buffer_depth(FREENECT_DEPTH_11BIT_SIZE),
 			m_buffer_rgb(FREENECT_VIDEO_RGB_SIZE),
 			m_gamma(2048),
@@ -62,7 +59,6 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 			m_new_depth_frame(false),
 			depthMat(cv::Size(640,480),CV_16UC1), rgbMat(cv::Size(640,480), CV_8UC3,Scalar(0)), ownMat(cv::Size(640,480), CV_8UC3,cv::Scalar(0))
 		{
-			stopped = false;
 			initDone = false;;
 			cameraIsOn = false;
 			faceDetectionIsEnabled = false;
@@ -83,7 +79,7 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 
 
 		//	Freenect::Freenect freenect;
-		//	MyFreenectDevice& device = freenect.createDevice<MyFreenectDevice>(0);
+		//	DirecsKinect& device = freenect.createDevice<DirecsKinect>(0);
 
 		//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
 		//	namedWindow("depth",CV_WINDOW_AUTOSIZE);
@@ -92,7 +88,7 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 		//	device.startDepth();
 		}
 
-		~CamThread();
+		~DirecsKinect();
 
 
 		// Do not call directly even in child
@@ -119,9 +115,6 @@ class CamThread : public QThread, public Freenect::FreenectDevice
 		@param haarClassifierCascade is the whole filename
 		 */
 		void setCascadePath(QString haarClassifierCascade);
-
-		void stop();
-		virtual void run();
 
 
 	public slots:
