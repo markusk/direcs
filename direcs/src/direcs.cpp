@@ -1662,7 +1662,7 @@ Direcs::~Direcs()
 	delete interface1;
 	if (!consoleMode)
 	{
-		delete camThread;
+//		delete camThread;
 		delete aboutDialog;
 		delete joystickDialog;
 		delete settingsDialog;

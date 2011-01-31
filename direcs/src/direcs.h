@@ -56,7 +56,7 @@
 #include "joystick.h"
 #include "head.h"
 #include "direcsKinect.h"
-#include "camThread.h"
+//#include "camThread.h"
 #include "speakThread.h"
 
 
@@ -328,7 +328,7 @@ class Direcs : public QObject
 		Inifile *inifile1;
 		NetworkThread *netThread;
 		LaserThread *laserThread;
-		CamThread *camThread;
+//		CamThread *camThread;
 		SpeakThread *speakThread;
 		Joystick *joystick;
 		Head *head;
