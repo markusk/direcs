@@ -869,7 +869,7 @@ void Direcs::init()
 		{
 			emit splashMessage("Detecting Kinect camera...");
 			emit message("Detecting Kinect camera...", false);
-/*
+
 			//
 			// creation of Kinect Camera instance is not in the constructor, since this may need some time and we want to see that on the splash screen
 			//
@@ -878,12 +878,7 @@ void Direcs::init()
 			// show Kinect messages in GUI
 			connect(kinect, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 			connect(kinect, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-*/
-			// The updated Kinect camera thread using OpenCV
-			camThread = new CamThread();
-			emit splashMessage("Starting camera thread...");
-			emit message("Starting camera thread...", false);
-			camThread->start();
+
 //			camThread& device = freenect.createDevice<MyFreenectDevice>(0);
 
 			//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
@@ -893,7 +888,7 @@ void Direcs::init()
 			//	device.startDepth();
 
 //			camThread->init();
-/*
+
 			//-----------------------------------------------------------
 			// check if Kinect camera is connected
 			//-----------------------------------------------------------
@@ -928,6 +923,11 @@ void Direcs::init()
 				// the signal for setting the video mode
 //				connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
 
+				// now starting the "get an image every n ms" thread
+				emit splashMessage("Starting camera thread...");
+				emit message("Starting camera thread...", false);
+				camThread = new CamThread();
+				camThread->start();
 			}
 			else
 			{
@@ -935,11 +935,11 @@ void Direcs::init()
 				emit message("Kinect camera not found.", false);
 				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
-				gui->disableCamera();
+				//gui->disableCamera();
 				emit message("No Kinect detected.");
 
 			}
-*/
+
 		}
 
 
