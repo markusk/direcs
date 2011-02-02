@@ -55,7 +55,7 @@ void CamThread::run()
 		Mat rgbMat(Size(640,480),CV_8UC3,Scalar(0));
 		Mat ownMat(Size(640,480),CV_8UC3,Scalar(0));
 
-		Freenect::Freenect freenect;
+//		Freenect::Freenect freenect;
 //		DirecsKinect& device = freenect.createDevice<DirecsKinect>(0);
 
 		namedWindow("rgb",CV_WINDOW_AUTOSIZE);

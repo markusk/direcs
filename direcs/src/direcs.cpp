@@ -880,7 +880,10 @@ void Direcs::init()
 			connect(kinect, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 */
 			// The updated Kinect camera thread using OpenCV
-			//camThread = new CamThread();
+			camThread = new CamThread();
+			emit splashMessage("Starting camera thread...");
+			emit message("Starting camera thread...", false);
+			camThread->start();
 //			camThread& device = freenect.createDevice<MyFreenectDevice>(0);
 
 			//	namedWindow("rgb",CV_WINDOW_AUTOSIZE);
