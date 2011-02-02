@@ -23,13 +23,19 @@
 
 CamThread::CamThread() : QThread()
 {
-	initDone = false;;
-
+	initDone = false;
 	stopped = false;
+
 	cameraIsOn = false;
 	faceDetectionIsEnabled = false;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
+
+	// create space for our image data
+	m_rgb.resize(640*480*3);
+
+	// default to RGB mode
+	m_mode=0;
 }
 
 
@@ -77,6 +83,26 @@ void CamThread::run()
 //		cv::imshow("rgb", rgbMat);
 //		depthMat.convertTo(depthf, CV_8UC1, 255.0/2048.0);
 //		cv::imshow("depth",depthf);
+
+
+		// - - - -
+
+
+		QKinect *kinect=QKinect::instance();
+
+		if (m_mode ==0)
+		{
+			// get RGB image
+			kinect->getRGB(m_rgb);
+		}
+		else if(m_mode == 1)
+		{
+			kinect->getDepth(m_rgb);
+		}
+
+
+		// - - - -
+
 
 		// let the thread sleep some time
 		msleep(THREADSLEEPTIME);

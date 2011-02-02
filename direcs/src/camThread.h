@@ -42,6 +42,7 @@ using namespace cv;
 using namespace std;
 
 #include "direcsKinect.h"
+#include "QKinect.h"
 //-------------------------------------------------------------------
 
 
@@ -136,6 +137,14 @@ class CamThread : public QThread
 */
 		bool m_new_rgb_frame;
 		bool m_new_depth_frame;
+
+// - - - -
+		/// @brief the image data to draw put into a GL texture
+		std::vector<uint8_t> m_rgb;
+
+		/// @brief the draw mode we are using
+		int m_mode;
+		// - - - -
 
 		bool initDone;
 		bool cameraIsOn;
