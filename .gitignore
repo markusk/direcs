@@ -16,26 +16,35 @@ moc_*.cpp
 .directory
 .DS_Store
 
-
 direcs/Makefile
 direcs/src/Makefile
-
-
+direcs/src/Makefile.Debug
+direcs/src/Makefile.Release
 direcs/bin/direcs
+
+direcs/doc/
 direcs/tmp/
 direcs/src/test/hellogl
 direcs.log
 
 direcs-avrsim/bin/
   
+direcs-remote/Makefile
+direcs-remote/src/Makefile
+direcs-remote/src/Makefile.Debug
+direcs-remote/src/Makefile.Release
 direcs-remote/bin/direcs-remote
-
-direcs/src/Makefile.Debug
-direcs/src/Makefile.Release
-direcs/doc/
 
 direcs-avr/.dep/
 direcs-avr/Debug/
 direcs-avr/test/.dep
 
+test/Makefile
+test/src/Makefile
 test/bin
+
+kinect/Makefile
+kinect/src/Makefile
+kinect/src/Makefile.Debug
+kinect/src/Makefile.Release
+kinect/bin/kinect
