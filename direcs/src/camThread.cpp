@@ -55,7 +55,9 @@ void CamThread::run()
 		init();
 	}
 
-	IplImage *image = cvCreateImageHeader(cvSize(640,480), 8, 3);
+	//	IplImage *image = cvCreateImageHeader(cvSize(640,480), 8, 3);
+	Mat rgbMat(Size(640, 480), CV_8UC3, Scalar(0));
+	namedWindow("video");
 
 	//  start "threading"...
 	while (!stopped)
@@ -63,10 +65,19 @@ void CamThread::run()
 //		if (cameraIsOn == true)
 //		{
 
+		// get RGB picture
 		freenect_sync_get_video((void**)&data, &timestamp, 0, FREENECT_VIDEO_RGB);
-		cvSetData(image, data, 640*3);
-		cvCvtColor(image, image, CV_RGB2BGR);
-		cvShowImage("RGB", image);
+
+		// iplimage
+		//cvSetData(image, data, 640*3);
+		//cvCvtColor(image, image, CV_RGB2BGR);
+
+		rgbMat.data = (uchar*) data;
+		cvtColor(rgbMat, rgbMat, CV_RGB2BGR);
+
+		// show image
+		//cvShowImage("RGB", image);
+		imshow("video", rgbMat);
 
 		/*
 		Mat mImage;  > header!

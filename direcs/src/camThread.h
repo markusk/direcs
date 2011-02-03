@@ -127,7 +127,7 @@ class CamThread : public QThread
 		freenect_context *f_ctx;
 		freenect_device *f_dev;
 
-//		IplImage *image;
+		//IplImage *image;
 		char *data;
 		unsigned int timestamp;
 
