@@ -898,7 +898,7 @@ void Direcs::init()
 				emit message("Kinect camera found.", false);
 
 				// look a bit up
-				kinect->setAngle(5); /// \todo: put to ini file and settings dialog
+				kinect->setAngle(5); /// \todo: put angle value to ini file and settings dialog
 				gui->showKinectAngle(5);
 
 				// show kinect camera state in gui
@@ -913,8 +913,8 @@ void Direcs::init()
 //				connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
 //				connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
 //				connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));/
-				// the signal for setting the camera angle
 
+				// the signal for setting the camera angle
 				connect(gui, SIGNAL(setKinectAngle(double)), kinect, SLOT(setAngle(double)));
 
 				// the signal for resetting the camera angle
