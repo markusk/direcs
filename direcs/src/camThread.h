@@ -92,6 +92,12 @@ class CamThread : public QThread
 		void camDataComplete(QImage* image);
 
 		/**
+		@param *image is a pointer to the camera image
+		@sa Gui::setCamImageDepth()
+		*/
+		void camDepthComplete(QImage* image);
+
+		/**
 		Disables checkBoxes in the GUI
 		*/
 		void disableFaceDetection();

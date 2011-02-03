@@ -78,8 +78,11 @@ void CamThread::run()
 		// convert to QImage
 		QImage tmp( (uchar*)rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
-		// send image to GUI
+		// send RGB image to GUI
 		emit camDataComplete(&tmp);
+
+		// send DEPTH image to GUI
+	//	emit camDepthComplete(&tmp);
 
 		// let the thread sleep some time
 		msleep(THREADSLEEPTIME);

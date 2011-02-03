@@ -842,6 +842,7 @@ void Direcs::init()
 			// (Whenever the image is complete, the image is shown in the GUI)
 			//----------------------------------------------------------------------------
 			connect(camThread, SIGNAL( camDataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
+			connect(camThread, SIGNAL( camDepthComplete(QImage*) ), gui, SLOT( setCamImageDepth(QImage*) ));
 
 			//--------------------------------------------------------------------------------------------------------
 			// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)

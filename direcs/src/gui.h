@@ -159,11 +159,18 @@ class Gui : public QMainWindow
 		void appendSerialLog(QString text, bool CR=true);
 
 		/**
-		Shows the new picture from the cam (live).
+		Shows the new RGB picture from the Kienct camera.
 		@param frame
 		@sa CamThread::camDataComplete()
 		*/
 		void setCamImage(QImage* image);
+
+		/**
+		Shows the new depth picture from the Kienct camera.
+		@param frame
+		@sa CamThread::camDepthComplete()
+		*/
+		void setCamImageDepth(QImage* image);
 
 		/**
 		Show some face track data in the GUI.
