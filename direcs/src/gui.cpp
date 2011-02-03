@@ -1474,14 +1474,6 @@ void Gui::disableCompass()
 }
 
 
-void Gui::setCamImageData(int width, int height, int pixeldepth)
-{
-	// tell the OpenGLContext the image data
-//	ui.frameCamera->setImageData(width, height, pixeldepth);
-	appendLog("Camera image width, height and pixel depth set.");
-}
-
-
 void Gui::setCamImage(QImage* image)
 {
 

@@ -113,11 +113,6 @@ class Gui : public QMainWindow
 		*/
 		void showMotorStatus(unsigned char motor, bool power, unsigned char direction);
 
-		/**
-		tell the OpenGLContext the image data
-		*/
-		void setCamImageData(int width, int height, int pixeldepth);
-
 #ifdef ACTIVELASERVIEW
 		/**
 		Initialise the laser view (find the middle of the now fresh shown control etc.)
