@@ -158,17 +158,12 @@ class Gui : public QMainWindow
 		*/
 		void appendSerialLog(QString text, bool CR=true);
 
-/*
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-		/ **
+		/**
 		Shows the new picture from the cam (live).
 		@param frame
 		@sa CamThread::camDataComplete()
-		* /
-		void setCamImage(IplImage* frame);
-		//void setCamImage(QImage* image);
-#endif
-*/
+		*/
+		void setCamImage(QImage* image);
 
 		/**
 		Show some face track data in the GUI.

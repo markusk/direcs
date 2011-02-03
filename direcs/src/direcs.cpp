@@ -730,47 +730,6 @@ void Direcs::init()
 		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );
 		// FIXME: this is too often!! Because of 10ms sensor thread!!
 
- /// \todo kinect stuff
-/*
-		if (!consoleMode)
-		{
-			//----------------------------------------------------------------------------
-			// connect sensor contact signals to "show contact alarm"
-			// (Whenever the an alarm contact was closed, show the result in the cam image)
-			//----------------------------------------------------------------------------
-//			connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
-
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-			//----------------------------------------------------------------------------
-			// connect camDataComplete from the cam thread to signal "setCamImage"
-			// (Whenever the image is complete, the image is shown in the GUI)
-			//----------------------------------------------------------------------------
-			connect(camThread, SIGNAL( camDataComplete(IplImage*) ), gui, SLOT( setCamImage(IplImage*) ));
-#endif
-
-			//--------------------------------------------------------------------------------------------------------
-			// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
-			//--------------------------------------------------------------------------------------------------------
-			connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
-			connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
-
-			//----------------------------------------------------------------------------
-			// enable face detection, when activated in the GUI
-			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
-
-			//----------------------------------------------------------------------------
-			// enable face tracking, when activated in the GUI
-			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
-
-			//----------------------------------------------------------------------------
-			// show the face track direction in the gui
-			//----------------------------------------------------------------------------
-			connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
-		}
-*/
-
 		//----------------------------------------------------------------------------
 		// connect obstacle check (alarm!) sensor signal to "logical unit"
 		//----------------------------------------------------------------------------
@@ -871,6 +830,40 @@ void Direcs::init()
 			emit message("Detecting Kinect camera...", false);
 
 			camThread = new CamThread();
+
+			//----------------------------------------------------------------------------
+			// connect sensor contact signals to "show contact alarm"
+			// (Whenever the an alarm contact was closed, show the result in the cam image)
+			//----------------------------------------------------------------------------
+			// connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
+
+			//----------------------------------------------------------------------------
+			// connect camDataComplete from the cam thread to signal "setCamImage"
+			// (Whenever the image is complete, the image is shown in the GUI)
+			//----------------------------------------------------------------------------
+			connect(camThread, SIGNAL( camDataComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
+
+			//--------------------------------------------------------------------------------------------------------
+			// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
+			//--------------------------------------------------------------------------------------------------------
+			connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
+			connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
+
+			//----------------------------------------------------------------------------
+			// enable face detection, when activated in the GUI
+			//----------------------------------------------------------------------------
+			connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
+
+			//----------------------------------------------------------------------------
+			// enable face tracking, when activated in the GUI
+			//----------------------------------------------------------------------------
+			connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
+
+			//----------------------------------------------------------------------------
+			// show the face track direction in the gui
+			//----------------------------------------------------------------------------
+			connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
+
 
 			// show Kinect messages in GUI
 //			connect(kinect, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));

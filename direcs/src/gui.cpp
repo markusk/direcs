@@ -1482,27 +1482,20 @@ void Gui::setCamImageData(int width, int height, int pixeldepth)
 }
 
 
-/*
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-//void Gui::setCamImage(QImage* image)
-void Gui::setCamImage(IplImage* frame)
+void Gui::setCamImage(QImage* image)
 {
-	// set image from OpenGL context to Qt frame!
-	ui.frameCamera->setImage((unsigned char*)frame->imageData);
 
-	// try it with qimage instead of iplImage...
-	//ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
+	ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
+	//ui.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
 
-/ *
+/*
 	// save pic, when ckecked in GUI
 	if ( ui.checkBoxAutoSave->isChecked() )
 	{
 		saveCamImage();
 	}
-* /
-}
-#endif
 */
+}
 
 
 /*
@@ -1543,6 +1536,7 @@ void Gui::on_btnKinectResetAngle_clicked()
 
 void Gui::saveCamImage(void)
 {
+/*
 	//---------------------------
 	// grab cam pic from Qt-GUI
 	//---------------------------
@@ -1567,6 +1561,7 @@ void Gui::saveCamImage(void)
 		cameraPicToSave.save(filename.toAscii(), "PNG");
 		//appendLog(tr("Picture \"%1\" saved.").arg(filename));
 	}
+*/
 }
 
 

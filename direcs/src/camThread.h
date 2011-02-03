@@ -86,11 +86,10 @@ class CamThread : public QThread
 
 	signals:
 		/**
-		@param *imgPtr is a pointer to the camera image
+		@param *image is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
-		void camDataComplete(IplImage* imgPtr);
-		//void camDataComplete(QImage* image);
+		void camDataComplete(QImage* image);
 
 		/**
 		Disables checkBoxes in the GUI

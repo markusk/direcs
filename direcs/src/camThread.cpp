@@ -56,8 +56,8 @@ void CamThread::run()
 	// create an empty image with OpenCV
 	Mat rgbMat(Size(640, 480), CV_8UC3, Scalar(0));
 
-	// show empty image
-	namedWindow("video");
+	// show empty image with OpenCV
+	// namedWindow("video");
 
 	//  start "threading"...
 	while (!stopped)
@@ -72,15 +72,14 @@ void CamThread::run()
 		rgbMat.data = (uchar*) data;
 		cvtColor(rgbMat, rgbMat, CV_RGB2BGR);
 
-		// show image
-		imshow("video", rgbMat);
+		// refresh image with OpenCV
+		// imshow("video", rgbMat);
 
-		/*
-		Mat mImage;  > header!
+		// convert to QImage
+		QImage tmp( (uchar*)rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
-		QImage tmp( (uchar*)color.data, color.cols, color.rows, color.step, QImage::Format_RGB888  );
-		ui.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
-		*/
+		// send image to GUI
+		emit camDataComplete(&tmp);
 
 		// let the thread sleep some time
 		msleep(THREADSLEEPTIME);
