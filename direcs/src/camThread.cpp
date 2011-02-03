@@ -76,10 +76,10 @@ void CamThread::run()
 		// imshow("video", rgbMat);
 
 		// convert to QImage
-		QImage tmp( (uchar*)rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
+		qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 		// send RGB image to GUI
-		emit camDataComplete(&tmp);
+		emit camDataComplete(&qimage);
 
 		// send DEPTH image to GUI
 	//	emit camDepthComplete(&tmp);

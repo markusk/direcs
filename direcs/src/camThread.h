@@ -135,13 +135,11 @@ class CamThread : public QThread
 		char *data; // the 'raw' data from the Kinect image
 		unsigned int timestamp;
 
-		mutable QMutex m_rgb_mutex;
-		mutable QMutex m_depth_mutex;
+		QImage qimage; // for sending a QImage to the GUI (Signal)
 
-		Mat depthMat;
-		Mat depthf;
-		Mat rgbMat;
-		Mat ownMat;
+		//mutable QMutex m_rgb_mutex;
+		//mutable QMutex m_depth_mutex;
+
 
 		bool initDone;
 		bool cameraIsOn;
