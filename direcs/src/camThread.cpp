@@ -88,7 +88,34 @@ void CamThread::run()
 		qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 		// send RGB image to GUI
-		emit camDataComplete(&qimage);
+		emit camDataComplete (&qimage);
+
+
+		//----------------------
+		// do OpenCV stuff here
+		//----------------------
+		Mat gray, color;
+
+		cv::cvtColor(rgbMat, gray, CV_RGB2GRAY);
+		GaussianBlur(gray, gray, Size(5, 5), 2, 2);
+		cv::Canny(gray, gray, 20, 60, 3);
+
+		vector<Vec4i> lines;
+		HoughLinesP(gray, lines, 1, CV_PI/180, 80, 30, 10);
+
+		rgbMat.copyTo(color);
+
+		for (size_t i = 0; i < lines.size(); i++)
+		{
+			line(color, Point(lines[i][0], lines[i][1]), Point(lines[i][2], lines[i][3]), Scalar(0,0,255), 2, 8);
+		}
+
+		// convert to QImage
+		qimage = QImage( (uchar*) color.data, color.cols, color.rows, color.step, QImage::Format_RGB888);
+
+		// send OpenCV processed image to GUI
+		emit camOpenCVComplete(&qimage);
+
 
 /*
 		//-------------------

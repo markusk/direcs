@@ -1497,6 +1497,13 @@ void Gui::setCamImageDepth(QImage* image)
 }
 
 
+void Gui::setCamImageOpenCV(QImage* image)
+{
+
+	ui.lblCameraOpenCV->setPixmap(pixmap.fromImage(*(image)));
+}
+
+
 /*
 void Gui::on_btnKinectVideoRGB_clicked(bool checked)
 {

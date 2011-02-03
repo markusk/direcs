@@ -168,6 +168,13 @@ class Gui : public QMainWindow
 		void setCamImageDepth(QImage* image);
 
 		/**
+		Shows the OpenCV processed picture from the Kienct camera.
+		@param frame
+		@sa CamThread::camOpenCVComplete()
+		*/
+		void setCamImageOpenCV(QImage* image);
+
+		/**
 		Show some face track data in the GUI.
 		@param faces is the number of detected faces
 		@param faceX is the X coordinate to the middle of a detected face (0, if none)
