@@ -127,8 +127,7 @@ class CamThread : public QThread
 		freenect_context *f_ctx;
 		freenect_device *f_dev;
 
-		//IplImage *image;
-		char *data;
+		char *data; // the 'raw' data from the Kinect image
 		unsigned int timestamp;
 
 		mutable QMutex m_rgb_mutex;

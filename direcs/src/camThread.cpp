@@ -30,8 +30,6 @@ CamThread::CamThread() : QThread()
 	faceDetectionIsEnabled = false;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
-
-//	image = cvCreateImageHeader(cvSize(640,480), 8, 3);
 }
 
 
@@ -55,8 +53,10 @@ void CamThread::run()
 		init();
 	}
 
-	//	IplImage *image = cvCreateImageHeader(cvSize(640,480), 8, 3);
+	// create an empty image with OpenCV
 	Mat rgbMat(Size(640, 480), CV_8UC3, Scalar(0));
+
+	// show empty image
 	namedWindow("video");
 
 	//  start "threading"...
@@ -68,15 +68,11 @@ void CamThread::run()
 		// get RGB picture
 		freenect_sync_get_video((void**)&data, &timestamp, 0, FREENECT_VIDEO_RGB);
 
-		// iplimage
-		//cvSetData(image, data, 640*3);
-		//cvCvtColor(image, image, CV_RGB2BGR);
-
+		// convert image
 		rgbMat.data = (uchar*) data;
 		cvtColor(rgbMat, rgbMat, CV_RGB2BGR);
 
 		// show image
-		//cvShowImage("RGB", image);
 		imshow("video", rgbMat);
 
 		/*
