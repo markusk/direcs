@@ -36,6 +36,9 @@ CamThread::CamThread() : QThread()
 CamThread::~CamThread()
 {
 	stopped = true;
+
+	// Stops the runloop (if running), cleans up all buffers, unsets callbacks, and flushes queues from the Kinect
+	freenect_sync_stop();
 }
 
 
