@@ -29,10 +29,9 @@
 #include <QFile>
 #include <QMutex>
 //-------------------------------------------------------------------
-#include <libfreenect.hpp>
 #include <opencv/cv.h>
-#include <opencv/cxcore.h>
 #include <opencv/highgui.h>
+#include <libfreenect/libfreenect_sync.h>
 
 #include <iostream>
 #include <vector>
@@ -41,8 +40,6 @@
 using namespace cv;
 using namespace std;
 
-#include "direcsKinect.h"
-#include "QKinect.h"
 //-------------------------------------------------------------------
 
 
@@ -127,24 +124,20 @@ class CamThread : public QThread
 
 
 	private:
+		freenect_context *f_ctx;
+		freenect_device *f_dev;
+
+//		IplImage *image;
+		char *data;
+		unsigned int timestamp;
+
 		mutable QMutex m_rgb_mutex;
 		mutable QMutex m_depth_mutex;
-/*
+
 		Mat depthMat;
 		Mat depthf;
 		Mat rgbMat;
 		Mat ownMat;
-*/
-		bool m_new_rgb_frame;
-		bool m_new_depth_frame;
-
-// - - - -
-		/// @brief the image data to draw put into a GL texture
-		std::vector<uint8_t> m_rgb;
-
-		/// @brief the draw mode we are using
-		int m_mode;
-		// - - - -
 
 		bool initDone;
 		bool cameraIsOn;
@@ -155,7 +148,7 @@ class CamThread : public QThread
 
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
+		static const unsigned long THREADSLEEPTIME = 50; // Default: 100 ms
 };
 
 #endif

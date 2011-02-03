@@ -44,11 +44,7 @@ unix|macx {
 				servo.h \
 				settingsDialog.h \
 				speakThread.h \
-				logfile.h \
-				QKinect.h \
-				direcsKinect.h
-#				RGBWindow.h \
-#				glwidget.h
+				logfile.h
 
 	SOURCES +=	aboutDialog.cpp \
 				camThread.cpp \
@@ -76,11 +72,7 @@ unix|macx {
 				servo.cpp \
 				settingsDialog.cpp \
 				speakThread.cpp \
-				logfile.cpp \
-				QKinect.cpp \
-				direcsKinect.cpp
-#				RGBWindow.cpp \
-#				glwidget.cpp
+				logfile.cpp
 
 	FORMS +=	direcs.ui \
 				aboutDialog.ui \
@@ -102,7 +94,7 @@ unix|macx {
 				-L/usr/local/lib \
 				-lespeak \
 				-lqwt-qt4 \
-				-lfreenect \
+				-lfreenect_sync \
 				-lopencv_core \
 				-lopencv_highgui \
 				-lopencv_imgproc

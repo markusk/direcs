@@ -31,11 +31,7 @@ CamThread::CamThread() : QThread()
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
 
-	// create space for our image data
-	m_rgb.resize(640*480*3);
-
-	// default to RGB mode
-	m_mode=0;
+//	image = cvCreateImageHeader(cvSize(640,480), 8, 3);
 }
 
 
@@ -56,67 +52,34 @@ void CamThread::run()
 
 	if (initDone==false)
 	{
-		Mat depthMat(Size(640,480),CV_16UC1);
-		Mat depthf(Size(640,480),CV_8UC1);
-		Mat rgbMat(Size(640,480),CV_8UC3,Scalar(0));
-		Mat ownMat(Size(640,480),CV_8UC3,Scalar(0));
-
-//		Freenect::Freenect freenect;
-//		DirecsKinect& device = freenect.createDevice<DirecsKinect>(0);
-
-		namedWindow("rgb",CV_WINDOW_AUTOSIZE);
-		namedWindow("depth",CV_WINDOW_AUTOSIZE);
-
-//		device.startVideo();
-//		device.startDepth();
-		initDone = true;
+		init();
 	}
 
+	IplImage *image = cvCreateImageHeader(cvSize(640,480), 8, 3);
 
 	//  start "threading"...
 	while (!stopped)
 	{
 //		if (cameraIsOn == true)
 //		{
-//		device.getVideo(rgbMat);
-//		device.getDepth(depthMat);
-//		cv::imshow("rgb", rgbMat);
-//		depthMat.convertTo(depthf, CV_8UC1, 255.0/2048.0);
-//		cv::imshow("depth",depthf);
 
+		freenect_sync_get_video((void**)&data, &timestamp, 0, FREENECT_VIDEO_RGB);
+		cvSetData(image, data, 640*3);
+		cvCvtColor(image, image, CV_RGB2BGR);
+		cvShowImage("RGB", image);
 
-		// - - - -
+		/*
+		Mat mImage;  > header!
 
-
-		QKinect *kinect=QKinect::instance();
-
-		if (m_mode ==0)
-		{
-			// get RGB image
-			kinect->getRGB(m_rgb);
-		}
-		else if(m_mode == 1)
-		{
-			kinect->getDepth(m_rgb);
-		}
-
-
-		// - - - -
-
+		QImage tmp( (uchar*)color.data, color.cols, color.rows, color.step, QImage::Format_RGB888  );
+		ui.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
+		*/
 
 		// let the thread sleep some time
 		msleep(THREADSLEEPTIME);
+
 //		} // cameraIsOn
 	} // while !stopped
-
-	if (initDone)
-	{
-//			cvDestroyWindow("rgb");
-//			cvDestroyWindow("depth");
-
-//			device.stopVideo();
-//			device.stopDepth();
-	}
 
 	stopped = false;
 }
@@ -158,12 +121,11 @@ void CamThread::setCascadePath(QString haarClassifierCascade)
 
 bool CamThread::init()
 {
-/*
 	if (initDone == false)
 	{
 		// do only *one* init!
 		initDone = true;
-
+/*
 		if ( 1 )
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR: could not initialize capturing from /dev/video%1.</font>").arg( 0 ));
@@ -175,10 +137,10 @@ bool CamThread::init()
 		}
 	}
 
-		cameraIsOn = true;
-
-	return true;
+	cameraIsOn = true;
 */
+	return true;
+	}
 
-	return false;
+//	return false;
 }
