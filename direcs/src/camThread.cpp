@@ -70,7 +70,7 @@ void CamThread::run()
 
 		// convert image
 		rgbMat.data = (uchar*) data;
-		cvtColor(rgbMat, rgbMat, CV_RGB2BGR);
+		// cvtColor(rgbMat, rgbMat, CV_RGB2BGR); // only when shown in OpenCV window!
 
 		// refresh image with OpenCV
 		// imshow("video", rgbMat);
