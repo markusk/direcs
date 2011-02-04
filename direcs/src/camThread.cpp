@@ -111,7 +111,52 @@ void CamThread::run()
 		}
 
 		// convert to QImage
-		qimage = QImage( (uchar*) color.data, color.cols, color.rows, color.step, QImage::Format_RGB888);
+		qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
+*/
+
+/* geht nicht
+		cv::cvtColor( rgbMat, gray, CV_RGB2GRAY );
+//		GaussianBlur( gray, gray, Size(9, 9), 2, 2 );
+		GaussianBlur( gray, gray, Size(5, 5), 2, 2 );
+
+		cv::Canny( gray, gray, 20, 60, 3 );
+
+		// convert to QImage
+		qimage = QImage( (uchar*) gray.data, gray.cols, gray.rows, gray.step, QImage::Format_Indexed8 );
+*/
+
+// - - - - beispiel 8.2
+
+//		IplImage*    g_image    = NULL; // das ist das bild
+		IplImage*    g_gray    = NULL;
+		int        g_thresh  = 100;
+		CvMemStorage*  g_storage  = NULL;
+
+
+		if( g_storage==NULL )
+		{
+			g_gray = cvCreateImage( cvGetSize(g_image), 8, 1 );
+			g_storage = cvCreateMemStorage(0);
+		} else
+		{
+			cvClearMemStorage( g_storage );
+		}
+
+		CvSeq* contours = 0;
+		cvCvtColor( g_image, g_gray, CV_BGR2GRAY );
+		cvThreshold( g_gray, g_gray, g_thresh, 255, CV_THRESH_BINARY );
+		cvFindContours( g_gray, g_storage, &contours );
+		cvZero( g_gray );
+
+		if( contours )
+		{
+			cvDrawContours(g_gray, contours, cvScalarAll(255), cvScalarAll(255), 100);
+		}
+
+		cvShowImage( "Contours", g_gray );
+
+
+// - - - - - - - - - - -
 
 		// send OpenCV processed image to GUI
 		emit camOpenCVComplete(&qimage);
