@@ -142,6 +142,7 @@ class CamThread : public QThread
 		unsigned int timestamp;
 
 		QImage qimage; // for sending a QImage to the GUI (Signal)
+		Mat gray; // for OpencV
 
 		//mutable QMutex m_rgb_mutex;
 		//mutable QMutex m_depth_mutex;
