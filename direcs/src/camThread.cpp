@@ -83,18 +83,20 @@ void CamThread::run()
 
 		// refresh image with OpenCV
 		// imshow("video", rgbMat);
-/*
+
 		// convert to QImage
 		qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 		// send RGB image to GUI
 		emit camDataComplete (&qimage);
-*/
+
 
 		//----------------------
 		// do OpenCV stuff here
 		//----------------------
 /*
+		// canny
+		//
 		cv::cvtColor(rgbMat, gray, CV_RGB2GRAY);
 		GaussianBlur(gray, gray, Size(5, 5), 2, 2);
 		cv::Canny(gray, gray, 20, 60, 3);
@@ -111,53 +113,21 @@ void CamThread::run()
 		qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 */
 
-/* geht nicht
-
-		cv::cvtColor( rgbMat, gray, CV_RGB2GRAY );
-//		GaussianBlur( gray, gray, Size(9, 9), 2, 2 );
-		GaussianBlur( gray, gray, Size(5, 5), 2, 2 );
-
-		cv::Canny( gray, gray, 20, 60, 3 );
-
-		// convert to QImage
-		qimage = QImage( (uchar*) gray.data, gray.cols, gray.rows, gray.step, QImage::Format_Indexed8 );
-*/
-
-// - - - - beispiel 8.2
-
-//		IplImage*    g_image    = NULL; // das ist das bild
-//		IplImage*    g_gray    = NULL;
-		int        g_thresh  = 100;
-//		CvMemStorage*  g_storage  = NULL;
+		// contours
+		//
+		int g_thresh = 100;
 		vector<vector<Point> > lines;
 		vector<Vec4i> hierarchy;
-/*
-		if( g_storage==NULL )
-		{
-			g_gray = cvCreateImage( cvGetSize(rgbMat), 8, 1 );
-			g_storage = createM cvCreateMemStorage(0);
-		} else
-		{
-			cvClearMemStorage( g_storage );
-		}
-*/
 
-//		CvSeq* contours = 0;
 		cvtColor( rgbMat, gray, CV_BGR2GRAY );
 		threshold( gray, gray, g_thresh, 255, CV_THRESH_BINARY );
-//org:		cv::findContours( gray, g_storage, &contours );
-		findContours( gray, lines, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-//org:		cvZero( gray );
 
-		// org: cvDrawContours(gray, contours, cvScalarAll(255), cvScalarAll(255), 100);
+		findContours( gray, lines, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 		drawContours(gray, lines, -1, Scalar(255, 0, 0), 2);
 
-		imshow( "Contours", gray );
-
 		// convert to QImage
-		qimage = QImage( (uchar*) gray.data, gray.cols, gray.rows, gray.step, QImage::Format_Indexed8 );
-
-// - - - - - - - - - - -
+		cvtColor( gray, rgbMat, CV_GRAY2RGB );
+		qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 		// send OpenCV processed image to GUI
 		emit camOpenCVComplete(&qimage);
