@@ -45,7 +45,7 @@ using namespace std;
 
 /**
 \brief This class gets a live picture from a Kinect camera.
-This class uses the QThread techniquesand then some OpenCV stuff on the live picture; we will see...
+This class uses the QThread techniques and then some OpenCV stuff on the live picture; we will see...
 */
 class CamThread : public QThread
 {

@@ -198,14 +198,30 @@ void CamThread::setCascadePath(QString haarClassifierCascade)
 
 bool CamThread::init()
 {
+	double angle = 0;
+
+
+	// do only *one* init!
 	if (initDone == false)
 	{
-		// do only *one* init!
 		initDone = true;
-/*
-		if ( 1 )
+
+
+		// constrain the angle from -30 to +30
+		if (angle > 30)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR: could not initialize capturing from /dev/video%1.</font>").arg( 0 ));
+			angle = 30;
+		}
+		else if (angle <-30)
+		{
+			angle=-30;
+		}
+
+
+		// try to set angle
+		if (freenect_sync_set_tilt_degs(angle, 0))
+		{
+			emit message("<font color=\"#FF0000\">ERROR: could not initialize Kinect camera.</font>");
 
 			cameraIsOn = false;
 			stopped = true;
@@ -214,10 +230,9 @@ bool CamThread::init()
 		}
 	}
 
-	cameraIsOn = true;
-*/
-	return true;
-	}
 
-//	return false;
+	emit message("Kinect camera initialized.");
+	cameraIsOn = true;
+	stopped = false;
+	return true;
 }
