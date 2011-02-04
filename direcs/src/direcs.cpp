@@ -866,14 +866,14 @@ void Direcs::init()
 			//----------------------------------------------------------------------------
 			connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
 
-
 			// show Kinect messages in GUI
-//			connect(kinect, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-//			connect(kinect, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 
 			emit splashMessage("Starting camera thread...");
 			emit message("Starting camera thread...", false);
 			camThread->start();
+
 
 /*
 			//-----------------------------------------------------------
