@@ -872,6 +872,7 @@ void Direcs::init()
 
 			emit splashMessage("Starting camera thread...");
 			emit message("Starting camera thread...", false);
+			camThread->init();
 			camThread->start();
 
 
