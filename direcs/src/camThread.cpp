@@ -83,17 +83,18 @@ void CamThread::run()
 
 		// refresh image with OpenCV
 		// imshow("video", rgbMat);
-
+/*
 		// convert to QImage
 		qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 		// send RGB image to GUI
 		emit camDataComplete (&qimage);
-
+*/
 
 		//----------------------
 		// do OpenCV stuff here
 		//----------------------
+/*
 		cv::cvtColor(rgbMat, gray, CV_RGB2GRAY);
 		GaussianBlur(gray, gray, Size(5, 5), 2, 2);
 		cv::Canny(gray, gray, 20, 60, 3);
@@ -111,6 +112,7 @@ void CamThread::run()
 */
 
 /* geht nicht
+
 		cv::cvtColor( rgbMat, gray, CV_RGB2GRAY );
 //		GaussianBlur( gray, gray, Size(9, 9), 2, 2 );
 		GaussianBlur( gray, gray, Size(5, 5), 2, 2 );
@@ -124,33 +126,36 @@ void CamThread::run()
 // - - - - beispiel 8.2
 
 //		IplImage*    g_image    = NULL; // das ist das bild
-		IplImage*    g_gray    = NULL;
+//		IplImage*    g_gray    = NULL;
 		int        g_thresh  = 100;
-		CvMemStorage*  g_storage  = NULL;
-
-
+//		CvMemStorage*  g_storage  = NULL;
+		vector<vector<Point> > lines;
+		vector<Vec4i> hierarchy;
+/*
 		if( g_storage==NULL )
 		{
-			g_gray = cvCreateImage( cvGetSize(g_image), 8, 1 );
-			g_storage = cvCreateMemStorage(0);
+			g_gray = cvCreateImage( cvGetSize(rgbMat), 8, 1 );
+			g_storage = createM cvCreateMemStorage(0);
 		} else
 		{
 			cvClearMemStorage( g_storage );
 		}
+*/
 
-		CvSeq* contours = 0;
-		cvCvtColor( g_image, g_gray, CV_BGR2GRAY );
-		cvThreshold( g_gray, g_gray, g_thresh, 255, CV_THRESH_BINARY );
-		cvFindContours( g_gray, g_storage, &contours );
-		cvZero( g_gray );
+//		CvSeq* contours = 0;
+		cvtColor( rgbMat, gray, CV_BGR2GRAY );
+		threshold( gray, gray, g_thresh, 255, CV_THRESH_BINARY );
+//org:		cv::findContours( gray, g_storage, &contours );
+		findContours( gray, lines, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+//org:		cvZero( gray );
 
-		if( contours )
-		{
-			cvDrawContours(g_gray, contours, cvScalarAll(255), cvScalarAll(255), 100);
-		}
+		// org: cvDrawContours(gray, contours, cvScalarAll(255), cvScalarAll(255), 100);
+		drawContours(gray, lines, -1, Scalar(255, 0, 0), 2);
 
-		cvShowImage( "Contours", g_gray );
+		imshow( "Contours", gray );
 
+		// convert to QImage
+		qimage = QImage( (uchar*) gray.data, gray.cols, gray.rows, gray.step, QImage::Format_Indexed8 );
 
 // - - - - - - - - - - -
 
