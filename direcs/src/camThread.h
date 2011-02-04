@@ -139,6 +139,7 @@ class CamThread : public QThread
 		freenect_device *f_dev;
 
 		char *data; // the 'raw' data from the Kinect image
+		short *dataDepth;
 		unsigned int timestamp;
 
 		QImage qimage; // for sending a QImage to the GUI (Signal)

@@ -38,7 +38,7 @@ CamThread::~CamThread()
 	stopped = true;
 
 	// Stops the runloop (if running), cleans up all buffers, unsets callbacks, and flushes queues from the Kinect
-	freenect_sync_stop();
+//	freenect_sync_stop();
 }
 
 
@@ -71,6 +71,7 @@ void CamThread::run()
 		//  start "threading"...
 		while (!stopped)
 		{
+/*
 			//-----------------
 			// get RGB picture
 			//-----------------
@@ -88,7 +89,7 @@ void CamThread::run()
 
 			// send RGB image to GUI
 			emit camDataComplete (&qimage);
-
+*/
 
 			//----------------------
 			// do OpenCV stuff here
@@ -111,7 +112,7 @@ void CamThread::run()
 			// convert to QImage
 			qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 			*/
-
+/*
 			// contours
 			//
 			int g_thresh = 100;
@@ -130,26 +131,25 @@ void CamThread::run()
 
 			// send OpenCV processed image to GUI
 			emit camOpenCVComplete(&qimage);
+*/
 
-
-			/*
 			//-------------------
 			// get depth picture
 			//-------------------
-			freenect_sync_get_depth((void**)&data, &timestamp, 0, FREENECT_DEPTH_10BIT);
+			freenect_sync_get_depth((void**)&dataDepth, &timestamp, 0, FREENECT_DEPTH_10BIT);
 
 			// convert image
-			depthF.data = (uchar*) data;
+			depthMat.data = (uchar*) dataDepth;
 
-//			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
+			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
 
 			// convert to QImage
+			cvtColor( depthMat, rgbMat, CV_GRAY2RGB );
 //			qimage = QImage( (uchar*) depthMat.data, depthMat.cols, depthMat.rows, depthMat.step, QImage::Format_Indexed8 );
-			qimage = QImage( (uchar*) depthF.data, depthF.cols, depthF.rows, depthF.step, QImage::Format_Indexed8 );
+			qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 			// send DEPTH image to GUI
 			emit camDepthComplete(&qimage);
-			*/
 
 			// let the thread sleep some time
 			msleep(THREADSLEEPTIME);
