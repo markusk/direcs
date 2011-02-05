@@ -89,7 +89,7 @@ void CamThread::run()
 			qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 			// send RGB image to GUI
-			emit camDataComplete (&qimage);
+			emit camImageComplete (&qimage);
 
 
 			//----------------------
@@ -113,7 +113,7 @@ void CamThread::run()
 			// convert to QImage
 			qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 			*/
-/*
+
 			// contours
 			//
 			int g_thresh = 100;
@@ -128,11 +128,11 @@ void CamThread::run()
 
 			// convert to QImage
 			cvtColor( gray, rgbMat, CV_GRAY2RGB );
-			qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
+			qimageOpenCV = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
 
 			// send OpenCV processed image to GUI
-			emit camOpenCVComplete(&qimage);
-*/
+			emit camImageOpenCVComplete(&qimageOpenCV);
+
 
 			//-------------------
 			// get depth picture
@@ -147,10 +147,10 @@ void CamThread::run()
 			// convert to QImage
 			cvtColor( depthMat, rgbMat2, CV_GRAY2RGB );
 //			qimage = QImage( (uchar*) depthMat.data, depthMat.cols, depthMat.rows, depthMat.step, QImage::Format_Indexed8 );
-			qimage = QImage( (uchar*) rgbMat2.data, rgbMat2.cols, rgbMat2.rows, rgbMat2.step, QImage::Format_RGB888 );
+			qimageDepth = QImage( (uchar*) rgbMat2.data, rgbMat2.cols, rgbMat2.rows, rgbMat2.step, QImage::Format_RGB888 );
 
 			// send DEPTH image to GUI
-			emit camDepthComplete(&qimage);
+			emit camImageDepthComplete(&qimageDepth);
 
 			// let the thread sleep some time
 			msleep(THREADSLEEPTIME);

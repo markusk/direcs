@@ -89,19 +89,19 @@ class CamThread : public QThread
 		@param *image is a pointer to the camera image
 		@sa Gui::setCamImage()
 		*/
-		void camDataComplete(QImage* image);
+		void camImageComplete(QImage* image);
 
 		/**
 		@param *image is a pointer to the camera image
 		@sa Gui::setCamImageDepth()
 		*/
-		void camDepthComplete(QImage* image);
+		void camImageDepthComplete(QImage* image);
 
 		/**
 		@param *image is a pointer to the camera image
 		@sa Gui::setCamImageOpenCV()
 		*/
-		void camOpenCVComplete(QImage* image);
+		void camImageOpenCVComplete(QImage* image);
 
 		/**
 		Disables checkBoxes in the GUI
@@ -143,6 +143,8 @@ class CamThread : public QThread
 		unsigned int timestamp;
 
 		QImage qimage; // for sending a QImage to the GUI (Signal)
+		QImage qimageDepth; // for sending a QImage to the GUI (Signal)
+		QImage qimageOpenCV; // for sending a QImage to the GUI (Signal)
 		Mat gray; // for OpencV
 
 		//mutable QMutex m_rgb_mutex;
