@@ -142,11 +142,11 @@ void CamThread::run()
 			// convert image
 			depthMat.data = (uchar*) dataDepth;
 
-
+			// convert again
 			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
-			// convert to QImage
 			cvtColor( depthF, rgbMat2, CV_GRAY2RGB );
-//			qimage = QImage( (uchar*) depthMat.data, depthMat.cols, depthMat.rows, depthMat.step, QImage::Format_Indexed8 );
+
+			// convert to QImage
 			qimageDepth = QImage( (uchar*) rgbMat2.data, rgbMat2.cols, rgbMat2.rows, rgbMat2.step, QImage::Format_RGB888 );
 
 			// send DEPTH image to GUI
