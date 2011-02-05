@@ -284,7 +284,7 @@ void Direcs::init()
 	}
 	else
 	{
-		connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
+		connect(this, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
 	}
 
 	//--------------------------------------------------------------------------
