@@ -831,97 +831,89 @@ void Direcs::init()
 
 			camThread = new CamThread();
 
-			//----------------------------------------------------------------------------
-			// connect sensor contact signals to "show contact alarm"
-			// (Whenever the an alarm contact was closed, show the result in the cam image)
-			//----------------------------------------------------------------------------
-			// connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
-
-			//----------------------------------------------------------------------------
-			// connect camDataComplete from the cam thread to signal "setCamImage"
-			// (Whenever the image is complete, the image is shown in the GUI)
-			//----------------------------------------------------------------------------
-			connect(camThread, SIGNAL( camImageComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
-			connect(camThread, SIGNAL( camImageDepthComplete(QImage*) ), gui, SLOT( setCamImageDepth(QImage*) ));
-			connect(camThread, SIGNAL( camImageOpenCVComplete(QImage*) ), gui, SLOT( setCamImageOpenCV(QImage*) ));
-
-			//--------------------------------------------------------------------------------------------------------
-			// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
-			//--------------------------------------------------------------------------------------------------------
-			connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
-			connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
-
-			//----------------------------------------------------------------------------
-			// enable face detection, when activated in the GUI
-			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
-
-			//----------------------------------------------------------------------------
-			// enable face tracking, when activated in the GUI
-			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
-
-			//----------------------------------------------------------------------------
-			// show the face track direction in the gui
-			//----------------------------------------------------------------------------
-			connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
-
 			// show Kinect messages in GUI
 			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 
-			emit splashMessage("Starting camera thread...");
-			emit message("Starting camera thread...", false);
-			camThread->init();
-			camThread->start();
 
-
-/*
 			//-----------------------------------------------------------
 			// check if Kinect camera is connected
 			//-----------------------------------------------------------
-			if (kinect->kinectDetected)
+			emit splashMessage("Initialising Kinect camera...");
+			emit message("Initialising Kinect camera...", false);
+
+			if (camThread->init() == true)
 			{
 				emit splashMessage("Kinect found.");
-				emit message("Kinect camera found.", false);
+				emit message("Kinect found.", false);
+
+				// connect sensor contact signals to "show contact alarm"
+				// (Whenever the an alarm contact was closed, show the result in the cam image)
+				// connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
+
+				// connect camDataComplete from the cam thread to signal "setCamImage"
+				// (Whenever the image is complete, the image is shown in the GUI)
+				connect(camThread, SIGNAL( camImageComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
+				connect(camThread, SIGNAL( camImageDepthComplete(QImage*) ), gui, SLOT( setCamImageDepth(QImage*) ));
+				connect(camThread, SIGNAL( camImageOpenCVComplete(QImage*) ), gui, SLOT( setCamImageOpenCV(QImage*) ));
+
+				// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
+				connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
+				connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
+
+				// enable face detection, when activated in the GUI
+				connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
+
+				// enable face tracking, when activated in the GUI
+				connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
+
+				// show the face track direction in the gui
+				connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
+
+				//--------------------------------------------
+				// start threading and grabbing live pictures
+				//--------------------------------------------
+				camThread->start();
 
 				// look a bit up
-				kinect->setAngle(5); /// \todo: put angle value to ini file and settings dialog
-				gui->showKinectAngle(5);
+				// kinect->setAngle(5); /// \todo: put angle value to ini file and settings dialog
+				// gui->showKinectAngle(5);
 
 				// show kinect camera state in gui
 				gui->setLEDCamera(GREEN);
 
 				// the signals for the LED actions
 
-//				connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
-//				connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
-//				connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
-//				connect(gui, SIGNAL(setYellowLed()), kinect, SLOT(setYellowLed()));
-//				connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
-//				connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
-//				connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));/
+				// connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
+				// connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
+				// connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
+				// connect(gui, SIGNAL(setYellowLed()), kinect, SLOT(setYellowLed()));
+				// connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
+				// connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
+				// connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));/
 
-				// the signal for setting the camera angle
-				connect(gui, SIGNAL(setKinectAngle(double)), kinect, SLOT(setAngle(double)));
+				/// \todo the signal for setting the camera angle
+				//connect(gui, SIGNAL(setKinectAngle(double)), kinect, SLOT(setAngle(double)));
 
-				// the signal for resetting the camera angle
-				connect(gui, SIGNAL(resetKinectAngle()), kinect, SLOT(resetAngle()));
+				/// \todo the signal for resetting the camera angle
+				//connect(gui, SIGNAL(resetKinectAngle()), kinect, SLOT(resetAngle()));
 
 				// the signal for setting the video mode
-//				connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
+				// connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
 			}
 			else
 			{
 				emit splashMessage("Kinect not found.");
 				emit message("Kinect camera not found.", false);
+
 				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
+
 				//gui->disableCamera();
 				emit message("No Kinect detected.");
 
 			}
-*/
+
 		}
 
 
