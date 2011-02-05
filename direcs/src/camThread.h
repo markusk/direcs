@@ -147,6 +147,8 @@ class CamThread : public QThread
 		QImage qimageOpenCV; // for sending a QImage to the GUI (Signal)
 		Mat gray; // for OpencV
 
+		std::vector<uint16_t> m_gamma;
+
 		//mutable QMutex m_rgb_mutex;
 		//mutable QMutex m_depth_mutex;
 
