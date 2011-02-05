@@ -60,6 +60,7 @@ void CamThread::run()
 	{
 		// create an empty image with OpenCV
 		Mat rgbMat(Size(640, 480), CV_8UC3, Scalar(0));
+		Mat rgbMat2(Size(640, 480), CV_8UC3, Scalar(0));
 
 		// create an empty image with OpenCV
 		Mat depthMat(Size(640, 480), CV_16UC1);
@@ -71,7 +72,7 @@ void CamThread::run()
 		//  start "threading"...
 		while (!stopped)
 		{
-/*
+
 			//-----------------
 			// get RGB picture
 			//-----------------
@@ -89,7 +90,7 @@ void CamThread::run()
 
 			// send RGB image to GUI
 			emit camDataComplete (&qimage);
-*/
+
 
 			//----------------------
 			// do OpenCV stuff here
@@ -136,7 +137,7 @@ void CamThread::run()
 			//-------------------
 			// get depth picture
 			//-------------------
-			freenect_sync_get_depth((void**)&dataDepth, &timestamp, 0, FREENECT_DEPTH_11BIT);
+			freenect_sync_get_depth((void**)&dataDepth, &timestamp, 0, FREENECT_DEPTH_10BIT);
 
 			// convert image
 			depthMat.data = (uchar*) dataDepth;
@@ -144,9 +145,9 @@ void CamThread::run()
 			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
 
 			// convert to QImage
-			cvtColor( depthMat, rgbMat, CV_GRAY2RGB );
+			cvtColor( depthMat, rgbMat2, CV_GRAY2RGB );
 //			qimage = QImage( (uchar*) depthMat.data, depthMat.cols, depthMat.rows, depthMat.step, QImage::Format_Indexed8 );
-			qimage = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
+			qimage = QImage( (uchar*) rgbMat2.data, rgbMat2.cols, rgbMat2.rows, rgbMat2.step, QImage::Format_RGB888 );
 
 			// send DEPTH image to GUI
 			emit camDepthComplete(&qimage);
