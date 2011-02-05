@@ -136,7 +136,7 @@ void CamThread::run()
 			//-------------------
 			// get depth picture
 			//-------------------
-			freenect_sync_get_depth((void**)&dataDepth, &timestamp, 0, FREENECT_DEPTH_10BIT);
+			freenect_sync_get_depth((void**)&dataDepth, &timestamp, 0, FREENECT_DEPTH_11BIT);
 
 			// convert image
 			depthMat.data = (uchar*) dataDepth;
