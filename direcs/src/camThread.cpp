@@ -64,7 +64,7 @@ void CamThread::run()
 
 		// create an empty image with OpenCV
 		Mat depthMat(Size(640, 480), CV_16UC1);
-		Mat depthF  (Size(640, 480), CV_8UC1);
+//		Mat depthF  (Size(640, 480), CV_8UC1);
 
 		// show empty image with OpenCV
 		// namedWindow("video");
@@ -142,8 +142,8 @@ void CamThread::run()
 			// convert image
 			depthMat.data = (uchar*) dataDepth;
 
-			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
 
+//			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
 			// convert to QImage
 			cvtColor( depthMat, rgbMat2, CV_GRAY2RGB );
 //			qimage = QImage( (uchar*) depthMat.data, depthMat.cols, depthMat.rows, depthMat.step, QImage::Format_Indexed8 );
