@@ -218,7 +218,7 @@ bool CamThread::init()
 			angle=-30;
 		}
 
-/*
+
 		// try to set angle
 		if (freenect_sync_set_tilt_degs(angle, 0))
 		{
@@ -229,7 +229,7 @@ bool CamThread::init()
 
 			return false;
 		}
-*/
+
 	}
 
 
