@@ -3615,6 +3615,30 @@ void Direcs::readSettings()
 			}
 			break;
 	}
+
+	//---------------------------------------------------------------------
+	// read setting
+	value = inifile1->readSetting("Config", "threshold");
+
+	switch (value)
+	{
+		case -2:
+			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+			value = 0;
+			break;
+		case -1:
+			emit message("<font color=\"#FF0000\">Value \"threshold\" not found in ini-file!</font>");
+			value = 0;
+			break;
+		default:
+			if (!consoleMode)
+			{
+				// set value in camThread and GUI
+				camThread->setThreshold(value);
+				emit message(QString("Setting threshold to <b>%1</b>.").arg(value));
+			}
+			break;
+	}
 }
 
 
