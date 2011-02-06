@@ -75,7 +75,7 @@ void CamThread::run()
 
 		// create an empty image with OpenCV
 		Mat depthMat(Size(640, 480), CV_16UC1);
-		Mat depthMatResult(Size(640, 480), CV_8UC1);
+		Mat depthF  (Size(640, 480), CV_8UC1);
 
 		// show empty image with OpenCV
 		// namedWindow("video");
@@ -153,68 +153,12 @@ void CamThread::run()
 			// convert image
 			depthMat.data = (uchar*) dataDepth;
 
+			// convert again
+			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
+			cvtColor( depthF, rgbMat2, CV_GRAY2RGB );
 
-// + + +
-
-/*
-			unsigned char *depth_mid = depthMat.data;
-
-			for (int i = 0; i < 640*480; i++)
-			{
-				int lb = ((short *)depthMat.data)[i] % 256;
-				int ub = ((short *)depthMat.data)[i] / 256;
-				switch (ub) {
-				case 0:
-					depth_mid[3*i+2] = 255;
-					depth_mid[3*i+1] = 255-lb;
-					depth_mid[3*i+0] = 255-lb;
-					break;
-				case 1:
-					depth_mid[3*i+2] = 255;
-					depth_mid[3*i+1] = lb;
-					depth_mid[3*i+0] = 0;
-					break;
-				case 2:
-					depth_mid[3*i+2] = 255-lb;
-					depth_mid[3*i+1] = 255;
-					depth_mid[3*i+0] = 0;
-					break;
-				case 3:
-					depth_mid[3*i+2] = 0;
-					depth_mid[3*i+1] = 255;
-					depth_mid[3*i+0] = lb;
-					break;
-				case 4:
-					depth_mid[3*i+2] = 0;
-					depth_mid[3*i+1] = 255-lb;
-					depth_mid[3*i+0] = 255;
-					break;
-				case 5:
-					depth_mid[3*i+2] = 0;
-					depth_mid[3*i+1] = 0;
-					depth_mid[3*i+0] = 255-lb;
-					break;
-				default:
-					depth_mid[3*i+2] = 0;
-					depth_mid[3*i+1] = 0;
-					depth_mid[3*i+0] = 0;
-					break;
-				}
-			}
-
-
-// + + +
-
-
-//			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
-
-			// convert image
-			depthMatResult.data = (unsigned char*) depth_mid;
-*/
 			// convert to QImage
-//			cvtColor( depthMat, rgbMat2, CV_GRAY2RGB );
-//			qimageDepth = QImage( (uchar*) depthMatResult.data, depthMatResult.cols, depthMatResult.rows, depthMatResult.step, QImage::Format_RGB888 );
-			qimageDepth = QImage( (uchar*) depthMat.data, depthMat.cols, depthMat.rows, depthMat.step, QImage::Format_RGB888 );
+			qimageDepth = QImage( (uchar*) rgbMat2.data, rgbMat2.cols, rgbMat2.rows, rgbMat2.step, QImage::Format_RGB888 );
 
 			// send DEPTH image to GUI
 			emit camImageDepthComplete(&qimageDepth);

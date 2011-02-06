@@ -284,7 +284,7 @@ void Direcs::init()
 	}
 	else
 	{
-		connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
+		connect(this, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
 	}
 
 	//--------------------------------------------------------------------------
@@ -2169,7 +2169,7 @@ void Direcs::drive(const unsigned char command)
 	switch (command)
 	{
 		case FORWARD:
-			emit message("FORWARD");
+			emit message("FORWARD... ", false);
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
@@ -2177,18 +2177,20 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-//			/* \todo this is a test mode for sending only -one- serial command to the mc
-			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
-//			*/
-//			motors->motorControl(ALLMOTORS, SAME, command);
+
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
 			return;
 			break;
 
 		case BACKWARD:
-			emit message("BACKWARD");
+			emit message("BACKWARD... ", false);
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
@@ -2196,18 +2198,20 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-///			/* \todo this is a test mode for sending only -one- serial command to the mc
-			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
-//			*/
-//			motors->motorControl(ALLMOTORS, SAME, command);
+
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
 			return;
 			break;
 
 		case LEFT:
-			emit message("LEFT");
+			emit message("LEFT... ", false);
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
@@ -2215,18 +2219,20 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-///			/* //\todo this is a test mode for sending only -one- serial command to the mc
-			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
 			return;
 			break;
 
 		case RIGHT:
-			emit message("RIGHT");
+			emit message("RIGHT... ", false);
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
@@ -2234,18 +2240,20 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-///			/* //\todo this is a test mode for sending only -one- serial command to the mc
-			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
 			return;
 			break;
 
 		case TURNLEFT:
-			emit message("TURNLEFT");
+			emit message("TURNLEFT... ", false);
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
@@ -2253,18 +2261,20 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
 			}
-			/**/ /// \todo this is a test mode for sending only -one- serial command to the mc
-			motors->motorControl(MOTOR1, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR3, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, COUNTERCLOCKWISE);
-// 			*/
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
 			return;
 			break;
 
 		case TURNRIGHT:
-			emit message("TURNRIGHT");
+			emit message("TURNRIGHT... ", false);
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
@@ -2272,19 +2282,22 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
 				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
 			}
-			/// \todo this is a test mode for sending only -one- serial command to the mc
-			motors->motorControl(MOTOR1, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR2, SAME, CLOCKWISE);
-			motors->motorControl(MOTOR3, SAME, COUNTERCLOCKWISE);
-			motors->motorControl(MOTOR4, SAME, CLOCKWISE);
-// 			motors->motorControl(ALLMOTORS, SAME, command);
+
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
 			return;
 			break;
 
 		case START:
 			robotDrives = true;
 			emit message("Starting to drive forward...");
-			emit message("START");
+			emit message("START... ", false);
 			// set the motors to "drive FORWARD"
 			if (!consoleMode)
 			{
@@ -2293,7 +2306,7 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
 				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
 			}
-/*	FIXME: to much data over serial port?!?
+			/*	FIXME: to much data over serial port?!?
 			motors->setMotorSpeed(MOTOR1, 0); /// \todo check if this works
 			motors->setMotorSpeed(MOTOR2, 0); /// \todo check if this works
 			motors->setMotorSpeed(MOTOR3, 0); /// \todo check if this works
@@ -2303,23 +2316,24 @@ void Direcs::drive(const unsigned char command)
 			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
 			/// \TODO put that to a slider in the config menu / file.
 			/// \TODO make this speed increaser optional!
-*/
-			/// \todo this is a test mode for sending only -one- serial command to the mc
-			/*
-			motors->motorControl(MOTOR1, ON, CLOCKWISE);
-			motors->motorControl(MOTOR2, ON, CLOCKWISE);
-			motors->motorControl(MOTOR3, ON, CLOCKWISE);
-			motors->motorControl(MOTOR4, ON, CLOCKWISE);
 			*/
-			motors->motorControl(ALLMOTORS, SAME, command);
+
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
 			return;
 			break;
 
 		case WAIT:
-			emit message("WAIT");
-/*	FIXME: to much data over serial port?!?
+			emit message("WAIT... ", false);
+			/*	FIXME: to much data over serial port?!?
 			resetDrivingSpeedTimer();
-*/
+			*/
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
@@ -2327,28 +2341,27 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, OFF, SAME);
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
-			// turning motors off
-			/// \todo this is a test mode for sending only -one- serial command to the mc
-			/*
-			motors->motorControl(MOTOR1, OFF, SAME);
-			motors->motorControl(MOTOR2, OFF, SAME);
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
-			*/
-			motors->motorControl(ALLMOTORS, SAME, command);
 
-			//
+			// turning motors off
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
+
 			// Don't stop the motThread (PWM)!
 			// Only switching motors off!
-			//
 			return;
 			break;
 
 		case STOP:
-			emit message("STOP");
-/*	FIXME: to much data over serial port?!?
+			emit message("STOP... ", false);
+			/*	FIXME: to much data over serial port?!?
 			resetDrivingSpeedTimer();
-*/
+			*/
 			if (!consoleMode)
 			{
 				gui->showMotorStatus(MOTOR1, OFF, SAME);
@@ -2356,19 +2369,19 @@ void Direcs::drive(const unsigned char command)
 				gui->showMotorStatus(MOTOR3, OFF, SAME);
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
+
 			// turning motors off
-			//// \todo this is a test mode for sending only -one- serial command to the mc
-			/*
-			motors->motorControl(MOTOR1, OFF, SAME);
-			motors->motorControl(MOTOR2, OFF, SAME);
-			motors->motorControl(MOTOR3, OFF, SAME);
-			motors->motorControl(MOTOR4, OFF, SAME);
-			*/
-			motors->motorControl(ALLMOTORS, SAME, command);
-			//
+			if (motors->motorControl(ALLMOTORS, SAME, command))
+			{
+				emit message("ok", true, false, false);
+			}
+			else
+			{
+				emit message("Atmel-Error!");
+			}
+
 			// Don't stop the motThread (clock)!
 			// Only switching motors off!
-			//
 			robotDrives = false;
 			return;
 			break;
