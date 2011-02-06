@@ -179,7 +179,8 @@ bool InterfaceAvr::receiveString(QString &string)
 	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
-		qDebug() << "error at receiveString";
+		/// \todo on maximum errors do a program stop or so!
+		//qDebug() << "error at receiveString";
 		return false;
 	}
 
