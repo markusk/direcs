@@ -30,6 +30,8 @@ CamThread::CamThread() : QThread()
 	faceDetectionIsEnabled = false;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
+
+	mThreshold = 100;
 }
 
 
@@ -136,12 +138,11 @@ void CamThread::run()
 
 			// contours
 			//
-			int g_thresh = 100;
 			vector<vector<Point> > lines;
 			vector<Vec4i> hierarchy;
 
 			cvtColor( rgbMat2, gray, CV_BGR2GRAY );
-			threshold( gray, gray, g_thresh, 255, CV_THRESH_BINARY );
+			threshold( gray, gray, mThreshold, 255, CV_THRESH_BINARY );
 
 			findContours( gray, lines, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 			drawContours(gray, lines, -1, Scalar(255, 0, 0), 2);
@@ -239,4 +240,10 @@ bool CamThread::init()
 	cameraIsOn = true;
 	stopped = false;
 	return true;
+}
+
+
+void CamThread::setThreshold(int threshold)
+{
+	mThreshold = threshold;
 }

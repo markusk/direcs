@@ -83,6 +83,12 @@ class CamThread : public QThread
 		*/
 		void enableFaceDetection(int state);
 
+		/**
+		  Set threshold for OpenCV algorithm.
+		  @param threshold
+		  */
+		void setThreshold(int threshold);
+
 
 	signals:
 		/**
@@ -146,6 +152,8 @@ class CamThread : public QThread
 		QImage qimageDepth; // for sending a QImage to the GUI (Signal)
 		QImage qimageOpenCV; // for sending a QImage to the GUI (Signal)
 		Mat gray; // for OpencV
+
+		int mThreshold;
 
 		std::vector<uint16_t> m_gamma;
 
