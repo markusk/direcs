@@ -1472,11 +1472,9 @@ void Gui::disableFaceDetection()
 }
 
 
-void Gui::disableCamera()
+void Gui::hideCameraControls()
 {
-	appendLog("Camera window disabled!");
-	ui.dockCamera->setEnabled(false);
-	// ui.dockCamera->hide();
+	ui.dockCamera->hide();
 }
 
 

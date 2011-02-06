@@ -912,6 +912,7 @@ void Direcs::init()
 
 				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
+				gui->hideCameraControls();
 
 				//gui->disableCamera();
 				emit message("No Kinect detected.");
