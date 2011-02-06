@@ -341,8 +341,6 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		connect(gui, SIGNAL(test()), this, SLOT(test()));
 	}
-	// currently not in use:
-	//connect(gui, SIGNAL(test()), camThread, SLOT(test()));
 
 	if (!consoleMode)
 	{
@@ -389,21 +387,6 @@ void Direcs::init()
 		// let the GUI show servo messages in the log
 		//--------------------------------------------------------------------------
 		connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-
-		//-------------------------------------------------------------------------------------
-		// disable face detection in the GUI, on error with loading haar cascade in CamThread
-		// Must be before readSettings!
-		//-------------------------------------------------------------------------------------
-///		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() )); \todo kinect stuff
-
-		//-------------------------------------------------------------------------------------
-		// disable camera controls in the GUI, on error opeing the camera in the CamThread
-		// Must be before readSettings!
-		//-------------------------------------------------------------------------------------
-///		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() )); \todo kinect stuff
-
-		// send error messages to the gui
-///		connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString))); \todo kinect stuff
 	}
 
 
@@ -869,6 +852,24 @@ void Direcs::init()
 
 				// show the face track direction in the gui
 				connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
+
+				//-------------------------------------------------------------------------------------
+				// disable face detection in the GUI, on error with loading haar cascade in CamThread
+				// Must be before readSettings!
+				//-------------------------------------------------------------------------------------
+		///		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() )); \todo kinect stuff
+
+				//-------------------------------------------------------------------------------------
+				// disable camera controls in the GUI, on error opeing the camera in the CamThread
+				// Must be before readSettings!
+				//-------------------------------------------------------------------------------------
+		///		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() )); \todo kinect stuff
+
+				// send error messages to the gui
+		///		connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString))); \todo kinect stuff
+
+				// set the Threshold in the camThread when changed in GUI
+				connect(gui, SIGNAL(setThreshold(int)), camThread, SLOT(setThreshold(int)));
 
 				//--------------------------------------------
 				// start threading and grabbing live pictures

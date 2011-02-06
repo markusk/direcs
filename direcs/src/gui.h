@@ -495,6 +495,11 @@ class Gui : public QMainWindow
 		 */
 		void resetKinectAngle();
 
+		/**
+		  Sets the threshold on the OpenCV iamge stuff.
+		 */
+		void setThreshold(int value);
+
 
 	protected slots:
 		/**
@@ -550,6 +555,7 @@ class Gui : public QMainWindow
 //		void on_btnKinectVideoIR8Bit_clicked(bool checked);
 		void on_spinBoxKinectAngle_valueChanged(int i);
 		void on_btnKinectResetAngle_clicked();
+		void on_sliderThreshold_valueChanged(int);
 
 		/**
 		Saves the current picture to disk (one time shot).

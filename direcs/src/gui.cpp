@@ -1539,6 +1539,11 @@ void Gui::on_btnKinectResetAngle_clicked()
 	emit resetKinectAngle();
 }
 
+void Gui::on_sliderThreshold_valueChanged(int value)
+{
+	emit setThreshold(value);
+}
+
 
 void Gui::saveCamImage(void)
 {
