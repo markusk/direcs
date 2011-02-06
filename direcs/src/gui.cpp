@@ -2079,6 +2079,8 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 void Gui::on_checkBoxMirror_stateChanged(int state)
 {
+	Q_UNUSED(state);
+
 	// QtGL class!!
 //	ui.frameCamera->enableMirrorMode(state);
 }
