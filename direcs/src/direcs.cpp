@@ -1909,6 +1909,11 @@ void Direcs::enableFaceTracking(int state)
 
 void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
+	Q_UNUSED(faces);
+	Q_UNUSED(faceX);
+	Q_UNUSED(faceY);
+	Q_UNUSED(faceRadius);
+
 /*
 
 \todo kinect stuff

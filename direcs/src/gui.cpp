@@ -1440,6 +1440,10 @@ void Gui::on_btnSavePicture_clicked()
 
 void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY)
 {
+/*
+
+ currently not in use...
+
 	// show coordinates of the first detected face
 	ui.lblFaces->setNum(faces);
 
@@ -1449,6 +1453,14 @@ void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int
 
 	ui.lblLastFaceX->setNum(lastFaceX);
 	ui.lblLastFaceY->setNum(lastFaceY);
+*/
+
+	Q_UNUSED(faces);
+	Q_UNUSED(faceX);
+	Q_UNUSED(faceY);
+	Q_UNUSED(faceRadius);
+	Q_UNUSED(lastFaceX);
+	Q_UNUSED(lastFaceY);
 }
 
 
