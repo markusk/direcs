@@ -149,9 +149,9 @@
     <addaction name="actionAll"/>
     <addaction name="separator"/>
     <addaction name="actionCamera"/>
-    <addaction name="actionLog"/>
     <addaction name="actionState"/>
     <addaction name="actionVoltage"/>
+    <addaction name="actionLog"/>
     <addaction name="separator"/>
     <addaction name="actionJoystick"/>
     <addaction name="separator"/>
@@ -193,9 +193,9 @@
    <addaction name="actionResetDrivenDistance"/>
    <addaction name="separator"/>
    <addaction name="actionCamera"/>
-   <addaction name="actionLog"/>
    <addaction name="actionState"/>
    <addaction name="actionVoltage"/>
+   <addaction name="actionLog"/>
    <addaction name="actionAll"/>
    <addaction name="actionJoystick"/>
    <addaction name="actionSettings"/>
@@ -205,6 +205,10 @@
    <addaction name="actionExit"/>
   </widget>
   <widget class="QDockWidget" name="dockState">
+   <property name="windowIcon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/led_green.gif</normaloff>:/images/images/led_green.gif</iconset>
+   </property>
    <property name="windowTitle">
     <string>State</string>
    </property>
@@ -1222,6 +1226,10 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockVoltage">
+   <property name="windowIcon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/battery-100.png</normaloff>:/images/images/battery-100.png</iconset>
+   </property>
    <property name="windowTitle">
     <string>Voltage</string>
    </property>
@@ -1411,6 +1419,10 @@
      <width>360</width>
      <height>981</height>
     </size>
+   </property>
+   <property name="windowIcon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/camera-web.png</normaloff>:/images/images/camera-web.png</iconset>
    </property>
    <property name="windowTitle">
     <string>Camera</string>
@@ -1794,6 +1806,10 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockLog">
+   <property name="windowIcon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/text-plain.png</normaloff>:/images/images/text-plain.png</iconset>
+   </property>
    <property name="windowTitle">
     <string>Logs</string>
    </property>
