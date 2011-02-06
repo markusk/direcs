@@ -409,6 +409,12 @@ class Gui : public QMainWindow
 		*/
 		void showKinectAngle(double angle);
 
+		/**
+		Shows the threshold / sets the threshold slider regarding to the value from e.g. an inifile or CamThread.
+		@param threshold
+		*/
+		void showThreshold(int threshold);
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -496,7 +502,7 @@ class Gui : public QMainWindow
 		void resetKinectAngle();
 
 		/**
-		  Sets the threshold on the OpenCV iamge stuff.
+		  Sets the threshold on the OpenCV iamge stuff. This Signal is sent to the @sa CamThread
 		 */
 		void setThreshold(int value);
 

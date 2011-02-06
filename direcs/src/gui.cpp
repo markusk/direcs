@@ -3388,6 +3388,12 @@ void Gui::showKinectAngle(double angle)
 }
 
 
+void Gui::showThreshold(int threshold)
+{
+	ui.sliderThreshold->setValue(threshold);
+}
+
+
 void Gui::setConsoleMode(bool state)
 {
 	consoleMode = state;

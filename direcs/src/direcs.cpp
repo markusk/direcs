@@ -140,6 +140,11 @@ Direcs::Direcs(bool bConsoleMode)
 	joystick = new Joystick();
 	head = new Head(servos);
 
+	if (!consoleMode)
+	{
+		camThread = new CamThread();
+	}
+
 	drivingSpeedTimer = new QTimer();
 }
 
@@ -812,8 +817,6 @@ void Direcs::init()
 			emit splashMessage("Detecting Kinect camera...");
 			emit message("Detecting Kinect camera...", false);
 
-			camThread = new CamThread();
-
 			// show Kinect messages in GUI
 			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
@@ -866,7 +869,7 @@ void Direcs::init()
 		///		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() )); \todo kinect stuff
 
 				// send error messages to the gui
-		///		connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString))); \todo kinect stuff
+				connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 
 				// set the Threshold in the camThread when changed in GUI
 				connect(gui, SIGNAL(setThreshold(int)), camThread, SLOT(setThreshold(int)));
@@ -1183,20 +1186,6 @@ void Direcs::shutdown()
 		//--------------------------------
 		// quit the camThread
 		//--------------------------------
-/*
-		if (kinect->kinectDetected)
-		{
-			emit message("Stopping Kinect camera...");
-			emit splashMessage("Stopping Kinect camera...");
-
-			// kinect->resetAngle();
-
-			kinect->setLedOff();
-
-			kinect->shutDownKinect();
-		}
-*/
-		/*
 		if (camThread->isRunning() == true)
 		{
 			emit message("Stopping camera thread...");
@@ -1231,7 +1220,6 @@ void Direcs::shutdown()
 				emit message("Camera thread terminated.");
 			}
 		}
-		*/
 	}
 
 
@@ -1640,7 +1628,7 @@ Direcs::~Direcs()
 	delete interface1;
 	if (!consoleMode)
 	{
-//		delete camThread;
+		delete camThread;
 		delete aboutDialog;
 		delete joystickDialog;
 		delete settingsDialog;
@@ -3635,6 +3623,7 @@ void Direcs::readSettings()
 			{
 				// set value in camThread and GUI
 				camThread->setThreshold(value);
+				gui->showThreshold(value);
 				emit message(QString("Setting threshold to <b>%1</b>.").arg(value));
 			}
 			break;
