@@ -3836,7 +3836,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 
 					if (robotDrives == false)
 					{
-						drive(START);
+						/// \todo check if this makes sense...
+						// drive(START);
 					}
 
 					drive(BACKWARD);
@@ -3891,7 +3892,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 
 				if (robotDrives == false)
 				{
-					drive(START);
+					/// \todo check if this makes sense...
+					// drive(START);
 				}
 
 				drive(FORWARD);
@@ -3970,7 +3972,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 
 				if (robotDrives == false)
 				{
-					drive(START);
+					/// \todo check if this makes sense...
+					// drive(START);
 				}
 
 				drive(RIGHT);
@@ -4004,7 +4007,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 
 				if (robotDrives == false)
 				{
-					drive(START);
+					/// \todo check if this makes sense...
+					// drive(START);
 				}
 
 				drive(LEFT);
@@ -4159,7 +4163,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (robotDrives == false)
 			{
 				/// \todo check if this makes sense...
-				drive(START);
+				// drive(START);
 			}
 
 			drive(BACKWARD);
@@ -4173,7 +4177,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (robotDrives == false)
 			{
 				/// \todo check if this makes sense...
-				drive(START);
+				// drive(START);
 			}
 
 			drive(FORWARD);
@@ -4315,7 +4319,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				if (robotDrives == false)
 				{
 					/// \todo check if this makes sense...
-					drive(START);
+					// drive(START);
 				}
 
 				// do a right turn in a circle!
@@ -4339,7 +4343,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				if (robotDrives == false)
 				{
 					/// \todo check if this makes sense...
-					drive(START);
+					// drive(START);
 				}
 
 				// do a left turn in a circle!
