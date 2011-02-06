@@ -30,17 +30,6 @@ CamThread::CamThread() : QThread()
 	faceDetectionIsEnabled = false;
 	faceDetectionWasActive = false;
 	haarClassifierCascadeFilename = "none";
-
-	m_gamma.resize(2048);
-
-	/// build the gamma table used for the depth to rgb conversion
-	/// taken from the demo programs
-	for (int i=0; i<2048; ++i)
-	{
-		float v = i/2048.0;
-		v = std::pow(v, 3)* 6;
-		m_gamma[i] = v*6*256;
-	}
 }
 
 
@@ -72,6 +61,7 @@ void CamThread::run()
 		// create an empty image with OpenCV
 		Mat rgbMat(Size(640, 480), CV_8UC3, Scalar(0));
 		Mat rgbMat2(Size(640, 480), CV_8UC3, Scalar(0));
+		Mat rgbMat3(Size(640, 480), CV_8UC3, Scalar(0));
 
 		// create an empty image with OpenCV
 		Mat depthMat(Size(640, 480), CV_16UC1);
@@ -103,9 +93,28 @@ void CamThread::run()
 			emit camImageComplete (&qimage);
 
 
-			//----------------------
-			// do OpenCV stuff here
-			//----------------------
+			//-------------------
+			// get depth picture
+			//-------------------
+			freenect_sync_get_depth((void**)&dataDepth, &timestamp, 0, FREENECT_DEPTH_10BIT);
+
+			// convert image
+			depthMat.data = (uchar*) dataDepth;
+
+			// convert again
+			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
+			cvtColor( depthF, rgbMat2, CV_GRAY2RGB );
+
+			// convert to QImage
+			qimageDepth = QImage( (uchar*) rgbMat2.data, rgbMat2.cols, rgbMat2.rows, rgbMat2.step, QImage::Format_RGB888 );
+
+			// send DEPTH image to GUI
+			emit camImageDepthComplete(&qimageDepth);
+
+
+			//-----------------------------------------
+			// do OpenCV stuff here on the depth image
+			//-----------------------------------------
 			/*
 			// canny
 			//
@@ -131,37 +140,19 @@ void CamThread::run()
 			vector<vector<Point> > lines;
 			vector<Vec4i> hierarchy;
 
-			cvtColor( rgbMat, gray, CV_BGR2GRAY );
+			cvtColor( rgbMat2, gray, CV_BGR2GRAY );
 			threshold( gray, gray, g_thresh, 255, CV_THRESH_BINARY );
 
 			findContours( gray, lines, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 			drawContours(gray, lines, -1, Scalar(255, 0, 0), 2);
 
 			// convert to QImage
-			cvtColor( gray, rgbMat, CV_GRAY2RGB );
-			qimageOpenCV = QImage( (uchar*) rgbMat.data, rgbMat.cols, rgbMat.rows, rgbMat.step, QImage::Format_RGB888 );
+			cvtColor( gray, rgbMat3, CV_GRAY2RGB );
+			qimageOpenCV = QImage( (uchar*) rgbMat3.data, rgbMat3.cols, rgbMat3.rows, rgbMat3.step, QImage::Format_RGB888 );
 
 			// send OpenCV processed image to GUI
 			emit camImageOpenCVComplete(&qimageOpenCV);
 
-
-			//-------------------
-			// get depth picture
-			//-------------------
-			freenect_sync_get_depth((void**)&dataDepth, &timestamp, 0, FREENECT_DEPTH_10BIT);
-
-			// convert image
-			depthMat.data = (uchar*) dataDepth;
-
-			// convert again
-			depthMat.convertTo(depthF, CV_8UC1, 255.0/2048.0);
-			cvtColor( depthF, rgbMat2, CV_GRAY2RGB );
-
-			// convert to QImage
-			qimageDepth = QImage( (uchar*) rgbMat2.data, rgbMat2.cols, rgbMat2.rows, rgbMat2.step, QImage::Format_RGB888 );
-
-			// send DEPTH image to GUI
-			emit camImageDepthComplete(&qimageDepth);
 
 			// let the thread sleep some time
 			msleep(THREADSLEEPTIME);
