@@ -877,26 +877,29 @@ int main(void)
 			// BOTRIGHT = "bot drive right"
 			if (strcmp(stringbuffer, "*bdr#") == 0)
 			{
-				// MOTOR 1 CLOCKWISE
+				// MOTOR 1 CLOCKWISE = forward
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
 				// set Motor1 B bit
 				PORTL |= (1<<PIN1);
-				// MOTOR 2 CLOCKWISE
-				// delete Motor2 A bit
-				PORTL &= ~(1<<PIN2);
-				// set Motor2 B bit
-				PORTL |= (1<<PIN3);
-				// MOTOR 3 COUNTERCLOCKWISE
+				
+				// MOTOR 2 COUNTERCLOCKWISE = backward
+				// set Motor2 A bit
+				PORTL |= (1<<PIN2);
+				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN3);
+
+				// MOTOR 3 COUNTERCLOCKWISE = backward
 				// set Motor3 A bit
 				PORTL |= (1<<PIN6);
 				// delete Motor3 B bit
 				PORTL &= ~(1<<PIN7);
-				// MOTOR 4 COUNTERCLOCKWISE
-				// set Motor4 A bit
-				PORTD |= (1<<PIN6);
-				// delete Motor4 B bit
-				PORTD &= ~(1<<PIN7);
+
+				// MOTOR 4 CLOCKWISE = forward
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
 
 				// answer with "ok"
 				put_string("*bdr#");
