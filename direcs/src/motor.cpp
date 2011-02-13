@@ -316,26 +316,15 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				//
-				//   A T T E N T I O N :
-				//
-				//   Because of the right-left reversed mounting of one of the motors
-				//   the control-logic for CLOCKWISE and COUNTERCLOCKWISE could be used
-				//   reversed in this method. And only in this method!
-				//   Because of this reversed logic the commands could swapped here!
-				//   (counterclockwise = clockwise and vice versa)
-				//   THIS HAS ONLY TO BE DONE, WHEN THE MOTORS ARE WIRED EXACTLY THE SAME!
-				//   black = minus	red = plus	->	on both motors identically!
-				//
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md2cc") == true)
+					if (interface1->sendString("md2cw") == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*md2cc#")
+							if (answer == "*md2cw#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -352,12 +341,12 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md2cw") == true)
+					if (interface1->sendString("md2cc") == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*md2cw#")
+							if (answer == "*md2cc#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -499,26 +488,15 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				//
-				//   A T T E N T I O N :
-				//
-				//   Because of the right-left reversed mounting of one of the motors
-				//   the control-logic for CLOCKWISE and COUNTERCLOCKWISE could be used
-				//   reversed in this method. And only in this method!
-				//   Because of this reversed logic the commands could swapped here!
-				//   (counterclockwise = clockwise and vice versa)
-				//   THIS HAS ONLY TO BE DONE, WHEN THE MOTORS ARE WIRED EXACTLY THE SAME!
-				//   black = minus	red = plus	->	on both motors identically!
-				//
 				if (direction == CLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md4cc") == true)
+					if (interface1->sendString("md4cw") == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*md4cc#")
+							if (answer == "*md4cw#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
@@ -535,12 +513,12 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 				if (direction == COUNTERCLOCKWISE)
 				{
 					// set the direction
-					if (interface1->sendString("md4cw") == true)
+					if (interface1->sendString("md4cc") == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer) == true)
 						{
-							if (answer == "*md4cw#")
+							if (answer == "*md4cc#")
 							{
 								// Unlock the mutex
 								mutex->unlock();
