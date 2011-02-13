@@ -913,26 +913,29 @@ int main(void)
 			// TURNRIGHT = "bot turn right"
 			if (strcmp(stringbuffer, "*btr#") == 0)
 			{
-				// MOTOR 1 COUNTERCLOCKWISE
+				// MOTOR 1 COUNTERCLOCKWISE -> changed to CLOCKWISE due to mounting on the bot!
 				// set Motor1 A bit
 				PORTL |= (1<<PIN0);
 				// delete Motor1 B bit
 				PORTL &= ~(1<<PIN1);
-				// MOTOR 2 CLOCKWISE
+
+				// MOTOR 2 CLOCKWISE -> changed to COUNTERCLOCKWISE due to mounting on the bot!
 				// delete Motor2 A bit
 				PORTL &= ~(1<<PIN2);
 				// set Motor2 B bit
 				PORTL |= (1<<PIN3);
+
 				// MOTOR 3 COUNTERCLOCKWISE
 				// set Motor3 A bit
 				PORTL |= (1<<PIN6);
 				// delete Motor3 B bit
 				PORTL &= ~(1<<PIN7);
-				// MOTOR 4 CLOCKWISE
-				// delete Motor4 A bit
-				PORTD &= ~(1<<PIN6);
-				// set Motor4 B bit
-				PORTD |= (1<<PIN7);
+
+				// MOTOR 4 CLOCKWISE -> changed to COUNTERCLOCKWISE due to mounting on the bot!
+				// set Motor4 A bit
+				PORTD |= (1<<PIN6);
+				// delete Motor4 B bit
+				PORTD &= ~(1<<PIN7);
 
 				// answer with "ok"
 				put_string("*btr#");
