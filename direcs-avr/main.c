@@ -753,23 +753,30 @@ int main(void)
 			// BOTSTART = "bot go"
 			if (strcmp(stringbuffer, "*bgo#") == 0)
 			{
-				// MOTOR 1 CLOCKWISE
-				// MOTOR 2 COUNTERCLOCKWISE
-				// MOTOR 3 CLOCKWISE
-				// MOTOR 4 COUNTERCLOCKWISE
-				// set Motor1 B bit
-				// set Motor2 A bit
-				// set Motor3 B bit
-				// set Motor4 A bit
-				PORTL |= (1<<PIN1) | (1<<PIN2) | (1<<PIN7);
-				PORTD |= (1<<PIN6);
+				// MOTOR 1 CLOCKWISE = forward
 				// delete Motor1 A bit
-				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN0);
+				// set Motor1 B bit
+				PORTL |= (1<<PIN1);
+				
+				// MOTOR 2 CLOCKWISE = forward
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// set Motor2 B bit
+				PORTL |= (1<<PIN3);
+				
+				// MOTOR 3 CLOCKWISE = forward
 				// delete Motor3 A bit
-				// delete Motor4 B bit
-				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
-				PORTD &= ~(1<<PIN7);
-
+				PORTL &= ~(1<<PIN6);
+				// set Motor3 B bit
+				PORTL |= (1<<PIN7);
+				
+				// MOTOR 4 CLOCKWISE = forward
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
+				
 				// answer with "ok"
 				put_string("*bgo#");
 			}
@@ -777,22 +784,29 @@ int main(void)
 			// BOTFORWARD = "bot drive forward"
 			if (strcmp(stringbuffer, "*bdf#") == 0)
 			{
-				// MOTOR 1 CLOCKWISE
-				// MOTOR 2 COUNTERCLOCKWISE
-				// MOTOR 3 CLOCKWISE
-				// MOTOR 4 COUNTERCLOCKWISE
-				// set Motor1 B bit
-				// set Motor2 A bit
-				// set Motor3 B bit
-				// set Motor4 A bit
-				PORTL |= (1<<PIN1) | (1<<PIN2) | (1<<PIN7);
-				PORTD |= (1<<PIN6);
+				// MOTOR 1 CLOCKWISE = forward
 				// delete Motor1 A bit
-				// delete Motor2 B bit
+				PORTL &= ~(1<<PIN0);
+				// set Motor1 B bit
+				PORTL |= (1<<PIN1);
+				
+				// MOTOR 2 CLOCKWISE = forward
+				// delete Motor2 A bit
+				PORTL &= ~(1<<PIN2);
+				// set Motor2 B bit
+				PORTL |= (1<<PIN3);
+				
+				// MOTOR 3 CLOCKWISE = forward
 				// delete Motor3 A bit
-				// delete Motor4 B bit
-				PORTL &= ~( (1<<PIN0) | (1<<PIN3) | (1<<PIN6) );
-				PORTD &= ~(1<<PIN7);
+				PORTL &= ~(1<<PIN6);
+				// set Motor3 B bit
+				PORTL |= (1<<PIN7);
+				
+				// MOTOR 4 CLOCKWISE = forward
+				// delete Motor4 A bit
+				PORTD &= ~(1<<PIN6);
+				// set Motor4 B bit
+				PORTD |= (1<<PIN7);
 
 				// answer with "ok"
 				put_string("*bdf#");
