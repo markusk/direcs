@@ -885,25 +885,25 @@ int main(void)
 			// TURNLEFT = "bot turn left"
 			if (strcmp(stringbuffer, "*btl#") == 0)
 			{
-				// MOTOR 1 CLOCKWISE
+				// MOTOR 1 CLOCKWISE = forward
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
 				// set Motor1 B bit
 				PORTL |= (1<<PIN1);
 				
-				// MOTOR 2 COUNTERCLOCKWISE
+				// MOTOR 2 COUNTERCLOCKWISE = backward
 				// set Motor2 A bit
 				PORTL |= (1<<PIN2);
 				// delete Motor2 B bit
 				PORTL &= ~(1<<PIN3);
 				
-				// MOTOR 3 CLOCKWISE
+				// MOTOR 3 CLOCKWISE = forward
 				// delete Motor3 A bit
 				PORTL &= ~(1<<PIN6);
 				// set Motor3 B bit
 				PORTL |= (1<<PIN7);
 				
-				// MOTOR 4 COUNTERCLOCKWISE
+				// MOTOR 4 COUNTERCLOCKWISE = backward
 				// set Motor4 A bit
 				PORTD |= (1<<PIN6);
 				// delete Motor4 B bit
