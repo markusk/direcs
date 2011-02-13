@@ -120,7 +120,7 @@ double Motor::getDrivenDistance(unsigned char motor)
 }
 
 
-bool Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
+bool Motor::motorControl(int motor, bool power, int direction)
 {
 	QString command = "bst"; // stop robot
 	QString answer = "error";

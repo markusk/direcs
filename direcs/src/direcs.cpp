@@ -681,7 +681,7 @@ void Direcs::init()
 			//----------------------------------------------------------------------------
 			// drive in the direction which was emited from the gui
 			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
+			connect(gui, SIGNAL( drive(int) ), this, SLOT( drive(int) ));
 		}
 
 		//----------------------------------------------------------------------------
@@ -2147,7 +2147,7 @@ void Direcs::showSensorData()
 }
 
 
-void Direcs::drive(const unsigned char command)
+void Direcs::drive(const int command)
 {
 	static unsigned char lastCommand = 255;
 

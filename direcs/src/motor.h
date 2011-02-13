@@ -51,7 +51,7 @@ class Motor : public QObject
 
 		@sa makeSteps() for generating steps for stepper motors
 		*/
-		bool motorControl(unsigned char motor, bool power, unsigned char direction);
+		bool motorControl(int motor, bool power, int direction);
 
 
 		/**
@@ -162,43 +162,43 @@ class Motor : public QObject
 		static const unsigned char BIT7 = 128;
 
 		/// Some driving directions *and* motor directions for the robot. @sa Direcs::drive() [Slot]
-		static const unsigned char FORWARD     = 10; /// Motor direction (formerly "clockwise")
-		static const unsigned char BACKWARD    = 20; /// Motor direction (formerly "counterclockwise"
-		static const unsigned char LEFT			= 30;
-		static const unsigned char RIGHT		= 40;
-		static const unsigned char TURNLEFT		= 50;
-		static const unsigned char TURNRIGHT	= 60;
-		static const unsigned char START		= 70;
-		static const unsigned char STOP			= 80;
-		static const unsigned char WAIT			= 90;
-		// static const unsigned char DIAGONAL_FORWARD_LEFT
-		// static const unsigned char DIAGONAL_FORWARD_RIGHT
-		// static const unsigned char DIAGONAL_BACKWARD_LEFT
-		// static const unsigned char DIAGONAL_BACKWARD_RIGHT
+		static const int FORWARD    = 10; /// Motor direction (formerly "clockwise")
+		static const int BACKWARD   = 20; /// Motor direction (formerly "counterclockwise"
+		static const int LEFT		= 30;
+		static const int RIGHT		= 40;
+		static const int TURNLEFT	= 50;
+		static const int TURNRIGHT	= 60;
+		static const int START		= 70;
+		static const int STOP		= 80;
+		static const int WAIT		= 90;
+		// static const int DIAGONAL_FORWARD_LEFT
+		// static const int DIAGONAL_FORWARD_RIGHT
+		// static const int DIAGONAL_BACKWARD_LEFT
+		// static const int DIAGONAL_BACKWARD_RIGHT
 
-		static const unsigned char SAME      = 200; /// Motor direction/power "same like before"
-		static const unsigned char MOTOR1    = 210; /// Motor 1 front left
-		static const unsigned char MOTOR2    = 220; /// Motor 2 front right
-		static const unsigned char MOTOR3    = 230; /// Motor 3 back left
-		static const unsigned char MOTOR4    = 240; /// Motor 4 back right
-		static const unsigned char ALLMOTORS = 250; /// used for letting the robot getting only one command for all motors (like 'forward all'). This is to reduce commands on the serial line.
+		static const int SAME      = 200; /// Motor direction/power "same like before"
+		static const int MOTOR1    = 210; /// Motor 1 front left
+		static const int MOTOR2    = 220; /// Motor 2 front right
+		static const int MOTOR3    = 230; /// Motor 3 back left
+		static const int MOTOR4    = 240; /// Motor 4 back right
+		static const int ALLMOTORS = 250; /// used for letting the robot getting only one command for all motors (like 'forward all'). This is to reduce commands on the serial line.
 
-		static const unsigned char MOTOR1FW		= 300;
-		static const unsigned char MOTOR1BW		= 310;
-		static const unsigned char MOTOR1OFF	= 320;
-		static const unsigned char MOTOR2FW		= 330;
-		static const unsigned char MOTOR2BW		= 340;
-		static const unsigned char MOTOR2OFF	= 350;
-		static const unsigned char MOTOR3FW		= 360;
-		static const unsigned char MOTOR3BW		= 370;
-		static const unsigned char MOTOR3OFF	= 380;
-		static const unsigned char MOTOR4FW		= 390;
-		static const unsigned char MOTOR4BW		= 400;
-		static const unsigned char MOTOR4OFF	= 410;
+		static const int MOTOR1FW	= 300;
+		static const int MOTOR1BW	= 310;
+		static const int MOTOR1OFF	= 320;
+		static const int MOTOR2FW	= 330;
+		static const int MOTOR2BW	= 340;
+		static const int MOTOR2OFF	= 350;
+		static const int MOTOR3FW	= 360;
+		static const int MOTOR3BW	= 370;
+		static const int MOTOR3OFF	= 380;
+		static const int MOTOR4FW	= 390;
+		static const int MOTOR4BW	= 400;
+		static const int MOTOR4OFF	= 410;
 
-		static const unsigned char READ_AXIS_X = 500;
-		static const unsigned char READ_AXIS_Y = 510;
-		static const unsigned char READ_AXIS_Z = 520;
+		static const int READ_AXIS_X = 500;
+		static const int READ_AXIS_Y = 510;
+		static const int READ_AXIS_Z = 520;
 
 		//
 		/// The bits for controling the USB-Circuit

@@ -1146,7 +1146,7 @@ void Gui::showAlarm(short int sensor, bool state)
 }
 
 
-void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char direction)
+void Gui::showMotorStatus(int motor, bool power, int direction)
 {
 	switch (motor)
 	{
