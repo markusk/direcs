@@ -485,24 +485,26 @@ int main(void)
 				put_string("*mp1of#");
 			}
 			else
-			// MOTOR1_CLOCKWISE
+			// MOTOR 1 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md1cw#") == 0)
 			{
 				// delete Motor1 A bit
 				PORTL &= ~(1<<PIN0);
 				// set Motor1 B bit
 				PORTL |= (1<<PIN1);
+
 				// answer with "ok"
 				put_string("*md1cw#");
 			}
 			else
-			// MOTOR1_COUNTERCLOCKWISE
+			// MOTOR 1 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md1cc#") == 0)
 			{
 				// set Motor1 A bit
 				PORTL |= (1<<PIN0);
 				// delete Motor1 B bit
 				PORTL &= ~(1<<PIN1);
+				
 				// answer with "ok"
 				put_string("*md1cc#");
 			}
@@ -532,24 +534,26 @@ int main(void)
 				put_string("*mp2of#");
 			}
 			else
-			// MOTOR2_CLOCKWISE
+			// MOTOR 2 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md2cw#") == 0)
 			{
 				// delete Motor2 A bit
 				PORTL &= ~(1<<PIN2);
 				// set Motor2 B bit
 				PORTL |= (1<<PIN3);
+
 				// answer with "ok"
 				put_string("*md2cw#");
 			}
 			else
-			// MOTOR2_COUNTERCLOCKWISE
+			// MOTOR 2 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md2cc#") == 0)
 			{
 				// set Motor2 A bit
 				PORTL |= (1<<PIN2);
 				// delete Motor2 B bit
 				PORTL &= ~(1<<PIN3);
+
 				// answer with "ok"
 				put_string("*md2cc#");
 			}
@@ -579,32 +583,26 @@ int main(void)
 				put_string("*mp3of#");
 			}
 			else
-			// MOTOR3_CLOCKWISE // cam pan R
+			// MOTOR 3 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md3cw#") == 0)
 			{
-				// only, when end switch is clear
-				// if ( bit_is_clear(PINK,PIN2) )
-				// {
 				// delete Motor3 A bit
 				PORTL &= ~(1<<PIN6);
 				// set Motor3 B bit
 				PORTL |= (1<<PIN7);
-				// }
+
 				// answer with "ok"
 				put_string("*md3cw#");
 			}
 			else
-			// MOTOR3_COUNTERCLOCKWISE // cam pan L
+			// MOTOR 3 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md3cc#") == 0)
 			{
-				// only, when end switch is clear
-				// if ( bit_is_clear(PINK,PIN3) )
-				// {
 				// set Motor3 A bit
 				PORTL |= (1<<PIN6);
 				// delete Motor3 B bit
 				PORTL &= ~(1<<PIN7);
-				// }
+
 				// answer with "ok"
 				put_string("*md3cc#");
 			}
@@ -634,31 +632,26 @@ int main(void)
 				put_string("*mp4of#");
 			}
 			else
-			// MOTOR4_CLOCKWISE // cam tilt top
+			// MOTOR 4 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md4cw#") == 0)
 			{
-				// only, when end switch is clear
-				// if ( bit_is_clear(PINK,PIN1) )
-				// {
 				// delete Motor4 A bit
 				PORTD &= ~(1<<PIN6);
 				// set Motor4 B bit
 				PORTD |= (1<<PIN7);
-				// }
+
 				// answer with "ok"
 				put_string("*md4cw#");
 			}
 			else
-			// MOTOR4_COUNTERCLOCKWISE // cam tilt bottom
+			// MOTOR 4 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md4cc#") == 0)
 			{
-				// if ( bit_is_clear(PINK,PIN0) )
-				// {
 				// set Motor4 A bit
 				PORTD |= (1<<PIN6);
 				// delete Motor4 B bit
 				PORTD &= ~(1<<PIN7);
-				// }
+
 				// answer with "ok"
 				put_string("*md4cc#");
 			}
