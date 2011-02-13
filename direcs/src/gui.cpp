@@ -1168,12 +1168,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 			switch (direction)
 			{
-				case CLOCKWISE:
+				case FORWARD:
 //					ui.btnDirection1->setText("BACKWARD");
 //					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
-				case COUNTERCLOCKWISE:
+				case BACKWARD:
 //					ui.btnDirection1->setText("FORWARD");
 //					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_red.gif"));
@@ -1201,12 +1201,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 			switch (direction)
 			{
-				case CLOCKWISE:
+				case FORWARD:
 //					ui.btnDirection2->setText("BACKWARD");
 //					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
-				case COUNTERCLOCKWISE:
+				case BACKWARD:
 //					ui.btnDirection2->setText("FORWARD");
 //					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_red.gif"));
@@ -1234,12 +1234,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 			switch (direction)
 			{
-				case CLOCKWISE:
+				case FORWARD:
 //					ui.btnDirection3->setText("BACKWARD");
 //					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
-				case COUNTERCLOCKWISE:
+				case BACKWARD:
 //					ui.btnDirection3->setText("FORWARD");
 //					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_red.gif"));
@@ -1267,12 +1267,12 @@ void Gui::showMotorStatus(unsigned char motor, bool power, unsigned char directi
 
 			switch (direction)
 			{
-				case CLOCKWISE:
+				case FORWARD:
 //					ui.btnDirection4->setText("BACKWARD");
 //					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					break;
-				case COUNTERCLOCKWISE:
+				case BACKWARD:
 //					ui.btnDirection4->setText("FORWARD");
 //					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
 					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_red.gif"));

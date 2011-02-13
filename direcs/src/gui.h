@@ -687,29 +687,44 @@ class Gui : public QMainWindow
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
 
-		/// @sa Direcs::drive() [Slot]
-		static const unsigned char START = 7; //! For button signal "start driving"
-		static const unsigned char STOP  = 8; //! For button signal "stop driving"
-		static const unsigned char MOTOR1FW		= 10; /// for the test widget
-		static const unsigned char MOTOR1BW		= 11; /// for the test widget
-		static const unsigned char MOTOR1OFF	= 12; /// for the test widget
-		static const unsigned char MOTOR2FW		= 13; /// for the test widget
-		static const unsigned char MOTOR2BW		= 14; /// for the test widget
-		static const unsigned char MOTOR2OFF	= 15; /// for the test widget
-		static const unsigned char MOTOR3FW		= 16; /// for the test widget
-		static const unsigned char MOTOR3BW		= 17; /// for the test widget
-		static const unsigned char MOTOR3OFF	= 18; /// for the test widget
-		static const unsigned char MOTOR4FW		= 19; /// for the test widget
-		static const unsigned char MOTOR4BW		= 20; /// for the test widget
-		static const unsigned char MOTOR4OFF	= 21; /// for the test widget
+		/// Some driving directions *and* motor directions for the robot. @sa Direcs::drive() [Slot]
+		static const unsigned char FORWARD     = 10; /// Motor direction (formerly "clockwise")
+		static const unsigned char BACKWARD    = 20; /// Motor direction (formerly "counterclockwise"
+		static const unsigned char LEFT			= 30;
+		static const unsigned char RIGHT		= 40;
+		static const unsigned char TURNLEFT		= 50;
+		static const unsigned char TURNRIGHT	= 60;
+		static const unsigned char START		= 70;
+		static const unsigned char STOP			= 80;
+		static const unsigned char WAIT			= 90;
+		// static const unsigned char DIAGONAL_FORWARD_LEFT
+		// static const unsigned char DIAGONAL_FORWARD_RIGHT
+		// static const unsigned char DIAGONAL_BACKWARD_LEFT
+		// static const unsigned char DIAGONAL_BACKWARD_RIGHT
 
-		static const unsigned char CLOCKWISE        = 0;  /// Motor direction "CLOCKWISE"
-		static const unsigned char COUNTERCLOCKWISE = 1;  /// Motor direction "COUNTERCLOCKWISE
-		static const unsigned char SAME             = 3;  /// Motor direction/power "same like before"
-		static const unsigned char MOTOR1           = 10; /// Motor 1 front left
-		static const unsigned char MOTOR2           = 20; /// Motor 2 front right
-		static const unsigned char MOTOR3           = 30; /// Motor 3 back left
-		static const unsigned char MOTOR4           = 40; /// Motor 4 back right
+		static const unsigned char SAME      = 200; /// Motor direction/power "same like before"
+		static const unsigned char MOTOR1    = 210; /// Motor 1 front left
+		static const unsigned char MOTOR2    = 220; /// Motor 2 front right
+		static const unsigned char MOTOR3    = 230; /// Motor 3 back left
+		static const unsigned char MOTOR4    = 240; /// Motor 4 back right
+		static const unsigned char ALLMOTORS = 250; /// used for letting the robot getting only one command for all motors (like 'forward all'). This is to reduce commands on the serial line.
+
+		static const unsigned char MOTOR1FW		= 300;
+		static const unsigned char MOTOR1BW		= 310;
+		static const unsigned char MOTOR1OFF	= 320;
+		static const unsigned char MOTOR2FW		= 330;
+		static const unsigned char MOTOR2BW		= 340;
+		static const unsigned char MOTOR2OFF	= 350;
+		static const unsigned char MOTOR3FW		= 360;
+		static const unsigned char MOTOR3BW		= 370;
+		static const unsigned char MOTOR3OFF	= 380;
+		static const unsigned char MOTOR4FW		= 390;
+		static const unsigned char MOTOR4BW		= 400;
+		static const unsigned char MOTOR4OFF	= 410;
+
+		static const unsigned char READ_AXIS_X = 500;
+		static const unsigned char READ_AXIS_Y = 510;
+		static const unsigned char READ_AXIS_Z = 520;
 
 		/**
 		Give the sensors some names

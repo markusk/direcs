@@ -2167,10 +2167,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("FORWARD... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR2, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR3, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2188,10 +2188,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("BACKWARD... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR2, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2209,10 +2209,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("LEFT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR2, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR3, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2230,10 +2230,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("RIGHT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR2, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2251,10 +2251,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("TURNLEFT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR2, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR3, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2272,10 +2272,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("TURNRIGHT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR2, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2296,10 +2296,10 @@ void Direcs::drive(const unsigned char command)
 			// set the motors to "drive FORWARD"
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, FORWARD);
+				gui->showMotorStatus(MOTOR2, ON, FORWARD);
+				gui->showMotorStatus(MOTOR3, ON, FORWARD);
+				gui->showMotorStatus(MOTOR4, ON, FORWARD);
 			}
 			/*	FIXME: to much data over serial port?!?
 			motors->setMotorSpeed(MOTOR1, 0); /// \todo check if this works
@@ -2385,9 +2385,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 1 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, BACKWARD);
 			}
-			if (!motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE))
+			if (!motors->motorControl(MOTOR1, ON, BACKWARD))
 				emit message("ERROR motor 1 CCW");
 			return;
 			break;
@@ -2396,9 +2396,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 1 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, FORWARD);
 			}
-			if (!motors->motorControl(MOTOR1, ON, CLOCKWISE))
+			if (!motors->motorControl(MOTOR1, ON, FORWARD))
 				emit message("ERROR motor 1 CW");
 			return;
 			break;
@@ -2418,9 +2418,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 2 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, BACKWARD);
 			}
-			motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR2, ON, BACKWARD);
 			return;
 			break;
 
@@ -2428,9 +2428,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 2 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, FORWARD);
 			}
-			motors->motorControl(MOTOR2, ON, CLOCKWISE);
+			motors->motorControl(MOTOR2, ON, FORWARD);
 			return;
 			break;
 
@@ -2448,9 +2448,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 3 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR3, ON, BACKWARD);
 			}
-			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR3, ON, BACKWARD);
 			return;
 			break;
 
@@ -2458,9 +2458,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 3 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR3, ON, FORWARD);
 			}
-			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR3, ON, FORWARD);
 			return;
 			break;
 
@@ -2478,9 +2478,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 4 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR4, ON, BACKWARD);
 			}
-			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, ON, BACKWARD);
 			return;
 			break;
 
@@ -2488,9 +2488,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 4 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR4, ON, FORWARD);
 			}
-			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			motors->motorControl(MOTOR4, ON, FORWARD);
 			return;
 			break;
 
