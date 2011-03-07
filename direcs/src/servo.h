@@ -75,8 +75,9 @@ class Servo : public QThread
 		Moves a servo.
 		@param servo is the servo number.
 		@param position is the position (0 - 255).
+		@return true on success
 		 */
-		void moveServo(unsigned char servo, unsigned char position);
+		bool moveServo(unsigned char servo, unsigned char position);
 
 		/**
 		Moves all servos into their default positions.

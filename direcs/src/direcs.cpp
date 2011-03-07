@@ -590,11 +590,8 @@ void Direcs::init()
 				//-------------------------------------------------------
 				// move all servos in their default positions
 				//-------------------------------------------------------
-				/// \todo temporarily deactivated (no servos mounted on the current robot)
-				/*
 				servos->init();
 				emit message("Servos moved to default positions");
-				*/
 
 				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
@@ -3802,6 +3799,8 @@ void Direcs::executeRemoteCommand(QString command)
 
 void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 {
+	static unsigned char servo1Pos = servos->getServoPosition(SERVO1);
+
 	//
 	// Y axis
 	//
@@ -3845,7 +3844,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 
 
-/*
 			// ###############################################################################
 			// disabled since the head is not in use use!
 			// ###############################################################################
@@ -3861,7 +3859,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
-*/
 
 			return;
 		}
@@ -3900,7 +3897,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 
 
-/*
 			// ###############################################################################
 			// disabled since the head is not in use use!
 			// ###############################################################################
@@ -3918,7 +3914,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
-*/
 
 			return;
 		}
@@ -4207,7 +4202,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-//				servo1Pos++;
+				servo1Pos++;
 			}
 
 			//------------------
@@ -4215,14 +4210,14 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-//				servo1Pos--;
+				servo1Pos--;
 			}
 
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-//				servos->moveServo(SERVO1, servo1Pos);
-//				emit message(QString("Servo 1 moved to %1.").arg(servo1Pos));
+				servos->moveServo(SERVO1, servo1Pos);
+				emit message(QString("Servo 1 moved to %1.").arg(servo1Pos));
 			}
 			return;
 		} // servo test mode
@@ -4412,16 +4407,16 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle1 == false)
 				{
-//					servoTestMode = true;
-//					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
-//					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
-//					emit speak("Servo test mode");
+					servoTestMode = true;
+					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
+					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
+					emit speak("Servo test mode");
 				}
 				else
 				{
-//					servoTestMode = false;
-//					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
-//					emit speak("Servo test mode disabled");
+					servoTestMode = false;
+					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
+					emit speak("Servo test mode disabled");
 				}
 				toggle1 = !toggle1;
 			}

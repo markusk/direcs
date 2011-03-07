@@ -85,8 +85,9 @@ int main(void)
 	DDRG |= (1<<PIN5);
 
 
-	// switch port H (all PINS) to output [servos]
+	// switch port H (all PINS) to output [servos / RGB LEDs]
 	DDRH = 0xff;
+	
 	// switch some bits on port E to output [2 more servos]
 	DDRE |= (1 << DDE3) | (1 << DDE4);
 	
@@ -214,7 +215,7 @@ int main(void)
 
 
 	// start the servo PWM timer
-// 	startPWMServo(1);
+ 	startPWMServo(1);
 // 	startPWMServo(2);
 // 	startPWMServo(3);
 // 	startPWMServo(4);
@@ -958,6 +959,20 @@ int main(void)
 
 				// answer with "ok"
 				put_string("*btr#");
+			}
+			else
+			// SET SERVO 1
+			if (strncmp(stringbuffer, "*sv1", 4) == 0)
+			{
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string and set speed
+				setServoPosition(1, atoi(stringbuffer));
+				// answer with "ok"
+				put_string("*sv1#");
 			}
 		
 		} // RXcompleted

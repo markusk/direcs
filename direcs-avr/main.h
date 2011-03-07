@@ -118,7 +118,7 @@
 #include "adconv.h"   // AD conversion
 #include "ultra.h"    // ultrasonic sensor
 #include "pwm.h"      // pulse width modulation
-#include "servo.h"    // servo stuff
+#include "servo.h"    // servo stuff PORTS ARE IN USE FOR RGB LEDS NOW!! NO SERVOS ANYMORE!
 #include "micromag.h" // 3D magnetic compass 'micromag3'
 
 
