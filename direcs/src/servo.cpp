@@ -29,15 +29,15 @@ Servo::Servo(InterfaceAvr *i, QMutex *m)
 	// init arrays
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
-		servoStartPosition[servo] = 1;
-		servoMinPosition[servo] = 10;
-		servoDefaultPosition[servo] = 19;
-		servoEndPosition[servo] = 30;
+		servoStartPosition[servo] = 0;
+		servoMinPosition[servo] = 0;
+		servoDefaultPosition[servo] = 64;
+		servoEndPosition[servo] = 255;
 		servoMaxPosition[servo] = 255;
 		servoPosition[servo] = servoDefaultPosition[servo];
 	}
 
-	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
+	robotState = ON; // Wer're thinking positive. The robot is ON until we know nothing other. :-)
 }
 
 
@@ -154,7 +154,6 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 
 void Servo::init(void)
 {
-	/// \todo temporarily deactivated (no servos mounted on the current robot)
 	if (robotState == ON)
 	{
 		for (int servo=0; servo<NUMBEROFSERVOS; servo++)
