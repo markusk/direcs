@@ -592,7 +592,6 @@ void Direcs::init()
 				//-------------------------------------------------------
 				servos->init();
 				emit message("Servos moved to default positions");
-/// \todo check why servo method is a thread...  servos->start();
 
 				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------

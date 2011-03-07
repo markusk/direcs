@@ -22,8 +22,6 @@
 
 Servo::Servo(InterfaceAvr *i, QMutex *m)
 {
-	stopped = false;
-
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
@@ -45,29 +43,6 @@ Servo::Servo(InterfaceAvr *i, QMutex *m)
 
 Servo::~Servo()
 {
-}
-
-
-void Servo::stop()
-{
-	stopped = true;
-}
-
-void Servo::run()
-{
-	//
-	//  start "threading"...
-	//
-	while (!stopped)
-	{
-		// let the thread sleep some time
-		// for having more time for the other threads
-		msleep(THREADSLEEPTIME);
-
-		// do something
-		// ...
-	}
-	stopped = false;
 }
 
 
