@@ -206,21 +206,26 @@ int main(void)
 	// initialize the PWM timer (with compare value 100)
 	// This value is changed by the mrs programm, when value is read from ini-file!
 	// 12 * 64 µs = 768 µs ?!?
-// 	setServoPosition(1, 19); // <- exact position now in the mrs.ini!
-// 	setServoPosition(2, 13); // <- exact position now in the mrs.ini!
-// 	setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-// 	setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-// 	setServoPosition(5, 24); // <- exact position now in the mrs.ini!
-// 	setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+ 	setServoPosition(1, 0); // <- exact position now in the mrs.ini!
+ 	setServoPosition(2, 0); // <- exact position now in the mrs.ini!
+ 	setServoPosition(3, 0); // <- exact position now in the mrs.ini!
+ 	setServoPosition(4, 0); // <- exact position now in the mrs.ini!
+ 	setServoPosition(5, 0); // <- exact position now in the mrs.ini!
+ 	setServoPosition(6, 0); // <- exact position now in the mrs.ini!
 
 
 	// start the servo PWM timer
  	startPWMServo(1);
-// 	startPWMServo(2);
-// 	startPWMServo(3);
-// 	startPWMServo(4);
-// 	startPWMServo(5);
-// 	startPWMServo(6);
+ 	startPWMServo(2);
+ 	startPWMServo(3);
+ 	startPWMServo(4);
+ 	startPWMServo(5);
+ 	startPWMServo(6);
+ 	
+ 	unsigned char servoPosition    = 0;
+ 	unsigned char servoPWM123isOFF = 0;
+ 	unsigned char servoPWM4isOFF   = 0;
+ 	unsigned char servoPWM56isOFF  = 0;
 
 
 
@@ -969,10 +974,188 @@ int main(void)
 				stringbuffer[1] = '0';
 				stringbuffer[2] = '0';
 				stringbuffer[3] = '0';
-				// get value from string and set speed
-				setServoPosition(1, atoi(stringbuffer));
+				// get value from string
+				servoPosition = atoi(stringbuffer);
+				if (servoPosition == 0)
+				{
+					// stop PWM for servos 1, 2, 3 (due to same Atmel ports)
+					servoPWM123isOFF = 1;
+					stopPWMServo(1);
+				}
+				else
+				{
+					// turn on PWM if it was turned off before
+					if (servoPWM123isOFF == 1)
+					{
+						servoPWM123isOFF = 0;
+						// start PWM for servos 1, 2, 3 (due to same Atmel ports)
+						startPWMServo(1);
+					}
+					// set PWM
+					setServoPosition(1, servoPosition);
+				}
 				// answer with "ok"
 				put_string("*sv1#");
+			}
+			else
+			// SET SERVO 2
+			if (strncmp(stringbuffer, "*sv2", 4) == 0)
+			{
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string
+				servoPosition = atoi(stringbuffer);
+				if (servoPosition == 0)
+				{
+					// stop PWM for servos 1, 2, 3 (due to same Atmel ports)
+					servoPWM123isOFF = 1;
+					stopPWMServo(2);
+				}
+				else
+				{
+					// turn on PWM if it was turned off before
+					if (servoPWM123isOFF == 1)
+					{
+						servoPWM123isOFF = 0;
+						// start PWM for servos 1, 2, 3 (due to same Atmel ports)
+						startPWMServo(2);
+					}
+					// set PWM
+					setServoPosition(2, servoPosition);
+				}
+				// answer with "ok"
+				put_string("*sv2#");
+			}
+			else
+			// SET SERVO 3
+			if (strncmp(stringbuffer, "*sv3", 4) == 0)
+			{
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string
+				servoPosition = atoi(stringbuffer);
+				if (servoPosition == 0)
+				{
+					// stop PWM for servos 1, 2, 3 (due to same Atmel ports)
+					servoPWM123isOFF = 1;
+					stopPWMServo(3);
+				}
+				else
+				{
+					// turn on PWM if it was turned off before
+					if (servoPWM123isOFF == 1)
+					{
+						servoPWM123isOFF = 0;
+						// start PWM for servos 1, 2, 3 (due to same Atmel ports)
+						startPWMServo(3);
+					}
+					// set PWM
+					setServoPosition(3, servoPosition);
+				}
+				// answer with "ok"
+				put_string("*sv3#");
+			}
+			else
+			// SET SERVO 4
+			if (strncmp(stringbuffer, "*sv4", 4) == 0)
+			{
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string
+				servoPosition = atoi(stringbuffer);
+				if (servoPosition == 0)
+				{
+					// stop PWM for servos 4
+					servoPWM4isOFF = 1;
+					stopPWMServo(4);
+				}
+				else
+				{
+					// turn on PWM if it was turned off before
+					if (servoPWM4isOFF == 1)
+					{
+						servoPWM4isOFF = 0;
+						// start PWM for servo 4
+						startPWMServo(4);
+					}
+					// set PWM
+					setServoPosition(4, servoPosition);
+				}
+				// answer with "ok"
+				put_string("*sv4#");
+			}
+			else
+			// SET SERVO 5
+			if (strncmp(stringbuffer, "*sv5", 4) == 0)
+			{
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string
+				servoPosition = atoi(stringbuffer);
+				if (servoPosition == 0)
+				{
+					// stop PWM for servos 5, 6 (due to same Atmel ports)
+					servoPWM56isOFF = 1;
+					stopPWMServo(5);
+				}
+				else
+				{
+					// turn on PWM if it was turned off before
+					if (servoPWM56isOFF == 1)
+					{
+						servoPWM56isOFF = 0;
+						// start PWM for servos 5, 6 (due to same Atmel ports)
+						startPWMServo(5);
+					}
+					// set PWM
+					setServoPosition(5, servoPosition);
+				}
+				// answer with "ok"
+				put_string("*sv5#");
+			}
+			else
+			// SET SERVO 6
+			if (strncmp(stringbuffer, "*sv6", 4) == 0)
+			{
+				// change first chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				// get value from string
+				servoPosition = atoi(stringbuffer);
+				if (servoPosition == 0)
+				{
+					// stop PWM for servos 5, 6 (due to same Atmel ports)
+					servoPWM56isOFF = 1;
+					stopPWMServo(6);
+				}
+				else
+				{
+					// turn on PWM if it was turned off before
+					if (servoPWM56isOFF == 1)
+					{
+						servoPWM56isOFF = 0;
+						// start PWM for servos 5, 6 (due to same Atmel ports)
+						startPWMServo(6);
+					}
+					// set PWM
+					setServoPosition(6, servoPosition);
+				}
+				// answer with "ok"
+				put_string("*sv6#");
 			}
 		
 		} // RXcompleted

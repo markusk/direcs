@@ -592,6 +592,7 @@ void Direcs::init()
 				//-------------------------------------------------------
 				servos->init();
 				emit message("Servos moved to default positions");
+/// \todo check why servo method is a thread...  servos->start();
 
 				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
@@ -1176,6 +1177,15 @@ void Direcs::shutdown()
 
 	emit message("STOPPING drive!");
 	drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
+
+
+	// turn off all RGB LEDs
+	servos->moveServo(SERVO1, 0);
+	servos->moveServo(SERVO2, 0);
+	servos->moveServo(SERVO3, 0);
+	servos->moveServo(SERVO4, 0);
+	servos->moveServo(SERVO5, 0);
+	servos->moveServo(SERVO6, 0);
 
 
 	/// \todo a universal quit-threads-method

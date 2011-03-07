@@ -81,7 +81,7 @@ bool Servo::moveServo(unsigned char servo, unsigned char position)
 		// servo number okay?
 		if (servo > NUMBEROFSERVOS-1)
 		{
-			emit message(QString("<b><font color=\"#FF0000\">Servo%1 is not an allowed servo numer (1-%2)! (moveServo)</font>").arg(servo+1).arg(NUMBEROFSERVOS-1) );
+			emit message(QString("<font color=\"#FF0000\">Servo%1 is not an allowed servo numer (1-%2)! (moveServo)</font>").arg(servo+1).arg(NUMBEROFSERVOS-1) );
 			return false;
 		}
 
@@ -89,7 +89,7 @@ bool Servo::moveServo(unsigned char servo, unsigned char position)
 		// wanted servo position okay?
 		if ( (position < servoMinPosition[servo]) || (position > servoMaxPosition[servo]) )
 		{
-			emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
+			emit message(QString("<font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
 			return false;
 		}
 
@@ -121,7 +121,7 @@ bool Servo::moveServo(unsigned char servo, unsigned char position)
 		// Unlock the mutex.
 		mutex->unlock();
 
-		emit message(QString("<b><font color=\"#FF0000\">Error moving servo%1 (moveServo)</font>").arg(servo+1));
+		emit message(QString("<font color=\"#FF0000\">Error moving servo%1 (moveServo)</font>").arg(servo+1));
 		return false;
 
 	} // robot is ON
@@ -195,7 +195,7 @@ unsigned char Servo::getServoPosition(int servo, unsigned char type)
 {
 	if ( (servo < SERVO1) || (servo > (NUMBEROFSERVOS-1)) )
 	{
-		emit message(QString("<b><font color=\"#FF0000\">Servo%1 out of allowed range! (getServoPosition)</font>").arg(servo+1));
+		emit message(QString("<font color=\"#FF0000\">Servo%1 out of allowed range! (getServoPosition)</font>").arg(servo+1));
 		return 0;
 	}
 
