@@ -1061,7 +1061,7 @@ void Direcs::init()
 			// file not found-Msg
 			QMessageBox msgbox(QMessageBox::Critical,
 							   tr("direcs"),
-							   tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()),
+							   tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n%2\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()).arg( QDir::currentPath() ),
 							   QMessageBox::Ok | QMessageBox::Default);
 			msgbox.exec();
 			forceShutdown = true; // don't ask for AreYouSure, later when shutting down
