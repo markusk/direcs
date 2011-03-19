@@ -4603,6 +4603,117 @@ void Direcs::systemerrorcatcher(int errorlevel)
 
 void Direcs::test()
 {
+	static int color = 0;
+
+
+	if (color==0)
+	{
+		color++;
+		servos->moveServo(SERVO1, 255);
+		servos->moveServo(SERVO2, 1);
+		servos->moveServo(SERVO3, 1);
+
+		servos->moveServo(SERVO4, 255);
+		servos->moveServo(SERVO5, 1);
+		servos->moveServo(SERVO6, 1);
+		return;
+	}
+
+	if (color==1)
+	{
+		color++;
+		servos->moveServo(SERVO1, 1);
+		servos->moveServo(SERVO2, 255);
+		servos->moveServo(SERVO3, 1);
+
+		servos->moveServo(SERVO4, 1);
+		servos->moveServo(SERVO5, 255);
+		servos->moveServo(SERVO6, 1);
+		return;
+	}
+
+	if (color==2)
+	{
+		color++;
+		servos->moveServo(SERVO1, 1);
+		servos->moveServo(SERVO2, 1);
+		servos->moveServo(SERVO3, 255);
+
+		servos->moveServo(SERVO4, 1);
+		servos->moveServo(SERVO5, 1);
+		servos->moveServo(SERVO6, 255);
+		return;
+	}
+
+	if (color==3)
+	{
+		color++;
+		servos->moveServo(SERVO1, 255);
+		servos->moveServo(SERVO2, 255);
+		servos->moveServo(SERVO3, 255);
+
+		servos->moveServo(SERVO4, 255);
+		servos->moveServo(SERVO5, 255);
+		servos->moveServo(SERVO6, 255);
+		return;
+	}
+
+
+
+	if (color==4)
+	{
+		color++;
+		servos->moveServo(SERVO1, 255);
+		servos->moveServo(SERVO2, 1);
+		servos->moveServo(SERVO3, 1);
+
+		servos->moveServo(SERVO4, 1);
+		servos->moveServo(SERVO5, 255);
+		servos->moveServo(SERVO6, 1);
+		return;
+	}
+
+	if (color==5)
+	{
+		color++;
+		servos->moveServo(SERVO1, 1);
+		servos->moveServo(SERVO2, 255);
+		servos->moveServo(SERVO3, 1);
+
+		servos->moveServo(SERVO4, 1);
+		servos->moveServo(SERVO5, 1);
+		servos->moveServo(SERVO6, 255);
+		return;
+	}
+
+	if (color==6)
+	{
+		color++;
+		servos->moveServo(SERVO1, 1);
+		servos->moveServo(SERVO2, 1);
+		servos->moveServo(SERVO3, 255);
+
+		servos->moveServo(SERVO4, 255);
+		servos->moveServo(SERVO5, 1);
+		servos->moveServo(SERVO6, 1);
+		return;
+	}
+
+	if (color==7)
+	{
+		color=0;
+		servos->moveServo(SERVO1, 1);
+		servos->moveServo(SERVO2, 1);
+		servos->moveServo(SERVO3, 1);
+
+		servos->moveServo(SERVO4, 1);
+		servos->moveServo(SERVO5, 1);
+		servos->moveServo(SERVO6, 1);
+		return;
+	}
+
+
+	/*
 	static bool toggle = OFF;
 
 
@@ -4646,4 +4757,5 @@ void Direcs::test()
 
 
 	motors->flashlight(toggle);
+	*/
 }
