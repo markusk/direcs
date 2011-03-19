@@ -297,6 +297,13 @@ class Direcs : public QObject
 		*/
 		void resetDrivingSpeedTimer(void);
 
+		/**
+		Turns the driving light to RED, GREEN, BLUE, WHITE or LEDOFF.
+		@param color
+		@todo Move the drivingLight method to a better file/place.
+		*/
+		void drivingLight(unsigned char color);
+
 
 		mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 
@@ -504,11 +511,13 @@ class Direcs : public QObject
 		static const short int LASER5 = 16;
 
 		/**
-		The GUI LED colors
+		The GUI LED colors. Also used for @sa drivingLight()
 		*/
 		static const unsigned char LEDOFF	= 0;
 		static const unsigned char RED		= 1;
 		static const unsigned char GREEN	= 2;
+		static const unsigned char BLUE	    = 3;
+		static const unsigned char WHITE	= 4;
 };
 
 #endif

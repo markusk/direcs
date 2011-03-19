@@ -4601,6 +4601,57 @@ void Direcs::systemerrorcatcher(int errorlevel)
 }
 
 
+void Direcs::drivingLight(unsigned char color)
+{
+	switch (color)
+	{
+		case RED:
+			servos->moveServo(SERVO1, 255);
+			servos->moveServo(SERVO2, 1);
+			servos->moveServo(SERVO3, 1);
+			servos->moveServo(SERVO4, 255);
+			servos->moveServo(SERVO5, 1);
+			servos->moveServo(SERVO6, 1);
+			break;
+		case GREEN:
+			servos->moveServo(SERVO1, 1);
+			servos->moveServo(SERVO2, 255);
+			servos->moveServo(SERVO3, 1);
+			servos->moveServo(SERVO4, 1);
+			servos->moveServo(SERVO5, 255);
+			servos->moveServo(SERVO6, 1);
+			break;
+
+		case BLUE:
+			servos->moveServo(SERVO1, 1);
+			servos->moveServo(SERVO2, 1);
+			servos->moveServo(SERVO3, 255);
+			servos->moveServo(SERVO4, 1);
+			servos->moveServo(SERVO5, 1);
+			servos->moveServo(SERVO6, 255);
+			break;
+
+		case WHITE:
+			servos->moveServo(SERVO1, 255);
+			servos->moveServo(SERVO2, 255);
+			servos->moveServo(SERVO3, 255);
+			servos->moveServo(SERVO4, 255);
+			servos->moveServo(SERVO5, 255);
+			servos->moveServo(SERVO6, 255);
+			break;
+
+		case LEDOFF:
+			servos->moveServo(SERVO1, 1);
+			servos->moveServo(SERVO2, 1);
+			servos->moveServo(SERVO3, 1);
+			servos->moveServo(SERVO4, 1);
+			servos->moveServo(SERVO5, 1);
+			servos->moveServo(SERVO6, 1);
+			break;
+	}
+}
+
+
 void Direcs::test()
 {
 	static int color = 0;
