@@ -590,11 +590,8 @@ void Direcs::init()
 				//-------------------------------------------------------
 				// move all servos in their default positions
 				//-------------------------------------------------------
-				/// \todo temporarily deactivated (no servos mounted on the current robot)
-				/*
 				servos->init();
 				emit message("Servos moved to default positions");
-				*/
 
 				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
@@ -681,7 +678,7 @@ void Direcs::init()
 			//----------------------------------------------------------------------------
 			// drive in the direction which was emited from the gui
 			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( drive(unsigned char) ), this, SLOT( drive(unsigned char) ));
+			connect(gui, SIGNAL( drive(int) ), this, SLOT( drive(int) ));
 		}
 
 		//----------------------------------------------------------------------------
@@ -1179,6 +1176,15 @@ void Direcs::shutdown()
 
 	emit message("STOPPING drive!");
 	drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
+
+
+	// turn off all RGB LEDs
+	servos->moveServo(SERVO1, 0);
+	servos->moveServo(SERVO2, 0);
+	servos->moveServo(SERVO3, 0);
+	servos->moveServo(SERVO4, 0);
+	servos->moveServo(SERVO5, 0);
+	servos->moveServo(SERVO6, 0);
 
 
 	/// \todo a universal quit-threads-method
@@ -2147,7 +2153,7 @@ void Direcs::showSensorData()
 }
 
 
-void Direcs::drive(const unsigned char command)
+void Direcs::drive(const int command)
 {
 	static unsigned char lastCommand = 255;
 
@@ -2167,10 +2173,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("FORWARD... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR2, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR3, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2188,10 +2194,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("BACKWARD... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR2, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2209,10 +2215,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("LEFT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR2, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR3, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2230,10 +2236,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("RIGHT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR2, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2251,10 +2257,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("TURNLEFT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR2, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR3, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2272,10 +2278,10 @@ void Direcs::drive(const unsigned char command)
 			emit message("TURNRIGHT... ", false);
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR2, SAME, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, SAME, COUNTERCLOCKWISE);
-				gui->showMotorStatus(MOTOR4, SAME, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR2, SAME, FORWARD);
+				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
+				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2296,10 +2302,10 @@ void Direcs::drive(const unsigned char command)
 			// set the motors to "drive FORWARD"
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
-				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, FORWARD);
+				gui->showMotorStatus(MOTOR2, ON, FORWARD);
+				gui->showMotorStatus(MOTOR3, ON, FORWARD);
+				gui->showMotorStatus(MOTOR4, ON, FORWARD);
 			}
 			/*	FIXME: to much data over serial port?!?
 			motors->setMotorSpeed(MOTOR1, 0); /// \todo check if this works
@@ -2385,9 +2391,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 1 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, BACKWARD);
 			}
-			if (!motors->motorControl(MOTOR1, ON, COUNTERCLOCKWISE))
+			if (!motors->motorControl(MOTOR1, ON, BACKWARD))
 				emit message("ERROR motor 1 CCW");
 			return;
 			break;
@@ -2396,9 +2402,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 1 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR1, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR1, ON, FORWARD);
 			}
-			if (!motors->motorControl(MOTOR1, ON, CLOCKWISE))
+			if (!motors->motorControl(MOTOR1, ON, FORWARD))
 				emit message("ERROR motor 1 CW");
 			return;
 			break;
@@ -2418,9 +2424,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 2 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR2, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, BACKWARD);
 			}
-			motors->motorControl(MOTOR2, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR2, ON, BACKWARD);
 			return;
 			break;
 
@@ -2428,9 +2434,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 2 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR2, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR2, ON, FORWARD);
 			}
-			motors->motorControl(MOTOR2, ON, CLOCKWISE);
+			motors->motorControl(MOTOR2, ON, FORWARD);
 			return;
 			break;
 
@@ -2448,9 +2454,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 3 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR3, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR3, ON, BACKWARD);
 			}
-			motors->motorControl(MOTOR3, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR3, ON, BACKWARD);
 			return;
 			break;
 
@@ -2458,9 +2464,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 3 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR3, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR3, ON, FORWARD);
 			}
-			motors->motorControl(MOTOR3, ON, CLOCKWISE);
+			motors->motorControl(MOTOR3, ON, FORWARD);
 			return;
 			break;
 
@@ -2478,9 +2484,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 4 forward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR4, ON, COUNTERCLOCKWISE);
+				gui->showMotorStatus(MOTOR4, ON, BACKWARD);
 			}
-			motors->motorControl(MOTOR4, ON, COUNTERCLOCKWISE);
+			motors->motorControl(MOTOR4, ON, BACKWARD);
 			return;
 			break;
 
@@ -2488,9 +2494,9 @@ void Direcs::drive(const unsigned char command)
 			emit message("Motor 4 backward");
 			if (!consoleMode)
 			{
-				gui->showMotorStatus(MOTOR4, ON, CLOCKWISE);
+				gui->showMotorStatus(MOTOR4, ON, FORWARD);
 			}
-			motors->motorControl(MOTOR4, ON, CLOCKWISE);
+			motors->motorControl(MOTOR4, ON, FORWARD);
 			return;
 			break;
 
@@ -3802,6 +3808,8 @@ void Direcs::executeRemoteCommand(QString command)
 
 void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 {
+	static unsigned char servo1Pos = servos->getServoPosition(SERVO1);
+
 	//
 	// Y axis
 	//
@@ -3845,7 +3853,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 
 
-/*
 			// ###############################################################################
 			// disabled since the head is not in use use!
 			// ###############################################################################
@@ -3861,7 +3868,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
-*/
 
 			return;
 		}
@@ -3900,7 +3906,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			}
 
 
-/*
 			// ###############################################################################
 			// disabled since the head is not in use use!
 			// ###############################################################################
@@ -3918,7 +3923,6 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
 				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
-*/
 
 			return;
 		}
@@ -4207,7 +4211,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue > 0)
 			{
-//				servo1Pos++;
+				servo1Pos++;
 			}
 
 			//------------------
@@ -4215,14 +4219,14 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			//------------------
 			if (axisValue < 0)
 			{
-//				servo1Pos--;
+				servo1Pos--;
 			}
 
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-//				servos->moveServo(SERVO1, servo1Pos);
-//				emit message(QString("Servo 1 moved to %1.").arg(servo1Pos));
+				servos->moveServo(SERVO1, servo1Pos);
+				emit message(QString("Servo 1 moved to %1.").arg(servo1Pos));
 			}
 			return;
 		} // servo test mode
@@ -4412,16 +4416,16 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 			{
 				if (toggle1 == false)
 				{
-//					servoTestMode = true;
-//					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
-//					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
-//					emit speak("Servo test mode");
+					servoTestMode = true;
+					emit message("<font color=\"#0000FF\">Servo test mode ON.</front>");
+					emit message(QString("Servo %1 selected.").arg(currentTestServo+1));
+					emit speak("Servo test mode");
 				}
 				else
 				{
-//					servoTestMode = false;
-//					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
-//					emit speak("Servo test mode disabled");
+					servoTestMode = false;
+					emit message("<font color=\"#0000FF\">Servo test mode OFF.</front>");
+					emit speak("Servo test mode disabled");
 				}
 				toggle1 = !toggle1;
 			}

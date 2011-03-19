@@ -228,11 +228,11 @@ int JoyReader::SetUpInterface(int joyId,IOHIDDeviceRef hidDev)
 					isKeyboard=1;
 					break;
 				case kHIDUsage_GD_Joystick:
-					qDebug("Found a Joystick.");
+//					qDebug("Found a Joystick.");
 					isJoystick=1;
 					break;
 				case kHIDUsage_GD_GamePad:
-					qDebug("Found a GamePad.");
+//					qDebug("Found a GamePad.");
 					isGamePad=1;
 					break;
 				}
@@ -396,7 +396,7 @@ void JoyReader::ReleaseInterface(void)
 		//
 		// This hidDev was copied from a copy of IOHIDManager's device list.
 		// Who owns it?  Why did I have to make a copy?
-		// 
+		//
 		// The Creare Rule implies that I have the ownership.
 		// http://developer.apple.com/mac/library/documentation/CoreFoundation/Conceptual/CFMemoryMgmt/Concepts/Ownership.html#//apple_ref/doc/uid/20001148-SW1
 		//
@@ -496,12 +496,12 @@ int JoyReader::WriteCalibInfoFile(FILE *fp) const
 		if(0!=hatSwitch[i].exist)
 		{
 			fprintf(fp,"HATINF %d %d %d %d %d %d\n",
-			    i,
-			    hatSwitch[i].valueNeutral,
-			    hatSwitch[i].value0Deg,
-			    hatSwitch[i].value90Deg,
-			    hatSwitch[i].value180Deg,
-			    hatSwitch[i].value270Deg);
+				i,
+				hatSwitch[i].valueNeutral,
+				hatSwitch[i].value0Deg,
+				hatSwitch[i].value90Deg,
+				hatSwitch[i].value180Deg,
+				hatSwitch[i].value270Deg);
 		}
 	}
 #endif

@@ -35,23 +35,13 @@
 
 It has to be a thread because of communicating at the same time with the microcontroller via the class. @sa InterfaceAvr() !
 */
-class Servo : public QThread
+class Servo : public QObject
 {
 	Q_OBJECT
 
 	public:
 		Servo(InterfaceAvr *i, QMutex *m);
 		~Servo();
-
-		/**
-		Stops the thread.
-		*/
-		void stop();
-
-		/**
-		Starts the thread.
-		*/
-		virtual void run();
 
 		/**
 		Sets the servos maximum start, end and its default position.
@@ -75,8 +65,9 @@ class Servo : public QThread
 		Moves a servo.
 		@param servo is the servo number.
 		@param position is the position (0 - 255).
+		@return true on success
 		 */
-		void moveServo(unsigned char servo, unsigned char position);
+		bool moveServo(unsigned char servo, unsigned char position);
 
 		/**
 		Moves all servos into their default positions.
@@ -101,7 +92,6 @@ class Servo : public QThread
 	private:
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
-		volatile bool stopped;
 		bool robotState; // stores the robot state within this class
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!

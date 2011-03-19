@@ -120,7 +120,7 @@ double Motor::getDrivenDistance(unsigned char motor)
 }
 
 
-bool Motor::motorControl(unsigned char motor, bool power, unsigned char direction)
+bool Motor::motorControl(int motor, bool power, int direction)
 {
 	QString command = "bst"; // stop robot
 	QString answer = "error";
@@ -230,7 +230,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == CLOCKWISE)
+				if (direction == FORWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md1cw") == true)
@@ -252,7 +252,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == COUNTERCLOCKWISE)
+				if (direction == BACKWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md1cc") == true)
@@ -316,7 +316,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == CLOCKWISE)
+				if (direction == FORWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md2cw") == true)
@@ -338,7 +338,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == COUNTERCLOCKWISE)
+				if (direction == BACKWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md2cc") == true)
@@ -402,7 +402,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == CLOCKWISE)
+				if (direction == FORWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md3cw") == true)
@@ -424,7 +424,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == COUNTERCLOCKWISE)
+				if (direction == BACKWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md3cc") == true)
@@ -488,7 +488,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == CLOCKWISE)
+				if (direction == FORWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md4cw") == true)
@@ -510,7 +510,7 @@ bool Motor::motorControl(unsigned char motor, bool power, unsigned char directio
 					return false;
 				}
 
-				if (direction == COUNTERCLOCKWISE)
+				if (direction == BACKWARD)
 				{
 					// set the direction
 					if (interface1->sendString("md4cc") == true)

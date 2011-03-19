@@ -22,8 +22,6 @@
 
 Servo::Servo(InterfaceAvr *i, QMutex *m)
 {
-	stopped = false;
-
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
@@ -31,15 +29,15 @@ Servo::Servo(InterfaceAvr *i, QMutex *m)
 	// init arrays
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
 	{
-		servoStartPosition[servo] = 1;
-		servoMinPosition[servo] = 10;
-		servoDefaultPosition[servo] = 19;
-		servoEndPosition[servo] = 30;
+		servoStartPosition[servo] = 0;
+		servoMinPosition[servo] = 0;
+		servoDefaultPosition[servo] = 64;
+		servoEndPosition[servo] = 255;
 		servoMaxPosition[servo] = 255;
 		servoPosition[servo] = servoDefaultPosition[servo];
 	}
 
-	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
+	robotState = ON; // Wer're thinking positive. The robot is ON until we know nothing other. :-)
 }
 
 
@@ -48,195 +46,63 @@ Servo::~Servo()
 }
 
 
-void Servo::stop()
+bool Servo::moveServo(unsigned char servo, unsigned char position)
 {
-	stopped = true;
-}
-
-void Servo::run()
-{
-	//
-	//  start "threading"...
-	//
-	while (!stopped)
-	{
-		// let the thread sleep some time
-		// for having more time for the other threads
-		msleep(THREADSLEEPTIME);
-
-		// do something
-		// ...
-	}
-	stopped = false;
-}
+	QString answer = "error";
 
 
-void Servo::moveServo(unsigned char servo, unsigned char position)
-{
 	if (robotState == ON)
 	{
-		//qDebug("moveServo%d to position %d. Start=%d / Default=%d / End=%d", servo, position, servoStartPosition[servo], servoDefaultPosition[servo], servoEndPosition[servo]);
+		// servo number okay?
+		if (servo > NUMBEROFSERVOS-1)
+		{
+			emit message(QString("<font color=\"#FF0000\">Servo%1 is not an allowed servo numer (1-%2)! (moveServo)</font>").arg(servo+1).arg(NUMBEROFSERVOS-1) );
+			return false;
+		}
 
-		// *don't* move servo to a position out of the allowed range!!
+
+		// wanted servo position okay?
 		if ( (position < servoMinPosition[servo]) || (position > servoMaxPosition[servo]) )
 		{
-			//emit message(QString("<b><font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
-			return;
+			emit message(QString("<font color=\"#FF0000\">Servo%1 position %2 out of allowed range (%3-%4)! (moveServo)</font>").arg(servo+1).arg(position).arg(servoStartPosition[servo]).arg(servoEndPosition[servo]));
+			return false;
 		}
 
-		// store the newservo position
+
+		// store the new servo position
 		servoPosition[servo] = position;
 
-		static bool toggle = false;
+		// Lock the mutex.
+		mutex->lock();
 
-		if (!toggle)
+
+		// move servo
+		// send command to microcontroller
+		if (interface1->sendString(QString("*sv%1%2#").arg(servo + 1).arg(position)) == true)
 		{
-			toggle = !toggle;
-			emit message("<font color=\"#FF0000\">Servo functions deactivated in the program [servo.cpp]!</font>");
+			// check if the robot answers with "ok"
+			if ( interface1->receiveString(answer) == true)
+			{
+				if (answer == QString("*sv%1#").arg(servo + 1))
+				{
+					// Unlock the mutex
+					mutex->unlock();
+					return true;
+				}
+			}
 		}
 
-		/// \todo temporarily deactivated (no servos mounted on the current robot)
-		/*
-		switch (servo)
-		{
-			case SERVO1:
-				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-				mutex->lock();
-				// which servo
-				if (interface1->sendChar(SET_SERVO1) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// the position
-				if (interface1->sendChar(position) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// Unlock the mutex.
-				mutex->unlock();
-				break;
-			case SERVO2:
-				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-				mutex->lock();
-				// which servo
-				if (interface1->sendChar(SET_SERVO2) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// the position
-				if (interface1->sendChar(position) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// Unlock the mutex.
-				mutex->unlock();
-				break;
-			case SERVO3:
-				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-				mutex->lock();
-				// which servo
-				if (interface1->sendChar(SET_SERVO3) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// the position
-				if (interface1->sendChar(position) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// Unlock the mutex.
-				mutex->unlock();
-				break;
-			case SERVO4:
-				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-				mutex->lock();
-				// which servo
-				if (interface1->sendChar(SET_SERVO4) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// the position
-				if (interface1->sendChar(position) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// Unlock the mutex.
-				mutex->unlock();
-				break;
-			case SERVO5:
-				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-				mutex->lock();
-				// which servo
-				if (interface1->sendChar(SET_SERVO5) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// the position
-				if (interface1->sendChar(position) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// Unlock the mutex.
-				mutex->unlock();
-				break;
-			case SERVO6:
-				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-				mutex->lock();
-				// which servo
-				if (interface1->sendChar(SET_SERVO6) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// the position
-				if (interface1->sendChar(position) == false)
-				{
-					// Unlock the mutex.
-					mutex->unlock();
-					qDebug("ERROR sending to serial port (Servo)");
-					return;
-				}
-				// Unlock the mutex.
-				mutex->unlock();
-				break;
-			default:
-				emit message(QString("<b><font color=\"#FF0000\">ERROR: Servo number %1 not supportet (moveServo)</font>").arg(servo));
-				break;
-		}
-	*/
+
+		// Unlock the mutex.
+		mutex->unlock();
+
+		emit message(QString("<font color=\"#FF0000\">Error moving servo%1 (moveServo)</font>").arg(servo+1));
+		return false;
+
 	} // robot is ON
+
+	// robot is OFF
+	return false;
 }
 
 
@@ -288,8 +154,6 @@ void Servo::setServoPosition(int servo, unsigned char type, unsigned char positi
 
 void Servo::init(void)
 {
-	/// \todo temporarily deactivated (no servos mounted on the current robot)
-	/*
 	if (robotState == ON)
 	{
 		for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -298,7 +162,6 @@ void Servo::init(void)
 			//emit message(QString("Init servo%1 to def-pos: %2").arg(servo+1).arg(servoDefaultPosition[servo]));
 		}
 	} // robot is ON
-	*/
 }
 
 
@@ -306,7 +169,7 @@ unsigned char Servo::getServoPosition(int servo, unsigned char type)
 {
 	if ( (servo < SERVO1) || (servo > (NUMBEROFSERVOS-1)) )
 	{
-		emit message(QString("<b><font color=\"#FF0000\">Servo%1 out of allowed range! (getServoPosition)</font>").arg(servo+1));
+		emit message(QString("<font color=\"#FF0000\">Servo%1 out of allowed range! (getServoPosition)</font>").arg(servo+1));
 		return 0;
 	}
 
