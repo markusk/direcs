@@ -188,7 +188,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
- - - - - original end */
 }
 
 
