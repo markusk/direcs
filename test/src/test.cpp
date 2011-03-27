@@ -473,10 +473,21 @@ void test::testSlot()
 
 		for (int angle=0; angle < 270*2; angle++)
 		{
-			textEdit->append( QString("%1: %2m | %3: %4m").arg(angle,     3, 10, QChar('0')).arg( sickS300->getDistance(angle    ), 4, 'f', 2 )
+			textEdit->append( QString("%1: %2m | %3: %4m | %5: %6m | %7: %8m | %9: %10m | %11: %12m | %13: %14m | %15: %16m | %17: %18m")
+														 .arg(angle,     3, 10, QChar('0')).arg( sickS300->getDistance(angle    ), 4, 'f', 2 )
 														 .arg(angle + 1, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 1), 4, 'f', 2 )
+														 .arg(angle + 2, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 2), 4, 'f', 2 )
+														 .arg(angle + 3, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 3), 4, 'f', 2 )
+														 .arg(angle + 4, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 4), 4, 'f', 2 )
+														 .arg(angle + 5, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 5), 4, 'f', 2 )
+														 .arg(angle + 6, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 6), 4, 'f', 2 )
+														 .arg(angle + 7, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 7), 4, 'f', 2 )
+														 .arg(angle + 8, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 8), 4, 'f', 2 )
 														 );
-			angle++;
+			angle = angle + 8;
+
+			if (angle>= 270*2)
+				break;
 		}
 	}
 
