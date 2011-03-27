@@ -473,7 +473,10 @@ void test::testSlot()
 
 		for (int angle=0; angle < 270*2; angle++)
 		{
-			textEdit->append( QString("%1: %2m").arg(angle, 3).arg( sickS300->getDistance(angle), 0, 'f', 2 ) );
+			textEdit->append( QString("%1: %2m | %3: %4m").arg(angle,     3, 10, QChar('0')).arg( sickS300->getDistance(angle    ), 4, 'f', 2 )
+														 .arg(angle + 1, 3, 10, QChar('0')).arg( sickS300->getDistance(angle + 1), 4, 'f', 2 )
+														 );
+			angle++;
 		}
 	}
 
