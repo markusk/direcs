@@ -150,6 +150,8 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		#endif
 	}
 
+	qDebug(">>> setting serial port speed to %d.", spd);
+
 	// set speed (input and output)
 	if(spd != -1)
 	{
