@@ -441,9 +441,19 @@ QString test::strippedName(const QString &fullFileName)
 }
 
 
+void test::appendLog(QString message)
+{
+	textEdit->append(message);
+}
+
+
 void test::testSlot()
 {
-	textEdit->append("click");
+	// clear content
+	textEdit->clear();
+	// add current date & time
+	textEdit->append( QString("%1").arg(QDateTime::currentDateTime().toString() ) );
+
 /*
 	if (sickS300->readUnknownTelegram() == -1)
 	{
@@ -460,7 +470,11 @@ void test::testSlot()
 	}
 	else
 	{
-		appendLog("scan OKAY");
+
+		for (int angle=0; angle < 270*2; angle++)
+		{
+			textEdit->append( QString("%1: %2m").arg(angle, 3).arg( sickS300->getDistance(angle), 0, 'f', 2 ) );
+		}
 	}
 
 
@@ -477,12 +491,6 @@ void test::testSlot()
 		textEdit->append("thread stopped");
 	}
 	*/
-}
-
-
-void test::appendLog(QString message)
-{
-	textEdit->append(message);
 }
 
 
