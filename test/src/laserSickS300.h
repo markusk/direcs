@@ -32,7 +32,8 @@
 
 
 /**
-@brief Gives access to a SICK laser scanner S300.
+\author Markus Knapp
+@brief Gives access to a SICK laser scanner S300 Standard (not Professional!).
 */
 class SickS300 : public QObject
 {

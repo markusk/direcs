@@ -34,114 +34,12 @@ DirecsSerial::~DirecsSerial()
 
 int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 {
-	/*
 	struct termios  options;
 	int spd = -1;
 	int newbaud = 0;
-*/
 
 
-	// + + + + +  sick old laser code start
-	// + + + + +  sick old laser code start
-	// + + + + +  sick old laser code start
-
-	Q_UNUSED(baudrate);
-
-	// for QString to char* conversion
-	QByteArray ba = dev_name;
-
-
-	if ( (mDev_fd = open(ba.data(), O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0) // TODO: check if this still works with Linux!
-	{
-		return -1;
-	}
-
-
-	// Note that open() follows POSIX semantics: multiple open() calls to
-	// the same file will succeed unless the TIOCEXCL ioctl is issued.
-	// This will prevent additional opens except by root-owned processes.
-	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
-	if (ioctl(mDev_fd, TIOCEXCL) == -1)
-	{
-		emit message(QString("Error setting TIOCEXCL on /dev/tty... - %1(%2).").arg(strerror(errno)).arg(errno));
-		return -1;
-	}
-	emit message("TIOCEXCL set succesfully.");
-
-	// Now that the device is open, clear the O_NONBLOCK flag so
-	// subsequent I/O will block.
-	// See fcntl(2) ("man 2 fcntl") for details.
-	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
-	{
-		emit message(QString("Error clearing O_NONBLOCK - %1(%2).").arg(strerror(errno)).arg(errno));
-		return -1;
-	}
-	emit message("O_NONBLOCK cleared successfully.");
-
-
-	//-----------------
-	// Orignal laser.h
-	//-----------------
-	#define DIRECS_LASER_USE_SELECT 1
-	#define DIRECS_LASER_LOW_LATENCY 1
-
-
-	#ifdef DIRECS_LASER_LOW_LATENCY
-	setLowLatency();
-	#endif
-
-	//-----------------
-	// Original laser.cpp code now here: sick_set_serial_params(laser) inserted here:
-	//-----------------
-	struct termios  ctio;
-
-
-	// Get current port settings
-	tcgetattr(mDev_fd, &ctio);
-
-	// set the baudrate
-	cfsetispeed(&ctio, (speed_t) B38400 );
-	cfsetospeed(&ctio, (speed_t) B38400 );
-
-	// org laser.cpp: ctio.c_iflag = iSoftControl(laser->dev.swf) | iParity(laser->dev.parity);
-	// swf = 0 = IXOFF ?      [iSoftControl]
-	// parity = N = PARENB ?  [cParity]
-	ctio.c_iflag = IXOFF | IGNPAR;
-
-	ctio.c_oflag = 0;
-
-	// org laser.cpp: ctio.c_cflag =         CREAD | CLOCAL                       | cParity(laser->dev.parity) | cDataSize(laser->dev.databits) | cStopSize(laser->dev.stopbits);
-	// 8 Data byte = CS8  [cDataSize]
-	// ^ stop byte = 0 ?  [cStopSize]
-
-	ctio.c_cflag  = CREAD | CLOCAL | PARENB | CS8 | 0;
-	ctio.c_cflag &= ~CRTSCTS; // disable HW flow control!! // TODO: check if that also works under linux!
-	ctio.c_lflag = 0;
-	ctio.c_cc[VTIME] = 0;     /* inter-character timer unused */
-	ctio.c_cc[VMIN] = 0;      /* blocking read until 0 chars received */
-
-
-	// Cause the new options to take effect immediately.
-	tcsetattr(mDev_fd, TCSANOW, &ctio);
-
-	//-----------------
-
-
-
-	emit message("Serial device openend.");
-	return(mDev_fd);
-
-
-	// + + + + +  sick old laser code end
-	// + + + + +  sick old laser code end
-	// + + + + +  sick old laser code end
-
-
-
-/* - - - - original:
-
-
-	// mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);	// 2010-05-23: not needed for Atmel and SICK laser S300!
+	 // mDev_fd = open(dev_name, O_RDWR | O_NOCTTY, 0);	// 2010-05-23: not needed for Atmel and SICK laser S300!
 	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK);
 
 	// Note that open() follows POSIX semantics: multiple open() calls to
@@ -160,22 +58,20 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+//		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
 
 	if (mDev_fd < 0)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+//		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
 
 
 	// Get current port settings
-	if (tcgetattr(mDev_fd, &options))
-	{
-		emit message(QString("<font color=\"#FF0000\">ERROR getting serial port attributes at DirecsSerial::openAtmelPort!</font>"));
-		return -1;
-	}
+	tcgetattr(mDev_fd, &options);
 
 	// this setting is needed for Mac OS! But works under Linux, too!
 	options.c_cflag |= CLOCAL;
@@ -691,62 +587,6 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 
 int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 {
-	// + + + + +  sick old laser code start (from readPort of this class taken)
-	// + + + + +  sick old laser code start (from readPort of this class taken)
-	// + + + + +  sick old laser code start (from readPort of this class taken)
-
-	// ---------------------------------------------------------
-	// taken from sick_handle_laser():
-	// ---------------------------------------------------------
-
-	int amountRead = 0, bytes_read = 0;
-	struct timeval t;
-	fd_set set;
-	int err;
-
-	while (nChars > 0)
-	{
-		t.tv_sec = 0;
-		t.tv_usec = READ_TIMEOUT;
-		FD_ZERO(&set);
-		FD_SET(mDev_fd, &set);
-
-		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
-		if (err == 0)
-		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using select() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
-			return errno;
-		}
-
-		amountRead = read(mDev_fd, buf, nChars);
-		emit message(QString("Read byte=0x%2").arg(*buf, 2, 16, QLatin1Char('0')));
-
-		if (amountRead < 0 && errno != EWOULDBLOCK)
-		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
-			// FIXME: was, wenn return 0 ?!?!?
-			return errno;
-		}
-		else
-		{
-			if(amountRead > 0)
-			{
-				bytes_read += amountRead;
-				nChars -= amountRead;
-				buf += amountRead;
-			}
-		}
-	}
-
-	return bytes_read;
-
-
-	// + + + + +  sick old laser code end
-	// + + + + +  sick old laser code end
-	// + + + + +  sick old laser code end
-
-
-/*
 	//
 	// Original code from method readPort
 	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
@@ -764,20 +604,22 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
 
+		// are we ready for reading?
 		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
 
-		// check if time limit expired (select=0)
-		if (err == 0)
+		// check if an error occured
+		// (0 = timeout / -1 = error)
+		if (err <= 0)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using select() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
 		}
 
 		// read from the serial device
 		amountRead = read(mDev_fd, buf, nChars);
 
-
-		if(amountRead < 0 && errno != EWOULDBLOCK)
+		if (amountRead < 0 && errno != EWOULDBLOCK)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 // FIXME: was, wenn return 0 ?!?!?
@@ -794,7 +636,6 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 		}
 	}
 	return bytes_read;
-*/
 }
 
 

@@ -29,9 +29,6 @@ SickS300::SickS300()
 	// creating the serial port object
 	serialPort = new DirecsSerial();
 
-	// forwarding error messages from serialport to gui
-	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
-
 	laserSerialPort = "NOTSET";
 
 	// -----------------------------------------------------------------------------------------
@@ -216,26 +213,9 @@ int SickS300::setup()
 	const unsigned char getTokenCommand[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
 	unsigned char answer = 255;
 	unsigned int i = 0;
-	int result = -1;
-	int bytes_available = 0;
-	int byteCounter = 4;
-	int errorcounter= 0;
 
 
 	emit message("Initialising Sick S300:");
-	emit message("Flushing serial input buffer first.");
-	result = serialPort->purgeRx();
-
-	if (result != 0)
-	{
-		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::setup).</font>");
-
-		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
-		emit systemerror(-1);
-
-		return -1;
-	}
-
 
 	// send "get token" to laser
 	emit message("Sending 'get token'...");
@@ -253,65 +233,34 @@ int SickS300::setup()
 	}
 	emit message("OKAY");
 
-
-	// Reading answer, 4 byte (00 00 00 00)
-	emit message("Receiving 00 00 00 00 answer...");
-	while (byteCounter >= 4)
+	// getting anser 0x00 0x00 0x00 0x00
+	emit message("Receiving answer...");
+	for (i=0; i<4; i++)
 	{
-
-		// read what is available in the serial buffer
-		bytes_available = serialPort->numChars();
-
-		if (bytes_available <= 0)
+		if (receiveChar(&answer) == true)
 		{
-			errorcounter++;
-
-			if (errorcounter >= 10)
+			if (answer != 0)
 			{
-				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
-				emit systemerror(-1);
-
-				emit message("<font color=\"#FF0000\">ERROR: No bytes available at setup().</font>");
-
-				return -1;
-			}
-
-			emit message("trying again...");
-		}
-
-
-		while (bytes_available > 0)
-		{
-			if (receiveChar(&answer) == true)
-			{
-
-				// check if every answer bit is 0x00
-				// the last byte (no 4) contains the error code if != 0.
-				if (answer != 0x00)
-				{
-					emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::setup).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
-
-					// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
-					emit systemerror(-1);
-
-					return -1;
-				}
-			}
-			else
-			{
-				// error
-				emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::setup).</font>").arg(i+1));
+				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
 
 				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
 				emit systemerror(-1);
 
 				return -1;
 			}
-
-			// counter - 1
-			bytes_available--;
-			byteCounter++;
 		}
+		else
+		{
+			// error
+			emit message("<font color=\"#FF0000\">ERROR</font>");
+
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+			emit systemerror(-1);
+
+			return -1;
+		}
+
+		// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 	}
 	emit message("Sick laser S300 setup OKAY");
 
@@ -338,12 +287,15 @@ int SickS300::readRequestTelegram()
 	int result = -1;
 
 
+//	QTime x;
+//	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
+
 	// flushing serial input buffer
 	result = serialPort->purgeRx();
 
 	if (result != 0)
 	{
-		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 flushing serial port (SickS300::readRequestTelegram).</font>").arg(result));
 
 		// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
 		emit systemerror(-1);
@@ -372,10 +324,8 @@ int SickS300::readRequestTelegram()
 	//emit message("Receiving answer...");
 	for (i=0; i<4; i++)
 	{
-
 		if (receiveChar(&answer) == true)
 		{
-
 			// check if every answer bit is 0x00
 			// the last byte (no 4) contains the error code if != 0.
 			if (answer != 0x00)
@@ -387,18 +337,19 @@ int SickS300::readRequestTelegram()
 
 				return -1;
 			}
-			else
-			{
-				// error
-				emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+		}
+		else
+		{
+			// error
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
 
-				// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
-				emit systemerror(-1);
+			// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here. e.g. obstacle check thread.
+			emit systemerror(-1);
 
-				return -1;
-			}
+			return -1;
 		}
 	}
+	//emit message("OKAY");
 
 
 	//-----------------------------------------------------

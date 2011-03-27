@@ -57,6 +57,7 @@
 
 
 /**
+\author Markus Knapp
 \brief Class to read data from and write data to the serial port.
 
 This class is used to communicate with the laser scanners and with the robot (with the Atmel controller).
