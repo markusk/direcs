@@ -55,6 +55,9 @@ SickS300::SickS300()
 	}
 	*/
 
+	// forward the messages from direcsSerial directly
+	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+
 	emit message(QString("Using baudrate of %1 baud.").arg(baudRate));
 }
 
