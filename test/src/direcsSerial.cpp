@@ -34,46 +34,7 @@ DirecsSerial::~DirecsSerial()
 
 int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 {
-	emit message("about to try to open seriak port");
-	mDev_fd = open(dev_name, O_RDWR | O_NOCTTY | O_NONBLOCK);
-	if (mDev_fd < 0)
-	{
-		emit message(" ahhhhhhhhh couldn't open port");
-		return -1;
-	}
-	else
-		emit message("opened [%s] successfully");
-  // put the port in nonblocking mode
-	struct termios oldtio, newtio;
-	if (tcgetattr(mDev_fd, &oldtio) < 0)
-	{
-		emit message("ahhhhhhh couldn't run tcgetattr()");
-		return -1;
-	}
-	bzero(&newtio, sizeof(newtio));
-	newtio.c_iflag = IGNPAR | INPCK;
-	newtio.c_oflag = 0;
-	newtio.c_cflag = CS8 | CLOCAL | CREAD;
-	newtio.c_lflag = 0;
-	newtio.c_cc[VTIME] = 0;
-	newtio.c_cc[VMIN] = 0; // poll
-	emit message(QString("Using %1 for baudrate.").arg(baudrate));
-	cfsetspeed(&newtio, baudrate);
-	tcflush(mDev_fd, TCIOFLUSH);
-	if (tcsetattr(mDev_fd, TCSANOW, &newtio) < 0)
-	{
-		emit message(" ahhhhhhhhhhh tcsetattr failed");
-		return -1;
-	}
-
-	// flush the buffer of the serial device
-	unsigned char character;
-//	while (this->readAtmelPort(&character, 1) > 0) { }
-
-	emit message("Serial device openend.");
-	return (mDev_fd);
-
-/*	struct termios  options;
+	struct termios  options;
 	int spd = -1;
 	int newbaud = 0;
 
@@ -229,7 +190,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
-*/
 }
 
 
