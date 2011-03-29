@@ -77,6 +77,7 @@ void LaserThread::stop()
 void LaserThread::run()
 {
 	int laserValue = 0;
+	static int errorCounter = 0;
 
 
 	// check if all necessary values wer set / members are initialised
@@ -140,8 +141,17 @@ void LaserThread::run()
 					}
 					else
 					{
-						stopped = true;
-						emit message("ERROR reading S300 data. Laser thread stopped!");
+						if (errorCounter > MAXERRORS)
+						{
+							stopped = true;
+							emit message(QString("%1 ERRORs reading S300 data. Laser thread stopped!").arg(MAXERRORS));
+							errorCounter = 0;
+						}
+						else
+						{
+							errorCounter++;
+							emit message(QString("%1. error reading S300 laser.").arg(errorCounter));
+						}
 					}
 				}
 			}
