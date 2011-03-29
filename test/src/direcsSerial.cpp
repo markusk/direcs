@@ -150,7 +150,8 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		#endif
 	}
 
-	qDebug(">>> setting serial port speed to %d.", spd);
+	//qDebug(">>> setting serial port speed to %d.", spd);
+
 
 	// set speed (input and output)
 	if(spd != -1)
@@ -597,11 +598,12 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	fd_set set;
 	int returnValue;
 
+
 	while (nChars > 0)
 	{
 		// wait up to 0,25 seconds (250000 microseconds)
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
-		t.tv_sec = 0;
+		t.tv_sec  = 0;
 		t.tv_usec = READ_TIMEOUT_ATMEL; // 0,25 seconds
 
 		// watch serial port to see when it has input
@@ -626,8 +628,10 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 			else
 			{
 				// timeout
-				emit message(QString("<font color=\"#FF0000\">ERROR: No data available within %1 microseconds when using select() on serial device (DirecsSerial::readAtmelPort).</font>").arg(READ_TIMEOUT_ATMEL));
-				return -1;
+				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 microseconds when using select() on serial device (DirecsSerial::readAtmelPort).</font>").arg(READ_TIMEOUT_ATMEL));
+				emit message(QString("<font color=\"#FF0000\">ERROR %1: %2.</font>").arg(errno).arg(strerror(errno)));
+
+				return errno;
 			}
 		}
 
