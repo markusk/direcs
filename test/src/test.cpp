@@ -62,38 +62,46 @@ test::test()
 	  //---------------------------------------------------------------------------------------------------
 	  // SICK laser S300 test stuff
 
-	  sickS300 = new SickS300();
+	  // sickS300 = new SickS300();
 
 	  // send messages from the other class to this class (to the GUI)
-	  connect(sickS300, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
+	  // connect(sickS300, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
 
 	  // "/dev/tty.USA19Hfa141P1.1" // Keyspan
 	  // "/dev/tty.PL2303-000013FD" // Prolific
-	  // /dev/ttyLaserScannerFront
+	  // "/dev/ttyLaserScannerFront"
 
-	  textEdit->append("Opening serial port for S300...");
+	  // sickS300->setDevicePort("/dev/ttyLaserScannerFront");
 
-	  sickS300->setDevicePort("/dev/ttyLaserScannerFront");
 
-	  if (sickS300->openComPort() == false)
-	  {
-		  textEdit->append(QString("ERROR opening serial port %1").arg(serialPortPath));
-	  }
-	  else
+	  // create laser thread
+	  laserThread = new LaserThread();
+
+	  // send messages from the other class to this class (to the GUI)
+	  connect(laserThread, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
+
+	  laserThread->setType(LASER1, "S300"); // this also creates the S300 object within the laser thread
+	  laserThread->setAngle(LASER1, 270);
+	  laserThread->setMounting(LASER1, "normal");
+	  laserThread->setResolution(LASER1, 0.5);
+	  laserThread->setSerialPort(LASER1, "/dev/ttyLaserScannerFront");
+
+	  textEdit->append("Starting laser thread...");
+
+	  // start laser thread
+	  laserThread->start();
+
+	  textEdit->append("Looking for S300...");
+
+	  // init the laser
+	  if (laserThread->isConnected(LASER1))
 	  {
 		  // * The laser is ON *
 		  appendLog("OKAY");
-
-		  // init the laser
-		  textEdit->append("S300 setup...");
-
-		  sickS300->setup();
-
-		  // create laser thread
-		  laserThread = new LaserThread();
-		  laserThread->setAngle(LASER1, 270);
-		  laserThread->setMounting(LASER1, "normal");
-		  laserThread->setResolution(LASER1, 0.5);
+	  }
+	  else
+	  {
+		  appendLog("ERROR");
 	  }
 
 	  //---------------------------------------------------------------------------------------------------
@@ -431,7 +439,7 @@ void test::setCurrentFile(const QString &fileName)
 
 	  QString shownName;
 	  if (curFile.isEmpty())
-			shownName = "untitled.txt";
+			shownName = "direcs test app";
 	  else
 			shownName = strippedName(curFile);
 
