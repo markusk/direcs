@@ -595,26 +595,40 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	int amountRead = 0, bytes_read = 0;
 	struct timeval t;
 	fd_set set;
-	int err;
+	int returnValue;
 
 	while (nChars > 0)
 	{
+		// wait up to 0,25 seconds (250000 microseconds)
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
 		t.tv_sec = 0;
-		t.tv_usec = READ_TIMEOUT_ATMEL;
+		t.tv_usec = READ_TIMEOUT_ATMEL; // 0,25 seconds
+
+		// watch serial port to see when it has input
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
 
-		// are we ready for reading?
-		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
+		// is the serial port ready for reading?
+		returnValue = select(mDev_fd + 1, &set, NULL, NULL, &t);
 
-		// check if an error occured
-		// (0 = timeout / -1 = error)
-		if (err <= 0)
+		// check if timeout or an error occured
+		if (returnValue == -1)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
-			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
+		}
+		else
+		{
+			if (returnValue)
+			{
+				// data available now
+			}
+			else
+			{
+				// timeout
+				emit message(QString("<font color=\"#FF0000\">ERROR: No data available within %1 microseconds when using select() on serial device (DirecsSerial::readAtmelPort).</font>").arg(READ_TIMEOUT_ATMEL));
+				return -1;
+			}
 		}
 
 		// read from the serial device
