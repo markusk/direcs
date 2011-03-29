@@ -466,16 +466,7 @@ void test::testSlot()
 	// add current date & time
 	textEdit->append( QString("%1").arg(QDateTime::currentDateTime().toString() ) );
 
-/*
-	if (sickS300->readUnknownTelegram() == -1)
-	{
-		appendLog("unknown telegram ERROR");
-	}
-	else
-	{
-		appendLog("unknown data OKAY");
-	}
-*/
+	/*
 	if (sickS300->readRequestTelegram() == -1)
 	{
 		appendLog("scan ERROR");
@@ -502,21 +493,29 @@ void test::testSlot()
 				break;
 		}
 	}
+*/
 
+	//
+	// using laser thread values !
+	//
+	for (int angle=0; angle < 270*2; angle++)
+	{
+		textEdit->append( QString("%1: %2m | %3: %4m | %5: %6m | %7: %8m | %9: %10m | %11: %12m | %13: %14m | %15: %16m | %17: %18m")
+													 .arg(angle,     3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle    ), 4, 'f', 2 )
+													 .arg(angle + 1, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 1), 4, 'f', 2 )
+													 .arg(angle + 2, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 2), 4, 'f', 2 )
+													 .arg(angle + 3, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 3), 4, 'f', 2 )
+													 .arg(angle + 4, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 4), 4, 'f', 2 )
+													 .arg(angle + 5, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 5), 4, 'f', 2 )
+													 .arg(angle + 6, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 6), 4, 'f', 2 )
+													 .arg(angle + 7, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 7), 4, 'f', 2 )
+													 .arg(angle + 8, 3, 10, QChar('0')).arg( laserThread->getValue(LASER1, angle + 8), 4, 'f', 2 )
+													 );
+		angle = angle + 8;
 
-	/*
-	// start the thread and let it emit some values
-	if (laserThread->isRunning() == false)
-	{
-		textEdit->append("thread started");
-		laserThread->start();
+		if (angle>= 270*2)
+			break;
 	}
-	else
-	{
-		laserThread->stop();
-		textEdit->append("thread stopped");
-	}
-	*/
 }
 
 
