@@ -110,8 +110,17 @@ private:
 //	  Circuit *circuit1;
 //	  InterfaceAvr *interface1;
 	  SickS300 *sickS300;
-//	  LaserThread *laserThread;
+	  LaserThread *laserThread;
 	  QString serialPortPath; // something like /dev/ttyUSB0
+
+	  /**
+	  For the integrated DIRECS laser module
+	  */
+	  static const short int LASER1 = 1;
+	  static const short int LASER2 = 2;
+	  static const short int LASER3 = 4;
+	  static const short int LASER4 = 8;
+	  static const short int LASER5 = 16;
 };
 
 #endif

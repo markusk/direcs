@@ -89,6 +89,11 @@ test::test()
 
 		  sickS300->setup();
 
+		  // create laser thread
+		  laserThread = new LaserThread();
+		  laserThread->setAngle(LASER1, 270);
+		  laserThread->setMounting(LASER1, "normal");
+		  laserThread->setResolution(LASER1, 0.5);
 	  }
 
 	  //---------------------------------------------------------------------------------------------------
@@ -156,16 +161,15 @@ test::~test()
 	delete mutex;
 	*/
 
-	// SICK laser S300 test stuff
-	delete sickS300;
-/*
 	// stop the thread
 	if (laserThread->isRunning())
 	{
 		laserThread->stop();
 	}
 	delete laserThread;
-*/
+
+	// SICK laser S300 test stuff
+	delete sickS300;
 }
 
 
