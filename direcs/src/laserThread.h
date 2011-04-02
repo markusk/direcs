@@ -186,7 +186,7 @@ class LaserThread : public QThread
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 250; // Default: 250 ms
+		static const unsigned long THREADSLEEPTIME = 500; // Default: 250 ms
 
 		// FIXME: put this to the ini-file or so. Fix also: read_parameters() in laser.cpp !!
 		static const unsigned char LMS = 0; // this is temporary
@@ -223,6 +223,9 @@ class LaserThread : public QThread
 		// the tags for the laser lines
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
+
+		// nuber of tries reading from laser scanner
+		static const short int MAXERRORS = 3;
 };
 
 #endif
