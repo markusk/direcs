@@ -58,27 +58,18 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-//		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
 
 	if (mDev_fd < 0)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-//		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
 
 
 	// Get current port settings
 	tcgetattr(mDev_fd, &options);
-
-//	qDebug("cflags: %d, %d, %d, %d, %d, %d, %d, %d.", options.c_cc, options.c_cflag, options.c_iflag, options.c_ispeed, options.c_lflag, options.c_line, options.c_oflag, options.c_ospeed);
-
-//	qDebug("Gelesene Port settings:");
-//	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
-//	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
-
 
 	// this setting is needed for Mac OS! But works under Linux, too!
 	options.c_cflag |= CLOCAL;
@@ -92,9 +83,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// Disable hardware flow control:
 	options.c_cflag &= ~CRTSCTS;
 
-// original, but 0 is undefined!
-//	options.c_lflag = 0;
-// This doesn't fix the linux serial laser bug, too:	options.c_lflag &= ~(ICANON | ECHO | ISIG); // raw data, no canonical mode!
+	//	options.c_lflag = 0; // DISABLED! Using cfmakeraw instead below! Now we are fine under Linux with the laser scanner S300 which uses this method, too! (2.4.2011)
 
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
@@ -160,10 +149,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		#endif
 	}
 
-//	qDebug(">>> case = %d", baudrate);
-//	qDebug(">>> setting serial port speed to %d / B38400=%d / B9600=%d.", spd, B38400, B9600);
-
-
 	// set speed (input and output)
 	if(spd != -1)
 	{
@@ -193,6 +178,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	}
 
 	/// Set *TERMIOS_P to indicate raw mode.
+	// Added on 2.4.2011 for the usage of the laser scanner S300 under Linux. Resolved the "resource unavailable" error and works under Mac OS X 10.6, too.
 	cfmakeraw(&options);
 
 	// Cause the new options to take effect immediately.
@@ -201,12 +187,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		emit message(QString("<font color=\"#FF0000\">ERROR setting serial port attributes at DirecsSerial::openAtmelPort!</font>"));
 		return -1;
 	}
-
-//	// Get current port settings
-//	tcgetattr(mDev_fd, &options);
-//	qDebug("Port settings nach dem Schreiben:");
-//	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
-//	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
