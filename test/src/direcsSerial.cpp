@@ -75,26 +75,26 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 //	qDebug("cflags: %d, %d, %d, %d, %d, %d, %d, %d.", options.c_cc, options.c_cflag, options.c_iflag, options.c_ispeed, options.c_lflag, options.c_line, options.c_oflag, options.c_ospeed);
 
-	qDebug("Gelesene Port settings:");
+//	qDebug("Gelesene Port settings:");
 //	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
-	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
+//	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
 
 
 	// this setting is needed for Mac OS! But works under Linux, too!
 	options.c_cflag |= CLOCAL;
 
 	// 8N1
-	options.c_cflag &= ~PARENB;
-	options.c_cflag &= ~CSTOPB;
-	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
+	options.c_cflag &= ~PARENB; // no parity bit
+	options.c_cflag &= ~CSTOPB; // 1 stop bit
+	options.c_cflag &= ~CSIZE;  //
+	options.c_cflag |= CS8;     // 8 data bit
 
 	// Disable hardware flow control:
 	options.c_cflag &= ~CRTSCTS;
 
-// original, aber 0 ist undefinert!	options.c_lflag = 0;
-// auch nicht:	options.c_lflag &= ~(ICANON | ECHO | ISIG); // raw data, no canonical mode!
-
+// original, but 0 is undefined!
+//	options.c_lflag = 0;
+// This doesn't fix the linux serial laser bug, too:	options.c_lflag &= ~(ICANON | ECHO | ISIG); // raw data, no canonical mode!
 
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
@@ -160,8 +160,8 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		#endif
 	}
 
-	qDebug(">>> case = %d", baudrate);
-	qDebug(">>> setting serial port speed to %d / B38400=%d / B9600=%d.", spd, B38400, B9600);
+//	qDebug(">>> case = %d", baudrate);
+//	qDebug(">>> setting serial port speed to %d / B38400=%d / B9600=%d.", spd, B38400, B9600);
 
 
 	// set speed (input and output)
@@ -202,21 +202,11 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		return -1;
 	}
 
-	// Get current port settings
-	tcgetattr(mDev_fd, &options);
-	qDebug("Port settings nach dem Schreiben:");
+//	// Get current port settings
+//	tcgetattr(mDev_fd, &options);
+//	qDebug("Port settings nach dem Schreiben:");
 //	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
-	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
-
-/*
-Gelesene Port settings:
-Linux: cflags: c_cc=3, c_cflag=3263, c_iflag=1280, c_ispeed=15, c_lflag=0, c_line=0, c_oflag=5, c_ospeed=15.
->>> case = 38400
->>> setting serial port speed to 15 / B38400=15 / B9600=13.
-Port settings nach dem Schreiben:
-Linux: cflags: c_cc=3, c_cflag=3263, c_iflag=1280, c_ispeed=15, c_lflag=0, c_line=0, c_oflag=5, c_ospeed=15.
-*/
-
+//	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
