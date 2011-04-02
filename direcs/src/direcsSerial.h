@@ -47,8 +47,8 @@
 
 #endif
 
-#define READ_TIMEOUT          250000      /// the timout for serial reading in micro seconds! s.a. 'select' command in @sa readAtmelPort
-#define READ_TIMEOUT_ATMEL    250000      /// the timout for serial reading in micro seconds! s.a. 'select' command in @sa readAtmelPort
+#define READ_TIMEOUT          250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
+#define READ_TIMEOUT_ATMEL    250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
 #define _POSIX
 
 #include <QtGlobal>
@@ -191,6 +191,18 @@ class DirecsSerial : public QObject
 		@return 0=successful switched to low latency mode. 0=continue in normal mode.
 		**/
 		int setLowLatency(int fd);
+
+		/**
+		Avtivates the low latency mode for the serial line.
+		This works with real serial devices, USB-to-RS232 often does not work.
+		In this case, the system continues in the standard operational mode.
+		Note: Low latency does not run with cygwin.
+
+		This method is provided for convenience and uses the internal member for the file descriptor. It needs no parameters!
+
+		@return 0=successful switched to low latency mode. 0=continue in normal mode.
+		**/
+		int setLowLatency();
 
 
 	signals:

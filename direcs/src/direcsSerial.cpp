@@ -58,14 +58,12 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-//		qDebug("Error clearing O_NONBLOCK - %s(%d).\n", strerror(errno), errno);
 		return -1;
 	}
 
 	if (mDev_fd < 0)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
-//		qDebug("Error %d opening serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
 
@@ -77,15 +75,16 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	options.c_cflag |= CLOCAL;
 
 	// 8N1
-	options.c_cflag &= ~PARENB;
-	options.c_cflag &= ~CSTOPB;
-	options.c_cflag &= ~CSIZE;
-	options.c_cflag |= CS8;
+	options.c_cflag &= ~PARENB; // no parity bit
+	options.c_cflag &= ~CSTOPB; // 1 stop bit
+	options.c_cflag &= ~CSIZE;  //
+	options.c_cflag |= CS8;     // 8 data bit
 
 	// Disable hardware flow control:
 	options.c_cflag &= ~CRTSCTS;
 
-	options.c_lflag = 0;
+	//	options.c_lflag = 0; // DISABLED! Using cfmakeraw instead below! Now we are fine under Linux with the laser scanner S300 which uses this method, too! (2.4.2011)
+
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
 
@@ -153,20 +152,41 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// set speed (input and output)
 	if(spd != -1)
 	{
-		cfsetispeed(&options, (speed_t) spd);
-		cfsetospeed(&options, (speed_t) spd);
+		if (cfsetispeed(&options, (speed_t) spd) != 0)
+		{
+			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port input speed at DirecsSerial::openAtmelPort!</font>"));
+			return -1;
+		}
+
+		if (cfsetospeed(&options, (speed_t) spd) != 0)
+		{
+			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port output speed at DirecsSerial::openAtmelPort!</font>"));
+			return -1;
+		}
 	}
 	else
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR: Wrong value for speed parameter at DirecsSerial::openAtmelPort!</font>"));
-//		qDebug("ERROR: Wrong value for speed parameter in openAtmelPort at DirecsSerial!");
+		return -1;
 	}
 
 	// Flushes all pending I/O to the serial port. This clears only the read buffer!
-	tcflush(mDev_fd, TCIFLUSH);
+	if (tcflush(mDev_fd, TCIFLUSH) != 0)
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR fluhsing serial input buffer at DirecsSerial::openAtmelPort!</font>"));
+		return -1;
+	}
+
+	/// Set *TERMIOS_P to indicate raw mode.
+	// Added on 2.4.2011 for the usage of the laser scanner S300 under Linux. Resolved the "resource unavailable" error and works under Mac OS X 10.6, too.
+	cfmakeraw(&options);
 
 	// Cause the new options to take effect immediately.
-	tcsetattr(mDev_fd, TCSANOW, &options);
+	if (tcsetattr(mDev_fd, TCSANOW, &options) != 0)
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR setting serial port attributes at DirecsSerial::openAtmelPort!</font>"));
+		return -1;
+	}
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
@@ -416,23 +436,47 @@ void DirecsSerial::configurePort(int dev_fd, int baudrate, char parity)
 
 long DirecsSerial::numChars(int dev_fd)
 {
-	long available = 0;
+	int available = 0;
 
-	if(ioctl(dev_fd, FIONREAD, &available) == 0)
+
+	int err = ioctl(dev_fd, FIONREAD, &available);
+	if (err == 0)
+	{
+		emit message(QString("Bytes available at readAtmelPort: %1").arg(available));
 		return available;
+	}
 	else
-		return -1;
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using ioctl() on serial device at DirecsSerial::numChars().</font>").arg(errno).arg(strerror(errno)));
+		return errno;
+	}
 }
 
 
 long DirecsSerial::numChars()
 {
-	long available = 0;
+	int available = 0;
+	double timeout=0.1;
+	fd_set read_set;
+	struct timeval timer;
+	timer.tv_sec=(long)(floor(timeout));
+	timer.tv_usec=(long)((timeout-floor(timeout))*1000000);
+	FD_ZERO(&read_set);
+	FD_SET(mDev_fd, &read_set);
+	select(mDev_fd + 1, &read_set, NULL, NULL, &timer);
 
-	if(ioctl(mDev_fd, FIONREAD, &available) == 0)
+
+	int err = ioctl(mDev_fd, FIONREAD, &available);
+	if (err == 0)
+	{
+		emit message(QString("Bytes available at readAtmelPort: %1").arg(available));
 		return available;
+	}
 	else
-		return -1;
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using ioctl() on serial device at DirecsSerial::numChars().</font>").arg(errno).arg(strerror(errno)));
+		return errno;
+	}
 }
 
 
@@ -499,7 +543,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c)
 
 	if (n < 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when writing to serial device at DirecsSerial::writeAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when writing to serial device at DirecsSerial::writeAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 //		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
@@ -551,26 +595,43 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 	int amountRead = 0, bytes_read = 0;
 	struct timeval t;
 	fd_set set;
-	int err;
+	int returnValue;
+
 
 	while (nChars > 0)
 	{
+		// wait up to 0,25 seconds (250000 microseconds)
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
-		t.tv_sec = 0;
-		t.tv_usec = READ_TIMEOUT_ATMEL;
+		t.tv_sec  = 0;
+		t.tv_usec = READ_TIMEOUT_ATMEL; // 0,25 seconds
+
+		// watch serial port to see when it has input
 		FD_ZERO(&set);
 		FD_SET(mDev_fd, &set);
 
-		// are we ready for reading?
-		err = select(mDev_fd + 1, &set, NULL, NULL, &t);
+		// is the serial port ready for reading?
+		returnValue = select(mDev_fd + 1, &set, NULL, NULL, &t);
 
-		// check if an error occured
-		// (0 = timeout / -1 = error)
-		if (err <= 0)
+		// check if timeout or an error occured
+		if (returnValue == -1)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
-			// qDebug("Select error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
+		}
+		else
+		{
+			if (returnValue)
+			{
+				// data available now
+			}
+			else
+			{
+				// timeout
+				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 microseconds when using select() on serial device (DirecsSerial::readAtmelPort).</font>").arg(READ_TIMEOUT_ATMEL));
+				emit message(QString("<font color=\"#FF0000\">ERROR %1: %2.</font>").arg(errno).arg(strerror(errno)));
+
+				return errno;
+			}
 		}
 
 		// read from the serial device
@@ -578,9 +639,8 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
 
 		if (amountRead < 0 && errno != EWOULDBLOCK)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when reading from serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
 // FIXME: was, wenn return 0 ?!?!?
-			// qDebug("Read error %d reading from serial device: %s\n", errno, strerror(errno));
 			return errno;
 		}
 		else
@@ -613,21 +673,23 @@ int DirecsSerial::setLowLatency(int fd)
 
 	struct serial_struct serial;
 	int result;
-	result=ioctl(fd, TIOCGSERIAL, &serial);
+	result = ioctl(fd, TIOCGSERIAL, &serial);
 
 	if (result)
 	{
-		qDebug("Cannot get the serial attributes for low latency serial mode. Switching to normal mode");
+		emit message("<font color=\"#FF0000\">ERROR: Cannot get the serial attributes for low latency serial mode. Switching to normal mode</font>");
 		return result;
 	}
 	else
 	{
 		serial.flags |= ASYNC_LOW_LATENCY;
 		serial.xmit_fifo_size = 1;
-		ioctl(fd, TIOCSSERIAL, &serial);
+
+		result = ioctl(fd, TIOCSSERIAL, &serial);
+
 		if (result)
 		{
-			qDebug("Cannot activeate low latency mode. Switching to normal mode");
+			emit message("<font color=\"#FF0000\">ERROR: Cannot activeate low latency mode. Switching to normal mode</font>");
 			return result;
 		}
 	}
@@ -635,6 +697,43 @@ int DirecsSerial::setLowLatency(int fd)
 	#endif
 #else
 	Q_UNUSED(fd);
+	return -1;
+#endif
+}
+
+
+int DirecsSerial::setLowLatency()
+{
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
+	#ifdef CYGWIN
+	return -1;
+	#else
+
+	struct serial_struct serial;
+	int result;
+	result = ioctl(mDev_fd, TIOCGSERIAL, &serial);
+
+	if (result)
+	{
+		emit message("<font color=\"#FF0000\">ERROR: Cannot get the serial attributes for low latency serial mode. Switching to normal mode</font>");
+		return result;
+	}
+	else
+	{
+		serial.flags |= ASYNC_LOW_LATENCY;
+		serial.xmit_fifo_size = 1;
+
+		result = ioctl(mDev_fd, TIOCSSERIAL, &serial);
+
+		if (result)
+		{
+			emit message("<font color=\"#FF0000\">ERROR: Cannot activeate low latency mode. Switching to normal mode</font>");
+			return result;
+		}
+	}
+	return result;
+	#endif
+#else
 	return -1;
 #endif
 }
