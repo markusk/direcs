@@ -92,7 +92,10 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// Disable hardware flow control:
 	options.c_cflag &= ~CRTSCTS;
 
-	options.c_lflag = 0;
+// original, aber 0 ist undefinert!	options.c_lflag = 0;
+// auch nicht:	options.c_lflag &= ~(ICANON | ECHO | ISIG); // raw data, no canonical mode!
+
+
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
 
@@ -188,6 +191,9 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		emit message(QString("<font color=\"#FF0000\">ERROR fluhsing serial input buffer at DirecsSerial::openAtmelPort!</font>"));
 		return -1;
 	}
+
+	/// Set *TERMIOS_P to indicate raw mode.
+	cfmakeraw(&options);
 
 	// Cause the new options to take effect immediately.
 	if (tcsetattr(mDev_fd, TCSANOW, &options) != 0)
