@@ -24,3 +24,5 @@ TARGET = test
 DESTDIR = ../bin
 RESOURCES = application.qrc
 FORMS +=
+
+QMAKE_CXXFLAGS+= -m32
