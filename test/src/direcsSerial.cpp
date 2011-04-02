@@ -76,7 +76,8 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 //	qDebug("cflags: %d, %d, %d, %d, %d, %d, %d, %d.", options.c_cc, options.c_cflag, options.c_iflag, options.c_ispeed, options.c_lflag, options.c_line, options.c_oflag, options.c_ospeed);
 
 	qDebug("Gelesene Port settings:");
-	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
+//	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
+	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
 
 
 	// this setting is needed for Mac OS! But works under Linux, too!
@@ -198,7 +199,18 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// Get current port settings
 	tcgetattr(mDev_fd, &options);
 	qDebug("Port settings nach dem Schreiben:");
-	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
+//	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
+	qDebug("Linux: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_line=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_line, (int) options.c_oflag, (int) options.c_ospeed);
+
+/*
+Gelesene Port settings:
+Linux: cflags: c_cc=3, c_cflag=3263, c_iflag=1280, c_ispeed=15, c_lflag=0, c_line=0, c_oflag=5, c_ospeed=15.
+>>> case = 38400
+>>> setting serial port speed to 15 / B38400=15 / B9600=13.
+Port settings nach dem Schreiben:
+Linux: cflags: c_cc=3, c_cflag=3263, c_iflag=1280, c_ispeed=15, c_lflag=0, c_line=0, c_oflag=5, c_ospeed=15.
+*/
+
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
