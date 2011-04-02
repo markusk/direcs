@@ -73,7 +73,10 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// Get current port settings
 	tcgetattr(mDev_fd, &options);
 
-	qDebug("cflags: %d, %d, %d, %d, %d, %d, %d, %d.", options.c_cc, options.c_cflag, options.c_iflag, options.c_ispeed, options.c_lflag, options.c_line, options.c_oflag, options.c_ospeed);
+//	qDebug("cflags: %d, %d, %d, %d, %d, %d, %d, %d.", options.c_cc, options.c_cflag, options.c_iflag, options.c_ispeed, options.c_lflag, options.c_line, options.c_oflag, options.c_ospeed);
+
+	qDebug("Gelesene Port settings:");
+	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
 
 
 	// this setting is needed for Mac OS! But works under Linux, too!
@@ -153,7 +156,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		#endif
 	}
 
-	qDebug(">>> cas e= %d.", baudrate);
+	qDebug(">>> case = %d", baudrate);
 	qDebug(">>> setting serial port speed to %d / B38400=%d / B9600=%d.", spd, B38400, B9600);
 
 
@@ -192,6 +195,10 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		return -1;
 	}
 
+	// Get current port settings
+	tcgetattr(mDev_fd, &options);
+	qDebug("Port settings nach dem Schreiben:");
+	qDebug("Mac: cflags: c_cc=%d, c_cflag=%d, c_iflag=%d, c_ispeed=%d, c_lflag=%d, c_oflag=%d, c_ospeed=%d.", *(options.c_cc), options.c_cflag, (int) options.c_iflag, (int) options.c_ispeed, (int) options.c_lflag, (int) options.c_oflag, (int) options.c_ospeed);
 
 	emit message("Serial device openend.");
 	return (mDev_fd);
