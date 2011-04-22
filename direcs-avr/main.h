@@ -64,6 +64,7 @@
 #define	READ_AXIS_Z				63
 
 #define	INIT					64
+#define PAUSE					65
 
 #define READ_CONTACT1			70
 #define READ_CONTACT2			71
@@ -101,8 +102,12 @@
 #define SENSORMOTOR2			39 // ADC15
 
 // just nice to have
-#define OFF						0
 #define ON						1
+#define OFF						0
+
+// just nice to have
+#define ENABLE					1
+#define DISABLE					0
 
 // "Morsedauer" für ein Bit in Millisekunden
 #define BITZEIT 100     
@@ -113,6 +118,7 @@
 #include <avr/interrupt.h> // @sa /usr/local/CrossPack-AVR/avr/include/avr/iom2560.h and -> iomxx0_1.h for Atmega2560
 #include <stdlib.h> // für utoa und itoa
 #include <util/delay.h>
+#include <avr/wdt.h>  // watchdog stuff
 
 #include "usart.h"    // serial stuff
 #include "adconv.h"   // AD conversion
@@ -142,5 +148,8 @@ void relais(uint8_t state);
 
 // lange, variable Wartezeit, Einheit in Millisekunden
 void long_delay(uint16_t ms);
+
+// enables or disables the watchdog
+void watchdog(uint8_t state);
 
 #endif

@@ -1506,3 +1506,65 @@ void long_delay(uint16_t ms)
 {
     for (; ms>0; ms--) _delay_ms(1);
 }
+
+
+void watchdog(uint8_t state)
+{
+	// Disable global interrupts.
+	// This is here for setting the interrupt control registers
+	cli();
+
+	// Reset the watchdog timer (wdt).
+	// When the wdt is enabled, a call to this instruction is required before the timer expires,
+	// otherwise a watchdog-initiated device reset will occur.
+	wdt_reset();
+
+
+	//--------------------
+	// Enable watchdog
+	//--------------------
+	if (state == ENABLE)
+	{
+		// start timed sequence
+		WDTCSR |= (1<<WDCE) | (1<<WDE);
+		
+		// set new prescaler (time-out) to 64K (65536 cycles) which means a time-out after 0.5 s
+//		WDTCSR = (1<<WDE) | (1<<WDP2) | (1<<WDP0);
+		WDTCSR = (1<<WDP2) | (1<<WDP0);
+
+		// And here we enable the watchdog interrupt!
+		// So if a time-out occurs, the correspondig interrupt routine is executed
+		WDTCSR |= (1<<WDIE);
+	
+		// Enable global interrupts
+		sei();
+
+		return;
+	}
+
+
+	//--------------------
+	// Disable watchdog
+	//--------------------
+	// Clear WDRF in MCUSR
+	MCUSR &= ~(1<<WDRF);
+	
+	// write logical 1 to WDCE and WDE
+	// keep old prescaler setting to prevent unintentional time-out
+	WDTCSR |= (1<<WDCE) | (1<<WDE);
+	
+	// turn off WDT
+	WDTCSR = 0x00;
+
+	// Enable global interrupts
+	sei();
+}
+
+
+SIGNAL(WDT_vect)
+{
+	// turn flashlight on !
+	relais(ON);
+	
+	// and now?!?
+}
