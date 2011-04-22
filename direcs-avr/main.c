@@ -248,6 +248,9 @@ int main(void)
 		// Wurde ein kompletter String empfangen und ist der Buffer ist leer?
 		if (RXcompleted == 1)
 		{
+			// Everything's fine, so reset the watchdog timer (wdt).
+			wdt_reset();
+
 			// ja, dann String lesen und uart_rx_flag löschen
 			get_string(stringbuffer);
 
