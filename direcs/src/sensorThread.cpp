@@ -184,9 +184,12 @@ void SensorThread::run()
 			//-----------------
 			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop(); /// \todo and what now? sa: other stop calls!
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -194,9 +197,12 @@ void SensorThread::run()
 
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -208,9 +214,12 @@ void SensorThread::run()
 			//---------------
 			if (readMotorSensor(MOTORSENSOR1) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 			// send value over the network
 			// *0m42# means motorsensor1 with 42 mA
@@ -218,9 +227,12 @@ void SensorThread::run()
 
 			if (readMotorSensor(MOTORSENSOR2) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
@@ -231,9 +243,12 @@ void SensorThread::run()
 
 			if (readMotorSensor(MOTORSENSOR3) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
@@ -241,9 +256,12 @@ void SensorThread::run()
 
 			if (readMotorSensor(MOTORSENSOR4) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
@@ -280,16 +298,22 @@ void SensorThread::run()
 			//-----------------
 			if (readDrivenDistance(DRIVENDISTANCE1) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading driven distance 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 			if (readDrivenDistance(DRIVENDISTANCE2) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading driven distance 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 
@@ -301,9 +325,12 @@ void SensorThread::run()
 				//-------------------------------------------
 				if (readCompassAxis(XAXIS) == false)
 				{
+					emit message("<font color=\"#FF0000\">ERROR reading compass axis X. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					// mutex->unlock();
-					// stop();
+					 mutex->unlock();
+					 // stop this thread
+					 stop();
+					 return;
 				}
 				// send value over the network
 				// *xc42# means axis x of the compass has 42°
@@ -312,9 +339,12 @@ void SensorThread::run()
 
 				if (readCompassAxis(YAXIS) == false)
 				{
+					emit message("<font color=\"#FF0000\">ERROR reading compass axis Y. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					// mutex->unlock();
-					// stop();
+					 mutex->unlock();
+					 // stop this thread
+					 stop();
+					 return;
 				}
 				// send value over the network
 				// *yc42# means axis y of the compass has 42°
@@ -323,9 +353,12 @@ void SensorThread::run()
 
 				if (readCompassAxis(ZAXIS) == false)
 				{
+					emit message("<font color=\"#FF0000\">ERROR reading compass axis Z. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					// mutex->unlock();
-					// stop();
+					 mutex->unlock();
+					 // stop this thread
+					 stop();
+					 return;
 				}
 				// send value over the network
 				// *zc42# means axis z of the compass has 42°
@@ -346,44 +379,62 @@ void SensorThread::run()
 			//------------------
 			if (readInfraredSensor(SENSOR1) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 			if (readInfraredSensor(SENSOR2) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 			if (readInfraredSensor(SENSOR3) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 			if (readInfraredSensor(SENSOR4) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 			if (readInfraredSensor(SENSOR5) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 5. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 			if (readInfraredSensor(SENSOR6) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 6. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 
 			// infrared sensors 7 and 8 are now the voltage sensors!
@@ -395,9 +446,12 @@ void SensorThread::run()
 			//---------------------
 			if (readUltrasonicSensor(SENSOR16) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading ultrasonic sensor. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 */
 
@@ -405,9 +459,12 @@ void SensorThread::run()
 			// read value of contact 1 (cam pan L)
 			if (readContact(CONTACT1) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 				else
 				{
@@ -425,9 +482,12 @@ void SensorThread::run()
 			// read value of contact 2 (cam pan R)
 			if (readContact(CONTACT2) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 				else
 				{
@@ -445,9 +505,12 @@ void SensorThread::run()
 			// read value of contact 3 (cam tilt L/TOP)
 			if (readContact(CONTACT3) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 				else
 				{
@@ -465,9 +528,12 @@ void SensorThread::run()
 			// read value of contact 4 (cam tilt R/BOTTOM)
 			if (readContact(CONTACT4) == false)
 			{
+				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				// mutex->unlock();
-				// stop();
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 return;
 			}
 				else
 				{
@@ -704,7 +770,11 @@ bool SensorThread::resetDrivenDistance(int sensor)
 			}
 
 			// error
-			mutex->unlock();
+			emit message("<font color=\"#FF0000\">ERROR resetting driven distance 1. Stopping sensorThread!</font>");
+			// Unlock the mutex.
+			 mutex->unlock();
+			 // stop this thread
+			 stop();
 			return false;
 			break;
 		case MOTORSENSOR2:
@@ -724,7 +794,11 @@ bool SensorThread::resetDrivenDistance(int sensor)
 			}
 
 			// error
-			mutex->unlock();
+			emit message("<font color=\"#FF0000\">ERROR resetting driven distance 2. Stopping sensorThread!</font>");
+			// Unlock the mutex.
+			 mutex->unlock();
+			 // stop this thread
+			 stop();
 			return false;
 			break;
 	}
