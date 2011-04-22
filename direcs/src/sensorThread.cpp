@@ -1284,6 +1284,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR1] = value;
+						return true;
 					}
 				}
 			}
@@ -1304,6 +1305,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR2] = value;
+						return true;
 					}
 				}
 			}
@@ -1326,6 +1328,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR3] = value;
+						return true;
 					}
 				}
 			}
@@ -1350,6 +1353,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR4] = value;
+						return true;
 					}
 				}
 			}
@@ -1388,6 +1392,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 					{
 						// store measured value
 						drivenDistance[DRIVENDISTANCE1] = value;
+						return true;
 					}
 				}
 			}
@@ -1408,6 +1413,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 					{
 						// store measured value
 						drivenDistance[DRIVENDISTANCE2] = value;
+						return true;
 					}
 				}
 			}
@@ -1444,6 +1450,7 @@ bool SensorThread::readCompassAxis(short int axis)
 					{
 						// convert the value to degrees and store the value in the class member
 						xAxis =  convertToDegree(value);
+						return true;
 					}
 				}
 			}
@@ -1464,6 +1471,7 @@ bool SensorThread::readCompassAxis(short int axis)
 					{
 						// convert the value to degrees and store the value in the class member
 						yAxis =  convertToDegree(value);
+						return true;
 					}
 				}
 			}
@@ -1484,6 +1492,7 @@ bool SensorThread::readCompassAxis(short int axis)
 					{
 						// convert the value to degrees and store the value in the class member
 						zAxis =  convertToDegree(value);
+						return true;
 					}
 				}
 			}
