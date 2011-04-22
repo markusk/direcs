@@ -64,7 +64,7 @@
 #define	READ_AXIS_Z				63
 
 #define	INIT					64
-#define PAUSE					65
+#define SLEEP					65
 
 #define READ_CONTACT1			70
 #define READ_CONTACT2			71

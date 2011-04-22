@@ -292,6 +292,22 @@ int main(void)
 				watchdog(ENABLE);
 			}
 			else
+			// SLEEP
+			if (strcmp(stringbuffer, "*sl#") == 0)
+			{
+				// d i s a b l e  watchdog!
+				watchdog(DISABLE);
+	
+				// flashlight off
+				relais(OFF);
+
+				// red LED off
+				redLED(OFF);
+				
+				// answer
+				put_string("*sl#");
+			}
+			else
 			// READ_SENSOR_1
 			if (strcmp(stringbuffer, "*s1#") == 0)
 			{
