@@ -695,6 +695,8 @@ void Direcs::init()
 		connect(sensorThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
 		// show error messages in GUI, too
 		connect(sensorThread, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
+		// write error messages to logfile
+		connect(sensorThread, SIGNAL( message(QString, bool) ), logfile, SLOT( appendLog(QString, bool) ));
 
 		if (!consoleMode)
 		{
