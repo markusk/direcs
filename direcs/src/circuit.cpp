@@ -159,3 +159,39 @@ void Circuit::setRobotState(bool state)
 	// store the state within this class
 	circuitState = state;
 }
+
+
+bool Circuit::sleep()
+{
+	QString answer = "error";
+
+
+	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	{
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+
+		// sending SLEEP command
+		if (interface1->sendString("sl") == true)
+		{
+			// check if the robot answers with "sl"
+			if ( interface1->receiveString(answer) == true)
+			{
+				// everthing's fine
+				if (answer == "*sl#")
+				{
+					// Unlock the mutex
+					mutex->unlock();
+
+					return true;
+				}
+			}
+		}
+
+		// Unlock the mutex.
+		mutex->unlock();
+
+	}
+
+	return false;
+}

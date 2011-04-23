@@ -59,6 +59,12 @@ class Circuit : public QObject
 		bool initCircuit();
 
 		/**
+		Puts the robot's circuits to sleep. This also disables the robot's watchdog!
+		@return true, when everything was fine
+		*/
+		bool sleep();
+
+		/**
 		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
 		@return true, when connected.
 		*/
