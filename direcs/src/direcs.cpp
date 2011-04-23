@@ -1563,8 +1563,9 @@ void Direcs::shutdown()
 	//-------------------------------------------------------
 	// Last init for the robots circuits
 	//-------------------------------------------------------
-	emit message("\todo Last circuit init...");
-// 	circuit1->initCircuit(); // FIXME: what, if the robote serial communication hangs here? timeout check?
+	emit splashMessage("Putting robot to sleep...");
+	emit message("Putting robot to sleep...");
+	circuit1->sleep(); /// \todo what, if the robote serial communication hangs here? timeout check?
 
 
 	if (forceShutdown==false) // don't close a serial port when we have a forced shutdown
