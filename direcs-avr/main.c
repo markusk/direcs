@@ -304,15 +304,15 @@ int main(void)
 				PORTL &= ~(1<<PIN7);
 				PORTD &= ~(1<<PIN6);
 				PORTD &= ~(1<<PIN7);
-
-				// d i s a b l e  watchdog!
-				watchdog(DISABLE);
 	
 				// flashlight off
 				relais(OFF);
 
 				// red LED off
 				redLED(OFF);
+
+				// d i s a b l e  watchdog!
+				watchdog(DISABLE);
 				
 				// answer
 				put_string("*sl#");
@@ -1595,8 +1595,16 @@ void watchdog(uint8_t state)
 
 SIGNAL(WDT_vect)
 {
+	// turn all drive motor bits off (except PWM bits)
+	PORTL &= ~(1<<PIN0);
+	PORTL &= ~(1<<PIN1);
+	PORTL &= ~(1<<PIN2);
+	PORTL &= ~(1<<PIN3);
+	PORTL &= ~(1<<PIN6);
+	PORTL &= ~(1<<PIN7);
+	PORTD &= ~(1<<PIN6);
+	PORTD &= ~(1<<PIN7);
+
 	// turn flashlight on !
 	relais(ON);
-	
-	// and now?!?
 }
