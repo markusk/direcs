@@ -797,6 +797,9 @@ void Direcs::init()
 		// whenever there is an error in the laser sensor, turn the laser GUI LED off
 		connect(laserThread, SIGNAL( systemerror(int) ), gui, SLOT( systemerrorcatcher(int) ) );
 
+		// whenever there is an error in the laser sensor, stop driving, or so.
+		connect(laserThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
 		// write laser thread messages to logfile, too
 		connect(laserThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
@@ -4603,25 +4606,34 @@ void Direcs::checkArguments()
 
 void Direcs::systemerrorcatcher(int errorlevel)
 {
-	if (errorlevel == -1) // error with laserscanner thread
+	switch (errorlevel)
 	{
-		if (!consoleMode)
+	case -1:
+		// error with laserscanner thread
+		if (robotDrives)
 		{
-			// turn GUI laser LED red
-			gui->setLEDLaser(RED);
-		}
-	}
+			gui->appendLog("<font color=\"#0000FF\"Emergency stop due to laserscanner problems!/font>");
+			logfile->appendLog("<font color=\"#0000FF\"Emergency stop due to laserscanner problems!/font>");
 
-	if (errorlevel == -2) // error with sensor thread -> error in atmel read / write port!
-	{
+			// stop driving
+			drive(STOP);
+
+			// flashlight ON
+			motors->flashlight(ON);
+		}
+		break;
+
+	case -2:
+		// error with sensor thread -> error in atmel read / write port!
 		if (!consoleMode)
 		{
 			// stopping plot thread
 			plotThread->stop();
-
-			// force shutdown and do no circuit inits etc, when exiting direcs
-			forceShutdown = true;
 		}
+
+		// force shutdown and do no circuit inits etc, when exiting direcs
+		forceShutdown = true;
+		break;
 	}
 }
 
