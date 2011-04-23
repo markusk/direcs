@@ -295,6 +295,16 @@ int main(void)
 			// SLEEP
 			if (strcmp(stringbuffer, "*sl#") == 0)
 			{
+				// turn all drive motor bits off (except PWM bits)
+				PORTL &= ~(1<<PIN0);
+				PORTL &= ~(1<<PIN1);
+				PORTL &= ~(1<<PIN2);
+				PORTL &= ~(1<<PIN3);
+				PORTL &= ~(1<<PIN6);
+				PORTL &= ~(1<<PIN7);
+				PORTD &= ~(1<<PIN6);
+				PORTD &= ~(1<<PIN7);
+
 				// d i s a b l e  watchdog!
 				watchdog(DISABLE);
 	
