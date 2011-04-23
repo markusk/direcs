@@ -663,10 +663,10 @@ void ObstacleCheckThread::systemerrorcatcher(int errorlevel)
 {
 	if (errorlevel == -1)
 	{
-		// obstacles EVERYWHERE IN FRONT
-		emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime()); /// \todo signal for rear laser!
+// wtf?		// obstacles EVERYWHERE IN FRONT
+// wtf?		emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
 
-		emit message("<font color=\"#FF0000\">Error received from other module. Stopping obstacle check thread!</font>");
+		emit message("<font color=\"#FF0000\">Error received from other module. Stopping obstacle check thread.</font>");
 
 		// stop this thread
 		stop();
