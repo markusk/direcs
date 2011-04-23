@@ -1181,18 +1181,19 @@ void Direcs::shutdown()
 	}
 
 
-	emit message("STOPPING drive!");
-	drive(STOP); // FIXME: what if the robot (serial communication hangs here?!?) tmeout?!?
+//	emit message("STOPPING drive!");
+//	drive(STOP); /// \todo what if the robot (serial communication hangs here?!?) tmeout?!?
 
-
-	// turn off all RGB LEDs
-	servos->moveServo(SERVO1, 0);
-	servos->moveServo(SERVO2, 0);
-	servos->moveServo(SERVO3, 0);
-	servos->moveServo(SERVO4, 0);
-	servos->moveServo(SERVO5, 0);
-	servos->moveServo(SERVO6, 0);
-
+	if (forceShutdown==false)
+	{
+		// turn off all RGB LEDs
+		servos->moveServo(SERVO1, 0);
+		servos->moveServo(SERVO2, 0);
+		servos->moveServo(SERVO3, 0);
+		servos->moveServo(SERVO4, 0);
+		servos->moveServo(SERVO5, 0);
+		servos->moveServo(SERVO6, 0);
+	}
 
 	/// \todo a universal quit-threads-method
 	if (!consoleMode)
@@ -1563,21 +1564,25 @@ void Direcs::shutdown()
 	}
 
 
-	//-------------------------------------------------------
-	// Last init for the robots circuits
-	//-------------------------------------------------------
-	emit splashMessage("Putting robot to sleep...");
-	emit message("Putting robot to sleep...");
-	circuit1->sleep(); /// \todo what, if the robote serial communication hangs here? timeout check?
-
-
-	if (forceShutdown==false) // don't close a serial port when we have a forced shutdown
+	if (forceShutdown==false)
 	{
+		//-------------------------------------------------------
+		// Last init for the robots circuits
+		//-------------------------------------------------------
+		emit splashMessage("Putting robot to sleep...");
+		emit message("Putting robot to sleep...");
+		circuit1->sleep(); /// \todo what, if the robote serial communication hangs here? timeout check?
+
 		//-----------------------------
 		// close serial port to mc
 		//-----------------------------
 		emit message("Closing serial port to microcontroller...");
 		interface1->closeComPort();
+	}
+	else
+	{
+		emit splashMessage("Shutdown forced, no circuit communication anymore...");
+		emit message("Shutdown forced, no circuit communication anymore...");
 	}
 
 
