@@ -205,6 +205,12 @@ class SensorThread : public QThread
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
+		/**
+		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
+		@param errorlevel needs to be defined. Temporariliy we use -2 in case of error in this thread.
+		*/
+		void systemerror(int errorlevel);
+
 
 	private:
 		/**

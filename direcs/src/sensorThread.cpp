@@ -189,6 +189,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 			// send value over the network
@@ -202,6 +204,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 			// send value over the network
@@ -219,6 +223,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 			// send value over the network
@@ -247,6 +253,8 @@ void SensorThread::run()
 				// Unlock the mutex.
 				 mutex->unlock();
 				 // stop this thread
+				 // inform other modules
+				 emit systemerror(-2);
 				 stop();
 				 return;
 			}
@@ -261,6 +269,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 			// send value over the network
@@ -303,6 +313,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -313,6 +325,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -330,6 +344,8 @@ void SensorThread::run()
 					 mutex->unlock();
 					 // stop this thread
 					 stop();
+					 // inform other modules
+					 emit systemerror(-2);
 					 return;
 				}
 				// send value over the network
@@ -344,6 +360,8 @@ void SensorThread::run()
 					 mutex->unlock();
 					 // stop this thread
 					 stop();
+					 // inform other modules
+					 emit systemerror(-2);
 					 return;
 				}
 				// send value over the network
@@ -358,6 +376,8 @@ void SensorThread::run()
 					 mutex->unlock();
 					 // stop this thread
 					 stop();
+					 // inform other modules
+					 emit systemerror(-2);
 					 return;
 				}
 				// send value over the network
@@ -384,6 +404,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -394,6 +416,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -404,6 +428,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -414,6 +440,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -424,6 +452,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -434,6 +464,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 
@@ -451,6 +483,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 */
@@ -464,6 +498,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 				else
@@ -487,6 +523,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 				else
@@ -510,6 +548,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 				else
@@ -533,6 +573,8 @@ void SensorThread::run()
 				 mutex->unlock();
 				 // stop this thread
 				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
 				 return;
 			}
 				else
@@ -775,6 +817,8 @@ bool SensorThread::resetDrivenDistance(int sensor)
 			 mutex->unlock();
 			 // stop this thread
 			 stop();
+			 // inform other modules
+			 emit systemerror(-2);
 			return false;
 			break;
 		case MOTORSENSOR2:
@@ -799,6 +843,8 @@ bool SensorThread::resetDrivenDistance(int sensor)
 			 mutex->unlock();
 			 // stop this thread
 			 stop();
+			 // inform other modules
+			 emit systemerror(-2);
 			return false;
 			break;
 	}

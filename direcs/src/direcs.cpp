@@ -617,6 +617,9 @@ void Direcs::init()
 					emit message("Starting sensor thread...", false);
 					sensorThread->start();
 					emit message("Sensor thread started.");
+
+					// whenever there is a material error, react!
+					connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 				}
 
 #ifndef BUILDFORROBOT
@@ -4601,6 +4604,18 @@ void Direcs::systemerrorcatcher(int errorlevel)
 		{
 			// turn GUI laser LED red
 			gui->setLEDLaser(RED);
+		}
+	}
+
+	if (errorlevel == -2) // error with sensor thread -> error in atmel read / write port!
+	{
+		if (!consoleMode)
+		{
+			// stopping plot thread
+			plotThread->stop();
+
+			// force shutdown and do no circuit inits etc, when exiting direcs
+			forceShutdown = true;
 		}
 	}
 }
