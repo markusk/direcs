@@ -138,6 +138,12 @@ void LaserThread::run()
 					{
 						getAndStoreLaserValuesFront();
 						emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+
+						// resetting error counter one by one (for each good read, we are moving to "0".
+						if (errorCounter > 0)
+						{
+							errorCounter--;
+						}
 					}
 					else
 					{
