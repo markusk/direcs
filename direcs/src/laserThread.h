@@ -230,8 +230,11 @@ class LaserThread : public QThread
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
 
-		// nuber of tries reading from laser scanner
-		static const short int MAXERRORS = 3;
+		/**
+		Nuber of tries reading from laser scanner.
+		In case of error, we send the Signal systemerror, which lets the robot stop. In case of good reading, we decrease the errorcounter by one to zero.
+		*/
+		static const short int MAXERRORS = 2;
 };
 
 #endif

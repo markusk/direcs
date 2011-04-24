@@ -147,7 +147,7 @@ void LaserThread::run()
 					}
 					else
 					{
-						if (errorCounter > MAXERRORS)
+						if (errorCounter >= MAXERRORS)
 						{
 							stopped = true;
 							emit message(QString("%1 ERRORs reading S300 data. Laser thread stopped!").arg(MAXERRORS));
