@@ -292,7 +292,7 @@ int main(void)
 				watchdog(ENABLE);
 			}
 			else
-			// SLEEP
+			// SLEEP (and turn off watchdog)
 			if (strcmp(stringbuffer, "*sl#") == 0)
 			{
 				// turn all drive motor bits off (except PWM bits)
