@@ -127,7 +127,13 @@ class LaserThread : public QThread
 		/**
 		This slot enables or disables the simulation mode.
 		*/
-		void setSimulationMode(bool status);
+		void setSimulationMode(bool state);
+
+		/**
+		  This slot sets the measure mode. If activated one can walk around the laser, and the lessest value will only be stored.
+		  With this one can set a new alarm distance by walking around the robot.
+		  */
+		void setMeasureMode(bool state);
 
 
 	signals:

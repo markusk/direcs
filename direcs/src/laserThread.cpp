@@ -213,7 +213,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 				// flip the data, due to a flipped mounting of the hardware!
 				//
 				// get the data from 0 to 180 degrees (left to right)
-				// 'flip' will be increased every step - 1, so the data are stored from 180° to 0°
+				// 'flip' will be increased every step - 1, so the data are stored from 180 deg to 0 deg
 				for (int angle=0, flip=numReadingsFront-1; angle<numReadingsFront; angle++, flip--)
 				{
 					// get value from laser
@@ -404,7 +404,7 @@ void LaserThread::setFlag(short int laserScanner, int angle, int flag)
 }
 
 
-void LaserThread::setSimulationMode(bool status)
+void LaserThread::setSimulationMode(bool state)
 {
 	// check if all necessary values have been initialised
 	if (laserScannerFrontIsConnected)
@@ -436,7 +436,7 @@ void LaserThread::setSimulationMode(bool status)
 	}
 
 	// store the sim state
-	simulationMode = status;
+	simulationMode = state;
 
 
 	if (simulationMode == true)
