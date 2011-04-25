@@ -586,12 +586,14 @@ void Direcs::init()
 				motors->setMotorSpeed(3, mot3Speed);
 				motors->setMotorSpeed(4, mot4Speed);
 				emit message("Motor speed set in microcontroller");
+				logfile->appendLog("Motor speed set in microcontroller");
 
 				//-------------------------------------------------------
 				// move all servos in their default positions
 				//-------------------------------------------------------
 				servos->init();
 				emit message("Servos moved to default positions");
+				logfile->appendLog("Servos moved to default positions");
 
 				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
