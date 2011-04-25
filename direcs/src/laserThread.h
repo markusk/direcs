@@ -179,6 +179,7 @@ class LaserThread : public QThread
 		int numReadingsFront;
 		int numReadingsRear;
 		bool simulationMode;
+		bool measureMode;
 		QString mountingLaserscannerFront; /// cane be "normal" or "flipped"
 		QString mountingLaserscannerRear; /// cane be "normal" or "flipped"
 		int laserscannerAngleFront; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees

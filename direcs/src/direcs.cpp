@@ -4693,6 +4693,14 @@ void Direcs::drivingLight(unsigned char color)
 
 void Direcs::test()
 {
+	static bool toggle = false;
+
+
+	toggle = !toggle;
+	laserThread->setMeasureMode(toggle);
+	gui->appendLog(QString("Measure mode = %1").arg(toggle));
+
+/*
 	static int color = 0;
 
 
@@ -4772,6 +4780,7 @@ void Direcs::test()
 		drivingLight(LEDOFF);
 		return;
 	}
+*/
 
 
 	/*

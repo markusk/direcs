@@ -23,7 +23,6 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>camThread_8h</filename>
     <class kind="class">CamThread</class>
-    <class kind="struct">KOORD_T</class>
   </compound>
   <compound kind="file">
     <name>circuit.cpp</name>
@@ -97,6 +96,7 @@
     <includes id="laserThread_8h" name="laserThread.h" local="yes" imported="no">laserThread.h</includes>
     <includes id="joystick_8h" name="joystick.h" local="yes" imported="no">joystick.h</includes>
     <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
+    <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
     <includes id="speakThread_8h" name="speakThread.h" local="yes" imported="no">speakThread.h</includes>
     <class kind="struct">CleanExit</class>
     <class kind="class">Direcs</class>
@@ -1534,13 +1534,6 @@
     <filename>classCamThread.html</filename>
     <member kind="slot">
       <type>void</type>
-      <name>drawContactAlarm</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a6c1e768a2a61440b20fb68cd3f2c8a16</anchor>
-      <arglist>(char position, bool state)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>enableFaceDetection</name>
       <anchorfile>classCamThread.html</anchorfile>
       <anchor>a765e53b83e63b9cc7d7ea7d7988276a4</anchor>
@@ -1548,17 +1541,31 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>test</name>
+      <name>setThreshold</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>af1a3ff8f6f634aa46cd48ee2b44cfac9</anchor>
-      <arglist>()</arglist>
+      <anchor>acc995eeee20b3f7b628be8b303312e7c</anchor>
+      <arglist>(int threshold)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
-      <name>camDataComplete</name>
+      <name>camImageComplete</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a3aad7aacf47d8aace3c08cf6b834711e</anchor>
-      <arglist>(IplImage *imgPtr)</arglist>
+      <anchor>af149d0cbb0fc53357f1cc9337f5f114b</anchor>
+      <arglist>(QImage *image)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>camImageDepthComplete</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a3ec71a27f676819262687cfbfdcd7a51</anchor>
+      <arglist>(QImage *image)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>camImageOpenCVComplete</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a5f989dc37caa98808608d1e6b6518246</anchor>
+      <arglist>(QImage *image)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -1596,27 +1603,6 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>int</type>
-      <name>imageHeight</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a8ac063f3a77007fbc7a367cf030494a6</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>imagePixelDepth</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>ab8a1bbea4402430612ad81e65402ce0f</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>imageWidth</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a8dbe49e4e201a560717ad0e4715e4362</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>bool</type>
       <name>init</name>
       <anchorfile>classCamThread.html</anchorfile>
@@ -1636,13 +1622,6 @@
       <anchorfile>classCamThread.html</anchorfile>
       <anchor>a343567ede62f3455081180ac53331134</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setCameraDevice</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>af2506cb760e15f6aca44b57f04a8f011</anchor>
-      <arglist>(int device)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -1666,13 +1645,6 @@
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
-      <name>cameraDevice</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a53f0fe4a2e09fc034b8fdcf1f85ac6d2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>bool</type>
       <name>cameraIsOn</name>
       <anchorfile>classCamThread.html</anchorfile>
@@ -1680,38 +1652,31 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>contactAlarmBottom</name>
+      <type>char *</type>
+      <name>data</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a0d2efca7f8ae8ddb47b66bf9f6ac31f7</anchor>
+      <anchor>a6f021c4f806b757bbea55e13a688584a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>contactAlarmLeft</name>
+      <type>char *</type>
+      <name>dataDepth</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a7719ac2c22f0fa5809db90e7247fafd4</anchor>
+      <anchor>a387c047f57507cab2c91f2cba652c19c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>contactAlarmRight</name>
+      <type>freenect_context *</type>
+      <name>f_ctx</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a89118efcff164ddd487d35e6b63b963d</anchor>
+      <anchor>adc9cdf6061c63ecfb2224b11ec7a825d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>contactAlarmTop</name>
+      <type>freenect_device *</type>
+      <name>f_dev</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>aab93e05aae1900596deef4e0970cfa30</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QVector&lt; KOORD_T &gt;</type>
-      <name>detectedFaces</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>ad16cfdc0e16527e214344ac99588301e</anchor>
+      <anchor>ab6518cf64f3bd4b3572ebe9df666df86</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -1729,17 +1694,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>Mat</type>
+      <name>gray</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a2f2be10e5991d7e60370c544900aeb23</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>QString</type>
       <name>haarClassifierCascadeFilename</name>
       <anchorfile>classCamThread.html</anchorfile>
       <anchor>ae367e8a75516ea79bd30532f0ab114b9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>height</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a1578c0db1e0a6c6e07651e4836ea8060</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -1750,10 +1715,38 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
-      <name>pixeldepth</name>
+      <type>std::vector&lt; uint16_t &gt;</type>
+      <name>m_gamma</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a3b7a2836e3cfa45cc99793eeaad18400</anchor>
+      <anchor>adefbee0d13efbc916a8428c6efeb481b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>mThreshold</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a8e4b10176e16e8946851b43bc2928fcd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QImage</type>
+      <name>qimage</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a6244ff6a579128723271df2f4bc23283</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QImage</type>
+      <name>qimageDepth</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>aed3a7392e12a09adf39d8b40d860c02a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QImage</type>
+      <name>qimageOpenCV</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>af3f890786df9f88ff6c32768aa311a20</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -1764,52 +1757,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
-      <name>width</name>
+      <type>unsigned int</type>
+      <name>timestamp</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a4bbddf5b6eb62e424748ffa01de0c764</anchor>
+      <anchor>ad4ff6715abba211c4a39c3e4001f3f11</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>BOTTOM</name>
+      <type>static const unsigned long</type>
+      <name>THREADSLEEPTIME</name>
       <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a5bf0e24d6bcea1175b3311915cea2f35</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>FACEARRAYSIZE</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>ac66a1f55f32dbd5634b5a33e4cc42b4f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>LEFT</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a00b03952be46576c4318a72705ec9030</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>RIGHT</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>ad41ca22b9ab1ae1857bc1e30235653fc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const double</type>
-      <name>scale</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a8d4f5e2f84aef91fbbc165d245252115</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>TOP</name>
-      <anchorfile>classCamThread.html</anchorfile>
-      <anchor>a6b954181c0410a88f21442120d94294a</anchor>
+      <anchor>a53704fa03dcee1a5fde641d03be96bdf</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -1836,6 +1794,13 @@
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a967d7fef9e9652d1e9cf84d35ce21f42</anchor>
       <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
+      <name>sleep</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a9d83f2adbe78963d19e94aa422b483f0</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -1977,6 +1942,13 @@
       <anchorfile>classCompassWidget.html</anchorfile>
       <anchor>a97261d426c948a5b1e33f04e5406a8b3</anchor>
       <arglist>(float xAngle, float yAngle, float zAngle)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setBackgroundColor</name>
+      <anchorfile>classCompassWidget.html</anchorfile>
+      <anchor>ab9efeecf8b60b22be62c03e9584d3c11</anchor>
+      <arglist>(QColor col)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -2914,8 +2886,8 @@
       <type>void</type>
       <name>drive</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>abe9407c8e189c7c97331252c6d4be704</anchor>
-      <arglist>(const unsigned char command)</arglist>
+      <anchor>ae28946a239f4ab3e8c00b0f6cf49b44e</anchor>
+      <arglist>(const int command)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -3047,8 +3019,8 @@
       <type>void</type>
       <name>message</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>affea9a7dbaad97a71434dd0d25c3f937</anchor>
-      <arglist>(QString text, bool CR=true, bool sayIt=false)</arglist>
+      <anchor>aabb0db514c903ada40799d49b73efeff</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -3143,6 +3115,13 @@
     </member>
     <member kind="function" protection="private">
       <type>void</type>
+      <name>drivingLight</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a7b49ecb8a75d3d50508fabc53de4167c</anchor>
+      <arglist>(unsigned char color)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
       <name>readSettings</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a4585a9e133d01f6a42b12023fbf126b1</anchor>
@@ -3174,6 +3153,13 @@
       <name>cameraTestMode</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a25b2341abb3f927fc2de45bf5844c579</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>CamThread *</type>
+      <name>camThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a53e90b59b5542a3b962fbff3baf2ff38</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3314,13 +3300,6 @@
       <name>joystickDialog</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a217592e0e53a6f326f80f6c9e489109e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>QKinect *</type>
-      <name>kinect</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>afdc846a7483f413810a7ce0c154c832e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3618,31 +3597,24 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>ALLMOTORS</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a7a566b1873f73d5ea77db398c4c8dc48</anchor>
+      <anchor>ae12b28b84f08e80fa8504c0d913a7532</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>BACKWARD</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>af6d851cb31470a4ad5ec1ffb8341cc10</anchor>
+      <anchor>aaba209b04fdabbcf9bdd184f2bcd7ce8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
-      <name>CLOCKWISE</name>
+      <name>BLUE</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a009cce67759a982c587e408bad8d3574</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>COUNTERCLOCKWISE</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a5074946caf3405f8cc9bae356e97fdb5</anchor>
+      <anchor>a008cc497d0c2733982836a6c096c01f5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3653,10 +3625,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>FORWARD</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>aad74fe3aa6a92f431756a965d52bc1f8</anchor>
+      <anchor>ac16e24eb9285e8ee717879aa971c944a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3744,10 +3716,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>LEFT</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a9e1a6a8c9dc69011ccb6a540a27dbaf3</anchor>
+      <anchor>a93abe7f2b64b20a57bf8c001089bc12f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3772,115 +3744,115 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a3da2e6bd69adcabeb97279b903972e4c</anchor>
+      <anchor>a4a264633591b09ab8fe176a65d8ca01d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1BW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a11ed3d6134f2b0159697779b98491e94</anchor>
+      <anchor>aaeb50e1e759a5416390d59f28e3a94f6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1FW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>ab917eb52386c01385c8185ce19f071b9</anchor>
+      <anchor>ad8d9ec49e72af02d25c591efd4b56abb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1OFF</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a4c6a2a04a89b3cbabdcd0d2514835bc9</anchor>
+      <anchor>a56234e9ab979bb31473192c369205f0c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a4d5b17ed1fa73fa7945c3d2ae0141207</anchor>
+      <anchor>a142cd172cece583feaa4009cd05c099c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2BW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a40b71c9a5e99492628eeba6f8c13c620</anchor>
+      <anchor>aba3bf6c52ba02d7f7c6bbb789473e4fa</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2FW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>acc138927816640305f56312b7204e3bb</anchor>
+      <anchor>abcbd7fb5f9dd631dfc9e3a7cf213e476</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2OFF</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a2f5f8156aec1d00e9a831e9a4c546682</anchor>
+      <anchor>a404655c3748771a2b0bfe3c2419571d7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>aadb5de98820cbfd5cd727bdb6349b1bf</anchor>
+      <anchor>a87ce9e8bd7641f51d915c7cb8841cca6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3BW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a1b6c06cd44fcc34ca6f6a2196cd43c4a</anchor>
+      <anchor>a71ee8981849c58755491dba4f202992c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3FW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>ac94755a6c48217ff213c3e7cd6091deb</anchor>
+      <anchor>add3541e999c3ab553e42052e63d185e4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3OFF</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a2dc7a50fb4ebd592ebcd9621aa852097</anchor>
+      <anchor>a17525db9f5a62097747cc06d4ed42f24</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>affe3c7a7c9b15da978a4813869ade2d2</anchor>
+      <anchor>a8acd340d586fa9ca7a9201ccce93aebf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4BW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a23ee65547c86434def158af17c367fb6</anchor>
+      <anchor>a3b6b9484b1ab4f246b675ba1e9527d23</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4FW</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a8bfee8293bcc6350816116f8908585ce</anchor>
+      <anchor>a65471145346a601dd41a5808c5bf36a9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4OFF</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a0922b61962df31f7a3fd9aea25f54db7</anchor>
+      <anchor>a5995829591f029238c3d9b01a1f13859</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3947,24 +3919,24 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>READ_AXIS_X</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a6fc2794bd6a8f6639be86c0be377d9b4</anchor>
+      <anchor>a7e009f6a0f0c1fa51957032ff1f55a38</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>READ_AXIS_Y</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a7871a7b8fa4d0203f831b7f39d2851f4</anchor>
+      <anchor>a78b155bb953e41d4d961d121e3c21d24</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>READ_AXIS_Z</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a3135834bd3d8e8ac0e4e1ca625658534</anchor>
+      <anchor>a44443acbd87960aac45843b2d7d12962</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3975,17 +3947,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>RIGHT</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>af98726a902f99346a36834b668557471</anchor>
+      <anchor>afc68fdc2c35e7a981dbbc229c05c92a6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>SAME</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>ab32ef3a1fee2525e310b97460e48df48</anchor>
+      <anchor>a10afa65200d76471096cffaaa48e8426</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4101,17 +4073,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>START</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>ae9f527d1652474216aabb58cb9f37e5e</anchor>
+      <anchor>add2ada2957482da65d30bccdaf08d7dd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>STOP</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a45af0d460aee64b9218e5b478aada6e2</anchor>
+      <anchor>ab2847982993f8e3d9368c311a7265d42</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4157,17 +4129,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>TURNLEFT</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a9bb8c0316e2ab02d0bf0766c89ba0de5</anchor>
+      <anchor>abcb40839e7ca41ca2514b4998b4b820d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>TURNRIGHT</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a33f5465be31db31e55acfac018c93eaa</anchor>
+      <anchor>a7f9e21532ae0d935fe06b233d63b7f6e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4185,10 +4157,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>WAIT</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a0f1eac0eafe86fddc1eeb74c08d3b15d</anchor>
+      <anchor>a6ac46143bc13439e8d809c39fb9e741a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>WHITE</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a4b3fbeb2ebfcf5287e15a6a4d3f07ad5</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -4271,6 +4250,13 @@
       <anchorfile>classDirecsSerial.html</anchorfile>
       <anchor>ade208108a72af2b4cc8ba5a55a953048</anchor>
       <arglist>(int dev_fd, unsigned char *buf, int nChars)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>setLowLatency</name>
+      <anchorfile>classDirecsSerial.html</anchorfile>
+      <anchor>a826686798c2996a89271b8c3acb77658</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -4619,13 +4605,6 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>disableCamera</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a514a620397a3eedf2f9789eda780c4ba</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>disableCompass</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>ad48fa1f2346fccc5afdb3656e8a49372</anchor>
@@ -4637,6 +4616,34 @@
       <anchorfile>classGui.html</anchorfile>
       <anchor>a879b018073c869d6c66e93a0f97186c0</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>hideCameraControls</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a5c3b1f758f9975431d73877d20e285d1</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setCamImage</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>af6eef8df4d829a96add9b794b1d24272</anchor>
+      <arglist>(QImage *image)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setCamImageDepth</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a70f85a16972ece4f8fa0194a76324596</anchor>
+      <arglist>(QImage *image)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setCamImageOpenCV</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a887b13bca06aa1386364c2b81c4c1659</anchor>
+      <arglist>(QImage *image)</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4773,6 +4780,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>showThreshold</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a765e2b4bb12aa9e3984046d5ea538d94</anchor>
+      <arglist>(int threshold)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>systemerrorcatcher</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a1db5c4ae8822880131bf6b13822a6c93</anchor>
@@ -4782,8 +4796,8 @@
       <type>void</type>
       <name>drive</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>adeadc75e73e0e0f3ebaf44217bab9c45</anchor>
-      <arglist>(const unsigned char command)</arglist>
+      <anchor>adb2ebda9e3369b6e52168462fe7f33a2</anchor>
+      <arglist>(const int command)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -4850,6 +4864,13 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>setThreshold</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a6b265fe141940103dc23a4e7858c4674</anchor>
+      <arglist>(int value)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>shutdown</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>ada58feae70f01eb9cacc012d4b2f7d56</anchor>
@@ -4885,13 +4906,6 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>setCamImageData</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>ae72a1ab8522c3deb3b60f3d54aff5c0c</anchor>
-      <arglist>(int width, int height, int pixeldepth)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>showAlarm</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a3e39b4a62def8238cb3f7c2eb10f481e</anchor>
@@ -4915,8 +4929,8 @@
       <type>void</type>
       <name>showMotorStatus</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>af89c21d71ce6cf0b45941099759f06e7</anchor>
-      <arglist>(unsigned char motor, bool power, unsigned char direction)</arglist>
+      <anchor>aba78ed4bc0f5e3683bbbe6d6cd88ed74</anchor>
+      <arglist>(int motor, bool power, int direction)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -5077,6 +5091,13 @@
       <name>on_checkBoxMirror_stateChanged</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a49c01cf888eb42806b6eef3fb1d5de79</anchor>
+      <arglist>(int)</arglist>
+    </member>
+    <member kind="slot" protection="private">
+      <type>void</type>
+      <name>on_sliderThreshold_valueChanged</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aa15aafcae591b536d75b2e0d99a70295</anchor>
       <arglist>(int)</arglist>
     </member>
     <member kind="slot" protection="private">
@@ -5353,20 +5374,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>std::vector&lt; uint8_t &gt;</type>
-      <name>m_rgb</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a776486d2070bba4078cb305227a88fd5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>cv::Mat</type>
-      <name>mImage</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>aefea306de060a4f8d94fc1b118c44b02</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>int</type>
       <name>mLargestFreeAreaEndFront</name>
       <anchorfile>classGui.html</anchorfile>
@@ -5466,23 +5473,23 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
+      <name>ALLMOTORS</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ad739f33b2c1c9fdf6f6310293749e1f4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>BACKWARD</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>acf05b2e3d3b185980ca0347a7d13ed64</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
       <name>CENTEROFLARGESTFREEWAY</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a269da7ef387dc4b5a39b4ddfbeea8681</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>CLOCKWISE</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a7cc3b48653b6d087bc662620583a585a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>COUNTERCLOCKWISE</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a39a25f6920692a94918b0e1be3644228</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -5490,6 +5497,13 @@
       <name>FITTOFRAMEFACTOR</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a18233f32cdf9e41d5ae86d931f7e93b6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>FORWARD</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aa3e63c3996bde0eef58133da1d3a23b9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -5591,6 +5605,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>LEFT</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a4f1600cb6c873eff8bf2e18988f3aad5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const float</type>
       <name>MAXIMUMPLOTHEARTBEAT</name>
       <anchorfile>classGui.html</anchorfile>
@@ -5640,115 +5661,115 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a3ba1f9d883d744c1582274d47772cafc</anchor>
+      <anchor>ae50606effea058526d6f7003fa284cda</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ac5f92a308ccafd371778a2dc1a14bc00</anchor>
+      <anchor>a102f5d82ca5389785b16e6067dbe4004</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a7a10c6f251987f205c26fd0e06d4e038</anchor>
+      <anchor>ad9371d2d732db5fed20d8669cf8ba184</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a4a2963c36935ab5b66d6e05269ff488b</anchor>
+      <anchor>a2e54664fb45c3ebbf65b7ca2deab5e62</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ac7391aacc5fbd55081635213d69ed477</anchor>
+      <anchor>ad050900a931455ee9205363d9e3e3548</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a26c08ed9fd8e58219e76cf2b0c53349d</anchor>
+      <anchor>a2e112419a25a7801b729fbdd875d1c31</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>af6de3ba8723cf564c57d2e2bdbd2960c</anchor>
+      <anchor>a9000e0b33f9f86c21f91bdea7dc3e57d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR2OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a22b879a3c7c439df8eb5b7ad49aa60e4</anchor>
+      <anchor>ae46c65c1fd249b97c6a3eb2002f1860f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a84f64a2c5b73f0adbc97c4a5a768e15a</anchor>
+      <anchor>a6d59ae3254c586fbc7cd985f99d5de74</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a57f60e187b4db634df3a1c52c4781d69</anchor>
+      <anchor>a6c39569af3cff30f84a62842bac5f17f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ae3be1e68ded7e711f1c55cd44e2a055a</anchor>
+      <anchor>a8f3bcc7e0dfafedc4168c59f2b8f311f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR3OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a8607a886899ef63f516f515350ce2508</anchor>
+      <anchor>a9273832231423c6607a26a7e2c5a3e66</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>aff9c6f3941d13dddcd451e0a1c4ee27a</anchor>
+      <anchor>ae7be59029a15271a2126123bc9d1c5e3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4BW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a91de7d22ec58805c2941fc5ca87427af</anchor>
+      <anchor>a71a493d63ddccc9586360656ce42c573</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4FW</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a74a4bf8a25cbc50b9a7d43634e52eb00</anchor>
+      <anchor>a61cb49469efa0d219500612f8c16c9a4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR4OFF</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a3e1616886b70d742501b6af851fdc699</anchor>
+      <anchor>acb01bc847358cc5d97728f1700e3233a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -5808,6 +5829,27 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>READ_AXIS_X</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a1498e21a4b631fb7bd2f8472ea6468eb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>READ_AXIS_Y</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a425cf5e66a7064375ae4f3ef53e8ddcc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>READ_AXIS_Z</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>af19a5c31c8d805db415b3ef9a54a841b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>RED</name>
       <anchorfile>classGui.html</anchorfile>
@@ -5815,10 +5857,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
+      <name>RIGHT</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a93b84c033cd943d6c2f858f7ccbbbc6b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
       <name>SAME</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>ade3aaedc2e411b560f673c0e7ee37d07</anchor>
+      <anchor>a781ee217d472b7420142689b0a769e1f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -5899,10 +5948,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>START</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a21abca2f35b19b268ad46dccb4e8e608</anchor>
+      <anchor>aa60036e8f5cb5b15924c85e61e19c7cf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -5913,10 +5962,24 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>STOP</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>abf87fb7ce331c464db716e6920c2d028</anchor>
+      <anchor>ae91208ae976422ba0c3ddf0d21815c03</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>TURNLEFT</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ab4795a1b447f60e98c7447fb54475073</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>TURNRIGHT</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a6ecdd781a91564bfcd7eec9249434834</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -5931,6 +5994,13 @@
       <name>VOLTAGESENSOR2</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a8fc4fa5981e5b84d109fbc7233aadabc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>WAIT</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a1a4c96a4369bffe0e444a4421fb87f60</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6923,38 +6993,6 @@
       <name>JOYSTICKAXISY5</name>
       <anchorfile>classJoystickDialog.html</anchorfile>
       <anchor>a76733b94e048c5beb295aeb39eb25242</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>KOORD_T</name>
-    <filename>structKOORD__T.html</filename>
-    <member kind="variable">
-      <type>int</type>
-      <name>radius</name>
-      <anchorfile>structKOORD__T.html</anchorfile>
-      <anchor>a2450a48668c90526088c2913a7b6ffde</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>rank</name>
-      <anchorfile>structKOORD__T.html</anchorfile>
-      <anchor>ad7ebc66bb528d0771ae2e84851584bbb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>x</name>
-      <anchorfile>structKOORD__T.html</anchorfile>
-      <anchor>a78818678937072457c7a8ba449e63d66</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>y</name>
-      <anchorfile>structKOORD__T.html</anchorfile>
-      <anchor>a11fc65f11b8996127c9c53291f8b7a61</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -8285,10 +8323,17 @@
     <filename>classLaserThread.html</filename>
     <member kind="slot">
       <type>void</type>
+      <name>setMeasureMode</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a97b5de789a3b15696a5fec9e77efbdb9</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setSimulationMode</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>ad8108c3193f742b2830022b11a96e653</anchor>
-      <arglist>(bool status)</arglist>
+      <anchor>a743bfedc8a69f923f09e2ba4cc7fcb08</anchor>
+      <arglist>(bool state)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -8557,6 +8602,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>measureMode</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>aa42219bd658b151869dfb60867dad8e3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>QString</type>
       <name>mountingLaserscannerFront</name>
       <anchorfile>classLaserThread.html</anchorfile>
@@ -8666,6 +8718,13 @@
       <name>LMS</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>a73dc4d92ae3660482d28892530e23028</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const short int</type>
+      <name>MAXERRORS</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a910077c74c77a3136add002684b4f0d4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -8841,8 +8900,8 @@
       <type>bool</type>
       <name>motorControl</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a5178528359d0527644147d37d5e81538</anchor>
-      <arglist>(unsigned char motor, bool power, unsigned char direction)</arglist>
+      <anchor>ac6486d9f29ed7899a0c7304e30df1263</anchor>
+      <arglist>(int motor, bool power, int direction)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -8978,17 +9037,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>ALLMOTORS</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a294ba8ddb661d31bc2fc1a72db1ef702</anchor>
+      <anchor>a2adf209464a1a74709d8c93718073d24</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>BACKWARD</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>ae18ee7609db3a19bd3f50f0d9e571833</anchor>
+      <anchor>a66fae106af1ec26a6c6fbf3eb51ddef2</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9119,20 +9178,6 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
-      <name>CLOCKWISE</name>
-      <anchorfile>classMotor.html</anchorfile>
-      <anchor>ac1ab49b884905d33777b222d7e880cb0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>COUNTERCLOCKWISE</name>
-      <anchorfile>classMotor.html</anchorfile>
-      <anchor>a0616ee2b7b91d2827e79e60de1bebd9e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
       <name>FLASHLIGHT_OFF</name>
       <anchorfile>classMotor.html</anchorfile>
       <anchor>af9467edad6f2586f6a25e246c98ce9dc</anchor>
@@ -9146,10 +9191,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>FORWARD</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a360e3c82ab6be8d07ff00f46f1b2e82f</anchor>
+      <anchor>a1703e41ad93d56d6cebeae8ebe176b58</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9160,10 +9205,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>LEFT</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a5094d75047915238c7655a53da702739</anchor>
+      <anchor>ad438aefe355254bfdfc9b6e59632d183</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9174,10 +9219,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>MOTOR1</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>aaaf78f2f87f1b6f2287dd3690e71f4b4</anchor>
+      <anchor>ae570c69581ae96807a1a96714c8cf742</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9223,10 +9268,31 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
+      <name>MOTOR1BW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a3f9f66c037085b546b150715ea27d761</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR1FW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a8085c39df2406714f188ee986b95702f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR1OFF</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a609791495a53f2bc56b1bc9d152cdb29</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
       <name>MOTOR2</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>abf54e569fdcd415ab3b1bec3f19fca07</anchor>
+      <anchor>a1e0434595ea2124fa3716e23c68f4d3d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9272,10 +9338,31 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
+      <name>MOTOR2BW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a62e7aefef02e33ef253723972fe0aff5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR2FW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a5e17db74040973035881fbc8ec4d7948</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR2OFF</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>ae588a88116723e7388ed3b1776944b1b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
       <name>MOTOR3</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a9671e47d5ebd6b867a332ff9da9c3963</anchor>
+      <anchor>a25285ea560ca0fb4633171c76452ade3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9307,10 +9394,31 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
+      <name>MOTOR3BW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a55f22b013bdf7c03bad2bd739abf1c4e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR3FW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>ae097ac30f52e08c297ca008659be1674</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR3OFF</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>aee8c1946641d92f8d1904ab8ae99f558</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
       <name>MOTOR4</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a9291b449831c2cb3c41852d369c2e2a9</anchor>
+      <anchor>a47bff28278d2226d91e3836d29ad0dbd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9342,6 +9450,27 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR4BW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a5c9d92b84e215374e6b320cf1c9bfeb8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR4FW</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a404536c4476faa05395ae5ab675fd457</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MOTOR4OFF</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a72024c525b92d500301cff7638c452a9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
       <name>MOTORCLOCK</name>
       <anchorfile>classMotor.html</anchorfile>
@@ -9363,17 +9492,38 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
-      <name>RIGHT</name>
+      <type>static const int</type>
+      <name>READ_AXIS_X</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a971433e94763ddc3ae14d3aaf401638d</anchor>
+      <anchor>abe823493b58e19d69a7306fe7bfd4189</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
+      <name>READ_AXIS_Y</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>acdc84c569047a464ec2ed08130fbfaaa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>READ_AXIS_Z</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a926e723041e89615acc161d0d3419c78</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>RIGHT</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a052c4ad7f075db9e9f8a8b0a40b2e89d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
       <name>SAME</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a0908be292908516f3333ac6ab3cacc34</anchor>
+      <anchor>a50b4957dc49eba8deb08c4beafbe802f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9384,38 +9534,38 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>START</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>ab2a09f3925d04edcca2647ea6a052cd0</anchor>
+      <anchor>a352927badf53e989dfaf763649881990</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>STOP</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a8047dc373a9913899c3a373f430c3a1b</anchor>
+      <anchor>a05d4df92e60286076d5e86b924a756cc</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>TURNLEFT</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>ae76c943d918efa64d5dbd8ad127f52e2</anchor>
+      <anchor>a4cca6ef77e278e4009aea0f99d493e01</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>TURNRIGHT</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>a521cd8def41d6c631240113500a2aa8f</anchor>
+      <anchor>a5257b7029b859dd0fa28e1a4b73ee0df</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned char</type>
+      <type>static const int</type>
       <name>WAIT</name>
       <anchorfile>classMotor.html</anchorfile>
-      <anchor>aa8f28c9bad3ad72dafcd7535ec0d37a2</anchor>
+      <anchor>ad43a49d354edfee80c1afd53ba55a265</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -10936,6 +11086,13 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>message</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>ab11911acef9e06d02e430510ea855331</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>sendNetworkString</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>a45da7b4633ac1eaff3c5d7c7dd18c470</anchor>
@@ -10947,6 +11104,13 @@
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>a184faa1dc7f377931953d1c2bf16b7cb</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>systemerror</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>a988e083df62d9db68bab9e30f79f6cbb</anchor>
+      <arglist>(int errorlevel)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -11730,10 +11894,10 @@
       <arglist>(void)</arglist>
     </member>
     <member kind="slot">
-      <type>void</type>
+      <type>bool</type>
       <name>moveServo</name>
       <anchorfile>classServo.html</anchorfile>
-      <anchor>a50019278e68334d583893770567b1e4e</anchor>
+      <anchor>ad768bd5587c46c4610bb50be05ef9a37</anchor>
       <arglist>(unsigned char servo, unsigned char position)</arglist>
     </member>
     <member kind="slot">
@@ -11757,13 +11921,6 @@
       <anchor>ae96ce9ca7e632339a915c9bec552d01e</anchor>
       <arglist>(int servo, unsigned char type=SVCURRENT)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>run</name>
-      <anchorfile>classServo.html</anchorfile>
-      <anchor>a462745dc4bfea892a5a65603590ba748</anchor>
-      <arglist>()</arglist>
-    </member>
     <member kind="function">
       <type></type>
       <name>Servo</name>
@@ -11777,13 +11934,6 @@
       <anchorfile>classServo.html</anchorfile>
       <anchor>a421751a5ec3282134387b8ab4c615562</anchor>
       <arglist>(int servo, unsigned char type, unsigned char position)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>stop</name>
-      <anchorfile>classServo.html</anchorfile>
-      <anchor>aef590ce5ad82d3373abecd04c521d163</anchor>
-      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -11854,13 +12004,6 @@
       <anchorfile>classServo.html</anchorfile>
       <anchor>a6c977559f3bf0f15d57c8555e5195340</anchor>
       <arglist>[NUMBEROFSERVOS]</arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>volatile bool</type>
-      <name>stopped</name>
-      <anchorfile>classServo.html</anchorfile>
-      <anchor>a6ed495f6287c5598851367c893cf2f46</anchor>
-      <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>

@@ -27,6 +27,7 @@ LaserThread::LaserThread()
 	laserScannerFrontIsConnected = false;
 	laserScannerRearIsConnected = false;
 	simulationMode = false;
+	measureMode = false;
 	numReadingsFront = 0;
 	numReadingsRear  = 0;
 	laserscannerAngleFront = -1;
@@ -231,15 +232,33 @@ void LaserThread::getAndStoreLaserValuesFront()
 	{
 		if (laserscannerTypeFront == S300)
 		{
+			float currentDistance = 0.0;
+
+
 			if (mountingLaserscannerFront == "normal")
 			{
 				// /get the data from 0 to 270 degrees (left to right)
 				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
 				for (int angleIndex=0; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++)
 				{
-					// get value from laser
-					// store the value in an array in this thread
-					laserScannerValuesFront[angleIndex] = laserS300->getDistance(angleIndex);
+					//  get distance
+					currentDistance = laserS300->getDistance(angleIndex);
+
+					// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
+					if (measureMode)
+					{
+						// only store value from laser if the new value (current distance) is less than the last stored value
+						if (currentDistance < laserScannerValuesFront[angleIndex])
+						{
+							// store the value in an array in this thread
+							laserScannerValuesFront[angleIndex] = currentDistance;
+						}
+					}
+					else
+					{
+						// store the value in an array in this thread
+						laserScannerValuesFront[angleIndex] = currentDistance;
+					}
 
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
@@ -252,12 +271,27 @@ void LaserThread::getAndStoreLaserValuesFront()
 				//
 				// get the data from 0 to 270 degrees (left to right)
 				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
-				// 'flip' will be increased every step - 1, so the data are stored from 270� to 0�
+				// 'flip' will be increased every step - 1, so the data are stored from 270 deg to 0 deg
 				for (int angleIndex=0, flip=(laserscannerAngleFront/laserscannerResolutionFront)-1; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++, flip--)
 				{
-					// get value from laser
-					// store the value in an array in this thread
-					laserScannerValuesFront[flip] = laserS300->getDistance(angleIndex);
+					//  get distance
+					currentDistance = laserS300->getDistance(angleIndex);
+
+					// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
+					if (measureMode)
+					{
+						// only store value from laser if the new value (current distance) is less than the last stored value
+						if (currentDistance < laserScannerValuesFront[angleIndex])
+						{
+							// store the value in an array in this thread
+							laserScannerValuesFront[flip] = currentDistance;
+						}
+					}
+					else
+					{
+						// store the value in an array in this thread
+						laserScannerValuesFront[flip] = currentDistance;
+					}
 
 					// send value over the network
 					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
@@ -497,6 +531,13 @@ void LaserThread::setSimulationMode(bool state)
 		emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
 		emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
 	}
+}
+
+
+void LaserThread::setMeasureMode(bool state)
+{
+	// store that we are in measure state now (or not)
+	measureMode = state;
 }
 
 
