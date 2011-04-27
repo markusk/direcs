@@ -4625,12 +4625,11 @@ void Direcs::systemerrorcatcher(int errorlevel)
 {
 	switch (errorlevel)
 	{
-	case -1:
-		// error with laserscanner thread
+	case -1: // error with laserscanner thread
 		if (robotDrives)
 		{
-			gui->appendLog("<font color=\"#0000FF\"Emergency stop due to laserscanner problems!/font>");
-			logfile->appendLog("<font color=\"#0000FF\"Emergency stop due to laserscanner problems!/font>");
+			emit message("<font color=\"#0000FF\"Emergency stop due to laserscanner problems!/font>");
+			logfile->appendLog("Emergency stop due to laserscanner problems!");
 
 			// stop driving
 			drive(STOP);
@@ -4640,9 +4639,10 @@ void Direcs::systemerrorcatcher(int errorlevel)
 		}
 		break;
 
-	case -2:
+	case -2: // error with sensor thread -> error in atmel read / write port!
+		emit message("Error with sensor thread. Forcing shutdown when exitng direcs later (No last hardware init).");
+		logfile->appendLog("Error with sensor thread. Forcing shutdown when exitng direcs later (No last hardware init).");
 #ifndef BUILDFORROBOT
-		// error with sensor thread -> error in atmel read / write port!
 		if (!consoleMode)
 		{
 			// stopping plot thread
