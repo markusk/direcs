@@ -4626,13 +4626,14 @@ void Direcs::systemerrorcatcher(int errorlevel)
 		break;
 
 	case -2:
+#ifndef BUILDFORROBOT
 		// error with sensor thread -> error in atmel read / write port!
 		if (!consoleMode)
 		{
 			// stopping plot thread
 			plotThread->stop();
 		}
-
+#endif
 		// force shutdown and do no circuit inits etc, when exiting direcs
 		forceShutdown = true;
 		break;
