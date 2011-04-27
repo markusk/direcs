@@ -2194,6 +2194,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
 
+			drivingLight(GREEN);
+
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
 				emit message("ok", true, false, false);
@@ -2214,6 +2216,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
 				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
+
+			drivingLight(GREEN);
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
@@ -2236,6 +2240,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
+			drivingLight(GREEN);
+
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
 				emit message("ok", true, false, false);
@@ -2256,6 +2262,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
 				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
+
+			drivingLight(GREEN);
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
@@ -2278,6 +2286,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR4, SAME, BACKWARD);
 			}
 
+			drivingLight(GREEN);
+
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
 				emit message("ok", true, false, false);
@@ -2298,6 +2308,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR3, SAME, BACKWARD);
 				gui->showMotorStatus(MOTOR4, SAME, FORWARD);
 			}
+
+			drivingLight(GREEN);
 
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
@@ -2334,6 +2346,8 @@ void Direcs::drive(const int command)
 			/// \TODO make this speed increaser optional!
 			*/
 
+			drivingLight(GREEN);
+
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
 				emit message("ok", true, false, false);
@@ -2357,6 +2371,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR3, OFF, SAME);
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
+
+			drivingLight(WHITE);
 
 			// turning motors off
 			if (motors->motorControl(ALLMOTORS, SAME, command))
@@ -2385,6 +2401,8 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR3, OFF, SAME);
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
+
+			drivingLight(WHITE);
 
 			// turning motors off
 			if (motors->motorControl(ALLMOTORS, SAME, command))
