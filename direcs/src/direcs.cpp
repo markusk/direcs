@@ -562,7 +562,7 @@ void Direcs::init()
 				// check compass module
 				if (circuit1->initCompass() == true)
 				{
-					gui->appendLog("3D compass module detected.");
+					emit message("3D compass module detected.");
 					if (!consoleMode)
 					{
 						gui->setLEDCompass(GREEN);
@@ -570,7 +570,7 @@ void Direcs::init()
 				}
 				else
 				{
-					gui->appendLog("<font color=\"#FF0000\">3D compass module not connected!</font>");
+					emit message("<font color=\"#FF0000\">3D compass module not connected!</font>");
 					if (!consoleMode)
 					{
 						gui->setLEDCompass(RED);
@@ -4714,7 +4714,7 @@ void Direcs::test()
 
 	toggle = !toggle;
 	laserThread->setMeasureMode(toggle);
-	gui->appendLog(QString("Measure mode = %1").arg(toggle));
+	emit message(QString("Measure mode = %1").arg(toggle));
 
 /*
 	static int color = 0;
