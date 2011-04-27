@@ -190,14 +190,13 @@ int main(void)
 	// 100 * 64 µs = 6400 µs = 6,4 ms
 	//
 	// drive motor 1
-	setPWMwidth(1, 100);
+	setPWMwidth(1, 60);
 	// drive motor 2
-	setPWMwidth(2, 100);
+	setPWMwidth(2, 60);
 	// drive motor 3
-	setPWMwidth(3, 100);
+	setPWMwidth(3, 60);
 	// drive motor 4
-	setPWMwidth(4, 100);
-
+	setPWMwidth(4, 60);
 
 	// start the motor PWM timers
  	startPWM();
