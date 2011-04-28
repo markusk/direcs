@@ -140,7 +140,8 @@ HOSTNAME = $$system(hostname)
 message( Hostname is $$HOSTNAME )
 
 
-contains( HOSTNAME, [rR]obot ) {
+#contains( HOSTNAME, [rR]obot ) {
+contains( HOSTNAME, macbook.fritz.box ) {
 #contains( HOSTNAME, iMac ) {
 #contains( HOSTNAME, debianmac ) {
 	 message( ************************************** )
@@ -151,6 +152,7 @@ contains( HOSTNAME, [rR]obot ) {
 	FORMS -=	direcs.ui
 	FORMS +=	direcsSmall.ui
 
+	DEFINES += USEROBOTGUI
 #	 DEFINES += BUILDFORROBOT
 #	 DEFINES += LASERVIEW
 
@@ -163,7 +165,7 @@ contains( HOSTNAME, [rR]obot ) {
 #	 message( Removing active laser view... )
 #	 DEFINES -= ACTIVELASERVIEW
 
-	 message( Building RELEASE version (no debugging!)... )
+	 message( Building release version (no debugging!)... )
 	 CONFIG -= debug
 	 CONFIG += release
 
