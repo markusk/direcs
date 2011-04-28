@@ -36,129 +36,162 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>9</number>
       </property>
       <widget class="QWidget" name="tabState">
        <attribute name="title">
         <string>State</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string>Voltage</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap>direcs/direcs/images/battery-100.png</pixmap>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="font">
-                <font>
-                 <pointsize>36</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>12.00 V</string>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap>direcs/direcs/images/battery-040.png</pixmap>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_4">
-               <property name="font">
-                <font>
-                 <pointsize>36</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>21.68 V</string>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QGroupBox" name="groupBox_2">
-          <property name="title">
-           <string>State</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_7">
-           <item row="0" column="0">
+       <widget class="QGroupBox" name="groupBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>437</width>
+          <height>381</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Voltage</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0" rowspan="2">
+          <widget class="QWidget" name="widgetVoltage1" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>305</width>
+             <height>161</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="lblBattery1">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="lblVoltage1">
+           <property name="font">
+            <font>
+             <pointsize>24</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="text">
+            <string>12,00 V</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" rowspan="2">
+          <widget class="QWidget" name="widgetVoltage2" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>305</width>
+             <height>161</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="lblBattery2">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="lblVoltage2">
+           <property name="font">
+            <font>
+             <pointsize>24</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="text">
+            <string>24,00 V</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>439</x>
+          <y>0</y>
+          <width>321</width>
+          <height>381</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>State</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
               <widget class="QLabel" name="lblLEDHeartbeat">
                <property name="pixmap">
-                <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLabel" name="label_11">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Heartbeat</string>
                </property>
@@ -167,12 +200,17 @@
              <item row="1" column="0">
               <widget class="QLabel" name="lblLEDCompass">
                <property name="pixmap">
-                <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
               <widget class="QLabel" name="label_7">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Compass</string>
                </property>
@@ -181,12 +219,17 @@
              <item row="2" column="0">
               <widget class="QLabel" name="lblLEDCamera">
                <property name="pixmap">
-                <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
               <widget class="QLabel" name="label_9">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Camera</string>
                </property>
@@ -195,12 +238,17 @@
              <item row="3" column="0">
               <widget class="QLabel" name="lblLEDLaser">
                <property name="pixmap">
-                <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
              <item row="3" column="1">
               <widget class="QLabel" name="label_8">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Laser</string>
                </property>
@@ -209,12 +257,17 @@
              <item row="4" column="0">
               <widget class="QLabel" name="lblLEDJoystick">
                <property name="pixmap">
-                <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
              <item row="4" column="1">
               <widget class="QLabel" name="label_10">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Joystick</string>
                </property>
@@ -223,12 +276,17 @@
              <item row="5" column="0">
               <widget class="QLabel" name="lblLEDNetwork">
                <property name="pixmap">
-                <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
              <item row="5" column="1">
               <widget class="QLabel" name="label_6">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Network</string>
                </property>
@@ -236,14 +294,27 @@
              </item>
             </layout>
            </item>
-           <item row="0" column="2">
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
                 <widget class="QLabel" name="lblLEDFrontLeft4">
                  <property name="pixmap">
-                  <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                  <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -266,7 +337,7 @@
                <item>
                 <widget class="QLabel" name="lblLEDFrontRight3">
                  <property name="pixmap">
-                  <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                  <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -287,7 +358,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/bot_from_above.png</pixmap>
+                <pixmap resource="../direcs.qrc">:/images/images/bot_from_above.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -302,7 +373,7 @@
                <item>
                 <widget class="QLabel" name="lblLEDBackLeft2">
                  <property name="pixmap">
-                  <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                  <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -325,7 +396,7 @@
                <item>
                 <widget class="QLabel" name="lblLEDBackRight1">
                  <property name="pixmap">
-                  <pixmap resource="direcs/direcs/direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                  <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -336,105 +407,1243 @@
              </item>
             </layout>
            </item>
-           <item row="1" column="0" colspan="3">
-            <widget class="QWidget" name="widgetHeartbeat" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QWidget" name="widgetHeartbeat" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>161</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabCompass">
+       <attribute name="title">
+        <string>Compass</string>
+       </attribute>
+       <widget class="CompassWidget" name="frameCompass" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>371</width>
+          <height>371</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>10</y>
+          <width>241</width>
+          <height>371</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label18_12">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>X:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="lblCompassX">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>0 deg</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label18_13">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Y:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="lblCompassY">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>0 deg</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label18_14">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Z:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="2">
+          <widget class="QLabel" name="lblCompassZ">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>0 deg</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label18_15">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Heading:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <spacer name="horizontalSpacer_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLabel" name="lblCompassHeading">
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <pointsize>24</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>0 deg</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabLaserView">
+       <attribute name="title">
+        <string>Laser View</string>
+       </attribute>
+       <widget class="QSlider" name="sliderZoom">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>360</y>
+          <width>501</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>10</number>
+        </property>
+        <property name="pageStep">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksBothSides</enum>
+        </property>
+       </widget>
+       <widget class="QGraphicsView" name="graphicsViewLaser">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>501</width>
+          <height>341</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>501</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="statusTip">
+         <string>Robot can be dragged with the mouse!</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+        <property name="dragMode">
+         <enum>QGraphicsView::ScrollHandDrag</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblRobotSlotWidth">
+        <property name="geometry">
+         <rect>
+          <x>590</x>
+          <y>190</y>
+          <width>103</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>&gt; 84 cm</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblLaserFrontFreeWidth">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>190</y>
+          <width>30</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>oo</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label18_10">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>160</y>
+          <width>200</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Free area width:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblLaserFrontFreeCenter">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>110</y>
+          <width>91</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>0 deg</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label18_9">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>80</y>
+          <width>231</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Largest free area center:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblLaserFrontFreeArea">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>40</y>
+          <width>142</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>0 - 180 deg</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label18_8">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>12</y>
+          <width>171</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Largest free area:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblPreferredDirection">
+        <property name="geometry">
+         <rect>
+          <x>523</x>
+          <y>310</y>
+          <width>32</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label18_11">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>280</y>
+          <width>191</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Preferred direction:</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabLaserState">
+       <attribute name="title">
+        <string>Laser State</string>
+       </attribute>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>731</width>
+          <height>371</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="_26">
+           <item>
+            <widget class="QLabel" name="textLabel1_5">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>161</height>
-              </size>
+             <property name="text">
+              <string>Revolutions:</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+           <item>
+            <widget class="QLabel" name="labelRevolutions4">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
              </property>
-            </spacer>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
            </item>
-           <item row="0" column="3">
-            <spacer name="horizontalSpacer_6">
+          </layout>
+         </item>
+         <item row="0" column="2">
+          <layout class="QHBoxLayout" name="_1">
+           <item>
+            <widget class="QLabel" name="textLabel1_3">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Revolutions:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelRevolutions3">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <layout class="QHBoxLayout" name="_27">
+           <item>
+            <widget class="QLabel" name="textLabel1_6">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Distance:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelDrivenDistance4">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>0 cm</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="2">
+          <layout class="QHBoxLayout" name="_0">
+           <item>
+            <widget class="QLabel" name="textLabel1_4">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Distance:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelDrivenDistance3">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>0 cm</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0">
+          <layout class="QHBoxLayout" name="_20">
+           <item>
+            <widget class="QLabel" name="textLabel2_7">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Revolutions:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelRevolutions2">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="2">
+          <layout class="QHBoxLayout" name="_16">
+           <item>
+            <widget class="QLabel" name="textLabel1_2">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Revolutions:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelRevolutions1">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="3" column="0">
+          <layout class="QHBoxLayout" name="_21">
+           <item>
+            <widget class="QLabel" name="textLabel2_6">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Distance:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelDrivenDistance2">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>0 cm</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="3" column="2">
+          <layout class="QHBoxLayout" name="_17">
+           <item>
+            <widget class="QLabel" name="textLabel1">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Distance:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelDrivenDistance1">
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+               <pointsize>24</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>0 cm</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="1">
+          <spacer name="horizontalSpacer_17">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabCamera">
+       <attribute name="title">
+        <string>Camera</string>
+       </attribute>
+       <widget class="QLabel" name="lblCamera">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>320</width>
+          <height>240</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>320</width>
+          <height>240</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>320</width>
+          <height>240</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <property name="text">
+         <string>Kinect RGB Video</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblCameraDepth">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>10</y>
+          <width>320</width>
+          <height>240</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>320</width>
+          <height>240</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>320</width>
+          <height>240</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <property name="text">
+         <string>Kinect Depth Video</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabOpenCV">
+       <attribute name="title">
+        <string>OpenCV</string>
+       </attribute>
+       <widget class="QLabel" name="lblCameraOpenCV">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>320</width>
+          <height>240</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>320</width>
+          <height>240</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>320</width>
+          <height>240</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <property name="text">
+         <string>OpenCV</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>10</y>
+          <width>411</width>
+          <height>241</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>Threshold</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="sliderThreshold">
+             <property name="maximum">
+              <number>200</number>
+             </property>
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval">
+              <number>20</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblThreshold">
+             <property name="text">
+              <string>100</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>Angle</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="spinBoxKinectAngle">
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="minimum">
+              <number>-30</number>
+             </property>
+             <property name="maximum">
+              <number>30</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnKinectResetAngle">
+             <property name="text">
+              <string>Reset</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
            </item>
           </layout>
-         </widget>
-        </item>
-       </layout>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_14">
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="checkBoxMirror">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>Mirror</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="checkBoxFaceDetection">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>Face Detection</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="checkBoxFaceTracking">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Verdana</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>Face Tracking</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <item>
+              <widget class="QLabel" name="textLabel2_14">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Faces:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_13">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblFaces">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="4" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <item>
+              <widget class="QLabel" name="textLabel2_11">
+               <property name="text">
+                <string>Track to:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblFaceTrackTo">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="5" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <item>
+              <widget class="QPushButton" name="btnSavePicture">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Verdana</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Save</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../direcs.qrc">
+                 <normaloff>:/images/images/drive-harddisk.png</normaloff>:/images/images/drive-harddisk.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_14">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </widget>
-      <widget class="QWidget" name="tabLaser">
+      <widget class="QWidget" name="tabLogMain">
        <attribute name="title">
-        <string>Laser</string>
+        <string>Main Log</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="3" column="1">
-         <widget class="QLabel" name="label_2">
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="pixmap">
-           <pixmap>../Desktop/screenshot-2.png</pixmap>
-          </property>
-          <property name="scaledContents">
-           <bool>false</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QSlider" name="verticalSlider">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="tickPosition">
-           <enum>QSlider::TicksBothSides</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QTextEdit" name="textEditGlobalLog">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>751</width>
+          <height>381</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
-      <widget class="QWidget" name="tabLogs">
+      <widget class="QWidget" name="tabLogSerial">
        <attribute name="title">
-        <string>Logs</string>
+        <string>Serial Log</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QSplitter" name="splitter">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <widget class="QTextEdit" name="textEdit"/>
-          <widget class="QTextEdit" name="textEdit_2"/>
-          <widget class="QTextEdit" name="textEdit_3"/>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QTextEdit" name="textEditSerialLog">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>751</width>
+          <height>381</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabLogSerial">
+       <attribute name="title">
+        <string>Network Log</string>
+       </attribute>
+       <widget class="QTextEdit" name="textEditNetworkLog">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>751</width>
+          <height>381</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabTest">
+       <attribute name="title">
+        <string>Test</string>
+       </attribute>
       </widget>
      </widget>
     </item>
@@ -449,16 +1658,237 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuRobot">
+    <property name="title">
+     <string>Robot</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+   </widget>
+   <addaction name="menuRobot"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="sizeGripEnabled">
     <bool>false</bool>
    </property>
   </widget>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/system-shutdown.png</normaloff>:/images/images/system-shutdown.png</iconset>
+   </property>
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionLaser_View">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/sick.png</normaloff>:/images/images/sick.png</iconset>
+   </property>
+   <property name="text">
+    <string>Laser View</string>
+   </property>
+  </action>
+  <action name="actionCamera">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/camera-web.png</normaloff>:/images/images/camera-web.png</iconset>
+   </property>
+   <property name="text">
+    <string>Camera</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/configure.png</normaloff>:/images/images/configure.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionLog">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/text-plain.png</normaloff>:/images/images/text-plain.png</iconset>
+   </property>
+   <property name="text">
+    <string>Log</string>
+   </property>
+  </action>
+  <action name="actionJoystick">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/input-gaming.png</normaloff>:/images/images/input-gaming.png</iconset>
+   </property>
+   <property name="text">
+    <string>Joystick</string>
+   </property>
+  </action>
+  <action name="actionNetwork_Log">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/images/kwifimanager.png</normaloff>:/images/images/kwifimanager.png</iconset>
+   </property>
+   <property name="text">
+    <string>Network Log</string>
+   </property>
+  </action>
+  <action name="actionDrive">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/direcs_256x256.png</normaloff>:/images/images/direcs_256x256.png</iconset>
+   </property>
+   <property name="text">
+    <string>Drive</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/system-reboot.png</normaloff>:/images/images/system-reboot.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionRemote">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/network-wireless.png</normaloff>:/images/images/network-wireless.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remote</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/media-flash.png</normaloff>:/images/images/media-flash.png</iconset>
+   </property>
+   <property name="text">
+    <string>Test</string>
+   </property>
+  </action>
+  <action name="actionSimulate">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/utilities-system-monitor.png</normaloff>
+     <normalon>:/images/images/utilities-system-monitor-active.png</normalon>:/images/images/utilities-system-monitor.png</iconset>
+   </property>
+   <property name="text">
+    <string>Simulate</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionAll">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/window-duplicate.png</normaloff>:/images/images/window-duplicate.png</iconset>
+   </property>
+   <property name="text">
+    <string>All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/help-about.png</normaloff>:/images/images/help-about.png</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionVoltage">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/battery-100.png</normaloff>:/images/images/battery-100.png</iconset>
+   </property>
+   <property name="text">
+    <string>Voltage</string>
+   </property>
+  </action>
+  <action name="actionState">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/led_green.gif</normaloff>:/images/images/led_green.gif</iconset>
+   </property>
+   <property name="text">
+    <string>State</string>
+   </property>
+  </action>
+  <action name="actionResetDrivenDistance">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/measure.png</normaloff>:/images/images/measure.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset Driven Distance</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset Driven Distance</string>
+   </property>
+  </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CompassWidget</class>
+   <extends>QWidget</extends>
+   <header>compassWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="direcs/direcs/direcs.qrc"/>
   <include location="../direcs.qrc"/>
+  <include location="../../../../direcs.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>sliderThreshold</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lblThreshold</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>379</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>400</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
