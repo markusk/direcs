@@ -140,8 +140,8 @@ HOSTNAME = $$system(hostname)
 message( Hostname is $$HOSTNAME )
 
 
-#contains( HOSTNAME, [rR]obot ) {
-contains( HOSTNAME, macbook.fritz.box ) {
+contains( HOSTNAME, [rR]obot ) {
+#contains( HOSTNAME, macbook.fritz.box ) {
 #contains( HOSTNAME, iMac ) {
 #contains( HOSTNAME, debianmac ) {
 	 message( ************************************** )
