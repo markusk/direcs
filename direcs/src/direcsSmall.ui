@@ -36,13 +36,13 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>9</number>
+       <number>8</number>
       </property>
       <widget class="QWidget" name="tabState">
        <attribute name="title">
         <string>State</string>
        </attribute>
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QGroupBox" name="groupBoxVoltage">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -161,7 +161,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QGroupBox" name="groupBox_2">
+       <widget class="QGroupBox" name="groupBoxState">
         <property name="geometry">
          <rect>
           <x>439</x>
@@ -445,7 +445,7 @@
          <bool>true</bool>
         </property>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>450</x>
@@ -888,7 +888,7 @@
        <attribute name="title">
         <string>Laser State</string>
        </attribute>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1182,102 +1182,92 @@
        <attribute name="title">
         <string>Camera</string>
        </attribute>
-       <widget class="QLabel" name="lblCamera">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>320</width>
-          <height>240</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>320</width>
-          <height>240</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>320</width>
-          <height>240</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>24</pointsize>
-         </font>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Sunken</enum>
-        </property>
-        <property name="text">
-         <string>Kinect RGB Video</string>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="lblCameraDepth">
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>10</y>
-          <width>320</width>
-          <height>240</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>320</width>
-          <height>240</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>320</width>
-          <height>240</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>24</pointsize>
-         </font>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Sunken</enum>
-        </property>
-        <property name="text">
-         <string>Kinect Depth Video</string>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_7">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblCamera">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>320</width>
+            <height>240</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>320</width>
+            <height>240</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>24</pointsize>
+           </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="text">
+           <string>Kinect RGB Video</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="lblCameraDepth">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>320</width>
+            <height>240</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>320</width>
+            <height>240</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>24</pointsize>
+           </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="text">
+           <string>Kinect Depth Video</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tabOpenCV">
        <attribute name="title">
@@ -1286,8 +1276,8 @@
        <widget class="QLabel" name="lblCameraOpenCV">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>10</y>
+          <x>20</x>
+          <y>71</y>
           <width>320</width>
           <height>240</height>
          </rect>
@@ -1334,9 +1324,9 @@
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>10</y>
-          <width>411</width>
+          <x>360</x>
+          <y>70</y>
+          <width>401</width>
           <height>241</height>
          </rect>
         </property>
@@ -1625,7 +1615,7 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="tabLogSerial">
+      <widget class="QWidget" name="tabLogNetwork">
        <attribute name="title">
         <string>Network Log</string>
        </attribute>
@@ -1871,7 +1861,7 @@
  </customwidgets>
  <resources>
   <include location="../direcs.qrc"/>
-  <include location="../../../../direcs.qrc"/>
+  <include location="../direcs.qrc"/>
  </resources>
  <connections>
   <connection>
