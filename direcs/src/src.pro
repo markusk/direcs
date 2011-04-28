@@ -77,7 +77,8 @@ unix|macx {
 	FORMS +=	direcs.ui \
 				aboutDialog.ui \
 				joystickDialog.ui \
-				settingsDialog.ui
+				settingsDialog.ui \
+				direcsSmall.ui
 
 	QT +=		network \
 				opengl
