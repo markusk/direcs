@@ -146,17 +146,22 @@ contains( HOSTNAME, [rR]obot ) {
 	 message( ************************************** )
 	 message( *** Configuring for robot build... *** )
 	 message( ************************************** )
-	 DEFINES += BUILDFORROBOT
-	 DEFINES += LASERVIEW
 
-	 message( Removing plot stuff (qwt)... )
-	 INCLUDEPATH -= /usr/include/qwt-qt4
-	 HEADERS     -= plotThread.h
-	 SOURCES     -= plotThread.cpp
-	 LIBS        -= -lqwt
+	 message( Switching to special robot GUI... )
+	FORMS -=	direcs.ui
+	FORMS +=	direcsSmall.ui
 
-	 message( Removing active laser view... )
-	 DEFINES -= ACTIVELASERVIEW
+#	 DEFINES += BUILDFORROBOT
+#	 DEFINES += LASERVIEW
+
+#	 message( Removing plot stuff (qwt)... )
+#	 INCLUDEPATH -= /usr/include/qwt-qt4
+#	 HEADERS     -= plotThread.h
+#	 SOURCES     -= plotThread.cpp
+#	 LIBS        -= -lqwt
+
+#	 message( Removing active laser view... )
+#	 DEFINES -= ACTIVELASERVIEW
 
 	 message( Building RELEASE version (no debugging!)... )
 	 CONFIG -= debug
