@@ -1658,8 +1658,11 @@
      <string>Robot</string>
     </property>
     <addaction name="actionDrive"/>
+    <addaction name="actionReset"/>
     <addaction name="actionTest"/>
     <addaction name="actionSimulate"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1689,15 +1692,17 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionDrive"/>
+   <addaction name="actionReset"/>
    <addaction name="actionTest"/>
    <addaction name="actionSimulate"/>
-   <addaction name="actionReset"/>
    <addaction name="actionRemote"/>
    <addaction name="actionResetDrivenDistance"/>
    <addaction name="actionJoystick"/>
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
    <addaction name="actionAbout"/>
+   <addaction name="separator"/>
+   <addaction name="actionExit"/>
   </widget>
   <action name="actionExit">
    <property name="icon">
@@ -1791,6 +1796,9 @@
   </action>
   <action name="actionRemote">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="icon">
