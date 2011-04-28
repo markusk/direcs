@@ -604,6 +604,7 @@ void Gui::on_actionTest_activated()
 }
 
 
+#ifndef USEROBOTGUI
 void Gui::on_actionAll_activated()
 {
 	ui.dockVoltage->show();
@@ -620,8 +621,10 @@ void Gui::on_actionAll_activated()
 		ui.dockCamera->show();
 	}
 }
+#endif
 
 
+#ifndef USEROBOTGUI
 void Gui::on_actionCamera_activated()
 {
 //	if (ui.dockCamera->isEnabled())
@@ -636,8 +639,10 @@ void Gui::on_actionCamera_activated()
 		}
 //	}
 }
+#endif
 
 
+#ifndef USEROBOTGUI
 void Gui::on_actionVoltage_activated()
 {
 	if (ui.dockVoltage->isVisible())
@@ -649,9 +654,11 @@ void Gui::on_actionVoltage_activated()
 		ui.dockVoltage->show();
 	}
 }
+#endif
 
 
 /*
+#ifndef USEROBOTGUI
 void Gui::on_actionCurrent_activated()
 {
 	if (ui.dockCurrent->isVisible())
@@ -663,9 +670,11 @@ void Gui::on_actionCurrent_activated()
 		ui.dockCurrent->show();
 	}
 }
+#endif
 */
 
 
+#ifndef USEROBOTGUI
 void Gui::on_actionState_activated()
 {
 	if (ui.dockState->isVisible())
@@ -677,6 +686,8 @@ void Gui::on_actionState_activated()
 		ui.dockState->show();
 	}
 }
+#endif
+
 
 void Gui::on_actionSettings_activated()
 {
@@ -691,6 +702,7 @@ void Gui::on_actionSettings_activated()
 }
 
 
+#ifndef USEROBOTGUI
 void Gui::on_actionLog_activated()
 {
 	if (ui.dockLog->isVisible())
@@ -702,6 +714,7 @@ void Gui::on_actionLog_activated()
 		ui.dockLog->show();
 	}
 }
+#endif
 
 
 void Gui::on_actionJoystick_activated()
@@ -1474,7 +1487,9 @@ void Gui::disableFaceDetection()
 
 void Gui::hideCameraControls()
 {
+#ifndef USEROBOTGUI
 	ui.dockCamera->hide();
+#endif
 }
 
 

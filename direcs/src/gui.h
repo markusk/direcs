@@ -41,8 +41,11 @@
 
 #include "compassWidget.h"
 
-
-#include "ui_direcs.h"
+#ifdef USEROBOTGUI
+	#include "ui_direcsSmall.h"
+#else
+	#include "ui_direcs.h"
+#endif
 
 #ifndef BUILDFORROBOT
 	#include <qwt_plot_layout.h>
@@ -512,14 +515,16 @@ class Gui : public QMainWindow
 		Action if a menu item or a toolbar button is clicked
 		*/
 		void on_actionExit_activated();
+		void on_actionSettings_activated();
+		void on_actionJoystick_activated();
+#ifndef USEROBOTGUI
+		void on_actionAll_activated();
 		void on_actionCamera_activated();
 		void on_actionVoltage_activated();
-//		void on_actionCurrent_activated();
+		//		void on_actionCurrent_activated();
 		void on_actionState_activated();
-		void on_actionSettings_activated();
 		void on_actionLog_activated();
-		void on_actionJoystick_activated();
-		void on_actionAll_activated();
+#endif
 		void on_actionAbout_activated();
 		void on_actionDrive_activated();
 		void on_actionReset_activated();
