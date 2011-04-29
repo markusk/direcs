@@ -41,11 +41,11 @@
 
 #include "compassWidget.h"
 
-#ifdef USEROBOTGUI
+//#ifdef USEROBOTGUI
 	#include "ui_direcsSmall.h"
-#else
+//#else
 	#include "ui_direcs.h"
-#endif
+//#endif
 
 #ifndef BUILDFORROBOT
 	#include <qwt_plot_layout.h>
@@ -69,7 +69,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent = 0);
+		Gui(bool useRobotGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent = 0);
 		~Gui();
 
 		/*
@@ -597,10 +597,12 @@ class Gui : public QMainWindow
 		@param text is the string to be cleaned
 		@return the cleaned string
 		*/
-		QString removeHtml(QString text);
+		QString removeHtml(QString text); /// @todo fix me to leave the last char in the string. @sa Logfile
 
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
-		Ui::mainWindow ui;
+		bool m_useRobotGUI; /// if true, we will use a small GUI for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Direcs
+		Ui::mainWindow ui; /// This is the large default GUI, when not running on the robot
+		Ui::mainWindowSmall uiSmall; /// This is the small GUI, when running on the robots small TFT
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the direcs class!
 		JoystickDialog *joystickDialog; // just a pointer to the object created in the direcs class!
 		AboutDialog *aboutDialog;       // just a pointer to the object created in the direcs class!

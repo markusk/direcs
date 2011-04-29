@@ -148,9 +148,9 @@ contains( HOSTNAME, [rR]obot ) {
 	 message( *** Configuring for robot build... *** )
 	 message( ************************************** )
 
-	 message( Switching to special robot GUI... )
-	FORMS -=	direcs.ui
-	FORMS +=	direcsSmall.ui
+#	 message( Switching to special robot GUI... )
+#	FORMS -=	direcs.ui
+#	FORMS +=	direcsSmall.ui
 
 	DEFINES += USEROBOTGUI
 #	 DEFINES += BUILDFORROBOT

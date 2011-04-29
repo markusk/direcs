@@ -134,7 +134,7 @@ Direcs::Direcs(bool bConsoleMode)
 		settingsDialog = new SettingsDialog();
 		joystickDialog = new JoystickDialog();
 		aboutDialog = new AboutDialog();
-		gui = new Gui(settingsDialog, joystickDialog, aboutDialog);
+		gui = new Gui(useRobotGUI, settingsDialog, joystickDialog, aboutDialog);
 		splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 	}
 

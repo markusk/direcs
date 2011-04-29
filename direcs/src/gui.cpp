@@ -21,7 +21,7 @@
 #include "gui.h"
 
 
-Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(bool useRobotGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointer from the original SensorThread object
 	settingsDialog = s;
@@ -51,6 +51,9 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	labelFillColorBlue  = QColor(64, 64, 255);
 	gridColor = QColor(Qt::black);
 
+	// store which GUI to use local
+	m_useRobotGUI = useRobotGUI;
+
 
 	// do the rest of my init stuff
 	init();
@@ -59,15 +62,10 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 
 void Gui::init()
 {
+	//-----------------
 	// startup the GUI
+	//-----------------
 	ui.setupUi(this);
-
-
-	// set mode of left camera widget to depth draw (1 = depth)
-	// ui.frameDepth->setMode(1);
-
-	// disable the motor current docks since this is not in use right now
-	//ui.dockCurrent->setVisible(false);
 
 
 	// get background color for compass widget

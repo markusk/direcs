@@ -382,7 +382,7 @@ class Direcs : public QObject
 		bool shutdownAlreadyCalled;
 		bool forceShutdown; /// this is set to true, when no ini-file was found at startup. This make the program leave without the stupid AreYouSure-Question.
 		QString hostnameForSmallGUI; /// Due to this name, we will decide which GUI will be shown (small or large one). @sa useRobotGUI @sa Direcs::init()
-		bool useRobotGUI; /// if true, we will use a small GUI for fitting on a small onboard TFT. By default this is decided by the local hostname of the system
+		bool useRobotGUI; /// if true, we will use a small GUI for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Gui
 		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
