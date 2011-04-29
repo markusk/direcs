@@ -150,6 +150,9 @@ void LaserThread::run()
 					{
 						if (errorCounter >= MAXERRORS)
 						{
+							// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+							emit systemerror(-1);
+
 							stopped = true;
 							emit message(QString("%1 ERRORs reading S300 data. Laser thread stopped!").arg(MAXERRORS));
 							errorCounter = 0;
@@ -707,9 +710,6 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 			// let the splash screen and the GUI / log file from the direcs class show laser init messages
 			// (connect the signal from the laser class to the signal from this class)
 			connect(laserS300, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
-
-			// forward system error signals from the S300 by this class signal
-			connect(laserS300, SIGNAL(systemerror(int)), this, SIGNAL(systemerror(int)));
 
 			return;
 		}
