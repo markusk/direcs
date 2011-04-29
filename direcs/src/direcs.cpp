@@ -91,6 +91,10 @@ Direcs::Direcs(bool bConsoleMode)
 	// store mode from main method
 	consoleMode = bConsoleMode;
 
+	//------------------------------------------------------------------
+	// Creating logfile object
+	//------------------------------------------------------------------
+	logfile = new Logfile();
 
 	//--------------------------------------------------------------------------
 	// check local hostname to decide, which GUI we will use (small or large)
@@ -113,7 +117,6 @@ Direcs::Direcs(bool bConsoleMode)
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
-	logfile = new Logfile();
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	speakThread = new SpeakThread();
 #endif
