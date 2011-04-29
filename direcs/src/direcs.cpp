@@ -105,14 +105,14 @@ Direcs::Direcs(bool bConsoleMode)
 
 	logfile->appendLog(QString("The hostname of this machine is %1").arg(hostname));
 
-	if (hostname.contains(hostnameForSmallGUI))
+	if (hostname.contains("robot"))
 	{
-		logfile->appendLog("We will use the small robot GUI.");
+		logfile->appendLog("Hostname contains 'robot'. We will use the small robot GUI.");
 		useRobotGUI = true;
 	}
 	else
 	{
-		logfile->appendLog("We will use the large GUI.");
+		logfile->appendLog("Hostname does not contain 'robot'. We will use the large GUI.");
 		useRobotGUI = false;
 	}
 
@@ -184,7 +184,6 @@ void Direcs::init()
 	}
 	forceShutdown = false;
 	inifile1->setFilename("direcs.ini");
-	hostnameForSmallGUI = "robot";
 	useRobotGUI=false;
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
