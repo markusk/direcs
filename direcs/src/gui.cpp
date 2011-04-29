@@ -51,23 +51,26 @@ Gui::Gui(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *pare
 	labelFillColorBlue  = QColor(64, 64, 255);
 	gridColor = QColor(Qt::black);
 
-	// startup the GUI
-	ui.setupUi(this);
 
 	// do the rest of my init stuff
 	init();
+}
+
+
+void Gui::init()
+{
+	// startup the GUI
+	ui.setupUi(this);
+
 
 	// set mode of left camera widget to depth draw (1 = depth)
 	// ui.frameDepth->setMode(1);
 
 	// disable the motor current docks since this is not in use right now
 	//ui.dockCurrent->setVisible(false);
-}
 
 
-void Gui::init()
-{
-// get background color for compass widget
+	// get background color for compass widget
 //	QColor compassBackground = this->palette().window().color();
 //	QColor compassBackground = this->palette().light().color();
 
