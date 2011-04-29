@@ -91,6 +91,25 @@ Direcs::Direcs(bool bConsoleMode)
 	// store mode from main method
 	consoleMode = bConsoleMode;
 
+
+	//--------------------------------------------------------------------------
+	// check local hostname to decide, which GUI we will use (small or large)
+	//--------------------------------------------------------------------------
+	QString hostname = QHostInfo::localHostName();
+	logfile->appendLog(QString("The hostname of this machine is %1").arg(hostname));
+
+	if (hostname.contains(hostnameForSmallGUI))
+	{
+		logfile->appendLog("We will use the small robot GUI.");
+		useRobotGUI = true;
+	}
+	else
+	{
+		logfile->appendLog("We will use the large GUI.");
+		useRobotGUI = false;
+	}
+
+
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
@@ -161,6 +180,8 @@ void Direcs::init()
 	inifile1->setFilename("direcs.ini");
 	logfile->setFilename("direcs.log");
 	/// \todo direcs->setLogFileName("direcs.log");
+	hostnameForSmallGUI = "robot";
+	useRobotGUI=false;
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 	laserscannerTypeFront= "error1";
