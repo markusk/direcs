@@ -600,7 +600,7 @@ class Gui : public QMainWindow
 		QString removeHtml(QString text); /// @todo fix me to leave the last char in the string. @sa Logfile
 
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
-		bool m_useRobotGUI; /// if true, we will use a small GUI for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Direcs
+		bool useLargeGUI; /// if true, we will use the large GUI. If false, we will use the small one for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Direcs
 		Ui::mainWindow ui; /// This is the large default GUI, when not running on the robot
 		Ui::mainWindowSmall uiSmall; /// This is the small GUI, when running on the robots small TFT
 		SettingsDialog *settingsDialog; // just a pointer to the object created in the direcs class!

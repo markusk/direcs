@@ -30,6 +30,7 @@ Gui::Gui(bool useRobotGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a,
 
 	robotIsOn = false;
 	consoleMode = false;
+	useLargeGUI = true;
 
 #ifdef ACTIVELASERVIEW
 	laserXPos = 0; // correct value is set in the initLaserView()!!
@@ -51,8 +52,9 @@ Gui::Gui(bool useRobotGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a,
 	labelFillColorBlue  = QColor(64, 64, 255);
 	gridColor = QColor(Qt::black);
 
-	// store which GUI to use local
-	m_useRobotGUI = useRobotGUI;
+	// store which GUI to use
+	// the robot GUI is the small one
+	useLargeGUI = !useRobotGUI;
 
 
 	// do the rest of my init stuff
