@@ -87,7 +87,10 @@ void Gui::init()
 */
 
 	// remote control is enabled by default. @sa Direcs::init()
-	ui.actionRemote->setChecked(true);
+	if (useLargeGUI)
+		ui.actionRemote->setChecked(true);
+	else
+		uiSmall.actionRemote->setChecked(true);
 
 	//----------------------------------------------------------------------------
 	// Voltage stuff (progressBars)
@@ -123,12 +126,19 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face detect check box changes, set the detection mode
 	//----------------------------------------------------------------------------------
-	connect(ui.checkBoxFaceDetection, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
+	if (useLargeGUI)
+		connect(ui.checkBoxFaceDetection, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
+	else
+		connect(uiSmall.checkBoxFaceDetection, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
 
 	//----------------------------------------------------------------------------------
 	// Whenever the state of the face tracking check box changes, set the tracking mode
 	//----------------------------------------------------------------------------------
-	connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
+	if (useLargeGUI)
+		connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
+	else
+		connect(uiSmall.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
+
 
 #ifndef BUILDFORROBOT
 	//----------------------------------------------------------------------------
@@ -146,9 +156,18 @@ infrared Sensors temporarily removed from robot!!
 	//----------------------------------
 	// change text of buttons
 	//----------------------------------
-	ui.actionDrive->setText("&Drive");
-	ui.actionDrive->setToolTip("Start driving");
-	ui.actionDrive->setStatusTip("Start driving");
+	if (useLargeGUI)
+	{
+		ui.actionDrive->setText("&Drive");
+		ui.actionDrive->setToolTip("Start driving");
+		ui.actionDrive->setStatusTip("Start driving");
+	}
+	else
+	{
+		uiSmall.actionDrive->setText("&Drive");
+		uiSmall.actionDrive->setToolTip("Start driving");
+		uiSmall.actionDrive->setStatusTip("Start driving");
+	}
 }
 
 
@@ -247,14 +266,28 @@ void Gui::setRobotControls(bool state)
 	robotIsOn = state;
 
 	// set the controls
-	ui.actionDrive->setEnabled(state);
-	ui.actionReset->setEnabled(state);
-	/*
-	ui.btnResetMovement1->setEnabled(state);
-	ui.btnResetMovement2->setEnabled(state);
-	ui.btnResetMovement3->setEnabled(state);
-	ui.btnResetMovement4->setEnabled(state);
-	*/
+	if (useLargeGUI)
+	{
+		ui.actionDrive->setEnabled(state);
+		ui.actionReset->setEnabled(state);
+		/*
+		ui.btnResetMovement1->setEnabled(state);
+		ui.btnResetMovement2->setEnabled(state);
+		ui.btnResetMovement3->setEnabled(state);
+		ui.btnResetMovement4->setEnabled(state);
+		*/
+	}
+	else
+	{
+		uiSmall.actionDrive->setEnabled(state);
+		uiSmall.actionReset->setEnabled(state);
+		/*
+		uiSmall.btnResetMovement1->setEnabled(state);
+		uiSmall.btnResetMovement2->setEnabled(state);
+		uiSmall.btnResetMovement3->setEnabled(state);
+		uiSmall.btnResetMovement4->setEnabled(state);
+		*/
+	}
 
 	if (!robotIsOn)
 	{
@@ -285,13 +318,36 @@ void Gui::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 	}
 
 	// insert the new text in the GUI
-	ui.textEditGlobalLog->insertHtml(text);
+	if (useLargeGUI)
+	{
+		ui.textEditGlobalLog->insertHtml(text);
+	}
+	else
+	{
+		uiSmall.textEditGlobalLog->insertHtml(text);
+	}
 
 	if (CR == true) // default!
-		ui.textEditGlobalLog->insertHtml("<br>");
+	{
+		if (useLargeGUI)
+		{
+			ui.textEditGlobalLog->insertHtml("<br>");
+		}
+		else
+		{
+			uiSmall.textEditGlobalLog->insertHtml("<br>");
+		}
+	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	ui.textEditGlobalLog->ensureCursorVisible();
+	if (useLargeGUI)
+	{
+		ui.textEditGlobalLog->ensureCursorVisible();
+	}
+	else
+	{
+		uiSmall.textEditGlobalLog->ensureCursorVisible();
+	}
 
 
 	if (consoleMode)
@@ -324,16 +380,37 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	newText = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
 
 	// insert the text
-	ui.textEditNetworkLog->insertHtml(newText);
+	if (useLargeGUI)
+	{
+		ui.textEditNetworkLog->insertHtml(newText);
+	}
+	else
+	{
+		uiSmall.textEditNetworkLog->insertHtml(newText);
+	}
 
 	if (CR == true) // default!
 	{
 		// insert a line break
-		ui.textEditNetworkLog->insertHtml("<br>");
+		if (useLargeGUI)
+		{
+			ui.textEditNetworkLog->insertHtml("<br>");
+		}
+		else
+		{
+			uiSmall.textEditNetworkLog->insertHtml("<br>");
+		}
 	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	ui.textEditNetworkLog->ensureCursorVisible();
+	if (useLargeGUI)
+	{
+		ui.textEditNetworkLog->ensureCursorVisible();
+	}
+	else
+	{
+		uiSmall.textEditNetworkLog->ensureCursorVisible();
+	}
 
 
 	if (consoleMode)
@@ -366,16 +443,37 @@ void Gui::appendSerialLog(QString text, bool CR)
 	newText = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
 
 	// insert the text
-	ui.textEditSerialLog->insertHtml(newText);
+	if (useLargeGUI)
+	{
+		ui.textEditSerialLog->insertHtml(newText);
+	}
+	else
+	{
+		uiSmall.textEditSerialLog->insertHtml(newText);
+	}
 
 	if (CR == true) // default!
 	{
 		// insert a line break
-		ui.textEditSerialLog->insertHtml("<br>");
+		if (useLargeGUI)
+		{
+			ui.textEditSerialLog->insertHtml("<br>");
+		}
+		else
+		{
+			uiSmall.textEditSerialLog->insertHtml("<br>");
+		}
 	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	ui.textEditSerialLog->ensureCursorVisible();
+	if (useLargeGUI)
+	{
+		ui.textEditSerialLog->ensureCursorVisible();
+	}
+	else
+	{
+		uiSmall.textEditSerialLog->ensureCursorVisible();
+	}
 
 
 	if (consoleMode)
@@ -401,9 +499,18 @@ void Gui::on_actionDrive_activated()
 		toggle = true;
 
 		// change text of "drive button"
-		ui.actionDrive->setText("Stop &driving");
-		ui.actionDrive->setToolTip("Stop driving");
-		ui.actionDrive->setStatusTip("Stop driving");
+		if (useLargeGUI)
+		{
+			ui.actionDrive->setText("Stop &driving");
+			ui.actionDrive->setToolTip("Stop driving");
+			ui.actionDrive->setStatusTip("Stop driving");
+		}
+		else
+		{
+			uiSmall.actionDrive->setText("Stop &driving");
+			uiSmall.actionDrive->setToolTip("Stop driving");
+			uiSmall.actionDrive->setStatusTip("Stop driving");
+		}
 
 		//----------------
 		// start driving
@@ -416,9 +523,18 @@ void Gui::on_actionDrive_activated()
 		appendLog("Stop driving...");
 
 		// change text of "drive button"
-		ui.actionDrive->setText("&Drive");
-		ui.actionDrive->setToolTip("Start driving");
-		ui.actionDrive->setStatusTip("Start driving");
+		if (useLargeGUI)
+		{
+			ui.actionDrive->setText("&Drive");
+			ui.actionDrive->setToolTip("Start driving");
+			ui.actionDrive->setStatusTip("Start driving");
+		}
+		else
+		{
+			uiSmall.actionDrive->setText("&Drive");
+			uiSmall.actionDrive->setToolTip("Start driving");
+			uiSmall.actionDrive->setStatusTip("Start driving");
+		}
 
 		//****************
 		// stop driving
@@ -443,23 +559,48 @@ void Gui::on_actionReset_activated()
 
 	// reset progressBars
 	/*
-	ui.progressBarSensor1->setValue(0);
-	ui.progressBarSensor2->setValue(0);
-	ui.progressBarSensor3->setValue(0);
-	ui.progressBarSensor4->setValue(0);
-	ui.progressBarSensor5->setValue(0);
-	ui.progressBarSensor6->setValue(0);
-	ui.progressBarSensor7->setValue(0);
-	ui.progressBarSensor8->setValue(0);
-	ui.progressBarSensor16->setValue(0);
+  if (useLargeGUI)
+  {
+ ui.progressBarSensor1->setValue(0);
+ ui.progressBarSensor2->setValue(0);
+ ui.progressBarSensor3->setValue(0);
+ ui.progressBarSensor4->setValue(0);
+ ui.progressBarSensor5->setValue(0);
+ ui.progressBarSensor6->setValue(0);
+ ui.progressBarSensor7->setValue(0);
+ ui.progressBarSensor8->setValue(0);
+ ui.progressBarSensor16->setValue(0);
+  }
+  else
+  {
+ uiSmall.progressBarSensor1->setValue(0);
+ uiSmall.progressBarSensor2->setValue(0);
+ uiSmall.progressBarSensor3->setValue(0);
+ uiSmall.progressBarSensor4->setValue(0);
+ uiSmall.progressBarSensor5->setValue(0);
+ uiSmall.progressBarSensor6->setValue(0);
+ uiSmall.progressBarSensor7->setValue(0);
+ uiSmall.progressBarSensor8->setValue(0);
+ uiSmall.progressBarSensor16->setValue(0);
+  }
 	*/
 
 	// reset labels
 /*
-	ui.btnDirection1->setText("FORWARD");
-	ui.btnDirection2->setText("FORWARD");
-	ui.btnDirection3->setText("FORWARD");
-	ui.btnDirection4->setText("FORWARD");
+  if (useLargeGUI)
+  {
+ ui.btnDirection1->setText("FORWARD");
+ ui.btnDirection2->setText("FORWARD");
+ ui.btnDirection3->setText("FORWARD");
+ ui.btnDirection4->setText("FORWARD");
+  }
+  else
+  {
+ uiSmall.btnDirection1->setText("FORWARD");
+ uiSmall.btnDirection2->setText("FORWARD");
+ uiSmall.btnDirection3->setText("FORWARD");
+ uiSmall.btnDirection4->setText("FORWARD");
+  }
 */
 }
 
@@ -469,26 +610,58 @@ void Gui::on_actionResetDrivenDistance_activated()
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR1);
 	// reset labels
-	ui.labelDrivenDistance1->setText("0 cm");
-	ui.labelRevolutions1->setText("0");
+	if (useLargeGUI)
+	{
+		ui.labelDrivenDistance1->setText("0 cm");
+		ui.labelRevolutions1->setText("0");
+	}
+	else
+	{
+		uiSmall.labelDrivenDistance1->setText("0 cm");
+		uiSmall.labelRevolutions1->setText("0");
+	}
 
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR2);
 	// reset labels
-	ui.labelDrivenDistance2->setText("0 cm");
-	ui.labelRevolutions2->setText("0");
+	if (useLargeGUI)
+	{
+		ui.labelDrivenDistance2->setText("0 cm");
+		ui.labelRevolutions2->setText("0");
+	}
+	else
+	{
+		uiSmall.labelDrivenDistance2->setText("0 cm");
+		uiSmall.labelRevolutions2->setText("0");
+	}
 
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR3);
 	// reset labels
-	ui.labelDrivenDistance3->setText("0 cm");
-	ui.labelRevolutions3->setText("0");
+	if (useLargeGUI)
+	{
+		ui.labelDrivenDistance3->setText("0 cm");
+		ui.labelRevolutions3->setText("0");
+	}
+	else
+	{
+		uiSmall.labelDrivenDistance3->setText("0 cm");
+		uiSmall.labelRevolutions3->setText("0");
+	}
 
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR4);
 	// reset labels
-	ui.labelDrivenDistance4->setText("0 cm");
-	ui.labelRevolutions4->setText("0");
+	if (useLargeGUI)
+	{
+		ui.labelDrivenDistance4->setText("0 cm");
+		ui.labelRevolutions4->setText("0");
+	}
+	else
+	{
+		uiSmall.labelDrivenDistance4->setText("0 cm");
+		uiSmall.labelRevolutions4->setText("0");
+	}
 }
 
 
@@ -499,8 +672,16 @@ void Gui::on_btnResetMovement1_clicked()
 	emit resetDrivenDistance(MOTORSENSOR1);
 
 	// reset labels
-	ui.labelDrivenDistance1->setText("0 cm");
-	ui.labelRevolutions1->setText("0");
+  if (useLargeGUI)
+  {
+ ui.labelDrivenDistance1->setText("0 cm");
+ ui.labelRevolutions1->setText("0");
+  }
+  else
+  {
+ uiSmall.labelDrivenDistance1->setText("0 cm");
+ uiSmall.labelRevolutions1->setText("0");
+  }
 }
 
 
@@ -510,8 +691,16 @@ void Gui::on_btnResetMovement2_clicked()
 	emit resetDrivenDistance(MOTORSENSOR2);
 
 	// reset labels
-	ui.labelDrivenDistance2->setText("0 cm");
-	ui.labelRevolutions2->setText("0");
+  if (useLargeGUI)
+  {
+ ui.labelDrivenDistance2->setText("0 cm");
+ ui.labelRevolutions2->setText("0");
+  }
+  else
+  {
+ uiSmall.labelDrivenDistance2->setText("0 cm");
+ uiSmall.labelRevolutions2->setText("0");
+  }
 }
 
 
@@ -521,8 +710,16 @@ void Gui::on_btnResetMovement3_clicked()
 	emit resetDrivenDistance(MOTORSENSOR3);
 
 	// reset labels
-	ui.labelDrivenDistance3->setText("0 cm");
-	ui.labelRevolutions3->setText("0");
+  if (useLargeGUI)
+  {
+ ui.labelDrivenDistance3->setText("0 cm");
+ ui.labelRevolutions3->setText("0");
+  }
+  else
+  {
+ uiSmall.labelDrivenDistance3->setText("0 cm");
+ uiSmall.labelRevolutions3->setText("0");
+  }
 }
 
 
@@ -532,8 +729,16 @@ void Gui::on_btnResetMovement4_clicked()
 	emit resetDrivenDistance(MOTORSENSOR4);
 
 	// reset labels
-	ui.labelDrivenDistance4->setText("0 cm");
-	ui.labelRevolutions4->setText("0");
+  if (useLargeGUI)
+  {
+ ui.labelDrivenDistance4->setText("0 cm");
+ ui.labelRevolutions4->setText("0");
+  }
+  else
+  {
+ uiSmall.labelDrivenDistance4->setText("0 cm");
+ uiSmall.labelRevolutions4->setText("0");
+  }
 }
 */
 
@@ -613,18 +818,25 @@ void Gui::on_actionTest_activated()
 #ifndef USEROBOTGUI
 void Gui::on_actionAll_activated()
 {
-	ui.dockVoltage->show();
-//	ui.dockCurrent->show();
-	ui.dockState->show();
-	ui.dockLog->show();
-
-	// 	settingsDialog->show();
-	// 	joystickDialog->show();
-
-	// only show the cam window, if the cam usage is enabled
-	if (ui.dockCamera->isEnabled())
+	if (useLargeGUI)
 	{
-		ui.dockCamera->show();
+		ui.dockVoltage->show();
+		//	ui.dockCurrent->show();
+		ui.dockState->show();
+		ui.dockLog->show();
+
+		// 	settingsDialog->show();
+		// 	joystickDialog->show();
+
+		// only show the cam window, if the cam usage is enabled
+		if (ui.dockCamera->isEnabled())
+		{
+			ui.dockCamera->show();
+		}
+	}
+	else
+	{
+		// no dock widgets in the small GUI
 	}
 }
 #endif
@@ -635,6 +847,8 @@ void Gui::on_actionCamera_activated()
 {
 //	if (ui.dockCamera->isEnabled())
 //	{
+	if (useLargeGUI)
+	{
 		if (ui.dockCamera->isVisible())
 		{
 			ui.dockCamera->hide();
@@ -643,6 +857,11 @@ void Gui::on_actionCamera_activated()
 		{
 			ui.dockCamera->show();
 		}
+	}
+	else
+	{
+		// no dock widgets in the small GUI
+	}
 //	}
 }
 #endif
@@ -651,13 +870,20 @@ void Gui::on_actionCamera_activated()
 #ifndef USEROBOTGUI
 void Gui::on_actionVoltage_activated()
 {
-	if (ui.dockVoltage->isVisible())
+	if (useLargeGUI)
 	{
-		ui.dockVoltage->hide();
+		if (ui.dockVoltage->isVisible())
+		{
+			ui.dockVoltage->hide();
+		}
+		else
+		{
+			ui.dockVoltage->show();
+		}
 	}
 	else
 	{
-		ui.dockVoltage->show();
+		// no dock widgets in the small GUI
 	}
 }
 #endif
@@ -667,14 +893,28 @@ void Gui::on_actionVoltage_activated()
 #ifndef USEROBOTGUI
 void Gui::on_actionCurrent_activated()
 {
-	if (ui.dockCurrent->isVisible())
-	{
-		ui.dockCurrent->hide();
-	}
-	else
-	{
-		ui.dockCurrent->show();
-	}
+  if (useLargeGUI)
+  {
+ if (ui.dockCurrent->isVisible())
+ {
+	 ui.dockCurrent->hide();
+ }
+ else
+ {
+	 ui.dockCurrent->show();
+ }
+  }
+  else
+  {
+ if (uiSmall.dockCurrent->isVisible())
+ {
+	 uiSmall.dockCurrent->hide();
+ }
+ else
+ {
+	 uiSmall.dockCurrent->show();
+ }
+  }
 }
 #endif
 */
@@ -683,13 +923,20 @@ void Gui::on_actionCurrent_activated()
 #ifndef USEROBOTGUI
 void Gui::on_actionState_activated()
 {
-	if (ui.dockState->isVisible())
+	if (useLargeGUI)
 	{
-		ui.dockState->hide();
+		if (ui.dockState->isVisible())
+		{
+			ui.dockState->hide();
+		}
+		else
+		{
+			ui.dockState->show();
+		}
 	}
 	else
 	{
-		ui.dockState->show();
+		// no dock widgets in the small GUI
 	}
 }
 #endif
@@ -711,13 +958,20 @@ void Gui::on_actionSettings_activated()
 #ifndef USEROBOTGUI
 void Gui::on_actionLog_activated()
 {
-	if (ui.dockLog->isVisible())
+	if (useLargeGUI)
 	{
-		ui.dockLog->hide();
+		if (ui.dockLog->isVisible())
+		{
+			ui.dockLog->hide();
+		}
+		else
+		{
+			ui.dockLog->show();
+		}
 	}
 	else
 	{
-		ui.dockLog->show();
+		// no dock widgets in the small GUI
 	}
 }
 #endif
@@ -873,19 +1127,47 @@ void Gui::showDrivenDistance(int sensor, int distance)
 	switch (sensor)
 	{
 		case MOTORSENSOR1:
-			ui.labelDrivenDistance1->setText(QString("%1 cm").arg(distance));
+			if (useLargeGUI)
+			{
+				ui.labelDrivenDistance1->setText(QString("%1 cm").arg(distance));
+			}
+			else
+			{
+				uiSmall.labelDrivenDistance1->setText(QString("%1 cm").arg(distance));
+			}
 			return;
 			break;
 		case MOTORSENSOR2:
-			ui.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
+			if (useLargeGUI)
+			{
+				ui.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
+			}
+			else
+			{
+				uiSmall.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
+			}
 			return;
 			break;
 		case MOTORSENSOR3:
-			ui.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
+			if (useLargeGUI)
+			{
+				ui.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
+			}
+			else
+			{
+				uiSmall.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
+			}
 			return;
 			break;
 		case MOTORSENSOR4:
-			ui.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
+			if (useLargeGUI)
+			{
+				ui.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
+			}
+			else
+			{
+				uiSmall.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
+			}
 			return;
 			break;
 	}
@@ -905,8 +1187,16 @@ void Gui::showVoltage(int sensor, float voltage)
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-			ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
-// 			ui.progressBarVoltage1->setValue(voltage);
+			if (useLargeGUI)
+			{
+				ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+//	 			ui.progressBarVoltage1->setValue(voltage);
+			}
+			else
+			{
+				uiSmall.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+// 				uiSmall.progressBarVoltage1->setValue(voltage);
+			}
 
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE1)
@@ -914,24 +1204,53 @@ void Gui::showVoltage(int sensor, float voltage)
 				// change icon
 				if (voltage > 0.0)
 				{
-					ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-060.png"));
+					if (useLargeGUI)
+					{
+						ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-060.png"));
+					}
+					else
+					{
+						uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-060.png"));
+					}
 				}
 				else
 				{
-					ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+					if (useLargeGUI)
+					{
+						ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+					}
+					else
+					{
+						uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+					}
 				}
 			}
 			else
 			{
 				// change icon
-				ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
+				if (useLargeGUI)
+				{
+					ui.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
+				}
+				else
+				{
+					uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
+				}
 			}
 
 			return;
 			break;
 		case VOLTAGESENSOR2:
-			ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
-//			ui.progressBarVoltage2->setValue(voltage);
+			if (useLargeGUI)
+			{
+				ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+//				ui.progressBarVoltage2->setValue(voltage);
+			}
+			else
+			{
+				uiSmall.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+//				uiSmall.progressBarVoltage2->setValue(voltage);
+			}
 
 			// change color of the label depending on the voltage
 			if (voltage < MINIMUMVOLTAGE2)
@@ -939,17 +1258,38 @@ void Gui::showVoltage(int sensor, float voltage)
 				// change icon
 				if (voltage > 0.0)
 				{
-					ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-060.png"));
+					if (useLargeGUI)
+					{
+						ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-060.png"));
+					}
+					else
+					{
+						uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-060.png"));
+					}
 				}
 				else
 				{
-					ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+					if (useLargeGUI)
+					{
+						ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+					}
+					else
+					{
+						uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+					}
 				}
 			}
 			else
 			{
 				// change icon
-				ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
+				if (useLargeGUI)
+				{
+					ui.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
+				}
+				else
+				{
+					uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
+				}
 			}
 
 			return;
@@ -1181,7 +1521,14 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case OFF:
 //					ui.btnPower1->setPalette( QApplication::palette() );
 //					ui.btnDirection1->setPalette( QApplication::palette() );
-					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
 					break;
 			}
 
@@ -1190,12 +1537,26 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case FORWARD:
 //					ui.btnDirection1->setText("BACKWARD");
 //					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
 					break;
 				case BACKWARD:
 //					ui.btnDirection1->setText("FORWARD");
 //					ui.btnDirection1->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
 					break;
 				case SAME:
 					break;
@@ -1214,7 +1575,14 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case OFF:
 //					ui.btnPower2->setPalette( QApplication::palette() );
 //					ui.btnDirection2->setPalette( QApplication::palette() );
-					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
 					break;
 			}
 
@@ -1223,12 +1591,26 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case FORWARD:
 //					ui.btnDirection2->setText("BACKWARD");
 //					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
 					break;
 				case BACKWARD:
 //					ui.btnDirection2->setText("FORWARD");
 //					ui.btnDirection2->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
 					break;
 				case SAME:
 					break;
@@ -1247,7 +1629,14 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case OFF:
 //					ui.btnPower3->setPalette( QApplication::palette() );
 //					ui.btnDirection3->setPalette( QApplication::palette() );
-					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
 					break;
 			}
 
@@ -1256,12 +1645,26 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case FORWARD:
 //					ui.btnDirection3->setText("BACKWARD");
 //					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
 					break;
 				case BACKWARD:
 //					ui.btnDirection3->setText("FORWARD");
 //					ui.btnDirection3->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
 					break;
 				case SAME:
 					break;
@@ -1280,7 +1683,14 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case OFF:
 //					ui.btnPower4->setPalette( QApplication::palette() );
 //					ui.btnDirection4->setPalette( QApplication::palette() );
-					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+					}
 					break;
 			}
 
@@ -1289,12 +1699,26 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 				case FORWARD:
 //					ui.btnDirection4->setText("BACKWARD");
 //					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_green.gif"));
+					}
 					break;
 				case BACKWARD:
 //					ui.btnDirection4->setText("FORWARD");
 //					ui.btnDirection4->setPalette(QPalette(labelFillColorGreen));
-					ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					if (useLargeGUI)
+					{
+						ui.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
+					else
+					{
+						uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_red.gif"));
+					}
 					break;
 				case SAME:
 					break;
@@ -1329,9 +1753,18 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	}
 
 
-	ui.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
-//	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
-	ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
+	if (useLargeGUI)
+	{
+		ui.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
+	//	ui.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
+		ui.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
+	}
+	else
+	{
+		uiSmall.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
+	//	uiSmall.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
+		uiSmall.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
+	}
 
 
 	// show width in cm with one decimal place (Nachkommastelle)
@@ -1343,30 +1776,72 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 //		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 2).append(" m"));
 
 		// show the text with 0 decimals (Nachkommastellen)
-		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
+		if (useLargeGUI)
+		{
+			ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
+		}
+		else
+		{
+			uiSmall.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
+		}
 
 		// show the currently configured robot slot with with a prepended '>' or '<'
 		if ( width > configuredRobotSlotWidth)
+		{
+			if (useLargeGUI)
+			{
+				ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+			}
+			else
+			{
+				uiSmall.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+			}
+		}
+		else
+		{
+			if (useLargeGUI)
+			{
+				ui.lblRobotSlotWidth->setText( QString("< %1 cm").arg(configuredRobotSlotWidth) );
+			}
+			else
+			{
+				uiSmall.lblRobotSlotWidth->setText( QString("< %1 cm").arg(configuredRobotSlotWidth) );
+			}
+		}
+	}
+	else
+	{
+		if (useLargeGUI)
+		{
+			ui.lblLaserFrontFreeWidth->setText("oo");
+		}
+		else
+		{
+			uiSmall.lblLaserFrontFreeWidth->setText("oo");
+		}
+
+		// show the currently configured robot slot with with a prepended '>' or '<'
+		if (useLargeGUI)
 		{
 			ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
 		}
 		else
 		{
-			ui.lblRobotSlotWidth->setText( QString("< %1 cm").arg(configuredRobotSlotWidth) );
+			uiSmall.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
 		}
-	}
-	else
-	{
-		ui.lblLaserFrontFreeWidth->setText("oo");
-
-		// show the currently configured robot slot with with a prepended '>' or '<'
-		ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
 	}
 
 
 #ifdef ACTIVELASERVIEW
 	// show the same width in the scene
-	widthTextFront->setText( ui.lblLaserFrontFreeWidth->text() );
+	if (useLargeGUI)
+	{
+		widthTextFront->setText( ui.lblLaserFrontFreeWidth->text() );
+	}
+	else
+	{
+		widthTextFront->setText( uiSmall.lblLaserFrontFreeWidth->text() );
+	}
 #endif
 }
 
@@ -1375,19 +1850,40 @@ void Gui::showPreferredDirection(QString direction)
 {
 	if (direction == "FORWARD")
 	{
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
+		if (useLargeGUI)
+		{
+			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
+		}
+		else
+		{
+			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
+		}
 		return;
 	}
 
 	if (direction == "LEFT")
 	{
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
+		if (useLargeGUI)
+		{
+			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
+		}
+		else
+		{
+			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
+		}
 		return;
 	}
 
 	if (direction == "RIGHT")
 	{
-		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
+		if (useLargeGUI)
+		{
+			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
+		}
+		else
+		{
+			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
+		}
 		return;
 	}
 }
@@ -1396,55 +1892,118 @@ void Gui::showFaceTrackDirection(QString direction)
 {
 	if (direction == "UP")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/up.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/up.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/up.png"));
+		}
 		return;
 	}
 
 	if (direction == "UPLEFT")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upleft.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upleft.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upleft.png"));
+		}
 		return;
 	}
 
 	if (direction == "UPRIGHT")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upright.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upright.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upright.png"));
+		}
 		return;
 	}
 
 	if (direction == "DOWN")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/down.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/down.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/down.png"));
+		}
 		return;
 	}
 
 	if (direction == "DOWNLEFT")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downleft.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downleft.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downleft.png"));
+		}
 		return;
 	}
 
 	if (direction == "DOWNRIGHT")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downright.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downright.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downright.png"));
+		}
 		return;
 	}
 
 	if (direction == "LEFT")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/left.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/left.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/left.png"));
+		}
 		return;
 	}
 
 	if (direction == "RIGHT")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/right.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/right.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/right.png"));
+		}
 		return;
 	}
 
 	if (direction == "NONE")
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+		}
 		return;
 	}
 }
@@ -1486,15 +2045,30 @@ void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int
 void Gui::disableFaceDetection()
 {
 	appendLog("Face detection disabled!");
-	ui.checkBoxFaceDetection->setEnabled(false);
-	ui.checkBoxFaceTracking->setEnabled(false);
+	if (useLargeGUI)
+	{
+		ui.checkBoxFaceDetection->setEnabled(false);
+		ui.checkBoxFaceTracking->setEnabled(false);
+	}
+	else
+	{
+		uiSmall.checkBoxFaceDetection->setEnabled(false);
+		uiSmall.checkBoxFaceTracking->setEnabled(false);
+	}
 }
 
 
 void Gui::hideCameraControls()
 {
 #ifndef USEROBOTGUI
-	ui.dockCamera->hide();
+	if (useLargeGUI)
+	{
+		ui.dockCamera->hide();
+	}
+	else
+	{
+		// no dock widgets in the small GUI
+	}
 #endif
 }
 
@@ -1508,8 +2082,16 @@ void Gui::disableCompass()
 void Gui::setCamImage(QImage* image)
 {
 
-	ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
-	//ui.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
+	if (useLargeGUI)
+	{
+		ui.lblCamera->setPixmap(pixmap.fromImage(*(image)));
+		//ui.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
+	}
+	else
+	{
+		uiSmall.lblCamera->setPixmap(pixmap.fromImage(*(image)));
+		//uiSmall.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
+	}
 
 /*
 	// save pic, when ckecked in GUI
@@ -1524,14 +2106,27 @@ void Gui::setCamImage(QImage* image)
 void Gui::setCamImageDepth(QImage* image)
 {
 
-	ui.lblCameraDepth->setPixmap(pixmap.fromImage(*(image)));
+	if (useLargeGUI)
+	{
+		ui.lblCameraDepth->setPixmap(pixmap.fromImage(*(image)));
+	}
+	else
+	{
+		uiSmall.lblCameraDepth->setPixmap(pixmap.fromImage(*(image)));
+	}
 }
 
 
 void Gui::setCamImageOpenCV(QImage* image)
 {
-
-	ui.lblCameraOpenCV->setPixmap(pixmap.fromImage(*(image)));
+	if (useLargeGUI)
+	{
+		ui.lblCameraOpenCV->setPixmap(pixmap.fromImage(*(image)));
+	}
+	else
+	{
+		uiSmall.lblCameraOpenCV->setPixmap(pixmap.fromImage(*(image)));
+	}
 }
 
 
@@ -1565,7 +2160,14 @@ void Gui::on_spinBoxKinectAngle_valueChanged(int i)
 
 void Gui::on_btnKinectResetAngle_clicked()
 {
-	ui.spinBoxKinectAngle->setValue(0);
+	if (useLargeGUI)
+	{
+		ui.spinBoxKinectAngle->setValue(0);
+	}
+	else
+	{
+		uiSmall.spinBoxKinectAngle->setValue(0);
+	}
 
 	emit resetKinectAngle();
 }
@@ -1925,35 +2527,72 @@ void Gui::on_btnDirection4_toggled(bool checked)
 void Gui::on_actionRemote_activated()
 {
 	// if remote control is enabled, disable some controls in the GUI
-	if (ui.actionRemote->isChecked())
+	if (useLargeGUI)
 	{
-		ui.actionDrive->setEnabled(false);
-		emit enableRemoteControlListening(true);
+		if (ui.actionRemote->isChecked())
+		{
+			ui.actionDrive->setEnabled(false);
+			emit enableRemoteControlListening(true);
+		}
+		else
+		{
+			if (robotIsOn)
+			{
+				ui.actionDrive->setEnabled(true);
+			}
+			emit enableRemoteControlListening(false);
+		}
 	}
 	else
 	{
-		if (robotIsOn)
+		if (uiSmall.actionRemote->isChecked())
 		{
-			ui.actionDrive->setEnabled(true);
+			uiSmall.actionDrive->setEnabled(false);
+			emit enableRemoteControlListening(true);
 		}
-		emit enableRemoteControlListening(false);
+		else
+		{
+			if (robotIsOn)
+			{
+				uiSmall.actionDrive->setEnabled(true);
+			}
+			emit enableRemoteControlListening(false);
+		}
 	}
 }
 
 
 void Gui::on_actionSimulate_activated()
 {
-	if (ui.actionSimulate->isChecked())
+	if (useLargeGUI)
 	{
-		ui.actionSimulate->setStatusTip("Disable simulation");
-		ui.actionSimulate->setToolTip("Disable simulation");
-		emit simulate(true);
+		if (ui.actionSimulate->isChecked())
+		{
+			ui.actionSimulate->setStatusTip("Disable simulation");
+			ui.actionSimulate->setToolTip("Disable simulation");
+			emit simulate(true);
+		}
+		else
+		{
+			ui.actionSimulate->setStatusTip("Simulate");
+			ui.actionSimulate->setToolTip("Simulate");
+			emit simulate(false);
+		}
 	}
 	else
 	{
-		ui.actionSimulate->setStatusTip("Simulate");
-		ui.actionSimulate->setToolTip("Simulate");
-		emit simulate(false);
+		if (uiSmall.actionSimulate->isChecked())
+		{
+			uiSmall.actionSimulate->setStatusTip("Disable simulation");
+			uiSmall.actionSimulate->setToolTip("Disable simulation");
+			emit simulate(true);
+		}
+		else
+		{
+			uiSmall.actionSimulate->setStatusTip("Simulate");
+			uiSmall.actionSimulate->setToolTip("Simulate");
+			emit simulate(false);
+		}
 	}
 }
 
@@ -1967,7 +2606,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	QString text;
 
 
-	// show the zoom value in a label
+	// show the zoom value in a label /// @todo put his in a signal slot in qt desginer
 	// ui.labelLaserTop->setText(tr("%1").arg(value));
 
 
@@ -2101,7 +2740,8 @@ void Gui::on_checkBoxMirror_stateChanged(int state)
 	Q_UNUSED(state);
 
 	// QtGL class!!
-//	ui.frameCamera->enableMirrorMode(state);
+	//	ui.frameCamera->enableMirrorMode(state);
+	//	uiSmall.frameCamera->enableMirrorMode(state);
 }
 
 
@@ -2110,11 +2750,25 @@ void Gui::on_checkBoxFaceDetection_stateChanged(int state)
 	// en/disable face *tracking* checkbox
 	if (state == Qt::Checked)
 	{
-		ui.checkBoxFaceTracking->setEnabled(true);
+		if (useLargeGUI)
+		{
+			ui.checkBoxFaceTracking->setEnabled(true);
+		}
+		else
+		{
+			uiSmall.checkBoxFaceTracking->setEnabled(true);
+		}
 	}
 	else
 	{
-		ui.checkBoxFaceTracking->setEnabled(false);
+		if (useLargeGUI)
+		{
+			ui.checkBoxFaceTracking->setEnabled(false);
+		}
+		else
+		{
+			uiSmall.checkBoxFaceTracking->setEnabled(false);
+		}
 	}
 }
 
@@ -2130,7 +2784,14 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 	// change face tracking direction icon to middle
 	if (state == Qt::Unchecked)
 	{
-		ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+		if (useLargeGUI)
+		{
+			ui.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+		}
+		else
+		{
+			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+		}
 	}
 }
 
@@ -2162,8 +2823,16 @@ void Gui::initLaserView()
 
 	// init the reference spot pos at startup!
 	// (horicontal and vertical middle of the view)
-	laserXPos = (ui.graphicsViewLaser->width()  / 2);
-	laserYPos = (ui.graphicsViewLaser->height() / 2);
+	if (useLargeGUI)
+	{
+		laserXPos = (ui.graphicsViewLaser->width()  / 2);
+		laserYPos = (ui.graphicsViewLaser->height() / 2);
+	}
+	else
+	{
+		laserXPos = (uiSmall.graphicsViewLaser->width()  / 2);
+		laserYPos = (uiSmall.graphicsViewLaser->height() / 2);
+	}
 
 
 	// init laser y pos at startup!
@@ -2250,7 +2919,14 @@ void Gui::initLaserView()
 
 
 	// zoom into the laser lines by default factor
-	ui.sliderZoom->setValue(STARTZOOMLEVEL);
+	if (useLargeGUI)
+	{
+		ui.sliderZoom->setValue(STARTZOOMLEVEL);
+	}
+	else
+	{
+		uiSmall.sliderZoom->setValue(STARTZOOMLEVEL);
+	}
 }
 #endif
 
@@ -2271,7 +2947,15 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	static qreal widthLineFrontPosY2 = 0.0;
 	*/
 	int laserLineLength = 0;
-	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
+	int zoomView = 0;
+	if (useLargeGUI)
+	{
+		zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
+	}
+	else
+	{
+		zoomView = uiSmall.sliderZoom->value(); // get a scale to fit the beams into the window
+	}
 
 
 	//----------------------------------------------------------------------------------------
@@ -2457,7 +3141,15 @@ void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> las
 	static qreal widthLineRearPosY1 = 0.0;
 	static qreal widthLineRearPosY2 = 0.0;
 	int laserLineLength = 0;
-	int zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
+	int zoomView = 0;
+	if (useLargeGUI)
+	{
+		zoomView = ui.sliderZoom->value(); // get a scale to fit the beams into the window
+	}
+	else
+	{
+		zoomView = uiSmall.sliderZoom->value(); // get a scale to fit the beams into the window
+	}
 
 
 	//----------------------------------------------------------------------------------------
@@ -2628,7 +3320,14 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 	laserXPos = mouseEvent->scenePos().x();
 
 	// refresh laserView
-	on_sliderZoom_valueChanged(ui.sliderZoom->value());
+	if (useLargeGUI)
+	{
+		on_sliderZoom_valueChanged(ui.sliderZoom->value());
+	}
+	else
+	{
+		on_sliderZoom_valueChanged(uiSmall.sliderZoom->value());
+	}
 }
 #endif
 
@@ -2672,7 +3371,17 @@ void Gui::setLaserscannerResolution(short int laserscanner, float resolution)
 #ifdef ACTIVELASERVIEW
 void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 {
-	int zoomValue = ui.sliderZoom->value();
+	int zoomValue = 0;
+
+
+	if (useLargeGUI)
+	{
+		zoomValue = ui.sliderZoom->value();
+	}
+	else
+	{
+		zoomValue = uiSmall.sliderZoom->value();
+	}
 
 
 	if (wheelEvent->delta() > 0)
@@ -2685,7 +3394,14 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 	}
 
 	// refresh laserView (set zoom slider)
-	ui.sliderZoom->setValue(zoomValue);
+	if (useLargeGUI)
+	{
+		ui.sliderZoom->setValue(zoomValue);
+	}
+	else
+	{
+		uiSmall.sliderZoom->setValue(zoomValue);
+	}
 }
 #endif
 
@@ -2718,10 +3434,24 @@ void Gui::createLaserScannerObjects()
 	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());	-> DISABLED to enable dragging the robot in the laserView!!
 
 	// set scene to the GUI
-	ui.graphicsViewLaser->setScene(scene);
+	if (useLargeGUI)
+	{
+		ui.graphicsViewLaser->setScene(scene);
+	}
+	else
+	{
+		uiSmall.graphicsViewLaser->setScene(scene);
+	}
 
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet by the hardware))
-	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+	if (useLargeGUI)
+	{
+		ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+	}
+	else
+	{
+		uiSmall.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+	}
 
 	//=======================================================
 	// add robot picture1
@@ -2730,7 +3460,14 @@ void Gui::createLaserScannerObjects()
 	pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
 
 	// init the scale for the laser line / distances drawing stuff
-	lastZoom = ui.sliderZoom->value();
+	if (useLargeGUI)
+	{
+		lastZoom = ui.sliderZoom->value();
+	}
+	else
+	{
+		lastZoom = uiSmall.sliderZoom->value();
+	}
 
 	//--------------------------------------------------------------
 	// set the start scale
@@ -3032,15 +3769,34 @@ void Gui::initLaserStuff()
 void Gui::initPlots()
 {
 	// create to qwt plot objects and place them in the GUI
-	qwtPlotVoltage1.setParent(ui.widgetVoltage1);
-	qwtPlotVoltage2.setParent(ui.widgetVoltage2);
+	if (useLargeGUI)
+	{
+		qwtPlotVoltage1.setParent(ui.widgetVoltage1);
+		qwtPlotVoltage2.setParent(ui.widgetVoltage2);
+	}
+	else
+	{
+		qwtPlotVoltage1.setParent(uiSmall.widgetVoltage1);
+		qwtPlotVoltage2.setParent(uiSmall.widgetVoltage2);
+	}
 
-//	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
-//	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);
+	//	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
+	//	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);       or
+	//	qwtPlotCurrent1.setParent(uiSmall.widgetCurrent1and2);
+	//	qwtPlotCurrent2.setParent(uiSmall.widgetCurrent3and4);
 
-	qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
-//	ui.widgetHeartbeat->resize(205, 100); // 305 x 161
-//	qwtPlotHeartbeat.resize(205, 100);
+	if (useLargeGUI)
+	{
+		qwtPlotHeartbeat.setParent(ui.widgetHeartbeat);
+	//	ui.widgetHeartbeat->resize(205, 100); // 305 x 161
+	//	qwtPlotHeartbeat.resize(205, 100);
+	}
+	else
+	{
+		qwtPlotHeartbeat.setParent(uiSmall.widgetHeartbeat);
+	//	uiSmall.widgetHeartbeat->resize(205, 100); // 305 x 161
+	//	qwtPlotHeartbeat.resize(205, 100);
+	}
 
 	// get the current application font
 	QFont applicationFont = QApplication::font();
@@ -3227,13 +3983,26 @@ void Gui::initPlots()
 	//------------------------------------------------------------
 	// resize qwt plot items to the correct underlying frame size
 	//------------------------------------------------------------
-	qwtPlotVoltage1.setGeometry( ui.widgetVoltage1->rect() );
-	qwtPlotVoltage2.setGeometry( ui.widgetVoltage2->rect() );
+	if (useLargeGUI)
+	{
+		qwtPlotVoltage1.setGeometry( ui.widgetVoltage1->rect() );
+		qwtPlotVoltage2.setGeometry( ui.widgetVoltage2->rect() );
 
-//	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
-//	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
+	//	qwtPlotCurrent1.setGeometry( ui.widgetCurrent1and2->rect() );
+	//	qwtPlotCurrent2.setGeometry( ui.widgetCurrent1and2->rect() );
 
-	qwtPlotHeartbeat.setGeometry( ui.widgetHeartbeat->rect() );
+		qwtPlotHeartbeat.setGeometry( ui.widgetHeartbeat->rect() );
+	}
+	else
+	{
+		qwtPlotVoltage1.setGeometry( uiSmall.widgetVoltage1->rect() );
+		qwtPlotVoltage2.setGeometry( uiSmall.widgetVoltage2->rect() );
+
+	//	qwtPlotCurrent1.setGeometry( uiSmall.widgetCurrent1and2->rect() );
+	//	qwtPlotCurrent2.setGeometry( uiSmall.widgetCurrent1and2->rect() );
+
+		qwtPlotHeartbeat.setGeometry( uiSmall.widgetHeartbeat->rect() );
+	}
 }
 #endif
 
@@ -3300,15 +4069,30 @@ void Gui::initCompass()
 void Gui::showCompassData(float x, float y, float z, float heading)
 {
 	// also formats the string to 1 digits precision!
-	ui.lblCompassX->setText( QString("%1").setNum(x, 'f', 1).append(" deg") );
-	ui.lblCompassY->setText( QString("%1").setNum(y, 'f', 1).append(" deg") );
-	ui.lblCompassZ->setText( QString("%1").setNum(z, 'f', 1).append(" deg") );
-	ui.lblCompassHeading->setText( QString("%1").setNum(heading, 'f', 1).append(" deg") );
+	if (useLargeGUI)
+	{
+		ui.lblCompassX->setText( QString("%1").setNum(x, 'f', 1).append(" deg") );
+		ui.lblCompassY->setText( QString("%1").setNum(y, 'f', 1).append(" deg") );
+		ui.lblCompassZ->setText( QString("%1").setNum(z, 'f', 1).append(" deg") );
+		ui.lblCompassHeading->setText( QString("%1").setNum(heading, 'f', 1).append(" deg") );
 
-// 	ui.qwtCompass->setValue(x);
+	// 	ui.qwtCompass->setValue(x);
 
-	// set the 3D OpenGL compass!
-	ui.frameCompass->setAllRotations(x, y, z); /// \todo and what to do with the 'heading'?
+		// set the 3D OpenGL compass!
+		ui.frameCompass->setAllRotations(x, y, z); /// \todo and what to do with the 'heading'?
+	}
+	else
+	{
+		uiSmall.lblCompassX->setText( QString("%1").setNum(x, 'f', 1).append(" deg") );
+		uiSmall.lblCompassY->setText( QString("%1").setNum(y, 'f', 1).append(" deg") );
+		uiSmall.lblCompassZ->setText( QString("%1").setNum(z, 'f', 1).append(" deg") );
+		uiSmall.lblCompassHeading->setText( QString("%1").setNum(heading, 'f', 1).append(" deg") );
+
+	// 	uiSmall.qwtCompass->setValue(x);
+
+		// set the 3D OpenGL compass!
+		uiSmall.frameCompass->setAllRotations(x, y, z); /// \todo and what to do with the 'heading'?
+	}
 }
 
 
@@ -3317,13 +4101,34 @@ void Gui::setLEDHeartbeat(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
 			break;
 		case GREEN:
-			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
 			break;
 		case LEDOFF:
-			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
 			break;
 	}
 }
@@ -3334,13 +4139,34 @@ void Gui::setLEDCompass(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
 			break;
 		case GREEN:
-			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
 			break;
 		case LEDOFF:
-			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
 			break;
 	}
 }
@@ -3351,13 +4177,34 @@ void Gui::setLEDJoystick(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
 			break;
 		case GREEN:
-			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
 			break;
 		case LEDOFF:
-			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
 			break;
 	}
 }
@@ -3368,13 +4215,34 @@ void Gui::setLEDCamera(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
 			break;
 		case GREEN:
-			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
 			break;
 		case LEDOFF:
-			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
 			break;
 	}
 }
@@ -3384,14 +4252,35 @@ void Gui::setLEDNetwork(unsigned char state)
 {
 	switch (state)
 	{
-		case RED:
-			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			case RED:
+			if (useLargeGUI)
+			{
+				ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
 			break;
 		case GREEN:
-			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
 			break;
 		case LEDOFF:
-			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
 			break;
 	}
 }
@@ -3402,13 +4291,34 @@ void Gui::setLEDLaser(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
 			break;
 		case GREEN:
-			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
 			break;
 		case LEDOFF:
-			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			if (useLargeGUI)
+			{
+				ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
 			break;
 	}
 }
@@ -3417,13 +4327,27 @@ void Gui::setLEDLaser(unsigned char state)
 void Gui::showKinectAngle(double angle)
 {
 	// we do a type cast here since the original Kinect method uses 'double'.
-	ui.spinBoxKinectAngle->setValue((int) angle);
+	if (useLargeGUI)
+	{
+		ui.spinBoxKinectAngle->setValue((int) angle);
+	}
+	else
+	{
+		uiSmall.spinBoxKinectAngle->setValue((int) angle);
+	}
 }
 
 
 void Gui::showThreshold(int threshold)
 {
-	ui.sliderThreshold->setValue(threshold);
+	if (useLargeGUI)
+	{
+		ui.sliderThreshold->setValue(threshold);
+	}
+	else
+	{
+		uiSmall.sliderThreshold->setValue(threshold);
+	}
 }
 
 
@@ -3475,6 +4399,12 @@ void Gui::processCam()
 			// add brightness and contrast
 //			this->processFrame(frame);
 
+  if (useLargeGUI)
+  {
+  }
+  else
+  {
+  }
 			ui.frameOpenCV->sendImage( &frame );
 
 			QTimer::singleShot(25, this, SLOT(processCam()));
