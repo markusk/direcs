@@ -95,6 +95,7 @@ Direcs::Direcs(bool bConsoleMode)
 	// Creating logfile object
 	//------------------------------------------------------------------
 	logfile = new Logfile();
+	logfile->setFilename("direcs.log");
 
 	//--------------------------------------------------------------------------
 	// check local hostname to decide, which GUI we will use (small or large)
@@ -181,8 +182,6 @@ void Direcs::init()
 	}
 	forceShutdown = false;
 	inifile1->setFilename("direcs.ini");
-	logfile->setFilename("direcs.log");
-	/// \todo direcs->setLogFileName("direcs.log");
 	hostnameForSmallGUI = "robot";
 	useRobotGUI=false;
 	serialPortMicrocontroller = "error1";
