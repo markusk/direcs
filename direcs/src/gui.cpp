@@ -1189,12 +1189,12 @@ void Gui::showVoltage(int sensor, float voltage)
 		case VOLTAGESENSOR1:
 			if (useLargeGUI)
 			{
-				ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+				ui.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" V"));
 //	 			ui.progressBarVoltage1->setValue(voltage);
 			}
 			else
 			{
-				uiSmall.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+				uiSmall.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 2).append(" V"));
 // 				uiSmall.progressBarVoltage1->setValue(voltage);
 			}
 
@@ -1243,12 +1243,12 @@ void Gui::showVoltage(int sensor, float voltage)
 		case VOLTAGESENSOR2:
 			if (useLargeGUI)
 			{
-				ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+				ui.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" V"));
 //				ui.progressBarVoltage2->setValue(voltage);
 			}
 			else
 			{
-				uiSmall.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" Volt"));
+				uiSmall.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 2).append(" V"));
 //				uiSmall.progressBarVoltage2->setValue(voltage);
 			}
 
