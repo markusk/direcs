@@ -95,7 +95,10 @@ class Direcs : public QObject
 
 
 	public:
-		Direcs(bool bConsoleMode);
+		/**
+		The parameters are given from a main method which gets them from the console (startup arguments).
+		*/
+		Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI);
 		~Direcs();
 
 
@@ -379,9 +382,11 @@ class Direcs : public QObject
 		unsigned int value;
 		float floatValue;
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
+		bool forceSmallGUI; /// is enabled if the argument 'small' was passed by command-line. This will result in a startup with the small GUI - regardless of the hostname.
+		bool forceLargeGUI; /// is enabled if the argument 'large' was passed by command-line. This will result in a startup with the large GUI - regardless of the hostname.
 		bool shutdownAlreadyCalled;
 		bool forceShutdown; /// this is set to true, when no ini-file was found at startup. This make the program leave without the stupid AreYouSure-Question.
-		bool useRobotGUI; /// if true, we will use a small GUI for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Gui::Gui()
+		bool useSmallGUI; /// if true, we will use a small GUI for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Gui::Gui()
 		QList <QDateTime> obstacleAlarmFrontLeftList;			/// A list of obstacle alarms that occured left the last n times.
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.

@@ -21,7 +21,7 @@
 #include "gui.h"
 
 
-Gui::Gui(bool useRobotGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(bool useSmallGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent) : QMainWindow(parent)
 {
 	// copy the pointer from the original SensorThread object
 	settingsDialog = s;
@@ -54,7 +54,7 @@ Gui::Gui(bool useRobotGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a,
 
 	// store which GUI to use
 	// the robot GUI is the small one
-	useLargeGUI = !useRobotGUI;
+	useLargeGUI = !useSmallGUI;
 
 
 	// do the rest of my init stuff
@@ -67,7 +67,10 @@ void Gui::init()
 	//-----------------
 	// startup the GUI
 	//-----------------
-	ui.setupUi(this);
+	if (useLargeGUI)
+		ui.setupUi(this);
+	else
+		uiSmall.setupUi(this);
 
 
 	// get background color for compass widget

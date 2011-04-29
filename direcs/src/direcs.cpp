@@ -24,6 +24,8 @@
 int main(int argc, char *argv[])
 {
 	bool consoleMode = false;
+	bool forceSmallGUI = false;
+	bool forceLargeGUI = false;
 
 
 	// Check for command-line argument "console".
@@ -39,6 +41,20 @@ int main(int argc, char *argv[])
 			{
 				consoleMode = true;
 				qDebug() << "Console mode enabled.";
+			}
+
+			// force small GUI ?
+			if (strcasecmp(argv[i], "small") == 0)
+			{
+				forceSmallGUI = true;
+				qDebug() << "Using small GUI.";
+			}
+
+			// force large GUI ?
+			if (strcasecmp(argv[i], "large") == 0)
+			{
+				forceLargeGUI = true;
+				qDebug() << "Using large GUI.";
 			}
 		}
 	}
@@ -56,7 +72,7 @@ int main(int argc, char *argv[])
 		CleanExit cleanExit;
 
 		// create Direcs class object
-		Direcs d(consoleMode);
+		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI);
 
 		// init direcs
 		d.init();
@@ -76,7 +92,7 @@ int main(int argc, char *argv[])
 		QApplication app(argc, argv);
 
 		// create the Direcs class object
-		Direcs d(consoleMode);
+		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI);
 
 		// init direcs
 		d.init();
@@ -86,21 +102,24 @@ int main(int argc, char *argv[])
 }
 
 
-Direcs::Direcs(bool bConsoleMode)
+Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 {
 	// store mode from main method
 	consoleMode = bConsoleMode;
+	forceSmallGUI = bForceSmallGUI;
+	forceLargeGUI = bForceLargeGUI;
 
-	//------------------------------------------------------------------
+	//-------------------------
 	// Creating logfile object
-	//------------------------------------------------------------------
+	//-------------------------
 	logfile = new Logfile();
 	logfile->setFilename("direcs.log");
 	logfile->appendLog("- start -------------------------------------------------------------------------------------------------");
 
-	//--------------------------------------------------------------------------
-	// check local hostname to decide, which GUI we will use (small or large)
-	//--------------------------------------------------------------------------
+
+	//----------------------
+	// check local hostname
+	//----------------------
 	QString hostname = QHostInfo::localHostName();
 
 	logfile->appendLog(QString("The hostname of this machine is %1").arg(hostname));
@@ -108,18 +127,30 @@ Direcs::Direcs(bool bConsoleMode)
 	if (hostname.contains("robot"))
 	{
 		logfile->appendLog("Hostname contains 'robot'. We will use the small robot GUI.");
-		useRobotGUI = true;
+		useSmallGUI = true;
 	}
 	else
 	{
 		logfile->appendLog("Hostname does not contain 'robot'. We will use the large GUI.");
-		useRobotGUI = false;
+		useSmallGUI = false;
+	}
+
+	if (forceSmallGUI)
+	{
+		logfile->appendLog("Overriding GUI use due to command line argument. We will use the small robot GUI!");
+		useSmallGUI = true;
+	}
+
+	if (forceLargeGUI)
+	{
+		logfile->appendLog("Overriding GUI use due to command line argument. We will use the large robot GUI!");
+		useSmallGUI = false;
 	}
 
 
-	//------------------------------------------------------------------
-	// create the objects
-	//------------------------------------------------------------------
+	//--------------------------
+	// create all other objects
+	//--------------------------
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	speakThread = new SpeakThread();
 #endif
@@ -137,7 +168,7 @@ Direcs::Direcs(bool bConsoleMode)
 		settingsDialog = new SettingsDialog();
 		joystickDialog = new JoystickDialog();
 		aboutDialog = new AboutDialog();
-		gui = new Gui(useRobotGUI, settingsDialog, joystickDialog, aboutDialog);
+		gui = new Gui(useSmallGUI, settingsDialog, joystickDialog, aboutDialog);
 		splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 	}
 
@@ -184,7 +215,7 @@ void Direcs::init()
 	}
 	forceShutdown = false;
 	inifile1->setFilename("direcs.ini");
-	useRobotGUI=false;
+	useSmallGUI=false;
 	serialPortMicrocontroller = "error1";
 	serialPortLaserscannerFront = "error1";
 	laserscannerTypeFront= "error1";

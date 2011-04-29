@@ -69,7 +69,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(bool useRobotGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent = 0);
+		Gui(bool useSmallGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent = 0);
 		~Gui();
 
 		/*
