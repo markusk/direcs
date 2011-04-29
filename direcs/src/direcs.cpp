@@ -96,12 +96,13 @@ Direcs::Direcs(bool bConsoleMode)
 	//------------------------------------------------------------------
 	logfile = new Logfile();
 	logfile->setFilename("direcs.log");
+	logfile->appendLog("- start -------------------------------------------------------------------------------------------------");
+	logfile->appendLog(QString("The hostname of this machine is %1").arg(hostname));
 
 	//--------------------------------------------------------------------------
 	// check local hostname to decide, which GUI we will use (small or large)
 	//--------------------------------------------------------------------------
 	QString hostname = QHostInfo::localHostName();
-	logfile->appendLog(QString("The hostname of this machine is %1").arg(hostname));
 
 	if (hostname.contains(hostnameForSmallGUI))
 	{
@@ -2674,10 +2675,6 @@ void Direcs::readSettings()
 			// write messages for the GUI or fotthe console ALSO to a logfile
 			//--------------------------------------------------------------------------
 			connect(this, SIGNAL( message(QString) ), logfile, SLOT( appendLog(QString) ));
-			//-----------------------------
-			// first log file message
-			//-----------------------------
-			logfile->appendLog("- start -------------------------------------------------------------------------------------------------");
 			break;
 	}
 
