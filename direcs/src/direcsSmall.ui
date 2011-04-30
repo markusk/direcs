@@ -135,7 +135,7 @@
               <enum>QFrame::Raised</enum>
              </property>
              <property name="text">
-              <string>12,00 V</string>
+              <string>12,0 V</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -221,7 +221,7 @@
               <enum>QFrame::Raised</enum>
              </property>
              <property name="text">
-              <string>24,00 V</string>
+              <string>24,0 V</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -983,9 +983,9 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tabLaserState">
+    <widget class="QWidget" name="tabDistance">
      <attribute name="title">
-      <string>Laser State</string>
+      <string>Distance</string>
      </attribute>
      <widget class="QWidget" name="layoutWidget2">
       <property name="geometry">
@@ -1788,6 +1788,13 @@
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
    <addaction name="actionAbout"/>
+   <addaction name="actionBlanc"/>
+   <addaction name="actionBlanc_2"/>
+   <addaction name="actionBlanc_3"/>
+   <addaction name="actionBlanc_4"/>
+   <addaction name="actionBlanc_5"/>
+   <addaction name="actionBlanc_7"/>
+   <addaction name="actionBlanc_6"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
   </widget>
@@ -1970,6 +1977,81 @@
    </property>
    <property name="toolTip">
     <string>Reset Driven Distance</string>
+   </property>
+  </action>
+  <action name="actionBlanc">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+   </property>
+   <property name="text">
+    <string>blanc</string>
+   </property>
+  </action>
+  <action name="actionBlanc_2">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+   </property>
+   <property name="text">
+    <string>blanc</string>
+   </property>
+  </action>
+  <action name="actionBlanc_3">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+   </property>
+   <property name="text">
+    <string>blanc</string>
+   </property>
+  </action>
+  <action name="actionBlanc_4">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+   </property>
+   <property name="text">
+    <string>blanc</string>
+   </property>
+  </action>
+  <action name="actionBlanc_5">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+   </property>
+   <property name="text">
+    <string>blanc</string>
+   </property>
+  </action>
+  <action name="actionBlanc_6">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionBlanc_7">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
  </widget>
