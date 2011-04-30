@@ -179,23 +179,15 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	}
 
 
-// - - - - - - - - - - -
-
-
 	/// Set *TERMIOS_P to indicate raw mode.
-	// Added on 2.4.2011 for the usage of the laser scanner S300 under Linux. Resolved the "resource unavailable" error and works under Mac OS X 10.6, too.
-//	cfmakeraw(&options);
-
+	// Added on 02.04.2011 for the usage of the laser scanner S300 under Linux. Resolved the "resource unavailable" error and works under Mac OS X 10.6, too.
 	/*
-	Raw mode
+	Setting raw mode
 
 	cfmakeraw() sets the terminal to something like the "raw" mode of the old Version 7 terminal driver:
 	input is available character by character, echoing is disabled, and all special processing
 	of terminal input and output characters is disabled.  The terminal attributes are set as follows:
-	*/
 
-
-	/*
 	IGNBRK
 	Ignore BREAK condition on input.
 
@@ -225,14 +217,12 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// *delete* the following flags
 	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
 
-
 	/*
 	OPOST
 	Enable implementation-defined output processing.
 	*/
 	// *delete* the following flags
 	options.c_oflag &= ~OPOST;
-
 
 	/*
 	ECHO
@@ -252,18 +242,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 
 	Source: http://linux.die.net/man/3/termios
 	*/
-	//org:	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-	// mk neu 30.04.2011:
-	// *delete* the following flags
-	options.c_lflag &= ~(ECHO | ECHONL | ISIG);
-	// *set* the following flags
-	options.c_lflag |= (ICANON | IEXTEN);
-
-//	options.c_cflag &= ~(CSIZE | PARENB);														// see above
-//	options.c_cflag |= CS8;																		// see above
-
-
-// - - - - - - - - - - -
+	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
 
 
 	// Cause the new options to take effect immediately.
