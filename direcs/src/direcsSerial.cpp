@@ -194,15 +194,73 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	of terminal input and output characters is disabled.  The terminal attributes are set as follows:
 	*/
 
-	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
-	options.c_oflag &= ~OPOST;
-	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-//	options.c_cflag &= ~(CSIZE | PARENB);														// see above
-//	options.c_cflag |= CS8;																		// see above
 
 	/*
-	Linux manpage, 30.04.2011
+	IGNBRK
+	Ignore BREAK condition on input.
+
+	BRKINT
+	If IGNBRK is set, a BREAK is ignored. If it is not set but BRKINT is set, then a BREAK causes the input and output queues to be flushed, and if the terminal is the controlling terminal of a foreground process group, it will cause a SIGINT to be sent to this foreground process group. When neither IGNBRK nor BRKINT are set, a BREAK reads as a null byte ('\0'), except when PARMRK is set, in which case it reads as the sequence \377 \0 \0.
+
+	PARMRK
+	If IGNPAR is not set, prefix a character with a parity error or framing error with \377 \0. If neither IGNPAR nor PARMRK is set, read a character with a parity error or framing error as \0.
+
+	ISTRIP
+	Strip off eighth bit.
+
+	INLCR
+	Translate NL to CR on input.
+
+	IGNCR
+	Ignore carriage return on input.
+
+	ICRNL
+	Translate carriage return to newline on input (unless IGNCR is set).
+
+	IXON
+	Enable XON/XOFF flow control on output.
+
+	Source: http://linux.die.net/man/3/termios
 	*/
+	// *delete* the following flags
+	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+
+
+	/*
+	OPOST
+	Enable implementation-defined output processing.
+	*/
+	// *delete* the following flags
+	options.c_oflag &= ~OPOST;
+
+
+	/*
+	ECHO
+	Echo input characters.
+
+	ECHONL
+	If ICANON is also set, echo the NL character even if ECHO is not set.
+
+	ICANON
+	Enable canonical mode. This enables the special characters EOF, EOL, EOL2, ERASE, KILL, LNEXT, REPRINT, STATUS, and WERASE, and buffers by lines.
+
+	ISIG
+	When any of the characters INTR, QUIT, SUSP, or DSUSP are received, generate the corresponding signal.
+
+	IEXTEN
+	Enable implementation-defined input processing. This flag, as well as ICANON must be enabled for the special characters EOL2, LNEXT, REPRINT, WERASE to be interpreted, and for the IUCLC flag to be effective.
+
+	Source: http://linux.die.net/man/3/termios
+	*/
+	//org:	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	// mk neu 30.04.2011:
+	// *delete* the following flags
+	options.c_lflag &= ~(ECHO | ECHONL | ISIG);
+	// *set* the following flags
+	options.c_lflag |= (ICANON | IEXTEN);
+
+//	options.c_cflag &= ~(CSIZE | PARENB);														// see above
+//	options.c_cflag |= CS8;																		// see above
 
 
 // - - - - - - - - - - -
