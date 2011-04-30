@@ -89,26 +89,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
 
 
-// - - - - - - - - - -
-	/*
-	Raw mode
-
-	cfmakeraw() sets the terminal to something like the "raw" mode of the old Version 7 terminal driver:
-	input is available character by character, echoing is disabled, and all special processing
-	of terminal input and output characters is disabled.  The terminal attributes are set as follows:
-	*/
-	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
-	options.c_oflag &= ~OPOST;
-	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-//	options.c_cflag &= ~(CSIZE | PARENB);														<	bereits oben
-//	options.c_cflag |= CS8;																		<	bereits oben
-
-	/*
-	Linux manpage, 30.04.2011
-	*/
-// - - - - - - - - - -
-
-
 	// this part is originally from setparms:
 	newbaud = (baudrate/100);
 
@@ -212,14 +192,15 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	cfmakeraw() sets the terminal to something like the "raw" mode of the old Version 7 terminal driver:
 	input is available character by character, echoing is disabled, and all special processing
 	of terminal input and output characters is disabled.  The terminal attributes are set as follows:
+	*/
 
 	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
 	options.c_oflag &= ~OPOST;
 	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-	options.c_cflag &= ~(CSIZE | PARENB);
-	options.c_cflag |= CS8;
+//	options.c_cflag &= ~(CSIZE | PARENB);														// see above
+//	options.c_cflag |= CS8;																		// see above
 
-
+	/*
 	Linux manpage, 30.04.2011
 	*/
 
