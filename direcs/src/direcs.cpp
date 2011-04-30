@@ -892,7 +892,7 @@ void Direcs::init()
 			if (camThread->init() == true)
 			{
 				emit splashMessage("Kinect found.");
-				emit message("Kinect found.", false);
+				emit message("Kinect found.");
 
 				// connect sensor contact signals to "show contact alarm"
 				// (Whenever the an alarm contact was closed, show the result in the cam image)
