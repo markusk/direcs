@@ -3893,8 +3893,12 @@ void Gui::initPlots()
 	// set background color
 	//qwtPlotVoltage1.setCanvasBackground(QColor(Qt::black));
 
-	// set title
-	qwtPlotVoltage1.setTitle("12 V Battery");
+	// on the smal GUI there is no space for a title
+	if (useLargeGUI)
+	{
+		// set title
+		qwtPlotVoltage1.setTitle("12 V Battery");
+	}
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
@@ -3928,8 +3932,12 @@ void Gui::initPlots()
 	// set background color
 	//qwtPlotVoltage2.setCanvasBackground(QColor(Qt::black));
 
-	// set title
-	qwtPlotVoltage2.setTitle("24 V Battery");
+	// on the smal GUI there is no space for a title
+	if (useLargeGUI)
+	{
+		// set title
+		qwtPlotVoltage2.setTitle("24 V Battery");
+	}
 
 	// Set axis scale (instead of using autoscale, which is default)
 	// maximum voltage value at which the axis should and, and the steps between each divider
