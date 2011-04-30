@@ -88,6 +88,27 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
 
+
+// - - - - - - - - - -
+	/*
+	Raw mode
+
+	cfmakeraw() sets the terminal to something like the "raw" mode of the old Version 7 terminal driver:
+	input is available character by character, echoing is disabled, and all special processing
+	of terminal input and output characters is disabled.  The terminal attributes are set as follows:
+	*/
+	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+	options.c_oflag &= ~OPOST;
+	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+//	options.c_cflag &= ~(CSIZE | PARENB);														<	bereits oben
+//	options.c_cflag |= CS8;																		<	bereits oben
+
+	/*
+	Linux manpage, 30.04.2011
+	*/
+// - - - - - - - - - -
+
+
 	// this part is originally from setparms:
 	newbaud = (baudrate/100);
 
@@ -177,9 +198,34 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		return -1;
 	}
 
+
+// - - - - - - - - - - -
+
+
 	/// Set *TERMIOS_P to indicate raw mode.
 	// Added on 2.4.2011 for the usage of the laser scanner S300 under Linux. Resolved the "resource unavailable" error and works under Mac OS X 10.6, too.
-	cfmakeraw(&options);
+//	cfmakeraw(&options);
+
+	/*
+	Raw mode
+
+	cfmakeraw() sets the terminal to something like the "raw" mode of the old Version 7 terminal driver:
+	input is available character by character, echoing is disabled, and all special processing
+	of terminal input and output characters is disabled.  The terminal attributes are set as follows:
+
+	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+	options.c_oflag &= ~OPOST;
+	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	options.c_cflag &= ~(CSIZE | PARENB);
+	options.c_cflag |= CS8;
+
+
+	Linux manpage, 30.04.2011
+	*/
+
+
+// - - - - - - - - - - -
+
 
 	// Cause the new options to take effect immediately.
 	if (tcsetattr(mDev_fd, TCSANOW, &options) != 0)
