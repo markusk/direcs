@@ -511,14 +511,14 @@
        <item row="1" column="0">
         <widget class="QWidget" name="widgetHeartbeat" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>291</width>
            <height>161</height>
           </size>
          </property>
