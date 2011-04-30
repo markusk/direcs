@@ -876,7 +876,7 @@ void Direcs::init()
 		if (!consoleMode)
 		{
 			emit splashMessage("Detecting Kinect camera...");
-			emit message("Detecting Kinect camera...", false);
+			emit message("Detecting Kinect camera...");
 
 			// show Kinect messages in GUI
 			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
@@ -887,7 +887,7 @@ void Direcs::init()
 			// check if Kinect camera is connected
 			//-----------------------------------------------------------
 			emit splashMessage("Initialising Kinect camera...");
-			emit message("Initialising Kinect camera...", false);
+			emit message("Initialising Kinect camera...");
 
 			if (camThread->init() == true)
 			{
