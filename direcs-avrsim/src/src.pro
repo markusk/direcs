@@ -1,6 +1,6 @@
-DESTDIR = .
+DESTDIR = ../bin
 
-TARGET = ../bin/direcs-avrsim
+TARGET = direcs-avrsim
 
 MOC_DIR = ../tmp
 
@@ -27,9 +27,11 @@ SOURCES +=	direcsSerial.cpp \
 
 FORMS +=	mainWindow.ui
 
-DEFINES =	_TTY_POSIX_
+CONFIG += debug
 
-CONFIG -= release
+INCLUDEPATH += /opt/local/include \
+				/opt/local/libexec/qt4-mac/include
 
-LIBS += -L/usr/lib \
-	-L/usr/local/lib
+LIBS +=		-L/opt/local/lib \
+				-L/usr/lib \
+				-L/usr/local/lib
