@@ -102,6 +102,14 @@ class InterfaceAvr : public QObject
 		*/
 		bool convertStringToInt(QString string, int &value);
 
+		/**
+		Checks if chars are avialable to be received.
+
+		@return true if chars are available
+		**/
+		bool charsAvailable();
+
+
 
 	signals:
 		/**

@@ -275,3 +275,14 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 	value = 0;
 	return false;
 }
+
+
+bool InterfaceAvr::charsAvailable()
+{
+	if (serialPort->numChars() <= 0)
+	{
+		return false;
+	}
+
+	return true;
+}
