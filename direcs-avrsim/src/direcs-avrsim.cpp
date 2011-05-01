@@ -85,7 +85,9 @@ void DirecsAvrsim::init()
 {
 	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 	splashColor = Qt::red;
+//	serialPortMicrocontroller = "/dev/tty.SLAB_USBtoUART"; /// this is the seperate serial adapter, but the same as on the Atmel-Board!
 	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
+//	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
 	robotSimulationMode = false;
 
 	//--------------------------------------------------------------------------
@@ -127,6 +129,7 @@ void DirecsAvrsim::init()
 	//--------------------------------------------------------------------------
 	// send status messages to the GUI
 	//--------------------------------------------------------------------------
+	connect(interface1, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
 	connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
 	connect(simulationThread, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
 
@@ -153,6 +156,8 @@ void DirecsAvrsim::init()
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
+	emit message(QString("Using serial port %1").arg(serialPortMicrocontroller), false);
+
 	emit message("Opening serial port for microcontroller communication...", false);
 
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
@@ -194,7 +199,6 @@ void DirecsAvrsim::init()
 	//--------------------------
 	// lets have fun, now
 	//--------------------------
-	emit message(QString("Now waiting for serial commands on %1...").arg(serialPortMicrocontroller), false);
 }
 
 
