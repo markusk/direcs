@@ -41,7 +41,7 @@
 */
 class DirecsAvrsim : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 
 	public:
@@ -170,9 +170,9 @@ class DirecsAvrsim : public QObject
 		static const unsigned char MOTOR4BW		= 20;
 		static const unsigned char MOTOR4OFF	= 21;
 
-		static const unsigned char READ_AXIS_X = 61;
-		static const unsigned char READ_AXIS_Y = 62;
-		static const unsigned char READ_AXIS_Z = 63;
+		static const unsigned char READAXISX = 61;
+		static const unsigned char READAXISY = 62;
+		static const unsigned char READAXISZ = 63;
 
 		/**
 		Give the sensors some names
@@ -215,7 +215,7 @@ class DirecsAvrsim : public QObject
 		/// The voltage sensors
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
-		
+
 		/// The minimum voltages for an acoustic and optical alarm. @sa Gui::showVoltage
 		static const float MINIMUMVOLTAGE1 = 10.80; // TODO: put min. voltage 1 in the ini-file
 		static const float MINIMUMVOLTAGE2 = 21.60; // TODO: put min. voltage 2 in the ini-file
