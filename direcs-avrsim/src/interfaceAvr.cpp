@@ -279,10 +279,10 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 
 bool InterfaceAvr::charsAvailable()
 {
-	if (serialPort->numChars() <= 0)
+	if (serialPort->numChars() > 0)
 	{
-		return false;
+		return true;
 	}
 
-	return true;
+	return false;
 }
