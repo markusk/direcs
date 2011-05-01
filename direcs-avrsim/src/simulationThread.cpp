@@ -95,420 +95,962 @@ void SimulationThread::run()
 				}
 			} // serial reading was successfull
 /*
-			//====================================================================
-			//====================================================================
-			//====================================================================
+		//====================================================================
+		//====================================================================
+		//====================================================================
 
-			switch (value)
-			{
-				case INIT:
-					// turn all drive motor bits off (except PWM bits)
-					PORTL &= ~(1<<PIN0);
-					PORTL &= ~(1<<PIN1);
-					PORTL &= ~(1<<PIN2);
-					PORTL &= ~(1<<PIN3);
-					PORTL &= ~(1<<PIN6);
-					PORTL &= ~(1<<PIN7);
-					PORTD &= ~(1<<PIN6);
-					PORTD &= ~(1<<PIN7);
-					// flashlight off
-					PORTC &= ~(1<<PIN1);
+ // Endlose Hauptschleife
+ while(1)
+ {
 
-					// 				setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-					// 				setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-					// 				setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-					// 				setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-					// 				setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-					// 				setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+	 // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
+	 if (RXcompleted == 1)
+	 {
+		 // Everything's fine, so reset the watchdog timer (wdt).
+		 wdt_reset();
 
-					// "answer" with "@" [Ascii Dezimal @ = 64]
-					// this answer is used to see if the robot is "on"
-					UsartTransmit( (uint8_t)(64) );
-					break;
-
-					//-------------------------------
-				case READ_SENSOR_1:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR1);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_2:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR2);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_3:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR3);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_4:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR4);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_5:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR5);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_6:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR6);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_7:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR7);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_8:
-					// read value from the analog digital converter (ADC)
-					value = readADC(SENSOR8);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_SENSOR_16:
-					// ultra sonic sensor !!
-					value = ultraschall_messung();
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_MOTOR_SENSOR1:
-					// motor sensor
-					value = readADC(SENSORMOTOR1);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_MOTOR_SENSOR2:
-					// motor sensor
-					value = readADC(SENSORMOTOR2);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_MOTOR_DISTANCE1:
-					// driven distance of motor 1 (encoder)
-					value = rightDistanceCounter;
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case READ_MOTOR_DISTANCE2:
-					// driven distance of motor 2 (encoder)
-					value = leftDistanceCounter;
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
-
-				case RESET_MOTOR_DISTANCE1:
-					// reset driven distance of motor 1 (encoder)
-					rightDistanceCounter = 0;
-					rightWheelCounter = 0;
-					break;
-
-				case RESET_MOTOR_DISTANCE2:
-					// reset driven distance of motor 1 (encoder)
-					leftDistanceCounter = 0;
-					leftWheelCounter = 0;
-					break;
-
-					//-------------------------------
-				case MOTOR1_OFF:
-					// delete Motor1 A bit
-					PORTL &= ~(1<<PIN0);
-					// delete Motor1 B bit
-					PORTL &= ~(1<<PIN1);
-					break;
-
-				case MOTOR1_CLOCKWISE:
-					// delete Motor1 A bit
-					PORTL &= ~(1<<PIN0);
-					// set Motor1 B bit
-					PORTL |= (1<<PIN1);
-					break;
-
-				case MOTOR1_COUNTERCLOCKWISE:
-					// set Motor1 A bit
-					PORTL |= (1<<PIN0);
-					// delete Motor1 B bit
-					PORTL &= ~(1<<PIN1);
-					break;
-
-				case MOTOR1_SPEED_SET:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setPWMwidth(1, value);
-					break;
-
-					//-------------------------------
-				case MOTOR2_OFF:
-					// delete Motor2 A bit
-					PORTL &= ~(1<<PIN2);
-					// delete Motor2 B bit
-					PORTL &= ~(1<<PIN3);
-					break;
-
-				case MOTOR2_CLOCKWISE:
-					// delete Motor2 A bit
-					PORTL &= ~(1<<PIN2);
-					// set Motor2 B bit
-					PORTL |= (1<<PIN3);
-					break;
-
-				case MOTOR2_COUNTERCLOCKWISE:
-					// set Motor2 A bit
-					PORTL |= (1<<PIN2);
-					// delete Motor2 B bit
-					PORTL &= ~(1<<PIN3);
-					break;
-
-				case MOTOR2_SPEED_SET:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setPWMwidth(2, value);
-					break;
-
-					//-------------------------------
-				case MOTOR3_OFF:
-					// delete Motor3 A bit
-					PORTL &= ~(1<<PIN6);
-					// delete Motor3 B bit
-					PORTL &= ~(1<<PIN7);
-					break;
-
-				case MOTOR3_CLOCKWISE: // cam pan R
-					// only, when end switch is clear
-					if ( bit_is_clear(PINK,PIN2) )
-					{
-						// delete Motor3 A bit
-						PORTL &= ~(1<<PIN6);
-						// set Motor3 B bit
-						PORTL |= (1<<PIN7);
-					}
-					break;
-
-				case MOTOR3_COUNTERCLOCKWISE: // cam pan L
-					// only, when end switch is clear
-					if ( bit_is_clear(PINK,PIN3) )
-					{
-						// set Motor3 A bit
-						PORTL |= (1<<PIN6);
-						// delete Motor3 B bit
-						PORTL &= ~(1<<PIN7);
-					}
-					break;
-
-				case MOTOR3_SPEED_SET:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setPWMwidth(3, value);
-					break;
-
-					//-------------------------------
-				case MOTOR4_OFF:
-					// delete Motor4 A bit
-					PORTD &= ~(1<<PIN6);
-					// delete Motor4 B bit
-					PORTD &= ~(1<<PIN7);
-					break;
-
-				case MOTOR4_CLOCKWISE: // cam tilt top
-					// only, when end switch is clear
-					if ( bit_is_clear(PINK,PIN1) )
-					{
-						// delete Motor4 A bit
-						PORTD &= ~(1<<PIN6);
-						// set Motor4 B bit
-						PORTD |= (1<<PIN7);
-					}
-					break;
-
-				case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
-					if ( bit_is_clear(PINK,PIN0) )
-					{
-						// set Motor4 A bit
-						PORTD |= (1<<PIN6);
-						// delete Motor4 B bit
-						PORTD &= ~(1<<PIN7);
-					}
-					break;
-
-				case MOTOR4_SPEED_SET:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setPWMwidth(4, value);
-					break;
-
-					//-------------------------------
-				case SET_SERVO1:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setServoPosition(1, value);
-					break;
-
-				case SET_SERVO2:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setServoPosition(2, value);
-					break;
-
-				case SET_SERVO3:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setServoPosition(3, value);
-					break;
+		 // ja, dann String lesen und uart_rx_flag löschen
+		 get_string(stringbuffer);
 
 
-				case SET_SERVO4:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setServoPosition(4, value);
-					break;
+		 //--------------------------
+		 // check what was received
+		 //--------------------------
 
 
-				case SET_SERVO5:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setServoPosition(5, value);
-					break;
+		 // RESET / INIT
+		 if (strcmp(stringbuffer, "*re#") == 0)
+		 {
+			 // turn all drive motor bits off (except PWM bits)
+			 PORTL &= ~(1<<PIN0);
+			 PORTL &= ~(1<<PIN1);
+			 PORTL &= ~(1<<PIN2);
+			 PORTL &= ~(1<<PIN3);
+			 PORTL &= ~(1<<PIN6);
+			 PORTL &= ~(1<<PIN7);
+			 PORTD &= ~(1<<PIN6);
+			 PORTD &= ~(1<<PIN7);
+			 // flashlight off
+			 relais(OFF);
+			 // red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+			 redLED(OFF);
 
+			 // setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+			 // setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+			 // setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+			 // setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+			 // setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+			 // setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 
-				case SET_SERVO6:
-					// wait for the (second) value to set the pwm!
-					value = UsartReceive();
-					setServoPosition(6, value);
-					break;
+			 // answer with "ok"
+			 // this answer is used to see if the robot is "on"
+			 put_string("*ok#");
 
-					//-------------------------------
-				case FLASHLIGHT_ON:
-					// set flashlight bit
-					PORTC |= (1<<PIN1);
-					PORTC &= ~(1<<PIN0); // < yellow led
-					break;
-				case FLASHLIGHT_OFF:
-					// delete flashlight bit
-					PORTC &= ~(1<<PIN1);
-					PORTC |= (1<<PIN0); // < yellow led
-					break;
+			 // e n a b l e  watchdog!
+			 watchdog(ENABLE);
+		 }
+		 else
+		 // SLEEP (and turn off watchdog)
+		 if (strcmp(stringbuffer, "*sl#") == 0)
+		 {
+			 // turn all drive motor bits off (except PWM bits)
+			 PORTL &= ~(1<<PIN0);
+			 PORTL &= ~(1<<PIN1);
+			 PORTL &= ~(1<<PIN2);
+			 PORTL &= ~(1<<PIN3);
+			 PORTL &= ~(1<<PIN6);
+			 PORTL &= ~(1<<PIN7);
+			 PORTD &= ~(1<<PIN6);
+			 PORTD &= ~(1<<PIN7);
 
-					//-------------------------------
-				case READ_CONTACT1:
-					// contact cam tilt R/BOTTOM
-					// send 1 Byte (8 bit!)
-					UsartTransmit( (uint8_t) bit_is_set(PINK,PIN3) );
-					break;
+			 // flashlight off
+			 relais(OFF);
 
-				case READ_CONTACT2:
-					// contact cam tilt L/TOP
-					// send 1 Byte (8 bit!)
-					UsartTransmit( (uint8_t) bit_is_set(PINK,PIN2) );
-					break;
+			 // red LED off
+			 redLED(OFF);
 
-				case READ_CONTACT3:
-					// contact cam pan R
-					// send 1 Byte (8 bit!)
-					UsartTransmit( (uint8_t) bit_is_set(PINK,PIN1) );
-					break;
+			 // d i s a b l e  watchdog!
+			 watchdog(DISABLE);
 
-				case READ_CONTACT4:
-					// contact cam pan L
-					// send 1 Byte (8 bit!)
-					UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
-					break;
+			 // answer
+			 put_string("*sl#");
+		 }
+		 else
+		 // READ_SENSOR_1
+		 if (strcmp(stringbuffer, "*s1#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR1) );
+		 }
+		 else
+		 // READ_SENSOR_2
+		 if (strcmp(stringbuffer, "*s2#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR2) );
+		 }
+		 else
+		 // READ_SENSOR_3
+		 if (strcmp(stringbuffer, "*s3#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR3) );
+		 }
+		 else
+		 // READ_SENSOR_4
+		 if (strcmp(stringbuffer, "*s4#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR4) );
+		 }
+		 else
+		 // READ_SENSOR_5
+		 if (strcmp(stringbuffer, "*s5#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR5) );
+		 }
+		 else
+		 // READ_SENSOR_6
+		 if (strcmp(stringbuffer, "*s6#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR6) );
+		 }
+		 else
+		 // READ_SENSOR_7 (24 V supply)
+		 if (strcmp(stringbuffer, "*s7#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR7) );
+		 }
+		 else
+		 // READ_SENSOR_8 (12 V supply)
+		 if (strcmp(stringbuffer, "*s8#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSOR8) );
+		 }
+		 else
+		 // READ_SENSOR_16
+		 // ultra sonic sensor !!
+		 if (strcmp(stringbuffer, "*s16#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( ultraschall_messung() );
+		 }
+		 else
+		 // READ 3D COMPASS CONNECTION
+		 if (strcmp(stringbuffer, "*cc#") == 0)
+		 {
+			 // check if micromag is connected to Atmel-Board (PB6 = high)
+			 if ( bit_is_set(PINB,PIN6) )
+			 {
+				 put_string("*ok#");
+			 }
+			 else
+			 {
+				 // not connected.
+				 put_string("*er#");
+			 }
+		 }
+		 else
+		 // READ_AXIS_X
+		 if (strcmp(stringbuffer, "*cx#") == 0)
+		 {
+			 // check if micromag is connected to Atmel-Board (PB6 = high)
+			 if ( bit_is_set(PINB,PIN6) )
+			 {
+				 // read axis from the micromag3 sensor and send answer over serial port
+				 sendUInt( readMicromag(READ_AXIS_X) );
+			 }
+			 else
+			 {
+				 // not connected.
+				 sendUInt(0);
+			 }
+		 }
+		 else
+		 // READ_AXIS_Y
+		 if (strcmp(stringbuffer, "*cy#") == 0)
+		 {
+			 // check if micromag is connected to Atmel-Board (PB6 = high)
+			 if ( bit_is_set(PINB,PIN6) )
+			 {
+				 // read axis from the micromag3 sensor and send answer over serial port
+				 sendUInt( readMicromag(READ_AXIS_Y) );
+			 }
+			 else
+			 {
+				 // not connected.
+				 sendUInt(0);
+			 }
+		 }
+		 else
+		 // READ_AXIS_Z
+		 if (strcmp(stringbuffer, "*cz#") == 0)
+		 {
+			 // check if micromag is connected to Atmel-Board (PB6 = high)
+			 if ( bit_is_set(PINB,PIN6) )
+			 {
+				 // read axis from the micromag3 sensor and send answer over serial port
+				 sendUInt( readMicromag(READ_AXIS_Z) );
+			 }
+			 else
+			 {
+				 // not connected.
+				 sendUInt(0);
+			 }
+		 }
+		 else
+		 // READ_MOTOR_SENSOR1
+		 if (strcmp(stringbuffer, "*ms1#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSORMOTOR1) );
+		 }
+		 else
+		 // READ_MOTOR_SENSOR2
+		 if (strcmp(stringbuffer, "*ms2#") == 0)
+		 {
+			 // read ADC and send answer over serial port
+			 sendUInt( readADC(SENSORMOTOR2) );
+		 }
+		 else
+		 // READ_MOTOR_DISTANCE1
+		 if (strcmp(stringbuffer, "*dd1#") == 0)
+		 {
+			 // send driven distance of motor 1 encoder over serial port
+			 sendUInt( rightDistanceCounter );
+		 }
+		 else
+		 // READ_MOTOR_DISTANCE2
+		 if (strcmp(stringbuffer, "*dd2#") == 0)
+		 {
+			 // send driven distance of motor 2 encoder over serial port
+			 sendUInt( leftDistanceCounter );
+		 }
+		 else
+		 // RESET_MOTOR_DISTANCE1
+		 if (strcmp(stringbuffer, "*id1#") == 0)
+		 {
+			 // init driven distance of motor 1 (encoder)
+			 rightDistanceCounter = 0;
+			 rightWheelCounter = 0;
+			 // answer with "ok"
+			 put_string("*ok#");
+		 }
+		 else
+		 // RESET_MOTOR_DISTANCE2
+		 if (strcmp(stringbuffer, "*id2#") == 0)
+		 {
+			 // init driven distance of motor 2 (encoder)
+			 leftDistanceCounter = 0;
+			 leftWheelCounter = 0;
+			 // answer with "ok"
+			 put_string("*ok#");
+		 }
+		 else
+		 // FLASHLIGHT ON
+		 if (strcmp(stringbuffer, "*f0on#") == 0)
+		 {
+			 relais(ON);
+			 yellowLED(ON);
+			 put_string("*f0on#");
+		 }
+		 else
+		 // FLASHLIGHT OFF
+		 if (strcmp(stringbuffer, "*f0of#") == 0)
+		 {
+			 relais(OFF);
+			 yellowLED(OFF);
+			 put_string("*f0of#");
+		 }
+		 else
+		 // MOTOR1_OFF
+		 if (strcmp(stringbuffer, "*mp1of#") == 0)
+		 {
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // delete Motor1 B bit
+			 PORTL &= ~(1<<PIN1);
+			 // answer with "ok"
+			 put_string("*mp1of#");
+		 }
+		 else
+		 // MOTOR 1 CLOCKWISE = forward
+		 if (strcmp(stringbuffer, "*md1cw#") == 0)
+		 {
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // set Motor1 B bit
+			 PORTL |= (1<<PIN1);
 
-				case READ_AXIS_X:
-					// read x axis from the micromag3 sensor
-					value = readMicromag(READ_AXIS_X);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
+			 // answer with "ok"
+			 put_string("*md1cw#");
+		 }
+		 else
+		 // MOTOR 1 COUNTERCLOCKWISE = backward
+		 if (strcmp(stringbuffer, "*md1cc#") == 0)
+		 {
+			 // set Motor1 A bit
+			 PORTL |= (1<<PIN0);
+			 // delete Motor1 B bit
+			 PORTL &= ~(1<<PIN1);
 
-				case READ_AXIS_Y:
-					// read x axis from the micromag3 sensor
-					value = readMicromag(READ_AXIS_Y);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
+			 // answer with "ok"
+			 put_string("*md1cc#");
+		 }
+		 else
+		 // MOTOR1_SPEED_SET
+		 if (strncmp(stringbuffer, "*mv1", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string and set speed
+			 setPWMwidth(1, atoi(stringbuffer));
+			 // answer with "ok"
+			 put_string("*mv1#");
+		 }
+		 else
+		 // MOTOR2_OFF
+		 if (strcmp(stringbuffer, "*mp2of#") == 0)
+		 {
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // delete Motor2 B bit
+			 PORTL &= ~(1<<PIN3);
+			 // answer with "ok"
+			 put_string("*mp2of#");
+		 }
+		 else
+		 // MOTOR 2 CLOCKWISE = forward
+		 if (strcmp(stringbuffer, "*md2cw#") == 0)
+		 {
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // set Motor2 B bit
+			 PORTL |= (1<<PIN3);
 
-				case READ_AXIS_Z:
-					// read x axis from the micromag3 sensor
-					value = readMicromag(READ_AXIS_Z);
-					// send MS-Byte
-					UsartTransmit( (uint8_t)(value >> 8) );
-					// send LS-Byte
-					UsartTransmit( (uint8_t)(value) );
-					break;
+			 // answer with "ok"
+			 put_string("*md2cw#");
+		 }
+		 else
+		 // MOTOR 2 COUNTERCLOCKWISE = backward
+		 if (strcmp(stringbuffer, "*md2cc#") == 0)
+		 {
+			 // set Motor2 A bit
+			 PORTL |= (1<<PIN2);
+			 // delete Motor2 B bit
+			 PORTL &= ~(1<<PIN3);
 
-	// 			default:
-	// 				//
-	// 				// yellow 'traffic' LED
-	// 				//
-	// 				if (yellowLEDtoggle == 0)
-	// 				{
-	// 					yellowLEDtoggle = 1;
-	// 					// yelow LED on (low active!)
-	// 					PORTC &= ~(1<<PIN0);
-	// 				}
-	// 				else
-	// 				{
-	// 					yellowLEDtoggle = 0;
-	// 					// yelow LED off (low active!)
-	// 					PORTC |= (1<<PIN0);
-	// 				}
-	// 				break;
+			 // answer with "ok"
+			 put_string("*md2cc#");
+		 }
+		 else
+		 // MOTOR2_SPEED_SET
+		 if (strncmp(stringbuffer, "*mv2", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string and set speed
+			 setPWMwidth(2, atoi(stringbuffer));
+			 // answer with "ok"
+			 put_string("*mv2#");
+		 }
+		 else
+		 // MOTOR3_OFF
+		 if (strcmp(stringbuffer, "*mp3of#") == 0)
+		 {
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // delete Motor3 B bit
+			 PORTL &= ~(1<<PIN7);
+			 // answer with "ok"
+			 put_string("*mp3of#");
+		 }
+		 else
+		 // MOTOR 3 CLOCKWISE = forward
+		 if (strcmp(stringbuffer, "*md3cw#") == 0)
+		 {
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // set Motor3 B bit
+			 PORTL |= (1<<PIN7);
 
-			} // switch
-			//====================================================================
-			//====================================================================
-			//====================================================================
+			 // answer with "ok"
+			 put_string("*md3cw#");
+		 }
+		 else
+		 // MOTOR 3 COUNTERCLOCKWISE = backward
+		 if (strcmp(stringbuffer, "*md3cc#") == 0)
+		 {
+			 // set Motor3 A bit
+			 PORTL |= (1<<PIN6);
+			 // delete Motor3 B bit
+			 PORTL &= ~(1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*md3cc#");
+		 }
+		 else
+		 // MOTOR3_SPEED_SET
+		 if (strncmp(stringbuffer, "*mv3", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string and set speed
+			 setPWMwidth(3, atoi(stringbuffer));
+			 // answer with "ok"
+			 put_string("*mv3#");
+		 }
+		 else
+		 // MOTOR4_OFF
+		 if (strcmp(stringbuffer, "*mp4of#") == 0)
+		 {
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // delete Motor4 B bit
+			 PORTD &= ~(1<<PIN7);
+			 // answer with "ok"
+			 put_string("*mp4of#");
+		 }
+		 else
+		 // MOTOR 4 CLOCKWISE = forward
+		 if (strcmp(stringbuffer, "*md4cw#") == 0)
+		 {
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // set Motor4 B bit
+			 PORTD |= (1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*md4cw#");
+		 }
+		 else
+		 // MOTOR 4 COUNTERCLOCKWISE = backward
+		 if (strcmp(stringbuffer, "*md4cc#") == 0)
+		 {
+			 // set Motor4 A bit
+			 PORTD |= (1<<PIN6);
+			 // delete Motor4 B bit
+			 PORTD &= ~(1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*md4cc#");
+		 }
+		 else
+		 // MOTOR4_SPEED_SET
+		 if (strncmp(stringbuffer, "*mv4", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string and set speed
+			 setPWMwidth(4, atoi(stringbuffer));
+			 // answer with "ok"
+			 put_string("*mv4#");
+		 }
+		 else
+		 // SPEED_SET_ALLMOTORS
+		 if (strncmp(stringbuffer, "*mv0", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string and set speed
+			 setPWMwidth(1, atoi(stringbuffer));
+			 setPWMwidth(2, atoi(stringbuffer));
+			 setPWMwidth(3, atoi(stringbuffer));
+			 setPWMwidth(4, atoi(stringbuffer));
+			 // answer with "ok"
+			 put_string("*mv0#");
+		 }
+		 else
+		 // BOTSTOP
+		 if (strcmp(stringbuffer, "*bst#") == 0)
+		 {
+			 // MOTOR 1 OFF
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // delete Motor1 B bit
+			 PORTL &= ~(1<<PIN1);
+			 // MOTOR 2 OFF
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // delete Motor2 B bit
+			 PORTL &= ~(1<<PIN3);
+			 // MOTOR 3 OFF
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // delete Motor3 B bit
+			 PORTL &= ~(1<<PIN7);
+			 // MOTOR 4 OFF
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // delete Motor4 B bit
+			 PORTD &= ~(1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*bst#");
+		 }
+		 else
+		 // BOTWAIT
+		 if (strcmp(stringbuffer, "*bwa#") == 0)
+		 {
+			 // MOTOR 1 OFF
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // delete Motor1 B bit
+			 PORTL &= ~(1<<PIN1);
+			 // MOTOR 2 OFF
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // delete Motor2 B bit
+			 PORTL &= ~(1<<PIN3);
+			 // MOTOR 3 OFF
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // delete Motor3 B bit
+			 PORTL &= ~(1<<PIN7);
+			 // MOTOR 4 OFF
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // delete Motor4 B bit
+			 PORTD &= ~(1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*bwa#");
+		 }
+		 else
+		 // BOTSTART = "bot go"
+		 if (strcmp(stringbuffer, "*bgo#") == 0)
+		 {
+			 // MOTOR 1 CLOCKWISE = forward
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // set Motor1 B bit
+			 PORTL |= (1<<PIN1);
+
+			 // MOTOR 2 CLOCKWISE = forward
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // set Motor2 B bit
+			 PORTL |= (1<<PIN3);
+
+			 // MOTOR 3 CLOCKWISE = forward
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // set Motor3 B bit
+			 PORTL |= (1<<PIN7);
+
+			 // MOTOR 4 CLOCKWISE = forward
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // set Motor4 B bit
+			 PORTD |= (1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*bgo#");
+		 }
+		 else
+		 // BOTFORWARD = "bot drive forward"
+		 if (strcmp(stringbuffer, "*bdf#") == 0)
+		 {
+			 // MOTOR 1 CLOCKWISE = forward
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // set Motor1 B bit
+			 PORTL |= (1<<PIN1);
+
+			 // MOTOR 2 CLOCKWISE = forward
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // set Motor2 B bit
+			 PORTL |= (1<<PIN3);
+
+			 // MOTOR 3 CLOCKWISE = forward
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // set Motor3 B bit
+			 PORTL |= (1<<PIN7);
+
+			 // MOTOR 4 CLOCKWISE = forward
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // set Motor4 B bit
+			 PORTD |= (1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*bdf#");
+		 }
+		 else
+		 // BOTBACKWARD = "bot drive backward"
+		 if (strcmp(stringbuffer, "*bdb#") == 0)
+		 {
+			 // MOTOR 1 COUNTERCLOCKWISE = backward
+			 // set Motor1 A bit
+			 PORTL |= (1<<PIN0);
+			 // delete Motor1 B bit
+			 PORTL &= ~(1<<PIN1);
+
+			 // MOTOR 2 COUNTERCLOCKWISE = backward
+			 // set Motor2 A bit
+			 PORTL |= (1<<PIN2);
+			 // delete Motor2 B bit
+			 PORTL &= ~(1<<PIN3);
+
+			 // MOTOR 3 COUNTERCLOCKWISE = backward
+			 // set Motor3 A bit
+			 PORTL |= (1<<PIN6);
+			 // delete Motor3 B bit
+			 PORTL &= ~(1<<PIN7);
+
+			 // MOTOR 4 COUNTERCLOCKWISE = backward
+			 // set Motor4 A bit
+			 PORTD |= (1<<PIN6);
+			 // delete Motor4 B bit
+			 PORTD &= ~(1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*bdb#");
+		 }
+		 else
+		 // BOTLEFT = "bot drive left"
+		 if (strcmp(stringbuffer, "*bdl#") == 0)
+		 {
+			 // MOTOR 1 COUNTERCLOCKWISE = backward
+			 // set Motor1 A bit
+			 PORTL |= (1<<PIN0);
+			 // delete Motor1 B bit
+			 PORTL &= ~(1<<PIN1);
+
+			 // MOTOR 2 CLOCKWISE = forward
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // set Motor2 B bit
+			 PORTL |= (1<<PIN3);
+
+			 // MOTOR 3 CLOCKWISE = forward
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // set Motor3 B bit
+			 PORTL |= (1<<PIN7);
+
+			 // MOTOR 4 COUNTERCLOCKWISE = backward
+			 // set Motor4 A bit
+			 PORTD |= (1<<PIN6);
+			 // delete Motor4 B bit
+			 PORTD &= ~(1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*bdl#");
+		 }
+		 else
+		 // BOTRIGHT = "bot drive right"
+		 if (strcmp(stringbuffer, "*bdr#") == 0)
+		 {
+			 // MOTOR 1 CLOCKWISE = forward
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // set Motor1 B bit
+			 PORTL |= (1<<PIN1);
+
+			 // MOTOR 2 COUNTERCLOCKWISE = backward
+			 // set Motor2 A bit
+			 PORTL |= (1<<PIN2);
+			 // delete Motor2 B bit
+			 PORTL &= ~(1<<PIN3);
+
+			 // MOTOR 3 COUNTERCLOCKWISE = backward
+			 // set Motor3 A bit
+			 PORTL |= (1<<PIN6);
+			 // delete Motor3 B bit
+			 PORTL &= ~(1<<PIN7);
+
+			 // MOTOR 4 CLOCKWISE = forward
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // set Motor4 B bit
+			 PORTD |= (1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*bdr#");
+		 }
+		 else
+		 // TURNLEFT = "bot turn left"
+		 if (strcmp(stringbuffer, "*btl#") == 0)
+		 {
+			 // MOTOR 1 CLOCKWISE = forward
+			 // delete Motor1 A bit
+			 PORTL &= ~(1<<PIN0);
+			 // set Motor1 B bit
+			 PORTL |= (1<<PIN1);
+
+			 // MOTOR 2 COUNTERCLOCKWISE = backward
+			 // set Motor2 A bit
+			 PORTL |= (1<<PIN2);
+			 // delete Motor2 B bit
+			 PORTL &= ~(1<<PIN3);
+
+			 // MOTOR 3 CLOCKWISE = forward
+			 // delete Motor3 A bit
+			 PORTL &= ~(1<<PIN6);
+			 // set Motor3 B bit
+			 PORTL |= (1<<PIN7);
+
+			 // MOTOR 4 COUNTERCLOCKWISE = backward
+			 // set Motor4 A bit
+			 PORTD |= (1<<PIN6);
+			 // delete Motor4 B bit
+			 PORTD &= ~(1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*btl#");
+		 }
+		 else
+		 // TURNRIGHT = "bot turn right"
+		 if (strcmp(stringbuffer, "*btr#") == 0)
+		 {
+			 // MOTOR 1 COUNTERCLOCKWISE = backward
+			 // set Motor1 A bit
+			 PORTL |= (1<<PIN0);
+			 // delete Motor1 B bit
+			 PORTL &= ~(1<<PIN1);
+
+			 // MOTOR 2 CLOCKWISE = forward
+			 // delete Motor2 A bit
+			 PORTL &= ~(1<<PIN2);
+			 // set Motor2 B bit
+			 PORTL |= (1<<PIN3);
+
+			 // MOTOR 3 COUNTERCLOCKWISE = backward
+			 // set Motor3 A bit
+			 PORTL |= (1<<PIN6);
+			 // delete Motor3 B bit
+			 PORTL &= ~(1<<PIN7);
+
+			 // MOTOR 4 CLOCKWISE = forward
+			 // delete Motor4 A bit
+			 PORTD &= ~(1<<PIN6);
+			 // set Motor4 B bit
+			 PORTD |= (1<<PIN7);
+
+			 // answer with "ok"
+			 put_string("*btr#");
+		 }
+		 else
+		 // SET SERVO 1
+		 if (strncmp(stringbuffer, "*sv1", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string
+			 servoPosition = atoi(stringbuffer);
+			 if (servoPosition == 0)
+			 {
+				 // stop PWM for servos 1, 2, 3 (due to same Atmel ports)
+				 servoPWM123isOFF = 1;
+				 stopPWMServo(1);
+			 }
+			 else
+			 {
+				 // turn on PWM if it was turned off before
+				 if (servoPWM123isOFF == 1)
+				 {
+					 servoPWM123isOFF = 0;
+					 // start PWM for servos 1, 2, 3 (due to same Atmel ports)
+					 startPWMServo(1);
+				 }
+				 // set PWM
+				 setServoPosition(1, servoPosition);
+			 }
+			 // answer with "ok"
+			 put_string("*sv1#");
+		 }
+		 else
+		 // SET SERVO 2
+		 if (strncmp(stringbuffer, "*sv2", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string
+			 servoPosition = atoi(stringbuffer);
+			 if (servoPosition == 0)
+			 {
+				 // stop PWM for servos 1, 2, 3 (due to same Atmel ports)
+				 servoPWM123isOFF = 1;
+				 stopPWMServo(2);
+			 }
+			 else
+			 {
+				 // turn on PWM if it was turned off before
+				 if (servoPWM123isOFF == 1)
+				 {
+					 servoPWM123isOFF = 0;
+					 // start PWM for servos 1, 2, 3 (due to same Atmel ports)
+					 startPWMServo(2);
+				 }
+				 // set PWM
+				 setServoPosition(2, servoPosition);
+			 }
+			 // answer with "ok"
+			 put_string("*sv2#");
+		 }
+		 else
+		 // SET SERVO 3
+		 if (strncmp(stringbuffer, "*sv3", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string
+			 servoPosition = atoi(stringbuffer);
+			 if (servoPosition == 0)
+			 {
+				 // stop PWM for servos 1, 2, 3 (due to same Atmel ports)
+				 servoPWM123isOFF = 1;
+				 stopPWMServo(3);
+			 }
+			 else
+			 {
+				 // turn on PWM if it was turned off before
+				 if (servoPWM123isOFF == 1)
+				 {
+					 servoPWM123isOFF = 0;
+					 // start PWM for servos 1, 2, 3 (due to same Atmel ports)
+					 startPWMServo(3);
+				 }
+				 // set PWM
+				 setServoPosition(3, servoPosition);
+			 }
+			 // answer with "ok"
+			 put_string("*sv3#");
+		 }
+		 else
+		 // SET SERVO 4
+		 if (strncmp(stringbuffer, "*sv4", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string
+			 servoPosition = atoi(stringbuffer);
+			 if (servoPosition == 0)
+			 {
+				 // stop PWM for servos 4
+				 servoPWM4isOFF = 1;
+				 stopPWMServo(4);
+			 }
+			 else
+			 {
+				 // turn on PWM if it was turned off before
+				 if (servoPWM4isOFF == 1)
+				 {
+					 servoPWM4isOFF = 0;
+					 // start PWM for servo 4
+					 startPWMServo(4);
+				 }
+				 // set PWM
+				 setServoPosition(4, servoPosition);
+			 }
+			 // answer with "ok"
+			 put_string("*sv4#");
+		 }
+		 else
+		 // SET SERVO 5
+		 if (strncmp(stringbuffer, "*sv5", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string
+			 servoPosition = atoi(stringbuffer);
+			 if (servoPosition == 0)
+			 {
+				 // stop PWM for servos 5, 6 (due to same Atmel ports)
+				 servoPWM56isOFF = 1;
+				 stopPWMServo(5);
+			 }
+			 else
+			 {
+				 // turn on PWM if it was turned off before
+				 if (servoPWM56isOFF == 1)
+				 {
+					 servoPWM56isOFF = 0;
+					 // start PWM for servos 5, 6 (due to same Atmel ports)
+					 startPWMServo(5);
+				 }
+				 // set PWM
+				 setServoPosition(5, servoPosition);
+			 }
+			 // answer with "ok"
+			 put_string("*sv5#");
+		 }
+		 else
+		 // SET SERVO 6
+		 if (strncmp(stringbuffer, "*sv6", 4) == 0)
+		 {
+			 // change first chars for upcoming string conversion
+			 stringbuffer[0] = '0';
+			 stringbuffer[1] = '0';
+			 stringbuffer[2] = '0';
+			 stringbuffer[3] = '0';
+			 // get value from string
+			 servoPosition = atoi(stringbuffer);
+			 if (servoPosition == 0)
+			 {
+				 // stop PWM for servos 5, 6 (due to same Atmel ports)
+				 servoPWM56isOFF = 1;
+				 stopPWMServo(6);
+			 }
+			 else
+			 {
+				 // turn on PWM if it was turned off before
+				 if (servoPWM56isOFF == 1)
+				 {
+					 servoPWM56isOFF = 0;
+					 // start PWM for servos 5, 6 (due to same Atmel ports)
+					 startPWMServo(6);
+				 }
+				 // set PWM
+				 setServoPosition(6, servoPosition);
+			 }
+			 // answer with "ok"
+			 put_string("*sv6#");
+		 }
+
+	 } // RXcompleted
+ } // while (1)
+
+		//====================================================================
+		//====================================================================
+		//====================================================================
 */
 
 			//====================================================================
