@@ -47,6 +47,7 @@ void SimulationThread::stop()
 void SimulationThread::run()
 {
 	unsigned char receivedChar = 0;
+	QString string;
 	bool heartbeatToggle = false;
 
 
@@ -74,12 +75,16 @@ void SimulationThread::run()
 				mutex->unlock();
 // 				qDebug("nothing to read [SimulationThread]");
 // 				return;
+				emit message("ERROR receiving string [SimulationThread::run]. Stopping thread!");
 			}
 			else
 			{
 				// Unlock the mutex.
 				mutex->unlock();
 				switch (receivedChar)
+
+				// show string in GUI
+				emit message(string);
 				{
 					case 64:
 						// "answer" with "@" [Ascii Dezimal @ = 64]
@@ -92,6 +97,9 @@ void SimulationThread::run()
 							return;
 							}
 						break;
+
+					// show string in GUI
+					emit message("*ok#");
 				}
 			} // serial reading was successfull
 /*

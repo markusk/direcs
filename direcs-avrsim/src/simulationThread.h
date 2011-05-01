@@ -79,6 +79,12 @@ class SimulationThread : public QThread
 		*/
 		void heartbeat(bool alive);
 
+		/**
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		*/
+		void message(QString text);
+
 
 	private:
 		mutable QMutex *mutex; // make this class thread-safe

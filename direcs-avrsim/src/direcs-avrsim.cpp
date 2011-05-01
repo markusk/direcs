@@ -24,14 +24,14 @@
 int main(int argc, char *argv[])
 {
 	bool consoleMode = false;
-	
-	
+
+
 	// Check for command-line argument "console".
 	// A deeper argument check will be done later within the class Direcs-avrsim!
 	if (argc > 1)
 	{
 		qDebug() << argc - 1 << "argument(s) passed...";
-		
+
 		for (int i=1; i<argc; i++)
 		{
 			// now search for the "console" parameter (case insensitive)
@@ -42,12 +42,12 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	
-	
+
+
 	//----------------------
 	// CREATE A GUI APP
 	//----------------------
-	
+
 	// Initialize the resource file
 	Q_INIT_RESOURCE(direcsAvrsim);
 
@@ -56,10 +56,10 @@ int main(int argc, char *argv[])
 
 	// create the Direcs-avrsim class object
 	DirecsAvrsim d(consoleMode);
-	
+
 	// init direcs
 	d.init();
-	
+
 	return app.exec();
 }
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 {
 	Q_UNUSED(bConsoleMode);
-	
+
 	//------------------------------------------------------------------
 	// create the objects
 	//------------------------------------------------------------------
@@ -76,7 +76,7 @@ DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
-	
+
 	simulationThread = new SimulationThread(interface1, mutex);
 }
 
@@ -87,27 +87,27 @@ void DirecsAvrsim::init()
 	splashColor = Qt::red;
 	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; // FIXME: put to ini-file or somewhere else!
 	robotSimulationMode = false;
-	
+
 	//--------------------------------------------------------------------------
 	// show the splash screen
 	//--------------------------------------------------------------------------
 	splash->show();
-	
+
 	//--------------------------------------------------------------------------
 	// show splash messages in the splash screen
 	//--------------------------------------------------------------------------
 	connect(this, SIGNAL( splashMessage(QString) ), this, SLOT( showSplashMessage(QString) ));
 
-	
+
 	/*
 	not in use at the moment...
-	
+
 	//--------------------------------------------------------------------------------
 	// create the commmand line arguments list
 	//--------------------------------------------------------------------------------
 	arguments = QCoreApplication::arguments();
 	int count = arguments.count() - 1;
-	
+
 	// check if arguments were passed on the command-line
 	if (count > 0)
 	{
@@ -116,7 +116,7 @@ void DirecsAvrsim::init()
 		checkArguments();
 	}
 	*/
-	
+
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
 	// For example: 1.234,00 EUR
@@ -124,7 +124,11 @@ void DirecsAvrsim::init()
 	QLocale::setDefault(QLocale::German);
 	commaSeparator = ",";
 
+	//--------------------------------------------------------------------------
+	// send status messages to the GUI
+	//--------------------------------------------------------------------------
 	connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
+	connect(simulationThread, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
 
 	//--------------------------------------------------------------------------
 	// let some classes know the robots state
@@ -132,7 +136,7 @@ void DirecsAvrsim::init()
 	// this is needed, when the first openCOMPort method fails:
 	//connect(interface1,	SIGNAL( robotState(bool) ), gui, SLOT( setRobotControls(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), simulationThread,	SLOT( setRobotState(bool) ));
-	
+
 	//--------------------------------------------------------------------------
 	// shutdown Direcs-avrsim program on exit button
 	// shutdown is also called, when the gui is closed
@@ -143,7 +147,7 @@ void DirecsAvrsim::init()
 	// call (a) test method(s) when clicking the test button
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
-	
+
 
 
 	//-------------------------------------------------------
@@ -171,22 +175,22 @@ void DirecsAvrsim::init()
 		emit message("Serial port opened.");
 	} // robot is ON
 
-	
+
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
 	// (sets the direcs an the threads to simulation mode)
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
 
-	
+
 	//----------------------------------------------------------------------------
 	// show the gui
 	//----------------------------------------------------------------------------
 	gui->show();
 
 	// delete the splash screen
- 	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
-	
+	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+
 	//--------------------------
 	// lets have fun, now
 	//--------------------------
@@ -200,7 +204,7 @@ void DirecsAvrsim::shutdown()
 
 	splash->show();
 	emit splashMessage("Shutting down...");
-	
+
 	//--------------------------
 	// quit the sensor thread
 	//--------------------------
@@ -291,7 +295,7 @@ void DirecsAvrsim::setSimulationMode(bool status)
 	if (status == true)
 	{
 		emit message("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
-		
+
 		//------------------------------
 		// start the simulation thread
 		//------------------------------
@@ -307,7 +311,7 @@ void DirecsAvrsim::setSimulationMode(bool status)
 		emit message("Stopping simulation thread...", false);
 		simulationThread->stop();
 		emit message("Simulation thread stopped.");
-		
+
 		emit message("<font color=\"#0000FF\">Simulation mode disabled.</font>");
 	}
 }
