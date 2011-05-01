@@ -519,6 +519,7 @@ long DirecsSerial::numChars(int dev_fd)
 
 long DirecsSerial::numChars()
 {
+	/*
 	int available = 0;
 	double timeout=0.1;
 	fd_set read_set;
@@ -541,6 +542,26 @@ long DirecsSerial::numChars()
 		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using ioctl() on serial device at DirecsSerial::numChars().</font>").arg(errno).arg(strerror(errno)));
 		return errno;
 	}
+	*/
+
+	int available = 0;
+
+
+	int err = ioctl(mDev_fd, FIONREAD, &available);
+
+	if (err == -1)
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using ioctl() on serial device at DirecsSerial::numChars().</font>").arg(errno).arg(strerror(errno)));
+		return errno;
+	}
+
+	if (available > 0)
+	{
+		emit message(QString("Bytes available at readAtmelPort: %1").arg(available));
+		return available;
+	}
+
+	return 0;
 }
 
 
