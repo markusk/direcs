@@ -46,7 +46,6 @@ void SimulationThread::stop()
 
 void SimulationThread::run()
 {
-	unsigned char receivedChar = 0;
 	QString string;
 	bool heartbeatToggle = false;
 
@@ -69,38 +68,61 @@ void SimulationThread::run()
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
 
-			if (interface1->receiveChar(&receivedChar) == false)
+			if (interface1->receiveString(string) == false)
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-// 				qDebug("nothing to read [SimulationThread]");
-// 				return;
 				emit message("ERROR receiving string [SimulationThread::run]. Stopping thread!");
+				stop();
 			}
 			else
 			{
 				// Unlock the mutex.
 				mutex->unlock();
-				switch (receivedChar)
 
 				// show string in GUI
 				emit message(string);
+
+				// Everything's fine, so reset the watchdog timer (wdt).
+///	@todo		wdt_reset();
+
+				// RESET / INIT
+				if (string == "*re#")
 				{
-					case 64:
-						// "answer" with "@" [Ascii Dezimal @ = 64]
-						// this answer is used to see if the robot is "on"
-						if (interface1->sendChar(64) == false)
-						{
-							// Unlock the mutex.
-							mutex->unlock();
-							qDebug("ERROR sending to serial port [SimulationThread]");
-							return;
-							}
-						break;
+/*
+					// turn all drive motor bits off (except PWM bits)
+					PORTL &= ~(1<<PIN0);
+					PORTL &= ~(1<<PIN1);
+					PORTL &= ~(1<<PIN2);
+					PORTL &= ~(1<<PIN3);
+					PORTL &= ~(1<<PIN6);
+					PORTL &= ~(1<<PIN7);
+					PORTD &= ~(1<<PIN6);
+					PORTD &= ~(1<<PIN7);
+					// flashlight off
+					relais(OFF);
+					// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+					redLED(OFF);
+
+					// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+					// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+					// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+					// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+					// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+					// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+*/
+					// answer with "ok"
+					// this answer is used to see if the robot is "on"
+					interface1->sendString("*ok#");
 
 					// show string in GUI
 					emit message("*ok#");
+
+					// e n a b l e  watchdog!
+/// @todo			watchdog(ENABLE);
 				}
+
+
 			} // serial reading was successfull
 /*
 		//====================================================================
