@@ -48,6 +48,7 @@ void SimulationThread::run()
 {
 	QString string;
 	bool heartbeatToggle = false;
+	static bool toggle = false;
 
 
 	//
@@ -67,6 +68,20 @@ void SimulationThread::run()
 			//---------------------------------------------------------
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
+
+			//--------------------------
+			// wait for chars from Atmel
+			//--------------------------
+			while ( (stopped == false) && (interface1->charsAvailable() == false) )
+			{
+				if (!toggle)
+				{
+					toggle = true;
+					emit message("Waiting for chars available...");
+				}
+			}
+
+			emit message("Chars available!");
 
 			if (interface1->receiveString(string) == false)
 			{
