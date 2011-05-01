@@ -85,7 +85,7 @@ void DirecsAvrsim::init()
 {
 	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 	splashColor = Qt::red;
-	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; // FIXME: put to ini-file or somewhere else!
+	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
 	robotSimulationMode = false;
 
 	//--------------------------------------------------------------------------
