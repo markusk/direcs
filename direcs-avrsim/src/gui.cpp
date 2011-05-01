@@ -32,7 +32,7 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	// startup the GUI
 	//-------------------------------------------------------
 	ui.setupUi(this);
-	
+
 	//--------------------------------
 	// do the rest of my init stuff
 	//--------------------------------
@@ -78,6 +78,8 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
 	ui.textEditLog->ensureCursorVisible();
+
+	Q_UNUSED(sayIt);
 }
 
 
@@ -153,6 +155,6 @@ QString Gui::removeHtml(QString text)
 		text.remove(start, text.indexOf(">") - start + 1);
 	} while (text.contains(">"));
 	// till the last HTML ">" is found
-	
+
 	return text;
 }
