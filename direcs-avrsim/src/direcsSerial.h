@@ -51,8 +51,6 @@
 #define READ_TIMEOUT_ATMEL    250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
 #define _POSIX
 
-#include <qextserialport.h> /// http://code.google.com/qextserialport/
-
 #include <QtGlobal>
 #include <QString>
 #include <QDebug>

@@ -24,6 +24,7 @@
 #include <QtGlobal> // for Q_OS_* Makro!
 
 #include "direcsSerial.h"
+#include <qextserialport.h> /// http://code.google.com/qextserialport/
 
 #include <QFile>
 #include <QObject>
