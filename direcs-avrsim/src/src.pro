@@ -27,11 +27,14 @@ SOURCES +=	direcsSerial.cpp \
 
 FORMS +=	mainWindow.ui
 
-CONFIG += debug
-
 INCLUDEPATH += /opt/local/include \
 				/opt/local/libexec/qt4-mac/include
 
 LIBS +=		-L/opt/local/lib \
 				-L/usr/lib \
 				-L/usr/local/lib
+
+CONFIG(debug, debug|release):LIBS  += -lqextserialportd
+else:LIBS  += -lqextserialport
+
+unix:DEFINES   = _TTY_POSIX_
