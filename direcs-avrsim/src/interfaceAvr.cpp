@@ -23,27 +23,25 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new QextSerialPort("/dev/ttyAtmelBoard", QextSerialPort::Polling);
-	// port = new QextSerialPort("/dev/tty.PL2303-003014FA", QextSerialPort::Polling);
+	serialPort = new QextSerialPort(QextSerialPort::Polling);
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
-//	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+/// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
 InterfaceAvr::~InterfaceAvr()
 {
+	if (serialPort->isOpen())
+		serialPort->close();
+
 	delete serialPort;
 }
 
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-	// for QString to char* conversion
-	QByteArray ba = comPort.toLatin1();
-
-
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
@@ -54,14 +52,30 @@ bool InterfaceAvr::openComPort(QString comPort)
 		return false;
 	}
 
+	// set port name / path to device
+	serialPort->setPortName(comPort);
 
-	// serial port config and flush also done in openAtmelPort!
-	if (serialPort->openAtmelPort( ba.data(), 9600 ) == -1)
+	/// @todo serial port config and flush also done in openAtmelPort!
+	if (serialPort->open() == -1) /// where to set the 9600, 8 N 1?
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
 		return false;
 	}
+
+
+	// serial port settings
+	serialPort->setBaudRate(BAUD9600);
+	serialPort->setDataBits(DATA_8);
+	serialPort->setParity(PAR_NONE);
+//	serialPort->setDtr(); /// @todo check if this is needed. By default set to true!
+//	serialPort->setRts();
+
+	// disable flow control
+	serialPort->setFlowControl(FLOW_OFF);
+
+	// flush serial port
+	serialPort->flush();
 
 	return true;
 }
@@ -69,8 +83,8 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 void InterfaceAvr::closeComPort()
 {
-	// using direcsSerial
-	serialPort->closeAtmelPort();
+	if (serialPort->isOpen())
+		serialPort->close();
 }
 
 
@@ -280,7 +294,7 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 
 bool InterfaceAvr::charsAvailable()
 {
-	if (serialPort->numChars() > 0)
+	if (serialPort->bytesAvailable() > 0)
 	{
 		return true;
 	}
