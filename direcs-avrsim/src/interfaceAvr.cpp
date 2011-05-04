@@ -23,11 +23,12 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new DirecsSerial();
+	serialPort = new QextSerialPort("/dev/ttyAtmelBoard", QextSerialPort::Polling);
+	// port = new QextSerialPort("/dev/tty.PL2303-003014FA", QextSerialPort::Polling);
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
-	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+//	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
