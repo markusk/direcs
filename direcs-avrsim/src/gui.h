@@ -67,7 +67,7 @@ class Gui : public QMainWindow
 		Turns the GUI flashlight on or off
 		@param state can be ON or OFF.
 		*/
-		void flashlight(bool state);
+		void setFlashlight(bool state);
 
 
 	protected:

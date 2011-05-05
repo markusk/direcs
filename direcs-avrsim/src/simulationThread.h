@@ -88,6 +88,16 @@ class SimulationThread : public QThread
 		/**
 		Simulated Atmel method
 		*/
+		void greenLED(bool state);
+
+		/**
+		Simulated Atmel method
+		*/
+		void redLED(bool state);
+
+		/**
+		Simulated Atmel method
+		*/
 		void relais(bool state);
 
 

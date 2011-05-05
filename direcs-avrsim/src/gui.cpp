@@ -156,7 +156,7 @@ void Gui::setLEDRed(bool state)
 }
 
 
-void Gui::flashlight(bool state)
+void Gui::setFlashlight(bool state)
 {
 	if (state)
 	{
