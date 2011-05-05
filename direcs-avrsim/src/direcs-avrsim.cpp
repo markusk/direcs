@@ -137,7 +137,7 @@ void DirecsAvrsim::init()
 	// these are the simulated Atmel methods
 	connect(simulationThread, SIGNAL(greenLED(bool)), gui, SLOT(setLEDGreen(bool)));
 	connect(simulationThread, SIGNAL(redLED(bool)), gui, SLOT(setLEDRed(bool)));
-	connect(simulationThread, SIGNAL(flashlight(bool)), gui, SLOT(setFlashlight(bool)));
+	connect(simulationThread, SIGNAL(relais(bool)), gui, SLOT(setFlashlight(bool)));
 
 	//--------------------------------------------------------------------------
 	// let some classes know the robots state
