@@ -49,7 +49,7 @@ void SimulationThread::run()
 	QString string;
 	unsigned char character = 0;
 	bool heartbeatToggle = false;
-	static bool toggle = false;
+	static bool stringStarted = false;
 
 
 	//
@@ -85,14 +85,36 @@ void SimulationThread::run()
 				interface1->receiveChar(&character);
 
 				// command string from Atmel starts?
-				if (character==starter)
+				if (character == starter)
 				{
+					stringStarted = true;
+
 					// send text with no CR to GUI
 					emit message("*", false);
+
+					// waiting for the rest of the string
+					while (interface1->charsAvailable() == false)
+						;
+
+					// get next char
+					interface1->receiveChar(&character);
+
+					// command string from Atmel starts?
+					if (character == terminator)
+					{
+						// send text to GUI
+						emit message("#");
+					}
+					else
+					{
+						emit message(QString("%1").arg((char *) &character));
+					}
+
+
 				}
 				else
 				{
-					emit message(QString("%1").arg(character));
+					emit message(QString("%1").arg((char *) &character));
 				}
 
 			} // thread runs
