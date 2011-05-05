@@ -51,6 +51,8 @@ void SimulationThread::run()
 	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 	static int charCounter = 0;
 	QString commandString;
+	bool stringStarted = false;
+	bool commandCompleted = false;
 
 
 	//
@@ -70,7 +72,8 @@ void SimulationThread::run()
 			//--------------------------
 			while (stopped == false)
 			{
-				emit message("Waiting for Atmel command string...");
+				if (stringStarted == false)
+					emit message("Waiting for Atmel command string to start...");
 
 				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 				mutex->lock();
@@ -81,108 +84,136 @@ void SimulationThread::run()
 				interface1->receiveChar(&character);
 				mutex->unlock();
 
-				// command string from Atmel starts?
-				if (character == starter)
+				if (commandCompleted == false)
 				{
-					// start QString
-					commandString[0] = character;
-
-					charCounter++;
-
-					// send text with no CR to GUI
-					emit message("*", false);
-
-					// waiting for the rest of the string
-					mutex->lock();
-					while (interface1->charsAvailable() == false)
-						;
-
-					// get next char
-					interface1->receiveChar(&character);
-					mutex->unlock();
-
-					// increase char counter
-					charCounter++;
-
-					// serial buffer overfluw?
+					// serial buffer overflow?
 					if (charCounter <= maxStringLength)
 					{
-						// build command string
-						commandString.append((char *) &character);
-
-						// command string from Atmel completed?
-						if (character == terminator)
+						// command string from Atmel starts?
+						if (character == starter)
 						{
-							// reset char counter
-							charCounter = 0;
+							stringStarted = true;
+							commandCompleted = false;
 
-							// send text to GUI
-							emit message("#");
+							// start QString
+							commandString[0] = character;
 
+							charCounter++;
 
-							//-----------------------------------------------
-							emit message("Atmel command string completed.");
-							//-----------------------------------------------
+							// send text with no CR to GUI
+							emit message("*", false);
 
-							// Everything's fine, so reset the watchdog timer (wdt).
-			///	@todo		wdt_reset();
-
-							// RESET / INIT
-							if (commandString == "*re#")
-							{
-			/*
-								// turn all drive motor bits off (except PWM bits)
-								PORTL &= ~(1<<PIN0);
-								PORTL &= ~(1<<PIN1);
-								PORTL &= ~(1<<PIN2);
-								PORTL &= ~(1<<PIN3);
-								PORTL &= ~(1<<PIN6);
-								PORTL &= ~(1<<PIN7);
-								PORTD &= ~(1<<PIN6);
-								PORTD &= ~(1<<PIN7);
-								// flashlight off
-								relais(OFF);
-								// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
-								redLED(OFF);
-
-								// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-								// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-								// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-								// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-								// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-								// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-			*/
-								// answer with "ok"
-								// this answer is used to see if the robot is "on"
-								mutex->lock();
-								interface1->sendString("*ok#");
-								mutex->unlock();
-
-								// show string in GUI
-								emit message("*ok#");
-
-								// e n a b l e  watchdog!
-			/// @todo			watchdog(ENABLE);
-							}
-
-
-
-						} // terminator?
+						} // command started
 						else
 						{
-							// send char to GUI
-							emit message(QString("%1").arg((char *) &character), false);
+							// command string from Atmel completed?
+							if (character == terminator)
+							{
+								// complete command string
+								commandString.append((char *) &character);
+
+								commandCompleted = true;
+								stringStarted = false;
+
+								// reset char counter
+								charCounter = 0;
+
+								// send text to GUI
+								emit message("#");
+
+
+								//-----------------------------------------------
+								emit message("Atmel command string completed.");
+								//-----------------------------------------------
+								emit message(QString("string=%1.").arg(commandString));
+
+								// Everything's fine, so reset the watchdog timer (wdt).
+				///	@todo		wdt_reset();
+
+								// RESET / INIT
+								if (commandString == "*re#")
+								{
+				/*
+									// turn all drive motor bits off (except PWM bits)
+									PORTL &= ~(1<<PIN0);
+									PORTL &= ~(1<<PIN1);
+									PORTL &= ~(1<<PIN2);
+									PORTL &= ~(1<<PIN3);
+									PORTL &= ~(1<<PIN6);
+									PORTL &= ~(1<<PIN7);
+									PORTD &= ~(1<<PIN6);
+									PORTD &= ~(1<<PIN7);
+									// flashlight off
+									relais(OFF);
+									// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+									redLED(OFF);
+
+									// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+									// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+									// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+									// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+									// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+									// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+				*/
+									// answer with "ok"
+									// this answer is used to see if the robot is "on"
+									mutex->lock();
+									interface1->sendString("*ok#");
+									mutex->unlock();
+
+									// show string in GUI
+									emit message("*ok#");
+
+									// e n a b l e  watchdog!
+				/// @todo			watchdog(ENABLE);
+								}
+								else
+								{
+									charCounter = 0;
+									commandCompleted = false;
+									stringStarted = false;
+
+									// delete string!
+									commandString.clear();
+
+									emit message("+++ Unknown Atmel command string!");
+								}
+
+
+
+							} // terminator?
+							else
+							{
+								// we are in the middle of the command string...
+								charCounter++;
+
+								commandCompleted = false;
+
+								// build command string
+								commandString.append((char *) &character);
+
+								// send char to GUI
+								emit message(QString("%1").arg((char *) &character), false);
+							}
+
 						}
-					}
+					} // buffer okay
 					else
 					{
 						// string 'buffer overflow'
-						// reset char counter
+
 						charCounter = 0;
+						commandCompleted = false;
+						stringStarted = false;
+
+						// delete string!
+						commandString.clear();
 
 						emit message("+++ string size exceeded. Discarding received chars...");
 					}
-				} // string started
+				} // commmand completed
+
+
 			} // thread runs
 
 
