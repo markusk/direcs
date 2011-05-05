@@ -47,6 +47,7 @@ void SimulationThread::stop()
 void SimulationThread::run()
 {
 	QString string;
+	unsigned char character = 0;
 	bool heartbeatToggle = false;
 	static bool toggle = false;
 
@@ -72,16 +73,33 @@ void SimulationThread::run()
 			//--------------------------
 			// wait for chars from Atmel
 			//--------------------------
-			while ( (stopped == false) && (interface1->charsAvailable() == false) )
+			while (stopped == false)
 			{
-				if (!toggle)
-				{
-					toggle = true;
-					emit message("Waiting for chars available...");
-				}
-			}
+				emit message("Waiting for Atmel command string...");
 
-			emit message("Chars available!");
+				while (interface1->charsAvailable() == false)
+					;
+
+
+				// get char
+				interface1->receiveChar(&character);
+
+				// command string from Atmel starts?
+				if (character==starter)
+				{
+					// send text with no CR to GUI
+					emit message("*", false);
+				}
+				else
+				{
+					emit message(QString("%1").arg(character));
+				}
+
+			} // thread runs
+
+
+
+
 
 			if (interface1->receiveString(string) == false)
 			{
