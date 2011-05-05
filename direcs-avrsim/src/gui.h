@@ -41,7 +41,7 @@ class Gui : public QMainWindow
 		Gui(QMainWindow *parent = 0);
 		~Gui();
 
-		
+
 	public slots:
 		/**
 		Appends text to the main log in the main window.
@@ -50,12 +50,24 @@ class Gui : public QMainWindow
 		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
 		 */
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
-		
+
 		/**
-		Turns the heartbeat LED on or off (green or gray pixmap).
+		Turns the red LED on or off (coloured or gray pixmap).
 		@param state can be ON or OFF.
 		*/
-		void setLEDHeartbeat(bool state);
+		void setLEDRed(bool state);
+
+		/**
+		Turns the green LED on or off (coloured or gray pixmap).
+		@param state can be ON or OFF.
+		*/
+		void setLEDGreen(bool state);
+
+		/**
+		Turns the GUI flashlight on or off
+		@param state can be ON or OFF.
+		*/
+		void flashlight(bool state);
 
 
 	protected:
@@ -67,7 +79,7 @@ class Gui : public QMainWindow
 		Exits the whole programm.
 		 */
 		void shutdown();
-		
+
 		/**
 		Enables or disables the robots simulation mode.
 		This signal is sent from the simulation button and received from all threads which deliver real signals from the bot.
@@ -163,10 +175,10 @@ class Gui : public QMainWindow
 
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
-		
+
 		static const float MINIMUMVOLTAGE1 = 10.80; // TODO: put min. voltage 1 in the ini-file
 		static const float MINIMUMVOLTAGE2 = 21.60; // TODO: put min. voltage 2 in the ini-file
-		
+
 		static const float MAXIMUMVOLTAGE1 = 12.00; /// for progress bars TODO: put max. voltage 1 in the ini-file
 		static const float MAXIMUMVOLTAGE2 = 24.00; /// for progress bars TODO: put max. voltage 2 in the ini-file
 

@@ -128,15 +128,43 @@ void Gui::on_actionSimulate_activated()
 }
 
 
-void Gui::setLEDHeartbeat(bool state)
+void Gui::setLEDGreen(bool state)
 {
 	if (state)
 	{
-		ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+		ui.lblLEDGreen->setPixmap(QPixmap(":/images/images/led_green.gif"));
 	}
 	else
 	{
-		ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+		ui.lblLEDGreen->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+		return;
+	}
+}
+
+
+void Gui::setLEDRed(bool state)
+{
+	if (state)
+	{
+		ui.lblLEDRed->setPixmap(QPixmap(":/images/images/led_red.gif"));
+	}
+	else
+	{
+		ui.lblLEDRed->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+		return;
+	}
+}
+
+
+void Gui::flashlight(bool state)
+{
+	if (state)
+	{
+		ui.lblFlashlight->setPixmap(QPixmap(":/images/images/strobo_on.png"));
+	}
+	else
+	{
+		ui.lblFlashlight->setPixmap(QPixmap(":/images/images/strobo_off.png"));
 		return;
 	}
 }
