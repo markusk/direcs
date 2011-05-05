@@ -25,6 +25,17 @@ InterfaceAvr::InterfaceAvr()
 	// creating the serial port object
 	serialPort = new QextSerialPort(QextSerialPort::Polling);
 
+	// serial port settings
+	serialPort->setBaudRate(BAUD9600);
+	serialPort->setDataBits(DATA_8);
+	serialPort->setParity(PAR_NONE);
+//	serialPort->setDtr(); /// @todo check if this is needed. By default set to true!
+//	serialPort->setRts();
+	serialPort->setFlowControl(FLOW_OFF);
+
+	//set timeouts to 500 ms
+	serialPort->setTimeout(500);
+
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
 /// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
@@ -55,24 +66,14 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// set port name / path to device
 	serialPort->setPortName(comPort);
 
-	/// @todo serial port config and flush also done in openAtmelPort!
-	if (serialPort->open() == -1) /// where to set the 9600, 8 N 1?
+	// open serial port for read and write
+	// 'unbufferd' used because of qextserial example 'QESPTA'.
+	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
 		return false;
 	}
-
-
-	// serial port settings
-	serialPort->setBaudRate(BAUD9600);
-	serialPort->setDataBits(DATA_8);
-	serialPort->setParity(PAR_NONE);
-//	serialPort->setDtr(); /// @todo check if this is needed. By default set to true!
-//	serialPort->setRts();
-
-	// disable flow control
-	serialPort->setFlowControl(FLOW_OFF);
 
 	// flush serial port
 	serialPort->flush();
