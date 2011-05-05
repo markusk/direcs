@@ -46,10 +46,11 @@ void SimulationThread::stop()
 
 void SimulationThread::run()
 {
-	QString string;
 	unsigned char character = 0;
 	bool heartbeatToggle = false;
-	static bool stringStarted = false;
+	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
+	static int charCounter = 0;
+	QString commandString;
 
 
 	//
@@ -64,12 +65,6 @@ void SimulationThread::run()
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
-			//---------------------------------------------------------
-			// receive an char on the serial line
-			//---------------------------------------------------------
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-
 			//--------------------------
 			// wait for chars from Atmel
 			//--------------------------
@@ -77,108 +72,120 @@ void SimulationThread::run()
 			{
 				emit message("Waiting for Atmel command string...");
 
+				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+				mutex->lock();
 				while (interface1->charsAvailable() == false)
 					;
 
-
 				// get char
 				interface1->receiveChar(&character);
+				mutex->unlock();
 
 				// command string from Atmel starts?
 				if (character == starter)
 				{
-					stringStarted = true;
+					// start QString
+					commandString[0] = character;
+
+					charCounter++;
 
 					// send text with no CR to GUI
 					emit message("*", false);
 
 					// waiting for the rest of the string
+					mutex->lock();
 					while (interface1->charsAvailable() == false)
 						;
 
 					// get next char
 					interface1->receiveChar(&character);
+					mutex->unlock();
 
-					// command string from Atmel starts?
-					if (character == terminator)
+					// increase char counter
+					charCounter++;
+
+					// serial buffer overfluw?
+					if (charCounter <= maxStringLength)
 					{
-						// send text to GUI
-						emit message("#");
+						// build command string
+						commandString.append((char *) &character);
+
+						// command string from Atmel completed?
+						if (character == terminator)
+						{
+							// reset char counter
+							charCounter = 0;
+
+							// send text to GUI
+							emit message("#");
+
+
+							//-----------------------------------------------
+							emit message("Atmel command string completed.");
+							//-----------------------------------------------
+
+							// Everything's fine, so reset the watchdog timer (wdt).
+			///	@todo		wdt_reset();
+
+							// RESET / INIT
+							if (commandString == "*re#")
+							{
+			/*
+								// turn all drive motor bits off (except PWM bits)
+								PORTL &= ~(1<<PIN0);
+								PORTL &= ~(1<<PIN1);
+								PORTL &= ~(1<<PIN2);
+								PORTL &= ~(1<<PIN3);
+								PORTL &= ~(1<<PIN6);
+								PORTL &= ~(1<<PIN7);
+								PORTD &= ~(1<<PIN6);
+								PORTD &= ~(1<<PIN7);
+								// flashlight off
+								relais(OFF);
+								// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+								redLED(OFF);
+
+								// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+								// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+								// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+								// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+								// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+								// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+			*/
+								// answer with "ok"
+								// this answer is used to see if the robot is "on"
+								mutex->lock();
+								interface1->sendString("*ok#");
+								mutex->unlock();
+
+								// show string in GUI
+								emit message("*ok#");
+
+								// e n a b l e  watchdog!
+			/// @todo			watchdog(ENABLE);
+							}
+
+
+
+						} // terminator?
+						else
+						{
+							// send char to GUI
+							emit message(QString("%1").arg((char *) &character), false);
+						}
 					}
 					else
 					{
-						emit message(QString("%1").arg((char *) &character));
+						// string 'buffer overflow'
+						// reset char counter
+						charCounter = 0;
+
+						emit message("+++ string size exceeded. Discarding received chars...");
 					}
-
-
-				}
-				else
-				{
-					emit message(QString("%1").arg((char *) &character));
-				}
-
+				} // string started
 			} // thread runs
 
 
-
-
-
-			if (interface1->receiveString(string) == false)
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-				emit message("ERROR receiving string [SimulationThread::run]. Stopping thread!");
-				stop();
-			}
-			else
-			{
-				// Unlock the mutex.
-				mutex->unlock();
-
-				// show string in GUI
-				emit message(string);
-
-				// Everything's fine, so reset the watchdog timer (wdt).
-///	@todo		wdt_reset();
-
-				// RESET / INIT
-				if (string == "*re#")
-				{
-/*
-					// turn all drive motor bits off (except PWM bits)
-					PORTL &= ~(1<<PIN0);
-					PORTL &= ~(1<<PIN1);
-					PORTL &= ~(1<<PIN2);
-					PORTL &= ~(1<<PIN3);
-					PORTL &= ~(1<<PIN6);
-					PORTL &= ~(1<<PIN7);
-					PORTD &= ~(1<<PIN6);
-					PORTD &= ~(1<<PIN7);
-					// flashlight off
-					relais(OFF);
-					// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
-					redLED(OFF);
-
-					// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-					// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-					// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-					// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-					// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-					// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-*/
-					// answer with "ok"
-					// this answer is used to see if the robot is "on"
-					interface1->sendString("*ok#");
-
-					// show string in GUI
-					emit message("*ok#");
-
-					// e n a b l e  watchdog!
-/// @todo			watchdog(ENABLE);
-				}
-
-
-			} // serial reading was successfull
 /*
 		//====================================================================
 		//====================================================================
