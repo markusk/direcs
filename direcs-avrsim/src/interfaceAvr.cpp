@@ -166,43 +166,28 @@ bool InterfaceAvr::sendString(QString string)
 
 bool InterfaceAvr::receiveString(QString &string)
 {
-	int result = 0;
-	unsigned char character;
-	QByteArray ba;
+	char buff[1024];
+	int numBytes = 0;
 
+	// data available?
+	numBytes = serialPort->bytesAvailable();
 
-	do
+	// are data available?
+	// if there are >1024 bytes available, something goes wrong here...
+	if ((numBytes < 1) || (numBytes > 1024))
 	{
-		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readAtmelPort(&character, 1);
-
-		if (result == 1)
-		{
-			// append received char to byte array
-			ba.append(character);
-		}
-
-	} while ( (result == 1) && (character != '#') );
-
-	if (result != 1)
-	{
-		// ERROR (error message already emitted from readAtmelPort!)
-		/// \todo on maximum errors do a program stop or so!
-		//qDebug() << "error at receiveString";
 		return false;
 	}
 
-	// copy chars to QString to pointer to return the QString
-	string = QString::fromUtf8(ba.data(), ba.length());
-
-	// check result!
-	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
+	if (serialPort->read(buff, numBytes) == -1)
 	{
-		return true;
+		return false;
 	}
 
+	// 'return' data read
+	string = buff;
 
-	return false;
+	return true;
 }
 
 
