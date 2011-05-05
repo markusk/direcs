@@ -127,8 +127,12 @@ void SimulationThread::run()
 								//-----------------------------------------------
 								emit message(QString("string=%1.").arg(commandString));
 
-								// Everything's fine, so reset the watchdog timer (wdt).
-				///	@todo		wdt_reset();
+// Everything's fine, so reset the watchdog timer (wdt).
+///	@todo		wdt_reset();
+
+								//--------------------------
+								// check what was received
+								//--------------------------
 
 								// RESET / INIT
 								if (commandString == "*re#")
@@ -164,8 +168,8 @@ void SimulationThread::run()
 									// show string in GUI
 									emit message("*ok#");
 
-									// e n a b l e  watchdog!
-				/// @todo			watchdog(ENABLE);
+// e n a b l e  watchdog!
+/// @todo			watchdog(ENABLE);
 								}
 								else
 								{
@@ -176,7 +180,7 @@ void SimulationThread::run()
 									// delete string!
 									commandString.clear();
 
-									emit message("+++ Unknown Atmel command string!");
+									emit message("+++ Unknown Atmel command string! +++");
 								}
 
 
@@ -236,9 +240,6 @@ void SimulationThread::run()
 		 get_string(stringbuffer);
 
 
-		 //--------------------------
-		 // check what was received
-		 //--------------------------
 
 
 		 // RESET / INIT

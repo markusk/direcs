@@ -85,8 +85,14 @@ class SimulationThread : public QThread
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false);
 
+		/**
+		Simulated Atmel method
+		*/
+		void relais(bool state);
+
 
 	private:
+
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
