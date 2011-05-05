@@ -142,30 +142,20 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 bool InterfaceAvr::sendString(QString string)
 {
-//	QString debugstring;
-
-
 	// send starter
 	if (sendChar(starter) == true)
 	{
-		// send 'content' of string
-//		debugstring = "*";
-		for (int i=0; i<string.length(); i++)
+		// sending the string returns the number of chars sent
+		if ( serialPort->write(string.toAscii(), string.length() != string.length()) )
 		{
-			// char by char
-			if (sendChar( string.at(i).toAscii() ) == false)
-			{
-				return false;
-			}
-//			debugstring.append(string.at(i));
+			return false;
 		}
+
 
 		// send terminator
 		if (sendChar(terminator) == true)
 		{
 			// success
-//			debugstring.append("#");
-//			emit message(debugstring);
 			return true;
 		}
 	}
