@@ -131,7 +131,7 @@ class InterfaceAvr : public QObject
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		@param text is the message to be emitted
 		*/
-		void message(QString text);
+		void message(QString text, bool CR=true, bool sayIt=false);
 
 
 	private:

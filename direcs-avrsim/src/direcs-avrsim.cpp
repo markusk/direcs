@@ -88,6 +88,7 @@ void DirecsAvrsim::init()
 //	serialPortMicrocontroller = "/dev/tty.SLAB_USBtoUART"; /// this is the seperate serial adapter, but the same as on the Atmel-Board!
 	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
 //	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
+//	serialPortMicrocontroller = "/dev/ttyAtmelBoard";
 	robotSimulationMode = false;
 
 	//--------------------------------------------------------------------------
@@ -129,9 +130,9 @@ void DirecsAvrsim::init()
 	//--------------------------------------------------------------------------
 	// send status messages to the GUI
 	//--------------------------------------------------------------------------
-	connect(interface1, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
-	connect(this, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
-	connect(simulationThread, SIGNAL( message(QString) ), gui, SLOT( appendLog(QString) ));
+	connect(interface1,       SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
+	connect(this,             SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
+	connect(simulationThread, SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
 
 	//--------------------------------------------------------------------------
 	// let some classes know the robots state

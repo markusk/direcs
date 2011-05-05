@@ -83,7 +83,7 @@ class SimulationThread : public QThread
 		Emits a info or error message to a slot.
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		*/
-		void message(QString text);
+		void message(QString text, bool CR=true, bool sayIt=false);
 
 
 	private:
@@ -99,6 +99,9 @@ class SimulationThread : public QThread
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
+
+		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *  @sa InterfaceAvr()
+		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #  @sa InterfaceAvr()
 };
 
 #endif
