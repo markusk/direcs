@@ -110,6 +110,11 @@ class InterfaceAvr : public QObject
 		**/
 		bool charsAvailable();
 
+		/**
+		Clears the serial input buffer. There may be some unwanted chars in the queue from a former run or so. So this methods just performs a 'flush'.
+		*/
+		void clearInputBuffer();
+
 
 
 	signals:

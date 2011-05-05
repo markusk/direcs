@@ -279,3 +279,9 @@ bool InterfaceAvr::charsAvailable()
 
 	return false;
 }
+
+
+void InterfaceAvr::clearInputBuffer()
+{
+	serialPort->flush();
+}
