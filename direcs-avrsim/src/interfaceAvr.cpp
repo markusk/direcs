@@ -94,12 +94,14 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	int result = 0;
 // 	static int receiveErrorCounter = 0;
 
+	// convert to QByteArray since write() needs that like this
+	QByteArray data;
+	data.resize(1);
+	data[0] = character;
 
-	// send one byte to the serial port with direcsSerial
-	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeAtmelPort(&character);
-
-	if (result < 0)
+	// send *one* byte to the serial port with direcsSerial
+	// Return code shall be *one*
+	if (serialPort->write(data, 1) != 1)
 	{
 // 		receiveErrorCounter++;
 		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
