@@ -51,4 +51,7 @@ kinect/bin/kinect
 OpenCV/sync
 OpenCV/sync.dSYM/Contents/Info.plist
 OpenCV/sync.dSYM/Contents/Resources/DWARF/sync
-Icon
+Icon
+test/test
+direcs-avrsim/src/Makefile
+direcs-avrsim/Makefile
