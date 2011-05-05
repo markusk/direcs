@@ -121,21 +121,21 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
-	int result = 0;
-
-
-	// reading one char with direcsSerial
-	// Must return 1 (1 character succussfull read)!
-	result = serialPort->readAtmelPort(character, 1);
-
-	if (result != 1)
+	// data available?
+	if (serialPort->bytesAvailable() < 1)
 	{
 		// ERROR
-		// emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );  < error message already emitted from readAtmelPort!
 		return false;
 	}
 
-	// emit emitMessage( QString("Received '%1'.").arg(result) ); // this makes the program to slow and than to crash!!
+	// read data
+	// and 'convert' from unsigned char* to char*. See also http://bytes.com/topic/c/answers/720858-convert-unsigned-char-char
+	if (serialPort->read((char *) character, 1) != 1)
+	{
+		// ERROR
+		return false;
+	}
+
 	return true;
 }
 
