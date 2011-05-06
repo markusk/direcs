@@ -71,11 +71,10 @@ void SimulationThread::run()
 			//--------------------------
 			// wait for chars from Atmel
 			//--------------------------
+			emit message("Waiting for Atmel command string to start...");
+
 			while (stopped == false)
 			{
-				if (stringStarted == false)
-					emit message("Waiting for Atmel command string to start...");
-
 				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 				mutex->lock();
 				while (interface1->charsAvailable() == false)
@@ -130,7 +129,7 @@ void SimulationThread::run()
 
 
 								//-----------------------------------------------
-								emit message(QString("Atmel command string: \"%1\".").arg(receiveString), false);
+								emit message(QString("Atmel command string: \"%1\".").arg(receiveString));
 								//-----------------------------------------------
 
 								// copy string for command check
@@ -1140,7 +1139,8 @@ void SimulationThread::run()
 						// delete string!
 						receiveString.clear();
 
-						emit message("+++ string size exceeded. Discarding received chars...");
+						emit message("+++ String size exceeded. Discarding received chars. +++");
+						emit message("Waiting for Atmel command string to start...");
 					}
 				} // commmand completed
 
