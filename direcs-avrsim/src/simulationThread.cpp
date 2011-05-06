@@ -52,6 +52,7 @@ void SimulationThread::run()
 	static int charCounter = 0;
 	QString receiveString;
 	QString commandString;
+	QChar qchar; // this is for conversion from unsigned char to QString
 	bool stringStarted = false;
 	bool commandCompleted = false;
 	static bool redLEDtoggle = false;
@@ -99,7 +100,9 @@ void SimulationThread::run()
 					// serial buffer overflow?
 					if (charCounter <= maxStringLength)
 					{
-						// command string from Atmel starts?
+						//---------------------------------------------
+						// command string from Atmel started?
+						//---------------------------------------------
 						if (character == starter)
 						{
 							stringStarted = true;
@@ -108,24 +111,32 @@ void SimulationThread::run()
 							// start QString
 							receiveString.clear();
 
-							// complete command string
-							receiveString.append((char *) &character);
+							// build command string
+							// convert from unsigned char to QChar and then to QString
+							qchar = character;
+							receiveString.append( QString(&qchar, 1) );
+
+							// send char to GUI (with no CR)
+							emit message(QString("%1").arg( qchar ), false);
 
 							charCounter++;
 
 							emit greenLED(ON);
-
-							// send text with no CR to GUI
-							emit message("*", false);
-
 						} // command started
 						else
 						{
+							//---------------------------------------------
 							// command string from Atmel completed?
+							//---------------------------------------------
 							if (character == terminator)
 							{
-								// complete command string
-								receiveString.append((char *) &character);
+								// build command string
+								// convert from unsigned char to QChar and then to QString
+								qchar = character;
+								receiveString.append( QString(&qchar, 1) );
+
+								// send char to GUI
+								emit message(QString("%1").arg( qchar ));
 
 								commandCompleted = true;
 								stringStarted = false;
@@ -134,9 +145,6 @@ void SimulationThread::run()
 								charCounter = 0;
 
 								emit greenLED(OFF);
-
-								// send text to GUI
-								emit message("#");
 
 
 								//-----------------------------------------------
@@ -1110,6 +1118,9 @@ void SimulationThread::run()
 
 								else
 								{
+									//-----------------------------------------
+									// command complete (*...#), but unknown!
+									//-----------------------------------------
 									charCounter = 0;
 									commandCompleted = false;
 									stringStarted = false;
@@ -1125,16 +1136,20 @@ void SimulationThread::run()
 							} // terminator?
 							else
 							{
-								// we are in the middle of the command string...
+								//---------------------------------------------
+								// we are in the middle of the command string
+								//---------------------------------------------
 								charCounter++;
 
 								commandCompleted = false;
 
 								// build command string
-								receiveString.append((char *) &character);
+								// convert from unsigned char to QChar and then to QString
+								qchar = character;
+								receiveString.append( QString(&qchar, 1) );
 
-								// send char to GUI
-								emit message(QString("%1").arg((char *) &character), false);
+								// send char to GUI (with no CR)
+								emit message(QString("%1").arg( qchar ), false);
 							}
 
 						}
@@ -1152,7 +1167,7 @@ void SimulationThread::run()
 
 						emit greenLED(OFF);
 
-						emit message("+++ String size exceeded. Discarding received chars. +++");
+						emit message("<br>+++ String size exceeded. Discarding received chars. +++");
 						emit message("Waiting for Atmel command string to start...");
 					}
 				} // commmand completed
