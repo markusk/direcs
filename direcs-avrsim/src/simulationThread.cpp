@@ -50,6 +50,7 @@ void SimulationThread::run()
 	bool heartbeatToggle = false;
 	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 	static int charCounter = 0;
+	QString receiveString;
 	QString commandString;
 	bool stringStarted = false;
 	bool commandCompleted = false;
@@ -99,10 +100,10 @@ void SimulationThread::run()
 							commandCompleted = false;
 
 							// start QString
-							commandString.clear();
+							receiveString.clear();
 
 							// complete command string
-							commandString.append((char *) &character);
+							receiveString.append((char *) &character);
 
 							charCounter++;
 
@@ -116,7 +117,7 @@ void SimulationThread::run()
 							if (character == terminator)
 							{
 								// complete command string
-								commandString.append((char *) &character);
+								receiveString.append((char *) &character);
 
 								commandCompleted = true;
 								stringStarted = false;
@@ -129,9 +130,19 @@ void SimulationThread::run()
 
 
 								//-----------------------------------------------
-								emit message("Atmel command string completed.");
+								emit message(QString("Atmel command string: \"%1\".").arg(receiveString), false);
 								//-----------------------------------------------
-								emit message(QString("string=%1.").arg(commandString));
+
+								// copy string for command check
+								commandString = receiveString;
+
+								//-------------------------------------------------
+								// reset received string for next upcoming command
+								//-------------------------------------------------
+								charCounter = 0;
+								receiveString.clear();
+								stringStarted = false;
+								commandCompleted = false;
 
 // Everything's fine, so reset the watchdog timer (wdt).
 ///	@todo		wdt_reset();
@@ -1094,7 +1105,7 @@ void SimulationThread::run()
 									stringStarted = false;
 
 									// delete string!
-									commandString.clear();
+									receiveString.clear();
 
 									emit message("+++ Unknown Atmel command string! +++");
 								}
@@ -1110,7 +1121,7 @@ void SimulationThread::run()
 								commandCompleted = false;
 
 								// build command string
-								commandString.append((char *) &character);
+								receiveString.append((char *) &character);
 
 								// send char to GUI
 								emit message(QString("%1").arg((char *) &character), false);
@@ -1127,7 +1138,7 @@ void SimulationThread::run()
 						stringStarted = false;
 
 						// delete string!
-						commandString.clear();
+						receiveString.clear();
 
 						emit message("+++ string size exceeded. Discarding received chars...");
 					}
