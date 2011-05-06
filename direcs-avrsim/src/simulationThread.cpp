@@ -162,8 +162,8 @@ void SimulationThread::run()
 								stringStarted = false;
 								commandCompleted = false;
 
-// Everything's fine, so reset the watchdog timer (wdt).
-///	@todo		wdt_reset();
+								// Everything's fine, so reset the watchdog timer (wdt).
+								///	@todo		wdt_reset();
 
 								//--------------------------
 								// check what was received
@@ -172,7 +172,7 @@ void SimulationThread::run()
 								// RESET / INIT
 								if (commandString == "*re#")
 								{
-				/*
+									/*
 									// turn all drive motor bits off (except PWM bits)
 									PORTL &= ~(1<<PIN0);
 									PORTL &= ~(1<<PIN1);
@@ -188,14 +188,14 @@ void SimulationThread::run()
 									// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
 									redLED(OFF);
 
-/*
+									/*
 									// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
 									// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
 									// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
 									// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
 									// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
 									// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-				*/
+*/
 									// answer with "ok"
 									// this answer is used to see if the robot is "on"
 									mutex->lock();
@@ -205,16 +205,14 @@ void SimulationThread::run()
 									// show string in GUI
 									emit answer("*ok#");
 
-// e n a b l e  watchdog!
-/// @todo			watchdog(ENABLE);
+									// e n a b l e  watchdog!
+									/// @todo			watchdog(ENABLE);
 								} // *re#
-
-
-								/*
-
+								else
 								// SLEEP (and turn off watchdog)
-								if (strcmp(stringbuffer, "*sl#") == 0)
+								if (commandString == "*sl#")
 								{
+									/*
 									// turn all drive motor bits off (except PWM bits)
 									PORTL &= ~(1<<PIN0);
 									PORTL &= ~(1<<PIN1);
@@ -224,7 +222,7 @@ void SimulationThread::run()
 									PORTL &= ~(1<<PIN7);
 									PORTD &= ~(1<<PIN6);
 									PORTD &= ~(1<<PIN7);
-
+*/
 									// flashlight off
 									relais(OFF);
 
@@ -232,11 +230,14 @@ void SimulationThread::run()
 									redLED(OFF);
 
 									// d i s a b l e  watchdog!
-									watchdog(DISABLE);
+									///	@todo		wdt_reset();
 
 									// answer
-									put_string("*sl#");
+									emit answer("*sl#");
 								}
+
+								/*
+
 										 else
 										 // READ_SENSOR_1
 										 if (strcmp(stringbuffer, "*s1#") == 0)
