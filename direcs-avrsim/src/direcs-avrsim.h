@@ -175,23 +175,6 @@ class DirecsAvrsim : public QObject
 		static const unsigned char READAXISY = 62;
 		static const unsigned char READAXISZ = 63;
 
-		/**
-		Give the sensors some names
-		DONT CHANGE THIS NUMBERS!
-		THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!
-		*/
-		static const short int SENSOR1 = 1;
-		static const short int SENSOR2 = 2;
-		static const short int SENSOR3 = 4;
-		static const short int SENSOR4 = 8;
-		static const short int SENSOR5 = 16;
-		static const short int SENSOR6 = 32;
-		static const short int SENSOR7 = 64;
-		static const short int SENSOR8 = 128;
-
-		////The ultrasonic sensor
-		static const short int SENSOR16 = 256;
-
 		/// Value, if no sensor has a value to react
 		static const short int NONE = 0;
 
