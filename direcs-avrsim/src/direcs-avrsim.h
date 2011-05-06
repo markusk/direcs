@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -35,6 +35,7 @@
 //-------------------------------------------------------------------
 
 /**
+\author Markus Knapp
 \brief The main class of the whole robot simulation programm.
 
  All objects are created here. This method also starts the GUI and its splash screen.

@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2009 by Markus Knapp                                  *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -31,6 +31,7 @@
 
 
 /**
+\author Markus Knapp
 \brief Responsible for simulating the Atmel on the serial port.
 
 This thread answers like the atmel on the serial line.
