@@ -13,14 +13,12 @@ CONFIG += debug \
 
 TEMPLATE = app
 
-HEADERS +=	direcsSerial.h \
-	gui.h \
+HEADERS +=	gui.h \
 	direcs-avrsim.h \
 	interfaceAvr.h \
 	simulationThread.h
 
-SOURCES +=	direcsSerial.cpp \
-	gui.cpp \
+SOURCES +=	gui.cpp \
 	direcs-avrsim.cpp \
 	interfaceAvr.cpp \
 	simulationThread.cpp
