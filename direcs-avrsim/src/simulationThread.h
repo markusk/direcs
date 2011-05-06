@@ -136,16 +136,22 @@ class SimulationThread : public QThread
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *  @sa InterfaceAvr()
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #  @sa InterfaceAvr()
 
-		// these numbers represent the Ports of the A/D converter C  !!!
-		// for the infrared sensors and the motor sensors
-		#define SENSOR1					0  // ADC0
-		#define SENSOR2					1  // ADC1
-		#define SENSOR3					2  // ADC2
-		#define SENSOR4					3  // ADC3
-		#define SENSOR5					4  // ADC4
-		#define SENSOR6					5  // ADC5
-		#define SENSOR7					6  // ADC6
-		#define SENSOR8					7  // ADC7
+/**
+Simulated Atmel method defines
+*/
+// these numbers represent the Ports of the A/D converter C  !!!
+// for the infrared sensors and the motor sensors
+#define SENSOR1					0  // ADC0
+#define SENSOR2					1  // ADC1
+#define SENSOR3					2  // ADC2
+#define SENSOR4					3  // ADC3
+#define SENSOR5					4  // ADC4
+#define SENSOR6					5  // ADC5
+#define SENSOR7					6  // ADC6
+#define SENSOR8					7  // ADC7
+
+#define SENSORMOTOR1			38 // ADC14
+#define SENSORMOTOR2			39 // ADC15
 };
 
 #endif

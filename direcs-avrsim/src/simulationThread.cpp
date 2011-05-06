@@ -287,6 +287,13 @@ void SimulationThread::run()
 									// read ADC and send answer over serial port
 									sendUInt( readADC(SENSOR7) );
 								}
+								else
+								// READ_SENSOR_8 (12 V supply)
+								if (commandString == "*s8#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR8) );
+								}
 								/*
 										 else
 										 // READ_SENSOR_8 (12 V supply)
@@ -367,20 +374,6 @@ void SimulationThread::run()
 											 }
 										 }
 										 else
-										 // READ_MOTOR_SENSOR1
-										 if (commandString == "*ms1#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSORMOTOR1) );
-										 }
-										 else
-										 // READ_MOTOR_SENSOR2
-										 if (commandString == "*ms2#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSORMOTOR2) );
-										 }
-										 else
 										 // READ_MOTOR_DISTANCE1
 										 if (commandString == "*dd1#")
 										 {
@@ -414,6 +407,20 @@ void SimulationThread::run()
 											 // answer with "ok"
 											 emit answer("*ok#");
 										 }
+								else
+								// READ_MOTOR_SENSOR1
+								if (commandString == "*ms1#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSORMOTOR1) );
+								}
+								else
+								// READ_MOTOR_SENSOR2
+								if (commandString == "*ms2#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSORMOTOR2) );
+								}
 */
 										 else
 										 // FLASHLIGHT ON
@@ -1247,8 +1254,17 @@ void SimulationThread::sendUInt(uint16_t value)
 uint16_t SimulationThread::readADC(unsigned char channel)
 {
 	if (channel==SENSOR7) // 12V sensor
-		return 684;
+		return (uint16_t) (57.000 * 12);
 
 	if (channel==SENSOR8) // 24V sensor
-		return 867;
+		return (uint16_t) (36.125 * 24);
+
+	if (channel == SENSORMOTOR1)
+		return (uint16_t) (1000 / 29); // 1000 mA
+
+	if (channel == SENSORMOTOR2)
+		return (uint16_t) (1000 / 29); // 1000 mA
+
+	emit message("+++ Sensor not implemented in readADC! +++");
+	return 0;
 }
