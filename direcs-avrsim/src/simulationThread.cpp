@@ -1150,6 +1150,8 @@ void SimulationThread::run()
 						// delete string!
 						receiveString.clear();
 
+						emit greenLED(OFF);
+
 						emit message("+++ String size exceeded. Discarding received chars. +++");
 						emit message("Waiting for Atmel command string to start...");
 					}
