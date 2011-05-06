@@ -78,7 +78,10 @@ void SimulationThread::run()
 				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 				mutex->lock();
 				while (interface1->charsAvailable() == false)
-					;
+				{
+					if (stopped)
+						break;
+				}
 
 				// get char
 				interface1->receiveChar(&character);
