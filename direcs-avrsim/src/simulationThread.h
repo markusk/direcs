@@ -126,6 +126,13 @@ class SimulationThread : public QThread
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 
+		/**
+		Simulated Atmeöl values
+		*/
+		uint16_t leftDistanceCounter;
+		uint16_t rightDistanceCounter;
+
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms

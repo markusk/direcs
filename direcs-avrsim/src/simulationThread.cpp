@@ -30,6 +30,9 @@ SimulationThread::SimulationThread(InterfaceAvr *i, QMutex *m)
 	mutex = m;
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
+
+	leftDistanceCounter = 0;
+	rightDistanceCounter = 0;
 }
 
 
@@ -381,7 +384,6 @@ void SimulationThread::run()
 									// read ADC and send answer over serial port
 									sendUInt( readADC(SENSORMOTOR2) );
 								}
-								/*
 								else
 								// READ_MOTOR_DISTANCE1
 								if (commandString == "*dd1#")
@@ -396,6 +398,7 @@ void SimulationThread::run()
 									// send driven distance of motor 2 encoder over serial port
 									sendUInt( leftDistanceCounter );
 								}
+								/*
 								else
 								// RESET_MOTOR_DISTANCE1
 								if (commandString == "*id1#")
