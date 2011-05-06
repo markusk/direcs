@@ -11,5 +11,7 @@
         <file>images/strobo_off.png</file>
         <file>images/strobo_on.png</file>
         <file>images/led_red.gif</file>
+        <file>images/relais_off.png</file>
+        <file>images/relais_on.png</file>
     </qresource>
 </RCC>

@@ -176,10 +176,12 @@ void Gui::setFlashlight(bool state)
 {
 	if (state)
 	{
+		ui.lblRelais->setPixmap(QPixmap(":/images/images/relais_on.png"));
 		ui.lblFlashlight->setPixmap(QPixmap(":/images/images/strobo_on.png"));
 	}
 	else
 	{
+		ui.lblRelais->setPixmap(QPixmap(":/images/images/relais_off.png"));
 		ui.lblFlashlight->setPixmap(QPixmap(":/images/images/strobo_off.png"));
 		return;
 	}
