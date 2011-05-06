@@ -240,56 +240,56 @@ void SimulationThread::run()
 
 										 else
 										 // READ_SENSOR_1
-										 if (strcmp(stringbuffer, "*s1#") == 0)
+										 if (commandString == "*s1#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR1) );
 										 }
 										 else
 										 // READ_SENSOR_2
-										 if (strcmp(stringbuffer, "*s2#") == 0)
+										 if (commandString == "*s2#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR2) );
 										 }
 										 else
 										 // READ_SENSOR_3
-										 if (strcmp(stringbuffer, "*s3#") == 0)
+										 if (commandString == "*s3#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR3) );
 										 }
 										 else
 										 // READ_SENSOR_4
-										 if (strcmp(stringbuffer, "*s4#") == 0)
+										 if (commandString == "*s4#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR4) );
 										 }
 										 else
 										 // READ_SENSOR_5
-										 if (strcmp(stringbuffer, "*s5#") == 0)
+										 if (commandString == "*s5#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR5) );
 										 }
 										 else
 										 // READ_SENSOR_6
-										 if (strcmp(stringbuffer, "*s6#") == 0)
+										 if (commandString == "*s6#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR6) );
 										 }
 										 else
 										 // READ_SENSOR_7 (24 V supply)
-										 if (strcmp(stringbuffer, "*s7#") == 0)
+										 if (commandString == "*s7#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR7) );
 										 }
 										 else
 										 // READ_SENSOR_8 (12 V supply)
-										 if (strcmp(stringbuffer, "*s8#") == 0)
+										 if (commandString == "*s8#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSOR8) );
@@ -297,29 +297,29 @@ void SimulationThread::run()
 										 else
 										 // READ_SENSOR_16
 										 // ultra sonic sensor !!
-										 if (strcmp(stringbuffer, "*s16#") == 0)
+										 if (commandString == "*s16#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( ultraschall_messung() );
 										 }
 										 else
 										 // READ 3D COMPASS CONNECTION
-										 if (strcmp(stringbuffer, "*cc#") == 0)
+										 if (commandString == "*cc#")
 										 {
 											 // check if micromag is connected to Atmel-Board (PB6 = high)
 											 if ( bit_is_set(PINB,PIN6) )
 											 {
-												 put_string("*ok#");
+												 emit answer("*ok#");
 											 }
 											 else
 											 {
 												 // not connected.
-												 put_string("*er#");
+												 emit answer("*er#");
 											 }
 										 }
 										 else
 										 // READ_AXIS_X
-										 if (strcmp(stringbuffer, "*cx#") == 0)
+										 if (commandString == "*cx#")
 										 {
 											 // check if micromag is connected to Atmel-Board (PB6 = high)
 											 if ( bit_is_set(PINB,PIN6) )
@@ -335,7 +335,7 @@ void SimulationThread::run()
 										 }
 										 else
 										 // READ_AXIS_Y
-										 if (strcmp(stringbuffer, "*cy#") == 0)
+										 if (commandString == "*cy#")
 										 {
 											 // check if micromag is connected to Atmel-Board (PB6 = high)
 											 if ( bit_is_set(PINB,PIN6) )
@@ -351,7 +351,7 @@ void SimulationThread::run()
 										 }
 										 else
 										 // READ_AXIS_Z
-										 if (strcmp(stringbuffer, "*cz#") == 0)
+										 if (commandString == "*cz#")
 										 {
 											 // check if micromag is connected to Atmel-Board (PB6 = high)
 											 if ( bit_is_set(PINB,PIN6) )
@@ -367,51 +367,51 @@ void SimulationThread::run()
 										 }
 										 else
 										 // READ_MOTOR_SENSOR1
-										 if (strcmp(stringbuffer, "*ms1#") == 0)
+										 if (commandString == "*ms1#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSORMOTOR1) );
 										 }
 										 else
 										 // READ_MOTOR_SENSOR2
-										 if (strcmp(stringbuffer, "*ms2#") == 0)
+										 if (commandString == "*ms2#")
 										 {
 											 // read ADC and send answer over serial port
 											 sendUInt( readADC(SENSORMOTOR2) );
 										 }
 										 else
 										 // READ_MOTOR_DISTANCE1
-										 if (strcmp(stringbuffer, "*dd1#") == 0)
+										 if (commandString == "*dd1#")
 										 {
 											 // send driven distance of motor 1 encoder over serial port
 											 sendUInt( rightDistanceCounter );
 										 }
 										 else
 										 // READ_MOTOR_DISTANCE2
-										 if (strcmp(stringbuffer, "*dd2#") == 0)
+										 if (commandString == "*dd2#")
 										 {
 											 // send driven distance of motor 2 encoder over serial port
 											 sendUInt( leftDistanceCounter );
 										 }
 										 else
 										 // RESET_MOTOR_DISTANCE1
-										 if (strcmp(stringbuffer, "*id1#") == 0)
+										 if (commandString == "*id1#")
 										 {
 											 // init driven distance of motor 1 (encoder)
 											 rightDistanceCounter = 0;
 											 rightWheelCounter = 0;
 											 // answer with "ok"
-											 put_string("*ok#");
+											 emit answer("*ok#");
 										 }
 										 else
 										 // RESET_MOTOR_DISTANCE2
-										 if (strcmp(stringbuffer, "*id2#") == 0)
+										 if (commandString == "*id2#")
 										 {
 											 // init driven distance of motor 2 (encoder)
 											 leftDistanceCounter = 0;
 											 leftWheelCounter = 0;
 											 // answer with "ok"
-											 put_string("*ok#");
+											 emit answer("*ok#");
 										 }
 */
 										 else
@@ -433,18 +433,18 @@ void SimulationThread::run()
 /*
 										 else
 										 // MOTOR1_OFF
-										 if (strcmp(stringbuffer, "*mp1of#") == 0)
+										 if (commandString == "*mp1of#")
 										 {
 											 // delete Motor1 A bit
 											 PORTL &= ~(1<<PIN0);
 											 // delete Motor1 B bit
 											 PORTL &= ~(1<<PIN1);
 											 // answer with "ok"
-											 put_string("*mp1of#");
+											 emit answer("*mp1of#");
 										 }
 										 else
 										 // MOTOR 1 CLOCKWISE = forward
-										 if (strcmp(stringbuffer, "*md1cw#") == 0)
+										 if (commandString == "*md1cw#")
 										 {
 											 // delete Motor1 A bit
 											 PORTL &= ~(1<<PIN0);
@@ -452,11 +452,11 @@ void SimulationThread::run()
 											 PORTL |= (1<<PIN1);
 
 											 // answer with "ok"
-											 put_string("*md1cw#");
+											 emit answer("*md1cw#");
 										 }
 										 else
 										 // MOTOR 1 COUNTERCLOCKWISE = backward
-										 if (strcmp(stringbuffer, "*md1cc#") == 0)
+										 if (commandString == "*md1cc#")
 										 {
 											 // set Motor1 A bit
 											 PORTL |= (1<<PIN0);
@@ -464,11 +464,11 @@ void SimulationThread::run()
 											 PORTL &= ~(1<<PIN1);
 
 											 // answer with "ok"
-											 put_string("*md1cc#");
+											 emit answer("*md1cc#");
 										 }
 										 else
 										 // MOTOR1_SPEED_SET
-										 if (strncmp(stringbuffer, "*mv1", 4) == 0)
+										 if (commandString.startsWith("*mv1", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -478,22 +478,22 @@ void SimulationThread::run()
 											 // get value from string and set speed
 											 setPWMwidth(1, atoi(stringbuffer));
 											 // answer with "ok"
-											 put_string("*mv1#");
+											 emit answer("*mv1#");
 										 }
 										 else
 										 // MOTOR2_OFF
-										 if (strcmp(stringbuffer, "*mp2of#") == 0)
+										 if (commandString == "*mp2of#")
 										 {
 											 // delete Motor2 A bit
 											 PORTL &= ~(1<<PIN2);
 											 // delete Motor2 B bit
 											 PORTL &= ~(1<<PIN3);
 											 // answer with "ok"
-											 put_string("*mp2of#");
+											 emit answer("*mp2of#");
 										 }
 										 else
 										 // MOTOR 2 CLOCKWISE = forward
-										 if (strcmp(stringbuffer, "*md2cw#") == 0)
+										 if (commandString == "*md2cw#")
 										 {
 											 // delete Motor2 A bit
 											 PORTL &= ~(1<<PIN2);
@@ -501,11 +501,11 @@ void SimulationThread::run()
 											 PORTL |= (1<<PIN3);
 
 											 // answer with "ok"
-											 put_string("*md2cw#");
+											 emit answer("*md2cw#");
 										 }
 										 else
 										 // MOTOR 2 COUNTERCLOCKWISE = backward
-										 if (strcmp(stringbuffer, "*md2cc#") == 0)
+										 if (commandString == "*md2cc#")
 										 {
 											 // set Motor2 A bit
 											 PORTL |= (1<<PIN2);
@@ -513,11 +513,11 @@ void SimulationThread::run()
 											 PORTL &= ~(1<<PIN3);
 
 											 // answer with "ok"
-											 put_string("*md2cc#");
+											 emit answer("*md2cc#");
 										 }
 										 else
 										 // MOTOR2_SPEED_SET
-										 if (strncmp(stringbuffer, "*mv2", 4) == 0)
+										 if (commandString.startsWith("*mv2", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -527,22 +527,22 @@ void SimulationThread::run()
 											 // get value from string and set speed
 											 setPWMwidth(2, atoi(stringbuffer));
 											 // answer with "ok"
-											 put_string("*mv2#");
+											 emit answer("*mv2#");
 										 }
 										 else
 										 // MOTOR3_OFF
-										 if (strcmp(stringbuffer, "*mp3of#") == 0)
+										 if (commandString == "*mp3of#")
 										 {
 											 // delete Motor3 A bit
 											 PORTL &= ~(1<<PIN6);
 											 // delete Motor3 B bit
 											 PORTL &= ~(1<<PIN7);
 											 // answer with "ok"
-											 put_string("*mp3of#");
+											 emit answer("*mp3of#");
 										 }
 										 else
 										 // MOTOR 3 CLOCKWISE = forward
-										 if (strcmp(stringbuffer, "*md3cw#") == 0)
+										 if (commandString == "*md3cw#")
 										 {
 											 // delete Motor3 A bit
 											 PORTL &= ~(1<<PIN6);
@@ -550,11 +550,11 @@ void SimulationThread::run()
 											 PORTL |= (1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*md3cw#");
+											 emit answer("*md3cw#");
 										 }
 										 else
 										 // MOTOR 3 COUNTERCLOCKWISE = backward
-										 if (strcmp(stringbuffer, "*md3cc#") == 0)
+										 if (commandString == "*md3cc#")
 										 {
 											 // set Motor3 A bit
 											 PORTL |= (1<<PIN6);
@@ -562,11 +562,11 @@ void SimulationThread::run()
 											 PORTL &= ~(1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*md3cc#");
+											 emit answer("*md3cc#");
 										 }
 										 else
 										 // MOTOR3_SPEED_SET
-										 if (strncmp(stringbuffer, "*mv3", 4) == 0)
+										 if (commandString.startsWith("*mv3", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -576,22 +576,22 @@ void SimulationThread::run()
 											 // get value from string and set speed
 											 setPWMwidth(3, atoi(stringbuffer));
 											 // answer with "ok"
-											 put_string("*mv3#");
+											 emit answer("*mv3#");
 										 }
 										 else
 										 // MOTOR4_OFF
-										 if (strcmp(stringbuffer, "*mp4of#") == 0)
+										 if (commandString == "*mp4of#")
 										 {
 											 // delete Motor4 A bit
 											 PORTD &= ~(1<<PIN6);
 											 // delete Motor4 B bit
 											 PORTD &= ~(1<<PIN7);
 											 // answer with "ok"
-											 put_string("*mp4of#");
+											 emit answer("*mp4of#");
 										 }
 										 else
 										 // MOTOR 4 CLOCKWISE = forward
-										 if (strcmp(stringbuffer, "*md4cw#") == 0)
+										 if (commandString == "*md4cw#")
 										 {
 											 // delete Motor4 A bit
 											 PORTD &= ~(1<<PIN6);
@@ -599,11 +599,11 @@ void SimulationThread::run()
 											 PORTD |= (1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*md4cw#");
+											 emit answer("*md4cw#");
 										 }
 										 else
 										 // MOTOR 4 COUNTERCLOCKWISE = backward
-										 if (strcmp(stringbuffer, "*md4cc#") == 0)
+										 if (commandString == "*md4cc#")
 										 {
 											 // set Motor4 A bit
 											 PORTD |= (1<<PIN6);
@@ -611,11 +611,11 @@ void SimulationThread::run()
 											 PORTD &= ~(1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*md4cc#");
+											 emit answer("*md4cc#");
 										 }
 										 else
 										 // MOTOR4_SPEED_SET
-										 if (strncmp(stringbuffer, "*mv4", 4) == 0)
+										 if (commandString.startsWith("*mv4", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -625,11 +625,11 @@ void SimulationThread::run()
 											 // get value from string and set speed
 											 setPWMwidth(4, atoi(stringbuffer));
 											 // answer with "ok"
-											 put_string("*mv4#");
+											 emit answer("*mv4#");
 										 }
 										 else
 										 // SPEED_SET_ALLMOTORS
-										 if (strncmp(stringbuffer, "*mv0", 4) == 0)
+										 if (commandString.startsWith("*mv0", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -642,11 +642,11 @@ void SimulationThread::run()
 											 setPWMwidth(3, atoi(stringbuffer));
 											 setPWMwidth(4, atoi(stringbuffer));
 											 // answer with "ok"
-											 put_string("*mv0#");
+											 emit answer("*mv0#");
 										 }
 										 else
 										 // BOTSTOP
-										 if (strcmp(stringbuffer, "*bst#") == 0)
+										 if (commandString == "*bst#")
 										 {
 											 // MOTOR 1 OFF
 											 // delete Motor1 A bit
@@ -670,11 +670,11 @@ void SimulationThread::run()
 											 PORTD &= ~(1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*bst#");
+											 emit answer("*bst#");
 										 }
 										 else
 										 // BOTWAIT
-										 if (strcmp(stringbuffer, "*bwa#") == 0)
+										 if (commandString == "*bwa#")
 										 {
 											 // MOTOR 1 OFF
 											 // delete Motor1 A bit
@@ -698,11 +698,11 @@ void SimulationThread::run()
 											 PORTD &= ~(1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*bwa#");
+											 emit answer("*bwa#");
 										 }
 										 else
 										 // BOTSTART = "bot go"
-										 if (strcmp(stringbuffer, "*bgo#") == 0)
+										 if (commandString == "*bgo#")
 										 {
 											 // MOTOR 1 CLOCKWISE = forward
 											 // delete Motor1 A bit
@@ -729,11 +729,11 @@ void SimulationThread::run()
 											 PORTD |= (1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*bgo#");
+											 emit answer("*bgo#");
 										 }
 										 else
 										 // BOTFORWARD = "bot drive forward"
-										 if (strcmp(stringbuffer, "*bdf#") == 0)
+										 if (commandString == "*bdf#")
 										 {
 											 // MOTOR 1 CLOCKWISE = forward
 											 // delete Motor1 A bit
@@ -760,11 +760,11 @@ void SimulationThread::run()
 											 PORTD |= (1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*bdf#");
+											 emit answer("*bdf#");
 										 }
 										 else
 										 // BOTBACKWARD = "bot drive backward"
-										 if (strcmp(stringbuffer, "*bdb#") == 0)
+										 if (commandString == "*bdb#")
 										 {
 											 // MOTOR 1 COUNTERCLOCKWISE = backward
 											 // set Motor1 A bit
@@ -791,11 +791,11 @@ void SimulationThread::run()
 											 PORTD &= ~(1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*bdb#");
+											 emit answer("*bdb#");
 										 }
 										 else
 										 // BOTLEFT = "bot drive left"
-										 if (strcmp(stringbuffer, "*bdl#") == 0)
+										 if (commandString == "*bdl#")
 										 {
 											 // MOTOR 1 COUNTERCLOCKWISE = backward
 											 // set Motor1 A bit
@@ -822,11 +822,11 @@ void SimulationThread::run()
 											 PORTD &= ~(1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*bdl#");
+											 emit answer("*bdl#");
 										 }
 										 else
 										 // BOTRIGHT = "bot drive right"
-										 if (strcmp(stringbuffer, "*bdr#") == 0)
+										 if (commandString == "*bdr#")
 										 {
 											 // MOTOR 1 CLOCKWISE = forward
 											 // delete Motor1 A bit
@@ -853,11 +853,11 @@ void SimulationThread::run()
 											 PORTD |= (1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*bdr#");
+											 emit answer("*bdr#");
 										 }
 										 else
 										 // TURNLEFT = "bot turn left"
-										 if (strcmp(stringbuffer, "*btl#") == 0)
+										 if (commandString == "*btl#")
 										 {
 											 // MOTOR 1 CLOCKWISE = forward
 											 // delete Motor1 A bit
@@ -884,11 +884,11 @@ void SimulationThread::run()
 											 PORTD &= ~(1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*btl#");
+											 emit answer("*btl#");
 										 }
 										 else
 										 // TURNRIGHT = "bot turn right"
-										 if (strcmp(stringbuffer, "*btr#") == 0)
+										 if (commandString == "*btr#")
 										 {
 											 // MOTOR 1 COUNTERCLOCKWISE = backward
 											 // set Motor1 A bit
@@ -915,11 +915,11 @@ void SimulationThread::run()
 											 PORTD |= (1<<PIN7);
 
 											 // answer with "ok"
-											 put_string("*btr#");
+											 emit answer("*btr#");
 										 }
 										 else
 										 // SET SERVO 1
-										 if (strncmp(stringbuffer, "*sv1", 4) == 0)
+										 if (commandString.startsWith("*sv1", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -947,11 +947,11 @@ void SimulationThread::run()
 												 setServoPosition(1, servoPosition);
 											 }
 											 // answer with "ok"
-											 put_string("*sv1#");
+											 emit answer("*sv1#");
 										 }
 										 else
 										 // SET SERVO 2
-										 if (strncmp(stringbuffer, "*sv2", 4) == 0)
+										 if (commandString.startsWith("*sv2", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -979,11 +979,11 @@ void SimulationThread::run()
 												 setServoPosition(2, servoPosition);
 											 }
 											 // answer with "ok"
-											 put_string("*sv2#");
+											 emit answer("*sv2#");
 										 }
 										 else
 										 // SET SERVO 3
-										 if (strncmp(stringbuffer, "*sv3", 4) == 0)
+										 if (commandString.startsWith("*sv3", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -1011,11 +1011,11 @@ void SimulationThread::run()
 												 setServoPosition(3, servoPosition);
 											 }
 											 // answer with "ok"
-											 put_string("*sv3#");
+											 emit answer("*sv3#");
 										 }
 										 else
 										 // SET SERVO 4
-										 if (strncmp(stringbuffer, "*sv4", 4) == 0)
+										 if (commandString.startsWith("*sv4", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -1043,11 +1043,11 @@ void SimulationThread::run()
 												 setServoPosition(4, servoPosition);
 											 }
 											 // answer with "ok"
-											 put_string("*sv4#");
+											 emit answer("*sv4#");
 										 }
 										 else
 										 // SET SERVO 5
-										 if (strncmp(stringbuffer, "*sv5", 4) == 0)
+										 if (commandString.startsWith("*sv5", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -1075,11 +1075,11 @@ void SimulationThread::run()
 												 setServoPosition(5, servoPosition);
 											 }
 											 // answer with "ok"
-											 put_string("*sv5#");
+											 emit answer("*sv5#");
 										 }
 										 else
 										 // SET SERVO 6
-										 if (strncmp(stringbuffer, "*sv6", 4) == 0)
+										 if (commandString.startsWith("*sv6", Qt::CaseInsensitive))
 										 {
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
@@ -1107,7 +1107,7 @@ void SimulationThread::run()
 												 setServoPosition(6, servoPosition);
 											 }
 											 // answer with "ok"
-											 put_string("*sv6#");
+											 emit answer("*sv6#");
 										 }
 
 
