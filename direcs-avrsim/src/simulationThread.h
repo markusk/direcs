@@ -86,6 +86,12 @@ class SimulationThread : public QThread
 		void message(QString text, bool CR=true, bool sayIt=false);
 
 		/**
+		Emits a info or error message to a slot.
+		This slot can be used to display a text on a splash screen, log file, to print it to a console...
+		*/
+		void answer(QString text, bool CR=true, bool sayIt=false);
+
+		/**
 		Simulated Atmel method
 		*/
 		void greenLED(bool state);
