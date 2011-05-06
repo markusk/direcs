@@ -52,6 +52,14 @@ class Gui : public QMainWindow
 		void appendLog(QString text, bool CR=true, bool sayIt=false);
 
 		/**
+		Appends text to the answer log in the main window.
+		@param text is the text to be displayed.
+		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
+		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
+		 */
+		void appendAnswerLog(QString text, bool CR=true, bool sayIt=false);
+
+		/**
 		Turns the red LED on or off (coloured or gray pixmap).
 		@param state can be ON or OFF.
 		*/

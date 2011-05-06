@@ -83,6 +83,22 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 }
 
 
+
+void Gui::appendAnswerLog(QString text, bool CR, bool sayIt)
+{
+	// insert the text in the GUI
+	ui.textEditAnswerLog->insertHtml(text);
+
+	if (CR == TRUE) // default!
+		ui.textEditAnswerLog->insertHtml("<br>");
+
+	// Ensures that the cursor is visible by scrolling the text edit if necessary.
+	ui.textEditAnswerLog->ensureCursorVisible();
+
+	Q_UNUSED(sayIt);
+}
+
+
 void Gui::on_actionLog_activated()
 {
 	if (ui.dockLog->isVisible())
