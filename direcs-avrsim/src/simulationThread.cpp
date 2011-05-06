@@ -1217,3 +1217,37 @@ void SimulationThread::setRobotState(bool state)
 	// store the state within this class
 	robotState = state;
 }
+
+
+void SimulationThread::sendUInt(uint16_t value)
+{
+	QString stringbuffer;
+
+
+	// start the answer string to send with a '*'
+	stringbuffer[0] = starter;
+
+	// convert int to ascii (to Basis 10)
+	// (but don't overwrite the first char which is the 'starter' *.)
+	QString num = QString().setNum(value, 10);
+	stringbuffer.append(num);
+
+	// add m string terminator '#' at the end of the buffer
+	stringbuffer[stringbuffer.length()] = terminator;
+
+	// String mit \0 terminieren
+	// stringbuffer[length+1] = 0;
+
+	// send answer
+	emit answer(stringbuffer);
+}
+
+
+uint16_t SimulationThread::readADC(unsigned char channel)
+{
+	if (channel==SENSOR7) // 12V sensor
+		return 684;
+
+	if (channel==SENSOR8) // 24V sensor
+		return 867;
+}

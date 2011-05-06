@@ -109,6 +109,16 @@ class SimulationThread : public QThread
 
 
 	private:
+		/**
+		Simulated Atmel method
+		*/
+		void sendUInt(uint16_t value);
+
+		/**
+		Simulated Atmel method
+		*/
+		uint16_t readADC(unsigned char channel);
+
 
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
