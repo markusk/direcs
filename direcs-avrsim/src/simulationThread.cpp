@@ -96,7 +96,10 @@ void SimulationThread::run()
 							commandCompleted = false;
 
 							// start QString
-							commandString[0] = character;
+							commandString.clear();
+
+							// complete command string
+							commandString.append((char *) &character);
 
 							charCounter++;
 
