@@ -237,56 +237,57 @@ void SimulationThread::run()
 								}
 
 								/*
-
-										 else
-										 // READ_SENSOR_1
-										 if (commandString == "*s1#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR1) );
-										 }
-										 else
-										 // READ_SENSOR_2
-										 if (commandString == "*s2#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR2) );
-										 }
-										 else
-										 // READ_SENSOR_3
-										 if (commandString == "*s3#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR3) );
-										 }
-										 else
-										 // READ_SENSOR_4
-										 if (commandString == "*s4#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR4) );
-										 }
-										 else
-										 // READ_SENSOR_5
-										 if (commandString == "*s5#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR5) );
-										 }
-										 else
-										 // READ_SENSOR_6
-										 if (commandString == "*s6#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR6) );
-										 }
-										 else
-										 // READ_SENSOR_7 (24 V supply)
-										 if (commandString == "*s7#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR7) );
-										 }
+								else
+								// READ_SENSOR_1
+								if (commandString == "*s1#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR1) );
+								}
+								else
+								// READ_SENSOR_2
+								if (commandString == "*s2#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR2) );
+								}
+								else
+								// READ_SENSOR_3
+								if (commandString == "*s3#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR3) );
+								}
+								else
+								// READ_SENSOR_4
+								if (commandString == "*s4#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR4) );
+								}
+								else
+								// READ_SENSOR_5
+								if (commandString == "*s5#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR5) );
+								}
+								else
+								// READ_SENSOR_6
+								if (commandString == "*s6#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR6) );
+								}
+								*/
+								else
+								// READ_SENSOR_7 (24 V supply)
+								if (commandString == "*s7#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( readADC(SENSOR7) );
+								}
+								/*
 										 else
 										 // READ_SENSOR_8 (12 V supply)
 										 if (commandString == "*s8#")
