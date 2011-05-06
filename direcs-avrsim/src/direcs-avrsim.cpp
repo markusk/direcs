@@ -133,6 +133,7 @@ void DirecsAvrsim::init()
 	connect(interface1,       SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
 	connect(this,             SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
 	connect(simulationThread, SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
+	connect(simulationThread, SIGNAL( answer(QString, bool, bool) ),  gui, SLOT( appendAnswerLog(QString, bool, bool) ));
 
 	// these are the simulated Atmel methods
 	connect(simulationThread, SIGNAL(greenLED(bool)), gui, SLOT(setLEDGreen(bool)));

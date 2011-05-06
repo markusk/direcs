@@ -184,7 +184,7 @@ void SimulationThread::run()
 									mutex->unlock();
 
 									// show string in GUI
-									emit message("*ok#");
+									emit answer("*ok#");
 
 // e n a b l e  watchdog!
 /// @todo			watchdog(ENABLE);
@@ -400,7 +400,7 @@ void SimulationThread::run()
 										 {
 											 relais(ON);
 //											 yellowLED(ON);
-											 emit message("*f0on#");
+											 emit answer("*f0on#");
 										 }
 										 else
 										 // FLASHLIGHT OFF
@@ -408,7 +408,7 @@ void SimulationThread::run()
 										 {
 											 relais(OFF);
 //											 yellowLED(OFF);
-											 emit message("*f0of#");
+											 emit answer("*f0of#");
 										 }
 /*
 										 else
