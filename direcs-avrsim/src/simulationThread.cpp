@@ -295,118 +295,78 @@ void SimulationThread::run()
 									sendUInt( readADC(SENSOR8) );
 								}
 								/*
-										 else
-										 // READ_SENSOR_8 (12 V supply)
-										 if (commandString == "*s8#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( readADC(SENSOR8) );
-										 }
-										 else
-										 // READ_SENSOR_16
-										 // ultra sonic sensor !!
-										 if (commandString == "*s16#")
-										 {
-											 // read ADC and send answer over serial port
-											 sendUInt( ultraschall_messung() );
-										 }
-										 else
-										 // READ 3D COMPASS CONNECTION
-										 if (commandString == "*cc#")
-										 {
-											 // check if micromag is connected to Atmel-Board (PB6 = high)
-											 if ( bit_is_set(PINB,PIN6) )
-											 {
-												 emit answer("*ok#");
-											 }
-											 else
-											 {
-												 // not connected.
-												 emit answer("*er#");
-											 }
-										 }
-										 else
-										 // READ_AXIS_X
-										 if (commandString == "*cx#")
-										 {
-											 // check if micromag is connected to Atmel-Board (PB6 = high)
-											 if ( bit_is_set(PINB,PIN6) )
-											 {
-												 // read axis from the micromag3 sensor and send answer over serial port
-												 sendUInt( readMicromag(READ_AXIS_X) );
-											 }
-											 else
-											 {
-												 // not connected.
-												 sendUInt(0);
-											 }
-										 }
-										 else
-										 // READ_AXIS_Y
-										 if (commandString == "*cy#")
-										 {
-											 // check if micromag is connected to Atmel-Board (PB6 = high)
-											 if ( bit_is_set(PINB,PIN6) )
-											 {
-												 // read axis from the micromag3 sensor and send answer over serial port
-												 sendUInt( readMicromag(READ_AXIS_Y) );
-											 }
-											 else
-											 {
-												 // not connected.
-												 sendUInt(0);
-											 }
-										 }
-										 else
-										 // READ_AXIS_Z
-										 if (commandString == "*cz#")
-										 {
-											 // check if micromag is connected to Atmel-Board (PB6 = high)
-											 if ( bit_is_set(PINB,PIN6) )
-											 {
-												 // read axis from the micromag3 sensor and send answer over serial port
-												 sendUInt( readMicromag(READ_AXIS_Z) );
-											 }
-											 else
-											 {
-												 // not connected.
-												 sendUInt(0);
-											 }
-										 }
-										 else
-										 // READ_MOTOR_DISTANCE1
-										 if (commandString == "*dd1#")
-										 {
-											 // send driven distance of motor 1 encoder over serial port
-											 sendUInt( rightDistanceCounter );
-										 }
-										 else
-										 // READ_MOTOR_DISTANCE2
-										 if (commandString == "*dd2#")
-										 {
-											 // send driven distance of motor 2 encoder over serial port
-											 sendUInt( leftDistanceCounter );
-										 }
-										 else
-										 // RESET_MOTOR_DISTANCE1
-										 if (commandString == "*id1#")
-										 {
-											 // init driven distance of motor 1 (encoder)
-											 rightDistanceCounter = 0;
-											 rightWheelCounter = 0;
-											 // answer with "ok"
-											 emit answer("*ok#");
-										 }
-										 else
-										 // RESET_MOTOR_DISTANCE2
-										 if (commandString == "*id2#")
-										 {
-											 // init driven distance of motor 2 (encoder)
-											 leftDistanceCounter = 0;
-											 leftWheelCounter = 0;
-											 // answer with "ok"
-											 emit answer("*ok#");
-										 }
+								else
+								// READ_SENSOR_16
+								// ultra sonic sensor !!
+								if (commandString == "*s16#")
+								{
+									// read ADC and send answer over serial port
+									sendUInt( ultraschall_messung() );
+								}
+								else
+								// READ 3D COMPASS CONNECTION
+								if (commandString == "*cc#")
+								{
+									// check if micromag is connected to Atmel-Board (PB6 = high)
+									if ( bit_is_set(PINB,PIN6) )
+									{
+										emit answer("*ok#");
+									}
+									else
+									{
+										// not connected.
+										emit answer("*er#");
+									}
+								}
+								else
+								// READ_AXIS_X
+								if (commandString == "*cx#")
+								{
+									// check if micromag is connected to Atmel-Board (PB6 = high)
+									if ( bit_is_set(PINB,PIN6) )
+									{
+										// read axis from the micromag3 sensor and send answer over serial port
+										sendUInt( readMicromag(READ_AXIS_X) );
+									}
+									else
+									{
+										// not connected.
+										sendUInt(0);
+									}
+								}
+								else
+								// READ_AXIS_Y
+								if (commandString == "*cy#")
+								{
+									// check if micromag is connected to Atmel-Board (PB6 = high)
+									if ( bit_is_set(PINB,PIN6) )
+									{
+										// read axis from the micromag3 sensor and send answer over serial port
+										sendUInt( readMicromag(READ_AXIS_Y) );
+									}
+									else
+									{
+										// not connected.
+										sendUInt(0);
+									}
+								}
+								else
+								// READ_AXIS_Z
+								if (commandString == "*cz#")
+								{
+									// check if micromag is connected to Atmel-Board (PB6 = high)
+									if ( bit_is_set(PINB,PIN6) )
+									{
+										// read axis from the micromag3 sensor and send answer over serial port
+										sendUInt( readMicromag(READ_AXIS_Z) );
+									}
+									else
+									{
+										// not connected.
+										sendUInt(0);
+									}
+								}
+								*/
 								else
 								// READ_MOTOR_SENSOR1
 								if (commandString == "*ms1#")
@@ -421,514 +381,549 @@ void SimulationThread::run()
 									// read ADC and send answer over serial port
 									sendUInt( readADC(SENSORMOTOR2) );
 								}
+								/*
+								else
+								// READ_MOTOR_DISTANCE1
+								if (commandString == "*dd1#")
+								{
+									// send driven distance of motor 1 encoder over serial port
+									sendUInt( rightDistanceCounter );
+								}
+								else
+								// READ_MOTOR_DISTANCE2
+								if (commandString == "*dd2#")
+								{
+									// send driven distance of motor 2 encoder over serial port
+									sendUInt( leftDistanceCounter );
+								}
+								else
+								// RESET_MOTOR_DISTANCE1
+								if (commandString == "*id1#")
+								{
+									// init driven distance of motor 1 (encoder)
+									rightDistanceCounter = 0;
+									rightWheelCounter = 0;
+									// answer with "ok"
+									emit answer("*ok#");
+								}
+								else
+								// RESET_MOTOR_DISTANCE2
+								if (commandString == "*id2#")
+								{
+									// init driven distance of motor 2 (encoder)
+									leftDistanceCounter = 0;
+									leftWheelCounter = 0;
+									// answer with "ok"
+									emit answer("*ok#");
+								}
 */
-										 else
-										 // FLASHLIGHT ON
-										 if (commandString == "*f0on#")
-										 {
-											 relais(ON);
-//											 yellowLED(ON);
-											 emit answer("*f0on#");
-										 }
-										 else
-										 // FLASHLIGHT OFF
-											 if (commandString == "*f0of#")
-										 {
-											 relais(OFF);
-//											 yellowLED(OFF);
-											 emit answer("*f0of#");
-										 }
+								else
+								// FLASHLIGHT ON
+								if (commandString == "*f0on#")
+								{
+									relais(ON);
+//									yellowLED(ON);
+									emit answer("*f0on#");
+								}
+								else
+								// FLASHLIGHT OFF
+								if (commandString == "*f0of#")
+								{
+									relais(OFF);
+//									yellowLED(OFF);
+									emit answer("*f0of#");
+								}
 /*
-										 else
-										 // MOTOR1_OFF
-										 if (commandString == "*mp1of#")
-										 {
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // delete Motor1 B bit
-											 PORTL &= ~(1<<PIN1);
-											 // answer with "ok"
-											 emit answer("*mp1of#");
-										 }
-										 else
-										 // MOTOR 1 CLOCKWISE = forward
-										 if (commandString == "*md1cw#")
-										 {
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // set Motor1 B bit
-											 PORTL |= (1<<PIN1);
+								else
+								// MOTOR1_OFF
+								if (commandString == "*mp1of#")
+								{
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// delete Motor1 B bit
+									PORTL &= ~(1<<PIN1);
+									// answer with "ok"
+									emit answer("*mp1of#");
+								}
+								else
+								// MOTOR 1 CLOCKWISE = forward
+								if (commandString == "*md1cw#")
+								{
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// set Motor1 B bit
+									PORTL |= (1<<PIN1);
 
-											 // answer with "ok"
-											 emit answer("*md1cw#");
-										 }
-										 else
-										 // MOTOR 1 COUNTERCLOCKWISE = backward
-										 if (commandString == "*md1cc#")
-										 {
-											 // set Motor1 A bit
-											 PORTL |= (1<<PIN0);
-											 // delete Motor1 B bit
-											 PORTL &= ~(1<<PIN1);
+									// answer with "ok"
+									emit answer("*md1cw#");
+								}
+								else
+								// MOTOR 1 COUNTERCLOCKWISE = backward
+								if (commandString == "*md1cc#")
+								{
+									// set Motor1 A bit
+									PORTL |= (1<<PIN0);
+									// delete Motor1 B bit
+									PORTL &= ~(1<<PIN1);
 
-											 // answer with "ok"
-											 emit answer("*md1cc#");
-										 }
-										 else
-										 // MOTOR1_SPEED_SET
-										 if (commandString.startsWith("*mv1", Qt::CaseInsensitive))
-										 {
-											 // change first chars for upcoming string conversion
-											 stringbuffer[0] = '0';
-											 stringbuffer[1] = '0';
-											 stringbuffer[2] = '0';
-											 stringbuffer[3] = '0';
-											 // get value from string and set speed
-											 setPWMwidth(1, atoi(stringbuffer));
-											 // answer with "ok"
-											 emit answer("*mv1#");
-										 }
-										 else
-										 // MOTOR2_OFF
-										 if (commandString == "*mp2of#")
-										 {
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // delete Motor2 B bit
-											 PORTL &= ~(1<<PIN3);
-											 // answer with "ok"
-											 emit answer("*mp2of#");
-										 }
-										 else
-										 // MOTOR 2 CLOCKWISE = forward
-										 if (commandString == "*md2cw#")
-										 {
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // set Motor2 B bit
-											 PORTL |= (1<<PIN3);
+									// answer with "ok"
+									emit answer("*md1cc#");
+								}
+								else
+								// MOTOR1_SPEED_SET
+								if (commandString.startsWith("*mv1", Qt::CaseInsensitive))
+								{
+									// change first chars for upcoming string conversion
+									stringbuffer[0] = '0';
+									stringbuffer[1] = '0';
+									stringbuffer[2] = '0';
+									stringbuffer[3] = '0';
+									// get value from string and set speed
+									setPWMwidth(1, atoi(stringbuffer));
+									// answer with "ok"
+									emit answer("*mv1#");
+								}
+								else
+								// MOTOR2_OFF
+								if (commandString == "*mp2of#")
+								{
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// delete Motor2 B bit
+									PORTL &= ~(1<<PIN3);
+									// answer with "ok"
+									emit answer("*mp2of#");
+								}
+								else
+								// MOTOR 2 CLOCKWISE = forward
+								if (commandString == "*md2cw#")
+								{
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// set Motor2 B bit
+									PORTL |= (1<<PIN3);
 
-											 // answer with "ok"
-											 emit answer("*md2cw#");
-										 }
-										 else
-										 // MOTOR 2 COUNTERCLOCKWISE = backward
-										 if (commandString == "*md2cc#")
-										 {
-											 // set Motor2 A bit
-											 PORTL |= (1<<PIN2);
-											 // delete Motor2 B bit
-											 PORTL &= ~(1<<PIN3);
+									// answer with "ok"
+									emit answer("*md2cw#");
+								}
+								else
+								// MOTOR 2 COUNTERCLOCKWISE = backward
+								if (commandString == "*md2cc#")
+								{
+									// set Motor2 A bit
+									PORTL |= (1<<PIN2);
+									// delete Motor2 B bit
+									PORTL &= ~(1<<PIN3);
 
-											 // answer with "ok"
-											 emit answer("*md2cc#");
-										 }
-										 else
-										 // MOTOR2_SPEED_SET
-										 if (commandString.startsWith("*mv2", Qt::CaseInsensitive))
-										 {
-											 // change first chars for upcoming string conversion
-											 stringbuffer[0] = '0';
-											 stringbuffer[1] = '0';
-											 stringbuffer[2] = '0';
-											 stringbuffer[3] = '0';
-											 // get value from string and set speed
-											 setPWMwidth(2, atoi(stringbuffer));
-											 // answer with "ok"
-											 emit answer("*mv2#");
-										 }
-										 else
-										 // MOTOR3_OFF
-										 if (commandString == "*mp3of#")
-										 {
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // delete Motor3 B bit
-											 PORTL &= ~(1<<PIN7);
-											 // answer with "ok"
-											 emit answer("*mp3of#");
-										 }
-										 else
-										 // MOTOR 3 CLOCKWISE = forward
-										 if (commandString == "*md3cw#")
-										 {
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // set Motor3 B bit
-											 PORTL |= (1<<PIN7);
+									// answer with "ok"
+									emit answer("*md2cc#");
+								}
+								else
+								// MOTOR2_SPEED_SET
+								if (commandString.startsWith("*mv2", Qt::CaseInsensitive))
+								{
+									// change first chars for upcoming string conversion
+									stringbuffer[0] = '0';
+									stringbuffer[1] = '0';
+									stringbuffer[2] = '0';
+									stringbuffer[3] = '0';
+									// get value from string and set speed
+									setPWMwidth(2, atoi(stringbuffer));
+									// answer with "ok"
+									emit answer("*mv2#");
+								}
+								else
+								// MOTOR3_OFF
+								if (commandString == "*mp3of#")
+								{
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// delete Motor3 B bit
+									PORTL &= ~(1<<PIN7);
+									// answer with "ok"
+									emit answer("*mp3of#");
+								}
+								else
+								// MOTOR 3 CLOCKWISE = forward
+								if (commandString == "*md3cw#")
+								{
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// set Motor3 B bit
+									PORTL |= (1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*md3cw#");
-										 }
-										 else
-										 // MOTOR 3 COUNTERCLOCKWISE = backward
-										 if (commandString == "*md3cc#")
-										 {
-											 // set Motor3 A bit
-											 PORTL |= (1<<PIN6);
-											 // delete Motor3 B bit
-											 PORTL &= ~(1<<PIN7);
+									// answer with "ok"
+									emit answer("*md3cw#");
+								}
+								else
+								// MOTOR 3 COUNTERCLOCKWISE = backward
+								if (commandString == "*md3cc#")
+								{
+									// set Motor3 A bit
+									PORTL |= (1<<PIN6);
+									// delete Motor3 B bit
+									PORTL &= ~(1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*md3cc#");
-										 }
-										 else
-										 // MOTOR3_SPEED_SET
-										 if (commandString.startsWith("*mv3", Qt::CaseInsensitive))
-										 {
-											 // change first chars for upcoming string conversion
-											 stringbuffer[0] = '0';
-											 stringbuffer[1] = '0';
-											 stringbuffer[2] = '0';
-											 stringbuffer[3] = '0';
-											 // get value from string and set speed
-											 setPWMwidth(3, atoi(stringbuffer));
-											 // answer with "ok"
-											 emit answer("*mv3#");
-										 }
-										 else
-										 // MOTOR4_OFF
-										 if (commandString == "*mp4of#")
-										 {
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // delete Motor4 B bit
-											 PORTD &= ~(1<<PIN7);
-											 // answer with "ok"
-											 emit answer("*mp4of#");
-										 }
-										 else
-										 // MOTOR 4 CLOCKWISE = forward
-										 if (commandString == "*md4cw#")
-										 {
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // set Motor4 B bit
-											 PORTD |= (1<<PIN7);
+									// answer with "ok"
+									emit answer("*md3cc#");
+								}
+								else
+								// MOTOR3_SPEED_SET
+								if (commandString.startsWith("*mv3", Qt::CaseInsensitive))
+								{
+									// change first chars for upcoming string conversion
+									stringbuffer[0] = '0';
+									stringbuffer[1] = '0';
+									stringbuffer[2] = '0';
+									stringbuffer[3] = '0';
+									// get value from string and set speed
+									setPWMwidth(3, atoi(stringbuffer));
+									// answer with "ok"
+									emit answer("*mv3#");
+								}
+								else
+								// MOTOR4_OFF
+								if (commandString == "*mp4of#")
+								{
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// delete Motor4 B bit
+									PORTD &= ~(1<<PIN7);
+									// answer with "ok"
+									emit answer("*mp4of#");
+								}
+								else
+								// MOTOR 4 CLOCKWISE = forward
+								if (commandString == "*md4cw#")
+								{
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// set Motor4 B bit
+									PORTD |= (1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*md4cw#");
-										 }
-										 else
-										 // MOTOR 4 COUNTERCLOCKWISE = backward
-										 if (commandString == "*md4cc#")
-										 {
-											 // set Motor4 A bit
-											 PORTD |= (1<<PIN6);
-											 // delete Motor4 B bit
-											 PORTD &= ~(1<<PIN7);
+									// answer with "ok"
+									emit answer("*md4cw#");
+								}
+								else
+								// MOTOR 4 COUNTERCLOCKWISE = backward
+								if (commandString == "*md4cc#")
+								{
+									// set Motor4 A bit
+									PORTD |= (1<<PIN6);
+									// delete Motor4 B bit
+									PORTD &= ~(1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*md4cc#");
-										 }
-										 else
-										 // MOTOR4_SPEED_SET
-										 if (commandString.startsWith("*mv4", Qt::CaseInsensitive))
-										 {
-											 // change first chars for upcoming string conversion
-											 stringbuffer[0] = '0';
-											 stringbuffer[1] = '0';
-											 stringbuffer[2] = '0';
-											 stringbuffer[3] = '0';
-											 // get value from string and set speed
-											 setPWMwidth(4, atoi(stringbuffer));
-											 // answer with "ok"
-											 emit answer("*mv4#");
-										 }
-										 else
-										 // SPEED_SET_ALLMOTORS
-										 if (commandString.startsWith("*mv0", Qt::CaseInsensitive))
-										 {
-											 // change first chars for upcoming string conversion
-											 stringbuffer[0] = '0';
-											 stringbuffer[1] = '0';
-											 stringbuffer[2] = '0';
-											 stringbuffer[3] = '0';
-											 // get value from string and set speed
-											 setPWMwidth(1, atoi(stringbuffer));
-											 setPWMwidth(2, atoi(stringbuffer));
-											 setPWMwidth(3, atoi(stringbuffer));
-											 setPWMwidth(4, atoi(stringbuffer));
-											 // answer with "ok"
-											 emit answer("*mv0#");
-										 }
-										 else
-										 // BOTSTOP
-										 if (commandString == "*bst#")
-										 {
-											 // MOTOR 1 OFF
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // delete Motor1 B bit
-											 PORTL &= ~(1<<PIN1);
-											 // MOTOR 2 OFF
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // delete Motor2 B bit
-											 PORTL &= ~(1<<PIN3);
-											 // MOTOR 3 OFF
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // delete Motor3 B bit
-											 PORTL &= ~(1<<PIN7);
-											 // MOTOR 4 OFF
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // delete Motor4 B bit
-											 PORTD &= ~(1<<PIN7);
+									// answer with "ok"
+									emit answer("*md4cc#");
+								}
+								else
+								// MOTOR4_SPEED_SET
+								if (commandString.startsWith("*mv4", Qt::CaseInsensitive))
+								{
+									// change first chars for upcoming string conversion
+									stringbuffer[0] = '0';
+									stringbuffer[1] = '0';
+									stringbuffer[2] = '0';
+									stringbuffer[3] = '0';
+									// get value from string and set speed
+									setPWMwidth(4, atoi(stringbuffer));
+									// answer with "ok"
+									emit answer("*mv4#");
+								}
+								else
+								// SPEED_SET_ALLMOTORS
+								if (commandString.startsWith("*mv0", Qt::CaseInsensitive))
+								{
+									// change first chars for upcoming string conversion
+									stringbuffer[0] = '0';
+									stringbuffer[1] = '0';
+									stringbuffer[2] = '0';
+									stringbuffer[3] = '0';
+									// get value from string and set speed
+									setPWMwidth(1, atoi(stringbuffer));
+									setPWMwidth(2, atoi(stringbuffer));
+									setPWMwidth(3, atoi(stringbuffer));
+									setPWMwidth(4, atoi(stringbuffer));
+									// answer with "ok"
+									emit answer("*mv0#");
+								}
+								else
+								// BOTSTOP
+								if (commandString == "*bst#")
+								{
+									// MOTOR 1 OFF
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// delete Motor1 B bit
+									PORTL &= ~(1<<PIN1);
+									// MOTOR 2 OFF
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// delete Motor2 B bit
+									PORTL &= ~(1<<PIN3);
+									// MOTOR 3 OFF
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// delete Motor3 B bit
+									PORTL &= ~(1<<PIN7);
+									// MOTOR 4 OFF
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// delete Motor4 B bit
+									PORTD &= ~(1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*bst#");
-										 }
-										 else
-										 // BOTWAIT
-										 if (commandString == "*bwa#")
-										 {
-											 // MOTOR 1 OFF
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // delete Motor1 B bit
-											 PORTL &= ~(1<<PIN1);
-											 // MOTOR 2 OFF
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // delete Motor2 B bit
-											 PORTL &= ~(1<<PIN3);
-											 // MOTOR 3 OFF
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // delete Motor3 B bit
-											 PORTL &= ~(1<<PIN7);
-											 // MOTOR 4 OFF
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // delete Motor4 B bit
-											 PORTD &= ~(1<<PIN7);
+									// answer with "ok"
+									emit answer("*bst#");
+								}
+								else
+								// BOTWAIT
+								if (commandString == "*bwa#")
+								{
+									// MOTOR 1 OFF
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// delete Motor1 B bit
+									PORTL &= ~(1<<PIN1);
+									// MOTOR 2 OFF
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// delete Motor2 B bit
+									PORTL &= ~(1<<PIN3);
+									// MOTOR 3 OFF
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// delete Motor3 B bit
+									PORTL &= ~(1<<PIN7);
+									// MOTOR 4 OFF
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// delete Motor4 B bit
+									PORTD &= ~(1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*bwa#");
-										 }
-										 else
-										 // BOTSTART = "bot go"
-										 if (commandString == "*bgo#")
-										 {
-											 // MOTOR 1 CLOCKWISE = forward
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // set Motor1 B bit
-											 PORTL |= (1<<PIN1);
+									// answer with "ok"
+									emit answer("*bwa#");
+								}
+								else
+								// BOTSTART = "bot go"
+								if (commandString == "*bgo#")
+								{
+									// MOTOR 1 CLOCKWISE = forward
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// set Motor1 B bit
+									PORTL |= (1<<PIN1);
 
-											 // MOTOR 2 CLOCKWISE = forward
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // set Motor2 B bit
-											 PORTL |= (1<<PIN3);
+									// MOTOR 2 CLOCKWISE = forward
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// set Motor2 B bit
+									PORTL |= (1<<PIN3);
 
-											 // MOTOR 3 CLOCKWISE = forward
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // set Motor3 B bit
-											 PORTL |= (1<<PIN7);
+									// MOTOR 3 CLOCKWISE = forward
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// set Motor3 B bit
+									PORTL |= (1<<PIN7);
 
-											 // MOTOR 4 CLOCKWISE = forward
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // set Motor4 B bit
-											 PORTD |= (1<<PIN7);
+									// MOTOR 4 CLOCKWISE = forward
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// set Motor4 B bit
+									PORTD |= (1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*bgo#");
-										 }
-										 else
-										 // BOTFORWARD = "bot drive forward"
-										 if (commandString == "*bdf#")
-										 {
-											 // MOTOR 1 CLOCKWISE = forward
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // set Motor1 B bit
-											 PORTL |= (1<<PIN1);
+									// answer with "ok"
+									emit answer("*bgo#");
+								}
+								else
+								// BOTFORWARD = "bot drive forward"
+								if (commandString == "*bdf#")
+								{
+									// MOTOR 1 CLOCKWISE = forward
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// set Motor1 B bit
+									PORTL |= (1<<PIN1);
 
-											 // MOTOR 2 CLOCKWISE = forward
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // set Motor2 B bit
-											 PORTL |= (1<<PIN3);
+									// MOTOR 2 CLOCKWISE = forward
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// set Motor2 B bit
+									PORTL |= (1<<PIN3);
 
-											 // MOTOR 3 CLOCKWISE = forward
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // set Motor3 B bit
-											 PORTL |= (1<<PIN7);
+									// MOTOR 3 CLOCKWISE = forward
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// set Motor3 B bit
+									PORTL |= (1<<PIN7);
 
-											 // MOTOR 4 CLOCKWISE = forward
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // set Motor4 B bit
-											 PORTD |= (1<<PIN7);
+									// MOTOR 4 CLOCKWISE = forward
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// set Motor4 B bit
+									PORTD |= (1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*bdf#");
-										 }
-										 else
-										 // BOTBACKWARD = "bot drive backward"
-										 if (commandString == "*bdb#")
-										 {
-											 // MOTOR 1 COUNTERCLOCKWISE = backward
-											 // set Motor1 A bit
-											 PORTL |= (1<<PIN0);
-											 // delete Motor1 B bit
-											 PORTL &= ~(1<<PIN1);
+									// answer with "ok"
+									emit answer("*bdf#");
+								}
+								else
+								// BOTBACKWARD = "bot drive backward"
+								if (commandString == "*bdb#")
+								{
+									// MOTOR 1 COUNTERCLOCKWISE = backward
+									// set Motor1 A bit
+									PORTL |= (1<<PIN0);
+									// delete Motor1 B bit
+									PORTL &= ~(1<<PIN1);
 
-											 // MOTOR 2 COUNTERCLOCKWISE = backward
-											 // set Motor2 A bit
-											 PORTL |= (1<<PIN2);
-											 // delete Motor2 B bit
-											 PORTL &= ~(1<<PIN3);
+									// MOTOR 2 COUNTERCLOCKWISE = backward
+									// set Motor2 A bit
+									PORTL |= (1<<PIN2);
+									// delete Motor2 B bit
+									PORTL &= ~(1<<PIN3);
 
-											 // MOTOR 3 COUNTERCLOCKWISE = backward
-											 // set Motor3 A bit
-											 PORTL |= (1<<PIN6);
-											 // delete Motor3 B bit
-											 PORTL &= ~(1<<PIN7);
+									// MOTOR 3 COUNTERCLOCKWISE = backward
+									// set Motor3 A bit
+									PORTL |= (1<<PIN6);
+									// delete Motor3 B bit
+									PORTL &= ~(1<<PIN7);
 
-											 // MOTOR 4 COUNTERCLOCKWISE = backward
-											 // set Motor4 A bit
-											 PORTD |= (1<<PIN6);
-											 // delete Motor4 B bit
-											 PORTD &= ~(1<<PIN7);
+									// MOTOR 4 COUNTERCLOCKWISE = backward
+									// set Motor4 A bit
+									PORTD |= (1<<PIN6);
+									// delete Motor4 B bit
+									PORTD &= ~(1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*bdb#");
-										 }
-										 else
-										 // BOTLEFT = "bot drive left"
-										 if (commandString == "*bdl#")
-										 {
-											 // MOTOR 1 COUNTERCLOCKWISE = backward
-											 // set Motor1 A bit
-											 PORTL |= (1<<PIN0);
-											 // delete Motor1 B bit
-											 PORTL &= ~(1<<PIN1);
+									// answer with "ok"
+									emit answer("*bdb#");
+								}
+								else
+								// BOTLEFT = "bot drive left"
+								if (commandString == "*bdl#")
+								{
+									// MOTOR 1 COUNTERCLOCKWISE = backward
+									// set Motor1 A bit
+									PORTL |= (1<<PIN0);
+									// delete Motor1 B bit
+									PORTL &= ~(1<<PIN1);
 
-											 // MOTOR 2 CLOCKWISE = forward
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // set Motor2 B bit
-											 PORTL |= (1<<PIN3);
+									// MOTOR 2 CLOCKWISE = forward
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// set Motor2 B bit
+									PORTL |= (1<<PIN3);
 
-											 // MOTOR 3 CLOCKWISE = forward
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // set Motor3 B bit
-											 PORTL |= (1<<PIN7);
+									// MOTOR 3 CLOCKWISE = forward
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// set Motor3 B bit
+									PORTL |= (1<<PIN7);
 
-											 // MOTOR 4 COUNTERCLOCKWISE = backward
-											 // set Motor4 A bit
-											 PORTD |= (1<<PIN6);
-											 // delete Motor4 B bit
-											 PORTD &= ~(1<<PIN7);
+									// MOTOR 4 COUNTERCLOCKWISE = backward
+									// set Motor4 A bit
+									PORTD |= (1<<PIN6);
+									// delete Motor4 B bit
+									PORTD &= ~(1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*bdl#");
-										 }
-										 else
-										 // BOTRIGHT = "bot drive right"
-										 if (commandString == "*bdr#")
-										 {
-											 // MOTOR 1 CLOCKWISE = forward
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // set Motor1 B bit
-											 PORTL |= (1<<PIN1);
+									// answer with "ok"
+									emit answer("*bdl#");
+								}
+								else
+								// BOTRIGHT = "bot drive right"
+								if (commandString == "*bdr#")
+								{
+									// MOTOR 1 CLOCKWISE = forward
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// set Motor1 B bit
+									PORTL |= (1<<PIN1);
 
-											 // MOTOR 2 COUNTERCLOCKWISE = backward
-											 // set Motor2 A bit
-											 PORTL |= (1<<PIN2);
-											 // delete Motor2 B bit
-											 PORTL &= ~(1<<PIN3);
+									// MOTOR 2 COUNTERCLOCKWISE = backward
+									// set Motor2 A bit
+									PORTL |= (1<<PIN2);
+									// delete Motor2 B bit
+									PORTL &= ~(1<<PIN3);
 
-											 // MOTOR 3 COUNTERCLOCKWISE = backward
-											 // set Motor3 A bit
-											 PORTL |= (1<<PIN6);
-											 // delete Motor3 B bit
-											 PORTL &= ~(1<<PIN7);
+									// MOTOR 3 COUNTERCLOCKWISE = backward
+									// set Motor3 A bit
+									PORTL |= (1<<PIN6);
+									// delete Motor3 B bit
+									PORTL &= ~(1<<PIN7);
 
-											 // MOTOR 4 CLOCKWISE = forward
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // set Motor4 B bit
-											 PORTD |= (1<<PIN7);
+									// MOTOR 4 CLOCKWISE = forward
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// set Motor4 B bit
+									PORTD |= (1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*bdr#");
-										 }
-										 else
-										 // TURNLEFT = "bot turn left"
-										 if (commandString == "*btl#")
-										 {
-											 // MOTOR 1 CLOCKWISE = forward
-											 // delete Motor1 A bit
-											 PORTL &= ~(1<<PIN0);
-											 // set Motor1 B bit
-											 PORTL |= (1<<PIN1);
+									// answer with "ok"
+									emit answer("*bdr#");
+								}
+								else
+								// TURNLEFT = "bot turn left"
+								if (commandString == "*btl#")
+								{
+									// MOTOR 1 CLOCKWISE = forward
+									// delete Motor1 A bit
+									PORTL &= ~(1<<PIN0);
+									// set Motor1 B bit
+									PORTL |= (1<<PIN1);
 
-											 // MOTOR 2 COUNTERCLOCKWISE = backward
-											 // set Motor2 A bit
-											 PORTL |= (1<<PIN2);
-											 // delete Motor2 B bit
-											 PORTL &= ~(1<<PIN3);
+									// MOTOR 2 COUNTERCLOCKWISE = backward
+									// set Motor2 A bit
+									PORTL |= (1<<PIN2);
+									// delete Motor2 B bit
+									PORTL &= ~(1<<PIN3);
 
-											 // MOTOR 3 CLOCKWISE = forward
-											 // delete Motor3 A bit
-											 PORTL &= ~(1<<PIN6);
-											 // set Motor3 B bit
-											 PORTL |= (1<<PIN7);
+									// MOTOR 3 CLOCKWISE = forward
+									// delete Motor3 A bit
+									PORTL &= ~(1<<PIN6);
+									// set Motor3 B bit
+									PORTL |= (1<<PIN7);
 
-											 // MOTOR 4 COUNTERCLOCKWISE = backward
-											 // set Motor4 A bit
-											 PORTD |= (1<<PIN6);
-											 // delete Motor4 B bit
-											 PORTD &= ~(1<<PIN7);
+									// MOTOR 4 COUNTERCLOCKWISE = backward
+									// set Motor4 A bit
+									PORTD |= (1<<PIN6);
+									// delete Motor4 B bit
+									PORTD &= ~(1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*btl#");
-										 }
-										 else
-										 // TURNRIGHT = "bot turn right"
-										 if (commandString == "*btr#")
-										 {
-											 // MOTOR 1 COUNTERCLOCKWISE = backward
-											 // set Motor1 A bit
-											 PORTL |= (1<<PIN0);
-											 // delete Motor1 B bit
-											 PORTL &= ~(1<<PIN1);
+									// answer with "ok"
+									emit answer("*btl#");
+								}
+								else
+								// TURNRIGHT = "bot turn right"
+								if (commandString == "*btr#")
+								{
+									// MOTOR 1 COUNTERCLOCKWISE = backward
+									// set Motor1 A bit
+									PORTL |= (1<<PIN0);
+									// delete Motor1 B bit
+									PORTL &= ~(1<<PIN1);
 
-											 // MOTOR 2 CLOCKWISE = forward
-											 // delete Motor2 A bit
-											 PORTL &= ~(1<<PIN2);
-											 // set Motor2 B bit
-											 PORTL |= (1<<PIN3);
+									// MOTOR 2 CLOCKWISE = forward
+									// delete Motor2 A bit
+									PORTL &= ~(1<<PIN2);
+									// set Motor2 B bit
+									PORTL |= (1<<PIN3);
 
-											 // MOTOR 3 COUNTERCLOCKWISE = backward
-											 // set Motor3 A bit
-											 PORTL |= (1<<PIN6);
-											 // delete Motor3 B bit
-											 PORTL &= ~(1<<PIN7);
+									// MOTOR 3 COUNTERCLOCKWISE = backward
+									// set Motor3 A bit
+									PORTL |= (1<<PIN6);
+									// delete Motor3 B bit
+									PORTL &= ~(1<<PIN7);
 
-											 // MOTOR 4 CLOCKWISE = forward
-											 // delete Motor4 A bit
-											 PORTD &= ~(1<<PIN6);
-											 // set Motor4 B bit
-											 PORTD |= (1<<PIN7);
+									// MOTOR 4 CLOCKWISE = forward
+									// delete Motor4 A bit
+									PORTD &= ~(1<<PIN6);
+									// set Motor4 B bit
+									PORTD |= (1<<PIN7);
 
-											 // answer with "ok"
-											 emit answer("*btr#");
-										 }
-										 else
-										 // SET SERVO 1
-										 if (commandString.startsWith("*sv1", Qt::CaseInsensitive))
-										 {
+									// answer with "ok"
+									emit answer("*btr#");
+								}
+								else
+								// SET SERVO 1
+								if (commandString.startsWith("*sv1", Qt::CaseInsensitive))
+								{
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
 											 stringbuffer[1] = '0';
@@ -956,11 +951,11 @@ void SimulationThread::run()
 											 }
 											 // answer with "ok"
 											 emit answer("*sv1#");
-										 }
-										 else
-										 // SET SERVO 2
-										 if (commandString.startsWith("*sv2", Qt::CaseInsensitive))
-										 {
+								}
+								else
+								// SET SERVO 2
+								if (commandString.startsWith("*sv2", Qt::CaseInsensitive))
+								{
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
 											 stringbuffer[1] = '0';
@@ -1020,11 +1015,11 @@ void SimulationThread::run()
 											 }
 											 // answer with "ok"
 											 emit answer("*sv3#");
-										 }
-										 else
-										 // SET SERVO 4
-										 if (commandString.startsWith("*sv4", Qt::CaseInsensitive))
-										 {
+								}
+								else
+								// SET SERVO 4
+								if (commandString.startsWith("*sv4", Qt::CaseInsensitive))
+								{
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
 											 stringbuffer[1] = '0';
@@ -1052,11 +1047,11 @@ void SimulationThread::run()
 											 }
 											 // answer with "ok"
 											 emit answer("*sv4#");
-										 }
-										 else
-										 // SET SERVO 5
-										 if (commandString.startsWith("*sv5", Qt::CaseInsensitive))
-										 {
+								}
+								else
+								// SET SERVO 5
+								if (commandString.startsWith("*sv5", Qt::CaseInsensitive))
+								{
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
 											 stringbuffer[1] = '0';
@@ -1084,11 +1079,11 @@ void SimulationThread::run()
 											 }
 											 // answer with "ok"
 											 emit answer("*sv5#");
-										 }
-										 else
-										 // SET SERVO 6
-										 if (commandString.startsWith("*sv6", Qt::CaseInsensitive))
-										 {
+								}
+								else
+								// SET SERVO 6
+								if (commandString.startsWith("*sv6", Qt::CaseInsensitive))
+								{
 											 // change first chars for upcoming string conversion
 											 stringbuffer[0] = '0';
 											 stringbuffer[1] = '0';
@@ -1116,12 +1111,11 @@ void SimulationThread::run()
 											 }
 											 // answer with "ok"
 											 emit answer("*sv6#");
-										 }
+								}
 
-
-										//====================================================================
-										//====================================================================
-										//====================================================================
+								//====================================================================
+								//====================================================================
+								//====================================================================
 								*/
 
 
