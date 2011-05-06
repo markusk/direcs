@@ -54,6 +54,7 @@ void SimulationThread::run()
 	QString commandString;
 	bool stringStarted = false;
 	bool commandCompleted = false;
+	static bool redLEDtoggle = false;
 
 
 	//
@@ -87,6 +88,12 @@ void SimulationThread::run()
 				interface1->receiveChar(&character);
 				mutex->unlock();
 
+
+				// toggling the red LED on and off with every received serial commmand
+				redLEDtoggle = !redLEDtoggle;
+				emit redLED(redLEDtoggle);
+
+
 				if (commandCompleted == false)
 				{
 					// serial buffer overflow?
@@ -106,6 +113,8 @@ void SimulationThread::run()
 
 							charCounter++;
 
+							emit greenLED(ON);
+
 							// send text with no CR to GUI
 							emit message("*", false);
 
@@ -124,12 +133,14 @@ void SimulationThread::run()
 								// reset char counter
 								charCounter = 0;
 
+								emit greenLED(OFF);
+
 								// send text to GUI
 								emit message("#");
 
 
 								//-----------------------------------------------
-								emit message(QString("Atmel command string: \"%1\".").arg(receiveString));
+								emit message(QString("Atmel command string: %1.").arg(receiveString));
 								//-----------------------------------------------
 
 								// copy string for command check
