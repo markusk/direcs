@@ -152,11 +152,19 @@ bool InterfaceAvr::sendString(QString string)
 		}
 
 
-		// send terminator
+		// send terminator char
 		if (sendChar(terminator) == true)
 		{
-			// success
-			return true;
+/*
+			// send final string terminator  @sa Atmel code 'ISR(USART3_RX_vect)' in usart.c
+			if (sendChar( 0 ) == true)
+			{
+*/
+				// success
+				return true;
+/*
+			}
+*/
 		}
 	}
 

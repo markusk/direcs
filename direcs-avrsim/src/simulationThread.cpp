@@ -58,9 +58,7 @@ void SimulationThread::run()
 	static int charCounter = 0;
 	QString receiveString;
 	QString commandString;
-//	QChar qchar; // this is for conversion from unsigned char to QString
-	QByteArray qchar;
-	qchar.resize(1);
+	QChar qchar; // this is for conversion from unsigned char to QString
 	bool stringStarted = false;
 	bool commandCompleted = false;
 	static bool redLEDtoggle = false;
@@ -94,7 +92,10 @@ void SimulationThread::run()
 				}
 
 				// get char
-				interface1->receiveChar(&character);
+				if (interface1->receiveChar(&character) == false)
+				{
+					qDebug("ERROR: More than one char received, when only one was expected!");
+				}
 				mutex->unlock();
 
 
@@ -113,7 +114,6 @@ void SimulationThread::run()
 						//---------------------------------------------
 						if (character == starter)
 						{
-qDebug("starter");
 							stringStarted = true;
 							commandCompleted = false;
 
@@ -122,8 +122,8 @@ qDebug("starter");
 
 							// build command string
 							// convert from unsigned char to QChar and then to QString
-							qchar[0] = character;
-							receiveString.append( qchar );
+							qchar = character;
+							receiveString.append( QString(&qchar, 1) );
 
 							emit message("<br>", false, false, false);
 							// send char to GUI (with no CR, but timestamp)
@@ -140,11 +140,10 @@ qDebug("starter");
 							//---------------------------------------------
 							if (character == terminator)
 							{
-qDebug("terminator");
 								// build command string
 								// convert from unsigned char to QChar and then to QString
-qchar[0] = character;
-receiveString.append( qchar );
+								qchar = character;
+								receiveString.append( QString(&qchar, 1) );
 
 								// send char to GUI (with CR, but no timestamp)
 								emit message(QString("%1").arg( qchar ), true, false, false);
@@ -1147,7 +1146,6 @@ receiveString.append( qchar );
 							} // terminator?
 							else
 							{
-								qDebug("middle");
 								//---------------------------------------------
 								// we are in the middle of the command string
 								//---------------------------------------------
@@ -1157,8 +1155,8 @@ receiveString.append( qchar );
 
 								// build command string
 								// convert from unsigned char to QChar and then to QString
-								qchar[0] = character;
-								receiveString.append( qchar );
+								qchar = character;
+								receiveString.append( QString(&qchar, 1) );
 
 								// send char to GUI (with no CR)
 								emit message(QString("%1").arg( qchar ), false, false, false);
