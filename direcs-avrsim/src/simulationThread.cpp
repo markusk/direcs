@@ -1271,15 +1271,15 @@ void SimulationThread::sendToAtmel(QString string)
 {
 	// this should be always the case
 	if (string.startsWith(starter))
-		string.remove(1, 1);
+		string.remove(0, 1);
 
 	// this should be always the case
 	if (string.endsWith(terminator))
-		string.remove(string.length(), 1);
+		string.remove(string.length()-1, 1);
 
 	mutex->lock();
 
-	if (interface1->sendString("*ok#") == false)
+	if (interface1->sendString(string) == false)
 		qDebug("ERROR sending string @ SimulationThread::sendToAtmel()."); /// @todo react on errors within this thread. Use a signal which stops the thread or so.
 
 	mutex->unlock();
