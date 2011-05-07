@@ -122,12 +122,16 @@ void SimulationThread::run()
 
 							// build command string
 							// convert from unsigned char to QChar and then to QString
-							qchar = character;
-							receiveString.append( QString(&qchar, 1) );
+//							qchar = character;
+//							receiveString.append( QString(&qchar, 1) );
+// complete command string
+receiveString.append((char *) &character);
 
 							emit message("<br>", false, false, false);
 							// send char to GUI (with no CR, but timestamp)
-							emit message(QString("%1").arg( qchar ), false, false, true);
+//							emit message(QString("%1").arg( qchar ), false, false, true);
+// send char to GUI
+emit message(QString("%1").arg((char *) &character), false, false, false);
 
 							charCounter++;
 
@@ -142,11 +146,15 @@ void SimulationThread::run()
 							{
 								// build command string
 								// convert from unsigned char to QChar and then to QString
-								qchar = character;
-								receiveString.append( QString(&qchar, 1) );
+//								qchar = character;
+//								receiveString.append( QString(&qchar, 1) );
+// complete command string
+receiveString.append((char *) &character);
 
 								// send char to GUI (with CR, but no timestamp)
-								emit message(QString("%1").arg( qchar ), true, false, false);
+//								emit message(QString("%1").arg( qchar ), true, false, false);
+// send char to GUI
+emit message(QString("%1").arg((char *) &character), false, false, false);
 
 								commandCompleted = true;
 								stringStarted = false;
@@ -1155,11 +1163,15 @@ void SimulationThread::run()
 
 								// build command string
 								// convert from unsigned char to QChar and then to QString
-								qchar = character;
-								receiveString.append( QString(&qchar, 1) );
+//								qchar = character;
+//								receiveString.append( QString(&qchar, 1) );
+// complete command string
+receiveString.append((char *) &character);
 
 								// send char to GUI (with no CR)
-								emit message(QString("%1").arg( qchar ), false, false, false);
+//								emit message(QString("%1").arg( qchar ), false, false, false);
+// send char to GUI
+emit message(QString("%1").arg((char *) &character), false, false, false);
 							}
 
 						}
