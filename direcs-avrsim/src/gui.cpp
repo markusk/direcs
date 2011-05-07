@@ -99,32 +99,6 @@ void Gui::appendAnswerLog(QString text, bool CR, bool sayIt)
 }
 
 
-void Gui::on_actionLog_activated()
-{
-	if (ui.dockLog->isVisible())
-	{
-		ui.dockLog->hide();
-	}
-	else
-	{
-		ui.dockLog->show();
-	}
-}
-
-
-void Gui::on_actionState_activated()
-{
-	if (ui.dockState->isVisible())
-	{
-		ui.dockState->hide();
-	}
-	else
-	{
-		ui.dockState->show();
-	}
-}
-
-
 void Gui::on_actionSimulate_activated()
 {
 	if (ui.actionSimulate->isChecked())

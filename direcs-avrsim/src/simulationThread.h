@@ -119,7 +119,6 @@ class SimulationThread : public QThread
 		*/
 		uint16_t readADC(unsigned char channel);
 
-
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
