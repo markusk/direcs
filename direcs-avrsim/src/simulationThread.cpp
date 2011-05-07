@@ -58,7 +58,9 @@ void SimulationThread::run()
 	static int charCounter = 0;
 	QString receiveString;
 	QString commandString;
-	QChar qchar; // this is for conversion from unsigned char to QString
+//	QChar qchar; // this is for conversion from unsigned char to QString
+	QByteArray qchar;
+	qchar.resize(1);
 	bool stringStarted = false;
 	bool commandCompleted = false;
 	static bool redLEDtoggle = false;
@@ -111,6 +113,7 @@ void SimulationThread::run()
 						//---------------------------------------------
 						if (character == starter)
 						{
+qDebug("starter");
 							stringStarted = true;
 							commandCompleted = false;
 
@@ -119,11 +122,11 @@ void SimulationThread::run()
 
 							// build command string
 							// convert from unsigned char to QChar and then to QString
-							qchar = character;
-							receiveString.append( QString(&qchar, 1) );
+							qchar[0] = character;
+							receiveString.append( qchar );
 
 							// send char to GUI (with no CR)
-							emit message(QString("%1").arg( qchar ), false);
+							emit message(QString("").append( qchar ), false);
 
 							charCounter++;
 
@@ -136,13 +139,14 @@ void SimulationThread::run()
 							//---------------------------------------------
 							if (character == terminator)
 							{
+qDebug("terminator");
 								// build command string
 								// convert from unsigned char to QChar and then to QString
-								qchar = character;
-								receiveString.append( QString(&qchar, 1) );
+qchar[0] = character;
+receiveString.append( qchar );
 
-								// send char to GUI
-								emit message(QString("%1").arg( qchar ));
+// send char to GUI (with no CR)
+emit message(QString("").append( qchar ), false);
 
 								commandCompleted = true;
 								stringStarted = false;
@@ -1142,6 +1146,7 @@ void SimulationThread::run()
 							} // terminator?
 							else
 							{
+								qDebug("middle");
 								//---------------------------------------------
 								// we are in the middle of the command string
 								//---------------------------------------------
@@ -1151,11 +1156,11 @@ void SimulationThread::run()
 
 								// build command string
 								// convert from unsigned char to QChar and then to QString
-								qchar = character;
-								receiveString.append( QString(&qchar, 1) );
+								qchar[0] = character;
+								receiveString.append( qchar );
 
 								// send char to GUI (with no CR)
-								emit message(QString("%1").arg( qchar ), false);
+								emit message(QString("").append( qchar ), false);
 							}
 
 						}
