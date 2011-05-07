@@ -109,14 +109,6 @@ class SimulationThread : public QThread
 		void relais(bool state);
 
 
-private slots:
-		/**
-		This Slot receives the 'answer' Signal and will send the string via InterfaceAvr.
-		To use IntervaceAvr in direcs.cpp., too, we remove the starter * and terminator # in this method, since this will be sent automatically by @sa InterfaceAvr::sendString()
-		*/
-		void sendToAtmel(QString string);
-
-
 	private:
 		/**
 		Simulated Atmel method
@@ -127,6 +119,12 @@ private slots:
 		Simulated Atmel method
 		*/
 		uint16_t readADC(unsigned char channel);
+
+		/**
+		This method sends the 'answer' Signal/string to the Atmel via InterfaceAvr.
+		To reuse IntervaceAvr in direcs.cpp., too, we remove the starter * and terminator # in this method, since this will be sent automatically by @sa InterfaceAvr::sendString()
+		*/
+		void sendToAtmel(QString string);
 
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;

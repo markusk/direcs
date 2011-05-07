@@ -33,9 +33,6 @@ SimulationThread::SimulationThread(InterfaceAvr *i, QMutex *m)
 
 	leftDistanceCounter = 0;
 	rightDistanceCounter = 0;
-
-	// let this thread send the 'answer' string to the Atmel via interfaceAvr (Atmel: put_string).
-//	connect(this, SIGNAL( answer(QString) ), this, SLOT( sendToAtmel(QString)) );
 }
 
 
@@ -216,9 +213,8 @@ emit message(QString("%1").arg((char *) &character), false, false, false);
 */
 									// answer with "ok"
 									// this answer is used to see if the robot is "on"
-mutex->lock();
-interface1->sendString("*ok#");
-mutex->unlock();
+									sendToAtmel("*ok#");
+
 									//
 									// This sends the string to Atmel and GUI
 									emit answer("*ok#");
