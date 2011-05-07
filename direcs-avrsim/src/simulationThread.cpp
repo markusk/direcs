@@ -215,7 +215,6 @@ emit message(QString("%1").arg((char *) &character), false, false, false);
 									// this answer is used to see if the robot is "on"
 									sendToAtmel("*ok#");
 
-									//
 									// This sends the string to Atmel and GUI
 									emit answer("*ok#");
 
@@ -247,6 +246,7 @@ emit message(QString("%1").arg((char *) &character), false, false, false);
 									///	@todo		wdt_reset();
 
 									// answer
+									sendToAtmel("*sl#");
 									emit answer("*sl#");
 								}
 
@@ -437,6 +437,7 @@ emit message(QString("%1").arg((char *) &character), false, false, false);
 								{
 									relais(ON);
 //									yellowLED(ON);
+									sendToAtmel("*f0on#");
 									emit answer("*f0on#");
 								}
 								else
@@ -445,6 +446,7 @@ emit message(QString("%1").arg((char *) &character), false, false, false);
 								{
 									relais(OFF);
 //									yellowLED(OFF);
+									sendToAtmel("*#");
 									emit answer("*f0of#");
 								}
 /*
