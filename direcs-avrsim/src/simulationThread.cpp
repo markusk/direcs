@@ -81,7 +81,7 @@ void SimulationThread::run()
 			//--------------------------
 			// wait for chars from Atmel
 			//--------------------------
-			emit message("Waiting for Atmel command string to start...");
+			emit message("Waiting for Atmel command string start...");
 
 			while (stopped == false)
 			{
@@ -125,8 +125,9 @@ qDebug("starter");
 							qchar[0] = character;
 							receiveString.append( qchar );
 
-							// send char to GUI (with no CR)
-							emit message(QString("").append( qchar ), false);
+							emit message("<br>", false, false, false);
+							// send char to GUI (with no CR, but timestamp)
+							emit message(QString("%1").arg( qchar ), false, false, true);
 
 							charCounter++;
 
@@ -145,8 +146,8 @@ qDebug("terminator");
 qchar[0] = character;
 receiveString.append( qchar );
 
-// send char to GUI (with no CR)
-emit message(QString("").append( qchar ), false);
+								// send char to GUI (with CR, but no timestamp)
+								emit message(QString("%1").arg( qchar ), true, false, false);
 
 								commandCompleted = true;
 								stringStarted = false;
@@ -1138,7 +1139,7 @@ emit message(QString("").append( qchar ), false);
 									// delete string!
 									receiveString.clear();
 
-									emit message("+++ Unknown Atmel command string! +++");
+									emit message("++ Unknown Atmel command string! ++");
 								}
 
 
@@ -1160,7 +1161,7 @@ emit message(QString("").append( qchar ), false);
 								receiveString.append( qchar );
 
 								// send char to GUI (with no CR)
-								emit message(QString("").append( qchar ), false);
+								emit message(QString("%1").arg( qchar ), false, false, false);
 							}
 
 						}
@@ -1178,17 +1179,13 @@ emit message(QString("").append( qchar ), false);
 
 						emit greenLED(OFF);
 
-						emit message("<br>+++ String size exceeded. Discarding received chars. +++");
-						emit message("Waiting for Atmel command string to start...");
+						emit message("<br>", false, false, false);
+						emit message("+++ String size exceeded. +++");
+						emit message("+++ Discarding chars. +++");
+						emit message("Waiting for Atmel command string start...");
 					}
 				} // commmand completed
-
-
 			} // thread runs
-
-
-
-
 		} // simulation = false
 
 		if (simulationMode)

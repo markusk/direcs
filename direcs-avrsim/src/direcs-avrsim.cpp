@@ -130,10 +130,10 @@ void DirecsAvrsim::init()
 	//--------------------------------------------------------------------------
 	// send status messages to the GUI
 	//--------------------------------------------------------------------------
-	connect(interface1,       SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
-	connect(this,             SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
-	connect(simulationThread, SIGNAL( message(QString, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool) ));
-	connect(simulationThread, SIGNAL( answer(QString, bool, bool) ),  gui, SLOT( appendAnswerLog(QString, bool, bool) ));
+	connect(interface1,       SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
+	connect(this,             SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
+	connect(simulationThread, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
+	connect(simulationThread, SIGNAL( answer(QString, bool, bool, bool) ),  gui, SLOT( appendAnswerLog(QString, bool, bool, bool) ));
 
 	// these are the simulated Atmel methods
 	connect(simulationThread, SIGNAL(greenLED(bool)), gui, SLOT(setLEDGreen(bool)));
@@ -163,9 +163,9 @@ void DirecsAvrsim::init()
 	//-------------------------------------------------------
 	// Open serial port for microcontroller communication
 	//-------------------------------------------------------
-	emit message(QString("Using serial port %1").arg(serialPortMicrocontroller), false);
+	emit message(QString("Using serial port %1").arg(serialPortMicrocontroller));
 
-	emit message("Opening serial port for microcontroller communication...", false);
+	emit message("Opening serial port for microcontroller...");
 
 	if (interface1->openComPort(serialPortMicrocontroller) == false)
 	{
@@ -318,14 +318,14 @@ void DirecsAvrsim::setSimulationMode(bool status)
 		//------------------------------
 		if (simulationThread->isRunning() == false)
 		{
-			emit message("Starting simulation thread...", false);
+			emit message("Starting simulation thread...");
 			simulationThread->start();
 			emit message("Simulation thread started.");
 		}
 	}
 	else
 	{
-		emit message("Stopping simulation thread...", false);
+		emit message("Stopping simulation thread...");
 		simulationThread->stop();
 		emit message("Simulation thread stopped.");
 

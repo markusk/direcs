@@ -105,7 +105,7 @@ class DirecsAvrsim : public QObject
 		Emits a string to the GUI log / console.
 		@param text is the message to be emitted
 		*/
-		void message(QString text, bool CR=true, bool sayIt=false);
+		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/**
 		Emits a string to the splash screen.
