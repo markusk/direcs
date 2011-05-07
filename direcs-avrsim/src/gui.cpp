@@ -68,8 +68,17 @@ void Gui::on_actionExit_activated()
 
 
 
-void Gui::appendLog(QString text, bool CR, bool sayIt)
+void Gui::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 {
+	if (addTimestamp)
+	{
+		// get the current date and time for a timestimp in the log
+		now = QDateTime::currentDateTime();
+
+		// prepend timestamp
+		text = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+	}
+
 	// insert the text in the GUI
 	ui.textEditLog->insertHtml(text);
 
@@ -84,8 +93,17 @@ void Gui::appendLog(QString text, bool CR, bool sayIt)
 
 
 
-void Gui::appendAnswerLog(QString text, bool CR, bool sayIt)
+void Gui::appendAnswerLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 {
+	if (addTimestamp)
+	{
+		// get the current date and time for a timestimp in the log
+		now = QDateTime::currentDateTime();
+
+		// prepend timestamp
+		text = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
+	}
+
 	// insert the text in the GUI
 	ui.textEditAnswerLog->insertHtml(text);
 

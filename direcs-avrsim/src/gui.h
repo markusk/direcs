@@ -24,6 +24,7 @@
 
 //-------------------------------------------------------------------
 #include <QtGui>
+#include <QDateTime>
 //-------------------------------------------------------------------
 #include "ui_mainWindow.h"
 //-------------------------------------------------------------------
@@ -50,7 +51,7 @@ class Gui : public QMainWindow
 		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
 		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
 		 */
-		void appendLog(QString text, bool CR=true, bool sayIt=false);
+		void appendLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/**
 		Appends text to the answer log in the main window.
@@ -58,7 +59,7 @@ class Gui : public QMainWindow
 		@param CR adds a carriage return (CR) to the text, if true (default). This parameter is optional!
 		@param sayIt If true, the text is also spoken (default=false). This parameter is optional!
 		 */
-		void appendAnswerLog(QString text, bool CR=true, bool sayIt=false);
+		void appendAnswerLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/**
 		Turns the red LED on or off (coloured or gray pixmap).
@@ -129,6 +130,7 @@ class Gui : public QMainWindow
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
 		QColor labelFillColorBlue;
+		QDateTime now; /// this is for the timestamp in the logs in the gui
 
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
