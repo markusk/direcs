@@ -33,6 +33,9 @@ SimulationThread::SimulationThread(InterfaceAvr *i, QMutex *m)
 
 	leftDistanceCounter = 0;
 	rightDistanceCounter = 0;
+
+	// let this thread send the 'answer' string to the Atmel via interfaceAvr (Atmel: put_string).
+	connect(this, SIGNAL( answer(QString) ), this, SLOT( sendToAtmel(QString)) );
 }
 
 
@@ -201,11 +204,8 @@ void SimulationThread::run()
 */
 									// answer with "ok"
 									// this answer is used to see if the robot is "on"
-									mutex->lock();
-									interface1->sendString("*ok#");
-									mutex->unlock();
-
-									// show string in GUI
+									//
+									// This sends the string to Atmel and GUI
 									emit answer("*ok#");
 
 									// e n a b l e  watchdog!
@@ -1264,4 +1264,23 @@ uint16_t SimulationThread::readADC(unsigned char channel)
 
 	emit message("+++ Sensor not implemented in readADC! +++");
 	return 0;
+}
+
+
+void SimulationThread::sendToAtmel(QString string)
+{
+	// this should be always the case
+	if (string.startsWith(starter))
+		string.remove(1, 1);
+
+	// this should be always the case
+	if (string.endsWith(terminator))
+		string.remove(string.length(), 1);
+
+	mutex->lock();
+
+	if (interface1->sendString("*ok#") == false)
+		qDebug("ERROR sending string @ SimulationThread::sendToAtmel()."); /// @todo react on errors within this thread. Use a signal which stops the thread or so.
+
+	mutex->unlock();
 }
