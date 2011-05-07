@@ -146,7 +146,7 @@ bool InterfaceAvr::sendString(QString string)
 	if (sendChar(starter) == true)
 	{
 		// sending the string returns the number of chars sent
-		if ( serialPort->write(string.toAscii(), string.length() != string.length()) )
+		if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )
 		{
 			return false;
 		}
