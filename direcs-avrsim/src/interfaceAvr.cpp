@@ -29,8 +29,9 @@ InterfaceAvr::InterfaceAvr()
 	serialPort->setBaudRate(BAUD9600);
 	serialPort->setDataBits(DATA_8);
 	serialPort->setParity(PAR_NONE);
-//	serialPort->setDtr(); /// @todo check if this is needed. By default set to true!
-//	serialPort->setRts();
+	serialPort->setStopBits(STOP_1);
+//	serialPort->setDtr(false); /// @todo check if this is needed. By default set to true!
+//	serialPort->setRts(false);
 	serialPort->setFlowControl(FLOW_OFF);
 
 	//set timeouts to 500 ms
