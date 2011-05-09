@@ -143,33 +143,21 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 bool InterfaceAvr::sendString(QString string)
 {
-	// send starter
-	if (sendChar(starter) == true)
+	// add starter
+	string.prepend("*");
+
+	// add terminator
+	string.append("#");
+
+	qDebug() << "sending string:" << string;
+
+	// sending the string returns the number of chars sent
+	if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )
 	{
-		// sending the string returns the number of chars sent
-		if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )
-		{
-			return false;
-		}
-
-
-		// send terminator char
-		if (sendChar(terminator) == true)
-		{
-/*
-			// send final string terminator  @sa Atmel code 'ISR(USART3_RX_vect)' in usart.c
-			if (sendChar( 0 ) == true)
-			{
-*/
-				// success
-				return true;
-/*
-			}
-*/
-		}
+		return false;
 	}
 
-	return false;
+	return true;
 }
 
 
