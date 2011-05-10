@@ -506,12 +506,13 @@ void Direcs::init()
 #endif
 
 		//----------------------------------------------------------------------------
-		// let the GUI show messages in the log docks
+		// let the GUI show messages in the logs
 		//----------------------------------------------------------------------------
 		if (!consoleMode)
 		{
 			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 		}
 		else
@@ -521,8 +522,9 @@ void Direcs::init()
 			connect(obstCheckThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 		}
 
-		// also emit interface class messages to the logfile
+		// also emit interface class messages to the *logfile*
 		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
+		connect(circuit1,   SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
@@ -536,7 +538,7 @@ void Direcs::init()
 		// Open serial port for microcontroller communication
 		//-------------------------------------------------------
 		emit splashMessage("Opening serial port for microcontroller communication...");
-		emit message("Opening serial port for microcontroller communication...", false);
+		emit message(QString("Opening serial port %1 for microcontroller communication...").arg(serialPortMicrocontroller));
 
 		if (interface1->openComPort(serialPortMicrocontroller) == false)
 		{
