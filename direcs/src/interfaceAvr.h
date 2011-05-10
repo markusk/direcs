@@ -23,7 +23,7 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#include "direcsSerial.h"
+#include <qextserialport.h> /// http://code.google.com/qextserialport/
 
 #include <QFile>
 #include <QObject>
@@ -102,6 +102,19 @@ class InterfaceAvr : public QObject
 		*/
 		bool convertStringToInt(QString string, int &value);
 
+		/**
+		Checks if chars are avialable to be received.
+
+		@return true if chars are available
+		**/
+		bool charsAvailable();
+
+		/**
+		Clears the serial input buffer. There may be some unwanted chars in the queue from a former run or so. So this methods just performs a 'flush'.
+		*/
+		void clearInputBuffer();
+
+
 
 	signals:
 		/**
@@ -122,11 +135,11 @@ class InterfaceAvr : public QObject
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		@param text is the message to be emitted
 		*/
-		void message(QString text);
+		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 
 	private:
-		DirecsSerial *serialPort;
+		QextSerialPort *serialPort;
 
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"

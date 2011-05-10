@@ -23,53 +23,73 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new DirecsSerial();
+	serialPort = new QextSerialPort(QextSerialPort::Polling);
+
+	// serial port settings
+	serialPort->setBaudRate(BAUD9600);
+	serialPort->setDataBits(DATA_8);
+	serialPort->setParity(PAR_NONE);
+	serialPort->setStopBits(STOP_1);
+//	serialPort->setDtr(false); /// @todo check if this is needed. By default set to true!
+//	serialPort->setRts(false);
+	serialPort->setFlowControl(FLOW_OFF);
+
+	//set timeouts to 500 ms
+	serialPort->setTimeout(500);
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
-	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+/// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
 InterfaceAvr::~InterfaceAvr()
 {
+	if (serialPort->isOpen())
+		serialPort->close();
+
 	delete serialPort;
 }
 
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
-	// for QString to char* conversion
-	QByteArray ba = comPort.toLatin1();
-
-
 	// check if file (serial port) exists
 	if (QFile::exists(comPort) == false)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(comPort));
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-
+		qDebug("openComPort: serial path not found!");
 		return false;
 	}
 
+	// set port name / path to device
+	serialPort->setPortName(comPort);
 
-	// serial port config and flush also done in openAtmelPort!
-	if (serialPort->openAtmelPort( ba.data(), 9600 ) == -1)
+	// open serial port for read and write
+	// 'unbufferd' used because of qextserial example 'QESPTA'.
+	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
+		qDebug("openComPort: error opening serial port!");
 		return false;
 	}
 
+	// flush serial port
+	serialPort->flush();
+
+	qDebug("openComPort: serial port opened.");
+	emit robotState(true); /// let the circuit class know, that we opened it
 	return true;
 }
 
 
 void InterfaceAvr::closeComPort()
 {
-	// using direcsSerial
-	serialPort->closeAtmelPort();
+	if (serialPort->isOpen())
+		serialPort->close();
 }
 
 
@@ -78,12 +98,14 @@ bool InterfaceAvr::sendChar(unsigned char character)
 	int result = 0;
 // 	static int receiveErrorCounter = 0;
 
+	// convert to QByteArray since write() needs that like this
+	QByteArray data;
+	data.resize(1);
+	data[0] = character;
 
-	// send one byte to the serial port with direcsSerial
-	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeAtmelPort(&character);
-
-	if (result < 0)
+	// send *one* byte to the serial port with direcsSerial
+	// Return code shall be *one*
+	if (serialPort->write(data, 1) != 1)
 	{
 // 		receiveErrorCounter++;
 		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
@@ -103,98 +125,69 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
-	int result = 0;
-
-
-	// reading one char with direcsSerial
-	// Must return 1 (1 character succussfull read)!
-	result = serialPort->readAtmelPort(character, 1);
-
-	if (result != 1)
+	// data available?
+	if (serialPort->bytesAvailable() < 1)
 	{
 		// ERROR
-		// emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );  < error message already emitted from readAtmelPort!
 		return false;
 	}
 
-	// emit emitMessage( QString("Received '%1'.").arg(result) ); // this makes the program to slow and than to crash!!
+	// read data
+	// and 'convert' from unsigned char* to char*. See also http://bytes.com/topic/c/answers/720858-convert-unsigned-char-char
+	if (serialPort->read((char *) character, 1) != 1)
+	{
+		// ERROR
+		return false;
+	}
+
 	return true;
 }
 
 
 bool InterfaceAvr::sendString(QString string)
 {
-//	QString debugstring;
+	// add starter
+	string.prepend("*");
 
+	// add terminator
+	string.append("#");
 
-	// send starter
-	if (sendChar(starter) == true)
+	qDebug() << "sending string:" << string;
+
+	// sending the string returns the number of chars sent
+	if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )
 	{
-		// send 'content' of string
-//		debugstring = "*";
-		for (int i=0; i<string.length(); i++)
-		{
-			// char by char
-			if (sendChar( string.at(i).toAscii() ) == false)
-			{
-				return false;
-			}
-//			debugstring.append(string.at(i));
-		}
-
-		// send terminator
-		if (sendChar(terminator) == true)
-		{
-			// success
-//			debugstring.append("#");
-//			emit message(debugstring);
-			return true;
-		}
+		return false;
 	}
 
-	return false;
+	return true;
 }
 
 
 bool InterfaceAvr::receiveString(QString &string)
 {
-	int result = 0;
-	unsigned char character;
-	QByteArray ba;
+	char buff[1024];
+	int numBytes = 0;
 
+	// data available?
+	numBytes = serialPort->bytesAvailable();
 
-	do
+	// are data available?
+	// if there are >1024 bytes available, something goes wrong here...
+	if ((numBytes < 1) || (numBytes > 1024))
 	{
-		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readAtmelPort(&character, 1);
-
-		if (result == 1)
-		{
-			// append received char to byte array
-			ba.append(character);
-		}
-
-	} while ( (result == 1) && (character != '#') );
-
-	if (result != 1)
-	{
-		// ERROR (error message already emitted from readAtmelPort!)
-		/// \todo on maximum errors do a program stop or so!
-		//qDebug() << "error at receiveString";
 		return false;
 	}
 
-	// copy chars to QString to pointer to return the QString
-	string = QString::fromUtf8(ba.data(), ba.length());
-
-	// check result!
-	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
+	if (serialPort->read(buff, numBytes) == -1)
 	{
-		return true;
+		return false;
 	}
 
+	// 'return' data read
+	string = buff;
 
-	return false;
+	return true;
 }
 
 
@@ -274,4 +267,21 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 
 	value = 0;
 	return false;
+}
+
+
+bool InterfaceAvr::charsAvailable()
+{
+	if (serialPort->bytesAvailable() > 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
+void InterfaceAvr::clearInputBuffer()
+{
+	serialPort->flush();
 }
