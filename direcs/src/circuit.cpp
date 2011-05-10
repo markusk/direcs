@@ -26,7 +26,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	interface1 = i;
 	mutex = m;
 
-	circuitState = true; // We think positive
+	circuitState = false;
 	firstInitDone = false;
 	compassCircuitState = false;
 }
@@ -52,14 +52,19 @@ bool Circuit::initCircuit()
 		//-------------------------------------------------------
 
 		// sending RESET (INIT) command
+		emit message("Sending *re#...");
 		if (interface1->sendString("re") == true)
 		{
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer) == true)
 			{
+				emit message("Answer received.");
 				// everthing's fine :-)
 				if (answer == "*ok#")
 				{
+					emit message("Answer was correct.");
 					// Unlock the mutex
 					mutex->unlock();
 
@@ -71,6 +76,14 @@ bool Circuit::initCircuit()
 					return true;
 				}
 			}
+			else
+			{
+				emit message("No answer received.");
+			}
+		}
+		else
+		{
+			emit message("Error sending string.");
 		}
 
 		// Unlock the mutex.
@@ -158,6 +171,7 @@ void Circuit::setRobotState(bool state)
 {
 	// store the state within this class
 	circuitState = state;
+	qDebug("Circuit::setRobotState: state=%d", circuitState);
 }
 
 

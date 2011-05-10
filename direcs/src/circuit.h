@@ -97,7 +97,7 @@ class Circuit : public QObject
 		Sends a string to the GUI log.
 		@param text is the message to be emitted
 		*/
-		void emitMessage(QString text);
+		void message(QString text);
 
 
 	private:
