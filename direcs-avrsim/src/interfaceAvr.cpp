@@ -26,18 +26,6 @@ InterfaceAvr::InterfaceAvr()
 	// using 'EventDriven' instead of 'Polling', since last one seems to make some problems ().
 	serialPort = new QextSerialPort(QextSerialPort::EventDriven);
 
-	// serial port settings
-	serialPort->setBaudRate(BAUD9600);
-	serialPort->setDataBits(DATA_8);
-	serialPort->setParity(PAR_NONE);
-	serialPort->setStopBits(STOP_1);
-//	serialPort->setDtr(false); /// @todo check if this is needed. By default set to true!
-//	serialPort->setRts(false);
-	serialPort->setFlowControl(FLOW_OFF);
-
-	//set timeouts to 500 ms
-	serialPort->setTimeout(500);
-
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
 /// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
@@ -81,7 +69,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// open serial port for read and write
 	//------------------------------------
 	// 'Unbuffered' mode removed, since we use the 'EventDriven' mode in the constructor
-	if (serialPort->open(QIODevice::ReadWrite) == false)
+	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered ) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
@@ -96,6 +84,18 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 	qDebug("openComPort: serial port opened.");
 	emit robotState(true); /// let the circuit class know, that we opened it
+
+	// serial port settings
+	serialPort->setBaudRate(BAUD9600);
+	serialPort->setDataBits(DATA_8);
+	serialPort->setParity(PAR_NONE);
+	serialPort->setStopBits(STOP_1);
+//	serialPort->setDtr(false); /// @todo check if this is needed. By default set to true!
+//	serialPort->setRts(false);
+	serialPort->setFlowControl(FLOW_OFF);
+
+	//set timeouts to 500 ms
+	serialPort->setTimeout(500);
 
 	connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 	connect(serialPort, SIGNAL(dsrChanged(bool)), this, SLOT(onDsrChanged(bool)));
