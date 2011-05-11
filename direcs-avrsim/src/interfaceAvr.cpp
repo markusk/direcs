@@ -23,7 +23,8 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new QextSerialPort(QextSerialPort::Polling);
+	// using 'EventDriven' instead of 'Polling', since last one seems to make some problems ().
+	serialPort = new QextSerialPort(QextSerialPort::EventDriven);
 
 	// serial port settings
 	serialPort->setBaudRate(BAUD9600);
@@ -79,8 +80,8 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//------------------------------------
 	// open serial port for read and write
 	//------------------------------------
-	// 'unbufferd' used because of qextserial example 'QESPTA'.
-	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered) == false)
+	// 'Unbuffered' mode removed, since we use the 'EventDriven' mode in the constructor
+	if (serialPort->open(QIODevice::ReadWrite) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
@@ -91,10 +92,18 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//------------------------------------
 	// flush serial port
 	//------------------------------------
-	serialPort->flush();
+//	serialPort->flush();
 
 	qDebug("openComPort: serial port opened.");
 	emit robotState(true); /// let the circuit class know, that we opened it
+
+	connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+	connect(serialPort, SIGNAL(dsrChanged(bool)), this, SLOT(onDsrChanged(bool)));
+
+	if (!(serialPort->lineStatus() & LS_DSR))
+		qDebug() << "warning: device is not turned on";
+
+	qDebug() << "listening for data on" << serialPort->portName();
 
 	return true;
 }
@@ -308,4 +317,36 @@ void InterfaceAvr::flush()
 		// flush input and output port
 		serialPort->flush();
 	}
+}
+
+
+void InterfaceAvr::onReadyRead()
+{
+	static QByteArray bytes;
+	int a = serialPort->bytesAvailable();
+	qDebug() << "bytes available:" << a;
+
+
+	QByteArray newBytes;
+	newBytes.resize(a);
+	serialPort->read(newBytes.data(), newBytes.size());
+//    newBytes.resize(port->readLine(newBytes.data(), 1024));
+	qDebug() << "bytes read:" << newBytes.size();
+	qDebug() << "bytes:" << newBytes;
+
+
+//    QByteArray newBytes = port->readAll();
+//    qDebug() << newBytes;
+
+	// merge.
+	bytes.append(newBytes);
+	qDebug() << "total:" << bytes;
+}
+
+void InterfaceAvr::onDsrChanged(bool status)
+{
+	if (status)
+		qDebug() << "device was turned on";
+	else
+		qDebug() << "device was turned off";
 }

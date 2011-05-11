@@ -138,6 +138,16 @@ class InterfaceAvr : public QObject
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 
+	private slots:
+	   /**
+		*/
+		void onReadyRead();
+
+		/**
+		*/
+		void onDsrChanged(bool status);
+
+
 	private:
 		QextSerialPort *serialPort;
 
