@@ -46,7 +46,12 @@ InterfaceAvr::InterfaceAvr()
 InterfaceAvr::~InterfaceAvr()
 {
 	if (serialPort->isOpen())
+	{
+		// flush input and output port
+		serialPort->flush();
+
 		serialPort->close();
+	}
 
 	delete serialPort;
 }
@@ -54,30 +59,42 @@ InterfaceAvr::~InterfaceAvr()
 
 bool InterfaceAvr::openComPort(QString comPort)
 {
+	//------------------------------------
 	// check if file (serial port) exists
+	//------------------------------------
 	if (QFile::exists(comPort) == false)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(comPort));
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-
+		qDebug("openComPort: serial path not found!");
 		return false;
 	}
 
+	//------------------------------------
 	// set port name / path to device
+	//------------------------------------
 	serialPort->setPortName(comPort);
 
+	//------------------------------------
 	// open serial port for read and write
+	//------------------------------------
 	// 'unbufferd' used because of qextserial example 'QESPTA'.
 	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
+		qDebug("openComPort: error opening serial port!");
 		return false;
 	}
 
+	//------------------------------------
 	// flush serial port
+	//------------------------------------
 	serialPort->flush();
+
+	qDebug("openComPort: serial port opened.");
+	emit robotState(true); /// let the circuit class know, that we opened it
 
 	return true;
 }
@@ -86,7 +103,12 @@ bool InterfaceAvr::openComPort(QString comPort)
 void InterfaceAvr::closeComPort()
 {
 	if (serialPort->isOpen())
+	{
+		// flush input and output port
+		serialPort->flush();
+
 		serialPort->close();
+	}
 }
 
 
