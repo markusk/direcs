@@ -311,7 +311,7 @@ void DirecsAvrsim::setSimulationMode(bool status)
 		emit message("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
 
 		emit message("Clearing serial input buffer first.");
-		interface1->clearInputBuffer();
+		interface1->flush();
 
 		//------------------------------
 		// start the simulation thread

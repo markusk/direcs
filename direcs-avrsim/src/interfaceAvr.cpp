@@ -300,7 +300,7 @@ bool InterfaceAvr::charsAvailable()
 }
 
 
-void InterfaceAvr::clearInputBuffer()
+void InterfaceAvr::flush()
 {
 	serialPort->flush();
 }
