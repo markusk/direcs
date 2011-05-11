@@ -302,5 +302,10 @@ bool InterfaceAvr::charsAvailable()
 
 void InterfaceAvr::flush()
 {
-	serialPort->flush();
+	if (serialPort->isOpen())
+	{
+		emit message("Flusing I/O buffer from serial port.");
+		// flush input and output port
+		serialPort->flush();
+	}
 }
