@@ -105,6 +105,8 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 	qDebug() << "listening for data on" << serialPort->portName();
 
+	emit message("Waiting for Atmel command string start...");
+
 	return true;
 }
 
@@ -323,28 +325,141 @@ void InterfaceAvr::flush()
 void InterfaceAvr::onReadyRead()
 {
 	static QByteArray bytes;
+	QByteArray newBytes;
+	// - - -
+	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
+	unsigned char character = 0;
+	static int charCounter = 0;
+	QString receiveString;
+	QString commandString;
+	QChar qchar; // this is for conversion from unsigned char to QString
+	bool stringStarted = false;
+	bool commandCompleted = false;
+//	static bool redLEDtoggle = false;
+	// - - -
+
+
 	int a = serialPort->bytesAvailable();
 	qDebug() << "bytes available:" << a;
 
-
-	QByteArray newBytes;
 	newBytes.resize(a);
 	serialPort->read(newBytes.data(), newBytes.size());
 //    newBytes.resize(port->readLine(newBytes.data(), 1024));
 	qDebug() << "bytes read:" << newBytes.size();
 	qDebug() << "bytes:" << newBytes;
 
-
 //    QByteArray newBytes = port->readAll();
 //    qDebug() << newBytes;
 
 	// merge.
 	bytes.append(newBytes);
+
+	// copy to receiveString
+	receiveString = QString(bytes);
+
 	qDebug() << "total:" << bytes;
 
 
-	// emit completed Atmel command
-	emit commandCompleted( QString(newBytes) );
+	// - - - - - - - - - - - - - - - - - - -
+	// - - - - - - - - - - - - - - - - - - -
+	// - - - - - - - - - - - - - - - - - - -
+
+
+
+	// toggling the red LED on and off with every received serial commmand
+//		redLEDtoggle = !redLEDtoggle;
+//		emit redLED(redLEDtoggle);
+
+
+	if (commandCompleted == false)
+	{
+		// serial buffer overflow?
+		if (charCounter <= maxStringLength)
+		{
+			//---------------------------------------------
+			// command string from Atmel started?
+			//---------------------------------------------
+			if (receiveString.startsWith(starter)
+			{
+					stringStarted = true;
+					commandCompleted = false;
+
+					// start QString
+					receiveString.clear();
+
+					// build command string
+					// convert from unsigned char to QChar and then to QString
+					qchar = character;
+					receiveString.append( QString(&qchar, 1) );
+// complete command string
+//receiveString.append((char *) &character);
+
+					emit message("<br>", false, false, false);
+					// send char to GUI (with no CR, but timestamp)
+					emit message(QString("%1").arg( qchar ), false, false, true);
+// send char to GUI
+//emit message(QString("%1").arg((char *) &character), false, false, false);
+
+					charCounter++;
+
+					emit greenLED(ON);
+				} // command started
+				else
+				{
+					//---------------------------------------------
+					// command string from Atmel completed?
+					//---------------------------------------------
+					if (character == terminator)
+					{
+						// build command string
+						// convert from unsigned char to QChar and then to QString
+						qchar = character;
+						receiveString.append( QString(&qchar, 1) );
+// complete command string
+//receiveString.append((char *) &character);
+
+						// send char to GUI (with CR, but no timestamp)
+						emit message(QString("%1").arg( qchar ), true, false, false);
+// send char to GUI
+//emit message(QString("%1").arg((char *) &character), false, false, false);
+
+						commandCompleted = true;
+						stringStarted = false;
+
+						// reset char counter
+						charCounter = 0;
+
+						emit greenLED(OFF);
+
+
+						//-----------------------------------------------
+						emit message(QString("Atmel command string: %1.").arg(receiveString));
+						//-----------------------------------------------
+
+						// copy string for command check
+						commandString = receiveString;
+
+						//-------------------------------------------------
+						// reset received string for next upcoming command
+						//-------------------------------------------------
+						charCounter = 0;
+						receiveString.clear();
+						stringStarted = false;
+						commandCompleted = false;
+
+
+						// emit completed Atmel command
+						emit commandCompleted( QString(newBytes) );
+					}
+				}
+
+						// - - - - - - - - - - - - - - - - - - -
+						// - - - - - - - - - - - - - - - - - - -
+						// - - - - - - - - - - - - - - - - - - -
+
+
+
+
 }
 
 

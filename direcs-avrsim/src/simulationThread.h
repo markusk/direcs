@@ -153,8 +153,6 @@ class SimulationThread : public QThread
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
 
-		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *  @sa InterfaceAvr()
-		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #  @sa InterfaceAvr()
 
 /**
 Simulated Atmel method defines

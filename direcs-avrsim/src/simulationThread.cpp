@@ -51,16 +51,7 @@ void SimulationThread::stop()
 
 void SimulationThread::run()
 {
-	unsigned char character = 0;
 	bool heartbeatToggle = false;
-	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
-	static int charCounter = 0;
-	QString receiveString;
-	QString commandString;
-	QChar qchar; // this is for conversion from unsigned char to QString
-	bool stringStarted = false;
-	bool commandCompleted = false;
-	static bool redLEDtoggle = false;
 
 
 	//
@@ -73,111 +64,8 @@ void SimulationThread::run()
 		msleep(THREADSLEEPTIME);
 
 
-		if ( (robotState == ON) && (simulationMode == false) )
+		if ( (robotState == ON) && (simulationMode == false) && (commandComplete == true))
 		{
-			//--------------------------
-			// wait for chars from Atmel
-			//--------------------------
-			emit message("Waiting for Atmel command string start...");
-
-			while (stopped == false)
-			{
-				// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-				mutex->lock();
-				while (interface1->charsAvailable() == false)
-				{
-					if (stopped)
-						break;
-				}
-
-				// get char
-				if (interface1->receiveChar(&character) == false)
-				{
-					qDebug("ERROR: More than one char received, when only one was expected!");
-				}
-				mutex->unlock();
-
-
-				// toggling the red LED on and off with every received serial commmand
-				redLEDtoggle = !redLEDtoggle;
-				emit redLED(redLEDtoggle);
-
-
-				if (commandCompleted == false)
-				{
-					// serial buffer overflow?
-					if (charCounter <= maxStringLength)
-					{
-						//---------------------------------------------
-						// command string from Atmel started?
-						//---------------------------------------------
-						if (character == starter)
-						{
-							stringStarted = true;
-							commandCompleted = false;
-
-							// start QString
-							receiveString.clear();
-
-							// build command string
-							// convert from unsigned char to QChar and then to QString
-							qchar = character;
-							receiveString.append( QString(&qchar, 1) );
-// complete command string
-//receiveString.append((char *) &character);
-
-							emit message("<br>", false, false, false);
-							// send char to GUI (with no CR, but timestamp)
-							emit message(QString("%1").arg( qchar ), false, false, true);
-// send char to GUI
-//emit message(QString("%1").arg((char *) &character), false, false, false);
-
-							charCounter++;
-
-							emit greenLED(ON);
-						} // command started
-						else
-						{
-							//---------------------------------------------
-							// command string from Atmel completed?
-							//---------------------------------------------
-							if (character == terminator)
-							{
-								// build command string
-								// convert from unsigned char to QChar and then to QString
-								qchar = character;
-								receiveString.append( QString(&qchar, 1) );
-// complete command string
-//receiveString.append((char *) &character);
-
-								// send char to GUI (with CR, but no timestamp)
-								emit message(QString("%1").arg( qchar ), true, false, false);
-// send char to GUI
-//emit message(QString("%1").arg((char *) &character), false, false, false);
-
-								commandCompleted = true;
-								stringStarted = false;
-
-								// reset char counter
-								charCounter = 0;
-
-								emit greenLED(OFF);
-
-
-								//-----------------------------------------------
-								emit message(QString("Atmel command string: %1.").arg(receiveString));
-								//-----------------------------------------------
-
-								// copy string for command check
-								commandString = receiveString;
-
-								//-------------------------------------------------
-								// reset received string for next upcoming command
-								//-------------------------------------------------
-								charCounter = 0;
-								receiveString.clear();
-								stringStarted = false;
-								commandCompleted = false;
 
 								// Everything's fine, so reset the watchdog timer (wdt).
 								///	@todo		wdt_reset();
@@ -1199,7 +1087,7 @@ void SimulationThread::run()
 					}
 				} // commmand completed
 			} // thread runs
-		} // simulation = false
+		} // simulation = false  &&  robot is on  && command complete
 
 		if (simulationMode)
 		{
