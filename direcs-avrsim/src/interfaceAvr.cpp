@@ -341,7 +341,12 @@ void InterfaceAvr::onReadyRead()
 	// merge.
 	bytes.append(newBytes);
 	qDebug() << "total:" << bytes;
+
+
+	// emit completed Atmel command
+	emit commandCompleted( QString(newBytes) );
 }
+
 
 void InterfaceAvr::onDsrChanged(bool status)
 {

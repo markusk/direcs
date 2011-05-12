@@ -73,7 +73,7 @@ class SimulationThread : public QThread
 		void setRobotState(bool state);
 
 		/**
-		This slots takes a string received from the Atel. @sa interfaceAvr
+		This slots takes a string received from the Atel. @sa InterfaceAvr::commandCompleted()
 		@param string contains the received string
 		*/
 		void commandReceived(QString string);
