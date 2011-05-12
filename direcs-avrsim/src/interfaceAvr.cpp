@@ -324,7 +324,7 @@ void InterfaceAvr::flush()
 
 void InterfaceAvr::onReadyRead()
 {
-	static QByteArray bytes;
+	QByteArray bytes;
 	QByteArray newBytes;
 	// - - -
 	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
@@ -404,6 +404,18 @@ void InterfaceAvr::onReadyRead()
 
 //				emit greenLED(ON);
 		}
+		else
+		{
+			// send recevied string to GUI)
+			emit message(receiveString);
+
+			//-------------------------------------------------
+			// wrong starter -> reset received string
+			//-------------------------------------------------
+			receiveString.clear();
+			stringStarted = false;
+			commandComplete = false;
+		}
 
 
 		//---------------------------------------------
@@ -421,12 +433,10 @@ void InterfaceAvr::onReadyRead()
 //			emit greenLED(OFF);
 
 
-			//-----------------------------------------------
-			emit message(QString("Atmel command string: %1.").arg(receiveString));
-			//-----------------------------------------------
-
 			// copy string for command check
 			commandString = receiveString;
+
+			emit message(QString("Atmel command string: %1.").arg(commandString));
 
 			//-------------------------------------------------
 			// reset received string for next upcoming command
@@ -434,7 +444,6 @@ void InterfaceAvr::onReadyRead()
 			receiveString.clear();
 			stringStarted = false;
 			commandComplete = false;
-
 
 			// emit completed Atmel command
 			emit commandCompleted( QString(commandString) );

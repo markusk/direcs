@@ -74,43 +74,43 @@ void SimulationThread::run()
 			// check what was received
 			//--------------------------
 
-								// RESET / INIT
-								if (commandString == "*re#")
-								{
-									/*
-									// turn all drive motor bits off (except PWM bits)
-									PORTL &= ~(1<<PIN0);
-									PORTL &= ~(1<<PIN1);
-									PORTL &= ~(1<<PIN2);
-									PORTL &= ~(1<<PIN3);
-									PORTL &= ~(1<<PIN6);
-									PORTL &= ~(1<<PIN7);
-									PORTD &= ~(1<<PIN6);
-									PORTD &= ~(1<<PIN7);
-									*/
-									// flashlight off
-									relais(OFF);
-									// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
-									redLED(OFF);
+			// RESET / INIT
+			if (commandString == "*re#")
+			{
+				/*
+				// turn all drive motor bits off (except PWM bits)
+				PORTL &= ~(1<<PIN0);
+				PORTL &= ~(1<<PIN1);
+				PORTL &= ~(1<<PIN2);
+				PORTL &= ~(1<<PIN3);
+				PORTL &= ~(1<<PIN6);
+				PORTL &= ~(1<<PIN7);
+				PORTD &= ~(1<<PIN6);
+				PORTD &= ~(1<<PIN7);
+				*/
+				// flashlight off
+				relais(OFF);
+				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+				redLED(OFF);
 
-									/*
-									// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-									// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-									// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-									// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-									// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-									// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+				/*
+				// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+				// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+				// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+				// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+				// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+				// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 */
-									// answer with "ok"
-									// this answer is used to see if the robot is "on"
-									sendToAtmel("*ok#");
+				// answer with "ok"
+				// this answer is used to see if the robot is "on"
+				sendToAtmel("*ok#");
 
-									// This sends the string to Atmel and GUI
-									emit answer("*ok#");
+				// This sends the string to the GUI
+				emit answer("*ok#");
 
-									// e n a b l e  watchdog!
-									/// @todo			watchdog(ENABLE);
-								} // *re#
+				// e n a b l e  watchdog!
+				/// @todo			watchdog(ENABLE);
+			} // *re#
 								else
 								// SLEEP (and turn off watchdog)
 								if (commandString == "*sl#")
@@ -1031,6 +1031,10 @@ void SimulationThread::run()
 				// command complete (*...#), but unknown!
 				//-----------------------------------------
 				emit message("++ Unknown Atmel command string! ++");
+
+				// let the thread know, that the (next upcoming) Atmel command is not complete (wait for the next command!)
+				commandComplete = false;
+				commandString.clear();
 			}
 
 		} // simulation = false  &&  robot is on  && command complete
@@ -1118,6 +1122,11 @@ uint16_t SimulationThread::readADC(unsigned char channel)
 
 void SimulationThread::sendToAtmel(QString string)
 {
+	// let the thread know, that the (next upcoming) Atmel command is not complete (wait for the next command!)
+	commandComplete = false;
+	commandString.clear();
+
+
 	// this should be always the case
 	if (string.startsWith(starter))
 		string.remove(0, 1);
