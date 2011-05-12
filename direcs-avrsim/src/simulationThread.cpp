@@ -33,6 +33,8 @@ SimulationThread::SimulationThread(InterfaceAvr *i, QMutex *m)
 
 	leftDistanceCounter = 0;
 	rightDistanceCounter = 0;
+
+	commandComplete = false;
 }
 
 
@@ -1296,4 +1298,10 @@ void SimulationThread::sendToAtmel(QString string)
 		qDebug("ERROR sending string @ SimulationThread::sendToAtmel()."); /// @todo react on errors within this thread. Use a signal which stops the thread or so.
 
 	mutex->unlock();
+}
+
+
+void SimulationThread::commandReceived(QString string)
+{
+	commandComplete = true;
 }

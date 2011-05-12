@@ -72,6 +72,12 @@ class SimulationThread : public QThread
 		*/
 		void setRobotState(bool state);
 
+		/**
+		This slots takes a string received from the Atel. @sa interfaceAvr
+		@param string contains the received string
+		*/
+		void commandReceived(QString string);
+
 
 	signals:
 		/**
@@ -131,9 +137,10 @@ class SimulationThread : public QThread
 		volatile bool stopped;
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
+		bool commandComplete; /// this is set to true by the slot @sa commandReceived
 
 		/**
-		Simulated Atmeöl values
+		Simulated Atmel values
 		*/
 		uint16_t leftDistanceCounter;
 		uint16_t rightDistanceCounter;
