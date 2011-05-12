@@ -67,12 +67,12 @@ void SimulationThread::run()
 		if ( (robotState == ON) && (simulationMode == false) && (commandComplete == true))
 		{
 
-								// Everything's fine, so reset the watchdog timer (wdt).
-								///	@todo		wdt_reset();
+			// Everything's fine, so reset the watchdog timer (wdt).
+			///	@todo		wdt_reset();
 
-								//--------------------------
-								// check what was received
-								//--------------------------
+			//--------------------------
+			// check what was received
+			//--------------------------
 
 								// RESET / INIT
 								if (commandString == "*re#")
@@ -1025,68 +1025,14 @@ void SimulationThread::run()
 								*/
 
 
-								else
-								{
-									//-----------------------------------------
-									// command complete (*...#), but unknown!
-									//-----------------------------------------
-									charCounter = 0;
-									commandCompleted = false;
-									stringStarted = false;
+			else
+			{
+				//-----------------------------------------
+				// command complete (*...#), but unknown!
+				//-----------------------------------------
+				emit message("++ Unknown Atmel command string! ++");
+			}
 
-									// delete string!
-									receiveString.clear();
-
-									emit message("++ Unknown Atmel command string! ++");
-								}
-
-
-
-							} // terminator?
-							else
-							{
-								//---------------------------------------------
-								// we are in the middle of the command string
-								//---------------------------------------------
-								charCounter++;
-
-								commandCompleted = false;
-
-								// build command string
-								// convert from unsigned char to QChar and then to QString
-								qchar = character;
-								receiveString.append( QString(&qchar, 1) );
-// complete command string
-//receiveString.append((char *) &character);
-
-								// send char to GUI (with no CR)
-								emit message(QString("%1").arg( qchar ), false, false, false);
-// send char to GUI
-//emit message(QString("%1").arg((char *) &character), false, false, false);
-							}
-
-						}
-					} // buffer okay
-					else
-					{
-						// string 'buffer overflow'
-
-						charCounter = 0;
-						commandCompleted = false;
-						stringStarted = false;
-
-						// delete string!
-						receiveString.clear();
-
-						emit greenLED(OFF);
-
-						emit message("<br>", false, false, false);
-						emit message("+++ String size exceeded. +++");
-						emit message("+++ Discarding chars. +++");
-						emit message("Waiting for Atmel command string start...");
-					}
-				} // commmand completed
-			} // thread runs
 		} // simulation = false  &&  robot is on  && command complete
 
 		if (simulationMode)
@@ -1192,4 +1138,5 @@ void SimulationThread::sendToAtmel(QString string)
 void SimulationThread::commandReceived(QString string)
 {
 	commandComplete = true;
+	commandString = string;
 }

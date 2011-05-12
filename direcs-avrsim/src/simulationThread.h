@@ -145,6 +145,8 @@ class SimulationThread : public QThread
 		uint16_t leftDistanceCounter;
 		uint16_t rightDistanceCounter;
 
+		QString commandString; ///  this will contain the command string from the Atmel when received via signal from InterfaceAVr
+
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
@@ -152,6 +154,9 @@ class SimulationThread : public QThread
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
+
+		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
+		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
 
 
 /**

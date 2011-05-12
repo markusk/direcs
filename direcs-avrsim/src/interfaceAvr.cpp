@@ -328,13 +328,11 @@ void InterfaceAvr::onReadyRead()
 	QByteArray newBytes;
 	// - - -
 	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
-	unsigned char character = 0;
-	static int charCounter = 0;
 	QString receiveString;
 	QString commandString;
 	QChar qchar; // this is for conversion from unsigned char to QString
 	bool stringStarted = false;
-	bool commandCompleted = false;
+	bool commandComplete = false;
 //	static bool redLEDtoggle = false;
 	// - - -
 
@@ -371,94 +369,78 @@ void InterfaceAvr::onReadyRead()
 //		emit redLED(redLEDtoggle);
 
 
-	if (commandCompleted == false)
+	if (commandComplete == false)
 	{
+		//---------------------------------------------
 		// serial buffer overflow?
-		if (charCounter <= maxStringLength)
+		//---------------------------------------------
+		if (receiveString.length() > maxStringLength)
 		{
-			//---------------------------------------------
-			// command string from Atmel started?
-			//---------------------------------------------
-			if (receiveString.startsWith(starter)
-			{
-					stringStarted = true;
-					commandCompleted = false;
+				commandComplete = false;
+				stringStarted = false;
 
-					// start QString
-					receiveString.clear();
+//			emit greenLED(OFF);
 
-					// build command string
-					// convert from unsigned char to QChar and then to QString
-					qchar = character;
-					receiveString.append( QString(&qchar, 1) );
-// complete command string
-//receiveString.append((char *) &character);
+				emit message("<br>", false, false, false);
+				emit message("+++ String size exceeded. +++");
+				emit message("+++ Discarding chars. +++");
+				emit message("Waiting for Atmel command string start...");
 
-					emit message("<br>", false, false, false);
-					// send char to GUI (with no CR, but timestamp)
-					emit message(QString("%1").arg( qchar ), false, false, true);
-// send char to GUI
-//emit message(QString("%1").arg((char *) &character), false, false, false);
-
-					charCounter++;
-
-					emit greenLED(ON);
-				} // command started
-				else
-				{
-					//---------------------------------------------
-					// command string from Atmel completed?
-					//---------------------------------------------
-					if (character == terminator)
-					{
-						// build command string
-						// convert from unsigned char to QChar and then to QString
-						qchar = character;
-						receiveString.append( QString(&qchar, 1) );
-// complete command string
-//receiveString.append((char *) &character);
-
-						// send char to GUI (with CR, but no timestamp)
-						emit message(QString("%1").arg( qchar ), true, false, false);
-// send char to GUI
-//emit message(QString("%1").arg((char *) &character), false, false, false);
-
-						commandCompleted = true;
-						stringStarted = false;
-
-						// reset char counter
-						charCounter = 0;
-
-						emit greenLED(OFF);
+				return;
+		}
 
 
-						//-----------------------------------------------
-						emit message(QString("Atmel command string: %1.").arg(receiveString));
-						//-----------------------------------------------
+		//---------------------------------------------
+		// command string from Atmel started?
+		//---------------------------------------------
+		if (receiveString.startsWith(starter))
+		{
+				stringStarted = true;
+				commandComplete = false;
 
-						// copy string for command check
-						commandString = receiveString;
+				emit message("<br>", false, false, false);
+				// send char to GUI (with no CR, but timestamp)
+				emit message(QString("%1").arg( qchar ), false, false, true);
 
-						//-------------------------------------------------
-						// reset received string for next upcoming command
-						//-------------------------------------------------
-						charCounter = 0;
-						receiveString.clear();
-						stringStarted = false;
-						commandCompleted = false;
-
-
-						// emit completed Atmel command
-						emit commandCompleted( QString(newBytes) );
-					}
-				}
-
-						// - - - - - - - - - - - - - - - - - - -
-						// - - - - - - - - - - - - - - - - - - -
-						// - - - - - - - - - - - - - - - - - - -
+//				emit greenLED(ON);
+		}
 
 
+		//---------------------------------------------
+		// command string from Atmel completed?
+		//---------------------------------------------
+		if (receiveString.endsWith(terminator))
+		{
 
+			// send char to GUI (with CR, but no timestamp)
+			emit message(QString("%1").arg( receiveString ), true, false, false);
+
+			commandComplete = true;
+			stringStarted = false;
+
+//			emit greenLED(OFF);
+
+
+			//-----------------------------------------------
+			emit message(QString("Atmel command string: %1.").arg(receiveString));
+			//-----------------------------------------------
+
+			// copy string for command check
+			commandString = receiveString;
+
+			//-------------------------------------------------
+			// reset received string for next upcoming command
+			//-------------------------------------------------
+			receiveString.clear();
+			stringStarted = false;
+			commandComplete = false;
+
+
+			// emit completed Atmel command
+			emit commandCompleted( QString(commandString) );
+		}
+
+	} // commandComplete = false
 
 }
 
