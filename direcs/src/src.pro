@@ -29,7 +29,7 @@ unix|macx {
 				interfaceAvr.h \
 				joystick.h \
 				joystickDialog.h \
-				laser.h \
+#				laser.h \
 				laserScene.h \
 				laserSickS300.h \
 				laserThread.h \
@@ -56,7 +56,7 @@ unix|macx {
 				interfaceAvr.cpp \
 				joystick.cpp \
 				joystickDialog.cpp \
-				laser.cpp \
+#				laser.cpp \
 				laserSickS300.cpp \
 				laserScene.cpp \
 				laserThread.cpp \

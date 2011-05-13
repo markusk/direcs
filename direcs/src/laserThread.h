@@ -21,7 +21,7 @@
 #ifndef LASERTHREAD_H
 #define LASERTHREAD_H
 
-#include "laser.h"
+//#include "laser.h"	temporarily disabled
 #include "laserSickS300.h"
 #include "inifile.h" // for reading the sim values
 #include <QThread>
@@ -187,7 +187,7 @@ class LaserThread : public QThread
 		float laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
 		float laserscannerResolutionRear;  /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
 
-		Laser *laser; // the object for the PLS or LMS laserscanner
+//		Laser *laser; // the object for the PLS or LMS laserscanner		temporarily disabled
 		SickS300 *laserS300; // the object for the S300 laserscanner
 		Inifile *inifile1; //  for reading simulation values
 

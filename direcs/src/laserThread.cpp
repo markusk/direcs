@@ -50,8 +50,8 @@ LaserThread::~LaserThread()
 		if ((laserscannerTypeFront == PLS) || ((laserscannerTypeRear == PLS)) )
 		{
 			// shutdown laser (parameter '0' is not in use)
-			laser->direcs_laser_shutdown(0);
-			delete laser;
+//			laser->direcs_laser_shutdown(0)	;							temporarily disabled
+//			delete laser;												temporarily disabled
 		}
 		else
 		{
@@ -108,6 +108,9 @@ void LaserThread::run()
 		{
 			if ( (laserscannerTypeFront==PLS) || (laserscannerTypeRear==PLS)) // this is stupid, but the direcs_laser_run gets always ALL laser scanner values (wasn't my idea)
 			{
+/*
+  temporarily disabled
+
 				// asks ALL lasers (managed internaly in laser_main.cpp) for data.
 				// this calls code for PLS laser scanners!
 				laserValue = laser->direcs_laser_run();
@@ -129,6 +132,7 @@ void LaserThread::run()
 					emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
 					break;
 				}
+*/
 			}
 			else
 			{
@@ -188,6 +192,8 @@ void LaserThread::getAndStoreLaserValuesFront()
 {
 	if (laserscannerTypeFront == PLS)
 	{
+/*
+ temporarily disabled
 		// check if all 180 beams were read (in the laser module)
 		numReadingsFront = laser->getLaserNumReadings(LASER1);
 
@@ -230,6 +236,7 @@ void LaserThread::getAndStoreLaserValuesFront()
 				}
 			}
 		}
+*/
 	}
 	else
 	{
@@ -310,6 +317,8 @@ void LaserThread::getAndStoreLaserValuesRear()
 {
 	if (laserscannerTypeRear == PLS)
 	{
+/*
+temporarily disabled
 		// check if all 180 beams were read (in the laser module)
 		numReadingsRear = laser->getLaserNumReadings(LASER2);
 
@@ -352,6 +361,7 @@ void LaserThread::getAndStoreLaserValuesRear()
 				}
 			}
 		}
+*/
 	}
 	else
 	{
@@ -557,7 +567,7 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 		if (laserscannerTypeFront == PLS)
 		{
 			// for laser.cpp:
-			laser->setDevicePort(laserScanner, serialPort);
+//			laser->setDevicePort(laserScanner, serialPort);			temporarily disabled
 			return;
 		}
 
@@ -579,7 +589,7 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 		if (laserscannerTypeRear == PLS)
 		{
 			// for laser.cpp:
-			laser->setDevicePort(laserScanner, serialPort);
+//			laser->setDevicePort(laserScanner, serialPort);			temporarily disabled
 			return;
 		}
 
@@ -692,13 +702,15 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 		// create the laser objects
 		if ((laserType=="PLS") || (laserType=="LMS"))
 		{
+/*
+temporarily disabled
 			// this is the 'old' laser stuff for the LMS or PLS
 			laser = new Laser();
 
 			// let the splash screen from the direcs class show laser init messages
 			// (connect the signal from the laser class to the signal from this class)
 			connect(laser, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
-
+*/
 			return;
 		}
 
@@ -825,6 +837,8 @@ bool LaserThread::isConnected(short int laserScanner)
 
 		if (laserscannerTypeFront == PLS)
 		{
+/*
+temporarily disabled
 			// try to start the laser module LASER1
 			if (laser->direcs_laser_start(laserScanner) == 0)
 			{
@@ -833,9 +847,12 @@ bool LaserThread::isConnected(short int laserScanner)
 			}
 			else
 			{
+*/
 				laserScannerFrontIsConnected = false;
 				return false;
+/*
 			}
+*/
 		}
 		else
 		{
@@ -898,6 +915,9 @@ bool LaserThread::isConnected(short int laserScanner)
 
 		if (laserscannerTypeRear == PLS)
 		{
+/*
+temporarily disabled
+
 			// try to start the laser module LASER2
 			if (laser->direcs_laser_start(laserScanner) == 0)
 			{
@@ -906,9 +926,12 @@ bool LaserThread::isConnected(short int laserScanner)
 			}
 			else
 			{
+*/
 				laserScannerRearIsConnected = false;
 				return false;
+/*
 			}
+*/
 		}
 		else
 		{
