@@ -28,7 +28,7 @@
 #include <QTime>
 
 
-#include "direcsSerial.h"
+#include <qextserialport.h> /// http://code.google.com/qextserialport/
 
 
 /**
@@ -113,11 +113,21 @@ class SickS300 : public QObject
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		@param text is the message to be emitted
 		*/
-		void message(QString text);
+		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
+
+
+	private slots:
+	   /**
+		*/
+		void onReadyRead();
+
+		/**
+		*/
+		void onDsrChanged(bool status);
 
 
 	private:
-		DirecsSerial *serialPort;
+		QextSerialPort *serialPort;
 		int baudRate;
 		QString laserSerialPort; /// the path to the serial device. e.g. /dev/ttyUSB0
 

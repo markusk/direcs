@@ -23,11 +23,9 @@
 
 SickS300::SickS300()
 {
-	// The S300 Standard works only with a fixed baudrate of 38400 thru the diagnostic port.
-	baudRate = 38400;
-
 	// creating the serial port object
-	serialPort = new DirecsSerial();
+	// using 'EventDriven' instead of 'Polling', since last one seems to make some problems ().
+	serialPort = new QextSerialPort(QextSerialPort::EventDriven);
 
 	laserSerialPort = "NOTSET";
 
@@ -79,10 +77,6 @@ void SickS300::setDevicePort(QString serialPort)
 
 bool SickS300::openComPort()
 {
-	// for QString to char* conversion
-	QByteArray ba = laserSerialPort.toLatin1();
-
-
 	// check if serial port was set
 	if (laserSerialPort == "NOTSET")
 	{
@@ -90,19 +84,55 @@ bool SickS300::openComPort()
 		return false;
 	}
 
+
+	//------------------------------------
 	// check if file (serial port) exists
+	//------------------------------------
 	if (QFile::exists(laserSerialPort) == false)
 	{
-		emit message( QString("<font color=\"#FF0000\">Path %1 not found!</font>").arg(laserSerialPort) );
+		emit message(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(laserSerialPort));
 		return false;
 	}
 
+	//------------------------------------
+	// set port name / path to device
+	//------------------------------------
+	serialPort->setPortName(laserSerialPort);
 
-	// serial port config (57600, no HWFLCTRL, 8N1) and flush also done in openAtmelPort!
-	if (serialPort->openAtmelPort( ba.data(), baudRate ) == -1)
+	//------------------------------------
+	// open serial port for read and write
+	//------------------------------------
+	// 'Unbuffered' mode removed, since we use the 'EventDriven' mode in the constructor
+	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered ) == false)
 	{
 		return false;
 	}
+
+	//------------------------------------
+	// flush serial port
+	//------------------------------------
+//	serialPort->flush();
+
+	emit message("Serial Port for laser opened.");
+
+	// serial port settings
+	// The S300 Standard works only with a fixed baudrate of 38400 thru the diagnostic port.
+	serialPort->setBaudRate(BAUD38400);
+	serialPort->setDataBits(DATA_8);
+	serialPort->setParity(PAR_NONE);
+	serialPort->setStopBits(STOP_1);
+	serialPort->setFlowControl(FLOW_OFF);
+
+	//set timeouts to 500 ms
+	serialPort->setTimeout(500);
+
+	connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+	connect(serialPort, SIGNAL(dsrChanged(bool)), this, SLOT(onDsrChanged(bool)));
+
+	if (!(serialPort->lineStatus() & LS_DSR))
+		qDebug() << "warning: device is not turned on";
+
+	emit message("Serial port settings set.");
 
 	return true;
 }
@@ -148,8 +178,13 @@ int SickS300::closeComPort()
 	}
 
 
-	// close serial port
-	serialPort->closeAtmelPort();
+	if (serialPort->isOpen())
+	{
+		// flush input and output port
+		serialPort->flush();
+
+		serialPort->close();
+	}
 
 	return 0;
 }
@@ -157,11 +192,16 @@ int SickS300::closeComPort()
 
 bool SickS300::sendChar(unsigned char character)
 {
+	// convert to QByteArray since write() needs that like this
+	QByteArray data;
+	data.resize(1);
+	data[0] = character;
+
 // 	static int receiveErrorCounter = 0;
 
 
 	// send one byte to the serial port with direcsSerial
-	if (serialPort->writeAtmelPort(&character) <= 0)
+	if (serialPort->write(data, 1) != 1)
 	{
 		emit message("<font color=\"#FF0000\">ERROR writing serial port (sendChar, SickS300)!<font>");
 		return false;
@@ -173,12 +213,18 @@ bool SickS300::sendChar(unsigned char character)
 
 bool SickS300::receiveChar(unsigned char *character)
 {
-	// reading one char with direcsSerial
-	// Must return 1 (1 character succussfull read)!
-	if (serialPort->readAtmelPort(character, 1) != 1)
+	// data available?
+	if (serialPort->bytesAvailable() < 1)
 	{
 		// ERROR
-		emit message("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, SickS300)!<font>");
+		return false;
+	}
+
+	// read data
+	// and 'convert' from unsigned char* to char*. See also http://bytes.com/topic/c/answers/720858-convert-unsigned-char-char
+	if (serialPort->read((char *) character, 1) != 1)
+	{
+		// ERROR
 		return false;
 	}
 
@@ -257,14 +303,12 @@ int SickS300::readRequestTelegram()
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
-	// flushing serial input buffer
-	result = serialPort->purgeRx();
-
-	if (result != 0)
+	if (serialPort->isOpen())
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR %1 flushing serial port (SickS300::readRequestTelegram).</font>").arg(result));
-		return -1;
+		// flush input and output port
+		serialPort->flush();
 	}
+
 
 	// send "get scan data" to laser
 	// emit message("Sending 'get scan data'...");
@@ -535,14 +579,12 @@ int SickS300::readUnknownTelegram()
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
-	// flushing serial input buffer
-	result = serialPort->purgeRx();
-
-	if (result != 0)
+	if (serialPort->isOpen())
 	{
-		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
-		return -1;
+		// flush input and output port
+		serialPort->flush();
 	}
+
 
 	// send "read block 0B" to laser
 	 emit message("Sending 'read block 0B'...");
@@ -680,4 +722,42 @@ float SickS300::getDistance(int angleIndex)
 
 	// here we convert from cm to m (meters)!!
 	return (distances[angleIndex] / 100);
+}
+
+
+void SickS300::onReadyRead()
+{
+	QByteArray bytes;
+	QByteArray newBytes;
+	QString receiveString;
+
+
+	int a = serialPort->bytesAvailable();
+	qDebug() << "bytes available:" << a;
+
+	newBytes.resize(a);
+	serialPort->read(newBytes.data(), newBytes.size());
+//    newBytes.resize(port->readLine(newBytes.data(), 1024));
+	qDebug() << "bytes read:" << newBytes.size();
+	qDebug() << "bytes:" << newBytes;
+
+//    QByteArray newBytes = port->readAll();
+//    qDebug() << newBytes;
+
+	// merge.
+	bytes.append(newBytes);
+
+	// copy to receiveString
+	receiveString = QString(bytes);
+
+	qDebug() << "total:" << bytes;
+}
+
+
+void SickS300::onDsrChanged(bool status)
+{
+	if (status)
+		qDebug() << "device was turned on";
+	else
+		qDebug() << "device was turned off";
 }
