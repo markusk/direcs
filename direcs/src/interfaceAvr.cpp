@@ -23,19 +23,8 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new QextSerialPort(QextSerialPort::Polling);
-
-	// serial port settings
-	serialPort->setBaudRate(BAUD9600);
-	serialPort->setDataBits(DATA_8);
-	serialPort->setParity(PAR_NONE);
-	serialPort->setStopBits(STOP_1);
-//	serialPort->setDtr(false); /// @todo check if this is needed. By default set to true!
-//	serialPort->setRts(false);
-	serialPort->setFlowControl(FLOW_OFF);
-
-	//set timeouts to 500 ms
-	serialPort->setTimeout(500);
+	// using 'EventDriven' instead of 'Polling', since last one seems to make some problems ().
+	serialPort = new QextSerialPort(QextSerialPort::EventDriven);
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
@@ -79,8 +68,8 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//------------------------------------
 	// open serial port for read and write
 	//------------------------------------
-	// 'unbufferd' used because of qextserial example 'QESPTA'.
-	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered) == false)
+	// 'Unbuffered' mode removed, since we use the 'EventDriven' mode in the constructor
+	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered ) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
@@ -91,10 +80,32 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//------------------------------------
 	// flush serial port
 	//------------------------------------
-	serialPort->flush();
+//	serialPort->flush();
 
 	qDebug("openComPort: serial port opened.");
 	emit robotState(true); /// let the circuit class know, that we opened it
+
+	// serial port settings
+	serialPort->setBaudRate(BAUD9600);
+	serialPort->setDataBits(DATA_8);
+	serialPort->setParity(PAR_NONE);
+	serialPort->setStopBits(STOP_1);
+//	serialPort->setDtr(false); /// @todo check if this is needed. By default set to true!
+//	serialPort->setRts(false);
+	serialPort->setFlowControl(FLOW_OFF);
+
+	//set timeouts to 500 ms
+	serialPort->setTimeout(500);
+
+	connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+	connect(serialPort, SIGNAL(dsrChanged(bool)), this, SLOT(onDsrChanged(bool)));
+
+	if (!(serialPort->lineStatus() & LS_DSR))
+		qDebug() << "warning: device is not turned on";
+
+	qDebug() << "listening for data on" << serialPort->portName();
+
+	emit message("Waiting for Atmel command string start...");
 
 	return true;
 }
@@ -308,4 +319,145 @@ void InterfaceAvr::flush()
 		// flush input and output port
 		serialPort->flush();
 	}
+}
+
+
+void InterfaceAvr::onReadyRead()
+{
+	QByteArray bytes;
+	QByteArray newBytes;
+	// - - -
+	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
+	QString receiveString;
+	QString commandString;
+	QChar qchar; // this is for conversion from unsigned char to QString
+	bool stringStarted = false;
+	bool commandComplete = false;
+//	static bool redLEDtoggle = false;
+	// - - -
+
+
+	int a = serialPort->bytesAvailable();
+	qDebug() << "bytes available:" << a;
+
+	newBytes.resize(a);
+	serialPort->read(newBytes.data(), newBytes.size());
+//    newBytes.resize(port->readLine(newBytes.data(), 1024));
+	qDebug() << "bytes read:" << newBytes.size();
+	qDebug() << "bytes:" << newBytes;
+
+//    QByteArray newBytes = port->readAll();
+//    qDebug() << newBytes;
+
+	// merge.
+	bytes.append(newBytes);
+
+	// copy to receiveString
+	receiveString = QString(bytes);
+
+	qDebug() << "total:" << bytes;
+
+
+	// - - - - - - - - - - - - - - - - - - -
+	// - - - - - - - - - - - - - - - - - - -
+	// - - - - - - - - - - - - - - - - - - -
+
+
+
+	// toggling the red LED on and off with every received serial commmand
+//		redLEDtoggle = !redLEDtoggle;
+//		emit redLED(redLEDtoggle);
+
+
+	if (commandComplete == false)
+	{
+		//---------------------------------------------
+		// serial buffer overflow?
+		//---------------------------------------------
+		if (receiveString.length() > maxStringLength)
+		{
+				commandComplete = false;
+				stringStarted = false;
+
+//			emit greenLED(OFF);
+
+				emit message("<br>", false, false, false);
+				emit message("+++ String size exceeded. +++");
+				emit message("+++ Discarding chars. +++");
+				emit message("Waiting for Atmel command string start...");
+
+				return;
+		}
+
+
+		//---------------------------------------------
+		// command string from Atmel started?
+		//---------------------------------------------
+		if (receiveString.startsWith(starter))
+		{
+				stringStarted = true;
+				commandComplete = false;
+
+				emit message("<br>", false, false, false);
+				// send char to GUI (with no CR, but timestamp)
+				emit message(QString("%1").arg( qchar ), false, false, true);
+
+//				emit greenLED(ON);
+		}
+		else
+		{
+			// send recevied string to GUI)
+			emit message(receiveString);
+
+			//-------------------------------------------------
+			// wrong starter -> reset received string
+			//-------------------------------------------------
+			receiveString.clear();
+			stringStarted = false;
+			commandComplete = false;
+		}
+
+
+		//---------------------------------------------
+		// command string from Atmel completed?
+		//---------------------------------------------
+		if (receiveString.endsWith(terminator))
+		{
+
+			// send char to GUI (with CR, but no timestamp)
+			emit message(QString("%1").arg( receiveString ), true, false, false);
+
+			commandComplete = true;
+			stringStarted = false;
+
+//			emit greenLED(OFF);
+
+
+			// copy string for command check
+			commandString = receiveString;
+
+			emit message(QString("Atmel command string: %1.").arg(commandString));
+
+			//-------------------------------------------------
+			// reset received string for next upcoming command
+			//-------------------------------------------------
+			receiveString.clear();
+			stringStarted = false;
+			commandComplete = false;
+
+			// emit completed Atmel command
+			emit commandCompleted( QString(commandString) );
+		}
+
+	} // commandComplete = false
+
+}
+
+
+void InterfaceAvr::onDsrChanged(bool status)
+{
+	if (status)
+		qDebug() << "device was turned on";
+	else
+		qDebug() << "device was turned off";
 }

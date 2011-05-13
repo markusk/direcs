@@ -118,6 +118,12 @@ class InterfaceAvr : public QObject
 
 	signals:
 		/**
+		This signal emits if a complete command string was received. @sa SimulationThread::commandReceived()
+		@param string contains the received string
+		*/
+		void commandCompleted(QString string);
+
+		/**
 		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
 		This signal is emitted, when the openComPort() method fails!
 		@param state can be ON or OFF
@@ -136,6 +142,16 @@ class InterfaceAvr : public QObject
 		@param text is the message to be emitted
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
+
+
+	private slots:
+	   /**
+		*/
+		void onReadyRead();
+
+		/**
+		*/
+		void onDsrChanged(bool status);
 
 
 	private:

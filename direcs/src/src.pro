@@ -23,7 +23,6 @@ unix|macx {
 				circuit.h \
 				compassWidget.h \
 				consoleGui.h \
-				direcsSerial.h \
 				gui.h \
 				head.h \
 				inifile.h \
@@ -51,7 +50,6 @@ unix|macx {
 				circuit.cpp \
 				compassWidget.cpp \
 				consoleGui.cpp \
-				direcsSerial.cpp \
 				gui.cpp \
 				head.cpp \
 				inifile.cpp \
@@ -111,6 +109,9 @@ unix|macx {
 	message("See http://www.openkinect.org for details how to install libfreenect.")
 }
 
+CONFIG(debug, debug|release):LIBS  += -lqextserialportd
+else:LIBS  += -lqextserialport
+
 
 macx {
 	message("Processing MAC OS scope...")
@@ -131,7 +132,7 @@ macx {
 	ICON = ../images/direcs.icns
 
 	QMAKE_CXXFLAGS+= -arch x86_64
-	INCLUDEPATH+=/usr/local/boost/
+	INCLUDEPATH+=/usr/local/boost
 }
 
 
