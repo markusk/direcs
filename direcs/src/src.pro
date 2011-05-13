@@ -8,13 +8,13 @@ OBJECTS_DIR = ../tmp
 
 RESOURCES = ../direcs.qrc
 
-CONFIG += warn_on \
-	thread \
+CONFIG += debug \
 	qt
 
 TEMPLATE = app
 
-DEFINES += ACTIVELASERVIEW
+DEFINES += ACTIVELASERVIEW \
+			_TTY_POSIX_
 
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
