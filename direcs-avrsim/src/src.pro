@@ -36,3 +36,6 @@ CONFIG(debug, debug|release):LIBS  += -lqextserialportd
 else:LIBS  += -lqextserialport
 
 unix:DEFINES   = _TTY_POSIX_
+
+macx:ICON = ../images/direcs-avrsim.icns
+
