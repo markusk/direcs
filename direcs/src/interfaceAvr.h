@@ -156,6 +156,7 @@ class InterfaceAvr : public QObject
 
 	private:
 		QextSerialPort *serialPort;
+		bool commandComplete; // this indicates, that a complete Atmel command was received - e.g. *sl#
 
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"

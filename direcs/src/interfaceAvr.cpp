@@ -29,6 +29,9 @@ InterfaceAvr::InterfaceAvr()
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
 /// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+
+	//  we do not have a completed Atmel commandr received so far
+	commandComplete = false;
 }
 
 
@@ -327,27 +330,30 @@ void InterfaceAvr::onReadyRead()
 	QByteArray bytes;
 	QByteArray newBytes;
 	// - - -
-	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
+//	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 	QString receiveString;
 	QString commandString;
 	QChar qchar; // this is for conversion from unsigned char to QString
 	bool stringStarted = false;
-	bool commandComplete = false;
 //	static bool redLEDtoggle = false;
 	// - - -
 
 
+	// check how many bytes are available
+	// since this Slot is called automatically, the *have* to be some available
 	int a = serialPort->bytesAvailable();
-	qDebug() << "bytes available:" << a;
+	qDebug() << a << "Byte available";
 
+	// reserve space
 	newBytes.resize(a);
-	serialPort->read(newBytes.data(), newBytes.size());
-//    newBytes.resize(port->readLine(newBytes.data(), 1024));
-	qDebug() << "bytes read:" << newBytes.size();
-	qDebug() << "bytes:" << newBytes;
 
-//    QByteArray newBytes = port->readAll();
-//    qDebug() << newBytes;
+	// read bytes
+	serialPort->read(newBytes.data(), newBytes.size());
+	// newBytes.resize(port->readLine(newBytes.data(), 1024));
+	qDebug() << newBytes.size() << "Byte read:" << newBytes;
+
+	//    QByteArray newBytes = port->readAll();
+	//    qDebug() << newBytes;
 
 	// merge.
 	bytes.append(newBytes);
@@ -355,7 +361,7 @@ void InterfaceAvr::onReadyRead()
 	// copy to receiveString
 	receiveString = QString(bytes);
 
-	qDebug() << "total:" << bytes;
+	qDebug() << "Total:" << bytes << "\n";
 
 
 	// - - - - - - - - - - - - - - - - - - -
@@ -376,17 +382,19 @@ void InterfaceAvr::onReadyRead()
 		//---------------------------------------------
 		if (receiveString.length() > maxStringLength)
 		{
-				commandComplete = false;
-				stringStarted = false;
+			commandComplete = false;
+			stringStarted = false;
+
+			// reset own time measuring
+			duration.restart();
 
 //			emit greenLED(OFF);
 
-				emit message("<br>", false, false, false);
-				emit message("+++ String size exceeded. +++");
-				emit message("+++ Discarding chars. +++");
-				emit message("Waiting for Atmel command string start...");
+			emit message("+++ String size exceeded. +++");
+			emit message("+++ Discarding chars. +++");
+			emit message("Waiting for Atmel command string start...");
 
-				return;
+			return;
 		}
 
 
@@ -395,19 +403,19 @@ void InterfaceAvr::onReadyRead()
 		//---------------------------------------------
 		if (receiveString.startsWith(starter))
 		{
-				stringStarted = true;
-				commandComplete = false;
 
 				emit message("<br>", false, false, false);
 				// send char to GUI (with no CR, but timestamp)
 				emit message(QString("%1").arg( qchar ), false, false, true);
+			stringStarted = true;
+			commandComplete = false;
 
-//				emit greenLED(ON);
+//			emit greenLED(ON);
 		}
 		else
 		{
 			// send recevied string to GUI)
-			emit message(receiveString);
+//			emit message(receiveString);
 
 			//-------------------------------------------------
 			// wrong starter -> reset received string
@@ -425,7 +433,7 @@ void InterfaceAvr::onReadyRead()
 		{
 
 			// send char to GUI (with CR, but no timestamp)
-			emit message(QString("%1").arg( receiveString ), true, false, false);
+			// emit message(QString("%1").arg( receiveString ), true, false, false);
 
 			commandComplete = true;
 			stringStarted = false;
@@ -436,7 +444,7 @@ void InterfaceAvr::onReadyRead()
 			// copy string for command check
 			commandString = receiveString;
 
-			emit message(QString("Atmel command string: %1.").arg(commandString));
+			emit message(QString("Atmel says: %1.").arg(commandString));
 
 			//-------------------------------------------------
 			// reset received string for next upcoming command
