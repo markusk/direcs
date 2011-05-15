@@ -44,6 +44,10 @@ Circuit::~Circuit()
 
 bool Circuit::initCircuit()
 {
+	bool myTimeout = false;
+	bool commandComplete = false;
+
+
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -66,32 +70,46 @@ bool Circuit::initCircuit()
 			// let us wait for an answer from the Atmel
 			do
 			{
-			} while ( (duration.elapsed() < ATMELTIMEOUT) && (interface1->commandOkay() == false) );
+				if (duration.elapsed() >= ATMELTIMEOUT)
+					myTimeout = true;
 
-			// check if the robot answers with "ok"
-			if ( interface1->receiveString(atmelString) == true)
+				if (interface1->commandOkay() == true)
+					commandComplete = true;
+
+			} while ((commandComplete == false) && (myTimeout == false) );
+
+
+			if (myTimeout)
 			{
-				emit message("Answer received.");
-				// everthing's fine :-)
-				if (atmelString == "*ok#")
-				{
-					emit message("Answer was correct.");
-					// Unlock the mutex
-					mutex->unlock();
-
-					// ciruit init okay
-					firstInitDone = true;
-					circuitState = true;
-					emit robotState(true);
-
-					return true;
-				}
-			}
-			else
-			{
-				emit message("No answer received.");
+				emit message(QString("Timeout (%1 > %2ms)").arg(duration.msec()).arg(ATMELTIMEOUT));
+				return false;
 			}
 
+
+			if (!commandComplete)
+			{
+				emit message("No complete answer received.");
+				return false;
+			}
+
+
+			// everthing's fine :-)
+			emit message("Answer received.");
+
+			// (atmelString is set via Slot getString() )
+			if (atmelString == "*ok#")
+			{
+				emit message("Answer was correct.");
+				// Unlock the mutex
+				mutex->unlock();
+
+				// ciruit init okay
+				firstInitDone = true;
+				circuitState = true;
+				emit robotState(true);
+
+				return true;
+			}
 
 		}
 		else
@@ -102,7 +120,7 @@ bool Circuit::initCircuit()
 		// Unlock the mutex.
 		mutex->unlock();
 
-	}
+	} // robot alread marked as OFF
 
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	firstInitDone = true;
