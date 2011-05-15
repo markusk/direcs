@@ -59,6 +59,15 @@ bool Circuit::initCircuit()
 		{
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
+
+			// start own time measuring
+			duration.start();
+
+			// let us wait for an answer from the Atmel
+			do
+			{
+			} while ( (duration.elapsed() < ATMELTIMEOUT) && (interface1->commandOkay() == false) );
+
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(atmelString) == true)
 			{

@@ -24,6 +24,7 @@
 //-------------------------------------------------------------------
 #include "interfaceAvr.h"
 #include <QMutex>
+#include <QTime>
 //-------------------------------------------------------------------
 
 /**
@@ -109,6 +110,10 @@ class Circuit : public QObject
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		QString atmelString; /// stores the string recevied from the Atmel
+
+		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
+		static const int ATMELTIMEOUT = 250; /// timeout in ms
+
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
 		bool circuitState; // stores the robot state within this class
