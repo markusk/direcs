@@ -78,6 +78,11 @@ class Circuit : public QObject
 		 */
 		void setRobotState(bool state);
 
+		/**
+		This slot takes the received Atmel command string and stores it in a class member.
+		*/
+		void getString(QString string);
+
 
 	signals:
 		/**
@@ -103,6 +108,7 @@ class Circuit : public QObject
 	private:
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
+		QString atmelString; /// stores the string recevied from the Atmel
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
 		bool circuitState; // stores the robot state within this class

@@ -29,6 +29,11 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	circuitState = false;
 	firstInitDone = false;
 	compassCircuitState = false;
+
+	atmelString = "error";
+
+	// get the strings emmited from the interfaceAcrt class
+	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(getString(QString)));
 }
 
 
@@ -39,9 +44,6 @@ Circuit::~Circuit()
 
 bool Circuit::initCircuit()
 {
-	QString answer = "error";
-
-
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -58,11 +60,11 @@ bool Circuit::initCircuit()
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
 			// check if the robot answers with "ok"
-			if ( interface1->receiveString(answer) == true)
+			if ( interface1->receiveString(atmelString) == true)
 			{
 				emit message("Answer received.");
 				// everthing's fine :-)
-				if (answer == "*ok#")
+				if (atmelString == "*ok#")
 				{
 					emit message("Answer was correct.");
 					// Unlock the mutex
@@ -80,6 +82,8 @@ bool Circuit::initCircuit()
 			{
 				emit message("No answer received.");
 			}
+
+
 		}
 		else
 		{
@@ -208,4 +212,10 @@ bool Circuit::sleep()
 	}
 
 	return false;
+}
+
+
+void Circuit::getString(QString string)
+{
+	atmelString = string;
 }
