@@ -470,9 +470,3 @@ void InterfaceAvr::onDsrChanged(bool status)
 	else
 		qDebug() << "device was turned off";
 }
-
-
-bool InterfaceAvr::commandOkay()
-{
-	return commandComplete;
-}

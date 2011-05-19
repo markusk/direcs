@@ -115,12 +115,6 @@ class InterfaceAvr : public QObject
 		*/
 		void flush();
 
-		/**
-		@todo decribe me
-		*/
-		bool commandOkay();
-
-
 
 	signals:
 		/**
