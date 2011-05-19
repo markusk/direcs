@@ -31,6 +31,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	compassCircuitState = false;
 
 	atmelString = "error";
+	commandComplete = false;
 
 	// get the strings emmited from the interfaceAcrt class
 	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(getString(QString)));
@@ -45,7 +46,6 @@ Circuit::~Circuit()
 bool Circuit::initCircuit()
 {
 	bool myTimeout = false;
-	bool commandComplete = false;
 
 
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
@@ -70,28 +70,28 @@ bool Circuit::initCircuit()
 			// let us wait for an answer from the Atmel
 			do
 			{
-				if (duration.elapsed() >= ATMELTIMEOUT)
+				if (duration.elapsed() > ATMELTIMEOUT)
 					myTimeout = true;
-
-				if (interface1->commandOkay() == true)
-					commandComplete = true;
 
 			} while ((commandComplete == false) && (myTimeout == false) );
 
 
 			if (myTimeout)
 			{
-				emit message(QString("Timeout (%1 > %2ms)").arg(duration.msec()).arg(ATMELTIMEOUT));
+				emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 				return false;
 			}
 
 
 			if (!commandComplete)
 			{
+				emit message(QString("TEST!! atmelString=%1.").arg(atmelString));
 				emit message("No complete answer received.");
 				return false;
 			}
 
+			// reset indicator
+			commandComplete = false;
 
 			// everthing's fine :-)
 			emit message("Answer received.");
@@ -244,5 +244,7 @@ bool Circuit::sleep()
 
 void Circuit::getString(QString string)
 {
+	commandComplete = true;
 	atmelString = string;
+	emit message( QString("Slot getstring received: %1").arg(string) );
 }
