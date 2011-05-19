@@ -27,6 +27,7 @@
 
 #include <QFile>
 #include <QObject>
+#include <QTime>
 #include <QDebug>
 
 
@@ -162,9 +163,12 @@ class InterfaceAvr : public QObject
 	private:
 		QextSerialPort *serialPort;
 		bool commandComplete; // this indicates, that a complete Atmel command was received - e.g. *sl#
+		QTime duration;
 
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"
+
+		static const int ATMELTIMEOUT = 250; /// timeout in ms
 
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #

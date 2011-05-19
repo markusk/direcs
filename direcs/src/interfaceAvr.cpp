@@ -327,7 +327,7 @@ void InterfaceAvr::flush()
 
 void InterfaceAvr::onReadyRead()
 {
-	QByteArray bytes;
+static	QByteArray bytes;
 	QByteArray newBytes;
 	// - - -
 //	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
@@ -375,8 +375,9 @@ void InterfaceAvr::onReadyRead()
 //		emit redLED(redLEDtoggle);
 
 
-	if (commandComplete == false)
-	{
+//	if (commandComplete == false)
+//	{
+/*
 		//---------------------------------------------
 		// serial buffer overflow?
 		//---------------------------------------------
@@ -396,17 +397,16 @@ void InterfaceAvr::onReadyRead()
 
 			return;
 		}
-
+*/
 
 		//---------------------------------------------
 		// command string from Atmel started?
 		//---------------------------------------------
 		if (receiveString.startsWith(starter))
 		{
+			// start own time measuring
+			duration.start();
 
-				emit message("<br>", false, false, false);
-				// send char to GUI (with no CR, but timestamp)
-				emit message(QString("%1").arg( qchar ), false, false, true);
 			stringStarted = true;
 			commandComplete = false;
 
@@ -423,6 +423,9 @@ void InterfaceAvr::onReadyRead()
 			receiveString.clear();
 			stringStarted = false;
 			commandComplete = false;
+
+			// reset own time measuring
+			duration.restart();
 		}
 
 
@@ -431,19 +434,15 @@ void InterfaceAvr::onReadyRead()
 		//---------------------------------------------
 		if (receiveString.endsWith(terminator))
 		{
-
 			// send char to GUI (with CR, but no timestamp)
 			// emit message(QString("%1").arg( receiveString ), true, false, false);
 
-			commandComplete = true;
-			stringStarted = false;
-
 //			emit greenLED(OFF);
-
 
 			// copy string for command check
 			commandString = receiveString;
 
+			emit message(QString("interfaceAvr time: %1 ms").arg(duration.elapsed()));
 			emit message(QString("Atmel says: %1.").arg(commandString));
 
 			//-------------------------------------------------
@@ -451,13 +450,15 @@ void InterfaceAvr::onReadyRead()
 			//-------------------------------------------------
 			receiveString.clear();
 			stringStarted = false;
-			commandComplete = false;
+
+			// this can be checked via commandOkay()
+			commandComplete = true;
 
 			// emit completed Atmel command
 			emit commandCompleted( QString(commandString) );
 		}
 
-	} // commandComplete = false
+//	} // commandComplete = false
 
 }
 
