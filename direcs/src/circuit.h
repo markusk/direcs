@@ -23,6 +23,7 @@
 
 //-------------------------------------------------------------------
 #include "interfaceAvr.h"
+#include <QThread>
 #include <QMutex>
 #include <QTime>
 //-------------------------------------------------------------------
@@ -33,7 +34,7 @@
 
 This class delivers a initialisation for the robot's circuits and checks, if the robot is ON or OFF.
 */
-class Circuit : public QObject
+class Circuit : public QThread
 {
 	Q_OBJECT
 
@@ -50,6 +51,10 @@ class Circuit : public QObject
 		@return The state of the compass module which is connected to the robots circuit (Atmel board).
 		*/
 		bool compassConnected();
+
+		void stop();
+
+		virtual void run();
 
 
 	public slots:
@@ -109,6 +114,7 @@ class Circuit : public QObject
 	private:
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
+		volatile bool stopped;
 		QString atmelString; /// stores the string recevied from the Atmel
 		bool commandComplete; // this indicates, that a complete Atmel command was received - e.g. *sl#
 
@@ -123,6 +129,10 @@ class Circuit : public QObject
 
 		static const bool ON  = true;
 		static const bool OFF = false;
+
+		// Every thread sleeps some time, for having a bit more time for the other threads!
+		// Time in milliseconds
+		static const unsigned long THREADSLEEPTIME = 100; // Default: 100 ms
 };
 
 #endif

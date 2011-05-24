@@ -20,11 +20,13 @@
 
 #include "circuit.h"
 
-Circuit::Circuit(InterfaceAvr *i, QMutex *m)
+Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
 {
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
+
+	stopped = false;
 
 	circuitState = false;
 	firstInitDone = false;
@@ -40,6 +42,32 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 
 Circuit::~Circuit()
 {
+	stopped = true;
+}
+
+
+void Circuit::stop()
+{
+	stopped = true;
+}
+
+
+void Circuit::run()
+{
+	//  start "threading"...
+	while (!stopped)
+	{
+
+		// do some heavy threading here...
+
+
+		// let the thread sleep some time
+		msleep(THREADSLEEPTIME);
+
+	} // while !stopped
+
+
+	stopped = false;
 }
 
 
