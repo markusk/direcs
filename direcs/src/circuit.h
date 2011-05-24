@@ -82,7 +82,7 @@ class Circuit : public QObject
 		/**
 		This slot takes the received Atmel command string and stores it in a class member.
 		*/
-		void getString(QString string);
+		void getString(bool state, QString string);
 
 
 	signals:

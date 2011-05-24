@@ -34,7 +34,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	commandComplete = false;
 
 	// get the strings emmited from the interfaceAcrt class
-	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(getString(QString)));
+	connect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(getString(bool, QString)));
 }
 
 
@@ -242,9 +242,9 @@ bool Circuit::sleep()
 }
 
 
-void Circuit::getString(QString string)
+void Circuit::getString(bool state, QString string)
 {
-	commandComplete = true;
+	commandComplete = state;
 	atmelString = string;
 	emit message( QString("Slot getstring received: %1").arg(string) );
 }
