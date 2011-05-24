@@ -119,8 +119,10 @@ macx {
 	LIBS -=		-lespeak \
 				-lqwt-qt4
 
-	message("Changing qwt lib name. Has to be installed via macports.")
-	LIBS +=		-lqwt
+	message("Changing qwt lib name. Has to be installed via macports or manually (QWT 5.2.1 !!")
+	LIBS +=		-L/usr/local/qwt-5.2.1/lib \
+				-lqwt
+	INCLUDEPATH+=/usr/local/qwt-5.2.1/include
 
 	message( Adding joystick stuff... )
 	LIBS +=		-framework IOKit \
