@@ -59,7 +59,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 		emit message(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(comPort));
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-		qDebug("openComPort: serial path not found!");
+//		qDebug("openComPort: serial path not found!");
 		return false;
 	}
 
@@ -76,7 +76,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
-		qDebug("openComPort: error opening serial port!");
+//		qDebug("openComPort: error opening serial port!");
 		return false;
 	}
 
@@ -85,7 +85,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//------------------------------------
 //	serialPort->flush();
 
-	qDebug("openComPort: serial port opened.");
+//	qDebug("openComPort: serial port opened.");
 	emit robotState(true); /// let the circuit class know, that we opened it
 
 	// serial port settings
@@ -185,7 +185,7 @@ bool InterfaceAvr::sendString(QString string)
 	// add terminator
 	string.append("#");
 
-	qDebug() << "sending string:" << string;
+//	qDebug() << "sending string:" << string;
 
 	// sending the string returns the number of chars sent
 	if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )
@@ -342,7 +342,7 @@ static	QByteArray bytes;
 	// check how many bytes are available
 	// since this Slot is called automatically, the *have* to be some available
 	int a = serialPort->bytesAvailable();
-	qDebug() << a << "Byte available";
+//	qDebug() << a << "Byte available";
 
 	// reserve space
 	newBytes.resize(a);
@@ -350,7 +350,7 @@ static	QByteArray bytes;
 	// read bytes
 	serialPort->read(newBytes.data(), newBytes.size());
 	// newBytes.resize(port->readLine(newBytes.data(), 1024));
-	qDebug() << newBytes.size() << "Byte read:" << newBytes;
+//	qDebug() << newBytes.size() << "Byte read:" << newBytes;
 
 	//    QByteArray newBytes = port->readAll();
 	//    qDebug() << newBytes;
@@ -361,7 +361,7 @@ static	QByteArray bytes;
 	// copy to receiveString
 	receiveString = QString(bytes);
 
-	qDebug() << "Total:" << bytes << "\n";
+//	qDebug() << "Total:" << bytes << "\n";
 
 
 	// - - - - - - - - - - - - - - - - - - -
