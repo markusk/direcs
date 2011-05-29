@@ -167,18 +167,25 @@ void Circuit::run()
 
 bool Circuit::initCircuit()
 {
-	bool myTimeout = false;
+//	bool myTimeout = false;
 
 
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
+		atmelCommand = "re";
 
+//		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+//		mutex->lock();
+
+		// let the 'run' method work on ths command
+		stopped = false;
+
+		// let the thread sleep some time
+		msleep(THREADSLEEPTIME);
+/*
 		//-------------------------------------------------------
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
-
 		// sending RESET (INIT) command
 		emit message("Sending *re#...");
 		if (interface1->sendString("re") == true)
