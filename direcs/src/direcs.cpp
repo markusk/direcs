@@ -612,6 +612,10 @@ void Direcs::init()
 			//==========================
 			emit splashMessage("Searching robot...");
 
+			// start the circuit thread
+			emit splashMessage("Starting circuit thread.");
+			circuit1->start();
+
 			if (circuit1->initCircuit() == true)
 			{
 				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
