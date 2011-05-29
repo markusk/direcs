@@ -115,7 +115,7 @@ class Circuit : public QThread
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
-		QString atmelString; /// stores the string recevied from the Atmel
+		QString atmelAnswer; /// stores the string received from the Atmel
 		bool answerReceived; // this indicates, that a complete Atmel command was received - e.g. *sl#
 
 		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers

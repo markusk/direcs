@@ -32,7 +32,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
 	firstInitDone = false;
 	compassCircuitState = false;
 
-	atmelString = "error";
+	atmelAnswer = "error";
 	answerReceived = false;
 
 	// get the strings emmited from the interfaceAcrt class
@@ -113,7 +113,7 @@ bool Circuit::initCircuit()
 
 			if (!answerReceived)
 			{
-				emit message(QString("TEST!! atmelString=%1.").arg(atmelString));
+				emit message(QString("TEST!! atmelString=%1.").arg(atmelAnswer));
 				emit message("No complete answer received.");
 				return false;
 			}
@@ -125,7 +125,7 @@ bool Circuit::initCircuit()
 			emit message("Answer received.");
 
 			// (atmelString is set via Slot getString() )
-			if (atmelString == "*ok#")
+			if (atmelAnswer == "*ok#")
 			{
 				emit message("Answer was correct.");
 				// Unlock the mutex
@@ -273,6 +273,6 @@ bool Circuit::sleep()
 void Circuit::getString(bool state, QString string)
 {
 	answerReceived = state;
-	atmelString = string;
+	atmelAnswer = string;
 	emit message( QString("Slot getstring received: %1").arg(string) );
 }
