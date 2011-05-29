@@ -32,6 +32,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
 	firstInitDone = false;
 	compassCircuitState = false;
 
+	atmelCommand.clear();
 	atmelAnswer = "error";
 	answerReceived = false;
 

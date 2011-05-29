@@ -115,8 +115,9 @@ class Circuit : public QThread
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
-		QString atmelAnswer; /// stores the string received from the Atmel
-		bool answerReceived; // this indicates, that a complete Atmel command was received - e.g. *sl#
+		QString atmelCommand; /// this is the command for the Atmel
+		QString atmelAnswer;  /// this stores the string received from the Atmel
+		bool answerReceived;  /// this indicates, that a complete Atmel command was received - e.g. *sl#
 
 		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
 		static const int ATMELTIMEOUT = 250; /// timeout in ms
