@@ -182,7 +182,7 @@ bool InterfaceAvr::sendString(QString string)
 	// add terminator
 	string.append("#");
 
-	qDebug() << "sending string:" << string;
+//	qDebug() << "sending string:" << string;
 
 	// sending the string returns the number of chars sent
 	if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )
@@ -338,18 +338,18 @@ void InterfaceAvr::onReadyRead()
 
 
 	int a = serialPort->bytesAvailable();
-	qDebug() << "bytes available:" << a;
+//	qDebug() << "bytes available:" << a;
 
 	newBytes.resize(a);
 	serialPort->read(newBytes.data(), newBytes.size());
-//    newBytes.resize(port->readLine(newBytes.data(), 1024));
-	qDebug() << "bytes read:" << newBytes.size();
-	qDebug() << "bytes:" << newBytes;
+	// newBytes.resize(port->readLine(newBytes.data(), 1024));
+//	qDebug() << "bytes read:" << newBytes.size();
+//	qDebug() << "bytes:" << newBytes;
 
-//    QByteArray newBytes = port->readAll();
-//    qDebug() << newBytes;
+	// QByteArray newBytes = port->readAll();
+	// qDebug() << newBytes;
 
-	// merge.
+	// merge
 	bytes.append(newBytes);
 
 	// copy to receiveString
