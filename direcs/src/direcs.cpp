@@ -3326,7 +3326,7 @@ void Direcs::readSettings()
 			mot1Speed = 0;
 			break;
 		default:
-			if (mot1Speed > 254)
+			if (mot1Speed > 255)
 			{
 				emit message("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than 255!! Value set to 255!</font>");
 				mot1Speed = 255;
@@ -3358,7 +3358,7 @@ void Direcs::readSettings()
 			mot2Speed = 0;
 			break;
 		default:
-			if (mot2Speed > 254)
+			if (mot2Speed > 255)
 			{
 				emit message("<font color=\"#FF0000\">Value \"motor2Speed\" is greater than 255!! Value set to 255!</font>");
 				mot2Speed = 255;
@@ -3390,7 +3390,7 @@ void Direcs::readSettings()
 			mot3Speed = 0;
 			break;
 		default:
-			if (mot3Speed > 254)
+			if (mot3Speed > 255)
 			{
 				emit message("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than 255!! Value set to 255!</font>");
 				mot3Speed = 255;
@@ -3422,7 +3422,7 @@ void Direcs::readSettings()
 			mot4Speed = 0;
 			break;
 		default:
-			if (mot4Speed > 254)
+			if (mot4Speed > 255)
 			{
 				emit message("<font color=\"#FF0000\">Value \"motor4Speed\" is greater than 255!! Value set to 255!</font>");
 				mot4Speed = 255;
@@ -3454,7 +3454,7 @@ void Direcs::readSettings()
 			minimumSpeed = 0;
 			break;
 		default:
-			if (minimumSpeed > 254)
+			if (minimumSpeed > 255)
 			{
 				emit message("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than 255!! Value set to 255!</font>");
 				minimumSpeed = 255;
@@ -3486,7 +3486,7 @@ void Direcs::readSettings()
 			maximumSpeed = 0;
 			break;
 		default:
-			if (maximumSpeed > 254)
+			if (maximumSpeed > 255)
 			{
 				emit message("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than 255!! Value set to 255!</font>");
 				maximumSpeed = 255;
@@ -3521,7 +3521,7 @@ void Direcs::readSettings()
 				settingValue = 0;
 				break;
 			default:
-				if (settingValue > 254)
+				if (settingValue > 255)
 				{
 					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
@@ -3555,7 +3555,7 @@ void Direcs::readSettings()
 				settingValue = 0;
 				break;
 			default:
-				if (settingValue > 254)
+				if (settingValue > 255)
 				{
 					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
@@ -3588,7 +3588,7 @@ void Direcs::readSettings()
 				settingValue = 0;
 				break;
 			default:
-				if (settingValue > 254)
+				if (settingValue > 255)
 				{
 					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
@@ -3621,7 +3621,7 @@ void Direcs::readSettings()
 				settingValue = 0;
 				break;
 			default:
-				if (settingValue > 254)
+				if (settingValue > 255)
 				{
 					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
@@ -3654,7 +3654,7 @@ void Direcs::readSettings()
 				settingValue = 0;
 				break;
 			default:
-				if (settingValue > 254)
+				if (settingValue > 255)
 				{
 					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than 255!! Value set to 255!</font>").arg(settingName));
 					settingValue = 255;
