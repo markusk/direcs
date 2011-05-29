@@ -248,20 +248,24 @@ bool Circuit::initCircuit()
 
 		// Unlock the mutex.
 		mutex->unlock();
-
+*/
 	} // robot alread marked as OFF
-
+/*
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	firstInitDone = true;
 	circuitState = false;
 	emit robotState(false);
 
 	return false;
+*/
+
+	return circuitState;
 }
 
 
 bool Circuit::initCompass()
 {
+/*
 	QString answer = "error";
 
 
@@ -293,7 +297,7 @@ bool Circuit::initCompass()
 		mutex->unlock();
 
 	}
-
+*/
 	compassCircuitState = false;
 	emit compassState(false);
 
