@@ -32,9 +32,9 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
 	firstInitDone = false;
 	compassCircuitState = false;
 
-	atmelCommand.clear();
-	atmelAnswer = "error";
 	answerReceived = false;
+	atmelAnswer.clear();
+	atmelCommand.clear();
 
 	// get the strings emmited from the interfaceAcrt class
 	connect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(getString(bool, QString)));
