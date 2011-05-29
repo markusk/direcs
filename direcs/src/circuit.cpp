@@ -103,7 +103,7 @@ void Circuit::run()
 
 			if (!answerReceived)
 			{
-				emit message(QString("TEST!! atmelString=%1.").arg(atmelAnswer));
+				emit message(QString("TEST!! atmelString=%1").arg(atmelAnswer));
 				emit message("No complete answer received.");
 				stopped = true;
 
@@ -170,6 +170,7 @@ bool Circuit::initCircuit()
 //	bool myTimeout = false;
 
 
+	emit message(QString("initcircuit: circuitstate=%1.").arg(circuitState));
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		atmelCommand = "re";
@@ -335,7 +336,8 @@ void Circuit::setRobotState(bool state)
 {
 	// store the state within this class
 	circuitState = state;
-	qDebug("Circuit::setRobotState: state=%d", circuitState);
+//	qDebug("Circuit::setRobotState: state=%d", circuitState);
+	emit message("Circuit got the message, that the serial port was opened successfully.");
 }
 
 
