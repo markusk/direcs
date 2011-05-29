@@ -33,7 +33,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
 	compassCircuitState = false;
 
 	atmelString = "error";
-	commandComplete = false;
+	answerReceived = false;
 
 	// get the strings emmited from the interfaceAcrt class
 	connect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(getString(bool, QString)));
@@ -101,7 +101,7 @@ bool Circuit::initCircuit()
 				if (duration.elapsed() > ATMELTIMEOUT)
 					myTimeout = true;
 
-			} while ((commandComplete == false) && (myTimeout == false) );
+			} while ((answerReceived == false) && (myTimeout == false) );
 
 
 			if (myTimeout)
@@ -111,7 +111,7 @@ bool Circuit::initCircuit()
 			}
 
 
-			if (!commandComplete)
+			if (!answerReceived)
 			{
 				emit message(QString("TEST!! atmelString=%1.").arg(atmelString));
 				emit message("No complete answer received.");
@@ -119,7 +119,7 @@ bool Circuit::initCircuit()
 			}
 
 			// reset indicator
-			commandComplete = false;
+			answerReceived = false;
 
 			// everthing's fine :-)
 			emit message("Answer received.");
@@ -272,7 +272,7 @@ bool Circuit::sleep()
 
 void Circuit::getString(bool state, QString string)
 {
-	commandComplete = state;
+	answerReceived = state;
 	atmelString = string;
 	emit message( QString("Slot getstring received: %1").arg(string) );
 }
