@@ -78,7 +78,7 @@ bool Servo::moveServo(unsigned char servo, unsigned char position)
 
 		// move servo
 		// send command to microcontroller
-		if (interface1->sendString(QString("*sv%1%2#").arg(servo + 1).arg(position)) == true)
+		if (interface1->sendString(QString("sv%1%2").arg(servo + 1).arg(position)) == true)
 		{
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer) == true)
