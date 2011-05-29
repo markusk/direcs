@@ -583,16 +583,14 @@ void Direcs::init()
 			//**********************
 			//* Serial port opened *
 			//**********************
-			emit message("Serial port opened.");
 			if (consoleMode)
 			{
 				consoleGui->appendSerialLog("Serial port opened.");
 			}
 			else
 			{
-				gui->appendSerialLog("Serial port opened.");
+				emit message("Serial port opened.");
 			}
-			logfile->appendLog("Serial port opened.");
 
 
 			//-------------------------------------------------------
@@ -610,11 +608,14 @@ void Direcs::init()
 			//==========================
 			// init the robots circuit
 			//==========================
-			emit splashMessage("Searching robot...");
-
 			// start the circuit thread
-			emit splashMessage("Starting circuit thread.");
+			emit splashMessage("Starting circuit thread...");
+			emit message("Starting circuit thread...");
 			circuit1->start();
+
+			emit message("Circuit thread started.");
+			emit splashMessage("Searching robot...");
+			emit message("Searching robot...");
 
 			if (circuit1->initCircuit() == true)
 			{
