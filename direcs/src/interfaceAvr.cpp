@@ -104,7 +104,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	connect(serialPort, SIGNAL(dsrChanged(bool)), this, SLOT(onDsrChanged(bool)));
 
 	if (!(serialPort->lineStatus() & LS_DSR))
-		qDebug() << "warning: device is not turned on. This message may not be correct, when working with USB-to-Serial-Converters!";
+		qDebug() << "Warning: Serial device is not turned on. This message may not be correct, when working with USB-to-Serial-Converters!";
 
 	qDebug() << "listening for data on" << serialPort->portName();
 
