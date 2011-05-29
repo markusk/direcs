@@ -55,15 +55,108 @@ void Circuit::stop()
 
 void Circuit::run()
 {
+	bool myTimeout = false;
+
+
 	//  start "threading"...
 	while (!stopped)
 	{
+		// send command to Atmel
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
 
-		// do some heavy threading here...
+		// Lock the serial port mutex.
+		mutex->lock();
+
+		if (interface1->sendString(atmelCommand) == true)
+		{
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// start own time measuring
+			duration.start();
 
 
-		// let the thread sleep some time
-		msleep(THREADSLEEPTIME);
+			// wait for an answer
+			do
+			{
+				if (duration.elapsed() > ATMELTIMEOUT)
+					myTimeout = true;
+
+				// let the thread sleep some time
+				msleep(THREADSLEEPTIME);
+
+			} while ((answerReceived == false) && (myTimeout == false) );
+
+
+			if (myTimeout)
+			{
+				emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+				stopped = true;
+
+				// Unlock the mutex
+				mutex->unlock();
+
+				/// @todo stopped=true HERE   test test test < < < <
+				stopped = true;
+			}
+
+
+			if (!answerReceived)
+			{
+				emit message(QString("TEST!! atmelString=%1.").arg(atmelAnswer));
+				emit message("No complete answer received.");
+				stopped = true;
+
+				// Unlock the mutex
+				mutex->unlock();
+
+				/// @todo stopped=true HERE   test test test < < < <
+				stopped = true;
+
+			}
+
+			// everthing's fine :-)
+			//
+			// reset indicator for nex command
+			answerReceived = false;
+			emit message("Answer received.");
+
+			// atmelString is received via Slot getString()
+			if (atmelAnswer == "*ok#") /// @todo implement check correct answer!!
+			{
+				emit message("Answer was correct.");
+
+//				// Unlock the mutex
+//				mutex->unlock();
+
+				// ciruit init okay
+				firstInitDone = true;
+				circuitState = true;
+				emit robotState(true);
+
+				/// @todo stopped=true HERE   test test test < < < <
+				stopped = true;
+			}
+			else
+			{
+				qDebug("INFO from initCircuit: Robot is OFF.");
+				firstInitDone = true;
+				circuitState = false;
+				emit robotState(false);
+
+				stopped = true;
+			}
+
+			// Unlock the mutex
+			mutex->unlock();
+		}
+		else
+		{
+			// error
+			stopped = true;
+			emit message("Error sending string in Circuit::run().");
+		}
+
 
 	} // while !stopped
 
