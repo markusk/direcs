@@ -57,9 +57,9 @@ class Circuit : public QObject
 	public slots:
 		/**
 		Initialises the robot's circuits. It also checks, if the robot is ON or OFF.
-		@return true, when the initialization was fine, so the robot is ON.
+		If the robot is ON and answers, it emits the Signal @sa robotState()
 		*/
-		bool initCircuit();
+		void initCircuit();
 
 		/**
 		Puts the robot's circuits to sleep. This also disables the robot's watchdog!
