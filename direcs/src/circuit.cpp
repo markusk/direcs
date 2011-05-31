@@ -20,13 +20,11 @@
 
 #include "circuit.h"
 
-Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
+Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 {
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
-
-	stopped = true; // this will be set by one of the other methods in this thread. e.g. initCicuit
 
 	circuitState = false; //  has to be TRUE at startup. Could be set to false, if InterfaceAvr is not finding a serial port. Will be later set within the run method.
 	firstInitDone = false;
@@ -43,130 +41,117 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
 
 Circuit::~Circuit()
 {
-	stopped = true;
 }
 
 
-void Circuit::stop()
-{
-	stopped = true;
-}
-
-
-void Circuit::run()
+void Circuit::test()
 {
 	bool myTimeout = false;
 
 
 	emit message("Circuit thread runs.");
 	emit message(QString("run: circuitState=%1.").arg(circuitState));
-	emit message(QString("run: stopped=%1.").arg(stopped));
 
-	//  start "threading"...
-	while (!stopped)
+	// send command to Atmel
+	emit message(QString("Sending *%1#...").arg(atmelCommand));
+
+	// Lock the serial port mutex.
+	mutex->lock();
+
+	if (interface1->sendString(atmelCommand) == true)
 	{
-		// send command to Atmel
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		emit message("Sent.");
+		emit message("Waiting for an answer...");
 
-		// Lock the serial port mutex.
-		mutex->lock();
+		// start own time measuring
+		duration.start();
 
-		if (interface1->sendString(atmelCommand) == true)
+
+		// wait for an answer
+		do
 		{
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
+			if (duration.elapsed() > ATMELTIMEOUT)
+				myTimeout = true;
 
-			// start own time measuring
-			duration.start();
+			// let the thread sleep some time
+//			msleep(THREADSLEEPTIME);
 
-
-			// wait for an answer
-			do
-			{
-				if (duration.elapsed() > ATMELTIMEOUT)
-					myTimeout = true;
-
-				// let the thread sleep some time
-				msleep(THREADSLEEPTIME);
-
-			} while ((answerReceived == false) && (myTimeout == false) );
+		} while ((answerReceived == false) && (myTimeout == false) );
 
 
-			if (myTimeout)
-			{
-				emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-				stopped = true;
+		if (myTimeout)
+		{
+			emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+//			stopped = true;
 
-				// Unlock the mutex
-				mutex->unlock();
+			// Unlock the mutex
+			mutex->unlock();
 
-				/// @todo stopped=true HERE   test test test < < < <
-				stopped = true;
-			}
+			/// @todo stopped=true HERE   test test test < < < <
+//			stopped = true;
+		}
 
 
-			if (!answerReceived)
-			{
-				emit message(QString("TEST!! atmelString=%1").arg(atmelAnswer));
-				emit message("No complete answer received.");
-				stopped = true;
+		if (!answerReceived)
+		{
+			emit message(QString("TEST!! atmelString=%1").arg(atmelAnswer));
+			emit message("No complete answer received.");
+//			stopped = true;
 
-				// Unlock the mutex
-				mutex->unlock();
+			// Unlock the mutex
+			mutex->unlock();
 
-				/// @todo stopped=true HERE   test test test < < < <
-				stopped = true;
+			/// @todo stopped=true HERE   test test test < < < <
+//			stopped = true;
 
-			}
+		}
 
-			// everthing's fine :-)
-			//
-			// reset indicator for nex command
-			answerReceived = false;
-			emit message("Answer received.");
+		// everthing's fine :-)
+		//
+		// reset indicator for nex command
+		answerReceived = false;
+		emit message("Answer received.");
 
-			// atmelString is received via Slot getString()
-			if (atmelAnswer == "*ok#") /// @todo implement check correct answer!!
-			{
-				emit message("Answer was correct.");
+		// atmelString is received via Slot getString()
+		if (atmelAnswer == "*ok#") /// @todo implement check correct answer!!
+		{
+			emit message("Answer was correct.");
 
 //				// Unlock the mutex
 //				mutex->unlock();
 
-				// ciruit init okay
-				firstInitDone = true;
-				circuitState = true;
-				emit robotState(true);
+			// ciruit init okay
+			firstInitDone = true;
+			circuitState = true;
+			emit robotState(true);
 
-				/// @todo stopped=true HERE   test test test < < < <
-				stopped = true;
-			}
-			else
-			{
-				qDebug("INFO from initCircuit: Robot is OFF.");
-				firstInitDone = true;
-				circuitState = false;
-				emit robotState(false);
-
-				stopped = true;
-			}
-
-			// Unlock the mutex
-			mutex->unlock();
+			/// @todo stopped=true HERE   test test test < < < <
+//			stopped = true;
 		}
 		else
 		{
-			// error
-			stopped = true;
-			emit message("Error sending string in Circuit::run().");
+			qDebug("INFO from initCircuit: Robot is OFF.");
+			firstInitDone = true;
+			circuitState = false;
+			emit robotState(false);
+
+//			stopped = true;
 		}
 
-
-	} // while !stopped
+		// Unlock the mutex
+		mutex->unlock();
+	}
+	else
+	{
+		// error
+//		stopped = true;
+		emit message("Error sending string in Circuit::run().");
+		emit robotState(false);
+	}
 }
 
 
-bool Circuit::initCircuit()
+void Circuit::initCircuit()
 {
 //	bool myTimeout = false;
 
@@ -181,11 +166,11 @@ bool Circuit::initCircuit()
 
 		// let the 'run' method work on ths command
 		emit message("About to send an Atmel command string.");
-		stopped = false;
-		emit message(QString("initCircuit: stopped=%1.").arg(stopped));
+//		stopped = false;
+//		emit message(QString("initCircuit: stopped=%1.").arg(stopped));
 
 		// let the thread sleep some time
-		msleep(THREADSLEEPTIME);
+//		msleep(THREADSLEEPTIME);
 /*
 		//-------------------------------------------------------
 		// Basic init for all the bits on the robot circuit
@@ -263,7 +248,7 @@ bool Circuit::initCircuit()
 	return false;
 */
 
-	return circuitState;
+//	return circuitState;
 }
 
 
