@@ -153,7 +153,7 @@ void Circuit::test()
 
 void Circuit::initCircuit()
 {
-//	bool myTimeout = false;
+	bool myTimeout = false;
 
 
 	emit message(QString("initCircuit: circuitState=%1.").arg(circuitState));
@@ -161,17 +161,9 @@ void Circuit::initCircuit()
 	{
 		atmelCommand = "re";
 
-//		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-//		mutex->lock();
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
 
-		// let the 'run' method work on ths command
-		emit message("About to send an Atmel command string.");
-//		stopped = false;
-//		emit message(QString("initCircuit: stopped=%1.").arg(stopped));
-
-		// let the thread sleep some time
-//		msleep(THREADSLEEPTIME);
-/*
 		//-------------------------------------------------------
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
@@ -197,15 +189,27 @@ void Circuit::initCircuit()
 			if (myTimeout)
 			{
 				emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-				return false;
+
+				qDebug("INFO from initCircuit: Robot is OFF.");
+				firstInitDone = true;
+				circuitState = false;
+
+				emit robotState(false);
+				return;
 			}
 
 
 			if (!answerReceived)
 			{
-				emit message(QString("TEST!! atmelString=%1.").arg(atmelAnswer));
+				//emit message(QString("TEST!! atmelString=%1.").arg(atmelAnswer));
 				emit message("No complete answer received.");
-				return false;
+
+				qDebug("INFO from initCircuit: Robot is OFF.");
+				firstInitDone = true;
+				circuitState = false;
+
+				emit robotState(false);
+				return;
 			}
 
 			// reset indicator
@@ -226,7 +230,7 @@ void Circuit::initCircuit()
 				circuitState = true;
 				emit robotState(true);
 
-				return true;
+				return;
 			}
 
 		}
@@ -237,18 +241,16 @@ void Circuit::initCircuit()
 
 		// Unlock the mutex.
 		mutex->unlock();
-*/
+
 	} // robot alread marked as OFF
-/*
+
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	firstInitDone = true;
 	circuitState = false;
+
 	emit robotState(false);
 
-	return false;
-*/
-
-//	return circuitState;
+	return;
 }
 
 
