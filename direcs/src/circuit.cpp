@@ -26,9 +26,9 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QThread()
 	interface1 = i;
 	mutex = m;
 
-	stopped = false;
+	stopped = true; // this will be set by one of the other methods in this thread. e.g. initCicuit
 
-	circuitState = false;
+	circuitState = false; //  has to be TRUE at startup. Could be set to false, if InterfaceAvr is not finding a serial port. Will be later set within the run method.
 	firstInitDone = false;
 	compassCircuitState = false;
 
@@ -57,6 +57,10 @@ void Circuit::run()
 {
 	bool myTimeout = false;
 
+
+	emit message("Circuit thread runs.");
+	emit message(QString("run: circuitState=%1.").arg(circuitState));
+	emit message(QString("run: stopped=%1.").arg(stopped));
 
 	//  start "threading"...
 	while (!stopped)
@@ -159,9 +163,6 @@ void Circuit::run()
 
 
 	} // while !stopped
-
-
-	stopped = false;
 }
 
 
@@ -170,7 +171,7 @@ bool Circuit::initCircuit()
 //	bool myTimeout = false;
 
 
-	emit message(QString("initcircuit: circuitstate=%1.").arg(circuitState));
+	emit message(QString("initCircuit: circuitState=%1.").arg(circuitState));
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		atmelCommand = "re";
@@ -179,7 +180,9 @@ bool Circuit::initCircuit()
 //		mutex->lock();
 
 		// let the 'run' method work on ths command
+		emit message("About to send an Atmel command string.");
 		stopped = false;
+		emit message(QString("initCircuit: stopped=%1.").arg(stopped));
 
 		// let the thread sleep some time
 		msleep(THREADSLEEPTIME);
