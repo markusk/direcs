@@ -4632,7 +4632,7 @@ void Direcs::setRobotState(bool state)
 			// whenever there is a material error, react!
 			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 		}
-
+*/
 #ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
@@ -4648,7 +4648,6 @@ void Direcs::setRobotState(bool state)
 			}
 		}
 #endif
-*/
 	} // circuit init was successfull
 	else
 	{
