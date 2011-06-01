@@ -626,6 +626,19 @@ void Direcs::init()
 		}
 
 
+#ifndef BUILDFORROBOT
+		if (!consoleMode)
+		{
+			//-----------------------------------------------------------
+			// start the plot thread ("clock" for plotting the curves)
+			//-----------------------------------------------------------
+			emit splashMessage("Starting plot thread...");
+			emit message("Starting plot thread...", false);
+			plotThread->start();
+			emit message("Plot thread started.");
+		}
+#endif
+
 		//-----------------------------------------------------------
 		// check if a joystick is connected
 		//-----------------------------------------------------------
@@ -4633,21 +4646,6 @@ void Direcs::setRobotState(bool state)
 			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 		}
 */
-#ifndef BUILDFORROBOT
-		if (!consoleMode)
-		{
-			//-----------------------------------------------------------
-			// start the plot thread ("clock" for plotting the curves)
-			//-----------------------------------------------------------
-			if (plotThread->isRunning() == false)
-			{
-				emit splashMessage("Starting plot thread...");
-				emit message("Starting plot thread...", false);
-				plotThread->start();
-				emit message("Plot thread started.");
-			}
-		}
-#endif
 	} // circuit init was successfull
 	else
 	{
