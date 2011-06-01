@@ -30,10 +30,10 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 	firstInitDone = false;
 	compassCircuitState = false;
 
-	answerTimeout = false;
-	answerReceived = false;
-	atmelAnswer.clear();
 	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
+	answerReceived = false;
+	answerTimeout = false;
 
 	// get the strings emmited from the interfaceAcrt class
 	connect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeAnswer(bool, QString)));
@@ -45,113 +45,6 @@ Circuit::~Circuit()
 }
 
 
-void Circuit::test()
-{
-	answerTimeout = false;
-
-
-	emit message("Circuit thread runs.");
-	emit message(QString("run: circuitState=%1.").arg(circuitState));
-
-	// send command to Atmel
-	emit message(QString("Sending *%1#...").arg(atmelCommand));
-
-	// Lock the serial port mutex.
-	mutex->lock();
-
-	if (interface1->sendString(atmelCommand) == true)
-	{
-		emit message("Sent.");
-		emit message("Waiting for an answer...");
-
-		// start own time measuring
-		duration.start();
-
-
-		// wait for an answer
-		do
-		{
-			if (duration.elapsed() > ATMELTIMEOUT)
-				answerTimeout = true;
-
-			// let the thread sleep some time
-//			msleep(THREADSLEEPTIME);
-
-		} while ((answerReceived == false) && (answerTimeout == false) );
-
-
-		if (answerTimeout)
-		{
-			emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-//			stopped = true;
-
-			// Unlock the mutex
-			mutex->unlock();
-
-			/// @todo stopped=true HERE   test test test < < < <
-//			stopped = true;
-		}
-
-
-		if (!answerReceived)
-		{
-			emit message(QString("TEST!! atmelString=%1").arg(atmelAnswer));
-			emit message("No complete answer received.");
-//			stopped = true;
-
-			// Unlock the mutex
-			mutex->unlock();
-
-			/// @todo stopped=true HERE   test test test < < < <
-//			stopped = true;
-
-		}
-
-		// everthing's fine :-)
-		//
-		// reset indicator for nex command
-		answerReceived = false;
-		emit message("Answer received.");
-
-		// atmelString is received via Slot getString()
-		if (atmelAnswer == "*ok#") /// @todo implement check correct answer!!
-		{
-			emit message("Answer was correct.");
-
-//				// Unlock the mutex
-//				mutex->unlock();
-
-			// ciruit init okay
-			firstInitDone = true;
-			circuitState = true;
-			emit robotState(true);
-
-			/// @todo stopped=true HERE   test test test < < < <
-//			stopped = true;
-		}
-		else
-		{
-			qDebug("INFO from initCircuit: Robot is OFF.");
-			firstInitDone = true;
-			circuitState = false;
-			emit robotState(false);
-
-//			stopped = true;
-		}
-
-		// Unlock the mutex
-		mutex->unlock();
-	}
-	else
-	{
-		// error
-//		stopped = true;
-		emit message("Error sending string in Circuit::run().");
-		emit robotState(false);
-	}
-}
-
-
 void Circuit::initCircuit()
 {
 	emit message(QString("initCircuit: circuitState=%1.").arg(circuitState));
@@ -160,6 +53,7 @@ void Circuit::initCircuit()
 	if (circuitState)
 	{
 		atmelCommand = "re";
+		expectedAtmelAnswer = "*ok#";
 
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
@@ -191,28 +85,28 @@ void Circuit::initCircuit()
 
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	emit message("Robot is OFF.");
+	expectedAtmelAnswer.clear();
 	firstInitDone = true;
 	circuitState = false;
 	emit robotState(false);
 }
 
 
-void Circuit::takeAnswer(bool state, QString string)
+void Circuit::takeAnswer(bool state, QString atmelAnswer)
 {
 	answerReceived = state;
-	atmelAnswer = string;
-	emit message( QString("Slot getstring received: %1").arg(string) );
+	emit message( QString("Slot takeAnswer received: %1").arg(atmelAnswer) );
 
 	// let us wait for an answer from the Atmel
 	do
 	{
 		if (duration.elapsed() > ATMELTIMEOUT)
-			myTimeout = true;
+			answerTimeout = true;
 
-	} while ((answerReceived == false) && (myTimeout == false) );
+	} while ((answerReceived == false) && (answerTimeout == false) );
 
 
-	if (myTimeout)
+	if (answerTimeout)
 	{
 		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 

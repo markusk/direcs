@@ -51,8 +51,6 @@ class Circuit : public QObject
 		*/
 		bool compassConnected();
 
-		void test();
-
 
 	public slots:
 		/**
@@ -83,8 +81,10 @@ class Circuit : public QObject
 
 		/**
 		This slot takes the received Atmel command string and stores it in a class member.
+		@param state
+		@param atmelAnswer
 		*/
-		void takeAnswer(bool state, QString string);
+		void takeAnswer(bool state, QString atmelAnswer);
 
 
 	signals:
@@ -112,9 +112,9 @@ class Circuit : public QObject
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		QString atmelCommand; /// this is the command for the Atmel
-		QString atmelAnswer;  /// this stores the string received from the Atmel
+		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.
 		bool answerReceived;  /// this indicates, that a complete Atmel command was received - e.g. *sl#
-		bool answerTimeout;
+		bool answerTimeout; /// this is set to true, when we have a timout while waiting for an Atmel answer
 
 		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
 		static const int ATMELTIMEOUT = 250; /// timeout in ms
