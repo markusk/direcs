@@ -30,6 +30,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 	firstInitDone = false;
 	compassCircuitState = false;
 
+	answerTimeout = false;
 	answerReceived = false;
 	atmelAnswer.clear();
 	atmelCommand.clear();
@@ -46,7 +47,7 @@ Circuit::~Circuit()
 
 void Circuit::test()
 {
-	bool myTimeout = false;
+	answerTimeout = false;
 
 
 	emit message("Circuit thread runs.");
@@ -71,15 +72,15 @@ void Circuit::test()
 		do
 		{
 			if (duration.elapsed() > ATMELTIMEOUT)
-				myTimeout = true;
+				answerTimeout = true;
 
 			// let the thread sleep some time
 //			msleep(THREADSLEEPTIME);
 
-		} while ((answerReceived == false) && (myTimeout == false) );
+		} while ((answerReceived == false) && (answerTimeout == false) );
 
 
-		if (myTimeout)
+		if (answerTimeout)
 		{
 			emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 //			stopped = true;
