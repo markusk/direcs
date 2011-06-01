@@ -128,7 +128,7 @@ void Circuit::takeAnswer(bool state, QString atmelAnswer)
 	}
 	else
 	{
-		emit message(QString("ERROR: Answer was %s intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
 
 		qDebug("INFO from initCircuit: Robot is OFF.");
 		firstInitDone = true;
