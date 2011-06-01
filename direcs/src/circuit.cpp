@@ -47,8 +47,6 @@ Circuit::~Circuit()
 
 void Circuit::initCircuit()
 {
-	emit message(QString("initCircuit: circuitState=%1.").arg(circuitState));
-
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (circuitState)
 	{
@@ -216,8 +214,6 @@ void Circuit::setRobotState(bool state)
 {
 	// store the state within this class
 	circuitState = state;
-//	qDebug("Circuit::setRobotState: state=%d", circuitState);
-	emit message("Circuit got the message, that the serial port was opened successfully.");
 }
 
 
