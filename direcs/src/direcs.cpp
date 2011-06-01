@@ -468,12 +468,9 @@ void Direcs::init()
 		}
 
 
-		if (speakThread->isRunning() == false)
-		{
-			emit message("Starting speak thread...", false);
-			speakThread->start();
-			emit message("Speak thread started.");
-		}
+		emit message("Starting speak thread...", false);
+		speakThread->start();
+		emit message("Speak thread started.");
 		#endif
 
 
@@ -649,13 +646,10 @@ void Direcs::init()
 				gui->setLEDJoystick(GREEN);
 
 			// start the joystick thread
-			if (joystick->isRunning() == false)
-			{
-				emit splashMessage("Starting joystick thread...");
-				emit message("Starting joystick thread...", false);
-				joystick->start();
-				emit message("Joystick thread started.");
-			}
+			emit splashMessage("Starting joystick thread...");
+			emit message("Starting joystick thread...", false);
+			joystick->start();
+			emit message("Joystick thread started.");
 		}
 		else
 		{
@@ -979,22 +973,16 @@ void Direcs::init()
 
 
 			// start the laserThread
-			if (laserThread->isRunning() == false)
-			{
-				emit splashMessage("Starting Laser thread...");
-				emit message("Starting Laser thread...", false);
-				laserThread->start();
-				emit message("Laser thread started.");
-			}
+			emit splashMessage("Starting Laser thread...");
+			emit message("Starting Laser thread...", false);
+			laserThread->start();
+			emit message("Laser thread started.");
 
 
-			if (obstCheckThread->isRunning() == false)
-			{
-				emit splashMessage("Starting obstacle check thread...");
-				emit message("Starting obstacle check thread...", false);
-				obstCheckThread->start();
-				emit message("Obstacle check thread started.");
-			}
+			emit splashMessage("Starting obstacle check thread...");
+			emit message("Starting obstacle check thread...", false);
+			obstCheckThread->start();
+			emit message("Obstacle check thread started.");
 		}
 		else
 		{
@@ -3673,16 +3661,13 @@ void Direcs::enableRemoteControlListening(bool state)
 		//-----------------------------------------------------------
 		// start the network thread (getting commands via network)
 		//-----------------------------------------------------------
-		if (netThread->isRunning() == false)
+		emit message("Starting network thread...", false);
+		if (!consoleMode)
 		{
-			emit message("Starting network thread...", false);
-			if (!consoleMode)
-			{
-				gui->appendNetworkLog("Starting network thread...");
-			}
-			netThread->start();
-			emit message("Network thread started.");
+			gui->appendNetworkLog("Starting network thread...");
 		}
+		netThread->start();
+		emit message("Network thread started.");
 	}
 	else
 	{
@@ -4543,38 +4528,26 @@ void Direcs::setSimulationMode(bool status)
 	{
 		emit message("<font color=\"#0000FF\">Simulation mode enabled!!</front>");
 
-		if (laserThread->isRunning() == false)
-		{
-			emit message("Starting Laser thread...", false);
-			laserThread->start();
-			emit message("Started.");
-		}
+		emit message("Starting Laser thread...", false);
+		laserThread->start();
+		emit message("Started.");
 
-		if (sensorThread->isRunning() == false)
-		{
-			emit message("Starting Sensor thread...", false);
-			sensorThread->start();
-			emit message("Started.");
-		}
+		emit message("Starting Sensor thread...", false);
+		sensorThread->start();
+		emit message("Started.");
 
 #ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
-			if (plotThread->isRunning() == false)
-			{
-				emit message("Starting plot thread...", false);
-				plotThread->start();
-				emit message("Started.");
-			}
+			emit message("Starting plot thread...", false);
+			plotThread->start();
+			emit message("Started.");
 		}
 #endif
 
-		if (obstCheckThread->isRunning() == false)
-		{
-			emit message("Starting obstacle check thread...", false);
-			obstCheckThread->start();
-			emit message("Started.");
-		}
+		emit message("Starting obstacle check thread...", false);
+		obstCheckThread->start();
+		emit message("Started.");
 	}
 	else
 	{
@@ -4635,16 +4608,13 @@ void Direcs::setRobotState(bool state)
 		//-----------------------------------------------------------
 		// start the sensor thread for reading the sensors)
 		//-----------------------------------------------------------
-		if (sensorThread->isRunning() == false)
-		{
-			emit splashMessage("Starting sensor thread...");
-			emit message("Starting sensor thread...", false);
-			sensorThread->start();
-			emit message("Sensor thread started.");
+		emit splashMessage("Starting sensor thread...");
+		emit message("Starting sensor thread...", false);
+		sensorThread->start();
+		emit message("Sensor thread started.");
 
-			// whenever there is a material error, react!
-			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-		}
+		// whenever there is a material error, react!
+		connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 */
 	} // circuit init was successfull
 	else
