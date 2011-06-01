@@ -95,60 +95,49 @@ void Circuit::initCircuit()
 void Circuit::takeAnswer(bool state, QString atmelAnswer)
 {
 	answerReceived = state;
-	emit message( QString("Slot takeAnswer received: %1").arg(atmelAnswer) );
+	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
 
-	// let us wait for an answer from the Atmel
-	do
-	{
-		if (duration.elapsed() > ATMELTIMEOUT)
-			answerTimeout = true;
-
-	} while ((answerReceived == false) && (answerTimeout == false) );
-
-
-	if (answerTimeout)
+	// how long did it take?
+	if (duration.elapsed() > ATMELTIMEOUT)
 	{
 		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 
 		qDebug("INFO from initCircuit: Robot is OFF.");
 		firstInitDone = true;
 		circuitState = false;
-
+		atmelCommand.clear();
+		expectedAtmelAnswer.clear();
 		emit robotState(false);
+
 		return;
 	}
-
-
-	if (!answerReceived)
-	{
-		//emit message(QString("TEST!! atmelString=%1.").arg(atmelAnswer));
-		emit message("No complete answer received.");
-
-		qDebug("INFO from initCircuit: Robot is OFF.");
-		firstInitDone = true;
-		circuitState = false;
-
-		emit robotState(false);
-		return;
-	}
-
-	// reset indicator
-	answerReceived = false;
 
 	// everthing's fine :-)
 	emit message("Answer received.");
 
-	// (atmelString is set via Slot getString() )
-	if (atmelAnswer == "*ok#")
+	if (atmelAnswer == expectedAtmelAnswer)
 	{
-		emit message("Answer was correct.");
-		// Unlock the mutex
-		mutex->unlock();
+		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
 
 		// ciruit init okay
 		firstInitDone = true;
 		circuitState = true;
+		atmelCommand.clear();
+		expectedAtmelAnswer.clear();
 		emit robotState(true);
+
+		return;
+	}
+	else
+	{
+		emit message(QString("ERROR: Answer was %s intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+
+		qDebug("INFO from initCircuit: Robot is OFF.");
+		firstInitDone = true;
+		circuitState = false;
+		atmelCommand.clear();
+		expectedAtmelAnswer.clear();
+		emit robotState(false);
 
 		return;
 	}
