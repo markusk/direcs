@@ -154,11 +154,10 @@ void Circuit::test()
 
 void Circuit::initCircuit()
 {
-	bool myTimeout = false;
-
-
 	emit message(QString("initCircuit: circuitState=%1.").arg(circuitState));
-	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	if (circuitState)
 	{
 		atmelCommand = "re";
 
@@ -246,6 +245,7 @@ void Circuit::initCircuit()
 	} // robot alread marked as OFF
 
 	qDebug("INFO from initCircuit: Robot is OFF.");
+	emit message("Robot is OFF.");
 	firstInitDone = true;
 	circuitState = false;
 
@@ -302,7 +302,7 @@ bool Circuit::isConnected()
 	// if not tried to init hardware, do this!
 	if (firstInitDone == false)
 	{
-		initCircuit();
+		initCircuit(); /// @todo implement this initCircuit and isConnected for event mode!
 		firstInitDone = true;
 	}
 
@@ -315,7 +315,7 @@ bool Circuit::compassConnected()
 	// if not tried to init the robots (and compass) hardware, do this!
 	if (firstInitDone == false)
 	{
-		initCircuit();
+		initCircuit(); /// @todo implement this initCircuit and compassConnected for event mode!
 		firstInitDone = true;
 	}
 
