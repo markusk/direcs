@@ -169,7 +169,7 @@ void Circuit::initCircuit()
 		//-------------------------------------------------------
 		// sending RESET (INIT) command
 		emit message("Sending *re#...");
-		if (interface1->sendString("re") == true)
+		if (interface1->sendString(atmelCommand) == true)
 		{
 			// start own time measuring
 			duration.start();
