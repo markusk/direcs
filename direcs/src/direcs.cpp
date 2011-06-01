@@ -367,7 +367,7 @@ void Direcs::init()
 	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-//	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
+	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 	if (!consoleMode)
 	{
 		connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
@@ -378,7 +378,7 @@ void Direcs::init()
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-//	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
+	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 	if (!consoleMode)
 	{
 		connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
@@ -620,97 +620,10 @@ void Direcs::init()
 			emit splashMessage("Searching robot...");
 			emit message("Searching robot...");
 
-			if (circuit1->initCircuit() == true)
-			{
-				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
-
-				// check compass module
-				if (circuit1->initCompass() == true)
-				{
-					emit message("3D compass module detected.");
-					if (!consoleMode)
-					{
-						gui->setLEDCompass(GREEN);
-					}
-				}
-				else
-				{
-					emit message("<font color=\"#FF0000\">3D compass module not connected!</font>");
-					if (!consoleMode)
-					{
-						gui->setLEDCompass(RED);
-					}
-				}
-
-				//-------------------------------------------------------
-				// set the read motor speed
-				//-------------------------------------------------------
-				motors->setMotorSpeed(1, mot1Speed);
-				motors->setMotorSpeed(2, mot2Speed);
-				motors->setMotorSpeed(3, mot3Speed);
-				motors->setMotorSpeed(4, mot4Speed);
-				emit message("Motor speed set in microcontroller");
-
-				//-------------------------------------------------------
-				// move all servos in their default positions
-				//-------------------------------------------------------
-				servos->init();
-				emit message("Servos moved to default positions");
-
-				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
-				//-----------------------------------------------------------
-				// start the heartbeat thread
-				//-----------------------------------------------------------
-				/*
-				if (heartbeat->isRunning() == false)
-				{
-					emit splashMessage("Starting heartbeat thread...");
-
-					emit message("Starting heartbeat thread...", false);
-					heartbeat->start();
-					emit message("Heartbeat thread started.");
-				}
-				*/
-
-				//-----------------------------------------------------------
-				// start the sensor thread for reading the sensors)
-				//-----------------------------------------------------------
-				if (sensorThread->isRunning() == false)
-				{
-					emit splashMessage("Starting sensor thread...");
-					emit message("Starting sensor thread...", false);
-					sensorThread->start();
-					emit message("Sensor thread started.");
-
-					// whenever there is a material error, react!
-					connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-				}
-
-#ifndef BUILDFORROBOT
-				if (!consoleMode)
-				{
-					//-----------------------------------------------------------
-					// start the plot thread ("clock" for plotting the curves)
-					//-----------------------------------------------------------
-					if (plotThread->isRunning() == false)
-					{
-						emit splashMessage("Starting plot thread...");
-						emit message("Starting plot thread...", false);
-						plotThread->start();
-						emit message("Plot thread started.");
-					}
-				}
-#endif
-			} // init was successfull
-			else
-			{
-				logfile->appendLog("Robot is OFF! Please turn it ON!");
-				emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-				emit message("Heartbeat thread NOT started!");
-				emit message("Sensor thread NOT started!");
-				emit message("Plot thread NOT started!");
-			}
-		} // robot is ON
+			//
+			// Further circuit handling (answers) will continue in the slot this->setRobotState !
+			//
+		}
 
 
 		//-----------------------------------------------------------
@@ -4663,12 +4576,89 @@ void Direcs::setSimulationMode(bool status)
 }
 
 
-/*
 void Direcs::setRobotState(bool state)
 {
-	robotIsOn = state;
-}
+
+	if (state == true)
+	{
+		emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
+
+		// check compass module
+		if (circuit1->initCompass() == true)
+		{
+			emit message("3D compass module detected.");
+			if (!consoleMode)
+			{
+				gui->setLEDCompass(GREEN);
+			}
+		}
+		else
+		{
+			emit message("<font color=\"#FF0000\">3D compass module not connected!</font>");
+			if (!consoleMode)
+			{
+				gui->setLEDCompass(RED);
+			}
+		}
+
+		//-------------------------------------------------------
+		// set the read motor speed
+		//-------------------------------------------------------
+		motors->setMotorSpeed(1, mot1Speed);
+		motors->setMotorSpeed(2, mot2Speed);
+		motors->setMotorSpeed(3, mot3Speed);
+		motors->setMotorSpeed(4, mot4Speed);
+		emit message("Motor speed set in microcontroller");
+
+		//-------------------------------------------------------
+		// move all servos in their default positions
+		//-------------------------------------------------------
+//				servos->init();
+//				emit message("Servos moved to default positions");
+
+
+/// @todo start sensor thread again. before that: rebuild it to be event driven!
+/*
+		//-----------------------------------------------------------
+		// start the sensor thread for reading the sensors)
+		//-----------------------------------------------------------
+		if (sensorThread->isRunning() == false)
+		{
+			emit splashMessage("Starting sensor thread...");
+			emit message("Starting sensor thread...", false);
+			sensorThread->start();
+			emit message("Sensor thread started.");
+
+			// whenever there is a material error, react!
+			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+		}
+
+#ifndef BUILDFORROBOT
+		if (!consoleMode)
+		{
+			//-----------------------------------------------------------
+			// start the plot thread ("clock" for plotting the curves)
+			//-----------------------------------------------------------
+			if (plotThread->isRunning() == false)
+			{
+				emit splashMessage("Starting plot thread...");
+				emit message("Starting plot thread...", false);
+				plotThread->start();
+				emit message("Plot thread started.");
+			}
+		}
+#endif
 */
+	} // circuit init was successfull
+	else
+	{
+		logfile->appendLog("Robot is OFF! Please turn it ON!");
+		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+		emit message("Heartbeat thread NOT started!");
+		emit message("Sensor thread NOT started!");
+		emit message("Plot thread NOT started!");
+	}
+}
 
 
 void Direcs::checkArguments()

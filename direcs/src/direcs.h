@@ -201,13 +201,11 @@ class Direcs : public QObject
 		*/
 		void finishSplash();
 
-		/*
-		/ **
+		/**
 		This slot sets (stores) the robots (circuits) state within this class.
 		@param state can be ON or OFF
-		 * /
-		void setRobotState(bool state);
 		*/
+		void setRobotState(bool state);
 
 		/**
 		Ends the programm, after asking "really?".
