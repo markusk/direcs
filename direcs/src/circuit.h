@@ -85,7 +85,14 @@ class Circuit : public QObject
 		@param state
 		@param atmelAnswer
 		*/
-		void takeAnswer(bool state, QString atmelAnswer);
+		void takeCircuitAnswer(bool state, QString atmelAnswer);
+
+		/**
+		This slot takes the received Atmel command string after initialising the compass.
+		@param state
+		@param atmelAnswer
+		*/
+		void takeCompassAnswer(bool state, QString atmelAnswer);
 
 
 	private slots:

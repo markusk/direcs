@@ -93,7 +93,7 @@ void Circuit::initCircuit()
 }
 
 
-void Circuit::takeAnswer(bool state, QString atmelAnswer)
+void Circuit::takeCircuitAnswer(bool state, QString atmelAnswer)
 {
 	answerReceived = state;
 	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
