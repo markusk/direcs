@@ -213,7 +213,7 @@ void Circuit::timeout()
 }
 
 
-bool Circuit::initCompass()
+void Circuit::initCompass()
 {
 /*
 	QString answer = "error";
