@@ -62,7 +62,7 @@ void Circuit::initCircuit()
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
 		// sending RESET (INIT) command
-		emit message("Sending *re#...");
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
 		if (interface1->sendString(atmelCommand) == true)
 		{
 			// start own time measuring. This will be used, if we get an answer from the Atmel
