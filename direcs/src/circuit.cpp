@@ -63,8 +63,11 @@ void Circuit::initCircuit()
 		emit message("Sending *re#...");
 		if (interface1->sendString(atmelCommand) == true)
 		{
-			// start own time measuring
+			// start own time measuring. This will be used, if we get an answer from the Atmel
 			duration.start();
+
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
@@ -139,6 +142,19 @@ void Circuit::takeAnswer(bool state, QString atmelAnswer)
 
 		return;
 	}
+}
+
+
+void Circuit::timeout()
+{
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+
+	qDebug("INFO from initCircuit: Robot is OFF.");
+	firstInitDone = true;
+	circuitState = false;
+	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
+	emit robotState(false);
 }
 
 

@@ -25,6 +25,7 @@
 #include "interfaceAvr.h"
 #include <QMutex>
 #include <QTime>
+#include <QTimer>
 //-------------------------------------------------------------------
 
 /**
@@ -85,6 +86,13 @@ class Circuit : public QObject
 		@param atmelAnswer
 		*/
 		void takeAnswer(bool state, QString atmelAnswer);
+
+
+	private slots:
+		/**
+		This Slot is called if we never get an answer from the Atmel
+		*/
+		void timeout();
 
 
 	signals:
