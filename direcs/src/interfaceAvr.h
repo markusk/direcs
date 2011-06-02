@@ -118,11 +118,10 @@ class InterfaceAvr : public QObject
 
 	signals:
 		/**
-		This signal emits if a complete command string was received. @sa SimulationThread::commandReceived()
-		@param state is true when the command is complete (which is always the case, but provided for convenience).
+		This signal emits if a complete command string was received. @sa SimulationThread::takeCompassAnswer() @sa SimulationThread::takeCircuitAnswer()
 		@param string contains the received string
 		*/
-		void commandCompleted(bool state, QString string);
+		void commandCompleted(QString string);
 
 		/**
 		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF

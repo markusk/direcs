@@ -46,8 +46,8 @@ void Circuit::initCircuit()
 {
 	// Get the next strings emmited from the interfaceAvr class, when available
 	// These are the answers from the Atmel
-	disconnect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCompassAnswer(bool, QString)));
-	connect   (interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCircuitAnswer(bool, QString)));
+	disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
+	connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
 
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (circuitState)
@@ -95,7 +95,7 @@ void Circuit::initCircuit()
 }
 
 
-void Circuit::takeCircuitAnswer(bool state, QString atmelAnswer)
+void Circuit::takeCircuitAnswer(QString atmelAnswer)
 {
 	answerReceived = state;
 	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
@@ -148,9 +148,8 @@ void Circuit::takeCircuitAnswer(bool state, QString atmelAnswer)
 }
 
 
-void Circuit::takeCompassAnswer(bool state, QString atmelAnswer)
+void Circuit::takeCompassAnswer(QString atmelAnswer)
 {
-	answerReceived = state;
 	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
 
 	// how long did it take?
@@ -219,8 +218,8 @@ void Circuit::initCompass()
 	{
 		// Get the next strings emmited from the interfaceAvr class, when available
 		// These are the answers from the Atmel
-		disconnect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCircuitAnswer(bool, QString)));
-		connect   (interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCompassAnswer(bool, QString)));
+		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
+		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
 
 
 		atmelCommand = "cc";

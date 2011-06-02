@@ -456,7 +456,7 @@ static	QByteArray bytes;
 			commandComplete = true;
 
 			// emit completed Atmel command
-			emit commandCompleted(true, QString(commandString));
+			emit commandCompleted(commandString);
 		}
 
 //	} // commandComplete = false
