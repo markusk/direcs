@@ -208,6 +208,12 @@ class Direcs : public QObject
 		void robotStateHandler(bool state);
 
 		/**
+		This slot sets (stores) the compass (circuits) state within this class.
+		@param state can be ON or OFF
+		*/
+		void compassStateHandler(bool state);
+
+		/**
 		Ends the programm, after asking "really?".
 		Calls the destructor of this class, after saving settings and some other exit stuff.
 		*/
@@ -257,6 +263,11 @@ class Direcs : public QObject
 		Initialize the robots basic circuit.
 		*/
 		void initCircuit();
+
+		/**
+		Initialize the robots compass circuit.
+		*/
+		void initCompass();
 
 		/**
 		Sends a string over the network.

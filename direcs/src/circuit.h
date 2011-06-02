@@ -81,7 +81,7 @@ class Circuit : public QObject
 		void setRobotState(bool state);
 
 		/**
-		This slot takes the received Atmel command string and stores it in a class member.
+		This slot takes the received Atmel command string after initialising the circuit.
 		@param state
 		@param atmelAnswer
 		*/
@@ -104,7 +104,7 @@ class Circuit : public QObject
 
 		/**
 		This signal emits the 3D compass module state; it checks if the module is connected to the Atmel board.
-		Not in use, at the moment...
+		@sa Direcs::compassStateHandler()
 		@param state can be true or false
 		*/
 		void compassState(bool state);

@@ -381,11 +381,14 @@ void Direcs::init()
 	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) ));
 	if (!consoleMode)
 	{
-		connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
+		connect(circuit1,	SIGNAL( robotState(bool) ), gui,		SLOT( setRobotControls(bool) ));
 	}
 
+	// get the state from the compass from the circuit class
+	connect(circuit1,	SIGNAL( compassState(bool) ), this,			SLOT( compassStateHandler(bool) ));
+
 	// let the sensorthread know, if only the compass is not connected
-	connect(circuit1,	SIGNAL( compassState(bool) ), sensorThread,	SLOT( setCompassState(bool) ));
+	connect(circuit1,	SIGNAL( compassState(bool) ), sensorThread,SLOT( setCompassState(bool) ));
 
 
 	if (!consoleMode)
@@ -4577,11 +4580,12 @@ void Direcs::robotStateHandler(bool state)
 	motors->setMotorSpeed(4, mot4Speed);
 	emit message("Motor speed set in microcontroller");
 
+
 	//-------------------------------------------------------
 	// move all servos in their default positions
 	//-------------------------------------------------------
-//				servos->init();
-//				emit message("Servos moved to default positions");
+//	servos->init();
+//	emit message("Servos moved to default positions");
 
 
 	if (state == true)
@@ -4605,6 +4609,7 @@ void Direcs::robotStateHandler(bool state)
 				gui->setLEDCompass(RED);
 			}
 		}
+		emit initCompass();
 
 
 /// @todo start sensor thread again. before that: rebuild it to be event driven!
