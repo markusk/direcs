@@ -68,7 +68,7 @@ void Circuit::initCircuit()
 			duration.start();
 
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutCircuit()) );
 
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
@@ -188,7 +188,7 @@ void Circuit::takeCompassAnswer(QString atmelAnswer)
 }
 
 
-void Circuit::timeout()
+void Circuit::timeoutCircuit()
 {
 	// check if we have already a valid answer
 	if (circuitState == true)

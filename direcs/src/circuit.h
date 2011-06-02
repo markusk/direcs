@@ -97,7 +97,7 @@ class Circuit : public QObject
 		/**
 		This Slot is called if we never get an answer from the Atmel
 		*/
-		void timeout();
+		void timeoutCircuit();
 
 
 	signals:
