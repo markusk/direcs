@@ -4608,7 +4608,7 @@ void Direcs::robotStateHandler(bool state)
 void Direcs::compassStateHandler(bool state)
 {
 	//
-	// if we are here, the robots compass init was okay
+	// if we are here, the robots compass init was okay and the initCompass was called / emmited
 	//
 
 	if (state == true)
