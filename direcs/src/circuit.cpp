@@ -44,9 +44,10 @@ Circuit::~Circuit()
 
 void Circuit::initCircuit()
 {
-	// get the strings emmited from the interfaceAvr class
+	// Get the next strings emmited from the interfaceAvr class, when available
 	// These are the answers from the Atmel
-	connect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCircuitAnswer(bool, QString)));
+	disconnect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCompassAnswer(bool, QString)));
+	connect   (interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCircuitAnswer(bool, QString)));
 
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (circuitState)
@@ -126,11 +127,6 @@ void Circuit::takeCircuitAnswer(bool state, QString atmelAnswer)
 		circuitState = true;
 		atmelCommand.clear();
 		expectedAtmelAnswer.clear();
-
-		// Get the next strings emmited from the interfaceAvr class, when available
-		// These are the answers from the Atmel
-		disconnect(interface1, SIGNAL(commandCompleted(bool,QString)), this, SLOT(takeCircuitAnswer(bool,QString)));
-		connect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCompassAnswer(bool, QString)));
 
 		emit robotState(true);
 
@@ -217,6 +213,10 @@ void Circuit::initCompass()
 {
 /*
 	QString answer = "error";
+		// Get the next strings emmited from the interfaceAvr class, when available
+		// These are the answers from the Atmel
+		disconnect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCircuitAnswer(bool, QString)));
+		connect   (interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCompassAnswer(bool, QString)));
 
 
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
