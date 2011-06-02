@@ -237,7 +237,7 @@ void Circuit::initCompass()
 			duration.start();
 
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-/// @todo	QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutCircuit()) );
 
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
@@ -253,6 +253,24 @@ void Circuit::initCompass()
 
 	// Unlock the mutex.
 	mutex->unlock();
+
+	expectedAtmelAnswer.clear();
+	compassCircuitState = false;
+	emit message("Compass is OFF.");
+	emit compassState(false);
+}
+
+
+void Circuit::timeoutCompass()
+{
+	// check if we have already a valid answer
+	if (compassCircuitState == true)
+	{
+		// we are happy
+		return;
+	}
+
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
 
 	expectedAtmelAnswer.clear();
 	compassCircuitState = false;
