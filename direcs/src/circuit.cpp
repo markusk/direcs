@@ -152,6 +152,46 @@ void Circuit::takeCircuitAnswer(bool state, QString atmelAnswer)
 }
 
 
+void Circuit::takeCompassAnswer(bool state, QString atmelAnswer)
+{
+	answerReceived = state;
+	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
+
+	// how long did it take?
+	if (duration.elapsed() > ATMELTIMEOUT)
+	{
+		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+
+		// timeout
+		emit compassState(false);
+
+		return;
+	}
+
+	// everthing's fine :-)
+	emit message("Answer received.");
+
+	if (atmelAnswer == expectedAtmelAnswer)
+	{
+		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+
+		// compass init okay
+		emit compassState(true);
+
+		return;
+	}
+	else
+	{
+		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+
+		// wrong answer
+		emit compassState(false);
+
+		return;
+	}
+}
+
+
 void Circuit::timeout()
 {
 	// check if we have already a valid answer
