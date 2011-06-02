@@ -126,7 +126,6 @@ class Circuit : public QObject
 		InterfaceAvr *interface1;
 		QString atmelCommand; /// this is the command for the Atmel
 		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.
-		bool answerReceived;  /// this indicates, that a complete Atmel command was received - e.g. *sl#
 		bool answerTimeout; /// this is set to true, when we have a timout while waiting for an Atmel answer
 
 		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers

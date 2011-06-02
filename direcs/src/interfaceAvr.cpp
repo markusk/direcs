@@ -333,7 +333,6 @@ static	QByteArray bytes;
 //	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 	QString receiveString;
 	QString commandString;
-	QChar qchar; // this is for conversion from unsigned char to QString
 	bool stringStarted = false;
 //	static bool redLEDtoggle = false;
 	// - - -

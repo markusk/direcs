@@ -32,7 +32,6 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 
 	atmelCommand.clear();
 	expectedAtmelAnswer.clear();
-	answerReceived = false;
 	answerTimeout = false;
 }
 
@@ -97,7 +96,6 @@ void Circuit::initCircuit()
 
 void Circuit::takeCircuitAnswer(QString atmelAnswer)
 {
-	answerReceived = state;
 	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
 
 	// how long did it take?
