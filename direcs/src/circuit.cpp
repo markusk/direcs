@@ -159,6 +159,7 @@ void Circuit::takeCompassAnswer(bool state, QString atmelAnswer)
 		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 
 		// timeout
+		compassCircuitState = false;
 		emit compassState(false);
 
 		return;
@@ -172,6 +173,7 @@ void Circuit::takeCompassAnswer(bool state, QString atmelAnswer)
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
 
 		// compass init okay
+		compassCircuitState = true;
 		emit compassState(true);
 
 		return;
@@ -181,6 +183,7 @@ void Circuit::takeCompassAnswer(bool state, QString atmelAnswer)
 		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
 
 		// wrong answer
+		compassCircuitState = false;
 		emit compassState(false);
 
 		return;
@@ -211,47 +214,53 @@ void Circuit::timeout()
 
 void Circuit::initCompass()
 {
-/*
-	QString answer = "error";
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	if (circuitState)
+	{
 		// Get the next strings emmited from the interfaceAvr class, when available
 		// These are the answers from the Atmel
 		disconnect(interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCircuitAnswer(bool, QString)));
 		connect   (interface1, SIGNAL(commandCompleted(bool, QString)), this, SLOT(takeCompassAnswer(bool, QString)));
 
 
-	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	{
+		atmelCommand = "cc";
+		expectedAtmelAnswer = "*ok#";
+
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 
-		// check if the 3D compass sensor is connected to the Atmel board
-		if (interface1->sendString("cc") == true)
+		//-------------------------------------------------------
+		// Basic init for all the bits on the robot circuit
+		//-------------------------------------------------------
+		// sending command
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		if (interface1->sendString(atmelCommand) == true)
 		{
-			// check if the robot answers with "ok"
-			if ( interface1->receiveString(answer) == true)
-			{
-				if (answer == "*ok#")
-				{
-					// Unlock the mutex
-					mutex->unlock();
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
 
-					compassCircuitState = true;
-					emit compassState(true);
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+/// @todo	QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-					return true;
-				}
-			}
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+			return;
 		}
 
-		// Unlock the mutex.
-		mutex->unlock();
-
+		emit message("Error sending string.");
 	}
-*/
-	compassCircuitState = false;
-	emit compassState(false);
 
-	return false;
+	// Unlock the mutex.
+	mutex->unlock();
+
+	expectedAtmelAnswer.clear();
+	compassCircuitState = false;
+	emit message("Compass is OFF.");
+	emit compassState(false);
 }
 
 
