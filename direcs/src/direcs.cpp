@@ -609,6 +609,7 @@ void Direcs::init()
 			// init the robots circuit
 			//==========================
 			connect(this, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+			connect(this, SIGNAL( initCompass() ), circuit1, SLOT( initCompass() ) );
 
 			// start the circuit thread
 			emit splashMessage("Starting circuit thread...");
