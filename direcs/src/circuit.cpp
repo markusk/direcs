@@ -147,6 +147,14 @@ void Circuit::takeAnswer(bool state, QString atmelAnswer)
 
 void Circuit::timeout()
 {
+	// check if we have already a valid answer
+	if (circuitState == true)
+	{
+		// we are happy
+		return;
+	}
+
+
 	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
 
 	qDebug("INFO from initCircuit: Robot is OFF.");
