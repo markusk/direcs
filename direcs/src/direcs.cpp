@@ -367,7 +367,7 @@ void Direcs::init()
 	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
+	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) ));
 	if (!consoleMode)
 	{
 		connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
@@ -378,7 +378,7 @@ void Direcs::init()
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
+	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) ));
 	if (!consoleMode)
 	{
 		connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
@@ -4562,7 +4562,7 @@ void Direcs::setSimulationMode(bool status)
 }
 
 
-void Direcs::setRobotState(bool state)
+void Direcs::robotStateHandler(bool state)
 {
 
 	if (state == true)

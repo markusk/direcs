@@ -205,7 +205,7 @@ class Direcs : public QObject
 		This slot sets (stores) the robots (circuits) state within this class.
 		@param state can be ON or OFF
 		*/
-		void setRobotState(bool state);
+		void robotStateHandler(bool state);
 
 		/**
 		Ends the programm, after asking "really?".
