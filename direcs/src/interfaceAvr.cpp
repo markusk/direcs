@@ -449,6 +449,7 @@ static	QByteArray bytes;
 			// reset received string for next upcoming command
 			//-------------------------------------------------
 			receiveString.clear();
+			bytes.clear(); // clean the internal receive string  @todo make this nicer
 			stringStarted = false;
 
 			// this can be checked via commandOkay()
