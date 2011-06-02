@@ -4621,9 +4621,7 @@ void Direcs::robotStateHandler(bool state)
 	{
 		logfile->appendLog("Robot is OFF! Please turn it ON!");
 		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-		emit message("Heartbeat thread NOT started!");
 		emit message("Sensor thread NOT started!");
-		emit message("Plot thread NOT started!");
 	}
 }
 
