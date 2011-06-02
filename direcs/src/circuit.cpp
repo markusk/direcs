@@ -26,7 +26,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 	interface1 = i;
 	mutex = m;
 
-	circuitState = false; //  has to be TRUE at startup. Could be set to false, if InterfaceAvr is not finding a serial port. Will be later set within the run method.
+	circuitState = true; //  has to be TRUE at startup. Could be set to false, if InterfaceAvr is not finding a serial port. Will be later set.
 	firstInitDone = false;
 	compassCircuitState = false;
 

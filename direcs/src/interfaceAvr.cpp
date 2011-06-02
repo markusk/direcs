@@ -86,7 +86,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 //	serialPort->flush();
 
 //	qDebug("openComPort: serial port opened.");
-	emit robotState(true); /// let the circuit class know, that we opened it
+//	emit robotState(true); /// let the circuit class know, that we opened it   << disabled since we only set this to true, when the robot ANSWERS correctly!!
 
 	// serial port settings
 	serialPort->setBaudRate(BAUD9600);
