@@ -4593,38 +4593,8 @@ void Direcs::robotStateHandler(bool state)
 		emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 
 		// check compass module
-		if (circuit1->initCompass() == true)
-		{
-			emit message("3D compass module detected.");
-			if (!consoleMode)
-			{
-				gui->setLEDCompass(GREEN);
-			}
-		}
-		else
-		{
-			emit message("<font color=\"#FF0000\">3D compass module not connected!</font>");
-			if (!consoleMode)
-			{
-				gui->setLEDCompass(RED);
-			}
-		}
 		emit initCompass();
 
-
-/// @todo start sensor thread again. before that: rebuild it to be event driven!
-/*
-		//-----------------------------------------------------------
-		// start the sensor thread for reading the sensors)
-		//-----------------------------------------------------------
-		emit splashMessage("Starting sensor thread...");
-		emit message("Starting sensor thread...", false);
-		sensorThread->start();
-		emit message("Sensor thread started.");
-
-		// whenever there is a material error, react!
-		connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-*/
 	} // circuit init was successfull
 	else
 	{
@@ -4632,6 +4602,45 @@ void Direcs::robotStateHandler(bool state)
 		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 		emit message("Sensor thread NOT started!");
 	}
+}
+
+
+void Direcs::compassStateHandler(bool state)
+{
+	//
+	// if we are here, the robots compass init was okay
+	//
+
+	if (state == true)
+	{
+		emit message("3D compass module detected.");
+		if (!consoleMode)
+		{
+			gui->setLEDCompass(GREEN);
+		}
+	}
+	else
+	{
+		emit message("<font color=\"#FF0000\">3D compass module not connected!</font>");
+		if (!consoleMode)
+		{
+			gui->setLEDCompass(RED);
+		}
+	}
+
+	/// @todo start sensor thread again. before that: rebuild it to be event driven!
+	/*
+			//-----------------------------------------------------------
+			// start the sensor thread for reading the sensors)
+			//-----------------------------------------------------------
+			emit splashMessage("Starting sensor thread...");
+			emit message("Starting sensor thread...", false);
+			sensorThread->start();
+			emit message("Sensor thread started.");
+
+			// whenever there is a material error, react!
+			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+	*/
 }
 
 
