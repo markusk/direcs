@@ -4104,6 +4104,44 @@ void Gui::showCompassData(float x, float y, float z, float heading)
 }
 
 
+void Gui::setLEDCircuit(unsigned char state)
+{
+	switch (state)
+	{
+		case RED:
+			if (useLargeGUI)
+			{
+				ui.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			break;
+		case GREEN:
+			if (useLargeGUI)
+			{
+				ui.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			break;
+		case LEDOFF:
+			if (useLargeGUI)
+			{
+				ui.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			break;
+	}
+}
+
+
 void Gui::setLEDHeartbeat(unsigned char state)
 {
 	switch (state)

@@ -359,7 +359,13 @@ class Gui : public QMainWindow
 		void showCompassData(float x, float y, float z, float heading);
 
 		/**
-		Turns the heartbeat/state GUI LED red, green or off.
+		Turns the circuit GUI LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDCircuit(unsigned char state);
+
+		/**
+		Turns the heartbeat GUI LED red, green or off.
 		@param state can be RED, GREEN or OFF.
 		*/
 		void setLEDHeartbeat(unsigned char state);

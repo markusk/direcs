@@ -4593,12 +4593,22 @@ void Direcs::robotStateHandler(bool state)
 	{
 		emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 
+		if (!consoleMode)
+		{
+			gui->setLEDCircuit(GREEN);
+		}
+
 		// check compass module
 		emit initCompass();
 
 	} // circuit init was successfull
 	else
 	{
+		if (!consoleMode)
+		{
+			gui->setLEDCircuit(RED);
+		}
+
 		logfile->appendLog("Robot is OFF! Please turn it ON!");
 		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
 		emit message("Sensor thread NOT started!");
