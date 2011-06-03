@@ -99,7 +99,7 @@ void Circuit::initCircuit()
 
 void Circuit::takeCircuitAnswer(QString atmelAnswer)
 {
-	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
+	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 
 	// how long did it take?
 	if (duration.elapsed() > ATMELTIMEOUT)
@@ -175,7 +175,7 @@ void Circuit::timeoutCircuit()
 
 void Circuit::takeCompassAnswer(QString atmelAnswer)
 {
-	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
+	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 
 	// how long did it take?
 	if (duration.elapsed() > ATMELTIMEOUT)
@@ -381,7 +381,7 @@ void Circuit::sleep()
 
 void Circuit::takeSleepAnswer(QString atmelAnswer)
 {
-	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
+	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 
 	// how long did it take?
 	if (duration.elapsed() > ATMELTIMEOUT)
