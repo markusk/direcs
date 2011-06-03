@@ -140,6 +140,11 @@ class Circuit : public QObject
 	private:
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
+
+		QString commandInitCircuit;		/// *re#
+		QString commandInitCompass;		/// *cc#
+		QString commandSleep;			/// *sl#
+
 		QString atmelCommand; /// this is the command for the Atmel
 		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.
 		bool answerTimeout; /// this is set to true, when we have a timout while waiting for an Atmel answer

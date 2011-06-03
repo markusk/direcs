@@ -33,6 +33,11 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 	atmelCommand.clear();
 	expectedAtmelAnswer.clear();
 	answerTimeout = false;
+
+	// the Atmel commands
+	commandInitCircuit = "re";
+	commandInitCompass	= "cc";
+	commandSleep		= "sl";
 }
 
 
