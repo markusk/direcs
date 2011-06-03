@@ -4566,22 +4566,6 @@ void Direcs::robotStateHandler(bool state)
 	// if we are here, the robots circuit init was okay, so the robot is on!
 	//
 
-	//-------------------------------------------------------
-	// set the read motor speed
-	//-------------------------------------------------------
-	motors->setMotorSpeed(1, mot1Speed);
-	motors->setMotorSpeed(2, mot2Speed);
-	motors->setMotorSpeed(3, mot3Speed);
-	motors->setMotorSpeed(4, mot4Speed);
-	emit message("Motor speed set in microcontroller");
-
-
-	//-------------------------------------------------------
-	// move all servos in their default positions
-	//-------------------------------------------------------
-//	servos->init();
-//	emit message("Servos moved to default positions");
-
 
 	if (state == true)
 	{
@@ -4591,6 +4575,21 @@ void Direcs::robotStateHandler(bool state)
 		{
 			gui->setLEDCircuit(GREEN);
 		}
+
+		//-------------------------------------------------------
+		// set the read motor speed
+		//-------------------------------------------------------
+		motors->setMotorSpeed(1, mot1Speed);
+		motors->setMotorSpeed(2, mot2Speed);
+		motors->setMotorSpeed(3, mot3Speed);
+		motors->setMotorSpeed(4, mot4Speed);
+		emit message("Motor speed set in microcontroller");
+
+		//-------------------------------------------------------
+		// move all servos in their default positions
+		//-------------------------------------------------------
+	//	servos->init();
+	//	emit message("Servos moved to default positions");
 
 		// check compass module
 		emit initCompass();
