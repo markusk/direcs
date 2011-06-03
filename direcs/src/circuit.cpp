@@ -26,7 +26,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 	interface1 = i;
 	mutex = m;
 
-	circuitState = true; //  has to be TRUE at startup. Could be set to false, if InterfaceAvr is not finding a serial port. Will be later set.
+	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
 	firstInitDone = false;
 	compassCircuitState = false;
 
@@ -91,6 +91,8 @@ void Circuit::initCircuit()
 	expectedAtmelAnswer.clear();
 	firstInitDone = true;
 	circuitState = false;
+
+	// emit result (instead ofold-school returning 'bool')
 	emit robotState(false);
 }
 
@@ -109,6 +111,7 @@ void Circuit::takeCircuitAnswer(QString atmelAnswer)
 		circuitState = false;
 		atmelCommand.clear();
 		expectedAtmelAnswer.clear();
+
 		emit robotState(false);
 
 		return;
@@ -140,6 +143,7 @@ void Circuit::takeCircuitAnswer(QString atmelAnswer)
 		circuitState = false;
 		atmelCommand.clear();
 		expectedAtmelAnswer.clear();
+
 		emit robotState(false);
 
 		return;
@@ -149,8 +153,8 @@ void Circuit::takeCircuitAnswer(QString atmelAnswer)
 
 void Circuit::timeoutCircuit()
 {
-	// check if we have already a valid answer
-	if (circuitState == true)
+	// first check if we had already an answer from the Atmel
+	if (firstInitDone == true)
 	{
 		// we are happy
 		return;
@@ -164,6 +168,7 @@ void Circuit::timeoutCircuit()
 	circuitState = false;
 	atmelCommand.clear();
 	expectedAtmelAnswer.clear();
+
 	emit robotState(false);
 }
 
@@ -179,6 +184,7 @@ void Circuit::takeCompassAnswer(QString atmelAnswer)
 
 		// timeout
 		compassCircuitState = false;
+
 		emit compassState(false);
 
 		return;
@@ -193,6 +199,7 @@ void Circuit::takeCompassAnswer(QString atmelAnswer)
 
 		// compass init okay
 		compassCircuitState = true;
+
 		emit compassState(true);
 
 		return;
@@ -203,6 +210,7 @@ void Circuit::takeCompassAnswer(QString atmelAnswer)
 
 		// wrong answer
 		compassCircuitState = false;
+
 		emit compassState(false);
 
 		return;
@@ -258,6 +266,7 @@ void Circuit::initCompass()
 	expectedAtmelAnswer.clear();
 	compassCircuitState = false;
 	emit message("Compass is OFF.");
+
 	emit compassState(false);
 }
 
@@ -276,6 +285,7 @@ void Circuit::timeoutCompass()
 	expectedAtmelAnswer.clear();
 	compassCircuitState = false;
 	emit message("Compass is OFF.");
+
 	emit compassState(false);
 }
 
@@ -286,7 +296,7 @@ bool Circuit::isConnected()
 	if (firstInitDone == false)
 	{
 		initCircuit(); /// @todo implement this initCircuit and isConnected for event mode!
-		firstInitDone = true;
+//		firstInitDone = true;
 	}
 
 	return circuitState;
