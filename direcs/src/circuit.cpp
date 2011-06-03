@@ -38,6 +38,8 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 	commandInitCircuit = "re";
 	commandInitCompass	= "cc";
 	commandSleep		= "sl";
+
+	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
 }
 
 
@@ -50,8 +52,8 @@ void Circuit::initCircuit()
 {
 	// Get the next strings emmited from the interfaceAvr class, when available
 	// These are the answers from the Atmel
-	disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
-	connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString))); /// < < < < < < < < < < < <
+//	disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
+//	connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
 
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
@@ -126,6 +128,12 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		// check the last command
 		if (atmelCommand == commandInitCompass)
 		{
+			// timeout
+			compassCircuitState = false;
+
+			emit compassState(false);
+
+			return;
 		} // InitCompass
 
 		// check the last command
@@ -156,6 +164,13 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		// check the last command
 		if (atmelCommand == commandInitCompass)
 		{
+
+			// compass init okay
+			compassCircuitState = true;
+
+			emit compassState(true);
+
+			return;
 		} // InitCompass
 
 		// check the last command
@@ -182,6 +197,13 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		// check the last command
 		if (atmelCommand == commandInitCompass)
 		{
+
+			// wrong answer
+			compassCircuitState = false;
+
+			emit compassState(false);
+
+			return;
 		} // InitCompass
 
 		// check the last command
@@ -320,8 +342,8 @@ void Circuit::initCompass()
 	{
 		// Get the next strings emmited from the interfaceAvr class, when available
 		// These are the answers from the Atmel
-		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
-		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
+//		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
+//		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
 
 
 		atmelCommand = commandInitCompass;
