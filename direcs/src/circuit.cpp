@@ -49,6 +49,7 @@ void Circuit::initCircuit()
 	connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
 
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
 	if (circuitState)
 	{
 		atmelCommand = "re";
@@ -146,6 +147,27 @@ void Circuit::takeCircuitAnswer(QString atmelAnswer)
 }
 
 
+void Circuit::timeoutCircuit()
+{
+	// check if we have already a valid answer
+	if (circuitState == true)
+	{
+		// we are happy
+		return;
+	}
+
+
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+
+	qDebug("INFO from initCircuit: Robot is OFF.");
+	firstInitDone = true;
+	circuitState = false;
+	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
+	emit robotState(false);
+}
+
+
 void Circuit::takeCompassAnswer(QString atmelAnswer)
 {
 	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
@@ -185,27 +207,6 @@ void Circuit::takeCompassAnswer(QString atmelAnswer)
 
 		return;
 	}
-}
-
-
-void Circuit::timeoutCircuit()
-{
-	// check if we have already a valid answer
-	if (circuitState == true)
-	{
-		// we are happy
-		return;
-	}
-
-
-	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-
-	qDebug("INFO from initCircuit: Robot is OFF.");
-	firstInitDone = true;
-	circuitState = false;
-	atmelCommand.clear();
-	expectedAtmelAnswer.clear();
-	emit robotState(false);
 }
 
 

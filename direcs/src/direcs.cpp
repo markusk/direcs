@@ -613,12 +613,11 @@ void Direcs::init()
 			connect(this, SIGNAL( initCompass() ), circuit1, SLOT( initCompass() ) );
 
 			// start the circuit thread
-			emit splashMessage("Starting circuit thread...");
-			emit message("Starting circuit thread...");
+			emit splashMessage("Initialising circuit...");
+			emit message("Initialising circuit...");
 
 			emit initCircuit();
 
-			emit message("Circuit thread started.");
 			emit splashMessage("Searching robot...");
 			emit message("Searching robot...");
 
