@@ -361,29 +361,7 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	// let some classes know the robots state
 	//--------------------------------------------------------------------------
-	// this is needed, when the first openCOMPort method fails:
-	connect(this,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
-	connect(this,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-//	connect(this,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(this,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-	connect(this,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) ));
-	if (!consoleMode)
-	{
-		connect(this,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
-	}
-
-/*
-	// also set the robot to OFF, when there are problems with the circuit
-	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-//	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) ));
-	if (!consoleMode)
-	{
-		connect(circuit1,	SIGNAL( robotState(bool) ), gui,		SLOT( setRobotControls(bool) ));
-	}
-*/
 
 	// get the state from the compass from the circuit class
 	connect(circuit1,	SIGNAL( compassState(bool) ), this,			SLOT( compassStateHandler(bool) ));
@@ -391,6 +369,15 @@ void Direcs::init()
 	// let the sensorthread know, if only the compass is not connected
 	connect(circuit1,	SIGNAL( compassState(bool) ), sensorThread,SLOT( setCompassState(bool) ));
 
+	connect(this,		SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
+	connect(this,		SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
+	connect(this,		SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
+//	connect(this,		SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
+
+	if (!consoleMode)
+	{
+		connect(this,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
+	}
 
 	if (!consoleMode)
 	{
@@ -577,7 +564,14 @@ void Direcs::init()
 				// has to be OFF, since the Atmel circuit is OFF
 				gui->setLEDCompass(LEDOFF);
 				gui->disableCompass();
+
+				gui->setLEDCircuit(RED);
 			}
+
+			//---------------------------------------------------
+			// tell all relevant classes, that the robot is OFF!
+			//---------------------------------------------------
+			emit robotState(OFF);
 		}
 		else
 		{
@@ -4604,14 +4598,17 @@ void Direcs::robotStateHandler(bool state)
 	} // circuit init was successfull
 	else
 	{
+		logfile->appendLog("Robot is OFF! Please turn it ON!");
+		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+		emit message("Sensor thread NOT started!");
+
+		// the robot is OFF
+		emit robotState(OFF);
+
 		if (!consoleMode)
 		{
 			gui->setLEDCircuit(RED);
 		}
-
-		logfile->appendLog("Robot is OFF! Please turn it ON!");
-		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-		emit message("Sensor thread NOT started!");
 	}
 }
 
