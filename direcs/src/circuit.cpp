@@ -57,7 +57,7 @@ void Circuit::initCircuit()
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
 	if (circuitState)
 	{
-		atmelCommand = "re";
+		atmelCommand = commandInitCircuit;
 		expectedAtmelAnswer = "*ok#";
 
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -234,7 +234,7 @@ void Circuit::initCompass()
 		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
 
 
-		atmelCommand = "cc";
+		atmelCommand = commandInitCompass;
 		expectedAtmelAnswer = "*ok#";
 
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -342,7 +342,7 @@ void Circuit::sleep()
 		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeSleepAnswer(QString)));
 
 
-		atmelCommand = "sl";
+		atmelCommand = commandSleep;
 		expectedAtmelAnswer = "*sl#";
 
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
