@@ -108,7 +108,9 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 {
 	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 
-	// how long did it take?
+	//----------
+	// timeout?
+	//----------
 	if (duration.elapsed() > ATMELTIMEOUT)
 	{
 		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
@@ -130,21 +132,23 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		{
 			// timeout
 			compassCircuitState = false;
-
 			emit compassState(false);
-
 			return;
 		} // InitCompass
 
 		// check the last command
 		if (atmelCommand == commandSleep)
 		{
+			// timeout
+			circuitState = false;
+			emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
+			return;
 		} // sleep
 	}
 
-	// everthing's fine :-)
-	emit message("Answer received.");
-
+	//------------------
+	// everthing's fine
+	//------------------
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
@@ -164,22 +168,24 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		// check the last command
 		if (atmelCommand == commandInitCompass)
 		{
-
 			// compass init okay
 			compassCircuitState = true;
-
 			emit compassState(true);
-
 			return;
 		} // InitCompass
 
 		// check the last command
 		if (atmelCommand == commandSleep)
 		{
+			// command okay
+			return;
 		} // sleep
 	}
 	else
 	{
+		//--------------
+		// wrong answer
+		//--------------
 		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
 
 		// check the last command
@@ -197,18 +203,17 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		// check the last command
 		if (atmelCommand == commandInitCompass)
 		{
-
-			// wrong answer
 			compassCircuitState = false;
-
 			emit compassState(false);
-
 			return;
 		} // InitCompass
 
 		// check the last command
 		if (atmelCommand == commandSleep)
 		{
+			circuitState = false;
+			emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
+			return;
 		} // sleep
 	}
 }
@@ -449,9 +454,9 @@ void Circuit::sleep()
 	{
 		// Get the next strings emmited from the interfaceAvr class, when available
 		// These are the answers from the Atmel
-		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
-		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
-		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeSleepAnswer(QString)));
+//		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
+//		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
+//		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeSleepAnswer(QString)));
 
 
 		atmelCommand = commandSleep;
