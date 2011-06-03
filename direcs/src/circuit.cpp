@@ -51,7 +51,7 @@ void Circuit::initCircuit()
 	// Get the next strings emmited from the interfaceAvr class, when available
 	// These are the answers from the Atmel
 	disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
-	connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
+	connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString))); /// < < < < < < < < < < < <
 
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
