@@ -102,6 +102,73 @@ void Circuit::initCircuit()
 }
 
 
+void Circuit::takeCommandAnswer(QString atmelAnswer)
+{
+	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+
+	// how long did it take?
+	if (duration.elapsed() > ATMELTIMEOUT)
+	{
+		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+
+		// check the last command which was sent
+		if (atmelCommand == commandInitCircuit)
+		{
+			qDebug("INFO from initCircuit: Robot is OFF.");
+			firstInitDone = true;
+			circuitState = false;
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
+
+			emit robotState(false);
+
+			return;
+		} // initCircuit
+	}
+
+	// everthing's fine :-)
+	emit message("Answer received.");
+
+	if (atmelAnswer == expectedAtmelAnswer)
+	{
+		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+
+		// check the last command which was sent
+		if (atmelCommand == commandInitCircuit)
+		{
+			// ciruit init okay
+			firstInitDone = true;
+			circuitState = true;
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
+
+			emit robotState(true);
+
+			return;
+		} // initCircuit
+	}
+	else
+	{
+		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+
+
+		// check the last command which was sent
+		if (atmelCommand == commandInitCircuit)
+		{
+			qDebug("INFO from initCircuit: Robot is OFF.");
+			firstInitDone = true;
+			circuitState = false;
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
+
+			emit robotState(false);
+
+			return;
+		} // initCircuit
+	}
+}
+
+
 void Circuit::takeCircuitAnswer(QString atmelAnswer)
 {
 	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );

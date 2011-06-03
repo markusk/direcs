@@ -98,6 +98,11 @@ class Circuit : public QObject
 		*/
 		void takeCompassAnswer(QString atmelAnswer);
 
+		/**
+		@todo describe this method
+		*/
+		void takeCommandAnswer(QString atmelAnswer);
+
 
 	private slots:
 		/**
