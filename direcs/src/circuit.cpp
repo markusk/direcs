@@ -111,7 +111,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 	{
 		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 
-		// check the last command which was sent
+		// check the last command
 		if (atmelCommand == commandInitCircuit)
 		{
 			qDebug("INFO from initCircuit: Robot is OFF.");
@@ -119,11 +119,19 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 			circuitState = false;
 			atmelCommand.clear();
 			expectedAtmelAnswer.clear();
-
 			emit robotState(false);
-
 			return;
 		} // initCircuit
+
+		// check the last command
+		if (atmelCommand == commandInitCompass)
+		{
+		} // InitCompass
+
+		// check the last command
+		if (atmelCommand == commandSleep)
+		{
+		} // sleep
 	}
 
 	// everthing's fine :-)
@@ -133,7 +141,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 	{
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
 
-		// check the last command which was sent
+		// check the last command
 		if (atmelCommand == commandInitCircuit)
 		{
 			// ciruit init okay
@@ -141,18 +149,25 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 			circuitState = true;
 			atmelCommand.clear();
 			expectedAtmelAnswer.clear();
-
 			emit robotState(true);
-
 			return;
 		} // initCircuit
+
+		// check the last command
+		if (atmelCommand == commandInitCompass)
+		{
+		} // InitCompass
+
+		// check the last command
+		if (atmelCommand == commandSleep)
+		{
+		} // sleep
 	}
 	else
 	{
 		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
 
-
-		// check the last command which was sent
+		// check the last command
 		if (atmelCommand == commandInitCircuit)
 		{
 			qDebug("INFO from initCircuit: Robot is OFF.");
@@ -160,11 +175,19 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 			circuitState = false;
 			atmelCommand.clear();
 			expectedAtmelAnswer.clear();
-
 			emit robotState(false);
-
 			return;
 		} // initCircuit
+
+		// check the last command
+		if (atmelCommand == commandInitCompass)
+		{
+		} // InitCompass
+
+		// check the last command
+		if (atmelCommand == commandSleep)
+		{
+		} // sleep
 	}
 }
 
