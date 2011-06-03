@@ -81,10 +81,10 @@ void Circuit::initCircuit()
 		}
 
 		emit message("Error sending string.");
-	}
 
-	// Unlock the mutex.
-	mutex->unlock();
+		// Unlock the mutex.
+		mutex->unlock();
+	}
 
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	emit message("Robot is OFF.");
@@ -258,10 +258,10 @@ void Circuit::initCompass()
 		}
 
 		emit message("Error sending string.");
-	}
 
-	// Unlock the mutex.
-	mutex->unlock();
+		// Unlock the mutex.
+		mutex->unlock();
+	}
 
 	expectedAtmelAnswer.clear();
 	compassCircuitState = false;
