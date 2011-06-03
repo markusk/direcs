@@ -46,5 +46,6 @@
         <file>images/window-duplicate.png</file>
         <file>images/system-reboot.png</file>
         <file>images/applications-internet.png</file>
+        <file>images/system-suspend-hibernate.png</file>
     </qresource>
 </RCC>

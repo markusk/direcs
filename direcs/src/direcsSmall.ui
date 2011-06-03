@@ -1765,6 +1765,7 @@
     </property>
     <addaction name="actionDrive"/>
     <addaction name="actionReset"/>
+    <addaction name="actionSleep"/>
     <addaction name="actionTest"/>
     <addaction name="actionSimulate"/>
     <addaction name="separator"/>
@@ -1799,6 +1800,7 @@
    </attribute>
    <addaction name="actionDrive"/>
    <addaction name="actionReset"/>
+   <addaction name="actionSleep"/>
    <addaction name="actionTest"/>
    <addaction name="actionSimulate"/>
    <addaction name="actionRemote"/>
@@ -1812,7 +1814,6 @@
    <addaction name="actionBlanc_3"/>
    <addaction name="actionBlanc_4"/>
    <addaction name="actionBlanc_5"/>
-   <addaction name="actionBlanc_7"/>
    <addaction name="actionBlanc_6"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
@@ -2061,16 +2062,19 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionBlanc_7">
+  <action name="actionSleep">
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
+     <normaloff>:/images/images/system-suspend-hibernate.png</normaloff>:/images/images/system-suspend-hibernate.png</iconset>
    </property>
    <property name="text">
-    <string/>
+    <string>Sleep</string>
    </property>
-   <property name="visible">
-    <bool>true</bool>
+   <property name="toolTip">
+    <string>Sleep</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
  </widget>

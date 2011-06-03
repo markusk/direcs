@@ -270,6 +270,7 @@ void Gui::setRobotControls(bool state)
 	{
 		ui.actionDrive->setEnabled(state);
 		ui.actionReset->setEnabled(state);
+		ui.actionSleep->setEnabled(state);
 		/*
 		ui.btnResetMovement1->setEnabled(state);
 		ui.btnResetMovement2->setEnabled(state);
@@ -281,6 +282,7 @@ void Gui::setRobotControls(bool state)
 	{
 		uiSmall.actionDrive->setEnabled(state);
 		uiSmall.actionReset->setEnabled(state);
+		uiSmall.actionSleep->setEnabled(state);
 		/*
 		uiSmall.btnResetMovement1->setEnabled(state);
 		uiSmall.btnResetMovement2->setEnabled(state);
@@ -602,6 +604,13 @@ void Gui::on_actionReset_activated()
  uiSmall.btnDirection4->setText("FORWARD");
   }
 */
+}
+
+
+void Gui::on_actionSleep_activated()
+{
+	// let the circuit sleep
+	emit sleepCircuit();
 }
 
 

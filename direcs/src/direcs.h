@@ -276,7 +276,7 @@ class Direcs : public QObject
 		void initCompass();
 
 		/**
-		Let the circuit sleep (turn of watchdog).
+		Let the circuit sleep (turn off watchdog).
 		*/
 		void sleepCircuit();
 

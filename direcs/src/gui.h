@@ -446,6 +446,11 @@ class Gui : public QMainWindow
 		void initServos();
 
 		/**
+		Let the circuit sleep (turn off watchdog).
+		*/
+		void sleepCircuit();
+
+		/**
 		Instructs the robot to drive FORWARD, BACKWARD, LEFT and RIGHT. The commands START, STOP or WAIT are also possible.
 		@param command
 		 */
@@ -534,6 +539,7 @@ class Gui : public QMainWindow
 		void on_actionAbout_activated();
 		void on_actionDrive_activated();
 		void on_actionReset_activated();
+		void on_actionSleep_activated();
 		void on_actionTest_activated();
 		void on_actionRemote_activated();
 		void on_actionSimulate_activated();

@@ -135,6 +135,7 @@
     </property>
     <addaction name="actionDrive"/>
     <addaction name="actionReset"/>
+    <addaction name="actionSleep"/>
     <addaction name="actionTest"/>
     <addaction name="actionSimulate"/>
     <addaction name="actionRemote"/>
@@ -187,6 +188,7 @@
    <addaction name="separator"/>
    <addaction name="actionDrive"/>
    <addaction name="actionReset"/>
+   <addaction name="actionSleep"/>
    <addaction name="actionTest"/>
    <addaction name="actionSimulate"/>
    <addaction name="actionRemote"/>
@@ -2039,6 +2041,21 @@
    </property>
    <property name="toolTip">
     <string>Reset Driven Distance</string>
+   </property>
+  </action>
+  <action name="actionSleep">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/system-suspend-hibernate.png</normaloff>:/images/images/system-suspend-hibernate.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sleep</string>
+   </property>
+   <property name="toolTip">
+    <string>Sleep</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
  </widget>
