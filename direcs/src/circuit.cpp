@@ -219,60 +219,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 }
 
 
-void Circuit::takeCircuitAnswer(QString atmelAnswer)
-{
-	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
-
-	// how long did it take?
-	if (duration.elapsed() > ATMELTIMEOUT)
-	{
-		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-
-		qDebug("INFO from initCircuit: Robot is OFF.");
-		firstInitDone = true;
-		circuitState = false;
-		atmelCommand.clear();
-		expectedAtmelAnswer.clear();
-
-		emit robotState(false);
-
-		return;
-	}
-
-	// everthing's fine :-)
-	emit message("Answer received.");
-
-	if (atmelAnswer == expectedAtmelAnswer)
-	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
-
-		// ciruit init okay
-		firstInitDone = true;
-		circuitState = true;
-		atmelCommand.clear();
-		expectedAtmelAnswer.clear();
-
-		emit robotState(true);
-
-		return;
-	}
-	else
-	{
-		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
-
-		qDebug("INFO from initCircuit: Robot is OFF.");
-		firstInitDone = true;
-		circuitState = false;
-		atmelCommand.clear();
-		expectedAtmelAnswer.clear();
-
-		emit robotState(false);
-
-		return;
-	}
-}
-
-
 void Circuit::timeoutCircuit()
 {
 	// first check if we had already an answer from the Atmel
@@ -292,51 +238,6 @@ void Circuit::timeoutCircuit()
 	expectedAtmelAnswer.clear();
 
 	emit robotState(false);
-}
-
-
-void Circuit::takeCompassAnswer(QString atmelAnswer)
-{
-	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
-
-	// how long did it take?
-	if (duration.elapsed() > ATMELTIMEOUT)
-	{
-		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-
-		// timeout
-		compassCircuitState = false;
-
-		emit compassState(false);
-
-		return;
-	}
-
-	// everthing's fine :-)
-	emit message("Answer received.");
-
-	if (atmelAnswer == expectedAtmelAnswer)
-	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
-
-		// compass init okay
-		compassCircuitState = true;
-
-		emit compassState(true);
-
-		return;
-	}
-	else
-	{
-		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
-
-		// wrong answer
-		compassCircuitState = false;
-
-		emit compassState(false);
-
-		return;
-	}
 }
 
 
@@ -498,46 +399,6 @@ void Circuit::sleep()
 	expectedAtmelAnswer.clear();
 
 	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
-}
-
-
-void Circuit::takeSleepAnswer(QString atmelAnswer)
-{
-	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
-
-	// how long did it take?
-	if (duration.elapsed() > ATMELTIMEOUT)
-	{
-		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-
-		// timeout
-		circuitState = false;
-		emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
-
-		return;
-	}
-
-	// everthing's fine :-)
-	emit message("Answer received.");
-
-	if (atmelAnswer == expectedAtmelAnswer)
-	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
-
-		// command okay
-
-		return;
-	}
-	else
-	{
-		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
-
-		// wrong answer
-		circuitState = false;
-		emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
-
-		return;
-	}
 }
 
 

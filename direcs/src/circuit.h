@@ -67,12 +67,6 @@ class Circuit : public QObject
 		void sleep();
 
 		/**
-		This slot takes the received Atmel command string after sending the sleep command to the circuit.
-		@param atmelAnswer
-		*/
-		void takeSleepAnswer(QString atmelAnswer);
-
-		/**
 		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
 		@return true, when connected.
 		*/
@@ -86,20 +80,9 @@ class Circuit : public QObject
 		 * /
 		void setRobotState(bool state);
 */
-		/**
-		This slot takes the received Atmel command string after initialising the circuit.
-		@param atmelAnswer
-		*/
-		void takeCircuitAnswer(QString atmelAnswer);
 
 		/**
-		This slot takes the received Atmel command string after initialising the compass.
-		@param atmelAnswer
-		*/
-		void takeCompassAnswer(QString atmelAnswer);
-
-		/**
-		@todo describe this method
+		This slot takes the received answers from the Atmel after sending a command string to it.
 		*/
 		void takeCommandAnswer(QString atmelAnswer);
 
