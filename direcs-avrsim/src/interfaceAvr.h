@@ -124,13 +124,6 @@ class InterfaceAvr : public QObject
 		void commandCompleted(QString string);
 
 		/**
-		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
-		This signal is emitted, when the openComPort() method fails!
-		@param state can be ON or OFF
-		*/
-		void robotState(bool state);
-
-		/**
 		This signal is emmited, when too much errors occur while receiving or sending to the serial port.
 		@sa Direcs::showExitDialog()
 		*/

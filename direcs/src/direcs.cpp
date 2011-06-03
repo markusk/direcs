@@ -362,27 +362,28 @@ void Direcs::init()
 	// let some classes know the robots state
 	//--------------------------------------------------------------------------
 	// this is needed, when the first openCOMPort method fails:
-	connect(interface1,	SIGNAL( robotState(bool) ), circuit1,		SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-//	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) )); // this is only used to indicatem that the robot is OFF!
+	connect(this,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
+	connect(this,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
+//	connect(this,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
+	connect(this,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
+	connect(this,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) ));
 	if (!consoleMode)
 	{
-		connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
+		connect(this,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
 	}
 
+/*
 	// also set the robot to OFF, when there are problems with the circuit
 	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) )); // this is to indicate that the report ANSWERS (and is ON, of course)!
+	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( robotStateHandler(bool) ));
 	if (!consoleMode)
 	{
 		connect(circuit1,	SIGNAL( robotState(bool) ), gui,		SLOT( setRobotControls(bool) ));
 	}
+*/
 
 	// get the state from the compass from the circuit class
 	connect(circuit1,	SIGNAL( compassState(bool) ), this,			SLOT( compassStateHandler(bool) ));

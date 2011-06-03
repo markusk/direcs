@@ -305,11 +305,13 @@ bool Circuit::compassConnected()
 }
 
 
+/*
 void Circuit::setRobotState(bool state)
 {
 	// store the state within this class
 	circuitState = state;
 }
+*/
 
 
 bool Circuit::sleep()

@@ -232,6 +232,12 @@ class Direcs : public QObject
 
 	signals:
 		/**
+		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
+		@param state can be ON or OFF
+		*/
+		void robotState(bool state);
+
+		/**
 		Shows the preferred driving direction of the robot in the GUI
 		@sa logicalUnit()
 		*/
