@@ -605,6 +605,7 @@ void Direcs::init()
 			//==========================
 			connect(this, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 			connect(this, SIGNAL( initCompass() ), circuit1, SLOT( initCompass() ) );
+			connect(this, SIGNAL( sleepCircuit() ), circuit1,	SLOT( sleep() ));
 
 			// start the circuit thread
 			emit splashMessage("Initialising circuit...");
@@ -1542,7 +1543,6 @@ void Direcs::shutdown()
 		}
 	}
 
-
 	if (forceShutdown==false)
 	{
 		//-------------------------------------------------------
@@ -1550,7 +1550,7 @@ void Direcs::shutdown()
 		//-------------------------------------------------------
 		emit splashMessage("Putting robot to sleep...");
 		emit message("Putting robot to sleep...");
-		circuit1->sleep(); /// \todo what, if the robote serial communication hangs here? timeout check?
+		emit sleepCircuit(); /// @todo what, if the robote serial communication hangs here? timeout check?
 
 		//-----------------------------
 		// close serial port to mc

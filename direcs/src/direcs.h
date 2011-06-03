@@ -276,6 +276,11 @@ class Direcs : public QObject
 		void initCompass();
 
 		/**
+		Let the circuit sleep (turn of watchdog).
+		*/
+		void sleepCircuit();
+
+		/**
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);

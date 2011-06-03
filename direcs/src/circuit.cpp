@@ -327,37 +327,55 @@ void Circuit::setRobotState(bool state)
 
 void Circuit::sleep()
 {
-	QString answer = "error";
-
-
-	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	if (circuitState)
 	{
+		// Get the next strings emmited from the interfaceAvr class, when available
+		// These are the answers from the Atmel
+		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
+		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
+		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeSleepAnswer(QString)));
+
+
+		atmelCommand = "sl";
+		expectedAtmelAnswer = "*sl#";
+
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 
-		// sending SLEEP command
-		if (interface1->sendString("sl") == true)
+		//---------------------------------------------------------------------------
+		// Sleep command for the robot circuit (disables the watchdog on the Atmel)
+		//---------------------------------------------------------------------------
+		// sending command
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		if (interface1->sendString(atmelCommand) == true)
 		{
-			// check if the robot answers with "sl"
-			if ( interface1->receiveString(answer) == true)
-			{
-				// everthing's fine
-				if (answer == "*sl#")
-				{
-					// Unlock the mutex
-					mutex->unlock();
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
 
-					return;
-				}
-			}
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutSleep()) );
+
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+			return;
 		}
+
+		emit message("Error sending string.");
 
 		// Unlock the mutex.
 		mutex->unlock();
-
 	}
 
-	return;
+	circuitState = false;
+	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
+
+	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 }
 
 
@@ -371,9 +389,8 @@ void Circuit::takeSleepAnswer(QString atmelAnswer)
 		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 
 		// timeout
-
-		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
-		// emit robotState(false);
+		circuitState = false;
+		emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 
 		return;
 	}
@@ -394,9 +411,12 @@ void Circuit::takeSleepAnswer(QString atmelAnswer)
 		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
 
 		// wrong answer
+		circuitState = false;
+		emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 
-		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
-		// emit robotState(false);
+		return;
+	}
+}
 
 
 void Circuit::timeoutSleep()
