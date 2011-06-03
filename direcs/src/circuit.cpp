@@ -50,11 +50,6 @@ Circuit::~Circuit()
 
 void Circuit::initCircuit()
 {
-	// Get the next strings emmited from the interfaceAvr class, when available
-	// These are the answers from the Atmel
-//	disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
-//	connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
-
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
 	if (circuitState)
@@ -246,12 +241,6 @@ void Circuit::initCompass()
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (circuitState)
 	{
-		// Get the next strings emmited from the interfaceAvr class, when available
-		// These are the answers from the Atmel
-//		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
-//		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
-
-
 		atmelCommand = commandInitCompass;
 		expectedAtmelAnswer = "*ok#";
 
@@ -339,27 +328,11 @@ bool Circuit::compassConnected()
 }
 
 
-/*
-void Circuit::setRobotState(bool state)
-{
-	// store the state within this class
-	circuitState = state;
-}
-*/
-
-
 void Circuit::sleep()
 {
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (circuitState)
 	{
-		// Get the next strings emmited from the interfaceAvr class, when available
-		// These are the answers from the Atmel
-//		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCircuitAnswer(QString)));
-//		disconnect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCompassAnswer(QString)));
-//		connect   (interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeSleepAnswer(QString)));
-
-
 		atmelCommand = commandSleep;
 		expectedAtmelAnswer = "*sl#";
 

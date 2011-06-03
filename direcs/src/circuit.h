@@ -71,15 +71,6 @@ class Circuit : public QObject
 		@return true, when connected.
 		*/
 		void initCompass();
-/* -> Disabled. Will now be emitted by central direcs class!
-		/ **
-		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
-		When the class knows this, unnecessary communication with the interface can be avoided.
-
-		@param state can be ON or OFF
-		 * /
-		void setRobotState(bool state);
-*/
 
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.
