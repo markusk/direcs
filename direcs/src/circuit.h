@@ -61,16 +61,16 @@ class Circuit : public QObject
 		void initCircuit();
 
 		/**
-		Puts the robot's circuits to sleep. This also disables the robot's watchdog!
-		@return true, when everything was fine
-		*/
-		void sleep();
-
-		/**
 		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
 		@return true, when connected.
 		*/
 		void initCompass();
+
+		/**
+		Puts the robot's circuits to sleep. This also disables the robot's watchdog!
+		@return true, when everything was fine
+		*/
+		void sleep();
 
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.

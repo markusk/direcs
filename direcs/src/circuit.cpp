@@ -99,6 +99,160 @@ void Circuit::initCircuit()
 }
 
 
+void Circuit::timeoutCircuit()
+{
+	// first check if we had already an answer from the Atmel
+	if (firstInitDone == true)
+	{
+		// we are happy
+		return;
+	}
+
+
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+
+	qDebug("INFO from initCircuit: Robot is OFF.");
+	firstInitDone = true;
+	circuitState = false;
+	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
+
+	emit robotState(false);
+}
+
+
+void Circuit::initCompass()
+{
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	if (circuitState)
+	{
+		atmelCommand = commandInitCompass;
+		expectedAtmelAnswer = "*ok#";
+
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+
+		//-------------------------------------------------------
+		// Basic init for all the bits on the robot circuit
+		//-------------------------------------------------------
+		// sending command
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		if (interface1->sendString(atmelCommand) == true)
+		{
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
+
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutCircuit()) );
+
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+			return;
+		}
+
+		emit message("Error sending string.");
+
+		// Unlock the mutex.
+		mutex->unlock();
+	}
+
+	expectedAtmelAnswer.clear();
+	compassCircuitState = false;
+	emit message("Compass is OFF.");
+
+	emit compassState(false);
+}
+
+
+void Circuit::timeoutCompass()
+{
+	// check if we have already a valid answer
+	if (compassCircuitState == true)
+	{
+		// we are happy
+		return;
+	}
+
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+
+	expectedAtmelAnswer.clear();
+	compassCircuitState = false;
+	emit message("Compass is OFF.");
+
+	emit compassState(false);
+}
+
+
+void Circuit::sleep()
+{
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	if (circuitState)
+	{
+		atmelCommand = commandSleep;
+		expectedAtmelAnswer = "*sl#";
+
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+
+		//---------------------------------------------------------------------------
+		// Sleep command for the robot circuit (disables the watchdog on the Atmel)
+		//---------------------------------------------------------------------------
+		// sending command
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		if (interface1->sendString(atmelCommand) == true)
+		{
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
+
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutSleep()) );
+
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+			return;
+		}
+
+		emit message("Error sending string.");
+
+		// Unlock the mutex.
+		mutex->unlock();
+	}
+
+	circuitState = false;
+	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
+
+	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
+}
+
+
+void Circuit::timeoutSleep()
+{
+	// check if we have already a valid answer
+	if (circuitState == true)
+	{
+		// we are happy
+		return;
+	}
+
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+
+	expectedAtmelAnswer.clear();
+	emit message("Robot is OFF.");
+
+	/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
+	// emit robotState(false);
+}
+
+
 void Circuit::takeCommandAnswer(QString atmelAnswer)
 {
 	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
@@ -214,94 +368,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 }
 
 
-void Circuit::timeoutCircuit()
-{
-	// first check if we had already an answer from the Atmel
-	if (firstInitDone == true)
-	{
-		// we are happy
-		return;
-	}
-
-
-	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-
-	qDebug("INFO from initCircuit: Robot is OFF.");
-	firstInitDone = true;
-	circuitState = false;
-	atmelCommand.clear();
-	expectedAtmelAnswer.clear();
-
-	emit robotState(false);
-}
-
-
-void Circuit::initCompass()
-{
-	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	if (circuitState)
-	{
-		atmelCommand = commandInitCompass;
-		expectedAtmelAnswer = "*ok#";
-
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
-
-		//-------------------------------------------------------
-		// Basic init for all the bits on the robot circuit
-		//-------------------------------------------------------
-		// sending command
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
-		if (interface1->sendString(atmelCommand) == true)
-		{
-			// start own time measuring. This will be used, if we get an answer from the Atmel
-			duration.start();
-
-			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutCircuit()) );
-
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
-
-			// Unlock the mutex.
-			mutex->unlock();
-
-			return;
-		}
-
-		emit message("Error sending string.");
-
-		// Unlock the mutex.
-		mutex->unlock();
-	}
-
-	expectedAtmelAnswer.clear();
-	compassCircuitState = false;
-	emit message("Compass is OFF.");
-
-	emit compassState(false);
-}
-
-
-void Circuit::timeoutCompass()
-{
-	// check if we have already a valid answer
-	if (compassCircuitState == true)
-	{
-		// we are happy
-		return;
-	}
-
-	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-
-	expectedAtmelAnswer.clear();
-	compassCircuitState = false;
-	emit message("Compass is OFF.");
-
-	emit compassState(false);
-}
-
-
 bool Circuit::isConnected()
 {
 	// if not tried to init hardware, do this!
@@ -325,70 +391,4 @@ bool Circuit::compassConnected()
 	}
 
 	return compassCircuitState;
-}
-
-
-void Circuit::sleep()
-{
-	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	if (circuitState)
-	{
-		atmelCommand = commandSleep;
-		expectedAtmelAnswer = "*sl#";
-
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
-
-		//---------------------------------------------------------------------------
-		// Sleep command for the robot circuit (disables the watchdog on the Atmel)
-		//---------------------------------------------------------------------------
-		// sending command
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
-		if (interface1->sendString(atmelCommand) == true)
-		{
-			// start own time measuring. This will be used, if we get an answer from the Atmel
-			duration.start();
-
-			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutSleep()) );
-
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
-
-			// Unlock the mutex.
-			mutex->unlock();
-
-			return;
-		}
-
-		emit message("Error sending string.");
-
-		// Unlock the mutex.
-		mutex->unlock();
-	}
-
-	circuitState = false;
-	atmelCommand.clear();
-	expectedAtmelAnswer.clear();
-
-	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
-}
-
-
-void Circuit::timeoutSleep()
-{
-	// check if we have already a valid answer
-	if (circuitState == true)
-	{
-		// we are happy
-		return;
-	}
-
-	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-
-	expectedAtmelAnswer.clear();
-	emit message("Robot is OFF.");
-
-	/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
-	// emit robotState(false);
 }
