@@ -67,6 +67,12 @@ class Circuit : public QObject
 		bool sleep();
 
 		/**
+		This slot takes the received Atmel command string after sending the sleep command to the circuit.
+		@param atmelAnswer
+		*/
+		void takeSleepAnswer(QString atmelAnswer);
+
+		/**
 		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
 		@return true, when connected.
 		*/

@@ -359,3 +359,45 @@ bool Circuit::sleep()
 
 	return false;
 }
+
+
+void Circuit::takeSleepAnswer(QString atmelAnswer)
+{
+	emit message( QString("takeAnswer: %1").arg(atmelAnswer) );
+
+	// how long did it take?
+	if (duration.elapsed() > ATMELTIMEOUT)
+	{
+		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+
+		// timeout
+
+		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
+		// emit robotState(false);
+
+		return;
+	}
+
+	// everthing's fine :-)
+	emit message("Answer received.");
+
+	if (atmelAnswer == expectedAtmelAnswer)
+	{
+		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+
+		// command okay
+
+		return;
+	}
+	else
+	{
+		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+
+		// wrong answer
+
+		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
+		// emit robotState(false);
+
+		return;
+	}
+}
