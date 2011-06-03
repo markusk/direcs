@@ -54,9 +54,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	if (QFile::exists(comPort) == false)
 	{
 		emit message(QString("<font color=\"#FF0000\">ERROR: %1 not found!</font>").arg(comPort));
-		// this tells other classes that the robot is OFF!
-		emit robotState(false);
-		qDebug("openComPort: serial path not found!");
+//		qDebug("openComPort: serial path not found!");
 		return false;
 	}
 
@@ -71,9 +69,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	// 'Unbuffered' mode removed, since we use the 'EventDriven' mode in the constructor
 	if (serialPort->open(QIODevice::ReadWrite | QIODevice::Unbuffered ) == false)
 	{
-		// this tells other classes that the robot is OFF!
-		emit robotState(false);
-		qDebug("openComPort: error opening serial port!");
+//		qDebug("openComPort: error opening serial port!");
 		return false;
 	}
 
@@ -82,8 +78,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	//------------------------------------
 //	serialPort->flush();
 
-	qDebug("openComPort: serial port opened.");
-	emit robotState(true); /// let the circuit class know, that we opened it
+//	qDebug("openComPort: serial port opened.");
 
 	// serial port settings
 	serialPort->setBaudRate(BAUD9600);
@@ -101,9 +96,11 @@ bool InterfaceAvr::openComPort(QString comPort)
 	connect(serialPort, SIGNAL(dsrChanged(bool)), this, SLOT(onDsrChanged(bool)));
 
 	if (!(serialPort->lineStatus() & LS_DSR))
-		qDebug() << "warning: device is not turned on";
+	{
+		qDebug() << "warning: serial device is not turned on";
+	}
 
-	qDebug() << "listening for data on" << serialPort->portName();
+//	qDebug() << "listening for data on" << serialPort->portName();
 
 	emit message("Waiting for Atmel command string start...");
 
