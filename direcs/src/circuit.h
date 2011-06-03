@@ -64,7 +64,7 @@ class Circuit : public QObject
 		Puts the robot's circuits to sleep. This also disables the robot's watchdog!
 		@return true, when everything was fine
 		*/
-		bool sleep();
+		void sleep();
 
 		/**
 		This slot takes the received Atmel command string after sending the sleep command to the circuit.

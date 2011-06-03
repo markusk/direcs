@@ -325,7 +325,7 @@ void Circuit::setRobotState(bool state)
 */
 
 
-bool Circuit::sleep()
+void Circuit::sleep()
 {
 	QString answer = "error";
 
@@ -347,7 +347,7 @@ bool Circuit::sleep()
 					// Unlock the mutex
 					mutex->unlock();
 
-					return true;
+					return;
 				}
 			}
 		}
@@ -357,7 +357,7 @@ bool Circuit::sleep()
 
 	}
 
-	return false;
+	return;
 }
 
 
