@@ -398,6 +398,21 @@ void Circuit::takeSleepAnswer(QString atmelAnswer)
 		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
 		// emit robotState(false);
 
+
+void Circuit::timeoutSleep()
+{
+	// check if we have already a valid answer
+	if (circuitState == true)
+	{
+		// we are happy
 		return;
 	}
+
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+
+	expectedAtmelAnswer.clear();
+	emit message("Robot is OFF.");
+
+	/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
+	// emit robotState(false);
 }

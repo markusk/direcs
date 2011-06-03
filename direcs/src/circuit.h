@@ -110,6 +110,11 @@ class Circuit : public QObject
 		*/
 		void timeoutCompass();
 
+		/**
+		This Slot is called if we never get an answer from the Atmel
+		*/
+		void timeoutSleep();
+
 
 	signals:
 		/**
