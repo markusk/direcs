@@ -71,7 +71,7 @@ void Circuit::initCircuit()
 			duration.start();
 
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutCircuit()) );
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
@@ -101,9 +101,6 @@ void Circuit::initCircuit()
 
 void Circuit::timeout()
 {
-	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-	expectedAtmelAnswer.clear();
-
 	// check the last command
 	if (atmelCommand == commandInitCircuit)
 	{
@@ -114,6 +111,8 @@ void Circuit::timeout()
 			return;
 		}
 
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
 		qDebug("INFO from initCircuit: Robot is OFF.");
 		firstInitDone = true;
 		circuitState = false;
@@ -134,6 +133,8 @@ void Circuit::timeout()
 			return;
 		}
 
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
 		compassCircuitState = false;
 		emit message("Compass is OFF.");
 		emit compassState(false);
@@ -152,6 +153,8 @@ void Circuit::timeout()
 			return;
 		}
 
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
 		emit message("Robot is OFF.");
 		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
 		// emit robotState(false);
@@ -159,7 +162,7 @@ void Circuit::timeout()
 		return;
 	} // sleep
 }
-
+/*
 void Circuit::timeoutCircuit()
 {
 	// first check if we had already an answer from the Atmel
@@ -180,7 +183,7 @@ void Circuit::timeoutCircuit()
 
 	emit robotState(false);
 }
-
+*/
 
 void Circuit::initCompass()
 {
@@ -204,7 +207,7 @@ void Circuit::initCompass()
 			duration.start();
 
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutCircuit()) );
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
@@ -228,7 +231,7 @@ void Circuit::initCompass()
 	emit compassState(false);
 }
 
-
+/*
 void Circuit::timeoutCompass()
 {
 	// check if we have already a valid answer
@@ -246,7 +249,7 @@ void Circuit::timeoutCompass()
 
 	emit compassState(false);
 }
-
+*/
 
 void Circuit::sleep()
 {
@@ -270,7 +273,7 @@ void Circuit::sleep()
 			duration.start();
 
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeoutSleep()) );
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
@@ -294,7 +297,7 @@ void Circuit::sleep()
 	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 }
 
-
+/*
 void Circuit::timeoutSleep()
 {
 	// check if we have already a valid answer
@@ -312,7 +315,7 @@ void Circuit::timeoutSleep()
 	/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
 	// emit robotState(false);
 }
-
+*/
 
 void Circuit::takeCommandAnswer(QString atmelAnswer)
 {

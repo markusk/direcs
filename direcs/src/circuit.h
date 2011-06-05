@@ -83,22 +83,22 @@ class Circuit : public QObject
 		This Slot is called if we never get an answer from the Atmel
 		*/
 		void timeout();
-
-		/**
+/*
+		/ **
 		This Slot is called if we never get an answer from the Atmel
-		*/
+		* /
 		void timeoutCircuit();
 
-		/**
+		/ **
 		This Slot is called if we never get an answer from the Atmel
-		*/
+		* /
 		void timeoutCompass();
 
-		/**
+		/ **
 		This Slot is called if we never get an answer from the Atmel
-		*/
+		* /
 		void timeoutSleep();
-
+*/
 
 	signals:
 		/**
