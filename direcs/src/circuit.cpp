@@ -99,6 +99,67 @@ void Circuit::initCircuit()
 }
 
 
+void Circuit::timeout()
+{
+	// check the last command
+	if (atmelCommand == commandInitCircuit)
+	{
+		// first check if we had already an answer from the Atmel
+		if (firstInitDone == true)
+		{
+			// we are happy
+			return;
+		}
+
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
+		qDebug("INFO from initCircuit: Robot is OFF.");
+		firstInitDone = true;
+		circuitState = false;
+		atmelCommand.clear();
+		emit robotState(false);
+		return;
+	} // initCircuit
+
+
+	// check the last command
+	if (atmelCommand == commandInitCompass)
+	{
+		// check if we have already a valid answer
+		if (compassCircuitState == true)
+		{
+			// we are happy
+			return;
+		}
+
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
+		compassCircuitState = false;
+		emit message("Compass is OFF.");
+		emit compassState(false);
+		return;
+	} // InitCompass
+
+
+	// check the last command
+	if (atmelCommand == commandSleep)
+	{
+		// check if we have already a valid answer
+		if (circuitState == true)
+		{
+			// we are happy
+			return;
+		}
+
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
+		emit message("Robot is OFF.");
+		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
+		// emit robotState(false);
+		return;
+	} // sleep
+}
+
 void Circuit::timeoutCircuit()
 {
 	// first check if we had already an answer from the Atmel
