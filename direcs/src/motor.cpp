@@ -66,7 +66,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	commandFlashlightOn		= "f0on";
 	commandFlashlightOff	= "f0of";
 
-	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
+	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));	/// < < < < error when connecting this. receiving commands for circuit, too!
 }
 
 
