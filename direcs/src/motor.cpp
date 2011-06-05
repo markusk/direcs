@@ -854,7 +854,8 @@ void Motor::flashlight(bool light)
 
 void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 {
-	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+	emit message( QString("Motor takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+	emit message( QString("Motor checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
 
 	if (regardingCommand != atmelCommand)
 	{
