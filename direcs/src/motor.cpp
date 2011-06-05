@@ -796,6 +796,62 @@ bool Motor::motorControl(int motor, bool power, int direction)
 }
 
 
+void Motor::flashlight(bool light)
+{
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	if (robotState == ON)
+	{
+		if (light == ON)
+		{
+			atmelCommand = commandFlashlightOn;
+			expectedAtmelAnswer = commandFlashlightOn;
+		}
+		else
+		{
+			atmelCommand = commandFlashlightOff;
+			expectedAtmelAnswer = commandFlashlightOff;
+		}
+
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+
+		//------------------
+		// sending command
+		//------------------
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		if (interface1->sendString(atmelCommand) == true)
+		{
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
+
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+			return;
+		}
+
+		emit message("Error sending string.");
+
+		// Unlock the mutex.
+		mutex->unlock();
+	}
+
+	expectedAtmelAnswer.clear();
+
+	// mark the robot as OFF within this class
+	robotState = OFF;
+
+	emit message("Error switching flashlight.");
+///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
+}
+
+
 void Motor::takeCommandAnswer(QString atmelAnswer)
 {
 	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
@@ -1270,62 +1326,6 @@ int Motor::getMotorSpeed(int motor)
 	}
 
 	return -1;
-}
-
-
-void Motor::flashlight(bool light)
-{
-	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	if (robotState == ON)
-	{
-		if (light == ON)
-		{
-			atmelCommand = commandFlashlightOn;
-			expectedAtmelAnswer = commandFlashlightOn;
-		}
-		else
-		{
-			atmelCommand = commandFlashlightOff;
-			expectedAtmelAnswer = commandFlashlightOff;
-		}
-
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
-
-		//------------------
-		// sending command
-		//------------------
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
-		if (interface1->sendString(atmelCommand) == true)
-		{
-			// start own time measuring. This will be used, if we get an answer from the Atmel
-			duration.start();
-
-			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
-
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
-
-			// Unlock the mutex.
-			mutex->unlock();
-
-			return;
-		}
-
-		emit message("Error sending string.");
-
-		// Unlock the mutex.
-		mutex->unlock();
-	}
-
-	expectedAtmelAnswer.clear();
-
-	// mark the robot as OFF within this class
-	robotState = OFF;
-
-	emit message("Error switching flashlight.");
-///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
 }
 
 
