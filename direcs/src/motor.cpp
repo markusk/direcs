@@ -804,12 +804,12 @@ void Motor::flashlight(bool light)
 		if (light == ON)
 		{
 			atmelCommand = commandFlashlightOn;
-			expectedAtmelAnswer = commandFlashlightOn;
+			expectedAtmelAnswer = QString("*").append(commandFlashlightOn).append("#");
 		}
 		else
 		{
 			atmelCommand = commandFlashlightOff;
-			expectedAtmelAnswer = commandFlashlightOff;
+			expectedAtmelAnswer = QString("*").append(commandFlashlightOff).append("#");
 		}
 
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
