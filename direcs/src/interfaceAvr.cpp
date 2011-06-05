@@ -32,6 +32,9 @@ InterfaceAvr::InterfaceAvr()
 
 	//  we do not have a completed Atmel commandr received so far
 	commandComplete = false;
+
+	// this is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
+	lastCommand.clear();
 }
 
 
@@ -179,6 +182,10 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 bool InterfaceAvr::sendString(QString string)
 {
+	// store the "current command"
+	// this will be sent back, when emmiting the commandCompleted Signal!
+	lastCommand = string;
+
 	// add starter
 	string.prepend("*");
 
@@ -455,7 +462,9 @@ static	QByteArray bytes;
 			commandComplete = true;
 
 			// emit completed Atmel command
-			emit commandCompleted(commandString);
+			emit commandCompleted(commandString, lastCommand);
+
+			/// @todo check if we need to clear lastCommand here!
 		}
 
 //	} // commandComplete = false

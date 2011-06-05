@@ -120,8 +120,9 @@ class InterfaceAvr : public QObject
 		/**
 		This signal emits if a complete command string was received. @sa SimulationThread::takeCompassAnswer() @sa SimulationThread::takeCircuitAnswer()
 		@param string contains the received string
+		@param regardingCommand contains the command which was used in the Slot @sa sendString()
 		*/
-		void commandCompleted(QString string);
+		void commandCompleted(QString answer, QString regardingCommand);
 
 		/**
 		This signal emits the robots state to all connected slots, to tell them if the robot is ON or OFF
@@ -158,6 +159,11 @@ class InterfaceAvr : public QObject
 		QextSerialPort *serialPort;
 		bool commandComplete; // this indicates, that a complete Atmel command was received - e.g. *sl#
 		QTime duration;
+
+		/// this is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
+		/// this will be sent back, when emmiting the commandCompleted Signal! Then the receibing Slot can check if this answer belongs to it or to another Slot.
+		QString lastCommand;
+
 
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"

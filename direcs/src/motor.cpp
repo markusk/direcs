@@ -66,7 +66,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	commandFlashlightOn		= "f0on";
 	commandFlashlightOff	= "f0of";
 
-	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));	/// < < < < error when connecting this. receiving commands for circuit, too!
+	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
@@ -852,9 +852,15 @@ void Motor::flashlight(bool light)
 }
 
 
-void Motor::takeCommandAnswer(QString atmelAnswer)
+void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 {
 	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+
+	if (regardingCommand != atmelCommand)
+	{
+		emit message("Answer is not for me (Motor).");
+		return;
+	}
 
 	//----------
 	// timeout?

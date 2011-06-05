@@ -39,7 +39,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 	commandInitCompass	= "cc";
 	commandSleep		= "sl";
 
-	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
+	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
@@ -193,9 +193,15 @@ void Circuit::sleep()
 }
 
 
-void Circuit::takeCommandAnswer(QString atmelAnswer)
+void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 {
 	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+
+	if (regardingCommand != atmelCommand)
+	{
+		emit message("Answer is not for me (Circuit).");
+		return;
+	}
 
 	//----------
 	// timeout?
