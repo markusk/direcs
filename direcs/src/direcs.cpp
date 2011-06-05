@@ -501,6 +501,7 @@ void Direcs::init()
 			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(motors, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 		}
 		else
