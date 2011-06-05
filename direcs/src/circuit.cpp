@@ -211,8 +211,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 			qDebug("INFO from initCircuit: Robot is OFF.");
 			firstInitDone = true;
 			circuitState = false;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit robotState(false);
 			return;
 		} // initCircuit
@@ -222,8 +220,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		{
 			// timeout
 			compassCircuitState = false;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit compassState(false);
 			return;
 		} // InitCompass
@@ -233,8 +229,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		{
 			// timeout
 			circuitState = false;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 			return;
 		} // sleep
@@ -253,8 +247,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 			// ciruit init okay
 			firstInitDone = true;
 			circuitState = true;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit robotState(true);
 			return;
 		} // initCircuit
@@ -264,8 +256,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		{
 			// compass init okay
 			compassCircuitState = true;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit compassState(true);
 			return;
 		} // InitCompass
@@ -274,8 +264,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		if (atmelCommand == commandSleep)
 		{
 			// command okay
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			return;
 		} // sleep
 	}
@@ -292,8 +280,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 			qDebug("INFO from initCircuit: Robot is OFF.");
 			firstInitDone = true;
 			circuitState = false;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit robotState(false);
 			return;
 		} // initCircuit
@@ -302,8 +288,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		if (atmelCommand == commandInitCompass)
 		{
 			compassCircuitState = false;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit compassState(false);
 			return;
 		} // InitCompass
@@ -312,8 +296,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer)
 		if (atmelCommand == commandSleep)
 		{
 			circuitState = false;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
 			emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 			return;
 		} // sleep
