@@ -186,7 +186,7 @@ void Circuit::sleep()
 	}
 
 	circuitState = false;
-	atmelCommand.clear();
+	atmelCommand.clear(); /// @todo check if this is an ERROR!!! this is in no other method here!!
 	expectedAtmelAnswer.clear();
 
 	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
