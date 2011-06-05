@@ -56,6 +56,8 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	firstInitDone = false;
 	compassCircuitState = false;
 
+	commandExecutedSuccessfull = false;
+
 	atmelCommand.clear();
 	expectedAtmelAnswer.clear();
 	answerTimeout = false;
@@ -64,7 +66,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	commandFlashlightOn		= "f0on";
 	commandFlashlightOff	= "f0of";
 
-//	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
+	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
 }
 
 
@@ -794,30 +796,88 @@ bool Motor::motorControl(int motor, bool power, int direction)
 }
 
 
+void Motor::takeCommandAnswer(QString atmelAnswer)
+{
+	emit message( QString("takeAnswer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+
+	//----------
+	// timeout?
+	//----------
+	if (duration.elapsed() > ATMELTIMEOUT)
+	{
+		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOn)
+		{
+			// timeout
+			commandExecutedSuccessfull = false;
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight on
+
+	}
+
+	//------------------
+	// everthing's fine
+	//------------------
+	if (atmelAnswer == expectedAtmelAnswer)
+	{
+		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOn)
+		{
+			commandExecutedSuccessfull = true;
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight on
+	}
+	else
+	{
+		//--------------
+		// wrong answer
+		//--------------
+		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOn)
+		{
+			// let this class know, that we had an error
+			robotState = false;
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight on
+	}
+}
+
+
 void Motor::timeout()
 {
 	// check the last command
 	if (atmelCommand == commandFlashlightOn)
 	{
 		// first check if we had already an answer from the Atmel
-		if (firstInitDone == true) /// @todo use commandAlreadyExecutedSuccessfull  ????????
+		if (commandExecutedSuccessfull == true)
 		{
+			// reset state
+			commandExecutedSuccessfull = false;
 			// we are happy
 			return;
 		}
 
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
 		expectedAtmelAnswer.clear();
-
-		qDebug("INFO from initCircuit: Robot is OFF.");
-		robotState = false;
 		atmelCommand.clear();
-//	todo	emit robotState(false);
+
+		// let this class know, that we had an error
+		robotState = false;
 
 		return;
 	} // flashlight on
-
-
 }
 
 

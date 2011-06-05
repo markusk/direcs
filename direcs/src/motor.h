@@ -101,6 +101,11 @@ class Motor : public QObject
 		void flashlight(bool light);
 
 		/**
+		This slot takes the received answers from the Atmel after sending a command string to it.
+		*/
+		void takeCommandAnswer(QString atmelAnswer);
+
+		/**
 		Sets the speed of a motor.
 		@param motor is the motor number (MOTOR1, MOTOR2, MOTOR3, MOTOR4, ALLMOTORS).
 		@param speed is the speed (0 - 255).
@@ -166,6 +171,7 @@ class Motor : public QObject
 		bool circuitState; // stores the robot state within this class
 		bool firstInitDone;
 		bool compassCircuitState; // stores the state of the compass module within this class
+		bool commandExecutedSuccessfull; /// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 
 		QString commandFlashlightOn;	/// *f0on#
 		QString commandFlashlightOff;	/// *f0of#
