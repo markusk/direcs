@@ -26,6 +26,7 @@
 //-------------------------------------------------------------------
 #include <QCoreApplication>
 #include <QMutex>
+#include <QTimer>
 //-------------------------------------------------------------------
 
 /**
@@ -83,13 +84,6 @@ class Motor : public QObject
 		*/
 		void resetMovementCounter(short int motor);
 
-		/**
-		Turns the flashlight ON or OFF.
-		@param state can be ON or OFF.
-		\todo put this somewhere else...
-		*/
-		bool flashlight(bool state);
-
 		/*
 		Generates steps for stepper motors.
 		@param steps are the number of steps.
@@ -99,6 +93,13 @@ class Motor : public QObject
 		*/
 
 	public slots:
+		/**
+		Turns the flashlight ON or OFF.
+		@param light can be ON or OFF.
+		@todo put this somewhere else...
+		*/
+		void flashlight(bool light);
+
 		/**
 		Sets the speed of a motor.
 		@param motor is the motor number (MOTOR1, MOTOR2, MOTOR3, MOTOR4, ALLMOTORS).
@@ -120,6 +121,22 @@ class Motor : public QObject
 		@param state can be ON or OFF
 		 */
 		void setRobotState(bool state);
+
+
+	private slots:
+		/**
+		This Slot is called if we never get an answer from the Atmel
+		*/
+		void timeout();
+
+
+	signals:
+
+		/**
+		Sends a string to the GUI log.
+		@param text is the message to be emitted
+		*/
+		void message(QString text);
 
 
 	private:
@@ -144,6 +161,22 @@ class Motor : public QObject
 		double drivenDistance2;
 		double drivenDistance3;
 		double drivenDistance4;
+
+
+		bool circuitState; // stores the robot state within this class
+		bool firstInitDone;
+		bool compassCircuitState; // stores the state of the compass module within this class
+
+		QString commandFlashlightOn;	/// *f0on#
+		QString commandFlashlightOff;	/// *f0of#
+
+		QString atmelCommand; /// this is the command for the Atmel
+		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.
+		bool answerTimeout; /// this is set to true, when we have a timout while waiting for an Atmel answer
+
+		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
+		static const int ATMELTIMEOUT = 500; /// timeout in ms
+
 
 		static const char ON  = true;   /** For motor "ON" */
 		static const char OFF = false;  /** For motor "OFF" */

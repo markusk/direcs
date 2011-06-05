@@ -50,6 +50,21 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	motorSpeedAllMotors = 20;
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
+
+
+	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
+	firstInitDone = false;
+	compassCircuitState = false;
+
+	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
+	answerTimeout = false;
+
+	// the Atmel commands
+	commandFlashlightOn		= "f0on";
+	commandFlashlightOff	= "f0of";
+
+//	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
 }
 
 
@@ -779,6 +794,33 @@ bool Motor::motorControl(int motor, bool power, int direction)
 }
 
 
+void Motor::timeout()
+{
+	// check the last command
+	if (atmelCommand == commandFlashlightOn)
+	{
+		// first check if we had already an answer from the Atmel
+		if (firstInitDone == true) /// @todo use commandAlreadyExecutedSuccessfull  ????????
+		{
+			// we are happy
+			return;
+		}
+
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
+
+		qDebug("INFO from initCircuit: Robot is OFF.");
+		robotState = false;
+		atmelCommand.clear();
+//	todo	emit robotState(false);
+
+		return;
+	} // flashlight on
+
+
+}
+
+
 /*
 void Motor::makeSteps(int steps)
 {
@@ -1171,65 +1213,59 @@ int Motor::getMotorSpeed(int motor)
 }
 
 
-bool Motor::flashlight(bool state)
+void Motor::flashlight(bool light)
 {
-	QString answer = "error";
-
-
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (robotState == ON)
 	{
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
-
-		if (state == ON)
+		if (light == ON)
 		{
-			// send command to microcontroller
-			if (interface1->sendString("*f0on#") == true)
-			{
-				// check if the robot answers with "ok"
-				if ( interface1->receiveString(answer) == true)
-				{
-					if (answer == "*f0on")
-					{
-						// Unlock the mutex
-						mutex->unlock();
-						return true;
-					}
-				}
-			}
-			//qDebug("ERROR sending to serial port (flashlight)");
-			// Unlocks the mutex
-			mutex->unlock();
-			return false;
+			atmelCommand = commandFlashlightOn;
+			expectedAtmelAnswer = commandFlashlightOn;
 		}
 		else
 		{
-			// send command to microcontroller
-			if (interface1->sendString("*f0of#") == true)
-			{
-				// check if the robot answers with "ok"
-				if ( interface1->receiveString(answer) == true)
-				{
-					if (answer == "*f0of")
-					{
-						// Unlock the mutex
-						mutex->unlock();
-						return true;
-					}
-				}
-			}
-			//qDebug("ERROR sending to serial port (flashlight)");
-			// Unlocks the mutex
-			mutex->unlock();
-			return false;
+			atmelCommand = commandFlashlightOff;
+			expectedAtmelAnswer = commandFlashlightOff;
 		}
 
-		// Unlocks the mutex. Attempting to unlock a mutex in a different thread to the one that locked it results in an error.
+		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+		mutex->lock();
+
+		//------------------
+		// sending command
+		//------------------
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		if (interface1->sendString(atmelCommand) == true)
+		{
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
+
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+			return;
+		}
+
+		emit message("Error sending string.");
+
+		// Unlock the mutex.
 		mutex->unlock();
-	} // robot is ON
+	}
 
+	expectedAtmelAnswer.clear();
 
-	return false;
+	// mark the robot as OFF within this class
+	robotState = OFF;
+
+	emit message("Error switching flashlight.");
+///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
 }
 
 
