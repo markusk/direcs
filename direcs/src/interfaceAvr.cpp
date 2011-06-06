@@ -30,14 +30,11 @@ InterfaceAvr::InterfaceAvr()
 	// (connect the signal from the interface class to the signal from this class)
 /// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 
-	//  we do not have a completed Atmel commandr received so far
-	commandComplete = false;
-
+	// this is all for readyRead
 	// this is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
-	lastCommand.clear();
-
-	// this is for readyRead
 	commandStarted = false;
+	commandString.clear();
+	bytes.clear();
 }
 
 
@@ -337,108 +334,106 @@ void InterfaceAvr::flush()
 
 void InterfaceAvr::onReadyRead()
 {
-	QByteArray newBytes;
-	QString receiveString;
-	QString commandString;
+	//	static bool redLEDtoggle = false;
 	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
-//	static bool redLEDtoggle = false;
 
 
 	// check how many bytes are available. Since this Slot is called automatically, there *have* to be some available
 	int a = serialPort->bytesAvailable();
 
-	// reserve space
-	newBytes.resize(a);
+	// this should never happen
+	if (a==0)
+	{
+		qDebug("strange...");
+		return;
+	}
 
-	// read bytes
-	serialPort->read(newBytes.data(), newBytes.size());
+	// reserve space
+	bytes.resize(a);
+
+	// read all available bytes
+	serialPort->read(bytes.data(), bytes.size());
 
 	// append to receiveString
-	receiveString.append(QString(newbytes));
+	commandString.append(QString(bytes));
 
 	// toggling the red LED on and off with every received serial commmand
-	//		redLEDtoggle = !redLEDtoggle;
-	//		emit redLED(redLEDtoggle);
+	//	redLEDtoggle = !redLEDtoggle;
+	//	emit redLED(redLEDtoggle);
 
-	if (commandComplete == false)
+	//-------------------------------------------
+	// serial buffer 'overflow?'
+	/// @sa direcs-avr/usart.h: uart_buffer_size
+	//-------------------------------------------
+	if (commandString.length() > maxStringLength)
 	{
-		//-------------------------
-		// serial buffer overflow?
-		//-------------------------
-		if (receiveString.length() > maxStringLength)
+		commandStarted = false;
+		commandString.clear();
+		bytes.clear();
+
+		// reset own time measuring
+		duration.restart();
+
+		// emit greenLED(OFF);
+		emit message("+++ String size exceeded. +++");
+		emit message("+++ Discarding chars. +++");
+
+		return;
+	}
+
+
+	if (commandStarted)
+	{
+		//--------------------------------------
+		// command string from Atmel completed?
+		//--------------------------------------
+		if (commandString.endsWith(terminator))
 		{
-			commandComplete = false;
 			commandStarted = false;
+			commandString.clear();
+			bytes.clear();
 
-			// reset own time measuring
-			duration.restart();
+			//  emit greenLED(OFF);
+			emit message(QString("interfaceAvr time: %1 ms").arg(duration.elapsed()));
+			emit message(QString("Atmel says: %1.").arg(commandString));
 
-//			emit greenLED(OFF);
-			emit message("+++ String size exceeded. +++");
-			emit message("+++ Discarding chars. +++");
+			//  emit completed Atmel command
+			emit commandCompleted(commandString, lastCommand);
 
 			return;
 		}
-
-
-		//-------------------------------------
-		// command string from Atmel started?
-		//-------------------------------------
-		if (receiveString.startsWith(starter))
+	}
+	else
+	{
+		//-------------------------
+		// command string started?
+		//-------------------------
+		if (commandString.startsWith(starter))
 		{
 			// start own time measuring
 			duration.start();
 
 			commandStarted = true;
-			commandComplete = false;
 
-//			emit greenLED(ON);
+			// emit greenLED(ON);
+
+			return;
 		}
 		else
 		{
 			//----------------------------------------
 			// wrong starter -> reset received string
 			//----------------------------------------
-			receiveString.clear();
 			commandStarted = false;
-			commandComplete = false;
+			commandString.clear();
+			bytes.clear();
 
 			// reset own time measuring
 			duration.restart();
+
+			return;
 		}
-
-
-		//--------------------------------------
-		// command string from Atmel completed?
-		//--------------------------------------
-		if (receiveString.endsWith(terminator))
-		{
-//			emit greenLED(OFF);
-
-			// copy string for command check
-			commandString = receiveString;
-
-			emit message(QString("interfaceAvr time: %1 ms").arg(duration.elapsed()));
-			emit message(QString("Atmel says: %1.").arg(commandString));
-
-			//-------------------------------------------------
-			// reset received string for next upcoming command
-			//-------------------------------------------------
-			receiveString.clear();
-			bytes.clear(); // clean the internal receive string  @todo make this nicer
-			commandStarted = false;
-
-			// this can be checked via commandOkay()
-			commandComplete = true;
-
-			// emit completed Atmel command
-			emit commandCompleted(commandString, lastCommand);
-
-			/// @todo check if we need to clear lastCommand here!
-		}
-
-	} // commandComplete = false
-
+	}
 }
 
 
