@@ -35,6 +35,9 @@ InterfaceAvr::InterfaceAvr()
 
 	// this is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
 	lastCommand.clear();
+
+	// this is for readyRead
+	stringStarted = false;
 }
 
 
@@ -340,7 +343,6 @@ static	QByteArray bytes;
 //	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 	QString receiveString;
 	QString commandString;
-	bool stringStarted = false;
 //	static bool redLEDtoggle = false;
 	// - - -
 

@@ -157,7 +157,8 @@ class InterfaceAvr : public QObject
 
 	private:
 		QextSerialPort *serialPort;
-		bool commandComplete; // this indicates, that a complete Atmel command was received - e.g. *sl#
+		bool stringStarted;    /// this indicates if a command string started (e.g. a '*' was received)
+		bool commandComplete; /// this indicates, that a complete Atmel command was received - e.g. *sl#
 		QTime duration;
 
 		/// this is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
