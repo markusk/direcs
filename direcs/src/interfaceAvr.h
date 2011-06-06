@@ -157,7 +157,7 @@ class InterfaceAvr : public QObject
 
 	private:
 		QextSerialPort *serialPort;
-		bool stringStarted;    /// this indicates if a command string started (e.g. a '*' was received)
+		bool commandStarted;    /// this indicates if a command string started (e.g. a '*' was received)
 		bool commandComplete; /// this indicates, that a complete Atmel command was received - e.g. *sl#
 		QTime duration;
 

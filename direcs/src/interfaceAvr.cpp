@@ -37,7 +37,7 @@ InterfaceAvr::InterfaceAvr()
 	lastCommand.clear();
 
 	// this is for readyRead
-	stringStarted = false;
+	commandStarted = false;
 }
 
 
@@ -415,7 +415,7 @@ static	QByteArray bytes;
 			// start own time measuring
 			duration.start();
 
-			stringStarted = true;
+			commandStarted = true;
 			commandComplete = false;
 
 //			emit greenLED(ON);
@@ -429,7 +429,7 @@ static	QByteArray bytes;
 			// wrong starter -> reset received string
 			//-------------------------------------------------
 			receiveString.clear();
-			stringStarted = false;
+			commandStarted = false;
 			commandComplete = false;
 
 			// reset own time measuring
@@ -458,7 +458,7 @@ static	QByteArray bytes;
 			//-------------------------------------------------
 			receiveString.clear();
 			bytes.clear(); // clean the internal receive string  @todo make this nicer
-			stringStarted = false;
+			commandStarted = false;
 
 			// this can be checked via commandOkay()
 			commandComplete = true;
