@@ -27,7 +27,6 @@
 
 #include <QFile>
 #include <QObject>
-#include <QTime>
 #include <QDebug>
 
 
@@ -159,8 +158,6 @@ class InterfaceAvr : public QObject
 		QextSerialPort *serialPort;
 		QByteArray bytes; /// this containes the received bytes/chars in @sa readyRead()
 		QString commandString; /// this will contain the final command built by @sa readyRead(). e.g. *sl#
-		bool commandStarted;    /// this indicates if a command string started (e.g. a '*' was received)
-		QTime duration;
 
 		/// this is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
 		/// this will be sent back, when emmiting the commandCompleted Signal! Then the receibing Slot can check if this answer belongs to it or to another Slot.

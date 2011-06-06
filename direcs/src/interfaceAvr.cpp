@@ -30,10 +30,10 @@ InterfaceAvr::InterfaceAvr()
 	// (connect the signal from the interface class to the signal from this class)
 /// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 
-	// this is all for readyRead
-	// this is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
-	commandStarted = false;
+	// commandString is the last command which was received from any other class to be sent to the Atmel via @sa sendString()
 	commandString.clear();
+
+	// this is for readyRead
 	bytes.clear();
 }
 
@@ -338,9 +338,10 @@ void InterfaceAvr::onReadyRead()
 	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 
 
-	// check how many bytes are available. Since this Slot is called automatically, there *have* to be some available
+	// check how many bytes are available.
+	// Since this Slot is called automatically, there *have* to be some available
 	int a = serialPort->bytesAvailable();
-	emit message(QString("%1 bytes available").arg(a));
+	//emit message(QString("%1 bytes available").arg(a));
 
 	// this should never happen
 	if (a==0)
@@ -352,12 +353,16 @@ void InterfaceAvr::onReadyRead()
 	// reserve space
 	bytes.resize(a);
 
+	//--------------------------
 	// read all available bytes
+	//--------------------------
 	serialPort->read(bytes.data(), bytes.size());
 
+	//--------------------------
 	// append to receiveString
+	//--------------------------
 	commandString.append(QString(bytes));
-	emit message(QString("commandString=%1").arg(commandString));
+	//emit message(QString("commandString=%1").arg(commandString));
 
 	// toggling the red LED on and off with every received serial stuff
 	//	redLEDtoggle = !redLEDtoggle;
@@ -369,12 +374,8 @@ void InterfaceAvr::onReadyRead()
 	//-------------------------------------------
 	if (commandString.length() > maxStringLength)
 	{
-		commandStarted = false;
 		commandString.clear();
 		bytes.clear();
-
-		// reset own time measuring
-		duration.restart();
 
 		// emit greenLED(OFF);
 		emit message("+++ String size exceeded. +++");
@@ -390,12 +391,6 @@ void InterfaceAvr::onReadyRead()
 	//------------------------
 	if ((commandString.startsWith(starter)) && !(commandString.endsWith(terminator)))
 	{
-		emit message("STRING START");
-		// start own time measuring
-		duration.start();
-
-		commandStarted = true;
-
 		// emit greenLED(ON);
 
 		// return and wait for next bytes..
@@ -408,17 +403,10 @@ void InterfaceAvr::onReadyRead()
 	//----------------------------------------
 	if ((commandString.endsWith(terminator)) &&  !(commandString.startsWith(starter)))
 	{
-		//----------------------------------------
-		// wrong starter -> reset received string
-		//----------------------------------------
 		emit message(QString("String '%1' did not start with '%2'!").arg(commandString).arg(starter));
 
-		commandStarted = false;
 		commandString.clear();
 		bytes.clear();
-
-		// reset own time measuring
-		duration.restart();
 
 		return;
 	}
@@ -430,13 +418,11 @@ void InterfaceAvr::onReadyRead()
 	if ((commandString.startsWith(starter)) && (commandString.endsWith(terminator)))
 	{
 		//  emit greenLED(OFF);
-		emit message(QString("interfaceAvr time: %1 ms").arg(duration.elapsed()));
 		emit message(QString("Atmel says: %1.").arg(commandString));
 
 		//  emit completed Atmel command
 		emit commandCompleted(commandString, lastCommand);
 
-		commandStarted = false;
 		commandString.clear();
 		bytes.clear();
 
