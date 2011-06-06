@@ -337,79 +337,53 @@ void InterfaceAvr::flush()
 
 void InterfaceAvr::onReadyRead()
 {
-static	QByteArray bytes;
 	QByteArray newBytes;
-	// - - -
-//	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 	QString receiveString;
 	QString commandString;
+	const int maxStringLength = 32; /// @sa direcs-avr/usart.h: uart_buffer_size
 //	static bool redLEDtoggle = false;
-	// - - -
 
 
-	// check how many bytes are available
-	// since this Slot is called automatically, the *have* to be some available
+	// check how many bytes are available. Since this Slot is called automatically, there *have* to be some available
 	int a = serialPort->bytesAvailable();
-//	qDebug() << a << "Byte available";
 
 	// reserve space
 	newBytes.resize(a);
 
 	// read bytes
 	serialPort->read(newBytes.data(), newBytes.size());
-	// newBytes.resize(port->readLine(newBytes.data(), 1024));
-//	qDebug() << newBytes.size() << "Byte read:" << newBytes;
 
-	//    QByteArray newBytes = port->readAll();
-	//    qDebug() << newBytes;
-
-	// merge.
-	bytes.append(newBytes);
-
-	// copy to receiveString
-	receiveString = QString(bytes);
-
-//	qDebug() << "Total:" << bytes << "\n";
-
-
-	// - - - - - - - - - - - - - - - - - - -
-	// - - - - - - - - - - - - - - - - - - -
-	// - - - - - - - - - - - - - - - - - - -
-
-
+	// append to receiveString
+	receiveString.append(QString(newbytes));
 
 	// toggling the red LED on and off with every received serial commmand
-//		redLEDtoggle = !redLEDtoggle;
-//		emit redLED(redLEDtoggle);
+	//		redLEDtoggle = !redLEDtoggle;
+	//		emit redLED(redLEDtoggle);
 
-
-//	if (commandComplete == false)
-//	{
-/*
-		//---------------------------------------------
+	if (commandComplete == false)
+	{
+		//-------------------------
 		// serial buffer overflow?
-		//---------------------------------------------
+		//-------------------------
 		if (receiveString.length() > maxStringLength)
 		{
 			commandComplete = false;
-			stringStarted = false;
+			commandStarted = false;
 
 			// reset own time measuring
 			duration.restart();
 
 //			emit greenLED(OFF);
-
 			emit message("+++ String size exceeded. +++");
 			emit message("+++ Discarding chars. +++");
-			emit message("Waiting for Atmel command string start...");
 
 			return;
 		}
-*/
 
-		//---------------------------------------------
+
+		//-------------------------------------
 		// command string from Atmel started?
-		//---------------------------------------------
+		//-------------------------------------
 		if (receiveString.startsWith(starter))
 		{
 			// start own time measuring
@@ -422,12 +396,9 @@ static	QByteArray bytes;
 		}
 		else
 		{
-			// send recevied string to GUI)
-//			emit message(receiveString);
-
-			//-------------------------------------------------
+			//----------------------------------------
 			// wrong starter -> reset received string
-			//-------------------------------------------------
+			//----------------------------------------
 			receiveString.clear();
 			commandStarted = false;
 			commandComplete = false;
@@ -437,14 +408,11 @@ static	QByteArray bytes;
 		}
 
 
-		//---------------------------------------------
+		//--------------------------------------
 		// command string from Atmel completed?
-		//---------------------------------------------
+		//--------------------------------------
 		if (receiveString.endsWith(terminator))
 		{
-			// send char to GUI (with CR, but no timestamp)
-			// emit message(QString("%1").arg( receiveString ), true, false, false);
-
 //			emit greenLED(OFF);
 
 			// copy string for command check
@@ -469,7 +437,7 @@ static	QByteArray bytes;
 			/// @todo check if we need to clear lastCommand here!
 		}
 
-//	} // commandComplete = false
+	} // commandComplete = false
 
 }
 

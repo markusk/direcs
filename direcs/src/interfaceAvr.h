@@ -157,6 +157,7 @@ class InterfaceAvr : public QObject
 
 	private:
 		QextSerialPort *serialPort;
+		QByteArray bytes; /// this containes the received bytes/chars in @sa readyRead()
 		bool commandStarted;    /// this indicates if a command string started (e.g. a '*' was received)
 		bool commandComplete; /// this indicates, that a complete Atmel command was received - e.g. *sl#
 		QTime duration;
