@@ -384,10 +384,11 @@ void InterfaceAvr::onReadyRead()
 	}
 
 
-	//-------------------------
-	// command string started and the string did not started in a call before (since we append it every timme!)
-	//-------------------------
-	if (commandString.startsWith(starter))
+	//------------------------
+	// command string start ?
+	// but not yet completed !
+	//------------------------
+	if ((commandString.startsWith(starter)) && !(commandString.endsWith(terminator)))
 	{
 		emit message("STRING START");
 		// start own time measuring
@@ -396,8 +397,16 @@ void InterfaceAvr::onReadyRead()
 		commandStarted = true;
 
 		// emit greenLED(ON);
+
+		// return and wait for next bytes..
+		return;
 	}
-	else
+
+
+	//----------------------------------------
+	// correct terminator, but wrong starter
+	//----------------------------------------
+	if ((commandString.endsWith(terminator)) &&  !(commandString.startsWith(starter)))
 	{
 		//----------------------------------------
 		// wrong starter -> reset received string
@@ -415,27 +424,25 @@ void InterfaceAvr::onReadyRead()
 	}
 
 
-	if (commandStarted)
+	//----------------------------
+	// command string completed ?
+	//----------------------------
+	if ((commandString.startsWith(starter)) && (commandString.endsWith(terminator)))
 	{
-		//--------------------------------------
-		// command string from Atmel completed?
-		//--------------------------------------
-		if (commandString.endsWith(terminator))
-		{
-			//  emit greenLED(OFF);
-			emit message(QString("interfaceAvr time: %1 ms").arg(duration.elapsed()));
-			emit message(QString("Atmel says: %1.").arg(commandString));
+		//  emit greenLED(OFF);
+		emit message(QString("interfaceAvr time: %1 ms").arg(duration.elapsed()));
+		emit message(QString("Atmel says: %1.").arg(commandString));
 
-			//  emit completed Atmel command
-			emit commandCompleted(commandString, lastCommand);
+		//  emit completed Atmel command
+		emit commandCompleted(commandString, lastCommand);
 
-			commandStarted = false;
-			commandString.clear();
-			bytes.clear();
+		commandStarted = false;
+		commandString.clear();
+		bytes.clear();
 
-			return;
-		}
+		return;
 	}
+
 }
 
 
