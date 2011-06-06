@@ -340,11 +340,12 @@ void InterfaceAvr::onReadyRead()
 
 	// check how many bytes are available. Since this Slot is called automatically, there *have* to be some available
 	int a = serialPort->bytesAvailable();
+	emit message(QString("%1 bytes available").arg(a));
 
 	// this should never happen
 	if (a==0)
 	{
-		qDebug("strange...");
+		emit message("strange...");
 		return;
 	}
 
@@ -356,8 +357,9 @@ void InterfaceAvr::onReadyRead()
 
 	// append to receiveString
 	commandString.append(QString(bytes));
+	emit message(QString("commandString=%1").arg(commandString));
 
-	// toggling the red LED on and off with every received serial commmand
+	// toggling the red LED on and off with every received serial stuff
 	//	redLEDtoggle = !redLEDtoggle;
 	//	emit redLED(redLEDtoggle);
 
@@ -382,6 +384,37 @@ void InterfaceAvr::onReadyRead()
 	}
 
 
+	//-------------------------
+	// command string started and the string did not started in a call before (since we append it every timme!)
+	//-------------------------
+	if (commandString.startsWith(starter))
+	{
+		emit message("STRING START");
+		// start own time measuring
+		duration.start();
+
+		commandStarted = true;
+
+		// emit greenLED(ON);
+	}
+	else
+	{
+		//----------------------------------------
+		// wrong starter -> reset received string
+		//----------------------------------------
+		emit message(QString("String '%1' did not start with '%2'!").arg(commandString).arg(starter));
+
+		commandStarted = false;
+		commandString.clear();
+		bytes.clear();
+
+		// reset own time measuring
+		duration.restart();
+
+		return;
+	}
+
+
 	if (commandStarted)
 	{
 		//--------------------------------------
@@ -389,10 +422,6 @@ void InterfaceAvr::onReadyRead()
 		//--------------------------------------
 		if (commandString.endsWith(terminator))
 		{
-			commandStarted = false;
-			commandString.clear();
-			bytes.clear();
-
 			//  emit greenLED(OFF);
 			emit message(QString("interfaceAvr time: %1 ms").arg(duration.elapsed()));
 			emit message(QString("Atmel says: %1.").arg(commandString));
@@ -400,36 +429,9 @@ void InterfaceAvr::onReadyRead()
 			//  emit completed Atmel command
 			emit commandCompleted(commandString, lastCommand);
 
-			return;
-		}
-	}
-	else
-	{
-		//-------------------------
-		// command string started?
-		//-------------------------
-		if (commandString.startsWith(starter))
-		{
-			// start own time measuring
-			duration.start();
-
-			commandStarted = true;
-
-			// emit greenLED(ON);
-
-			return;
-		}
-		else
-		{
-			//----------------------------------------
-			// wrong starter -> reset received string
-			//----------------------------------------
 			commandStarted = false;
 			commandString.clear();
 			bytes.clear();
-
-			// reset own time measuring
-			duration.restart();
 
 			return;
 		}
