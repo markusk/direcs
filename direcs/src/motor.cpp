@@ -880,6 +880,18 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			return;
 		} // flashlight on
 
+		// check the last command
+		if (atmelCommand == commandFlashlightOff)
+		{
+			// timeout
+			// let this class know, that we had an error
+			robotState = false;
+			commandExecutedSuccessfull = false;
+			atmelCommand = "none";
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight off
+
 	}
 
 	//------------------
@@ -897,6 +909,14 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight on
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOff)
+		{
+			commandExecutedSuccessfull = true;
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight off
 	}
 	else
 	{
@@ -914,6 +934,16 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight on
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOff)
+		{
+			// let this class know, that we had an error
+			robotState = false;
+			atmelCommand = "none";
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight off
 	}
 }
 
@@ -941,6 +971,28 @@ void Motor::timeout()
 
 		return;
 	} // flashlight on
+
+	// check the last command
+	if (atmelCommand == commandFlashlightOff)
+	{
+		// first check if we had already an answer from the Atmel
+		if (commandExecutedSuccessfull == true)
+		{
+			// reset state
+			commandExecutedSuccessfull = false;
+			// we are happy
+			return;
+		}
+
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		expectedAtmelAnswer.clear();
+		atmelCommand.clear();
+
+		// let this class know, that we had an error
+		robotState = false;
+
+		return;
+	} // flashlight off
 }
 
 
