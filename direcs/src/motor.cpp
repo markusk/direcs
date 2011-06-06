@@ -874,6 +874,8 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		if (atmelCommand == commandFlashlightOn)
 		{
 			// timeout
+			// let this class know, that we had an error
+			robotState = false;
 			commandExecutedSuccessfull = false;
 			atmelCommand.clear();
 			expectedAtmelAnswer.clear();
