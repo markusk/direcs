@@ -148,7 +148,7 @@ double Motor::getDrivenDistance(unsigned char motor)
 
 bool Motor::motorControl(int motor, bool power, int direction)
 {
-	QString command = "bst"; // stop robot
+//	QString command = "bst"; // stop robot
 	QString answer = "error";
 
 
@@ -995,9 +995,11 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 
 void Motor::timeout()
 {
+/*
 	// check the last command
 	if (atmelCommand == commandFlashlightOn)
 	{
+*/
 		// first check if we had already an answer from the Atmel
 		if (commandExecutedSuccessfull == true)
 		{
@@ -1016,6 +1018,7 @@ void Motor::timeout()
 		robotState = false;
 
 		return;
+/*
 	} // flashlight on
 
 	// check the last command
@@ -1040,6 +1043,7 @@ void Motor::timeout()
 
 		return;
 	} // flashlight off
+*/
 }
 
 
