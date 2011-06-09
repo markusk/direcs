@@ -47,5 +47,6 @@
         <file>images/system-reboot.png</file>
         <file>images/applications-internet.png</file>
         <file>images/system-suspend-hibernate.png</file>
+        <file>images/led_yellow.gif</file>
     </qresource>
 </RCC>
