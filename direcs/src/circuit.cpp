@@ -203,7 +203,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 {
 //	emit message( QString("Circuit takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 //	emit message( QString("Circuit checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
-
+/// @todo simplifiy takeCommandAnswer like in circuit.cpp!
 	if (regardingCommand != atmelCommand)
 	{
 		emit message("Answer is not for me (Circuit).");
@@ -333,6 +333,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 
 void Circuit::timeout()
 {
+	/// @todo simplifiy takeCommandAnswer like in circuit.cpp!
 	// check the last command
 	if (atmelCommand == commandInitCircuit)
 	{
