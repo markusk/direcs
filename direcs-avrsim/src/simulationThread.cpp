@@ -564,10 +564,12 @@ void SimulationThread::run()
 									// answer with "ok"
 									emit answer("*mv0#");
 								}
+*/
 								else
 								// BOTSTOP
 								if (commandString == "*bst#")
 								{
+									/*
 									// MOTOR 1 OFF
 									// delete Motor1 A bit
 									PORTL &= ~(1<<PIN0);
@@ -588,14 +590,17 @@ void SimulationThread::run()
 									PORTD &= ~(1<<PIN6);
 									// delete Motor4 B bit
 									PORTD &= ~(1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*bst#");
 									emit answer("*bst#");
 								}
 								else
 								// BOTWAIT
 								if (commandString == "*bwa#")
 								{
+									/*
 									// MOTOR 1 OFF
 									// delete Motor1 A bit
 									PORTL &= ~(1<<PIN0);
@@ -616,14 +621,17 @@ void SimulationThread::run()
 									PORTD &= ~(1<<PIN6);
 									// delete Motor4 B bit
 									PORTD &= ~(1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*bwa#");
 									emit answer("*bwa#");
 								}
 								else
 								// BOTSTART = "bot go"
 								if (commandString == "*bgo#")
 								{
+									/*
 									// MOTOR 1 CLOCKWISE = forward
 									// delete Motor1 A bit
 									PORTL &= ~(1<<PIN0);
@@ -647,14 +655,17 @@ void SimulationThread::run()
 									PORTD &= ~(1<<PIN6);
 									// set Motor4 B bit
 									PORTD |= (1<<PIN7);
+									 */
 
 									// answer with "ok"
+									sendToAtmel("*bgo#");
 									emit answer("*bgo#");
 								}
 								else
 								// BOTFORWARD = "bot drive forward"
 								if (commandString == "*bdf#")
 								{
+									/*
 									// MOTOR 1 CLOCKWISE = forward
 									// delete Motor1 A bit
 									PORTL &= ~(1<<PIN0);
@@ -678,14 +689,17 @@ void SimulationThread::run()
 									PORTD &= ~(1<<PIN6);
 									// set Motor4 B bit
 									PORTD |= (1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*bdf#");
 									emit answer("*bdf#");
 								}
 								else
 								// BOTBACKWARD = "bot drive backward"
 								if (commandString == "*bdb#")
 								{
+									/*
 									// MOTOR 1 COUNTERCLOCKWISE = backward
 									// set Motor1 A bit
 									PORTL |= (1<<PIN0);
@@ -709,14 +723,17 @@ void SimulationThread::run()
 									PORTD |= (1<<PIN6);
 									// delete Motor4 B bit
 									PORTD &= ~(1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*bdb#");
 									emit answer("*bdb#");
 								}
 								else
 								// BOTLEFT = "bot drive left"
 								if (commandString == "*bdl#")
 								{
+									/*
 									// MOTOR 1 COUNTERCLOCKWISE = backward
 									// set Motor1 A bit
 									PORTL |= (1<<PIN0);
@@ -740,14 +757,17 @@ void SimulationThread::run()
 									PORTD |= (1<<PIN6);
 									// delete Motor4 B bit
 									PORTD &= ~(1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*bdl#");
 									emit answer("*bdl#");
 								}
 								else
 								// BOTRIGHT = "bot drive right"
 								if (commandString == "*bdr#")
 								{
+									/*
 									// MOTOR 1 CLOCKWISE = forward
 									// delete Motor1 A bit
 									PORTL &= ~(1<<PIN0);
@@ -771,14 +791,17 @@ void SimulationThread::run()
 									PORTD &= ~(1<<PIN6);
 									// set Motor4 B bit
 									PORTD |= (1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*bdr#");
 									emit answer("*bdr#");
 								}
 								else
 								// TURNLEFT = "bot turn left"
 								if (commandString == "*btl#")
 								{
+									/*
 									// MOTOR 1 CLOCKWISE = forward
 									// delete Motor1 A bit
 									PORTL &= ~(1<<PIN0);
@@ -802,14 +825,17 @@ void SimulationThread::run()
 									PORTD |= (1<<PIN6);
 									// delete Motor4 B bit
 									PORTD &= ~(1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*btl#");
 									emit answer("*btl#");
 								}
 								else
 								// TURNRIGHT = "bot turn right"
 								if (commandString == "*btr#")
 								{
+									/*
 									// MOTOR 1 COUNTERCLOCKWISE = backward
 									// set Motor1 A bit
 									PORTL |= (1<<PIN0);
@@ -833,10 +859,13 @@ void SimulationThread::run()
 									PORTD &= ~(1<<PIN6);
 									// set Motor4 B bit
 									PORTD |= (1<<PIN7);
+									*/
 
 									// answer with "ok"
+									sendToAtmel("*btr#");
 									emit answer("*btr#");
 								}
+/*
 								else
 								// SET SERVO 1
 								if (commandString.startsWith("*sv1", Qt::CaseInsensitive))
