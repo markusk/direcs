@@ -168,7 +168,8 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				{
 					case FORWARD:
 						// bot drive forward
-						command = "bdf";
+						atmelCommand = commandDriveForward;
+						expectedAtmelAnswer = "*" + commandDriveForward + "#";
 						break;
 					case BACKWARD:
 						// bot drive backward
@@ -204,24 +205,32 @@ bool Motor::motorControl(int motor, bool power, int direction)
 						break;
 				}
 
-				// send command to bot
-				if (interface1->sendString(command) == true)
+				//------------------
+				// sending command
+				//------------------
+				emit message(QString("Sending *%1#...").arg(atmelCommand));
+				if (interface1->sendString(atmelCommand) == true)
 				{
-					// check if the robot answers with the sent command
-					if (interface1->receiveString(answer) == true)
-					{
-						if (answer == QString("*%1#").arg(command))
-						{
-							// Unlock the mutex
-							mutex->unlock();
-							return true;
-						}
-					}
+					// start own time measuring. This will be used, if we get an answer from the Atmel
+					duration.start();
+
+					// start additional seperate timer. If we NEVER get an answer, this slot will be called
+					QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+					emit message("Sent.");
+					emit message("Waiting for an answer...");
+
+					// Unlock the mutex.
+					mutex->unlock();
+
+					return true; /// @todo remove retrurn value!
 				}
-				//qDebug("ERROR sending to serial port (MotorControl)");
-				// Unlocks the mutex
+
+				emit message("Error sending string.");
+
+				// Unlock the mutex.
 				mutex->unlock();
-				return false;
+				return true; /// @todo remove retrurn value!
 				break;
 
 			//-------------------------
@@ -800,8 +809,14 @@ bool Motor::motorControl(int motor, bool power, int direction)
 		mutex->unlock();
 	} // robot is ON
 
+	atmelCommand = "none"; // reset current command
+	expectedAtmelAnswer.clear();
 
-	return false;
+	// mark the robot as OFF within this class
+	robotState = OFF;
+	///  We do not emit a Signal here. Nobody needs to know that we had a problem setting the motor. we jsut set robotState to OFF to let this class know this.
+
+	return false; /// @todo remove the return code here!
 }
 
 
