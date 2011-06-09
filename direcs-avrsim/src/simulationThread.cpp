@@ -347,7 +347,7 @@ void SimulationThread::run()
 								{
 									relais(OFF);
 //									yellowLED(OFF);
-									sendToAtmel("*#");
+									sendToAtmel("*f0of#");
 									emit answer("*f0of#");
 								}
 /*
