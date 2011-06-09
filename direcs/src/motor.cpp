@@ -879,10 +879,12 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	if (duration.elapsed() > ATMELTIMEOUT)
 	{
 		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-
+/*
 		// check the last command
 		if (atmelCommand == commandFlashlightOn)
 		{
+*/
+			/// @todo check if this now works for *all* commands in this class.
 			// timeout
 			// let this class know, that we had an error
 			robotState = false;
@@ -890,6 +892,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			atmelCommand = "none"; // reset current command
 			expectedAtmelAnswer.clear();
 			return;
+/*
 		} // flashlight on
 
 		// check the last command
@@ -903,7 +906,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight off
-
+*/
 	}
 
 	//------------------
@@ -912,13 +915,16 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
-
+/*
 		// check the last command
 		if (atmelCommand == commandFlashlightOn)
 		{
+*/
+			/// @todo check if this now works for *all* commands in this class.
 			commandExecutedSuccessfull = true;
 			atmelCommand = "none"; // reset current command
 			return;
+/*
 		} // flashlight on
 
 		// check the last command
@@ -928,6 +934,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			atmelCommand = "none"; // reset current command
 			return;
 		} // flashlight off
+*/
 	}
 	else
 	{
@@ -935,15 +942,18 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		// wrong answer
 		//--------------
 		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
-
+/*
 		// check the last command
 		if (atmelCommand == commandFlashlightOn)
 		{
+*/
+			/// @todo check if this now works for *all* commands in this class.
 			// let this class know, that we had an error
 			robotState = false;
 			atmelCommand = "none"; // reset current command
 			expectedAtmelAnswer.clear();
 			return;
+/*
 		} // flashlight on
 
 		// check the last command
@@ -955,6 +965,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight off
+*/
 	}
 }
 
