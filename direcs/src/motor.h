@@ -178,6 +178,15 @@ class Motor : public QObject
 
 		QString commandFlashlightOn;	/// *f0on#
 		QString commandFlashlightOff;	/// *f0of#
+		QString commandDriveForward;	/// *bdf#
+		QString commandDriveBackward;	/// *bdb#
+		QString commandDriveLeft;		/// *bdl#
+		QString commandDriveRight;		/// *bdr#
+		QString commandTurnLeft;		/// *btl#
+		QString commandTurnRight;		/// *btr#
+		QString commandBotGo;			/// *bgo#
+		QString commandBotStop;			/// *bst#
+		QString commandBotWait;			/// *bwa#
 
 		QString atmelCommand; /// this is the command for the Atmel
 		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.

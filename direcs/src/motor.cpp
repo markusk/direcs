@@ -65,6 +65,15 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	// the Atmel commands
 	commandFlashlightOn		= "f0on";
 	commandFlashlightOff	= "f0of";
+	commandDriveForward		= "bdf";
+	commandDriveBackward	= "bdb";
+	commandDriveLeft		= "bdl";
+	commandDriveRight		= "bdr";
+	commandTurnLeft			= "btl";
+	commandTurnRight		= "btr";
+	commandBotGo			= "bgo";
+	commandBotStop			= "bst";
+	commandBotWait			= "bwa";
 
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
