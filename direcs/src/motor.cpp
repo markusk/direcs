@@ -173,35 +173,43 @@ bool Motor::motorControl(int motor, bool power, int direction)
 						break;
 					case BACKWARD:
 						// bot drive backward
-						command = "bdb";
+						atmelCommand = commandDriveForward;
+						expectedAtmelAnswer = "*" + commandDriveForward + "#";
 						break;
 					case LEFT:
 						// bot drive left
-						command = "bdl";
+						atmelCommand = commandDriveLeft;
+						expectedAtmelAnswer = "*" + commandDriveLeft + "#";
 						break;
 					case RIGHT:
 						// bot drive right
-						command = "bdr";
+						atmelCommand = commandDriveRight;
+						expectedAtmelAnswer = "*" + commandDriveRight + "#";
 						break;
 					case TURNLEFT:
 						// bot turn left
-						command = "btl";
+						atmelCommand = commandTurnLeft;
+						expectedAtmelAnswer = "*" + commandTurnLeft + "#";
 						break;
 					case TURNRIGHT:
 						// bot turn right
-						command = "btr";
+						atmelCommand = commandTurnRight;
+						expectedAtmelAnswer = "*" + commandTurnRight + "#";
 						break;
 					case START:
 						// bot "go"
-						command = "bgo";
+						atmelCommand = commandBotGo;
+						expectedAtmelAnswer = "*" + commandBotGo + "#";
 						break;
 					case STOP:
 						// bot stop
-						command = "bst";
+						atmelCommand = commandBotStop;
+						expectedAtmelAnswer = "*" + commandBotStop + "#";
 						break;
 					case WAIT:
 						// bot wait
-						command = "bwa";
+						atmelCommand = commandBotWait;
+						expectedAtmelAnswer = "*" + commandBotWait + "#";
 						break;
 				}
 
