@@ -512,7 +512,7 @@ void Direcs::init()
 		}
 
 		// also emit interface class messages to the *logfile*
-		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
+		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); /// @todo check: FIXME: to fast in case of error for writing the logfile!
 		connect(circuit1,   SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
