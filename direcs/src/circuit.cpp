@@ -88,8 +88,10 @@ void Circuit::initCircuit()
 		mutex->unlock();
 	}
 
+	// error
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	emit message("Robot is OFF.");
+	atmelCommand.clear();
 	expectedAtmelAnswer.clear();
 	firstInitDone = true;
 	circuitState = false;
@@ -138,6 +140,8 @@ void Circuit::initCompass()
 		mutex->unlock();
 	}
 
+	// error
+	atmelCommand.clear();
 	expectedAtmelAnswer.clear();
 	compassCircuitState = false;
 	emit message("Compass is OFF.");
@@ -185,8 +189,10 @@ void Circuit::sleep()
 		mutex->unlock();
 	}
 
+	// error
+	atmelCommand.clear();
+	expectedAtmelAnswer.clear();
 	circuitState = false;
-	atmelCommand.clear(); /// @todo check if this is an ERROR!!! this is in no other method here!!
 	expectedAtmelAnswer.clear();
 
 	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
@@ -216,6 +222,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		{
 			// timeout
 			qDebug("INFO from initCircuit: Robot is OFF.");
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
 			firstInitDone = true;
 			circuitState = false;
 			emit robotState(false);
@@ -226,6 +234,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		if (atmelCommand == commandInitCompass)
 		{
 			// timeout
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
 			compassCircuitState = false;
 			emit compassState(false);
 			return;
@@ -235,6 +245,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		if (atmelCommand == commandSleep)
 		{
 			// timeout
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
 			circuitState = false;
 			emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 			return;
@@ -285,6 +297,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		if (atmelCommand == commandInitCircuit)
 		{
 			qDebug("INFO from initCircuit: Robot is OFF.");
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
 			firstInitDone = true;
 			circuitState = false;
 			emit robotState(false);
@@ -294,6 +308,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		// check the last command
 		if (atmelCommand == commandInitCompass)
 		{
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
 			compassCircuitState = false;
 			emit compassState(false);
 			return;
@@ -302,6 +318,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		// check the last command
 		if (atmelCommand == commandSleep)
 		{
+			atmelCommand.clear();
+			expectedAtmelAnswer.clear();
 			circuitState = false;
 			emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 			return;
@@ -322,12 +340,13 @@ void Circuit::timeout()
 			return;
 		}
 
+		// timeout
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-		expectedAtmelAnswer.clear();
 		qDebug("INFO from initCircuit: Robot is OFF.");
+		atmelCommand.clear();
+		expectedAtmelAnswer.clear();
 		firstInitDone = true;
 		circuitState = false;
-		atmelCommand.clear();
 		emit robotState(false);
 
 		return;
@@ -344,7 +363,9 @@ void Circuit::timeout()
 			return;
 		}
 
+		// timeout
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		atmelCommand.clear();
 		expectedAtmelAnswer.clear();
 		compassCircuitState = false;
 		emit message("Compass is OFF.");
@@ -364,7 +385,9 @@ void Circuit::timeout()
 			return;
 		}
 
+		// timeout
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		atmelCommand.clear();
 		expectedAtmelAnswer.clear();
 		emit message("Robot is OFF.");
 		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
@@ -380,8 +403,8 @@ bool Circuit::isConnected()
 	// if not tried to init hardware, do this!
 	if (firstInitDone == false)
 	{
-		initCircuit(); /// @todo implement this initCircuit and isConnected for event mode!
-//		firstInitDone = true;
+		initCircuit();
+		firstInitDone = true;
 	}
 
 	return circuitState;
