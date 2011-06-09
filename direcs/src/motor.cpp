@@ -58,7 +58,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 
 	commandExecutedSuccessfull = false;
 
-	atmelCommand.clear();
+	atmelCommand = "none"; // reset current command
 	expectedAtmelAnswer.clear();
 	answerTimeout = false;
 
@@ -842,6 +842,7 @@ void Motor::flashlight(bool light)
 		mutex->unlock();
 	}
 
+	atmelCommand = "none"; // reset current command
 	expectedAtmelAnswer.clear();
 
 	// mark the robot as OFF within this class
@@ -877,7 +878,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			// let this class know, that we had an error
 			robotState = false;
 			commandExecutedSuccessfull = false;
-			atmelCommand.clear();
+			atmelCommand = "none"; // reset current command
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight on
@@ -889,7 +890,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			// let this class know, that we had an error
 			robotState = false;
 			commandExecutedSuccessfull = false;
-			atmelCommand = "none";
+			atmelCommand = "none"; // reset current command
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight off
@@ -907,8 +908,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		if (atmelCommand == commandFlashlightOn)
 		{
 			commandExecutedSuccessfull = true;
-			atmelCommand.clear();
-			expectedAtmelAnswer.clear();
+			atmelCommand = "none"; // reset current command
 			return;
 		} // flashlight on
 
@@ -916,7 +916,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		if (atmelCommand == commandFlashlightOff)
 		{
 			commandExecutedSuccessfull = true;
-			expectedAtmelAnswer.clear();
+			atmelCommand = "none"; // reset current command
 			return;
 		} // flashlight off
 	}
@@ -932,7 +932,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		{
 			// let this class know, that we had an error
 			robotState = false;
-			atmelCommand.clear();
+			atmelCommand = "none"; // reset current command
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight on
@@ -942,7 +942,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		{
 			// let this class know, that we had an error
 			robotState = false;
-			atmelCommand = "none";
+			atmelCommand = "none"; // reset current command
 			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight off
@@ -961,12 +961,13 @@ void Motor::timeout()
 			// reset state
 			commandExecutedSuccessfull = false;
 			// we are happy
+			atmelCommand = "none"; // reset current command
 			return;
 		}
 
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		atmelCommand = "none"; // reset current command
 		expectedAtmelAnswer.clear();
-		atmelCommand.clear();
 
 		// let this class know, that we had an error
 		robotState = false;
@@ -983,12 +984,13 @@ void Motor::timeout()
 			// reset state
 			commandExecutedSuccessfull = false;
 			// we are happy
+			atmelCommand = "none"; // reset current command
 			return;
 		}
 
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		atmelCommand = "none"; // reset current command
 		expectedAtmelAnswer.clear();
-		atmelCommand.clear();
 
 		// let this class know, that we had an error
 		robotState = false;
