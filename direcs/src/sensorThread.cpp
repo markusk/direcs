@@ -197,6 +197,8 @@ void SensorThread::run()
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 
+/// @todo implement reste of this to new event method
+/* this here
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");
@@ -243,7 +245,7 @@ void SensorThread::run()
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
-
+*/
 /// \todo implement reading of motor sensors 3 and 4 !
 /*
 
@@ -302,7 +304,8 @@ void SensorThread::run()
 			}
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
-
+/// @todo implement reste of this to new event method
+/* this here
 			//-----------------
 			// driven distance
 			//-----------------
@@ -391,7 +394,7 @@ void SensorThread::run()
 				// emit ALL compass axes values
 				emit compassDataComplete(xAxis, yAxis, zAxis, heading);
 			}
-
+*/
 /*			infrared Sensors temporarily removed from robot!!
 
 			//------------------
