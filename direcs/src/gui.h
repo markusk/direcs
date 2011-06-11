@@ -837,5 +837,6 @@ class Gui : public QMainWindow
 		static const unsigned char LEDOFF	= 0;
 		static const unsigned char RED		= 1;
 		static const unsigned char GREEN	= 2;
+		static const unsigned char YELLOW	= 3;
 };
 #endif

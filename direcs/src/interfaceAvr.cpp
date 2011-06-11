@@ -429,6 +429,8 @@ void InterfaceAvr::onReadyRead()
 		return;
 	}
 
+
+	emit message("ERROR: This line should never be reached (interfaceAvr::onReadyRead).");
 }
 
 

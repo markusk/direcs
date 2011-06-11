@@ -45,18 +45,6 @@ class Motor : public QObject
 		~Motor();
 
 		/**
-		Controls a motor (normal and stepper!).
-		@param motor is the motor number.
-		@param power can be ON or OFF.
-		@param direction can be CLOCKWISE or COUNTERCLOCKWISE.
-		@return true on access (answer from Atmel was okay)
-
-		@sa makeSteps() for generating steps for stepper motors
-		*/
-		bool motorControl(int motor, bool power, int direction);
-
-
-		/**
 		@return The speed of a motor.
 		@param motor is the motor number.
 		*/
@@ -94,6 +82,17 @@ class Motor : public QObject
 		*/
 
 	public slots:
+		/**
+		Controls a motor (normal and stepper!).
+		@param motor is the motor number.
+		@param power can be ON or OFF.
+		@param direction can be CLOCKWISE or COUNTERCLOCKWISE.
+		@return true on access (answer from Atmel was okay)
+
+		@sa makeSteps() for generating steps for stepper motors
+		*/
+		bool motorControl(int motor, bool power, int direction);
+
 		/**
 		Turns the flashlight ON or OFF.
 		@param light can be ON or OFF.
@@ -178,6 +177,15 @@ class Motor : public QObject
 
 		QString commandFlashlightOn;	/// *f0on#
 		QString commandFlashlightOff;	/// *f0of#
+		QString commandDriveForward;	/// *bdf#
+		QString commandDriveBackward;	/// *bdb#
+		QString commandDriveLeft;		/// *bdl#
+		QString commandDriveRight;		/// *bdr#
+		QString commandTurnLeft;		/// *btl#
+		QString commandTurnRight;		/// *btr#
+		QString commandBotGo;			/// *bgo#
+		QString commandBotStop;			/// *bst#
+		QString commandBotWait;			/// *bwa#
 
 		QString atmelCommand; /// this is the command for the Atmel
 		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.

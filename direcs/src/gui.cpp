@@ -4137,6 +4137,16 @@ void Gui::setLEDCircuit(unsigned char state)
 				uiSmall.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
+		case YELLOW:
+			if (useLargeGUI)
+			{
+				ui.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_yellow.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDCircuit->setPixmap(QPixmap(":/images/images/led_yellow.gif"));
+			}
+		break;
 		case LEDOFF:
 			if (useLargeGUI)
 			{

@@ -48,6 +48,8 @@ Servo::~Servo()
 
 bool Servo::moveServo(unsigned char servo, unsigned char position)
 {
+/// @todo reenable moveServo again when implemented!
+/*
 	QString answer = "error";
 
 
@@ -103,6 +105,9 @@ bool Servo::moveServo(unsigned char servo, unsigned char position)
 
 	// robot is OFF
 	return false;
+*/
+
+	return true; /// @todo remove when implemented!
 }
 
 
