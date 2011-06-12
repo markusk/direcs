@@ -661,6 +661,168 @@ contacts temporarily removed from robot!! */
 }
 
 
+void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
+{
+//	emit message( QString("Motor takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+//	emit message( QString("Motor checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
+
+	if (regardingCommand != atmelCommand)
+	{
+		emit message("Answer is not for me (Motor).");
+		return;
+	}
+
+	//----------
+	// timeout?
+	//----------
+	if (duration.elapsed() > ATMELTIMEOUT)
+	{
+		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+/*
+		// check the last command
+		if (atmelCommand == commandFlashlightOn)
+		{
+*/
+			/// @todo check if this now works for *all* commands in this class.
+			// timeout
+			// let this class know, that we had an error
+			robotState = false;
+			commandExecutedSuccessfull = false;
+			atmelCommand = "none"; // reset current command
+			expectedAtmelAnswer.clear();
+			return;
+/*
+		} // flashlight on
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOff)
+		{
+			// timeout
+			// let this class know, that we had an error
+			robotState = false;
+			commandExecutedSuccessfull = false;
+			atmelCommand = "none"; // reset current command
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight off
+*/
+	}
+
+	//------------------
+	// everthing's fine
+	//------------------
+	if (atmelAnswer == expectedAtmelAnswer)
+	{
+		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+/*
+		// check the last command
+		if (atmelCommand == commandFlashlightOn)
+		{
+*/
+			/// @todo check if this now works for *all* commands in this class.
+			commandExecutedSuccessfull = true;
+			atmelCommand = "none"; // reset current command
+			return;
+/*
+		} // flashlight on
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOff)
+		{
+			commandExecutedSuccessfull = true;
+			atmelCommand = "none"; // reset current command
+			return;
+		} // flashlight off
+*/
+	}
+	else
+	{
+		//--------------
+		// wrong answer
+		//--------------
+		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+/*
+		// check the last command
+		if (atmelCommand == commandFlashlightOn)
+		{
+*/
+			/// @todo check if this now works for *all* commands in this class.
+			// let this class know, that we had an error
+			robotState = false;
+			atmelCommand = "none"; // reset current command
+			expectedAtmelAnswer.clear();
+			return;
+/*
+		} // flashlight on
+
+		// check the last command
+		if (atmelCommand == commandFlashlightOff)
+		{
+			// let this class know, that we had an error
+			robotState = false;
+			atmelCommand = "none"; // reset current command
+			expectedAtmelAnswer.clear();
+			return;
+		} // flashlight off
+*/
+	}
+}
+
+
+void SensorThread::timeout()
+{
+/*
+	// check the last command
+	if (atmelCommand == commandFlashlightOn)
+	{
+*/
+		// first check if we had already an answer from the Atmel
+		if (commandExecutedSuccessfull == true)
+		{
+			// reset state
+			commandExecutedSuccessfull = false;
+			// we are happy
+			atmelCommand = "none"; // reset current command
+			return;
+		}
+
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		atmelCommand = "none"; // reset current command
+		expectedAtmelAnswer.clear();
+
+		// let this class know, that we had an error
+		robotState = false;
+
+		return;
+/*
+	} // flashlight on
+
+	// check the last command
+	if (atmelCommand == commandFlashlightOff)
+	{
+		// first check if we had already an answer from the Atmel
+		if (commandExecutedSuccessfull == true)
+		{
+			// reset state
+			commandExecutedSuccessfull = false;
+			// we are happy
+			atmelCommand = "none"; // reset current command
+			return;
+		}
+
+		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		atmelCommand = "none"; // reset current command
+		expectedAtmelAnswer.clear();
+
+		// let this class know, that we had an error
+		robotState = false;
+
+		return;
+	} // flashlight off
+*/
+}
+
+
 int SensorThread::convertToDistance(int sensorValue)
 {
 	unsigned char calibrationValue = 8;
@@ -1406,7 +1568,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 					return true;
 				}
 
-				emit message("Error sending string.");
+				emit message("Error reading sensor.");
 
 				// Unlock the mutex.
 				mutex->unlock();
@@ -1419,7 +1581,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			// mark the robot as OFF within this class
 			robotState = OFF;
 
-			emit message("Error switching flashlight.");
+			emit message("Error reading sensor.");
 			///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
 /// - - new - -
 
