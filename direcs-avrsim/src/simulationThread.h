@@ -158,6 +158,9 @@ class SimulationThread : public QThread
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
 
+		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.000; // 12 V, command *s8#
+		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125; // 24 V, command *s7#
+
 
 /**
 Simulated Atmel method defines

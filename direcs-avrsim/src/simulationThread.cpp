@@ -1144,11 +1144,11 @@ void SimulationThread::sendUInt(uint16_t value)
 
 uint16_t SimulationThread::readADC(unsigned char channel)
 {
-	if (channel==SENSOR7) // 24V sensor
-		return (uint16_t) (57.000 * 24);
+	if (channel==SENSOR7) // 24V sensor = SENSOR2 = s7
+		return (uint16_t) (CONVERSIONFACTORVOLTAGESENSOR2 * 24);
 
-	if (channel==SENSOR8) // 12V sensor
-		return (uint16_t) (36.125 * 12);
+	if (channel==SENSOR8) // 12V sensor = SENSOR1 = s8
+		return (uint16_t) (CONVERSIONFACTORVOLTAGESENSOR1 * 12);
 
 	if (channel == SENSORMOTOR1)
 		return (uint16_t) (1000 / 29); // 1000 mA

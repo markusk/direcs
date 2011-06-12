@@ -143,8 +143,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	answerTimeout = false;
 
 	// the Atmel commands
-	commandReadVoltageSensor1	= "s7";  /// s7 = 24 V
-	commandReadVoltageSensor2	= "s8";  /// s8 = 12 V
+	commandReadVoltageSensor1	= "s8";  /// s8 = 12 V = VOLTAGESENSOR1
+	commandReadVoltageSensor2	= "s7";  /// s7 = 24 V = VOLTAGESENSOR2
 
 	// send answers from interfaceAvr to this class
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
