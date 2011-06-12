@@ -266,9 +266,8 @@ class SensorThread : public QThread
 		/**
 		Reads a voltage sensor value from the microcontroller
 		@param sensor is the sensor number (VOLTAGESENSOR1 to VOLTAGESENSOR2)
-		@return true on success, false on error
 		*/
-		bool readVoltageSensor(short int sensor);
+		void readVoltageSensor(short int sensor);
 
 		/**
 		Reads a motor sensor value from the microcontroller

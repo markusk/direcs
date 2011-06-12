@@ -1550,7 +1550,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 }
 
 
-bool SensorThread::readVoltageSensor(short int sensor)
+void SensorThread::readVoltageSensor(short int sensor)
 {
 	int value = 0;
 	QString answer = "error";
@@ -1583,8 +1583,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 					mutex->unlock();
 					/// @todo check lock / unlock! and remove this within the run method ?!?
 
-					/// @todo no return value here!
-					return true;
+					return;
 				}
 
 				emit message("Error reading sensor.");
@@ -1623,10 +1622,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 /// - - old - -
 */
 
-/// @todo use bool vars instead of 'return codes' here?
-			return false;
-
-
+			return;
 			break;
 		case VOLTAGESENSOR2:
 			// read sensor
@@ -1640,20 +1636,20 @@ bool SensorThread::readVoltageSensor(short int sensor)
 					{
 						// store measured value
 						voltageSensorValue[VOLTAGESENSOR2] = value;
-						return true;
+						return;
 					}
 				}
 			}
 
 			// error
 			voltageSensorValue[VOLTAGESENSOR2] = 0;
-			return false;
+			return;
 			break;
 	}
 
 	// this line should be never reached
 	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
-	return false;
+	return;
 }
 
 
