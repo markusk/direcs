@@ -737,12 +737,20 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 		{
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR1] = value;
+
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 		}
 
 		if (atmelCommand == commandReadVoltageSensor2)
 		{
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR2] = value;
+
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
 		}
 
 		atmelCommand = "none"; // reset current command
