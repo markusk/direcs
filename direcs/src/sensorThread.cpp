@@ -193,48 +193,10 @@ void SensorThread::run()
 			mutex->lock();
 /// @todo check lock/unlock !  use in readVoltageSensor method instead of here ?!?
 
-/*
-/// - - old - -
-			//-----------------
-			// voltage sensors
-			//-----------------
-			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
-			{
-				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 1. Stopping sensorThread!</font>");
-				// Unlock the mutex.
-				 mutex->unlock();
-				 // stop this thread
-				 stop();
-				 // inform other modules
-				 emit systemerror(-2);
-				 return;
-			}
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-/// - - old - -
-*/
 			//-----------------
 			// voltage sensors
 			//-----------------
 			readVoltageSensor(VOLTAGESENSOR1); // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
-/*
-			{
-				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 1. Stopping sensorThread!</font>");
-				// Unlock the mutex.
-				 mutex->unlock();
-				 // stop this thread
-				 stop();
-				 // inform other modules
-				 emit systemerror(-2);
-				 return;
-			}
-
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-*/
-
 
 /// @todo implement reste of this to new event method
 /* this here
@@ -667,9 +629,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 	int value = 0; // for conversion to int
 
 
-	//emit message( QString("SensorThread takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
-	//emit message( QString("SensorThread checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
-
 	if (regardingCommand != atmelCommand)
 	{
 		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
@@ -682,36 +641,22 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 	if (duration.elapsed() > ATMELTIMEOUT)
 	{
 		emit message(QString("Timeout (%1ms > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-/*
-		// check the last command
-		if (atmelCommand == commandFlashlightOn)
-		{
-*/
-			/// @todo check if this now works for *all* commands in this class.
-			// timeout
-			// let this class know, that we had an error
-			robotState = false;
-			commandExecutedSuccessfull = false;
-			atmelCommand = "none"; // reset current command
-			emit heartbeat(RED);
-			emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
-			// stop this thread
-			stop();
-			return;
-/*
-		} // flashlight on
 
-		// check the last command
-		if (atmelCommand == commandFlashlightOff)
-		{
-			// timeout
-			// let this class know, that we had an error
-			robotState = false;
-			commandExecutedSuccessfull = false;
-			atmelCommand = "none"; // reset current command
-			return;
-		} // flashlight off
-*/
+		// timeout
+		// let this class know, that we had an error
+		robotState = false;
+		commandExecutedSuccessfull = false;
+		atmelCommand = "none"; // reset current command
+		emit heartbeat(RED);
+		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+		// stop this thread
+		stop();
+
+/// @todo is systemerror emission still needed?!?  s.a. other error situations within this class!
+		// inform other modules
+//	    emit systemerror(-2);
+
+		return;
 	}
 
 	//------------------
@@ -763,91 +708,44 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 		// wrong answer
 		//--------------
 		emit message(QString("ERROR: Answer was %1 intead of *nnn#.").arg(atmelAnswer)); /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
-/*
-		// check the last command
-		if (atmelCommand == commandFlashlightOn)
-		{
-*/
-			/// @todo check if this now works for *all* commands in this class.
-			// let this class know, that we had an error
-			robotState = false;
-			atmelCommand = "none"; // reset current command
-			emit heartbeat(RED);
-			emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
-			// stop this thread
-			stop();
-			return;
-/*
-		} // flashlight on
 
-		// check the last command
-		if (atmelCommand == commandFlashlightOff)
-		{
-			// let this class know, that we had an error
-			robotState = false;
-			atmelCommand = "none"; // reset current command
-			return;
-		} // flashlight off
-*/
+		// let this class know, that we had an error
+		robotState = false;
+		atmelCommand = "none"; // reset current command
+		emit heartbeat(RED);
+		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+		// stop this thread
+		stop();
+		return;
 	}
 }
 
 
 void SensorThread::timeout()
 {
-/*
-	// check the last command
-	if (atmelCommand == commandFlashlightOn)
+	// first check if we had already an answer from the Atmel
+	if (commandExecutedSuccessfull == true)
 	{
-*/
-		// first check if we had already an answer from the Atmel
-		if (commandExecutedSuccessfull == true)
-		{
-			// reset state
-			commandExecutedSuccessfull = false;
-			// we are happy
-			atmelCommand = "none"; // reset current command
-			return;
-		}
-
-		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+		// reset state
+		commandExecutedSuccessfull = false;
+		// we are happy
 		atmelCommand = "none"; // reset current command
-
-		// let this class know, that we had an error
-		robotState = OFF;
-
-		emit heartbeat(RED);
-
-		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
-		// stop this thread
-		stop();
-
 		return;
-/*
-	} // flashlight on
+	}
 
-	// check the last command
-	if (atmelCommand == commandFlashlightOff)
-	{
-		// first check if we had already an answer from the Atmel
-		if (commandExecutedSuccessfull == true)
-		{
-			// reset state
-			commandExecutedSuccessfull = false;
-			// we are happy
-			atmelCommand = "none"; // reset current command
-			return;
-		}
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+	atmelCommand = "none"; // reset current command
 
-		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-		atmelCommand = "none"; // reset current command
+	// let this class know, that we had an error
+	robotState = OFF;
 
-		// let this class know, that we had an error
-		robotState = false;
+	emit heartbeat(RED);
 
-		return;
-	} // flashlight off
-*/
+	emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+	// stop this thread
+	stop();
+
+	return;
 }
 
 
@@ -1567,9 +1465,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-
-
-/// - - new - -
 			// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 			if (robotState == ON)
 			{
@@ -1604,32 +1499,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 			atmelCommand = "none"; // reset current command
 
 			///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
-/// - - new - -
-
-
-/*
-/// - - old - -
-			// read sensor
-			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
-			{
-				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
-				{
-					// convert to int
-					if (interface1->convertStringToInt(answer, value))
-					{
-						// store measured value
-						voltageSensorValue[VOLTAGESENSOR1] = value;
-						return true;
-					}
-				}
-			}
-
-			// error
-			voltageSensorValue[VOLTAGESENSOR1] = 0;
-/// - - old - -
-*/
-
 			return;
 			break;
 		case VOLTAGESENSOR2:
