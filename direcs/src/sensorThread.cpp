@@ -36,8 +36,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRSensorValue[SENSOR4] = 0;
 	iRSensorValue[SENSOR5] = 0;
 	iRSensorValue[SENSOR6] = 0;
-// 	iRSensorValue[SENSOR7] = 0; -> now voltage 12 V (measuring the power supply / accumulators), sensor 1 !!
-// 	iRSensorValue[SENSOR8] = 0; -> now voltage 24 V (measuring the power supply / accumulators)  sensor 2 !!
+// 	iRSensorValue[SENSOR7] = 0; -> now voltage 24 V (measuring the power supply / accumulators), sensor 1 !!
+// 	iRSensorValue[SENSOR8] = 0; -> now voltage 12 V (measuring the power supply / accumulators)  sensor 2 !!
 
 	// Array for storing the measured voltage values
 	voltageSensorValue[VOLTAGESENSOR1] = 0;
@@ -1144,7 +1144,7 @@ void SensorThread::setSimulationMode(bool state)
 		motorSensorValue[MOTORSENSOR3] = (int)3000/CONVERSIONFACTORMOTORSENSOR;
 		motorSensorValue[MOTORSENSOR4] = (int)4000/CONVERSIONFACTORMOTORSENSOR;
 
-		voltageSensorValue[VOLTAGESENSOR1] = 10.500000 * CONVERSIONFACTORVOLTAGESENSOR1; // simulate an empty 12 V battery
+		voltageSensorValue[VOLTAGESENSOR1] = 10.500000 * CONVERSIONFACTORVOLTAGESENSOR1; // simulate an 'empty' 12 V battery (with simulated 10.5 V)
 		voltageSensorValue[VOLTAGESENSOR2] = 24.000000 * CONVERSIONFACTORVOLTAGESENSOR2; // simulate a full 24 V battery
 
 		// initialisation
