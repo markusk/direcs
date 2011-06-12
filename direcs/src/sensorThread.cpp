@@ -668,7 +668,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 
 	if (regardingCommand != atmelCommand)
 	{
-		emit message("Answer is not for me (Motor).");
+		emit message("Answer is not for me (SensorThread).");
 		return;
 	}
 
