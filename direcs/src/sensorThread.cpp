@@ -144,7 +144,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	answerTimeout = false;
 
 	// the Atmel commands
-	commandReadVoltageSensor	= "s8";
+	commandReadVoltageSensor1	= "s7";  /// s7 = 24 V
+	commandReadVoltageSensor2	= "s8";  /// s8 = 12 V
 
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
@@ -717,41 +718,47 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
-/*
-		// check the last command
-		if (atmelCommand == commandFlashlightOn)
-		{
-*/
-			/// @todo check if this now works for *all* commands in this class.
-			commandExecutedSuccessfull = true;
-			atmelCommand = "none"; // reset current command
 
-			// convert answer to int
-			if (interface1->convertStringToInt(atmelAnswer, value))
+		/// @todo check if this now works for *all* commands in this class.
+		commandExecutedSuccessfull = true;
+		atmelCommand = "none"; // reset current command
+
+		// convert answer to int
+		if (interface1->convertStringToInt(atmelAnswer, value))
+		{
+			// check the last command
+			if (atmelCommand == commandReadVoltageSensor1)
 			{
 				// store measured value
 				voltageSensorValue[VOLTAGESENSOR1] = value;
 			}
-			else
+
+			if (atmelCommand == commandReadVoltageSensor2)
 			{
-				// error
-				emit message("ERROR converting sensor value.");
+				// store measured value
+				voltageSensorValue[VOLTAGESENSOR2] = value;
+			}
+		}
+		else
+		{
+			// error
+			emit message("ERROR converting sensor value.");
+
+			// check the last command
+			if (atmelCommand == commandReadVoltageSensor1)
+			{
 				// store measured value
 				voltageSensorValue[VOLTAGESENSOR1] = 0;
 			}
 
-			return;
-/*
-		} // flashlight on
+			if (atmelCommand == commandReadVoltageSensor2)
+			{
+				// store measured value
+				voltageSensorValue[VOLTAGESENSOR2] = 0;
+			}
+		}
 
-		// check the last command
-		if (atmelCommand == commandFlashlightOff)
-		{
-			commandExecutedSuccessfull = true;
-			atmelCommand = "none"; // reset current command
-			return;
-		} // flashlight off
-*/
+		return;
 	}
 	else
 	{
@@ -1563,8 +1570,9 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 			if (robotState == ON)
 			{
-				atmelCommand = commandReadVoltageSensor;
-				expectedAtmelAnswer = "*" + commandReadVoltageSensor + "#";
+				atmelCommand = commandReadVoltageSensor1;
+//				expectedAtmelAnswer = "*" + commandReadVoltageSensor + "#";
+/// @todo finalise expectedAtmelAnswer !  Using values returns e.g. *123# values.
 
 				emit message(QString("Sending *%1#...").arg(atmelCommand));
 				if (interface1->sendString(atmelCommand) == true)

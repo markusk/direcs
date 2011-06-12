@@ -306,7 +306,8 @@ class SensorThread : public QThread
 		bool compassState; // stores the robot state within this class
 		bool commandExecutedSuccessfull; /// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 
-		QString commandReadVoltageSensor;	/// *s8#	s8 = voltage sensor 1
+		QString commandReadVoltageSensor1;	/// *s7#	s7 = voltage sensor 1 = 24 Volt
+		QString commandReadVoltageSensor2;	/// *s8#	s8 = voltage sensor 1 = 12 Volt
 
 		QString atmelCommand; /// this is the command for the Atmel
 		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.
