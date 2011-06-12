@@ -664,15 +664,15 @@ contacts temporarily removed from robot!! */
 
 void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 {
-//	emit message( QString("Motor takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
-//	emit message( QString("Motor checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
 	int value = 0; // for conversion to int
 
 
+	//emit message( QString("SensorThread takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+	//emit message( QString("SensorThread checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
 
 	if (regardingCommand != atmelCommand)
 	{
-		emit message("Answer is not for me (SensorThread).");
+		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
 		return;
 	}
 
@@ -1606,7 +1606,6 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			// mark the robot as OFF within this class
 			robotState = OFF;
 
-			emit message("Error reading sensor.");
 			///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
 /// - - new - -
 
