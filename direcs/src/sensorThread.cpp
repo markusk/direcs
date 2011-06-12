@@ -677,7 +677,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 	//----------
 	if (duration.elapsed() > ATMELTIMEOUT)
 	{
-		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+		emit message(QString("Timeout (%1ms > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 /*
 		// check the last command
 		if (atmelCommand == commandFlashlightOn)
