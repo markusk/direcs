@@ -195,19 +195,6 @@ void SensorThread::run()
 
 /// @todo implement reste of this to new event method
 /* this here
-			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
-			{
-				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");
-				 // stop this thread
-				 stop();
-				 // inform other modules
-				 emit systemerror(-2);
-				 return;
-			}
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-
 
 			//---------------
 			// motor sensors
@@ -1456,11 +1443,11 @@ void SensorThread::readVoltageSensor(short int sensor)
 		case VOLTAGESENSOR2:
 			atmelCommand = commandReadVoltageSensor2;
 			break;
-	default:
-		// this line should be never reached
-		qDebug("WARNING: wrong sensor number in readVoltageSensor()");
-		return;
-		break;
+		default:
+			// this line should be never reached
+			qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+			return;
+			break;
 	}
 
 
