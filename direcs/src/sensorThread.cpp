@@ -1458,55 +1458,54 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 
 void SensorThread::readVoltageSensor(short int sensor)
 {
-	int value = 0;
-	QString answer = "error";
-
-
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-			// maybe robot is already recognized as OFF by another module
-			if (robotState == ON)
-			{
-				atmelCommand = commandReadVoltageSensor1;
-
-				emit message(QString("Sending *%1#...").arg(atmelCommand));
-				if (interface1->sendString(atmelCommand) == true)
-				{
-					// start own time measuring. This will be used, if we get an answer from the Atmel
-					duration.start();
-
-					// start additional seperate timer. If we NEVER get an answer, this slot will be called
-					QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
-
-					emit message("Sent.");
-					emit message("Waiting for an answer...");
-
-					// Unlock the mutex.
-					mutex->unlock();
-					/// @todo check lock / unlock! and remove this within the run method ?!?
-
-					return;
-				}
-
-				emit message("Error reading sensor.");
-
-				// Unlock the mutex.
-				mutex->unlock();
-				/// @todo check lock / unlock! and remove this within the run method ?!?
-				}
-
-				atmelCommand = "none"; // reset current command
-
-				//  We do not emit a Signal in case of error here.
-				return;
+			atmelCommand = commandReadVoltageSensor1;
 			break;
 		case VOLTAGESENSOR2:
+			atmelCommand = commandReadVoltageSensor2;
 			break;
+	default:
+		// this line should be never reached
+		qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+		return;
+		break;
 	}
 
-	// this line should be never reached
-	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+
+	// maybe robot is already recognized as OFF by another module
+	if (robotState == ON)
+	{
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+		if (interface1->sendString(atmelCommand) == true)
+		{
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
+
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+			emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+			/// @todo check lock / unlock! and remove this within the run method ?!?
+
+			return;
+		}
+
+		emit message("Error reading sensor.");
+
+		// Unlock the mutex.
+		mutex->unlock();
+		/// @todo check lock / unlock! and remove this within the run method ?!?
+	}
+
+	atmelCommand = "none"; // reset current command
+
+	//  We do not emit a Signal in case of error here.
 	return;
 }
 
