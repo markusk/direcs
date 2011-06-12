@@ -146,7 +146,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	// the Atmel commands
 	commandReadVoltageSensor	= "s8";
 
-/// @todo	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
+	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
@@ -1380,35 +1380,47 @@ bool SensorThread::readVoltageSensor(short int sensor)
 
 
 /// - - new - -
-
-			atmelCommand = commandReadVoltageSensor;
-			expectedAtmelAnswer = "*" + commandReadVoltageSensor + "#";
-
-			emit message(QString("Sending *%1#...").arg(atmelCommand));
-			if (interface1->sendString(atmelCommand) == true)
+			// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+			if (robotState == ON)
 			{
-				// start own time measuring. This will be used, if we get an answer from the Atmel
-				duration.start();
+				atmelCommand = commandReadVoltageSensor;
+				expectedAtmelAnswer = "*" + commandReadVoltageSensor + "#";
 
-				// start additional seperate timer. If we NEVER get an answer, this slot will be called
-				QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+				emit message(QString("Sending *%1#...").arg(atmelCommand));
+				if (interface1->sendString(atmelCommand) == true)
+				{
+					// start own time measuring. This will be used, if we get an answer from the Atmel
+					duration.start();
 
-				emit message("Sent.");
-				emit message("Waiting for an answer...");
+					// start additional seperate timer. If we NEVER get an answer, this slot will be called
+					QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+					emit message("Sent.");
+					emit message("Waiting for an answer...");
+
+					// Unlock the mutex.
+					mutex->unlock();
+					/// @todo check lock / unlock! and remove this within the run method ?!?
+
+					/// @todo no return value here!
+					return true;
+				}
+
+				emit message("Error sending string.");
 
 				// Unlock the mutex.
 				mutex->unlock();
 				/// @todo check lock / unlock! and remove this within the run method ?!?
-
-/// @todo no return value here!
-				return true;
 			}
 
-			emit message("Error sending string.");
+			atmelCommand = "none"; // reset current command
+			expectedAtmelAnswer.clear();
 
-			// Unlock the mutex.
-			mutex->unlock();
-			/// @todo check lock / unlock! and remove this within the run method ?!?
+			// mark the robot as OFF within this class
+			robotState = OFF;
+
+			emit message("Error switching flashlight.");
+			///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
 /// - - new - -
 
 
