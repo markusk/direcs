@@ -26,6 +26,8 @@
 //-------------------------------------------------------------------
 #include <QThread>
 #include <QMutex>
+#include <QTime>
+#include <QTimer>
 #include <math.h>
 //-------------------------------------------------------------------
 
@@ -288,6 +290,16 @@ class SensorThread : public QThread
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 		bool compassState; // stores the robot state within this class
+		bool commandExecutedSuccessfull; /// set to true, if command executed successfull. In this case a later timeout slot will check this first!
+
+		QString commandReadVoltageSensor;	/// *sX#  e.g. s8 = voltage sensor 1
+
+		QString atmelCommand; /// this is the command for the Atmel
+		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.
+		bool answerTimeout; /// this is set to true, when we have a timout while waiting for an Atmel answer
+
+		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
+		static const int ATMELTIMEOUT = 500; /// timeout in ms
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

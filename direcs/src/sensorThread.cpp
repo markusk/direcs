@@ -136,6 +136,17 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 	compassState = false;
+
+	commandExecutedSuccessfull = false;
+
+	atmelCommand = "none"; // reset current command
+	expectedAtmelAnswer.clear();
+	answerTimeout = false;
+
+	// the Atmel commands
+	commandReadVoltageSensor	= "s";
+
+/// @todo	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
