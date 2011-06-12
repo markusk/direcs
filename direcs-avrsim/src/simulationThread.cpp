@@ -1137,6 +1137,7 @@ void SimulationThread::sendUInt(uint16_t value)
 	// stringbuffer[length+1] = 0;
 
 	// send answer
+	sendToAtmel(stringbuffer);
 	emit answer(stringbuffer);
 }
 
