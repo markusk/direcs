@@ -188,11 +188,6 @@ void SensorThread::run()
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
-
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-/// @todo check lock/unlock !  use in readVoltageSensor method instead of here ?!?
-
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -203,8 +198,6 @@ void SensorThread::run()
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");
-				// Unlock the mutex.
-				 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -223,7 +216,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -238,7 +231,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 return;
@@ -254,7 +247,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 // inform other modules
 				 emit systemerror(-2);
@@ -269,7 +262,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -314,7 +307,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading driven distance 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -326,7 +319,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading driven distance 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -345,7 +338,7 @@ void SensorThread::run()
 				{
 					emit message("<font color=\"#FF0000\">ERROR reading compass axis X. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					 mutex->unlock();
+				//	 mutex->unlock();
 					 // stop this thread
 					 stop();
 					 // inform other modules
@@ -361,7 +354,7 @@ void SensorThread::run()
 				{
 					emit message("<font color=\"#FF0000\">ERROR reading compass axis Y. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					 mutex->unlock();
+				//	 mutex->unlock();
 					 // stop this thread
 					 stop();
 					 // inform other modules
@@ -377,7 +370,7 @@ void SensorThread::run()
 				{
 					emit message("<font color=\"#FF0000\">ERROR reading compass axis Z. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					 mutex->unlock();
+				//	 mutex->unlock();
 					 // stop this thread
 					 stop();
 					 // inform other modules
@@ -405,7 +398,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -417,7 +410,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -429,7 +422,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -441,7 +434,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -453,7 +446,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 5. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -465,7 +458,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 6. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -484,7 +477,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading ultrasonic sensor. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -499,7 +492,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -524,7 +517,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -549,7 +542,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -574,7 +567,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -594,9 +587,6 @@ void SensorThread::run()
 				}
 			}
 contacts temporarily removed from robot!! */
-
-			// Unlock the mutex.
-			mutex->unlock();
 
 		} // simulation = false
 
@@ -1478,6 +1468,10 @@ void SensorThread::readVoltageSensor(short int sensor)
 	if (robotState == ON)
 	{
 		emit message(QString("Sending *%1#...").arg(atmelCommand));
+
+		// Lock the mutex.
+		mutex->lock();
+
 		if (interface1->sendString(atmelCommand) == true)
 		{
 			// start own time measuring. This will be used, if we get an answer from the Atmel
@@ -1491,7 +1485,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 
 			// Unlock the mutex.
 			mutex->unlock();
-			/// @todo check lock / unlock! and remove this within the run method ?!?
 
 			return;
 		}
@@ -1500,13 +1493,11 @@ void SensorThread::readVoltageSensor(short int sensor)
 
 		// Unlock the mutex.
 		mutex->unlock();
-		/// @todo check lock / unlock! and remove this within the run method ?!?
 	}
 
 	atmelCommand = "none"; // reset current command
 
 	//  We do not emit a Signal in case of error here.
-	return;
 }
 
 
