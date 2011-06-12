@@ -187,9 +187,13 @@ void SensorThread::run()
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
+
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
+/// @todo check lock/unlock !  use in readVoltageSensor method instead of here ?!?
 
+/*
+/// - - old - -
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -207,6 +211,29 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
+/// - - old - -
+*/
+			//-----------------
+			// voltage sensors
+			//-----------------
+			readVoltageSensor(VOLTAGESENSOR1); // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
+/*
+			{
+				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 1. Stopping sensorThread!</font>");
+				// Unlock the mutex.
+				 mutex->unlock();
+				 // stop this thread
+				 stop();
+				 // inform other modules
+				 emit systemerror(-2);
+				 return;
+			}
+
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
+*/
+
 
 /// @todo implement reste of this to new event method
 /* this here
