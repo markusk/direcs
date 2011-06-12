@@ -75,6 +75,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	commandBotStop			= "bst";
 	commandBotWait			= "bwa";
 
+	// send answers from interfaceAvr to this class
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
