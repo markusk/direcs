@@ -818,7 +818,6 @@ void SensorThread::timeout()
 		// and stop the thread!
 		stopped = true;
 
-
 		emit heartbeat(RED);
 
 		return;
@@ -1605,6 +1604,11 @@ bool SensorThread::readVoltageSensor(short int sensor)
 
 			// mark the robot as OFF within this class
 			robotState = OFF;
+
+			// and stop the thread!
+			stopped = true;
+
+			emit heartbeat(RED);
 
 			///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
 /// - - new - -
