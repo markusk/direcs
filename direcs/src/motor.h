@@ -170,9 +170,9 @@ class Motor : public QObject
 		double drivenDistance4;
 
 
-		bool circuitState; // stores the robot state within this class
-		bool firstInitDone;
-		bool compassCircuitState; // stores the state of the compass module within this class
+//		bool circuitState; // stores the robot state within this class
+//		bool firstInitDone;
+//		bool compassCircuitState; // stores the state of the compass module within this class
 		bool commandExecutedSuccessfull; /// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 
 		QString commandFlashlightOn;	/// *f0on#

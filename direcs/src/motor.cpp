@@ -52,9 +52,9 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
 
-	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
-	firstInitDone = false;
-	compassCircuitState = false;
+//	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
+//	firstInitDone = false;
+//	compassCircuitState = false;
 
 	commandExecutedSuccessfull = false;
 
