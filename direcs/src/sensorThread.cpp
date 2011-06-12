@@ -694,6 +694,9 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			commandExecutedSuccessfull = false;
 			atmelCommand = "none"; // reset current command
 			emit heartbeat(RED);
+			emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+			// stop this thread
+			stop();
 			return;
 /*
 		} // flashlight on
@@ -714,6 +717,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 	//------------------
 	// everthing's fine
 	//------------------
+	/// @todo check if we have numbers between the * and #
 	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
@@ -775,6 +779,9 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			robotState = false;
 			atmelCommand = "none"; // reset current command
 			emit heartbeat(RED);
+			emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+			// stop this thread
+			stop();
 			return;
 /*
 		} // flashlight on
@@ -815,10 +822,11 @@ void SensorThread::timeout()
 		// let this class know, that we had an error
 		robotState = OFF;
 
-		// and stop the thread!
-		stopped = true;
-
 		emit heartbeat(RED);
+
+		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+		// stop this thread
+		stop();
 
 		return;
 /*
