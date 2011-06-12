@@ -727,38 +727,25 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 		atmelCommand = "none"; // reset current command
 
 		// convert answer to int
-		if (interface1->convertStringToInt(atmelAnswer, value))
-		{
-			// check the last command
-			if (atmelCommand == commandReadVoltageSensor1)
-			{
-				// store measured value
-				voltageSensorValue[VOLTAGESENSOR1] = value;
-			}
-
-			if (atmelCommand == commandReadVoltageSensor2)
-			{
-				// store measured value
-				voltageSensorValue[VOLTAGESENSOR2] = value;
-			}
-		}
-		else
+		if (interface1->convertStringToInt(atmelAnswer, value) == false)
 		{
 			// error
 			emit message("ERROR converting sensor value.");
 
-			// check the last command
-			if (atmelCommand == commandReadVoltageSensor1)
-			{
-				// store measured value
-				voltageSensorValue[VOLTAGESENSOR1] = 0;
-			}
+		}
 
-			if (atmelCommand == commandReadVoltageSensor2)
-			{
-				// store measured value
-				voltageSensorValue[VOLTAGESENSOR2] = 0;
-			}
+		// in both cases, we store the value! In case of error, value is 0.
+		// check the last command
+		if (atmelCommand == commandReadVoltageSensor1)
+		{
+			// store measured value
+			voltageSensorValue[VOLTAGESENSOR1] = value;
+		}
+
+		if (atmelCommand == commandReadVoltageSensor2)
+		{
+			// store measured value
+			voltageSensorValue[VOLTAGESENSOR2] = value;
 		}
 
 		return;
