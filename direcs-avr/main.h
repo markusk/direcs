@@ -95,8 +95,8 @@
 #define SENSOR4					3  // ADC3
 #define SENSOR5					4  // ADC4
 #define SENSOR6					5  // ADC5
-#define SENSOR7					6  // ADC6
-#define SENSOR8					7  // ADC7
+#define SENSOR7					6  // ADC6  =  24 Volt
+#define SENSOR8					7  // ADC7  =  12 Volt
 
 #define SENSORMOTOR1			38 // ADC14
 #define SENSORMOTOR2			39 // ADC15
