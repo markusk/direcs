@@ -165,9 +165,9 @@ class SensorThread : public QThread
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.
 		@param atmelAnswer contains the answer
-		@param regardingCommand contains the command which was used in the Slot @sa InterfaceAvr::commandCompleted()
+		@param correspondingCommand contains the command which was used in the Slot @sa InterfaceAvr::commandCompleted()
 		*/
-		void takeCommandAnswer(QString atmelAnswer, QString regardingCommand);
+		void takeCommandAnswer(QString atmelAnswer, QString correspondingCommand);
 
 
 	private slots:

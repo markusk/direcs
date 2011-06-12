@@ -601,12 +601,12 @@ contacts temporarily removed from robot!! */
 }
 
 
-void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
+void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingCommand)
 {
 	int value = 0; // for conversion to int
 
 
-	if (regardingCommand != atmelCommand)
+	if (correspondingCommand != atmelCommand)
 	{
 		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
 		return;
@@ -1467,7 +1467,7 @@ void SensorThread::readVoltageSensor(short int sensor)
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
 			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-			emit message("Sent.");
+			//emit message("Sent.");
 			emit message("Waiting for an answer...");
 
 			// Unlock the mutex.
