@@ -144,7 +144,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	answerTimeout = false;
 
 	// the Atmel commands
-	commandReadVoltageSensor	= "s";
+	commandReadVoltageSensor	= "s8";
 
 /// @todo	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
@@ -1377,6 +1377,43 @@ bool SensorThread::readVoltageSensor(short int sensor)
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
+
+
+/// - - new - -
+
+			atmelCommand = commandReadVoltageSensor;
+			expectedAtmelAnswer = "*" + commandReadVoltageSensor + "#";
+
+			emit message(QString("Sending *%1#...").arg(atmelCommand));
+			if (interface1->sendString(atmelCommand) == true)
+			{
+				// start own time measuring. This will be used, if we get an answer from the Atmel
+				duration.start();
+
+				// start additional seperate timer. If we NEVER get an answer, this slot will be called
+				QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+				emit message("Sent.");
+				emit message("Waiting for an answer...");
+
+				// Unlock the mutex.
+				mutex->unlock();
+				/// @todo check lock / unlock! and remove this within the run method ?!?
+
+/// @todo no return value here!
+				return true;
+			}
+
+			emit message("Error sending string.");
+
+			// Unlock the mutex.
+			mutex->unlock();
+			/// @todo check lock / unlock! and remove this within the run method ?!?
+/// - - new - -
+
+
+/*
+/// - - old - -
 			// read sensor
 			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
@@ -1395,7 +1432,13 @@ bool SensorThread::readVoltageSensor(short int sensor)
 
 			// error
 			voltageSensorValue[VOLTAGESENSOR1] = 0;
+/// - - old - -
+*/
+
+/// @todo use bool vars instead of 'return codes' here?
 			return false;
+
+
 			break;
 		case VOLTAGESENSOR2:
 			// read sensor
