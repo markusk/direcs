@@ -693,6 +693,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			robotState = false;
 			commandExecutedSuccessfull = false;
 			atmelCommand = "none"; // reset current command
+			emit heartbeat(RED);
 			return;
 /*
 		} // flashlight on
@@ -773,6 +774,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			// let this class know, that we had an error
 			robotState = false;
 			atmelCommand = "none"; // reset current command
+			emit heartbeat(RED);
 			return;
 /*
 		} // flashlight on
@@ -816,6 +818,8 @@ void SensorThread::timeout()
 		// and stop the thread!
 		stopped = true;
 
+
+		emit heartbeat(RED);
 
 		return;
 /*
