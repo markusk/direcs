@@ -146,6 +146,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	commandReadVoltageSensor1	= "s7";  /// s7 = 24 V
 	commandReadVoltageSensor2	= "s8";  /// s8 = 12 V
 
+	// send answers from interfaceAvr to this class
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
@@ -810,7 +811,11 @@ void SensorThread::timeout()
 		atmelCommand = "none"; // reset current command
 
 		// let this class know, that we had an error
-		robotState = false;
+		robotState = OFF;
+
+		// and stop the thread!
+		stopped = true;
+
 
 		return;
 /*
