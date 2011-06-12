@@ -1502,25 +1502,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 				return;
 			break;
 		case VOLTAGESENSOR2:
-			// read sensor
-			if (interface1->sendString("s7") == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
-			{
-				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
-				{
-					// convert to int
-					if (interface1->convertStringToInt(answer, value))
-					{
-						// store measured value
-						voltageSensorValue[VOLTAGESENSOR2] = value;
-						return;
-					}
-				}
-			}
-
-			// error
-			voltageSensorValue[VOLTAGESENSOR2] = 0;
-			return;
 			break;
 	}
 
