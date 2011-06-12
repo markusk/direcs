@@ -1465,7 +1465,7 @@ void SensorThread::readVoltageSensor(short int sensor)
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-			// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+			// maybe robot is already recognized as OFF by another module
 			if (robotState == ON)
 			{
 				atmelCommand = commandReadVoltageSensor1;
@@ -1494,12 +1494,12 @@ void SensorThread::readVoltageSensor(short int sensor)
 				// Unlock the mutex.
 				mutex->unlock();
 				/// @todo check lock / unlock! and remove this within the run method ?!?
-			}
+				}
 
-			atmelCommand = "none"; // reset current command
+				atmelCommand = "none"; // reset current command
 
-			///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
-			return;
+				//  We do not emit a Signal in case of error here.
+				return;
 			break;
 		case VOLTAGESENSOR2:
 			// read sensor
