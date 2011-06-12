@@ -722,16 +722,13 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 	{
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
 
-		/// @todo check if this now works for *all* commands in this class.
 		commandExecutedSuccessfull = true;
-		atmelCommand = "none"; // reset current command
 
 		// convert answer to int
 		if (interface1->convertStringToInt(atmelAnswer, value) == false)
 		{
 			// error
 			emit message("ERROR converting sensor value.");
-
 		}
 
 		// in both cases, we store the value! In case of error, value is 0.
@@ -747,6 +744,8 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR2] = value;
 		}
+
+		atmelCommand = "none"; // reset current command
 
 		return;
 	}
