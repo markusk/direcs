@@ -140,7 +140,6 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	commandExecutedSuccessfull = false;
 
 	atmelCommand = "none"; // reset current command
-	expectedAtmelAnswer.clear();
 	answerTimeout = false;
 
 	// the Atmel commands
@@ -693,7 +692,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			robotState = false;
 			commandExecutedSuccessfull = false;
 			atmelCommand = "none"; // reset current command
-			expectedAtmelAnswer.clear();
 			return;
 /*
 		} // flashlight on
@@ -706,7 +704,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			robotState = false;
 			commandExecutedSuccessfull = false;
 			atmelCommand = "none"; // reset current command
-			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight off
 */
@@ -775,7 +772,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			// let this class know, that we had an error
 			robotState = false;
 			atmelCommand = "none"; // reset current command
-			expectedAtmelAnswer.clear();
 			return;
 /*
 		} // flashlight on
@@ -786,7 +782,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			// let this class know, that we had an error
 			robotState = false;
 			atmelCommand = "none"; // reset current command
-			expectedAtmelAnswer.clear();
 			return;
 		} // flashlight off
 */
@@ -813,7 +808,6 @@ void SensorThread::timeout()
 
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
 		atmelCommand = "none"; // reset current command
-		expectedAtmelAnswer.clear();
 
 		// let this class know, that we had an error
 		robotState = false;
@@ -837,7 +831,6 @@ void SensorThread::timeout()
 
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
 		atmelCommand = "none"; // reset current command
-		expectedAtmelAnswer.clear();
 
 		// let this class know, that we had an error
 		robotState = false;
@@ -1571,8 +1564,6 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			if (robotState == ON)
 			{
 				atmelCommand = commandReadVoltageSensor1;
-//				expectedAtmelAnswer = "*" + commandReadVoltageSensor + "#";
-/// @todo finalise expectedAtmelAnswer !  Using values returns e.g. *123# values.
 
 				emit message(QString("Sending *%1#...").arg(atmelCommand));
 				if (interface1->sendString(atmelCommand) == true)
@@ -1602,7 +1593,6 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			}
 
 			atmelCommand = "none"; // reset current command
-			expectedAtmelAnswer.clear();
 
 			// mark the robot as OFF within this class
 			robotState = OFF;
