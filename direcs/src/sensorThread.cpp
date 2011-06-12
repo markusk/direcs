@@ -714,7 +714,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 	//------------------
 	// everthing's fine
 	//------------------
-	if (atmelAnswer == expectedAtmelAnswer)
+	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
 		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
 /*
@@ -758,7 +758,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 		//--------------
 		// wrong answer
 		//--------------
-		emit message(QString("ERROR: Answer was %1 intead of %2.").arg(atmelAnswer).arg(expectedAtmelAnswer));
+		emit message(QString("ERROR: Answer was %1 intead of *nnn#.").arg(atmelAnswer)); /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 /*
 		// check the last command
 		if (atmelCommand == commandFlashlightOn)
