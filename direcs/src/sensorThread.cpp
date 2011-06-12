@@ -191,7 +191,9 @@ void SensorThread::run()
 			//-----------------
 			// voltage sensors
 			//-----------------
-			readVoltageSensor(VOLTAGESENSOR1); // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
+			readVoltageSensor(VOLTAGESENSOR1);
+			readVoltageSensor(VOLTAGESENSOR2);
+
 
 /// @todo implement reste of this to new event method
 /* this here
