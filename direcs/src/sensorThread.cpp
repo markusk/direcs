@@ -665,6 +665,9 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 {
 //	emit message( QString("Motor takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 //	emit message( QString("Motor checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
+	int value = 0; // for conversion to int
+
+
 
 	if (regardingCommand != atmelCommand)
 	{
@@ -722,6 +725,21 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString regardingComma
 			/// @todo check if this now works for *all* commands in this class.
 			commandExecutedSuccessfull = true;
 			atmelCommand = "none"; // reset current command
+
+			// convert answer to int
+			if (interface1->convertStringToInt(atmelAnswer, value))
+			{
+				// store measured value
+				voltageSensorValue[VOLTAGESENSOR1] = value;
+			}
+			else
+			{
+				// error
+				emit message("ERROR converting sensor value.");
+				// store measured value
+				voltageSensorValue[VOLTAGESENSOR1] = 0;
+			}
+
 			return;
 /*
 		} // flashlight on
