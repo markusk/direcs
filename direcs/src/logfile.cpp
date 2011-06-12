@@ -84,18 +84,24 @@ void Logfile::appendLog(QString text, bool CR)
 	
 	
 	// remove HTML
-	int start= -1;
-	do
+	if (text.contains("<") && text.contains(">"))
 	{
-		// search for the first HTML "<"
-		start = text.indexOf("<");
+		int start= -1;
 
-		if (start != 1)
+		while (text.contains(">"))
 		{
-			text.remove(start, text.indexOf(">")+1 - start);
-		}
-	} while (text.contains(">"));
-	// to the last HTML ">" found
+			// search for the first HTML "<"
+			start = text.indexOf("<");
+
+			// when found
+			if (start != 1)
+			{
+				text.remove(start, (text.indexOf(">") - start + 1) );
+			}
+			else
+				break; // leave while loop, when we only found an '>' without leading '<'
+		};
+	}
 
 	
 	now = QDateTime::currentDateTime(); // get the current date and time
