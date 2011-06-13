@@ -258,7 +258,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	//------------------
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+		emit message(QString("Answer %1 was correct (Circuit).").arg(atmelAnswer));
 
 		// check the last command
 		if (atmelCommand == commandInitCircuit)

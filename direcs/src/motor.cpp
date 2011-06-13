@@ -938,7 +938,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	//------------------
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+		emit message(QString("Answer %1 was correct (Motor).").arg(atmelAnswer));
 /*
 		// check the last command
 		if (atmelCommand == commandFlashlightOn)

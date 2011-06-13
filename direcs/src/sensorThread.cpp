@@ -658,7 +658,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 	/// @todo check if we have numbers between the * and #
 	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
 
 		commandExecutedSuccessfull = true;
 
