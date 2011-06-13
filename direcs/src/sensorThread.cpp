@@ -200,6 +200,10 @@ void SensorThread::run()
 
 			readVoltageSensor(VOLTAGESENSOR2);
 
+			// wait until last command has finished
+			while ((commandExecutedSuccessfull == false) && (stopped==false))
+				msleep(50);
+
 
 /// @todo implement reste of this to new event method
 /* this here
@@ -663,14 +667,17 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 		{
 			// error
 			emit message("ERROR converting sensor value.");
+
+			// do not return, continue here! In both cases, we store the value! In case of error, value is 0.
 		}
 
-		// in both cases, we store the value! In case of error, value is 0.
 		// check the last command
 		if (atmelCommand == commandReadVoltageSensor1)
 		{
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR1] = value;
+
+			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -684,6 +691,8 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 		{
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR2] = value;
+
+			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
