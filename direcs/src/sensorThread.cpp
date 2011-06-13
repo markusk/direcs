@@ -193,6 +193,11 @@ void SensorThread::run()
 			// voltage sensors
 			//-----------------
 			readVoltageSensor(VOLTAGESENSOR1);
+
+			// wait until last command has finished
+			while ((commandExecutedSuccessfull == false) && (stopped==false))
+				msleep(50);
+
 			readVoltageSensor(VOLTAGESENSOR2);
 
 
