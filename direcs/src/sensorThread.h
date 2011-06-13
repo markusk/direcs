@@ -300,6 +300,7 @@ class SensorThread : public QThread
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
+		volatile bool stillInProgress;
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 		bool compassState; // stores the robot state within this class
@@ -309,6 +310,7 @@ class SensorThread : public QThread
 		QString commandReadVoltageSensor2;	/// *s8#	s8 = voltage sensor 1 = 12 Volt
 
 		QString atmelCommand; /// this is the command for the Atmel
+		mutable QMutex varMutex; // this is for the var atmelCommand
 
 		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
 		static const int ATMELTIMEOUT = 500; /// timeout in ms
