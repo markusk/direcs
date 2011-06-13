@@ -140,7 +140,6 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	commandExecutedSuccessfull = false;
 
 	atmelCommand = "none"; // reset current command
-	answerTimeout = false;
 
 	// the Atmel commands
 	commandReadVoltageSensor1	= "s8";  /// s8 = 12 V = VOLTAGESENSOR1

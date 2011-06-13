@@ -309,7 +309,6 @@ class SensorThread : public QThread
 		QString commandReadVoltageSensor2;	/// *s8#	s8 = voltage sensor 1 = 12 Volt
 
 		QString atmelCommand; /// this is the command for the Atmel
-		bool answerTimeout; /// this is set to true, when we have a timout while waiting for an Atmel answer
 
 		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
 		static const int ATMELTIMEOUT = 500; /// timeout in ms
