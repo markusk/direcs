@@ -26,6 +26,8 @@
 //-------------------------------------------------------------------
 #include <QThread>
 #include <QMutex>
+#include <QTime>
+#include <QTimer>
 #include <math.h>
 //-------------------------------------------------------------------
 
@@ -160,6 +162,20 @@ class SensorThread : public QThread
 		*/
 		void setCompassState(bool state);
 
+		/**
+		This slot takes the received answers from the Atmel after sending a command string to it.
+		@param atmelAnswer contains the answer
+		@param correspondingCommand contains the command which was used in the Slot @sa InterfaceAvr::commandCompleted()
+		*/
+		void takeCommandAnswer(QString atmelAnswer, QString correspondingCommand);
+
+
+	private slots:
+		/**
+		This Slot is called if we never get an answer from the Atmel
+		*/
+		void timeout();
+
 
 	signals:
 		/**
@@ -250,9 +266,8 @@ class SensorThread : public QThread
 		/**
 		Reads a voltage sensor value from the microcontroller
 		@param sensor is the sensor number (VOLTAGESENSOR1 to VOLTAGESENSOR2)
-		@return true on success, false on error
 		*/
-		bool readVoltageSensor(short int sensor);
+		void readVoltageSensor(short int sensor);
 
 		/**
 		Reads a motor sensor value from the microcontroller
@@ -285,13 +300,24 @@ class SensorThread : public QThread
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
+		volatile bool stillInProgress;
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 		bool compassState; // stores the robot state within this class
+		bool commandExecutedSuccessfull; /// set to true, if command executed successfull. In this case a later timeout slot will check this first!
+
+		QString commandReadVoltageSensor1;	/// *s7#	s7 = voltage sensor 1 = 24 Volt
+		QString commandReadVoltageSensor2;	/// *s8#	s8 = voltage sensor 1 = 12 Volt
+
+		QString atmelCommand; /// this is the command for the Atmel
+		mutable QMutex varMutex; // this is for the var atmelCommand
+
+		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
+		static const int ATMELTIMEOUT = 500; /// timeout in ms
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 500; // Default: 100 ms
+		static const unsigned long THREADSLEEPTIME = 750; // Default: 100 ms
 
 		// Give the infrared sensors some names
 		//
@@ -378,8 +404,8 @@ class SensorThread : public QThread
 		Defines the conversion factor for the voltage sensors to convert the sensor value in a "real world" value.
 		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57.0 results in 12 V.
 		*/
-		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.000;
-		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125;
+		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.000; // 12 V, command *s8#
+		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125; // 24 V, command *s7#
 
 		/**
 		The x, y, z axis value from the 3D magnetic sensor and the heading

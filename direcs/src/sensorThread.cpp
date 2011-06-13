@@ -36,8 +36,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	iRSensorValue[SENSOR4] = 0;
 	iRSensorValue[SENSOR5] = 0;
 	iRSensorValue[SENSOR6] = 0;
-// 	iRSensorValue[SENSOR7] = 0; -> now voltage 12 V (measuring the power supply / accumulators), sensor 1 !!
-// 	iRSensorValue[SENSOR8] = 0; -> now voltage 24 V (measuring the power supply / accumulators)  sensor 2 !!
+// 	iRSensorValue[SENSOR7] = 0; -> now voltage 24 V (measuring the power supply / accumulators), sensor 1 !!
+// 	iRSensorValue[SENSOR8] = 0; -> now voltage 12 V (measuring the power supply / accumulators)  sensor 2 !!
 
 	// Array for storing the measured voltage values
 	voltageSensorValue[VOLTAGESENSOR1] = 0;
@@ -136,6 +136,19 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 	compassState = false;
+
+	commandExecutedSuccessfull = false;
+
+	varMutex.lock();
+	atmelCommand = "none"; // reset current command
+	varMutex.unlock();
+
+	// the Atmel commands
+	commandReadVoltageSensor1	= "s8";  /// s8 = 12 V = VOLTAGESENSOR1
+	commandReadVoltageSensor2	= "s7";  /// s7 = 24 V = VOLTAGESENSOR2
+
+	// send answers from interfaceAvr to this class
+	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
@@ -176,42 +189,24 @@ void SensorThread::run()
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-
 			//-----------------
 			// voltage sensors
 			//-----------------
-			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
-			{
-				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 1. Stopping sensorThread!</font>");
-				// Unlock the mutex.
-				 mutex->unlock();
-				 // stop this thread
-				 stop();
-				 // inform other modules
-				 emit systemerror(-2);
-				 return;
-			}
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
+			readVoltageSensor(VOLTAGESENSOR1);
 
-			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
-			{
-				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");
-				// Unlock the mutex.
-				 mutex->unlock();
-				 // stop this thread
-				 stop();
-				 // inform other modules
-				 emit systemerror(-2);
-				 return;
-			}
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
+			// wait until last command has finished
+			while ((commandExecutedSuccessfull == false) && (stopped==false))
+				msleep(50);
 
+			readVoltageSensor(VOLTAGESENSOR2);
+
+			// wait until last command has finished
+			while ((commandExecutedSuccessfull == false) && (stopped==false))
+				msleep(50);
+
+
+/// @todo implement reste of this to new event method
+/* this here
 
 			//---------------
 			// motor sensors
@@ -220,7 +215,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -235,7 +230,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 return;
@@ -243,7 +238,7 @@ void SensorThread::run()
 			// send value over the network
 			// *1m42# means motorsensor2 with 42 mA
 			emit sendNetworkString( QString("*%1m%2#").arg(MOTORSENSOR2).arg(getMAmpere(MOTORSENSOR2)));
-
+*/
 /// \todo implement reading of motor sensors 3 and 4 !
 /*
 
@@ -251,7 +246,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 // inform other modules
 				 emit systemerror(-2);
@@ -266,7 +261,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading motor sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -302,7 +297,8 @@ void SensorThread::run()
 			}
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
-
+/// @todo implement reste of this to new event method
+/* this here
 			//-----------------
 			// driven distance
 			//-----------------
@@ -310,7 +306,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading driven distance 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -322,7 +318,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading driven distance 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -341,7 +337,7 @@ void SensorThread::run()
 				{
 					emit message("<font color=\"#FF0000\">ERROR reading compass axis X. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					 mutex->unlock();
+				//	 mutex->unlock();
 					 // stop this thread
 					 stop();
 					 // inform other modules
@@ -357,7 +353,7 @@ void SensorThread::run()
 				{
 					emit message("<font color=\"#FF0000\">ERROR reading compass axis Y. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					 mutex->unlock();
+				//	 mutex->unlock();
 					 // stop this thread
 					 stop();
 					 // inform other modules
@@ -373,7 +369,7 @@ void SensorThread::run()
 				{
 					emit message("<font color=\"#FF0000\">ERROR reading compass axis Z. Stopping sensorThread!</font>");
 					// Unlock the mutex.
-					 mutex->unlock();
+				//	 mutex->unlock();
 					 // stop this thread
 					 stop();
 					 // inform other modules
@@ -391,7 +387,7 @@ void SensorThread::run()
 				// emit ALL compass axes values
 				emit compassDataComplete(xAxis, yAxis, zAxis, heading);
 			}
-
+*/
 /*			infrared Sensors temporarily removed from robot!!
 
 			//------------------
@@ -401,7 +397,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -413,7 +409,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -425,7 +421,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -437,7 +433,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -449,7 +445,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 5. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -461,7 +457,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading infrared sensor 6. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -480,7 +476,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading ultrasonic sensor. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -495,7 +491,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 1. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -520,7 +516,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 2. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -545,7 +541,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 3. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -570,7 +566,7 @@ void SensorThread::run()
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading contact sensor 4. Stopping sensorThread!</font>");
 				// Unlock the mutex.
-				 mutex->unlock();
+			//	 mutex->unlock();
 				 // stop this thread
 				 stop();
 				 // inform other modules
@@ -590,9 +586,6 @@ void SensorThread::run()
 				}
 			}
 contacts temporarily removed from robot!! */
-
-			// Unlock the mutex.
-			mutex->unlock();
 
 		} // simulation = false
 
@@ -617,6 +610,160 @@ contacts temporarily removed from robot!! */
 		emit sensorDataComplete();
 	}
 	stopped = false;
+}
+
+
+void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingCommand)
+{
+	int value = 0; // for conversion to int
+
+
+	if (correspondingCommand != atmelCommand)
+	{
+		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
+		return;
+	}
+
+	//----------
+	// timeout?
+	//----------
+	if (duration.elapsed() > ATMELTIMEOUT)
+	{
+		emit message(QString("Timeout (%1ms > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+
+		// timeout
+		// let this class know, that we had an error
+		robotState = false;
+		commandExecutedSuccessfull = false;
+
+		varMutex.lock();
+		atmelCommand = "none"; // reset current command
+		varMutex.unlock();
+
+		emit heartbeat(RED);
+		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+		// stop this thread
+		stop();
+
+/// @todo is systemerror emission still needed?!?  s.a. other error situations within this class!
+		// inform other modules
+//	    emit systemerror(-2);
+
+		return;
+	}
+
+	//------------------
+	// everthing's fine
+	//------------------
+	/// @todo check if we have numbers between the * and #
+	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
+	{
+		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
+
+		commandExecutedSuccessfull = true;
+
+		// convert answer to int
+		if (interface1->convertStringToInt(atmelAnswer, value) == false)
+		{
+			// error
+			emit message("ERROR converting sensor value.");
+
+			// do not return, continue here! In both cases, we store the value! In case of error, value is 0.
+		}
+
+		// check the last command
+		if (atmelCommand == commandReadVoltageSensor1)
+		{
+			// store measured value
+			voltageSensorValue[VOLTAGESENSOR1] = value;
+
+			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
+
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
+
+			varMutex.lock();
+			atmelCommand = "none"; // reset current command
+			varMutex.unlock();
+			return;
+		}
+
+		if (atmelCommand == commandReadVoltageSensor2)
+		{
+			// store measured value
+			voltageSensorValue[VOLTAGESENSOR2] = value;
+
+			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
+
+			// send value over the network
+			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
+
+			varMutex.lock();
+			atmelCommand = "none"; // reset current command
+			varMutex.unlock();
+			return;
+		}
+
+		varMutex.lock();
+		atmelCommand = "none"; // reset current command
+		return;
+	}
+	else
+	{
+		//--------------
+		// wrong answer
+		//--------------
+		emit message(QString("ERROR: Answer was %1 intead of *nnn#.").arg(atmelAnswer)); /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
+
+		// let this class know, that we had an error
+		robotState = false;
+
+		varMutex.lock();
+		atmelCommand = "none"; // reset current command
+		varMutex.unlock();
+
+		emit heartbeat(RED);
+		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+		// stop this thread
+		stop();
+		return;
+	}
+}
+
+
+void SensorThread::timeout()
+{
+	// first check if we had already an answer from the Atmel
+	if (commandExecutedSuccessfull == true)
+	{
+		// reset state
+		commandExecutedSuccessfull = false;
+
+		// we are happy
+		varMutex.lock();
+		atmelCommand = "none"; // reset current command
+		varMutex.unlock();
+
+		return;
+	}
+
+	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+	varMutex.lock();
+	atmelCommand = "none"; // reset current command
+	varMutex.unlock();
+
+	// let this class know, that we had an error
+	robotState = OFF;
+
+	emit heartbeat(RED);
+
+	emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+	// stop this thread
+	stop();
+
+	return;
 }
 
 
@@ -923,7 +1070,7 @@ void SensorThread::setSimulationMode(bool state)
 		motorSensorValue[MOTORSENSOR3] = (int)3000/CONVERSIONFACTORMOTORSENSOR;
 		motorSensorValue[MOTORSENSOR4] = (int)4000/CONVERSIONFACTORMOTORSENSOR;
 
-		voltageSensorValue[VOLTAGESENSOR1] = 10.500000 * CONVERSIONFACTORVOLTAGESENSOR1; // simulate an empty 12 V battery
+		voltageSensorValue[VOLTAGESENSOR1] = 10.500000 * CONVERSIONFACTORVOLTAGESENSOR1; // simulate an 'empty' 12 V battery (with simulated 10.5 V)
 		voltageSensorValue[VOLTAGESENSOR2] = 24.000000 * CONVERSIONFACTORVOLTAGESENSOR2; // simulate a full 24 V battery
 
 		// initialisation
@@ -1327,61 +1474,64 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 }
 
 
-bool SensorThread::readVoltageSensor(short int sensor)
+void SensorThread::readVoltageSensor(short int sensor)
 {
-	int value = 0;
-	QString answer = "error";
-
-
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
-			// read sensor
-			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
-			{
-				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
-				{
-					// convert to int
-					if (interface1->convertStringToInt(answer, value))
-					{
-						// store measured value
-						voltageSensorValue[VOLTAGESENSOR1] = value;
-						return true;
-					}
-				}
-			}
-
-			// error
-			voltageSensorValue[VOLTAGESENSOR1] = 0;
-			return false;
+			varMutex.lock();
+			atmelCommand = commandReadVoltageSensor1;
+			varMutex.unlock();
 			break;
 		case VOLTAGESENSOR2:
-			// read sensor
-			if (interface1->sendString("s7") == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
-			{
-				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
-				{
-					// convert to int
-					if (interface1->convertStringToInt(answer, value))
-					{
-						// store measured value
-						voltageSensorValue[VOLTAGESENSOR2] = value;
-						return true;
-					}
-				}
-			}
-
-			// error
-			voltageSensorValue[VOLTAGESENSOR2] = 0;
-			return false;
+			varMutex.lock();
+			atmelCommand = commandReadVoltageSensor2;
+			varMutex.unlock();
+			break;
+		default:
+			// this line should be never reached
+			qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+			return;
 			break;
 	}
 
-	// this line should be never reached
-	qDebug("WARNING: wrong sensor number in readVoltageSensor()");
-	return false;
+
+	// maybe robot is already recognized as OFF by another module
+	if (robotState == ON)
+	{
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+
+		// Lock the mutex.
+		mutex->lock();
+
+		if (interface1->sendString(atmelCommand) == true)
+		{
+			// start own time measuring. This will be used, if we get an answer from the Atmel
+			duration.start();
+
+			// start additional seperate timer. If we NEVER get an answer, this slot will be called
+			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+			//emit message("Sent.");
+			emit message("Waiting for an answer...");
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+			return;
+		}
+
+		emit message("Error reading sensor.");
+
+		// Unlock the mutex.
+		mutex->unlock();
+	}
+
+	varMutex.lock();
+	atmelCommand = "none"; // reset current command
+	varMutex.unlock();
+
+	//  We do not emit a Signal in case of error here.
 }
 
 

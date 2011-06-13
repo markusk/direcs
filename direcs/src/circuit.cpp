@@ -206,7 +206,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 /// @todo simplifiy takeCommandAnswer like in circuit.cpp!
 	if (regardingCommand != atmelCommand)
 	{
-		emit message("Answer is not for me (Circuit).");
+		emit message(QString("Answer %1 is not for me (Circuit).").arg(atmelAnswer));
 		return;
 	}
 
@@ -258,7 +258,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	//------------------
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+		emit message(QString("Answer %1 was correct (Circuit).").arg(atmelAnswer));
 
 		// check the last command
 		if (atmelCommand == commandInitCircuit)

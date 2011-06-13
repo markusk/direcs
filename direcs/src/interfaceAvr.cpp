@@ -403,7 +403,7 @@ void InterfaceAvr::onReadyRead()
 	//----------------------------------------
 	if ((commandString.endsWith(terminator)) &&  !(commandString.startsWith(starter)))
 	{
-		emit message(QString("String '%1' did not start with '%2'!").arg(commandString).arg(starter));
+		emit message(QString("ERROR: String '%1' did not start with '%2'!").arg(commandString).arg(starter));
 
 		commandString.clear();
 		bytes.clear();
@@ -418,7 +418,7 @@ void InterfaceAvr::onReadyRead()
 	if ((commandString.startsWith(starter)) && (commandString.endsWith(terminator)))
 	{
 		//  emit greenLED(OFF);
-		emit message(QString("Atmel says: %1.").arg(commandString));
+		emit message(QString("Atmel says: %1").arg(commandString));
 
 		//  emit completed Atmel command
 		emit commandCompleted(commandString, lastCommand);

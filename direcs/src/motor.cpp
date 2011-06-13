@@ -52,9 +52,9 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
 
-	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
-	firstInitDone = false;
-	compassCircuitState = false;
+//	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
+//	firstInitDone = false;
+//	compassCircuitState = false;
 
 	commandExecutedSuccessfull = false;
 
@@ -75,6 +75,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	commandBotStop			= "bst";
 	commandBotWait			= "bwa";
 
+	// send answers from interfaceAvr to this class
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
@@ -892,7 +893,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 
 	if (regardingCommand != atmelCommand)
 	{
-		emit message("Answer is not for me (Motor).");
+		emit message(QString("Answer %1 is not for me (Motor).").arg(atmelAnswer));
 		return;
 	}
 
@@ -937,7 +938,7 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	//------------------
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
-		emit message(QString("Answer %1 was correct.").arg(atmelAnswer));
+		emit message(QString("Answer %1 was correct (Motor).").arg(atmelAnswer));
 /*
 		// check the last command
 		if (atmelCommand == commandFlashlightOn)
