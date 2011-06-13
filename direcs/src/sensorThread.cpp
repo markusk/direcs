@@ -660,8 +660,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 	{
 		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
 
-		commandExecutedSuccessfull = true;
-
 		// convert answer to int
 		if (interface1->convertStringToInt(atmelAnswer, value) == false)
 		{
@@ -686,6 +684,11 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			varMutex.lock();
 			atmelCommand = "none"; // reset current command
 			varMutex.unlock();
+
+			commandExecutedSuccessfull = true;
+
+			/// @todo maybe set a seperate "go on with run thread" here?
+
 			return;
 		}
 
@@ -703,11 +706,17 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			varMutex.lock();
 			atmelCommand = "none"; // reset current command
 			varMutex.unlock();
+
+			/// @todo maybe set a seperate "go on with run thread" here?
+
+			commandExecutedSuccessfull = true;
+
 			return;
 		}
 
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
+		emit message("+++ whats goig on here=?"); /// @todo call stop() here ?!? when does this case occur?
 		return;
 	}
 	else
@@ -719,6 +728,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 
 		// let this class know, that we had an error
 		robotState = false;
+		commandExecutedSuccessfull = false;
 
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
@@ -739,13 +749,13 @@ void SensorThread::timeout()
 	if (commandExecutedSuccessfull == true)
 	{
 		// reset state
-		commandExecutedSuccessfull = false;
+	//	commandExecutedSuccessfull = false;
 
 		// we are happy
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
 		varMutex.unlock();
-
+/// @todo maybe set a seperate "go on with run thread" here?
 		return;
 	}
 
@@ -1532,6 +1542,10 @@ void SensorThread::readVoltageSensor(short int sensor)
 	varMutex.unlock();
 
 	//  We do not emit a Signal in case of error here.
+
+	/// @todo TEST
+	emit message("+++ why is the robot OFF now? +++");
+
 }
 
 
