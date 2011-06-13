@@ -683,7 +683,9 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 
+			varMutex.lock();
 			atmelCommand = "none"; // reset current command
+			varMutex.unlock();
 			return;
 		}
 
@@ -698,10 +700,13 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
 
+			varMutex.lock();
 			atmelCommand = "none"; // reset current command
+			varMutex.unlock();
 			return;
 		}
 
+		varMutex.lock();
 		atmelCommand = "none"; // reset current command
 		return;
 	}
