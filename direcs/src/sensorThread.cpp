@@ -1486,6 +1486,14 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 
 void SensorThread::readVoltageSensor(short int sensor)
 {
+	// maybe robot is already recognized as OFF by another module
+	if (robotState == ON)
+	{
+
+	// this command is not executed yet
+	commandExecutedSuccessfull = false;
+/// @todo check if this should be moved to the robotstate==ON path !!
+
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
@@ -1506,9 +1514,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 	}
 
 
-	// maybe robot is already recognized as OFF by another module
-	if (robotState == ON)
-	{
 		emit message(QString("Sending *%1#...").arg(atmelCommand));
 
 		// Lock the mutex.
@@ -1535,13 +1540,16 @@ void SensorThread::readVoltageSensor(short int sensor)
 
 		// Unlock the mutex.
 		mutex->unlock();
-	}
+
+/*
 
 	varMutex.lock();
 	atmelCommand = "none"; // reset current command
 	varMutex.unlock();
 
 	//  We do not emit a Signal in case of error here.
+*/
+	} // robot is ON
 
 	/// @todo TEST
 	emit message("+++ why is the robot OFF now? +++");
