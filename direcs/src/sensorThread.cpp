@@ -139,7 +139,9 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 
 	commandExecutedSuccessfull = false;
 
+	varMutex.lock();
 	atmelCommand = "none"; // reset current command
+	varMutex.unlock();
 
 	// the Atmel commands
 	commandReadVoltageSensor1	= "s8";  /// s8 = 12 V = VOLTAGESENSOR1
@@ -624,7 +626,11 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 		// let this class know, that we had an error
 		robotState = false;
 		commandExecutedSuccessfull = false;
+
+		varMutex.lock();
 		atmelCommand = "none"; // reset current command
+		varMutex.unlock();
+
 		emit heartbeat(RED);
 		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
 		// stop this thread
@@ -689,7 +695,11 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 
 		// let this class know, that we had an error
 		robotState = false;
+
+		varMutex.lock();
 		atmelCommand = "none"; // reset current command
+		varMutex.unlock();
+
 		emit heartbeat(RED);
 		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
 		// stop this thread
@@ -706,13 +716,19 @@ void SensorThread::timeout()
 	{
 		// reset state
 		commandExecutedSuccessfull = false;
+
 		// we are happy
+		varMutex.lock();
 		atmelCommand = "none"; // reset current command
+		varMutex.unlock();
+
 		return;
 	}
 
 	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+	varMutex.lock();
 	atmelCommand = "none"; // reset current command
+	varMutex.unlock();
 
 	// let this class know, that we had an error
 	robotState = OFF;
@@ -1439,10 +1455,14 @@ void SensorThread::readVoltageSensor(short int sensor)
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
+			varMutex.lock();
 			atmelCommand = commandReadVoltageSensor1;
+			varMutex.unlock();
 			break;
 		case VOLTAGESENSOR2:
+			varMutex.lock();
 			atmelCommand = commandReadVoltageSensor2;
+			varMutex.unlock();
 			break;
 		default:
 			// this line should be never reached
@@ -1483,7 +1503,9 @@ void SensorThread::readVoltageSensor(short int sensor)
 		mutex->unlock();
 	}
 
+	varMutex.lock();
 	atmelCommand = "none"; // reset current command
+	varMutex.unlock();
 
 	//  We do not emit a Signal in case of error here.
 }
