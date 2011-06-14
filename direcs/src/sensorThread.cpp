@@ -618,7 +618,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 	int value = 0; // for conversion to int
 
 
-	if (correspondingCommand != atmelCommand)
+	if ((correspondingCommand != atmelCommand) || (stopped == true))
 	{
 //		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
 		// emit message(QString("correspondingCommand %1 != atmelCommand %2 (SensorThread).").arg(correspondingCommand).arg(atmelCommand));
