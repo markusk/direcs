@@ -618,9 +618,10 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 	int value = 0; // for conversion to int
 
 
-	if (correspondingCommand != atmelCommand)
+	if ((correspondingCommand != atmelCommand) || (stopped == true))
 	{
-		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
+//		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
+		// emit message(QString("correspondingCommand %1 != atmelCommand %2 (SensorThread).").arg(correspondingCommand).arg(atmelCommand));
 		return;
 	}
 
@@ -658,9 +659,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 	/// @todo check if we have numbers between the * and #
 	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
-		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
-
-		commandExecutedSuccessfull = true;
+//		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
 
 		// convert answer to int
 		if (interface1->convertStringToInt(atmelAnswer, value) == false)
@@ -677,7 +676,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR1] = value;
 
-			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
+//			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -686,6 +685,11 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			varMutex.lock();
 			atmelCommand = "none"; // reset current command
 			varMutex.unlock();
+
+			commandExecutedSuccessfull = true;
+
+			/// @todo maybe set a seperate "go on with run thread" here?
+
 			return;
 		}
 
@@ -694,7 +698,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR2] = value;
 
-			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
+//			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -703,11 +707,17 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			varMutex.lock();
 			atmelCommand = "none"; // reset current command
 			varMutex.unlock();
+
+			/// @todo maybe set a seperate "go on with run thread" here?
+
+			commandExecutedSuccessfull = true;
+
 			return;
 		}
 
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
+		emit message("+++ whats goig on here=?"); /// @todo call stop() here ?!? when does this case occur?
 		return;
 	}
 	else
@@ -719,6 +729,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 
 		// let this class know, that we had an error
 		robotState = false;
+		commandExecutedSuccessfull = false;
 
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
@@ -739,13 +750,13 @@ void SensorThread::timeout()
 	if (commandExecutedSuccessfull == true)
 	{
 		// reset state
-		commandExecutedSuccessfull = false;
+	//	commandExecutedSuccessfull = false;
 
 		// we are happy
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
 		varMutex.unlock();
-
+/// @todo maybe set a seperate "go on with run thread" here?
 		return;
 	}
 
@@ -1476,6 +1487,14 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 
 void SensorThread::readVoltageSensor(short int sensor)
 {
+	// maybe robot is already recognized as OFF by another module
+	if (robotState == ON)
+	{
+
+	// this command is not executed yet
+	commandExecutedSuccessfull = false;
+/// @todo check if this should be moved to the robotstate==ON path !!
+
 	switch (sensor)
 	{
 		case VOLTAGESENSOR1:
@@ -1496,10 +1515,7 @@ void SensorThread::readVoltageSensor(short int sensor)
 	}
 
 
-	// maybe robot is already recognized as OFF by another module
-	if (robotState == ON)
-	{
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
+//		emit message(QString("Sending *%1#...").arg(atmelCommand));
 
 		// Lock the mutex.
 		mutex->lock();
@@ -1512,8 +1528,8 @@ void SensorThread::readVoltageSensor(short int sensor)
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
 			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-			//emit message("Sent.");
-			emit message("Waiting for an answer...");
+//			emit message("Sent.");
+//			emit message("Waiting for an answer...");
 
 			// Unlock the mutex.
 			mutex->unlock();
@@ -1525,13 +1541,20 @@ void SensorThread::readVoltageSensor(short int sensor)
 
 		// Unlock the mutex.
 		mutex->unlock();
-	}
+
+/*
 
 	varMutex.lock();
 	atmelCommand = "none"; // reset current command
 	varMutex.unlock();
 
 	//  We do not emit a Signal in case of error here.
+*/
+	} // robot is ON
+
+	/// @todo TEST
+	emit message("+++ why is the robot OFF now? +++");
+
 }
 
 

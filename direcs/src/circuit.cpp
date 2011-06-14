@@ -64,7 +64,7 @@ void Circuit::initCircuit()
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
 		// sending RESET (INIT) command
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
+//		emit message(QString("Sending *%1#...").arg(atmelCommand));
 		if (interface1->sendString(atmelCommand) == true)
 		{
 			// start own time measuring. This will be used, if we get an answer from the Atmel
@@ -73,8 +73,8 @@ void Circuit::initCircuit()
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
 			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
+//			emit message("Sent.");
+//			emit message("Waiting for an answer...");
 
 			// Unlock the mutex.
 			mutex->unlock();
@@ -116,7 +116,7 @@ void Circuit::initCompass()
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
 		// sending command
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
+//		emit message(QString("Sending *%1#...").arg(atmelCommand));
 		if (interface1->sendString(atmelCommand) == true)
 		{
 			// start own time measuring. This will be used, if we get an answer from the Atmel
@@ -125,8 +125,8 @@ void Circuit::initCompass()
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
 			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
+//			emit message("Sent.");
+//			emit message("Waiting for an answer...");
 
 			// Unlock the mutex.
 			mutex->unlock();
@@ -165,7 +165,7 @@ void Circuit::sleep()
 		// Sleep command for the robot circuit (disables the watchdog on the Atmel)
 		//---------------------------------------------------------------------------
 		// sending command
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
+//		emit message(QString("Sending *%1#...").arg(atmelCommand));
 		if (interface1->sendString(atmelCommand) == true)
 		{
 			// start own time measuring. This will be used, if we get an answer from the Atmel
@@ -174,8 +174,8 @@ void Circuit::sleep()
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
 			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
+//			emit message("Sent.");
+//			emit message("Waiting for an answer...");
 
 			// Unlock the mutex.
 			mutex->unlock();
@@ -206,7 +206,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 /// @todo simplifiy takeCommandAnswer like in circuit.cpp!
 	if (regardingCommand != atmelCommand)
 	{
-		emit message(QString("Answer %1 is not for me (Circuit).").arg(atmelAnswer));
+//		emit message(QString("Answer %1 is not for me (Circuit).").arg(atmelAnswer));
 		return;
 	}
 
@@ -215,7 +215,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	//----------
 	if (duration.elapsed() > ATMELTIMEOUT)
 	{
-		emit message(QString("Timeout (%1 > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
+		emit message(QString("Timeout (%1ms > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
 
 		// check the last command
 		if (atmelCommand == commandInitCircuit)
@@ -258,7 +258,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 	//------------------
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
-		emit message(QString("Answer %1 was correct (Circuit).").arg(atmelAnswer));
+//		emit message(QString("Answer %1 was correct (Circuit).").arg(atmelAnswer));
 
 		// check the last command
 		if (atmelCommand == commandInitCircuit)
