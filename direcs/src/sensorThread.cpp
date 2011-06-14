@@ -620,7 +620,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 
 	if (correspondingCommand != atmelCommand)
 	{
-		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
+//		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
 		// emit message(QString("correspondingCommand %1 != atmelCommand %2 (SensorThread).").arg(correspondingCommand).arg(atmelCommand));
 		return;
 	}
@@ -659,7 +659,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 	/// @todo check if we have numbers between the * and #
 	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
-		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
+//		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
 
 		// convert answer to int
 		if (interface1->convertStringToInt(atmelAnswer, value) == false)
@@ -676,7 +676,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR1] = value;
 
-			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
+//			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -698,7 +698,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR2] = value;
 
-			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
+//			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -1515,7 +1515,7 @@ void SensorThread::readVoltageSensor(short int sensor)
 	}
 
 
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
+//		emit message(QString("Sending *%1#...").arg(atmelCommand));
 
 		// Lock the mutex.
 		mutex->lock();
@@ -1528,8 +1528,8 @@ void SensorThread::readVoltageSensor(short int sensor)
 			// start additional seperate timer. If we NEVER get an answer, this slot will be called
 			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-			//emit message("Sent.");
-			emit message("Waiting for an answer...");
+//			emit message("Sent.");
+//			emit message("Waiting for an answer...");
 
 			// Unlock the mutex.
 			mutex->unlock();
