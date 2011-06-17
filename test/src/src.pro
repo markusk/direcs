@@ -6,7 +6,8 @@ SOURCES += test.cpp \
 	circuit.cpp \
 	laser.cpp \
 	laserSickS300.cpp \
-	laserThread.cpp
+	laserThread.cpp \
+    lightweightserial.cpp
 HEADERS += test.h \
 	direcsSerial.h \
 	inifile.h \
@@ -14,7 +15,8 @@ HEADERS += test.h \
 	circuit.h \
 	laser.h \
 	laserSickS300.h \
-	laserThread.h
+	laserThread.h \
+    lightweightserial.h
 TEMPLATE = app
 CONFIG += warn_on \
 	thread \
@@ -30,4 +32,3 @@ FORMS +=
 MOC_DIR = ../tmp
 
 OBJECTS_DIR = ../tmp
-s
