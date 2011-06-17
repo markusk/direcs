@@ -26,3 +26,8 @@ RESOURCES = application.qrc
 FORMS +=
 
 # QMAKE_CXXFLAGS+= -m32
+
+MOC_DIR = ../tmp
+
+OBJECTS_DIR = ../tmp
+s
