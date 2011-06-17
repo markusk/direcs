@@ -25,4 +25,4 @@ DESTDIR = ../bin
 RESOURCES = application.qrc
 FORMS +=
 
-QMAKE_CXXFLAGS+= -m32
+# QMAKE_CXXFLAGS+= -m32
