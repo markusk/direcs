@@ -27,7 +27,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include "serial_port/lightweightserial.h"
+#include "lightweightserial.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
