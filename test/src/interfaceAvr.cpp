@@ -53,7 +53,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 		return false;
 	}
 
-
+/*
 	// serial port config and flush also done in openAtmelPort!
 	if (serialPort->openAtmelPort( ba.data(), 9600 ) == -1)
 	{
@@ -61,7 +61,8 @@ bool InterfaceAvr::openComPort(QString comPort)
 		emit robotState(false);
 		return false;
 	}
-
+*/
+	/// @todo put open stuff seperately
 	return true;
 }
 
@@ -69,7 +70,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 void InterfaceAvr::closeComPort()
 {
 	// using direcsSerial
-	serialPort->closeAtmelPort();
+/// @todo done in destructor	serialPort-> closeAtmelPort();
 }
 
 
