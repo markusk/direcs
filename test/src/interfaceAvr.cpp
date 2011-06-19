@@ -82,9 +82,9 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 	// send one byte to the serial port with direcsSerial
 	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeAtmelPort(&character);
+	result = serialPort->write(character);
 
-	if (result < 0)
+	if (result == false)
 	{
 // 		receiveErrorCounter++;
 		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
