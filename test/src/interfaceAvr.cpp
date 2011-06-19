@@ -23,11 +23,11 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new LightweightSerial();
+	serialPort = new LightweightSerial("/dev/tty.USA19Hfa141P1.1", 9600); /// @todo change path to var, add baudrate var
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
-	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+///	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
