@@ -107,10 +107,10 @@ private:
 	  QList <int *> pointerIntList;
 
 	  mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
-//	  Circuit *circuit1;
-//	  InterfaceAvr *interface1;
-	  SickS300 *sickS300;
-	  LaserThread *laserThread;
+	  Circuit *circuit1;
+	  InterfaceAvr *interface1;
+//	  SickS300 *sickS300;
+//	  LaserThread *laserThread;
 	  QString serialPortPath; // something like /dev/ttyUSB0
 
 	  /**
