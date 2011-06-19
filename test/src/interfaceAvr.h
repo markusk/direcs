@@ -23,7 +23,7 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#include "direcsSerial.h"
+#include "lightweightserial.h"
 
 #include <QFile>
 #include <QObject>
