@@ -109,9 +109,10 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	result = serialPort->readAtmelPort(character, 1);
+// direcsserial:	result = serialPort->readAtmelPort(character, 1);
+	result = serialPort->read(character);
 
-	if (result != 1)
+	if (result == false)
 	{
 		// ERROR
 		// emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );  < error message already emitted from readAtmelPort!
@@ -167,17 +168,17 @@ bool InterfaceAvr::receiveString(QString &string)
 	do
 	{
 		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readAtmelPort(&character, 1);
+		result = serialPort->read(&character);
 
-		if (result == 1)
+		if (result == true)
 		{
 			// append received char to byte array
 			ba.append(character);
 		}
 
-	} while ( (result == 1) && (character != '#') );
+	} while ( (result == true) && (character != '#') );
 
-	if (result != 1)
+	if (result == false)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
 		qDebug() << "error at receiveString";
