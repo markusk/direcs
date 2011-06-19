@@ -125,7 +125,7 @@ class InterfaceAvr : public QObject
 
 
 	private:
-		DirecsSerial *serialPort;
+		LightweightSerial *serialPort;
 
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"
