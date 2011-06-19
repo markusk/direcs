@@ -1560,8 +1560,8 @@ void watchdog(uint8_t state)
 		WDTCSR |= (1<<WDCE) | (1<<WDE);
 		
 		// set new prescaler (time-out) to 64K (65536 cycles) which means a time-out after 0.5 s
-//		WDTCSR = (1<<WDP2) | (1<<WDP1); // 12K = 1.0s
-		WDTCSR = (1<<WDP2) | (1<<WDP0); // 64K = 0.5s
+		WDTCSR = (1<<WDP2) | (1<<WDP1); // 12K = 1.0s  set to this on 13.06.2011 with direcs SHA c2992e09e97dbf89f5bd2bf03d94f679270315d8 (qextserialportEventDriven branch)
+//		WDTCSR = (1<<WDP2) | (1<<WDP0); // 64K = 0.5s
 
 		// And here we enable the watchdog interrupt!
 		// So if a time-out occurs, the correspondig interrupt routine is executed
