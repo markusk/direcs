@@ -37,20 +37,20 @@
 LightweightSerial::LightweightSerial(const char *port, int baud) :
   baud(baud), fd(0), happy(false)
 {
-	printf("about to try to open [%s]\n", port);
+	qDebug("about to try to open [%s]", port);
 	fd = open(port, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	if (fd < 0)
 	{
-		printf(" ahhhhhhhhh couldn't open port [%s]\n", port);
+		qDebug(" ahhhhhhhhh couldn't open port [%s]", port);
 		return;
 	}
 	else
-		printf("opened [%s] successfully\n", port);
+		qDebug("opened [%s] successfully", port);
   // put the port in nonblocking mode
 	struct termios oldtio, newtio;
 	if (tcgetattr(fd, &oldtio) < 0)
 	{
-		printf("ahhhhhhh couldn't run tcgetattr()\n");
+		qDebug("ahhhhhhh couldn't run tcgetattr()");
 		return;
 	}
 	bzero(&newtio, sizeof(newtio));
@@ -64,13 +64,14 @@ LightweightSerial::LightweightSerial(const char *port, int baud) :
 	tcflush(fd, TCIOFLUSH);
 	if (tcsetattr(fd, TCSANOW, &newtio) < 0)
 	{
-		printf(" ahhhhhhhhhhh tcsetattr failed\n");
+		qDebug(" ahhhhhhhhhhh tcsetattr failed");
 		return;
 	}
 
 	// flush the buffer of the serial device
 	uint8_t b;
 	while (this->read(&b) > 0) { }
+	qDebug("device opened\n");
   happy = true;
 }
 
@@ -89,10 +90,12 @@ bool LightweightSerial::read(uint8_t *b)
 	nread = ::read(fd,b,1);
 	if (nread < 0)
 	{
-		printf("ahhhhhh read returned <0\n");
-	happy = false;
+		qDebug("ahhhhhh read returned <0");
+		happy = false;
 		return false;
 	}
+
+	qDebug("nread=%d", nread);
 	return (nread == 1);
 }
 

@@ -31,6 +31,7 @@
 #define SERIALPORT_LIGHTWEIGHT_SERIAL_H
 
 #include <stdint.h>
+#include <QDebug>
 
 class LightweightSerial
 {
