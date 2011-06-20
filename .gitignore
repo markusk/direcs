@@ -4,6 +4,7 @@
 ui_*.h
 qrc_*.cpp
 moc_*.cpp
+*.pro.user
 
 *.eep
 *.elf
