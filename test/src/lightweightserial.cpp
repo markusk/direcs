@@ -84,9 +84,10 @@ LightweightSerial::~LightweightSerial()
 
 bool LightweightSerial::read(uint8_t *b)
 {
-  if (!happy)
-	return false;
-  long nread;
+	if (!happy)
+		return false;
+
+	long nread;
 	nread = ::read(fd,b,1);
 	if (nread < 0)
 	{
