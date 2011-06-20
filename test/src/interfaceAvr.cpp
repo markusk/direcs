@@ -35,6 +35,7 @@ InterfaceAvr::InterfaceAvr()
 
 InterfaceAvr::~InterfaceAvr()
 {
+/*
 	if (serialPort->isOpen())
 	{
 		// flush input and output port
@@ -42,7 +43,7 @@ InterfaceAvr::~InterfaceAvr()
 
 		serialPort->close();
 	}
-
+*/
 	delete serialPort;
 }
 
@@ -91,6 +92,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 	emit robotState(true); /// let the circuit class know, that we opened it
 
 	// serial port settings
+/*
 	serialPort->setBaudRate(BAUD9600);
 	serialPort->setDataBits(DATA_8);
 	serialPort->setParity(PAR_NONE);
@@ -101,9 +103,9 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 	//set timeouts to 500 ms
 	serialPort->setTimeout(500);
+*/
 
-
-	qDebug() << "listening for data on" << serialPort->portName();
+//	qDebug() << "listening for data on" << serialPort->portName();
 
 	emit message("Waiting for Atmel command string start...");
 
@@ -115,6 +117,7 @@ void InterfaceAvr::closeComPort()
 {
 	// using direcsSerial
 /// @todo done in destructor	serialPort-> closeAtmelPort();
+/*
 	if (serialPort->isOpen())
 	{
 		// flush input and output port
@@ -122,6 +125,7 @@ void InterfaceAvr::closeComPort()
 
 		serialPort->close();
 	}
+*/
 }
 
 
@@ -129,15 +133,15 @@ bool InterfaceAvr::sendChar(unsigned char character)
 {
 	int result = 0;
 // 	static int receiveErrorCounter = 0;
-
+/*
 	// convert to QByteArray since write() needs that like this
 	QByteArray data;
 	data.resize(1);
 	data[0] = character;
-
+*/
 	// send *one* byte to the serial port with direcsSerial
 	// Return code shall be *one*
-	if (serialPort->write(data, 1) != 1)
+	if (serialPort->write_block(&character, 1) == false)
 	{
 // 		receiveErrorCounter++;
 		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
@@ -157,16 +161,18 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 bool InterfaceAvr::receiveChar(unsigned char *character)
 {
+/*
 	// data available?
 	if (serialPort->bytesAvailable() < 1)
 	{
 		// ERROR
 		return false;
 	}
+*/
 
 	// read data
 	// and 'convert' from unsigned char* to char*. See also http://bytes.com/topic/c/answers/720858-convert-unsigned-char-char
-	if (serialPort->read((char *) character, 1) != 1)
+	if (serialPort->read_block(character, 1) == false)
 	{
 		// ERROR
 		return false;
@@ -187,7 +193,7 @@ bool InterfaceAvr::sendString(QString string)
 	qDebug() << "sending string:" << string;
 
 	// sending the string returns the number of chars sent
-	if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )
+	if ( serialPort->write_block(string.toAscii(), string.length()) == false )
 	{
 		return false;
 	}
@@ -199,8 +205,9 @@ bool InterfaceAvr::sendString(QString string)
 bool InterfaceAvr::receiveString(QString &string)
 {
 	char buff[1024];
-	int numBytes = 0;
+//	int numBytes = 0;
 
+	/*
 	// data available?
 	numBytes = serialPort->bytesAvailable();
 
@@ -210,8 +217,9 @@ bool InterfaceAvr::receiveString(QString &string)
 	{
 		return false;
 	}
+*/
 
-	if (serialPort->read(buff, numBytes) == -1)
+	if (serialPort->read(buff) == false)
 	{
 		return false;
 	}
@@ -301,7 +309,7 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 	return false;
 }
 
-
+/*
 bool InterfaceAvr::charsAvailable()
 {
 	if (serialPort->bytesAvailable() > 0)
@@ -322,8 +330,8 @@ void InterfaceAvr::flush()
 		serialPort->flush();
 	}
 }
-
-
+*/
+/*
 void InterfaceAvr::onReadyRead()
 {
 	QByteArray bytes;
@@ -463,3 +471,4 @@ void InterfaceAvr::onDsrChanged(bool status)
 	else
 		qDebug() << "device was turned off";
 }
+*/
