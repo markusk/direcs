@@ -24,8 +24,8 @@ InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
 //	serialPort = new LightweightSerial("/dev/tty.USA19Hfa141P1.1", 9600); /// @todo change path to var, add baudrate var
-//	serialPort = new LightweightSerial("/dev/tty.PL2303-003014FA", 9600); /// @todo change path to var, add baudrate var
-	serialPort = new LightweightSerial("/dev/ttyAtmelBoard", 9600); /// @todo change path to var, add baudrate var
+	serialPort = new LightweightSerial("/dev/tty.PL2303-003014FA", 9600); /// @todo change path to var, add baudrate var
+//	serialPort = new LightweightSerial("/dev/ttyAtmelBoard", 9600); /// @todo change path to var, add baudrate var
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
@@ -195,9 +195,11 @@ bool InterfaceAvr::sendString(QString string)
 	// sending the string returns the number of chars sent
 	if ( serialPort->write_block(string.toAscii(), string.length()) == false )
 	{
+		qDebug("error sending string");
 		return false;
 	}
 
+	qDebug("string sent");
 	return true;
 }
 
