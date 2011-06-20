@@ -54,14 +54,34 @@ LightweightSerial::LightweightSerial(const char *port, int baud) :
 		return;
 	}
 	bzero(&newtio, sizeof(newtio));
+
 	newtio.c_iflag = IGNPAR | INPCK;
 	newtio.c_oflag = 0;
+
+	// org	newtio.c_cflag = CS8 | CLOCAL | CREAD;
 	newtio.c_cflag = CS8 | CLOCAL | CREAD;
+
+
+	/// direcsSerial
+	/// 8N1
+	newtio.c_cflag &= ~PARENB; // no parity bit
+	newtio.c_cflag &= ~CSTOPB; // 1 stop bit
+	newtio.c_cflag &= ~CSIZE;  //
+	newtio.c_cflag |= CS8;     // 8 data bit
+
+	/// Disable hardware flow control:
+	newtio.c_cflag &= ~CRTSCTS;
+
+
+
 	newtio.c_lflag = 0;
 	newtio.c_cc[VTIME] = 0;
 	newtio.c_cc[VMIN] = 0; // poll
+
 	cfsetspeed(&newtio, baud);
+
 	tcflush(fd, TCIOFLUSH);
+
 	if (tcsetattr(fd, TCSANOW, &newtio) < 0)
 	{
 		qDebug(" ahhhhhhhhhhh tcsetattr failed");
