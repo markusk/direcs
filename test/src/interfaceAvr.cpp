@@ -23,7 +23,9 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new LightweightSerial("/dev/tty.USA19Hfa141P1.1", 9600); /// @todo change path to var, add baudrate var
+//	serialPort = new LightweightSerial("/dev/tty.USA19Hfa141P1.1", 9600); /// @todo change path to var, add baudrate var
+//	serialPort = new LightweightSerial("/dev/tty.PL2303-003014FA", 9600); /// @todo change path to var, add baudrate var
+	serialPort = new LightweightSerial("/dev/ttyAtmelBoard", 9600); /// @todo change path to var, add baudrate var
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
@@ -126,14 +128,14 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 bool InterfaceAvr::sendString(QString string)
 {
-//	QString debugstring;
+	QString debugstring;
 
 
 	// send starter
 	if (sendChar(starter) == true)
 	{
 		// send 'content' of string
-//		debugstring = "*";
+		debugstring = "*";
 		for (int i=0; i<string.length(); i++)
 		{
 			// char by char
@@ -141,15 +143,15 @@ bool InterfaceAvr::sendString(QString string)
 			{
 				return false;
 			}
-//			debugstring.append(string.at(i));
+			debugstring.append(string.at(i));
 		}
 
 		// send terminator
 		if (sendChar(terminator) == true)
 		{
 			// success
-//			debugstring.append("#");
-//			emit message(debugstring);
+			debugstring.append("#");
+			emit message(debugstring);
 			return true;
 		}
 	}
@@ -174,6 +176,7 @@ bool InterfaceAvr::receiveString(QString &string)
 		{
 			// append received char to byte array
 			ba.append(character);
+			qDebug("receiveString char=%c", character);
 		}
 
 	} while ( (result == true) && (character != '#') );
@@ -191,10 +194,12 @@ bool InterfaceAvr::receiveString(QString &string)
 	// check result!
 	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
 	{
+		qDebug("string received correct");
 		return true;
 	}
 
 
+	qDebug("error receiving string");
 	return false;
 }
 
