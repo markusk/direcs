@@ -73,6 +73,12 @@ class CommandHandler : public QThread
 		void setRobotState(bool state);
 
 		/**
+		This slot takes the a command string and adds it to a list to be executed by the Atmel controller.
+		@param command is the command
+		*/
+		void takeCommand(QString command);
+
+		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.
 		@param atmelAnswer contains the answer
 		@param correspondingCommand contains the command which was used in the Slot @sa InterfaceAvr::commandCompleted()
@@ -126,8 +132,8 @@ class CommandHandler : public QThread
 		bool robotState;					// stores the robot state within this class
 		bool commandExecutedSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 
-		QString commandReadVoltageSensor1;	/// *s7#	s7 = voltage sensor 1 = 24 Volt
-		QString commandReadVoltageSensor2;	/// *s8#	s8 = voltage sensor 1 = 12 Volt
+		QList <QString> commands;			/// This list contains the commands for the Atmel. It is a kind of queue.
+
 
 		QString atmelCommand; /// this is the command for the Atmel
 		mutable QMutex varMutex; // this is for the var atmelCommand

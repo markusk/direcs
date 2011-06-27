@@ -30,6 +30,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 	mutex = m;
 
 
+
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
 	commandExecutedSuccessfull = false;
@@ -100,6 +101,13 @@ void CommandHandler::run()
 //		emit sensorDataComplete();
 	}
 	stopped = false;
+}
+
+
+void CommandHandler::takeCommand(QString command)
+{
+	// add next command to command list
+	commands.append(command);
 }
 
 
@@ -279,6 +287,15 @@ void CommandHandler::setSimulationMode(bool state)
 	// fill array with some nice values
 	if (simulationMode == true)
 	{
+//		// copy sim values into the distances values
+//		for (int i=0; i<laserScannerValuesFront.count(); i++)
+//		{
+//			// the distances
+//			// laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
+//			laserScannerValuesFront[i] = simulationValuesFront[i];
+//			// the flags
+//			laserScannerFlagsFront[i] = OBSTACLE;
+//		}
 	}
 	else
 	{
