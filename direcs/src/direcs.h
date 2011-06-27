@@ -48,6 +48,7 @@
 #include "sensorThread.h"
 #include "motor.h"
 #include "servo.h"
+#include "commandHandler.h"
 #include "obstacleCheckThread.h"
 #include "inifile.h"
 #include "logfile.h"
