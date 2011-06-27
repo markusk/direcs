@@ -180,6 +180,7 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
+	commandHandler = new CommandHandler(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
 
@@ -1464,6 +1465,46 @@ void Direcs::shutdown()
 	}
 
 
+	//--------------------------
+	// quit the command handler
+	//--------------------------
+	//qDebug("Starting to stop the command handler NOW!");
+	if (commandHandler->isRunning() == true)
+	{
+		emit message("Stopping command handler...");
+		emit splashMessage("Stopping command handler...");
+
+		// my own stop routine :-)
+		commandHandler->stop();
+
+		// slowing thread down
+		commandHandler->setPriority(QThread::IdlePriority);
+		commandHandler->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((commandHandler->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (commandHandler->isFinished() == true)
+		{
+			emit message("Command handler stopped.");
+		}
+		else
+		{
+			emit message("ERROR: Terminating command handler because it doesn't answer...");
+			emit splashMessage("Terminating command handler because it doesn't answer...");
+			commandHandler->terminate();
+			commandHandler->wait(1000);
+			emit message("Command handler terminated.");
+		}
+	}
+
+
 /*
 	//--------------------------
 	/// \todo quit the heartbeat thread
@@ -1627,6 +1668,7 @@ Direcs::~Direcs()
 	delete sensorThread;
 	// \todo delete heartbeat;
 	delete circuit1;
+	delete commandHandler;
 	delete interface1;
 	if (!consoleMode)
 	{

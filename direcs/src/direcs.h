@@ -356,6 +356,7 @@ class Direcs : public QObject
 		SensorThread *sensorThread;
 		Motor *motors;
 		Servo *servos;
+		CommandHandler *commandHandler;
 		ObstacleCheckThread *obstCheckThread;
 		Inifile *inifile1;
 		NetworkThread *netThread;
