@@ -118,14 +118,13 @@ class CommandHandler : public QThread
 
 
 	private:
-		mutable QMutex *mutex; // make this class thread-safe
-		InterfaceAvr *interface1;
+		mutable QMutex *mutex;				// make this class thread-safe
+		InterfaceAvr *interface1;			/// a pointer to the Atmel communication class (serial port stuff)
 		volatile bool stopped;
-		volatile bool stillInProgress;
+		volatile bool commandInProgress;	/// set to true, when currently executing an command on and with the serial port
 		bool simulationMode;
-		bool robotState; // stores the robot state within this class
-		bool compassState; // stores the robot state within this class
-		bool commandExecutedSuccessfull; /// set to true, if command executed successfull. In this case a later timeout slot will check this first!
+		bool robotState;					// stores the robot state within this class
+		bool commandExecutedSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 
 		QString commandReadVoltageSensor1;	/// *s7#	s7 = voltage sensor 1 = 24 Volt
 		QString commandReadVoltageSensor2;	/// *s8#	s8 = voltage sensor 1 = 12 Volt
