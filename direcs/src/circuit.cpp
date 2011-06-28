@@ -107,7 +107,7 @@ void Circuit::initCompass()
 	if (circuitState)
 	{
 		atmelCommand = commandInitCompass;
-		expectedAtmelAnswer = "*ok#";
+		expectedAtmelAnswer = "*cc#";
 
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();

@@ -219,10 +219,10 @@ void SimulationThread::run()
 									*/
 										// answer with "ok"
 										// this answer is used to see if the robot is "on"
-										sendToAtmel("*ok#");
+										sendToAtmel("*cc#");
 
 										// This sends the string to the GUI
-										emit answer("*ok#");
+										emit answer("*cc#");
 									/*
 									}
 									else
