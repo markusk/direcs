@@ -55,7 +55,7 @@ void Circuit::initCircuit()
 	if (circuitState)
 	{
 		atmelCommand = commandInitCircuit;
-		expectedAtmelAnswer = "*ok#";
+		expectedAtmelAnswer = "*re#";
 
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();

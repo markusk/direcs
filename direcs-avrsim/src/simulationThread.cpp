@@ -101,12 +101,12 @@ void SimulationThread::run()
 				// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
 				// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 */
-				// answer with "ok"
+				// answer with "re"
 				// this answer is used to see if the robot is "on"
-				sendToAtmel("*ok#");
+				sendToAtmel("*re#");
 
 				// This sends the string to the GUI
-				emit answer("*ok#");
+				emit answer("*re#");
 
 				// e n a b l e  watchdog!
 				/// @todo			watchdog(ENABLE);
