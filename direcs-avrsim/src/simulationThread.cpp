@@ -1122,21 +1122,26 @@ void SimulationThread::sendUInt(uint16_t value)
 	QString stringbuffer;
 
 
-	// start the answer string to send with a '*'
-	stringbuffer[0] = starter;
+	// start the answer string with the last command (i.e. *s7#)
+	stringbuffer = commandString;
+
+	// remove every '#' from the string
+	stringbuffer.remove(terminator);
+
+	// now add the string divider
+	stringbuffer.append(divider);
+
 
 	// convert int to ascii (to Basis 10)
-	// (but don't overwrite the first char which is the 'starter' *.)
+	// and append this to the string
 	QString num = QString().setNum(value, 10);
 	stringbuffer.append(num);
 
-	// add m string terminator '#' at the end of the buffer
-	stringbuffer[stringbuffer.length()] = terminator;
+	// add string terminator '#' at the end of the buffer
+//	stringbuffer[stringbuffer.length()] = terminator;
+	stringbuffer.append(terminator);
 
-	// String mit \0 terminieren
-	// stringbuffer[length+1] = 0;
-
-	// send answer
+	// send string (answer)
 	sendToAtmel(stringbuffer);
 	emit answer(stringbuffer);
 }
