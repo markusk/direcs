@@ -129,6 +129,7 @@
 
 
 // stores the serial received command and the string which will be sent as an answer
+char command[64];
 char stringbuffer[64];
 
 
