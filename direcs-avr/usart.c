@@ -9,6 +9,13 @@ void setStarter(uint8_t startr)
 }
 
 
+void setDivider(uint8_t divi)
+{
+	// this divides a string with a '='
+	divider = divi;
+}
+
+
 void setTerminator(uint8_t termi)
 {
 	// this terminates a string with a '#'

@@ -28,6 +28,7 @@ volatile uint8_t RXcompleted; // Flag, String komplett empfangen
 volatile uint8_t TXcompleted; // Flag, String komplett gesendet
 
 volatile uint8_t starter;    // this marks the beginning of a received string. which is '*' at the moment.
+volatile uint8_t divider;    // this marks the 'middle' of a received string. which is '=' at the moment.
 volatile uint8_t terminator; // this marks the end of a string. which is '#' at the moment.
 
 char uart_rx_buffer[uart_buffer_size+1]; // Empfangspuffer (+1 wg. zusätzlichem \0 in ISR RX)
@@ -39,6 +40,9 @@ volatile uint8_t greenLEDtoggle;
 
 // set string starter
 void setStarter(uint8_t startr);
+
+// set string divider
+void setDivider(uint8_t divi);
 
 // set string terminator
 void setTerminator(uint8_t termi);

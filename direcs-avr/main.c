@@ -35,6 +35,7 @@ int main(void)
 	RXcompleted = 0;	// Flag, String komplett empfangen
 	TXcompleted = 1;	// Flag, String komplett gesendet
 	setStarter(42);    //42 = '*'
+	setDivider(61);    //61 = '='
 	setTerminator(35); //35 = '#'
 
 

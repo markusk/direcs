@@ -153,8 +153,13 @@ class InterfaceAvr : public QObject
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"
 
+		/**
+		example answer string without value from Atmel: *re#
+		example answer string with value    from Atmel: *s7=42#
+		*/
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
+		static const char divider    = 61; /// This divides the serial string for the Atmel controller.    61  =  =
 };
 
 #endif

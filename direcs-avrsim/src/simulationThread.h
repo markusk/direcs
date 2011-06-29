@@ -155,8 +155,13 @@ class SimulationThread : public QThread
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
 
+		/**
+		example answer string without value from Atmel: *re#
+		example answer string with value    from Atmel: *s7=42#
+		*/
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
+		static const char divider    = 61; /// This divides the serial string for the Atmel controller.    61  =  =
 
 		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.000; // 12 V, command *s8#
 		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125; // 24 V, command *s7#
