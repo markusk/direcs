@@ -283,7 +283,7 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 	if (string.contains(divider))
 	{
 		// remove everything from '*' to '='
-		string.remove(string.indexOf(starter), string.lastIndexOf(divider));
+		string.remove(string.indexOf(starter), (string.lastIndexOf(divider) - string.indexOf(starter) + 1));
 		// remove terminator
 		string = string.remove(terminator);
 	}
