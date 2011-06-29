@@ -279,12 +279,25 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 	bool conversion = false;
 
 
-	// remove starter
-	string = string.remove(starter);
-	// remove terminator
-	string = string.remove(terminator);
+	// string i.e. *s7=42#
+	if (string.contains(divider))
+	{
+		// remove everything from '*' to '='
+		string.remove(string.indexOf(starter), string.lastIndexOf(divider));
+		// remove terminator
+		string = string.remove(terminator);
+	}
+	else
+	{
+		// string i.e. *re#
+		//
+		// remove starter
+		string = string.remove(starter);
+		// remove terminator
+		string = string.remove(terminator);
+	}
 
-	// convert to int
+	// convert remaing string to int
 	value = string.toInt(&conversion);
 
 	if (conversion)
