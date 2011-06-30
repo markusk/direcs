@@ -292,7 +292,8 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 	bool conversion = false;
 
 
-	// string i.e. *s7=42#
+	// remove orignal command if this is prepended
+	// i.e. *s7=42#
 	if (string.contains(divider))
 	{
 		// remove everything from '*' to '='
