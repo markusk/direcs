@@ -1299,14 +1299,20 @@ void sendUInt(uint16_t value)
 {
 	uint8_t length = 0;
 	char number[16]; // 16 digits for an itoa temo string
-	
-	
-	// copy received command to the answer (i.e. *s7#), expect the '#'!!
-	strncpy(stringbuffer, command, strlen(command)-1);
 
-	// add divider '='
-	stringbuffer[strlen(stringbuffer)] = divider;
+
+	// copy received command to the answer (i.e. *s7#), expect the '#'!!
+	strcpy(stringbuffer, command);
+
+	// get the length
+	length = strlen(stringbuffer);
 	
+	// replace old terminator '*' by divider '='
+	stringbuffer[length - 1] = divider;
+
+	// add \0
+	stringbuffer[length] = 0;
+
 	// convert int to ascii (to Basis 10)
 	// (but don't overwrite the first char which is the 'starter' *.)
 	itoa(value, number, 10);
@@ -1314,12 +1320,14 @@ void sendUInt(uint16_t value)
 	// add 'int' as ASCII to string
 	strcat(stringbuffer, number);
 
+	// get the length
+	length = strlen(stringbuffer);
+
 	// add terminator '#'
-	stringbuffer[strlen(stringbuffer)] = terminator;
+	stringbuffer[length] = terminator;
 
 	// String mit \0 terminieren
-// org	stringbuffer[length+1] = 0;
-	stringbuffer[strlen(stringbuffer)] = 0;
+	stringbuffer[length+1] = 0;
 
 	// send answer
 	put_string(stringbuffer);
