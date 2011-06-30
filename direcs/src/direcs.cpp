@@ -372,6 +372,7 @@ void Direcs::init()
 
 	connect(this,		SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(this,		SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
+	connect(this,		SIGNAL( robotState(bool) ), commandHandler,SLOT( setRobotState(bool) ));
 	connect(this,		SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
 //	connect(this,		SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 
@@ -924,6 +925,7 @@ void Direcs::init()
 			//----------------------------------------------------------------------------
 			connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
 			connect(gui, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
+			connect(gui, SIGNAL( simulate(bool) ), commandHandler, SLOT( setSimulationMode(bool) ));
 			connect(gui, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
 			connect(gui, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
 		}
@@ -4579,6 +4581,10 @@ void Direcs::setSimulationMode(bool status)
 		sensorThread->start();
 		emit message("Started.");
 
+		emit message("Starting command handler...", false);
+		commandHandler->start();
+		emit message("Started.");
+
 #ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
@@ -4639,6 +4645,18 @@ void Direcs::robotStateHandler(bool state)
 		// check compass module
 		emit initCompass();
 
+
+		//-----------------------------------------------------------
+		// start the Atmel command handler thread
+		//-----------------------------------------------------------
+		// whenever there is a material error, react!
+		connect(commandHandler, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+		emit splashMessage("Starting command handler...");
+		emit message("Starting command handler...", false);
+		commandHandler->start();
+		emit message("Command handler started.");
+
+/// @todo check when and how to start the sensor thread after start of the command handler etc. !??!!!  NEW IN qextEventRelaunch branch !
 
 		//-----------------------------------------------------------
 		// start the sensor thread for reading the sensors)
