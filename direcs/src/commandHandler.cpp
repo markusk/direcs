@@ -35,6 +35,8 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	commandExecutedSuccessfull = false;
 
+	commandInProgress = false;
+
 	// send answers from interfaceAvr to this class
 //	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
@@ -77,6 +79,34 @@ void CommandHandler::run()
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
+			// wait for finished command execution (which is currently in progress)
+			if (commandInProgress)
+			{
+				// see if we nead to break out
+				if (stopped)
+				{
+					break;
+				}
+
+				// let the thread sleep some time
+				msleep(50);
+			}
+
+
+			// wait for an command in the list to be executed
+			if (commands.isEmpty())
+			{
+				// see if we nead to break out
+				if (stopped)
+				{
+					break;
+				}
+
+				// let the thread sleep some time
+				msleep(50);
+			}
+
+
 
 		} // state=ON & simulation=false
 
@@ -113,6 +143,19 @@ void CommandHandler::takeCommand(QString command)
 
 void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondingCommand)
 {
+	commandInProgress = false;
+
+	// see if executed answer is in list of expected answers
+	for (int i=0; i<answers.size(); i++)
+	{
+		// at can be faster than []
+		if (answers.at(i) == atmelAnswer)
+		{
+			return;
+		}
+	}
+
+
 /*
 	int value = 0; // for conversion to int
 
