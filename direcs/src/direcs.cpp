@@ -4810,6 +4810,8 @@ void Direcs::drivingLight(unsigned char color)
 
 void Direcs::test()
 {
+	commandHandler->takeCommand("s7");
+
 /*
 	static bool toggle = false;
 
@@ -4902,7 +4904,7 @@ void Direcs::test()
 	}
 */
 
-
+/*
 	static bool toggle = OFF;
 
 
@@ -4946,4 +4948,5 @@ void Direcs::test()
 
 
 	motors->flashlight(toggle);
+*/
 }
