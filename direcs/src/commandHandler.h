@@ -132,8 +132,13 @@ class CommandHandler : public QThread
 		bool robotState;					// stores the robot state within this class
 		bool commandExecutedSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 
-		QList <QString> commands;			/// This list contains the commands for the Atmel. It is a kind of queue.
+		QList <QString> commandStrings;			/// This list contains the commands for the Atmel. It is a kind of queue.
+		QList <unsigned char> commandIDs;		/// This list contains the commands for the Atmel. It is a kind of queue.
+		QList <QDateTime> commandTimestamps;	/// This list contains the commands for the Atmel. It is a kind of queue.
+
 		QList <QString> answers;			/// This list contains the expected answers from the Atmel.
+
+		unsigned char currentID;			/// this is a unique ID which is increased by one at every new received command (kind of process ID)
 
 
 		QString atmelCommand; /// this is the command for the Atmel

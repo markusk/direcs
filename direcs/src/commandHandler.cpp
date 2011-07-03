@@ -37,6 +37,9 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	commandInProgress = false;
 
+	// start with command (process) ID no. 0
+	currentID = 0;
+
 	// send answers from interfaceAvr to this class
 //	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
@@ -94,7 +97,7 @@ void CommandHandler::run()
 
 
 			// wait for an command in the list to be executed
-			if (commands.isEmpty())
+			if (commandStrings.isEmpty())
 			{
 				// see if we nead to break out
 				if (stopped)
@@ -136,8 +139,20 @@ void CommandHandler::run()
 
 void CommandHandler::takeCommand(QString command)
 {
-	// add next command to command list
-	commands.append(command);
+	// add command to list
+	commandStrings.append(command);
+
+	// add command ID to list
+	commandIDs.append(currentID);
+
+	// add timestamp to list
+	commandTimestamps.append(QDateTime::currentDateTime());
+
+//	if (currentID > 0)
+//		qDebug() << "command:" << commandIDs.last() << commandStrings.last() << commandTimestamps.last().toString("hh:mm:ss.zzz") << " / " << "time dif:" << commandTimestamps.at(currentID-1).msecsTo( commandTimestamps.at(currentID) ) << "ms";
+
+	// create next command ID
+	currentID++;
 }
 
 
