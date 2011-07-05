@@ -83,7 +83,7 @@ void CommandHandler::run()
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
 			// wait for finished command execution (which is currently in progress)
-			if (commandInProgress)
+			while (commandInProgress)
 			{
 				// see if we nead to break out
 				if (stopped)
@@ -97,7 +97,7 @@ void CommandHandler::run()
 
 
 			// wait for an command in the list to be executed
-			if (commandStrings.isEmpty())
+			while (commandStrings.isEmpty())
 			{
 				// see if we nead to break out
 				if (stopped)
