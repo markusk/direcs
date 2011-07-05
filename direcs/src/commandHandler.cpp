@@ -132,7 +132,7 @@ void CommandHandler::run()
 
 			// debug msg
 			if (currentID > 0)
-				qDebug() << "command:" << commandIDs.last() << commandStrings.last() << commandTimestamps.last().toString("hh:mm:ss.zzz") << " / " << "time dif:" << commandTimestamps.at(currentID-1).msecsTo( commandTimestamps.at(currentID) ) << "ms";
+				qDebug() << "command:" << commandIDs.last() << commandStrings.last() << answerTimestamps.last().toString("hh:mm:ss.zzz") << " / " << "time dif:" << answerTimestamps.at(currentID-1).msecsTo( QDateTime::currentDateTime() ) << "ms";
 
 			//------------
 			/// @ todo   s e n d   c o m m a n d   h e r e
@@ -189,10 +189,10 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	commandInProgress = false;
 
 	// see if executed answer is in list of expected answers
-	for (int i=0; i<answers.size(); i++)
+	for (int i=0; i<answerStrings.size(); i++)
 	{
 		// at can be faster than []
-		if (answers.at(i) == atmelAnswer)
+		if (answerStrings.at(i) == atmelAnswer)
 		{
 			return;
 		}
