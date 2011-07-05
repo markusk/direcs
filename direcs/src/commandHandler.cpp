@@ -47,12 +47,8 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 CommandHandler::~CommandHandler()
 {
-	// send "off" or "shutdown" heartbeat signal over network to remote app
-	emit heartbeat(RED);
-
-	// send heartbeat over the network
-	// *0h2# means 'heartbeat no. 0 is DEAD'
-	emit sendNetworkString("*0h2#");
+	// stop all activities first
+	stop();
 }
 
 
@@ -88,7 +84,7 @@ void CommandHandler::run()
 				// see if we nead to break out
 				if (stopped)
 				{
-					break;
+					return;
 				}
 
 				// let the thread sleep some time
@@ -102,7 +98,7 @@ void CommandHandler::run()
 				// see if we nead to break out
 				if (stopped)
 				{
-					break;
+					return;
 				}
 
 				// let the thread sleep some time
