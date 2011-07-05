@@ -115,9 +115,6 @@ void CommandHandler::run()
 			// get next command from list (oldest first)
 			QString commandToBeExecuted = commandStrings.first();
 
-			// remove from "to do" list
-			commandStrings.removeFirst();
-
 			// add command ID to list
 			answerIDs.append(currentID);
 
@@ -127,17 +124,19 @@ void CommandHandler::run()
 			// add timestamp to list
 			answerTimestamps.append(QDateTime::currentDateTime());
 
-			// unlock mutex
-			commandListMutex.unlock();
-
 			// debug msg
 			if (currentID > 0)
 				qDebug() << "command:" << commandIDs.last() << commandStrings.last() << answerTimestamps.last().toString("hh:mm:ss.zzz") << " / " << "time dif:" << answerTimestamps.at(currentID-1).msecsTo( QDateTime::currentDateTime() ) << "ms";
 
+			// remove from "to do" list
+			commandStrings.removeFirst();
+
+			// unlock mutex
+			commandListMutex.unlock();
 			//------------
 			/// @ todo   s e n d   c o m m a n d   h e r e
 			//------------
-
+			emit message("TEST COMMAND");
 
 		} // state=ON & simulation=false
 
