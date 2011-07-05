@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 	bool consoleMode = false;
 	bool forceSmallGUI = false;
 	bool forceLargeGUI = false;
+	bool noSensorThread = false;
 
 
 	// Check for command-line argument "console".
@@ -56,6 +57,13 @@ int main(int argc, char *argv[])
 				forceLargeGUI = true;
 				qDebug() << "Using large GUI.";
 			}
+
+			// do not start sensor thread?
+			if (strcasecmp(argv[i], "nosensorthread") == 0)
+			{
+				noSensorThread = true;
+				qDebug() << "*Not* starting sensor thread.";
+			}
 		}
 	}
 
@@ -72,7 +80,7 @@ int main(int argc, char *argv[])
 		CleanExit cleanExit;
 
 		// create Direcs class object
-		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI);
+		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI, noSensorThread);
 
 		// init direcs
 		d.init();
@@ -92,7 +100,7 @@ int main(int argc, char *argv[])
 		QApplication app(argc, argv);
 
 		// create the Direcs class object
-		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI);
+		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI, noSensorThread);
 
 		// init direcs
 		d.init();
@@ -102,12 +110,13 @@ int main(int argc, char *argv[])
 }
 
 
-Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
+Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI, bool bNoSensorThread)
 {
 	// store mode from main method
 	consoleMode = bConsoleMode;
 	forceSmallGUI = bForceSmallGUI;
 	forceLargeGUI = bForceLargeGUI;
+	noSensorThread = bNoSensorThread;
 
 	//-------------------------
 	// Creating logfile object
@@ -4580,6 +4589,7 @@ void Direcs::setSimulationMode(bool status)
 		laserThread->start();
 		emit message("Started.");
 
+		/// @todo see if we may *not* start the sensor thread, when doNotStartSensorThread is true (command line argument)!
 		emit message("Starting Sensor thread...", false);
 		sensorThread->start();
 		emit message("Started.");
@@ -4661,15 +4671,27 @@ void Direcs::robotStateHandler(bool state)
 
 /// @todo check when and how to start the sensor thread after start of the command handler etc. !??!!!  NEW IN qextEventRelaunch branch !
 
-		//-----------------------------------------------------------
-		// start the sensor thread for reading the sensors)
-		//-----------------------------------------------------------
-		// whenever there is a material error, react!
-		connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-		emit splashMessage("Starting sensor thread...");
-		emit message("Starting sensor thread...", false);
-		sensorThread->start();
-		emit message("Sensor thread started.");
+		// sesor thread disabled via command line argument?
+		if (noSensorThread)
+		{
+			//-----------------------------------------------------------
+			// do not start the sensor thread !!  (test purposes)
+			//-----------------------------------------------------------
+			emit splashMessage("Not starting sensor thread!");
+			emit message("Not starting sensor thread!", false);
+		}
+		else
+		{
+			//-----------------------------------------------------------
+			// start the sensor thread for reading the sensors)
+			//-----------------------------------------------------------
+			// whenever there is a material error, react!
+			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+			emit splashMessage("Starting sensor thread...");
+			emit message("Starting sensor thread...", false);
+			sensorThread->start();
+			emit message("Sensor thread started.");
+		}
 
 	} // circuit init was successfull
 	else

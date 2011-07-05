@@ -99,7 +99,7 @@ class Direcs : public QObject
 		/**
 		The parameters are given from a main method which gets them from the console (startup arguments).
 		*/
-		Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI);
+		Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI, bool bNoSensorThread);
 		~Direcs();
 
 
@@ -403,9 +403,10 @@ class Direcs : public QObject
 		bool endSpeedMotor4Reached;
 		unsigned int value;
 		float floatValue;
-		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
-		bool forceSmallGUI; /// is enabled if the argument 'small' was passed by command-line. This will result in a startup with the small GUI - regardless of the hostname.
-		bool forceLargeGUI; /// is enabled if the argument 'large' was passed by command-line. This will result in a startup with the large GUI - regardless of the hostname.
+		bool consoleMode; /// is true if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
+		bool forceSmallGUI; /// is true if the argument 'small' was passed by command-line. This will result in a startup with the small GUI - regardless of the hostname.
+		bool forceLargeGUI; /// is true if the argument 'large' was passed by command-line. This will result in a startup with the large GUI - regardless of the hostname.
+		bool noSensorThread; /// is true if the argument 'nosensorthread' was passed by command-line. In this case, the sensor thread is not startet (for test purposes)
 		bool shutdownAlreadyCalled;
 		bool forceShutdown; /// this is set to true, when no ini-file was found at startup. This make the program leave without the stupid AreYouSure-Question.
 		bool useSmallGUI; /// if true, we will use a small GUI for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Gui::Gui()
