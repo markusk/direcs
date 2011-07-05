@@ -502,6 +502,7 @@ void Direcs::init()
 		{
 			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(commandHandler, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(motors, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
@@ -510,6 +511,7 @@ void Direcs::init()
 		{
 			connect(joystick, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
+			connect(commandHandler, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 		}
 
@@ -517,6 +519,7 @@ void Direcs::init()
 		connect(interface1, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); /// @todo check: FIXME: to fast in case of error for writing the logfile!
 		connect(circuit1,   SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 		connect(motors,		SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+		connect(commandHandler, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
