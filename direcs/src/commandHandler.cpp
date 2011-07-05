@@ -122,7 +122,9 @@ void CommandHandler::run()
 
 			// debug msg
 			if (currentID > 0)
-				qDebug() << "command:" << commandIDs.last() << commandStrings.last() << answerTimestamps.last().toString("hh:mm:ss.zzz") << " / " << "time dif:" << answerTimestamps.at(currentID-1).msecsTo( QDateTime::currentDateTime() ) << "ms";
+			{
+				emit message( QString("command ID=%1 string=%2 time=%3 time-dif=%4ms").arg(commandIDs.last()).arg(commandStrings.last()).arg(answerTimestamps.last().toString("hh:mm:ss.zzz")).arg(answerTimestamps.at(currentID-1).msecsTo( QDateTime::currentDateTime() )) );
+			}
 
 			// remove from "to do" list
 			commandStrings.removeFirst();
