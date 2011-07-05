@@ -346,21 +346,9 @@ void InterfaceAvr::onReadyRead()
 	QChar qchar; // this is for conversion from unsigned char to QString
 	bool stringStarted = false;
 	bool commandComplete = false;
-//	static bool redLEDtoggle = false;
+	static bool redLEDtoggle = false;
 	// - - -
 
-
-	// toggling the red LED on and off with every received serial commmand
-	if (redLEDtoggle == 0)
-	{
-		redLEDtoggle = 1;
-	}
-	else
-	{
-		redLEDtoggle = 0;
-	}
-
-	emit redLED(redLEDtoggle);
 
 	int a = serialPort->bytesAvailable();
 //	qDebug() << "bytes available:" << a;
@@ -390,8 +378,8 @@ void InterfaceAvr::onReadyRead()
 
 
 	// toggling the red LED on and off with every received serial commmand
-//		redLEDtoggle = !redLEDtoggle;
-//		emit redLED(redLEDtoggle);
+	redLEDtoggle = !redLEDtoggle;
+	emit redLED(redLEDtoggle);
 
 
 	if (commandComplete == false)
@@ -404,7 +392,7 @@ void InterfaceAvr::onReadyRead()
 				commandComplete = false;
 				stringStarted = false;
 
-//			emit greenLED(OFF);
+				emit greenLED(OFF);
 
 				emit message("<br>", false, false, false);
 				emit message("+++ String size exceeded. +++");
@@ -427,7 +415,7 @@ void InterfaceAvr::onReadyRead()
 				// send char to GUI (with no CR, but timestamp)
 				emit message(QString("%1").arg( qchar ), false, false, true);
 
-//				emit greenLED(ON);
+				emit greenLED(ON);
 		}
 		else
 		{
@@ -455,7 +443,7 @@ void InterfaceAvr::onReadyRead()
 			commandComplete = true;
 			stringStarted = false;
 
-//			emit greenLED(OFF);
+			emit greenLED(OFF);
 
 
 			// copy string for command check
