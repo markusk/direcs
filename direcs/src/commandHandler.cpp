@@ -109,7 +109,7 @@ void CommandHandler::run()
 				msleep(50);
 			}
 
-
+			// lock mutex
 			commandListMutex.lock();
 
 			// get next command from list (oldest first)
@@ -127,6 +127,7 @@ void CommandHandler::run()
 			// add timestamp to list
 			answerTimestamps.append(QDateTime::currentDateTime());
 
+			// unlock mutex
 			commandListMutex.unlock();
 
 			// debug msg
@@ -166,6 +167,7 @@ void CommandHandler::run()
 
 void CommandHandler::takeCommand(QString command)
 {
+	// lock mutex
 	commandListMutex.lock();
 
 	// add command and expected answers to lists
@@ -177,6 +179,7 @@ void CommandHandler::takeCommand(QString command)
 	// create next command ID
 	currentID++;
 
+	// unlock mutex
 	commandListMutex.unlock();
 }
 
