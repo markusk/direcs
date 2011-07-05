@@ -29,6 +29,9 @@ InterfaceAvr::InterfaceAvr()
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
 /// @todo	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+
+	redLEDtoggle = 0;
+	greenLEDtoggle = 0;
 }
 
 
@@ -346,6 +349,18 @@ void InterfaceAvr::onReadyRead()
 //	static bool redLEDtoggle = false;
 	// - - -
 
+
+	// toggling the red LED on and off with every received serial commmand
+	if (redLEDtoggle == 0)
+	{
+		redLEDtoggle = 1;
+	}
+	else
+	{
+		redLEDtoggle = 0;
+	}
+
+	emit redLED(redLEDtoggle);
 
 	int a = serialPort->bytesAvailable();
 //	qDebug() << "bytes available:" << a;

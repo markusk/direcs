@@ -91,7 +91,7 @@ void SimulationThread::run()
 				// flashlight off
 				relais(OFF);
 				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
-				redLED(OFF);
+				emit redLED(OFF);
 
 				/*
 				// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
@@ -130,7 +130,7 @@ void SimulationThread::run()
 									relais(OFF);
 
 									// red LED off
-									redLED(OFF);
+									emit redLED(OFF);
 
 									// d i s a b l e  watchdog!
 									///	@todo		wdt_reset();

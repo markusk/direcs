@@ -136,6 +136,16 @@ class InterfaceAvr : public QObject
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
+		/**
+		Simulated Atmel method
+		*/
+		void greenLED(bool state);
+
+		/**
+		Simulated Atmel method
+		*/
+		void redLED(bool state);
+
 
 	private slots:
 	   /**
@@ -160,6 +170,9 @@ class InterfaceAvr : public QObject
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
 		static const char divider    = 61; /// This divides the serial string for the Atmel controller.    61  =  =
+
+		volatile uint8_t redLEDtoggle;
+		volatile uint8_t greenLEDtoggle;
 };
 
 #endif
