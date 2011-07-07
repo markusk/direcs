@@ -131,6 +131,7 @@ class CommandHandler : public QThread
 		bool simulationMode;
 		bool robotState;					// stores the robot state within this class
 		bool commandExecutedSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
+		bool commandInQueue;
 
 		QList <QString> commandStrings;			/// this list
 		QList <unsigned char> commandIDs;		/// this list contains the the unique ID

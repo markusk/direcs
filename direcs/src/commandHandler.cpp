@@ -37,6 +37,8 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	commandInProgress = false;
 
+	commandInQueue = false;
+
 	// start with command (process) ID no. 0
 	currentID = 0;
 
@@ -93,7 +95,7 @@ void CommandHandler::run()
 
 
 			// wait for an command in the list to be executed
-			while (commandStrings.isEmpty())
+			while (!commandInQueue)
 			{
 				// see if we nead to break out
 				if (stopped)
@@ -191,6 +193,8 @@ void CommandHandler::takeCommand(QString command)
 
 	// create next command ID
 	currentID++;
+
+	commandInQueue = true;
 
 	// unlock mutex
 	commandListMutex.unlock();
