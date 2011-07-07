@@ -74,9 +74,9 @@ class CommandHandler : public QThread
 
 		/**
 		This slot takes the a command string and adds it to a list to be executed by the Atmel controller.
-		@param command is the command
+		@param commandString is the command
 		*/
-		void takeCommand(QString command);
+		void takeCommand(QString commandString);
 
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.

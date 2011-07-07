@@ -173,16 +173,20 @@ void CommandHandler::run()
 }
 
 
-void CommandHandler::takeCommand(QString command)
+void CommandHandler::takeCommand(QString commandString)
 {
+	command tempCommand;
+
+
+	// fill data structure
+	tempCommand.string = commandString;
+	tempCommand.ID = currentID;
+
 	// lock mutex
 	commandListMutex.lock();
 
-	// add command and expected answers to lists
-	commandStrings.append(command);
-
-	// add command ID to list
-	commandIDs.append(currentID);
+	// add command and ID to command lists
+	commandList.append(tempCommand);
 
 	// create next command ID
 	currentID++;
