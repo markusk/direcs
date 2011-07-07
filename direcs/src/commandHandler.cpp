@@ -37,8 +37,6 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	commandInProgress = false;
 
-	commandInQueue = false;
-
 	// start with command (process) ID no. 0
 	currentID = 0;
 
@@ -69,6 +67,7 @@ void CommandHandler::stop()
 
 void CommandHandler::run()
 {
+	QString commandToBeExecuted;
 	bool heartbeatToggle = false;
 
 
@@ -95,7 +94,7 @@ void CommandHandler::run()
 
 
 			// wait for an command in the list to be executed
-			while (!commandInQueue)
+			while (commandStrings.isEmpty())
 			{
 				// see if we nead to break out
 				if (stopped)
@@ -112,7 +111,7 @@ void CommandHandler::run()
 			commandListMutex.lock();
 
 			// get next command from list (oldest first)
-			QString commandToBeExecuted = commandStrings.first();
+			commandToBeExecuted = commandStrings.first();
 
 			// add command ID to list
 			answerIDs.append(currentID);
@@ -139,12 +138,6 @@ void CommandHandler::run()
 			// remove from "to do" list
 			commandIDs.removeFirst();
 
-			// any other comands in list?
-			if (commandStrings.isEmpty())
-			{
-				commandInQueue = false;
-			}
-
 			// unlock mutex
 			commandListMutex.unlock();
 
@@ -152,7 +145,7 @@ void CommandHandler::run()
 			//------------
 			/// @ todo   s e n d   c o m m a n d   h e r e
 			//------------
-			emit message("TEST COMMAND");
+			emit message(QString("SENDING COMMAND %1").arg(commandToBeExecuted));
 
 		} // state=ON & simulation=false
 
@@ -193,8 +186,6 @@ void CommandHandler::takeCommand(QString command)
 
 	// create next command ID
 	currentID++;
-
-	commandInQueue = true;
 
 	// unlock mutex
 	commandListMutex.unlock();

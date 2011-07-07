@@ -131,7 +131,6 @@ class CommandHandler : public QThread
 		bool simulationMode;
 		bool robotState;					// stores the robot state within this class
 		bool commandExecutedSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
-		bool commandInQueue;
 
 		QList <QString> commandStrings;			/// this list
 		QList <unsigned char> commandIDs;		/// this list contains the the unique ID
@@ -147,7 +146,7 @@ class CommandHandler : public QThread
 		mutable QMutex commandListMutex; // this is for the var atmelCommand
 
 		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
-		static const int ATMELTIMEOUT = 500; /// timeout in ms
+		static const int ATMELTIMEOUT = 250; /// timeout in ms
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
