@@ -132,6 +132,7 @@ class CommandHandler : public QThread
 		bool robotState;					// stores the robot state within this class
 		bool commandExecutedSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 
+
 		QList <QString> commandStrings;			/// this list
 		QList <unsigned char> commandIDs;		/// this list contains the the unique ID
 
@@ -141,6 +142,21 @@ class CommandHandler : public QThread
 
 		unsigned char currentID;			/// this is a unique ID which is increased by one at every new received command (kind of process ID)
 
+		struct command
+		{
+			QString string;			/// this is the command
+			unsigned char ID;		/// this is the unique ID
+		};
+
+		struct answer
+		{
+			QString string;			/// this is the expected answer
+			unsigned char ID;		/// this is the unique ID
+			QDateTime timestamp;	/// this is the timestamps when the command execution *started*. With this we can check how long a command took, when we get the answer
+		};
+
+		QList <command> commandList;
+		QList <answer>  answerList;
 
 		QString atmelCommand; /// this is the command for the Atmel
 		mutable QMutex commandListMutex; // this is for the var atmelCommand
