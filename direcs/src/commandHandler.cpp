@@ -105,6 +105,7 @@ void CommandHandler::run()
 				msleep(50);
 			}
 
+
 			// lock mutex
 			commandListMutex.lock();
 
@@ -123,14 +124,29 @@ void CommandHandler::run()
 			// debug msg
 			if (currentID > 0)
 			{
-				emit message( QString("command ID=%1 string=%2 time=%3 time-dif=%4ms").arg(commandIDs.last()).arg(commandStrings.last()).arg(answerTimestamps.last().toString("hh:mm:ss.zzz")).arg(answerTimestamps.at(currentID-1).msecsTo( QDateTime::currentDateTime() )) );
+// err				emit message( QString("command ID=%1 string=%2 time=%3 time-dif=%4ms").arg(commandIDs.first()).arg(commandStrings.first()).arg(answerTimestamps.first().toString("hh:mm:ss.zzz")).arg(answerTimestamps.first().msecsTo( QDateTime::currentDateTime() )) );
+				emit message( QString("command ID=%1 string=%2 time=%3").arg(commandIDs.first()).arg(commandStrings.first()).arg(answerTimestamps.first().toString("hh:mm:ss.zzz")) );
 			}
 
 			// remove from "to do" list
 			commandStrings.removeFirst();
 
+			// remove from "to do" list
+			answerTimestamps.removeFirst();
+
+			// remove from "to do" list
+			commandIDs.removeFirst();
+
+			// any other comands in list?
+			if (commandStrings.isEmpty())
+			{
+				commandInQueue = false;
+			}
+
 			// unlock mutex
 			commandListMutex.unlock();
+
+
 			//------------
 			/// @ todo   s e n d   c o m m a n d   h e r e
 			//------------
