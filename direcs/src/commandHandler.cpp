@@ -67,6 +67,8 @@ void CommandHandler::stop()
 
 void CommandHandler::run()
 {
+	command tempCommand;
+	answer  tempAnswer;
 	QString commandToBeExecuted;
 	bool heartbeatToggle = false;
 
@@ -94,7 +96,7 @@ void CommandHandler::run()
 
 
 			// wait for an command in the list to be executed
-			while (commandStrings.isEmpty())
+			while (commandList.isEmpty())
 			{
 				// see if we nead to break out
 				if (stopped)
@@ -111,32 +113,37 @@ void CommandHandler::run()
 			commandListMutex.lock();
 
 			// get next command from list (oldest first)
-			commandToBeExecuted = commandStrings.first();
+			tempCommand = commandList.first();
 
-			// add command ID to list
-			answerIDs.append(currentID);
+			// store command in this class
+			tempAnswer.string = tempCommand.string;
 
-			// add expected answer to list
-			answerStrings.append(commandToBeExecuted);
+			// set expected answer string from command
+			tempAnswer.string = tempCommand.string;
 
-			// add timestamp to list
-			answerTimestamps.append(QDateTime::currentDateTime());
+			// store command in this class
+			commandToBeExecuted = tempCommand.string;
+
+			// get command ID and use this ID in answer list
+			tempAnswer.ID = tempCommand.ID;
+
+			// generate timestamp ("now")
+			tempAnswer.timestamp = QDateTime::currentDateTime();
+
+			// add to answer list
+			answerList.append(tempAnswer);
+
 
 			// debug msg
 			if (currentID > 0)
 			{
 // err				emit message( QString("command ID=%1 string=%2 time=%3 time-dif=%4ms").arg(commandIDs.first()).arg(commandStrings.first()).arg(answerTimestamps.first().toString("hh:mm:ss.zzz")).arg(answerTimestamps.first().msecsTo( QDateTime::currentDateTime() )) );
-				emit message( QString("command ID=%1 string=%2 time=%3").arg(commandIDs.first()).arg(commandStrings.first()).arg(answerTimestamps.first().toString("hh:mm:ss.zzz")) );
+// old				emit message( QString("command ID=%1 string=%2 time=%3").arg(commandIDs.first()).arg(commandStrings.first()).arg(answerTimestamps.first().toString("hh:mm:ss.zzz")) );
+				emit message( QString("command ID=%1 string=%2 time=%3").arg( tempAnswer.ID ).arg( tempAnswer.string ).arg( tempAnswer.timestamp.toString("hh:mm:ss.zzz") ));
 			}
 
 			// remove from "to do" list
-			commandStrings.removeFirst();
-
-			// remove from "to do" list
-			answerTimestamps.removeFirst();
-
-			// remove from "to do" list
-			commandIDs.removeFirst();
+			commandList.removeFirst();
 
 			// unlock mutex
 			commandListMutex.unlock();
@@ -178,15 +185,18 @@ void CommandHandler::takeCommand(QString commandString)
 	command tempCommand;
 
 
+	// lock mutex
+	commandListMutex.lock();
+
 	// fill data structure
 	tempCommand.string = commandString;
 	tempCommand.ID = currentID;
 
-	// lock mutex
-	commandListMutex.lock();
-
 	// add command and ID to command lists
 	commandList.append(tempCommand);
+
+	// debug msg
+	// emit message( QString("command ID %1, %2 appended").arg(tempCommand.string).arg(tempCommand.ID) );
 
 	// create next command ID
 	currentID++;
@@ -198,17 +208,29 @@ void CommandHandler::takeCommand(QString commandString)
 
 void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondingCommand)
 {
+	answer tempAnswer;
+
+
+	// we have an answer, so we can tell the run-loop, that it can continue
 	commandInProgress = false;
 
+
 	// see if executed answer is in list of expected answers
-	for (int i=0; i<answerStrings.size(); i++)
+	for (int i=0; i<answerList.size(); i++)
 	{
+		tempAnswer = answerList.at(i);
+
 		// at can be faster than []
-		if (answerStrings.at(i) == atmelAnswer)
+		if (tempAnswer.string == atmelAnswer)
 		{
+			/// @todo now check duration        < < < < <
+
 			return;
 		}
 	}
+
+
+	/// @todo ERROR answer not expected !
 
 
 /*
