@@ -172,6 +172,11 @@ class SensorThread : public QThread
 
 	signals:
 		/**
+		This Signal sends a command to the (Atmel) command handler. @sa CommandHandler()
+		*/
+		void sendCommand(QString command, QString sender);
+
+		/**
 		This signal is emitted when all sensors were read.
 		@sa Direcs::showSensorData()
 		*/

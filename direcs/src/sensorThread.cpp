@@ -1456,36 +1456,12 @@ void SensorThread::readVoltageSensor(short int sensor)
 	}
 
 
-//		emit message(QString("Sending *%1#...").arg(atmelCommand));
+	emit message(QString("Sending *%1#...").arg(atmelCommand));
 
-		// Lock the mutex.
-		mutex->lock();
+	// send command to (Atmel) command handler
+	emit sendCommand(atmelCommand, className);
 
-		if (interface1->sendString(atmelCommand) == true)
-		{
 
-//			emit message("Sent.");
-//			emit message("Waiting for an answer...");
-
-			// Unlock the mutex.
-			mutex->unlock();
-
-			return;
-		}
-
-		emit message("Error reading sensor.");
-
-		// Unlock the mutex.
-		mutex->unlock();
-
-/*
-
-	varMutex.lock();
-	atmelCommand = "none"; // reset current command
-	varMutex.unlock();
-
-	//  We do not emit a Signal in case of error here.
-*/
 	} // robot is ON
 
 	/// @todo TEST
