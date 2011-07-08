@@ -424,7 +424,6 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 
 void CommandHandler::timeout()
 {
-	/*
 	// first check if we had already an answer from the Atmel
 	if (commandExecutedSuccessfull == true)
 	{
@@ -432,17 +431,10 @@ void CommandHandler::timeout()
 	//	commandExecutedSuccessfull = false;
 
 		// we are happy
-		varMutex.lock();
-		atmelCommand = "none"; // reset current command
-		varMutex.unlock();
-/// @todo maybe set a seperate "go on with run thread" here?
 		return;
 	}
 
 	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-	varMutex.lock();
-	atmelCommand = "none"; // reset current command
-	varMutex.unlock();
 
 	// let this class know, that we had an error
 	robotState = OFF;
@@ -454,7 +446,6 @@ void CommandHandler::timeout()
 	stop();
 
 	return;
-	*/
 }
 
 
