@@ -154,7 +154,35 @@ void CommandHandler::run()
 			//------------
 			emit message(QString("SENDING COMMAND %1").arg(commandToBeExecuted));
 
-		} // state=ON & simulation=false
+
+			// this command is not executed yet
+			commandExecutedSuccessfull = false;
+
+
+			// Lock the mutex.
+			mutex->lock();
+
+			if (interface1->sendString(commandToBeExecuted) == true)
+			{
+				// start own time measuring. This will be used, if we get an answer from the Atmel
+				duration.start();
+
+				// start additional seperate timer. If we NEVER get an answer, this slot will be called
+				QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+
+				emit message("Sent.");
+			}
+			else
+			{
+				emit message("ERROR sending command (commandHandler::run")	;
+			}
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+
+
+		} // robot is on  and  simulation mode is off
 
 		if (simulationMode)
 		{
