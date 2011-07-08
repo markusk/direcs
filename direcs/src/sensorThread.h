@@ -170,13 +170,6 @@ class SensorThread : public QThread
 		void takeCommandAnswer(QString atmelAnswer, QString caller);
 
 
-	private slots:
-		/**
-		This Slot is called if we never get an answer from the Atmel
-		*/
-		void timeout();
-
-
 	signals:
 		/**
 		This signal is emitted when all sensors were read.
@@ -312,9 +305,6 @@ class SensorThread : public QThread
 
 		QString atmelCommand; /// this is the command for the Atmel
 		mutable QMutex varMutex; // this is for the var atmelCommand
-
-		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
-		static const int ATMELTIMEOUT = 500; /// timeout in ms
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

@@ -719,40 +719,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 }
 
 
-void SensorThread::timeout()
-{
-	// first check if we had already an answer from the Atmel
-	if (commandExecutedSuccessfull == true)
-	{
-		// reset state
-	//	commandExecutedSuccessfull = false;
-
-		// we are happy
-		varMutex.lock();
-		atmelCommand = "none"; // reset current command
-		varMutex.unlock();
-/// @todo maybe set a seperate "go on with run thread" here?
-		return;
-	}
-
-	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-	varMutex.lock();
-	atmelCommand = "none"; // reset current command
-	varMutex.unlock();
-
-	// let this class know, that we had an error
-	robotState = OFF;
-
-	emit heartbeat(RED);
-
-	emit message(QString("<font color=\"#FF0000\">ERROR reading sensor. Stopping %1!</font>").arg(thisClass));
-	// stop this thread
-	stop();
-
-	return;
-}
-
-
 int SensorThread::convertToDistance(int sensorValue)
 {
 	unsigned char calibrationValue = 8;
@@ -1497,11 +1463,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 
 		if (interface1->sendString(atmelCommand) == true)
 		{
-			// start own time measuring. This will be used, if we get an answer from the Atmel
-			duration.start();
-
-			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
 //			emit message("Sent.");
 //			emit message("Waiting for an answer...");
