@@ -295,7 +295,7 @@ class SensorThread : public QThread
 		*/
 		bool readContact(short int contact);
 
-		QString thisClass;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
+		QString className;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;

@@ -22,7 +22,7 @@
 
 SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 {
-	thisClass = this->staticMetaObject.className();
+	className = this->staticMetaObject.className();
 
 	stopped = false;
 	simulationMode = false;
@@ -621,9 +621,9 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 
 
 	// was it this class which asked for the answer?
-	if ((caller != thisClass) || (stopped == true))
+	if ((caller != className) || (stopped == true))
 	{
-		emit message(QString("Answer %1 is not for %2.").arg(atmelAnswer).arg(thisClass));
+		emit message(QString("Answer %1 is not for %2.").arg(atmelAnswer).arg(className));
 		return;
 	}
 
@@ -634,7 +634,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 	/// @todo check if we have numbers between the * and #
 	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
-		emit message(QString("Answer %1 was correct (%2).").arg(atmelAnswer).arg(thisClass));
+		emit message(QString("Answer %1 was correct (%2).").arg(atmelAnswer).arg(className));
 
 		// convert answer to int
 		if (interface1->convertStringToInt(atmelAnswer, value) == false)
@@ -711,7 +711,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		varMutex.unlock();
 
 		emit heartbeat(RED);
-		emit message(QString("<font color=\"#FF0000\">ERROR reading sensor. Stopping %1!</font>").arg(thisClass));
+		emit message(QString("<font color=\"#FF0000\">ERROR reading sensor. Stopping %1!</font>").arg(className));
 		// stop this thread
 		stop();
 		return;
