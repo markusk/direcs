@@ -74,8 +74,9 @@ class CommandHandler : public QThread
 		/**
 		This slot takes the a command string and adds it to a list to be executed by the Atmel controller.
 		@param commandString is the command
+		@param callerName is the name of the class which called this slot
 		*/
-		void takeCommand(QString commandString);
+		void takeCommand(QString commandString, QString callerName);
 
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.
@@ -136,6 +137,7 @@ class CommandHandler : public QThread
 		{
 			QString string;			/// this is the command
 			unsigned char ID;		/// this is the unique ID
+			QString caller;			/// this is the name of the calling class (which called the Slot @sa takeCommand()
 		};
 
 		struct answer

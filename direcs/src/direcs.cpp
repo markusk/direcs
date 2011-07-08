@@ -4835,7 +4835,8 @@ void Direcs::drivingLight(unsigned char color)
 
 void Direcs::test()
 {
-	commandHandler->takeCommand("s7");
+	commandHandler->takeCommand("s7", this->staticMetaObject.className());
+//	commandHandler->takeCommand("f0on", this->staticMetaObject.className());
 
 /*
 	static bool toggle = false;

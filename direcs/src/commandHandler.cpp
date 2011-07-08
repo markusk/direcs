@@ -204,7 +204,7 @@ void CommandHandler::run()
 }
 
 
-void CommandHandler::takeCommand(QString commandString)
+void CommandHandler::takeCommand(QString commandString, QString callerName)
 {
 	command tempCommand;
 
@@ -215,12 +215,13 @@ void CommandHandler::takeCommand(QString commandString)
 	// fill data structure
 	tempCommand.string = commandString;
 	tempCommand.ID = currentID;
+	tempCommand.caller = callerName;
 
 	// add command and ID to command lists
 	commandList.append(tempCommand);
 
 	// debug msg
-	// emit message( QString("command ID %1, %2 appended").arg(tempCommand.string).arg(tempCommand.ID) );
+	emit message( QString("command %1, Id=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
 
 	// create next command ID
 	currentID++;
@@ -288,7 +289,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 			/// --------------------------
 			/// @todo  and now? answer OKAY. no timeout. :-) bring answer to expecting thread e.g. sensorthread!!
 			/// --------------------------
-
+//			emit message( QString("class = %1").arg( this->staticMetaObject.className() ) ); /// @sa indexOfSignal use this for caller?
 
 			return;
 		}
