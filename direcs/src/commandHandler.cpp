@@ -246,10 +246,11 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	// see if executed answer is in list of expected answers
 	for (int i=0; i<answerList.size(); i++)
 	{
+		// at can be faster than []
 		tempAnswer = answerList.at(i);
 
-		// at can be faster than []
-		if (tempAnswer.string == atmelAnswer)
+		// see if the Atmel answer starts with the starter and the sent command (i.e. *s7... )
+		if (atmelAnswer.startsWith( QString("%1%2").arg(starter).arg(tempAnswer.string) ))
 		{
 			//--------------
 			// answer found
