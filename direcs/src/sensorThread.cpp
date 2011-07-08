@@ -148,9 +148,6 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	// the Atmel commands
 	commandReadVoltageSensor1	= "s8";  /// s8 = 12 V = VOLTAGESENSOR1
 	commandReadVoltageSensor2	= "s7";  /// s7 = 24 V = VOLTAGESENSOR2
-
-	// send answers from interfaceAvr to this class
-	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
@@ -195,7 +192,8 @@ void SensorThread::run()
 			// voltage sensors
 			//-----------------
 			readVoltageSensor(VOLTAGESENSOR1);
-
+msleep(250);
+/*
 			// wait until last command has finished
 			while ((commandExecutedSuccessfull == false) && (stopped==false))
 				msleep(50);
@@ -205,7 +203,7 @@ void SensorThread::run()
 			// wait until last command has finished
 			while ((commandExecutedSuccessfull == false) && (stopped==false))
 				msleep(50);
-
+*/
 
 /// @todo implement reste of this to new event method
 /* this here
