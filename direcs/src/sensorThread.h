@@ -165,9 +165,9 @@ class SensorThread : public QThread
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.
 		@param atmelAnswer contains the answer
-		@param correspondingCommand contains the command which was used in the Slot @sa InterfaceAvr::commandCompleted()
+		@param caller is the name of the class which called this slot
 		*/
-		void takeCommandAnswer(QString atmelAnswer, QString correspondingCommand);
+		void takeCommandAnswer(QString atmelAnswer, QString caller);
 
 
 	private slots:
@@ -297,6 +297,7 @@ class SensorThread : public QThread
 		*/
 		bool readContact(short int contact);
 
+		QString thisClass;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;

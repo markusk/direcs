@@ -22,6 +22,8 @@
 
 SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 {
+	thisClass = this->staticMetaObject.className();
+
 	stopped = false;
 	simulationMode = false;
 
@@ -613,15 +615,15 @@ contacts temporarily removed from robot!! */
 }
 
 
-void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingCommand)
+void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 {
 	int value = 0; // for conversion to int
 
 
-	if ((correspondingCommand != atmelCommand) || (stopped == true))
+	// was it this class which asked for the answer?
+	if ((caller != thisClass) || (stopped == true))
 	{
-//		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
-		// emit message(QString("correspondingCommand %1 != atmelCommand %2 (SensorThread).").arg(correspondingCommand).arg(atmelCommand));
+		emit message(QString("Answer %1 is not for %2.").arg(atmelAnswer).arg(thisClass));
 		return;
 	}
 
@@ -659,7 +661,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 	/// @todo check if we have numbers between the * and #
 	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 	{
-//		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
+		emit message(QString("Answer %1 was correct (%2).").arg(atmelAnswer).arg(thisClass));
 
 		// convert answer to int
 		if (interface1->convertStringToInt(atmelAnswer, value) == false)
@@ -676,7 +678,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR1] = value;
 
-//			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
+			emit message(QString("VOLTAGESENSOR1 = s8 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR1)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -698,7 +700,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 			// store measured value
 			voltageSensorValue[VOLTAGESENSOR2] = value;
 
-//			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
+			emit message(QString("VOLTAGESENSOR2 = s7 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR2)));
 
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -736,7 +738,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString correspondingC
 		varMutex.unlock();
 
 		emit heartbeat(RED);
-		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+		emit message(QString("<font color=\"#FF0000\">ERROR reading sensor. Stopping %1!</font>").arg(thisClass));
 		// stop this thread
 		stop();
 		return;
@@ -770,7 +772,7 @@ void SensorThread::timeout()
 
 	emit heartbeat(RED);
 
-	emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
+	emit message(QString("<font color=\"#FF0000\">ERROR reading sensor. Stopping %1!</font>").arg(thisClass));
 	// stop this thread
 	stop();
 
