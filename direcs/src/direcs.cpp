@@ -4663,7 +4663,7 @@ void Direcs::robotStateHandler(bool state)
 		// start the Atmel command handler thread
 		//-----------------------------------------------------------
 		// whenever there is a material error, react!
-		connect(commandHandler, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+		connect(commandHandler, SIGNAL(systemerror(int)), this, SLOT(systemerrorcatcher(int)));
 
 		// sensorThread takes the answers to commands he sent to the commandHandler before
 		connect(commandHandler, SIGNAL(commandComplete(QString,QString)), sensorThread, SLOT(takeCommandAnswer(QString,QString)));
