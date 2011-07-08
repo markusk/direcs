@@ -41,7 +41,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 	currentID = 0;
 
 	// send answers from interfaceAvr to this class
-//	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
+	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
@@ -251,7 +251,37 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 		// at can be faster than []
 		if (tempAnswer.string == atmelAnswer)
 		{
-			/// @todo now check duration        < < < < <
+			//---------------
+			// answer found!
+			//---------------
+
+
+			//----------
+			// timeout?
+			//----------
+			QDateTime now = QDateTime::currentDateTime();
+
+			if (tempAnswer.timestamp.msecsTo(now) > ATMELTIMEOUT)
+			{
+				emit message(QString("Timeout (%1ms > %2ms)").arg( tempAnswer.timestamp.msecsTo(now) ).arg( ATMELTIMEOUT ));
+
+				// timeout
+				// let this class know, that we had an error
+				robotState = false;
+				commandExecutedSuccessfull = false;
+
+				emit heartbeat(RED);
+				emit message("<font color=\"#FF0000\">ERROR executing command. Stopping commandHandler!</font>");
+				// stop this thread
+				stop();
+
+		/// @todo is systemerror emission still needed?!?  s.a. other error situations within this class!
+				// inform other modules
+		//	    emit systemerror(-2);
+
+				return;
+			}
+
 
 			return;
 		}
