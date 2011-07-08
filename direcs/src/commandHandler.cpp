@@ -173,7 +173,7 @@ void CommandHandler::run()
 			}
 			else
 			{
-				emit message("ERROR sending command (commandHandler::run")	;
+				emit message(QString("ERROR sending command (%1::run").arg(this->staticMetaObject.className()) ); /// @todo use this nice call in every class for showing which method caused an error!
 			}
 
 			// Unlock the mutex.
