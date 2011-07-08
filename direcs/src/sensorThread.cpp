@@ -627,33 +627,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		return;
 	}
 
-	//----------
-	// timeout?
-	//----------
-	if (duration.elapsed() > ATMELTIMEOUT)
-	{
-		emit message(QString("Timeout (%1ms > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-
-		// timeout
-		// let this class know, that we had an error
-		robotState = false;
-		commandExecutedSuccessfull = false;
-
-		varMutex.lock();
-		atmelCommand = "none"; // reset current command
-		varMutex.unlock();
-
-		emit heartbeat(RED);
-		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
-		// stop this thread
-		stop();
-
-/// @todo is systemerror emission still needed?!?  s.a. other error situations within this class!
-		// inform other modules
-//	    emit systemerror(-2);
-
-		return;
-	}
 
 	//------------------
 	// everthing's fine
