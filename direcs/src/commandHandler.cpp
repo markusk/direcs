@@ -251,6 +251,11 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 			//--------------
 			// answer found
 			//--------------
+
+			// remove element from answer list
+			answerList.removeAt(i);
+
+			commandSentSuccessfull = true; // this lets the seperate timeout slot just return
 			emit message("Expected answer received");
 
 			//----------
@@ -278,6 +283,11 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 
 				return;
 			}
+
+
+			/// --------------------------
+			/// @todo  and now? answer OKAY. no timeout. :-) bring answer to expecting thread e.g. sensorthread!!
+			/// --------------------------
 
 
 			return;
