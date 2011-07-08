@@ -130,7 +130,7 @@ class CommandHandler : public QThread
 		volatile bool commandInProgress;	/// set to true, when currently executing an command on and with the serial port
 		bool simulationMode;
 		bool robotState;					// stores the robot state within this class
-		bool commandExecutedSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
+		bool commandSentSuccessfull;	/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 		unsigned char currentID;			/// this is a unique ID which is increased by one at every new received command (kind of process ID)
 
 		struct command
