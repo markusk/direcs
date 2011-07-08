@@ -251,10 +251,10 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 		// at can be faster than []
 		if (tempAnswer.string == atmelAnswer)
 		{
-			//---------------
-			// answer found!
-			//---------------
-
+			//--------------
+			// answer found
+			//--------------
+			emit message("Expected answer received");
 
 			//----------
 			// timeout?
@@ -288,7 +288,20 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	}
 
 
-	/// @todo ERROR answer not expected !
+	//------------------
+	// answer not found
+	//------------------
+	emit message(QString("<font color=\"#FF0000\">ERROR! Answer %1 not expected. Stopping commandHandler!</font>").arg(atmelAnswer));
+
+	// let this class know, that we had an error
+	robotState = false;
+	commandExecutedSuccessfull = false;
+
+	emit heartbeat(RED);
+	// stop this thread
+	stop();
+	return;
+
 
 
 /*
