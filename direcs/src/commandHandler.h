@@ -58,7 +58,7 @@ class CommandHandler : public QThread
 	public slots:
 		/**
 		This slot enables or disables the simulation mode.
-		In the simulation mode all sensor values are set to a fixed value. No real sensor values are read from the robot, when set to true.
+		In the simulation mode... [to  be defined for this class]
 		@param state can be true or false.
 		@sa Gui::simulate()
 		*/
