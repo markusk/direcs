@@ -4664,6 +4664,10 @@ void Direcs::robotStateHandler(bool state)
 		//-----------------------------------------------------------
 		// whenever there is a material error, react!
 		connect(commandHandler, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
+		// sensorThread takes the answers to commands he sent to the commandHandler before
+		connect(commandHandler, SIGNAL(commandComplete(QString,QString)), sensorThread, SLOT(takeCommandAnswer(QString,QString)));
+
 		emit splashMessage("Starting command handler...");
 		emit message("Starting command handler...", false);
 		commandHandler->start();
@@ -4693,7 +4697,7 @@ void Direcs::robotStateHandler(bool state)
 			emit message("Sensor thread started.");
 		}
 
-	} // circuit init was successfull
+	} // circuit init successfull
 	else
 	{
 		logfile->appendLog("Robot is OFF! Please turn it ON!");
