@@ -33,7 +33,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
-	commandExecutedSuccessfull = false;
+	commandSentSuccessfull = false;
 
 	commandInProgress = false;
 
@@ -69,7 +69,7 @@ void CommandHandler::run()
 {
 	command tempCommand;
 	answer  tempAnswer;
-	QString commandToBeExecuted;
+	QString commandToBeSent;
 	bool heartbeatToggle = false;
 
 
@@ -122,7 +122,7 @@ void CommandHandler::run()
 			tempAnswer.string = tempCommand.string;
 
 			// store command in this class
-			commandToBeExecuted = tempCommand.string;
+			commandToBeSent = tempCommand.string;
 
 			// get command ID and use this ID in answer list
 			tempAnswer.ID = tempCommand.ID;
@@ -137,8 +137,6 @@ void CommandHandler::run()
 			// debug msg
 			if (currentID > 0)
 			{
-// err				emit message( QString("command ID=%1 string=%2 time=%3 time-dif=%4ms").arg(commandIDs.first()).arg(commandStrings.first()).arg(answerTimestamps.first().toString("hh:mm:ss.zzz")).arg(answerTimestamps.first().msecsTo( QDateTime::currentDateTime() )) );
-// old				emit message( QString("command ID=%1 string=%2 time=%3").arg(commandIDs.first()).arg(commandStrings.first()).arg(answerTimestamps.first().toString("hh:mm:ss.zzz")) );
 				emit message( QString("command ID=%1 string=%2 time=%3").arg( tempAnswer.ID ).arg( tempAnswer.string ).arg( tempAnswer.timestamp.toString("hh:mm:ss.zzz") ));
 			}
 
@@ -149,20 +147,18 @@ void CommandHandler::run()
 			commandListMutex.unlock();
 
 
-			//------------
-			/// @ todo   s e n d   c o m m a n d   h e r e
-			//------------
-			emit message(QString("SENDING COMMAND %1").arg(commandToBeExecuted));
-
+			//-----------------------
+			// send command to Atmel
+			//-----------------------
+			emit message(QString("SENDING COMMAND %1").arg(commandToBeSent));
 
 			// this command is not executed yet
-			commandExecutedSuccessfull = false;
-
+			commandSentSuccessfull = false;
 
 			// Lock the mutex.
 			mutex->lock();
 
-			if (interface1->sendString(commandToBeExecuted) == true)
+			if (interface1->sendString(commandToBeSent) == true)
 			{
 				// start own time measuring. This will be used, if we get an answer from the Atmel
 				duration.start();
@@ -269,7 +265,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 				// timeout
 				// let this class know, that we had an error
 				robotState = false;
-				commandExecutedSuccessfull = false;
+				commandSentSuccessfull = false;
 
 				emit heartbeat(RED);
 				emit message("<font color=\"#FF0000\">ERROR executing command. Stopping commandHandler!</font>");
@@ -296,7 +292,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 
 	// let this class know, that we had an error
 	robotState = false;
-	commandExecutedSuccessfull = false;
+	commandSentSuccessfull = false;
 
 	emit heartbeat(RED);
 	// stop this thread
@@ -439,7 +435,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 void CommandHandler::timeout()
 {
 	// first check if we had already an answer from the Atmel
-	if (commandExecutedSuccessfull == true)
+	if (commandSentSuccessfull == true)
 	{
 		// reset state
 	//	commandExecutedSuccessfull = false;
