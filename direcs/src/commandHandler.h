@@ -149,10 +149,17 @@ class CommandHandler : public QThread
 		QList <command> commandList;
 		QList <answer>  answerList;
 
-		QString atmelCommand; /// this is the command for the Atmel
 		mutable QMutex commandListMutex; // this is for the var atmelCommand
 
-		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
+		/**
+		example answer string without value from Atmel: *re#
+		example answer string with value    from Atmel: *s7=42#
+		*/
+		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
+		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
+		static const char divider    = 61; /// This divides the serial string for the Atmel controller.    61  =  =
+
+		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers in general
 		static const int ATMELTIMEOUT = 250; /// timeout in ms
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
