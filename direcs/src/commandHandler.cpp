@@ -127,6 +127,9 @@ void CommandHandler::run()
 			// get command ID and use this ID in answer list
 			tempAnswer.ID = tempCommand.ID;
 
+			// add name of the calling class
+			tempAnswer.caller = tempCommand.caller;
+
 			// generate timestamp ("now")
 			tempAnswer.timestamp = QDateTime::currentDateTime();
 
@@ -137,7 +140,7 @@ void CommandHandler::run()
 			// debug msg
 			if (currentID > 0)
 			{
-				emit message( QString("command ID=%1 string=%2 time=%3").arg( tempAnswer.ID ).arg( tempAnswer.string ).arg( tempAnswer.timestamp.toString("hh:mm:ss.zzz") ));
+				emit message( QString("command ID=%1 string=%2 caller=%3 time=%4").arg( tempAnswer.ID ).arg( tempAnswer.string ).arg(tempAnswer.caller).arg( tempAnswer.timestamp.toString("hh:mm:ss.zzz") ));
 			}
 
 			// remove from "to do" list
@@ -221,7 +224,7 @@ void CommandHandler::takeCommand(QString commandString, QString callerName)
 	commandList.append(tempCommand);
 
 	// debug msg
-	emit message( QString("command %1, Id=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
+	// emit message( QString("command %1, Id=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
 
 	// create next command ID
 	currentID++;

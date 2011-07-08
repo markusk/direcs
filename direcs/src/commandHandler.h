@@ -144,6 +144,7 @@ class CommandHandler : public QThread
 		{
 			QString string;			/// this is the expected answer
 			unsigned char ID;		/// this is the unique ID
+			QString caller;			/// this is the name of the calling class (which called the Slot @sa takeCommand()
 			QDateTime timestamp;	/// this is the timestamps when the command execution *started*. With this we can check how long a command took, when we get the answer
 		};
 
