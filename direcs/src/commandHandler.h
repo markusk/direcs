@@ -28,7 +28,6 @@
 #include <QMutex>
 #include <QTime>
 #include <QTimer>
-#include <math.h>
 //-------------------------------------------------------------------
 
 /**
