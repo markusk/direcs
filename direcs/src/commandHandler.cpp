@@ -201,7 +201,7 @@ void CommandHandler::run()
 		}
 
 		//  e m i t  Signal
-//		emit sensorDataComplete();
+///		emit sensorDataComplete();   @todo this is old unused code from sensorThread. emit something else here?
 	}
 	stopped = false;
 }
@@ -289,10 +289,11 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 			}
 
 
-			/// --------------------------
-			/// @todo  and now? answer OKAY. no timeout. :-) bring answer to expecting thread e.g. sensorthread!!
-			/// --------------------------
-//			emit message( QString("class = %1").arg( this->staticMetaObject.className() ) ); /// @sa indexOfSignal use this for caller?
+			// ------------
+			// emit Signal
+			// ------------
+			// answer with the string which the Atmel received and with the name of the calling class which asked for executing this command
+			emit commandComplete(tempAnswer.string, tempAnswer.caller);
 
 			return;
 		}
