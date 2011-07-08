@@ -305,40 +305,6 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	int value = 0; // for conversion to int
 
 
-	if ((correspondingCommand != atmelCommand) || (stopped == true))
-	{
-//		emit message(QString("Answer %1 is not for me (SensorThread).").arg(atmelAnswer));
-		// emit message(QString("correspondingCommand %1 != atmelCommand %2 (SensorThread).").arg(correspondingCommand).arg(atmelCommand));
-		return;
-	}
-
-	//----------
-	// timeout?
-	//----------
-	if (duration.elapsed() > ATMELTIMEOUT)
-	{
-		emit message(QString("Timeout (%1ms > %2ms)").arg(duration.elapsed()).arg(ATMELTIMEOUT));
-
-		// timeout
-		// let this class know, that we had an error
-		robotState = false;
-		commandExecutedSuccessfull = false;
-
-		varMutex.lock();
-		atmelCommand = "none"; // reset current command
-		varMutex.unlock();
-
-		emit heartbeat(RED);
-		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
-		// stop this thread
-		stop();
-
-/// @todo is systemerror emission still needed?!?  s.a. other error situations within this class!
-		// inform other modules
-//	    emit systemerror(-2);
-
-		return;
-	}
 
 	//------------------
 	// everthing's fine
@@ -380,55 +346,14 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 			return;
 		}
 
-		if (atmelCommand == commandReadVoltageSensor2)
-		{
-			// store measured value
-			voltageSensorValue[VOLTAGESENSOR2] = value;
-
-//			emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR2)));
-
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-
-			varMutex.lock();
-			atmelCommand = "none"; // reset current command
-			varMutex.unlock();
-
-			/// @todo maybe set a seperate "go on with run thread" here?
-
-			commandExecutedSuccessfull = true;
-
-			return;
-		}
 
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
 		emit message("+++ whats goig on here=?"); /// @todo call stop() here ?!? when does this case occur?
 		return;
 	}
-	else
-	{
-		//--------------
-		// wrong answer
-		//--------------
-		emit message(QString("ERROR: Answer was %1 intead of *nnn#.").arg(atmelAnswer)); /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 
-		// let this class know, that we had an error
-		robotState = false;
-		commandExecutedSuccessfull = false;
-
-		varMutex.lock();
-		atmelCommand = "none"; // reset current command
-		varMutex.unlock();
-
-		emit heartbeat(RED);
-		emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
-		// stop this thread
-		stop();
-		return;
-	}
-	*/
+ */
 }
 
 
