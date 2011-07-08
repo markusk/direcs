@@ -74,9 +74,9 @@ class CommandHandler : public QThread
 		/**
 		This slot takes the a command string and adds it to a list to be executed by the Atmel controller.
 		@param commandString is the command
-		@param callerName is the name of the class which called this slot
+		@param caller is the name of the class which called this slot
 		*/
-		void takeCommand(QString commandString, QString callerName);
+		void takeCommand(QString commandString, QString caller);
 
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.
@@ -94,6 +94,13 @@ class CommandHandler : public QThread
 
 
 	signals:
+		/**
+		This signal is emitted, when a valid answer was completely received by the Atmel in time (all conditions necessary to be matched!).
+		@param answer is the answer string from the Atmel (i.e. *re# or *s7=867#)
+		@param caller is the name of the calling class (which called the Slot @sa takeCommand()
+		*/
+		void commandComplete(QString answer, QString caller);
+
 		/**
 		Sends a string over the network.
 		*/

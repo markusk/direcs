@@ -207,7 +207,7 @@ void CommandHandler::run()
 }
 
 
-void CommandHandler::takeCommand(QString commandString, QString callerName)
+void CommandHandler::takeCommand(QString commandString, QString caller)
 {
 	command tempCommand;
 
@@ -218,7 +218,7 @@ void CommandHandler::takeCommand(QString commandString, QString callerName)
 	// fill data structure
 	tempCommand.string = commandString;
 	tempCommand.ID = currentID;
-	tempCommand.caller = callerName;
+	tempCommand.caller = caller;
 
 	// add command and ID to command lists
 	commandList.append(tempCommand);
