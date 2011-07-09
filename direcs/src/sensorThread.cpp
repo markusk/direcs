@@ -1398,20 +1398,19 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 
 void SensorThread::readVoltageSensor(short int sensor)
 {
+	QString command;
+
+
 	// maybe robot is already recognized as OFF by another module
 	if (robotState == ON)
 	{
 		switch (sensor)
 		{
 			case VOLTAGESENSOR1:
-				varMutex.lock();
-				atmelCommand = commandReadVoltageSensor1;
-				varMutex.unlock();
+				command = commandReadVoltageSensor1;
 				break;
 			case VOLTAGESENSOR2:
-				varMutex.lock();
-				atmelCommand = commandReadVoltageSensor2;
-				varMutex.unlock();
+				command = commandReadVoltageSensor2;
 				break;
 			default:
 				// this line should be never reached
@@ -1420,17 +1419,13 @@ void SensorThread::readVoltageSensor(short int sensor)
 				break;
 		}
 
+		emit message(QString("Sending *%1#...").arg(command));
 
-		emit message(QString("Sending *%1#...").arg(atmelCommand));
-
-		// send command to (Atmel) command handler
-		emit sendCommand(atmelCommand, className);
+		// send command and caller class name to (Atmel) command handler
+		emit sendCommand(command, className);
 
 		return;
-	} // robot is ON
-
-	/// @todo TEST
-	emit message("+++ why is the robot OFF now? +++");
+	}
 }
 
 
