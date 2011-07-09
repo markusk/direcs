@@ -139,8 +139,6 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 	compassState = false;
 
-	commandExecutedSuccessfull = false;
-
 	varMutex.lock();
 	atmelCommand = "none"; // reset current command
 	varMutex.unlock();
@@ -648,10 +646,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		atmelCommand = "none"; // reset current command
 		varMutex.unlock();
 
-		commandExecutedSuccessfull = true;
-
-		/// @todo maybe set a seperate "go on with run thread" here?
-
 		return;
 	}
 
@@ -670,10 +664,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		atmelCommand = "none"; // reset current command
 		varMutex.unlock();
 
-		/// @todo maybe set a seperate "go on with run thread" here?
-
-		commandExecutedSuccessfull = true;
-
 		return;
 	}
 
@@ -685,7 +675,6 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 
 	// let this class know, that we had an error
 	robotState = false;
-	commandExecutedSuccessfull = false;
 
 	varMutex.lock();
 	atmelCommand = "none"; // reset current command
@@ -1412,11 +1401,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 	// maybe robot is already recognized as OFF by another module
 	if (robotState == ON)
 	{
-
-		// this command is not executed yet
-		commandExecutedSuccessfull = false;
-	/// @todo check if this should be moved to the robotstate==ON path !!
-
 		switch (sensor)
 		{
 			case VOLTAGESENSOR1:
