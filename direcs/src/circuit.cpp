@@ -22,6 +22,8 @@
 
 Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 {
+	className = this->staticMetaObject.className();
+
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
