@@ -138,12 +138,13 @@ void CommandHandler::run()
 			// add to answer list
 			answerList.append(tempAnswer);
 
-
+			/*
 			// debug msg
 			if (currentID > 0)
 			{
 				emit message( QString("command ID=%1 string=%2 caller=%3 time=%4").arg( tempAnswer.ID ).arg( tempAnswer.string ).arg(tempAnswer.caller).arg( tempAnswer.timestamp.toString("hh:mm:ss.zzz") ));
 			}
+			*/
 
 			// remove from "to do" list
 			commandList.removeFirst();
@@ -155,7 +156,7 @@ void CommandHandler::run()
 			//-----------------------
 			// send command to Atmel
 			//-----------------------
-			emit message(QString("SENDING COMMAND %1").arg(commandToBeSent));
+			// emit message(QString("SENDING COMMAND %1").arg(commandToBeSent));
 
 			// this command is not executed yet
 			commandSentSuccessfull = false;
@@ -171,7 +172,7 @@ void CommandHandler::run()
 				// start additional seperate timer. If we NEVER get an answer, this slot will be called
 				QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
 
-				emit message("Sent.");
+				// emit message("Sent.");
 			}
 			else
 			{
@@ -180,8 +181,6 @@ void CommandHandler::run()
 
 			// Unlock the mutex.
 			mutex->unlock();
-
-
 
 		} // robot is on  and  simulation mode is off
 
@@ -261,7 +260,9 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 			answerList.removeAt(i);
 
 			commandSentSuccessfull = true; // this lets the seperate timeout slot just return
-			emit message(QString("Expected answer received in %1").arg(className));
+
+			// debug msg
+			// emit message(QString("Expected answer received in %1").arg(className));
 
 			//----------
 			// timeout?

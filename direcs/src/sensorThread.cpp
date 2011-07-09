@@ -637,7 +637,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 	}
 
 	// debug msg
-	emit message(QString("Answer %1 received in %2. Command=%3. Value=%4").arg(atmelAnswer).arg(className).arg(command).arg(value));
+	// emit message(QString("Answer %1 received in %2. Command=%3. Value=%4").arg(atmelAnswer).arg(className).arg(command).arg(value));
 
 	// now store the voltage
 	if (command == commandReadVoltageSensor1)
