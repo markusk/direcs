@@ -171,6 +171,9 @@ void CommandHandler::run()
 
 			if (interface1->sendString(commandToBeSent) == true)
 			{
+				// let this run loop wait before sending the next command to the Atmel
+				commandInProgress = true;
+
 				// start own time measuring. This will be used, if we get an answer from the Atmel
 				duration.start();
 
