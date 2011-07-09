@@ -22,6 +22,8 @@
 
 CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 {
+	className = this->staticMetaObject.className();
+
 	stopped = false;
 	simulationMode = false;
 
@@ -259,7 +261,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 			answerList.removeAt(i);
 
 			commandSentSuccessfull = true; // this lets the seperate timeout slot just return
-			emit message("Expected answer received");
+			emit message(QString("Expected answer received in %1").arg(className));
 
 			//----------
 			// timeout?
