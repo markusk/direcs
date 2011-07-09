@@ -95,12 +95,13 @@ class InterfaceAvr : public QObject
 
 		/**
 		Returns an integer value which comes from a former recevied string.
-		Example: With *42# the 42 is the 'string' here.
+		Example: string is *s7=42#, than s7 is the command and 42 would be the value
 		@param string
 		@param &value is the int value when the conversion was successfull.
+		@param &comamnd will contain the command which was included in the string
 		@return true on access or false if an error occured.
 		*/
-		bool convertStringToInt(QString string, int &value);
+		bool convertStringToInt(QString string, int &value, QString &command);
 
 		/**
 		Checks if chars are avialable to be received.

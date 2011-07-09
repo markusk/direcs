@@ -287,13 +287,18 @@ bool InterfaceAvr::receiveInt(int *value)
 }
 
 
-bool InterfaceAvr::convertStringToInt(QString string, int &value)
+bool InterfaceAvr::convertStringToInt(QString string, int &value, QString &command)
 {
 	bool conversion = false;
 
 
-	// remove orignal command if this is prepended
-	// i.e. *s7=42#
+	// extract the command, i.e. 's7', for returning it
+	command = string.left( string.indexOf(divider) );
+	command.remove(starter);
+
+
+	// string is i.e. *s7=42#
+	// look for '='
 	if (string.contains(divider))
 	{
 		// remove everything from '*' to '='
