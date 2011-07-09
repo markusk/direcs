@@ -1414,7 +1414,7 @@ void SensorThread::readVoltageSensor(short int sensor)
 				break;
 			default:
 				// this line should be never reached
-				qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+				emit message(QString("WARNING: wrong sensor number %1 in readVoltageSensor()").arg(sensor));
 				return;
 				break;
 		}
