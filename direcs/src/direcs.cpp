@@ -4689,8 +4689,12 @@ void Direcs::robotStateHandler(bool state)
 			//-----------------------------------------------------------
 			// start the sensor thread for reading the sensors)
 			//-----------------------------------------------------------
+			// commands now go to the commandHandler
+			connect(sensorThread, SIGNAL(sendCommand(QString,QString)), commandHandler, SLOT(takeCommand(QString,QString)));
+
 			// whenever there is a material error, react!
 			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
 			emit splashMessage("Starting sensor thread...");
 			emit message("Starting sensor thread...", false);
 			sensorThread->start();
