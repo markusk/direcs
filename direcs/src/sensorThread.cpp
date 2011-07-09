@@ -1432,41 +1432,40 @@ void SensorThread::readVoltageSensor(short int sensor)
 	if (robotState == ON)
 	{
 
-	// this command is not executed yet
-	commandExecutedSuccessfull = false;
-/// @todo check if this should be moved to the robotstate==ON path !!
+		// this command is not executed yet
+		commandExecutedSuccessfull = false;
+	/// @todo check if this should be moved to the robotstate==ON path !!
 
-	switch (sensor)
-	{
-		case VOLTAGESENSOR1:
-			varMutex.lock();
-			atmelCommand = commandReadVoltageSensor1;
-			varMutex.unlock();
-			break;
-		case VOLTAGESENSOR2:
-			varMutex.lock();
-			atmelCommand = commandReadVoltageSensor2;
-			varMutex.unlock();
-			break;
-		default:
-			// this line should be never reached
-			qDebug("WARNING: wrong sensor number in readVoltageSensor()");
-			return;
-			break;
-	}
-
-
-	emit message(QString("Sending *%1#...").arg(atmelCommand));
-
-	// send command to (Atmel) command handler
-	emit sendCommand(atmelCommand, className);
+		switch (sensor)
+		{
+			case VOLTAGESENSOR1:
+				varMutex.lock();
+				atmelCommand = commandReadVoltageSensor1;
+				varMutex.unlock();
+				break;
+			case VOLTAGESENSOR2:
+				varMutex.lock();
+				atmelCommand = commandReadVoltageSensor2;
+				varMutex.unlock();
+				break;
+			default:
+				// this line should be never reached
+				qDebug("WARNING: wrong sensor number in readVoltageSensor()");
+				return;
+				break;
+		}
 
 
+		emit message(QString("Sending *%1#...").arg(atmelCommand));
+
+		// send command to (Atmel) command handler
+		emit sendCommand(atmelCommand, className);
+
+		return;
 	} // robot is ON
 
 	/// @todo TEST
 	emit message("+++ why is the robot OFF now? +++");
-
 }
 
 
