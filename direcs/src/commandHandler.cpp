@@ -242,7 +242,6 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	// we have an answer, so we can tell the run-loop, that it can continue
 	commandInProgress = false;
 
-
 	// see if executed answer is in list of expected answers
 	for (int i=0; i<answerList.size(); i++)
 	{

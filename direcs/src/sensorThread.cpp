@@ -626,94 +626,81 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 	}
 
 
-	//------------------
-	// everthing's fine
-	//------------------
-	/// @todo check if we have numbers between the * and #
-	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
+	// debug msg
+	emit message(QString("Answer %1 was correct (%2).").arg(atmelAnswer).arg(className));
+
+	// convert answer to int (get sensor value)
+	if (interface1->convertStringToInt(atmelAnswer, value) == false) /// @todo move this method to commandHandler or so...
 	{
-		emit message(QString("Answer %1 was correct (%2).").arg(atmelAnswer).arg(className));
+		// error
+		emit message("ERROR converting sensor value.");
 
-		// convert answer to int
-		if (interface1->convertStringToInt(atmelAnswer, value) == false)
-		{
-			// error
-			emit message("ERROR converting sensor value.");
-
-			// do not return, continue here! In both cases, we store the value! In case of error, value is 0.
-		}
-
-		// check the last command
-		if (atmelCommand == commandReadVoltageSensor1)
-		{
-			// store measured value
-			voltageSensorValue[VOLTAGESENSOR1] = value;
-
-			emit message(QString("VOLTAGESENSOR1 = s8 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR1)));
-
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-
-			varMutex.lock();
-			atmelCommand = "none"; // reset current command
-			varMutex.unlock();
-
-			commandExecutedSuccessfull = true;
-
-			/// @todo maybe set a seperate "go on with run thread" here?
-
-			return;
-		}
-
-		if (atmelCommand == commandReadVoltageSensor2)
-		{
-			// store measured value
-			voltageSensorValue[VOLTAGESENSOR2] = value;
-
-			emit message(QString("VOLTAGESENSOR2 = s7 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR2)));
-
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
-
-			varMutex.lock();
-			atmelCommand = "none"; // reset current command
-			varMutex.unlock();
-
-			/// @todo maybe set a seperate "go on with run thread" here?
-
-			commandExecutedSuccessfull = true;
-
-			return;
-		}
-
-		varMutex.lock();
-		atmelCommand = "none"; // reset current command
-		emit message("+++ whats goig on here=?"); /// @todo call stop() here ?!? when does this case occur?
-		return;
+		// do not return, continue here! In both cases, we store the value! In case of error, value is 0.
 	}
-	else
-	{
-		//--------------
-		// wrong answer
-		//--------------
-		emit message(QString("ERROR: Answer was %1 intead of *nnn#.").arg(atmelAnswer)); /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
 
-		// let this class know, that we had an error
-		robotState = false;
-		commandExecutedSuccessfull = false;
+	// now store the voltage
+	if (atmelAnswer == commandReadVoltageSensor1)
+	{
+		// store measured value
+		voltageSensorValue[VOLTAGESENSOR1] = value;
+
+		emit message(QString("VOLTAGESENSOR1 = s8 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR1)));
+
+		// send value over the network
+		// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+		emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 
 		varMutex.lock();
 		atmelCommand = "none"; // reset current command
 		varMutex.unlock();
 
-		emit heartbeat(RED);
-		emit message(QString("<font color=\"#FF0000\">ERROR reading sensor. Stopping %1!</font>").arg(className));
-		// stop this thread
-		stop();
+		commandExecutedSuccessfull = true;
+
+		/// @todo maybe set a seperate "go on with run thread" here?
+
 		return;
 	}
+
+	if (atmelAnswer == commandReadVoltageSensor2)
+	{
+		// store measured value
+		voltageSensorValue[VOLTAGESENSOR2] = value;
+
+		emit message(QString("VOLTAGESENSOR2 = s7 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR2)));
+
+		// send value over the network
+		// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
+		emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR2).arg( (int) voltageSensorValue[VOLTAGESENSOR2]));
+
+		varMutex.lock();
+		atmelCommand = "none"; // reset current command
+		varMutex.unlock();
+
+		/// @todo maybe set a seperate "go on with run thread" here?
+
+		commandExecutedSuccessfull = true;
+
+		return;
+	}
+
+
+	//-------------------
+	// unexpected answer
+	//-------------------
+	emit message(QString("ERROR: Answer %1 not expected in %2.").arg(atmelAnswer).arg(className));
+
+	// let this class know, that we had an error
+	robotState = false;
+	commandExecutedSuccessfull = false;
+
+	varMutex.lock();
+	atmelCommand = "none"; // reset current command
+	varMutex.unlock();
+
+	emit heartbeat(RED);
+	emit message(QString("<font color=\"#FF0000\">ERROR reading sensor. Stopping %1!</font>").arg(className));
+	// stop this thread
+	stop();
 }
 
 
