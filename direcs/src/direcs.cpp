@@ -1199,7 +1199,7 @@ void Direcs::shutdown()
 		//--------------------------------
 		// quit the camThread
 		//--------------------------------
-		if (camThread->isRunning() == true)
+		if (camThread->isRunning())
 		{
 			emit message("Stopping camera thread...");
 			emit splashMessage("Stopping camera thread...");
@@ -1240,7 +1240,7 @@ void Direcs::shutdown()
 	// quit the obstacle check thread
 	//--------------------------------
 	//qDebug("Starting to stop the obstacle check thread NOW!");
-	if (obstCheckThread->isRunning() == true)
+	if (obstCheckThread->isRunning())
 	{
 		emit message("Stopping obstacle check thread...");
 		emit splashMessage("Stopping obstacle check thread...");
@@ -1279,7 +1279,7 @@ void Direcs::shutdown()
 	//--------------------------------
 	// quit the laserThread
 	//--------------------------------
-	if (laserThread->isRunning() == true)
+	if (laserThread->isRunning())
 	{
 		emit message("Stopping laser thread...");
 		emit splashMessage("Stopping laser thread...");
@@ -1319,7 +1319,7 @@ void Direcs::shutdown()
 	//--------------------------------
 	// quit the speakThread
 	//--------------------------------
-	if (speakThread->isRunning() == true)
+	if (speakThread->isRunning())
 	{
 		emit message("Stopping speak thread...");
 		emit splashMessage("Stopping speak thread...");
@@ -1359,7 +1359,7 @@ void Direcs::shutdown()
 	//--------------------------------
 	// quit the joystick thread
 	//--------------------------------
-	if (joystick->isRunning() == true)
+	if (joystick->isRunning())
 	{
 		emit message("Stopping joystick thread...");
 		emit splashMessage("Stopping joystick thread...");
@@ -1401,7 +1401,7 @@ void Direcs::shutdown()
 		//--------------------------------
 		// quit the plotThread
 		//--------------------------------
-		if (plotThread->isRunning() == true)
+		if (plotThread->isRunning())
 		{
 			emit message("Stopping Plot thread...");
 			emit splashMessage("Stopping Plot thread...");
@@ -1443,7 +1443,7 @@ void Direcs::shutdown()
 	// quit the sensor thread
 	//--------------------------
 	//qDebug("Starting to stop the sensor thread NOW!");
-	if (sensorThread->isRunning() == true)
+	if (sensorThread->isRunning())
 	{
 		emit message("Stopping sensor thread...");
 		emit splashMessage("Stopping sensor thread...");
@@ -1483,7 +1483,7 @@ void Direcs::shutdown()
 	// quit the command handler
 	//--------------------------
 	//qDebug("Starting to stop the command handler NOW!");
-	if (commandHandler->isRunning() == true)
+	if (commandHandler->isRunning())
 	{
 		emit message("Stopping command handler...");
 		emit splashMessage("Stopping command handler...");
@@ -1523,7 +1523,7 @@ void Direcs::shutdown()
 	//--------------------------
 	/// \todo quit the heartbeat thread
 	//--------------------------
-	if (heartbeat->isRunning() == true)
+	if (heartbeat->isRunning())
 	{
 		emit message("Stopping heartbeat thread...");
 
@@ -1562,7 +1562,7 @@ void Direcs::shutdown()
 	//--------------------------------
 	// quit the network thread
 	//--------------------------------
-	if (netThread->isRunning() == true)
+	if (netThread->isRunning())
 	{
 		emit message("Stopping network thread...");
 		if (!consoleMode)
