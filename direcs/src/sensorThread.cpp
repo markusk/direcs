@@ -645,7 +645,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		// store measured value
 		voltageSensorValue[VOLTAGESENSOR1] = value;
 
-		emit message(QString("VOLTAGESENSOR1 = s8 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR1)));
+		emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(commandReadVoltageSensor1).arg(convertToVolt(VOLTAGESENSOR1)));
 
 		// send value over the network
 		// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
@@ -667,7 +667,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		// store measured value
 		voltageSensorValue[VOLTAGESENSOR2] = value;
 
-		emit message(QString("VOLTAGESENSOR2 = s7 = %1 Volt").arg(convertToVolt(VOLTAGESENSOR2)));
+		emit message(QString("VOLTAGESENSOR2 = %1 = %2 Volt").arg(commandReadVoltageSensor2).arg(convertToVolt(VOLTAGESENSOR2)));
 
 		// send value over the network
 		// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
