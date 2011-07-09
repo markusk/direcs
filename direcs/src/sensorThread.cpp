@@ -616,6 +616,7 @@ contacts temporarily removed from robot!! */
 void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 {
 	int value = 0; // for conversion to int
+	QString command = "error";
 
 
 	// was it this class which asked for the answer?
@@ -626,11 +627,8 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 	}
 
 
-	// debug msg
-	emit message(QString("Answer %1 was correct (%2).").arg(atmelAnswer).arg(className));
-
 	// convert answer to int (get sensor value)
-	if (interface1->convertStringToInt(atmelAnswer, value) == false) /// @todo move this method to commandHandler or so...
+	if (interface1->convertStringToInt(atmelAnswer, value, command) == false) /// @todo move this method to commandHandler or so...
 	{
 		// error
 		emit message("ERROR converting sensor value.");
@@ -638,8 +636,11 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		// do not return, continue here! In both cases, we store the value! In case of error, value is 0.
 	}
 
+	// debug msg
+	emit message(QString("Answer %1 received in %2. Command=%3. Value=%4").arg(atmelAnswer).arg(className).arg(command).arg(value));
+
 	// now store the voltage
-	if (atmelAnswer == commandReadVoltageSensor1)
+	if (command == commandReadVoltageSensor1)
 	{
 		// store measured value
 		voltageSensorValue[VOLTAGESENSOR1] = value;
@@ -661,7 +662,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 		return;
 	}
 
-	if (atmelAnswer == commandReadVoltageSensor2)
+	if (command == commandReadVoltageSensor2)
 	{
 		// store measured value
 		voltageSensorValue[VOLTAGESENSOR2] = value;
@@ -687,7 +688,7 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 	//-------------------
 	// unexpected answer
 	//-------------------
-	emit message(QString("ERROR: Answer %1 not expected in %2.").arg(atmelAnswer).arg(className));
+	emit message(QString("ERROR: Answer %1 not expected in %2.").arg(command).arg(className));
 
 	// let this class know, that we had an error
 	robotState = false;
@@ -1460,6 +1461,8 @@ bool SensorThread::readMotorSensor(short int sensor)
 {
 	int value = 0;
 	QString answer = "error";
+	QString command = "error";
+
 
 	switch (sensor)
 	{
@@ -1471,7 +1474,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR1] = value;
@@ -1492,7 +1495,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR2] = value;
@@ -1515,7 +1518,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR3] = value;
@@ -1540,7 +1543,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// store measured value
 						motorSensorValue[MOTORSENSOR4] = value;
@@ -1567,6 +1570,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 {
 	int value = 0;
 	QString answer = "error";
+	QString command = "error";
 
 
 	switch (sensor)
@@ -1579,7 +1583,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// store measured value
 						drivenDistance[DRIVENDISTANCE1] = value;
@@ -1600,7 +1604,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// store measured value
 						drivenDistance[DRIVENDISTANCE2] = value;
@@ -1625,6 +1629,7 @@ bool SensorThread::readCompassAxis(short int axis)
 {
 	int value = 0;
 	QString answer = "error";
+	QString command = "error";
 
 
 	switch (axis)
@@ -1637,7 +1642,7 @@ bool SensorThread::readCompassAxis(short int axis)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// convert the value to degrees and store the value in the class member
 						xAxis =  convertToDegree(value);
@@ -1658,7 +1663,7 @@ bool SensorThread::readCompassAxis(short int axis)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// convert the value to degrees and store the value in the class member
 						yAxis =  convertToDegree(value);
@@ -1679,7 +1684,7 @@ bool SensorThread::readCompassAxis(short int axis)
 				if (interface1->receiveString(answer) == true)
 				{
 					// convert to int
-					if (interface1->convertStringToInt(answer, value))
+					if (interface1->convertStringToInt(answer, value, command))
 					{
 						// convert the value to degrees and store the value in the class member
 						zAxis =  convertToDegree(value);
