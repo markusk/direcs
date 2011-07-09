@@ -234,7 +234,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 	// emit message( QString("command %1, Id=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
 
 	// create next command ID
-	currentID++;
+	currentID++; /// @todo double cross check: do have we have more than x commands in the queued in the line? > emit systemerror than.
 
 	// unlock mutex
 	commandListMutex.unlock();
@@ -408,15 +408,8 @@ void CommandHandler::setSimulationMode(bool state)
 	// fill array with some nice values
 	if (simulationMode == true)
 	{
-//		// copy sim values into the distances values
-//		for (int i=0; i<laserScannerValuesFront.count(); i++)
-//		{
-//			// the distances
-//			// laserScannerValuesFront[i] = 2.30; //(i+1) / 100;
-//			laserScannerValuesFront[i] = simulationValuesFront[i];
-//			// the flags
-//			laserScannerFlagsFront[i] = OBSTACLE;
-//		}
+		/// @todo implement simulation mode for commandHandler
+		emit message("ERROR: simulation mode noe yet implemented in CommandHandler class!!");
 	}
 	else
 	{
