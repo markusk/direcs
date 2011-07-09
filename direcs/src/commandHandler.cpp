@@ -293,8 +293,8 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 			// ------------
 			// emit Signal
 			// ------------
-			// answer with the string which the Atmel received and with the name of the calling class which asked for executing this command
-			emit commandComplete(tempAnswer.string, tempAnswer.caller);
+			// answer with the complete string which the Atmel received and with the name of the calling class which asked for executing this command
+			emit commandComplete(atmelAnswer, tempAnswer.caller);
 
 			return;
 		}
