@@ -90,7 +90,7 @@ class CommandHandler : public QThread
 		/**
 		This Slot is called if we never get an answer from the Atmel
 		*/
-		void timeout();
+		void generalTimeout();
 
 
 	signals:
@@ -140,6 +140,7 @@ class CommandHandler : public QThread
 		bool robotState;					// stores the robot state within this class
 		bool commandSentSuccessfull;		/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 		unsigned char currentID;			/// this is a unique ID which is increased by one at every new received command (kind of process ID)
+		QTimer *timeoutTimer;
 
 		struct command
 		{

@@ -44,6 +44,9 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	// send answers from interfaceAvr to this class
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
+
+	timeoutTimer = new QTimer();
+	connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(generalTimeout()));
 }
 
 
@@ -51,6 +54,8 @@ CommandHandler::~CommandHandler()
 {
 	// stop all activities first
 	stop();
+
+	delete timeoutTimer;
 }
 
 
@@ -170,7 +175,8 @@ void CommandHandler::run()
 				duration.start();
 
 				// start additional seperate timer. If we NEVER get an answer, this slot will be called
-				QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
+				// a singleShot timer did not work here, so we use the class memer...
+				timeoutTimer->start(ATMELTIMEOUT);
 
 				// emit message("Sent.");
 			}
@@ -374,30 +380,24 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 }
 
 
-void CommandHandler::timeout()
+void CommandHandler::generalTimeout()
 {
 	// first check if we had already an answer from the Atmel
 	if (commandSentSuccessfull == true)
 	{
-		// reset state
-	//	commandExecutedSuccessfull = false;
-
 		// we are happy
 		return;
 	}
 
-	emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
+	emit message(QString("<font color=\"#FF0000\">ERROR: General timeout (> %1ms). Stopping %2!</font>").arg(ATMELTIMEOUT).arg(className));
 
 	// let this class know, that we had an error
 	robotState = OFF;
 
 	emit heartbeat(RED);
 
-	emit message("<font color=\"#FF0000\">ERROR reading sensor. Stopping sensorThread!</font>");
 	// stop this thread
 	stop();
-
-	return;
 }
 
 
