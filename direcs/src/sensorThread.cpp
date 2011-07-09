@@ -192,18 +192,11 @@ void SensorThread::run()
 			// voltage sensors
 			//-----------------
 			readVoltageSensor(VOLTAGESENSOR1);
-msleep(250);
-/*
-			// wait until last command has finished
-			while ((commandExecutedSuccessfull == false) && (stopped==false))
-				msleep(50);
+			msleep(250);
 
 			readVoltageSensor(VOLTAGESENSOR2);
+			msleep(250);
 
-			// wait until last command has finished
-			while ((commandExecutedSuccessfull == false) && (stopped==false))
-				msleep(50);
-*/
 
 /// @todo implement reste of this to new event method
 /* this here
