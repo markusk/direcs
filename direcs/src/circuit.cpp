@@ -363,11 +363,17 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	}
 
 	// debug msg
-	// emit message(QString("Answer %1 received in %2. Command=%3. Value=%4").arg(atmelAnswer).arg(className).arg(command).arg(value));
+	// emit message(QString("Answer %1 received in %2. Command=%3.").arg(atmelAnswer).arg(className).arg(commandInitCircuit));
 
 	//------
 	// okay
 	//------
+
+	// remove starter and terminator from string (different to sensorThread)
+	atmelAnswer.remove(starter);
+	atmelAnswer.remove(terminator);
+
+	// check answer
 	if (atmelAnswer == commandInitCircuit) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
 	{
 		atmelCommand = "none"; // reset current command
