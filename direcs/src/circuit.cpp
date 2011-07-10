@@ -51,6 +51,8 @@ Circuit::~Circuit()
 
 void Circuit::initCircuit()
 {
+	QString command = commandInitCircuit;
+
 	/*
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
@@ -102,15 +104,10 @@ void Circuit::initCircuit()
 	emit robotState(false);
 	*/
 
-/// TEST TEST TEST with commandHandler
+	emit message(QString("%1 sends *%2#...").arg(className).arg(command));
 
-	emit message("Robot is ON (fake).");
-	atmelCommand = "none"; // reset current command
-	expectedAtmelAnswer.clear();
-	firstInitDone = true;
-	circuitState = true;
-
-	emit robotState(true);
+	// send command and caller class name to (Atmel) command handler
+	emit sendCommand(command, className);
 }
 
 
@@ -177,6 +174,7 @@ void Circuit::initCompass()
 
 void Circuit::sleep()
 {
+/*
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (circuitState)
 	{
@@ -221,6 +219,7 @@ void Circuit::sleep()
 	expectedAtmelAnswer.clear();
 
 	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
+*/
 }
 
 
