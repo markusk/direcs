@@ -52,6 +52,7 @@ Circuit::~Circuit()
 
 void Circuit::initCircuit()
 {
+	/*
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
 	if (circuitState)
@@ -98,13 +99,25 @@ void Circuit::initCircuit()
 	firstInitDone = true;
 	circuitState = false;
 
-	// emit result (instead ofold-school returning 'bool')
+	// emit result (instead of old-school returning 'bool')
 	emit robotState(false);
+	*/
+
+/// TEST TEST TEST with commandHandler
+
+	emit message("Robot is ON (fake).");
+	atmelCommand = "none"; // reset current command
+	expectedAtmelAnswer.clear();
+	firstInitDone = true;
+	circuitState = true;
+
+	emit robotState(true);
 }
 
 
 void Circuit::initCompass()
 {
+/*
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (circuitState)
 	{
@@ -149,6 +162,17 @@ void Circuit::initCompass()
 	emit message("Compass is OFF.");
 
 	emit compassState(false);
+	*/
+
+
+	/// TEST TEST TEST with commandHandler
+
+	atmelCommand = "none"; // reset current command
+	expectedAtmelAnswer.clear();
+	compassCircuitState = true;
+	emit message("Compass is ON (fake).");
+
+	emit compassState(true);
 }
 
 
