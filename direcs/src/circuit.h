@@ -78,13 +78,6 @@ class Circuit : public QObject
 		void takeCommandAnswer(QString atmelAnswer, QString caller);
 
 
-	private slots:
-		/**
-		This Slot is called if we never get an answer from the Atmel
-		*/
-		void timeout();
-
-
 	signals:
 		/**
 		This Signal sends a command to the (Atmel) command handler. @sa CommandHandler()
