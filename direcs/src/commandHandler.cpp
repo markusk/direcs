@@ -262,7 +262,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 		commandList.append(tempCommand);
 
 		// debug msg
-		// emit message( QString("command %1, Id=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
+		// emit message( QString("Recveived command %1, ID=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
 
 		// create next command ID
 		currentID++; /// @todo double cross check: do have we have more than x commands in the queued in the line? > emit systemerror than.
@@ -294,13 +294,13 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 			// answer found
 			//--------------
 
+			// debug msg
+			// emit message(QString("Expected answer %1 received in %2").arg(atmelAnswer).arg(className));
+
 			// remove element from answer list
 			answerList.removeAt(i);
 
 			commandSentSuccessfull = true; // this lets the seperate timeout slot just return
-
-			// debug msg
-			// emit message(QString("Expected answer received in %1").arg(className));
 
 			//----------
 			// timeout?
