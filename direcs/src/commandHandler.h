@@ -79,11 +79,10 @@ class CommandHandler : public QThread
 		void takeCommand(QString commandString, QString caller);
 
 		/**
-		This slot takes the received answers from the Atmel after sending a command string to it.
+		This slot takes the received answers from the Atmel after sending a command string was sent to it.
 		@param atmelAnswer contains the answer
-		@param correspondingCommand contains the command which was used in the Slot @sa InterfaceAvr::commandCompleted()
 		*/
-		void takeCommandAnswer(QString atmelAnswer, QString correspondingCommand);
+		void takeCommandAnswer(QString atmelAnswer);
 
 
 	signals:

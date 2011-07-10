@@ -41,7 +41,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 	currentID = 0;
 
 	// send answers from interfaceAvr to this class
-	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
+	connect(interface1, SIGNAL(commandCompleted(QString)), this, SLOT(takeCommandAnswer(QString)));
 }
 
 
@@ -273,7 +273,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 }
 
 
-void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondingCommand)
+void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 {
 	answer tempAnswer;
 

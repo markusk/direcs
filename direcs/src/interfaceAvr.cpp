@@ -182,10 +182,6 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 bool InterfaceAvr::sendString(QString string)
 {
-	// store the "current command"
-	// this will be sent back, when emmiting the commandCompleted Signal!
-	lastCommand = string;
-
 	// add starter
 	string.prepend("*");
 
@@ -440,7 +436,7 @@ void InterfaceAvr::onReadyRead()
 		emit message(QString("Atmel says: %1").arg(commandString));
 
 		//  emit completed Atmel command
-		emit commandCompleted(commandString, lastCommand);
+		emit commandCompleted(commandString);
 
 		commandString.clear();
 		bytes.clear();
