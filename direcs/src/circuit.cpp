@@ -223,8 +223,9 @@ void Circuit::sleep()
 }
 
 
-void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
+void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 {
+/*
 //	emit message( QString("Circuit takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 //	emit message( QString("Circuit checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
 /// @todo simplifiy takeCommandAnswer like in circuit.cpp!
@@ -352,6 +353,47 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 			return;
 		} // sleep
 	}
+*/
+
+	// was it this class which asked for the answer?
+	if (caller != className) // not 'stopped=true' check here in contrast to sensorThread
+	{
+		emit message(QString("Answer %1 is not for %2.").arg(atmelAnswer).arg(className));
+		return;
+	}
+
+	// debug msg
+	// emit message(QString("Answer %1 received in %2. Command=%3. Value=%4").arg(atmelAnswer).arg(className).arg(command).arg(value));
+
+	//------
+	// okay
+	//------
+	if (atmelAnswer == commandInitCircuit) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
+	{
+		atmelCommand = "none"; // reset current command
+		firstInitDone = true;
+		circuitState = true;
+		emit robotState(true);
+		return;
+	}
+
+
+	//-------------------
+	// unexpected answer
+	//-------------------
+	qDebug("INFO from initCircuit: Robot is OFF.");
+	emit message(QString("ERROR: Answer %1 not expected in %2.").arg(atmelAnswer).arg(className));
+
+	// let this class know, that we had an error
+	firstInitDone = true;
+	circuitState = false;
+
+	// let other classes know, that we had an error
+	emit robotState(false);
+
+//	varMutex.lock();
+///	atmelCommand = "none"; /// reset current command      < < < < <   check this < < < < also senorThread ! !
+//	varMutex.unlock();
 }
 
 

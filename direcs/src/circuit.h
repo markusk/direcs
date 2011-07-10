@@ -76,9 +76,9 @@ class Circuit : public QObject
 		/**
 		This slot takes the received answers from the Atmel after sending a command string to it.
 		@param atmelAnswer contains the answer
-		@param regardingCommand contains the command which was used in the Slot @sa InterfaceAvr::commandCompleted()
+		@param caller is the name of the class which called this slot
 		*/
-		void takeCommandAnswer(QString atmelAnswer, QString regardingCommand);
+		void takeCommandAnswer(QString atmelAnswer, QString caller);
 
 
 	private slots:
