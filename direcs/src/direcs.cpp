@@ -3570,6 +3570,14 @@ void Direcs::readSettings()
 			break;
 	}
 
+/*
+	unsigned long sleepTimeSensorThread;
+	unsigned long sleepTimeCommandHandler;
+	unsigned long intervalTimeSensorThread;
+	unsigned long atmelTimeout;
+*/
+} // readSettings
+
 
 void Direcs::enableRemoteControlListening(bool state)
 {

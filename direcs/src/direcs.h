@@ -401,6 +401,10 @@ class Direcs : public QObject
 		bool endSpeedMotor2Reached;
 		bool endSpeedMotor3Reached;
 		bool endSpeedMotor4Reached;
+		unsigned long sleepTimeSensorThread;
+		unsigned long sleepTimeCommandHandler;
+		unsigned long intervalTimeSensorThread;
+		unsigned long atmelTimeout;
 		unsigned int value;
 		float floatValue;
 		bool consoleMode; /// is true if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
