@@ -372,7 +372,9 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	atmelAnswer.remove(starter);
 	atmelAnswer.remove(terminator);
 
+	//--------------
 	// check answer
+	//--------------
 	if (atmelAnswer == commandInitCircuit) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
 	{
 		firstInitDone = true;
@@ -385,19 +387,19 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	//-------------------
 	// unexpected answer
 	//-------------------
+
+	// we do not need to check worng answers for 'sleep' or 'initCompass'. All we need to do now is makr the robot as OFF and let all other moduled know that.
 	qDebug("INFO from initCircuit: Robot is OFF.");
 	emit message(QString("ERROR: Answer %1 not expected in %2.").arg(atmelAnswer).arg(className));
 
 	// let this class know, that we had an error
 	firstInitDone = true;
 	circuitState = false;
+	compassCircuitState = false;
 
 	// let other classes know, that we had an error
 	emit robotState(false);
-
-//	varMutex.lock();
-///	atmelCommand = "none"; /// reset current command      < < < < <   check this < < < < also senorThread ! !
-//	varMutex.unlock();
+	emit compassState(false);
 }
 
 
