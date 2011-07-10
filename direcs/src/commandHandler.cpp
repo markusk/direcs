@@ -45,6 +45,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 	// send answers from interfaceAvr to this class
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 
+	// timer which ckecks if we have a general timout when waiting for a command answer
 	timeoutTimer = new QTimer();
 	connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(generalTimeout()));
 }
@@ -61,6 +62,9 @@ CommandHandler::~CommandHandler()
 
 void CommandHandler::stop()
 {
+	// stop general timeout timer since we got an answer
+	timeoutTimer->stop();
+
 	stopped = true;
 
 	// send "off" or "shutdown" heartbeat signal over network to remote app
@@ -161,7 +165,7 @@ void CommandHandler::run()
 			//-----------------------
 			// send command to Atmel
 			//-----------------------
-			// emit message(QString("SENDING COMMAND %1").arg(commandToBeSent));
+			emit message(QString("SENDING COMMAND %1").arg(commandToBeSent));
 
 			// this command is not executed yet
 			commandSentSuccessfull = false;
@@ -179,9 +183,10 @@ void CommandHandler::run()
 
 				// start additional seperate timer. If we NEVER get an answer, this slot will be called
 				// a singleShot timer did not work here, so we use the class memer...
-				timeoutTimer->start(ATMELTIMEOUT);
+				if (timeoutTimer->isActive() == false)
+					timeoutTimer->start(ATMELTIMEOUT);
 
-				// emit message("Sent.");
+				emit message("Sent.");
 			}
 			else
 			{
@@ -248,6 +253,10 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 {
 	answer tempAnswer;
 
+
+
+	// stop general timeout timer since we got an answer
+	timeoutTimer->stop();
 
 	// we have an answer, so we can tell the run-loop, that it can continue
 	commandInProgress = false;
