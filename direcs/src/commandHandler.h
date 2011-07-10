@@ -87,10 +87,10 @@ class CommandHandler : public QThread
 
 
 	private slots:
-		/**
-		This Slot is called if we never get an answer from the Atmel
-		*/
-		void generalTimeout();
+//		/**
+//		This Slot is called if we never get an answer from the Atmel
+//		*/
+//		void generalTimeout();
 
 
 	signals:

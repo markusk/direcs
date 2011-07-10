@@ -433,7 +433,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
  */
 }
 
-
+/*
 void CommandHandler::generalTimeout()
 {
 	// first check if we had already an answer from the Atmel
@@ -453,7 +453,7 @@ void CommandHandler::generalTimeout()
 	// stop this thread
 	stop();
 }
-
+*/
 
 void CommandHandler::setSimulationMode(bool state)
 {
