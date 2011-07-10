@@ -254,7 +254,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 			commandSentSuccessfull = false;
 
 			emit heartbeat(RED);
-			emit message(QString("<font color=\"#FF0000\">ERROR when waiting executing command. Stopping %1!</font>").arg(className));
+			emit message(QString("<font color=\"#FF0000\">ERROR when waiting for executing command. Stopping %1!</font>").arg(className));
 			// stop this thread
 			stop();
 
@@ -339,13 +339,14 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 				commandSentSuccessfull = false;
 
 				emit heartbeat(RED);
-				emit message(QString("<font color=\"#FF0000\">ERROR executing command. Stopping %1!</font>").arg(className));
+				emit message(QString("<font color=\"#FF0000\">ERROR when waiting executing command. Stopping %1!</font>").arg(className));
 				// stop this thread
 				stop();
 
-		/// @todo is systemerror emission still needed?!?  s.a. other error situations within this class!
-				// inform other modules
-		//	    emit systemerror(-2);
+				//-----------------------
+				// inform other modules!
+				//-----------------------
+				emit robotState(false);
 
 				return;
 			}
@@ -365,18 +366,22 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	//------------------
 	// answer not found
 	//------------------
-	emit message(QString("<font color=\"#FF0000\">ERROR! Answer %1 not expected. Stopping commandHandler!</font>").arg(atmelAnswer));
 
 	// let this class know, that we had an error
 	setRobotState(OFF);;
 	commandSentSuccessfull = false;
 
 	emit heartbeat(RED);
+	emit message(QString("<font color=\"#FF0000\">ERROR! Answer %1 not expected. Stopping Stopping %2!</font>").arg(className).arg(className));
 	// stop this thread
 	stop();
+
+	//-----------------------
+	// inform other modules!
+	//-----------------------
+	emit robotState(false);
+
 	return;
-
-
 
 /*
 	int value = 0; // for conversion to int
