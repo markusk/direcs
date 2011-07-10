@@ -90,6 +90,11 @@ class Circuit : public QObject
 
 	signals:
 		/**
+		This Signal sends a command to the (Atmel) command handler. @sa CommandHandler()
+		*/
+		void sendCommand(QString command, QString sender);
+
+		/**
 		This signal emits the robot (circuit) state to all connected slots, to tell them if the robot is ON or OFF
 		@param state can be true or false
 		*/

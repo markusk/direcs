@@ -41,8 +41,6 @@ Circuit::Circuit() : QObject()
 	commandInitCircuit = "re";
 	commandInitCompass	= "cc";
 	commandSleep		= "sl";
-
-	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
