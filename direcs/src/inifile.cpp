@@ -121,12 +121,6 @@ void Inifile::writeSetting(QString group, QString name, int value)
 
 int Inifile::readSetting(QString group, QString name)
 {
-	// check if ini-file is writable
-	if (settings->isWritable() == false)
-	{
-		return -2;
-	}
-
 	// string for group+value in inifile
 	QString iniSection = group + "/" + name;
 
@@ -138,12 +132,6 @@ int Inifile::readSetting(QString group, QString name)
 
 QString Inifile::readString(QString group, QString name)
 {
-	// check if ini-file is writable
-	if (settings->isWritable() == false)
-	{
-		return "error2";
-	}
-
 	// string for group+name in inifile
 	QString iniSection = group + "/" + name;
 
