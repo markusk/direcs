@@ -184,7 +184,8 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI, bool
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
-	circuit1 = new Circuit(interface1, mutex);
+//	circuit1 = new Circuit(interface1, mutex);
+	circuit1 = new Circuit();
 ///	\todo heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);

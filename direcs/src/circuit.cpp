@@ -20,13 +20,14 @@
 
 #include "circuit.h"
 
-Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
+//Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
+Circuit::Circuit() : QObject()
 {
 	className = this->staticMetaObject.className();
 
 	// copy the pointer from the original object
-	interface1 = i;
-	mutex = m;
+//	interface1 = i;
+//	mutex = m;
 
 	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
 	firstInitDone = false;

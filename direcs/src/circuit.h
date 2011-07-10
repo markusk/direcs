@@ -39,7 +39,8 @@ class Circuit : public QObject
 	Q_OBJECT
 
 	public:
-		Circuit(InterfaceAvr *i, QMutex *m);
+//		Circuit(InterfaceAvr *i, QMutex *m);
+		Circuit();
 		~Circuit();
 
 		/**
@@ -110,8 +111,8 @@ class Circuit : public QObject
 
 	private:
 		QString className;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
-		mutable QMutex *mutex; // make this class thread-safe
-		InterfaceAvr *interface1;
+//		mutable QMutex *mutex; // make this class thread-safe
+//		InterfaceAvr *interface1;
 
 		QString commandInitCircuit;		/// *re#
 		QString commandInitCompass;		/// *cc#
