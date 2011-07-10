@@ -226,67 +226,71 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 	answer tempAnswer;
 
 
-	/// @todo check for robotState here, too?
+	/// @todo should we empty the command and answer lists in case of error, too? Could or should matter the whole class!?
 
-	// if we recieved already commands (and expect answers, so the answer list is not empty)
-	if (answerList.isEmpty() == false)
+	// this check helps if we exit direcs
+	if (interfaceState == ON)
 	{
-		//------------------
-		// general timeout?
-		//------------------
-		// okay, first le'ts check how much time was gone, since we received the first command
-		// if it is too long, than we have a general timeout and will stop all actions!
-
-		// get oldest command element
-		// this contains also the start timestamp of this command
-		tempAnswer = answerList.first();
-
-		// hey kids, what time is it?
-		QDateTime now = QDateTime::currentDateTime();
-
-		if (tempAnswer.timestamp.msecsTo(now) > ATMELTIMEOUT)
+		// if we recieved already commands (and expect answers, so the answer list is not empty)
+		if (answerList.isEmpty() == false)
 		{
-			emit message(QString("General timeout error (%1ms > %2ms)").arg( tempAnswer.timestamp.msecsTo(now) ).arg( ATMELTIMEOUT ));
+			//------------------
+			// general timeout?
+			//------------------
+			// okay, first le'ts check how much time was gone, since we received the first command
+			// if it is too long, than we have a general timeout and will stop all actions!
 
-			// timeout
-			// let this class know, that we had an error
-			setRobotState(OFF);;
-			commandSentSuccessfull = false;
+			// get oldest command element
+			// this contains also the start timestamp of this command
+			tempAnswer = answerList.first();
 
-			emit heartbeat(RED);
-			emit message(QString("<font color=\"#FF0000\">ERROR when waiting for executing command. Stopping %1!</font>").arg(className));
-			// stop this thread
-			stop();
+			// hey kids, what time is it?
+			QDateTime now = QDateTime::currentDateTime();
 
-			//-----------------------
-			// inform other modules!
-			//-----------------------
-			emit robotState(false);
+			if (tempAnswer.timestamp.msecsTo(now) > ATMELTIMEOUT)
+			{
+				emit message(QString("General timeout error (%1ms > %2ms)").arg( tempAnswer.timestamp.msecsTo(now) ).arg( ATMELTIMEOUT ));
 
-			return;
+				// timeout
+				// let this class know, that we had an error
+				setRobotState(OFF);;
+				commandSentSuccessfull = false;
+
+				emit heartbeat(RED);
+				emit message(QString("<font color=\"#FF0000\">ERROR when waiting for executing command. Stopping %1!</font>").arg(className));
+				// stop this thread
+				stop();
+
+				//-----------------------
+				// inform other modules!
+				//-----------------------
+				emit robotState(false);
+
+				return;
+			}
 		}
-	}
 
 
-	// lock mutex
-	commandListMutex.lock();
+		// lock mutex
+		commandListMutex.lock();
 
-	// fill data structure
-	tempCommand.string = commandString;
-	tempCommand.ID = currentID;
-	tempCommand.caller = caller;
+		// fill data structure
+		tempCommand.string = commandString;
+		tempCommand.ID = currentID;
+		tempCommand.caller = caller;
 
-	// add command and ID to command lists
-	commandList.append(tempCommand);
+		// add command and ID to command lists
+		commandList.append(tempCommand);
 
-	// debug msg
-	// emit message( QString("command %1, Id=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
+		// debug msg
+		// emit message( QString("command %1, Id=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
 
-	// create next command ID
-	currentID++; /// @todo double cross check: do have we have more than x commands in the queued in the line? > emit systemerror than.
+		// create next command ID
+		currentID++; /// @todo double cross check: do have we have more than x commands in the queued in the line? > emit systemerror than.
 
-	// unlock mutex
-	commandListMutex.unlock();
+		// unlock mutex
+		commandListMutex.unlock();
+	} // interfaeState is ON
 }
 
 
