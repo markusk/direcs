@@ -22,6 +22,8 @@
 
 SimulationThread::SimulationThread(InterfaceAvr *i, QMutex *m)
 {
+	className = this->staticMetaObject.className();
+
 	stopped = false;
 	simulationMode = false;
 
@@ -1114,6 +1116,8 @@ void SimulationThread::setRobotState(bool state)
 {
 	// store the state within this class
 	robotState = state;
+
+	emit message(QString("Robot state set to %1 in %2").arg(state).arg(className));
 }
 
 

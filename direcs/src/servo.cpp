@@ -22,6 +22,8 @@
 
 Servo::Servo(InterfaceAvr *i, QMutex *m)
 {
+	className = this->staticMetaObject.className();
+
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
@@ -210,4 +212,6 @@ void Servo::setRobotState(bool state)
 {
 	// store the state within this class
 	robotState = state;
+
+	emit message(QString("Robot state set to %1 in %2").arg(state).arg(className));
 }
