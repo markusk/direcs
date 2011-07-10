@@ -596,6 +596,25 @@ void Direcs::init()
 		}
 		else
 		{
+			//------------------------------------------------------------------------------------------------
+			// start the Atmel command handler thread
+			// It takes all commands per signal from e.g. the circuit class, sensorThread, motor class etc.
+			//------------------------------------------------------------------------------------------------
+			// whenever there is a material error, react!
+			connect(commandHandler, SIGNAL(systemerror(int)), this, SLOT(systemerrorcatcher(int)));
+
+			// sensorThread takes the answers to commands he sent to the commandHandler before
+			connect(commandHandler, SIGNAL(commandComplete(QString,QString)), sensorThread, SLOT(takeCommandAnswer(QString,QString)));
+
+			// circuit takes the answers to commands he sent to the commandHandler before
+			connect(commandHandler, SIGNAL(commandComplete(QString,QString)), circuit1, SLOT(takeCommandAnswer(QString,QString)));
+
+			emit splashMessage("Starting command handler...");
+			emit message("Starting command handler...", false);
+			commandHandler->start();
+			emit message("Command handler started.");
+
+
 			//**********************
 			//* Serial port opened *
 			//**********************
@@ -4663,22 +4682,6 @@ void Direcs::robotStateHandler(bool state)
 		// check compass module
 		emit initCompass();
 
-
-		//-----------------------------------------------------------
-		// start the Atmel command handler thread
-		//-----------------------------------------------------------
-		// whenever there is a material error, react!
-		connect(commandHandler, SIGNAL(systemerror(int)), this, SLOT(systemerrorcatcher(int)));
-
-		// sensorThread takes the answers to commands he sent to the commandHandler before
-		connect(commandHandler, SIGNAL(commandComplete(QString,QString)), sensorThread, SLOT(takeCommandAnswer(QString,QString)));
-
-		emit splashMessage("Starting command handler...");
-		emit message("Starting command handler...", false);
-		commandHandler->start();
-		emit message("Command handler started.");
-
-/// @todo check when and how to start the sensor thread after start of the command handler etc. !??!!!  NEW IN qextEventRelaunch branch !
 
 		// sesor thread disabled via command line argument?
 		if (noSensorThread)
