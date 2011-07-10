@@ -600,14 +600,14 @@ void Direcs::init()
 			// start the Atmel command handler thread
 			// It takes all commands per signal from e.g. the circuit class, sensorThread, motor class etc.
 			//------------------------------------------------------------------------------------------------
-			// whenever there is a material error, react!
-			connect(commandHandler, SIGNAL(systemerror(int)), this, SLOT(systemerrorcatcher(int)));
-
-			// sensorThread takes the answers to commands he sent to the commandHandler before
-			connect(commandHandler, SIGNAL(commandComplete(QString,QString)), sensorThread, SLOT(takeCommandAnswer(QString,QString)));
+			// commands now go to the commandHandler
+			connect(circuit1, SIGNAL(sendCommand(QString,QString)), commandHandler, SLOT(takeCommand(QString,QString)));
 
 			// circuit takes the answers to commands he sent to the commandHandler before
 			connect(commandHandler, SIGNAL(commandComplete(QString,QString)), circuit1, SLOT(takeCommandAnswer(QString,QString)));
+
+			// whenever there is a material error, react!
+			connect(commandHandler, SIGNAL(systemerror(int)), this, SLOT(systemerrorcatcher(int)));
 
 			emit splashMessage("Starting command handler...");
 			emit message("Starting command handler...", false);
