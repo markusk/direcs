@@ -125,6 +125,7 @@ class Motor : public QObject
 	private:
 		void calculateMovement(); /// \todo check the conversion value and make it a const!
 
+		QString className;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		bool robotState; // stores the robot state within this class

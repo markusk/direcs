@@ -132,6 +132,7 @@ class SimulationThread : public QThread
 		*/
 		void sendToAtmel(QString string);
 
+		QString className;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
