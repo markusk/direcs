@@ -95,10 +95,20 @@ void Circuit::initCircuit()
 	emit robotState(false);
 	*/
 
-	emit message(QString("%1 sends *%2#...").arg(className).arg(command));
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
+	if (circuitState)
+	{
+		//-------------------------------------------------------
+		// Basic init for all the bits on the robot circuit
+		//-------------------------------------------------------
 
-	// send command and caller class name to (Atmel) command handler
-	emit sendCommand(command, className);
+		// sending RESET (INIT) command
+		emit message(QString("%1 sends *%2#...").arg(className).arg(command));
+
+		// send command and caller class name to (Atmel) command handler
+		emit sendCommand(command, className);
+	}
 }
 
 
