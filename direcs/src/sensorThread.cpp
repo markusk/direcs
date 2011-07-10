@@ -1423,8 +1423,6 @@ void SensorThread::readVoltageSensor(short int sensor)
 
 		// send command and caller class name to (Atmel) command handler
 		emit sendCommand(command, className);
-
-		return;
 	}
 }
 
