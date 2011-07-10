@@ -22,11 +22,9 @@
 #define CIRCUIT_H
 
 //-------------------------------------------------------------------
-#include "interfaceAvr.h"
-#include <QMutex>
-#include <QTime>
-#include <QTimer>
+#include <QObject>
 //-------------------------------------------------------------------
+
 
 /**
 \author Markus Knapp
@@ -39,7 +37,6 @@ class Circuit : public QObject
 	Q_OBJECT
 
 	public:
-//		Circuit(InterfaceAvr *i, QMutex *m);
 		Circuit();
 		~Circuit();
 
@@ -116,18 +113,11 @@ class Circuit : public QObject
 
 	private:
 		QString className;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
-//		mutable QMutex *mutex; // make this class thread-safe
-//		InterfaceAvr *interface1;
 
 		QString commandInitCircuit;		/// *re#
 		QString commandInitCompass;		/// *cc#
 		QString commandSleep;			/// *sl#
 
-		QString atmelCommand; /// this is the command for the Atmel
-		QString expectedAtmelAnswer; /// this stores the answer which the Atmel should Answer from the last command he got.
-		bool answerTimeout; /// this is set to true, when we have a timout while waiting for an Atmel answer
-
-		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers
 		static const int ATMELTIMEOUT = 500; /// timeout in ms
 
 		static const unsigned char INIT = 64;

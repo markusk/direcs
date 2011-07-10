@@ -307,7 +307,7 @@ class SensorThread : public QThread
 		QString commandReadVoltageSensor1;	/// *s7#	s7 = voltage sensor 1 = 24 Volt
 		QString commandReadVoltageSensor2;	/// *s8#	s8 = voltage sensor 1 = 12 Volt
 
-		QString atmelCommand; /// this is the command for the Atmel
+		QString atmelCommand; /// this is the command for the Atmel < < < < < to be removed < < < < < <
 		mutable QMutex varMutex; // this is for the var atmelCommand
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!

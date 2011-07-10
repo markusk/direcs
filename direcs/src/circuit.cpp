@@ -20,22 +20,13 @@
 
 #include "circuit.h"
 
-//Circuit::Circuit(InterfaceAvr *i, QMutex *m) : QObject()
 Circuit::Circuit() : QObject()
 {
 	className = this->staticMetaObject.className();
 
-	// copy the pointer from the original object
-//	interface1 = i;
-//	mutex = m;
-
 	circuitState = true; //  has to be TRUE at startup for the first init! Could be set to false, later if we fail to initialise the circuit.
 	firstInitDone = false;
 	compassCircuitState = false;
-
-	atmelCommand = "none"; // reset current command
-	expectedAtmelAnswer.clear();
-	answerTimeout = false;
 
 	// the Atmel commands
 	commandInitCircuit = "re";
@@ -163,8 +154,6 @@ void Circuit::initCompass()
 
 	/// TEST TEST TEST with commandHandler
 
-	atmelCommand = "none"; // reset current command
-	expectedAtmelAnswer.clear();
 	compassCircuitState = true;
 	emit message("Compass is ON (fake).");
 
@@ -376,7 +365,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	// check answer
 	if (atmelAnswer == commandInitCircuit) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
 	{
-		atmelCommand = "none"; // reset current command
 		firstInitDone = true;
 		circuitState = true;
 		emit robotState(true);
@@ -405,6 +393,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 
 void Circuit::timeout()
 {
+/*
 	/// @todo simplifiy takeCommandAnswer like in circuit.cpp!
 	// check the last command
 	if (atmelCommand == commandInitCircuit)
@@ -413,15 +402,12 @@ void Circuit::timeout()
 		if (firstInitDone == true)
 		{
 			// we are happy
-			atmelCommand = "none"; // reset current command
 			return;
 		}
 
 		// timeout
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
 		qDebug("INFO from initCircuit: Robot is OFF.");
-		atmelCommand = "none"; // reset current command
-		expectedAtmelAnswer.clear();
 		firstInitDone = true;
 		circuitState = false;
 		emit robotState(false);
@@ -437,14 +423,11 @@ void Circuit::timeout()
 		if (compassCircuitState == true)
 		{
 			// we are happy
-			atmelCommand = "none"; // reset current command
 			return;
 		}
 
 		// timeout
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-		atmelCommand = "none"; // reset current command
-		expectedAtmelAnswer.clear();
 		compassCircuitState = false;
 		emit message("Compass is OFF.");
 		emit compassState(false);
@@ -460,20 +443,18 @@ void Circuit::timeout()
 		if (circuitState == true)
 		{
 			// we are happy
-			atmelCommand = "none"; // reset current command
 			return;
 		}
 
 		// timeout
 		emit message(QString("Timeout (> %2ms)").arg(ATMELTIMEOUT));
-		atmelCommand = "none"; // reset current command
-		expectedAtmelAnswer.clear();
 		emit message("Robot is OFF.");
 		/// @todo do we need this information in other classes? normaly only called once at direcs shutdown to stop the Atnel watchdog
 		// emit robotState(false);
 
 		return;
 	} // sleep
+*/
 }
 
 

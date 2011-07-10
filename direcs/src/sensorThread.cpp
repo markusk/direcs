@@ -140,7 +140,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	compassState = false;
 
 	varMutex.lock();
-	atmelCommand = "none"; // reset current command
+	atmelCommand = "none"; // reset current command < < < < < to be removed < < < < < <
 	varMutex.unlock();
 
 	// the Atmel commands
