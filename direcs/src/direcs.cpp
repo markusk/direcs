@@ -3570,6 +3570,26 @@ void Direcs::readSettings()
 			break;
 	}
 
+	//---------------------------------------------------------------------
+	// read setting
+	value = inifile1->readSetting("Config", "sleepTimeSensorThread");
+
+	switch (value)
+	{
+		case -1:
+			emit message("<font color=\"#FF0000\">Value \"sleepTimeSensorThread\" not found in ini-file!</font>");
+			value = 0;
+			break;
+		default:
+			if (!consoleMode)
+			{
+				// set value in sensor thread
+				sensorThread->setSleepTime(value);
+				emit message(QString("Setting sleepTimeSensorThread to <b>%1ms</b>.").arg(value));
+			}
+			break;
+	}
+
 /*
 	unsigned long sleepTimeSensorThread;
 	unsigned long sleepTimeCommandHandler;
