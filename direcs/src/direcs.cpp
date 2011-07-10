@@ -4700,6 +4700,9 @@ void Direcs::robotStateHandler(bool state)
 			// commands now go to the commandHandler
 			connect(sensorThread, SIGNAL(sendCommand(QString,QString)), commandHandler, SLOT(takeCommand(QString,QString)));
 
+			// sensorThread takes the answers to commands he sent to the commandHandler before
+			connect(commandHandler, SIGNAL(commandComplete(QString,QString)), sensorThread, SLOT(takeCommandAnswer(QString,QString)));
+
 			// whenever there is a material error, react!
 			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 
