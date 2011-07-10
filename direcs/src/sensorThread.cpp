@@ -24,6 +24,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 {
 	className = this->staticMetaObject.className();
 
+	threadSleepTime = 0;
+
 	stopped = false;
 	simulationMode = false;
 
@@ -160,6 +162,13 @@ SensorThread::~SensorThread()
 }
 
 
+void SensorThread::setSleepTime(unsigned long time)
+{
+	// store time
+	threadSleepTime = time;
+}
+
+
 void SensorThread::stop()
 {
 	stopped = true;
@@ -178,11 +187,20 @@ void SensorThread::run()
 	bool heartbeatToggle = false;
 
 
+	// check if time set
+	if (threadSleepTime == 0)
+	{
+		emit message(QString("ERROR: Thread sleep time not set in %1!").arg(className));
+		stop();
+		return;
+	}
+
+
 	//  start "threading"...
 	while (!stopped)
 	{
 		// let the thread sleep some time for having more time for the other threads
-		msleep(THREADSLEEPTIME);
+		msleep(threadSleepTime);
 
 		if ( (robotState == ON) && (simulationMode == false) )
 		{
