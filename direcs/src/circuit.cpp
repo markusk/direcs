@@ -383,6 +383,21 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 		return;
 	}
 
+	if (atmelAnswer == commandInitCompass) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
+	{
+		// compass init okay
+		atmelCommand = "none"; // reset current command
+		compassCircuitState = true;
+		emit compassState(true);
+		return;
+	}
+
+	if (atmelAnswer == commandSleep) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
+	{
+		// sleep okay
+		return;
+	}
+
 
 	//-------------------
 	// unexpected answer
