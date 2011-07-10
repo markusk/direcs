@@ -44,56 +44,6 @@ void Circuit::initCircuit()
 {
 	QString command = commandInitCircuit;
 
-	/*
-	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
-	if (circuitState)
-	{
-		atmelCommand = commandInitCircuit;
-		expectedAtmelAnswer = "*re#";
-
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
-
-		//-------------------------------------------------------
-		// Basic init for all the bits on the robot circuit
-		//-------------------------------------------------------
-		// sending RESET (INIT) command
-//		emit message(QString("Sending *%1#...").arg(atmelCommand));
-		if (interface1->sendString(atmelCommand) == true)
-		{
-			// start own time measuring. This will be used, if we get an answer from the Atmel
-			duration.start();
-
-			// start additional seperate timer. If we NEVER get an answer, this slot will be called
-			QTimer::singleShot(ATMELTIMEOUT, this, SLOT(timeout()) );
-
-//			emit message("Sent.");
-//			emit message("Waiting for an answer...");
-
-			// Unlock the mutex.
-			mutex->unlock();
-
-			return;
-		}
-
-		emit message("Error sending string.");
-
-		// Unlock the mutex.
-		mutex->unlock();
-	}
-
-	// error
-	qDebug("INFO from initCircuit: Robot is OFF.");
-	emit message("Robot is OFF.");
-	atmelCommand = "none"; // reset current command
-	expectedAtmelAnswer.clear();
-	firstInitDone = true;
-	circuitState = false;
-
-	// emit result (instead of old-school returning 'bool')
-	emit robotState(false);
-	*/
 
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
@@ -282,36 +232,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	//------------------
 	if (atmelAnswer == expectedAtmelAnswer)
 	{
-//		emit message(QString("Answer %1 was correct (Circuit).").arg(atmelAnswer));
 
-		// check the last command
-		if (atmelCommand == commandInitCircuit)
-		{
-			// ciruit init okay
-			atmelCommand = "none"; // reset current command
-			firstInitDone = true;
-			circuitState = true;
-			emit robotState(true);
-			return;
-		} // initCircuit
-
-		// check the last command
-		if (atmelCommand == commandInitCompass)
-		{
-			// compass init okay
-			atmelCommand = "none"; // reset current command
-			compassCircuitState = true;
-			emit compassState(true);
-			return;
-		} // InitCompass
-
-		// check the last command
-		if (atmelCommand == commandSleep)
-		{
-			// command okay
-			atmelCommand = "none"; // reset current command
-			return;
-		} // sleep
 	}
 	else
 	{
