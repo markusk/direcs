@@ -312,7 +312,8 @@ class SensorThread : public QThread
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 750; // Default: 100 ms
+		static const unsigned long THREADSLEEPTIME = 750; // time in ms the thread sleeps after/before reading all sensors
+		static const unsigned long INTERVALTIME    = 500; // time in ms between each sensor reading
 
 		// Give the infrared sensors some names
 		//
