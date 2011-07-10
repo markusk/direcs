@@ -53,7 +53,7 @@ void Circuit::initCircuit()
 		// Basic init for all the bits on the robot circuit
 		//-------------------------------------------------------
 
-		// sending RESET (INIT) command
+		// sending command
 		emit message(QString("%1 sends *%2#...").arg(className).arg(command));
 
 		// send command and caller class name to (Atmel) command handler
@@ -112,12 +112,23 @@ void Circuit::initCompass()
 	*/
 
 
-	/// TEST TEST TEST with commandHandler
+	QString command = commandInitCompass;
 
-	compassCircuitState = true;
-	emit message("Compass is ON (fake).");
 
-	emit compassState(true);
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
+	if (circuitState)
+	{
+		//-------------------------------------------------------
+		// Basic init for the robots compass
+		//-------------------------------------------------------
+
+		// sending command
+		emit message(QString("%1 sends *%2#...").arg(className).arg(command));
+
+		// send command and caller class name to (Atmel) command handler
+		emit sendCommand(command, className);
+	}
 }
 
 
@@ -169,6 +180,23 @@ void Circuit::sleep()
 
 	emit robotState(false); /// @todo check if we should use the 'massive error handling' here or if this is relevant, since we only call this when we shutdown direcs
 */
+	QString command = commandSleep;
+
+
+	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
+	if (circuitState)
+	{
+		//-------------------------------------------------------
+		// Basic init for the robots compass
+		//-------------------------------------------------------
+
+		// sending command
+		emit message(QString("%1 sends *%2#...").arg(className).arg(command));
+
+		// send command and caller class name to (Atmel) command handler
+		emit sendCommand(command, className);
+	}
 }
 
 
@@ -283,7 +311,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	}
 
 	// debug msg
-	// emit message(QString("Answer %1 received in %2. Command=%3.").arg(atmelAnswer).arg(className).arg(commandInitCircuit));
+	// emit message(QString("Answer %1 received in %2.").arg(atmelAnswer).arg(className));
 
 	//------
 	// okay
@@ -307,7 +335,6 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	if (atmelAnswer == commandInitCompass) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
 	{
 		// compass init okay
-		atmelCommand = "none"; // reset current command
 		compassCircuitState = true;
 		emit compassState(true);
 		return;
@@ -316,6 +343,7 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	if (atmelAnswer == commandSleep) // this is different to sensorThread where the atmelAnswer contains the regarding command AND a sensor value (i.e. *s7=42#)
 	{
 		// sleep okay
+		emit message("Robot felt asleep.");
 		return;
 	}
 
@@ -325,8 +353,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	//-------------------
 
 	// we do not need to check worng answers for 'sleep' or 'initCompass'. All we need to do now is makr the robot as OFF and let all other moduled know that.
-	qDebug("INFO from initCircuit: Robot is OFF.");
 	emit message(QString("ERROR: Answer %1 not expected in %2.").arg(atmelAnswer).arg(className));
+	qDebug("INFO from initCircuit: Robot is OFF.");
 
 	// let this class know, that we had an error
 	firstInitDone = true;
