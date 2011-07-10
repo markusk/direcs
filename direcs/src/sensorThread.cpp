@@ -621,7 +621,9 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 	// convert answer to int (get sensor value)
 	if (interface1->convertStringToInt(atmelAnswer, value, command) == false) /// @todo move this method to commandHandler or so...
 	{
+		//-------
 		// error
+		//-------
 		emit message("ERROR converting sensor value.");
 
 		// do not return, continue here! In both cases, we store the value! In case of error, value is 0.
@@ -630,6 +632,10 @@ void SensorThread::takeCommandAnswer(QString atmelAnswer, QString caller)
 	// debug msg
 	// emit message(QString("Answer %1 received in %2. Command=%3. Value=%4").arg(atmelAnswer).arg(className).arg(command).arg(value));
 
+
+	//------
+	// okay
+	//------
 	// now store the voltage
 	if (command == commandReadVoltageSensor1)
 	{
