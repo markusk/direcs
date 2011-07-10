@@ -86,13 +86,6 @@ class CommandHandler : public QThread
 		void takeCommandAnswer(QString atmelAnswer, QString correspondingCommand);
 
 
-	private slots:
-//		/**
-//		This Slot is called if we never get an answer from the Atmel
-//		*/
-//		void generalTimeout();
-
-
 	signals:
 		/**
 		This signal is emitted, when a valid answer was completely received by the Atmel in time (all conditions necessary to be matched!).
@@ -145,10 +138,6 @@ class CommandHandler : public QThread
 		bool interfaceState;				/// stores the interface / robot state within this class
 		bool commandSentSuccessfull;		/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 		unsigned char currentID;			/// this is a unique ID which is increased by one at every new received command (kind of process ID)
-//		QTimer *timeoutTimer;
-
-		QDateTime duration;					/// for measuring between sending an command to Atmel and the time it needs till the Atmel answers in general
-		static const int ATMELTIMEOUT = 250; /// timeout in ms
 
 		struct command
 		{
@@ -181,6 +170,8 @@ class CommandHandler : public QThread
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 750; // Default: 100 ms
+
+		static const int ATMELTIMEOUT = 250; /// timeout in ms
 
 		static const int MAXIMUMPLOTHEARTBEAT = 5; /// theoratically 5 Volt for heartbeat "high" @sa Gui::initPlot
 

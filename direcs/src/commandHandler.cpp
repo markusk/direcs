@@ -42,10 +42,6 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	// send answers from interfaceAvr to this class
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
-
-	// timer which ckecks if we have a general timout when waiting for a command answer
-//	timeoutTimer = new QTimer();
-//	connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(generalTimeout()));
 }
 
 
@@ -53,16 +49,11 @@ CommandHandler::~CommandHandler()
 {
 	// stop all activities first
 	stop();
-
-//	delete timeoutTimer;
 }
 
 
 void CommandHandler::stop()
 {
-	// stop general timeout timer since we got an answer
-//	timeoutTimer->stop();
-
 	stopped = true;
 
 	// send "off" or "shutdown" heartbeat signal over network to remote app
@@ -145,13 +136,11 @@ void CommandHandler::run()
 			// add to answer list
 			answerList.append(tempAnswer);
 
-			/*
 			// debug msg
-			if (currentID > 0)
-			{
-				emit message( QString("command ID=%1 string=%2 caller=%3 time=%4").arg( tempAnswer.ID ).arg( tempAnswer.string ).arg(tempAnswer.caller).arg( tempAnswer.timestamp.toString("hh:mm:ss.zzz") ));
-			}
-			*/
+			// if (currentID > 0)
+			// {
+			// 	emit message( QString("command ID=%1 string=%2 caller=%3 time=%4").arg( tempAnswer.ID ).arg( tempAnswer.string ).arg(tempAnswer.caller).arg( tempAnswer.timestamp.toString("hh:mm:ss.zzz") ));
+			// }
 
 			// remove from "to do" list
 			commandList.removeFirst();
@@ -176,14 +165,6 @@ void CommandHandler::run()
 				// let this run loop wait before sending the next command to the Atmel
 				commandInProgress = true;
 
-				// start own time measuring. This will be used, if we get an answer from the Atmel
-				duration.currentDateTime();
-/*
-				// start additional seperate timer. If we NEVER get an answer, this slot will be called
-				// a singleShot timer did not work here, so we use the class memer...
-				if (timeoutTimer->isActive() == false)
-					timeoutTimer->start(ATMELTIMEOUT);
-*/
 				emit message("Sent.");
 			}
 			else
@@ -213,8 +194,6 @@ void CommandHandler::run()
 			heartbeatToggle = !heartbeatToggle;
 		}
 
-		//  e m i t  Signal
-///		emit sensorDataComplete();   @todo this is old unused code from sensorThread. emit something else here?
 	}
 	stopped = false;
 }
@@ -298,11 +277,6 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 {
 	answer tempAnswer;
 
-	 QDateTime::currentDateTime();
-
-
-	// stop general timeout timer since we got an answer
-//	timeoutTimer->stop();
 
 	// we have an answer, so we can tell the run-loop, that it can continue
 	commandInProgress = false;
@@ -386,83 +360,8 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	emit robotState(false);
 
 	return;
-
-/*
-	int value = 0; // for conversion to int
-
-
-
-	//------------------
-	// everthing's fine
-	//------------------
-	/// @todo check if we have numbers between the * and #
-	if (atmelAnswer.startsWith("*") && atmelAnswer.endsWith("#")) /// This is different to @sa Circuit and @sa Motor. Since we get a value like *42, we only check the string.
-	{
-//		emit message(QString("Answer %1 was correct (SensorThread).").arg(atmelAnswer));
-
-		// convert answer to int
-		if (interface1->convertStringToInt(atmelAnswer, value) == false)
-		{
-			// error
-			emit message("ERROR converting sensor value.");
-
-			// do not return, continue here! In both cases, we store the value! In case of error, value is 0.
-		}
-
-		// check the last command
-		if (atmelCommand == commandReadVoltageSensor1)
-		{
-			// store measured value
-			voltageSensorValue[VOLTAGESENSOR1] = value;
-
-//			emit message(QString("VOLTAGESENSOR1 = %1 = %2 Volt").arg(correspondingCommand).arg(convertToVolt(VOLTAGESENSOR1)));
-
-			// send value over the network
-			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
-			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-
-			varMutex.lock();
-			atmelCommand = "none"; // reset current command
-			varMutex.unlock();
-
-			commandExecutedSuccessfull = true;
-
-			/// @todo maybe set a seperate "go on with run thread" here?
-
-			return;
-		}
-
-
-		varMutex.lock();
-		atmelCommand = "none"; // reset current command
-		emit message("+++ whats goig on here=?"); /// @todo call stop() here ?!? when does this case occur?
-		return;
-	}
-
- */
 }
 
-/*
-void CommandHandler::generalTimeout()
-{
-	// first check if we had already an answer from the Atmel
-	if (commandSentSuccessfull == true)
-	{
-		// we are happy
-		return;
-	}
-
-	emit message(QString("<font color=\"#FF0000\">ERROR: General timeout (> %1ms). Stopping %2!</font>").arg(ATMELTIMEOUT).arg(className));
-
-	// let this class know, that we had an error
-	setRobotState(OFF);;
-
-	emit heartbeat(RED);
-
-	// stop this thread
-	stop();
-}
-*/
 
 void CommandHandler::setSimulationMode(bool state)
 {
