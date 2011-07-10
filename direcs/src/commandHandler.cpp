@@ -31,9 +31,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 	interface1 = i;
 	mutex = m;
 
-
-
-	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
+	interfaceState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
 	commandSentSuccessfull = false;
 
@@ -46,8 +44,8 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 
 	// timer which ckecks if we have a general timout when waiting for a command answer
-	timeoutTimer = new QTimer();
-	connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(generalTimeout()));
+//	timeoutTimer = new QTimer();
+//	connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(generalTimeout()));
 }
 
 
@@ -56,14 +54,14 @@ CommandHandler::~CommandHandler()
 	// stop all activities first
 	stop();
 
-	delete timeoutTimer;
+//	delete timeoutTimer;
 }
 
 
 void CommandHandler::stop()
 {
 	// stop general timeout timer since we got an answer
-	timeoutTimer->stop();
+//	timeoutTimer->stop();
 
 	stopped = true;
 
@@ -90,7 +88,7 @@ void CommandHandler::run()
 		// let the thread sleep some time for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-		if ( (robotState == ON) && (simulationMode == false) )
+		if ( (interfaceState == ON) && (simulationMode == false) )
 		{
 			// wait for finished command execution (which is currently in progress)
 			while (commandInProgress)
@@ -179,13 +177,13 @@ void CommandHandler::run()
 				commandInProgress = true;
 
 				// start own time measuring. This will be used, if we get an answer from the Atmel
-				duration.start();
-
+				duration.currentDateTime();
+/*
 				// start additional seperate timer. If we NEVER get an answer, this slot will be called
 				// a singleShot timer did not work here, so we use the class memer...
 				if (timeoutTimer->isActive() == false)
 					timeoutTimer->start(ATMELTIMEOUT);
-
+*/
 				emit message("Sent.");
 			}
 			else
@@ -225,6 +223,49 @@ void CommandHandler::run()
 void CommandHandler::takeCommand(QString commandString, QString caller)
 {
 	command tempCommand;
+	answer tempAnswer;
+
+
+	/// @todo check for robotState here, too?
+
+	// if we recieved already commands (and expect answers, so the answer list is not empty)
+	if (answerList.isEmpty() == false)
+	{
+		//------------------
+		// general timeout?
+		//------------------
+		// okay, first le'ts check how much time was gone, since we received the first command
+		// if it is too long, than we have a general timeout and will stop all actions!
+
+		// get oldest command element
+		// this contains also the start timestamp of this command
+		tempAnswer = answerList.first();
+
+		// hey kids, what time is it?
+		QDateTime now = QDateTime::currentDateTime();
+
+		if (tempAnswer.timestamp.msecsTo(now) > ATMELTIMEOUT)
+		{
+			emit message(QString("General timeout error (%1ms > %2ms)").arg( tempAnswer.timestamp.msecsTo(now) ).arg( ATMELTIMEOUT ));
+
+			// timeout
+			// let this class know, that we had an error
+			setRobotState(OFF);;
+			commandSentSuccessfull = false;
+
+			emit heartbeat(RED);
+			emit message(QString("<font color=\"#FF0000\">ERROR when waiting executing command. Stopping %1!</font>").arg(className));
+			// stop this thread
+			stop();
+
+			//-----------------------
+			// inform other modules!
+			//-----------------------
+			emit robotState(false);
+
+			return;
+		}
+	}
 
 
 	// lock mutex
@@ -253,10 +294,11 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 {
 	answer tempAnswer;
 
+	 QDateTime::currentDateTime();
 
 
 	// stop general timeout timer since we got an answer
-	timeoutTimer->stop();
+//	timeoutTimer->stop();
 
 	// we have an answer, so we can tell the run-loop, that it can continue
 	commandInProgress = false;
@@ -293,11 +335,11 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 
 				// timeout
 				// let this class know, that we had an error
-				robotState = false;
+				setRobotState(OFF);;
 				commandSentSuccessfull = false;
 
 				emit heartbeat(RED);
-				emit message("<font color=\"#FF0000\">ERROR executing command. Stopping commandHandler!</font>");
+				emit message(QString("<font color=\"#FF0000\">ERROR executing command. Stopping %1!</font>").arg(className));
 				// stop this thread
 				stop();
 
@@ -326,7 +368,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer, QString correspondin
 	emit message(QString("<font color=\"#FF0000\">ERROR! Answer %1 not expected. Stopping commandHandler!</font>").arg(atmelAnswer));
 
 	// let this class know, that we had an error
-	robotState = false;
+	setRobotState(OFF);;
 	commandSentSuccessfull = false;
 
 	emit heartbeat(RED);
@@ -404,7 +446,7 @@ void CommandHandler::generalTimeout()
 	emit message(QString("<font color=\"#FF0000\">ERROR: General timeout (> %1ms). Stopping %2!</font>").arg(ATMELTIMEOUT).arg(className));
 
 	// let this class know, that we had an error
-	robotState = OFF;
+	setRobotState(OFF);;
 
 	emit heartbeat(RED);
 
@@ -425,7 +467,7 @@ void CommandHandler::setSimulationMode(bool state)
 	}
 	else
 	{
-		if (robotState==OFF)
+		if (interfaceState==OFF)
 			emit heartbeat(RED);
 	}
 }
@@ -434,5 +476,7 @@ void CommandHandler::setSimulationMode(bool state)
 void CommandHandler::setRobotState(bool state)
 {
 	// store the state within this class
-	robotState = state;
+	interfaceState = state;
+
+	emit message(QString("Robot state set to %1 in %2").arg(state).arg(className));
 }

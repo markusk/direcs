@@ -129,6 +129,11 @@ class CommandHandler : public QThread
 		*/
 		void systemerror(int errorlevel);
 
+		/**
+		This signal emits the robots state to all connected slots, to tell them when we have problem with the communication and so with the Atmel.
+		*/
+		void robotState(bool state);
+
 
 	private:
 		QString className;					/// this will contain the name of this class at runtime.
@@ -137,10 +142,13 @@ class CommandHandler : public QThread
 		volatile bool stopped;
 		volatile bool commandInProgress;	/// set to true, when currently executing an command on and with the serial port
 		bool simulationMode;
-		bool robotState;					// stores the robot state within this class
+		bool interfaceState;				/// stores the interface / robot state within this class
 		bool commandSentSuccessfull;		/// set to true, if command executed successfull. In this case a later timeout slot will check this first!
 		unsigned char currentID;			/// this is a unique ID which is increased by one at every new received command (kind of process ID)
-		QTimer *timeoutTimer;
+//		QTimer *timeoutTimer;
+
+		QDateTime duration;					/// for measuring between sending an command to Atmel and the time it needs till the Atmel answers in general
+		static const int ATMELTIMEOUT = 250; /// timeout in ms
 
 		struct command
 		{
@@ -169,9 +177,6 @@ class CommandHandler : public QThread
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
 		static const char divider    = 61; /// This divides the serial string for the Atmel controller.    61  =  =
-
-		QTime duration; /// for measuring between sending an command to Atmel and the time it needs till the Atmel answers in general
-		static const int ATMELTIMEOUT = 250; /// timeout in ms
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

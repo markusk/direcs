@@ -379,11 +379,15 @@ void Direcs::init()
 	// let the sensorthread know, if only the compass is not connected
 	connect(circuit1,	SIGNAL( compassState(bool) ), sensorThread,SLOT( setCompassState(bool) ));
 
-	connect(this,		SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
-	connect(this,		SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-	connect(this,		SIGNAL( robotState(bool) ), commandHandler,SLOT( setRobotState(bool) ));
-	connect(this,		SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
-//	connect(this,		SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
+	connect(this,			SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
+	connect(this,			SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
+	connect(this,			SIGNAL( robotState(bool) ), commandHandler,SLOT( setRobotState(bool) ));
+	connect(this,			SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
+//	connect(this,			SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
+
+	// let the sensorthread know, if we have any problems with the commandHandler, and so with the Atmel communication
+	connect(commandHandler,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
+
 
 	if (!consoleMode)
 	{
