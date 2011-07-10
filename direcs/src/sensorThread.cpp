@@ -1419,7 +1419,7 @@ void SensorThread::readVoltageSensor(short int sensor)
 				break;
 		}
 
-		emit message(QString("Sending *%1#...").arg(command));
+		emit message(QString("%1 sends *%2#...").arg(className).arg(command));
 
 		// send command and caller class name to (Atmel) command handler
 		emit sendCommand(command, className);
