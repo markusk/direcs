@@ -111,7 +111,8 @@ void Circuit::takeCommandAnswer(QString atmelAnswer, QString caller)
 	// was it this class which asked for the answer?
 	if (caller != className) // not 'stopped=true' check here in contrast to sensorThread
 	{
-		emit message(QString("Answer %1 is not for %2.").arg(atmelAnswer).arg(className));
+		// debug msg
+		//emit message(QString("Answer %1 is not for %2.").arg(atmelAnswer).arg(className));
 		return;
 	}
 

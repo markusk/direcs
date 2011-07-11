@@ -165,7 +165,8 @@ void CommandHandler::run()
 				// let this run loop wait before sending the next command to the Atmel
 				commandInProgress = true;
 
-				emit message("Sent.");
+				// debug msg
+				//emit message("Sent.");
 			}
 			else
 			{

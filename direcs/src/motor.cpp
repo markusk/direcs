@@ -895,7 +895,8 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 
 	if (regardingCommand != atmelCommand)
 	{
-//		emit message(QString("Answer %1 is not for me (Motor).").arg(atmelAnswer));
+		// debug msg
+		// emit message(QString("Answer %1 is not for me (Motor).").arg(atmelAnswer));
 		return;
 	}
 
