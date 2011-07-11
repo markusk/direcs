@@ -3585,14 +3585,33 @@ void Direcs::readSettings()
 			{
 				// set value in sensor thread
 				sensorThread->setSleepTime(value);
-				emit message(QString("Setting sleepTimeSensorThread to <b>%1ms</b>.").arg(value));
+				emit message(QString("Setting sleepTimeSensorThread to <b>%1 ms</b>.").arg(value));
 			}
 			break;
 	}
 
+	//---------------------------------------------------------------------
+	// read setting
+	value = inifile1->readSetting("Config", "sleepTimeCommandHandler");
+
+	switch (value)
+	{
+		case -1:
+			emit message("<font color=\"#FF0000\">Value \"sleepTimeCommandHandler\" not found in ini-file!</font>");
+			value = 0;
+			break;
+		default:
+			if (!consoleMode)
+			{
+				// set value in sensor thread
+				commandHandler->setSleepTime(value);
+				emit message(QString("Setting sleepTimeCommandHandler to <b>%1 ms</b>.").arg(value));
+			}
+			break;
+	}
+	emit message("Servo default settings read and set.");
+
 /*
-	unsigned long sleepTimeSensorThread;
-	unsigned long sleepTimeCommandHandler;
 	unsigned long intervalTimeSensorThread;
 	unsigned long atmelTimeout;
 */

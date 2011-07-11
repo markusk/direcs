@@ -45,6 +45,12 @@ class CommandHandler : public QThread
 		~CommandHandler();
 
 		/**
+		Sets the sleep time for this thread
+		@param time in ms
+		*/
+		void setSleepTime(unsigned long time);
+
+		/**
 		Stops the thread.
 		*/
 		void stop();
@@ -166,9 +172,7 @@ class CommandHandler : public QThread
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
 		static const char divider    = 61; /// This divides the serial string for the Atmel controller.    61  =  =
 
-		// Every thread sleeps some time, for having a bit more time fo the other threads!
-		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 250; // Default: 100 ms
+		unsigned long threadSleepTime; // time in ms the thread sleeps after/before executing the next cycle
 
 		static const int ATMELTIMEOUT = 500; /// timeout in ms
 

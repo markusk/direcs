@@ -52,6 +52,13 @@ CommandHandler::~CommandHandler()
 }
 
 
+void CommandHandler::setSleepTime(unsigned long time)
+{
+	// store time
+	threadSleepTime = time;
+}
+
+
 void CommandHandler::stop()
 {
 	stopped = true;
@@ -77,7 +84,7 @@ void CommandHandler::run()
 	while (!stopped)
 	{
 		// let the thread sleep some time for having more time for the other threads
-		msleep(THREADSLEEPTIME);
+		msleep(threadSleepTime);
 
 		if ( (interfaceState == ON) && (simulationMode == false) )
 		{
