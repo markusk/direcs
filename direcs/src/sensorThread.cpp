@@ -25,6 +25,7 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	className = this->staticMetaObject.className();
 
 	threadSleepTime = 0;
+	intervalTime = 0;
 
 	stopped = false;
 	simulationMode = false;
@@ -169,6 +170,13 @@ void SensorThread::setSleepTime(unsigned long time)
 }
 
 
+void SensorThread::setIntervalTime(unsigned long time)
+{
+	// store time
+	intervalTime = time;
+}
+
+
 void SensorThread::stop()
 {
 	stopped = true;
@@ -195,6 +203,14 @@ void SensorThread::run()
 		return;
 	}
 
+	// check if time set
+	if (intervalTime == 0)
+	{
+		emit message(QString("ERROR: Interval time not set in %1!").arg(className));
+		stop();
+		return;
+	}
+
 
 	//  start "threading"...
 	while (!stopped)
@@ -208,10 +224,10 @@ void SensorThread::run()
 			// voltage sensors
 			//-----------------
 			readVoltageSensor(VOLTAGESENSOR1);
-			msleep(INTERVALTIME); /// @todo check how long we should sleep here
+			msleep(intervalTime);
 
 			readVoltageSensor(VOLTAGESENSOR2);
-			msleep(INTERVALTIME); /// @todo check how long we should sleep here
+			msleep(intervalTime);
 
 
 /// @todo implement reste of this to new event method

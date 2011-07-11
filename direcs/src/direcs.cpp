@@ -3630,9 +3630,26 @@ void Direcs::readSettings()
 			break;
 	}
 
-/*
-	unsigned long intervalTimeSensorThread;
-*/
+	//---------------------------------------------------------------------
+	// read setting
+	value = inifile1->readSetting("Config", "intervalTimeSensorThread");
+
+	switch (value)
+	{
+		case -1:
+			emit message("<font color=\"#FF0000\">Value \"intervalTimeSensorThread\" not found in ini-file!</font>");
+			value = 0;
+			break;
+		default:
+			if (!consoleMode)
+			{
+				// set value
+				sensorThread->setIntervalTime(value);
+				emit message(QString("Setting intervalTimeSensorThread to <b>%1 ms</b>.").arg(value));
+			}
+			break;
+	}
+
 } // readSettings
 
 

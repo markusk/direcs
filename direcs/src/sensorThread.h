@@ -53,6 +53,12 @@ class SensorThread : public QThread
 		void setSleepTime(unsigned long time);
 
 		/**
+		Sets the sleep time between each sensor read call.
+		@param time in ms
+		*/
+		void setIntervalTime(unsigned long time);
+
+		/**
 		Stops the thread.
 		*/
 		void stop();
@@ -319,7 +325,7 @@ class SensorThread : public QThread
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		unsigned long threadSleepTime; // time in ms the thread sleeps after/before reading all sensors
-		static const unsigned long INTERVALTIME    = 500; // time in ms between each sensor reading
+		unsigned long intervalTime; // time in ms between each sensor reading
 
 		// Give the infrared sensors some names
 		//
