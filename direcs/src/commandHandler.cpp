@@ -204,6 +204,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 {
 	command tempCommand;
 	answer tempAnswer;
+	qint64 duration;
 
 
 	/// @todo should we empty the command and answer lists in case of error, too? Could or should matter the whole class!?
@@ -225,11 +226,11 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 			tempAnswer = answerList.first();
 
 			// hey kids, what time is it?
-			QDateTime now = QDateTime::currentDateTime();
+			duration = tempAnswer.timestamp.msecsTo(QDateTime::currentDateTime());
 
-			if (tempAnswer.timestamp.msecsTo(now) > ATMELTIMEOUT)
+			if (duration > ATMELTIMEOUT)
 			{
-				emit message(QString("General timeout error (%1ms > %2ms)").arg( tempAnswer.timestamp.msecsTo(now) ).arg( ATMELTIMEOUT ));
+				emit message(QString("General timeout error (%1ms > %2ms)").arg( duration ).arg( ATMELTIMEOUT ));
 
 				// timeout
 				// let this class know, that we had an error
@@ -264,7 +265,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 
 		// debug msg
 		// emit message( QString("Recveived command %1, ID=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
-		emit message( QString("Added ID %1. %2 commands in queue.").arg(currentID).arg(commandList.count());
+		emit message( QString("Added ID %1. %2 commands in queue.").arg(currentID).arg(commandList.count()));
 
 		// create next command ID
 		currentID++; /// @todo double cross check: do have we have more than x commands in the queued in the line? > emit systemerror than.
@@ -278,6 +279,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 {
 	answer tempAnswer;
+	qint64 duration;
 
 
 	// we have an answer, so we can tell the run-loop, that it can continue
@@ -307,11 +309,11 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 			//----------
 			// timeout?
 			//----------
-			QDateTime now = QDateTime::currentDateTime();
+			duration = tempAnswer.timestamp.msecsTo(QDateTime::currentDateTime());
 
-			if (tempAnswer.timestamp.msecsTo(now) > ATMELTIMEOUT)
+			if (duration > ATMELTIMEOUT)
 			{
-				emit message(QString("Timeout (%1ms > %2ms)").arg( tempAnswer.timestamp.msecsTo(now) ).arg( ATMELTIMEOUT ));
+				emit message(QString("Timeout (%1ms > %2ms)").arg( duration ).arg( ATMELTIMEOUT ));
 
 				// timeout
 				// let this class know, that we had an error
@@ -331,6 +333,8 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 				return;
 			}
 
+			// debug msg
+			emit message(QString("Command duration: %1 ms").arg(duration));
 
 			// ------------
 			// emit Signal
