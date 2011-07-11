@@ -283,7 +283,7 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value, QString &comma
 
 
 	// extract the command, i.e. 's7', for returning it
-	command = string.left( string.firstIndexOf(divider) );
+	command = string.left( string.indexOf(divider) );
 	command.remove(starter);
 
 
