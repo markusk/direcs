@@ -47,14 +47,14 @@ QString Logfile::checkPath()
 bool Logfile::checkFiles()
 {
 	QString filename;
-	
+
 
 	if (filename == "not_set")
 	{
 		return false;
 	}
-	
-	
+
+
 	// path + filename for ini-file
 	filename = programPath;
 	filename.append("/");
@@ -65,8 +65,8 @@ bool Logfile::checkFiles()
 	{
 		return false;
 	}
-	
-	
+
+
 	return true;
 }
 */
@@ -81,8 +81,8 @@ void Logfile::appendLog(QString text, bool CR)
 		qDebug("logFilename not set!");
 		return;
 	}
-	
-	
+
+
 	// remove HTML
 	if (text.contains("<") && text.contains(">"))
 	{
@@ -103,10 +103,10 @@ void Logfile::appendLog(QString text, bool CR)
 		};
 	}
 
-	
+
 	now = QDateTime::currentDateTime(); // get the current date and time
 	QTextStream out(&file);
-	out << now.toString("yyyy") << "-" << now.toString("MM") << "-" << now.toString("dd") << " " << now.toString("hh") << ":" << now.toString("mm") << ":" << now.toString("ss") << " " << text << "\n";
+	out << now.toString("yyyy") << "-" << now.toString("MM") << "-" << now.toString("dd") << "  " << now.toString("hh") << ":" << now.toString("mm") << ":" << now.toString("ss") << "." << now.toString("zzz") << "  " << text << "\n";
 }
 
 
@@ -115,7 +115,7 @@ void Logfile::setFilename(QString filename)
 	// set the filename
 	logFilename = filename;
 	file.setFileName(filename);
-	
+
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
 	{
 		qDebug("Error opening logfile!");
@@ -127,6 +127,6 @@ void Logfile::setFilename(QString filename)
 void Logfile::writeHeartbeat(unsigned char state)
 {
 	Q_UNUSED(state);
-	
+
 	appendLog("-heartbeat-");
 }
