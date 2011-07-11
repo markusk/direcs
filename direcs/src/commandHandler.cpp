@@ -90,6 +90,15 @@ void CommandHandler::run()
 	bool heartbeatToggle = false;
 
 
+	// check if time set
+	if (threadSleepTime == 0)
+	{
+		emit message(QString("ERROR: Thread sleep time not set in %1!").arg(className));
+		stop();
+		return;
+	}
+
+
 	//  start "threading"...
 	while (!stopped)
 	{
@@ -221,7 +230,16 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 {
 	command tempCommand;
 	answer tempAnswer;
-	qint64 duration;
+	unsigned long duration;
+
+
+	// check if time set
+	if (atmelTimeout == 0)
+	{
+		emit message(QString("ERROR: Atmel timeout not set in %1!").arg(className));
+		stop();
+		return;
+	}
 
 
 	/// @todo should we empty the command and answer lists in case of error, too? Could or should matter the whole class!?
@@ -296,7 +314,16 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 {
 	answer tempAnswer;
-	qint64 duration;
+	unsigned long duration;
+
+
+	// check if time set
+	if (atmelTimeout == 0)
+	{
+		emit message(QString("ERROR: Atmel timeout not set in %1!").arg(className));
+		stop();
+		return;
+	}
 
 
 	// we have an answer, so we can tell the run-loop, that it can continue
