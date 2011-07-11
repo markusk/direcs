@@ -152,7 +152,7 @@ void CommandHandler::run()
 			//-----------------------
 			// send command to Atmel
 			//-----------------------
-			emit message(QString("SENDING COMMAND %1").arg(commandToBeSent));
+			emit message(QString("%1 sends %2 (ID %3)").arg(className).arg(commandToBeSent).arg(currentID));
 
 			// this command is not executed yet
 			commandSentSuccessfull = false;
@@ -264,6 +264,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 
 		// debug msg
 		// emit message( QString("Recveived command %1, ID=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
+		emit message( QString("Added ID %1. %2 commands in queue.").arg(currentID).arg(commandList.count());
 
 		// create next command ID
 		currentID++; /// @todo double cross check: do have we have more than x commands in the queued in the line? > emit systemerror than.
