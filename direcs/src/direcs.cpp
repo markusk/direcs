@@ -3609,11 +3609,29 @@ void Direcs::readSettings()
 			}
 			break;
 	}
-	emit message("Servo default settings read and set.");
+
+	//---------------------------------------------------------------------
+	// read setting
+	value = inifile1->readSetting("Config", "atmelTimeout");
+
+	switch (value)
+	{
+		case -1:
+			emit message("<font color=\"#FF0000\">Value \"atmelTimeout\" not found in ini-file!</font>");
+			value = 0;
+			break;
+		default:
+			if (!consoleMode)
+			{
+				// set value
+				commandHandler->setAtmelTimeout(value);
+				emit message(QString("Setting atmelTimeout to <b>%1 ms</b>.").arg(value));
+			}
+			break;
+	}
 
 /*
 	unsigned long intervalTimeSensorThread;
-	unsigned long atmelTimeout;
 */
 } // readSettings
 

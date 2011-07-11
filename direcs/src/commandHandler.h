@@ -51,6 +51,12 @@ class CommandHandler : public QThread
 		void setSleepTime(unsigned long time);
 
 		/**
+		Sets the duration in where we expect an answer from the Atmel.
+		@param time in ms
+		*/
+		void setAtmelTimeout(unsigned long time);
+
+		/**
 		Stops the thread.
 		*/
 		void stop();
@@ -174,7 +180,7 @@ class CommandHandler : public QThread
 
 		unsigned long threadSleepTime; // time in ms the thread sleeps after/before executing the next cycle
 
-		static const int ATMELTIMEOUT = 500; /// timeout in ms
+		unsigned long atmelTimeout; // duration in ms in where we axpect a valid answer from the Atmel
 
 		static const int MAXIMUMPLOTHEARTBEAT = 5; /// theoratically 5 Volt for heartbeat "high" @sa Gui::initPlot
 

@@ -24,6 +24,9 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 {
 	className = this->staticMetaObject.className();
 
+	threadSleepTime = 0;
+	atmelTimeout = 0;
+
 	stopped = false;
 	simulationMode = false;
 
@@ -56,6 +59,13 @@ void CommandHandler::setSleepTime(unsigned long time)
 {
 	// store time
 	threadSleepTime = time;
+}
+
+
+void CommandHandler::setAtmelTimeout(unsigned long time)
+{
+	// store time
+	atmelTimeout = time;
 }
 
 
@@ -98,7 +108,7 @@ void CommandHandler::run()
 				}
 
 				// let the thread sleep some time
-				msleep(50);
+				msleep(50); /// @todo put this sleep time in a var
 			}
 
 
@@ -112,7 +122,7 @@ void CommandHandler::run()
 				}
 
 				// let the thread sleep some time
-				msleep(50);
+				msleep(50); /// @todo put this sleep time in a var
 			}
 
 
@@ -235,9 +245,9 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 			// hey kids, what time is it?
 			duration = tempAnswer.timestamp.msecsTo(QDateTime::currentDateTime());
 
-			if (duration > ATMELTIMEOUT)
+			if (duration > atmelTimeout)
 			{
-				emit message(QString("General timeout error (%1ms > %2ms)").arg( duration ).arg( ATMELTIMEOUT ));
+				emit message(QString("General timeout error (%1ms > %2ms)").arg( duration ).arg( atmelTimeout ));
 
 				// timeout
 				// let this class know, that we had an error
@@ -318,9 +328,9 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 			//----------
 			duration = tempAnswer.timestamp.msecsTo(QDateTime::currentDateTime());
 
-			if (duration > ATMELTIMEOUT)
+			if (duration > atmelTimeout)
 			{
-				emit message(QString("Timeout (%1ms > %2ms)").arg( duration ).arg( ATMELTIMEOUT ));
+				emit message(QString("Timeout (%1ms > %2ms)").arg( duration ).arg( atmelTimeout ));
 
 				// timeout
 				// let this class know, that we had an error
