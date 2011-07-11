@@ -170,7 +170,7 @@ class CommandHandler : public QThread
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 250; // Default: 100 ms
 
-		static const int ATMELTIMEOUT = 250; /// timeout in ms
+		static const int ATMELTIMEOUT = 500; /// timeout in ms
 
 		static const int MAXIMUMPLOTHEARTBEAT = 5; /// theoratically 5 Volt for heartbeat "high" @sa Gui::initPlot
 
