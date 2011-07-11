@@ -208,10 +208,10 @@ void SensorThread::run()
 			// voltage sensors
 			//-----------------
 			readVoltageSensor(VOLTAGESENSOR1);
-			msleep(250); /// @todo check how long we should sleep here
+			msleep(INTERVALTIME); /// @todo check how long we should sleep here
 
 			readVoltageSensor(VOLTAGESENSOR2);
-			msleep(250); /// @todo check how long we should sleep here
+			msleep(INTERVALTIME); /// @todo check how long we should sleep here
 
 
 /// @todo implement reste of this to new event method
