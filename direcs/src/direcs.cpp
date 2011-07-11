@@ -3583,7 +3583,7 @@ void Direcs::readSettings()
 		default:
 			if (!consoleMode)
 			{
-				// set value in sensor thread
+				// set value
 				sensorThread->setSleepTime(value);
 				emit message(QString("Setting sleepTimeSensorThread to <b>%1 ms</b>.").arg(value));
 			}
@@ -3603,7 +3603,7 @@ void Direcs::readSettings()
 		default:
 			if (!consoleMode)
 			{
-				// set value in sensor thread
+				// set value
 				commandHandler->setSleepTime(value);
 				emit message(QString("Setting sleepTimeCommandHandler to <b>%1 ms</b>.").arg(value));
 			}

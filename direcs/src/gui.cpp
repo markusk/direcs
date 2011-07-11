@@ -2084,7 +2084,7 @@ void Gui::hideCameraControls()
 
 void Gui::disableCompass()
 {
-	appendLog("to do");
+	appendLog("Gui::disableCompass to be implemented"); /// @todo implement Gui::disableCompass
 }
 
 
