@@ -190,7 +190,8 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI, bool
 // cpu-test	motors = new Motor(interface1, mutex);
 	motors = new Motor();
 	sensorThread = new SensorThread(interface1, mutex);
-	servos = new Servo(interface1, mutex);
+// cpu-test	servos = new Servo(interface1, mutex);
+	servos = new Servo();
 	commandHandler = new CommandHandler(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
