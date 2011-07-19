@@ -169,6 +169,7 @@ class CommandHandler : public QThread
 		QList <answer>  answerList;
 
 		mutable QMutex commandListMutex; // this is for the var atmelCommand
+		mutable QMutex answerListMutex; // this is for the var atmelCommand
 
 		/**
 		example answer string without value from Atmel: *re#
