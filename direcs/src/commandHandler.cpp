@@ -84,10 +84,10 @@ void CommandHandler::stop()
 
 void CommandHandler::run()
 {
-	command tempCommand;
-	answer  tempAnswer;
-	QString commandToBeSent;
-	bool heartbeatToggle = false;
+	static command tempCommand;
+	static answer  tempAnswer;
+	static QString commandToBeSent;
+	static bool heartbeatToggle = false;
 
 
 	// check if time set
