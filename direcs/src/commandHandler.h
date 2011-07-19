@@ -128,6 +128,11 @@ class CommandHandler : public QThread
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/**
+		Emit command handler information to GUI, or so.
+		*/
+		void commandInformation(QString string);
+
+		/**
 		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
 		@param errorlevel needs to be defined. Temporariliy we use -2 in case of error in this thread.
 		*/

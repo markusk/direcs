@@ -48,7 +48,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="tabState">
      <attribute name="title">
@@ -1728,8 +1728,34 @@
         <x>10</x>
         <y>0</y>
         <width>751</width>
-        <height>361</height>
+        <height>351</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblqwetr">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>357</y>
+        <width>131</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Command Handler:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblCommandHandlerInformation">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>357</y>
+        <width>621</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Informations here...</string>
       </property>
      </widget>
     </widget>

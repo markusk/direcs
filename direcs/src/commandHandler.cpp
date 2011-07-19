@@ -382,6 +382,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 
 			// debug msg
 			emit message(QString("Command duration: %1 ms").arg(duration));
+			emit commandInformation(QString("Duration: %1 ms  In queue: %2").arg(duration).arg(commandList.count()));
 
 			// ------------
 			// emit Signal

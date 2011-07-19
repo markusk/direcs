@@ -519,6 +519,7 @@ void Direcs::init()
 			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(commandHandler, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(commandHandler, SIGNAL(commandInformation(QString)), gui, SLOT(showCommandInformation(QString))); // send general command information to GUI, too!
 			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(motors, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
