@@ -32,7 +32,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	// copy the pointer from the original object
 	interface1 = i;
-	mutex = m;
+	interfaceAvrMutex = m;
 
 	interfaceState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
@@ -184,7 +184,7 @@ void CommandHandler::run()
 			commandSentSuccessfull = false;
 
 			// Lock the mutex.
-			mutex->lock();
+			interfaceAvrMutex->lock();
 
 			if (interface1->sendString(commandToBeSent) == true)
 			{
@@ -200,7 +200,7 @@ void CommandHandler::run()
 			}
 
 			// Unlock the mutex.
-			mutex->unlock();
+			interfaceAvrMutex->unlock();
 
 		} // robot is on  and  simulation mode is off
 

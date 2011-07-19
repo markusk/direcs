@@ -141,7 +141,7 @@ class CommandHandler : public QThread
 
 	private:
 		QString className;					/// this will contain the name of this class at runtime.
-		mutable QMutex *mutex;				// make this class thread-safe
+		mutable QMutex *interfaceAvrMutex;	// make this class thread-safe
 		InterfaceAvr *interface1;			/// a pointer to the Atmel communication class (serial port stuff)
 		volatile bool stopped;
 		volatile bool commandInProgress;	/// set to true, when currently executing an command on and with the serial port
