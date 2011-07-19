@@ -117,7 +117,7 @@ void CommandHandler::run()
 				}
 
 				// let the thread sleep some time
-				msleep(50); /// @todo put this sleep time in a var
+				msleep(threadSleepTime); /// @todo put this sleep time in a var
 			}
 
 
@@ -131,7 +131,7 @@ void CommandHandler::run()
 				}
 
 				// let the thread sleep some time
-				msleep(50); /// @todo put this sleep time in a var
+				msleep(threadSleepTime); /// @todo put this sleep time in a var
 			}
 
 
