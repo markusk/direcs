@@ -20,13 +20,14 @@
 
 #include "motor.h"
 
-Motor::Motor(InterfaceAvr *i, QMutex *m)
+/* cpu-test  Motor::Motor(InterfaceAvr *i, QMutex *m) */
+Motor::Motor()
 {
 	className = this->staticMetaObject.className();
 
 	// copy the pointer from the original object
-	interface1 = i;
-	mutex = m;
+//	interface1 = i;
+//	mutex = m;
 
 	// Initialize the motor step counters
 	//steps1 = 0;
@@ -78,7 +79,7 @@ Motor::Motor(InterfaceAvr *i, QMutex *m)
 	commandBotWait			= "bwa";
 
 	// send answers from interfaceAvr to this class
-	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
+//	connect(interface1, SIGNAL(commandCompleted(QString, QString)), this, SLOT(takeCommandAnswer(QString, QString)));
 }
 
 
@@ -151,6 +152,7 @@ double Motor::getDrivenDistance(unsigned char motor)
 
 bool Motor::motorControl(int motor, bool power, int direction)
 {
+/* cpu-test
 //	QString command = "bst"; // stop robot
 	QString answer = "error";
 
@@ -586,7 +588,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				// Unlocks the mutex
 				mutex->unlock();
 				break;
-
+cpu-test */
 
 	/*
 			//-------------------------
@@ -813,9 +815,9 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				mutex->unlock();
 
 				break;
-	*/
+	* /
 		}
-
+/ * cpu-test
 		// Unlocks the mutex, if no case statement fits in the switch command
 		mutex->unlock();
 	} // robot is ON
@@ -826,13 +828,14 @@ bool Motor::motorControl(int motor, bool power, int direction)
 	// mark the robot as OFF within this class
 	robotState = OFF;
 	///  We do not emit a Signal here. Nobody needs to know that we had a problem setting the motor. we jsut set robotState to OFF to let this class know this.
-
+cpu-test */
 	return false; /// @todo remove the return code here!
 }
 
 
 void Motor::flashlight(bool light)
 {
+/* cpu-test
 	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	if (robotState == ON)
 	{
@@ -882,7 +885,7 @@ void Motor::flashlight(bool light)
 
 	// mark the robot as OFF within this class
 	robotState = OFF;
-
+cpu-test */
 	emit message("Error switching flashlight.");
 ///  @todo emit a Signal here?  No. Nobody needs to know that we had a problem setting the flashlight.
 }
@@ -890,7 +893,8 @@ void Motor::flashlight(bool light)
 
 void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 {
-//	emit message( QString("Motor takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
+/* cpu-test
+	//	emit message( QString("Motor takes answer for %1: %2").arg(atmelCommand).arg(atmelAnswer) );
 //	emit message( QString("Motor checks: %1 = %2 ?").arg(regardingCommand).arg(atmelCommand) );
 
 	if (regardingCommand != atmelCommand)
@@ -942,11 +946,13 @@ void Motor::takeCommandAnswer(QString atmelAnswer, QString regardingCommand)
 		expectedAtmelAnswer.clear();
 			return;
 	}
+	cpu-test */
 }
 
 
 void Motor::timeout()
 {
+	/* cpu-test
 	/// this is the same code for all commands right now
 
 	// first check if we had already an answer from the Atmel
@@ -967,6 +973,7 @@ void Motor::timeout()
 	robotState = false;
 
 	return;
+	cpu-test */
 }
 
 
@@ -1184,7 +1191,7 @@ void Motor::resetMovementCounter(short int motor)
 bool Motor::setMotorSpeed(int motor, int speed)
 {
 	QString answer = "error";
-
+/* cpu-test
 
 	if (robotState == ON)
 	{
@@ -1327,7 +1334,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 		mutex->unlock();
 	} // robot is ON
 
-
+cpu-test */
 	// robot is off
 	return false;
 }

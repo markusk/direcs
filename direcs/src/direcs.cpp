@@ -187,7 +187,8 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI, bool
 //	circuit1 = new Circuit(interface1, mutex);
 	circuit1 = new Circuit();
 ///	\todo heartbeat = new Heartbeat(interface1, mutex);
-	motors = new Motor(interface1, mutex);
+// cpu-test	motors = new Motor(interface1, mutex);
+	motors = new Motor();
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
 	commandHandler = new CommandHandler(interface1, mutex);

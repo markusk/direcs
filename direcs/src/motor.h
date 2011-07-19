@@ -41,7 +41,8 @@ class Motor : public QObject
 	Q_OBJECT
 
 	public:
-		Motor(InterfaceAvr *i, QMutex *m);
+	/* Motor(InterfaceAvr *i, QMutex *m); */
+		Motor();
 		~Motor();
 
 		/**
@@ -150,8 +151,8 @@ class Motor : public QObject
 		void calculateMovement(); /// \todo check the conversion value and make it a const!
 
 		QString className;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
-		mutable QMutex *mutex; // make this class thread-safe
-		InterfaceAvr *interface1;
+//		mutable QMutex *mutex; // make this class thread-safe
+//		InterfaceAvr *interface1;
 		bool robotState; // stores the robot state within this class
 		int motor1Speed;
 		int motor2Speed;
