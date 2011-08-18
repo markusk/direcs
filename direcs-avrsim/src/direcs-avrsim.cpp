@@ -206,10 +206,23 @@ void DirecsAvrsim::init()
 	connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
 
 
+
+	//------------------------------------------------------------------
+	// place gui window at a nice position on the screen
+	//------------------------------------------------------------------
+
+	// for getting the screen resolution
+	QDesktopWidget *desktop = QApplication::desktop();
+
+	// move mainWindow to the left bottom ! ! !
+	gui->move( 1, (desktop->height() - gui->height()) );
+
 	//----------------------------------------------------------------------------
 	// show the gui
 	//----------------------------------------------------------------------------
 	gui->show();
+
+
 
 	// delete the splash screen
 	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
