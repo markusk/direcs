@@ -40,7 +40,8 @@ class Servo : public QObject
 	Q_OBJECT
 
 	public:
-		Servo(InterfaceAvr *i, QMutex *m);
+	/*cpu-test		Servo(InterfaceAvr *i, QMutex *m); */
+		Servo();
 		~Servo();
 
 		/**
@@ -91,8 +92,8 @@ class Servo : public QObject
 
 	private:
 		QString className;	/// this will contain the name of this class at runtime. @sa takeCommandAnswer()
-		mutable QMutex *mutex; // make this class thread-safe
-		InterfaceAvr *interface1;
+//		mutable QMutex *mutex; // make this class thread-safe
+//		InterfaceAvr *interface1;
 		bool robotState; // stores the robot state within this class
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!

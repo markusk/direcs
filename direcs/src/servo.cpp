@@ -20,13 +20,14 @@
 
 #include "servo.h"
 
-Servo::Servo(InterfaceAvr *i, QMutex *m)
+/* cpu-test Servo::Servo(InterfaceAvr *i, QMutex *m) */
+Servo::Servo()
 {
 	className = this->staticMetaObject.className();
 
 	// copy the pointer from the original object
-	interface1 = i;
-	mutex = m;
+//	interface1 = i;
+//	mutex = m;
 
 	// init arrays
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)

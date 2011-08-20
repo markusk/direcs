@@ -4416,6 +4416,19 @@ void Gui::showThreshold(int threshold)
 }
 
 
+void Gui::showCommandInformation(QString string)
+{
+	if (useLargeGUI)
+	{
+		ui.lblCommandHandlerInformation->setText(string);
+	}
+	else
+	{
+		uiSmall.lblCommandHandlerInformation->setText(string);
+	}
+}
+
+
 void Gui::setConsoleMode(bool state)
 {
 	consoleMode = state;

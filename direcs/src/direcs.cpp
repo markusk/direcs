@@ -187,9 +187,11 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI, bool
 //	circuit1 = new Circuit(interface1, mutex);
 	circuit1 = new Circuit();
 ///	\todo heartbeat = new Heartbeat(interface1, mutex);
-	motors = new Motor(interface1, mutex);
+// cpu-test	motors = new Motor(interface1, mutex);
+	motors = new Motor();
 	sensorThread = new SensorThread(interface1, mutex);
-	servos = new Servo(interface1, mutex);
+// cpu-test	servos = new Servo(interface1, mutex);
+	servos = new Servo();
 	commandHandler = new CommandHandler(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
@@ -517,6 +519,7 @@ void Direcs::init()
 			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(commandHandler, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
+			connect(commandHandler, SIGNAL(commandInformation(QString)), gui, SLOT(showCommandInformation(QString))); // send general command information to GUI, too!
 			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(motors, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));

@@ -32,7 +32,7 @@ CommandHandler::CommandHandler(InterfaceAvr *i, QMutex *m)
 
 	// copy the pointer from the original object
 	interface1 = i;
-	mutex = m;
+	interfaceAvrMutex = m;
 
 	interfaceState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
@@ -84,10 +84,10 @@ void CommandHandler::stop()
 
 void CommandHandler::run()
 {
-	command tempCommand;
-	answer  tempAnswer;
-	QString commandToBeSent;
-	bool heartbeatToggle = false;
+	static command tempCommand;
+	static answer  tempAnswer;
+	static QString commandToBeSent;
+	static bool heartbeatToggle = false;
 
 
 	// check if time set
@@ -117,7 +117,7 @@ void CommandHandler::run()
 				}
 
 				// let the thread sleep some time
-				msleep(50); /// @todo put this sleep time in a var
+				msleep(threadSleepTime); /// @todo put this sleep time in a var
 			}
 
 
@@ -131,15 +131,14 @@ void CommandHandler::run()
 				}
 
 				// let the thread sleep some time
-				msleep(50); /// @todo put this sleep time in a var
+				msleep(threadSleepTime); /// @todo put this sleep time in a var
 			}
 
 
-			// lock mutex
-			commandListMutex.lock();
-
 			// get next command from list (oldest first)
+			commandListMutex.lock();
 			tempCommand = commandList.first();
+			commandListMutex.unlock();
 
 			// store command in this class
 			tempAnswer.string = tempCommand.string;
@@ -160,7 +159,9 @@ void CommandHandler::run()
 			tempAnswer.timestamp = QDateTime::currentDateTime();
 
 			// add to answer list
+			answerListMutex.lock();
 			answerList.append(tempAnswer);
+			answerListMutex.unlock();
 
 			// debug msg
 			// if (currentID > 0)
@@ -169,9 +170,8 @@ void CommandHandler::run()
 			// }
 
 			// remove from "to do" list
+			commandListMutex.lock();
 			commandList.removeFirst();
-
-			// unlock mutex
 			commandListMutex.unlock();
 
 
@@ -184,7 +184,7 @@ void CommandHandler::run()
 			commandSentSuccessfull = false;
 
 			// Lock the mutex.
-			mutex->lock();
+			interfaceAvrMutex->lock();
 
 			if (interface1->sendString(commandToBeSent) == true)
 			{
@@ -200,7 +200,7 @@ void CommandHandler::run()
 			}
 
 			// Unlock the mutex.
-			mutex->unlock();
+			interfaceAvrMutex->unlock();
 
 		} // robot is on  and  simulation mode is off
 
@@ -258,7 +258,9 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 
 			// get oldest command element
 			// this contains also the start timestamp of this command
+			answerListMutex.lock();
 			tempAnswer = answerList.first();
+			answerListMutex.unlock();
 
 			// hey kids, what time is it?
 			duration = tempAnswer.timestamp.msecsTo(QDateTime::currentDateTime());
@@ -287,16 +289,15 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 		}
 
 
-		// lock mutex
-		commandListMutex.lock();
-
 		// fill data structure
 		tempCommand.string = commandString;
 		tempCommand.ID = currentID;
 		tempCommand.caller = caller;
 
 		// add command and ID to command lists
+		commandListMutex.lock();
 		commandList.append(tempCommand);
+		commandListMutex.unlock();
 
 		// debug msg
 		// emit message( QString("Recveived command %1, ID=%2 from %3 appended").arg(tempCommand.string).arg(tempCommand.ID).arg(tempCommand.caller) );
@@ -305,8 +306,6 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 		// create next command ID
 		currentID++; /// @todo double cross check: do have we have more than x commands in the queued in the line? > emit systemerror than.
 
-		// unlock mutex
-		commandListMutex.unlock();
 	} // interfaeState is ON
 }
 
@@ -333,7 +332,9 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 	for (int i=0; i<answerList.size(); i++)
 	{
 		// at can be faster than []
+		answerListMutex.lock();
 		tempAnswer = answerList.at(i);
+		answerListMutex.unlock();
 
 		// see if the Atmel answer starts with the starter and the sent command (i.e. *s7... )
 		if (atmelAnswer.startsWith( QString("%1%2").arg(starter).arg(tempAnswer.string) ))
@@ -346,7 +347,9 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 			// emit message(QString("Expected answer %1 received in %2").arg(atmelAnswer).arg(className));
 
 			// remove element from answer list
+			answerListMutex.lock();
 			answerList.removeAt(i);
+			answerListMutex.unlock();
 
 			commandSentSuccessfull = true; // this lets the seperate timeout slot just return
 
@@ -379,6 +382,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 
 			// debug msg
 			emit message(QString("Command duration: %1 ms").arg(duration));
+			emit commandInformation(QString("Duration: %1 ms  In queue: %2").arg(duration).arg(commandList.count()));
 
 			// ------------
 			// emit Signal

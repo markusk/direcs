@@ -424,6 +424,11 @@ class Gui : public QMainWindow
 		*/
 		void showThreshold(int threshold);
 
+		/**
+		Shows commandHandler information in the GUI (e.g. command duration, commmands in queue)
+		*/
+		void showCommandInformation(QString string);
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);

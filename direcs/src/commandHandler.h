@@ -128,6 +128,11 @@ class CommandHandler : public QThread
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/**
+		Emit command handler information to GUI, or so.
+		*/
+		void commandInformation(QString string);
+
+		/**
 		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
 		@param errorlevel needs to be defined. Temporariliy we use -2 in case of error in this thread.
 		*/
@@ -141,7 +146,7 @@ class CommandHandler : public QThread
 
 	private:
 		QString className;					/// this will contain the name of this class at runtime.
-		mutable QMutex *mutex;				// make this class thread-safe
+		mutable QMutex *interfaceAvrMutex;	// make this class thread-safe
 		InterfaceAvr *interface1;			/// a pointer to the Atmel communication class (serial port stuff)
 		volatile bool stopped;
 		volatile bool commandInProgress;	/// set to true, when currently executing an command on and with the serial port
@@ -169,6 +174,7 @@ class CommandHandler : public QThread
 		QList <answer>  answerList;
 
 		mutable QMutex commandListMutex; // this is for the var atmelCommand
+		mutable QMutex answerListMutex; // this is for the var atmelCommand
 
 		/**
 		example answer string without value from Atmel: *re#
