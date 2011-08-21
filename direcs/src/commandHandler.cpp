@@ -263,11 +263,21 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 			answerListMutex.unlock();
 
 			// hey kids, what time is it?
+#ifdef Q_OS_LINUX
+			// On Linux (Qt 4.6.3) we currently get only seconds - no miliseconds! :-/
+			duration = tempAnswer.timestamp.secsTo(QDateTime::currentDateTime());
+
+			if (duration > (atmelTimeout/1000) )
+			{
+				emit message(QString("General timeout error (%1ms > %2ms)").arg( duration*1000 ).arg( atmelTimeout ));
+#else
+			// get duration in miliseconds
 			duration = tempAnswer.timestamp.msecsTo(QDateTime::currentDateTime());
 
 			if (duration > atmelTimeout)
 			{
 				emit message(QString("General timeout error (%1ms > %2ms)").arg( duration ).arg( atmelTimeout ));
+#endif
 
 				// timeout
 				// let this class know, that we had an error
@@ -356,11 +366,21 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 			//----------
 			// timeout?
 			//----------
+#ifdef Q_OS_LINUX
+			// On Linux (Qt 4.6.3) we currently get only seconds - no miliseconds! :-/
+			duration = tempAnswer.timestamp.secsTo(QDateTime::currentDateTime());
+
+			if (duration > (atmelTimeout/1000) )
+			{
+				emit message(QString("Timeout (%1ms > %2ms)").arg( duration*1000 ).arg( atmelTimeout ));
+#else
+			// get duration in miliseconds
 			duration = tempAnswer.timestamp.msecsTo(QDateTime::currentDateTime());
 
 			if (duration > atmelTimeout)
 			{
 				emit message(QString("Timeout (%1ms > %2ms)").arg( duration ).arg( atmelTimeout ));
+#endif
 
 				// timeout
 				// let this class know, that we had an error
