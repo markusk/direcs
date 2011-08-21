@@ -29,6 +29,10 @@
 #include <QObject>
 #include <QDebug>
 
+#ifdef Q_OS_LINUX
+#include <stdint.h> // for uint8_t and 16_t types
+#endif
+
 
 /**
 \author Markus Knapp
