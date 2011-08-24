@@ -87,8 +87,8 @@ void DirecsAvrsim::init()
 	splashColor = Qt::red;
 //	serialPortMicrocontroller = "/dev/tty.SLAB_USBtoUART"; /// this is the seperate serial adapter, but the same as on the Atmel-Board!
 //	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
-//	serialPortMicrocontroller = "/dev/tty.USA19Hfa141P1.1"; /// keyspan Adapter
-	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
+	serialPortMicrocontroller = "/dev/tty.KeySerial1"; /// keyspan Adapter
+//	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
 //	serialPortMicrocontroller = "/dev/ttyAtmelBoard";
 	robotSimulationMode = false;
 
