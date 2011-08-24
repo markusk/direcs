@@ -8,7 +8,7 @@ OBJECTS_DIR = ../tmp
 
 RESOURCES = ../direcsAvrsim.qrc
 
-CONFIG += debug \
+CONFIG += release \
 	qt
 
 TEMPLATE = app
