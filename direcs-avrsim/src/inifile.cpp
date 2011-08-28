@@ -75,7 +75,7 @@ bool Inifile::checkFiles()
 	}
 
 	// check if ini-file exists
-	if (QFile::exists(filename) == false)
+	if (QFile::exists(mainIniFilename) == false)
 	{
 		return false;
 	}
@@ -96,7 +96,6 @@ QString Inifile::getInifileName()
 	if (mainIniFilename.isEmpty())
 	{
 		qDebug("Filename not set in Inifile::writeSetting()!");
-		return;
 	}
 
 	return mainIniFilename;
