@@ -16,12 +16,14 @@ TEMPLATE = app
 HEADERS +=	gui.h \
 	direcs-avrsim.h \
 	interfaceAvr.h \
-	simulationThread.h
+	simulationThread.h \
+    inifile.h
 
 SOURCES +=	gui.cpp \
 	direcs-avrsim.cpp \
 	interfaceAvr.cpp \
-	simulationThread.cpp
+	simulationThread.cpp \
+    inifile.cpp
 
 FORMS +=	mainWindow.ui
 
@@ -38,4 +40,3 @@ else:LIBS  += -lqextserialport
 unix:DEFINES   = _TTY_POSIX_
 
 macx:ICON = ../images/direcs-avrsim.icns
-
