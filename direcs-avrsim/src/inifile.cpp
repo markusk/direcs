@@ -28,14 +28,6 @@ Inifile::Inifile()
 	//commandTimer = new QTimer();
 	//connect(commandTimer, SIGNAL(timeout()), SLOT(commandClock()));
 
-	//------------------------------------------------------------------
-	// set the name of the programms ini-file
-	//------------------------------------------------------------------
-	mainIniFilename = "not_set";
-
-	// the setings object is created in the setInifileName() method !
-
-
 	// Inizialize the (script) command counter
 	//commandCounter = 0;
 
@@ -48,7 +40,6 @@ Inifile::Inifile()
 	//------------------------------------------------------------------
 	// create the settings object. Use the ini-format
 	//------------------------------------------------------------------
-//	settings = new QSettings(mainIniFilename, QSettings::IniFormat);
 	settings = new QSettings();
 
 	// set settings format
@@ -83,9 +74,9 @@ bool Inifile::checkFiles()
 	QString filename;
 
 
-	if (mainIniFilename == "not_set")
+	if (mainIniFilename.isEmpty())
 	{
-		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles().");
+		qDebug("Filename not set in Inifile::checkFiles().");
 		return false;
 	}
 
@@ -120,9 +111,9 @@ QString Inifile::getInifileName()
 
 void Inifile::writeSetting(QString group, QString name, int value)
 {
-	if (mainIniFilename == "not_set")
+	if (mainIniFilename.isEmpty())
 	{
-		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+		qDebug("Filename not set in Inifile::writeSetting()!");
 	}
 
 	//-------------------------------------
@@ -139,9 +130,9 @@ void Inifile::writeSetting(QString group, QString name, int value)
 
 int Inifile::readSetting(QString group, QString name)
 {
-	if (mainIniFilename == "not_set")
+	if (mainIniFilename.isEmpty())
 	{
-		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+		qDebug("Filename not set in Inifile::readSetting()!");
 	}
 
 
@@ -156,9 +147,9 @@ int Inifile::readSetting(QString group, QString name)
 
 QString Inifile::readString(QString group, QString name)
 {
-	if (mainIniFilename == "not_set")
+	if (mainIniFilename.isEmpty())
 	{
-		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+		qDebug("Filename not set in Inifile::readString()!");
 	}
 
 
@@ -178,9 +169,9 @@ QString Inifile::readString(QString group, QString name)
 
 float Inifile::readFloat(QString group, QString name)
 {
-	if (mainIniFilename == "not_set")
+	if (mainIniFilename.isEmpty())
 	{
-		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+		qDebug("Filename not set in Inifile::readFloat()!");
 	}
 
 
