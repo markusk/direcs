@@ -76,6 +76,7 @@ DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
+	inifile = new Inifile();
 
 	simulationThread = new SimulationThread(interface1, mutex);
 }
@@ -289,6 +290,7 @@ DirecsAvrsim::~DirecsAvrsim()
 	qDebug("Bye.");
 	delete simulationThread;
 	delete interface1;
+	delete inifile;
 	delete splash;
 	delete gui;
 }
