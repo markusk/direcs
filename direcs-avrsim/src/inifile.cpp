@@ -48,7 +48,11 @@ Inifile::Inifile()
 	//------------------------------------------------------------------
 	// create the settings object. Use the ini-format
 	//------------------------------------------------------------------
-	settings = new QSettings(mainIniFilename, QSettings::IniFormat);
+//	settings = new QSettings(mainIniFilename, QSettings::IniFormat);
+	settings = new QSettings();
+
+	// set settings format
+	settings->setDefaultFormat(QSettings::IniFormat);
 
 	// deactivate fallbacks (read only in the specified file)
 	settings->setFallbacksEnabled(false);
