@@ -28,14 +28,6 @@ Inifile::Inifile()
 	//commandTimer = new QTimer();
 	//connect(commandTimer, SIGNAL(timeout()), SLOT(commandClock()));
 
-	//------------------------------------------------------------------
-	// set the name of the programms ini-file
-	//------------------------------------------------------------------
-	mainIniFilename = "not_set";
-
-	// the setings object is created in the setInifileName() method !
-
-
 	// Inizialize the (script) command counter
 	//commandCounter = 0;
 
@@ -44,11 +36,23 @@ Inifile::Inifile()
 
 	// Name of the section to search for in the ini-file (script exection)
 	//iniSection = "Sequence1";
+
+	//------------------------------------------------------------------
+	// create the settings object. Use the ini-format
+	//------------------------------------------------------------------
+	settings = new QSettings();
+
+	// set settings format
+	settings->setDefaultFormat(QSettings::IniFormat);
+
+	// deactivate fallbacks (read only in the specified file)
+	settings->setFallbacksEnabled(false);
 }
 
 
 Inifile::~Inifile()
 {
+	delete settings;
 }
 
 
@@ -70,9 +74,9 @@ bool Inifile::checkFiles()
 	QString filename;
 
 
-	if (mainIniFilename == "not_set")
+	if (mainIniFilename.isEmpty())
 	{
-		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles().");
+		qDebug("Filename not set in Inifile::checkFiles().");
 		return false;
 	}
 
@@ -107,6 +111,11 @@ QString Inifile::getInifileName()
 
 void Inifile::writeSetting(QString group, QString name, int value)
 {
+	if (mainIniFilename.isEmpty())
+	{
+		qDebug("Filename not set in Inifile::writeSetting()!");
+	}
+
 	//-------------------------------------
 	// store the programm settings
 	//-------------------------------------
@@ -121,6 +130,12 @@ void Inifile::writeSetting(QString group, QString name, int value)
 
 int Inifile::readSetting(QString group, QString name)
 {
+	if (mainIniFilename.isEmpty())
+	{
+		qDebug("Filename not set in Inifile::readSetting()!");
+	}
+
+
 	// string for group+value in inifile
 	QString iniSection = group + "/" + name;
 
@@ -132,6 +147,12 @@ int Inifile::readSetting(QString group, QString name)
 
 QString Inifile::readString(QString group, QString name)
 {
+	if (mainIniFilename.isEmpty())
+	{
+		qDebug("Filename not set in Inifile::readString()!");
+	}
+
+
 	// string for group+name in inifile
 	QString iniSection = group + "/" + name;
 
@@ -148,6 +169,11 @@ QString Inifile::readString(QString group, QString name)
 
 float Inifile::readFloat(QString group, QString name)
 {
+	if (mainIniFilename.isEmpty())
+	{
+		qDebug("Filename not set in Inifile::readFloat()!");
+	}
+
 
 	// string for group+value in inifile
 	QString iniSection = group + "/" + name;
@@ -471,17 +497,6 @@ void Inifile::sync(void)
 
 void Inifile::setFilename(QString filename)
 {
-	if (mainIniFilename == "not_set")
-	{
-		// set the filename
-		mainIniFilename = filename;
-
-		//------------------------------------------------------------------
-		// create the settings object. Use the ini-format
-		//------------------------------------------------------------------
-		settings = new QSettings(mainIniFilename, QSettings::IniFormat);
-
-		// deactivate fallbacks (read only in the specified file)
-		settings->setFallbacksEnabled(false);
-	}
+	// set the filename
+	mainIniFilename = filename;
 }
