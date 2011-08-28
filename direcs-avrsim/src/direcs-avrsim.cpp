@@ -66,6 +66,8 @@ int main(int argc, char *argv[])
 
 DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 {
+	QApplication::setOrganizationDomain("de.direcs");
+	QApplication::setOrganizationName("direcs");
 	Q_UNUSED(bConsoleMode);
 
 	//------------------------------------------------------------------
