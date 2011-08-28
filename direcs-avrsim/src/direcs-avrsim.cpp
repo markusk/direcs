@@ -180,6 +180,28 @@ void DirecsAvrsim::init()
 	emit splashMessage("Loading config file...");
 	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
 
+	//--------------------------------------------------------------------------
+	// Check for the programm ini file
+	//--------------------------------------------------------------------------
+	if (inifile1->checkFiles() == false)
+	{
+		// file not found-Msg
+		QMessageBox msgbox(QMessageBox::Critical,
+						   tr("direcs-avrsim"),
+						   tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n%2\n\nSorry, exiting NOW...").arg(inifile1->getInifileName()).arg( QDir::currentPath() ),
+						   QMessageBox::Ok | QMessageBox::Default);
+		msgbox.exec();
+		emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
+
+		// call my own exit routine
+		shutdown();
+
+		// here we're back from the shutdown method, so bye bye
+		// QCoreApplication::exit(-1); does not work!
+		exit(1); // FIXME: works, but doesn't call the destructor :-(
+	}
+
+
 	//-------------------------------------------------------
 	// read settings from inifile
 	//-------------------------------------------------------
