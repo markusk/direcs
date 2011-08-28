@@ -179,7 +179,7 @@ void DirecsAvrsim::init()
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
 	emit splashMessage("Loading config file...");
-	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
+	emit message(QString("Current path: %1").arg( QDir::currentPath() ));
 
 	//--------------------------------------------------------------------------
 	// Check for the programm ini file
