@@ -44,11 +44,20 @@ Inifile::Inifile()
 
 	// Name of the section to search for in the ini-file (script exection)
 	//iniSection = "Sequence1";
+
+	//------------------------------------------------------------------
+	// create the settings object. Use the ini-format
+	//------------------------------------------------------------------
+	settings = new QSettings(mainIniFilename, QSettings::IniFormat);
+
+	// deactivate fallbacks (read only in the specified file)
+	settings->setFallbacksEnabled(false);
 }
 
 
 Inifile::~Inifile()
 {
+	delete settings;
 }
 
 
@@ -493,17 +502,6 @@ void Inifile::sync(void)
 
 void Inifile::setFilename(QString filename)
 {
-	if (mainIniFilename == "not_set")
-	{
-		// set the filename
-		mainIniFilename = filename;
-
-		//------------------------------------------------------------------
-		// create the settings object. Use the ini-format
-		//------------------------------------------------------------------
-		settings = new QSettings(mainIniFilename, QSettings::IniFormat);
-
-		// deactivate fallbacks (read only in the specified file)
-		settings->setFallbacksEnabled(false);
-	}
+	// set the filename
+	mainIniFilename = filename;
 }
