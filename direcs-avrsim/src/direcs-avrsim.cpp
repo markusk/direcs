@@ -288,6 +288,7 @@ DirecsAvrsim::~DirecsAvrsim()
 	//--------------------------------------------------
 	qDebug("Bye.");
 	delete simulationThread;
+	delete interface1;
 	delete splash;
 	delete gui;
 }
