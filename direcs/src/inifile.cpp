@@ -36,17 +36,6 @@ Inifile::Inifile()
 
 	// Name of the section to search for in the ini-file (script exection)
 	//iniSection = "Sequence1";
-
-	//------------------------------------------------------------------
-	// create the settings object. Use the ini-format
-	//------------------------------------------------------------------
-	settings = new QSettings();
-
-	// set settings format
-	settings->setDefaultFormat(QSettings::IniFormat);
-
-	// deactivate fallbacks (read only in the specified file)
-	settings->setFallbacksEnabled(false);
 }
 
 
@@ -58,13 +47,24 @@ Inifile::~Inifile()
 
 void Inifile::setFilename(QString filename)
 {
+	/*
 	// get the current path and store it
 	mainIniFilename = QDir::currentPath();
 	mainIniFilename.append("/");
 	mainIniFilename.append(filename);
 
-	// set inifile name
-	settings->setPath(QSettings::IniFormat, QSettings::UserScope, mainIniFilename);
+	//------------------------------------------------------------------
+	// create the settings object. Use the ini-format
+	// (this has to be here, since we need the filename for the call)
+	//------------------------------------------------------------------
+	settings = new QSettings(mainIniFilename, QSettings::IniFormat);
+
+	// set settings format
+	settings->setDefaultFormat(QSettings::IniFormat);
+
+	// deactivate fallbacks (read only in the specified file)
+	settings->setFallbacksEnabled(false);
+	*/
 }
 
 
