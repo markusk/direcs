@@ -58,42 +58,21 @@ Inifile::~Inifile()
 
 void Inifile::setFilename(QString filename)
 {
-	// set the filename
-	mainIniFilename = filename;
-
-	settings->setPath(QSettings::IniFormat, QSettings::UserScope, mainIniFilename);
-}
-
-
-QString Inifile::checkPath()
-{
-	//
-	// check the current path from which the program started
-	//
-
 	// get the current path and store it
-	programPath = QDir::currentPath();
+	mainIniFilename = QDir::currentPath() + "/" + filename;
 
-	return programPath;
+	// set inifile name
+	settings->setPath(QSettings::IniFormat, QSettings::UserScope, mainIniFilename);
 }
 
 
 bool Inifile::checkFiles()
 {
-	QString filename;
-
-
 	if (mainIniFilename.isEmpty())
 	{
 		qDebug("Filename not set in Inifile::checkFiles().");
 		return false;
 	}
-
-
-	// path + filename for ini-file
-	filename = programPath;
-	filename.append("/");
-	filename.append(mainIniFilename);
 
 	// check if ini-file exists
 	if (QFile::exists(filename) == false)
@@ -114,6 +93,12 @@ bool Inifile::checkFiles()
 
 QString Inifile::getInifileName()
 {
+	if (mainIniFilename.isEmpty())
+	{
+		qDebug("Filename not set in Inifile::writeSetting()!");
+		return;
+	}
+
 	return mainIniFilename;
 }
 

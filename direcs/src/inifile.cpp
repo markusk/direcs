@@ -60,6 +60,9 @@ void Inifile::setFilename(QString filename)
 {
 	// get the current path and store it
 	mainIniFilename = QDir::currentPath() + "/" + filename;
+
+	// set inifile name
+	settings->setPath(QSettings::IniFormat, QSettings::UserScope, mainIniFilename);
 }
 
 
