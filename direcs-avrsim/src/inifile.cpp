@@ -107,6 +107,11 @@ QString Inifile::getInifileName()
 
 void Inifile::writeSetting(QString group, QString name, int value)
 {
+	if (mainIniFilename == "not_set")
+	{
+		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+	}
+
 	//-------------------------------------
 	// store the programm settings
 	//-------------------------------------
@@ -121,6 +126,12 @@ void Inifile::writeSetting(QString group, QString name, int value)
 
 int Inifile::readSetting(QString group, QString name)
 {
+	if (mainIniFilename == "not_set")
+	{
+		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+	}
+
+
 	// string for group+value in inifile
 	QString iniSection = group + "/" + name;
 
@@ -132,6 +143,12 @@ int Inifile::readSetting(QString group, QString name)
 
 QString Inifile::readString(QString group, QString name)
 {
+	if (mainIniFilename == "not_set")
+	{
+		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+	}
+
+
 	// string for group+name in inifile
 	QString iniSection = group + "/" + name;
 
@@ -148,6 +165,11 @@ QString Inifile::readString(QString group, QString name)
 
 float Inifile::readFloat(QString group, QString name)
 {
+	if (mainIniFilename == "not_set")
+	{
+		qDebug("Path for mainIniFilename not set in Inifile::CheckFiles()!");
+	}
+
 
 	// string for group+value in inifile
 	QString iniSection = group + "/" + name;
