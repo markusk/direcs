@@ -56,6 +56,15 @@ Inifile::~Inifile()
 }
 
 
+void Inifile::setFilename(QString filename)
+{
+	// set the filename
+	mainIniFilename = filename;
+
+	settings->setPath(QSettings::IniFormat, QSettings::UserScope, mainIniFilename);
+}
+
+
 QString Inifile::checkPath()
 {
 	//
@@ -492,11 +501,4 @@ void Inifile::commandClock()
 void Inifile::sync(void)
 {
 	settings->sync();
-}
-
-
-void Inifile::setFilename(QString filename)
-{
-	// set the filename
-	mainIniFilename = filename;
 }
