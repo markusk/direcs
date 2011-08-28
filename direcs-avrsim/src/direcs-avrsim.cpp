@@ -187,6 +187,7 @@ void DirecsAvrsim::init()
 
 	// file found-Msg
 	emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
+
 	if (inifile1->checkFiles() == false)
 	{
 		// file not found-Msg
@@ -259,7 +260,6 @@ void DirecsAvrsim::init()
 		} // robot is ON
 
 	}
-*/
 
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
