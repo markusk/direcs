@@ -364,7 +364,7 @@ void Direcs::init()
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
 	emit splashMessage("Loading config file...");
-	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
+	emit message(QString("Current path: %1").arg( QDir::currentPath() );
 
 	//--------------------------------------------------------------------------
 	// show a QMessage wth the possibility to exit the main programm, when errors occured!
