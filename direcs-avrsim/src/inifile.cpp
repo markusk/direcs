@@ -47,16 +47,14 @@ Inifile::~Inifile()
 
 void Inifile::setFilename(QString filename)
 {
-	// get the current path and store it
-	mainIniFilename = QDir::currentPath();
-	mainIniFilename.append("/");
+	// store filename
 	mainIniFilename.append(filename);
 
 	//------------------------------------------------------------------
 	// create the settings object. Use the ini-format
 	// (this has to be here, since we need the filename for the call)
 	//------------------------------------------------------------------
-	settings = new QSettings(mainIniFilename, QSettings::IniFormat);
+	settings = new QSettings(mainIniFilename, QSettings::IniFormat); // this filename has to be *without* slashes "/"!! Otherwise call crashes.
 
 	// set settings format
 	settings->setDefaultFormat(QSettings::IniFormat);
@@ -68,14 +66,22 @@ void Inifile::setFilename(QString filename)
 
 bool Inifile::checkFiles()
 {
+	QString tempFilename;
+
+
 	if (mainIniFilename.isEmpty())
 	{
 		qDebug("Filename not set in Inifile::checkFiles().");
 		return false;
 	}
 
+	// get the current path and store it
+	tempFilename = QDir::currentPath();
+	tempFilename.append("/");
+	tempFilename.append(mainIniFilename);
+
 	// check if ini-file exists
-	if (QFile::exists(mainIniFilename) == false)
+	if (QFile::exists(tempFilename) == false)
 	{
 		return false;
 	}
