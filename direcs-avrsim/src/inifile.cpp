@@ -54,7 +54,7 @@ void Inifile::setFilename(QString filename)
 	// create the settings object. Use the ini-format
 	// (this has to be here, since we need the filename for the call)
 	//------------------------------------------------------------------
-	settings = new QSettings(mainIniFilename, QSettings::IniFormat); // this filename has to be *without* slashes "/"!! Otherwise call crashes.
+	settings = new QSettings(mainIniFilename, QSettings::IniFormat); // this filename has to be *without* slashes "/"!! Otherwise call crashes?
 
 	// set settings format
 	settings->setDefaultFormat(QSettings::IniFormat);

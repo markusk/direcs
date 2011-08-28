@@ -88,11 +88,7 @@ void DirecsAvrsim::init()
 {
 	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 	splashColor = Qt::red;
-//	serialPortMicrocontroller = "/dev/tty.SLAB_USBtoUART"; /// this is the seperate serial adapter, but the same as on the Atmel-Board!
-//	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
-	serialPortMicrocontroller = "/dev/tty.KeySerial1"; /// keyspan Adapter
-//	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
-//	serialPortMicrocontroller = "/dev/ttyAtmelBoard";
+	serialPortMicrocontroller = "not set";
 	robotSimulationMode = false;
 	inifile1->setFilename("direcs-avrsim.ini");
 
@@ -190,6 +186,9 @@ void DirecsAvrsim::init()
 
 	if (inifile1->checkFiles() == false)
 	{
+		// first of all: show the GUI
+		gui->show();
+
 		// file not found-Msg
 		QMessageBox msgbox(QMessageBox::Critical,
 						   tr("direcs-avrsim"),
@@ -271,7 +270,8 @@ void DirecsAvrsim::init()
 	//----------------------------------------------------------------------------
 	// show the gui
 	//----------------------------------------------------------------------------
-	gui->show();
+	if (gui->isHidden())
+		gui->show();
 
 	// delete the splash screen
 	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
