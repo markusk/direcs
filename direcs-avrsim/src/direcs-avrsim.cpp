@@ -225,40 +225,41 @@ void DirecsAvrsim::init()
 	}
 	else
 	{
-		//
+		// - - - - - - - - - -
 		// everything okay
-		//
+		// - - - - - - - - - -
 		emit message(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
+
+
+		//-------------------------------------------------------
+		// Open serial port for microcontroller communication
+		//-------------------------------------------------------
+		emit message(QString("Using serial port %1").arg(serialPortMicrocontroller));
+
+		emit message("Opening serial port for microcontroller...");
+
+		if (interface1->openComPort(serialPortMicrocontroller) == false)
+		{
+			//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
+			emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
+
+			// show a warning dialog!
+			QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+			msgbox.exec();
+
+			// no serial port, no robot :-(
+			// 		robotIsOn = false;
+		}
+		else
+		{
+			// *******************
+			// * The robot is ON *
+			// *******************
+			emit message("Serial port opened.");
+		} // robot is ON
+
 	}
-
-
-	//-------------------------------------------------------
-	// Open serial port for microcontroller communication
-	//-------------------------------------------------------
-	emit message(QString("Using serial port %1").arg(serialPortMicrocontroller));
-
-	emit message("Opening serial port for microcontroller...");
-
-	if (interface1->openComPort(serialPortMicrocontroller) == false)
-	{
-		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
-		emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
-
-		// show a warning dialog!
-		QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
-		msgbox.exec();
-
-		// no serial port, no robot :-(
-// 		robotIsOn = false;
-	}
-	else
-	{
-		// *******************
-		// * The robot is ON *
-		// *******************
-		emit message("Serial port opened.");
-	} // robot is ON
-
+*/
 
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
