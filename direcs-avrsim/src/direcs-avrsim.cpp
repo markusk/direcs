@@ -174,6 +174,12 @@ void DirecsAvrsim::init()
 	connect(interface1, SIGNAL(commandCompleted(QString)), simulationThread, SLOT(commandReceived(QString)));
 
 
+	//--------------------------------------------------------------------------
+	// Check for the current programm path
+	//--------------------------------------------------------------------------
+	emit splashMessage("Loading config file...");
+	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
+
 	//-------------------------------------------------------
 	// read settings from inifile
 	//-------------------------------------------------------
