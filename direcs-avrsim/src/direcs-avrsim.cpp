@@ -184,6 +184,9 @@ void DirecsAvrsim::init()
 	//--------------------------------------------------------------------------
 	// Check for the programm ini file
 	//--------------------------------------------------------------------------
+
+	// file found-Msg
+	emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
 	if (inifile1->checkFiles() == false)
 	{
 		// file not found-Msg
