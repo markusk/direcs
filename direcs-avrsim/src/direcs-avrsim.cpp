@@ -94,6 +94,7 @@ void DirecsAvrsim::init()
 //	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
 //	serialPortMicrocontroller = "/dev/ttyAtmelBoard";
 	robotSimulationMode = false;
+	inifile1->setFilename("direcs-avrsim.ini");
 
 	//--------------------------------------------------------------------------
 	// show the splash screen
