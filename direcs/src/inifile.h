@@ -43,6 +43,18 @@ class Inifile : public QObject
 		~Inifile();
 
 		/**
+		Checks the current path from which the program started.
+		@return The path as a string.
+		*/
+		QString checkPath();
+
+		/**
+		Checks if the needed ini-file exists in the current path.
+		@return True, when the file was found.
+		*/
+		bool checkFiles();
+
+		/**
 		Stores a settings in an ini-file. The settings are stored in the typical ini-file-format.\n
 		Example ini-file:\n
 		\n
