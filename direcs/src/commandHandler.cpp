@@ -267,7 +267,7 @@ void CommandHandler::takeCommand(QString commandString, QString caller)
 			// On Linux (Qt 4.6.3) we currently get only seconds - no miliseconds! :-/
 			duration = tempAnswer.timestamp.secsTo(QDateTime::currentDateTime());
 
-			if (duration > (atmelTimeout/1000) )
+			if (duration > (atmelTimeout/1000) ) /// @todo check if this measurement works under Linux well !!
 			{
 				emit message(QString("General timeout error (%1ms > %2ms)").arg( duration*1000 ).arg( atmelTimeout ));
 #else
@@ -370,7 +370,7 @@ void CommandHandler::takeCommandAnswer(QString atmelAnswer)
 			// On Linux (Qt 4.6.3) we currently get only seconds - no miliseconds! :-/
 			duration = tempAnswer.timestamp.secsTo(QDateTime::currentDateTime());
 
-			if (duration > (atmelTimeout/1000) )
+			if (duration > (atmelTimeout/1000) ) /// @todo check if this measurement works under Linux well !!
 			{
 				emit message(QString("Timeout (%1ms > %2ms)").arg( duration*1000 ).arg( atmelTimeout ));
 #else
