@@ -364,7 +364,7 @@ void Direcs::init()
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
 	emit splashMessage("Loading config file...");
-	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
+	emit message(QString("Current path: %1").arg( QDir::currentPath() ));
 
 	//--------------------------------------------------------------------------
 	// show a QMessage wth the possibility to exit the main programm, when errors occured!
@@ -2714,11 +2714,19 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	serialPortMicrocontroller = inifile1->readString("Config", "serialPortMicrocontroller");
+#ifdef Q_OS_LINUX
+	QString portString = "serialPortMicrocontrollerLinux";
+#endif
+
+#ifdef Q_OS_MAC
+	QString portString = "serialPortMicrocontrollerMac";
+#endif
+
+	serialPortMicrocontroller = inifile1->readString("Config", portString);
 
 	if (serialPortMicrocontroller == "error1")
 	{
-		emit message("<font color=\"#FF0000\">Value \"serialPortMicrocontroller\" not found in ini-file!</font>");
+		emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(portString));
 	}
 	else
 	{

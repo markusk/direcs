@@ -26,6 +26,7 @@ direcs/bin/direcs
 direcs/doc/
 direcs/tmp/
 direcs/src/test/hellogl
+direcs/src/test/valgrind
 direcs.log
 
 direcs-avrsim/bin/

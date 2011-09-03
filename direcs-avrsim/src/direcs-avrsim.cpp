@@ -66,6 +66,8 @@ int main(int argc, char *argv[])
 
 DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 {
+	QApplication::setOrganizationDomain("de.direcs");
+	QApplication::setOrganizationName("direcs");
 	Q_UNUSED(bConsoleMode);
 
 	//------------------------------------------------------------------
@@ -76,6 +78,7 @@ DirecsAvrsim::DirecsAvrsim(bool bConsoleMode)
 
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
+	inifile1 = new Inifile();
 
 	simulationThread = new SimulationThread(interface1, mutex);
 }
@@ -85,12 +88,9 @@ void DirecsAvrsim::init()
 {
 	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 	splashColor = Qt::red;
-//	serialPortMicrocontroller = "/dev/tty.SLAB_USBtoUART"; /// this is the seperate serial adapter, but the same as on the Atmel-Board!
-//	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
-//	serialPortMicrocontroller = "/dev/tty.USA19Hfa141P1.1"; /// keyspan Adapter
-	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
-//	serialPortMicrocontroller = "/dev/ttyAtmelBoard";
+	serialPortMicrocontroller = "not set";
 	robotSimulationMode = false;
+	inifile1->setFilename("direcs-avrsim.ini");
 
 	//--------------------------------------------------------------------------
 	// show the splash screen
@@ -171,33 +171,94 @@ void DirecsAvrsim::init()
 	connect(interface1, SIGNAL(commandCompleted(QString)), simulationThread, SLOT(commandReceived(QString)));
 
 
-	//-------------------------------------------------------
-	// Open serial port for microcontroller communication
-	//-------------------------------------------------------
-	emit message(QString("Using serial port %1").arg(serialPortMicrocontroller));
+	//--------------------------------------------------------------------------
+	// Check for the current programm path
+	//--------------------------------------------------------------------------
+	emit splashMessage("Loading config file...");
+	emit message(QString("Current path: %1").arg( QDir::currentPath() ));
 
-	emit message("Opening serial port for microcontroller...");
+	//--------------------------------------------------------------------------
+	// Check for the programm ini file
+	//--------------------------------------------------------------------------
 
-	if (interface1->openComPort(serialPortMicrocontroller) == false)
+	// file found-Msg
+	emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
+
+	if (inifile1->checkFiles() == false)
 	{
-		//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
-		emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
+		// first of all: show the GUI
+		gui->show();
 
-		// show a warning dialog!
-		QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+		// file not found-Msg
+		QMessageBox msgbox(QMessageBox::Critical,
+						   tr("direcs-avrsim"),
+						   tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n%2\n\nSorry, exiting NOW...").arg(inifile1->getInifileName()).arg( QDir::currentPath() ),
+						   QMessageBox::Ok | QMessageBox::Default);
 		msgbox.exec();
+		emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
 
-		// no serial port, no robot :-(
-// 		robotIsOn = false;
+		// call my own exit routine
+		shutdown();
+
+		// here we're back from the shutdown method, so bye bye
+		// QCoreApplication::exit(-1); does not work!
+		exit(1); // FIXME: works, but doesn't call the destructor :-(
+	}
+
+
+	//-------------------------------------------------------
+	// read settings from inifile
+	//-------------------------------------------------------
+#ifdef Q_OS_LINUX
+	QString portString = "serialPortMicrocontrollerLinux";
+#endif
+
+#ifdef Q_OS_MAC
+	QString portString = "serialPortMicrocontrollerMac";
+#endif
+
+	serialPortMicrocontroller = inifile1->readString("Config", portString);
+
+	if (serialPortMicrocontroller == "error1")
+	{
+		emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(portString));
 	}
 	else
 	{
-		// *******************
-		// * The robot is ON *
-		// *******************
-		emit message("Serial port opened.");
-	} // robot is ON
+		// - - - - - - - - - -
+		// everything okay
+		// - - - - - - - - - -
+		emit message(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
 
+
+		//-------------------------------------------------------
+		// Open serial port for microcontroller communication
+		//-------------------------------------------------------
+		emit message(QString("Using serial port %1").arg(serialPortMicrocontroller));
+
+		emit message("Opening serial port for microcontroller...");
+
+		if (interface1->openComPort(serialPortMicrocontroller) == false)
+		{
+			//qDebug() << "Error opening serial port" << serialPortMicrocontroller;
+			emit message(QString("<font color=\"#FF0000\">*** ERROR opening serial port '%1'! ***</font>").arg(serialPortMicrocontroller));
+
+			// show a warning dialog!
+			QMessageBox msgbox(QMessageBox::Warning, tr("Error with robots serial port"), tr("Error opening serial port %1").arg(serialPortMicrocontroller), QMessageBox::Ok | QMessageBox::Default);
+			msgbox.exec();
+
+			// no serial port, no robot :-(
+			// 		robotIsOn = false;
+		}
+		else
+		{
+			// *******************
+			// * The robot is ON *
+			// *******************
+			emit message("Serial port opened.");
+		} // robot is ON
+
+	}
 
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
@@ -220,7 +281,8 @@ void DirecsAvrsim::init()
 	//----------------------------------------------------------------------------
 	// show the gui
 	//----------------------------------------------------------------------------
-	gui->show();
+	if (gui->isHidden())
+		gui->show();
 
 
 
@@ -301,6 +363,8 @@ DirecsAvrsim::~DirecsAvrsim()
 	//--------------------------------------------------
 	qDebug("Bye.");
 	delete simulationThread;
+	delete interface1;
+	delete inifile1;
 	delete splash;
 	delete gui;
 }
