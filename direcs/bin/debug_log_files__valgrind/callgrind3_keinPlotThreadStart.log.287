@@ -1,0 +1,1255 @@
+version: 1
+creator: callgrind-3.6.0.SVN-Debian
+pid: 4336
+cmd:  ./direcs small
+part: 287
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: L2 cache: 
+
+desc: Timerange: Basic block 2862215141 - 2872219312
+desc: Trigger: --dump-every-bb=10000000
+
+positions: line
+events: Ir
+summary: 43220782
+
+
+ob=(4) /lib/i686/cmov/libpthread-2.11.2.so
+fl=(483) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/sem_wait.S
+fn=(57218) sem_wait@@GLIBC_2.1
+
+fl=(587) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/pthread_cond_timedwait.S
+fn=(109486) pthread_cond_timedwait@@GLIBC_2.3.2
+cob=(1) /lib/ld-2.11.2.so
+cfi=(1) ???
+cfn=(214) _dl_sysinfo_int80
+calls=0 0 
+179 2
+180 1
++2 1
++2 1
++1 1
+cfi=(477) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/cancellation.c
+cfn=(55080) __pthread_disable_asynccancel
+calls=1 66 
+* 23
++4 1
++1 1
++1 1
++6 1
++2 1
++1 1
++1 1
++2 1
++1 1
++2 1
++1 1
++2 1
++1 1
++1 1
++1 1
++7 1
++1 1
++2 1
++1 1
++1 1
++1 1
++1 1
++6 1
++1 1
++2 1
++3 1
++1 1
++1 1
++1 1
++23 1
++6 1
++3 1
++1 1
+cfi=(594) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/pthread_mutex_lock.c
+cfn=(110826) __pthread_mutex_cond_lock
+calls=1 47 
+* 38
++1 1
++4 1
++2 1
++7 1
++2 1
++2 1
++2 1
++3 1
+
+fl=(470) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_create.c
+fn=(55038) start_thread
+cob=(81) /usr/lib/libQtCore.so.4.6.3
+cfi=(209) ???
+cfn=(109368) 0x0006ff20
+calls=0 0 
+300 157
+
+fl=(595) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/lowlevellock.S
+fn=(110836) __lll_unlock_wake
+363 1
++2 1
++2 1
++6 1
++1 1
++1 3
++1 1
++1 1
++1 1
+
+fl=(108) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_unlock.c
+fn=(866) pthread_mutex_unlock
+289 1
++1 1
+-1 1
++1 1
++1 1
+-1 1
+cfn=(868) __pthread_mutex_unlock_usercnt
+calls=1 36 
+* 41
+
+fn=(868)
+36 7
++1 1
+-1 1
+cfi=(49) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/sem_post.S
+cfn=(212) 0x00004340
+calls=1 170 
+* 2
+* 1
++1 2
++1 2
++3 2
++6 1
+-1 1
++1 1
++5 4
+cfn=(110834) _L_unlock_628
+calls=1 290 
+* 14
+-3 2
+
+fn=(110834)
+290 3
+cfi=(595)
+cfn=(110836)
+calls=1 +73 
+* 11
+
+fl=(477)
+fn=(55080)
+66 3
++3 1
+-3 2
++3 1
++3 1
++3 1
++4 1
++2 1
+-2 1
++2 1
++2 2
++11 3
++6 5
+
+fl=(49)
+fn=(212)
+170 2
++1 2
+
+fl=(594)
+fn=(110826)
+47 7
++3 1
+-3 1
+cfi=(49)
+cfn=(212)
+calls=1 170 
+* 2
+* 1
++3 1
++1 1
+-1 1
++1 2
++3 1
++2 1
+-2 1
++2 1
++5 5
++1 3
++63 3
++6 6
+
+ob=(92) /usr/lib/libespeak.so.1.1.43
+fl=(233) ???
+fn=(57198) 0x000298e0
+
+fn=(57440) 0x0002a270
+
+ob=(94) /home/markus/develop/direcs/direcs/bin/direcs
+fl=(428) /home/markus/develop/direcs/direcs/src/speakThread.cpp
+fn=(109460) SpeakThread::run()
+
+fl=(240) /home/markus/develop/direcs/direcs/src/../tmp/moc_direcs.cpp
+fn=(106078) Direcs::qt_metacall(QMetaObject::Call, int, void**)
+cfi=(243) /home/markus/develop/direcs/direcs/src/direcs.cpp
+cfn=(135946) Direcs::shutdown()
+calls=0 1116 
+167 43220625
+
+fl=(559) /home/markus/develop/direcs/direcs/src/networkThread.cpp
+fn=(114556) NetworkThread::run()
+
+fl=(235) ???
+fn=(5522) 0x08054990
+cob=(3) /lib/i686/cmov/libc-2.11.2.so
+cfi=(236) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/csu/libc-start.c
+cfn=(5530) (below main)
+calls=0 96 
+0 43220625
+
+fl=(536) /home/markus/develop/direcs/direcs/src/gui.cpp
+fn=(135942) Gui::closeEvent(QCloseEvent*)
+cfi=(538) /home/markus/develop/direcs/direcs/src/../tmp/moc_gui.cpp
+cfn=(135944) Gui::shutdown()
+calls=0 329 
+253 43220625
+
+fn=(135936) Gui::on_actionExit_activated()
+cob=(83) /usr/lib/libQtGui.so.4.6.3
+cfi=(214) ???
+cfn=(130270) QWidget::close()
+calls=0 0 
+259 43220625
+
+fl=(538)
+fn=(135944)
+cob=(81)
+cfi=(209)
+cfn=(6647) QMetaObject::activate(QObject*, QMetaObject const*, int, void**)'2
+calls=0 0 
+330 43220625
+
+fn=(107006) Gui::qt_metacall(QMetaObject::Call, int, void**)
+cfi=(536)
+cfn=(135936)
+calls=0 258 
+294 43220625
+
+fl=(243)
+fn=(5606) main
+cob=(83)
+cfi=(214)
+cfn=(130330) QApplication::exec()
+calls=0 0 
+108 43220625
+
+fn=(135946)
+1368 92204
+cob=(81)
+cfi=(209)
+cfn=(137168) QThread::isFinished() const
+calls=23051 0 
+* 2051539
+* 138306
+cob=(81)
+cfi=(209)
+cfn=(106810) QTime::elapsed() const
+calls=23051 0 
+* 40800270
+* 138306
+
+fl=(550) /home/markus/develop/direcs/direcs/src/sensorThread.cpp
+fn=(130650) SensorThread::run()
+cob=(81)
+cfi=(209)
+cfn=(109466) QThread::msleep(unsigned long)
+calls=0 0 
+219 157
+
+ob=(3)
+fl=(381) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/time/localtime.c
+fn=(21808) localtime_r
+32 92204
++1 23051
+-1 23051
+cfi=(44) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/multiarch/strcspn.S
+cfn=(184) 0x00016aaf
+calls=23051 +20 
+* 46102
+* 23051
++1 115255
+cfi=(371) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/time/tzset.c
+cfn=(21810) __tz_convert
+calls=23051 609 
+* 18740463
++1 92204
+
+fl=(372) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/time/tzfile.c
+fn=(21812) __tzfile_compute
+598 138306
++3 23051
+-3 23051
+cfi=(44)
+cfn=(184)
+calls=23051 52 
+* 46102
+* 23051
++3 46102
++5 23051
+-3 23051
++3 23051
+-3 23051
++1 23051
++2 161357
++30 138306
++42 115255
++33 23051
+-33 69153
++1 46102
++55 46102
++7 92204
++1 161357
++6 69153
++1 23051
+-1 46102
++3 23051
+-3 23051
++1 46102
++2 23051
++7 92204
+-11 23051
++14 23051
++1 23051
+-1 46102
++1 138306
+cfi=(216) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/strcmp.S
+cfn=(4416) strcmp
+calls=23051 34 
+* 898989
+* 46102
++1 23051
++1 23051
+-1 23051
++1 23051
++5 23051
+-1 23051
++8 23051
+-7 23051
++3 23051
+-4 23051
++8 115255
+-2 46102
++20 138306
+681 46102
++1 69153
++2 161357
++3 69153
+-3 23051
++3 23051
++34 138306
++1 92204
+cfi=(371)
+cfn=(21800) __tzstring
+calls=23051 91 
+* 3019681
+-1 23051
++3 23051
+-3 23051
++3 115255
++3 69153
++1 46102
++2 92204
++2 92204
+cfi=(371)
+cfn=(21800)
+calls=23051 91 
+* 3549854
+* 23051
++2 46102
+-2 23051
++2 69153
+
+fn=(21778) __tzfile_read
+105 138306
+cfi=(44)
+cfn=(184)
+calls=23051 -53 
+* 46102
+* 69153
++19 23051
+-9 23051
++7 23051
+-7 23051
++9 23051
++3 92204
+504 138306
+136 92204
++10 46102
++24 69153
++2 138306
+cfi=(301) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/io/../sysdeps/unix/sysv/linux/xstat64.c
+cfn=(9290) __xstat64@@GLIBC_2.2
+calls=23051 47 
+* 461020
+-2 207459
+496 23051
++1 23051
+170 230510
+
+fl=(44)
+fn=(184)
+52 391867
++1 391867
+
+fl=(371)
+fn=(21776) tzset_internal
+396 230510
+cfi=(44)
+cfn=(184)
+calls=46102 52 
+* 92204
+* 46102
++4 46102
+-4 138306
++4 115255
++58 276612
+-53 23051
+-3 23051
++3 46102
+cfi=(260) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/stdlib/getenv.c
+cfn=(6918) getenv
+calls=23051 36 
+* 8690227
++1 23051
+-1 23051
++1 92204
++17 46102
++8 23051
++1 23051
++3 69153
+cfi=(103) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/malloc/malloc.c
+cfn=(968) free
+calls=23051 3693 
+* 2120692
++1 69153
+cfi=(268) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/strdup.c
+cfn=(6940) strdup
+calls=23051 41 
+* 4909863
+* 23051
++3 115255
+cfi=(372)
+cfn=(21778)
+calls=23051 105 
+* 1890182
++1 92204
+
+fn=(21810)
+609 184408
+cfi=(44)
+cfn=(184)
+calls=23051 52 
+* 46102
+* 46102
++4 46102
++6 138306
++5 207459
+cfn=(21776)
+calls=23051 396 
+* 507122
++2 69153
++13 46102
++2 92204
++7 115255
+cfi=(382) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/time/offtime.c
+cfn=(21814) __offtime
+calls=23051 34 
+* 5440036
+* 46102
++6 92204
++3 161357
+-30 230510
+cfi=(372)
+cfn=(21812)
+calls=23051 -29 
+* 11179735
+* 23051
++22 69153
+
+fn=(21774) tzset
+589 23051
++1 23051
+-1 23051
++1 23051
+-1 46102
+cfi=(44)
+cfn=(184)
+calls=23051 52 
+* 46102
+* 23051
++1 92204
++2 69153
+cfn=(21776)
+calls=23051 396 
+* 18740463
++2 69153
++7 92204
++1 69153
+
+fn=(21800)
+91 276612
+cfi=(44)
+cfn=(184)
+calls=46102 -39 
+* 92204
+* 92204
++3 138306
+cfi=(166) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/multiarch/../../i586/strlen.S
+cfn=(1932) __GI_strlen
+calls=46102 -47 
+* 1383060
++4 138306
+-4 46102
++4 115255
++1 345765
++2 230510
++1 576275
+cfi=(216)
+cfn=(4416)
+calls=115255 -68 
+* 2258998
+* 345765
+-4 207459
++23 322714
+
+fl=(260)
+fn=(6918)
+36 138306
+cfi=(44)
+cfn=(184)
+calls=23051 +16 
+* 46102
+* 69153
++1 46102
+cfi=(166)
+cfn=(1932)
+calls=23051 +10 
+* 645428
+* 23051
++4 92204
++40 23051
++16 138306
+-56 46102
++3 46102
++29 23051
++6 23051
+-1 23051
++1 23051
++2 23051
+-8 23051
++5 23051
++3 23051
+-3 23051
++3 46102
++3 3042732
+-3 4080027
+
+fl=(103)
+fn=(856) malloc
+3616 115255
+cfi=(44)
+cfn=(184)
+calls=23051 52 
+* 46102
+* 69153
++5 46102
++1 46102
++3 46102
++33 184408
++3 69153
+cfn=(872) _int_malloc
+calls=23051 4250 
+* 1221703
++1 23051
+-1 23051
++1 23051
++20 92204
++1 207459
++3 161357
+
+fn=(872)
+4250 161357
+cfi=(44)
+cfn=(184)
+calls=23051 52 
+* 46102
+* 23051
++30 23051
+-30 46102
++30 184408
++8 23051
+-8 23051
++8 23051
++14 23051
+-13 46102
++1 23051
+-1 23051
++13 23051
+-12 46102
++14 46102
++1 138306
++7 69153
++4 69153
+4753 161357
+
+fn=(968)
+3693 138306
+cfi=(44)
+cfn=(184)
+calls=23051 52 
+* 46102
+* 46102
++5 46102
++1 46102
++5 46102
++3 23051
++3 69153
++15 69153
++12 138306
++2 46102
+cfn=(970) _int_free
+calls=23051 4765 
+* 1198652
++1 92204
++2 115255
+
+fn=(970)
+4765 184408
++15 23051
+-15 23051
+cfi=(44)
+cfn=(184)
+calls=23051 52 
+* 46102
+* 23051
++15 46102
++6 69153
+-6 23051
++6 69153
++13 46102
++13 46102
++12 23051
+-1 46102
++2 23051
+-2 23051
++2 46102
++27 69153
++3 23051
++1 46102
++20 23051
+-21 23051
++21 46102
++6 23051
++1 46102
+5056 138306
+
+fl=(301)
+fn=(9290)
+47 46102
++3 23051
+-3 23051
++3 23051
+-3 23051
+cfi=(44)
+cfn=(184)
+calls=23051 +5 
+* 46102
+* 23051
++3 69153
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=23051 -50 
+* 46102
+* 69153
++34 69153
+
+fl=(216)
+fn=(4416)
+34 138306
++1 138306
++4 138306
++1 138306
++1 138306
+-2 253561
++1 253561
++1 253561
++1 322714
++1 322714
++1 322714
++1 322714
++2 69153
++6 69153
++3 69153
++1 69153
++1 69153
++12 69153
+
+fl=(268)
+fn=(6940)
+41 115255
+cfi=(44)
+cfn=(184)
+calls=23051 +11 
+* 46102
+* 92204
++1 46102
+cfi=(166)
+cfn=(1932)
+calls=23051 +5 
+* 1267805
+* 23051
++1 46102
+cfi=(103)
+cfn=(856)
+calls=23051 3616 
+* 2374253
+* 23051
++2 69153
++3 92204
+cfi=(121) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/memcpy.S
+cfn=(946) memcpy
+calls=23051 -4 
+* 576275
++1 138306
+
+fl=(273) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/time/../sysdeps/unix/syscall-template.S
+fn=(7238) gettimeofday
+82 115255
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=23051 -82 
+* 46102
++1 23051
+
+fl=(473) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/misc/../sysdeps/unix/sysv/linux/i386/clone.S
+fn=(54974) clone
+cob=(4)
+cfi=(470)
+cfn=(55038)
+calls=0 230 
+130 157
+
+fl=(273)
+fn=(7238)
+82 69153
+
+fl=(473)
+fn=(54974)
+
+fl=(166)
+fn=(1932)
+47 92204
++2 92204
++2 92204
++2 92204
++1 69153
++2 69153
++1 69153
++2 69153
++1 69153
++2 69153
++2 69153
++1 69153
++2 69153
++2 46102
++1 46102
++2 46102
++1 46102
++26 46102
++1 46102
++2 46102
++1 46102
++2 46102
++1 46102
+-7 46102
++1 46102
++2 46102
++1 46102
++2 46102
++1 46102
++2 92204
++2 92204
++2 92204
++3 46102
++1 46102
++2 46102
++1 46102
++2 46102
++1 46102
++2 46102
++2 46102
++2 46102
++3 23051
++1 23051
++2 23051
++1 23051
++2 23051
++1 23051
++25 92204
++1 92204
++2 92204
++1 92204
++2 23051
++1 23051
++2 23051
++2 23051
++1 23051
++2 23051
++1 23051
++2 23051
++3 23051
++4 23051
+-4 69153
++4 69153
+
+fl=(382)
+fn=(21814)
+34 23051
++4 23051
+-4 115255
++4 23051
+-4 23051
+cfi=(44)
+cfn=(184)
+calls=23051 +18 
+* 46102
+* 23051
++4 184408
++1 46102
++2 46102
++7 23051
++1 23051
+-3 92204
++5 230510
++1 46102
++1 207459
++1 46102
++2 23051
+-2 23051
++2 276612
++1 23051
+-1 23051
++1 23051
++1 46102
++9 46102
++3 23051
+-3 276612
++3 23051
+-3 23051
++4 23051
+-1 23051
++1 23051
+-1 115255
+-3 23051
++3 1867131
+-6 368816
++11 69153
++8 23051
+-8 23051
++7 23051
++1 69153
++1 461020
++3 23051
++1 46102
++2 23051
+-3 23051
++1 23051
++2 138306
+
+fl=(121)
+fn=(946)
+44 23051
++1 23051
++1 23051
++1 23051
++2 23051
++1 23051
++1 23051
++1 23051
++1 23051
++1 23051
++28 23051
++1 23051
++1 23051
++4 23051
++6 23051
++1 23051
++1 23051
++1 23051
++1 23051
+
+ob=(1)
+fl=(1)
+fn=(0) 0x00000850
+cob=(94)
+cfi=(235)
+cfn=(5522)
+calls=0 0 
+0 43220625
+
+ob=(3)
+fl=(121)
+fn=(946)
+99 23051
++1 92204
+
+ob=(1)
+fl=(1)
+fn=(214)
+0 46103
+
+ob=(3)
+fl=(121)
+fn=(946)
+102 23051
+
+fl=(236)
+fn=(5530)
+cob=(94)
+cfi=(243)
+cfn=(5606)
+calls=0 25 
+228 43220625
+
+ob=(1)
+fl=(1)
+fn=(214)
+0 46103
+
+ob=(20) /lib/libglib-2.0.so.0.2400.2
+fl=(92) ???
+fn=(101114) g_main_context_dispatch
+cob=(83)
+cfi=(214)
+cfn=(104710) 0x00217170
+calls=0 0 
+0 43220625
+
+fn=(100926) g_main_context_iteration
+cfn=(100928) 0x0003eb20
+calls=0 0 
+0 43220625
+
+fn=(100928)
+cfn=(101114)
+calls=0 0 
+0 43220625
+
+ob=(81)
+fl=(209)
+fn=(109468) 0x0006f860
+cob=(4)
+cfi=(587)
+cfn=(109486)
+calls=0 37 
+0 108
+0 2
+cob=(4)
+cfi=(108)
+cfn=(866)
+calls=1 289 
+0 47
+
+fn=(3622) 0x00051e67
+0 230510
+
+fn=(69834) QMetaObject::metacall(QObject*, QMetaObject::Call, int, void**)
+cob=(94)
+cfi=(538)
+cfn=(107006)
+calls=0 230 
+0 43220625
+
+fn=(69835) QMetaObject::metacall(QObject*, QMetaObject::Call, int, void**)'2
+cob=(94)
+cfi=(240)
+cfn=(106078)
+calls=0 130 
+0 43220625
+
+fn=(100914) QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>)
+cob=(20)
+cfi=(92)
+cfn=(100926)
+calls=0 0 
+0 43220625
+
+fn=(137168)
+0 207459
+cfn=(3622)
+calls=23051 0 
+0 46102
+0 230510
+cfn=(3788) QMutex::unlock()
+calls=23051 0 
+0 553224
+0 276612
+cfn=(3770) QMutex::lock()
+calls=23051 0 
+0 645428
+0 92204
+
+fn=(3770)
+0 184408
+cfn=(3622)
+calls=23051 0 
+0 46102
+0 414918
+
+fn=(109466)
+cfn=(109468)
+calls=0 0 
+0 157
+
+fn=(109368)
+cob=(94)
+cfi=(550)
+cfn=(130650)
+calls=0 194 
+0 157
+
+fn=(3788)
+0 161357
+cfn=(3622)
+calls=23051 0 
+0 46102
+0 345765
+
+fn=(7980) QCoreApplication::notifyInternal(QObject*, QEvent*)
+cob=(83)
+cfi=(214)
+cfn=(34746) QApplication::notify(QObject*, QEvent*)
+calls=0 0 
+0 43220625
+
+fn=(7981) QCoreApplication::notifyInternal(QObject*, QEvent*)'2
+cob=(83)
+cfi=(214)
+cfn=(34747) QApplication::notify(QObject*, QEvent*)'2
+calls=0 0 
+0 43220625
+
+fn=(59300) QTime::currentTime()
+0 138306
+cfn=(3622)
+calls=23051 0 
+0 46102
+0 161357
+cob=(3)
+cfi=(273)
+cfn=(7238)
+calls=23051 82 
+0 253561
+0 69153
+cob=(3)
+cfi=(371)
+cfn=(21774)
+calls=23051 589 
+0 19339789
+0 115255
+cob=(3)
+cfi=(381)
+cfn=(21808)
+calls=23051 32 
+0 19155381
+0 530173
+
+fn=(106810)
+0 115255
+cfn=(3622)
+calls=23051 0 
+0 46102
+0 115255
+cfn=(59300)
+calls=23051 0 
+0 39809077
+0 115255
+cfn=(106816) QTime::msecsTo(QTime const&) const
+calls=23051 0 
+0 437969
+0 161357
+
+fn=(6646) QMetaObject::activate(QObject*, QMetaObject const*, int, void**)
+cfn=(69834)
+calls=0 0 
+0 43220625
+
+fn=(6647)
+cfn=(69835)
+calls=0 0 
+0 43220625
+
+fn=(106816)
+0 437969
+
+fn=(130384) QEventLoop::processEvents(QFlags<QEventLoop::ProcessEventsFlag>)
+cob=(83)
+cfi=(214)
+cfn=(100906) 0x00216e90
+calls=0 0 
+0 43220625
+
+fn=(130342) QCoreApplication::exec()
+cfn=(130354) QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>)
+calls=0 0 
+0 43220625
+
+fn=(130354)
+cfn=(130384)
+calls=0 0 
+0 43220625
+
+ob=(83)
+fl=(214)
+fn=(70652) QAbstractButton::event(QEvent*)
+cfn=(57862) QWidget::event(QEvent*)
+calls=0 0 
+0 43220625
+
+fn=(84196) QToolButton::event(QEvent*)
+cfn=(70652)
+calls=0 0 
+0 43220625
+
+fn=(130330)
+cob=(81)
+cfi=(209)
+cfn=(130342)
+calls=0 0 
+0 43220625
+
+fn=(133152) 0x001e97c0
+cfn=(133224) QApplicationPrivate::sendMouseEvent(QWidget*, QMouseEvent*, QWidget*, QWidget*, QWidget**, QPointer<QWidget>&, bool)
+calls=0 0 
+0 43220625
+
+fn=(135728) QAbstractButton::mouseReleaseEvent(QMouseEvent*)
+cfn=(135730) 0x00561290
+calls=0 0 
+0 43220625
+
+fn=(82818) QMainWindow::event(QEvent*)
+cfn=(57863) QWidget::event(QEvent*)'2
+calls=0 0 
+0 43220625
+
+fn=(135722) QToolButton::mouseReleaseEvent(QMouseEvent*)
+cfn=(135728)
+calls=0 0 
+0 43220625
+
+fn=(135730)
+cfn=(135738) QToolButton::nextCheckState()
+calls=0 0 
+0 43220625
+
+fn=(34746)
+cfn=(34752) QApplicationPrivate::notify_helper(QObject*, QEvent*)
+calls=0 0 
+0 43220625
+
+fn=(34747)
+cfn=(34753) QApplicationPrivate::notify_helper(QObject*, QEvent*)'2
+calls=0 0 
+0 43220625
+
+fn=(130270)
+cfn=(130276) QWidgetPrivate::close_helper(QWidgetPrivate::CloseMode)
+calls=0 0 
+0 43220625
+
+fn=(135934) QAction::activated(int)
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=0 0 
+0 43220625
+
+fn=(34752)
+cfn=(84196)
+calls=0 0 
+0 43220625
+
+fn=(34753)
+cfn=(82818)
+calls=0 0 
+0 43220625
+
+fn=(57862)
+cfn=(135722)
+calls=0 0 
+0 43220625
+
+fn=(57863)
+cob=(94)
+cfi=(536)
+cfn=(135942)
+calls=0 247 
+0 43220625
+
+fn=(104780) QApplication::x11ProcessEvent(_XEvent*)
+cfn=(133152)
+calls=0 0 
+0 43220625
+
+fn=(133224)
+cob=(81)
+cfi=(209)
+cfn=(7980)
+calls=0 0 
+0 43220625
+
+fn=(66256) QCoreApplication::sendEvent(QObject*, QEvent*)
+cob=(81)
+cfi=(209)
+cfn=(7981)
+calls=0 0 
+0 43220625
+
+fn=(100906)
+cob=(81)
+cfi=(209)
+cfn=(100914)
+calls=0 0 
+0 43220625
+
+fn=(104710)
+cfn=(104780)
+calls=0 0 
+0 43220625
+
+fn=(135334) QAction::activate(QAction::ActionEvent)
+cfn=(135934)
+calls=0 0 
+0 43220625
+
+fn=(135738)
+cfn=(135334)
+calls=0 0 
+0 43220625
+
+fn=(130276)
+cfn=(66256)
+calls=0 0 
+0 43220625
+
+totals: 43220782

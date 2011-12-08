@@ -1,0 +1,10553 @@
+version: 1
+creator: callgrind-3.6.0.SVN-Debian
+pid: 4336
+cmd:  ./direcs small
+part: 152
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: L2 cache: 
+
+desc: Timerange: Basic block 1511211504 - 1521222482
+desc: Trigger: --dump-every-bb=10000000
+
+positions: line
+events: Ir
+summary: 51260071
+
+
+ob=(94) /home/markus/develop/direcs/direcs/bin/direcs
+fl=(559) /home/markus/develop/direcs/direcs/src/networkThread.cpp
+fn=(114556) NetworkThread::run()
+61 2
+cob=(81) /usr/lib/libQtCore.so.4.6.3
+cfi=(209) ???
+cfn=(109466) QThread::msleep(unsigned long)
+calls=1 -61 
+* 553
+-5 5
+
+fl=(235) ???
+fn=(5522) 0x08054990
+cob=(3) /lib/i686/cmov/libc-2.11.2.so
+cfi=(236) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/csu/libc-start.c
+cfn=(5530) (below main)
+calls=0 96 
+0 51253335
+
+fl=(248) /usr/include/qt4/QtCore/qstring.h
+fn=(46588) QString::QString(char const*)
+413 4
+cob=(3)
+cfi=(238) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/gmon/../sysdeps/i386/i386-mcount.S
+cfn=(5556) mcount
+calls=1 35 
+* 34
+* 4
+cob=(81)
+cfi=(209)
+cfn=(6418) QString::fromAscii_helper(char const*, int)
+calls=1 0 
+* 239
+* 2
++1 2
+
+fl=(536) /home/markus/develop/direcs/direcs/src/gui.cpp
+fn=(115162) Gui::appendSerialLog(QString, bool)
+cob=(83) /usr/lib/libQtGui.so.4.6.3
+cfi=(214) ???
+cfn=(107020) QTextEdit::insertHtml(QString const&)
+calls=0 0 
+454 35167028
+457 2
++3 4
++6 4
+cfi=(248)
+cfn=(46588)
+calls=1 -53 
+* 285
+* 6
+cob=(83)
+cfi=(214)
+cfn=(107020)
+calls=1 0 
+* 16086006
+
+fl=(579) /home/markus/develop/direcs/direcs/src/../tmp/moc_sensorThread.cpp
+fn=(130780) SensorThread::sensorDataComplete()
+138 8
+cob=(3)
+cfi=(238)
+cfn=(5556)
+calls=2 35 
+* 68
++1 12
+cob=(81)
+cfi=(209)
+cfn=(6646) QMetaObject::activate(QObject*, QMetaObject const*, int, void**)
+calls=2 0 
+* 3810
++1 4
+
+fl=(538) /home/markus/develop/direcs/direcs/src/../tmp/moc_gui.cpp
+fn=(107006) Gui::qt_metacall(QMetaObject::Call, int, void**)
+cfi=(536)
+cfn=(115162)
+calls=0 438 
+259 51253335
+
+fl=(243) /home/markus/develop/direcs/direcs/src/direcs.cpp
+fn=(5606) main
+cob=(83)
+cfi=(214)
+cfn=(130330) QApplication::exec()
+calls=0 0 
+108 51253335
+
+fl=(550) /home/markus/develop/direcs/direcs/src/sensorThread.cpp
+fn=(130650) SensorThread::run()
+219 8
+cob=(81)
+cfi=(209)
+cfn=(109466)
+calls=2 0 
+* 1106
++2 8
+617 8
++18 6
+cfi=(579)
+cfn=(130780)
+calls=2 138 
+* 3902
+216 10
+
+fl=(428) /home/markus/develop/direcs/direcs/src/speakThread.cpp
+fn=(109460) SpeakThread::run()
+75 4
+cob=(81)
+cfi=(209)
+cfn=(109466)
+calls=2 -75 
+* 1106
++3 8
+-7 10
+
+ob=(3)
+fl=(239) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/gmon/mcount.c
+fn=(5558) __mcount_internal
+60 9
++13 3
+-13 9
++13 3
+-13 6
+cfi=(44) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/multiarch/strcspn.S
+cfn=(184) 0x00016aaf
+calls=3 -8 
+* 6
+* 3
++13 9
+-1 6
+174 18
+
+fl=(212) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/memmove.S
+fn=(3886) memmove
+44 2
++3 2
++1 2
++2 2
++1 2
++5 2
++1 2
++1 2
++1 2
++2 2
++1 2
++1 2
++2 2
++1 2
++2 317
++2 2
++2 2
++3 2
++5 2
+
+fl=(43) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/multiarch/strlen.S
+fn=(2316) __strlen_sse2
+70 3
++3 3
++1 3
++1 3
++1 3
++1 3
++1 3
++7 3
++2 3
++1 3
++1 3
++2 3
++1 3
++1 3
++1 1
++1 2
++4 1
++1 1
++2 1
++1 1
++1 1
++2 1
++1 1
++1 1
++1 1
++1 1
++15 3
++1 3
++1 3
++1 3
++1 3
++3 3
+
+fl=(238)
+fn=(5556)
+35 3
++1 3
++1 3
++2 3
++1 3
++4 3
+cfi=(239)
+cfn=(5558)
+calls=3 +16 
+* 72
++4 3
++1 3
++1 3
++1 3
+
+fl=(44)
+fn=(184)
+52 4600
++1 4600
+
+fl=(103) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/malloc/malloc.c
+fn=(2394) calloc
+4007 2673
+cfi=(44)
+cfn=(184)
+calls=297 52 
+* 594
+* 297
++10 891
++3 1188
++8 594
++1 594
++15 2970
++7 297
++1 297
+-1 297
++8 594
+-7 297
++7 297
+-7 297
++7 297
++7 891
+cfn=(872) _int_malloc
+calls=297 4250 
+* 18685
+* 297
++3 1188
++2 3267
++38 297
+-3 297
++3 1188
++10 297
++1 594
++1 594
++2 594
++7 297
+-3 297
++1 297
++1 297
++1 297
++15 2079
+
+fn=(872)
+4250 4095
+cfi=(44)
+cfn=(184)
+calls=585 52 
+* 1170
+* 585
++30 585
+-30 1170
++30 4680
++8 585
+-8 585
++8 585
++14 360
+-13 720
++1 360
+-1 360
++13 360
+-12 720
++14 720
++1 798
++7 399
++4 399
+4753 4088
+4330 904
++1 334
++1 334
+-1 334
++1 668
+-1 334
++3 334
+-2 334
++2 668
++1 494
++3 247
++1 494
++5 247
++1 247
++1 247
++2 247
+-4 247
++4 494
++4 247
+-1 247
++1 494
++19 523
++1 25
+-1 113
++1 565
++1 202
+cfn=(874) malloc_consolidate
+calls=101 5077 
+* 29356
++19 205
++93 205
+4739 205
+4485 615
+-93 205
+4739 205
+4392 205
+4739 205
+4485 410
+-77 205
+4739 205
+4408 410
+-16 205
++66 445
+-1 445
++2 1780
+-1 445
++1 1780
+-1 445
++46 1335
++7 445
+-7 445
++1 445
++6 445
+-5 445
+-1 445
++3 445
+-1 445
++4 445
+-7 696
++7 232
+-7 232
++1 232
++6 232
+-5 232
+-1 232
++3 232
+-1 232
++4 232
+4392 3528
++3 678
+-2 678
++1 1356
++1 2034
++3 678
++10 1820
++30 678
++5 678
+-5 678
++1 678
++4 678
++13 1354
++6 2254
++1 221
++1 221
+-1 221
++4 442
+-4 8
++1 8
+-1 8
++4 16
+-5 53
++1 3
+-1 9
++2 3
+-2 6
++5 3
+-4 3
++4 3
++34 928
+-39 88
+-52 150
+-2 154
+4520 408
++72 404
+-1 202
++1 202
++2 202
+-3 202
++2 202
++2 202
+-2 202
++2 202
+-2 202
++1 202
++1 404
++19 202
+-14 202
++14 404
+-14 1850
++12 326
+-1 1134
++3 1375
++4 241
++3 482
++1 100
++2 50
+-2 50
++1 50
+-1 100
+-22 50
++22 50
+-22 114
++2 120
++2 116
++2 50
++94 11
++3 11
+-3 11
++3 11
+-2 33
++2 22
+4444 1
++1 1
+-1 1
++1 2
++4 1
+-1 1
++1 2
+4753 7
+4521 354
++3 354
++1 9
++2 2
++1 10
++6 6
++3 4
++1 2
+-1 2
++1 22
++3 4
++1 2
++1 6
++31 2
+-1 2
++1 6
+4371 327
+4628 573
++3 191
+-3 191
++3 191
++2 382
++3 191
+-3 191
++3 3665
++3 382
++13 310
++1 310
+-6 155
++11 155
+-11 155
++17 155
+-6 155
++1 155
++2 155
+-1 155
++4 155
++1 84
++1 310
++2 14
++1 14
++2 112
++3 14
+-3 14
++2 14
++1 14
+-1 28
++5 14
+-1 14
++1 28
+-7 1128
++3 141
+-3 141
++2 141
++1 141
+-1 282
++5 141
+-1 141
++1 318
+-1 36
++1 72
+4371 20
+4640 36
++1 36
+-1 36
++1 72
+4371 17
+4706 11
++1 11
+-2 22
++2 33
+-2 11
++2 33
++2 22
+-2 11
+-1 11
++6 11
+-3 11
++4 11
+-4 11
++4 33
+4534 4
++4 26
+
+fn=(874)
+5077 606
+cfi=(44)
+cfn=(184)
+calls=101 52 
+* 202
+* 303
++22 303
++1 101
++2 101
++19 101
+-19 101
++17 101
++2 101
+-2 202
++26 101
+-24 101
++24 606
+-19 202
++2 202
+-2 1818
++2 1818
++17 190
+-15 190
++15 380
++8 88
+-1 88
++1 1056
++4 392
++4 392
+-4 392
++1 392
++1 392
++2 392
++5 1176
++1 392
++1 392
++1 392
+-2 392
++8 392
++3 784
+-41 392
+-3 392
++3 784
++1 392
+-4 392
++5 784
++2 392
+-2 392
++2 392
++1 81
++2 81
+-1 81
++2 1053
++3 1176
++1 1176
++6 608
++26 4848
++6 606
+
+fn=(968) free
+3693 2808
+cfi=(44)
+cfn=(184)
+calls=468 52 
+* 936
+* 936
++5 936
++1 936
++5 936
++3 467
++3 1401
++15 1401
++12 2802
++2 934
+cfn=(970) _int_free
+calls=467 4765 
+* 30469
++1 1868
++2 2340
+
+fn=(970)
+4765 10344
++15 1293
+-15 1293
+cfi=(44)
+cfn=(184)
+calls=1293 52 
+* 2586
+* 1293
++15 2586
++6 3879
+-6 1293
++6 3879
++13 2586
++13 2586
++79 1528
++21 3056
++6 764
+-10 764
++10 1528
++8 2292
++7 1528
++1 764
+-2 1528
++2 1528
++6 2292
++4 1528
++1 3
++2 3
+-1 3
++2 45
++3 2292
++2 2286
++7 388
++8 776
++1 388
++1 776
+-2 748
++1 374
++1 748
++7 762
+-2 762
++1 762
++1 762
++2 539
++1 539
++2 539
++3 1078
+-2 539
++2 539
++1 539
++30 1078
+-34 223
++3 446
+-2 223
++2 223
++1 223
++30 450
++1 6
++3 6
+4824 529
+-1 1058
++2 529
+-2 529
++2 1058
++27 1587
++3 529
++1 1058
++20 529
+-21 529
++21 1058
++6 529
++1 1058
+5056 7758
+-99 5516
++1 748
++39 2
++2 2
+-1 6
++1 4
++23 6
++1 4
+4920 4584
++28 28
++9 1358
+
+fn=(3876) realloc
+3749 5028
+cfi=(44)
+cfn=(184)
+calls=838 52 
+* 1676
+* 4190
++7 1676
++1 1676
++4 2514
++4 1676
++3 835
++2 835
+-2 835
++2 2505
++6 4175
++7 7515
++3 835
+-3 835
++3 835
++19 2505
++9 5010
++8 835
+-3 1670
++3 5010
+cfn=(3880) _int_realloc
+calls=835 5196 
+* 169152
+* 835
++2 3340
++1 9185
++24 835
++6 5845
+-90 6
++90 15
+-90 3
+cfn=(856) malloc
+calls=3 3616 
+* 2562
+
+fn=(3880)
+5196 6680
++22 835
+-22 835
+cfi=(44)
+cfn=(184)
+calls=835 52 
+* 1670
+* 835
++21 1670
++1 2505
++14 1670
++4 1670
++1 835
++1 1670
+-1 835
++2 1670
++6 4175
++8 862
++12 862
+-1 1684
++5 4838
++68 1454
++2 1454
++5 1436
++1 4308
++1 2872
++3 718
++4 1436
+cfn=(970)
+calls=718 4765 
+* 65649
++5 727
++73 5010
+-91 27
++1 9
+-1 63
++1 18
+-67 540
+cfn=(872)
+calls=108 4250 
+* 28610
+* 108
++1 540
++3 216
++6 108
+-5 108
++5 108
++11 108
++1 108
+-1 108
++3 216
++1 108
+-1 108
++1 108
++2 216
++4 186
++3 93
+-3 93
++1 186
++1 186
++1 93
++1 5
++2 5
+-2 5
++1 10
++1 5
++1 1
++2 1
+-2 1
++1 2
++1 1
++1 3
++1 3
++9 3
+cfn=(970)
+calls=1 4765 
+* 52
+* 321
+cfn=(970)
+calls=107 4765 
+* 6212
++3 216
++17 3590
+-76 168
++33 90
+cfi=(121) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/memcpy.S
+cfn=(946) memcpy
+calls=15 44 
+* 5191
+* 30
+
+fn=(856)
+3616 900
+cfi=(44)
+cfn=(184)
+calls=180 52 
+* 360
+* 540
++5 360
++1 360
++3 360
++33 1440
++3 540
+cfn=(872)
+calls=180 4250 
+* 75624
++1 180
+-1 180
++1 180
++20 720
++1 1636
++3 1260
+
+fl=(167) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/memset.S
+fn=(2396) memset
+52 1218
++1 1218
++2 1218
++1 1218
++5 1218
++2 1218
++1 1218
++2 1218
++1 1218
++12 1218
++1 1218
++1 1218
++2 1218
++2 225297
++2 1218
++1 1218
++5 1218
++3 1218
++8 1218
+
+fl=(273) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/time/../sysdeps/unix/syscall-template.S
+fn=(7238) gettimeofday
+82 25
+cob=(1) /lib/ld-2.11.2.so
+cfi=(1) ???
+cfn=(214) _dl_sysinfo_int80
+calls=5 -82 
+* 10
+* 15
++1 5
+
+fl=(473) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/misc/../sysdeps/unix/sysv/linux/i386/clone.S
+fn=(54974) clone
+cob=(4) /lib/i686/cmov/libpthread-2.11.2.so
+cfi=(470) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_create.c
+cfn=(55038) start_thread
+calls=0 230 
+130 6736
+
+fl=(121)
+fn=(946)
+44 33
++1 33
++1 33
++1 33
++2 33
++1 33
++1 33
++1 33
++1 33
++1 33
++2 26
++1 26
++2 18
++1 18
++11 18
++1 18
++1 18
++1 18
++1 4831
++2 18
++1 18
++2 18
++2 18
++1 18
++1 18
++4 18
+-6 15
++1 15
++1 15
++4 15
++6 15
++1 15
++2 15
++1 15
++1 5
++1 5
+
+ob=(1)
+fl=(1)
+fn=(0) 0x00000850
+cob=(94)
+cfi=(235)
+cfn=(5522)
+calls=0 0 
+0 51253335
+
+ob=(3)
+fl=(121)
+fn=(946)
+100 3179
+
+ob=(1)
+fl=(1)
+fn=(214)
+0 40
+
+ob=(3)
+fl=(121)
+fn=(946)
+102 15
+
+fl=(236)
+fn=(5530)
+cob=(94)
+cfi=(243)
+cfn=(5606)
+calls=0 25 
+228 51253335
+
+ob=(20) /lib/libglib-2.0.so.0.2400.2
+fl=(92) ???
+fn=(34772) g_main_context_wakeup
+0 21
+cfn=(664) 0x00013d47
+calls=3 0 
+0 6
+0 21
+cfn=(7838) g_atomic_int_get
+calls=3 0 
+0 21
+0 45
+cob=(4)
+cfi=(107) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_lock.c
+cfn=(864) pthread_mutex_lock
+calls=3 47 
+0 117
+0 6
+cfn=(7818) 0x00039a30
+calls=3 0 
+0 57
+0 36
+cob=(4)
+cfi=(108) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_unlock.c
+cfn=(866) pthread_mutex_unlock
+calls=3 289 
+0 120
+0 18
+
+fn=(101114) g_main_context_dispatch
+cob=(81)
+cfi=(209)
+cfn=(101130) 0x00198550
+calls=0 0 
+0 51253335
+
+fn=(100926) g_main_context_iteration
+cfn=(100928) 0x0003eb20
+calls=0 0 
+0 51253335
+
+fn=(100928)
+cfn=(101114)
+calls=0 0 
+0 51253335
+
+fn=(7818)
+0 12
+cfn=(664)
+calls=3 0 
+0 6
+0 39
+
+fn=(7838)
+0 21
+
+fn=(664)
+0 12
+
+ob=(23) /usr/lib/libfontconfig.so.1.4.4
+fl=(95) ???
+fn=(59380) 0x00009880
+0 17776
+
+fn=(59784) FcCharSetHasChar
+0 2828
+cfn=(59380)
+calls=202 0 
+0 17776
+0 3838
+
+ob=(81)
+fl=(209)
+fn=(4028) QListData::append()
+0 64
+cfn=(3622) 0x00051e67
+calls=8 0 
+0 16
+0 175
+cfn=(3848) 0x0008f9c0
+calls=4 0 
+0 140
+0 12
+cfn=(3864) QListData::realloc(int)
+calls=4 0 
+0 1340
+0 21
+cob=(3)
+cfi=(121)
+cfn=(946)
+calls=1 44 
+0 22
+0 5
+
+fn=(5642) 0x0006fc10
+0 13980
+cfn=(3622)
+calls=2796 0 
+0 5592
+0 22368
+cob=(4)
+cfi=(154) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/pthread_once.S
+cfn=(1770) pthread_once
+calls=2796 36 
+0 13980
+0 8388
+cob=(4)
+cfi=(201) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_getspecific.c
+cfn=(3392) pthread_getspecific
+calls=2796 27 
+0 69900
+0 27960
+
+fn=(6328) QString::QString(QChar const*, int)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 13
+cfn=(3828) qMalloc(unsigned int)
+calls=1 0 
+0 290
+0 15
+cob=(3)
+cfi=(121)
+cfn=(946)
+calls=1 44 
+0 21
+0 8
+
+fn=(6710) QObjectPrivate::~QObjectPrivate()
+0 12
+cfn=(3622)
+calls=2 0 
+0 4
+0 26
+cfn=(5792) 0x0005479a
+calls=2 0 
+0 4
+0 34
+cfn=(3622)
+calls=2 0 
+0 4
+0 48
+cfn=(6684) 0x00184c50
+calls=2 0 
+0 26
+0 8
+cfn=(6668) 0x00155c50
+calls=2 0 
+0 40
+0 28
+
+fn=(8422) 0x0018c7f0
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 13
+
+fn=(8750) QHashData::freeNode(void*)
+0 18
+cfn=(3622)
+calls=3 0 
+0 6
+0 18
+cfn=(4520) qFree(void*)
+calls=3 0 
+0 321
+0 12
+
+fn=(16524) QMapData::node_create(QMapData::Node**, int, int)
+0 10
+cfn=(3622)
+calls=1 0 
+0 2
+0 60
+cfn=(3828)
+calls=1 0 
+0 118
+0 1
+
+fn=(22628) QVariant::constData() const
+0 70
+
+fn=(26452) QListData::remove(int)
+0 40
+cfn=(3622)
+calls=4 0 
+0 8
+0 92
+
+fn=(37162) 0x000bddc0
+0 24
+
+fn=(67636) 0x000dc220
+0 92912
+cfn=(3622)
+calls=11614 0 
+0 23228
+0 2074956
+
+fn=(77144) QHashData::free_helper(void (*)(QHashData::Node*))
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 152
+cob=(83)
+cfi=(214)
+cfn=(108424) 0x00239630
+calls=3 0 
+0 12
+0 9
+cfn=(8750)
+calls=3 0 
+0 375
+0 27
+cob=(52) /usr/lib/libstdc++.so.6.0.13
+cfi=(151) ???
+cfn=(23404) operator delete[](void*)
+calls=1 0 
+0 159
+0 3
+cob=(52)
+cfi=(151)
+cfn=(5254) operator delete(void*)
+calls=1 0 
+0 109
+0 6
+
+fn=(101138) QMetaCallEvent::placeMetaCall(QObject*)
+cfn=(69834) QMetaObject::metacall(QObject*, QMetaObject::Call, int, void**)
+calls=0 0 
+0 51253335
+
+fn=(112788) 0x0017daf0
+0 18
+cfn=(3622)
+calls=2 0 
+0 4
+0 40
+cfn=(3828)
+calls=2 0 
+0 448
+0 10
+cfn=(3828)
+calls=2 0 
+0 448
+0 22
+cob=(52)
+cfi=(151)
+cfn=(2184) operator new(unsigned int)
+calls=2 0 
+0 464
+0 34
+cfn=(36994) QMetaCallEvent::QMetaCallEvent(int, QObject const*, int, int, int*, void**, QSemaphore*)
+calls=2 0 
+0 108
+0 10
+cfn=(37000) QCoreApplication::postEvent(QObject*, QEvent*)
+calls=2 0 
+0 1408
+0 12
+
+fn=(130342) QCoreApplication::exec()
+cfn=(130354) QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>)
+calls=0 0 
+0 51253335
+
+fn=(130354)
+cfn=(130384) QEventLoop::processEvents(QFlags<QEventLoop::ProcessEventsFlag>)
+calls=0 0 
+0 51253335
+
+fn=(3864)
+0 36
+cfn=(3622)
+calls=4 0 
+0 8
+0 24
+cfn=(3870) qRealloc(void*, unsigned int)
+calls=4 0 
+0 1224
+0 48
+
+fn=(5758) QObject::QObject(QObjectPrivate&, QObject*)
+0 12
+cfn=(3622)
+calls=2 0 
+0 4
+0 26
+cfn=(7778) QObject::thread() const
+calls=1 0 
+0 8
+0 4
+cfn=(5642)
+calls=2 0 
+0 116
+0 6
+cfn=(5762) 0x0006cba0
+calls=2 0 
+0 14
+0 13
+cfn=(5764) 0x0017bf70
+calls=1 0 
+0 22
+0 3
+cfn=(5764)
+calls=1 0 
+0 24
+0 18
+cfn=(5790) qt_addObject
+calls=2 0 
+0 20
+0 20
+cfn=(5778) QObject::setParent(QObject*)
+calls=2 0 
+0 2918
+0 2
+
+fn=(5806) 0x0006ddd0
+0 14
+cfn=(3622)
+calls=2 0 
+0 4
+0 20
+
+fn=(6498) QString::fromRawData(QChar const*, int)
+0 20
+cfn=(3622)
+calls=4 0 
+0 8
+0 28
+cfn=(3828)
+calls=4 0 
+0 488
+0 80
+
+fn=(7942) 0x001849c0
+0 16
+cfn=(3622)
+calls=2 0 
+0 4
+0 14
+cfn=(7948) 0x00184770
+calls=2 0 
+0 382
+0 8
+cfn=(4028)
+calls=2 0 
+0 810
+0 14
+
+fn=(16502) QMapData::createData(int)
+0 4
+cfn=(3622)
+calls=1 0 
+0 2
+0 4
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 132
+0 21
+
+fn=(79104) QCoreApplicationPrivate::sendPostedEvents(QObject*, int, QThreadData*)
+cfn=(7980) QCoreApplication::notifyInternal(QObject*, QEvent*)
+calls=0 0 
+0 51253335
+
+fn=(67512) 0x000dfa70
+0 3248
+cfn=(3622)
+calls=406 0 
+0 812
+0 3248
+cfn=(67516) 0x000c9330
+calls=406 0 
+0 5278
+0 2436
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=406 3749 
+0 107170
+0 3654
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=406 3749 
+0 117328
+0 113554
+cfn=(67532) 0x000c95b0
+calls=7792 0 
+0 397392
+0 120534
+cfn=(67572) 0x000cd8a0
+calls=406 0 
+0 18416849
+0 4466
+
+fn=(67604) 0x000cb750
+0 233760
+cfn=(3622)
+calls=23376 0 
+0 46752
+0 2976538
+cfn=(67620) 0x000c9eb0
+calls=7792 0 
+0 225968
+0 155840
+cfn=(67694) 0x000dc780
+calls=7792 0 
+0 529859
+0 16163
+cfn=(67620)
+calls=15 0 
+0 435
+0 1371662
+cfn=(67620)
+calls=85712 0 
+0 4455056
+0 1114256
+cfn=(67694)
+calls=85712 0 
+0 4955811
+0 257829
+cfn=(62960) 0x000dbb30
+calls=99 0 
+0 16428
+0 1287
+cfn=(62960)
+calls=99 0 
+0 17564
+0 1089
+cfn=(67496) 0x000dbaa0
+calls=99 0 
+0 10791
+0 729
+cfn=(62960)
+calls=99 0 
+0 17660
+0 792
+cfn=(67496)
+calls=99 0 
+0 10791
+0 1188
+cfn=(67636)
+calls=99 0 
+0 16830
+0 15840
+cfn=(67496)
+calls=99 0 
+0 10791
+0 13995
+cfn=(67620)
+calls=297 0 
+0 33957
+0 8316
+cfn=(67636)
+calls=297 0 
+0 56739
+0 3267
+
+fn=(67626) 0x000c9c60
+0 46752
+cfn=(3622)
+calls=7792 0 
+0 15584
+0 187008
+cfn=(67636)
+calls=7792 0 
+0 1488070
+0 163834
+
+fn=(67792) 0x000d5600
+0 3240
+cfn=(3622)
+calls=405 0 
+0 810
+0 16605
+cfn=(67806) 0x000c98d0
+calls=405 0 
+0 64725
+0 826156
+cfn=(67832) 0x000d2e80
+calls=38750 0 
+0 17365758
+0 290028
+
+fn=(67806)
+0 2835
+cfn=(3622)
+calls=405 0 
+0 810
+0 4455
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=405 52 
+0 54195
+0 2430
+
+fn=(86296) QRectF::toAlignedRect() const
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 6
+cob=(40) /lib/i686/cmov/libm-2.11.2.so
+cfi=(492) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/math/../sysdeps/i386/fpu/s_floor.S
+cfn=(59076) floor
+calls=1 11 
+0 13
+0 7
+cob=(40)
+cfi=(540) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/math/../sysdeps/i386/fpu/s_ceil.S
+cfn=(86306) ceil
+calls=1 11 
+0 13
+0 13
+cob=(40)
+cfi=(492)
+cfn=(59076)
+calls=1 11 
+0 13
+0 11
+cob=(40)
+cfi=(540)
+cfn=(86306)
+calls=1 11 
+0 13
+0 30
+
+fn=(98278) 0x000d2730
+0 34260
+cfn=(3622)
+calls=3426 0 
+0 6852
+0 126762
+
+fn=(109468) 0x0006f860
+0 25
+cfn=(3622)
+calls=5 0 
+0 10
+0 45
+cob=(4)
+cfi=(197) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_init.c
+cfn=(3352) pthread_mutex_init
+calls=5 43 
+0 325
+0 15
+cob=(4)
+cfi=(210) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_cond_init.c
+cfn=(3720) pthread_cond_init@@GLIBC_2.3.2
+calls=5 29 
+0 105
+0 10
+cob=(4)
+cfi=(107)
+cfn=(864)
+calls=5 47 
+0 195
+0 25
+cob=(4)
+cfi=(587) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/pthread_cond_timedwait.S
+cfn=(109486) pthread_cond_timedwait@@GLIBC_2.3.2
+calls=5 37 
+0 1120
+0 10
+cob=(4)
+cfi=(108)
+cfn=(866)
+calls=5 289 
+0 305
+0 10
+cob=(4)
+cfi=(340) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_cond_destroy.c
+cfn=(15028) pthread_cond_destroy@@GLIBC_2.3.2
+calls=5 28 
+0 175
+0 10
+cob=(4)
+cfi=(412) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_destroy.c
+cfn=(37726) pthread_mutex_destroy
+calls=5 27 
+0 65
+0 30
+
+fn=(6634) QObjectPrivate::clearGuards(QObject*)
+0 16
+cfn=(3622)
+calls=2 0 
+0 4
+0 30
+
+fn=(3848)
+0 16
+cfn=(3622)
+calls=4 0 
+0 8
+0 24
+cfn=(3856) qAllocMore(int, int)
+calls=4 0 
+0 64
+0 28
+
+fn=(5764)
+0 16
+cfn=(3622)
+calls=2 0 
+0 4
+0 26
+
+fn=(6036) QHashData::detach_helper2(void (*)(QHashData::Node*, void*), void (*)(QHashData::Node*), int, int)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 4
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 142
+0 43
+
+fn=(6358) QString::append(QString const&)
+0 30
+cfn=(3622)
+calls=6 0 
+0 12
+0 150
+cob=(3)
+cfi=(121)
+cfn=(946)
+calls=6 44 
+0 3293
+0 126
+
+fn=(6386) QString::QString(QChar)
+0 4
+cfn=(3622)
+calls=1 0 
+0 2
+0 4
+cfn=(3828)
+calls=1 0 
+0 304
+0 17
+
+fn=(7778)
+0 8
+
+fn=(8058) QEvent::~QEvent()
+0 5
+cfn=(3622)
+calls=1 0 
+0 2
+0 10
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 9
+cfn=(3622)
+calls=1 0 
+0 2
+0 12
+
+fn=(9420) QVectorData::reallocate(QVectorData*, int, int, int)
+0 114
+cfn=(3622)
+calls=19 0 
+0 38
+0 152
+cfn=(3870)
+calls=19 0 
+0 16466
+0 76
+
+fn=(15900) QString::toLower() const
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 76
+
+fn=(25642) QString::append(QChar)
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 9
+cfn=(6392) QString::grow(int)
+calls=1 0 
+0 34
+0 3
+cfn=(6398) QString::realloc(int)
+calls=1 0 
+0 237
+0 15
+
+fn=(34766) QEventDispatcherGlib::wakeUp()
+0 18
+cfn=(3622)
+calls=3 0 
+0 6
+0 12
+cob=(20)
+cfi=(92)
+cfn=(34772)
+calls=3 0 
+0 468
+0 24
+
+fn=(35280) QListData::insert(int)
+0 7
+cfn=(3622)
+calls=1 0 
+0 2
+0 30
+cob=(3)
+cfi=(212)
+cfn=(3886)
+calls=1 44 
+0 332
+0 10
+
+fn=(67100) qGetCharAttributes(unsigned short const*, unsigned int, HB_ScriptItem const*, unsigned int, HB_CharAttributes*)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 11
+cfn=(67102) 0x000e4bd0
+calls=1 0 
+0 795020
+0 4
+
+fn=(67108) 0x000e5380
+0 25356
+cfn=(3622)
+calls=6339 0 
+0 12678
+0 25356
+cfn=(67116) QUnicodeTables::properties(unsigned int)
+calls=6339 0 
+0 114102
+0 63390
+
+fn=(67204) 0x000de3d0
+0 2842
+cfn=(3622)
+calls=406 0 
+0 812
+0 3654
+cfn=(67212) 0x000e35e0
+calls=406 0 
+0 40209505
+0 2436
+
+fn=(119430) QRectF::operator&(QRectF const&) const
+0 142
+
+fn=(5674) QInternal::activateCallbacks(QInternal::Callback, void**)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 4
+cfn=(5676) 0x00066420
+calls=1 0 
+0 20
+0 13
+
+fn=(5790)
+0 6
+cfn=(5792)
+calls=2 0 
+0 4
+0 10
+
+fn=(6080) QHashData::allocateNode(int)
+0 18
+cfn=(3622)
+calls=3 0 
+0 6
+0 30
+cfn=(3828)
+calls=3 0 
+0 402
+0 6
+
+fn=(6418)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 17
+cfn=(6424) QString::fromLatin1_helper(char const*, int)
+calls=1 0 
+0 213
+0 1
+
+fn=(8008) QObject::event(QEvent*)
+cfn=(101138)
+calls=0 0 
+0 51253335
+
+fn=(8009) QObject::event(QEvent*)'2
+0 10
+cfn=(3622)
+calls=1 0 
+0 2
+0 16
+cfn=(8014) QObject::childEvent(QChildEvent*)
+calls=1 0 
+0 4
+0 2
+
+fn=(8406) QVariant::isNull() const
+0 4
+cfn=(3622)
+calls=1 0 
+0 2
+0 7
+cob=(83)
+cfi=(214)
+cfn=(8408) 0x001a17a0
+calls=1 0 
+0 54
+0 4
+
+fn=(21502) QChar::category() const
+0 808
+cfn=(5792)
+calls=202 0 
+0 404
+0 2424
+
+fn=(36994)
+0 10
+cfn=(3622)
+calls=2 0 
+0 4
+0 12
+cfn=(7974) QEvent::QEvent(QEvent::Type)
+calls=2 0 
+0 38
+0 44
+
+fn=(37008) QCoreApplication::compressEvent(QEvent*, QObject*, QPostEventList*)
+0 34
+
+fn=(37160) QString::indexOf(QLatin1String const&, int, Qt::CaseSensitivity) const
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 6
+cob=(3)
+cfi=(43)
+cfn=(2316)
+calls=1 70 
+0 33
+0 125
+cfn=(37162)
+calls=1 0 
+0 24
+0 11
+
+fn=(41688) QVariant::create(int, void const*)
+0 7
+cfn=(3622)
+calls=1 0 
+0 2
+0 12
+cob=(83)
+cfi=(214)
+cfn=(22630) 0x001a2920
+calls=1 0 
+0 57
+0 4
+
+fn=(67212)
+0 2030
+cfn=(3622)
+calls=406 0 
+0 812
+0 2842
+cfn=(67216) 0x000ddc40
+calls=406 0 
+0 6090
+0 4872
+cfn=(67224) 0x000df190
+calls=406 0 
+0 884110
+0 1624
+cfn=(67264) 0x000e18a0
+calls=406 0 
+0 12586
+0 2030
+cfn=(67512)
+calls=406 0 
+0 19295969
+0 1620
+cfn=(67784) 0x000df640
+calls=405 0 
+0 19994514
+0 406
+
+fn=(67496)
+0 1782
+cfn=(3622)
+calls=297 0 
+0 594
+0 1485
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=297 3693 
+0 27324
+0 1188
+
+fn=(67572)
+0 3248
+cfn=(3622)
+calls=406 0 
+0 812
+0 52374
+cfn=(67594) 0x000c9370
+calls=1218 0 
+0 12180
+0 55278
+cfn=(67728) 0x000c94f0
+calls=23376 0 
+0 1145424
+0 469956
+cfn=(67604)
+calls=23376 0 
+0 16577983
+0 99594
+
+fn=(67594)
+0 12180
+
+fn=(101130)
+cfn=(79098) QCoreApplication::sendPostedEvents(QObject*, int)
+calls=0 0 
+0 51253335
+
+fn=(3622)
+0 648092
+
+fn=(6662) 0x00184810
+0 15
+cfn=(3622)
+calls=3 0 
+0 6
+0 53
+cfn=(6668)
+calls=3 0 
+0 60
+0 27
+cfn=(4520)
+calls=2 0 
+0 214
+0 8
+
+fn=(6872) QVectorData::free(QVectorData*, int)
+0 78
+cfn=(3622)
+calls=13 0 
+0 26
+0 65
+cfn=(4520)
+calls=13 0 
+0 1715
+0 52
+
+fn=(8894) QString::fromLatin1(char const*, int)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 7
+cfn=(6424)
+calls=1 0 
+0 239
+0 7
+
+fn=(26446) QListData::erase(void**)
+0 18
+cfn=(3622)
+calls=2 0 
+0 4
+0 18
+cfn=(26452)
+calls=2 0 
+0 70
+0 18
+
+fn=(40480) QVariant::toInt(bool*) const
+0 5
+cfn=(3622)
+calls=1 0 
+0 2
+0 18
+
+fn=(66072) QUnicodeTables::script(unsigned int)
+0 25360
+cfn=(5792)
+calls=6340 0 
+0 12680
+0 70400
+
+fn=(67534) 0x000c93f0
+0 311680
+cfn=(3622)
+calls=31168 0 
+0 62336
+0 280512
+
+fn=(67620)
+0 5048895
+cfn=(67626)
+calls=7792 0 
+0 1901248
+0 38960
+
+fn=(67694)
+0 1361552
+cfn=(3622)
+calls=170194 0 
+0 340388
+0 11833293
+
+fn=(69834)
+cob=(94)
+cfi=(538)
+cfn=(107006)
+calls=0 230 
+0 51253335
+
+fn=(69835) QMetaObject::metacall(QObject*, QMetaObject::Call, int, void**)'2
+0 162
+cob=(83)
+cfi=(214)
+cfn=(107932) QTextEdit::qt_metacall(QMetaObject::Call, int, void**)
+calls=5 0 
+0 2697
+cob=(83)
+cfi=(214)
+cfn=(82058) QTextControl::qt_metacall(QMetaObject::Call, int, void**)
+calls=4 0 
+0 6391
+0 63
+
+fn=(70586) QBasicTimer::stop()
+0 14
+cfn=(3622)
+calls=2 0 
+0 4
+0 20
+
+fn=(100914) QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>)
+cob=(20)
+cfi=(92)
+cfn=(100926)
+calls=0 0 
+0 51253335
+
+fn=(3776) QThread::currentThreadId()
+0 11948
+cfn=(3622)
+calls=2987 0 
+0 5974
+0 8961
+cob=(4)
+cfi=(211) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_self.c
+cfn=(3782) pthread_self
+calls=2987 27 
+0 5974
+0 11948
+
+fn=(4462) QVectorData::allocate(int, int)
+0 78
+cfn=(3622)
+calls=13 0 
+0 26
+0 78
+cfn=(3828)
+calls=13 0 
+0 2019
+0 52
+
+fn=(6398)
+0 56
+cfn=(3622)
+calls=7 0 
+0 14
+0 63
+cfn=(3828)
+calls=7 0 
+0 1663
+0 119
+cob=(3)
+cfi=(121)
+cfn=(946)
+calls=7 44 
+0 154
+0 311
+
+fn=(6640) QObject::destroyed(QObject*)
+0 8
+cfn=(3622)
+calls=2 0 
+0 4
+0 26
+cfn=(6646)
+calls=2 0 
+0 86
+0 8
+
+fn=(6648) 0x0017bd90
+0 55
+cfn=(3622)
+calls=11 0 
+0 22
+0 121
+cfn=(4664) QMutexPool::get(void const*)
+calls=11 0 
+0 308
+0 66
+
+fn=(7994) QCoreApplicationPrivate::sendThroughApplicationEventFilters(QObject*, QEvent*)
+0 9
+cfn=(3622)
+calls=1 0 
+0 2
+0 18
+
+fn=(8014)
+0 4
+
+fn=(8400) QVariant::~QVariant()
+0 21990
+cfn=(3622)
+calls=3665 0 
+0 7330
+0 25691
+cob=(83)
+cfi=(214)
+cfn=(22656) 0x001a0a40
+calls=6 0 
+0 504
+0 14660
+
+fn=(23454) 0x0018ee00
+0 32
+cfn=(3622)
+calls=4 0 
+0 8
+0 76
+
+fn=(36490) QVariant::userType() const
+0 25522
+
+fn=(62960)
+0 2376
+cfn=(3622)
+calls=297 0 
+0 594
+0 1782
+cob=(3)
+cfi=(103)
+cfn=(2394)
+calls=297 4007 
+0 44227
+0 2673
+
+fn=(108296) QObjectPrivate::deleteChildren()
+0 36
+cob=(83)
+cfi=(214)
+cfn=(81970) QTextFrame::~QTextFrame()
+calls=1 0 
+0 1064
+0 10
+cfn=(6662)
+calls=1 0 
+0 169
+0 12
+
+fn=(108552) QString::operator>(QLatin1String const&) const
+0 208
+
+fn=(109044) QChar::direction(unsigned short)
+0 6344
+cfn=(5792)
+calls=6344 0 
+0 12688
+0 88816
+
+fn=(3770) QMutex::lock()
+0 24176
+cfn=(3622)
+calls=3022 0 
+0 6044
+0 15565
+cfn=(3776)
+calls=2987 0 
+0 44805
+0 50779
+
+fn=(6684)
+0 52
+
+fn=(8418) qcoreVariantHandler()
+0 5
+cfn=(5792)
+calls=5 0 
+0 10
+0 30
+
+fn=(40474) QVariant::QVariant(int)
+0 12
+
+fn=(67532)
+0 70128
+cfn=(67534)
+calls=7792 0 
+0 163632
+0 163632
+
+fn=(69828) QObjectPrivate::setCurrentSender(QObject*, QObjectPrivate::Sender*)
+0 81
+
+fn=(108570) QString::operator<(QLatin1String const&) const
+0 43
+
+fn=(109466)
+0 30
+cfn=(3622)
+calls=5 0 
+0 10
+0 35
+cob=(3)
+cfi=(273)
+cfn=(7238)
+calls=5 82 
+0 55
+0 125
+cfn=(109468)
+calls=5 0 
+0 2480
+0 30
+
+fn=(109368) 0x0006ff20
+cob=(94)
+cfi=(550)
+cfn=(130650)
+calls=0 194 
+0 5048
+cob=(94)
+cfi=(559)
+cfn=(114556)
+calls=0 45 
+0 560
+cob=(94)
+cfi=(428)
+cfn=(109460)
+calls=0 67 
+0 1128
+
+fn=(3788) QMutex::unlock()
+0 21154
+cfn=(3622)
+calls=3022 0 
+0 6044
+0 60265
+
+fn=(5640) QObjectPrivate::QObjectPrivate(int)
+0 10
+cfn=(3622)
+calls=2 0 
+0 4
+0 100
+
+fn=(5778)
+0 12
+cfn=(3622)
+calls=2 0 
+0 4
+0 12
+cfn=(5784) QObjectPrivate::setParent_helper(QObject*)
+calls=2 0 
+0 2882
+0 8
+
+fn=(6678) 0x00184c80
+0 10
+cfn=(3622)
+calls=2 0 
+0 4
+0 26
+cfn=(6684)
+calls=2 0 
+0 26
+0 10
+
+fn=(7948)
+0 16
+cfn=(3622)
+calls=2 0 
+0 4
+0 14
+cfn=(3822) QListData::detach3()
+calls=2 0 
+0 306
+0 42
+
+fn=(7968) QChildEvent::QChildEvent(QEvent::Type, QObject*)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 6
+cfn=(7974)
+calls=1 0 
+0 19
+0 10
+
+fn=(8000) QCoreApplicationPrivate::sendThroughObjectEventFilters(QObject*, QEvent*)
+0 9
+cfn=(3622)
+calls=1 0 
+0 2
+0 17
+
+fn=(34962) QObjectPrivate::cleanConnectionLists()
+0 72
+cfn=(3622)
+calls=9 0 
+0 18
+0 90
+
+fn=(37000)
+0 12
+cfn=(3622)
+calls=2 0 
+0 4
+0 12
+cfn=(8024) QCoreApplication::postEvent(QObject*, QEvent*, int)
+calls=2 0 
+0 1372
+0 8
+
+fn=(78564) QVariant::QVariant(int, void const*)
+0 7
+cfn=(3622)
+calls=1 0 
+0 2
+0 12
+cfn=(41688)
+calls=1 0 
+0 82
+0 6
+
+fn=(67102)
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 3642
+cfn=(67108)
+calls=1 0 
+0 38
+0 339640
+cfn=(67108)
+calls=6337 0 
+0 240806
+0 15
+cfn=(67108)
+calls=1 0 
+0 38
+0 210831
+
+fn=(67202) qShapeItem(HB_ShaperItem_*)
+0 1624
+cfn=(3622)
+calls=406 0 
+0 812
+0 2030
+cfn=(67204)
+calls=406 0 
+0 40219249
+0 1624
+
+fn=(67224)
+0 3248
+cfn=(3622)
+calls=406 0 
+0 812
+0 104374
+cfn=(67250) 0x000e5340
+calls=202 0 
+0 7676
+0 2652
+cfn=(67250)
+calls=204 0 
+0 7752
+0 216434
+cfn=(67250)
+calls=7386 0 
+0 280668
+0 260494
+
+fn=(67516)
+0 5278
+
+fn=(82008) QObjectPrivate::removePendingChildInsertedEvents(QObject*)
+0 22
+cfn=(3622)
+calls=1 0 
+0 2
+0 13
+cfn=(6668)
+calls=1 0 
+0 20
+0 5
+
+fn=(3822)
+0 32
+cfn=(3622)
+calls=4 0 
+0 8
+0 24
+cfn=(3828)
+calls=4 0 
+0 488
+0 76
+
+fn=(3828)
+0 576
+cfn=(3622)
+calls=144 0 
+0 288
+0 720
+cob=(3)
+cfi=(103)
+cfn=(856)
+calls=144 3616 
+0 76609
+0 576
+
+fn=(3856)
+0 902
+
+fn=(4520)
+0 556
+cfn=(3622)
+calls=139 0 
+0 278
+0 695
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=139 3693 
+0 18536
+0 556
+
+fn=(4664)
+0 143
+cfn=(3622)
+calls=11 0 
+0 22
+0 143
+
+fn=(5784)
+0 24
+cfn=(3622)
+calls=3 0 
+0 6
+0 69
+cfn=(7942)
+calls=1 0 
+0 624
+0 16
+cfn=(7968)
+calls=1 0 
+0 43
+0 11
+cfn=(7981) QCoreApplication::notifyInternal(QObject*, QEvent*)'2
+calls=1 0 
+0 284
+0 10
+cfn=(7942)
+calls=1 0 
+0 624
+0 3
+cfn=(8052) QChildEvent::~QChildEvent()
+calls=1 0 
+0 36
+0 3
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 142
+0 4
+cfn=(7974)
+calls=1 0 
+0 19
+0 6
+cfn=(8024)
+calls=1 0 
+0 995
+0 3
+
+fn=(6424)
+0 12
+cfn=(3622)
+calls=2 0 
+0 4
+0 32
+cfn=(3828)
+calls=2 0 
+0 252
+0 106
+cob=(3)
+cfi=(43)
+cfn=(2316)
+calls=2 70 
+0 40
+0 6
+
+fn=(7974)
+0 3
+cfn=(5792)
+calls=3 0 
+0 6
+0 49
+cfn=(5792)
+calls=1 0 
+0 2
+0 16
+
+fn=(7980)
+cob=(83)
+cfi=(214)
+cfn=(34746) QApplication::notify(QObject*, QEvent*)
+calls=0 0 
+0 51253335
+
+fn=(7981)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 13
+cfn=(5674)
+calls=1 0 
+0 45
+0 19
+cob=(83)
+cfi=(214)
+cfn=(34747) QApplication::notify(QObject*, QEvent*)'2
+calls=1 0 
+0 197
+0 2
+
+fn=(9054) QThreadStorageData::get() const
+0 13925
+cfn=(3622)
+calls=2785 0 
+0 5570
+0 13925
+cfn=(5642)
+calls=2785 0 
+0 161530
+0 66840
+
+fn=(35800) QMapData::continueFreeData(int)
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 14
+cfn=(4520)
+calls=1 0 
+0 107
+0 4
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 144
+0 6
+
+fn=(79098)
+cfn=(79104)
+calls=0 0 
+0 51253335
+
+fn=(67784)
+0 3645
+cfn=(3622)
+calls=405 0 
+0 810
+0 8505
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=405 52 
+0 54195
+0 5265
+cfn=(67792)
+calls=405 0 
+0 18567322
+0 199188
+cob=(83)
+cfi=(214)
+cfn=(67944) 0x003aa460
+calls=202 0 
+0 757456
+0 348927
+cob=(83)
+cfi=(214)
+cfn=(67944)
+calls=203 0 
+0 47780
+0 1421
+
+fn=(67832)
+0 426250
+cfn=(3622)
+calls=38750 0 
+0 77500
+0 2964102
+cfn=(67620)
+calls=15500 0 
+0 449500
+0 201500
+cfn=(67694)
+calls=15500 0 
+0 1891000
+0 232500
+cfn=(67620)
+calls=7750 0 
+0 224750
+0 77500
+cfn=(67694)
+calls=7750 0 
+0 945500
+0 875750
+cfn=(67620)
+calls=38750 0 
+0 1123750
+0 503750
+cfn=(67694)
+calls=38750 0 
+0 3301500
+0 475290
+cfn=(67620)
+calls=14690 0 
+0 426010
+0 190970
+cfn=(67694)
+calls=14690 0 
+0 1911563
+0 76617
+cfn=(67620)
+calls=1713 0 
+0 49677
+0 46251
+cfn=(67636)
+calls=1713 0 
+0 286509
+0 34260
+cfn=(67636)
+calls=1713 0 
+0 342948
+0 35973
+cfn=(98278)
+calls=1713 0 
+0 125049
+0 20556
+cfn=(98278)
+calls=1713 0 
+0 42825
+0 6408
+
+fn=(78184) QVariant::QVariant(double)
+0 60
+
+fn=(101458) QString::operator=(QChar)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 6
+cfn=(6386)
+calls=1 0 
+0 331
+0 4
+cfn=(6338) QString::operator=(QString const&)
+calls=1 0 
+0 29
+0 10
+
+fn=(5762)
+0 14
+
+fn=(5792)
+0 54060
+
+fn=(6062) QHashData::rehash(int)
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 22
+cob=(52)
+cfi=(151)
+cfn=(2178) operator new[](unsigned int)
+calls=1 0 
+0 147
+0 104
+
+fn=(6338)
+0 54
+cfn=(3622)
+calls=6 0 
+0 12
+0 108
+
+fn=(6392)
+0 8
+cfn=(3622)
+calls=2 0 
+0 4
+0 14
+cfn=(3856)
+calls=2 0 
+0 32
+0 10
+
+fn=(6646)
+0 135
+cfn=(3622)
+calls=15 0 
+0 30
+0 443
+cfn=(6648)
+calls=5 0 
+0 260
+0 40
+cfn=(5642)
+calls=5 0 
+0 290
+0 333
+cfn=(112788)
+calls=2 0 
+0 3026
+0 237
+cfn=(69835)
+calls=4 0 
+0 6491
+0 236
+cfn=(69828)
+calls=4 0 
+0 36
+0 40
+cfn=(69854) QObjectPrivate::resetCurrentSender(QObject*, QObjectPrivate::Sender*, QObjectPrivate::Sender*)
+calls=4 0 
+0 60
+0 28
+cfn=(3788)
+calls=4 0 
+0 96
+0 24
+cfn=(3770)
+calls=4 0 
+0 112
+0 27
+cfn=(3770)
+calls=5 0 
+0 140
+0 40
+cfn=(3788)
+calls=5 0 
+0 120
+0 209
+cfn=(34962)
+calls=5 0 
+0 100
+0 5
+
+fn=(6647) QMetaObject::activate(QObject*, QMetaObject const*, int, void**)'2
+0 54
+cfn=(3622)
+calls=6 0 
+0 12
+0 260
+cfn=(6648)
+calls=4 0 
+0 208
+0 32
+cfn=(5642)
+calls=4 0 
+0 232
+0 438
+cfn=(69835)
+calls=5 0 
+0 2822
+0 250
+cfn=(69828)
+calls=5 0 
+0 45
+0 50
+cfn=(69854)
+calls=5 0 
+0 75
+0 35
+cfn=(3788)
+calls=5 0 
+0 120
+0 30
+cfn=(3770)
+calls=5 0 
+0 140
+0 30
+cfn=(3770)
+calls=4 0 
+0 112
+0 32
+cfn=(3788)
+calls=4 0 
+0 96
+0 98
+cfn=(34962)
+calls=4 0 
+0 80
+0 4
+
+fn=(6696) qt_removeObject
+0 12
+cfn=(3622)
+calls=2 0 
+0 4
+0 20
+
+fn=(6702) QCoreApplication::removePostedEvents(QObject*)
+0 8
+cfn=(3622)
+calls=2 0 
+0 4
+0 12
+cfn=(6708) QCoreApplication::removePostedEvents(QObject*, int)
+calls=2 0 
+0 12033
+0 8
+
+fn=(22420) QVariant::QVariant(QVariant const&)
+0 288
+cfn=(3622)
+calls=32 0 
+0 64
+0 1150
+cfn=(22628)
+calls=5 0 
+0 35
+0 15
+cob=(83)
+cfi=(214)
+cfn=(22630)
+calls=5 0 
+0 285
+0 35
+
+fn=(67116)
+0 28262
+cfn=(5792)
+calls=14131 0 
+0 28262
+0 197834
+
+fn=(67264)
+0 3654
+cfn=(3622)
+calls=406 0 
+0 812
+0 8120
+
+fn=(130384)
+cob=(83)
+cfi=(214)
+cfn=(100906) 0x00216e90
+calls=0 0 
+0 51253335
+
+fn=(6628) QObject::~QObject()
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 23
+cfn=(6640)
+calls=1 0 
+0 66
+0 6
+cfn=(6648)
+calls=1 0 
+0 52
+0 36
+cfn=(6662)
+calls=1 0 
+0 169
+0 4
+cfn=(6678)
+calls=1 0 
+0 38
+0 8
+cfn=(108296)
+calls=1 0 
+0 1291
+0 3
+cfn=(6696)
+calls=1 0 
+0 18
+0 3
+cfn=(6702)
+calls=1 0 
+0 11943
+0 7
+cfn=(5806)
+calls=1 0 
+0 19
+0 7
+cob=(83)
+cfi=(214)
+cfn=(108302) 0x0040e5e0
+calls=1 0 
+0 4821
+0 11
+cfn=(3770)
+calls=1 0 
+0 28
+0 5
+cfn=(6634)
+calls=1 0 
+0 25
+0 5
+cfn=(3788)
+calls=1 0 
+0 24
+0 1
+
+fn=(6629) QObject::~QObject()'2
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 23
+cfn=(6640)
+calls=1 0 
+0 66
+0 6
+cfn=(6648)
+calls=1 0 
+0 52
+0 36
+cfn=(6662)
+calls=1 0 
+0 45
+0 4
+cfn=(6678)
+calls=1 0 
+0 38
+0 8
+cfn=(6696)
+calls=1 0 
+0 18
+0 3
+cfn=(6702)
+calls=1 0 
+0 122
+0 6
+cfn=(5784)
+calls=1 0 
+0 40
+0 4
+cfn=(5806)
+calls=1 0 
+0 19
+0 7
+cob=(83)
+cfi=(214)
+cfn=(82010) 0x003f57b0
+calls=1 0 
+0 307
+0 11
+cfn=(3770)
+calls=1 0 
+0 28
+0 5
+cfn=(6634)
+calls=1 0 
+0 25
+0 5
+cfn=(3788)
+calls=1 0 
+0 24
+0 1
+
+fn=(20178) QChar::isSpace() const
+0 25
+cfn=(3622)
+calls=5 0 
+0 10
+0 105
+
+fn=(3870)
+0 138
+cfn=(3622)
+calls=23 0 
+0 46
+0 115
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=23 3749 
+0 17299
+0 92
+
+fn=(4444) QVectorData::grow(int, int, int, bool)
+0 192
+cfn=(3622)
+calls=32 0 
+0 64
+0 380
+cfn=(3856)
+calls=25 0 
+0 806
+0 200
+
+fn=(5676)
+0 5
+cfn=(3622)
+calls=1 0 
+0 2
+0 13
+
+fn=(6404) QString::free(QString::Data*)
+0 98
+cfn=(3622)
+calls=14 0 
+0 28
+0 70
+cfn=(4520)
+calls=14 0 
+0 1605
+0 70
+
+fn=(6668)
+0 36
+cfn=(3622)
+calls=6 0 
+0 12
+0 72
+
+fn=(6708)
+0 14
+cfn=(3622)
+calls=2 0 
+0 4
+0 11664
+cfn=(8058)
+calls=1 0 
+0 131
+0 27
+cfn=(82008)
+calls=1 0 
+0 62
+0 6
+cfn=(3788)
+calls=1 0 
+0 24
+0 12
+cfn=(3770)
+calls=2 0 
+0 56
+0 8
+cfn=(3788)
+calls=1 0 
+0 24
+0 1
+
+fn=(8024)
+0 24
+cfn=(3622)
+calls=3 0 
+0 6
+0 42
+cfn=(3770)
+calls=3 0 
+0 84
+0 56
+cob=(83)
+cfi=(214)
+cfn=(37002) QApplication::compressEvent(QEvent*, QObject*, QPostEventList*)
+calls=2 0 
+0 126
+0 92
+cfn=(8026) 0x001707a0
+calls=2 0 
+0 582
+0 27
+cfn=(3788)
+calls=3 0 
+0 72
+0 21
+cfn=(34766)
+calls=3 0 
+0 528
+0 172
+cfn=(35280)
+calls=1 0 
+0 381
+0 3
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 142
+0 9
+
+fn=(8026)
+0 18
+cfn=(3622)
+calls=2 0 
+0 4
+0 14
+cfn=(4028)
+calls=2 0 
+0 48
+0 6
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=2 0 
+0 464
+0 28
+
+fn=(8052)
+0 4
+cfn=(3622)
+calls=1 0 
+0 2
+0 8
+cfn=(8058)
+calls=1 0 
+0 18
+0 4
+
+fn=(37602) QMetaObject::cast(QObject*) const
+0 135
+cob=(83)
+cfi=(214)
+cfn=(80448) QTextFrame::metaObject() const
+calls=6 0 
+0 84
+0 172
+
+fn=(67216)
+0 6090
+
+fn=(67250)
+0 31168
+cfn=(3622)
+calls=7792 0 
+0 15584
+0 31168
+cfn=(67116)
+calls=7792 0 
+0 140256
+0 77920
+
+fn=(67728)
+0 233760
+cfn=(67534)
+calls=23376 0 
+0 490896
+0 420768
+
+fn=(69848) QObject::qt_metacall(QMetaObject::Call, int, void**)
+0 72
+cfn=(3622)
+calls=9 0 
+0 18
+0 234
+
+fn=(69854)
+0 135
+
+fn=(80378) QVariant::toDouble(bool*) const
+0 25
+cfn=(3622)
+calls=5 0 
+0 10
+0 90
+
+ob=(83)
+fl=(214)
+fn=(8408)
+0 7
+cfn=(4054) 0x00149547
+calls=1 0 
+0 2
+0 7
+cob=(81)
+cfi=(209)
+cfn=(8418)
+calls=1 0 
+0 9
+0 2
+cob=(81)
+cfi=(209)
+cfn=(8422)
+calls=1 0 
+0 21
+0 6
+
+fn=(34746)
+cfn=(34752) QApplicationPrivate::notify_helper(QObject*, QEvent*)
+calls=0 0 
+0 51253335
+
+fn=(34747)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 37
+cfn=(34753) QApplicationPrivate::notify_helper(QObject*, QEvent*)'2
+calls=1 0 
+0 132
+0 18
+
+fn=(20114) 0x00156330
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 20
+
+fn=(22054) QColor::invalidate()
+0 44
+
+fn=(79732) 0x00407de0
+0 21
+cfn=(4054)
+calls=3 0 
+0 6
+0 54
+cfn=(4054)
+calls=3 0 
+0 6
+0 15
+cfn=(79704) QTextFormat::objectIndex() const
+calls=3 0 
+0 195
+0 21
+
+fn=(80098) QTextBlock::clearLayout()
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 14
+cfn=(82128) QTextLayout::clearLayout()
+calls=1 0 
+0 282
+0 4
+
+fn=(80144) 0x00407fa0
+0 80
+cfn=(4054)
+calls=10 0 
+0 20
+0 103
+cfn=(80154) QTextFrameFormat::QTextFrameFormat()
+calls=1 0 
+0 3017
+0 4
+cfn=(80258) QTextFrameFormat::setMargin(double)
+calls=1 0 
+0 3584
+0 4
+cfn=(80274) 0x00407b60
+calls=1 0 
+0 6671
+0 4
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 36
+0 3
+cfn=(79486) QTextFormat::~QTextFormat()
+calls=1 0 
+0 168
+0 2
+
+fn=(80162) 0x003f1650
+0 63
+cfn=(4054)
+calls=7 0 
+0 14
+0 63
+cob=(81)
+cfi=(209)
+cfn=(22420)
+calls=4 0 
+0 264
+0 32
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=4 0 
+0 92
+0 24
+cfn=(80172) 0x003f13f0
+calls=4 0 
+0 2840
+0 40
+cob=(81)
+cfi=(209)
+cfn=(22420)
+calls=4 0 
+0 264
+0 8
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=4 0 
+0 141
+0 101
+cob=(81)
+cfi=(209)
+cfn=(22420)
+calls=3 0 
+0 138
+0 3
+
+fn=(80204) QBrush::operator QVariant() const
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cob=(81)
+cfi=(209)
+cfn=(78564)
+calls=1 0 
+0 109
+0 6
+
+fn=(80800) QTextFrame::iterator::iterator(QTextFrame::iterator const&)
+0 16
+
+fn=(81098) 0x003dfd70
+0 52
+
+fn=(42744) QBrush::QBrush(QBrush const&)
+0 70
+
+fn=(57752) QWidget::testAttribute_helper(Qt::WidgetAttribute) const
+0 30
+
+fn=(57820) QWidget::metric(QPaintDevice::PaintDeviceMetric) const
+0 28776
+cfn=(4054)
+calls=3597 0 
+0 7194
+0 57552
+cfn=(57826) QX11Info::screen() const
+calls=3597 0 
+0 111507
+0 100716
+cfn=(57821) QWidget::metric(QPaintDevice::PaintDeviceMetric) const'2
+calls=3597 0 
+0 1906410
+0 3597
+
+fn=(57821)
+0 172656
+cfn=(4054)
+calls=21582 0 
+0 43164
+0 345312
+cfn=(57826)
+calls=21582 0 
+0 669042
+0 561132
+cfn=(57821)
+calls=17985 0 
+0 5021412
+0 25179
+cfn=(23236) QX11Info::appDpiY(int)
+calls=3597 0 
+0 86328
+0 3597
+
+fn=(59028) QFontPrivate::engineForScript(int) const
+0 13925
+cfn=(4054)
+calls=2785 0 
+0 5570
+0 13925
+cfn=(59030) 0x003b70b0
+calls=2785 0 
+0 64055
+0 47345
+cfn=(59078) 0x0039bce0
+calls=2785 0 
+0 387115
+0 44560
+cob=(81)
+cfi=(209)
+cfn=(3788)
+calls=2785 0 
+0 80765
+0 16710
+cob=(81)
+cfi=(209)
+cfn=(3770)
+calls=2785 0 
+0 130895
+0 22280
+
+fn=(65484) QTextCursor::QTextCursor()
+0 18
+
+fn=(65560) QWidget::update(QRect const&)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 22
+cfn=(57752)
+calls=1 0 
+0 15
+0 4
+cfn=(58590) QWidget::window() const
+calls=1 0 
+0 58
+0 18
+cfn=(100838) 0x00395b20
+calls=1 0 
+0 599
+0 1
+
+fn=(65838) QTextLayout::createLine()
+0 1632
+cfn=(4054)
+calls=204 0 
+0 408
+0 9598
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=1 0 
+0 43
+0 252
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=9 0 
+0 581
+0 60
+cfn=(65840) 0x002d4bf0
+calls=10 0 
+0 8642
+0 8523
+
+fn=(69288) QFontEngineFT::doKerning(QGlyphLayout*, QFlags<QTextEngine::ShaperFlag>) const
+0 1624
+cfn=(4054)
+calls=203 0 
+0 406
+0 2436
+cfn=(69408) QFontEngine::doKerning(QGlyphLayout*, QFlags<QTextEngine::ShaperFlag>) const
+calls=203 0 
+0 6404
+0 1218
+
+fn=(79626) 0x004088d0
+0 30
+cfn=(79628) 0x00408890
+calls=3 0 
+0 70
+0 79
+
+fn=(79652) 0x0040f450
+0 133
+cfn=(109116) 0x0040ee20
+calls=1 0 
+0 51
+0 5
+cfn=(109098) 0x0040ed60
+calls=1 0 
+0 52
+0 9
+
+fn=(79874) QTextDocument::contentsChanged()
+0 12
+cfn=(4054)
+calls=3 0 
+0 6
+0 27
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=3 0 
+0 3316
+0 12
+
+fn=(80278) QTextDocument::createObject(QTextFormat const&)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(80284) QTextFormat::type() const
+calls=1 0 
+0 6
+0 4
+cfn=(80284)
+calls=1 0 
+0 6
+0 5
+cfn=(80284)
+calls=1 0 
+0 6
+0 12
+cfn=(80290) QTextFormat::intProperty(int) const
+calls=1 0 
+0 116
+0 4
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 142
+0 4
+cfn=(80296) QTextFrame::QTextFrame(QTextDocument*)
+calls=1 0 
+0 3298
+0 1
+
+fn=(80296)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 132
+0 4
+cob=(81)
+cfi=(209)
+cfn=(5640)
+calls=1 0 
+0 57
+0 11
+cfn=(80302) QTextObject::QTextObject(QTextObjectPrivate&, QTextDocument*)
+calls=1 0 
+0 3064
+0 17
+
+fn=(80478) QTextFrame::lastPosition() const
+0 152
+
+fn=(80792) QTextFrame::iterator::iterator(QTextFrame*, int, int, int)
+0 28
+
+fn=(80990) QTextBlock::layout() const
+0 36
+cfn=(4054)
+calls=4 0 
+0 8
+0 75
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 142
+0 6
+cfn=(80996) QTextLayout::QTextLayout(QTextBlock const&)
+calls=1 0 
+0 433
+0 3
+
+fn=(81058) QTextLayout::setPosition(QPointF const&)
+0 15
+
+fn=(81328) QTextLine::height() const
+0 2030
+cfn=(4054)
+calls=203 0 
+0 406
+0 6496
+
+fn=(81412) QTextLayout::textOption() const
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(81068) QTextOption::QTextOption(QTextOption const&)
+calls=1 0 
+0 190
+0 6
+
+fn=(107038) QTextDocumentFragment::fromHtml(QString const&, QTextDocument const*)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(107044) QTextDocumentFragment::QTextDocumentFragment()
+calls=1 0 
+0 6
+0 2
+cfn=(65484)
+calls=1 0 
+0 6
+0 2
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 126
+0 4
+cfn=(107046) 0x0043e210
+calls=1 0 
+0 10576
+0 4
+cfn=(81682) QTextCursor::~QTextCursor()
+calls=1 0 
+0 18
+0 13
+cfn=(107060) 0x0043bab0
+calls=1 0 
+0 10341
+0 3
+cfn=(107182) 0x004401f0
+calls=1 0 
+0 5085
+0 3
+cfn=(81682)
+calls=1 0 
+0 287
+0 52
+cfn=(107518) 0x00404080
+calls=1 0 
+0 1358
+0 7
+
+fn=(107590) QTextCursor::movePosition(QTextCursor::MoveOperation, QTextCursor::MoveMode, int)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 23
+cfn=(107592) 0x00434f40
+calls=1 0 
+0 17636
+0 13
+cfn=(82274) 0x00439ab0
+calls=1 0 
+0 23
+0 7
+cfn=(82274)
+calls=1 0 
+0 23
+0 10
+
+fn=(107734) 0x0043acc0
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(82736) QTextCursor::hasComplexSelection() const
+calls=1 0 
+0 193
+0 10
+cfn=(107752) QTextCursor::selectionEnd() const
+calls=1 0 
+0 16
+0 3
+cfn=(82730) QTextCursor::selectionStart() const
+calls=1 0 
+0 15
+0 5
+cfn=(107758) 0x0043ac80
+calls=1 0 
+0 5873
+0 1
+
+fn=(108034) 0x004077c0
+0 12
+cfn=(81916) 0x0040ec50
+calls=1 0 
+0 25
+0 87
+cfn=(109162) 0x0040eee0
+calls=1 0 
+0 137
+0 2
+
+fn=(119338) QTextEngine::formatIndex(QScriptItem const*) const
+0 28776
+cfn=(4054)
+calls=3597 0 
+0 7194
+0 86328
+cfn=(80932) QTextBlock::position() const
+calls=3597 0 
+0 79134
+0 104967
+
+fn=(119410) 0x00632d70
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 16
+cfn=(58722) QWidget::layoutDirection() const
+calls=1 0 
+0 32
+0 5
+cfn=(109274) QAbstractSlider::value() const
+calls=1 0 
+0 7
+0 4
+cfn=(109274)
+calls=1 0 
+0 7
+0 29
+cob=(81)
+cfi=(209)
+cfn=(119430)
+calls=1 0 
+0 142
+0 5
+cob=(81)
+cfi=(209)
+cfn=(86296)
+calls=1 0 
+0 129
+0 20
+cfn=(65560)
+calls=1 0 
+0 728
+0 7
+
+fn=(34752)
+cfn=(82818) QMainWindow::event(QEvent*)
+calls=0 0 
+0 51253335
+
+fn=(34753)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(7994)
+calls=1 0 
+0 29
+0 10
+cob=(81)
+cfi=(209)
+cfn=(8000)
+calls=1 0 
+0 28
+0 12
+cob=(81)
+cfi=(209)
+cfn=(8009)
+calls=1 0 
+0 34
+0 2
+
+fn=(23172) QApplication::font()
+0 50
+cfn=(4054)
+calls=10 0 
+0 20
+0 50
+cfn=(23174) 0x00158bb0
+calls=10 0 
+0 180
+0 80
+cfn=(23248) QFont::QFont(QFont const&)
+calls=10 0 
+0 200
+0 160
+cob=(81)
+cfi=(209)
+cfn=(3788)
+calls=10 0 
+0 240
+0 40
+cob=(81)
+cfi=(209)
+cfn=(3770)
+calls=10 0 
+0 280
+0 50
+
+fn=(23236)
+0 17985
+cfn=(4054)
+calls=3597 0 
+0 7194
+0 61149
+
+fn=(23800) QFont::operator=(QFont const&)
+0 79222
+cfn=(4054)
+calls=7202 0 
+0 14404
+0 79222
+
+fn=(79386) QTextDocument::QTextDocument(QObject*)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 1041
+0 3
+cfn=(79388) 0x0040d280
+calls=1 0 
+0 2784
+0 5
+cob=(81)
+cfi=(209)
+cfn=(5758)
+calls=1 0 
+0 190
+0 6
+cfn=(79422) 0x0040bea0
+calls=1 0 
+0 6221
+0 6
+
+fn=(79590) 0x003f2060
+0 18
+cfn=(4054)
+calls=2 0 
+0 4
+0 24
+cfn=(79486)
+calls=2 0 
+0 781
+0 6
+cfn=(79486)
+calls=2 0 
+0 336
+0 20
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=2 0 
+0 248
+0 12
+
+fn=(80704) QTextFrameFormat::leftMargin() const
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80678) QTextFormat::hasProperty(int) const
+calls=1 0 
+0 57
+0 5
+cfn=(80684) QTextFormat::doubleProperty(int) const
+calls=1 0 
+0 175
+0 5
+
+fn=(80898) QTextFormat::toBlockFormat() const
+0 30
+cfn=(4054)
+calls=5 0 
+0 10
+0 30
+cfn=(80904) QTextBlockFormat::QTextBlockFormat(QTextFormat const&)
+calls=5 0 
+0 183
+0 30
+
+fn=(81004) QTextBlock::length() const
+0 98
+
+fn=(81076) QTextBlockFormat::tabPositions() const
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+cfn=(81082) QTextFormat::property(int) const
+calls=1 0 
+0 33
+0 4
+cob=(81)
+cfi=(209)
+cfn=(8406)
+calls=1 0 
+0 71
+0 6
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 11
+
+fn=(111114) QInputContext::focusWidget() const
+0 14
+
+fn=(59082) 0x0039bb70
+0 13925
+cfn=(4054)
+calls=2785 0 
+0 5570
+0 30635
+
+fn=(67010) 0x003d81e0
+0 40
+cfn=(4054)
+calls=4 0 
+0 8
+0 5006
+cfn=(67026) 0x003dff60
+calls=326 0 
+0 23945
+0 214165
+cfn=(67026)
+calls=3 0 
+0 135
+0 14
+cfn=(67026)
+calls=1 0 
+0 373
+0 7
+
+fn=(67956) QFontEngineFT::recalcAdvances(QGlyphLayout*, QFlags<QTextEngine::ShaperFlag>) const
+0 3248
+cfn=(4054)
+calls=406 0 
+0 812
+0 170877
+cfn=(69252) 0x0047f150
+calls=7789 0 
+0 259737
+0 105723
+
+fn=(79688) 0x00407e20
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 30
+cfn=(79696) QTextFormatCollection::format(int) const
+calls=3 0 
+0 144
+0 9
+cfn=(79704)
+calls=3 0 
+0 195
+0 9
+cfn=(79486)
+calls=3 0 
+0 66
+0 12
+cfn=(79714) 0x00407cf0
+calls=3 0 
+0 63
+0 18
+
+fn=(80284)
+0 18
+
+fn=(80420) 0x0040fe80
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cob=(81)
+cfi=(209)
+cfn=(16502)
+calls=1 0 
+0 163
+0 19
+
+fn=(80694) QTextFrameFormat::bottomMargin() const
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80678)
+calls=1 0 
+0 50
+0 5
+cfn=(80684)
+calls=1 0 
+0 168
+0 5
+
+fn=(80846) 0x00430930
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 25
+
+fn=(81068)
+0 18
+cfn=(4054)
+calls=2 0 
+0 4
+0 69
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 126
+0 23
+
+fn=(81652) 0x00410020
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 14
+cob=(81)
+cfi=(209)
+cfn=(3822)
+calls=2 0 
+0 322
+0 42
+
+fn=(81742) 0x004087c0
+0 18
+cfn=(4054)
+calls=2 0 
+0 4
+0 20
+
+fn=(81810) 0x004108c0
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 20
+cfn=(81820) 0x0040ffd0
+calls=1 0 
+0 20
+0 11
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=1 0 
+0 107
+0 4
+
+fn=(82094) 0x003c5c10
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cfn=(82104) QTextCursor::hasSelection() const
+calls=1 0 
+0 12
+0 8
+
+fn=(82738) 0x00432130
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(82208) 0x004081c0
+calls=1 0 
+0 97
+0 4
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 50
+0 10
+
+fn=(107206) 0x0043e970
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 39
+
+fn=(107478) QTextCursor::QTextCursor(QTextCursorPrivate*)
+0 18
+cfn=(4054)
+calls=2 0 
+0 4
+0 32
+
+fn=(107518)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 15
+cfn=(22296) QBrush::~QBrush()
+calls=1 0 
+0 175
+0 6
+cfn=(22296)
+calls=2 0 
+0 350
+0 24
+cfn=(79486)
+calls=3 0 
+0 54
+0 9
+cfn=(79486)
+calls=3 0 
+0 54
+0 25
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=1 0 
+0 124
+0 69
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=1 0 
+0 175
+0 10
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=1 0 
+0 126
+0 4
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=1 0 
+0 126
+0 1
+
+fn=(108636) 0x004136e0
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 18
+cfn=(81448) QTextFormat::operator=(QTextFormat const&)
+calls=2 0 
+0 50
+0 14
+cfn=(80678)
+calls=2 0 
+0 28
+0 28
+cfn=(80678)
+calls=2 0 
+0 28
+0 14
+cfn=(82082) QTextFormat::clearProperty(int)
+calls=2 0 
+0 44
+0 26
+cfn=(82082)
+calls=2 0 
+0 44
+0 56
+cob=(81)
+cfi=(209)
+cfn=(101458)
+calls=1 0 
+0 388
+0 2
+
+fn=(22038) QBrush::QBrush()
+0 4
+cfn=(22040) 0x00293c20
+calls=1 0 
+0 20
+0 6
+
+fn=(22656)
+0 48
+cfn=(4054)
+calls=6 0 
+0 12
+0 132
+cfn=(22296)
+calls=6 0 
+0 300
+0 12
+
+fn=(23248)
+0 144260
+
+fn=(79798) QTextFormat::toCharFormat() const
+0 21624
+cfn=(4054)
+calls=3604 0 
+0 7208
+0 21624
+cfn=(79804) QTextCharFormat::QTextCharFormat(QTextFormat const&)
+calls=3604 0 
+0 133348
+0 21624
+
+fn=(80080) QTextBlock::next() const
+0 52
+
+fn=(80886) QTextBlock::blockFormat() const
+0 50
+cfn=(4054)
+calls=5 0 
+0 10
+0 30
+cfn=(80892) QTextFormat::QTextFormat()
+calls=1 0 
+0 7
+0 3
+cfn=(80898)
+calls=1 0 
+0 55
+0 15
+cfn=(79486)
+calls=5 0 
+0 106
+0 71
+cfn=(79696)
+calls=4 0 
+0 192
+0 16
+cfn=(80898)
+calls=4 0 
+0 228
+0 4
+
+fn=(80996)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 132
+0 3
+cfn=(65746) QTextEngine::QTextEngine()
+calls=1 0 
+0 273
+0 12
+
+fn=(81094) QTextOption::setTabs(QList<QTextOption::Tab>)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 15
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 142
+0 6
+
+fn=(81186) QTextLine::setLineWidth(double)
+0 1827
+cfn=(4054)
+calls=203 0 
+0 406
+0 8932
+cfn=(65880) QTextLine::layout_helper(int)
+calls=203 0 
+0 49973267
+0 3248
+
+fn=(57826)
+0 172656
+cfn=(4054)
+calls=28776 0 
+0 57552
+0 143880
+cfn=(23242) QX11Info::appScreen()
+calls=28776 0 
+0 402864
+0 115104
+
+fn=(57862) QWidget::event(QEvent*)
+cob=(81)
+cfi=(209)
+cfn=(8008)
+calls=0 0 
+0 51253335
+
+fn=(58590)
+0 116
+
+fn=(65784) QTextEngine::invalidate()
+0 10
+cfn=(4054)
+calls=2 0 
+0 4
+0 10
+cfn=(65790) QTextEngine::freeMemory()
+calls=2 0 
+0 2679
+0 20
+
+fn=(65808) QTextOption::operator=(QTextOption const&)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 142
+0 18
+cfn=(81098)
+calls=1 0 
+0 13
+0 3
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 37
+
+fn=(67148) QTextEngine::shapeText(int) const
+0 3248
+cfn=(4054)
+calls=406 0 
+0 812
+0 6496
+cfn=(67154) QTextEngine::shapeTextWithHarfbuzz(int) const
+calls=406 0 
+0 42517321
+0 10556
+cfn=(67166) QTextEngine::font(QScriptItem const&) const
+calls=406 0 
+0 579860
+0 53967
+cfn=(23828) QFont::~QFont()
+calls=406 0 
+0 8932
+0 2436
+
+fn=(69842) QWidget::qt_metacall(QMetaObject::Call, int, void**)
+0 35
+cfn=(4054)
+calls=5 0 
+0 10
+0 50
+cob=(81)
+cfi=(209)
+cfn=(69848)
+calls=5 0 
+0 180
+0 92
+cfn=(69872) QWidget::updateMicroFocus()
+calls=2 0 
+0 402
+0 2
+
+fn=(80314) QTextFormatCollection::createObjectIndex(QTextFormat const&)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(79432) QTextFormatCollection::indexForFormat(QTextFormat const&)
+calls=1 0 
+0 2063
+0 13
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=1 0 
+0 43
+0 7
+cfn=(58474) 0x0018a000
+calls=1 0 
+0 416
+0 13
+
+fn=(80448)
+0 24
+cfn=(4124) 0x0015687f
+calls=6 0 
+0 12
+0 48
+
+fn=(80968) QTextFrame::iterator::operator++()
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cfn=(80786) QTextObject::docHandle() const
+calls=1 0 
+0 23
+0 30
+
+fn=(81644) QTextCursor::QTextCursor(QTextDocument*)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 10
+cfn=(79942) QTextDocument::docHandle() const
+calls=2 0 
+0 12
+0 6
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=2 0 
+0 268
+0 8
+cfn=(81646) 0x004332c0
+calls=2 0 
+0 724
+0 24
+
+fn=(81998) QTextObject::~QTextObject()
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cob=(81)
+cfi=(209)
+cfn=(6629)
+calls=1 0 
+0 911
+0 4
+
+fn=(82064) QTextControl::updateRequest(QRectF const&)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 13
+cob=(81)
+cfi=(209)
+cfn=(6647)
+calls=1 0 
+0 1897
+0 4
+
+fn=(82736)
+0 10
+cfn=(82738)
+calls=1 0 
+0 179
+0 4
+
+fn=(90404) QWidgetPrivate::paintOnScreen() const
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 15
+cfn=(58590)
+calls=1 0 
+0 58
+0 3
+
+fn=(107294) 0x0040b650
+0 40
+cfn=(107298) 0x00409a20
+calls=2 0 
+0 5187
+0 12
+cfn=(79828) 0x00409fb0
+calls=2 0 
+0 44
+0 76
+cfn=(79774) 0x00408c00
+calls=1 0 
+0 126
+0 8
+
+fn=(107376) 0x004318e0
+0 110
+
+fn=(107762) 0x0043a370
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 92
+cfn=(80932)
+calls=1 0 
+0 22
+0 22
+cob=(81)
+cfi=(209)
+cfn=(6328)
+calls=1 0 
+0 355
+0 6
+cfn=(108116) QTextBlock::textList() const
+calls=1 0 
+0 372
+0 11
+cfn=(108124) 0x0040b770
+calls=1 0 
+0 4272
+0 3
+cfn=(108182) QTextBlock::userState() const
+calls=1 0 
+0 14
+0 14
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=1 0 
+0 126
+0 24
+cfn=(79696)
+calls=1 0 
+0 48
+0 8
+cfn=(107712) 0x00439de0
+calls=1 0 
+0 404
+0 4
+cfn=(79486)
+calls=1 0 
+0 22
+0 20
+
+fn=(108246) QTextCursor::isCopyOf(QTextCursor const&) const
+0 9
+
+fn=(108444) 0x00419ba0
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cfn=(108448) 0x00411930
+calls=1 0 
+0 57
+0 17
+cfn=(108468) 0x004142a0
+calls=1 0 
+0 1393
+0 6
+cfn=(108492) 0x00412b20
+calls=1 0 
+0 465
+0 7
+cob=(81)
+cfi=(209)
+cfn=(15900)
+calls=1 0 
+0 86
+0 5
+cob=(81)
+cfi=(209)
+cfn=(6338)
+calls=1 0 
+0 29
+0 12
+cfn=(108542) 0x00412170
+calls=1 0 
+0 408
+0 33
+cfn=(108592) 0x004147e0
+calls=1 0 
+0 415
+0 3
+cfn=(108632) 0x00414230
+calls=1 0 
+0 607
+0 9
+cfn=(108684) 0x00416380
+calls=1 0 
+0 1327
+0 7
+cfn=(108824) 0x00414db0
+calls=1 0 
+0 1005
+0 12
+cfn=(108936) 0x004177f0
+calls=1 0 
+0 70
+0 24
+cfn=(108468)
+calls=1 0 
+0 1923
+0 2
+cfn=(108632)
+calls=1 0 
+0 209
+0 26
+cob=(81)
+cfi=(209)
+cfn=(20178)
+calls=1 0 
+0 28
+0 2
+
+fn=(108618) 0x0041a810
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 13
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=1 0 
+0 43
+0 6
+cfn=(58474)
+calls=1 0 
+0 260
+0 11
+
+fn=(108766) QCss::StyleSelector::declarationsForNode(QCss::StyleSelector::NodePtr, char const*)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(108772) QCss::StyleSelector::styleRulesForNode(QCss::StyleSelector::NodePtr)
+calls=1 0 
+0 106
+0 25
+
+fn=(112014) QWidget::inputContext()
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 16
+cfn=(110142) QWidgetPrivate::inputContext() const
+calls=2 0 
+0 98
+0 8
+
+fn=(22150) 0x00293610
+0 20
+cfn=(4054)
+calls=4 0 
+0 8
+0 32
+
+fn=(79440) 0x003f2360
+0 27
+cfn=(4054)
+calls=3 0 
+0 6
+0 23
+cfn=(79450) QTextFormat::QTextFormat(QTextFormat const&)
+calls=2 0 
+0 36
+0 16
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=2 0 
+0 46
+0 12
+cfn=(79456) 0x003f20f0
+calls=2 0 
+0 691
+0 12
+cfn=(79450)
+calls=2 0 
+0 36
+0 4
+cfn=(79486)
+calls=2 0 
+0 36
+0 34
+cfn=(79450)
+calls=1 0 
+0 20
+0 1
+
+fn=(79456)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 28
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=2 0 
+0 304
+0 81
+cfn=(79450)
+calls=1 0 
+0 20
+0 55
+cfn=(79590)
+calls=1 0 
+0 182
+0 1
+
+fn=(79496) 0x003f2450
+0 27
+cfn=(4054)
+calls=3 0 
+0 6
+0 57
+
+fn=(79548) 0x003f1280
+0 24
+cfn=(4054)
+calls=4 0 
+0 8
+0 76
+cfn=(79450)
+calls=4 0 
+0 80
+0 4
+
+fn=(79704)
+0 81
+cfn=(4054)
+calls=9 0 
+0 18
+0 144
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=9 0 
+0 63
+0 45
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=9 0 
+0 171
+0 63
+
+fn=(80678)
+0 308
+
+fn=(80878) QTextFrame::iterator::currentBlock() const
+0 40
+cfn=(4054)
+calls=4 0 
+0 8
+0 18
+cfn=(80786)
+calls=2 0 
+0 46
+0 38
+
+fn=(81082)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 23
+
+fn=(57846) QWidget::x11Info() const
+0 25179
+
+fn=(58822) QWidgetPrivate::invalidateGraphicsEffectsRecursively()
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 45
+cfn=(58828) QWidget::graphicsEffect() const
+calls=7 0 
+0 49
+0 19
+
+fn=(65796) QTextEngine::clearLineData()
+0 10
+cfn=(4054)
+calls=2 0 
+0 4
+0 34
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=1 0 
+0 225
+0 30
+
+fn=(65832) QTextEngine::LayoutData::LayoutData()
+0 10
+cfn=(4054)
+calls=2 0 
+0 4
+0 44
+
+fn=(67154)
+0 3248
+cfn=(4054)
+calls=406 0 
+0 812
+0 13804
+cfn=(67160) QTextEngine::fontEngine(QScriptItem const&, QFixed*, QFixed*, QFixed*) const
+calls=406 0 
+0 760936
+0 2842
+cfn=(67166)
+calls=406 0 
+0 579860
+0 3248
+cfn=(23828)
+calls=406 0 
+0 8932
+0 49128
+cfn=(67168) 0x003a7580
+calls=406 0 
+0 467668
+0 7308
+cfn=(66074) 0x003aad80
+calls=406 0 
+0 2030
+0 29232
+cfn=(66074)
+calls=406 0 
+0 2030
+0 2436
+cfn=(67190) QFontEngine::harfbuzzFont() const
+calls=406 0 
+0 8120
+0 1218
+cfn=(67196) QFontEngine::harfbuzzFace() const
+calls=406 0 
+0 7308
+0 63242
+cob=(81)
+cfi=(209)
+cfn=(67202)
+calls=406 0 
+0 40225339
+0 95807
+cfn=(69276) 0x003a82e0
+calls=203 0 
+0 32532
+0 150241
+
+fn=(67166)
+0 4060
+cfn=(4054)
+calls=812 0 
+0 1624
+0 8120
+cfn=(23248)
+calls=812 0 
+0 16240
+0 8120
+cfn=(119332) QTextEngine::format(QScriptItem const*) const
+calls=812 0 
+0 281126
+0 5684
+cfn=(81216) QTextCharFormat::font() const
+calls=812 0 
+0 38976
+0 4060
+cfn=(23800)
+calls=812 0 
+0 19488
+0 2436
+cfn=(23828)
+calls=812 0 
+0 17864
+0 6496
+cfn=(81230) QAbstractTextDocumentLayout::paintDevice() const
+calls=812 0 
+0 5684
+0 5684
+cfn=(57812) QFont::QFont(QFont const&, QPaintDevice*)
+calls=812 0 
+0 600880
+0 2436
+cfn=(23800)
+calls=812 0 
+0 19488
+0 1624
+cfn=(23828)
+calls=812 0 
+0 17864
+0 3248
+cfn=(80290)
+calls=812 0 
+0 56038
+0 4872
+cfn=(79486)
+calls=812 0 
+0 17864
+0 9744
+
+fn=(69808) QFontEngine::getGlyphBearings(unsigned int, double*, double*)
+0 2436
+cfn=(4054)
+calls=203 0 
+0 406
+0 1015
+cfn=(69420) QFontEngineFT::boundingBox(unsigned int)
+calls=203 0 
+0 19691
+0 5481
+
+fn=(79486)
+0 50568
+cfn=(4054)
+calls=7224 0 
+0 14448
+0 57758
+cfn=(23828)
+calls=3 0 
+0 66
+0 27
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=3 0 
+0 327
+0 61516
+cfn=(4054)
+calls=3628 0 
+0 7256
+0 29030
+cfn=(23828)
+calls=3 0 
+0 66
+0 26
+cfn=(80232) 0x003f1390
+calls=1 0 
+0 586
+0 6
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=3 0 
+0 327
+0 18140
+
+fn=(79622) 0x004094a0
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(79626)
+calls=1 0 
+0 31
+0 7
+cfn=(79638) 0x00410350
+calls=1 0 
+0 88
+0 28
+cfn=(79664) 0x00410510
+calls=1 0 
+0 89
+0 23
+cfn=(79688)
+calls=1 0 
+0 190
+0 4
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 15
+0 10
+cfn=(79696)
+calls=1 0 
+0 48
+0 5
+cfn=(79732)
+calls=1 0 
+0 106
+0 4
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 15
+0 3
+cfn=(79486)
+calls=1 0 
+0 22
+0 10
+cfn=(79746) 0x004085d0
+calls=1 0 
+0 37
+0 7
+
+fn=(79886) QTextDocument::blockCountChanged(int)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 13
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=1 0 
+0 54
+0 4
+
+fn=(80302)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cob=(81)
+cfi=(209)
+cfn=(5758)
+calls=1 0 
+0 3040
+0 8
+
+fn=(80530) QTextFrame::childFrames() const
+0 152
+
+fn=(80536) 0x003f5700
+0 1278
+cfn=(4054)
+calls=213 0 
+0 426
+0 2556
+
+fn=(81050) QTextLayout::position() const
+0 15
+
+fn=(81344) QTextLine::setPosition(QPointF const&)
+0 1624
+cfn=(4054)
+calls=203 0 
+0 406
+0 8120
+
+fn=(92020) QAbstractScrollArea::qt_metacall(QMetaObject::Call, int, void**)
+0 35
+cfn=(4054)
+calls=5 0 
+0 10
+0 50
+cfn=(85754) QFrame::qt_metacall(QMetaObject::Call, int, void**)
+calls=5 0 
+0 976
+0 89
+
+fn=(107046)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 126
+0 4
+cfn=(79386)
+calls=1 0 
+0 10269
+0 5
+cfn=(81720) QTextDocument::setUndoRedoEnabled(bool)
+calls=1 0 
+0 138
+0 3
+cfn=(82104)
+calls=1 0 
+0 9
+0 8
+
+fn=(107298)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 14
+cfn=(79626)
+calls=2 0 
+0 148
+0 16
+cfn=(79638)
+calls=2 0 
+0 437
+0 24
+cfn=(107332) 0x0040eba0
+calls=2 0 
+0 55
+0 80
+cfn=(107360) 0x00408860
+calls=2 0 
+0 2709
+0 10
+cfn=(79688)
+calls=2 0 
+0 380
+0 8
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=2 0 
+0 30
+0 22
+cfn=(79746)
+calls=2 0 
+0 958
+0 16
+cfn=(108034)
+calls=1 0 
+0 263
+0 1
+
+fn=(107712)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 16
+cfn=(79450)
+calls=2 0 
+0 40
+0 12
+cfn=(79432)
+calls=2 0 
+0 492
+0 6
+cfn=(79486)
+calls=2 0 
+0 44
+0 18
+cfn=(79704)
+calls=2 0 
+0 130
+0 4
+
+fn=(108492)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 80
+cob=(81)
+cfi=(209)
+cfn=(20178)
+calls=2 0 
+0 56
+0 24
+cob=(81)
+cfi=(209)
+cfn=(6392)
+calls=1 0 
+0 34
+0 4
+cob=(81)
+cfi=(209)
+cfn=(6398)
+calls=1 0 
+0 237
+0 22
+
+fn=(119332)
+0 21582
+cfn=(4054)
+calls=3597 0 
+0 7194
+0 17985
+cfn=(79330) QTextCharFormat::QTextCharFormat()
+calls=3597 0 
+0 86328
+0 35970
+cfn=(119338)
+calls=3597 0 
+0 306399
+0 21582
+cfn=(79696)
+calls=3597 0 
+0 172656
+0 17985
+cfn=(79798)
+calls=3597 0 
+0 205029
+0 10791
+cfn=(79486)
+calls=3597 0 
+0 79134
+0 14388
+cfn=(81448)
+calls=3597 0 
+0 122298
+0 7194
+cfn=(79486)
+calls=3597 0 
+0 79134
+0 39567
+
+fn=(23174)
+0 50
+cfn=(4054)
+calls=10 0 
+0 20
+0 110
+
+fn=(79664)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 40
+cfn=(79678) 0x0040f790
+calls=1 0 
+0 23
+0 16
+
+fn=(79714)
+0 21
+cfn=(4054)
+calls=3 0 
+0 6
+0 36
+
+fn=(79942)
+0 66
+
+fn=(80036) QTextDocument::contentsChange(int, int, int)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 17
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=1 0 
+0 54
+0 4
+
+fn=(80132) 0x0042f260
+0 15
+
+fn=(80594) QTextFrame::parentFrame() const
+0 28
+
+fn=(81122) QTextFormat::boolProperty(int) const
+0 32
+cfn=(4054)
+calls=4 0 
+0 8
+0 37
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=1 0 
+0 7
+0 7
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 25
+
+fn=(81230)
+0 25179
+
+fn=(57818) non-virtual thunk to QWidget::metric(QPaintDevice::PaintDeviceMetric) const
+0 7194
+cfn=(57820)
+calls=3597 0 
+0 2215752
+
+fn=(57838) non-virtual thunk to QWidget::devType() const
+0 7194
+cfn=(57840) QWidget::devType() const
+calls=3597 0 
+0 17985
+
+fn=(58686) QFont::resolve(QFont const&) const
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 21
+cfn=(58692) QFont::operator==(QFont const&) const
+calls=3 0 
+0 69
+0 24
+cfn=(23828)
+calls=3 0 
+0 66
+0 51
+cfn=(23248)
+calls=3 0 
+0 60
+0 18
+cfn=(23248)
+calls=3 0 
+0 60
+0 3
+
+fn=(65312) 0x003a45e0
+0 4872
+cfn=(65314) QFontEngineFT::ascent() const
+calls=406 0 
+0 3248
+0 2030
+
+fn=(65314)
+0 3248
+
+fn=(65752) QTextOption::QTextOption()
+0 18
+cfn=(4054)
+calls=2 0 
+0 4
+0 22
+cfn=(57776) QApplication::layoutDirection()
+calls=2 0 
+0 18
+0 22
+
+fn=(65790)
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 20
+cfn=(65922) QTextEngine::LayoutData::~LayoutData()
+calls=1 0 
+0 538
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 5283
+
+fn=(65802) QTextLayout::setTextOption(QTextOption const&)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(65808)
+calls=1 0 
+0 342
+0 4
+
+fn=(67142) QTextEngine::shape(int) const
+0 3248
+cfn=(4054)
+calls=406 0 
+0 812
+0 12180
+cfn=(67148)
+calls=406 0 
+0 43183628
+0 2436
+
+fn=(67172) QFontEngineFT::stringToCMap(QChar const*, int, QGlyphLayout*, int*, QFlags<QTextEngine::ShaperFlag>) const
+0 3654
+cfn=(4054)
+calls=406 0 
+0 812
+0 8726
+cob=(81)
+cfi=(209)
+cfn=(3788)
+calls=202 0 
+0 5858
+0 190172
+cob=(23)
+cfi=(95)
+cfn=(59784)
+calls=202 0 
+0 24442
+0 32586
+cfn=(59030)
+calls=202 0 
+0 4646
+0 606
+cob=(81)
+cfi=(209)
+cfn=(3770)
+calls=202 0 
+0 9494
+0 202
+
+fn=(69884) QAccessible::initialize()
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 20
+
+fn=(80290)
+0 28848
+cfn=(4054)
+calls=3606 0 
+0 7212
+0 68656
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=3606 0 
+0 25242
+0 25242
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=3606 0 
+0 68514
+0 25242
+
+fn=(80816) QTextFrame::iterator::iterator()
+0 20
+
+fn=(81646)
+0 20
+cfn=(4054)
+calls=2 0 
+0 4
+0 30
+cfn=(81652)
+calls=1 0 
+0 207
+0 4
+cob=(81)
+cfi=(209)
+cfn=(4028)
+calls=2 0 
+0 445
+0 14
+
+fn=(81726) 0x00408a80
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 24
+
+fn=(82600) QTextCursor::isNull() const
+0 12
+
+fn=(85754)
+0 35
+cfn=(4054)
+calls=5 0 
+0 10
+0 50
+cfn=(69842)
+calls=5 0 
+0 771
+0 110
+
+fn=(100838)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(58822)
+calls=1 0 
+0 122
+0 3
+cfn=(90404)
+calls=1 0 
+0 84
+0 25
+cfn=(90486) QWidget::mapTo(QWidget*, QPoint const&) const
+calls=1 0 
+0 234
+0 20
+cfn=(100852) 0x00310da0
+calls=1 0 
+0 17
+0 18
+cfn=(100852)
+calls=1 0 
+0 44
+0 13
+
+fn=(100906)
+cob=(81)
+cfi=(209)
+cfn=(100914)
+calls=0 0 
+0 51253335
+
+fn=(107102) 0x0041b230
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 42
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=1 0 
+0 142
+0 126
+cfn=(107124) 0x00412380
+calls=3 0 
+0 1617
+0 88
+cob=(81)
+cfi=(209)
+cfn=(9420)
+calls=2 0 
+0 1689
+0 16
+
+fn=(107664) 0x00433960
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+cfn=(82208)
+calls=1 0 
+0 97
+0 7
+cfn=(82208)
+calls=1 0 
+0 97
+0 7
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 50
+0 8
+
+fn=(108268) QTextEdit::textChanged()
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(6647)
+calls=1 0 
+0 84
+0 4
+
+fn=(108322) 0x00410a90
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 50
+
+fn=(108788) QCss::StyleSelector::~StyleSelector()
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 23
+cfn=(108790) 0x0041c460
+calls=1 0 
+0 202
+0 8
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=1 0 
+0 126
+0 1
+
+fn=(108848) 0x00453a00
+0 14
+cfn=(108852) 0x00453440
+calls=1 0 
+0 65
+0 2
+
+fn=(112016) 0x007b4370
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 10
+cfn=(111114)
+calls=2 0 
+0 14
+0 18
+
+fn=(22076) QColor::QColor(Qt::GlobalColor)
+0 16
+cfn=(4054)
+calls=4 0 
+0 8
+0 68
+cfn=(22082) QColor::setRgb(int, int, int, int)
+calls=4 0 
+0 192
+0 16
+
+fn=(22088) QColor::operator=(QColor const&)
+0 56
+
+fn=(23106) QApplication::palette()
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 11
+cfn=(23112) QPalette::QPalette(QPalette const&)
+calls=1 0 
+0 28
+0 7
+
+fn=(23112)
+0 56
+
+fn=(23438) 0x001a0bf0
+0 32
+cfn=(4054)
+calls=4 0 
+0 8
+0 28
+cob=(81)
+cfi=(209)
+cfn=(8418)
+calls=4 0 
+0 36
+0 28
+cob=(81)
+cfi=(209)
+cfn=(23454)
+calls=4 0 
+0 116
+0 24
+
+fn=(79360) QTextCursor::charFormat() const
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 34
+cfn=(79696)
+calls=2 0 
+0 96
+0 8
+cfn=(79798)
+calls=2 0 
+0 114
+0 6
+cfn=(79486)
+calls=2 0 
+0 44
+0 6
+cfn=(82082)
+calls=2 0 
+0 482
+0 8
+cfn=(79450)
+calls=2 0 
+0 40
+0 4
+cfn=(79486)
+calls=2 0 
+0 44
+0 58
+cfn=(80932)
+calls=2 0 
+0 44
+0 104
+
+fn=(79490) 0x003f1760
+0 15
+cfn=(4054)
+calls=3 0 
+0 6
+0 21
+cfn=(57700) QFont::QFont()
+calls=3 0 
+0 561
+0 36
+
+fn=(79678)
+0 23
+
+fn=(79696)
+0 25305
+cfn=(4054)
+calls=3615 0 
+0 7230
+0 46995
+cfn=(79450)
+calls=3615 0 
+0 72300
+0 21690
+
+fn=(80064) QTextDocument::findBlock(int) const
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 38
+cfn=(79942)
+calls=2 0 
+0 12
+0 24
+
+fn=(80154)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(79336) QTextFormat::QTextFormat(int)
+calls=1 0 
+0 8
+0 3
+cob=(81)
+cfi=(209)
+cfn=(40474)
+calls=1 0 
+0 12
+0 5
+cfn=(80160) QTextFormat::setProperty(int, QVariant const&)
+calls=1 0 
+0 910
+0 2
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 5
+cfn=(22170) QBrush::QBrush(Qt::GlobalColor, Qt::BrushStyle)
+calls=1 0 
+0 428
+0 4
+cfn=(80204)
+calls=1 0 
+0 130
+0 6
+cfn=(80160)
+calls=1 0 
+0 1351
+0 2
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 84
+0 2
+cfn=(22296)
+calls=1 0 
+0 25
+0 6
+
+fn=(80958) QTextFrame::iterator::operator=(QTextFrame::iterator const&)
+0 32
+
+fn=(81156) 0x00421b00
+0 3654
+cfn=(4054)
+calls=406 0 
+0 812
+0 3654
+cfn=(80488) QTextFrame::layoutData() const
+calls=406 0 
+0 2842
+0 6496
+
+fn=(57840)
+0 17985
+
+fn=(58692)
+0 36
+cfn=(4054)
+calls=3 0 
+0 6
+0 27
+
+fn=(58988) QColor::rgba() const
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 18
+
+fn=(59078)
+0 13925
+cfn=(4054)
+calls=2785 0 
+0 5570
+0 11140
+cfn=(59082)
+calls=2785 0 
+0 50130
+0 8355
+cob=(81)
+cfi=(209)
+cfn=(9054)
+calls=2785 0 
+0 261790
+0 36205
+
+fn=(65820) QTextEngine::itemize() const
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 15
+cfn=(65826) QTextEngine::validate() const
+calls=3 0 
+0 6886
+0 128313
+cob=(81)
+cfi=(209)
+cfn=(66072)
+calls=6340 0 
+0 108440
+0 12692
+cfn=(67068) QTextEngine::addRequiredBoundaries() const
+calls=2 0 
+0 40
+0 6
+cfn=(67074) QTextEngine::resolveAdditionalFormats() const
+calls=2 0 
+0 40
+0 14
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=1 0 
+0 144
+0 66
+cfn=(80932)
+calls=2 0 
+0 44
+0 56
+cfn=(80932)
+calls=2 0 
+0 44
+0 8
+cfn=(81004)
+calls=2 0 
+0 28
+0 237
+cfn=(79696)
+calls=4 0 
+0 192
+0 24
+cfn=(79798)
+calls=4 0 
+0 228
+0 16
+cfn=(79486)
+calls=4 0 
+0 88
+0 16
+cfn=(80290)
+calls=4 0 
+0 281
+0 28
+cfn=(67010)
+calls=4 0 
+0 243693
+0 12
+cfn=(79486)
+calls=4 0 
+0 88
+0 26761
+cob=(81)
+cfi=(209)
+cfn=(109044)
+calls=2 0 
+0 34
+0 152537
+cob=(81)
+cfi=(209)
+cfn=(109044)
+calls=6340 0 
+0 107780
+0 94385
+cfn=(109046) 0x003d50e0
+calls=2 0 
+0 2092
+0 71354
+cob=(81)
+cfi=(209)
+cfn=(3828)
+calls=1 0 
+0 503
+0 32927
+cfn=(109046)
+calls=2 0 
+0 42468
+0 7660
+cob=(81)
+cfi=(209)
+cfn=(109044)
+calls=2 0 
+0 34
+0 2
+
+fn=(65840)
+0 80
+cfn=(4054)
+calls=10 0 
+0 20
+0 87
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=1 0 
+0 152
+0 18
+cob=(3)
+cfi=(121)
+cfn=(946)
+calls=1 44 
+0 30
+0 390
+cob=(81)
+cfi=(209)
+cfn=(9420)
+calls=9 0 
+0 7802
+0 63
+
+fn=(65868) QTextLayout::endLayout()
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 16
+cfn=(65790)
+calls=1 0 
+0 3303
+0 6
+
+fn=(65900) QFontEngineFT::leading() const
+0 4060
+
+fn=(65934) QTextOption::~QTextOption()
+0 28
+cfn=(4054)
+calls=4 0 
+0 8
+0 20
+cfn=(81098)
+calls=2 0 
+0 26
+0 4
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=2 0 
+0 218
+0 20
+
+fn=(67026)
+0 2970
+cfn=(4054)
+calls=330 0 
+0 660
+0 1702
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=2 0 
+0 86
+0 200
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=8 0 
+0 496
+0 60
+cfn=(67034) 0x002d4de0
+calls=10 0 
+0 8525
+0 9754
+
+fn=(67088) 0x003da560
+0 10
+cfn=(4054)
+calls=1 0 
+0 2
+0 31
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=1 52 
+0 66659
+0 19
+
+fn=(67160)
+0 22280
+cfn=(4054)
+calls=2785 0 
+0 5570
+0 27850
+cfn=(23248)
+calls=2785 0 
+0 55700
+0 27850
+cfn=(119332)
+calls=2785 0 
+0 964090
+0 19495
+cfn=(81216)
+calls=2785 0 
+0 133680
+0 13925
+cfn=(23800)
+calls=2785 0 
+0 66840
+0 8355
+cfn=(23828)
+calls=2785 0 
+0 61270
+0 22280
+cfn=(81230)
+calls=2785 0 
+0 19495
+0 19495
+cfn=(57812)
+calls=2785 0 
+0 2060900
+0 8355
+cfn=(23800)
+calls=2785 0 
+0 66840
+0 5570
+cfn=(23828)
+calls=2785 0 
+0 61270
+0 13925
+cfn=(59028)
+calls=2785 0 
+0 827145
+0 13925
+cfn=(80290)
+calls=2785 0 
+0 192245
+0 19495
+cfn=(79486)
+calls=2785 0 
+0 61270
+0 25122
+cfn=(65312)
+calls=406 0 
+0 10150
+0 3654
+cfn=(65306) 0x003a4610
+calls=406 0 
+0 10556
+0 3654
+cfn=(65898) 0x003a4640
+calls=406 0 
+0 10962
+0 15549
+cfn=(23828)
+calls=2785 0 
+0 61270
+0 25065
+
+fn=(69812) 0x003dfc70
+0 8
+cfn=(4054)
+calls=2 0 
+0 4
+0 12
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=2 0 
+0 315
+0 8
+
+fn=(80258)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(78184)
+calls=1 0 
+0 12
+0 4
+cfn=(80160)
+calls=1 0 
+0 220
+0 3
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 4
+cob=(81)
+cfi=(209)
+cfn=(78184)
+calls=1 0 
+0 12
+0 4
+cfn=(80160)
+calls=1 0 
+0 1182
+0 3
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 4
+cob=(81)
+cfi=(209)
+cfn=(78184)
+calls=1 0 
+0 12
+0 4
+cfn=(80160)
+calls=1 0 
+0 234
+0 3
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 4
+cob=(81)
+cfi=(209)
+cfn=(78184)
+calls=1 0 
+0 12
+0 4
+cfn=(80160)
+calls=1 0 
+0 241
+0 3
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 4
+cob=(81)
+cfi=(209)
+cfn=(78184)
+calls=1 0 
+0 12
+0 4
+cfn=(80160)
+calls=1 0 
+0 1479
+0 2
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 6
+
+fn=(80316) 0x003ef180
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 174
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=7 0 
+0 49
+0 53
+cob=(81)
+cfi=(209)
+cfn=(80378)
+calls=5 0 
+0 125
+0 18
+cob=(81)
+cfi=(209)
+cfn=(40480)
+calls=1 0 
+0 25
+0 4
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=1 0 
+0 7
+0 10
+cfn=(58988)
+calls=1 0 
+0 27
+0 7
+cfn=(22296)
+calls=1 0 
+0 25
+0 23
+cob=(81)
+cfi=(209)
+cfn=(22628)
+calls=1 0 
+0 7
+0 3
+cfn=(42744)
+calls=1 0 
+0 10
+0 1
+
+fn=(80564) QTextObject::format() const
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 18
+cfn=(80570) QTextFormatCollection::objectFormat(int) const
+calls=2 0 
+0 150
+0 14
+
+fn=(80918) QTextFrame::iterator::currentFrame() const
+0 24
+
+fn=(81026) QTextDocument::objectForFormat(QTextFormat const&) const
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 12
+cfn=(79732)
+calls=2 0 
+0 212
+0 8
+
+fn=(81352) QTextLine::x() const
+0 2030
+cfn=(4054)
+calls=203 0 
+0 406
+0 3045
+
+fn=(81380) QTextLayout::minimumWidth() const
+0 4
+cfn=(4124)
+calls=1 0 
+0 2
+0 6
+
+fn=(81448)
+0 32400
+cfn=(4054)
+calls=3600 0 
+0 7200
+0 82782
+
+fn=(81554) 0x0041ec50
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cob=(81)
+cfi=(209)
+cfn=(70586)
+calls=1 0 
+0 19
+0 11
+
+fn=(81720)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(81722) 0x0040b7f0
+calls=1 0 
+0 120
+0 4
+
+fn=(82010)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(80536)
+calls=1 0 
+0 20
+0 4
+cob=(81)
+cfi=(209)
+cfn=(6710)
+calls=1 0 
+0 117
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 144
+0 5
+
+fn=(82072) 0x003c6b20
+0 7
+cfn=(82074) 0x003c6a00
+calls=1 0 
+0 815
+0 3
+cfn=(82094)
+calls=1 0 
+0 39
+0 4
+
+fn=(90486)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(3)
+cfi=(212)
+cfn=(3886)
+calls=1 44 
+0 21
+0 14
+cfn=(90492) QWidget::mapToParent(QPoint const&) const
+calls=1 0 
+0 16
+0 25
+cfn=(90492)
+calls=5 0 
+0 80
+0 61
+
+fn=(90492)
+0 96
+
+fn=(107032) QTextCursor::insertHtml(QString const&)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 13
+cfn=(82274)
+calls=1 0 
+0 23
+0 8
+cfn=(107038)
+calls=1 0 
+0 27907
+0 4
+cfn=(107556) QTextCursor::insertFragment(QTextDocumentFragment const&)
+calls=1 0 
+0 51206129
+0 2
+cfn=(108288) QTextDocumentFragment::~QTextDocumentFragment()
+calls=1 0 
+0 18894
+0 6
+
+fn=(107092) 0x0041b7b0
+0 27
+cfn=(4054)
+calls=3 0 
+0 6
+0 27
+cfn=(107102)
+calls=3 0 
+0 3750
+0 33
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=3 0 
+0 189
+0 3
+
+fn=(107190) QTextCursor::beginEditBlock()
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 12
+cfn=(82274)
+calls=1 0 
+0 23
+0 14
+
+fn=(107292) QTextCursor::blockFormat() const
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 31
+cfn=(80886)
+calls=1 0 
+0 169
+0 8
+
+fn=(107494) 0x00432b50
+0 32
+cfn=(107498) 0x004399b0
+calls=2 0 
+0 178
+0 6
+cfn=(107498)
+calls=2 0 
+0 72
+0 10
+
+fn=(107556)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 13
+cfn=(107562) QTextDocumentFragment::isEmpty() const
+calls=1 0 
+0 47
+0 4
+cfn=(82274)
+calls=1 0 
+0 23
+0 9
+cfn=(82274)
+calls=1 0 
+0 23
+0 3
+cfn=(107564) 0x00432a20
+calls=1 0 
+0 20
+0 5
+cfn=(107570) 0x0043dff0
+calls=1 0 
+0 25729
+0 2
+cfn=(82274)
+calls=1 0 
+0 23
+0 4
+cfn=(79820) 0x0040a200
+calls=1 0 
+0 51180119
+0 9
+cfn=(79942)
+calls=1 0 
+0 6
+0 3
+cfn=(82274)
+calls=1 0 
+0 23
+0 5
+cfn=(108270) 0x003f8780
+calls=1 0 
+0 41
+0 8
+
+fn=(107570)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cfn=(82600)
+calls=1 0 
+0 12
+0 21
+cfn=(81644)
+calls=1 0 
+0 223
+0 5
+cfn=(107590)
+calls=1 0 
+0 17745
+0 5
+cfn=(79360)
+calls=1 0 
+0 548
+0 12
+cfn=(107704) 0x0043a080
+calls=1 0 
+0 485
+0 2
+cfn=(107734)
+calls=1 0 
+0 6130
+0 15
+cfn=(81682)
+calls=1 0 
+0 22
+0 3
+cfn=(79486)
+calls=1 0 
+0 168
+0 3
+cfn=(79820)
+calls=1 0 
+0 22
+0 2
+cfn=(81682)
+calls=1 0 
+0 287
+0 6
+
+fn=(108290) QTextDocument::~QTextDocument()
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cob=(81)
+cfi=(209)
+cfn=(6628)
+calls=1 0 
+0 18621
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 5
+
+fn=(108448)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 17
+cob=(81)
+cfi=(209)
+cfn=(20178)
+calls=1 0 
+0 28
+0 2
+
+fn=(108592)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 54
+cfn=(108618)
+calls=1 0 
+0 344
+0 7
+
+fn=(108632)
+0 48
+cfn=(108636)
+calls=2 0 
+0 760
+0 8
+
+fn=(22062) QTransform::QTransform()
+0 80
+
+fn=(79852) 0x004079b0
+0 21
+cfn=(4054)
+calls=3 0 
+0 6
+0 38
+cfn=(79866) QTextDocument::modificationChanged(bool)
+calls=2 0 
+0 158
+0 6
+cfn=(79874)
+calls=3 0 
+0 3373
+0 21
+
+fn=(80584) QTextFrameFormat::QTextFrameFormat(QTextFormat const&)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 10
+cfn=(79450)
+calls=2 0 
+0 40
+0 8
+
+fn=(80618) QTextFormat::lengthProperty(int) const
+0 32
+cfn=(4054)
+calls=4 0 
+0 8
+0 268
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=4 0 
+0 28
+0 52
+cfn=(23438)
+calls=4 0 
+0 272
+0 32
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=4 0 
+0 76
+0 28
+
+fn=(80672) QTextFrameFormat::topMargin() const
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80678)
+calls=1 0 
+0 43
+0 5
+cfn=(80684)
+calls=1 0 
+0 161
+0 5
+
+fn=(80740) 0x0041ee50
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80466) QTextFrame::firstPosition() const
+calls=1 0 
+0 14
+0 3
+cfn=(80478)
+calls=1 0 
+0 38
+0 8
+
+fn=(81254) QTextLine::naturalTextWidth() const
+0 4060
+cfn=(4054)
+calls=406 0 
+0 812
+0 6090
+
+fn=(57832) qt_x11Info(QPaintDevice const*)
+0 25179
+cfn=(4054)
+calls=3597 0 
+0 7194
+0 21582
+cfn=(57838)
+calls=3597 0 
+0 25179
+0 17985
+cfn=(57846)
+calls=3597 0 
+0 25179
+0 17985
+
+fn=(65308) QFontEngineFT::descent() const
+0 3654
+
+fn=(65746)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(57700)
+calls=1 0 
+0 187
+0 13
+cfn=(65752)
+calls=1 0 
+0 42
+0 17
+
+fn=(65922)
+0 14
+cfn=(4054)
+calls=2 0 
+0 4
+0 40
+cfn=(69812)
+calls=2 0 
+0 347
+0 16
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=2 0 
+0 324
+0 8
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=2 3693 
+0 147
+0 2
+
+fn=(67196)
+0 2842
+cfn=(4054)
+calls=406 0 
+0 812
+0 3654
+
+fn=(69252)
+0 266436
+
+fn=(69878) QAccessible::updateAccessibility(QObject*, int, QAccessible::Event)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 34
+cfn=(69884)
+calls=2 0 
+0 36
+0 2
+cfn=(69886) 0x006ee5f0
+calls=2 0 
+0 40
+0 10
+
+fn=(79450)
+0 144862
+
+fn=(79820)
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 47
+cfn=(80048) 0x0042ff00
+calls=1 0 
+0 51173929
+0 66
+cob=(81)
+cfi=(209)
+cfn=(26446)
+calls=2 0 
+0 128
+0 10
+cfn=(107478)
+calls=2 0 
+0 54
+0 10
+cfn=(107486) QTextDocument::cursorPositionChanged(QTextCursor const&)
+calls=2 0 
+0 2574
+0 6
+cfn=(81682)
+calls=2 0 
+0 44
+0 14
+cfn=(79852)
+calls=3 0 
+0 3623
+0 17
+cfn=(79886)
+calls=1 0 
+0 77
+0 34
+cfn=(79840) 0x0040a330
+calls=1 0 
+0 21
+0 12
+cfn=(80036)
+calls=1 0 
+0 81
+0 36
+cfn=(4054)
+calls=4 0 
+0 8
+0 91
+cfn=(108234) QTextDocument::undoCommandAdded()
+calls=1 0 
+0 73
+0 1
+
+fn=(79866)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 26
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=2 0 
+0 108
+0 8
+
+fn=(80274)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80278)
+calls=1 0 
+0 3618
+0 16
+cfn=(80420)
+calls=1 0 
+0 194
+0 32
+cob=(81)
+cfi=(209)
+cfn=(16524)
+calls=1 0 
+0 191
+0 26
+cfn=(80314)
+calls=1 0 
+0 2572
+0 5
+
+fn=(80388) 0x003f1b80
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 12
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=3 0 
+0 630
+0 72
+cfn=(23248)
+calls=3 0 
+0 60
+0 48
+
+fn=(80714) QTextFrameFormat::rightMargin() const
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80678)
+calls=1 0 
+0 64
+0 5
+cfn=(80684)
+calls=1 0 
+0 182
+0 5
+
+fn=(80786)
+0 24
+cfn=(4054)
+calls=4 0 
+0 8
+0 20
+cfn=(79942)
+calls=4 0 
+0 24
+0 16
+
+fn=(81948) QTextEngine::~QTextEngine()
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(65922)
+calls=1 0 
+0 364
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 6
+cfn=(65934)
+calls=1 0 
+0 18
+0 3
+cfn=(23828)
+calls=1 0 
+0 22
+0 18
+
+fn=(82074)
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+cfn=(79360)
+calls=1 0 
+0 564
+0 4
+cfn=(79564) QTextFormat::operator==(QTextFormat const&) const
+calls=1 0 
+0 50
+0 4
+cfn=(79486)
+calls=1 0 
+0 168
+0 6
+
+fn=(82170) 0x0041fed0
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cfn=(80144)
+calls=1 0 
+0 20
+0 6
+cfn=(80466)
+calls=1 0 
+0 14
+0 17
+cfn=(80478)
+calls=1 0 
+0 38
+0 54
+cfn=(80792)
+calls=1 0 
+0 14
+0 5
+cfn=(82208)
+calls=1 0 
+0 97
+0 14
+
+fn=(82516) QTextControl::cursorPositionChanged()
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(6647)
+calls=1 0 
+0 856
+0 4
+
+fn=(82730)
+0 15
+
+fn=(107026) QTextControl::insertHtml(QString const&)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(107032)
+calls=1 0 
+0 51252996
+0 4
+
+fn=(107044)
+0 6
+
+fn=(107080) 0x0041a440
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 28
+cfn=(107092)
+calls=1 0 
+0 814
+0 5
+cob=(81)
+cfi=(209)
+cfn=(6338)
+calls=1 0 
+0 29
+0 9
+cfn=(107148) 0x0041a2a0
+calls=1 0 
+0 8238
+0 5
+
+fn=(107332)
+0 79
+
+fn=(107932)
+0 35
+cfn=(4054)
+calls=5 0 
+0 10
+0 50
+cfn=(92020)
+calls=5 0 
+0 1160
+0 84
+cfn=(119410)
+calls=1 0 
+0 1142
+0 4
+cfn=(108268)
+calls=1 0 
+0 103
+0 5
+cfn=(108256) QTextEdit::cursorPositionChanged()
+calls=1 0 
+0 103
+0 1
+
+fn=(108234)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=1 0 
+0 54
+0 4
+
+fn=(108238) 0x003c7c90
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(108246)
+calls=1 0 
+0 9
+0 4
+cfn=(82516)
+calls=1 0 
+0 875
+0 2
+cfn=(82508) QTextControl::microFocusChanged()
+calls=1 0 
+0 934
+0 5
+
+fn=(108684)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 44
+cfn=(108694) 0x0041c6a0
+calls=1 0 
+0 272
+0 9
+cfn=(79942)
+calls=1 0 
+0 6
+0 97
+cob=(81)
+cfi=(209)
+cfn=(8894)
+calls=1 0 
+0 261
+0 5
+cob=(81)
+cfi=(209)
+cfn=(6338)
+calls=1 0 
+0 29
+0 20
+cfn=(108766)
+calls=1 0 
+0 145
+0 26
+cfn=(108788)
+calls=1 0 
+0 367
+0 14
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=1 0 
+0 23
+0 1
+
+fn=(108902) 0x0045b020
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 15
+
+fn=(109274)
+0 14
+
+fn=(110142)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 16
+cfn=(110148) QApplication::inputContext() const
+calls=2 0 
+0 58
+0 8
+
+fn=(22082)
+0 28
+cfn=(4054)
+calls=4 0 
+0 8
+0 156
+
+fn=(22160) QBrush::init(QColor const&, Qt::BrushStyle)
+0 20
+cfn=(4054)
+calls=4 0 
+0 8
+0 68
+cfn=(22088)
+calls=4 0 
+0 56
+0 32
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=4 0 
+0 783
+0 20
+cfn=(22054)
+calls=4 0 
+0 44
+0 16
+cfn=(22062)
+calls=4 0 
+0 80
+0 40
+
+fn=(23100) QPalette::QPalette()
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(23106)
+calls=1 0 
+0 53
+0 5
+cfn=(23118) QPalette::~QPalette()
+calls=1 0 
+0 22
+0 11
+
+fn=(23242)
+0 28776
+cfn=(4124)
+calls=28776 0 
+0 57552
+0 316536
+
+fn=(37002)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 58
+cob=(81)
+cfi=(209)
+cfn=(37008)
+calls=2 0 
+0 34
+0 14
+
+fn=(79336)
+0 28856
+
+fn=(79432)
+0 56
+cfn=(4054)
+calls=7 0 
+0 14
+0 120
+cob=(81)
+cfi=(209)
+cfn=(6036)
+calls=1 0 
+0 197
+0 13
+cfn=(79434) 0x002395d0
+calls=1 0 
+0 21
+0 42
+cfn=(79434)
+calls=6 0 
+0 192
+0 121
+cfn=(79440)
+calls=3 0 
+0 1000
+0 56
+cfn=(80388)
+calls=1 0 
+0 434
+0 6
+cfn=(79506) 0x003f0060
+calls=1 0 
+0 631
+0 8
+cfn=(79506)
+calls=2 0 
+0 986
+0 24
+cfn=(79434)
+calls=3 0 
+0 81
+0 66
+cfn=(79548)
+calls=4 0 
+0 192
+0 24
+cfn=(79564)
+calls=4 0 
+0 170
+0 16
+cfn=(79486)
+calls=4 0 
+0 88
+0 48
+cfn=(80316)
+calls=2 0 
+0 588
+0 6
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=2 0 
+0 268
+0 6
+cfn=(79490)
+calls=2 0 
+0 426
+0 10
+cfn=(79496)
+calls=2 0 
+0 60
+0 62
+cfn=(79434)
+calls=3 0 
+0 93
+0 21
+cob=(81)
+cfi=(209)
+cfn=(6080)
+calls=3 0 
+0 462
+0 41
+cob=(81)
+cfi=(209)
+cfn=(6062)
+calls=1 0 
+0 283
+0 1
+
+fn=(79434)
+0 387
+
+fn=(79510) 0x003efb60
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 18
+cfn=(57700)
+calls=3 0 
+0 561
+0 121
+cfn=(23800)
+calls=3 0 
+0 72
+0 12
+cfn=(23828)
+calls=3 0 
+0 66
+0 18
+
+fn=(80604) QTextDocument::pageSize() const
+0 45
+
+fn=(81152) QTextLine::setLeadingIncluded(bool)
+0 5278
+
+fn=(59030)
+0 14935
+cfn=(4054)
+calls=2987 0 
+0 5974
+0 47792
+
+fn=(65306)
+0 4872
+cfn=(65308)
+calls=406 0 
+0 3654
+0 2030
+
+fn=(65826)
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 34
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=2 0 
+0 284
+0 6
+cfn=(65832)
+calls=2 0 
+0 58
+0 20
+cfn=(81140) QTextBlock::text() const
+calls=2 0 
+0 6334
+0 12
+cob=(81)
+cfi=(209)
+cfn=(6338)
+calls=2 0 
+0 58
+0 4
+cfn=(20114)
+calls=2 0 
+0 36
+0 10
+
+fn=(65898)
+0 4872
+cfn=(65900)
+calls=406 0 
+0 4060
+0 2030
+
+fn=(66074)
+0 4060
+
+fn=(69408)
+0 6404
+
+fn=(69806) 0x003a4550
+0 3857
+cfn=(69808)
+calls=203 0 
+0 29029
+0 812
+
+fn=(79388)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cob=(81)
+cfi=(209)
+cfn=(5640)
+calls=1 0 
+0 57
+0 7
+cfn=(57700)
+calls=1 0 
+0 187
+0 27
+cfn=(79396) 0x00410710
+calls=1 0 
+0 2116
+0 5
+cfn=(79406) 0x00410790
+calls=1 0 
+0 240
+0 4
+cfn=(65752)
+calls=1 0 
+0 42
+0 85
+
+fn=(79608) 0x0040b880
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 18
+cob=(81)
+cfi=(209)
+cfn=(25642)
+calls=1 0 
+0 308
+0 22
+cfn=(79622)
+calls=1 0 
+0 757
+0 74
+cfn=(79774)
+calls=1 0 
+0 20
+0 28
+cfn=(79696)
+calls=1 0 
+0 48
+0 4
+cfn=(79798)
+calls=1 0 
+0 57
+0 3
+cfn=(79486)
+calls=1 0 
+0 22
+0 2
+cfn=(79704)
+calls=1 0 
+0 65
+0 3
+cfn=(79486)
+calls=1 0 
+0 22
+0 7
+cfn=(79820)
+calls=1 0 
+0 363
+0 12
+
+fn=(80654) 0x0042e440
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cfn=(80488)
+calls=1 0 
+0 7
+0 11
+cfn=(80564)
+calls=1 0 
+0 101
+0 5
+cfn=(80578) QTextFormat::toFrameFormat() const
+calls=1 0 
+0 57
+0 4
+cfn=(79486)
+calls=1 0 
+0 22
+0 2
+cfn=(80672)
+calls=1 0 
+0 227
+0 8
+cfn=(80694)
+calls=1 0 
+0 241
+0 10
+cfn=(80704)
+calls=1 0 
+0 255
+0 10
+cfn=(80714)
+calls=1 0 
+0 269
+0 10
+cfn=(80684)
+calls=1 0 
+0 127
+0 11
+cfn=(80684)
+calls=1 0 
+0 127
+0 12
+cfn=(80594)
+calls=1 0 
+0 7
+0 20
+cfn=(79486)
+calls=1 0 
+0 22
+0 2
+cfn=(80740)
+calls=1 0 
+0 76
+0 14
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 50
+0 27
+cfn=(80604)
+calls=1 0 
+0 15
+0 68
+cfn=(80594)
+calls=1 0 
+0 7
+0 7
+cfn=(80780) QTextFrame::begin() const
+calls=1 0 
+0 160
+0 5
+cfn=(80800)
+calls=1 0 
+0 16
+0 11
+cfn=(80804) 0x00428620
+calls=1 0 
+0 51166713
+0 7
+cfn=(80530)
+calls=1 0 
+0 19
+0 36
+cob=(39) /lib/libgcc_s.so.1
+cfi=(137) ???
+cfn=(69320) __divdi3
+calls=1 0 
+0 42
+0 11
+cfn=(80594)
+calls=1 0 
+0 7
+0 49
+cfn=(80536)
+calls=1 0 
+0 20
+0 3
+cfn=(80536)
+calls=1 0 
+0 20
+0 32
+
+fn=(81582) 0x004205b0
+0 10
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cfn=(80144)
+calls=1 0 
+0 20
+0 3
+cfn=(80488)
+calls=1 0 
+0 7
+0 16
+
+fn=(81734) 0x00408810
+0 18
+cfn=(4054)
+calls=2 0 
+0 4
+0 20
+
+fn=(82290) QTextControl::textChanged()
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(6647)
+calls=1 0 
+0 1419
+0 4
+
+fn=(82332) QTextCursor::position() const
+0 84
+
+fn=(82508)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(6647)
+calls=1 0 
+0 915
+0 4
+
+fn=(103338) QTextLayout::lineCount() const
+0 16
+
+fn=(107124)
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 18
+cfn=(79330)
+calls=3 0 
+0 72
+0 66
+cfn=(79572) QTextBlockFormat::QTextBlockFormat()
+calls=3 0 
+0 72
+0 33
+cfn=(22170)
+calls=3 0 
+0 1227
+0 105
+
+fn=(107148)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 29
+cfn=(108444)
+calls=1 0 
+0 8200
+0 1
+
+fn=(107182)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(107190)
+calls=1 0 
+0 59
+0 102
+cfn=(108998) 0x0043c190
+calls=1 0 
+0 121
+0 21
+cfn=(107206)
+calls=3 0 
+0 69
+0 24
+cfn=(81122)
+calls=3 0 
+0 66
+0 12
+cfn=(107224) 0x0043b250
+calls=3 0 
+0 4014
+0 39
+cfn=(107460) QTextCursor::endEditBlock()
+calls=1 0 
+0 537
+0 6
+
+fn=(107286) QTextCursor::insertText(QString const&, QTextCharFormat const&)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 16
+cfn=(79450)
+calls=1 0 
+0 18
+0 4
+cfn=(82082)
+calls=1 0 
+0 22
+0 2
+cfn=(82274)
+calls=1 0 
+0 23
+0 4
+cfn=(82274)
+calls=1 0 
+0 23
+0 13
+cfn=(82274)
+calls=1 0 
+0 23
+0 3
+cfn=(107428) 0x004347d0
+calls=1 0 
+0 26
+0 3
+cfn=(79486)
+calls=1 0 
+0 18
+0 10
+cfn=(82274)
+calls=1 0 
+0 23
+0 7
+cfn=(79432)
+calls=1 0 
+0 213
+0 6
+cfn=(107292)
+calls=1 0 
+0 218
+0 3
+cfn=(82274)
+calls=1 0 
+0 23
+0 7
+cfn=(82274)
+calls=1 0 
+0 23
+0 7
+cob=(81)
+cfi=(209)
+cfn=(6358)
+calls=1 0 
+0 74
+0 2
+cfn=(82274)
+calls=1 0 
+0 23
+0 39
+cfn=(82274)
+calls=1 0 
+0 23
+0 5
+cfn=(82274)
+calls=1 0 
+0 23
+0 11
+cfn=(107294)
+calls=1 0 
+0 1335
+0 3
+cfn=(79486)
+calls=1 0 
+0 22
+0 8
+
+fn=(107360)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 11
+cfn=(65784)
+calls=1 0 
+0 2674
+0 8
+
+fn=(107428)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 56
+cfn=(107614) 0x00431e90
+calls=1 0 
+0 67
+0 7
+cfn=(80932)
+calls=1 0 
+0 22
+0 6
+cfn=(82412) QTextLayout::lineForTextPosition(int) const
+calls=1 0 
+0 38
+0 4
+
+fn=(107486)
+0 8
+cfn=(4054)
+calls=2 0 
+0 4
+0 26
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=2 0 
+0 2528
+0 8
+
+fn=(107564)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+
+fn=(108124)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 12
+cob=(81)
+cfi=(209)
+cfn=(6358)
+calls=1 0 
+0 74
+0 11
+cfn=(107294)
+calls=1 0 
+0 4158
+0 6
+
+fn=(108256)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cob=(81)
+cfi=(209)
+cfn=(6647)
+calls=1 0 
+0 84
+0 4
+
+fn=(108288)
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 17
+cfn=(108290)
+calls=1 0 
+0 18752
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 5
+
+fn=(108424)
+0 12
+
+fn=(108542)
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 58
+cob=(81)
+cfi=(209)
+cfn=(108552)
+calls=3 0 
+0 95
+0 39
+cob=(81)
+cfi=(209)
+cfn=(108552)
+calls=3 0 
+0 113
+0 41
+cob=(81)
+cfi=(209)
+cfn=(108570)
+calls=1 0 
+0 43
+0 10
+
+fn=(108936)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 62
+
+fn=(109002) 0x00411490
+0 42
+
+fn=(109046)
+0 44560
+
+fn=(4124)
+0 57572
+
+fn=(22296)
+0 96
+cfn=(4054)
+calls=12 0 
+0 24
+0 116
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=4 0 
+0 576
+0 88
+
+fn=(23118)
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 36
+
+fn=(79564)
+0 50
+cfn=(4054)
+calls=5 0 
+0 10
+0 160
+
+fn=(79606) 0x0040be60
+0 17
+cfn=(79608)
+calls=1 0 
+0 1846
+0 2
+
+fn=(79840)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 11
+
+fn=(81140)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 34
+cfn=(81004)
+calls=2 0 
+0 28
+0 38
+cob=(81)
+cfi=(209)
+cfn=(6398)
+calls=2 0 
+0 1143
+0 14
+cfn=(80932)
+calls=2 0 
+0 44
+0 72
+cfn=(81004)
+calls=2 0 
+0 28
+0 147
+cob=(81)
+cfi=(209)
+cfn=(6498)
+calls=4 0 
+0 624
+0 28
+cob=(81)
+cfi=(209)
+cfn=(6358)
+calls=4 0 
+0 3463
+0 143
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=4 0 
+0 504
+0 4
+
+fn=(81216)
+0 35970
+cfn=(4054)
+calls=3597 0 
+0 7194
+0 32373
+cfn=(23248)
+calls=3597 0 
+0 71940
+0 25179
+
+fn=(57700)
+0 50
+cfn=(4054)
+calls=10 0 
+0 20
+0 70
+cfn=(23172)
+calls=10 0 
+0 1350
+0 60
+cfn=(23828)
+calls=10 0 
+0 220
+0 100
+
+fn=(58474)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 26
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=2 0 
+0 460
+0 32
+cob=(3)
+cfi=(121)
+cfn=(946)
+calls=2 44 
+0 60
+0 78
+
+fn=(58828)
+0 49
+
+fn=(67168)
+0 4060
+cfn=(4054)
+calls=406 0 
+0 812
+0 8932
+cfn=(67172)
+calls=406 0 
+0 281198
+0 168626
+cob=(81)
+cfi=(209)
+cfn=(21502)
+calls=202 0 
+0 3636
+0 404
+
+fn=(67944)
+0 3645
+cfn=(4054)
+calls=405 0 
+0 810
+0 13382
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=304 52 
+0 30713
+0 2550
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=102 52 
+0 31930
+0 48283
+cfn=(67956)
+calls=406 0 
+0 540397
+0 42397
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=102 0 
+0 16140
+0 2742
+cob=(81)
+cfi=(209)
+cfn=(3828)
+calls=102 0 
+0 71023
+0 1224
+
+fn=(69872)
+0 14
+cfn=(4054)
+calls=2 0 
+0 4
+0 14
+cfn=(112014)
+calls=2 0 
+0 138
+0 10
+cfn=(112016)
+calls=2 0 
+0 58
+0 8
+cfn=(69878)
+calls=2 0 
+0 138
+0 18
+
+fn=(80232)
+0 36
+cfn=(4054)
+calls=4 0 
+0 8
+0 52
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=4 0 
+0 76
+0 52
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=13 0 
+0 592
+0 67
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=4 0 
+0 601
+0 24
+
+fn=(80458) 0x004206d0
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80466)
+calls=1 0 
+0 14
+0 10
+cfn=(80478)
+calls=1 0 
+0 38
+0 5
+cfn=(80488)
+calls=1 0 
+0 7
+0 14
+cfn=(80530)
+calls=1 0 
+0 19
+0 9
+cfn=(80536)
+calls=1 0 
+0 20
+0 6
+
+fn=(80556) 0x0042ee20
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(80564)
+calls=1 0 
+0 101
+0 4
+cfn=(80578)
+calls=1 0 
+0 57
+0 3
+cfn=(79486)
+calls=1 0 
+0 22
+0 3
+cfn=(80594)
+calls=1 0 
+0 7
+0 16
+cfn=(80618)
+calls=1 0 
+0 199
+0 16
+cfn=(80618)
+calls=1 0 
+0 199
+0 14
+cfn=(80618)
+calls=1 0 
+0 199
+0 37
+cfn=(80654)
+calls=1 0 
+0 51168995
+0 3
+cfn=(79486)
+calls=1 0 
+0 22
+0 23
+cfn=(80618)
+calls=1 0 
+0 199
+0 11
+cfn=(80604)
+calls=1 0 
+0 15
+0 5
+
+fn=(80824) QTextDocument::rootFrame() const
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cfn=(80144)
+calls=1 0 
+0 20
+0 4
+
+fn=(81394) QTextLayout::maximumWidth() const
+0 4
+cfn=(4124)
+calls=1 0 
+0 2
+0 6
+
+fn=(81722)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 26
+cfn=(81726)
+calls=1 0 
+0 22
+0 3
+cfn=(81734)
+calls=1 0 
+0 21
+0 3
+cfn=(81742)
+calls=1 0 
+0 21
+0 14
+
+fn=(81942) QTextLayout::~QTextLayout()
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(81948)
+calls=1 0 
+0 560
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 144
+0 5
+
+fn=(81970)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 12
+cfn=(81998)
+calls=1 0 
+0 929
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 5
+
+fn=(82104)
+0 21
+
+fn=(100852)
+0 61
+
+fn=(107060)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(65484)
+calls=1 0 
+0 6
+0 36
+cfn=(81644)
+calls=1 0 
+0 845
+0 4
+cfn=(81674) QTextCursor::operator=(QTextCursor const&)
+calls=1 0 
+0 31
+0 2
+cfn=(81682)
+calls=1 0 
+0 22
+0 5
+cob=(81)
+cfi=(209)
+cfn=(37160)
+calls=1 0 
+0 209
+0 21
+cfn=(107080)
+calls=1 0 
+0 9135
+0 11
+
+fn=(107224)
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 21
+cfn=(82332)
+calls=3 0 
+0 36
+0 27
+cfn=(79450)
+calls=3 0 
+0 54
+0 78
+cob=(81)
+cfi=(209)
+cfn=(6398)
+calls=3 0 
+0 763
+0 45
+cob=(81)
+cfi=(209)
+cfn=(20178)
+calls=1 0 
+0 28
+0 51
+cfn=(107286)
+calls=1 0 
+0 2316
+0 12
+cfn=(82332)
+calls=3 0 
+0 36
+0 42
+cfn=(79486)
+calls=3 0 
+0 54
+0 46
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=3 0 
+0 378
+0 3
+
+fn=(107460)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 12
+cfn=(82274)
+calls=1 0 
+0 23
+0 4
+cfn=(79820)
+calls=1 0 
+0 482
+0 6
+
+fn=(108182)
+0 14
+
+fn=(108468)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 39
+cfn=(107092)
+calls=2 0 
+0 3221
+0 36
+
+fn=(108694)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 17
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=1 0 
+0 152
+0 93
+
+fn=(108772)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 98
+
+fn=(108790)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 61
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=1 0 
+0 124
+0 6
+
+fn=(108844) 0x00453a40
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(108848)
+calls=1 0 
+0 81
+0 11
+
+fn=(108852)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 29
+cfn=(23800)
+calls=1 0 
+0 24
+0 19
+cfn=(23800)
+calls=1 0 
+0 24
+0 6
+
+fn=(109098)
+0 52
+
+fn=(109116)
+0 51
+
+fn=(130330)
+cob=(81)
+cfi=(209)
+cfn=(130342)
+calls=0 0 
+0 51253335
+
+fn=(4054)
+0 298872
+
+fn=(22170)
+0 24
+cfn=(4054)
+calls=4 0 
+0 8
+0 24
+cfn=(22150)
+calls=4 0 
+0 60
+0 28
+cfn=(22076)
+calls=4 0 
+0 300
+0 20
+cfn=(22160)
+calls=4 0 
+0 1167
+0 24
+
+fn=(22630)
+0 54
+cfn=(4054)
+calls=6 0 
+0 12
+0 210
+cfn=(42744)
+calls=6 0 
+0 60
+0 6
+
+fn=(23828)
+0 75740
+cfn=(4054)
+calls=10820 0 
+0 21640
+0 140660
+
+fn=(79406)
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=1 3749 
+0 211
+0 15
+
+fn=(79628)
+0 70
+
+fn=(80048)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80056) QAbstractTextDocumentLayout::document() const
+calls=1 0 
+0 7
+0 7
+cfn=(80064)
+calls=1 0 
+0 47
+0 4
+cfn=(80056)
+calls=1 0 
+0 7
+0 14
+cfn=(80064)
+calls=1 0 
+0 47
+0 22
+cfn=(80098)
+calls=1 0 
+0 308
+0 3
+cfn=(80080)
+calls=1 0 
+0 26
+0 23
+cob=(81)
+cfi=(209)
+cfn=(70586)
+calls=1 0 
+0 19
+0 35
+cfn=(81622) QAbstractTextDocumentLayout::update(QRectF const&)
+calls=1 0 
+0 2571
+0 11
+cfn=(80080)
+calls=1 0 
+0 26
+0 63
+cfn=(80132)
+calls=1 0 
+0 15
+0 11
+cfn=(80140) 0x0042f120
+calls=1 0 
+0 51170489
+0 23
+cfn=(81582)
+calls=1 0 
+0 62
+0 75
+
+fn=(80056)
+0 14
+
+fn=(80140)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(80144)
+calls=1 0 
+0 20
+0 6
+cfn=(80458)
+calls=1 0 
+0 156
+0 8
+cfn=(80144)
+calls=1 0 
+0 20
+0 3
+cfn=(80488)
+calls=1 0 
+0 7
+0 25
+cfn=(80556)
+calls=1 0 
+0 51170166
+0 4
+cfn=(80488)
+calls=1 0 
+0 7
+0 5
+cfn=(81554)
+calls=1 0 
+0 45
+0 1
+
+fn=(80160)
+0 56
+cfn=(4054)
+calls=7 0 
+0 14
+0 390
+cob=(81)
+cfi=(209)
+cfn=(22420)
+calls=7 0 
+0 402
+0 35
+cfn=(80162)
+calls=7 0 
+0 4087
+0 14
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=7 0 
+0 198
+0 44
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 126
+0 3
+cfn=(79490)
+calls=1 0 
+0 213
+0 4
+cfn=(79496)
+calls=1 0 
+0 30
+0 1
+
+fn=(80570)
+0 14
+cfn=(4054)
+calls=2 0 
+0 4
+0 22
+cfn=(79696)
+calls=2 0 
+0 96
+0 14
+
+fn=(80578)
+0 12
+cfn=(4054)
+calls=2 0 
+0 4
+0 12
+cfn=(80584)
+calls=2 0 
+0 74
+0 12
+
+fn=(80904)
+0 30
+cfn=(4054)
+calls=5 0 
+0 10
+0 25
+cfn=(79450)
+calls=5 0 
+0 98
+0 20
+
+fn=(80982) 0x00422480
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+cfn=(80990)
+calls=1 0 
+0 29
+0 4
+cfn=(81004)
+calls=1 0 
+0 14
+0 15
+cfn=(80678)
+calls=1 0 
+0 19
+0 17
+cfn=(81016) 0x0041f6d0
+calls=1 0 
+0 230
+0 8
+cfn=(80684)
+calls=1 0 
+0 78
+0 9
+cfn=(80684)
+calls=1 0 
+0 78
+0 15
+cfn=(81050)
+calls=1 0 
+0 15
+0 18
+cfn=(81058)
+calls=1 0 
+0 15
+0 11
+cfn=(81068)
+calls=1 0 
+0 50
+0 11
+cfn=(81076)
+calls=1 0 
+0 162
+0 5
+cfn=(81094)
+calls=1 0 
+0 174
+0 2
+cfn=(81098)
+calls=1 0 
+0 13
+0 7
+cfn=(80678)
+calls=1 0 
+0 19
+0 10
+cfn=(81114) QStyle::visualAlignment(Qt::LayoutDirection, QFlags<Qt::AlignmentFlag>)
+calls=1 0 
+0 18
+0 7
+cfn=(81122)
+calls=1 0 
+0 69
+0 7
+cfn=(65802)
+calls=1 0 
+0 361
+0 15
+cfn=(65814) QTextLayout::beginLayout()
+calls=1 0 
+0 1037999
+0 21
+cfn=(65838)
+calls=1 0 
+0 419
+0 1015
+cfn=(65838)
+calls=203 0 
+0 29320
+0 1628
+cfn=(81152)
+calls=203 0 
+0 5278
+0 2436
+cfn=(81156)
+calls=203 0 
+0 8729
+0 6490
+cfn=(81156)
+calls=203 0 
+0 8729
+0 4872
+cfn=(81328)
+calls=203 0 
+0 8932
+0 7105
+cfn=(81344)
+calls=203 0 
+0 10150
+0 1015
+cfn=(81352)
+calls=203 0 
+0 5481
+0 609
+cfn=(81254)
+calls=203 0 
+0 5481
+0 5484
+cfn=(81262) 0x00430890
+calls=203 0 
+0 9135
+0 217
+cfn=(81380)
+calls=1 0 
+0 12
+0 19
+cfn=(81394)
+calls=1 0 
+0 12
+0 33
+cfn=(80604)
+calls=1 0 
+0 15
+0 1429
+cfn=(81254)
+calls=203 0 
+0 5481
+0 2237
+cfn=(80684)
+calls=1 0 
+0 78
+0 28
+cfn=(81186)
+calls=1 0 
+0 1214693
+0 1616
+cfn=(81186)
+calls=202 0 
+0 48772987
+0 206
+cfn=(65868)
+calls=1 0 
+0 3335
+0 3
+cfn=(65934)
+calls=1 0 
+0 144
+0 1
+
+fn=(57776)
+0 2
+cfn=(4124)
+calls=2 0 
+0 4
+0 12
+
+fn=(67034)
+0 80
+cfn=(4054)
+calls=10 0 
+0 20
+0 142
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=2 0 
+0 304
+0 552
+cob=(81)
+cfi=(209)
+cfn=(9420)
+calls=8 0 
+0 7355
+0 72
+
+fn=(67068)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 20
+
+fn=(67086) QTextEngine::LayoutData::reallocate(int)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 29
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=1 3749 
+0 354
+0 23
+cfn=(67088)
+calls=1 0 
+0 66721
+0 19
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=1 52 
+0 9529
+0 2
+
+fn=(67190)
+0 3248
+cfn=(4054)
+calls=406 0 
+0 812
+0 4060
+
+fn=(69276)
+0 16750
+cfn=(69288)
+calls=203 0 
+0 12088
+0 3694
+
+fn=(69416) 0x003a4770
+0 1827
+cfn=(69418) QFontEngineFT::minRightBearing() const
+calls=203 0 
+0 4669
+0 406
+
+fn=(69418)
+0 1624
+cfn=(4054)
+calls=203 0 
+0 406
+0 2639
+
+fn=(79396)
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=1 3749 
+0 2087
+0 15
+
+fn=(79828)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 24
+
+fn=(80488)
+0 2884
+
+fn=(80684)
+0 72
+cfn=(4054)
+calls=9 0 
+0 18
+0 370
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=5 0 
+0 35
+0 8
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=4 0 
+0 28
+0 28
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=5 0 
+0 35
+0 30
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=5 0 
+0 95
+0 12
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=4 0 
+0 76
+0 71
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=4 0 
+0 28
+0 36
+cob=(81)
+cfi=(209)
+cfn=(22420)
+calls=4 0 
+0 184
+0 12
+cob=(81)
+cfi=(209)
+cfn=(22628)
+calls=4 0 
+0 28
+0 8
+
+fn=(80780)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cfn=(80786)
+calls=1 0 
+0 23
+0 4
+cfn=(80466)
+calls=1 0 
+0 14
+0 16
+cfn=(80478)
+calls=1 0 
+0 38
+0 29
+cfn=(80792)
+calls=1 0 
+0 14
+0 9
+
+fn=(80804)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cfn=(80488)
+calls=1 0 
+0 7
+0 9
+cfn=(80816)
+calls=1 0 
+0 10
+0 6
+cfn=(80824)
+calls=1 0 
+0 36
+0 14
+cfn=(80878)
+calls=1 0 
+0 25
+0 7
+cfn=(80886)
+calls=1 0 
+0 111
+0 30
+cfn=(80918)
+calls=1 0 
+0 6
+0 4
+cfn=(80918)
+calls=1 0 
+0 6
+0 39
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 50
+0 18
+cfn=(79486)
+calls=1 0 
+0 22
+0 11
+cfn=(80878)
+calls=1 0 
+0 50
+0 4
+cfn=(80932)
+calls=1 0 
+0 22
+0 5
+cfn=(80816)
+calls=1 0 
+0 10
+0 8
+cfn=(80958)
+calls=1 0 
+0 16
+0 6
+cfn=(80878)
+calls=1 0 
+0 50
+0 3
+cfn=(80968)
+calls=1 0 
+0 67
+0 5
+cfn=(80886)
+calls=1 0 
+0 169
+0 4
+cfn=(80290)
+calls=1 0 
+0 69
+0 14
+cfn=(80878)
+calls=1 0 
+0 25
+0 20
+cfn=(80982)
+calls=1 0 
+0 51164397
+0 9
+cfn=(80918)
+calls=1 0 
+0 6
+0 5
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 15
+0 5
+cfn=(80918)
+calls=1 0 
+0 6
+0 6
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 15
+0 5
+cfn=(80290)
+calls=1 0 
+0 69
+0 14
+cfn=(81448)
+calls=1 0 
+0 34
+0 2
+cfn=(79486)
+calls=1 0 
+0 22
+0 4
+cfn=(80990)
+calls=1 0 
+0 29
+0 5
+cfn=(81412)
+calls=1 0 
+0 212
+0 6
+cfn=(65934)
+calls=1 0 
+0 144
+0 131
+cob=(39)
+cfi=(137)
+cfn=(69320)
+calls=1 0 
+0 42
+0 16
+cfn=(82170)
+calls=1 0 
+0 293
+0 6
+cfn=(80958)
+calls=1 0 
+0 16
+0 24
+cfn=(80846)
+calls=1 0 
+0 35
+0 60
+cfn=(80838) 0x00430b30
+calls=1 0 
+0 42
+0 16
+cfn=(80530)
+calls=1 0 
+0 19
+0 10
+cfn=(80536)
+calls=1 0 
+0 20
+0 1
+
+fn=(81820)
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 38
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=1 0 
+0 107
+0 4
+
+fn=(81916)
+0 70
+
+fn=(82128)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cfn=(65796)
+calls=1 0 
+0 266
+0 4
+
+fn=(82208)
+0 30
+cfn=(4054)
+calls=5 0 
+0 10
+0 25
+cfn=(80144)
+calls=5 0 
+0 13596
+0 40
+cfn=(80530)
+calls=5 0 
+0 95
+0 50
+cfn=(80536)
+calls=5 0 
+0 100
+0 35
+
+fn=(82818)
+cfn=(57862)
+calls=0 0 
+0 51253335
+
+fn=(107498)
+0 32
+cfn=(4054)
+calls=4 0 
+0 8
+0 126
+cob=(81)
+cfi=(209)
+cfn=(26452)
+calls=2 0 
+0 70
+0 14
+
+fn=(107592)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 33
+cfn=(107614)
+calls=1 0 
+0 654
+0 5
+cfn=(80932)
+calls=1 0 
+0 22
+0 46
+cfn=(107664)
+calls=1 0 
+0 286
+0 8
+cfn=(107428)
+calls=1 0 
+0 194
+0 13
+cfn=(82412)
+calls=1 0 
+0 2408
+0 10
+cfn=(80886)
+calls=1 0 
+0 169
+0 5
+cfn=(80290)
+calls=1 0 
+0 69
+0 4
+cfn=(79486)
+calls=1 0 
+0 22
+0 9
+cfn=(82208)
+calls=1 0 
+0 13593
+0 4
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 50
+0 22
+
+fn=(107614)
+0 10
+cfn=(4054)
+calls=2 0 
+0 4
+0 12
+cfn=(80990)
+calls=2 0 
+0 645
+0 6
+cfn=(103338)
+calls=2 0 
+0 16
+0 28
+
+fn=(107758)
+0 16
+cfn=(107762)
+calls=1 0 
+0 5849
+0 8
+
+fn=(108270)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 31
+
+fn=(108302)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 15
+cfn=(81810)
+calls=1 0 
+0 169
+0 5
+cfn=(81726)
+calls=1 0 
+0 22
+0 16
+cfn=(108322)
+calls=1 0 
+0 60
+0 4
+cfn=(65934)
+calls=1 0 
+0 18
+0 34
+cfn=(81820)
+calls=1 0 
+0 133
+0 2
+cfn=(81820)
+calls=1 0 
+0 20
+0 32
+cfn=(81942)
+calls=1 0 
+0 726
+0 2
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 109
+0 16
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=1 3693 
+0 129
+0 9
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=1 3693 
+0 129
+0 4
+cfn=(81904) QTextFormatCollection::~QTextFormatCollection()
+calls=1 0 
+0 2328
+0 17
+cob=(81)
+cfi=(209)
+cfn=(6710)
+calls=1 0 
+0 117
+0 3
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=1 0 
+0 158
+0 17
+cfn=(81916)
+calls=1 0 
+0 25
+0 3
+cfn=(81916)
+calls=1 0 
+0 20
+0 18
+cob=(81)
+cfi=(209)
+cfn=(6404)
+calls=1 0 
+0 161
+0 6
+cob=(81)
+cfi=(209)
+cfn=(35800)
+calls=1 0 
+0 285
+0 1
+
+fn=(22040)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 13
+
+fn=(79330)
+0 14408
+cfn=(4054)
+calls=3602 0 
+0 7204
+0 21612
+cfn=(79336)
+calls=3602 0 
+0 28816
+0 14408
+
+fn=(79422)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 8
+cfn=(79330)
+calls=1 0 
+0 24
+0 5
+cfn=(79432)
+calls=1 0 
+0 2110
+0 3
+cfn=(79486)
+calls=1 0 
+0 18
+0 4
+cfn=(79330)
+calls=1 0 
+0 24
+0 5
+cfn=(79432)
+calls=1 0 
+0 213
+0 4
+cfn=(79572)
+calls=1 0 
+0 24
+0 4
+cfn=(79432)
+calls=1 0 
+0 1842
+0 7
+cfn=(79606)
+calls=1 0 
+0 1865
+0 2
+cfn=(79486)
+calls=1 0 
+0 18
+0 3
+cfn=(79486)
+calls=1 0 
+0 18
+0 10
+
+fn=(79506)
+0 18
+cfn=(4054)
+calls=3 0 
+0 6
+0 18
+cfn=(79510)
+calls=3 0 
+0 892
+0 33
+cfn=(58686)
+calls=3 0 
+0 396
+0 15
+cfn=(23800)
+calls=3 0 
+0 72
+0 6
+cfn=(23828)
+calls=3 0 
+0 66
+0 95
+
+fn=(79746)
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 60
+cfn=(107376)
+calls=2 0 
+0 110
+0 60
+cfn=(81652)
+calls=1 0 
+0 191
+0 6
+cob=(81)
+cfi=(209)
+cfn=(4028)
+calls=2 0 
+0 492
+0 46
+
+fn=(79774)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 41
+cfn=(81734)
+calls=1 0 
+0 21
+0 3
+cfn=(81742)
+calls=1 0 
+0 21
+0 40
+
+fn=(79804)
+0 21624
+cfn=(4054)
+calls=3604 0 
+0 7208
+0 18020
+cfn=(79450)
+calls=3604 0 
+0 72080
+0 14416
+
+fn=(80172)
+0 32
+cfn=(4054)
+calls=4 0 
+0 8
+0 64
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=4 0 
+0 739
+0 259
+cob=(81)
+cfi=(209)
+cfn=(22420)
+calls=10 0 
+0 620
+0 193
+cfn=(80232)
+calls=3 0 
+0 922
+0 3
+
+fn=(80838)
+0 9
+cfn=(4054)
+calls=1 0 
+0 2
+0 31
+
+fn=(80932)
+0 79398
+
+fn=(81114)
+0 18
+
+fn=(81262)
+0 1015
+cfn=(4054)
+calls=203 0 
+0 406
+0 2639
+cfn=(80536)
+calls=203 0 
+0 4060
+0 1015
+
+fn=(57812)
+0 39567
+cfn=(4054)
+calls=3597 0 
+0 7194
+0 25179
+cfn=(57818)
+calls=3597 0 
+0 2222946
+0 10791
+cfn=(57832)
+calls=3597 0 
+0 140283
+0 17985
+cfn=(57826)
+calls=3597 0 
+0 111507
+0 86328
+
+fn=(58722)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(57752)
+calls=1 0 
+0 15
+0 5
+
+fn=(65814)
+0 7
+cfn=(4054)
+calls=1 0 
+0 2
+0 4
+cfn=(65784)
+calls=1 0 
+0 49
+0 3
+cfn=(65796)
+calls=1 0 
+0 37
+0 3
+cfn=(65820)
+calls=1 0 
+0 1037886
+0 8
+
+fn=(65880)
+0 1827
+cfn=(4054)
+calls=203 0 
+0 406
+0 571499
+cfn=(67080) QTextEngine::attributes() const
+calls=203 0 
+0 897928
+0 93232
+cfn=(67160)
+calls=2379 0 
+0 4204161
+0 5570
+cfn=(69416)
+calls=203 0 
+0 6902
+0 217630
+cfn=(69806)
+calls=203 0 
+0 33698
+0 559289
+cfn=(67142)
+calls=406 0 
+0 43202304
+0 1624
+cfn=(67080)
+calls=406 0 
+0 9744
+0 167453
+
+fn=(67074)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 20
+
+fn=(67080)
+0 4872
+cfn=(4054)
+calls=609 0 
+0 1218
+0 3657
+cfn=(65820)
+calls=1 0 
+0 45
+0 20752
+cfn=(67086)
+calls=1 0 
+0 76687
+0 16
+cob=(81)
+cfi=(209)
+cfn=(67100)
+calls=1 0 
+0 795043
+0 9
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=1 0 
+0 161
+0 4874
+cob=(81)
+cfi=(209)
+cfn=(3828)
+calls=1 0 
+0 323
+0 15
+
+fn=(69420)
+0 2030
+cfn=(4054)
+calls=203 0 
+0 406
+0 3857
+cfn=(69252)
+calls=203 0 
+0 6699
+0 6699
+
+fn=(69886)
+0 10
+cfn=(4054)
+calls=2 0 
+0 4
+0 26
+
+fn=(79572)
+0 16
+cfn=(4054)
+calls=4 0 
+0 8
+0 24
+cfn=(79336)
+calls=4 0 
+0 32
+0 16
+
+fn=(79638)
+0 24
+cfn=(4054)
+calls=3 0 
+0 6
+0 194
+cfn=(79652)
+calls=1 0 
+0 25
+0 8
+cfn=(79652)
+calls=2 0 
+0 225
+0 43
+
+fn=(80466)
+0 56
+
+fn=(80892)
+0 7
+
+fn=(81016)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(80290)
+calls=1 0 
+0 69
+0 7
+cfn=(81026)
+calls=1 0 
+0 124
+0 15
+
+fn=(81622)
+0 4
+cfn=(4054)
+calls=1 0 
+0 2
+0 13
+cob=(81)
+cfi=(209)
+cfn=(6646)
+calls=1 0 
+0 2548
+0 4
+
+fn=(81674)
+0 22
+cfn=(4054)
+calls=2 0 
+0 4
+0 36
+
+fn=(81682)
+0 49
+cfn=(4054)
+calls=7 0 
+0 14
+0 62
+cfn=(107494)
+calls=2 0 
+0 298
+0 4
+cob=(52)
+cfi=(151)
+cfn=(5254)
+calls=2 0 
+0 218
+0 35
+
+fn=(81904)
+0 5
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(23828)
+calls=1 0 
+0 22
+0 16
+cob=(81)
+cfi=(209)
+cfn=(6872)
+calls=1 0 
+0 124
+0 11
+cfn=(79590)
+calls=1 0 
+0 1267
+0 11
+cob=(81)
+cfi=(209)
+cfn=(77144)
+calls=1 0 
+0 862
+0 1
+
+fn=(82058)
+0 28
+cfn=(4054)
+calls=4 0 
+0 8
+0 40
+cob=(81)
+cfi=(209)
+cfn=(69848)
+calls=4 0 
+0 144
+0 80
+cfn=(82072)
+calls=1 0 
+0 868
+0 8
+cfn=(108238)
+calls=1 0 
+0 1845
+0 4
+cfn=(82290)
+calls=1 0 
+0 1438
+0 7
+cfn=(82064)
+calls=1 0 
+0 1920
+0 1
+
+fn=(82082)
+0 56
+cfn=(4054)
+calls=7 0 
+0 14
+0 52
+cfn=(80388)
+calls=2 0 
+0 412
+0 58
+
+fn=(82274)
+0 144
+cfn=(4054)
+calls=18 0 
+0 36
+0 234
+
+fn=(82412)
+0 16
+cfn=(4054)
+calls=2 0 
+0 4
+0 54
+cfn=(65820)
+calls=1 0 
+0 2369
+0 3
+
+fn=(107020)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 7
+cfn=(107026)
+calls=1 0 
+0 51253015
+0 4
+
+fn=(107562)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 9
+cfn=(79942)
+calls=1 0 
+0 6
+0 22
+
+fn=(107704)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 12
+cfn=(65484)
+calls=1 0 
+0 6
+0 10
+cfn=(82332)
+calls=1 0 
+0 12
+0 21
+cfn=(107712)
+calls=1 0 
+0 374
+0 5
+cfn=(81674)
+calls=1 0 
+0 31
+0 6
+
+fn=(107752)
+0 16
+
+fn=(108116)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 11
+cfn=(80886)
+calls=1 0 
+0 169
+0 6
+cfn=(81026)
+calls=1 0 
+0 124
+0 4
+cob=(81)
+cfi=(209)
+cfn=(37602)
+calls=1 0 
+0 15
+0 3
+cfn=(79486)
+calls=1 0 
+0 22
+0 8
+
+fn=(108824)
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cfn=(23100)
+calls=1 0 
+0 105
+0 7
+cfn=(108830) 0x00457280
+calls=1 0 
+0 250
+0 2
+cfn=(23118)
+calls=1 0 
+0 22
+0 10
+cfn=(108844)
+calls=1 0 
+0 106
+0 8
+cfn=(57700)
+calls=1 0 
+0 187
+0 7
+cfn=(108852)
+calls=1 0 
+0 57
+0 26
+cfn=(22038)
+calls=1 0 
+0 30
+0 23
+cfn=(108902)
+calls=1 0 
+0 25
+0 6
+cfn=(22296)
+calls=1 0 
+0 25
+0 7
+cfn=(23828)
+calls=1 0 
+0 22
+0 3
+cfn=(23118)
+calls=1 0 
+0 22
+0 3
+cfn=(23828)
+calls=1 0 
+0 22
+0 17
+
+fn=(108830)
+0 10
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+cfn=(57700)
+calls=1 0 
+0 187
+0 7
+cfn=(23112)
+calls=1 0 
+0 28
+0 6
+
+fn=(108998)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 6
+cfn=(109002)
+calls=1 0 
+0 21
+0 7
+cfn=(109002)
+calls=1 0 
+0 21
+0 56
+
+fn=(109162)
+0 10
+cfn=(107332)
+calls=1 0 
+0 24
+0 96
+
+ob=(39)
+fl=(137)
+fn=(69320)
+0 64
+
+ob=(83)
+fl=(214)
+fn=(109162)
+0 7
+
+fn=(110148)
+0 10
+cfn=(4054)
+calls=2 0 
+0 4
+0 44
+
+ob=(39)
+fl=(137)
+fn=(69320)
+0 20
+
+ob=(40)
+fl=(540)
+fn=(86306)
+11 2
++1 2
++2 4
++5 2
++1 2
++1 2
++1 2
++1 2
++2 2
++2 2
++2 2
++1 2
+
+fl=(492)
+fn=(59076)
+11 2
++1 2
++2 4
++5 2
++1 2
++1 2
++1 2
++1 2
++2 2
++2 2
++2 2
++1 2
+
+ob=(4)
+fl=(594) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/pthread_mutex_lock.c
+fn=(110826) __pthread_mutex_cond_lock
+47 35
++3 5
+-3 5
+cfi=(49) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/sem_post.S
+cfn=(212) 0x00004340
+calls=5 170 
+* 10
+* 5
++3 5
++1 5
+-1 5
++1 10
++3 5
++2 5
+-2 5
++2 5
++5 25
++1 15
++63 15
++6 30
+
+fl=(210)
+fn=(3720)
+29 20
++5 5
+-2 5
++1 5
++1 5
++6 5
+-6 5
++4 10
++1 10
++1 10
++1 5
++2 5
++3 15
+
+fl=(201)
+fn=(3392)
+27 16776
+cfi=(49)
+cfn=(212)
+calls=2796 170 
+* 5592
+* 5592
++5 5592
++1 5592
++24 2796
++1 5592
++2 8388
++7 13980
+
+fl=(197)
+fn=(3352)
+43 30
+cfi=(49)
+cfn=(212)
+calls=5 170 
+* 10
+* 20
++5 15
++3 5
++3 15
++29 125
++3 15
++2 5
+-2 5
++2 5
++11 30
++28 15
++12 30
+
+fl=(483) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/sem_wait.S
+fn=(57218) sem_wait@@GLIBC_2.1
+
+fl=(587)
+fn=(109486)
+37 5
++2 5
++2 5
++2 5
++3 5
++1 5
++2 5
++1 5
++1 5
++3 5
++1 5
++1 5
++6 5
++4 5
++1 5
++1 5
++1 5
++3 5
++1 5
+cfi=(108)
+cfn=(868) __pthread_mutex_unlock_usercnt
+calls=5 -37 
+* 160
++2 5
++1 5
++2 5
++1 5
++1 5
++1 5
++3 5
++4 5
++1 5
++1 5
++1 5
++1 5
++1 5
++3 5
++3 5
++1 5
++3 5
++1 5
++1 5
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=5 0 
+* 10
++5 5
++3 5
++1 5
++1 5
++1 5
++18 5
++1 5
++1 5
++1 5
++1 5
++1 5
++3 5
++1 5
++2 5
++3 5
++6 5
++3 5
+cfi=(477) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/cancellation.c
+cfn=(55036) __pthread_enable_asynccancel
+calls=5 31 
+* 85
++1 5
++2 5
++4 5
++1 5
++1 5
++4 5
++5 5
++1 5
++2 5
++1 5
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=5 0 
+* 10
++1 5
++2 5
++2 5
++1 5
+cfi=(477)
+cfn=(55080) __pthread_disable_asynccancel
+calls=5 66 
+* 115
++4 5
++1 5
++1 5
++6 5
++2 5
++1 5
++1 5
++2 5
++1 5
++2 5
++1 5
++2 5
++1 5
++1 5
++1 5
++7 5
++1 5
++2 5
++1 5
++1 5
++1 5
++1 5
++6 5
++1 5
++2 5
++3 5
++1 5
++1 5
++1 5
++23 5
++6 5
++3 5
++1 5
+cfi=(594)
+cfn=(110826)
+calls=5 47 
+* 190
++1 5
++4 5
++2 5
++7 5
++2 5
++2 5
++2 5
++3 5
+
+fl=(470)
+fn=(55038)
+cob=(81)
+cfi=(209)
+cfn=(109368)
+calls=0 0 
+300 6736
+
+fl=(154)
+fn=(1770)
+36 2796
++1 2796
++1 2796
++1 2796
++1 2796
+
+fl=(595) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/lowlevellock.S
+fn=(110836) __lll_unlock_wake
+363 5
++2 5
++2 5
++6 5
++1 5
++1 15
++1 5
++1 5
++1 5
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=5 0 
+* 10
++2 5
++3 5
++3 5
++3 5
+
+fl=(412)
+fn=(37726)
+27 15
++1 10
++1 20
++4 10
++3 10
+
+fl=(340)
+fn=(15028)
+28 25
++1 15
++4 35
++2 40
++9 5
++5 5
+-5 10
++7 10
++32 5
+-4 5
++4 20
+
+fl=(108)
+fn=(868)
+36 91
++1 13
+-1 13
+cfi=(49)
+cfn=(212)
+calls=13 170 
+* 26
+* 13
++1 26
++1 26
++3 26
++6 13
+-1 13
++1 13
++5 52
+cfn=(110834) _L_unlock_628
+calls=5 290 
+* 140
+* 8
++25 48
+-28 16
+
+fn=(110834)
+52 5
++25 30
+290 15
+cfi=(595)
+cfn=(110836)
+calls=5 +73 
+* 85
+* 5
+
+fn=(866)
+289 8
++1 8
+-1 8
++1 8
++1 8
+-1 8
+cfn=(868)
+calls=8 36 
+* 377
+
+fl=(477)
+fn=(55036)
+31 10
++2 5
++4 10
++2 10
++3 10
++2 10
++2 15
++14 15
+
+fn=(55080)
+66 15
++3 5
+-3 10
++3 5
++3 5
++3 5
++4 5
++2 5
+-2 5
++2 5
++2 10
++11 15
++6 25
+
+fl=(107)
+fn=(864)
+47 64
+cfi=(49)
+cfn=(212)
+calls=8 170 
+* 16
+* 8
++3 16
++1 8
+-1 8
++1 16
++3 8
++2 8
+-2 8
++2 8
++5 40
++1 24
++63 8
++2 8
+-2 8
++2 8
++4 48
+
+fl=(211)
+fn=(3782)
+27 2987
++1 2987
+
+fl=(49)
+fn=(212)
+170 2827
++1 2827
+
+ob=(92) /usr/lib/libespeak.so.1.1.43
+fl=(233) ???
+fn=(57198) 0x000298e0
+
+fn=(57440) 0x0002a270
+
+ob=(52)
+fl=(151)
+fn=(1570) 0x00047217
+0 126
+
+fn=(2178)
+0 4
+cfn=(1570)
+calls=1 0 
+0 2
+0 5
+cfn=(2184)
+calls=1 0 
+0 132
+0 4
+
+fn=(2184)
+0 264
+cfn=(1570)
+calls=33 0 
+0 66
+0 165
+cob=(3)
+cfi=(103)
+cfn=(856)
+calls=33 3616 
+0 5469
+0 264
+
+fn=(5254)
+0 168
+cfn=(1570)
+calls=28 0 
+0 56
+0 140
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=28 3693 
+0 2905
+0 112
+
+fn=(23404)
+0 4
+cfn=(1570)
+calls=1 0 
+0 2
+0 5
+cfn=(5254)
+calls=1 0 
+0 144
+0 4
+
+totals: 51260071

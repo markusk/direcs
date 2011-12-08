@@ -1,0 +1,3595 @@
+version: 1
+creator: callgrind-3.6.0.SVN-Debian
+pid: 4336
+cmd:  ./direcs small
+part: 249
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: L2 cache: 
+
+desc: Timerange: Basic block 2481887781 - 2491901362
+desc: Trigger: --dump-every-bb=10000000
+
+positions: line
+events: Ir
+summary: 51510434
+
+
+ob=(94) /home/markus/develop/direcs/direcs/bin/direcs
+fl=(559) /home/markus/develop/direcs/direcs/src/networkThread.cpp
+fn=(114556) NetworkThread::run()
+61 2
+cob=(81) /usr/lib/libQtCore.so.4.6.3
+cfi=(209) ???
+cfn=(109466) QThread::msleep(unsigned long)
+calls=1 -61 
+* 553
+-5 5
+
+fl=(235) ???
+fn=(5522) 0x08054990
+cob=(3) /lib/i686/cmov/libc-2.11.2.so
+cfi=(236) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/csu/libc-start.c
+cfn=(5530) (below main)
+calls=0 96 
+0 51506788
+
+fl=(536) /home/markus/develop/direcs/direcs/src/gui.cpp
+fn=(115162) Gui::appendSerialLog(QString, bool)
+cob=(83) /usr/lib/libQtGui.so.4.6.3
+cfi=(214) ???
+cfn=(107020) QTextEdit::insertHtml(QString const&)
+calls=0 0 
+466 51506788
+
+fl=(579) /home/markus/develop/direcs/direcs/src/../tmp/moc_sensorThread.cpp
+fn=(130780) SensorThread::sensorDataComplete()
+138 4
+cob=(3)
+cfi=(238) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/gmon/../sysdeps/i386/i386-mcount.S
+cfn=(5556) mcount
+calls=1 35 
+* 34
++1 6
+cob=(81)
+cfi=(209)
+cfn=(6646) QMetaObject::activate(QObject*, QMetaObject const*, int, void**)
+calls=1 0 
+* 1905
++1 2
+
+fl=(538) /home/markus/develop/direcs/direcs/src/../tmp/moc_gui.cpp
+fn=(107006) Gui::qt_metacall(QMetaObject::Call, int, void**)
+cfi=(536)
+cfn=(115162)
+calls=0 438 
+259 51506788
+
+fl=(243) /home/markus/develop/direcs/direcs/src/direcs.cpp
+fn=(5606) main
+cob=(83)
+cfi=(214)
+cfn=(130330) QApplication::exec()
+calls=0 0 
+108 51506788
+
+fl=(550) /home/markus/develop/direcs/direcs/src/sensorThread.cpp
+fn=(130650) SensorThread::run()
+219 4
+cob=(81)
+cfi=(209)
+cfn=(109466)
+calls=1 0 
+* 551
++2 4
+617 4
++18 3
+cfi=(579)
+cfn=(130780)
+calls=1 138 
+* 1951
+216 5
+
+fl=(428) /home/markus/develop/direcs/direcs/src/speakThread.cpp
+fn=(109460) SpeakThread::run()
+75 2
+cob=(81)
+cfi=(209)
+cfn=(109466)
+calls=1 -75 
+* 553
++3 4
+-7 5
+
+ob=(3)
+fl=(238)
+fn=(5556)
+35 1
++1 1
++1 1
++2 1
++1 1
++4 1
+cfi=(239) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/gmon/mcount.c
+cfn=(5558) __mcount_internal
+calls=1 +16 
+* 24
++4 1
++1 1
++1 1
++1 1
+
+fl=(44) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/multiarch/strcspn.S
+fn=(184) 0x00016aaf
+52 4074
++1 4074
+
+fl=(103) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/malloc/malloc.c
+fn=(856) malloc
+3616 470
+cfi=(44)
+cfn=(184)
+calls=94 52 
+* 188
+* 282
++5 188
++1 188
++3 188
++33 752
++3 282
+cfn=(872) _int_malloc
+calls=94 4250 
+* 47333
++1 94
+-1 94
++1 94
++20 376
++1 854
++3 658
+
+fn=(2394) calloc
+4007 2430
+cfi=(44)
+cfn=(184)
+calls=270 52 
+* 540
+* 270
++10 810
++3 1080
++8 540
++1 540
++15 2700
++7 270
++1 270
+-1 270
++8 540
+-7 270
++7 270
+-7 270
++7 270
++7 810
+cfn=(872)
+calls=270 4250 
+* 37455
+* 270
++3 1080
++2 2970
++38 270
+-3 270
++3 1080
++10 270
++1 540
++1 540
++2 540
++7 270
+-3 270
++1 270
++1 270
++1 270
++15 1890
+
+fn=(872)
+4250 2646
+cfi=(44)
+cfn=(184)
+calls=378 52 
+* 756
+* 378
++30 378
+-30 756
++30 3024
++8 378
+-8 378
++8 378
++14 276
+-13 552
++1 276
+-1 276
++13 276
+-12 552
++14 552
++1 252
++7 126
++4 126
+4753 2646
+4330 672
++1 240
++1 240
+-1 240
++1 480
+-1 240
++3 240
+-2 240
++2 480
++1 316
++3 158
++1 316
++5 158
++1 158
++1 158
++2 158
+-4 158
++4 316
++4 158
+-1 158
++1 316
++19 417
++1 15
+-1 93
++1 465
++1 154
+cfn=(874) malloc_consolidate
+calls=77 5077 
+* 18861
++19 178
++93 178
+4739 178
+4485 534
+-93 178
+4739 178
+4392 178
+4739 178
+4485 356
+-77 178
+4739 178
+4408 356
+-16 178
++66 444
+-1 444
++2 1776
+-1 444
++1 1776
+-1 444
++46 1332
++7 444
+-7 444
++1 444
++6 444
+-5 444
+-1 444
++3 444
+-1 444
++4 444
+-7 294
++7 98
+-7 98
++1 98
++6 98
+-5 98
+-1 98
++3 98
+-1 98
++4 98
+4392 2880
++3 542
+-2 542
++1 1084
++1 1626
++3 542
++10 1550
++30 542
++5 542
+-5 542
++1 542
++4 542
++13 1084
++6 944
++1 92
++1 92
+-1 92
++4 184
+-4 3
++1 3
+-1 3
++4 6
++2 3
++2 3
+-2 3
++2 12
++1 6
++4 4
++1 2
+-1 2
++1 2
++1 6
+-16 33
++1 3
+-1 9
++2 3
+-2 6
++5 3
+-4 3
++4 3
++34 380
+-20 5
++1 3
++6 1
++6 1
+-1 1
++1 1
++1 1
++1 2
++2 3
+-36 33
+-52 156
+-2 156
+4520 356
++72 252
+-1 126
++1 126
++2 126
+-3 126
++2 126
++2 126
+-2 126
++2 126
+-2 126
++1 126
++1 252
++19 126
+-14 126
++14 252
+-14 1008
++12 248
+-1 744
++3 868
++4 124
++3 248
++1 8
++2 4
+-2 4
++1 4
+-1 8
+-22 4
++22 4
+-22 28
++2 54
++2 48
++96 6
++3 6
+-3 6
++3 6
+-2 18
++2 12
+4521 288
++3 288
++1 171
++2 53
++1 265
++6 161
++3 2
++1 1
+-1 1
++1 2
+-1 102
++1 51
+-1 51
++1 570
++3 104
++1 5
++1 15
++31 52
+-1 52
++1 156
+4371 270
+4628 360
++3 120
+-3 120
++3 120
++2 240
++3 120
+-3 120
++3 1860
++3 240
++13 240
++1 240
+-6 120
++11 120
+-11 120
++17 120
+-6 120
++1 120
++2 120
+-1 120
++4 120
++1 156
++1 240
++2 12
++1 12
++2 96
++3 12
+-3 12
++2 12
++1 12
+-1 24
++5 12
+-1 12
++1 24
+-7 864
++3 108
+-3 108
++2 108
++1 108
+-1 216
++5 108
+-1 108
++1 216
+4371 30
+4706 6
++1 6
+-2 12
++2 18
+-2 6
++2 18
++2 12
+-2 6
+-1 6
++6 6
+-3 6
++4 6
+-4 6
++4 18
+4552 47
++1 47
+-1 47
++1 141
+-5 47
++14 47
+-14 47
++10 47
++1 47
++2 47
+-1 47
++2 47
++5 141
++3 47
+-3 235
++2 47
+-2 47
++3 47
+-1 141
+-35 102
++4 676
+
+fn=(874)
+5077 462
+cfi=(44)
+cfn=(184)
+calls=77 52 
+* 154
+* 231
++22 231
++1 77
++2 77
++19 77
+-19 77
++17 77
++2 77
+-2 154
++26 77
+-24 77
++24 462
+-19 154
++2 154
+-2 1386
++2 1386
++17 79
+-15 79
++15 158
++8 76
+-1 76
++1 912
++4 231
++4 231
+-4 231
++1 231
++1 231
++2 231
++5 693
++1 231
++1 231
++1 231
+-2 231
++8 231
++3 462
+-41 231
+-3 231
++3 462
++1 231
+-4 231
++5 462
++2 231
+-2 231
++2 231
++7 693
++1 693
++6 310
++26 3696
++6 462
+
+fn=(968) free
+3693 2148
+cfi=(44)
+cfn=(184)
+calls=358 52 
+* 716
+* 716
++5 716
++1 716
++5 716
++3 358
++3 1074
++15 1074
++12 2148
++2 716
+cfn=(970) _int_free
+calls=358 4765 
+* 23061
++1 1432
++2 1790
+
+fn=(970)
+4765 9624
++15 1203
+-15 1203
+cfi=(44)
+cfn=(184)
+calls=1203 52 
+* 2406
+* 1203
++15 2406
++6 3609
+-6 1203
++6 3609
++13 2406
++13 2406
++79 1860
++21 3720
++6 930
+-10 930
++10 1860
++8 2790
++7 1860
++1 930
+-2 1860
++2 1860
++6 2790
++4 1860
++7 2790
++2 2790
++7 429
++8 858
++1 429
++1 858
+-2 1002
++1 501
++1 1002
++7 930
+-2 930
++1 930
++1 930
++2 98
++1 98
++2 98
++3 196
+-2 98
++2 98
++1 98
++30 196
+-34 832
++3 1664
+-2 832
++2 832
++1 832
++30 1664
+4824 273
+-1 546
++2 273
+-2 273
++2 546
++27 819
++3 273
++1 546
++20 273
+-21 273
++21 546
++6 273
++1 546
+5056 7218
+-99 6546
++1 1002
+-38 5580
++37 28
+
+fn=(3876) realloc
+3749 5082
+cfi=(44)
+cfn=(184)
+calls=847 52 
+* 1694
+* 4235
++7 1694
++1 1694
++4 2541
++4 1694
++3 846
++2 846
+-2 846
++2 2538
++6 4230
++7 7614
++3 846
+-3 846
++3 846
++19 2538
++9 5076
++8 846
+-3 1692
++3 5076
+cfn=(3880) _int_realloc
+calls=846 5196 
+* 152967
+* 846
++2 3384
++1 9306
++24 846
++6 5922
+-90 2
++90 5
+-90 1
+cfn=(856)
+calls=1 3616 
+* 337
+
+fn=(3880)
+5196 6768
++22 846
+-22 846
+cfi=(44)
+cfn=(184)
+calls=846 52 
+* 1692
+* 846
++21 1692
++1 2538
++14 1692
++4 1692
++1 846
++1 1692
+-1 846
++2 1692
++6 4230
++8 868
++12 868
+-1 1708
++5 5466
++68 1664
++2 1664
++5 1662
++1 4986
++1 3324
++3 831
++4 1662
+cfn=(970)
+calls=831 4765 
+* 78020
++5 832
++73 5076
+-91 3
++1 1
+-1 7
++1 2
+-67 70
+cfn=(872)
+calls=14 4250 
+* 3972
+* 14
++1 70
++3 28
++6 14
+-5 14
++5 14
++11 14
++1 14
+-1 14
++3 28
++1 14
+-1 14
++1 14
++2 28
++24 42
+cfn=(970)
+calls=14 4765 
+* 1296
++3 28
++17 4155
+-76 14
++33 84
+cfi=(121) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/memcpy.S
+cfn=(946) memcpy
+calls=14 44 
+* 6422
+* 28
+
+fl=(167) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/string/../sysdeps/i386/i686/memset.S
+fn=(2396) memset
+52 1247
++1 1247
++2 1247
++1 1247
++5 1247
++2 1247
++1 1247
++2 1247
++1 1247
++12 1247
++1 1247
++1 1247
++2 1247
++2 249571
++2 1247
++1 1247
++5 1247
++3 1247
++8 1247
+
+fl=(473) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/misc/../sysdeps/unix/sysv/linux/i386/clone.S
+fn=(54974) clone
+cob=(4) /lib/i686/cmov/libpthread-2.11.2.so
+cfi=(470) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_create.c
+cfn=(55038) start_thread
+calls=0 230 
+130 3646
+
+fl=(273) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/time/../sysdeps/unix/syscall-template.S
+fn=(7238) gettimeofday
+83 3
+-1 24
+cob=(1) /lib/ld-2.11.2.so
+cfi=(1) ???
+cfn=(214) _dl_sysinfo_int80
+calls=3 -82 
+* 6
+
+fl=(473)
+fn=(54974)
+
+fl=(121)
+fn=(946)
+44 15
++1 15
++1 15
++1 15
++2 15
++1 15
++1 15
++1 15
++1 15
++1 15
++2 15
++1 15
++2 15
++1 15
++11 15
++1 15
++1 15
++1 15
++1 6077
++2 15
++1 15
++2 15
++2 15
++1 15
++1 15
++4 15
+
+fl=(236)
+fn=(5530)
+cob=(94)
+cfi=(243)
+cfn=(5606)
+calls=0 25 
+228 51506788
+
+fl=(239)
+fn=(5558)
+60 3
++13 1
+-13 3
++13 1
+-13 2
+cfi=(44)
+cfn=(184)
+calls=1 -8 
+* 2
+* 1
++13 3
+-1 2
+
+ob=(1)
+fl=(1)
+fn=(0) 0x00000850
+cob=(94)
+cfi=(235)
+cfn=(5522)
+calls=0 0 
+0 51506788
+
+fn=(214)
+0 24
+
+ob=(3)
+fl=(239)
+fn=(5558)
+174 6
+
+ob=(20) /lib/libglib-2.0.so.0.2400.2
+fl=(92) ???
+fn=(101114) g_main_context_dispatch
+cob=(81)
+cfi=(209)
+cfn=(101130) 0x00198550
+calls=0 0 
+0 51506788
+
+fn=(100926) g_main_context_iteration
+cfn=(100928) 0x0003eb20
+calls=0 0 
+0 51506788
+
+fn=(100928)
+cfn=(101114)
+calls=0 0 
+0 51506788
+
+fn=(7818) 0x00039a30
+0 4
+cfn=(664) 0x00013d47
+calls=1 0 
+0 2
+0 13
+
+fn=(7838) g_atomic_int_get
+0 7
+
+fn=(664)
+0 4
+
+fn=(34772) g_main_context_wakeup
+0 7
+cfn=(664)
+calls=1 0 
+0 2
+0 7
+cfn=(7838)
+calls=1 0 
+0 7
+0 15
+cob=(4)
+cfi=(107) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_lock.c
+cfn=(864) pthread_mutex_lock
+calls=1 47 
+0 39
+0 2
+cfn=(7818)
+calls=1 0 
+0 19
+0 12
+cob=(4)
+cfi=(108) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_unlock.c
+cfn=(866) pthread_mutex_unlock
+calls=1 289 
+0 40
+0 6
+
+ob=(23) /usr/lib/libfontconfig.so.1.4.4
+fl=(95) ???
+fn=(59380) 0x00009880
+0 18128
+
+fn=(59784) FcCharSetHasChar
+0 2884
+cfn=(59380)
+calls=206 0 
+0 18128
+0 3914
+
+ob=(81)
+fl=(209)
+fn=(8008) QObject::event(QEvent*)
+cfn=(101138) QMetaCallEvent::placeMetaCall(QObject*)
+calls=0 0 
+0 51506788
+
+fn=(21502) QChar::category() const
+0 824
+cfn=(5792) 0x0005479a
+calls=206 0 
+0 412
+0 2472
+
+fn=(36994) QMetaCallEvent::QMetaCallEvent(int, QObject const*, int, int, int*, void**, QSemaphore*)
+0 5
+cfn=(3622) 0x00051e67
+calls=1 0 
+0 2
+0 6
+cfn=(7974) QEvent::QEvent(QEvent::Type)
+calls=1 0 
+0 19
+0 22
+
+fn=(37008) QCoreApplication::compressEvent(QEvent*, QObject*, QPostEventList*)
+0 17
+
+fn=(67212) 0x000e35e0
+0 2075
+cfn=(3622)
+calls=415 0 
+0 830
+0 2905
+cfn=(67216) 0x000ddc40
+calls=415 0 
+0 6225
+0 4974
+cfn=(67224) 0x000df190
+calls=415 0 
+0 896644
+0 1660
+cfn=(67264) 0x000e18a0
+calls=415 0 
+0 12865
+0 2075
+cfn=(67512) 0x000dfa70
+calls=415 0 
+0 19549230
+0 1660
+cfn=(67784) 0x000df640
+calls=415 0 
+0 20383162
+0 414
+
+fn=(67496) 0x000dbaa0
+0 1620
+cfn=(3622)
+calls=270 0 
+0 540
+0 1350
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=270 3693 
+0 24840
+0 1080
+
+fn=(67572) 0x000cd8a0
+0 3320
+cfn=(3622)
+calls=415 0 
+0 830
+0 53535
+cfn=(67594) 0x000c9370
+calls=1245 0 
+0 12450
+0 56121
+cfn=(67728) 0x000c94f0
+calls=23703 0 
+0 1161447
+0 476550
+cfn=(67604) 0x000cb750
+calls=23703 0 
+0 16807962
+0 101037
+
+fn=(67594)
+0 12450
+
+fn=(101130)
+cfn=(79098) QCoreApplication::sendPostedEvents(QObject*, int)
+calls=0 0 
+0 51506788
+
+fn=(3622)
+0 659764
+
+fn=(66072) QUnicodeTables::script(unsigned int)
+0 9104
+cfn=(5792)
+calls=2276 0 
+0 4552
+0 25280
+
+fn=(67534) 0x000c93f0
+0 316040
+cfn=(3622)
+calls=31604 0 
+0 63208
+0 284436
+
+fn=(67620) 0x000c9eb0
+0 5132656
+cfn=(67626) 0x000c9c60
+calls=7901 0 
+0 1927844
+0 39505
+
+fn=(67694) 0x000dc780
+0 1383936
+cfn=(3622)
+calls=172992 0 
+0 345984
+0 12037251
+
+fn=(69834) QMetaObject::metacall(QObject*, QMetaObject::Call, int, void**)
+cob=(94)
+cfi=(538)
+cfn=(107006)
+calls=0 230 
+0 51506788
+
+fn=(100914) QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>)
+cob=(20)
+cfi=(92)
+cfn=(100926)
+calls=0 0 
+0 51506788
+
+fn=(3776) QThread::currentThreadId()
+0 11660
+cfn=(3622)
+calls=2915 0 
+0 5830
+0 8745
+cob=(4)
+cfi=(211) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_self.c
+cfn=(3782) pthread_self
+calls=2915 27 
+0 5830
+0 11660
+
+fn=(4462) QVectorData::allocate(int, int)
+0 12
+cfn=(3622)
+calls=2 0 
+0 4
+0 12
+cfn=(3828) qMalloc(unsigned int)
+calls=2 0 
+0 268
+0 8
+
+fn=(6648) 0x0017bd90
+0 5
+cfn=(3622)
+calls=1 0 
+0 2
+0 11
+cfn=(4664) QMutexPool::get(void const*)
+calls=1 0 
+0 28
+0 6
+
+fn=(8400) QVariant::~QVariant()
+0 21264
+cfn=(3622)
+calls=3544 0 
+0 7088
+0 38984
+
+fn=(36490) QVariant::userType() const
+0 24815
+
+fn=(62960) 0x000dbb30
+0 2160
+cfn=(3622)
+calls=270 0 
+0 540
+0 1620
+cob=(3)
+cfi=(103)
+cfn=(2394)
+calls=270 4007 
+0 60675
+0 2430
+
+fn=(3770) QMutex::lock()
+0 23336
+cfn=(3622)
+calls=2917 0 
+0 5834
+0 14611
+cfn=(3776)
+calls=2915 0 
+0 43725
+0 49555
+
+fn=(67532) 0x000c95b0
+0 71109
+cfn=(67534)
+calls=7901 0 
+0 165921
+0 165921
+
+fn=(109466)
+0 18
+cfn=(3622)
+calls=3 0 
+0 6
+0 21
+cob=(3)
+cfi=(273)
+cfn=(7238)
+calls=3 82 
+0 33
+0 75
+cfn=(109468) 0x0006f860
+calls=3 0 
+0 1486
+0 18
+
+fn=(109368) 0x0006ff20
+cob=(94)
+cfi=(550)
+cfn=(130650)
+calls=0 194 
+0 2522
+cob=(94)
+cfi=(559)
+cfn=(114556)
+calls=0 45 
+0 560
+cob=(94)
+cfi=(428)
+cfn=(109460)
+calls=0 67 
+0 564
+
+fn=(3788) QMutex::unlock()
+0 20419
+cfn=(3622)
+calls=2917 0 
+0 5834
+0 58330
+
+fn=(34962) QObjectPrivate::cleanConnectionLists()
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 10
+
+fn=(37000) QCoreApplication::postEvent(QObject*, QEvent*)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 6
+cfn=(8024) QCoreApplication::postEvent(QObject*, QEvent*, int)
+calls=1 0 
+0 686
+0 4
+
+fn=(67102) 0x000e4bd0
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 4753
+cfn=(67108) 0x000e5380
+calls=1 0 
+0 38
+0 437988
+cfn=(67108)
+calls=8145 0 
+0 309510
+0 15
+cfn=(67108)
+calls=1 0 
+0 38
+0 270877
+
+fn=(67202) qShapeItem(HB_ShaperItem_*)
+0 1660
+cfn=(3622)
+calls=415 0 
+0 830
+0 2075
+cfn=(67204) 0x000de3d0
+calls=415 0 
+0 40874673
+0 1656
+
+fn=(67224)
+0 3320
+cfn=(3622)
+calls=415 0 
+0 830
+0 105980
+cfn=(67250) 0x000e5340
+calls=206 0 
+0 7828
+0 2717
+cfn=(67250)
+calls=209 0 
+0 7942
+0 219387
+cfn=(67250)
+calls=7486 0 
+0 284468
+0 264172
+
+fn=(67516) 0x000c9330
+0 5395
+
+fn=(3828)
+0 364
+cfn=(3622)
+calls=91 0 
+0 182
+0 455
+cob=(3)
+cfi=(103)
+cfn=(856)
+calls=91 3616 
+0 51286
+0 364
+
+fn=(3856) qAllocMore(int, int)
+0 592
+
+fn=(4520) qFree(void*)
+0 352
+cfn=(3622)
+calls=88 0 
+0 176
+0 440
+cob=(3)
+cfi=(103)
+cfn=(968)
+calls=88 3693 
+0 12541
+0 352
+
+fn=(4664)
+0 13
+cfn=(3622)
+calls=1 0 
+0 2
+0 13
+
+fn=(7974)
+0 1
+cfn=(5792)
+calls=1 0 
+0 2
+0 16
+
+fn=(7980) QCoreApplication::notifyInternal(QObject*, QEvent*)
+cob=(83)
+cfi=(214)
+cfn=(34746) QApplication::notify(QObject*, QEvent*)
+calls=0 0 
+0 51506788
+
+fn=(9054) QThreadStorageData::get() const
+0 13545
+cfn=(3622)
+calls=2709 0 
+0 5418
+0 13545
+cfn=(5642) 0x0006fc10
+calls=2709 0 
+0 157122
+0 65016
+
+fn=(79098)
+cfn=(79104) QCoreApplicationPrivate::sendPostedEvents(QObject*, int, QThreadData*)
+calls=0 0 
+0 51506788
+
+fn=(67784)
+0 3735
+cfn=(3622)
+calls=415 0 
+0 830
+0 8715
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=415 52 
+0 55291
+0 5395
+cfn=(67792) 0x000d5600
+calls=415 0 
+0 18961414
+0 202903
+cob=(83)
+cfi=(214)
+cfn=(67944) 0x003aa460
+calls=207 0 
+0 741802
+0 351997
+cob=(83)
+cfi=(214)
+cfn=(67944)
+calls=208 0 
+0 49624
+0 1456
+
+fn=(67832) 0x000d2e80
+0 434555
+cfn=(3622)
+calls=39505 0 
+0 79010
+0 3021500
+cfn=(67620)
+calls=15802 0 
+0 458258
+0 205426
+cfn=(67694)
+calls=15802 0 
+0 1927844
+0 237030
+cfn=(67620)
+calls=7901 0 
+0 229129
+0 79010
+cfn=(67694)
+calls=7901 0 
+0 963922
+0 892813
+cfn=(67620)
+calls=39505 0 
+0 1145645
+0 513565
+cfn=(67694)
+calls=39505 0 
+0 3365826
+0 484483
+cfn=(67620)
+calls=14972 0 
+0 434188
+0 194636
+cfn=(67694)
+calls=14972 0 
+0 1947182
+0 79192
+cfn=(67620)
+calls=1804 0 
+0 52316
+0 48708
+cfn=(67636) 0x000dc220
+calls=1804 0 
+0 302844
+0 36080
+cfn=(67636)
+calls=1804 0 
+0 359664
+0 37884
+cfn=(98278) 0x000d2730
+calls=1804 0 
+0 131692
+0 21648
+cfn=(98278)
+calls=1804 0 
+0 45100
+0 6828
+
+fn=(5792)
+0 37062
+
+fn=(6646)
+0 9
+cfn=(3622)
+calls=1 0 
+0 2
+0 47
+cfn=(6648)
+calls=1 0 
+0 52
+0 8
+cfn=(5642)
+calls=1 0 
+0 58
+0 71
+cfn=(112788) 0x0017daf0
+calls=1 0 
+0 1513
+0 43
+cfn=(3770)
+calls=1 0 
+0 28
+0 8
+cfn=(3788)
+calls=1 0 
+0 24
+0 21
+cfn=(34962)
+calls=1 0 
+0 20
+0 1
+
+fn=(67116) QUnicodeTables::properties(unsigned int)
+0 32096
+cfn=(5792)
+calls=16048 0 
+0 32096
+0 224672
+
+fn=(67264)
+0 3735
+cfn=(3622)
+calls=415 0 
+0 830
+0 8300
+
+fn=(130384) QEventLoop::processEvents(QFlags<QEventLoop::ProcessEventsFlag>)
+cob=(83)
+cfi=(214)
+cfn=(100906) 0x00216e90
+calls=0 0 
+0 51506788
+
+fn=(3870) qRealloc(void*, unsigned int)
+0 96
+cfn=(3622)
+calls=16 0 
+0 32
+0 80
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=16 3749 
+0 14626
+0 64
+
+fn=(4444) QVectorData::grow(int, int, int, bool)
+0 108
+cfn=(3622)
+calls=18 0 
+0 36
+0 198
+cfn=(3856)
+calls=18 0 
+0 592
+0 144
+
+fn=(8024)
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 14
+cfn=(3770)
+calls=1 0 
+0 28
+0 23
+cob=(83)
+cfi=(214)
+cfn=(37002) QApplication::compressEvent(QEvent*, QObject*, QPostEventList*)
+calls=1 0 
+0 63
+0 35
+cfn=(8026) 0x001707a0
+calls=1 0 
+0 291
+0 9
+cfn=(3788)
+calls=1 0 
+0 24
+0 7
+cfn=(34766) QEventDispatcherGlib::wakeUp()
+calls=1 0 
+0 176
+0 6
+
+fn=(8026)
+0 9
+cfn=(3622)
+calls=1 0 
+0 2
+0 7
+cfn=(4028) QListData::append()
+calls=1 0 
+0 24
+0 3
+cob=(52) /usr/lib/libstdc++.so.6.0.13
+cfi=(151) ???
+cfn=(2184) operator new(unsigned int)
+calls=1 0 
+0 232
+0 14
+
+fn=(67216)
+0 6225
+
+fn=(67250)
+0 31604
+cfn=(3622)
+calls=7901 0 
+0 15802
+0 31604
+cfn=(67116)
+calls=7901 0 
+0 142218
+0 79010
+
+fn=(67728)
+0 237030
+cfn=(67534)
+calls=23703 0 
+0 497763
+0 426654
+
+fn=(4028)
+0 8
+cfn=(3622)
+calls=1 0 
+0 2
+0 14
+
+fn=(5642)
+0 13550
+cfn=(3622)
+calls=2710 0 
+0 5420
+0 21680
+cob=(4)
+cfi=(154) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/pthread_once.S
+cfn=(1770) pthread_once
+calls=2710 36 
+0 13550
+0 8130
+cob=(4)
+cfi=(201) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_getspecific.c
+cfn=(3392) pthread_getspecific
+calls=2710 27 
+0 67750
+0 27100
+
+fn=(67636)
+0 94952
+cfn=(3622)
+calls=11869 0 
+0 23738
+0 2119588
+
+fn=(101138)
+cfn=(69834)
+calls=0 0 
+0 51506788
+
+fn=(112788)
+0 9
+cfn=(3622)
+calls=1 0 
+0 2
+0 20
+cfn=(3828)
+calls=1 0 
+0 224
+0 5
+cfn=(3828)
+calls=1 0 
+0 224
+0 11
+cob=(52)
+cfi=(151)
+cfn=(2184)
+calls=1 0 
+0 232
+0 17
+cfn=(36994)
+calls=1 0 
+0 54
+0 5
+cfn=(37000)
+calls=1 0 
+0 704
+0 6
+
+fn=(130342) QCoreApplication::exec()
+cfn=(130354) QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>)
+calls=0 0 
+0 51506788
+
+fn=(130354)
+cfn=(130384)
+calls=0 0 
+0 51506788
+
+fn=(79104)
+cfn=(7980)
+calls=0 0 
+0 51506788
+
+fn=(67512)
+0 3320
+cfn=(3622)
+calls=415 0 
+0 830
+0 3320
+cfn=(67516)
+calls=415 0 
+0 5395
+0 2490
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=415 3749 
+0 105900
+0 3735
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=415 3749 
+0 106043
+0 115179
+cfn=(67532)
+calls=7901 0 
+0 402951
+0 122250
+cfn=(67572)
+calls=415 0 
+0 18673252
+0 4565
+
+fn=(67604)
+0 237030
+cfn=(3622)
+calls=23703 0 
+0 47406
+0 3018176
+cfn=(67620)
+calls=7901 0 
+0 229129
+0 158020
+cfn=(67694)
+calls=7901 0 
+0 537271
+0 16381
+cfn=(67620)
+calls=15 0 
+0 435
+0 1390846
+cfn=(67620)
+calls=86911 0 
+0 4520035
+0 1129843
+cfn=(67694)
+calls=86911 0 
+0 5025126
+0 261363
+cfn=(62960)
+calls=90 0 
+0 15976
+0 1170
+cfn=(62960)
+calls=90 0 
+0 15976
+0 990
+cfn=(67496)
+calls=90 0 
+0 9810
+0 666
+cfn=(62960)
+calls=90 0 
+0 35473
+0 720
+cfn=(67496)
+calls=90 0 
+0 9810
+0 1080
+cfn=(67636)
+calls=90 0 
+0 15300
+0 14400
+cfn=(67496)
+calls=90 0 
+0 9810
+0 12735
+cfn=(67620)
+calls=270 0 
+0 30870
+0 7560
+cfn=(67636)
+calls=270 0 
+0 51585
+0 2970
+
+fn=(67626)
+0 47406
+cfn=(3622)
+calls=7901 0 
+0 15802
+0 189624
+cfn=(67636)
+calls=7901 0 
+0 1508885
+0 166127
+
+fn=(67792)
+0 3320
+cfn=(3622)
+calls=415 0 
+0 830
+0 17015
+cfn=(67806) 0x000c98d0
+calls=415 0 
+0 66081
+0 842373
+cfn=(67832)
+calls=39505 0 
+0 17735978
+0 295817
+
+fn=(67806)
+0 2905
+cfn=(3622)
+calls=415 0 
+0 830
+0 4565
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=415 52 
+0 55291
+0 2490
+
+fn=(98278)
+0 36080
+cfn=(3622)
+calls=3608 0 
+0 7216
+0 133496
+
+fn=(109468)
+0 15
+cfn=(3622)
+calls=3 0 
+0 6
+0 27
+cob=(4)
+cfi=(197) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_init.c
+cfn=(3352) pthread_mutex_init
+calls=3 43 
+0 195
+0 9
+cob=(4)
+cfi=(210) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_cond_init.c
+cfn=(3720) pthread_cond_init@@GLIBC_2.3.2
+calls=3 29 
+0 63
+0 6
+cob=(4)
+cfi=(107)
+cfn=(864)
+calls=3 47 
+0 117
+0 15
+cob=(4)
+cfi=(587) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/pthread_cond_timedwait.S
+cfn=(109486) pthread_cond_timedwait@@GLIBC_2.3.2
+calls=3 37 
+0 670
+0 6
+cob=(4)
+cfi=(108)
+cfn=(866)
+calls=3 289 
+0 183
+0 6
+cob=(4)
+cfi=(340) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_cond_destroy.c
+cfn=(15028) pthread_cond_destroy@@GLIBC_2.3.2
+calls=3 28 
+0 105
+0 6
+cob=(4)
+cfi=(412) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/pthread_mutex_destroy.c
+cfn=(37726) pthread_mutex_destroy
+calls=3 27 
+0 39
+0 18
+
+fn=(9420) QVectorData::reallocate(QVectorData*, int, int, int)
+0 96
+cfn=(3622)
+calls=16 0 
+0 32
+0 128
+cfn=(3870)
+calls=16 0 
+0 14898
+0 64
+
+fn=(34766)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 4
+cob=(20)
+cfi=(92)
+cfn=(34772)
+calls=1 0 
+0 156
+0 8
+
+fn=(67100) qGetCharAttributes(unsigned short const*, unsigned int, HB_ScriptItem const*, unsigned int, HB_CharAttributes*)
+0 6
+cfn=(3622)
+calls=1 0 
+0 2
+0 11
+cfn=(67102)
+calls=1 0 
+0 1023229
+0 4
+
+fn=(67108)
+0 32588
+cfn=(3622)
+calls=8147 0 
+0 16294
+0 32588
+cfn=(67116)
+calls=8147 0 
+0 146646
+0 81470
+
+fn=(67204)
+0 2905
+cfn=(3622)
+calls=415 0 
+0 830
+0 3735
+cfn=(67212)
+calls=415 0 
+0 40864719
+0 2484
+
+ob=(83)
+fl=(214)
+fn=(79696) QTextFormatCollection::format(int) const
+0 24801
+cfn=(4054) 0x00149547
+calls=3543 0 
+0 7086
+0 46059
+cfn=(79450) QTextFormat::QTextFormat(QTextFormat const&)
+calls=3543 0 
+0 70860
+0 21258
+
+fn=(81156) 0x00421b00
+0 3717
+cfn=(4054)
+calls=413 0 
+0 826
+0 3717
+cfn=(80488) QTextFrame::layoutData() const
+calls=413 0 
+0 2891
+0 6608
+
+fn=(57840) QWidget::devType() const
+0 17690
+
+fn=(59078) 0x0039bce0
+0 13545
+cfn=(4054)
+calls=2709 0 
+0 5418
+0 10836
+cfn=(59082) 0x0039bb70
+calls=2709 0 
+0 48762
+0 8127
+cob=(81)
+cfi=(209)
+cfn=(9054)
+calls=2709 0 
+0 254646
+0 35217
+
+fn=(65820) QTextEngine::itemize() const
+0 6
+cfn=(4054)
+calls=1 0 
+0 2
+0 5
+cfn=(65826) QTextEngine::validate() const
+calls=1 0 
+0 20
+0 45835
+cob=(81)
+cfi=(209)
+cfn=(66072)
+calls=2276 0 
+0 38936
+0 4560
+cfn=(67068) QTextEngine::addRequiredBoundaries() const
+calls=1 0 
+0 20
+0 3
+cfn=(67074) QTextEngine::resolveAdditionalFormats() const
+calls=1 0 
+0 20
+0 8
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=1 0 
+0 144
+0 36
+cfn=(80932) QTextBlock::position() const
+calls=1 0 
+0 22
+0 28
+cfn=(80932)
+calls=1 0 
+0 22
+0 4
+cfn=(81004) QTextBlock::length() const
+calls=1 0 
+0 14
+0 228
+cfn=(79696)
+calls=5 0 
+0 240
+0 30
+cfn=(79798) QTextFormat::toCharFormat() const
+calls=5 0 
+0 285
+0 20
+cfn=(79486) QTextFormat::~QTextFormat()
+calls=5 0 
+0 110
+0 20
+cfn=(80290) QTextFormat::intProperty(int) const
+calls=5 0 
+0 355
+0 35
+cfn=(67010) 0x003d81e0
+calls=5 0 
+0 310498
+0 15
+cfn=(79486)
+calls=5 0 
+0 110
+0 9696
+
+fn=(65840) 0x002d4bf0
+0 72
+cfn=(4054)
+calls=9 0 
+0 18
+0 79
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=1 0 
+0 152
+0 18
+cob=(3)
+cfi=(121)
+cfn=(946)
+calls=1 44 
+0 30
+0 351
+cob=(81)
+cfi=(209)
+cfn=(9420)
+calls=8 0 
+0 7788
+0 56
+
+fn=(65900) QFontEngineFT::leading() const
+0 4150
+
+fn=(67026) 0x003dff60
+0 3870
+cfn=(4054)
+calls=430 0 
+0 860
+0 2176
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=1 0 
+0 43
+0 200
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=8 0 
+0 496
+0 54
+cfn=(67034) 0x002d4de0
+calls=9 0 
+0 8363
+0 12638
+
+fn=(67088) 0x003da560
+0 10
+cfn=(4054)
+calls=1 0 
+0 2
+0 31
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=1 52 
+0 85587
+0 19
+
+fn=(67160) QTextEngine::fontEngine(QScriptItem const&, QFixed*, QFixed*, QFixed*) const
+0 21672
+cfn=(4054)
+calls=2709 0 
+0 5418
+0 27090
+cfn=(23248) QFont::QFont(QFont const&)
+calls=2709 0 
+0 54180
+0 27090
+cfn=(119332) QTextEngine::format(QScriptItem const*) const
+calls=2709 0 
+0 947640
+0 18963
+cfn=(81216) QTextCharFormat::font() const
+calls=2709 0 
+0 130032
+0 13545
+cfn=(23800) QFont::operator=(QFont const&)
+calls=2709 0 
+0 65016
+0 8127
+cfn=(23828) QFont::~QFont()
+calls=2709 0 
+0 59598
+0 21672
+cfn=(81230) QAbstractTextDocumentLayout::paintDevice() const
+calls=2709 0 
+0 18963
+0 18963
+cfn=(57812) QFont::QFont(QFont const&, QPaintDevice*)
+calls=2709 0 
+0 2004660
+0 8127
+cfn=(23800)
+calls=2709 0 
+0 65016
+0 5418
+cfn=(23828)
+calls=2709 0 
+0 59598
+0 13545
+cfn=(59028) QFontPrivate::engineForScript(int) const
+calls=2709 0 
+0 804573
+0 13545
+cfn=(80290)
+calls=2709 0 
+0 187071
+0 18963
+cfn=(79486)
+calls=2709 0 
+0 59598
+0 24577
+cfn=(65312) 0x003a45e0
+calls=415 0 
+0 10375
+0 3735
+cfn=(65306) 0x003a4610
+calls=415 0 
+0 10790
+0 3735
+cfn=(65898) 0x003a4640
+calls=415 0 
+0 11205
+0 15205
+cfn=(23828)
+calls=2709 0 
+0 59598
+0 24381
+
+fn=(81352) QTextLine::x() const
+0 2060
+cfn=(4054)
+calls=206 0 
+0 412
+0 3090
+
+fn=(81448) QTextFormat::operator=(QTextFormat const&)
+0 31842
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 81374
+
+fn=(107032) QTextCursor::insertHtml(QString const&)
+cfn=(107556) QTextCursor::insertFragment(QTextDocumentFragment const&)
+calls=0 0 
+0 51506788
+
+fn=(107556)
+cfn=(79820) 0x0040a200
+calls=0 0 
+0 51506788
+
+fn=(81254) QTextLine::naturalTextWidth() const
+0 4120
+cfn=(4054)
+calls=412 0 
+0 824
+0 6180
+
+fn=(57832) qt_x11Info(QPaintDevice const*)
+0 24766
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 21228
+cfn=(57838) non-virtual thunk to QWidget::devType() const
+calls=3538 0 
+0 24766
+0 17690
+cfn=(57846) QWidget::x11Info() const
+calls=3538 0 
+0 24766
+0 17690
+
+fn=(65308) QFontEngineFT::descent() const
+0 3735
+
+fn=(67196) QFontEngine::harfbuzzFace() const
+0 2905
+cfn=(4054)
+calls=415 0 
+0 830
+0 3735
+
+fn=(69252) 0x0047f150
+0 269118
+
+fn=(79450)
+0 141720
+
+fn=(79820)
+cfn=(80048) 0x0042ff00
+calls=0 0 
+0 51506788
+
+fn=(107026) QTextControl::insertHtml(QString const&)
+cfn=(107032)
+calls=0 0 
+0 51506788
+
+fn=(23242) QX11Info::appScreen()
+0 28304
+cfn=(4124) 0x0015687f
+calls=28304 0 
+0 56608
+0 311344
+
+fn=(37002)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 29
+cob=(81)
+cfi=(209)
+cfn=(37008)
+calls=1 0 
+0 17
+0 7
+
+fn=(79336) QTextFormat::QTextFormat(int)
+0 28304
+
+fn=(81152) QTextLine::setLeadingIncluded(bool)
+0 5382
+
+fn=(59030) 0x003b70b0
+0 14575
+cfn=(4054)
+calls=2915 0 
+0 5830
+0 46640
+
+fn=(65306)
+0 4980
+cfn=(65308)
+calls=415 0 
+0 3735
+0 2075
+
+fn=(65826)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+
+fn=(65898)
+0 4980
+cfn=(65900)
+calls=415 0 
+0 4150
+0 2075
+
+fn=(66074) 0x003aad80
+0 4150
+
+fn=(69408) QFontEngine::doKerning(QGlyphLayout*, QFlags<QTextEngine::ShaperFlag>) const
+0 8056
+
+fn=(69806) 0x003a4550
+0 3914
+cfn=(69808) QFontEngine::getGlyphBearings(unsigned int, double*, double*)
+calls=206 0 
+0 29458
+0 824
+
+fn=(80654) 0x0042e440
+cfn=(80804) 0x00428620
+calls=0 0 
+0 51506788
+
+fn=(4124)
+0 56608
+
+fn=(81216)
+0 35380
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 31842
+cfn=(23248)
+calls=3538 0 
+0 70760
+0 24766
+
+fn=(67168) 0x003a7580
+0 4150
+cfn=(4054)
+calls=415 0 
+0 830
+0 9130
+cfn=(67172) QFontEngineFT::stringToCMap(QChar const*, int, QGlyphLayout*, int*, QFlags<QTextEngine::ShaperFlag>) const
+calls=415 0 
+0 285598
+0 171088
+cob=(81)
+cfi=(209)
+cfn=(21502)
+calls=206 0 
+0 3708
+0 412
+
+fn=(67944)
+0 3735
+cfn=(4054)
+calls=415 0 
+0 830
+0 14263
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=329 52 
+0 36267
+0 2150
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=86 52 
+0 27340
+0 49050
+cfn=(67956) QFontEngineFT::recalcAdvances(QGlyphLayout*, QFlags<QTextEngine::ShaperFlag>) const
+calls=415 0 
+0 545996
+0 42819
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=86 0 
+0 13556
+0 2742
+cob=(81)
+cfi=(209)
+cfn=(3828)
+calls=86 0 
+0 51646
+0 1032
+
+fn=(80556) 0x0042ee20
+cfn=(80654)
+calls=0 0 
+0 51506788
+
+fn=(130330)
+cob=(81)
+cfi=(209)
+cfn=(130342)
+calls=0 0 
+0 51506788
+
+fn=(4054)
+0 293118
+
+fn=(23828)
+0 74298
+cfn=(4054)
+calls=10614 0 
+0 21228
+0 137982
+
+fn=(80048)
+cfn=(80140) 0x0042f120
+calls=0 0 
+0 51506788
+
+fn=(80140)
+cfn=(80556)
+calls=0 0 
+0 51506788
+
+fn=(80982) 0x00422480
+cfn=(65814) QTextLayout::beginLayout()
+calls=0 0 
+0 411290
+0 21
+cfn=(65838) QTextLayout::createLine()
+calls=1 0 
+0 419
+0 1030
+cfn=(65838)
+calls=206 0 
+0 29462
+0 1656
+cfn=(81152)
+calls=207 0 
+0 5382
+0 2484
+cfn=(81156)
+calls=207 0 
+0 8901
+0 6608
+cfn=(81156)
+calls=206 0 
+0 8858
+0 4944
+cfn=(81328) QTextLine::height() const
+calls=206 0 
+0 9064
+0 7210
+cfn=(81344) QTextLine::setPosition(QPointF const&)
+calls=206 0 
+0 10300
+0 1030
+cfn=(81352)
+calls=206 0 
+0 5562
+0 618
+cfn=(81254)
+calls=206 0 
+0 5562
+0 5565
+cfn=(81262) 0x00430890
+calls=206 0 
+0 9270
+0 1648
+cfn=(81254)
+calls=206 0 
+0 5562
+0 2270
+cfn=(80684) QTextFormat::doubleProperty(int) const
+calls=1 0 
+0 78
+0 28
+cfn=(81186) QTextLine::setLineWidth(double)
+calls=1 0 
+0 1472487
+0 1648
+cfn=(81186)
+calls=206 0 
+0 49487625
+0 206
+
+fn=(67034)
+0 72
+cfn=(4054)
+calls=9 0 
+0 18
+0 123
+cob=(81)
+cfi=(209)
+cfn=(4462)
+calls=1 0 
+0 152
+0 496
+cob=(81)
+cfi=(209)
+cfn=(9420)
+calls=8 0 
+0 7430
+0 72
+
+fn=(67068)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+
+fn=(67086) QTextEngine::LayoutData::reallocate(int)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 29
+cob=(3)
+cfi=(103)
+cfn=(3876)
+calls=1 3749 
+0 367
+0 23
+cfn=(67088)
+calls=1 0 
+0 85649
+0 19
+cob=(3)
+cfi=(167)
+cfn=(2396)
+calls=1 52 
+0 12241
+0 2
+
+fn=(67190) QFontEngine::harfbuzzFont() const
+0 3320
+cfn=(4054)
+calls=415 0 
+0 830
+0 4150
+
+fn=(69276) 0x003a82e0
+0 17264
+cfn=(69288) QFontEngineFT::doKerning(QGlyphLayout*, QFlags<QTextEngine::ShaperFlag>) const
+calls=208 0 
+0 13880
+0 3824
+
+fn=(69416) 0x003a4770
+0 1854
+cfn=(69418) QFontEngineFT::minRightBearing() const
+calls=206 0 
+0 4738
+0 412
+
+fn=(69418)
+0 1648
+cfn=(4054)
+calls=206 0 
+0 412
+0 2678
+
+fn=(80488)
+0 2891
+
+fn=(80684)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 18
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=1 0 
+0 7
+0 4
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=1 0 
+0 7
+0 6
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=1 0 
+0 19
+0 7
+
+fn=(80804)
+cfn=(80982)
+calls=0 0 
+0 51506788
+
+fn=(82818) QMainWindow::event(QEvent*)
+cfn=(57862) QWidget::event(QEvent*)
+calls=0 0 
+0 51506788
+
+fn=(79330) QTextCharFormat::QTextCharFormat()
+0 14152
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 21228
+cfn=(79336)
+calls=3538 0 
+0 28304
+0 14152
+
+fn=(79804) QTextCharFormat::QTextCharFormat(QTextFormat const&)
+0 21258
+cfn=(4054)
+calls=3543 0 
+0 7086
+0 17715
+cfn=(79450)
+calls=3543 0 
+0 70860
+0 14172
+
+fn=(80932)
+0 77880
+
+fn=(81262)
+0 1030
+cfn=(4054)
+calls=206 0 
+0 412
+0 2678
+cfn=(80536) 0x003f5700
+calls=206 0 
+0 4120
+0 1030
+
+fn=(57812)
+0 38918
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 24766
+cfn=(57818) non-virtual thunk to QWidget::metric(QPaintDevice::PaintDeviceMetric) const
+calls=3538 0 
+0 2186484
+0 10614
+cfn=(57832)
+calls=3538 0 
+0 137982
+0 17690
+cfn=(57826) QX11Info::screen() const
+calls=3538 0 
+0 109678
+0 84912
+
+fn=(65814)
+cfn=(65820)
+calls=0 0 
+0 411282
+0 8
+
+fn=(65880) QTextLine::layout_helper(int)
+0 1863
+cfn=(4054)
+calls=207 0 
+0 414
+0 714306
+cfn=(67080) QTextEngine::attributes() const
+calls=207 0 
+0 1154215
+0 91920
+cfn=(67160)
+calls=2294 0 
+0 4061930
+0 5412
+cfn=(69416)
+calls=206 0 
+0 7004
+0 209187
+cfn=(69806)
+calls=206 0 
+0 34196
+0 566518
+cfn=(67142) QTextEngine::shape(int) const
+calls=415 0 
+0 43924153
+0 1656
+cfn=(67080)
+calls=414 0 
+0 9936
+0 162711
+
+fn=(67074)
+0 8
+cfn=(4054)
+calls=1 0 
+0 2
+0 10
+
+fn=(67080)
+0 4968
+cfn=(4054)
+calls=621 0 
+0 1242
+0 3729
+cfn=(65820)
+calls=1 0 
+0 45
+0 27115
+cfn=(67086)
+calls=1 0 
+0 98340
+0 16
+cob=(81)
+cfi=(209)
+cfn=(67100)
+calls=1 0 
+0 1023252
+0 9
+cob=(81)
+cfi=(209)
+cfn=(4520)
+calls=1 0 
+0 161
+0 4970
+cob=(81)
+cfi=(209)
+cfn=(3828)
+calls=1 0 
+0 289
+0 15
+
+fn=(69420) QFontEngineFT::boundingBox(unsigned int)
+0 2060
+cfn=(4054)
+calls=206 0 
+0 412
+0 3914
+cfn=(69252)
+calls=206 0 
+0 6798
+0 6798
+
+fn=(107020)
+cfn=(107026)
+calls=0 0 
+0 51506788
+
+fn=(34746)
+cfn=(34752) QApplicationPrivate::notify_helper(QObject*, QEvent*)
+calls=0 0 
+0 51506788
+
+fn=(57820) QWidget::metric(QPaintDevice::PaintDeviceMetric) const
+0 28304
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 56608
+cfn=(57826)
+calls=3538 0 
+0 109678
+0 99064
+cfn=(57821) QWidget::metric(QPaintDevice::PaintDeviceMetric) const'2
+calls=3538 0 
+0 1875140
+0 3538
+
+fn=(57821)
+0 169824
+cfn=(4054)
+calls=21228 0 
+0 42456
+0 339648
+cfn=(57826)
+calls=21228 0 
+0 658068
+0 551928
+cfn=(57821)
+calls=17690 0 
+0 4939048
+0 24766
+cfn=(23236) QX11Info::appDpiY(int)
+calls=3538 0 
+0 84912
+0 3538
+
+fn=(59028)
+0 13545
+cfn=(4054)
+calls=2709 0 
+0 5418
+0 13545
+cfn=(59030)
+calls=2709 0 
+0 62307
+0 46053
+cfn=(59078)
+calls=2709 0 
+0 376551
+0 43344
+cob=(81)
+cfi=(209)
+cfn=(3788)
+calls=2709 0 
+0 78561
+0 16254
+cob=(81)
+cfi=(209)
+cfn=(3770)
+calls=2709 0 
+0 127323
+0 21672
+
+fn=(65838)
+0 1656
+cfn=(4054)
+calls=207 0 
+0 414
+0 9739
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=1 0 
+0 43
+0 224
+cob=(81)
+cfi=(209)
+cfn=(4444)
+calls=8 0 
+0 496
+0 54
+cfn=(65840)
+calls=9 0 
+0 8564
+0 8691
+
+fn=(69288)
+0 1664
+cfn=(4054)
+calls=208 0 
+0 416
+0 2496
+cfn=(69408)
+calls=208 0 
+0 8056
+0 1248
+
+fn=(81328)
+0 2060
+cfn=(4054)
+calls=206 0 
+0 412
+0 6592
+
+fn=(119338) QTextEngine::formatIndex(QScriptItem const*) const
+0 28304
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 84912
+cfn=(80932)
+calls=3538 0 
+0 77836
+0 116972
+
+fn=(34752)
+cfn=(82818)
+calls=0 0 
+0 51506788
+
+fn=(23236)
+0 17690
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 60146
+
+fn=(23800)
+0 77836
+cfn=(4054)
+calls=7076 0 
+0 14152
+0 77836
+
+fn=(81004)
+0 14
+
+fn=(59082)
+0 13545
+cfn=(4054)
+calls=2709 0 
+0 5418
+0 29799
+
+fn=(67010)
+0 50
+cfn=(4054)
+calls=5 0 
+0 10
+0 6530
+cfn=(67026)
+calls=425 0 
+0 28475
+0 275203
+cfn=(67026)
+calls=5 0 
+0 225
+0 5
+
+fn=(67956)
+0 3320
+cfn=(4054)
+calls=415 0 
+0 830
+0 172693
+cfn=(69252)
+calls=7868 0 
+0 262320
+0 106833
+
+fn=(23248)
+0 141520
+
+fn=(79798)
+0 21258
+cfn=(4054)
+calls=3543 0 
+0 7086
+0 21258
+cfn=(79804)
+calls=3543 0 
+0 131091
+0 21258
+
+fn=(81186)
+0 1863
+cfn=(4054)
+calls=207 0 
+0 414
+0 9108
+cfn=(65880)
+calls=207 0 
+0 50945421
+0 3306
+
+fn=(57826)
+0 169824
+cfn=(4054)
+calls=28304 0 
+0 56608
+0 141520
+cfn=(23242)
+calls=28304 0 
+0 396256
+0 113216
+
+fn=(57862)
+cob=(81)
+cfi=(209)
+cfn=(8008)
+calls=0 0 
+0 51506788
+
+fn=(67148) QTextEngine::shapeText(int) const
+0 3320
+cfn=(4054)
+calls=415 0 
+0 830
+0 6640
+cfn=(67154) QTextEngine::shapeTextWithHarfbuzz(int) const
+calls=415 0 
+0 43224058
+0 10764
+cfn=(67166) QTextEngine::font(QScriptItem const&) const
+calls=414 0 
+0 593212
+0 54653
+cfn=(23828)
+calls=414 0 
+0 9108
+0 2484
+
+fn=(57846)
+0 24766
+
+fn=(67154)
+0 3320
+cfn=(4054)
+calls=415 0 
+0 830
+0 14110
+cfn=(67160)
+calls=415 0 
+0 779754
+0 2905
+cfn=(67166)
+calls=415 0 
+0 594664
+0 3320
+cfn=(23828)
+calls=415 0 
+0 9130
+0 50215
+cfn=(67168)
+calls=415 0 
+0 474916
+0 7470
+cfn=(66074)
+calls=415 0 
+0 2075
+0 29880
+cfn=(66074)
+calls=415 0 
+0 2075
+0 2490
+cfn=(67190)
+calls=415 0 
+0 8300
+0 1245
+cfn=(67196)
+calls=415 0 
+0 7470
+0 64389
+cob=(81)
+cfi=(209)
+cfn=(67202)
+calls=415 0 
+0 40880894
+0 97108
+cfn=(69276)
+calls=208 0 
+0 34968
+0 152530
+
+fn=(67166)
+0 4145
+cfn=(4054)
+calls=829 0 
+0 1658
+0 8290
+cfn=(23248)
+calls=829 0 
+0 16580
+0 8290
+cfn=(119332)
+calls=829 0 
+0 290878
+0 5803
+cfn=(81216)
+calls=829 0 
+0 39792
+0 4145
+cfn=(23800)
+calls=829 0 
+0 19896
+0 2487
+cfn=(23828)
+calls=829 0 
+0 18238
+0 6632
+cfn=(81230)
+calls=829 0 
+0 5803
+0 5803
+cfn=(57812)
+calls=829 0 
+0 613460
+0 2487
+cfn=(23800)
+calls=829 0 
+0 19896
+0 1658
+cfn=(23828)
+calls=829 0 
+0 18238
+0 3316
+cfn=(80290)
+calls=829 0 
+0 57221
+0 4974
+cfn=(79486)
+calls=829 0 
+0 18238
+0 9948
+
+fn=(69808)
+0 2472
+cfn=(4054)
+calls=206 0 
+0 412
+0 1030
+cfn=(69420)
+calls=206 0 
+0 19982
+0 5562
+
+fn=(79486)
+0 49567
+cfn=(4054)
+calls=7081 0 
+0 14162
+0 116854
+cfn=(4054)
+calls=3543 0 
+0 7086
+0 46059
+
+fn=(80536)
+0 1236
+cfn=(4054)
+calls=206 0 
+0 412
+0 2472
+
+fn=(81344)
+0 1648
+cfn=(4054)
+calls=206 0 
+0 412
+0 8240
+
+fn=(119332)
+0 21228
+cfn=(4054)
+calls=3538 0 
+0 7076
+0 17690
+cfn=(79330)
+calls=3538 0 
+0 84912
+0 35380
+cfn=(119338)
+calls=3538 0 
+0 315100
+0 21228
+cfn=(79696)
+calls=3538 0 
+0 169824
+0 17690
+cfn=(79798)
+calls=3538 0 
+0 201666
+0 10614
+cfn=(79486)
+calls=3538 0 
+0 77836
+0 14152
+cfn=(81448)
+calls=3538 0 
+0 120292
+0 7076
+cfn=(79486)
+calls=3538 0 
+0 77836
+0 38918
+
+fn=(81230)
+0 24766
+
+fn=(57818)
+0 7076
+cfn=(57820)
+calls=3538 0 
+0 2179408
+
+fn=(57838)
+0 7076
+cfn=(57840)
+calls=3538 0 
+0 17690
+
+fn=(65312)
+0 4980
+cfn=(65314) QFontEngineFT::ascent() const
+calls=415 0 
+0 3320
+0 2075
+
+fn=(65314)
+0 3320
+
+fn=(67142)
+0 3320
+cfn=(4054)
+calls=415 0 
+0 830
+0 12450
+cfn=(67148)
+calls=415 0 
+0 43905069
+0 2484
+
+fn=(67172)
+0 3735
+cfn=(4054)
+calls=415 0 
+0 830
+0 8918
+cob=(81)
+cfi=(209)
+cfn=(3788)
+calls=206 0 
+0 5974
+0 192919
+cob=(23)
+cfi=(95)
+cfn=(59784)
+calls=206 0 
+0 24926
+0 33052
+cfn=(59030)
+calls=206 0 
+0 4738
+0 618
+cob=(81)
+cfi=(209)
+cfn=(3770)
+calls=206 0 
+0 9682
+0 206
+
+fn=(80290)
+0 28344
+cfn=(4054)
+calls=3543 0 
+0 7086
+0 67497
+cob=(81)
+cfi=(209)
+cfn=(36490)
+calls=3543 0 
+0 24801
+0 24801
+cob=(81)
+cfi=(209)
+cfn=(8400)
+calls=3543 0 
+0 67317
+0 24801
+
+fn=(100906)
+cob=(81)
+cfi=(209)
+cfn=(100914)
+calls=0 0 
+0 51506788
+
+ob=(4)
+fl=(594) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/pthread_mutex_lock.c
+fn=(110826) __pthread_mutex_cond_lock
+47 21
++3 3
+-3 3
+cfi=(49) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/sem_post.S
+cfn=(212) 0x00004340
+calls=3 170 
+* 6
+* 3
++3 3
++1 3
+-1 3
++1 6
++3 3
++2 3
+-2 3
++2 3
++5 15
++1 9
++63 9
++6 18
+
+fl=(210)
+fn=(3720)
+29 12
++5 3
+-2 3
++1 3
++1 3
++6 3
+-6 3
++4 6
++1 6
++1 6
++1 3
++2 3
++3 9
+
+fl=(201)
+fn=(3392)
+27 16260
+cfi=(49)
+cfn=(212)
+calls=2710 170 
+* 5420
+* 5420
++5 5420
++1 5420
++24 2710
++1 5420
++2 8130
++7 13550
+
+fl=(197)
+fn=(3352)
+43 18
+cfi=(49)
+cfn=(212)
+calls=3 170 
+* 6
+* 12
++5 9
++3 3
++3 9
++29 75
++3 9
++2 3
+-2 3
++2 3
++11 18
++28 9
++12 18
+
+fl=(483) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/sem_wait.S
+fn=(57218) sem_wait@@GLIBC_2.1
+
+fl=(587)
+fn=(109486)
+37 3
++2 3
++2 3
++2 3
++3 3
++1 3
++2 3
++1 3
++1 3
++3 3
++1 3
++1 3
++6 3
++4 3
++1 3
++1 3
++1 3
++3 3
++1 3
+cfi=(108)
+cfn=(868) __pthread_mutex_unlock_usercnt
+calls=3 -37 
+* 96
++2 3
++1 3
++2 3
++1 3
++1 3
++1 3
++3 3
++4 3
++1 3
++1 3
++1 3
++1 3
++1 3
++3 3
++3 3
++1 3
++3 3
++1 3
++1 3
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=3 0 
+* 6
++5 3
++3 3
++1 3
++1 3
++1 3
++18 3
++1 2
++1 2
++1 2
++1 2
++1 2
+-2 1
++1 1
++1 1
++3 3
++1 3
++2 3
++3 3
++6 3
++3 3
+cfi=(477) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/cancellation.c
+cfn=(55036) __pthread_enable_asynccancel
+calls=3 31 
+* 51
++1 3
++2 3
++4 3
++1 3
++1 3
++4 3
++5 3
++1 3
++2 3
++1 3
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=3 0 
+* 6
++1 3
++2 3
++2 3
++1 3
+cfi=(477)
+cfn=(55080) __pthread_disable_asynccancel
+calls=3 66 
+* 69
++4 3
++1 3
++1 3
++6 3
++2 3
++1 3
++1 3
++2 3
++1 3
++2 3
++1 3
++2 3
++1 3
++1 3
++1 3
++7 3
++1 3
++2 3
++1 3
++1 3
++1 3
++1 3
++6 3
++1 3
++2 3
++3 3
++1 3
++1 3
++1 3
++23 3
++6 3
++3 3
++1 3
+cfi=(594)
+cfn=(110826)
+calls=3 47 
+* 114
++1 3
++4 3
++2 3
++7 3
++2 3
++2 3
++2 3
++3 3
+
+fl=(470)
+fn=(55038)
+cob=(81)
+cfi=(209)
+cfn=(109368)
+calls=0 0 
+300 3646
+
+fl=(154)
+fn=(1770)
+36 2710
++1 2710
++1 2710
++1 2710
++1 2710
+
+fl=(595) /build/buildd-eglibc_2.11.2-10-i386-GapcyD/eglibc-2.11.2/nptl/../nptl/sysdeps/unix/sysv/linux/i386/i686/../i486/lowlevellock.S
+fn=(110836) __lll_unlock_wake
+363 3
++2 3
++2 3
++6 3
++1 3
++1 9
++1 3
++1 3
++1 3
+cob=(1)
+cfi=(1)
+cfn=(214)
+calls=3 0 
+* 6
++2 3
++3 3
++3 3
++3 3
+
+fl=(412)
+fn=(37726)
+27 9
++1 6
++1 12
++4 6
++3 6
+
+fl=(340)
+fn=(15028)
+28 15
++1 9
++4 21
++2 24
++9 3
++5 3
+-5 6
++7 6
++32 3
+-4 3
++4 12
+
+fl=(108)
+fn=(868)
+36 49
++1 7
+-1 7
+cfi=(49)
+cfn=(212)
+calls=7 170 
+* 14
+* 7
++1 14
++1 14
++3 14
++6 7
+-1 7
++1 7
++5 28
+cfn=(110834) _L_unlock_628
+calls=3 290 
+* 84
+* 4
++25 24
+-28 8
+
+fn=(110834)
+52 3
++25 18
+290 9
+cfi=(595)
+cfn=(110836)
+calls=3 +73 
+* 51
+* 3
+
+fn=(866)
+289 4
++1 4
+-1 4
++1 4
++1 4
+-1 4
+cfn=(868)
+calls=4 36 
+* 199
+
+fl=(477)
+fn=(55036)
+31 6
++2 3
++4 6
++2 6
++3 6
++2 6
++2 9
++14 9
+
+fn=(55080)
+66 9
++3 3
+-3 6
++3 3
++3 3
++3 3
++4 3
++2 3
+-2 3
++2 3
++2 6
++11 9
++6 15
+
+fl=(107)
+fn=(864)
+47 32
+cfi=(49)
+cfn=(212)
+calls=4 170 
+* 8
+* 4
++3 8
++1 4
+-1 4
++1 8
++3 4
++2 4
+-2 4
++2 4
++5 20
++1 12
++63 4
++2 4
+-2 4
++2 4
++4 24
+
+fl=(211)
+fn=(3782)
+27 2915
++1 2915
+
+fl=(49)
+fn=(212)
+170 2727
++1 2727
+
+ob=(92) /usr/lib/libespeak.so.1.1.43
+fl=(233) ???
+fn=(57198) 0x000298e0
+
+fn=(57440) 0x0002a270
+
+ob=(52)
+fl=(151)
+fn=(1570) 0x00047217
+0 4
+
+fn=(2184)
+0 16
+cfn=(1570)
+calls=2 0 
+0 4
+0 10
+cob=(3)
+cfi=(103)
+cfn=(856)
+calls=2 3616 
+0 418
+0 16
+
+totals: 51510434
