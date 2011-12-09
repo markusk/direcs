@@ -46,9 +46,6 @@ bool Circuit::initCircuit()
 	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
 	if (circuitState)
 	{
-		atmelCommand = commandInitCircuit;
-		expectedAtmelAnswer = "*re#";
-
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 
@@ -62,12 +59,12 @@ bool Circuit::initCircuit()
 		{
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
-			// check if the robot answers with "ok"
+			// check if the robot answers with "re"
 			if ( interface1->receiveString(answer) == true)
 			{
 				emit message("Answer received.");
 				// everthing's fine :-)
-				if (answer == "*ok#")
+				if (answer == "*re#")
 				{
 					emit message("Answer was correct.");
 					// Unlock the mutex
