@@ -182,7 +182,7 @@ bool InterfaceAvr::sendString(QString string)
 	// add terminator
 	string.append("#");
 
-	qDebug() << "sending string:" << string;
+	qDebug() << "Sending string:" << string;
 
 	// sending the string returns the number of chars sent
 	if ( (serialPort->write(string.toAscii(), string.length()) != string.length()) )

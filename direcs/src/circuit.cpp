@@ -65,6 +65,7 @@ bool Circuit::initCircuit()
 		{
 			emit message("Sent.");
 			emit message("Waiting for an answer...");
+
 			// check if the robot answers with "re"
 			if ( interface1->receiveString(atmelAnswer) == true)
 			{
@@ -87,6 +88,10 @@ bool Circuit::initCircuit()
 					emit robotState(true);
 
 					return true;
+				}
+				else
+				{
+					emit message("Wrong answer.");
 				}
 			}
 			else
