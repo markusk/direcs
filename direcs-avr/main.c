@@ -387,7 +387,7 @@ int main(void)
 				// check if micromag is connected to Atmel-Board (PB6 = high)
 				if ( bit_is_set(PINB,PIN6) )
 				{
-					put_string("*ok#");
+					put_string("*cc#");
 				}
 				else
 				{

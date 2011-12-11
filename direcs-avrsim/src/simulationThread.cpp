@@ -207,21 +207,19 @@ void SimulationThread::run()
 									// read ADC and send answer over serial port
 									sendUInt( ultraschall_messung() );
 								}
+								*/
 								else
 								// READ 3D COMPASS CONNECTION
 								if (commandString == "*cc#")
 								{
-									// check if micromag is connected to Atmel-Board (PB6 = high)
-									if ( bit_is_set(PINB,PIN6) )
-									{
-										emit answer("*ok#");
-									}
-									else
-									{
-										// not connected.
-										emit answer("*er#");
-									}
+									// answer with "ok"
+									// this answer is used to see if the robot is "on"
+									sendToAtmel("*cc#");
+
+									// This sends the string to the GUI
+									emit answer("*cc#");
 								}
+								/*
 								else
 								// READ_AXIS_X
 								if (commandString == "*cx#")

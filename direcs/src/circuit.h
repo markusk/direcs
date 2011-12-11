@@ -103,6 +103,15 @@ class Circuit : public QObject
 	private:
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
+
+		QString atmelCommand;
+		QString atmelAnswer;
+		QString expectedAtmelAnswer;
+
+		QString commandInitCircuit;		///	*re#
+		QString commandInitCompass;		///	*cc#
+		QString commandSleep;			///	*sl#
+
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
 		bool circuitState; // stores the robot state within this class
@@ -111,6 +120,14 @@ class Circuit : public QObject
 
 		static const bool ON  = true;
 		static const bool OFF = false;
+
+		/**
+		example answer string without value from Atmel: *re#
+		example answer string with value from Atmel:    *s7=42#
+		*/
+		static const char starter    = 42; /// This starts the serial string for the Atmel controller. 42 = *
+		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35 = #
+		static const char divider    = 61; /// This divides the serial string for the Atmel controller. 61 = =
 };
 
 #endif
