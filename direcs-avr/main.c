@@ -248,7 +248,7 @@ int main(void)
 		if (RXcompleted == 1)
 		{
 			// Everything's fine, so reset the watchdog timer (wdt).
-			wdt_reset();
+//			wdt_reset();
 
 			// ja, dann String lesen und uart_rx_flag löschen
 			get_string(stringbuffer);
@@ -1541,6 +1541,7 @@ void long_delay(uint16_t ms)
 
 void watchdog(uint8_t state)
 {
+/*	
 	// Disable global interrupts.
 	// This is here for setting the interrupt control registers
 	cli();
@@ -1589,9 +1590,11 @@ void watchdog(uint8_t state)
 
 	// Enable global interrupts
 	sei();
+	*/
 }
 
 
+/*
 SIGNAL(WDT_vect)
 {
 	// turn all drive motor bits off (except PWM bits)
@@ -1607,3 +1610,4 @@ SIGNAL(WDT_vect)
 	// turn flashlight on !
 	relais(ON);
 }
+*/
