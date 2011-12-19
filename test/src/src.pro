@@ -6,8 +6,7 @@ SOURCES += test.cpp \
 	circuit.cpp \
 	laser.cpp \
 	laserSickS300.cpp \
-	laserThread.cpp \
-    lightweightserial.cpp
+	laserThread.cpp
 HEADERS += test.h \
 	direcsSerial.h \
 	inifile.h \
@@ -15,16 +14,20 @@ HEADERS += test.h \
 	circuit.h \
 	laser.h \
 	laserSickS300.h \
-	laserThread.h \
-    lightweightserial.h
+	laserThread.h
 TEMPLATE = app
 CONFIG += warn_on \
 	thread \
 	qt \
-	debug
+	release
 TARGET = test
 DESTDIR = ../bin
 RESOURCES = application.qrc
 FORMS +=
 
-#QMAKE_CXXFLAGS+= -m32
+# QMAKE_CXXFLAGS+= -m32
+
+MOC_DIR = ../tmp
+
+OBJECTS_DIR = ../tmp
+

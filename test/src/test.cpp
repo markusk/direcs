@@ -162,13 +162,12 @@ test::test()
 
 test::~test()
 {
-
 	// AtmelBoard test stuff
 	delete circuit1;
 	delete interface1;
 	delete mutex;
 
-/*
+	/*
 	// stop the thread
 	if (laserThread->isRunning())
 	{
@@ -178,7 +177,7 @@ test::~test()
 
 	// SICK laser S300 test stuff
 	delete sickS300;
-*/
+	*/
 }
 
 
@@ -495,7 +494,7 @@ void test::testSlot()
 		}
 	}
 */
-/*
+
 	//
 	// using laser thread values !
 	//
@@ -517,7 +516,6 @@ void test::testSlot()
 		if (angle>= 270*2)
 			break;
 	}
-	*/
 }
 
 

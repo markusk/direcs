@@ -23,11 +23,11 @@
 InterfaceAvr::InterfaceAvr()
 {
 	// creating the serial port object
-	serialPort = new LightweightSerial("/dev/tty.USA19Hfa141P1.1", 9600); /// @todo change path to var, add baudrate var
+	serialPort = new DirecsSerial();
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
-///	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 }
 
 
@@ -53,7 +53,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 		return false;
 	}
 
-/*
+
 	// serial port config and flush also done in openAtmelPort!
 	if (serialPort->openAtmelPort( ba.data(), 9600 ) == -1)
 	{
@@ -61,8 +61,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 		emit robotState(false);
 		return false;
 	}
-*/
-	/// @todo put open stuff seperately
+
 	return true;
 }
 
@@ -70,7 +69,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 void InterfaceAvr::closeComPort()
 {
 	// using direcsSerial
-/// @todo done in destructor	serialPort-> closeAtmelPort();
+	serialPort->closeAtmelPort();
 }
 
 
@@ -82,9 +81,9 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 	// send one byte to the serial port with direcsSerial
 	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->write(character);
+	result = serialPort->writeAtmelPort(&character);
 
-	if (result == false)
+	if (result < 0)
 	{
 // 		receiveErrorCounter++;
 		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
@@ -109,10 +108,9 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-// direcsserial:	result = serialPort->readAtmelPort(character, 1);
-	result = serialPort->read(character);
+	result = serialPort->readAtmelPort(character, 1);
 
-	if (result == false)
+	if (result != 1)
 	{
 		// ERROR
 		// emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::receiveChar)!<font>").arg(strerror(result)) );  < error message already emitted from readAtmelPort!
@@ -168,17 +166,17 @@ bool InterfaceAvr::receiveString(QString &string)
 	do
 	{
 		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->read(&character);
+		result = serialPort->readAtmelPort(&character, 1);
 
-		if (result == true)
+		if (result == 1)
 		{
 			// append received char to byte array
 			ba.append(character);
 		}
 
-	} while ( (result == true) && (character != '#') );
+	} while ( (result == 1) && (character != '#') );
 
-	if (result == false)
+	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
 		qDebug() << "error at receiveString";

@@ -23,7 +23,7 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#include "lightweightserial.h"
+#include "direcsSerial.h"
 
 #include <QFile>
 #include <QObject>
@@ -125,7 +125,7 @@ class InterfaceAvr : public QObject
 
 
 	private:
-		LightweightSerial *serialPort;
+		DirecsSerial *serialPort;
 
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"

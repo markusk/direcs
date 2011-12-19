@@ -110,7 +110,7 @@ private:
 	  Circuit *circuit1;
 	  InterfaceAvr *interface1;
 //	  SickS300 *sickS300;
-//	  LaserThread *laserThread;
+	  LaserThread *laserThread;
 	  QString serialPortPath; // something like /dev/ttyUSB0
 
 	  /**
