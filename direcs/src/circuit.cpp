@@ -26,7 +26,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	interface1 = i;
 	mutex = m;
 
-	circuitState = false;
+	circuitState = true; // We think positive
 	firstInitDone = false;
 	compassCircuitState = false;
 
@@ -46,12 +46,11 @@ Circuit::~Circuit()
 
 bool Circuit::initCircuit()
 {
-	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	// if the serial port could be opened before calling this method, circuitState will be already TRUE.
-	if (circuitState)
-	{
-		atmelCommand = commandInitCircuit;
+	QString answer = "error";
 
+
+	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 
@@ -60,25 +59,14 @@ bool Circuit::initCircuit()
 		//-------------------------------------------------------
 
 		// sending RESET (INIT) command
-		emit message(QString("Sending %1%2%3...").arg(starter).arg(atmelCommand).arg(terminator));
-		if (interface1->sendString(atmelCommand) == true)
+		if (interface1->sendString("re") == true)
 		{
-			emit message("Sent.");
-			emit message("Waiting for an answer...");
-
-			// check if the robot answers with "re"
-			if ( interface1->receiveString(atmelAnswer) == true)
+			// check if the robot answers with "ok"
+			if ( interface1->receiveString(answer) == true)
 			{
-				emit message(QString("Answer '%1' received.").arg(atmelAnswer));
-
-				// remove starter and terminator from answer string
-				atmelAnswer.remove(starter);
-				atmelAnswer.remove(terminator);
-
 				// everthing's fine :-)
-				if (atmelAnswer == commandInitCircuit)
+				if (answer == "*ok#")
 				{
-					emit message("Answer was correct.");
 					// Unlock the mutex
 					mutex->unlock();
 
@@ -89,19 +77,7 @@ bool Circuit::initCircuit()
 
 					return true;
 				}
-				else
-				{
-					emit message("Wrong answer.");
-				}
 			}
-			else
-			{
-				emit message("No answer received.");
-			}
-		}
-		else
-		{
-			emit message("Error sending string.");
 		}
 
 		// Unlock the mutex.
@@ -120,11 +96,11 @@ bool Circuit::initCircuit()
 
 bool Circuit::initCompass()
 {
-	// maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	if (circuitState)
-	{
-		atmelCommand = commandInitCompass;
+	QString answer = "error";
 
+
+	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
+	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 
@@ -132,13 +108,9 @@ bool Circuit::initCompass()
 		if (interface1->sendString("cc") == true)
 		{
 			// check if the robot answers with "ok"
-			if ( interface1->receiveString(atmelAnswer) == true)
+			if ( interface1->receiveString(answer) == true)
 			{
-				// remove starter and terminator from answer string
-				atmelAnswer.remove(starter);
-				atmelAnswer.remove(terminator);
-
-				if (atmelAnswer == commandInitCompass)
+				if (answer == "*ok#")
 				{
 					// Unlock the mutex
 					mutex->unlock();

@@ -23,7 +23,7 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#include <qextserialport.h> /// http://code.google.com/qextserialport/
+#include "direcsSerial.h"
 
 #include <QFile>
 #include <QObject>
@@ -101,19 +101,6 @@ class InterfaceAvr : public QObject
 		@return true on access or false if an error occured.
 		*/
 		bool convertStringToInt(QString string, int &value);
-
-		/**
-		Checks if chars are avialable to be received.
-
-		@return true if chars are available
-		**/
-		bool charsAvailable();
-
-		/**
-		Clears the serial input and output buffer. There may be some unwanted chars in the queue from a former run or so. So this methods just performs a 'flush'.
-		*/
-		void flush();
-
 
 
 	signals:

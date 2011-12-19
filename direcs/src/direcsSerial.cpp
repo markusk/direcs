@@ -88,7 +88,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	options.c_cc[VTIME] = 0;     // inter-character timer unused
 	options.c_cc[VMIN] = 0;      // blocking read until 0 chars received
 
-
 	// this part is originally from setparms:
 	newbaud = (baudrate/100);
 
@@ -178,72 +177,9 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 		return -1;
 	}
 
-
 	/// Set *TERMIOS_P to indicate raw mode.
-	// Added on 02.04.2011 for the usage of the laser scanner S300 under Linux. Resolved the "resource unavailable" error and works under Mac OS X 10.6, too.
-	/*
-	Setting raw mode
-
-	cfmakeraw() sets the terminal to something like the "raw" mode of the old Version 7 terminal driver:
-	input is available character by character, echoing is disabled, and all special processing
-	of terminal input and output characters is disabled.  The terminal attributes are set as follows:
-
-	IGNBRK
-	Ignore BREAK condition on input.
-
-	BRKINT
-	If IGNBRK is set, a BREAK is ignored. If it is not set but BRKINT is set, then a BREAK causes the input and output queues to be flushed, and if the terminal is the controlling terminal of a foreground process group, it will cause a SIGINT to be sent to this foreground process group. When neither IGNBRK nor BRKINT are set, a BREAK reads as a null byte ('\0'), except when PARMRK is set, in which case it reads as the sequence \377 \0 \0.
-
-	PARMRK
-	If IGNPAR is not set, prefix a character with a parity error or framing error with \377 \0. If neither IGNPAR nor PARMRK is set, read a character with a parity error or framing error as \0.
-
-	ISTRIP
-	Strip off eighth bit.
-
-	INLCR
-	Translate NL to CR on input.
-
-	IGNCR
-	Ignore carriage return on input.
-
-	ICRNL
-	Translate carriage return to newline on input (unless IGNCR is set).
-
-	IXON
-	Enable XON/XOFF flow control on output.
-
-	Source: http://linux.die.net/man/3/termios
-	*/
-	// *delete* the following flags
-	options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
-
-	/*
-	OPOST
-	Enable implementation-defined output processing.
-	*/
-	// *delete* the following flags
-	options.c_oflag &= ~OPOST;
-
-	/*
-	ECHO
-	Echo input characters.
-
-	ECHONL
-	If ICANON is also set, echo the NL character even if ECHO is not set.
-
-	ICANON
-	Enable canonical mode. This enables the special characters EOF, EOL, EOL2, ERASE, KILL, LNEXT, REPRINT, STATUS, and WERASE, and buffers by lines.
-
-	ISIG
-	When any of the characters INTR, QUIT, SUSP, or DSUSP are received, generate the corresponding signal.
-
-	IEXTEN
-	Enable implementation-defined input processing. This flag, as well as ICANON must be enabled for the special characters EOL2, LNEXT, REPRINT, WERASE to be interpreted, and for the IUCLC flag to be effective.
-
-	Source: http://linux.die.net/man/3/termios
-	*/
-	options.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-
+	// Added on 2.4.2011 for the usage of the laser scanner S300 under Linux. Resolved the "resource unavailable" error and works under Mac OS X 10.6, too.
+	cfmakeraw(&options);
 
 	// Cause the new options to take effect immediately.
 	if (tcsetattr(mDev_fd, TCSANOW, &options) != 0)
