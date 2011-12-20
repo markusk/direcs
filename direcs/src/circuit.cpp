@@ -65,7 +65,7 @@ bool Circuit::initCircuit()
 			if ( interface1->receiveString(answer) == true)
 			{
 				// everthing's fine :-)
-				if (answer == "*ok#")
+				if (answer == "*re#")
 				{
 					// Unlock the mutex
 					mutex->unlock();
