@@ -17,9 +17,69 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-BINARY = usart
+PREFIX		?= arm-none-eabi
+#PREFIX		?= arm-elf
+DESTDIR		?= /usr/local
+INCDIR		= $(DESTDIR)/$(PREFIX)/include
+LIBDIR		= $(DESTDIR)/$(PREFIX)/lib
+SHAREDIR	= $(DESTDIR)/$(PREFIX)/share/libopencm3/scripts
+INSTALL		= install
 
-LDSCRIPT = ../stm32f4-discovery.ld
+TARGETS = stm32/f1 stm32/f2 stm32/f4 lpc13xx lm3s
 
-include ../../Makefile.include
+# Be silent per default, but 'make V=1' will show all compiler calls.
+ifneq ($(V),1)
+Q := @
+# Do not print "Entering directory ...".
+MAKEFLAGS += --no-print-directory
+endif
+
+all: build
+
+build: lib examples
+
+lib:
+	$(Q)for i in $(addprefix $@/,$(TARGETS)); do \
+		if [ -d $$i ]; then \
+			printf "  BUILD   $$i\n"; \
+			$(MAKE) -C $$i || exit $?; \
+		fi; \
+	done
+
+examples: lib
+	$(Q)for i in $(addsuffix /*/*,$(addprefix $@/,$(TARGETS))); do \
+		if [ -d $$i ]; then \
+			printf "  BUILD   $$i\n"; \
+			$(MAKE) -C $$i || exit $?; \
+		fi; \
+	done
+
+install: lib
+	@printf "  INSTALL headers\n"
+	$(Q)$(INSTALL) -d $(INCDIR)/libopencm3
+	$(Q)$(INSTALL) -d $(LIBDIR)
+	$(Q)$(INSTALL) -d $(SHAREDIR)
+	$(Q)cp -r include/libopencm3/* $(INCDIR)/libopencm3
+	@printf "  INSTALL libs\n"
+	$(Q)$(INSTALL) -m 0644 lib/*/*/*.a $(LIBDIR)
+	@printf "  INSTALL ldscripts\n"
+	$(Q)$(INSTALL) -m 0644 lib/*/*/*.ld $(LIBDIR)
+	@printf "  INSTALL scripts\n"
+	$(Q)$(INSTALL) -m 0644 scripts/* $(SHAREDIR)
+
+doxy:
+	doxygen Doxyfile
+
+clean:
+	$(Q)for i in $(addprefix lib/,$(TARGETS)) \
+		     $(addsuffix /*/*,$(addprefix examples/,$(TARGETS))); do \
+		if [ -d $$i ]; then \
+			printf "  CLEAN   $$i\n"; \
+			$(MAKE) -C $$i clean || exit $?; \
+		fi; \
+	done
+	@printf "  CLEAN   doxygen\n"
+	$(Q)rm -rf doxygen
+
+.PHONY: build lib examples install doxy clean
 
