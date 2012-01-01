@@ -8,6 +8,10 @@ moc_*.cpp
 *.eep
 *.elf
 *.hex
+*.d
+*.bin
+*.list
+*.srec
 *.lss
 *.lst
 *.map
