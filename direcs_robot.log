@@ -1,0 +1,664 @@
+2011-07-11  22:04:58.001  - start -------------------------------------------------------------------------------------------------
+2011-07-11  22:04:58.001  The hostname of this machine is robot
+2011-07-11  22:04:58.001  Hostname contains 'robot'. We will use the small robot GUI.
+2011-07-11  22:04:58.358  UNIX OS detected.
+2011-07-11  22:04:58.359  Linux OS detected.
+2011-07-11  22:04:58.359  X11 detected.
+2011-07-11  22:04:58.519  Serial port for microcontroller set to /dev/ttyAtmelBoard.
+2011-07-11  22:04:58.520  Front laser scanner type set to none.
+2011-07-11  22:04:58.521  Front laser scanner port set to /dev/ttyLaserScannerFront.
+2011-07-11  22:04:58.523  Front laser scanner mounting set to flipped.
+2011-07-11  22:04:58.524  Front laser scanner angle set to 270.
+2011-07-11  22:04:58.525  Front laser scanner resolution set to 0.5.
+2011-07-11  22:04:58.525  Rear laser scanner type set to none.
+2011-07-11  22:04:58.526  Rear laser scanner port set to /dev/ttyLaserScannerRear.
+2011-07-11  22:04:58.527  Rear laser scanner mounting set to normal.
+2011-07-11  22:04:58.528  Rear laser scanner angle set to 10.
+2011-07-11  22:04:58.529  Rear laser scanner resolution set to 1.
+2011-07-11  22:04:58.742  Haar classifier cascade file set todata/haarcascades/haarcascade_frontalface_alt2.xml.
+2011-07-11  22:04:58.753  Min. obstacle distance set to 60 cm.
+2011-07-11  22:04:58.755  Min. obstacle distance Laser Scanner set to 60 cm.
+2011-07-11  22:04:58.756  Robot slot set to 2 deg.
+2011-07-11  22:04:58.757  Robot slot width set to 84 cm.
+2011-07-11  22:04:58.759  Straight forward deviation set to 9 deg.
+2011-07-11  22:04:58.760  Joystick port set to /dev/input/js0.
+2011-07-11  22:04:58.761  Motor1 speed set to 10.
+2011-07-11  22:04:58.762  Motor2 speed set to 10.
+2011-07-11  22:04:58.763  Motor3 speed set to 10.
+2011-07-11  22:04:58.764  Motor4 speed set to 10.
+2011-07-11  22:04:58.765  Minimum speed speed set to 20.
+2011-07-11  22:04:58.767  Maximum speed speed set to 250.
+2011-07-11  22:04:58.768  Servo start settings read and set.
+2011-07-11  22:04:58.769  Servo end settings read and set.
+2011-07-11  22:04:58.770  Servo min. settings read and set.
+2011-07-11  22:04:58.771  Servo max. settings read and set.
+2011-07-11  22:04:58.772  Servo default settings read and set.
+2011-07-11  22:04:58.773  Setting network port to 45454.
+2011-07-11  22:04:58.775  Setting threshold to 100.
+2011-07-11  22:04:58.776  Setting sleepTimeSensorThread to 750 ms.
+2011-07-11  22:04:58.777  Setting sleepTimeCommandHandler to 250 ms.
+2011-07-11  22:04:58.778  Setting atmelTimeout to 2500 ms.
+2011-07-11  22:04:58.779  Setting intervalTimeSensorThread to 500 ms.
+2011-07-11  22:04:58.780  Starting network thread...
+2011-07-11  22:04:58.782  Network thread started.
+2011-07-11  22:04:58.789  Opening serial port /dev/ttyAtmelBoard for microcontroller communication...
+2011-07-11  22:04:58.802  Waiting for Atmel command string start...
+2011-07-11  22:04:58.805  Starting command handler...
+2011-07-11  22:04:58.807  Command handler started.
+2011-07-11  22:04:58.808  Serial port opened.
+2011-07-11  22:04:58.810  Initialising circuit...
+2011-07-11  22:04:58.811  Circuit sends *re#...
+2011-07-11  22:04:58.812  Added ID 0. 1 commands in queue.
+2011-07-11  22:04:58.815  Searching robot...
+2011-07-11  22:04:58.817  Starting plot thread...
+2011-07-11  22:04:58.819  Plot thread started.
+2011-07-11  22:04:58.822  Joystick thread NOT started.
+2011-07-11  22:04:58.825  Detecting Kinect camera...
+2011-07-11  22:04:58.827  Initialising Kinect camera...
+2011-07-11  22:04:58.831  ERROR: could not initialize Kinect camera.
+2011-07-11  22:04:58.835  Kinect camera not found.
+2011-07-11  22:04:58.837  No Kinect detected.
+2011-07-11  22:04:58.841  NO laser scanners found! Thread NOT started!
+2011-07-11  22:05:00.923  CommandHandler sends re (ID 1)
+2011-07-11  22:05:00.970  Atmel says: *re#
+2011-07-11  22:05:00.972  Command duration: 1915 ms
+2011-07-11  22:05:00.974  Robot is ON and answers.
+2011-07-11  22:05:00.975  Motor speed set in microcontroller
+2011-07-11  22:05:00.977  Circuit sends *cc#...
+2011-07-11  22:05:00.978  Added ID 1. 1 commands in queue.
+2011-07-11  22:05:00.999  Starting sensor thread...
+2011-07-11  22:05:01.000  Sensor thread started.
+2011-07-11  22:05:01.014  CommandHandler sends cc (ID 2)
+2011-07-11  22:05:01.024  Atmel says: *cc#
+2011-07-11  22:05:01.025  Command duration: 11 ms
+2011-07-11  22:05:01.026  3D compass module detected.
+2011-07-11  22:05:01.027  Answer *cc# is not for SensorThread.
+
+2011-07-11  22:05:01.751  SensorThread says *s8#...
+2011-07-11  22:05:01.752  Added ID 2. 1 commands in queue.
+2011-07-11  22:05:01.765  CommandHandler sends s8 (ID 3)
+2011-07-11  22:05:01.781  Atmel says: *s8=705#
+2011-07-11  22:05:01.782  Command duration: 17 ms
+2011-07-11  22:05:01.784  VOLTAGESENSOR1 = s8 = 12.3684 Volt
+
+2011-07-11  22:05:02.251  SensorThread says *s7#...
+2011-07-11  22:05:02.252  Added ID 3. 1 commands in queue.
+2011-07-11  22:05:02.266  CommandHandler sends s7 (ID 4)
+2011-07-11  22:05:02.281  Atmel says: *s7=854#
+2011-07-11  22:05:02.282  Command duration: 16 ms
+2011-07-11  22:05:02.284  VOLTAGESENSOR2 = s7 = 23.6401 Volt
+
+2011-07-11  22:05:03.517  SensorThread says *s8#...
+2011-07-11  22:05:03.538  Added ID 4. 1 commands in queue.
+2011-07-11  22:05:03.584  CommandHandler sends s8 (ID 5)
+2011-07-11  22:05:03.599  Atmel says: *s8=676#
+2011-07-11  22:05:03.614  Command duration: 32 ms
+2011-07-11  22:05:03.629  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+
+2011-07-11  22:05:04.021  SensorThread says *s7#...
+2011-07-11  22:05:04.037  Added ID 5. 1 commands in queue.
+2011-07-11  22:05:04.086  CommandHandler sends s7 (ID 6)
+2011-07-11  22:05:04.103  Atmel says: *s7=851#
+2011-07-11  22:05:04.121  Command duration: 36 ms
+2011-07-11  22:05:04.138  VOLTAGESENSOR2 = s7 = 23.5571 Volt
+
+2011-07-11  22:05:05.269  SensorThread says *s8#...
+2011-07-11  22:05:05.288  Added ID 6. 1 commands in queue.
+2011-07-11  22:05:05.332  CommandHandler sends s8 (ID 7)
+2011-07-11  22:05:05.351  Atmel says: *s8=675#
+2011-07-11  22:05:05.371  Command duration: 64 ms
+2011-07-11  22:05:05.392  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+
+2011-07-11  22:05:05.778  SensorThread says *s7#...
+2011-07-11  22:05:05.799  Added ID 7. 1 commands in queue.
+2011-07-11  22:05:05.822  CommandHandler sends s7 (ID 8)
+2011-07-11  22:05:05.844  Atmel says: *s7=849#
+2011-07-11  22:05:05.867  Command duration: 45 ms
+2011-07-11  22:05:05.890  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+
+2011-07-11  22:05:07.030  SensorThread says *s8#...
+2011-07-11  22:05:07.054  Added ID 8. 1 commands in queue.
+2011-07-11  22:05:07.079  CommandHandler sends s8 (ID 9)
+2011-07-11  22:05:07.104  Atmel says: *s8=676#
+2011-07-11  22:05:07.130  Command duration: 50 ms
+2011-07-11  22:05:07.156  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+
+2011-07-11  22:05:07.529  SensorThread says *s7#...
+2011-07-11  22:05:07.557  Added ID 9. 1 commands in queue.
+2011-07-11  22:05:07.590  CommandHandler sends s7 (ID 10)
+2011-07-11  22:05:07.618  Atmel says: *s7=850#
+2011-07-11  22:05:07.647  Command duration: 61 ms
+2011-07-11  22:05:07.676  VOLTAGESENSOR2 = s7 = 23.5294 Volt
+
+2011-07-11  22:05:08.787  SensorThread says *s8#...
+2011-07-11  22:05:08.817  Added ID 10. 1 commands in queue.
+2011-07-11  22:05:08.848  CommandHandler sends s8 (ID 11)
+2011-07-11  22:05:08.922  Atmel says: *s8=676#
+2011-07-11  22:05:08.953  Command duration: 105 ms
+2011-07-11  22:05:08.985  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+
+2011-07-11  22:05:09.286  SensorThread says *s7#...
+2011-07-11  22:05:09.319  Added ID 11. 1 commands in queue.
+2011-07-11  22:05:09.352  CommandHandler sends s7 (ID 12)
+2011-07-11  22:05:09.410  Atmel says: *s7=849#
+2011-07-11  22:05:09.443  Command duration: 91 ms
+2011-07-11  22:05:09.478  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+
+2011-07-11  22:05:10.538  SensorThread says *s8#...
+2011-07-11  22:05:10.574  Added ID 12. 1 commands in queue.
+2011-07-11  22:05:10.610  CommandHandler sends s8 (ID 13)
+2011-07-11  22:05:10.671  Atmel says: *s8=675#
+2011-07-11  22:05:10.708  Command duration: 97 ms
+2011-07-11  22:05:10.745  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+
+2011-07-11  22:05:11.041  SensorThread says *s7#...
+2011-07-11  22:05:11.079  Added ID 13. 1 commands in queue.
+2011-07-11  22:05:11.118  CommandHandler sends s7 (ID 14)
+2011-07-11  22:05:11.180  Atmel says: *s7=848#
+2011-07-11  22:05:11.219  Command duration: 100 ms
+2011-07-11  22:05:11.259  VOLTAGESENSOR2 = s7 = 23.474 Volt
+
+2011-07-11  22:05:12.319  SensorThread says *s8#...
+2011-07-11  22:05:12.372  Added ID 14. 1 commands in queue.
+2011-07-11  22:05:12.415  CommandHandler sends s8 (ID 15)
+2011-07-11  22:05:12.479  Atmel says: *s8=675#
+2011-07-11  22:05:12.521  Command duration: 107 ms
+2011-07-11  22:05:12.564  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+
+2011-07-11  22:05:12.799  SensorThread says *s7#...
+2011-07-11  22:05:12.842  Added ID 15. 1 commands in queue.
+2011-07-11  22:05:12.888  CommandHandler sends s7 (ID 16)
+2011-07-11  22:05:12.955  Atmel says: *s7=851#
+2011-07-11  22:05:13.000  Command duration: 112 ms
+2011-07-11  22:05:13.045  VOLTAGESENSOR2 = s7 = 23.5571 Volt
+
+2011-07-11  22:05:14.051  SensorThread says *s8#...
+2011-07-11  22:05:14.098  Added ID 16. 1 commands in queue.
+2011-07-11  22:05:14.145  CommandHandler sends s8 (ID 17)
+2011-07-11  22:05:14.214  Atmel says: *s8=675#
+2011-07-11  22:05:14.262  Command duration: 117 ms
+2011-07-11  22:05:14.310  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+
+2011-07-11  22:05:14.556  SensorThread says *s7#...
+2011-07-11  22:05:14.606  Added ID 17. 1 commands in queue.
+2011-07-11  22:05:14.655  CommandHandler sends s7 (ID 18)
+2011-07-11  22:05:14.728  Atmel says: *s7=850#
+2011-07-11  22:05:14.778  Command duration: 122 ms
+2011-07-11  22:05:14.829  VOLTAGESENSOR2 = s7 = 23.5294 Volt
+
+2011-07-11  22:05:15.813  SensorThread says *s8#...
+2011-07-11  22:05:15.864  Added ID 18. 1 commands in queue.
+2011-07-11  22:05:15.918  CommandHandler sends s8 (ID 19)
+2011-07-11  22:05:15.993  Atmel says: *s8=675#
+2011-07-11  22:05:16.046  Command duration: 128 ms
+2011-07-11  22:05:16.100  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+
+2011-07-11  22:05:16.312  SensorThread says *s7#...
+2011-07-11  22:05:16.367  Added ID 19. 1 commands in queue.
+2011-07-11  22:05:16.424  CommandHandler sends s7 (ID 20)
+2011-07-11  22:05:16.502  Atmel says: *s7=849#
+2011-07-11  22:05:16.558  Command duration: 135 ms
+2011-07-11  22:05:16.614  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+
+2011-07-11  22:05:17.570  SensorThread says *s8#...
+2011-07-11  22:05:17.628  Added ID 20. 1 commands in queue.
+2011-07-11  22:05:17.686  CommandHandler sends s8 (ID 21)
+2011-07-11  22:05:17.767  Atmel says: *s8=676#
+2011-07-11  22:05:17.825  Command duration: 139 ms
+2011-07-11  22:05:17.884  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+
+2011-07-11  22:05:18.069  SensorThread says *s7#...
+2011-07-11  22:05:18.128  Added ID 21. 1 commands in queue.
+2011-07-11  22:05:18.189  CommandHandler sends s7 (ID 22)
+2011-07-11  22:05:18.273  Atmel says: *s7=849#
+2011-07-11  22:05:18.334  Command duration: 144 ms
+2011-07-11  22:05:18.396  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+
+2011-07-11  22:05:19.321  SensorThread says *s8#...
+2011-07-11  22:05:19.384  Added ID 22. 1 commands in queue.
+2011-07-11  22:05:19.448  CommandHandler sends s8 (ID 23)
+2011-07-11  22:05:19.535  Atmel says: *s8=675#
+2011-07-11  22:05:19.604  Command duration: 151 ms
+2011-07-11  22:05:19.669  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:19.824  SensorThread says *s7#...
+2011-07-11  22:05:19.890  Added ID 23. 1 commands in queue.
+2011-07-11  22:05:19.957  CommandHandler sends s7 (ID 24)
+2011-07-11  22:05:20.047  Atmel says: *s7=851#
+2011-07-11  22:05:20.114  Command duration: 157 ms
+2011-07-11  22:05:20.181  VOLTAGESENSOR2 = s7 = 23.5571 Volt
+2011-07-11  22:05:21.082  SensorThread says *s8#...
+2011-07-11  22:05:21.152  Added ID 24. 1 commands in queue.
+2011-07-11  22:05:21.227  CommandHandler sends s8 (ID 25)
+2011-07-11  22:05:21.339  Atmel says: *s8=675#
+2011-07-11  22:05:21.410  Command duration: 187 ms
+2011-07-11  22:05:21.483  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:21.590  SensorThread says *s7#...
+2011-07-11  22:05:21.663  Added ID 25. 1 commands in queue.
+2011-07-11  22:05:21.761  CommandHandler sends s7 (ID 26)
+2011-07-11  22:05:21.834  Atmel says: *s7=850#
+2011-07-11  22:05:21.907  Command duration: 171 ms
+2011-07-11  22:05:21.980  VOLTAGESENSOR2 = s7 = 23.5294 Volt
+2011-07-11  22:05:22.834  SensorThread says *s8#...
+2011-07-11  22:05:22.908  Added ID 26. 1 commands in queue.
+2011-07-11  22:05:22.986  CommandHandler sends s8 (ID 27)
+2011-07-11  22:05:23.063  Atmel says: *s8=676#
+2011-07-11  22:05:23.137  Command duration: 155 ms
+2011-07-11  22:05:23.213  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:23.334  SensorThread says *s7#...
+2011-07-11  22:05:23.410  Added ID 27. 1 commands in queue.
+2011-07-11  22:05:23.494  CommandHandler sends s7 (ID 28)
+2011-07-11  22:05:23.581  Atmel says: *s7=848#
+2011-07-11  22:05:23.661  Command duration: 171 ms
+2011-07-11  22:05:23.740  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:05:24.587  SensorThread says *s8#...
+2011-07-11  22:05:24.666  Added ID 28. 1 commands in queue.
+2011-07-11  22:05:24.746  CommandHandler sends s8 (ID 29)
+2011-07-11  22:05:24.826  Atmel says: *s8=676#
+2011-07-11  22:05:24.907  Command duration: 161 ms
+2011-07-11  22:05:24.988  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:25.095  SensorThread says *s7#...
+2011-07-11  22:05:25.177  Added ID 29. 1 commands in queue.
+2011-07-11  22:05:25.260  CommandHandler sends s7 (ID 30)
+2011-07-11  22:05:25.343  Atmel says: *s7=850#
+2011-07-11  22:05:25.426  Command duration: 166 ms
+2011-07-11  22:05:25.510  VOLTAGESENSOR2 = s7 = 23.5294 Volt
+2011-07-11  22:05:26.343  SensorThread says *s8#...
+2011-07-11  22:05:26.427  Added ID 30. 1 commands in queue.
+2011-07-11  22:05:26.517  CommandHandler sends s8 (ID 31)
+2011-07-11  22:05:26.605  Atmel says: *s8=676#
+2011-07-11  22:05:26.691  Command duration: 178 ms
+2011-07-11  22:05:26.778  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:26.865  SensorThread says *s7#...
+2011-07-11  22:05:26.952  Added ID 31. 1 commands in queue.
+2011-07-11  22:05:27.045  CommandHandler sends s7 (ID 32)
+2011-07-11  22:05:27.136  Atmel says: *s7=850#
+2011-07-11  22:05:27.225  Command duration: 184 ms
+2011-07-11  22:05:27.314  VOLTAGESENSOR2 = s7 = 23.5294 Volt
+2011-07-11  22:05:28.098  SensorThread says *s8#...
+2011-07-11  22:05:28.188  Added ID 32. 1 commands in queue.
+2011-07-11  22:05:28.279  CommandHandler sends s8 (ID 33)
+2011-07-11  22:05:28.370  Atmel says: *s8=675#
+2011-07-11  22:05:28.461  Command duration: 182 ms
+2011-07-11  22:05:28.553  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:28.651  SensorThread says *s7#...
+2011-07-11  22:05:28.743  Added ID 33. 1 commands in queue.
+2011-07-11  22:05:28.840  CommandHandler sends s7 (ID 34)
+2011-07-11  22:05:28.938  Atmel says: *s7=849#
+2011-07-11  22:05:29.033  Command duration: 194 ms
+2011-07-11  22:05:29.128  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:29.904  SensorThread says *s8#...
+2011-07-11  22:05:29.999  Added ID 34. 1 commands in queue.
+2011-07-11  22:05:30.100  CommandHandler sends s8 (ID 35)
+2011-07-11  22:05:30.198  Atmel says: *s8=675#
+2011-07-11  22:05:30.294  Command duration: 199 ms
+2011-07-11  22:05:30.391  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:30.490  SensorThread says *s7#...
+2011-07-11  22:05:30.588  Added ID 35. 1 commands in queue.
+2011-07-11  22:05:30.695  CommandHandler sends s7 (ID 36)
+2011-07-11  22:05:30.794  Atmel says: *s7=848#
+2011-07-11  22:05:30.894  Command duration: 205 ms
+2011-07-11  22:05:30.993  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:05:31.638  SensorThread says *s8#...
+2011-07-11  22:05:31.739  Added ID 36. 1 commands in queue.
+2011-07-11  22:05:31.844  CommandHandler sends s8 (ID 37)
+2011-07-11  22:05:32.006  Atmel says: *s8=675#
+2011-07-11  22:05:32.137  Command duration: 266 ms
+2011-07-11  22:05:32.257  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:32.365  SensorThread says *s7#...
+2011-07-11  22:05:32.470  Added ID 37. 1 commands in queue.
+2011-07-11  22:05:32.608  CommandHandler sends s7 (ID 38)
+2011-07-11  22:05:32.715  Atmel says: *s7=848#
+2011-07-11  22:05:32.820  Command duration: 245 ms
+2011-07-11  22:05:32.926  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:05:33.369  SensorThread says *s8#...
+2011-07-11  22:05:33.476  Added ID 38. 1 commands in queue.
+2011-07-11  22:05:33.594  CommandHandler sends s8 (ID 39)
+2011-07-11  22:05:33.731  Atmel says: *s8=675#
+2011-07-11  22:05:33.839  Command duration: 255 ms
+2011-07-11  22:05:33.947  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:34.056  SensorThread says *s7#...
+2011-07-11  22:05:34.165  Added ID 39. 1 commands in queue.
+2011-07-11  22:05:34.299  CommandHandler sends s7 (ID 40)
+2011-07-11  22:05:34.409  Atmel says: *s7=850#
+2011-07-11  22:05:34.520  Command duration: 244 ms
+2011-07-11  22:05:34.631  VOLTAGESENSOR2 = s7 = 23.5294 Volt
+2011-07-11  22:05:35.188  SensorThread says *s8#...
+2011-07-11  22:05:35.299  Added ID 40. 1 commands in queue.
+2011-07-11  22:05:35.412  CommandHandler sends s8 (ID 41)
+2011-07-11  22:05:35.549  Atmel says: *s8=676#
+2011-07-11  22:05:35.668  Command duration: 249 ms
+2011-07-11  22:05:35.782  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:35.896  SensorThread says *s7#...
+2011-07-11  22:05:36.011  Added ID 41. 1 commands in queue.
+2011-07-11  22:05:36.151  CommandHandler sends s7 (ID 42)
+2011-07-11  22:05:36.266  Atmel says: *s7=849#
+2011-07-11  22:05:36.382  Command duration: 256 ms
+2011-07-11  22:05:36.499  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:36.954  SensorThread says *s8#...
+2011-07-11  22:05:37.072  Added ID 42. 1 commands in queue.
+2011-07-11  22:05:37.191  CommandHandler sends s8 (ID 43)
+2011-07-11  22:05:37.331  Atmel says: *s8=677#
+2011-07-11  22:05:37.450  Command duration: 259 ms
+2011-07-11  22:05:37.574  VOLTAGESENSOR1 = s8 = 11.8772 Volt
+2011-07-11  22:05:37.694  SensorThread says *s7#...
+2011-07-11  22:05:37.814  Added ID 43. 1 commands in queue.
+2011-07-11  22:05:37.960  CommandHandler sends s7 (ID 44)
+2011-07-11  22:05:38.082  Atmel says: *s7=849#
+2011-07-11  22:05:38.203  Command duration: 267 ms
+2011-07-11  22:05:38.325  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:38.663  SensorThread says *s8#...
+2011-07-11  22:05:38.786  Added ID 44. 1 commands in queue.
+2011-07-11  22:05:38.909  CommandHandler sends s8 (ID 45)
+2011-07-11  22:05:39.057  Atmel says: *s8=676#
+2011-07-11  22:05:39.181  Command duration: 271 ms
+2011-07-11  22:05:39.305  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:39.431  SensorThread says *s7#...
+2011-07-11  22:05:39.556  Added ID 45. 1 commands in queue.
+2011-07-11  22:05:39.716  CommandHandler sends s7 (ID 46)
+2011-07-11  22:05:39.846  Atmel says: *s7=847#
+2011-07-11  22:05:39.976  Command duration: 290 ms
+2011-07-11  22:05:40.109  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:05:40.401  SensorThread says *s8#...
+2011-07-11  22:05:40.532  Added ID 46. 1 commands in queue.
+2011-07-11  22:05:40.664  CommandHandler sends s8 (ID 47)
+2011-07-11  22:05:40.830  Atmel says: *s8=676#
+2011-07-11  22:05:40.960  Command duration: 298 ms
+2011-07-11  22:05:41.091  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:41.223  SensorThread says *s7#...
+2011-07-11  22:05:41.354  Added ID 47. 1 commands in queue.
+2011-07-11  22:05:41.511  CommandHandler sends s7 (ID 48)
+2011-07-11  22:05:41.673  Atmel says: *s7=849#
+2011-07-11  22:05:41.806  Command duration: 319 ms
+2011-07-11  22:05:41.939  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:42.145  SensorThread says *s8#...
+2011-07-11  22:05:42.279  Added ID 48. 1 commands in queue.
+2011-07-11  22:05:42.414  CommandHandler sends s8 (ID 49)
+2011-07-11  22:05:42.573  Atmel says: *s8=676#
+2011-07-11  22:05:42.709  Command duration: 293 ms
+2011-07-11  22:05:42.845  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:42.981  SensorThread says *s7#...
+2011-07-11  22:05:43.118  Added ID 49. 1 commands in queue.
+2011-07-11  22:05:43.280  CommandHandler sends s7 (ID 50)
+2011-07-11  22:05:43.417  Atmel says: *s7=850#
+2011-07-11  22:05:43.555  Command duration: 299 ms
+2011-07-11  22:05:43.699  VOLTAGESENSOR2 = s7 = 23.5294 Volt
+2011-07-11  22:05:43.903  SensorThread says *s8#...
+2011-07-11  22:05:44.042  Added ID 50. 1 commands in queue.
+2011-07-11  22:05:44.205  CommandHandler sends s8 (ID 51)
+2011-07-11  22:05:44.346  Atmel says: *s8=676#
+2011-07-11  22:05:44.487  Command duration: 305 ms
+2011-07-11  22:05:44.629  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:44.771  SensorThread says *s7#...
+2011-07-11  22:05:44.913  Added ID 51. 1 commands in queue.
+2011-07-11  22:05:45.081  CommandHandler sends s7 (ID 52)
+2011-07-11  22:05:45.224  Atmel says: *s7=849#
+2011-07-11  22:05:45.368  Command duration: 311 ms
+2011-07-11  22:05:45.512  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:45.665  SensorThread says *s8#...
+2011-07-11  22:05:45.813  Added ID 52. 1 commands in queue.
+2011-07-11  22:05:45.986  CommandHandler sends s8 (ID 53)
+2011-07-11  22:05:46.136  Atmel says: *s8=674#
+2011-07-11  22:05:46.285  Command duration: 323 ms
+2011-07-11  22:05:46.435  VOLTAGESENSOR1 = s8 = 11.8246 Volt
+2011-07-11  22:05:46.584  SensorThread says *s7#...
+2011-07-11  22:05:46.733  Added ID 53. 1 commands in queue.
+2011-07-11  22:05:46.909  CommandHandler sends s7 (ID 54)
+2011-07-11  22:05:47.058  Atmel says: *s7=848#
+2011-07-11  22:05:47.207  Command duration: 325 ms
+2011-07-11  22:05:47.357  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:05:47.508  SensorThread says *s8#...
+2011-07-11  22:05:47.664  Added ID 54. 1 commands in queue.
+2011-07-11  22:05:47.839  CommandHandler sends s8 (ID 55)
+2011-07-11  22:05:47.990  Atmel says: *s8=676#
+2011-07-11  22:05:48.141  Command duration: 326 ms
+2011-07-11  22:05:48.293  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:48.446  SensorThread says *s7#...
+2011-07-11  22:05:48.600  Added ID 55. 1 commands in queue.
+2011-07-11  22:05:48.779  CommandHandler sends s7 (ID 56)
+2011-07-11  22:05:48.933  Atmel says: *s7=848#
+2011-07-11  22:05:49.088  Command duration: 333 ms
+2011-07-11  22:05:49.243  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:05:49.399  SensorThread says *s8#...
+2011-07-11  22:05:49.555  Added ID 56. 1 commands in queue.
+2011-07-11  22:05:49.742  SensorThread says *s7#...
+2011-07-11  22:05:49.898  Added ID 57. 1 commands in queue.
+2011-07-11  22:05:50.055  CommandHandler sends s8 (ID 57)
+2011-07-11  22:05:50.213  Atmel says: *s8=676#
+2011-07-11  22:05:50.371  Command duration: 658 ms
+2011-07-11  22:05:50.529  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:50.691  CommandHandler sends s7 (ID 58)
+2011-07-11  22:05:50.874  Atmel says: *s7=849#
+2011-07-11  22:05:51.034  Command duration: 618 ms
+2011-07-11  22:05:51.193  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:51.355  SensorThread says *s8#...
+2011-07-11  22:05:51.515  Added ID 58. 1 commands in queue.
+2011-07-11  22:05:51.708  SensorThread says *s7#...
+2011-07-11  22:05:51.870  Added ID 59. 1 commands in queue.
+2011-07-11  22:05:52.033  CommandHandler sends s8 (ID 59)
+2011-07-11  22:05:52.196  Atmel says: *s8=676#
+2011-07-11  22:05:52.360  Command duration: 680 ms
+2011-07-11  22:05:52.524  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:52.691  CommandHandler sends s7 (ID 60)
+2011-07-11  22:05:52.857  SensorThread says *s8#...
+2011-07-11  22:05:53.022  Added ID 60. 1 commands in queue.
+2011-07-11  22:05:53.211  Atmel says: *s7=849#
+2011-07-11  22:05:53.377  Command duration: 994 ms
+2011-07-11  22:05:53.544  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:53.720  SensorThread says *s7#...
+2011-07-11  22:05:53.888  Added ID 61. 1 commands in queue.
+2011-07-11  22:05:54.056  CommandHandler sends s8 (ID 61)
+2011-07-11  22:05:54.247  Atmel says: *s8=676#
+2011-07-11  22:05:54.417  Command duration: 1030 ms
+2011-07-11  22:05:54.587  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:05:54.759  SensorThread says *s8#...
+2011-07-11  22:05:54.930  Added ID 62. 1 commands in queue.
+2011-07-11  22:05:55.100  CommandHandler sends s7 (ID 62)
+2011-07-11  22:05:55.294  Atmel says: *s7=848#
+2011-07-11  22:05:55.466  Command duration: 1024 ms
+2011-07-11  22:05:55.644  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:05:55.817  SensorThread says *s7#...
+2011-07-11  22:05:55.990  Added ID 63. 1 commands in queue.
+2011-07-11  22:05:56.165  CommandHandler sends s8 (ID 63)
+2011-07-11  22:05:56.362  Atmel says: *s8=675#
+2011-07-11  22:05:56.537  Command duration: 1041 ms
+2011-07-11  22:05:56.712  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:56.889  SensorThread says *s8#...
+2011-07-11  22:05:57.065  Added ID 64. 1 commands in queue.
+2011-07-11  22:05:57.242  CommandHandler sends s7 (ID 64)
+2011-07-11  22:05:57.418  SensorThread says *s7#...
+
+
+2011-07-11  22:05:57.601  Added ID 65. 2 commands in queue.
+2011-07-11  22:05:57.801  Atmel says: *s7=849#
+2011-07-11  22:05:57.979  Command duration: 1428 ms
+2011-07-11  22:05:58.157  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:05:58.340  SensorThread says *s8#...
+2011-07-11  22:05:58.519  Added ID 66. 2 commands in queue.
+2011-07-11  22:05:58.700  CommandHandler sends s8 (ID 66)
+2011-07-11  22:05:58.903  Atmel says: *s8=675#
+2011-07-11  22:05:59.084  Command duration: 1078 ms
+2011-07-11  22:05:59.265  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:05:59.447  SensorThread says *s7#...
+2011-07-11  22:05:59.635  Added ID 67. 2 commands in queue.
+2011-07-11  22:05:59.820  CommandHandler sends s7 (ID 67)
+2011-07-11  22:06:00.024  Atmel says: *s7=848#
+2011-07-11  22:06:00.208  Command duration: 1098 ms
+2011-07-11  22:06:00.392  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:06:00.579  SensorThread says *s8#...
+2011-07-11  22:06:00.764  Added ID 68. 2 commands in queue.
+2011-07-11  22:06:00.953  SensorThread says *s7#...
+2011-07-11  22:06:01.138  Added ID 69. 3 commands in queue.
+2011-07-11  22:06:01.324  CommandHandler sends s8 (ID 68)
+2011-07-11  22:06:01.533  Atmel says: *s8=675#
+2011-07-11  22:06:01.726  Command duration: 1506 ms
+2011-07-11  22:06:01.914  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:06:02.104  SensorThread says *s8#...
+2011-07-11  22:06:02.293  Added ID 70. 3 commands in queue.
+2011-07-11  22:06:02.483  CommandHandler sends s7 (ID 70)
+2011-07-11  22:06:02.673  SensorThread says *s7#...
+2011-07-11  22:06:02.863  Added ID 71. 4 commands in queue.
+2011-07-11  22:06:03.078  Atmel says: *s7=848#
+2011-07-11  22:06:03.269  Command duration: 1497 ms
+2011-07-11  22:06:03.460  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:06:03.661  SensorThread says *s8#...
+2011-07-11  22:06:03.853  Added ID 72. 4 commands in queue.
+2011-07-11  22:06:04.045  CommandHandler sends s8 (ID 72)
+2011-07-11  22:06:04.261  Atmel says: *s8=675#
+2011-07-11  22:06:04.455  Command duration: 1178 ms
+2011-07-11  22:06:04.650  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:06:04.844  SensorThread says *s7#...
+2011-07-11  22:06:05.039  Added ID 73. 4 commands in queue.
+2011-07-11  22:06:05.236  CommandHandler sends s7 (ID 73)
+2011-07-11  22:06:05.454  Atmel says: *s7=849#
+2011-07-11  22:06:05.657  Command duration: 1169 ms
+2011-07-11  22:06:05.853  VOLTAGESENSOR2 = s7 = 23.5017 Volt
+2011-07-11  22:06:06.051  SensorThread says *s8#...
+2011-07-11  22:06:06.248  Added ID 74. 4 commands in queue.
+2011-07-11  22:06:06.447  SensorThread says *s7#...
+2011-07-11  22:06:06.646  Added ID 75. 5 commands in queue.
+2011-07-11  22:06:06.846  CommandHandler sends s8 (ID 74)
+2011-07-11  22:06:07.070  Atmel says: *s8=676#
+2011-07-11  22:06:07.270  Command duration: 1583 ms
+2011-07-11  22:06:07.471  VOLTAGESENSOR1 = s8 = 11.8596 Volt
+2011-07-11  22:06:07.679  SensorThread says *s8#...
+2011-07-11  22:06:07.880  Added ID 76. 5 commands in queue.
+2011-07-11  22:06:08.084  SensorThread says *s7#...
+2011-07-11  22:06:08.286  Added ID 77. 6 commands in queue.
+2011-07-11  22:06:08.489  CommandHandler sends s7 (ID 76)
+2011-07-11  22:06:08.715  Atmel says: *s7=848#
+2011-07-11  22:06:08.919  Command duration: 1626 ms
+2011-07-11  22:06:09.123  VOLTAGESENSOR2 = s7 = 23.474 Volt
+2011-07-11  22:06:09.330  SensorThread says *s8#...
+2011-07-11  22:06:09.535  Added ID 78. 6 commands in queue.
+2011-07-11  22:06:09.747  CommandHandler sends s8 (ID 78)
+2011-07-11  22:06:09.952  SensorThread says *s7#...
+2011-07-11  22:06:10.159  Added ID 79. 7 commands in queue.
+2011-07-11  22:06:10.388  Atmel says: *s8=673#
+2011-07-11  22:06:10.597  Command duration: 1646 ms
+2011-07-11  22:06:10.805  VOLTAGESENSOR1 = s8 = 11.807 Volt
+2011-07-11  22:06:11.017  SensorThread says *s8#...
+2011-07-11  22:06:11.225  Added ID 80. 7 commands in queue.
+2011-07-11  22:06:11.435  CommandHandler sends s7 (ID 80)
+2011-07-11  22:06:11.650  SensorThread says *s7#...
+2011-07-11  22:06:11.860  Added ID 81. 8 commands in queue.
+2011-07-11  22:06:12.092  Atmel says: *s7=847#
+2011-07-11  22:06:12.303  Command duration: 1698 ms
+2011-07-11  22:06:12.515  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:06:12.731  SensorThread says *s8#...
+2011-07-11  22:06:12.943  Added ID 82. 8 commands in queue.
+2011-07-11  22:06:13.157  CommandHandler sends s8 (ID 82)
+2011-07-11  22:06:13.370  SensorThread says *s7#...
+2011-07-11  22:06:13.589  Added ID 83. 9 commands in queue.
+2011-07-11  22:06:13.827  Atmel says: *s8=674#
+2011-07-11  22:06:14.042  Command duration: 1730 ms
+2011-07-11  22:06:14.257  VOLTAGESENSOR1 = s8 = 11.8246 Volt
+2011-07-11  22:06:14.476  SensorThread says *s8#...
+2011-07-11  22:06:14.693  Added ID 84. 9 commands in queue.
+2011-07-11  22:06:14.911  CommandHandler sends s7 (ID 84)
+2011-07-11  22:06:15.127  SensorThread says *s7#...
+2011-07-11  22:06:15.344  Added ID 85. 10 commands in queue.
+2011-07-11  22:06:15.589  Atmel says: *s7=847#
+2011-07-11  22:06:15.808  Command duration: 1736 ms
+2011-07-11  22:06:16.027  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:06:16.250  SensorThread says *s8#...
+2011-07-11  22:06:16.469  Added ID 86. 10 commands in queue.
+2011-07-11  22:06:16.691  CommandHandler sends s8 (ID 86)
+2011-07-11  22:06:16.912  SensorThread says *s7#...
+2011-07-11  22:06:17.133  Added ID 87. 11 commands in queue.
+2011-07-11  22:06:17.379  Atmel says: *s8=674#
+2011-07-11  22:06:17.608  Command duration: 1771 ms
+2011-07-11  22:06:17.831  VOLTAGESENSOR1 = s8 = 11.8246 Volt
+2011-07-11  22:06:18.059  SensorThread says *s8#...
+2011-07-11  22:06:18.282  Added ID 88. 11 commands in queue.
+2011-07-11  22:06:18.508  CommandHandler sends s7 (ID 88)
+2011-07-11  22:06:18.733  SensorThread says *s7#...
+2011-07-11  22:06:18.959  Added ID 89. 12 commands in queue.
+2011-07-11  22:06:19.207  Atmel says: *s7=847#
+2011-07-11  22:06:19.434  Command duration: 1796 ms
+2011-07-11  22:06:19.666  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:06:19.897  SensorThread says *s8#...
+2011-07-11  22:06:20.124  Added ID 90. 12 commands in queue.
+2011-07-11  22:06:20.353  CommandHandler sends s8 (ID 90)
+2011-07-11  22:06:20.582  SensorThread says *s7#...
+2011-07-11  22:06:20.811  Added ID 91. 13 commands in queue.
+2011-07-11  22:06:21.064  Atmel says: *s8=675#
+2011-07-11  22:06:21.294  Command duration: 1851 ms
+2011-07-11  22:06:21.525  VOLTAGESENSOR1 = s8 = 11.8421 Volt
+2011-07-11  22:06:21.765  SensorThread says *s8#...
+2011-07-11  22:06:21.996  Added ID 92. 13 commands in queue.
+2011-07-11  22:06:22.229  SensorThread says *s7#...
+2011-07-11  22:06:22.461  Added ID 93. 14 commands in queue.
+2011-07-11  22:06:22.694  CommandHandler sends s7 (ID 92)
+2011-07-11  22:06:22.952  Atmel says: *s7=847#
+2011-07-11  22:06:23.186  Command duration: 1886 ms
+2011-07-11  22:06:23.420  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:06:23.663  SensorThread says *s8#...
+2011-07-11  22:06:23.898  Added ID 94. 14 commands in queue.
+2011-07-11  22:06:24.135  SensorThread says *s7#...
+2011-07-11  22:06:24.372  Added ID 95. 15 commands in queue.
+2011-07-11  22:06:24.612  CommandHandler sends s8 (ID 94)
+2011-07-11  22:06:24.876  Atmel says: *s8=674#
+2011-07-11  22:06:25.116  Command duration: 1907 ms
+2011-07-11  22:06:25.356  VOLTAGESENSOR1 = s8 = 11.8246 Volt
+2011-07-11  22:06:25.605  SensorThread says *s8#...
+2011-07-11  22:06:25.845  Added ID 96. 15 commands in queue.
+2011-07-11  22:06:26.087  SensorThread says *s7#...
+2011-07-11  22:06:26.329  Added ID 97. 16 commands in queue.
+2011-07-11  22:06:26.573  CommandHandler sends s7 (ID 96)
+2011-07-11  22:06:26.840  Atmel says: *s7=847#
+2011-07-11  22:06:27.084  Command duration: 1919 ms
+2011-07-11  22:06:27.328  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:06:27.578  SensorThread says *s8#...
+2011-07-11  22:06:27.823  Added ID 98. 16 commands in queue.
+2011-07-11  22:06:28.069  SensorThread says *s7#...
+2011-07-11  22:06:28.315  Added ID 99. 17 commands in queue.
+2011-07-11  22:06:28.563  CommandHandler sends s8 (ID 98)
+2011-07-11  22:06:28.832  Atmel says: *s8=674#
+2011-07-11  22:06:29.080  Command duration: 1957 ms
+2011-07-11  22:06:29.328  VOLTAGESENSOR1 = s8 = 11.8246 Volt
+2011-07-11  22:06:29.583  SensorThread says *s8#...
+2011-07-11  22:06:29.831  Added ID 100. 17 commands in queue.
+2011-07-11  22:06:30.081  SensorThread says *s7#...
+2011-07-11  22:06:30.330  Added ID 101. 18 commands in queue.
+2011-07-11  22:06:30.583  CommandHandler sends s7 (ID 100)
+2011-07-11  22:06:30.833  SensorThread says *s8#...
+2011-07-11  22:06:31.085  Added ID 102. 19 commands in queue.
+2011-07-11  22:06:31.362  Atmel says: *s7=847#
+2011-07-11  22:06:31.619  Command duration: 2484 ms
+2011-07-11  22:06:31.872  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:06:32.126  SensorThread says *s7#...
+2011-07-11  22:06:32.380  Added ID 103. 19 commands in queue.
+2011-07-11  22:06:32.637  SensorThread says *s8#...
+2011-07-11  22:06:32.891  Added ID 104. 20 commands in queue.
+2011-07-11  22:06:33.147  CommandHandler sends s8 (ID 103)
+2011-07-11  22:06:33.401  SensorThread says *s7#...
+2011-07-11  22:06:33.663  Added ID 105. 21 commands in queue.
+2011-07-11  22:06:33.944  Atmel says: *s8=674#
+2011-07-11  22:06:34.201  Timeout (2562ms > 2500ms)
+2011-07-11  22:06:34.459  Robot state set to 0 in CommandHandler
+2011-07-11  22:06:34.718  ERROR when waiting executing command. Stopping CommandHandler!
+2011-07-11  22:06:34.977  Robot state set to 0 in SensorThread
+
+
+2011-07-11  22:06:35.238  SensorThread says *s8#...
+2011-07-11  22:06:35.498  SensorThread says *s7#...
+2011-07-11  22:06:35.766  CommandHandler sends s7 (ID 106)
+2011-07-11  22:06:36.027  SensorThread says *s8#...
+2011-07-11  22:06:36.313  Atmel says: *s7=847#
+2011-07-11  22:06:36.575  Command duration: 2326 ms
+2011-07-11  22:06:36.837  VOLTAGESENSOR2 = s7 = 23.4464 Volt
+2011-07-11  22:07:15.645  ----------------
+2011-07-11  22:07:15.683  Shutting down...
+2011-07-11  22:07:15.721  ----------------
+2011-07-11  22:07:15.774  Stopping speak thread...
+2011-07-11  22:07:15.970  Speak thread stopped.
+2011-07-11  22:07:16.009  Stopping Plot thread...
+2011-07-11  22:07:16.400  Plot thread stopped.
+2011-07-11  22:07:16.440  Stopping sensor thread...
+2011-07-11  22:07:16.820  Sensor thread stopped.
+2011-07-11  22:07:16.862  Stopping network thread...
+2011-07-11  22:07:17.833  Network thread stopped.
+2011-07-11  22:07:17.886  Putting robot to sleep...
+2011-07-11  22:07:18.148  Circuit sends *sl#...
+2011-07-11  22:07:18.190  Closing serial port to microcontroller...
+2011-07-11  22:07:18.195  -------------------------------------------------------------------------------------------------- stop -
