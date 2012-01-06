@@ -60,24 +60,39 @@ void gpio_setup(void)
 
 int main(void)
 {
-	int i, j = 0, c = 0;
+//	int i, j = 0, c = 0; // original code
+	u16 value = 0;
 
 	clock_setup();
 	gpio_setup();
 	usart_setup();
 
 	/* Blink the LED (PD12) on the board with every transmitted byte. */
-	while (1) {
-		gpio_toggle(GPIOD, GPIO12);	/* LED on/off */
-		usart_send_blocking(USART2, c + '0'); /* USART2: Send byte. */
-		c = (c == 9) ? 0 : c + 1;	/* Increment c. */
-		if ((j++ % 80) == 0) {		/* Newline after line full. */
+	while (1)
+	{
+		// Wait until we receive something on the serial port
+		// Note that this is a BLOCKING read, so this will never be left, until we receive a byte!!
+		value = usart_recv_blocking(USART2);
+
+		// toggle LED for indication
+		gpio_toggle(GPIOD, GPIO12);
+
+		//answer with received char (byte)
+		usart_send_blocking(USART2, value);
+
+
+/* original code:
+		gpio_toggle(GPIOD, GPIO12);	// LED on/off
+		usart_send_blocking(USART2, c + '0'); // USART2: Send byte. 
+		c = (c == 9) ? 0 : c + 1;	// Increment c. 
+		if ((j++ % 80) == 0) {		// Newline after line full. 
 			usart_send_blocking(USART2, '\r');
 			usart_send_blocking(USART2, '\n');
 		}
-//		for (i = 0; i < 3000000; i++)	/* Wait a bit. */
-		for (i = 0; i < 30000; i++)	/* Wait a bit. */
+//		for (i = 0; i < 3000000; i++)	// Wait a bit. 
+		for (i = 0; i < 30000; i++)	// Wait a bit. 
 			__asm__("NOP");
+			*/
 	}
 
 	return 0;
