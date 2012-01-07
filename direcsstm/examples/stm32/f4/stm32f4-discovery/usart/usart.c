@@ -47,7 +47,7 @@ void usart_setup(void)
 	usart_set_parity(USART2, USART_PARITY_NONE);
 	usart_set_stopbits(USART2, USART_STOPBITS_1);
 
-	// setup RX *and* TX mode
+	// setup TX *and* RX mode
 	usart_set_mode(USART2, USART_MODE_TX_RX);
 	
 	// no flow control
@@ -66,55 +66,76 @@ void gpio_setup(void)
 	// Setup GPIO pins for USART2 transmit.
 	// TX
 	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO2);
+
 	// RX
 	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO3);
 
+	// RX as input mode! >> does not work, too!
+	// gpio_mode_setup(GPIOA, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO3);
+
 	// Setup USART2 TX pin as alternate function.
+	//
+	// For PIN0 to 7 we have (p. 141, RM0090):
+	// AF0 = system
+	// AF1 = TIM1..2
+	// AF2 = TIM3..5
+	// AF3 = TIM8..11
+	// AF4 = I2C1..3
+	// AF5 = SPI1..2
+	// AF6 = SPI3
+	// AF7 = USART1..3
+	// AF8 = USART4..6
+	// AF9 = CAN1..2, TIM12..14
+	// AF10 = OTG_FS, OTG_HS
+	// AF11 = ETH
+	// AF12 = FSMC, SDIO, OTG_HS
+	// AF13 = DCMI
+	// AF14 = n/a
+	// AF15 = EVENTOUT
 	gpio_set_af(GPIOA, GPIO_AF7, GPIO2);
 
 	// RX
-//	gpio_set_af(GPIOA, GPIO_AF7, GPIO3); // < < < < <  enabling this stops TX-ing !! < < < < <
+	gpio_set_af(GPIOA, GPIO_AF7, GPIO3); // < < < < <  enabling this stops TX-ing !! < < < < <
 }
 
 int main(void)
 {
-	int i, j = 0, c = 0; // original code
+	int i, j = 0, c = 0;
 	int value = 0;
 
 	clock_setup();
 	gpio_setup();
 	usart_setup();
 
-	/* Blink the LED (PD12) on the board with every transmitted byte. */
+	// Blink the LED (PD12) on the board with every transmitted byte.
 	while (1)
 	{
 		// Wait until we receive something on the serial port
-		// Note that this is a BLOCKING read, so this will never be left, until we receive a byte!!
-//		value = usart_recv_blocking(USART2);
-/*
-		// toggle LED for indication
-		gpio_toggle(GPIOD, GPIO12);
+		// Note that this is a BLOCKING read, so this will never be left, until we receive a byte!
+		//
+		value = usart_recv_blocking(USART2); // < < < < <  enabling this stops TX-ing !! < < < < <
 
-		//answer with received char (byte)
-		usart_send_blocking(USART2, value + '0');
-*/
-
-// original code:
+		// original code:
 		gpio_toggle(GPIOD, GPIO12);	// LED on/off
+
 //		usart_send_blocking(USART2, c + '0'); // USART2: Send byte. 
+
 //		c = (c == 9) ? 0 : c + 1;	// Increment c. 
 
-		// send byte
+		// Send byte
 		usart_send_blocking(USART2, '@');
 		 
-		if ((j++ % 80) == 0) {		// Newline after line full. 
+		// Newline after line full.
+		if ((j++ % 80) == 0)
+		{ 
 			usart_send_blocking(USART2, '\r');
 			usart_send_blocking(USART2, '\n');
 		}
-//		for (i = 0; i < 3000000; i++)	// Wait a bit. 
-		for (i = 0; i < 300000; i++)	// Wait a bit. 
-			__asm__("NOP");
 
+		// Wait a bit
+//		for (i = 0; i < 3000000; i++)
+		for (i = 0; i < 200000; i++)
+			__asm__("NOP");
 	}
 
 	return 0;
