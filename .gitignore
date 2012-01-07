@@ -12,6 +12,7 @@ moc_*.cpp
 *.bin
 *.list
 *.srec
+*.ld
 *.lss
 *.lst
 *.map
