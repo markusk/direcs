@@ -73,14 +73,13 @@ int main(void)
 
   while (1)
   {
-    int buchstabe = 64; // 64=@
+    int buchstabe = 64;   
 
-
-    /*
+/*
     // blocking read on serial port USART2
     while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
     buchstabe = USART_ReceiveData(USART2);
-    */
+*/
 
     // blocking send on USART2
     while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
@@ -152,25 +151,23 @@ void usartInit(void)
     
     //configure clock for GPIO, Port A
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-    
+
     //configure AF, Port A
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);
 
     //configure ports, &GPIO_InitStructure);
-    // 
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-
+    // TX
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    // Port A
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+    // RX
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-    // Port A
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     USART_Init(USART2, &USART_InitStructure);
