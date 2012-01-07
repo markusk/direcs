@@ -107,7 +107,7 @@
   */           
 
 #if !defined  (HSE_VALUE) 
-  #define HSE_VALUE    ((uint32_t)25000000) /*!< Value of the External oscillator in Hz */
+  #define HSE_VALUE    ((uint32_t)8000000) /*!< Value of the External oscillator in Hz. HAS TO BE 8000000 instead of 2500000 for the STM32F4 DISCOVERY BOARD! Otherwise USART sends/receive scrap!*/
 #endif /* HSE_VALUE */
 
 /**
