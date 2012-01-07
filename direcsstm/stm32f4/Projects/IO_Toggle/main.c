@@ -79,14 +79,14 @@ int main(void)
 
 
     /*
-    // blocking read on serial port USART3
-    while (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == RESET);
-    buchstabe = USART_ReceiveData(USART3);
+    // blocking read on serial port USART2
+    while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
+    buchstabe = USART_ReceiveData(USART2);
     */
 
-    // blocking send on USART3
-    while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET);
-    USART_SendData(USART3, buchstabe);
+    // blocking send on USART2
+    while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+    USART_SendData(USART2, buchstabe);
 
 
 
@@ -150,12 +150,14 @@ void usartInit(void)
    //   GPIO_InitTypeDef GPIO_InitStructure;
 
    //configure clock for USART
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+    
     //configure clock for GPIO
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+    
     //configure AF
-    GPIO_PinAFConfig(GPIOC,GPIO_PinSource10,GPIO_AF_USART3);
-    GPIO_PinAFConfig(GPIOC,GPIO_PinSource11,GPIO_AF_USART3);
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource10, GPIO_AF_USART2);
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource11, GPIO_AF_USART2);
 
     //configure ports, &GPIO_InitStructure);
 
@@ -171,10 +173,10 @@ void usartInit(void)
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-    USART_Init(USART3, &USART_InitStructure);
+    USART_Init(USART2, &USART_InitStructure);
 
-     /* Enable USART */
-     USART_Cmd(USART3, ENABLE);
+     /* Enable USART2 */
+     USART_Cmd(USART2, ENABLE);
 }
 
 
