@@ -1,5 +1,5 @@
-EXECUTABLE=IO_Toggle.elf
-BIN_IMAGE=IO_Toggle.bin
+EXECUTABLE=usart.elf
+BIN_IMAGE=usart.bin
 
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
