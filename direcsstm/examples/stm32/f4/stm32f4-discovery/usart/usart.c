@@ -46,10 +46,10 @@ void usart_setup(void)
 	usart_set_databits(USART2, 8);
 	usart_set_parity(USART2, USART_PARITY_NONE);
 	usart_set_stopbits(USART2, USART_STOPBITS_1);
-	
+
 	// setup RX *and* TX mode
 	usart_set_mode(USART2, USART_MODE_TX);
-
+	
 	// no flow control
 	usart_set_flow_control(USART2, USART_FLOWCONTROL_NONE);
 
@@ -67,13 +67,13 @@ void gpio_setup(void)
 	// TX
 	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO2);
 	// RX
-//	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO3);
+	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO3);
 
 	// Setup USART2 TX pin as alternate function.
 	gpio_set_af(GPIOA, GPIO_AF7, GPIO2);
 
 	// RX
-//	gpio_set_af(GPIOA, GPIO_AF7, GPIO3);
+//	gpio_set_af(GPIOA, GPIO_AF7, GPIO3); // < < < < <  enabling this stops TX-ing !! < < < < <
 }
 
 int main(void)
