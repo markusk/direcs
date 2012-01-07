@@ -73,13 +73,12 @@ int main(void)
 
   while (1)
   {
-    int buchstabe = 64;   
+    int buchstabe = 64;
 
-/*
+
     // blocking read on serial port USART2
     while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
     buchstabe = USART_ReceiveData(USART2);
-*/
 
     // blocking send on USART2
     while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
