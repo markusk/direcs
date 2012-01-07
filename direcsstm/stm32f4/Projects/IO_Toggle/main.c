@@ -75,6 +75,21 @@ int main(void)
 
   while (1)
   {
+    int buchstabe = 64; // 64=@
+
+
+    /*
+    // blocking read on serial port USART3
+    while (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == RESET);
+    buchstabe = USART_ReceiveData(USART3);
+    */
+
+    // blocking send on USART3
+    while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET);
+    USART_SendData(USART3, buchstabe);
+
+
+
     /* PD12 to be toggled */
     GPIO_SetBits(GPIOD, GPIO_Pin_12);
     
