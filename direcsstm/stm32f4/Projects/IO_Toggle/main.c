@@ -56,11 +56,9 @@ int main(void)
      */
 
 
-// - - - - - 
-
+  // call my new USART init
   usartInit();
 
-// - - - - - 
 
   /* GPIOD Periph clock enable */
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -152,26 +150,28 @@ void usartInit(void)
    //configure clock for USART
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
     
-    //configure clock for GPIO
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+    //configure clock for GPIO, Port A
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
     
-    //configure AF
-    GPIO_PinAFConfig(GPIOC, GPIO_PinSource10, GPIO_AF_USART2);
-    GPIO_PinAFConfig(GPIOC, GPIO_PinSource11, GPIO_AF_USART2);
+    //configure AF, Port A
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);
 
     //configure ports, &GPIO_InitStructure);
-
+    // 
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOC, &GPIO_InitStructure);
+    // Port A
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
-    GPIO_Init(GPIOC, &GPIO_InitStructure);
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+    // Port A
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     USART_Init(USART2, &USART_InitStructure);
 
