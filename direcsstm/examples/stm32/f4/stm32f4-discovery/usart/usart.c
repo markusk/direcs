@@ -48,7 +48,7 @@ void usart_setup(void)
 	usart_set_stopbits(USART2, USART_STOPBITS_1);
 
 	// setup RX *and* TX mode
-	usart_set_mode(USART2, USART_MODE_TX);
+	usart_set_mode(USART2, USART_MODE_TX_RX);
 	
 	// no flow control
 	usart_set_flow_control(USART2, USART_FLOWCONTROL_NONE);
