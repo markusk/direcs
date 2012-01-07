@@ -25,7 +25,10 @@
 void clock_setup(void)
 {
 	/* Enable GPIOD clock for LED & USARTs. */
+	// port D (LEDs)
 	rcc_peripheral_enable_clock(&RCC_AHB1ENR, RCC_AHB1ENR_IOPDEN);
+
+	// port A (USART)
 	rcc_peripheral_enable_clock(&RCC_AHB1ENR, RCC_AHB1ENR_IOPAEN);
 
 	/* Enable clocks for USART2. */
@@ -45,7 +48,7 @@ void usart_setup(void)
 	usart_set_stopbits(USART2, USART_STOPBITS_1);
 	
 	// setup RX *and* TX mode
-	usart_set_mode(USART2, USART_MODE_TX_RX);
+	usart_set_mode(USART2, USART_MODE_TX);
 
 	// no flow control
 	usart_set_flow_control(USART2, USART_FLOWCONTROL_NONE);
@@ -57,25 +60,26 @@ void usart_setup(void)
 void gpio_setup(void)
 {
 	// Setup GPIO pin GPIO12 on GPIO port D for LED.
+	// PUPD_NONE = no pull up pull down resistor
 	gpio_mode_setup(GPIOD, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO12);
 
 	// Setup GPIO pins for USART2 transmit.
 	// TX
 	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO2);
 	// RX
-	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO3);
+//	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO3);
 
 	// Setup USART2 TX pin as alternate function.
 	gpio_set_af(GPIOA, GPIO_AF7, GPIO2);
 
 	// RX
-	gpio_set_af(GPIOA, GPIO_AF7, GPIO3);
+//	gpio_set_af(GPIOA, GPIO_AF7, GPIO3);
 }
 
 int main(void)
 {
-//	int i, j = 0, c = 0; // original code
-	u16 value = 0;
+	int i, j = 0, c = 0; // original code
+	int value = 0;
 
 	clock_setup();
 	gpio_setup();
@@ -86,16 +90,16 @@ int main(void)
 	{
 		// Wait until we receive something on the serial port
 		// Note that this is a BLOCKING read, so this will never be left, until we receive a byte!!
-		value = usart_recv_blocking(USART2);
-
+//		value = usart_recv_blocking(USART2);
+/*
 		// toggle LED for indication
 		gpio_toggle(GPIOD, GPIO12);
 
 		//answer with received char (byte)
-		usart_send_blocking(USART2, value);
+		usart_send_blocking(USART2, value + '0');
+*/
 
-
-/* original code:
+// original code:
 		gpio_toggle(GPIOD, GPIO12);	// LED on/off
 		usart_send_blocking(USART2, c + '0'); // USART2: Send byte. 
 		c = (c == 9) ? 0 : c + 1;	// Increment c. 
@@ -106,7 +110,7 @@ int main(void)
 //		for (i = 0; i < 3000000; i++)	// Wait a bit. 
 		for (i = 0; i < 30000; i++)	// Wait a bit. 
 			__asm__("NOP");
-			*/
+
 	}
 
 	return 0;
