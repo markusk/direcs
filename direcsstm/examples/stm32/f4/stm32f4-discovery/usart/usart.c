@@ -101,14 +101,18 @@ int main(void)
 
 // original code:
 		gpio_toggle(GPIOD, GPIO12);	// LED on/off
-		usart_send_blocking(USART2, c + '0'); // USART2: Send byte. 
-		c = (c == 9) ? 0 : c + 1;	// Increment c. 
+//		usart_send_blocking(USART2, c + '0'); // USART2: Send byte. 
+//		c = (c == 9) ? 0 : c + 1;	// Increment c. 
+
+		// send byte
+		usart_send_blocking(USART2, '@');
+		 
 		if ((j++ % 80) == 0) {		// Newline after line full. 
 			usart_send_blocking(USART2, '\r');
 			usart_send_blocking(USART2, '\n');
 		}
 //		for (i = 0; i < 3000000; i++)	// Wait a bit. 
-		for (i = 0; i < 30000; i++)	// Wait a bit. 
+		for (i = 0; i < 300000; i++)	// Wait a bit. 
 			__asm__("NOP");
 
 	}
