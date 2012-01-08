@@ -119,10 +119,15 @@ GPIO_InitTypeDef  GPIO_InitStructure;
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
 
+
 //
 // the prototypes
 //
 int main(void);
+
+// GPIOPort init
+void gpioPortInit();
+
 void Delay(__IO uint32_t nCount);
 
 
