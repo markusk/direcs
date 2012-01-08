@@ -33,51 +33,52 @@ int main(void)
 
 	while (1)
 	{
-	uint16_t buchstabe = 64;
+		uint16_t buchstabe = 64;
 
 
-	// blocking read on serial port USART2
-	while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
-	buchstabe = USART_ReceiveData(USART2);
-
-	if (buchstabe==64)
-	{
-	// blocking send on USART2
-	while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
-	USART_SendData(USART2, 'A');
-	}
+		// blocking read on serial port USART2
+		while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
+		buchstabe = USART_ReceiveData(USART2);
 
 
-	/* PD12 to be toggled */
-	GPIO_SetBits(GPIOD, GPIO_Pin_12);
+		if (buchstabe==64)
+		{
+			// blocking send on USART2
+			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+			USART_SendData(USART2, 'A');
 
-	/* Insert delay */
-	Delay(0x3FFFFF);
+			/* PD12 to be toggled */
+			GPIO_SetBits(GPIOD, GPIO_Pin_12);
 
-	/* PD13 to be toggled */
-	GPIO_SetBits(GPIOD, GPIO_Pin_13);
+			/* Insert delay */
+			Delay(0x3FFFFF);
 
-	/* Insert delay */
-	Delay(0x3FFFFF);
+			/* PD13 to be toggled */
+			GPIO_SetBits(GPIOD, GPIO_Pin_13);
 
-	/* PD14 to be toggled */
-	GPIO_SetBits(GPIOD, GPIO_Pin_14);
+			/* Insert delay */
+			Delay(0x3FFFFF);
 
-	/* Insert delay */
-	Delay(0x3FFFFF);
+			/* PD14 to be toggled */
+			GPIO_SetBits(GPIOD, GPIO_Pin_14);
 
-		/* PD15 to be toggled */
-		GPIO_SetBits(GPIOD, GPIO_Pin_15);
+			/* Insert delay */
+			Delay(0x3FFFFF);
 
-		/* Insert delay */
-		Delay(0x7FFFFF);
+			/* PD15 to be toggled */
+			GPIO_SetBits(GPIOD, GPIO_Pin_15);
 
-		GPIO_ResetBits(GPIOD, GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);
+			/* Insert delay */
+			Delay(0x7FFFFF);
 
-		/* Insert delay */
-		Delay(0xFFFFFF);
+			GPIO_ResetBits(GPIOD, GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);
+
+			/* Insert delay */
+			Delay(0xFFFFFF);
+		}
 	}
 }
+
 
 /**
 	* @brief  Delay Function.
