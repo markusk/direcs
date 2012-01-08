@@ -1,5 +1,5 @@
 #include "usart.h"
-#include "main.h"
+//#include "main.h"
 
 
 void setStarter(int startr)
