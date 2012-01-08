@@ -42,7 +42,7 @@ void put_string(char *daten);
 void get_string(char *daten);
 
 void sendChar();
-void receiveChar();
+void receiveChar(int character);
 
 void usartInit(void);
 
