@@ -15,6 +15,7 @@ int main(void)
 		  system_stm32f4xx.c file
 	*/
 
+	// /dev/tty.usbserial-A900J1T0
 
 	// call my new USART init
 	usartInit();
@@ -45,7 +46,13 @@ int main(void)
 		{
 			// blocking send on USART2
 			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
-			USART_SendData(USART2, 'A');
+			USART_SendData(USART2, 'o');
+			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+			USART_SendData(USART2, 'k');
+			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+			USART_SendData(USART2, '\r');
+			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+			USART_SendData(USART2, '\n');
 
 			/* PD12 to be toggled */
 			GPIO_SetBits(GPIOD, GPIO_Pin_12);
