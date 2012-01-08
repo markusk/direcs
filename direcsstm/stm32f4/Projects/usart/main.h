@@ -2,6 +2,9 @@
 #define MAIN_H
 
 // #include "usart.h"    // serial stuff
+#include "stm32f4_discovery.h"
+#include "stm32f4xx_conf.h"
+
 
 
 // Private typedef -----------------------------------------------------------
