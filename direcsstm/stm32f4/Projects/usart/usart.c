@@ -42,7 +42,7 @@ void get_string(char *daten)
 		// Flag löschen
 		RXcompleted = 0;
 
-		redLED(OFF);
+// @todo		redLED(OFF);
 	}
 }
 
@@ -72,7 +72,7 @@ void receiveChar()
 		redLEDtoggle = 0;
 	}
 	
-	redLED(redLEDtoggle);
+// @todo	redLED(redLEDtoggle);
 
 
 	// Ist Puffer frei für neue Daten?
@@ -85,7 +85,7 @@ void receiveChar()
 			// string speichern, wenn mit 'starter' begonnen!
 			if  (data == starter)
 			{
-				greenLED(ON);
+// @todo				greenLED(ON);
 				// da string startet, zähler auf 0!
 				counter = 0;
 				// Daten in Puffer speichern
@@ -110,7 +110,7 @@ void receiveChar()
 				// Zähler zurücksetzen
 				counter = 0;
 				// green LED off
-				greenLED(OFF);
+// @todo				greenLED(OFF);
 				// reset flag
 				string_started = 0;
 				return;
@@ -135,7 +135,7 @@ void receiveChar()
 			// Zähler zurücksetzen
 			counter = 0;
 			// green LED off
-			greenLED(OFF);
+// @todo			greenLED(OFF);
 			// reset flag
 			string_started = 0;
 			return;
