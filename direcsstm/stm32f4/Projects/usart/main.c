@@ -34,13 +34,15 @@ int main(void)
 
 	while (1)
 	{
-		uint16_t buchstabe = 64;
+		uint16_t buchstabe = 0;
 
 
 		// blocking read on serial port USART2
-		while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
-		buchstabe = USART_ReceiveData(USART2);
+		while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
+		{
+		}
 
+		buchstabe = USART_ReceiveData(USART2);
 
 		if (buchstabe==64)
 		{
