@@ -1,18 +1,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4_discovery.h"
 #include "stm32f4xx_conf.h"
+#include "main.h"
 
-
-/* Private typedef -----------------------------------------------------------*/
-GPIO_InitTypeDef  GPIO_InitStructure;
-
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
-void Delay(__IO uint32_t nCount);
-void usartInit(void);
-/* Private functions ---------------------------------------------------------*/
 
 /**
   * @brief  Main program
