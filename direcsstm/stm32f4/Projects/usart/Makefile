@@ -1,5 +1,5 @@
-EXECUTABLE=usart.elf
-BIN_IMAGE=usart.bin
+EXECUTABLE=main.elf
+BIN_IMAGE=main.bin
 
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
