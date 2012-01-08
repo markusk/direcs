@@ -20,6 +20,12 @@ int main(void)
 	// call my new USART init
 	usartInit();
 
+	// own usart / string stuff
+	RXcompleted = 0;	// Flag, String komplett empfangen
+	TXcompleted = 1;	// Flag, String komplett gesendet
+	setStarter(42);    //42 = '*'
+	setTerminator(35); //35 = '#'
+
 
 	/* GPIOD Periph clock enable */
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
