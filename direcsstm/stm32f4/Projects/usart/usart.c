@@ -79,7 +79,7 @@ void receiveChar()
 	if (RXcompleted == 0)
 	{
 		// Puffer voll?
-		if (counter < (uart_buffer_size-1))
+		if (counter < (UARTBUFFERSIZE-1))
 		{     
 			// string start
 			// string speichern, wenn mit 'starter' begonnen!
