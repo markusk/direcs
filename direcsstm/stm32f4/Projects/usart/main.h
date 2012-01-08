@@ -102,10 +102,6 @@
 #define ON						1
 #define OFF						0
 
-// just nice to have
-#define ENABLE					1
-#define DISABLE					0
-
 // "Morsedauer" für ein Bit in Millisekunden
 #define BITZEIT 100     
 
