@@ -59,16 +59,47 @@ int main(void)
 		// ----------------------------------------------------------------
 
 
-		if (RXcompleted == 1)
+		if (RXcompleted)
 		{
 			// Get complete string and delete uart_rx_flag
 			get_string(stringbuffer);
 
 
-			// answer with "ok"
-			// this answer is used to see if the robot is "on"
-			put_string("*re#");
-		}
+			// RESET / INIT
+			if (strcmp(stringbuffer, "*re#") == 0)
+			{
+				/*
+				// turn all drive motor bits off (except PWM bits)
+				PORTL &= ~(1<<PIN0);
+				PORTL &= ~(1<<PIN1);
+				PORTL &= ~(1<<PIN2);
+				PORTL &= ~(1<<PIN3);
+				PORTL &= ~(1<<PIN6);
+				PORTL &= ~(1<<PIN7);
+				PORTD &= ~(1<<PIN6);
+				PORTD &= ~(1<<PIN7);
+				// flashlight off
+				relais(OFF);
+				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+				redLED(OFF);
+				
+				// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+				// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+				// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+				// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+				// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+				// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+				*/
+				// answer with "ok"
+				// this answer is used to see if the robot is "on"
+				put_string("*re#");
+				
+				/*
+				// e n a b l e  watchdog!
+				watchdog(ENABLE);
+				*/
+			}
+		} // RXcompleted
 
 
 		if (buchstabe==64)
