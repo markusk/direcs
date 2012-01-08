@@ -43,6 +43,10 @@ int main(void)
 		uint16_t buchstabe = 0;
 
 
+
+		// ----------------------------------------------------------------
+		// @todo: move this into usart.c
+		// ----------------------------------------------------------------
 		// blocking read on serial port USART2
 		while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
 		{
@@ -52,10 +56,12 @@ int main(void)
 
 		// build string
 		receiveChar(buchstabe);
+		// ----------------------------------------------------------------
+
 
 		if (RXcompleted == 1)
 		{
-			// ja, dann String lesen und uart_rx_flag löschen
+			// Get complete string and delete uart_rx_flag
 			get_string(stringbuffer);
 
 			// blocking send on USART2
