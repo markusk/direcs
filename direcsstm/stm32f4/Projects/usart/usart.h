@@ -3,7 +3,7 @@
 
 
 #include <string.h>
-#include "main.h" // for LED methods
+//#include "main.h" // for LED methods
 
 
 // Puffergrösse in Bytes, RX und TX sind gleich gross
