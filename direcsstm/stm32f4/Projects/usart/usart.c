@@ -27,7 +27,7 @@ void put_string(char *daten)
 		TXcompleted = 0;                    
 
 		// UDRE Interrupt einschalten, los gehts
-		UCSR3B |= (1<<UDRIE3); 
+// @todo		UCSR3B |= (1<<UDRIE3); 
    }
 }
 
@@ -59,7 +59,7 @@ ISR(USART3_RX_vect)
 
  
 	// Daten auslesen, dadurch wird das Interruptflag gelöscht              
-	data = UDR3;
+// @todo	data = UDR3;
 
 	// toggling the red LED on and off with every received serial commmand
 	if (redLEDtoggle == 0)
@@ -161,13 +161,13 @@ ISR(USART3_UDRE_vect)
 	{
 		// Abschließendes \0 nicht mehr senden!
 		
-		UCSR3B &= ~(1<<UDRIE3);     // UDRE Interrupt ausschalten
+// @todo		UCSR3B &= ~(1<<UDRIE3);     // UDRE Interrupt ausschalten
 		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
 		TXcompleted = 1;           // Flag setzen, Übertragung beeendet
 		RXcompleted = 0;           // Flag löschen, bereit für nächsten Empfang!
 	}
 	else
 	{
-		UDR3 = data;                // nein, Daten senden
+// @todo		UDR3 = data;                // nein, Daten senden
 	}
 }
