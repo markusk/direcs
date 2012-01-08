@@ -64,6 +64,7 @@ int main(void)
 			// Get complete string and delete uart_rx_flag
 			get_string(stringbuffer);
 
+			/*
 			// blocking send on USART2
 			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
 			USART_SendData(USART2, 'o');
@@ -73,6 +74,11 @@ int main(void)
 			USART_SendData(USART2, '\r');
 			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
 			USART_SendData(USART2, '\n');
+			*/
+
+			// answer with "ok"
+			// this answer is used to see if the robot is "on"
+			put_string("*re#");
 		}
 
 
