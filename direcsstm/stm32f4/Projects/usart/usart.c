@@ -2,14 +2,14 @@
 #include "main.h"
 
 
-void setStarter(uint8_t startr)
+void setStarter(int startr)
 {
 	// this terminates a string with a '#'
 	starter = startr;
 }
 
 
-void setTerminator(uint8_t termi)
+void setTerminator(int termi)
 {
 	// this terminates a string with a '#'
 	terminator = termi;
@@ -53,9 +53,9 @@ void get_string(char *daten)
 // Hauptprogramm den kompletten Empfang signalisiert
 ISR(USART3_RX_vect)
 {
-	static uint8_t counter = 0;    	// Zähler für empfangene Zeichen
-	static uint8_t string_started = 0;	// Sind wir jetzt im String?
-	uint8_t data;
+	static int counter = 0;    	// Zähler für empfangene Zeichen
+	static int string_started = 0;	// Sind wir jetzt im String?
+	int data;
 
  
 	// Daten auslesen, dadurch wird das Interruptflag gelöscht              
@@ -149,7 +149,7 @@ ISR(USART3_UDRE_vect)
 {
 	// Zeiger auf Sendepuffer
 	static char* uart_tx_p = uart_tx_buffer;
-	uint8_t data;
+	int data;
 	
 
 	// zu sendendes Zeichen lesen,
