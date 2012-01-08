@@ -44,6 +44,9 @@ int main(void)
 
 		buchstabe = USART_ReceiveData(USART2);
 
+		// build string
+		receiveChar(buchstabe);
+
 		if (buchstabe==64)
 		{
 			// blocking send on USART2

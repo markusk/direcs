@@ -52,7 +52,7 @@ void get_string(char *daten)
 // Wird ein Stringterminator empfangen, wird ein Flag gesetzt, welches dem 
 // Hauptprogramm den kompletten Empfang signalisiert
 // original direwcs-avr ISR(USART3_RX_vect)
-void receiveChar()
+void receiveChar(int character)
 {
 	static int counter = 0;    	// Zähler für empfangene Zeichen
 	static int string_started = 0;	// Sind wir jetzt im String?
@@ -60,7 +60,7 @@ void receiveChar()
 
  
 	// Daten auslesen, dadurch wird das Interruptflag gelöscht              
-// @todo	data = UDR3;
+	data = character;
 
 	// toggling the red LED on and off with every received serial commmand
 	if (redLEDtoggle == 0)
