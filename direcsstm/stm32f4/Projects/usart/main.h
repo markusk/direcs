@@ -123,7 +123,6 @@ char stringbuffer[64];
 // the prototypes
 //
 int main(void);
-void usartInit(void);
 void Delay(__IO uint32_t nCount);
 
 

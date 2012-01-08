@@ -44,5 +44,6 @@ void get_string(char *daten);
 void sendChar();
 void receiveChar();
 
+void usartInit(void);
 
 #endif
