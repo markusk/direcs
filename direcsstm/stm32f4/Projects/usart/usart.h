@@ -41,4 +41,8 @@ void put_string(char *daten);
 // anderenfalls ist der RX Buffer noch ungültig
 void get_string(char *daten);
 
+void sendChar();
+void receiveChar();
+
+
 #endif

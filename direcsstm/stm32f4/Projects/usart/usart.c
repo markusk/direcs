@@ -51,7 +51,8 @@ void get_string(char *daten)
 // hier werden Daten vom PC empfangen und in einem String zwischengespeichert
 // Wird ein Stringterminator empfangen, wird ein Flag gesetzt, welches dem 
 // Hauptprogramm den kompletten Empfang signalisiert
-ISR(USART3_RX_vect)
+// original direwcs-avr ISR(USART3_RX_vect)
+void receiveChar()
 {
 	static int counter = 0;    	// Zähler für empfangene Zeichen
 	static int string_started = 0;	// Sind wir jetzt im String?
@@ -145,7 +146,8 @@ ISR(USART3_RX_vect)
 
 // UART TX data register empty interrupt
 // hier werden neue Daten in das UART-Senderegister geladen
-ISR(USART3_UDRE_vect)
+// original direwcs-avr ISR(USART3_UDRE_vect)
+void sendChar()
 {
 	// Zeiger auf Sendepuffer
 	static char* uart_tx_p = uart_tx_buffer;
