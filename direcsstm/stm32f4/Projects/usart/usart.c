@@ -154,24 +154,30 @@ void sendChar()
 	int data;
 	
 
-	// zu sendendes Zeichen lesen,
-	// Zeiger auf Sendepuffer erhöhen
-	data = *uart_tx_p++;
-	
-	// Ende des nullterminierten Strings erreicht?
-	if (data == 0)
+	do
 	{
-		// Abschließendes \0 nicht mehr senden!
+		// zu sendendes Zeichen lesen,
+		// Zeiger auf Sendepuffer erhöhen
+		data = *uart_tx_p++;
 		
-// @todo		UCSR3B &= ~(1<<UDRIE3);     // UDRE Interrupt ausschalten
-		uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
-		TXcompleted = 1;           // Flag setzen, Übertragung beeendet
-		RXcompleted = 0;           // Flag löschen, bereit für nächsten Empfang!
-	}
-	else
-	{
-// @todo		UDR3 = data;                // nein, Daten senden
-	}
+		// Ende des nullterminierten Strings erreicht?
+		if (data == 0)
+		{
+			// Abschließendes \0 nicht mehr senden!
+			
+	// @todo		UCSR3B &= ~(1<<UDRIE3);     // UDRE Interrupt ausschalten
+			uart_tx_p = uart_tx_buffer; // Pointer zurücksetzen
+			TXcompleted = 1;           // Flag setzen, Übertragung beeendet
+			RXcompleted = 0;           // Flag löschen, bereit für nächsten Empfang!
+		}
+		else
+		{
+			// nein, Daten senden
+			// blocking send on USART2
+			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+			USART_SendData(USART2, data);
+		}
+	} while (!TXcompleted);
 }
 
 
