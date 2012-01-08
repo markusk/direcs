@@ -53,8 +53,11 @@ int main(void)
 		// build string
 		receiveChar(buchstabe);
 
-		if (buchstabe==64)
+		if (RXcompleted == 1)
 		{
+			// ja, dann String lesen und uart_rx_flag löschen
+			get_string(stringbuffer);
+
 			// blocking send on USART2
 			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
 			USART_SendData(USART2, 'o');
@@ -64,7 +67,11 @@ int main(void)
 			USART_SendData(USART2, '\r');
 			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
 			USART_SendData(USART2, '\n');
+		}
 
+
+		if (buchstabe==64)
+		{
 			/* PD12 to be toggled */
 			GPIO_SetBits(GPIOD, GPIO_Pin_12);
 
