@@ -224,4 +224,12 @@ void usartInit(void)
 
 	/* Enable USART2 */
 	USART_Cmd(USART2, ENABLE);
+
+	// - - - -
+
+	// own usart / string stuff
+	RXcompleted = 0;	// Flag, String komplett empfangen
+	TXcompleted = 1;	// Flag, String komplett gesendet
+	setStarter(42);    //42 = '*'
+	setTerminator(35); //35 = '#'
 }
