@@ -26,8 +26,8 @@ void put_string(char *daten)
 		// Flag für 'Senden ist komplett' löschen, 
 		TXcompleted = 0;                    
 
-		// UDRE Interrupt einschalten, los gehts
-// @todo		UCSR3B |= (1<<UDRIE3); 
+		// los gehts
+		sendChar(); 
    }
 }
 
