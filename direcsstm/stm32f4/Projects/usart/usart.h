@@ -46,4 +46,6 @@ void receiveChar(int character);
 
 void usartInit(void);
 
+void serialBlockingReadString();
+
 #endif

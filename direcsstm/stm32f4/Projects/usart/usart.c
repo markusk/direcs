@@ -233,3 +233,15 @@ void usartInit(void)
 	setStarter(42);    //42 = '*'
 	setTerminator(35); //35 = '#'
 }
+
+
+void serialBlockingReadString()
+{
+	// blocking read on serial port USART2
+	while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
+	{
+	}
+
+	// build string
+	receiveChar(USART_ReceiveData(USART2));
+}
