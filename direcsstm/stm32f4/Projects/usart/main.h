@@ -128,6 +128,8 @@ int main(void);
 // GPIOPort init
 void gpioPortInit();
 
+void LEDblink();
+
 void Delay(__IO uint32_t nCount);
 
 
