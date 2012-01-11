@@ -39,8 +39,8 @@ int main(void)
 
 	while (1)
 	{
-		serialBlockingReadString();
-/*
+//		serialBlockingReadString();
+
 		uint16_t buchstabe = 0;
 
 
@@ -53,9 +53,10 @@ int main(void)
 		
 		// build string
 		receiveChar(buchstabe);
-*/
 
-		if (RXcompleted)
+
+
+		if (RXcompleted == 1)
 		{
 			// Get complete string and delete uart_rx_flag
 			get_string(stringbuffer);
