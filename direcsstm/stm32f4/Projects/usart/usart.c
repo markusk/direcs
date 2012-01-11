@@ -237,11 +237,16 @@ void usartInit(void)
 
 void serialBlockingReadString()
 {
+	uint16_t buchstabe = 0;
+
+
 	// blocking read on serial port USART2
 	while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
 	{
 	}
 
+	buchstabe = USART_ReceiveData(USART2);
+	
 	// build string
-	receiveChar(USART_ReceiveData(USART2));
+	receiveChar(buchstabe);
 }
