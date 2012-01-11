@@ -84,7 +84,8 @@ int main(void)
 		} // RXcompleted
 
 
-		LEDblink();
+		if (buchstabe==64)
+			LEDblink();
 	}
 }
 
