@@ -36,7 +36,8 @@ int main(void)
 
 	while (1)
 	{
-//		serialBlockingReadString();
+		serialBlockingReadString();
+/*
 		uint16_t buchstabe = 0;
 
 
@@ -49,7 +50,7 @@ int main(void)
 		
 		// build string
 		receiveChar(buchstabe);
-
+*/
 
 		if (RXcompleted)
 		{
@@ -93,9 +94,10 @@ int main(void)
 			}
 		} // RXcompleted
 
-
+/*
 		if (buchstabe==64)
 			LEDblink();
+*/
 	}
 }
 
