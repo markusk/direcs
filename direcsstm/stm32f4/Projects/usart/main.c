@@ -26,7 +26,20 @@ int main(void)
 
 	while (1)
 	{
-		serialBlockingReadString();
+//		serialBlockingReadString();
+		uint16_t buchstabe = 0;
+
+
+		// blocking read on serial port USART2
+		while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
+		{
+		}
+
+		buchstabe = USART_ReceiveData(USART2);
+		
+		// build string
+		receiveChar(buchstabe);
+
 
 		if (RXcompleted)
 		{
