@@ -21,7 +21,9 @@ int main(void)
 	usartInit();
 
 	// GPIOPort init
-//	gpioPortInit();
+	//	--------------------------------------------------------------------------------
+	//  don't know why, but this code has to be here (not in a seperate method)
+	//	--------------------------------------------------------------------------------
 	/* GPIOD Periph clock enable */
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
@@ -32,6 +34,7 @@ int main(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
+	//	--------------------------------------------------------------------------------
 
 
 	while (1)
