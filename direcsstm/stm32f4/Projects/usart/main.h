@@ -132,6 +132,9 @@ void LEDblink();
 
 // sends a u int value over the serial line as ASCII
 void sendUInt(uint16_t value);
+
+char* ltoa(long value, char* result);
+
 void Delay(__IO uint32_t nCount);
 
 
