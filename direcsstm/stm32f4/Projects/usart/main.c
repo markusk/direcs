@@ -130,7 +130,6 @@ int main(void)
 				// read ADC and send answer over serial port
 // @todo:				sendUInt( readADC(SENSOR1) );
 				sendUInt( 42 );
-				put_string("ok");
 			}
 		} // RXcompleted
 
