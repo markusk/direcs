@@ -65,7 +65,7 @@ int main(void)
 			// RESET / INIT
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
-				/*
+/*
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
 				PORTL &= ~(1<<PIN1);
@@ -86,19 +86,19 @@ int main(void)
 				// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
 				// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
 				// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-				*/
+*/
 				// answer with "ok"
 				// this answer is used to see if the robot is "on"
 				put_string("*re#");
 				
-				/*
+/*
 				// e n a b l e  watchdog!
 				watchdog(ENABLE);
-				*/
+*/
 			}
 		} // RXcompleted
 
-	}
+	} // while (1)
 }
 
 
