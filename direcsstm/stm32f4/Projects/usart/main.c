@@ -129,7 +129,7 @@ int main(void)
 			{
 				// read ADC and send answer over serial port
 // @todo:				sendUInt( readADC(SENSOR1) );
-//	fix me:			sendUInt( 42 );
+				sendUInt( 42 );
 				put_string("ok");
 			}
 		} // RXcompleted
@@ -189,6 +189,34 @@ void LEDblink()
 }
 
 
+void sendUInt(uint16_t value)
+{
+	uint8_t length = 0;
+	
+	// start the answer string to send with a '*'
+	stringbuffer[0] = starter;
+
+
+	// convert int to ascii (to Basis 10)
+	// (but don't overwrite the first char which is the 'starter' *.)
+	ltoa(value, stringbuffer+1);
+
+
+	// get the length of the string
+	length = strlen(stringbuffer);
+
+
+	// add m string terminator '#' at the end of the buffer
+	stringbuffer[length] = terminator;
+
+
+	// String mit \0 terminieren
+	stringbuffer[length+1] = 0;
+
+
+	// send answer
+	put_string(stringbuffer);
+}
 /**
 	* @brief  Delay Function.
 	* @param  nCount:specifies the Delay time length.
