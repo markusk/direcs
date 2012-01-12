@@ -123,6 +123,15 @@ int main(void)
 				// answer
 				put_string("*sl#");
 			}
+			else
+			// READ_SENSOR_1
+			if (strcmp(stringbuffer, "*s1#") == 0)
+			{
+				// read ADC and send answer over serial port
+// @todo:				sendUInt( readADC(SENSOR1) );
+//	fix me:			sendUInt( 42 );
+				put_string("ok");
+			}
 		} // RXcompleted
 
 	} // while (1)
