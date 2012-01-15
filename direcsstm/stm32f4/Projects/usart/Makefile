@@ -5,15 +5,15 @@ CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 
 CFLAGS=-g -O2 -mlittle-endian -mthumb
-CFLAGS+=-mcpu=cortex-m4	
+CFLAGS+=-mcpu=cortex-m4
 CFLAGS+=-ffreestanding -nostdlib
 
 # to run from FLASH
 CFLAGS+=-Wl,-T,stm32_flash.ld
 
 # Default C stuff
-CFLAGS+=-I/usr/local/arm-none-eabi/include
-LDFLAGS+=-L/usr/local/arm-none-eabi/lib
+CFLAGS+=-I/opt/local/arm-none-eabi/include
+LDFLAGS+=-L/opt/local/arm-none-eabi/lib -lc -lgcc
 
 # stm32f4_discovery stuff
 CFLAGS+=-I../../STM32F4xx_StdPeriph_Driver/inc
