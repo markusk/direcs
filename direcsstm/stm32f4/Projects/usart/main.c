@@ -1,3 +1,4 @@
+#include <string.h>
 #include "main.h"
 
 
@@ -223,7 +224,7 @@ void sendUInt(uint16_t value)
  * C++ version 0.4 char* style "itoa":
  * Written by Lukás Chmela
  * Released under GPLv3.
- */
+ *
 #define BASE 10
 
 char* ltoa(long value, char* result)
@@ -254,17 +255,17 @@ char* ltoa(long value, char* result)
 
     return result;
 }
-
+*/
 
 /**
 	* @brief  Delay Function.
 	* @param  nCount:specifies the Delay time length.
   * @retval None
 	*/
-	void Delay(__IO uint32_t nCount)
-	{
-	while(nCount--)
+void Delay(__IO uint32_t nCount)
 {
+	while(nCount--)
+	{
 	}
 }
 
