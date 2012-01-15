@@ -1,4 +1,6 @@
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "main.h"
 
 
@@ -199,7 +201,8 @@ void sendUInt(uint16_t value)
 
 	// convert int to ascii (to Basis 10)
 	// (but don't overwrite the first char which is the 'starter' *.)
-	ltoa(value, stringbuffer+1);
+	//itoa(value, stringbuffer+1);
+	sprintf(stringbuffer+1, "%d", value);
 
 
 	// get the length of the string
