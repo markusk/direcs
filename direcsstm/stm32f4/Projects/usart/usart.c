@@ -50,6 +50,11 @@ void usartInit(void);
 
 void serialBlockingReadString();
 
+// returns the state if we have a complete string received (i.e. *re# )
+int stringReceived();
+
+
+
 
 
 void setStarter(int startr)
@@ -299,4 +304,10 @@ void serialBlockingReadString()
 	
 	// build string
 	receiveChar(buchstabe);
+}
+
+
+int stringReceived()
+{
+	return RXcompleted;
 }

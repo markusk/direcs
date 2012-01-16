@@ -58,7 +58,7 @@ int main(void)
 
 
 
-		if (RXcompleted == 1)
+		if (stringReceived())
 		{
 			// Get complete string and delete uart_rx_flag
 			get_string(stringbuffer);
@@ -133,7 +133,7 @@ int main(void)
 // @todo:				sendUInt( readADC(SENSOR1) );
 				sendUInt( 42 );
 			}
-		} // RXcompleted
+		} // stringReceived()
 
 	} // while (1)
 }
