@@ -33,6 +33,12 @@ void setStarter(int startr);
 // set string terminator
 void setTerminator(int termi);
 
+// returns starter
+int getStarter();
+
+// returns terminator
+int getTerminator();
+
 // einen String senden
 // vor Aufruf der Funktion muss man prüfen, ob uart_t_flag==1 ist
 // nur dann kann ein neuer String gesendet werden
@@ -68,6 +74,18 @@ void setTerminator(int termi)
 {
 	// this terminates a string with a '#'
 	terminator = termi;
+}
+
+
+int getStarter()
+{
+	return starter;
+}
+
+
+int getTerminator()
+{
+	return terminator;
 }
 
 
