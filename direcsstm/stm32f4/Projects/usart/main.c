@@ -195,7 +195,7 @@ void sendUInt(uint16_t value)
 	uint8_t length = 0;
 	
 	// start the answer string to send with a '*'
-	stringbuffer[0] = starter;
+	stringbuffer[0] = getStarter();
 
 
 	// convert int to ascii (to Basis 10)
@@ -209,7 +209,7 @@ void sendUInt(uint16_t value)
 
 
 	// add m string terminator '#' at the end of the buffer
-	stringbuffer[length] = terminator;
+	stringbuffer[length] = getTerminator();
 
 
 	// String mit \0 terminieren
