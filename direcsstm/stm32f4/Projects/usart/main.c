@@ -200,8 +200,8 @@ void sendUInt(uint16_t value)
 
 	// convert int to ascii (to Basis 10)
 	// (but don't overwrite the first char which is the 'starter' *.)
-	//itoa(value, stringbuffer+1);
-	sprintf(stringbuffer+1, "%d", value);
+	ltoa(value, stringbuffer+1);
+	//sprintf(stringbuffer+1, "%d", value);
 
 
 	// get the length of the string
@@ -226,7 +226,7 @@ void sendUInt(uint16_t value)
  * C++ version 0.4 char* style "itoa":
  * Written by Lukás Chmela
  * Released under GPLv3.
- *
+ */
 #define BASE 10
 
 char* ltoa(long value, char* result)
@@ -257,7 +257,7 @@ char* ltoa(long value, char* result)
 
     return result;
 }
-*/
+
 
 /**
 	* @brief  Delay Function.
