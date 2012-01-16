@@ -13,7 +13,7 @@ CFLAGS+=-Wl,-T,stm32_flash.ld
 
 # Default C stuff
 CFLAGS+=-I/opt/local/arm-none-eabi/include
-LDFLAGS+=-L/opt/local/arm-none-eabi/lib -lc -lgcc
+LDFLAGS+=-L/opt/local/arm-none-eabi/lib
 
 # stm32f4_discovery stuff
 CFLAGS+=-I../../STM32F4xx_StdPeriph_Driver/inc
