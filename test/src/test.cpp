@@ -115,7 +115,8 @@ test::test()
 	  interface1 = new InterfaceAvr();
 	  circuit1 = new Circuit(interface1, mutex);
 
-	  serialPortPath = "/dev/tty.SLAB_USBtoUART"; // Original driver "CP210x Macintosh OSX Driver v2." from SiLabs used.
+	 // serialPortPath = "/dev/tty.SLAB_USBtoUART"; // Original driver "CP210x Macintosh OSX Driver v2." from SiLabs used.
+	  serialPortPath = "/dev/tty.usbserial-A900J1T0"; // ARM board with STM32F4 and FTDI RS232R chip
 
 	  // send messages from the other class to this class (to the GUI)
 	  connect(interface1, SIGNAL( emitMessage(QString) ), this, SLOT( appendLog(QString) ));
