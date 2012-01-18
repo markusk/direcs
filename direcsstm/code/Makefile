@@ -16,10 +16,10 @@ CFLAGS+=-I/opt/local/arm-none-eabi/include
 LDFLAGS+=-L/opt/local/arm-none-eabi/lib
 
 # stm32f4_discovery stuff
-CFLAGS+=-I../../STM32F4xx_StdPeriph_Driver/inc
-CFLAGS+=-I../../STM32F4xx_StdPeriph_Driver/inc/device_support
-CFLAGS+=-I../../STM32F4xx_StdPeriph_Driver/inc/core_support 
-LDFLAGS+=-L../../STM32F4xx_StdPeriph_Driver/build -lSTM32F4xx_StdPeriph_Driver
+CFLAGS+=-I../STM32F4xx_StdPeriph_Driver/inc
+CFLAGS+=-I../STM32F4xx_StdPeriph_Driver/inc/device_support
+CFLAGS+=-I../STM32F4xx_StdPeriph_Driver/inc/core_support 
+LDFLAGS+=-L../STM32F4xx_StdPeriph_Driver/build -lSTM32F4xx_StdPeriph_Driver
 
 all: $(BIN_IMAGE)
 
