@@ -15,11 +15,11 @@ CFLAGS+=-Wl,-T,stm32_flash.ld
 CFLAGS+=-I/opt/local/arm-none-eabi/include
 LDFLAGS+=-L/opt/local/arm-none-eabi/lib
 
-# stm32f4_discovery stuff
-CFLAGS+=-I../STM32F4xx_StdPeriph_Driver/inc
-CFLAGS+=-I../STM32F4xx_StdPeriph_Driver/inc/device_support
-CFLAGS+=-I../STM32F4xx_StdPeriph_Driver/inc/core_support 
-LDFLAGS+=-L../STM32F4xx_StdPeriph_Driver/build -lSTM32F4xx_StdPeriph_Driver
+# STM32F4 StdPeriph Driver (lib) stuff
+CFLAGS+=-I../lib/inc
+CFLAGS+=-I../lib/inc/device_support
+CFLAGS+=-I../lib/inc/core_support 
+LDFLAGS+=-L../lib/build -lSTM32F4xx_StdPeriph_Driver
 
 all: $(BIN_IMAGE)
 
