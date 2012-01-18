@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2011 by Markus Knapp                                  *
+ *   Copyright (C) Markus Knapp                                          *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -164,10 +164,10 @@
 #define LID                              0x80
 
 #define RES_1_00_DEGREE                  0
-#define RES_0_50_DEGREE                  1 
+#define RES_0_50_DEGREE                  1
 #define RES_0_25_DEGREE                  2
 
-#ifndef TIOCGETP 
+#ifndef TIOCGETP
 #define TIOCGETP                         0x5481
 #define TIOCSETP                         0x5482
 #define RAW                              1
@@ -186,18 +186,18 @@ Currently supported are SICK LMS, PLS or HOKUYO_URG.
 */
 class Laser : public QObject
 {
-    Q_OBJECT
-	
+	Q_OBJECT
+
 	public:
 		Laser();
 		~Laser();
-		
+
 		static const short int LASER1 = 1;	/// For the direcs laserThread
 		static const short int LASER2 = 2;	/// For the direcs laserThread
 		static const short int LASER3 = 4;	/// For the direcs laserThread
 		static const short int LASER4 = 8;	/// For the direcs laserThread
 		static const short int LASER5 = 16;	/// For the direcs laserThread
-		
+
 		/**
 		This data structure is used by direcs_param_install_params and
 		direcs_param_usage to load and report the usage of a large number of
@@ -206,7 +206,7 @@ class Laser : public QObject
 		typedef char direcs_param_type_t;
 
 		typedef void (*direcs_param_change_handler_t)(char *module, char *variable, char *value);
-		
+
 		typedef struct
 		{
 			char *module;							/// The module name of this parameter
@@ -229,7 +229,7 @@ class Laser : public QObject
 		typedef enum { CM, MM, DM } range_res_t;
 		typedef enum { SICK_RANGE80M, SICK_RANGE160M, SICK_RANGE320M, SICK_REMISSION_NORM, SICK_REMISSION_DIRECT } range_dist_t;
 		typedef enum { N, E, O } parity_t;
-		
+
 		typedef struct
 		{
 			int                fd; // this is the file descriptor
@@ -244,7 +244,7 @@ class Laser : public QObject
 			int                swf;
 			int                laser_num;
 		} laser_device_t, *laser_device_p;
-		
+
 		typedef struct
 		{
 			QString device_name;
@@ -269,7 +269,7 @@ class Laser : public QObject
 		{
 			laser_settings_t settings;
 			laser_device_t dev;
-			
+
 			int numvalues;
 			double *range;
 			int *glare, *wfv, *sfv;
@@ -281,7 +281,7 @@ class Laser : public QObject
 			double timestamp;
 			double packet_timestamp;
 		} sick_laser_t, *sick_laser_p;
-		
+
 		/**
 		defines the type of laser that is used
 		*/
@@ -293,7 +293,7 @@ class Laser : public QObject
 			SIMULATED_LASER = 3,
 			UMKNOWN_PROXIMITY_SENSOR = 99
 		} direcs_laser_laser_type_t;
-		
+
 		/**
 		Possible remission values
 		*/
@@ -303,7 +303,7 @@ class Laser : public QObject
 			REMISSION_DIRECT     = 1,
 			REMISSION_NORMALIZED = 2
 		} direcs_laser_remission_type_t;
-		
+
 		/**
 		The configuration of the laser
 		*/
@@ -317,7 +317,7 @@ class Laser : public QObject
 			double accuracy;								/// error in the range measurements
 			direcs_laser_remission_type_t remission_mode;	/// if and what kind of remission values are used
 		} direcs_laser_laser_config_t;
-		
+
 		// vorher **global** in laser_main.cpp!
 		sick_laser_t *laser1; // defined in sick.h
 		sick_laser_t *laser2;
@@ -329,14 +329,14 @@ class Laser : public QObject
 		direcs_laser_laser_config_t *laser3_config;
 		direcs_laser_laser_config_t *laser4_config;
 		direcs_laser_laser_config_t *laser5_config;
-		
+
 		int use_laser1;
 		int use_laser2;
 		int use_laser3;
 		int use_laser4;
 		int use_laser5;
 		int quit_signal;
-		
+
 		QString laserSerialPort1;
 		QString laserSerialPort2;
 		QString laserSerialPort3;
@@ -360,21 +360,21 @@ class Laser : public QObject
 		void interpret_params(sick_laser_p laser, QString dev, QString type, double res, QString rem, double fov);
 		void check_parameter_settings(sick_laser_p laser);
 		void set_default_parameters(sick_laser_p laser, int laser_num);
-		
+
 		/**
 		Establish the serial connection to the laser and set the laser in the wanted mode(s).
 		*/
 		int  sick_start_laser(sick_laser_p laser);
-		
+
 		void sick_stop_laser(sick_laser_p laser);
-		
+
 		/**
 		Process any data that is available from the laser. Attempt to detect valid packets in the data.
 		*/
 		void sick_handle_laser(sick_laser_p laser);
-		
+
 		int sick_connect_device(sick_laser_p laser);
-		
+
 		double direcs_get_time(void);
 
 
@@ -402,18 +402,18 @@ class Laser : public QObject
 
 		int kernel_minimum_version( int a, int b, int c );
 		void sick_set_baudrate(sick_laser_p laser, int brate);
-		
+
 		/**
 		This method opens the serial port of the laser scanner, sets the serial port parameters and tries to set the latency mode, if defined
 		@return the file descriptor of the opend serial port
 		*/
 		int sick_serial_connect(sick_laser_p laser);
-		
+
 		/**
 		Compute the CRC checksum of a segment of data.
 		*/
 		int sick_compute_checksum(unsigned char *CommData, int uLen);
-		
+
 		int sick_read_data(sick_laser_p laser, unsigned char *data, double timeout);
 		int sick_write_command(sick_laser_p laser, unsigned char command, unsigned char *argument, int arg_length);
 		void sick_request_status(sick_laser_p laser);
@@ -428,35 +428,35 @@ class Laser : public QObject
 		void sick_start_continuous_mode(sick_laser_p laser);
 		void sick_stop_continuous_mode(sick_laser_p laser);
 		void sick_start_continuous_remission_part_mode(sick_laser_p laser);
-		
+
 		/**
 		Test a combination of baudrate and parity of the laser.
 		*/
 		int sick_testBaudrate(sick_laser_p laser, int brate);
-		
+
 		int sick_detect_baudrate(sick_laser_p laser);
-		
+
 		int sick_check_baudrate(sick_laser_p laser, int brate);
-		
+
 		void sick_install_settings(sick_laser_p laser);
-		
+
 		void sick_allocate_laser(sick_laser_p laser);
-		
+
 		/**
 		This function returns 1 if a valid packet is detected in a chunk of data.
 		@return An offset and packet length
 		*/
 		int sick_valid_packet(unsigned char *data, long size, long *offset, long *len);
-		
+
 		/**
 		Interpret packets received from the laser.  If the packets contain laser data, expand the data into a useful form.
 		*/
 		void sick_process_packet_distance(sick_laser_p laser, unsigned char *packet);
-		
+
 		void sick_process_packet_remission(sick_laser_p laser, unsigned char *packet);
-		
+
 		void sick_process_packet(sick_laser_p laser, unsigned char *packet);
-		
+
 		DirecsSerial *serialPort;
 };
 

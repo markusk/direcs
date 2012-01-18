@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2011 by Markus Knapp                                  *
+ *   Copyright (C) Markus Knapp                                          *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -35,24 +35,24 @@ This class handles the access to the global ini-file where all settings are stor
 */
 class Inifile : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 	public:
 		Inifile();
 		~Inifile();
-		
+
 		/**
 		Checks the current path from which the program started.
 		@return The path as a string.
 		*/
 		QString checkPath();
-		
+
 		/**
 		Checks if the needed ini-file exists in the current path.
 		@return True, when the file was found.
 		*/
 		bool checkFiles();
-		
+
 		/**
 		Stores a settings in an ini-file. The settings are stored in the typical ini-file-format.\n
 		Example ini-file:\n
@@ -64,7 +64,7 @@ class Inifile : public QObject
 		@param value is the value of the parameter (e.g. \e 23).
 		*/
 		void writeSetting(QString group, QString name, int value);
-		
+
 		/**
 		Reads an integer setting from an ini-file. The settings are read in the typical ini-file-format.\n
 		Example ini-file:\n
@@ -76,7 +76,7 @@ class Inifile : public QObject
 		@return The setting as an integer value.
 		*/
 		int readSetting(QString group, QString name);
-		
+
 		/**
 		Reads a string from an ini-file. The settings are read in the typical ini-file-format.\n
 		Example ini-file:\n
@@ -105,7 +105,7 @@ class Inifile : public QObject
 		Forces the ini.file to be written \e immediately. For example at program end.
 		*/
 		void sync(void);
-		
+
 		/**
 		@return The current ini-file.
 		*/

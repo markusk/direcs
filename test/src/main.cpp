@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Markus Knapp   *
- *   www.direcs.de   *
+ *   Copyright (C) Markus Knapp                                            *
+ *   www.direcs.de                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

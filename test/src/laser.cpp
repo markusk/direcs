@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2011 by Markus Knapp                                  *
+ *   Copyright (C) Markus Knapp                                          *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -28,25 +28,25 @@ Laser::Laser()
 	use_laser4 = 0;
 	use_laser5 = 0;
 	quit_signal = 0;
-	
+
 	laserSerialPort1 = "none";
 	laserSerialPort2 = "none";
 	laserSerialPort3 = "none";
 	laserSerialPort4 = "none";
 	laserSerialPort5 = "none";
-	
+
 	laser1 = new sick_laser_t;
 	laser2 = new sick_laser_t;
 	laser3 = new sick_laser_t;
 	laser4 = new sick_laser_t;
 	laser5 = new sick_laser_t;
-		
+
 	laser1_config = new direcs_laser_laser_config_t;
 	laser2_config = new direcs_laser_laser_config_t;
 	laser3_config = new direcs_laser_laser_config_t;
 	laser4_config = new direcs_laser_laser_config_t;
 	laser5_config = new direcs_laser_laser_config_t;
-	
+
 	serialPort = new DirecsSerial();
 }
 
@@ -54,13 +54,13 @@ Laser::Laser()
 Laser::~Laser()
 {
 	delete serialPort;
-	
+
 	delete laser1_config;
 	delete laser2_config;
 	delete laser3_config;
 	delete laser4_config;
 	delete laser5_config;
-	
+
 	delete laser1;
 	delete laser2;
 	delete laser3;
@@ -98,12 +98,12 @@ void Laser::check_parameter_settings(sick_laser_p laser)
 	if(laser->settings.type == PLS) {
 		strncpy((char *)laser->settings.password, (const char *)PLS_PASSWORD, 8);
 		laser->settings.parity = E;
-	} 
+	}
 	if(laser->settings.type == LMS) {
 		strncpy((char *)laser->settings.password, (const char *)LMS_PASSWORD, 8);
 		laser->settings.parity = N;
-	} 
-	
+	}
+
 	/*********************** START BAUDRATE **************************/
 	if(laser->settings.detect_baudrate)
 		laser->settings.start_baudrate = 9600;
@@ -115,7 +115,7 @@ void Laser::check_parameter_settings(sick_laser_p laser)
 			laser->settings.start_baudrate);
 		exit(1);
 	}
-	
+
 	/*********************** SET BAUDRATE **************************/
 	if(laser->settings.set_baudrate != 9600 &&
 		laser->settings.set_baudrate != 19200 &&
@@ -124,18 +124,18 @@ void Laser::check_parameter_settings(sick_laser_p laser)
 		fprintf(stderr, "ERROR: set baudrate = %d is not valid!\n",
 			laser->settings.set_baudrate);
 		exit(1);
-	} 
+	}
 	else if(laser->settings.set_baudrate == 500000)
 		laser->settings.use_highspeed = TRUE;
-	
+
 	/*********************** NUM VALUES **************************/
-	if(laser->settings.angle_range != 180 && 
+	if(laser->settings.angle_range != 180 &&
 		laser->settings.angle_range != 100) {
 		fprintf(stderr, "ERROR: angle range = %d is not valid!\n",
 			laser->settings.angle_range);
 		exit(1);
 	}
-	
+
 	/************************** ANGLE RANGE ************************/
 	if(laser->settings.angle_range == 100) {
 		if(laser->settings.angle_resolution == RES_1_00_DEGREE)
@@ -161,26 +161,26 @@ void Laser::check_parameter_settings(sick_laser_p laser)
 		if(laser->settings.angle_range == 100) {
 		fprintf(stderr, "ERROR: type = PLS and ang-range=100 is not valid!\n");
 		exit(1);
-		} 
+		}
 	}
-	
-	
+
+
 	/********************** REMISSION RANGE ************************/
 	/* remission values - start */
-	if (laser->settings.use_remission == 1 && 
+	if (laser->settings.use_remission == 1 &&
 		laser->settings.type != LMS) {
 		fprintf(stderr, "ERROR: remission values are only available using LMS laser!\n");
 		exit(1);
 	}
-	if (laser->settings.use_remission == 1 && 
+	if (laser->settings.use_remission == 1 &&
 		laser->settings.angle_resolution != RES_1_00_DEGREE) {
 		fprintf(stderr, "ERROR: remission values are only available with 1.0 degree resolution!\n");
 		exit(1);
 	}
-	
-	if(laser->settings.use_remission == 1) 
+
+	if(laser->settings.use_remission == 1)
 		laser->settings.rem_values = laser->settings.num_values;
-	else 
+	else
 		laser->settings.rem_values = 0;
 	/* remission values - stop */
 }
@@ -189,7 +189,7 @@ void Laser::check_parameter_settings(sick_laser_p laser)
 void Laser::interpret_params(sick_laser_p laser, QString dev, QString type, double res, QString rem, double fov)
 {
 	laser->settings.device_name = dev;
-	
+
 	if (type == "LMS")
 		laser->settings.type = LMS;
 	else if (type == "PLS")
@@ -212,7 +212,7 @@ void Laser::interpret_params(sick_laser_p laser, QString dev, QString type, doub
 		laser->settings.angle_resolution = RES_0_50_DEGREE;
 	else
 		laser->settings.angle_resolution = RES_1_00_DEGREE;
-	
+
 	/* remission values - start */
 	if (rem == "direct") {
 		laser->settings.use_remission = 1;
@@ -231,7 +231,7 @@ void Laser::interpret_params(sick_laser_p laser, QString dev, QString type, doub
 	}
 	else qDebug() << "ERROR: Parameter laser_use_remission for laser" << laser->settings.laser_num << "has invalid value:" << rem << "\nPossible values are: direct, normalized and off.\n";
 	/* remission values - stop */
-	
+
 	check_parameter_settings(laser);
 }
 
@@ -243,8 +243,8 @@ void Laser::read_parameters(short int laserScanner)
 	double fov1, fov2, fov3, fov4, fov5;
 	QString rem1, rem2, rem3, rem4, rem5;
 	QByteArray ba; // for QString to char* conversion
-	
-	
+
+
 	switch (laserScanner)
 	{
 		case LASER1:
@@ -312,7 +312,7 @@ void  Laser::set_laser_config_structure(sick_laser_p laser, direcs_laser_laser_c
 	if (laser->settings.type == LMS) {
 		config->laser_type = SICK_LMS;
 		config->maximum_range = 81.90;
-	
+
 		if (laser->settings.range_res == MM)
 		config->accuracy = 0.035;  /* 5cm in cm mode, 35mm in mm mode */
 		else
@@ -323,82 +323,82 @@ void  Laser::set_laser_config_structure(sick_laser_p laser, direcs_laser_laser_c
 		config->maximum_range = 50.0;
 		config->accuracy = 0.15; /* I need to look up this value in the SICK specs */
 	}
-	else { 
+	else {
 		// if unknown, assume LMS
 		config->laser_type = SICK_LMS;
 		config->maximum_range = 81.90;
-	
+
 		if (laser->settings.range_res == MM)
 		config->accuracy = 0.035;  /* 5cm in cm mode, 35mm in mm mode */
 		else
 		config->accuracy = 0.05;   /* 5cm in cm mode, 35mm in mm mode */
 	}
-	
+
 	if (laser->settings.num_values == 181 ) {
-		config->angular_resolution = direcs_degrees_to_radians(1.0); 
+		config->angular_resolution = direcs_degrees_to_radians(1.0);
 		config->fov  = M_PI;
 		config->start_angle = -0.5*config->fov;
-	} 
+	}
 	else if (laser->settings.num_values == 361 ) {
-		config->angular_resolution = direcs_degrees_to_radians(0.5); 
+		config->angular_resolution = direcs_degrees_to_radians(0.5);
 		config->fov  = M_PI;
 		config->start_angle = -0.5*config->fov;
-	} 
+	}
 	else if (laser->settings.num_values == 180 ) {
 		config->angular_resolution = direcs_degrees_to_radians(1.0);
 		config->fov  = M_PI - config->angular_resolution;
 		config->start_angle = -0.5*M_PI;
-	} 
+	}
 	else if (laser->settings.num_values == 360 ) {
 		config->angular_resolution = direcs_degrees_to_radians(0.5);
 		config->fov  = M_PI - config->angular_resolution;
 		config->start_angle = -0.5*M_PI;
-	} 
+	}
 	else   if (laser->settings.num_values == 401 ) {
 		config->angular_resolution = direcs_degrees_to_radians(0.25);
 		config->fov  = direcs_degrees_to_radians(100.0);
 		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
-	} 
+	}
 	else   if (laser->settings.num_values == 201 ) {
 		config->angular_resolution = direcs_degrees_to_radians(0.5);
 		config->fov  = direcs_degrees_to_radians(100.0);
 		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
-	} 
+	}
 	else   if (laser->settings.num_values == 101 ) {
 		config->angular_resolution = direcs_degrees_to_radians(1.0);
 		config->fov  = direcs_degrees_to_radians(100.0);
 		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
-	} 
+	}
 	else   if (laser->settings.num_values == 400 ) {
 		config->angular_resolution = direcs_degrees_to_radians(0.25);
 		config->fov  = direcs_degrees_to_radians(100.0) - config->angular_resolution;
 		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
-	} 
+	}
 	else   if (laser->settings.num_values == 200 ) {
 		config->angular_resolution = direcs_degrees_to_radians(0.5);
 		config->fov  = direcs_degrees_to_radians(100.0) - config->angular_resolution;
 		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
-	} 
+	}
 	else   if (laser->settings.num_values == 100 ) {
 		config->angular_resolution = direcs_degrees_to_radians(1.0);
 		config->fov  = direcs_degrees_to_radians(100.0) - config->angular_resolution;
 		config->start_angle = -0.5*direcs_degrees_to_radians(100.0);
-	} 
+	}
 	else {
 		config->fov  = M_PI;
 		config->start_angle = -0.5*config->fov;
 		config->angular_resolution = config->fov/((double)laser->settings.laser_num-1.0);
-	
+
 		qDebug("Unkown laser config for a SICK with %d beams\n", laser->settings.num_values);
 		qDebug("Guessing: (fov=%.3f, start=%.2f, res=%.2f)\n", config->fov, config->start_angle, config->angular_resolution);
-	
+
 	}
-	
-	if (laser->settings.use_remission == 1 && 
-		laser->settings.range_dist == SICK_REMISSION_DIRECT) 
+
+	if (laser->settings.use_remission == 1 &&
+		laser->settings.range_dist == SICK_REMISSION_DIRECT)
 		config->remission_mode = REMISSION_DIRECT;
-	else   if (laser->settings.use_remission == 1 && 
-		laser->settings.range_dist == SICK_REMISSION_NORM) 
+	else   if (laser->settings.use_remission == 1 &&
+		laser->settings.range_dist == SICK_REMISSION_NORM)
 		config->remission_mode = REMISSION_NORMALIZED;
 	else
 		config->remission_mode = REMISSION_NONE;
@@ -418,7 +418,7 @@ int Laser::direcs_laser_start(short int laserScanner)
 			if (use_laser1)
 			{
 				set_laser_config_structure(laser1, laser1_config);
-				
+
 				// try to connect to the laser
 				if (sick_start_laser(laser1) == 0)
 				{
@@ -442,7 +442,7 @@ int Laser::direcs_laser_start(short int laserScanner)
 			if (use_laser2)
 			{
 				set_laser_config_structure(laser2, laser2_config);
-				
+
 				// try to connect to the laser
 				if (sick_start_laser(laser2) == 0)
 				{
@@ -466,7 +466,7 @@ int Laser::direcs_laser_start(short int laserScanner)
 			if (use_laser3)
 			{
 				set_laser_config_structure(laser3, laser3_config);
-				
+
 				// try to connect to the laser
 				if (sick_start_laser(laser3) == 0)
 				{
@@ -490,7 +490,7 @@ int Laser::direcs_laser_start(short int laserScanner)
 			if (use_laser4)
 			{
 				set_laser_config_structure(laser4, laser4_config);
-				
+
 				// try to connect to the laser
 				if (sick_start_laser(laser4) == 0)
 				{
@@ -514,7 +514,7 @@ int Laser::direcs_laser_start(short int laserScanner)
 			if (use_laser5)
 			{
 				set_laser_config_structure(laser5, laser5_config);
-				
+
 				// try to connect to the laser
 				if (sick_start_laser(laser5) == 0)
 				{
@@ -529,7 +529,7 @@ int Laser::direcs_laser_start(short int laserScanner)
 			}
 			break;
 	}
-	
+
 	// this line should never be reached
 	return -1;
 }
@@ -564,83 +564,83 @@ int Laser::direcs_laser_run(void)
 	static int laser1_stalled = 0, laser2_stalled = 0, laser3_stalled = 0, laser4_stalled = 0, laser5_stalled = 0;;
 	int laserValue = 0;
 
-	
+
 	if (first)
 	{
 		last_update = direcs_get_time();
 		first = 0;
 	}
-	
+
 	current_time = direcs_get_time();
 	print_stats = (current_time - last_update > 1.0);
 
-	
+
 	if (use_laser1)
 	{
 		sick_handle_laser(laser1);
-		
+
 		if (laser1->new_reading)
 		{
 			laserValue += LASER1;
 		}
-		
+
 		laser1_stalled = (current_time - laser1->timestamp > 1.0);
 		//**
 		//fprintf(stderr, "time: %.1f",current_time - laser1.timestamp);
 		//**
-		
+
 		/* Markus Original:
 		if (print_stats)
 			fprintf(stderr, "L1: %s(%.1f%% full) ", laser1_stalled ? "STALLED " : " ", (laser1.buffer_position - laser1.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
 		*/
 	}
-	
-	
+
+
 	if(use_laser2)
 	{
 		//qDebug("direcs_laser_run: use_laser1=true");
 		sick_handle_laser(laser2);
-		
+
 		if (laser2->new_reading)
 		{
 			laserValue += LASER2;
 		}
-		
+
 		laser2_stalled = (current_time - laser2->timestamp > 1.0);
 		/*
 		if (print_stats)
 			fprintf(stderr, "L2: %s(%.1f%% full) ", laser2_stalled ? "STALLED " : " ", (laser2.buffer_position - laser2.processed_mark) / (float)LASER_BUFFER_SIZE * 100.0);
 		*/
 	}
-	
-	
+
+
 	if( use_laser3)
 	{
 		sick_handle_laser(laser3);
-		
+
 		if (laser3->new_reading)
 		{
 			laserValue += LASER3;
 		}
-		
+
 		laser3_stalled = (current_time - laser3->timestamp > 1.0);
-		
+
 		/*
 		if (print_stats)
 			fprintf(stderr, "L3: %s(%.1f%% full) ", laser3_stalled ? "STALLED " : " ", laser3->buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
 		*/
 	}
-	
-	
+
+
 	if (use_laser4)
 	{
 		sick_handle_laser(laser4);
-		
+
 		if (laser4->new_reading)
 		{
 			laserValue += LASER4;
 		}
-		
+
 		laser4_stalled = (current_time - laser4->timestamp > 1.0);
 
 		/*
@@ -648,25 +648,25 @@ int Laser::direcs_laser_run(void)
 			fprintf(stderr, "L4: %s(%.1f%% full) ", laser4_stalled ? "STALLED " : " ", laser4.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
 		*/
 	}
-	
-	
+
+
 	if (use_laser5)
 	{
 		sick_handle_laser(laser5);
-		
+
 		if(laser5->new_reading)
 		{
 			laserValue += LASER5;
 		}
-		
+
 		laser5_stalled = (current_time - laser5->timestamp > 1.0);
-		
+
 		/*
 		if(print_stats)
 			fprintf(stderr, "L5: %s(%.1f%% full) ", laser5_stalled ? "STALLED " : " ", laser5.buffer_position / (float)LASER_BUFFER_SIZE * 100.0);
 		*/
 	}
-	
+
 	/* Markus Original:
 	if (print_stats)
 	{
@@ -674,7 +674,7 @@ int Laser::direcs_laser_run(void)
 		last_update = current_time;
 	}
 	*/
-	
+
 	if(current_time - last_alive > 1.0)
 	{
 		last_alive = current_time;
@@ -756,7 +756,7 @@ float Laser::getLaserDistance(int laser, int angle)
 			return laserrange[angle];
 			break;
 	}
-	
+
 	// this line should never be reached
 	return 0.0;
 }
@@ -947,7 +947,7 @@ int Laser::sick_set_serial_params(sick_laser_p laser)
 int Laser::kernel_minimum_version( int a, int b, int c )
 {
 	struct utsname        uts;
-	int                   ca, cb, cc; 
+	int                   ca, cb, cc;
 	uname(&uts);
 	sscanf( uts.release, "%d.%d.%d", &ca, &cb, &cc );
 	if (ca*65536+cb*256+cc>=a*65536+b*256+c) {
@@ -962,16 +962,16 @@ void Laser::sick_set_baudrate(sick_laser_p laser, int brate)
 {
 	struct termios  ctio;
 
-	
+
 	tcgetattr(laser->dev.fd, &ctio); /* get current port settings */
 
 
 	#if !defined(CYGWIN) && !defined(__APPLE__)
-	
+
 	#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,20)
 	struct serial_struct  serinfo;
 	#endif
-	
+
 	#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,20)
 	if (brate==500000 && kernel_minimum_version(2,4,20))
 	{
@@ -998,16 +998,16 @@ void Laser::sick_set_baudrate(sick_laser_p laser, int brate)
 		cfsetispeed ( &ctio, (speed_t) cBaudrate(brate) );
 		cfsetospeed ( &ctio, (speed_t) cBaudrate(brate) );
 	}
-	#else 
+	#else
 	cfsetispeed( &ctio, (speed_t) cBaudrate(brate) );
 	cfsetospeed( &ctio, (speed_t) cBaudrate(brate) );
 	#endif
-	
+
 	#else
-	
+
 	cfsetispeed( &ctio, (speed_t) cBaudrate(brate) );
 	cfsetospeed( &ctio, (speed_t) cBaudrate(brate) );
-	
+
 	#endif
 
 	// tcflush(laser->dev.fd, TCIFLUSH); // TODO: check if that really is needed! (linux an mac)
@@ -1019,8 +1019,8 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 {
 	// for QString to char* conversion
 	QByteArray ba = laser->dev.ttyport.toLatin1();
-	
-	
+
+
 	if((laser->dev.fd = open(ba.data(), O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0) // TODO: check if this still works with Linux!
 	{
 		return -1;
@@ -1052,12 +1052,12 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 	#ifdef DIRECS_LASER_LOW_LATENCY
 	serialPort->setLowLatency(laser->dev.fd);
 	#endif
-	
+
 	if (sick_set_serial_params(laser) == -1)
 	{
 		return -1;
 	}
-	
+
 	return(laser->dev.fd);
 }
 
@@ -1065,7 +1065,7 @@ int Laser::sick_serial_connect(sick_laser_p laser)
 int Laser::sick_compute_checksum(unsigned char *CommData, int uLen)
 {
 	unsigned char abData[2] = {0, 0}, uCrc16[2] = {0, 0};
-	
+
 	while(uLen--) {
 		abData[0] = abData[1];
 		abData[1] = *CommData++;
@@ -1076,7 +1076,7 @@ int Laser::sick_compute_checksum(unsigned char *CommData, int uLen)
 		uCrc16[1] <<= 1;
 		uCrc16[0] ^= CRC16_GEN_POL0;
 		uCrc16[1] ^= CRC16_GEN_POL1;
-		} 
+		}
 		else {
 		uCrc16[0] <<= 1;
 		if(uCrc16[1] & 0x80)
@@ -1116,23 +1116,23 @@ int Laser::sick_read_data(sick_laser_p laser, unsigned char *data, double timeou
 	#else
 
 	start_time = direcs_get_time();
-		
+
 	while(direcs_get_time() - start_time < timeout)
 	{
 	#endif
 		val = serialPort->numChars(laser->dev.fd);
-		
+
 		if(val > 0)
 		{
 			if(pos + val >= BUFFER_SIZE)
 				return(0);
-			
+
 			if(pos + val >= l + 6)
 				val = l + 6 - pos;
-	
+
 			read(laser->dev.fd, &(data[pos]), val);
 			pos += val;
-			
+
 			if(!chk1 && pos > 2)
 			{
 				if(data[0] != STX || data[1] != LID)
@@ -1150,29 +1150,29 @@ int Laser::sick_read_data(sick_laser_p laser, unsigned char *data, double timeou
 							break;
 						}
 					}
-					
+
 					if(!chk1)
 						pos = 0;
 				}
 				else
 					chk1 = TRUE;
 			}
-			
+
 			if(!chk2 && pos > 4)
 			{
 				l = data[3] * 256 + data[2];
 				chk2 = TRUE;
 			}
 		}
-		
+
 		if(pos == l + 6)
 			return(l + 6);
-		
+
 		#ifndef DIRECS_LASER_USE_SELECT
 		usleep(1000);
 		#endif
 	}
-	
+
 	return(0);
 }
 
@@ -1190,7 +1190,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 	FD_ZERO(&read_set);
 	FD_SET(laser->dev.fd, &read_set);
 	#endif
-	
+
 	/* SYNC CHARS */
 	buffer[pos++] = 0x02;
 	/* ADDRESS    */
@@ -1210,7 +1210,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 	buffer[pos++] = check & 0x00ff;
 	buffer[pos++] = check / 256;
 	serialPort->writePort(laser->dev.fd, buffer, pos);
-	
+
 	/* wait for acknowledgement */
 	loop = 1;
 	answer = INI;
@@ -1241,13 +1241,13 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 		answer = UKN;
 		}
 		loop = 0;
-		} 
+		}
 		else if(counter > 5) {
 		answer = TIO;
 		loop = 0;
 		}
 	#ifndef DIRECS_LASER_USE_SELECT
-		usleep(1000); 
+		usleep(1000);
 	#endif
 	}
 	return answer;
@@ -1262,7 +1262,7 @@ void Laser::sick_request_status(sick_laser_p laser)
 void Laser::sick_request_sensor(sick_laser_p laser)
 {
 	static unsigned char args[2] = {0x05, 0xb4};
-	
+
 	sick_write_command(laser, 0x30, args, 2);
 }
 
@@ -1271,7 +1271,7 @@ int Laser::sick_set_laser_baudrate(sick_laser_p laser, int brate)
 {
 	unsigned char args[1];
 	int result;
-	
+
 	if(brate == 500000)
 		args[0] = 0x48;
 	else if(brate == 38400)
@@ -1289,7 +1289,7 @@ int Laser::sick_set_config_mode(sick_laser_p laser)
 {
 	unsigned char data[MAX_COMMAND_SIZE], args[MAX_COMMAND_SIZE];
 	int i, result;
-	
+
 	for(i = 0; i < 8; i++)
 		args[i + 1] = (unsigned char)laser->dev.passwd[i];
 	args[0] = 0x00;
@@ -1306,19 +1306,19 @@ int Laser::sick_set_lms_resolution(sick_laser_p laser)
 {
 	unsigned char args[4];
 	int result;
-	
+
 	if(laser->settings.angle_range == 100) {
 		args[0] = 0x64; args[1] = 0x00;
 		if(laser->settings.angle_resolution == RES_1_00_DEGREE) {
 		args[2] = 0x64; args[3] = 0x00;
-		} 
+		}
 		else if(laser->settings.angle_resolution == RES_0_50_DEGREE) {
 		args[2] = 0x32; args[3] = 0x00;
-		} 
+		}
 		else {
 		args[2] = 0x19; args[3] = 0x00;
 		}
-	} 
+	}
 	else {
 		args[0] = 0xB4; args[1] = 0x00;
 		if(laser->settings.angle_resolution == RES_1_00_DEGREE) {
@@ -1335,7 +1335,7 @@ int Laser::sick_set_lms_resolution(sick_laser_p laser)
 int Laser::sick_request_lms_config(sick_laser_p laser)
 {
 	int result;
-	
+
 	result = sick_write_command(laser, 0x74, NULL, 0);
 	return(result == ACK);
 }
@@ -1344,11 +1344,11 @@ int Laser::sick_request_lms_config(sick_laser_p laser)
 int Laser::sick_set_lms_config(sick_laser_p laser, unsigned char *data, int len)
 {
 	int result;
-	
+
 	if(len == 32) {
 		result = sick_write_command(laser, 0x77, data, len);
 		return(result == ACK);
-	} 
+	}
 	else
 		return(FALSE);
 }
@@ -1358,7 +1358,7 @@ int Laser::sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int leng
 {
 	int check, i;
 	unsigned char data[32];
-	
+
 	if(length < 4)
 		return(FALSE);
 	else
@@ -1376,18 +1376,18 @@ int Laser::sick_parse_conf_data(sick_laser_p laser, unsigned char *buf, int leng
 		(laser->settings.range_dist == SICK_RANGE320M && data[5] != 5) ||
 		(laser->settings.range_dist == SICK_REMISSION_NORM && data[5] != 13) ||
 		(laser->settings.range_dist == SICK_REMISSION_DIRECT && data[5] != 14)) {
-	
+
 		//    fprintf(stderr, "ok\n");
 		fprintf(stderr, "config-mode ... ");
 		do {} while (!sick_set_config_mode(laser));
 		fprintf(stderr, "ok ...");
-	
+
 		/* fix the laser sunlight problem */
 		//    data[4] |= 1;
-	
+
 		switch(laser->settings.range_dist) {
 		case SICK_RANGE80M:
-		data[5] = 1; 
+		data[5] = 1;
 		break;
 		case SICK_RANGE160M:
 		data[5] = 3;
@@ -1431,12 +1431,12 @@ int Laser::sick_set_lms_range(sick_laser_p laser)
 {
 	int l = 0;
 	unsigned char data[BUFFER_SIZE];
-	
+
 	if(sick_request_lms_config(laser)) {
 		usleep(100000);
 		l = sick_read_data(laser, data, MAX_TIME_FOR_GETTING_CONF);
 		return(sick_parse_conf_data(laser, data, l));
-	} 
+	}
 	else
 		return(FALSE);
 }
@@ -1447,7 +1447,7 @@ void Laser::sick_start_continuous_mode(sick_laser_p laser)
 	unsigned char lmsarg[1] = {0x24}, pls180arg[1] = {0x20};
 	unsigned char pls360arg[1] = {0x24};
 	int result = 0;
-	
+
 	do {
 		if(laser->settings.type == LMS)
 		result = sick_write_command(laser, 0x20, lmsarg, 1);
@@ -1465,7 +1465,7 @@ void Laser::sick_stop_continuous_mode(sick_laser_p laser)
 {
 	unsigned char args[1] = {0x25};
 	int result;
-	
+
 	do {
 		result = sick_write_command(laser, 0x20, args, 1);
 	} while(result != ACK);
@@ -1477,18 +1477,18 @@ void Laser::sick_start_continuous_remission_part_mode(sick_laser_p laser)
 	unsigned char lmsarg[7] = {0x2b, 1,0,0,0,0,0}, pls180arg[1] = {0x20};
 	unsigned char pls360arg[1] = {0x24};
 	int result = 0;
-	
+
 	if(laser->settings.type == LMS) {
 		lmsarg[3] = 1;
 		lmsarg[5] = laser->settings.rem_values;
 	}
 	else if(laser->settings.type == PLS) {
 		laser->settings.use_remission = 0;
-		fprintf(stderr, "WARNING: No remission-mode support for non LMS lasers. Continuing normal mode.\n"); 
+		fprintf(stderr, "WARNING: No remission-mode support for non LMS lasers. Continuing normal mode.\n");
 	}
-	
+
 	do {
-		if(laser->settings.type == LMS) 
+		if(laser->settings.type == LMS)
 		result = sick_write_command(laser, 0x20, lmsarg, 7);
 		else if(laser->settings.type == PLS &&
 			laser->settings.angle_resolution == RES_1_00_DEGREE)
@@ -1504,11 +1504,11 @@ int Laser::sick_testBaudrate(sick_laser_p laser, int brate)
 {
 	unsigned char data[BUFFER_SIZE], ReqLaser[2] = {5, 180};
 	int response;
-	
+
 	// start Markus: time measure added
 	//	double start_time = 0;
 	//	double elapsed_time = 0;
-	
+
 	// get time
 	//	start_time = direcs_get_time();
 	//qDebug("\nstart time: %f seks", start_time);
@@ -1518,19 +1518,19 @@ int Laser::sick_testBaudrate(sick_laser_p laser, int brate)
 	sick_set_baudrate(laser, brate);
 	//	elapsed_time = (direcs_get_time() - start_time);
 	//	qDebug("elapsed time till here: %f seks", elapsed_time);
-	
+
 	response = sick_write_command(laser, 0x30, ReqLaser, 2);
 	if(response == NAK)
 	{
 		fprintf(stderr, "Error : Could not send command to laser.\n");
 		return FALSE;
 	}
-	
+
 	if(sick_read_data(laser, data, MAX_TIME_FOR_TESTING_BAUDRATE))
 	{
 		return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -1589,7 +1589,7 @@ int Laser::sick_check_baudrate(sick_laser_p laser, int brate)
 	if(sick_testBaudrate(laser, brate)) {
 		fprintf(stderr, "yes\n");
 		return(TRUE);
-	} 
+	}
 	else {
 		fprintf(stderr, "no\n");
 		return(FALSE);
@@ -1615,33 +1615,33 @@ void Laser::sick_install_settings(sick_laser_p laser)
 void Laser::sick_allocate_laser(sick_laser_p laser)
 {
 	int i;
-	
+
 	laser->numvalues = laser->settings.num_values;
-	
+
 	laser->range = (double *)malloc(laser->settings.num_values * sizeof(double));
 	// Not nedded:
 	//direcs_test_alloc(laser->range);
-	
+
 	laser->glare = (int *)malloc(laser->settings.num_values * sizeof(int));
 	// Not nedded:
 	// direcs_test_alloc(laser->glare);
-	
+
 	laser->wfv = (int *)malloc(laser->settings.num_values * sizeof(int));
 	// Not nedded:
 	//direcs_test_alloc(laser->wfv);
-	
+
 	laser->sfv = (int *)malloc(laser->settings.num_values * sizeof(int));
 	// Not nedded:
 	//direcs_test_alloc(laser->sfv);
-	
+
 	laser->buffer = (unsigned char *)malloc(LASER_BUFFER_SIZE);
 	// Not nedded:
 	//direcs_test_alloc(laser->buffer);
-	
+
 	laser->new_reading = 0;
 	laser->buffer_position = 0;
 	laser->processed_mark = 0;
-	
+
 	for(i = 0; i < laser->settings.num_values; i++)
 	{
 		laser->range[i] = 0.0;
@@ -1649,16 +1649,16 @@ void Laser::sick_allocate_laser(sick_laser_p laser)
 		laser->wfv[i] = 0;
 		laser->sfv[i] = 0;
 	}
-	
+
 	if(laser->settings.use_remission)
 	{
 		laser->remvalues = laser->settings.rem_values;
 		laser->remission = (double *)malloc(laser->settings.rem_values * sizeof(double));
 		// not needed here:
 		//direcs_test_alloc(laser->remission);
-		
+
 		for(i = 0; i< laser->settings.rem_values; i++)
-	  		laser->remission[i] = 0;
+			laser->remission[i] = 0;
 	}
 }
 
@@ -1667,19 +1667,19 @@ int Laser::sick_connect_device(sick_laser_p laser)
 {
 	sick_install_settings(laser);
 	sick_allocate_laser(laser);
-	
+
 	emit(message(QString("Connecting Laser Scanner to %1...").arg(laser->dev.ttyport)));
 	sick_serial_connect(laser);
-	
+
 	if(laser->dev.fd == -1)
 	{
 		emit(message(QString("Connecting Laser Scanner to %1...failed!").arg(laser->dev.ttyport)));
 		return 1;
 	}
-	
+
 	emit(message(QString("Setting Laser Scanner port parameters to %1/%2/%3/%4...").arg(laser->dev.baudrate).arg(laser->dev.databits).arg(laser->dev.parity).arg(laser->dev.stopbits)));
 	sick_set_serial_params(laser);
-	
+
 	return 0;
 }
 
@@ -1700,7 +1700,7 @@ int Laser::sick_start_laser(sick_laser_p laser)
 	if(laser->settings.detect_baudrate)
 	{
 		brate = sick_detect_baudrate(laser);
-		
+
 		if (!brate)
 		{
 			return 1;
@@ -1731,17 +1731,17 @@ int Laser::sick_start_laser(sick_laser_p laser)
 			}
 
 		};
-		
+
 		emit(message(QString("Setting Laser Scanner baudrate to %1...").arg(laser->settings.set_baudrate)));
-		
+
 		while(!sick_set_laser_baudrate(laser, laser->settings.set_baudrate))
 		{
 		};
-		
+
 		sick_set_baudrate(laser, laser->settings.set_baudrate);
 	}
 
-	
+
 	/* set the resolution of the blue lasers */
 	if(laser->settings.type == LMS)
 	{
@@ -1749,9 +1749,9 @@ int Laser::sick_start_laser(sick_laser_p laser)
 		while(!sick_set_lms_resolution(laser))
 		{
 		};
-		
+
 		usleep(100000);
-		
+
 		emit(message(QString("Setting Laser Scanner to range %1...").arg(laser->settings.angle_range)));
 		while(!sick_set_lms_range(laser))
 		{
@@ -1772,7 +1772,7 @@ int Laser::sick_start_laser(sick_laser_p laser)
 	}
 
 	laser->packet_timestamp=-1;
-	
+
 	return 0;
 }
 
@@ -1780,7 +1780,7 @@ int Laser::sick_start_laser(sick_laser_p laser)
 int Laser::sick_valid_packet(unsigned char *data, long size, long *offset, long *len)
 {
 	int i, check, packet_size = 0, theo_size = 0;
-	
+
 	for(i = 0; i < size; i++) {
 		if(packet_size == 0 && *data == 0x02)
 		packet_size++;
@@ -1791,7 +1791,7 @@ int Laser::sick_valid_packet(unsigned char *data, long size, long *offset, long 
 		else if(packet_size == 2) {
 		theo_size = data[0];
 		packet_size++;
-		} 
+		}
 		else if(packet_size == 3) {
 		theo_size += (data[0] << 8) + 6;
 		if(size >= theo_size + (i - packet_size)) {	// check the crc
@@ -1807,7 +1807,7 @@ int Laser::sick_valid_packet(unsigned char *data, long size, long *offset, long 
 		*len = theo_size;
 		return 1;
 		}
-		} 
+		}
 		else
 		packet_size = 0;
 		}
@@ -1821,12 +1821,12 @@ void Laser::sick_process_packet_distance(sick_laser_p laser, unsigned char *pack
 {
 	int i = 0, LoB = 0, HiB = 0, bit14, bit15, numMeasurements;
 	float conversion = 1.0;
-	
+
 	if(packet[0] == 0xb0)
 	{
 		/* Check the number of measurements */
 		numMeasurements = ((packet[2] << 8) + packet[1]) & 0x3FFF;
-	
+
 		/* Extract the distance conversion factor */
 		bit14 = packet[2] & 0x40;
 		bit15 = packet[2] & 0x80;
@@ -1840,16 +1840,16 @@ void Laser::sick_process_packet_distance(sick_laser_p laser, unsigned char *pack
 			else
 			conversion = 10.0;
 		}
-		
+
 		/* Compute range values */
 		laser->new_reading = 1;
 		for (i = 0; i < numMeasurements; i++)
 		{
-			LoB = packet[i * 2 + 3]; 
+			LoB = packet[i * 2 + 3];
 			HiB = packet[i * 2 + 4];
 			laser->range[i] = ((HiB & 0x1f) * 256 + LoB) * conversion;
-			laser->glare[i] = (HiB & 0x20) / 32; 
-			laser->wfv[i] = (HiB & 0x40) / 64;  
+			laser->glare[i] = (HiB & 0x20) / 32;
+			laser->wfv[i] = (HiB & 0x40) / 64;
 			laser->sfv[i] = (HiB & 0x80) / 128;
 		}
 	}
@@ -1862,22 +1862,22 @@ void Laser::sick_process_packet_remission(sick_laser_p laser, unsigned char *pac
 	int parts, mstart, mend;
 	int offs;
 	float conversion = 1.0;
-	
+
 	if(packet[0] == 0xf5)
 	{
 		/* Extract number of scan parts (should be 1) */
 		parts = packet[1] & 0x7;
-		
+
 		offs = 0;
-	
+
 		mstart = ((packet[offs + 4] << 8) + packet[offs + 3]);
 		mend   = ((packet[offs + 6] << 8) + packet[offs + 5]);
 		//  fprintf(stderr, "mstart, mend = %d, %d\n", mstart, mend);
-	
+
 		/* Check the number of measurements */
 		numMeasurements = ((packet[offs + 8] << 8) + packet[offs + 7]) & 0x3FFF;
 		//  fprintf(stderr, "num_measurem. = %d\n",numMeasurements);
-	
+
 		/* Extract the distance conversion factor */
 		bit14 = packet[offs + 8] & 0x40;
 		bit15 = packet[offs + 8] & 0x80;
@@ -1891,12 +1891,12 @@ void Laser::sick_process_packet_remission(sick_laser_p laser, unsigned char *pac
 				else
 					conversion = 10.0;
 		}
-		
+
 		/* Compute range values */
 		laser->new_reading = 1;
 		for (i = 0; i < numMeasurements; i++)
 		{
-			LoB = packet[i * 4 + offs + 9]; 
+			LoB = packet[i * 4 + offs + 9];
 			HiB = packet[i * 4 + offs + 10];
 			laser->range[i] = (HiB * 256 + LoB) * conversion;
 			laser->remission[i] = packet[i * 4 + offs + 12] * 256 + packet[i * 4 + offs + 11];
@@ -1917,7 +1917,7 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 {
 	int bytes_available, bytes_read;
 	int leftover;
-	
+
 	laser->new_reading = 0;
 	#ifdef DIRECS_LASER_USE_SELECT
 	double timeout=0.1;
@@ -1931,14 +1931,14 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 	#endif
 	/* read what is available in the buffer */
 	bytes_available = serialPort->numChars(laser->dev.fd);
-	
+
 	if (bytes_available > LASER_BUFFER_SIZE - laser->buffer_position)
 	{
 		bytes_available = LASER_BUFFER_SIZE - laser->buffer_position;
 	}
-	
+
 	bytes_read = serialPort->readPort(laser->dev.fd, laser->buffer + laser->buffer_position, bytes_available);
-	
+
 	/* process at most one laser reading */
 	if(bytes_read > 0)
 	{
@@ -1946,18 +1946,18 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 		{
 			laser->packet_timestamp=direcs_get_time();
 		}
-		
+
 		laser->buffer_position += bytes_read;
-		
+
 		if(sick_valid_packet(laser->buffer + laser->processed_mark, laser->buffer_position - laser->processed_mark, &(laser->packet_offset), &(laser->packet_length)))
 		{
 			laser->timestamp=laser->packet_timestamp;
 			sick_process_packet(laser, laser->buffer + laser->processed_mark + laser->packet_offset + 4);
 			laser->packet_timestamp=-1.;
-	
+
 			leftover = laser->buffer_position - laser->processed_mark - laser->packet_length;
 			laser->processed_mark += laser->packet_offset + laser->packet_length;
-		
+
 			//PACKET_DROPPING
 			while (leftover>laser->packet_length)
 			{
@@ -1966,7 +1966,7 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 				// TODO: change std output
 				// fprintf(stderr,"D");
 			}
-		
+
 			if(leftover == 0)
 			{
 				laser->buffer_position = 0;
@@ -1974,8 +1974,8 @@ void Laser::sick_handle_laser(sick_laser_p laser)
 			}
 		}
 	}
-	
-	
+
+
 	/* shift everything forward in the buffer, if necessary */
 	if(laser->buffer_position > LASER_BUFFER_SIZE / 2)
 	{
@@ -2004,8 +2004,8 @@ double Laser::direcs_get_time(void)
 	{
 		qDebug("direcs_get_time encountered error in gettimeofday : %s", strerror(errno));
 	}
-	
+
 	t = tv.tv_sec + tv.tv_usec/1000000.0;
-	
+
 	return t;
 }
