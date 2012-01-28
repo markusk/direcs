@@ -289,6 +289,41 @@ int main(void)
 // @todo:				sendUInt( readADC(SENSOR1) );
 				sendUInt( 42 );
 			}
+			else
+			// MOTOR1_OFF
+			if (strcmp(stringbuffer, "*mp1of#") == 0)
+			{
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				// answer with "ok"
+				put_string("*mp1of#");
+			}
+			else
+			// MOTOR 1 CLOCKWISE = forward
+			if (strcmp(stringbuffer, "*md1cw#") == 0)
+			{
+				// delete Motor1 A bit
+				PORTL &= ~(1<<PIN0);
+				// set Motor1 B bit
+				PORTL |= (1<<PIN1);
+
+				// answer with "ok"
+				put_string("*md1cw#");
+			}
+			else
+			// MOTOR 1 COUNTERCLOCKWISE = backward
+			if (strcmp(stringbuffer, "*md1cc#") == 0)
+			{
+				// set Motor1 A bit
+				PORTL |= (1<<PIN0);
+				// delete Motor1 B bit
+				PORTL &= ~(1<<PIN1);
+				
+				// answer with "ok"
+				put_string("*md1cc#");
+			}
 		} // stringReceived()
 
 	} // while (1)
