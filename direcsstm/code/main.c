@@ -110,7 +110,8 @@
 
 // The port bits
 
-#define MOTOR1PORT				RCC_AHB1Periph_GPIOB
+#define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
+#define MOTOR1PORT				GPIOB
 #define MOTOR1BITA				GPIO_Pin_0
 #define MOTOR1BITB				GPIO_Pin_1
 
@@ -182,7 +183,7 @@ int main(void)
 	// 	Don't know why, but this code has to be here (not in a seperate method)
 	//	--------------------------------------------------------------------------------
 	// GPIOD Periph clock enable
-	RCC_AHB1PeriphClockCmd(MOTOR1PORT, ENABLE);
+	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
 
 	// Motor control Bits
 	GPIO_InitStructure.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
@@ -190,7 +191,7 @@ int main(void)
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
+	GPIO_Init(MOTOR1PORT, &GPIO_InitStructure);
 	//	--------------------------------------------------------------------------------
 
 
