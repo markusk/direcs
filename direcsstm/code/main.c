@@ -293,10 +293,8 @@ int main(void)
 			// MOTOR1_OFF
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
-				// delete Motor1 A bit
-				PORTL &= ~(1<<PIN0);
-				// delete Motor1 B bit
-				PORTL &= ~(1<<PIN1);
+				// delete Motor1 A and B bits
+				GPIO_ResetBits(MOTOR1BITA | MOTOR1BITB);
 				// answer with "ok"
 				put_string("*mp1of#");
 			}
@@ -305,9 +303,9 @@ int main(void)
 			if (strcmp(stringbuffer, "*md1cw#") == 0)
 			{
 				// delete Motor1 A bit
-				PORTL &= ~(1<<PIN0);
+				GPIO_ResetBits(MOTOR1BITA);
 				// set Motor1 B bit
-				PORTL |= (1<<PIN1);
+				GPIO_SetBits(MOTOR1PORT, MOTOR1BITB);
 
 				// answer with "ok"
 				put_string("*md1cw#");
@@ -317,9 +315,9 @@ int main(void)
 			if (strcmp(stringbuffer, "*md1cc#") == 0)
 			{
 				// set Motor1 A bit
-				PORTL |= (1<<PIN0);
+				GPIO_SetBits(MOTOR1PORT, MOTOR1BITA);
 				// delete Motor1 B bit
-				PORTL &= ~(1<<PIN1);
+				GPIO_ResetBits(MOTOR1BITB);
 				
 				// answer with "ok"
 				put_string("*md1cc#");
