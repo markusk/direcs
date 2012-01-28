@@ -106,6 +106,12 @@
 #define BITZEIT 100     
 
 
+// The port bits
+
+#define MOTOR1PORT				RCC_AHB1Periph_GPIOB
+#define MOTOR1BITA				GPIO_Pin_0
+#define MOTOR1BITB				GPIO_Pin_1
+
 
 #include "stm32f4_discovery.h"
 #include "stm32f4xx_conf.h"
