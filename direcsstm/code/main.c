@@ -293,7 +293,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
 				// delete Motor1 A and B bits
-				GPIO_ResetBits(MOTOR1BITA | MOTOR1BITB);
+				GPIO_ResetBits(MOTOR1PORT, MOTOR1BITA | MOTOR1BITB);
 				// answer with "ok"
 				put_string("*mp1of#");
 			}
@@ -302,7 +302,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*md1cw#") == 0)
 			{
 				// delete Motor1 A bit
-				GPIO_ResetBits(MOTOR1BITA);
+				GPIO_ResetBits(MOTOR1PORT, MOTOR1BITA);
 				// set Motor1 B bit
 				GPIO_SetBits(MOTOR1PORT, MOTOR1BITB);
 
@@ -316,7 +316,7 @@ int main(void)
 				// set Motor1 A bit
 				GPIO_SetBits(MOTOR1PORT, MOTOR1BITA);
 				// delete Motor1 B bit
-				GPIO_ResetBits(MOTOR1BITB);
+				GPIO_ResetBits(MOTOR1PORT, MOTOR1BITB);
 				
 				// answer with "ok"
 				put_string("*md1cc#");
