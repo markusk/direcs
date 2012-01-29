@@ -205,10 +205,11 @@ int main(void)
 
 
 	// LEDs off
-	GPIO_SetBits(LEDPORT, LEDGREEN);
-	GPIO_SetBits(LEDPORT, LEDORANGE);
-	GPIO_SetBits(LEDPORT, LEDRED);
-	GPIO_SetBits(LEDPORT, LEDBLUE);
+	turnLED(LEDGREEN, OFF);
+	turnLED(LEDORANGE, OFF);
+	turnLED(LEDRED, OFF);
+	turnLED(LEDBLUE, OFF);
+
 
 	// Motor bits off
 	// @todo !!
