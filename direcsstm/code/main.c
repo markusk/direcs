@@ -108,7 +108,13 @@
 #define BITZEIT 100     
 
 
-// The port bits
+// The port bits -------------------------------------------------------------
+#define LEDMEMSPERIPH			RCC_AHB1Periph_GPIOD
+#define LEDMEMSPORT				GPIOD
+#define LEDMEMSGREEN			GPIO_Pin_12
+#define LEDMEMSORANGE			GPIO_Pin_13
+#define LEDMEMSRED				GPIO_Pin_14
+#define LEDMEMSBLUE				GPIO_Pin_15
 
 #define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
 #define MOTOR1PORT				GPIOB
@@ -163,29 +169,29 @@ int main(void)
 	usartInit();
 
 	//	--------------------------------------------------------------------------------
-	//	GPIOPort init, Port D
+	//	GPIOPort init, Port D (MEMS LEDs)
 	// 	Don't know why, but this code has to be here (not in a seperate method)
 	//	--------------------------------------------------------------------------------
 	// GPIOD Periph clock enable
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	RCC_AHB1PeriphClockCmd(LEDMEMSPERIPH, ENABLE);
 
-	// Configure PD12, PD13, PD14 and PD15 in output pushpull mode
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13| GPIO_Pin_14| GPIO_Pin_15;
+	// Configure port bits in output pushpull mode
+	GPIO_InitStructure.GPIO_Pin = LEDMEMSGREEN | LEDMEMSORANGE| LEDMEMSRED| LEDMEMSBLUE;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
+	GPIO_Init(LEDMEMSPORT, &GPIO_InitStructure);
 	//	--------------------------------------------------------------------------------
 
 	//	--------------------------------------------------------------------------------
-	//	GPIOPort init, Port B
+	//	GPIOPort init, Port B (Motor bits)
 	// 	Don't know why, but this code has to be here (not in a seperate method)
 	//	--------------------------------------------------------------------------------
 	// GPIOD Periph clock enable
 	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
 
-	// Motor control Bits
+	// Configure port bits in output pushpull mode
 	GPIO_InitStructure.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
