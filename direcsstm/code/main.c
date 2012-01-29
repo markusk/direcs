@@ -109,12 +109,12 @@
 
 
 // The port bits -------------------------------------------------------------
-#define LEDMEMSPERIPH			RCC_AHB1Periph_GPIOD
-#define LEDMEMSPORT				GPIOD
-#define LEDMEMSGREEN			GPIO_Pin_12
-#define LEDMEMSORANGE			GPIO_Pin_13
-#define LEDMEMSRED				GPIO_Pin_14
-#define LEDMEMSBLUE				GPIO_Pin_15
+#define LEDCLOCK				RCC_AHB1Periph_GPIOD
+#define LEDPORT					GPIOD
+#define LEDGREEN				GPIO_Pin_12
+#define LEDORANGE				GPIO_Pin_13
+#define LEDRED					GPIO_Pin_14
+#define LEDBLUE					GPIO_Pin_15
 
 #define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
 #define MOTOR1PORT				GPIOB
@@ -173,15 +173,15 @@ int main(void)
 	// 	Don't know why, but this code has to be here (not in a seperate method)
 	//	--------------------------------------------------------------------------------
 	// GPIOD Periph clock enable
-	RCC_AHB1PeriphClockCmd(LEDMEMSPERIPH, ENABLE);
+	RCC_AHB1PeriphClockCmd(LEDCLOCK	, ENABLE);
 
 	// Configure port bits in output pushpull mode
-	GPIO_InitStructure.GPIO_Pin = LEDMEMSGREEN | LEDMEMSORANGE| LEDMEMSRED| LEDMEMSBLUE;
+	GPIO_InitStructure.GPIO_Pin = LEDGREEN | LEDORANGE| LEDRED| LEDBLUE;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(LEDMEMSPORT, &GPIO_InitStructure);
+	GPIO_Init(LEDPORT, &GPIO_InitStructure);
 	//	--------------------------------------------------------------------------------
 
 	//	--------------------------------------------------------------------------------
