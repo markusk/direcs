@@ -201,6 +201,16 @@ int main(void)
 	//	--------------------------------------------------------------------------------
 
 
+	// LEDs off
+	GPIO_SetBits(LEDPORT, LEDGREEN);
+	GPIO_SetBits(LEDPORT, LEDORANGE);
+	GPIO_SetBits(LEDPORT, LEDRED);
+	GPIO_SetBits(LEDPORT, LEDBLUE);
+
+	// Motor bits off
+	// @todo !!
+
+
 	while (1)
 	{
 //		serialBlockingReadString();
