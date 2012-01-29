@@ -140,6 +140,9 @@ void gpioPortInit();
 
 void LEDblink();
 
+// turns a LED on or off
+void turnLED(int led, int state);
+
 // sends a u int value over the serial line as ASCII
 void sendUInt(uint16_t value);
 
@@ -392,6 +395,19 @@ void LEDblink()
 
 	/* Insert delay */
 	Delay(0xFFFFFF);
+}
+
+
+void turnLED(int led, int state)
+{
+	if (state == ON)
+	{
+		GPIO_SetBits(LEDPORT, led);
+	}
+	else
+	{
+		GPIO_ResetBits(LEDPORT, led);
+	}
 }
 
 
