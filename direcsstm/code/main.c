@@ -243,6 +243,7 @@ int main(void)
 			// RESET / INIT
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
+				turnLED(LEDGREEN, ON);
 /*
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
