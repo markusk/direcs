@@ -290,11 +290,113 @@ int main(void)
 	turnLED(LEDRED, OFF);
 	turnLED(LEDBLUE, OFF);
 
-
+/*
 	// Motor bits off
 	// @todo !!
+while(1)
+{
+	TIM_Cmd(TIM3, DISABLE);
+		// Time base configuration
+	TIM_TimeBaseStructure.TIM_Period = 665;
+	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+//-
+	CCR4_Val = 333;
+	// PWM1 Mode configuration: Channel4
+	// GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9)
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
+	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
+//-
+	TIM_ARRPreloadConfig(TIM3, ENABLE);
+	TIM_Cmd(TIM3, ENABLE);
 
+	turnLED(LEDBLUE, ON);
+
+	// Insert delay
+	Delay(0x3FFFFF);
+
+	TIM_Cmd(TIM3, DISABLE);
+		// Time base configuration
+	TIM_TimeBaseStructure.TIM_Period = 665;
+	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+//-
+	CCR4_Val = 249;
+	// PWM1 Mode configuration: Channel4
+	// GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9)
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
+	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
+//-
+	TIM_ARRPreloadConfig(TIM3, ENABLE);
+	TIM_Cmd(TIM3, ENABLE);
+
+	turnLED(LEDBLUE, OFF);
+
+	// Insert delay
+	Delay(0x3FFFFF);
+
+	TIM_Cmd(TIM3, DISABLE);
+		// Time base configuration
+	TIM_TimeBaseStructure.TIM_Period = 665;
+	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+//-
+	CCR4_Val = 166;
+	// PWM1 Mode configuration: Channel4
+	// GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9)
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
+	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
+//-
+	TIM_ARRPreloadConfig(TIM3, ENABLE);
+	TIM_Cmd(TIM3, ENABLE);
+
+	turnLED(LEDBLUE, ON);
+
+	// Insert delay
+	Delay(0x3FFFFF);
+
+	TIM_Cmd(TIM3, DISABLE);
+		// Time base configuration
+	TIM_TimeBaseStructure.TIM_Period = 665;
+	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+//-
+	CCR4_Val = 83;
+	// PWM1 Mode configuration: Channel4
+	// GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9)
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
+	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
+//-
+	TIM_ARRPreloadConfig(TIM3, ENABLE);
+	TIM_Cmd(TIM3, ENABLE);
+
+	turnLED(LEDBLUE, OFF);
+
+	// Insert delay
+	Delay(0x3FFFFF);
+
+}
+*/
 	while (1)
 	{
 //		serialBlockingReadString();
