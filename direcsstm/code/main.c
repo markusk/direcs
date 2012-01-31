@@ -231,12 +231,14 @@ int main(void)
 
 
 	/* PWM1 Mode configuration: Channel3 */
+	/* GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9) */
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = CCR3_Val;
+	TIM_OCInitStructure.TIM_Pulse = CCR1_Val;
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
 	/* PWM1 Mode configuration: Channel4 */
+	/* GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9) */
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
