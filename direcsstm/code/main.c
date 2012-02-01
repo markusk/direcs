@@ -187,7 +187,7 @@ int main(void)
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	
 	// call timer config for PWM
-	TIM_Config();  // < < < < < < < < < < < < < < <
+	// TIM_Config();
 
 	/* -----------------------------------------------------------------------
     TIM3 Configuration: generate 4 PWM signals with 4 different duty cycles.
@@ -217,11 +217,11 @@ int main(void)
      function to update SystemCoreClock variable value. Otherwise, any configuration
      based on this variable will be incorrect.    
 	----------------------------------------------------------------------- */  
-
-	/* Compute the prescaler value */
+/*
+	// Compute the prescaler value
 	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / 28000000) - 1;
 
-	/* Time base configuration */
+	// Time base configuration
 	TIM_TimeBaseStructure.TIM_Period = 665;
 	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
@@ -230,15 +230,15 @@ int main(void)
 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
 
 
-	/* PWM1 Mode configuration: Channel3 */
-	/* GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9) */
+	// PWM1 Mode configuration: Channel3
+	// GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9)
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = CCR1_Val;
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
-	/* PWM1 Mode configuration: Channel4 */
-	/* GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9) */
+	// PWM1 Mode configuration: Channel4
+	// GPIOC Configuration:  TIM3 CH3 (PC8) and TIM3 CH4 (PC9)
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
@@ -247,9 +247,37 @@ int main(void)
 	//
 	TIM_ARRPreloadConfig(TIM3, ENABLE);
 
-	/* TIM3 enable counter */
+	// TIM3 enable counter
 	TIM_Cmd(TIM3, ENABLE);
+*/
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+	TIM_OCInitTypeDef  TIM_OCInitStructure;
+
+	// Time base configuration TIM1
+	TIM_TimeBaseStructure.TIM_Period = 19999;//PWM freq. = 1MHz/20000 = 50Hz
+	TIM_TimeBaseStructure.TIM_Prescaler = 23;// Timer loopt aan 24 MHz/24 = 1MHz
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure);
+
+	// PWM1 Mode configuration: TIM 1, Channel1
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+	TIM_OC1Init(TIM1, &TIM_OCInitStructure);
+	TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
+
+	// PWM1 Mode configuration: TIM 1, Channel4
+	TIM_OC4Init(TIM1, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM1, TIM_OCPreload_Enable);
+
+	TIM1->CCR1=1500; //test 1.5 ms voor servo1
+	TIM1->CCR4=1825; //test 1.825 ms voor servo 4 eingestellt.
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
