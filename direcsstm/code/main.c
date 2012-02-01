@@ -249,35 +249,7 @@ int main(void)
 
 	// TIM3 enable counter
 	TIM_Cmd(TIM3, ENABLE);
-*/
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-	TIM_OCInitTypeDef  TIM_OCInitStructure;
-
-	// Time base configuration TIM1
-	TIM_TimeBaseStructure.TIM_Period = 19999;//PWM freq. = 1MHz/20000 = 50Hz
-	TIM_TimeBaseStructure.TIM_Prescaler = 23;// Timer loopt aan 24 MHz/24 = 1MHz
-	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure);
-
-	// PWM1 Mode configuration: TIM 1, Channel1
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OC1Init(TIM1, &TIM_OCInitStructure);
-	TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
-
-	// PWM1 Mode configuration: TIM 1, Channel4
-	TIM_OC4Init(TIM1, &TIM_OCInitStructure);
-	TIM_OC4PreloadConfig(TIM1, TIM_OCPreload_Enable);
-
-	TIM1->CCR1=1500; //test 1.5 ms voor servo1
-	TIM1->CCR4=1825; //test 1.825 ms voor servo 4 eingestellt.
-
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
