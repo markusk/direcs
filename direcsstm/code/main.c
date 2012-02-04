@@ -222,8 +222,10 @@ int main(void)
 	----------------------------------------------------------------------- */  
 
 	// Compute the prescaler values
-	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / 1000000) - 1; // 1,000,000 Hz time base
-	PreCalPeriod = (uint16_t) (1000000 / 20000); // 20,000 Hz PWM output frequency
+	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / 28000000) - 1; // 1,000,000 Hz time base
+
+	// PreCalPeriod: 665 = 42 kHz  (28,000,000 / 42,000 Hz PWM output frequency = 665)
+	PreCalPeriod = (uint16_t) (28000000 / 42000);
 	Duty_Cycle = 100;
 
 	// Time base configuration
@@ -237,7 +239,7 @@ int main(void)
 	// basic init TIM4
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
 
-	// PWM1 Mode configuration: Channel1
+	// PWM1 Mode configuration: TIM3, Channel1, PC6
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = CCR1_Val;
@@ -245,25 +247,25 @@ int main(void)
 	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
-	// PWM1 Mode configuration: Channel2
+	// PWM1 Mode configuration: TIM3, Channel2
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = CCR2_Val;
 	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
-	// PWM1 Mode configuration: Channel3
+	// PWM1 Mode configuration: TIM3, Channel3
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = CCR3_Val;
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
-	// PWM1 Mode configuration: Channel4
+	// PWM1 Mode configuration: TIM3, Channel4
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
-	// PWM1 Mode configuration: Channel1, TIM4
+	// PWM1 Mode configuration: TIM4, Channel1
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = (PreCalPeriod * Duty_Cycle) / 100; // < < < < < < < < < 'speed'
@@ -300,7 +302,7 @@ int main(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(LEDPORT, &GPIO_InitStructure);
 	//	--------------------------------------------------------------------------------
-*/
+
 	//	--------------------------------------------------------------------------------
 	//	GPIOPort init, Port B (Motor bits)
 	// 	Don't know why, but this code has to be here (not in a seperate method)
@@ -316,14 +318,14 @@ int main(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(MOTOR1PORT, &GPIO_InitStructure);
 	//	--------------------------------------------------------------------------------
-
-
+*/
+/*
 	// LEDs off
-//	turnLED(LEDGREEN, OFF);
+	turnLED(LEDGREEN, OFF);
 	turnLED(LEDORANGE, OFF);
 	turnLED(LEDRED, OFF);
 	turnLED(LEDBLUE, OFF);
-
+*/
 
 	while (1)
 	{
