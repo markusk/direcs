@@ -306,7 +306,7 @@ int main(void)
 
 
 	// LEDs off
-	turnLED(LEDGREEN, OFF);
+//	turnLED(LEDGREEN, OFF);
 	turnLED(LEDORANGE, OFF);
 	turnLED(LEDRED, OFF);
 	turnLED(LEDBLUE, OFF);
@@ -340,7 +340,7 @@ int main(void)
 			// RESET / INIT
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
-				turnLED(LEDGREEN, ON);
+//				turnLED(LEDGREEN, ON);
 /*
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
@@ -473,8 +473,8 @@ void TIM_Config(void)
 	// TIM3 clock enable
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 
-	// GPIOC and GPIOB clock enable
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOB, ENABLE);
+	// GPIOC and GPIOB clock enable (Port C, B, D)
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOB | RCC_AHB1Periph_GPIOD, ENABLE);
 
 	// GPIOC Configuration: TIM3 CH1 (PC6) and TIM3 CH2 (PC7)
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 ;
@@ -492,11 +492,23 @@ void TIM_Config(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
 	GPIO_Init(GPIOB, &GPIO_InitStructure); 
 
+	// GPIOD Configuration: TIM4 CH1 (PD12)
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(GPIOC, &GPIO_InitStructure); 
+
 	// Connect TIM3 pins to AF2  
 	GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_TIM3);
-	GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3); 
+	GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3);
+	 
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource0, GPIO_AF_TIM3);
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource1, GPIO_AF_TIM3); 
+
+	// Connect TIM4 pin to AF2
+	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_TIM4);
 }
 
 
