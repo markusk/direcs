@@ -135,6 +135,8 @@ uint16_t CCR1_Val = 333;
 uint16_t CCR2_Val = 249;
 uint16_t CCR3_Val = 166;
 uint16_t CCR4_Val = 83;
+uint32_t TimerCounterClock = 28000000; // 28 MHz
+uint32_t TimerOutputClock = 10000; // 10 kHz
 uint16_t PrescalerValue = 0;
 uint16_t PreCalPeriod = 0;
 uint16_t Duty_Cycle = 0;
@@ -222,11 +224,9 @@ int main(void)
 	----------------------------------------------------------------------- */  
 
 	// Compute the prescaler values
-	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / 28000000) - 1; // 1,000,000 Hz time base
-
-	// PreCalPeriod: 665 = 42 kHz  (28,000,000 / 42,000 Hz PWM output frequency = 665)
-	PreCalPeriod = (uint16_t) (28000000 / 42000);
-	Duty_Cycle = 100;
+	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	PreCalPeriod = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	Duty_Cycle = 333;
 
 	// Time base configuration
 	TIM_TimeBaseStructure.TIM_Period = PreCalPeriod;
@@ -268,7 +268,7 @@ int main(void)
 	// PWM1 Mode configuration: TIM4, Channel1
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = (PreCalPeriod * Duty_Cycle) / 100; // < < < < < < < < < 'speed'
+	TIM_OCInitStructure.TIM_Pulse = CCR1_Val; // (PreCalPeriod / Duty_Cycle) * 100; // < < < < < < < < < 'speed'
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
@@ -487,8 +487,8 @@ void TIM_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	// TIM3 clock enable
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+	// TIM3, TIM4 clock enable
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3 | RCC_APB1Periph_TIM4, ENABLE);
 
 	// GPIOC and GPIOB clock enable (Port C, B, D)
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOB | RCC_AHB1Periph_GPIOD, ENABLE);
@@ -524,7 +524,7 @@ void TIM_Config(void)
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource0, GPIO_AF_TIM3);
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource1, GPIO_AF_TIM3); 
 
-	// Connect TIM4 pin to AF2
+	// Connect TIM4 pin to AF2, PD12
 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_TIM4);
 }
 
