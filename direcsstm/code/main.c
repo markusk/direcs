@@ -136,6 +136,9 @@ uint16_t CCR2_Val = 249;
 uint16_t CCR3_Val = 166;
 uint16_t CCR4_Val = 83;
 uint16_t PrescalerValue = 0;
+uint16_t PreCalPeriod = 0;
+uint16_t Duty_Cycle = 0;
+
 
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
@@ -220,9 +223,11 @@ int main(void)
 
 	// Compute the prescaler values
 	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / 1000000) - 1; // 1,000,000 Hz time base
+	PreCalPeriod = (uint16_t) (1000000 / 20000); // 20,000 Hz PWM output frequency
+	Duty_Cycle = 100;
 
 	// Time base configuration
-	TIM_TimeBaseStructure.TIM_Period = 665;
+	TIM_TimeBaseStructure.TIM_Period = PreCalPeriod;
 	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
@@ -261,7 +266,7 @@ int main(void)
 	// PWM1 Mode configuration: Channel1, TIM4
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = CCR1_Val; // < < < < < < < < < 'speed'
+	TIM_OCInitStructure.TIM_Pulse = (PreCalPeriod * Duty_Cycle) / 100; // < < < < < < < < < 'speed'
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
