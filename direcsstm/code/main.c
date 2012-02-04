@@ -229,6 +229,8 @@ int main(void)
 
 	// basic init TIM3
 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+	// basic init TIM4
+	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
 
 	// PWM1 Mode configuration: Channel1
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
@@ -256,11 +258,23 @@ int main(void)
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
+	// PWM1 Mode configuration: Channel1, TIM4
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = CCR1_Val; // < < < < < < < < < 'speed'
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
+	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
 	// preload TIM3 config
 	TIM_ARRPreloadConfig(TIM3, ENABLE);
+	// preload TIM4 config
+	TIM_ARRPreloadConfig(TIM4, ENABLE);
 
 	// TIM3 enable counter
 	TIM_Cmd(TIM3, ENABLE);
+	// TIM4 enable counter
+	TIM_Cmd(TIM4, ENABLE);
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
