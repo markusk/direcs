@@ -218,8 +218,8 @@ int main(void)
      based on this variable will be incorrect.    
 	----------------------------------------------------------------------- */  
 
-	// Compute the prescaler value
-	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / 28000000) - 1;
+	// Compute the prescaler values
+	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / 1000000) - 1; // 1,000,000 Hz time base
 
 	// Time base configuration
 	TIM_TimeBaseStructure.TIM_Period = 665;
