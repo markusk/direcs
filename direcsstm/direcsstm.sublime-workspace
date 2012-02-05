@@ -1,0 +1,364 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Timer",
+				"TimerOutputClock"
+			],
+			[
+				"MOTOR1B",
+				"MOTOR1BITB"
+			],
+			[
+				"MOTOR1",
+				"MOTOR1BITB"
+			],
+			[
+				"MOTOR",
+				"MOTOR1PORT"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"USA",
+				"USART2"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "code/main.c",
+			"settings":
+			{
+				"buffer_size": 18495,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/markus/develop/direcs/direcs-avr/main.c",
+			"settings":
+			{
+				"buffer_size": 36213,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/Users/markus/develop/direcs/direcs-avr/main.h",
+			"settings":
+			{
+				"buffer_size": 3698,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 136.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": true,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/markus/Downloads/Adium_Downloads/main.c",
+		"/Users/markus/develop/direcs/direcsstm/code/usart.c",
+		"/Users/markus/Library/Application Support/Sublime Text 2/Packages/User/Global.sublime-settings",
+		"/Users/markus/Library/Application Support/Sublime Text 2/Packages/Default/Global.sublime-settings",
+		"/Users/markus/Library/Application Support/Sublime Text 2/Packages/Default/Base File.sublime-settings",
+		"/Users/markus/Library/Application Support/Sublime Text 2/Packages/User/Base File.sublime-settings",
+		"/Users/markus/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/Makefile",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/usart.h",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/usart.c",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/main.h",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/main.c",
+		"/Users/markus/develop/STM/stlink/example/stm32f4/Projects/discovery_demo/main.c",
+		"/Users/markus/Desktop/test.html",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/string.c",
+		"/Users/markus/develop/minicom-2.4/doc/minirc.dfl",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/STM32F4xx_StdPeriph_Driver/inc/device_support/stm32f4xx.h",
+		"/Users/markus/develop/direcs/direcs-avr/usart.h",
+		"/Users/markus/develop/direcs/direcs-avr/usart.c",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/readme.txt",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_usart.c",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/system_stm32f4xx.c",
+		"/Users/markus/Documents/Logfile.txt",
+		"/Users/markus/develop/direcs/direcsstm/libopencm3/examples/stm32/f4/stm32f4-discovery/usart/usart.c",
+		"/Users/markus/develop/direcs/direcsstm/libopencm3/lib/stm32/usart.c",
+		"/Users/markus/develop/direcs/direcsstm/libopencm3/include/libopencm3/stm32/usart.h",
+		"/Users/markus/develop/direcs/direcsstm/libopencm3/include/libopencm3/stm32/f4/memorymap.h",
+		"/Users/markus/develop/direcs/direcsstm/libopencm3/include/libopencm3/stm32/memorymap.h",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/stm32f4xx_conf.h",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/usart/startup_stm32f4xx.s",
+		"/Users/markus/develop/STM/stlink/example/stm32f4/Projects/IO_Toggle/main.c",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/Projects/IO_Toggle/main.c",
+		"/Users/markus/develop/STM/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Project/STM32F4xx_StdPeriph_Examples/CRYP/AES_ECBmode_DMA/main.c",
+		"/Users/markus/develop/aaa_test/direcsstm/Utilities/STM32F4-Discovery/stm32f4_discovery.h",
+		"/Users/markus/develop/direcs/direcsstm/stm32f4/STM32F4xx_StdPeriph_Driver/inc/misc.h",
+		"/Users/markus/develop/direcs/direcs-avr/main.c",
+		"/Users/markus/develop/direcs/direcsstm/lib/stm32/usart.c",
+		"/Users/markus/develop/direcs/direcsstm/include/libopencm3/stm32/usart.h",
+		"/Users/markus/develop/direcs/direcsstm/include/libopencm3/stm32/f4/rcc.h",
+		"/Users/markus/develop/direcs/direcsstm/lib/stm32/f4/rcc.c",
+		"/Users/markus/develop/direcs/direcsstm/lib/stm32/f4/gpio.c",
+		"/Users/markus/develop/STM/libopencm3/examples/stm32/f1/stm32-h103/usart/usart.c",
+		"/Users/markus/develop/direcs/direcsstm/include/libopencm3/stm32/f4/gpio.h",
+		"/Users/markus/develop/direcs/direcsstm/examples/stm32/f4/stm32f4-discovery/usart/usart.c",
+		"/Users/markus/Desktop/CUL_V3.hex.html",
+		"/Users/markus/develop/direcs/direcsstm/memorymap.h",
+		"/Users/markus/Downloads/dfu-programmer-0.5.4/README",
+		"/Users/markus/develop/STM/stlink/example/stm32f4/Projects/discovery_demo/usbd_desc.c",
+		"/Users/markus/BACKUP_PLATTE/iTUNES_GEKAUFTES/iTunes/iTunes Music Library.xml",
+		"/Users/markus/develop/direcs/direcs-avr/main.h",
+		"/Users/markus/develop/direcs/direcs/bin/direcs.log",
+		"/Users/markus/Music/iTunes/iTunes Music Library.xml",
+		"/Users/markus/Downloads/dd26016.sql",
+		"/Users/markus/develop/homecontrol/main.c",
+		"/Users/markus/Downloads/osculator/OSCemoteMIDI.oscd",
+		"/Library/Preferences/Audio/com.apple.audio.DeviceSettings.plist",
+		"/Users/markus/Library/Application Support/Sublime Text 2/Packages/User/AvrMake.sublime-build"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"MOTOR1PERIPH",
+			"GPIOD",
+			"LEDPORT",
+			"LEDGREEN",
+			"GPIOD",
+			"TIM_Config",
+			"find",
+			"search",
+			"open",
+			"style",
+			"- ",
+			"toa",
+			"ltoa",
+			"GPIO_InitStructure",
+			"ENABLE",
+			"uart_buffer_size",
+			"uint16_t",
+			"uint8_t",
+			"RXcompleted",
+			"8000000",
+			"HSE",
+			"usart_send",
+			"usart_semd",
+			"MMIO32",
+			"system",
+			"MHz",
+			"Pin",
+			"GPIOC",
+			"USART_InitStructure",
+			"clock_setup",
+			"clock_stup",
+			"oppden",
+			"/*",
+			"*/",
+			"wdt",
+			"watchd",
+			"curr_doorstates",
+			"door states",
+			"activate door",
+			"main"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"UARTBUFFERSIZE",
+			"int",
+			"//",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "code/main.c",
+					"settings":
+					{
+						"buffer_size": 18495,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5650,
+								5650
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3525.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/markus/develop/direcs/direcs-avr/main.c",
+					"settings":
+					{
+						"buffer_size": 36213,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2180,
+								2180
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 912.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/markus/develop/direcs/direcs-avr/main.h",
+					"settings":
+					{
+						"buffer_size": 3698,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2597,
+								2597
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
