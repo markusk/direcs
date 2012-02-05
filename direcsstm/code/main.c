@@ -154,8 +154,8 @@ int main(void);
 // GPIOPort init
 void gpioPortInit();
 
-// Timer config for PWM
-void TIM_Config(void);
+// Timer init for PWM
+void TimerInit(void);
 
 void LEDblink();
 
@@ -191,12 +191,12 @@ int main(void)
 	usartInit();
 
 	
-	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	
-	// call timer config for PWM
-	TIM_Config();
+	// call timer init for PWM
+	TimerInit();
 
-	// Time base configuration
+
+	// Timer base configuration
+	// 	Don't know why, but this code has to be here (not in a seperate method)
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
 	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
@@ -415,11 +415,11 @@ void gpioPortInit()
 
 
 /**
-  * @brief  Configure the TIM3 Ouput Channels.
+  * @brief  Configure the timer for PWM.
   * @param  None
   * @retval None
   */
-void TIM_Config(void)
+void TimerInit(void)
 {
 	// set timer frequencies
 	TimerCounterClock = 1000000; //  1 MHz
