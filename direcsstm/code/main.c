@@ -136,7 +136,7 @@ uint16_t CCR2_Val = 249;
 uint16_t CCR3_Val = 166;
 uint16_t CCR4_Val = 83;
 uint32_t TimerCounterClock = 28000000; // 28 MHz
-uint32_t TimerOutputClock = 10000; // 10 kHz
+uint32_t TimerOutputClock = 1000; // 1 kHz
 uint16_t PrescalerValue = 0;
 uint16_t PreCalPeriod = 0;
 uint16_t Duty_Cycle = 0;
@@ -207,9 +207,10 @@ int main(void)
        Prescaler = (TIM3CLK / TIM3 counter clock) - 1
        Prescaler = ((SystemCoreClock /2) /28 MHz) - 1
                                               
-    To get TIM3 output clock at 30 KHz, the period (ARR)) is computed as follows:
+    To get TIM3 output clock at 10 KHz, the period (ARR)) is computed as follows:
        ARR = (TIM3 counter clock / TIM3 output clock) - 1
-           = 665
+       	   = (28,000,000 / 10,000) - 1
+           = 2799
                   
     TIM3 Channel1 duty cycle = (TIM3_CCR1/ TIM3_ARR)* 100 = 50%
     TIM3 Channel2 duty cycle = (TIM3_CCR2/ TIM3_ARR)* 100 = 37.5%
@@ -226,6 +227,16 @@ int main(void)
 	// Compute the prescaler values
 	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
 	PreCalPeriod = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	/*
+	Length Of One Pulse
+	= (1/TimerOutputClock) / PreCalPeriod;
+	= (1/1000 Hz) / (TimerCounterClock / TimerOutputClock)
+	= (1/1000 Hz) / (28000000 Hz / 1000 Hz)
+	= 35.714 ns
+
+	Length of the used Pulses:
+	18000 x 35.714 ns = 64 µs
+	*/
 	Duty_Cycle = 333;
 
 	// Time base configuration
@@ -268,7 +279,10 @@ int main(void)
 	// PWM1 Mode configuration: TIM4, Channel1
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = CCR1_Val; // (PreCalPeriod / Duty_Cycle) * 100; // < < < < < < < < < 'speed'
+
+	// Pulse ist der CCR-Wert, also die Anzahl der Counts auf die der Timer vergleicht, bis Wechsel nach LOW erfolgt
+//	TIM_OCInitStructure.TIM_Pulse = (PreCalPeriod / Duty_Cycle) * 100; // < < < < < < < < < 'speed' 0x0000 to 0xFFFF
+	TIM_OCInitStructure.TIM_Pulse = 18000; // < < < < < < < < < 'speed' 0x0000 to 0xFFFF (65535d)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
