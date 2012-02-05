@@ -135,11 +135,14 @@ uint16_t CCR1_Val = 333;
 uint16_t CCR2_Val = 249;
 uint16_t CCR3_Val = 166;
 uint16_t CCR4_Val = 83;
-uint32_t TimerCounterClock = 28000000; // 28 MHz
-uint32_t TimerOutputClock = 1000; // 1 kHz
+uint32_t TimerCounterClock = 1000000; // 1 MHz
+uint32_t TimerOutputClock = 10000;    // 10 kHz = 100 µs period
 uint16_t PrescalerValue = 0;
 uint16_t PreCalPeriod = 0;
-uint16_t Duty_Cycle = 0;
+
+// this is the wished pulse length in ms for the PWM timer (the HIGH time)
+// 0x0000 to 0xFFFF (65536)
+uint32_t PulseDurationInMicroSeconds = 50; // can be up to from 0 to 99 due to a TimerOutputClock of 10 kHz
 
 
 // stores the serial received command and the string which will be sent as an answer
@@ -225,23 +228,24 @@ int main(void)
 	----------------------------------------------------------------------- */  
 
 	// Compute the prescaler values
-	PrescalerValue = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
-	PreCalPeriod = (uint16_t) (TimerCounterClock / TimerOutputClock);
 	/*
-	Length Of One Pulse
+	Length of one period @ 1 kHz:
+	1 / 1 kHz = 1 ms
+
+	Length of one pulse:
 	= (1/TimerOutputClock) / PreCalPeriod;
 	= (1/1000 Hz) / (TimerCounterClock / TimerOutputClock)
 	= (1/1000 Hz) / (28000000 Hz / 1000 Hz)
 	= 35.714 ns
 
 	Length of the used Pulses:
-	18000 x 35.714 ns = 64 µs
+	18000 x 35.714 ns = 643 µs  (= 64% duty cycle)
 	*/
-	Duty_Cycle = 333;
+//	PulseValue = (PulseDurationInMicroSeconds / 100000) / (1/TimerOutputClock) / PreCalPeriod;
 
 	// Time base configuration
-	TIM_TimeBaseStructure.TIM_Period = PreCalPeriod;
-	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
@@ -279,10 +283,7 @@ int main(void)
 	// PWM1 Mode configuration: TIM4, Channel1
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-
-	// Pulse ist der CCR-Wert, also die Anzahl der Counts auf die der Timer vergleicht, bis Wechsel nach LOW erfolgt
-//	TIM_OCInitStructure.TIM_Pulse = (PreCalPeriod / Duty_Cycle) * 100; // < < < < < < < < < 'speed' 0x0000 to 0xFFFF
-	TIM_OCInitStructure.TIM_Pulse = 18000; // < < < < < < < < < 'speed' 0x0000 to 0xFFFF (65535d)
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
