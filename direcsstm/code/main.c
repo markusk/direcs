@@ -204,22 +204,22 @@ int main(void)
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
-	// basic init TIM4
-	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+	// basic timer init
+	TIM_TimeBaseInit(MOTORPWMTIMER, &TIM_TimeBaseStructure);
 
-	// PWM1 Mode configuration: TIM4, Channel1
+	// configure PWM mode and duration
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
-	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
+	TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+	TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
 
-	// preload TIM4 config
-	TIM_ARRPreloadConfig(TIM4, ENABLE);
+	// preload timer config
+	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
 
-	// TIM4 enable counter
-	TIM_Cmd(TIM4, ENABLE);
+	// enable timer / counter
+	TIM_Cmd(MOTORPWMTIMER, ENABLE);
 
 
 	//
