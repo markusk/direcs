@@ -131,18 +131,13 @@ GPIO_InitTypeDef  GPIO_InitStructure;
 // Private variables ---------------------------------------------------------
 TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 TIM_OCInitTypeDef  TIM_OCInitStructure;
-uint16_t CCR1_Val = 333;
-uint16_t CCR2_Val = 249;
-uint16_t CCR3_Val = 166;
-uint16_t CCR4_Val = 83;
 uint32_t TimerCounterClock = 1000000; // 1 MHz
 uint32_t TimerOutputClock = 10000;    // 10 kHz = 100 µs period
 uint16_t PrescalerValue = 0;
-uint16_t PreCalPeriod = 0;
 
 // this is the wished pulse length in ms for the PWM timer (the HIGH time)
-// 0x0000 to 0xFFFF (65536)
-uint32_t PulseDurationInMicroSeconds = 50; // can be up to from 0 to 99 due to a TimerOutputClock of 10 kHz
+// can be up to from 0 to 99 due to a TimerOutputClock of 10 kHz
+uint32_t PulseDurationInMicroSeconds = 50;
 
 
 // stores the serial received command and the string which will be sent as an answer
@@ -197,88 +192,14 @@ int main(void)
 	// call timer config for PWM
 	TIM_Config();
 
-	/* -----------------------------------------------------------------------
-    TIM3 Configuration: generate 4 PWM signals with 4 different duty cycles.
-    
-    In this example TIM3 input clock (TIM3CLK) is set to 2 * APB1 clock (PCLK1), 
-    since APB1 prescaler is different from 1.   
-      TIM3CLK = 2 * PCLK1  
-      PCLK1 = HCLK / 4 
-      => TIM3CLK = HCLK / 2 = SystemCoreClock /2
-          
-    To get TIM3 counter clock at 28 MHz, the prescaler is computed as follows:
-       Prescaler = (TIM3CLK / TIM3 counter clock) - 1
-       Prescaler = ((SystemCoreClock /2) /28 MHz) - 1
-                                              
-    To get TIM3 output clock at 10 KHz, the period (ARR)) is computed as follows:
-       ARR = (TIM3 counter clock / TIM3 output clock) - 1
-       	   = (28,000,000 / 10,000) - 1
-           = 2799
-                  
-    TIM3 Channel1 duty cycle = (TIM3_CCR1/ TIM3_ARR)* 100 = 50%
-    TIM3 Channel2 duty cycle = (TIM3_CCR2/ TIM3_ARR)* 100 = 37.5%
-    TIM3 Channel3 duty cycle = (TIM3_CCR3/ TIM3_ARR)* 100 = 25%
-    TIM3 Channel4 duty cycle = (TIM3_CCR4/ TIM3_ARR)* 100 = 12.5%
-
-    Note: 
-     SystemCoreClock variable holds HCLK frequency and is defined in system_stm32f4xx.c file.
-     Each time the core clock (HCLK) changes, user had to call SystemCoreClockUpdate()
-     function to update SystemCoreClock variable value. Otherwise, any configuration
-     based on this variable will be incorrect.    
-	----------------------------------------------------------------------- */  
-
-	// Compute the prescaler values
-	/*
-	Length of one period @ 1 kHz:
-	1 / 1 kHz = 1 ms
-
-	Length of one pulse:
-	= (1/TimerOutputClock) / PreCalPeriod;
-	= (1/1000 Hz) / (TimerCounterClock / TimerOutputClock)
-	= (1/1000 Hz) / (28000000 Hz / 1000 Hz)
-	= 35.714 ns
-
-	Length of the used Pulses:
-	18000 x 35.714 ns = 643 µs  (= 64% duty cycle)
-	*/
-//	PulseValue = (PulseDurationInMicroSeconds / 100000) / (1/TimerOutputClock) / PreCalPeriod;
-
 	// Time base configuration
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
 	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
-	// basic init TIM3
-	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
 	// basic init TIM4
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
-
-	// PWM1 Mode configuration: TIM3, Channel1, PC6
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = CCR1_Val;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
-	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
-
-	// PWM1 Mode configuration: TIM3, Channel2
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = CCR2_Val;
-	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
-	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
-
-	// PWM1 Mode configuration: TIM3, Channel3
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = CCR3_Val;
-	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
-	TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
-
-	// PWM1 Mode configuration: TIM3, Channel4
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = CCR4_Val;
-	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
-	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
 	// PWM1 Mode configuration: TIM4, Channel1
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
@@ -288,13 +209,9 @@ int main(void)
 	TIM_OC1Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-	// preload TIM3 config
-	TIM_ARRPreloadConfig(TIM3, ENABLE);
 	// preload TIM4 config
 	TIM_ARRPreloadConfig(TIM4, ENABLE);
 
-	// TIM3 enable counter
-	TIM_Cmd(TIM3, ENABLE);
 	// TIM4 enable counter
 	TIM_Cmd(TIM4, ENABLE);
 
@@ -502,27 +419,11 @@ void TIM_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	// TIM3, TIM4 clock enable
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3 | RCC_APB1Periph_TIM4, ENABLE);
+	// TIM4 clock enable
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
 
-	// GPIOC and GPIOB clock enable (Port C, B, D)
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOB | RCC_AHB1Periph_GPIOD, ENABLE);
-
-	// GPIOC Configuration: TIM3 CH1 (PC6) and TIM3 CH2 (PC7)
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 ;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
-	GPIO_Init(GPIOC, &GPIO_InitStructure); 
-
-	// GPIOB Configuration:  TIM3 CH3 (PB0) and TIM3 CH4 (PB1)
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
-	GPIO_Init(GPIOB, &GPIO_InitStructure); 
+	// GPIOD clock enable
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
 	// GPIOD Configuration: TIM4 CH1 (PD12)
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
@@ -531,13 +432,6 @@ void TIM_Config(void)
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
 	GPIO_Init(GPIOD, &GPIO_InitStructure); 
-
-	// Connect TIM3 pins to AF2  
-	GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_TIM3);
-	GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_TIM3);
-	 
-	GPIO_PinAFConfig(GPIOB, GPIO_PinSource0, GPIO_AF_TIM3);
-	GPIO_PinAFConfig(GPIOB, GPIO_PinSource1, GPIO_AF_TIM3); 
 
 	// Connect TIM4 pin to AF2, PD12
 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_TIM4);
