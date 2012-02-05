@@ -149,6 +149,8 @@ uint32_t PulseDurationInMicroSeconds = 0;
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
 
+int i;
+
 
 // the prototypes ------------------------------------------------------------
 int main(void);
@@ -227,59 +229,43 @@ int main(void)
 	//
 	while(1)
 	{
-		Delay(0x7FFFFF);
-		Delay(0x7FFFFF);
-		TIM_Cmd(TIM4, DISABLE);
+		for (i=1; i<70; i++)
+		{
+			Delay(0x03FFFF);
+			TIM_Cmd(MOTORPWMTIMER, DISABLE);
 
-		PulseDurationInMicroSeconds = 40;
-		TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-		TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-		TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
-		TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-		TIM_OC1Init(TIM4, &TIM_OCInitStructure);
-		TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
-		TIM_ARRPreloadConfig(TIM4, ENABLE);
-		TIM_Cmd(TIM4, ENABLE);
+			PulseDurationInMicroSeconds = i;
 
-		Delay(0x7FFFFF);
-		Delay(0x7FFFFF);
-		TIM_Cmd(TIM4, DISABLE);
+			TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+			TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
 
-		PulseDurationInMicroSeconds = 30;
-		TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-		TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-		TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
-		TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-		TIM_OC1Init(TIM4, &TIM_OCInitStructure);
-		TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
-		TIM_ARRPreloadConfig(TIM4, ENABLE);
-		TIM_Cmd(TIM4, ENABLE);
-		Delay(0x7FFFFF);
-		Delay(0x7FFFFF);
-		TIM_Cmd(TIM4, DISABLE);
+			TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
 
-		PulseDurationInMicroSeconds = 20;
-		TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-		TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-		TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
-		TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-		TIM_OC1Init(TIM4, &TIM_OCInitStructure);
-		TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
-		TIM_ARRPreloadConfig(TIM4, ENABLE);
-		TIM_Cmd(TIM4, ENABLE);
-		Delay(0x7FFFFF);
-		Delay(0x7FFFFF);
-		TIM_Cmd(TIM4, DISABLE);
+			TIM_Cmd(MOTORPWMTIMER, ENABLE);
+		}
 
-		PulseDurationInMicroSeconds = 10;
-		TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-		TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-		TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
-		TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-		TIM_OC1Init(TIM4, &TIM_OCInitStructure);
-		TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
-		TIM_ARRPreloadConfig(TIM4, ENABLE);
-		TIM_Cmd(TIM4, ENABLE);
+		for (i=70; i>2; i--)
+		{
+			Delay(0x03FFFF);
+			TIM_Cmd(MOTORPWMTIMER, DISABLE);
+
+			PulseDurationInMicroSeconds = i;
+
+			TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+			TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+
+			TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
+
+			TIM_Cmd(MOTORPWMTIMER, ENABLE);
+		}
 	}
 
 
