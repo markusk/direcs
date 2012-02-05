@@ -134,13 +134,13 @@
 
 
 // Private typedefs ----------------------------------------------------------
-GPIO_InitTypeDef  GPIO_InitStructureLED;
-GPIO_InitTypeDef GPIO_InitStructureTimer;
+GPIO_InitTypeDef 		GPIO_InitStructureLED;
+GPIO_InitTypeDef 		GPIO_InitStructureTimer;
+TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
+TIM_OCInitTypeDef		TIM_OCInitStructure;
 
 
 // Private variables ---------------------------------------------------------
-TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-TIM_OCInitTypeDef  TIM_OCInitStructure;
 uint32_t TimerCounterClock = 0;
 uint32_t TimerOutputClock = 0;
 uint16_t PrescalerValue = 0;
