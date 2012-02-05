@@ -133,8 +133,10 @@
 //#include "usart.h"    // serial stuff
 
 
-// Private typedef -----------------------------------------------------------
+// Private typedefs ----------------------------------------------------------
 GPIO_InitTypeDef  GPIO_InitStructureLED;
+GPIO_InitTypeDef GPIO_InitStructureTimer;
+
 
 // Private variables ---------------------------------------------------------
 TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
@@ -148,7 +150,7 @@ uint32_t PulseDurationInMicroSeconds = 0;
 char stringbuffer[64];
 
 
-// the prototypes -----------------------------------------------------------
+// the prototypes ------------------------------------------------------------
 int main(void);
 
 // GPIOPort init
@@ -489,8 +491,6 @@ void TimerInit(void)
 	// set pulse duration in mili seconds (HIGH time)
 	// can be up to from 0 to 99 (due to a TimerOutputClock of 10 kHz)
 	PulseDurationInMicroSeconds = 50;
-
-	GPIO_InitTypeDef GPIO_InitStructureTimer;
 
 	// Timer clock enable
 	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
