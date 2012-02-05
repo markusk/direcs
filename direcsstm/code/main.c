@@ -121,6 +121,14 @@
 #define MOTOR1BITA				GPIO_Pin_0
 #define MOTOR1BITB				GPIO_Pin_1
 
+#define MOTORPWMTIMER			TIM4
+#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
+#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOD
+#define MOTORPWMAF 				GPIO_AF_TIM4
+#define MOTORPWMPORT			GPIOD
+#define MOTORPWMBIT				GPIO_Pin_12
+#define MOTORPWMTIMBIT			GPIO_PinSource12
+
 
 //#include "usart.h"    // serial stuff
 
@@ -131,14 +139,10 @@ GPIO_InitTypeDef  GPIO_InitStructure;
 // Private variables ---------------------------------------------------------
 TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 TIM_OCInitTypeDef  TIM_OCInitStructure;
-uint32_t TimerCounterClock = 1000000; // 1 MHz
-uint32_t TimerOutputClock = 10000;    // 10 kHz = 100 µs period
+uint32_t TimerCounterClock = 0;
+uint32_t TimerOutputClock = 0;
 uint16_t PrescalerValue = 0;
-
-// this is the wished pulse length in ms for the PWM timer (the HIGH time)
-// can be up to from 0 to 99 due to a TimerOutputClock of 10 kHz
-uint32_t PulseDurationInMicroSeconds = 50;
-
+uint32_t PulseDurationInMicroSeconds = 0;
 
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
@@ -417,24 +421,32 @@ void gpioPortInit()
   */
 void TIM_Config(void)
 {
+	// set timer frequencies
+	TimerCounterClock = 1000000; //  1 MHz
+	TimerOutputClock = 10000;    // 10 kHz = 100 µs period
+
+	// set pulse duration in mili seconds (HIGH time)
+	// can be up to from 0 to 99 (due to a TimerOutputClock of 10 kHz)
+	PulseDurationInMicroSeconds = 50;
+
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	// TIM4 clock enable
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	// Timer clock enable
+	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
 
-	// GPIOD clock enable
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	// Port clock enable
+	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
 
-	// GPIOD Configuration: TIM4 CH1 (PD12)
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+	// Set PWM Port, Pin and method
+	GPIO_InitStructure.GPIO_Pin = MOTORPWMBIT;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
-	GPIO_Init(GPIOD, &GPIO_InitStructure); 
+	GPIO_Init(MOTORPWMPORT, &GPIO_InitStructure); 
 
-	// Connect TIM4 pin to AF2, PD12
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_TIM4);
+	// Connect TIM pin to AF
+	GPIO_PinAFConfig(MOTORPWMPORT, MOTORPWMTIMBIT, MOTORPWMAF);
 }
 
 
