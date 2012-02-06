@@ -229,7 +229,7 @@ int main(void)
 	//
 	while(1)
 	{
-		for (i=1; i<70; i++)
+		for (i=1; i<99; i++)
 		{
 			Delay(0x0BFFFF);
 			TIM_Cmd(MOTORPWMTIMER, DISABLE);
@@ -248,7 +248,12 @@ int main(void)
 			TIM_Cmd(MOTORPWMTIMER, ENABLE);
 		}
 
-		for (i=70; i>2; i--)
+		Delay(0xFFFFFF);
+		Delay(0xFFFFFF);
+		Delay(0xFFFFFF);
+		Delay(0xFFFFFF);
+
+		for (i=99; i>2; i--)
 		{
 			Delay(0x0BFFFF);
 			TIM_Cmd(MOTORPWMTIMER, DISABLE);
@@ -266,6 +271,11 @@ int main(void)
 
 			TIM_Cmd(MOTORPWMTIMER, ENABLE);
 		}
+
+		Delay(0xFFFFFF);
+		Delay(0xFFFFFF);
+		Delay(0xFFFFFF);
+		Delay(0xFFFFFF);
 	}
 
 
