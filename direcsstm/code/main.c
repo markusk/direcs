@@ -231,7 +231,7 @@ int main(void)
 	{
 		for (i=1; i<70; i++)
 		{
-			Delay(0x03FFFF);
+			Delay(0x0BFFFF);
 			TIM_Cmd(MOTORPWMTIMER, DISABLE);
 
 			PulseDurationInMicroSeconds = i;
@@ -250,7 +250,7 @@ int main(void)
 
 		for (i=70; i>2; i--)
 		{
-			Delay(0x03FFFF);
+			Delay(0x0BFFFF);
 			TIM_Cmd(MOTORPWMTIMER, DISABLE);
 
 			PulseDurationInMicroSeconds = i;
