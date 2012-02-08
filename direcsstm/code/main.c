@@ -132,10 +132,6 @@ GPIO_InitTypeDef 		GPIO_InitStructureLED;
 
 
 // Private variables ---------------------------------------------------------
-uint32_t TimerCounterClock;
-uint32_t TimerOutputClock;
-uint16_t PrescalerValue;
-uint32_t PulseDurationInMicroSeconds;
 
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
@@ -195,11 +191,9 @@ int main(void)
 			Delay(0x0BFFFF);
 			TIM_Cmd(MOTORPWMTIMER, DISABLE);
 
-			PulseDurationInMicroSeconds = i;
-
 			TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-			TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+			TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
 			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
 			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
@@ -219,11 +213,9 @@ int main(void)
 			Delay(0x0BFFFF);
 			TIM_Cmd(MOTORPWMTIMER, DISABLE);
 
-			PulseDurationInMicroSeconds = i;
-
 			TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-			TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+			TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
 			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
 			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
@@ -444,6 +436,10 @@ void TimerInit(void)
 	GPIO_InitTypeDef 		GPIO_InitStructureTimer;
 	TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef		TIM_OCInitStructure;
+	uint32_t TimerCounterClock = 0;
+	uint32_t TimerOutputClock = 0;
+	uint16_t PrescalerValue = 0;
+	uint32_t PulseDurationInMicroSeconds = 0;
 
 
 	// set timer frequencies
