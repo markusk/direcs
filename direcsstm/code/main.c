@@ -130,9 +130,6 @@
 #define MOTORPWMTIMBIT			GPIO_PinSource12
 
 
-//#include "usart.h"    // serial stuff
-
-
 // Private typedefs ----------------------------------------------------------
 GPIO_InitTypeDef 		GPIO_InitStructureLED;
 GPIO_InitTypeDef 		GPIO_InitStructureTimer;
@@ -182,20 +179,10 @@ void Delay(__IO uint32_t nCount);
   */
 int main(void)
 {
-	/*!< At this stage the microcontroller clock setting is already configured, 
-		 this is done through SystemInit() function which is called from startup
-		 file (startup_stm32f4xx.s) before to branch to application main.
-		 To reconfigure the default setting of SystemInit() function, refer to
-		  system_stm32f4xx.c file
-	*/
-
-	// /dev/tty.usbserial-A900J1T0
-
-	// call my new USART init
+	// init USART (serial port)
 	usartInit();
-
 	
-	// call timer init for PWM
+	// init timer for PWM
 	TimerInit();
 
 
