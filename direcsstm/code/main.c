@@ -138,14 +138,13 @@ TIM_OCInitTypeDef		TIM_OCInitStructure;
 
 
 // Private variables ---------------------------------------------------------
-uint32_t TimerCounterClock = 0;
-uint32_t TimerOutputClock = 0;
-uint16_t PrescalerValue = 0;
-uint32_t PulseDurationInMicroSeconds = 0;
+uint32_t TimerCounterClock;
+uint32_t TimerOutputClock;
+uint16_t PrescalerValue;
+uint32_t PulseDurationInMicroSeconds;
 
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
-
 int i;
 
 
