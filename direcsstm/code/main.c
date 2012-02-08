@@ -127,10 +127,6 @@
 #define MOTORPWMTIMBIT			GPIO_PinSource12
 
 
-// Private typedefs ----------------------------------------------------------
-GPIO_InitTypeDef 		GPIO_InitStructureLED;
-
-
 // Private variables ---------------------------------------------------------
 
 // stores the serial received command and the string which will be sent as an answer
@@ -168,14 +164,14 @@ void Delay(__IO uint32_t nCount);
   */
 int main(void)
 {
+	// general port init (LED, motor bits etc.)
+	gpioPortInit();
+
 	// init USART (serial port)
 	usartInit();
 	
 	// init timer for PWM
 	TimerInit();
-
-
-
 
 
 	//
@@ -232,41 +228,6 @@ int main(void)
 	}
 
 
-
-
-/*
-	//	--------------------------------------------------------------------------------
-	//	GPIOPort init, Port D (MEMS LEDs)
-	// 	Don't know why, but this code has to be here (not in a seperate method)
-	//	--------------------------------------------------------------------------------
-	// GPIOD Periph clock enable
-	RCC_AHB1PeriphClockCmd(LEDCLOCK	, ENABLE);
-
-	// Configure port bits in output pushpull mode
-	GPIO_InitStructureLED.GPIO_Pin = LEDGREEN | LEDORANGE| LEDRED| LEDBLUE;
-	GPIO_InitStructureLED.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructureLED.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(LEDPORT, &GPIO_InitStructureLED);
-	//	--------------------------------------------------------------------------------
-
-	//	--------------------------------------------------------------------------------
-	//	GPIOPort init, Port B (Motor bits)
-	// 	Don't know why, but this code has to be here (not in a seperate method)
-	//	--------------------------------------------------------------------------------
-	// GPIOD Periph clock enable
-	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
-
-	// Configure port bits in output pushpull mode
-	GPIO_InitStructureLED.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
-	GPIO_InitStructureLED.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructureLED.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
-	//	--------------------------------------------------------------------------------
-*/
 /*
 	// LEDs off
 	turnLED(LEDGREEN, OFF);
@@ -411,6 +372,9 @@ int main(void)
 
 void gpioPortInit()
 {
+	GPIO_InitTypeDef GPIO_InitStructureLED;
+
+
 /*
 	// GPIOD Periph clock enable
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -422,6 +386,37 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOD, &GPIO_InitStructureLED);
+
+
+	//	--------------------------------------------------------------------------------
+	//	GPIOPort init, Port D (MEMS LEDs)
+	//	--------------------------------------------------------------------------------
+	// GPIOD Periph clock enable
+	RCC_AHB1PeriphClockCmd(LEDCLOCK	, ENABLE);
+
+	// Configure port bits in output pushpull mode
+	GPIO_InitStructureLED.GPIO_Pin = LEDGREEN | LEDORANGE| LEDRED| LEDBLUE;
+	GPIO_InitStructureLED.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructureLED.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(LEDPORT, &GPIO_InitStructureLED);
+	//	--------------------------------------------------------------------------------
+
+	//	--------------------------------------------------------------------------------
+	//	GPIOPort init, Port B (Motor bits)
+	//	--------------------------------------------------------------------------------
+	// GPIOD Periph clock enable
+	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
+
+	// Configure port bits in output pushpull mode
+	GPIO_InitStructureLED.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
+	GPIO_InitStructureLED.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructureLED.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
+	//	--------------------------------------------------------------------------------
 */
 }
 
