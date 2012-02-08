@@ -104,9 +104,6 @@
 #define ON						1
 #define OFF						0
 
-// "Morsedauer" für ein Bit in Millisekunden
-#define BITZEIT 100     
-
 
 // The port bits -------------------------------------------------------------
 #define LEDCLOCK				RCC_AHB1Periph_GPIOD
@@ -132,9 +129,6 @@
 
 // Private typedefs ----------------------------------------------------------
 GPIO_InitTypeDef 		GPIO_InitStructureLED;
-GPIO_InitTypeDef 		GPIO_InitStructureTimer;
-TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
-TIM_OCInitTypeDef		TIM_OCInitStructure;
 
 
 // Private variables ---------------------------------------------------------
@@ -185,34 +179,15 @@ int main(void)
 	TimerInit();
 
 
-	// Timer base configuration
-	// 	Don't know why, but this code has to be here (not in a seperate method)
-	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
-	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
-	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
-	// basic timer init
-	TIM_TimeBaseInit(MOTORPWMTIMER, &TIM_TimeBaseStructure);
-
-	// configure PWM mode and duration
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-	TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-
-	// preload timer config
-	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
-
-	// enable timer / counter
-	TIM_Cmd(MOTORPWMTIMER, ENABLE);
 
 
 	//
 	//	motor pwm test ! ! !
 	//
+	TIM_OCInitTypeDef		TIM_OCInitStructure;
+
+
 	while(1)
 	{
 		for (i=1; i<99; i++)
@@ -466,6 +441,11 @@ void gpioPortInit()
   */
 void TimerInit(void)
 {
+	GPIO_InitTypeDef 		GPIO_InitStructureTimer;
+	TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
+	TIM_OCInitTypeDef		TIM_OCInitStructure;
+
+
 	// set timer frequencies
 	TimerCounterClock = 1000000; //  1 MHz
 	TimerOutputClock = 10000;    // 10 kHz = 100 µs period
@@ -490,6 +470,32 @@ void TimerInit(void)
 
 	// Connect TIM pin to AF
 	GPIO_PinAFConfig(MOTORPWMPORT, MOTORPWMTIMBIT, MOTORPWMAF);
+
+
+	// Timer base configuration
+	// 	Don't know why, but this code has to be here (not in a seperate method)
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(MOTORPWMTIMER, &TIM_TimeBaseStructure);
+
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+	TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+	TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+
+	// preload timer config
+	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(MOTORPWMTIMER, ENABLE);
 }
 
 
