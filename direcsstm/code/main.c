@@ -118,13 +118,13 @@
 #define MOTOR1BITA				GPIO_Pin_0
 #define MOTOR1BITB				GPIO_Pin_1
 
-#define MOTORPWMTIMER			TIM4
-#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
-#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOD
-#define MOTORPWMAF 				GPIO_AF_TIM4
-#define MOTORPWMPORT			GPIOD
-#define MOTORPWMBIT				GPIO_Pin_12
-#define MOTORPWMTIMBIT			GPIO_PinSource12
+#define MOTORPWMTIMER			TIM2
+#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM2
+#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
+#define MOTORPWMAF 				GPIO_AF_TIM2
+#define MOTORPWMPORT			GPIOB
+#define MOTORPWMBIT				GPIO_Pin_11
+#define MOTORPWMTIMBIT			GPIO_PinSource11
 
 
 // Private variables ---------------------------------------------------------
