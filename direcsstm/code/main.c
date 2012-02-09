@@ -506,33 +506,33 @@ void LEDblink()
 	//
 	// LED blink blink blink
 	//
-	/* PD12 to be toggled */
+	// PD12 to be toggled
 	GPIO_SetBits(GPIOD, GPIO_Pin_12);
 
-	/* Insert delay */
+	// Insert delay
 	Delay(0x3FFFFF);
 
-	/* PD13 to be toggled */
+	// PD13 to be toggled
 	GPIO_SetBits(GPIOD, GPIO_Pin_13);
 
-	/* Insert delay */
+	// Insert delay
 	Delay(0x3FFFFF);
 
-	/* PD14 to be toggled */
+	// PD14 to be toggled
 	GPIO_SetBits(GPIOD, GPIO_Pin_14);
 
-	/* Insert delay */
+	// Insert delay
 	Delay(0x3FFFFF);
 
-	/* PD15 to be toggled */
+	// PD15 to be toggled
 	GPIO_SetBits(GPIOD, GPIO_Pin_15);
 
-	/* Insert delay */
+	// Insert delay
 	Delay(0x7FFFFF);
 
 	GPIO_ResetBits(GPIOD, GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);
 
-	/* Insert delay */
+	// Insert delay
 	Delay(0xFFFFFF);
 }
 */
@@ -647,7 +647,7 @@ void assert_failed(uint8_t* file, uint32_t line)
 	/* User can add his own implementation to report the file name and line number,
 	  ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-	/* Infinite loop */
+	// Infinite loop
 	while (1)
 	{
 	}
