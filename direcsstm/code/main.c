@@ -167,7 +167,7 @@ void Delay(__IO uint32_t nCount);
   */
 int main(void)
 {
-	// init all system clocks
+	// init all system
 	clockInit();
 
 	// general port init (LED, motor bits etc.)
@@ -500,6 +500,7 @@ void TimerInit(void)
 }
 
 
+/*
 void LEDblink()
 {
 	//
@@ -534,6 +535,7 @@ void LEDblink()
 	/* Insert delay */
 	Delay(0xFFFFFF);
 }
+*/
 
 
 void turnLED(int led, int state)
