@@ -137,6 +137,9 @@ int i;
 // the prototypes ------------------------------------------------------------
 int main(void);
 
+// init of the several system clocks
+void clockInit();
+
 // GPIOPort init
 void gpioPortInit();
 
@@ -370,6 +373,19 @@ int main(void)
 }
 
 
+void clockInit()
+{
+	// GPIOD Periph clock enable for Motor bits
+	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
+
+	// Timer clock enable for Motor PWM
+	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+
+	// Port clock enable for Motor PWM
+	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
+}
+
+
 void gpioPortInit()
 {
 	GPIO_InitTypeDef GPIO_InitStructureLED;
@@ -406,9 +422,6 @@ void gpioPortInit()
 	//	--------------------------------------------------------------------------------
 	//	GPIOPort init, Port B (Motor bits)
 	//	--------------------------------------------------------------------------------
-	// GPIOD Periph clock enable
-	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
-
 	// Configure port bits in output pushpull mode
 	GPIO_InitStructureLED.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
 	GPIO_InitStructureLED.GPIO_Mode = GPIO_Mode_OUT;
@@ -444,12 +457,6 @@ void TimerInit(void)
 	// set pulse duration in mili seconds (HIGH time)
 	// can be up to from 0 to 99 (due to a TimerOutputClock of 10 kHz)
 	PulseDurationInMicroSeconds = 50;
-
-	// Timer clock enable
-	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
-
-	// Port clock enable
-	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
 
 	// Set PWM Port, Pin and method
 	GPIO_InitStructureTimer.GPIO_Pin = MOTORPWMBIT;
