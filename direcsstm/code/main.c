@@ -167,6 +167,9 @@ void Delay(__IO uint32_t nCount);
   */
 int main(void)
 {
+	// init all system clocks
+	clockInit();
+
 	// general port init (LED, motor bits etc.)
 	gpioPortInit();
 
