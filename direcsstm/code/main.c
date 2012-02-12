@@ -7,6 +7,11 @@
 
 
 // The port bits -------------------------------------------------------------
+#define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
+#define MOTOR1PORT				GPIOB
+#define MOTOR1BITA				GPIO_Pin_0
+#define MOTOR1BITB				GPIO_Pin_1
+
 #define MOTORPWMTIMER			TIM3
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
