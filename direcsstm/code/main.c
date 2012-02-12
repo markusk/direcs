@@ -12,6 +12,9 @@
 #define MOTOR1BITA				GPIO_Pin_0
 #define MOTOR1BITB				GPIO_Pin_1
 
+// this code works fine.
+// now issues with PD12 when using this timer and portbit
+
 #define MOTORPWMTIMER			TIM3
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
