@@ -25,7 +25,6 @@
 #define MOTORPWMTIMBIT			GPIO_PinSource6
 */
 
-// Private variables ---------------------------------------------------------
 
 // the prototypes ------------------------------------------------------------
 int main(void);
@@ -40,11 +39,6 @@ void Delay(__IO uint32_t nCount);
 
 
 
-/**
-  * @brief  Main program
-  * @param  None
-  * @retval None
-  */
 int main(void)
 {
 	// init all system
@@ -71,11 +65,6 @@ void clockInit()
 }
 
 
-/**
-  * @brief  Configure the timer for PWM.
-  * @param  None
-  * @retval None
-  */
 void TimerInit(void)
 {
 	GPIO_InitTypeDef 		GPIO_InitStructureTimer;
@@ -134,36 +123,9 @@ void TimerInit(void)
 }
 
 
-/**
-	* @brief  Delay Function.
-	* @param  nCount:specifies the Delay time length.
-  * @retval None
-	*/
 void Delay(__IO uint32_t nCount)
 {
 	while(nCount--)
 	{
 	}
 }
-
-
-#ifdef  USE_FULL_ASSERT
-
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t* file, uint32_t line)
-{ 
-	/* User can add his own implementation to report the file name and line number,
-	  ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-
-	// Infinite loop
-	while (1)
-	{
-	}
-}
-#endif
