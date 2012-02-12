@@ -63,13 +63,13 @@ int main(void)
 void clockInit()
 {
 	// Periph clock enable for Motor bits
-	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
+//	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
 
 	// Timer clock enable for Motor PWM
 	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
 
 	// Port clock enable for Motor PWM
-//	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
+	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
 }
 
 
