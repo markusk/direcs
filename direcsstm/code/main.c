@@ -16,7 +16,7 @@
 // now issues with PD12 when using this timer and portbit
 
 /* not okay !! 
-// TIM4, PB7
+// TIM4, PB7 (channel 2)
 #define MOTORPWMTIMER			TIM4
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
@@ -27,7 +27,7 @@
 */
 
 /* not okay !! 
-// TIM2, PB11 -> does not work. Why? TIM2 and 5 are 23 bit timers... hm...
+// TIM2, PB11 (channel 2) -> does not work. Why? TIM2 and 5 are 23 bit timers... hm...
 #define MOTORPWMTIMER			TIM2
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM2
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
@@ -37,8 +37,8 @@
 #define MOTORPWMTIMBIT			GPIO_PinSource11
 */
 
-// ok, too: (branch)
-// TIM3, PB4
+// ok
+// TIM3, PB4 (channel 1)
 #define MOTORPWMTIMER			TIM3
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
@@ -47,8 +47,8 @@
 #define MOTORPWMBIT				GPIO_Pin_4
 #define MOTORPWMTIMBIT			GPIO_PinSource4
 
-/* ok:
-// TIM3, PC6
+/* ok
+// TIM3, PC6 (channel 1)
 #define MOTORPWMTIMER			TIM3
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOC
