@@ -184,47 +184,12 @@ int main(void)
 	// init timer for PWM
 	TimerInit();
 
-
-	//
-	//	motor pwm test ! ! !
-	//
-	TIM_OCInitTypeDef		TIM_OCInitStructure;
-
-
-	while(1)
-	{
-		for (i=1; i<99; i++)
-		{
-			Delay(0x0BFFFF);
-			timerUpdate(i);
-		}
-/*
-		Delay(0xFFFFFF);
-		Delay(0xFFFFFF);
-		Delay(0xFFFFFF);
-		Delay(0xFFFFFF);
-*/
-		for (i=99; i>2; i--)
-		{
-			Delay(0x0BFFFF);
-			timerUpdate(i);
-		}
-/*
-		Delay(0xFFFFFF);
-		Delay(0xFFFFFF);
-		Delay(0xFFFFFF);
-		Delay(0xFFFFFF);
-*/
-	}
-
-
-/*
 	// LEDs off
 	turnLED(LEDGREEN, OFF);
 	turnLED(LEDORANGE, OFF);
 	turnLED(LEDRED, OFF);
 	turnLED(LEDBLUE, OFF);
-*/
+
 
 	while (1)
 	{
