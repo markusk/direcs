@@ -223,6 +223,10 @@ int main(void)
 	// init DMA
 	DMAinit();
 
+	// Start ADC3 Software Conversion
+	ADC_SoftwareStartConv(ADC3);
+
+
 	// LEDs off
 	turnLED(LEDGREEN, OFF);
 	turnLED(LEDORANGE, OFF);
@@ -376,6 +380,18 @@ int main(void)
 
 				// answer with "ok"
 				put_string("*mv1#");
+			}
+			else
+			// READ_SENSOR_7 (24 V supply)
+			if (strcmp(stringbuffer, "*s7#") == 0)
+			{
+				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
+				ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
+
+				i = ADC3ConvertedVoltage;
+
+				// read ADC and send answer over serial port
+				sendUInt( i );
 			}
 		} // stringReceived()
 
