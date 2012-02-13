@@ -370,6 +370,7 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(LEDPORT, &GPIO_InitStructureLED);
 	//	--------------------------------------------------------------------------------
+*/
 
 	//	--------------------------------------------------------------------------------
 	//	GPIOPort init, Port B (Motor bits)
@@ -382,7 +383,6 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
 	//	--------------------------------------------------------------------------------
-*/
 }
 
 
