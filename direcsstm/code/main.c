@@ -148,6 +148,9 @@ void gpioPortInit();
 // Timer init for PWM
 void TimerInit(void);
 
+// Timer speed / PWM duty cycle update
+void timerUpdate(int speed);
+
 void LEDblink();
 
 // turns a LED on or off
@@ -494,6 +497,44 @@ void TimerInit(void)
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (MOTORPWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(MOTORPWMTIMER, ENABLE);
+}
+
+
+void timerUpdate(int speed)
+{
+	TIM_Cmd(MOTORPWMTIMER, DISABLE);
+
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
