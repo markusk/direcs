@@ -196,20 +196,7 @@ int main(void)
 		for (i=1; i<99; i++)
 		{
 			Delay(0x0BFFFF);
-			TIM_Cmd(MOTORPWMTIMER, DISABLE);
-
-			TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-			TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
-			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-
-			// Channel 2 !
-			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-
-			TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
-
-			TIM_Cmd(MOTORPWMTIMER, ENABLE);
+			timerUpdate(i);
 		}
 /*
 		Delay(0xFFFFFF);
@@ -220,20 +207,7 @@ int main(void)
 		for (i=99; i>2; i--)
 		{
 			Delay(0x0BFFFF);
-			TIM_Cmd(MOTORPWMTIMER, DISABLE);
-
-			TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-			TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
-			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-
-			// Channel 2 !
-			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-
-			TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
-
-			TIM_Cmd(MOTORPWMTIMER, ENABLE);
+			timerUpdate(i);
 		}
 /*
 		Delay(0xFFFFFF);
@@ -530,6 +504,9 @@ void TimerInit(void)
 
 void timerUpdate(int speed)
 {
+	TIM_OCInitTypeDef TIM_OCInitStructure;
+
+
 	TIM_Cmd(MOTORPWMTIMER, DISABLE);
 
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
