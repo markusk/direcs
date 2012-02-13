@@ -438,7 +438,6 @@ void TimerInit(void)
 	// Connect TIM pin to Alternate Function (AF)
 	GPIO_PinAFConfig(MOTORPWMPORT, MOTORPWMTIMBIT, MOTORPWMAF);
 
-
 	// Timer base configuration
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
 	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
@@ -447,7 +446,6 @@ void TimerInit(void)
 
 	// basic timer init
 	TIM_TimeBaseInit(MOTORPWMTIMER, &TIM_TimeBaseStructure);
-
 
 	// configure PWM mode and duration
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
@@ -488,6 +486,12 @@ void timerUpdate(int speed)
 {
 	TIM_OCInitTypeDef TIM_OCInitStructure;
 
+
+	// are within a valid range?
+	if ((speed<1) || (speed>99))
+	{
+		return;
+	}
 
 	TIM_Cmd(MOTORPWMTIMER, DISABLE);
 
