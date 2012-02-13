@@ -15,7 +15,7 @@
 // this code works fine.
 // now issues with PD12 when using this timer and portbit
 
-// ok
+// ok kein übersprechen!
 // TIM4, PB7 (channel 2)
 #define MOTORPWMTIMER			TIM4
 #define	MOTORPWMCHANNEL			2
@@ -27,7 +27,7 @@
 #define MOTORPWMTIMBIT			GPIO_PinSource7
 
 
-/* ok
+/* übersprechen auf PD12, TIM4, channel 1
 // TIM2, PB11 (channel 4)
 #define MOTORPWMTIMER			TIM2
 #define	MOTORPWMCHANNEL			4
@@ -37,10 +37,9 @@
 #define MOTORPWMPORT			GPIOB
 #define MOTORPWMBIT				GPIO_Pin_11
 #define MOTORPWMTIMBIT			GPIO_PinSource11
+*/
 
-
-/*
-// ok
+/* übersprechen auf PD12, TIM4, channel 1
 // TIM3, PB4 (channel 1)
 #define MOTORPWMTIMER			TIM3
 #define	MOTORPWMCHANNEL			1
@@ -52,7 +51,7 @@
 #define MOTORPWMTIMBIT			GPIO_PinSource4
 */
 
-/* ok
+/* übersprechen auf PD12, TIM4, channel 1
 // TIM3, PC6 (channel 1)
 #define MOTORPWMTIMER			TIM3
 #define	MOTORPWMCHANNEL			1
