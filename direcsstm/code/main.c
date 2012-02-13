@@ -146,6 +146,7 @@
 #define MOTORPWMAF 				GPIO_AF_TIM4
 
 // ADC PC0 for battery voltage sensor
+#define SENSOR7DMACHANNEL		DMA_Channel_2;
 #define SENSOR7PORT				GPIOC
 #define SENSOR7PIN				GPIO_Pin_0
 #define SENSOR7CLOCK			RCC_AHB1Periph_GPIOC
@@ -446,12 +447,13 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
-
+/*
 	// Configure ADC channel as anlog input
 	GPIO_InitStructureADC.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_InitStructureADC.GPIO_Pin = SENSOR7PIN;
-	GPIO_InitStructureADC.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructureADC.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_Init(SENSOR7PORT, &GPIO_InitStructureADC);
+*/
 }
 
 
