@@ -118,7 +118,7 @@
 #define MOTOR1BITB				GPIO_Pin_1
 #define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
 
-// TIM4, PB7 (channel 2) for motor speed (PWM)
+// TIM4, PB7, Channel 2 for motor speed (PWM)
 #define MOTORPWMTIMER			TIM4
 #define	MOTORPWMCHANNEL			2
 #define MOTORPWMPORT			GPIOB
@@ -199,19 +199,21 @@ int main(void)
 			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 			TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
 			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+
+			// Channel 2 !
+			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
 
 			TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
 
 			TIM_Cmd(MOTORPWMTIMER, ENABLE);
 		}
-
+/*
 		Delay(0xFFFFFF);
 		Delay(0xFFFFFF);
 		Delay(0xFFFFFF);
 		Delay(0xFFFFFF);
-
+*/
 		for (i=99; i>2; i--)
 		{
 			Delay(0x0BFFFF);
@@ -221,18 +223,21 @@ int main(void)
 			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 			TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
 			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+
+			// Channel 2 !
+			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
 
 			TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
 
 			TIM_Cmd(MOTORPWMTIMER, ENABLE);
 		}
-
+/*
 		Delay(0xFFFFFF);
 		Delay(0xFFFFFF);
 		Delay(0xFFFFFF);
 		Delay(0xFFFFFF);
+*/
 	}
 
 
