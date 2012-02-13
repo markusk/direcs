@@ -145,9 +145,12 @@
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
 #define MOTORPWMAF 				GPIO_AF_TIM4
 
-// ADC as battery voltage sensor
+// ADC PC0 for battery voltage sensor
 #define SENSOR7PORT				GPIOC
 #define SENSOR7PIN				GPIO_Pin_0
+#define SENSOR7CLOCK			RCC_AHB1Periph_GPIOC
+#define SENSOR7DMACLOCK			RCC_AHB1Periph_DMA2
+#define SENSOR7ADCCLOCK			RCC_APB2Periph_ADC3
 
 
 
