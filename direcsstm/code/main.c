@@ -116,7 +116,7 @@
 #define MOTOR1PORT				GPIOB
 #define MOTOR1BITA				GPIO_Pin_0
 #define MOTOR1BITB				GPIO_Pin_1
-#define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
+#define MOTOR1CLOCK				RCC_AHB1Periph_GPIOB
 
 // TIM4, PB7, Channel 2 for motor speed (PWM)
 #define MOTORPWMTIMER			TIM4
@@ -328,7 +328,7 @@ int main(void)
 void clockInit()
 {
 	// GPIOD Periph clock enable for Motor bits
-	RCC_AHB1PeriphClockCmd(MOTOR1PERIPH, ENABLE);
+	RCC_AHB1PeriphClockCmd(MOTOR1CLOCK, ENABLE);
 
 	// Timer clock enable for Motor PWM
 	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
