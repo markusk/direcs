@@ -156,11 +156,12 @@
 
 
 // ADC DMA stuff
-#define ADC1_DR_Address	((uint32_t)0x4001244C)
+#define ADC3_DR_ADDRESS	((uint32_t)0x4001244C)
 
 
 // Private variables ---------------------------------------------------------
-__IO uint16_t ADC10Value; // stores the ADC result
+__IO uint16_t ADC3ConvertedValue = 0;
+__IO uint32_t ADC3ConvertedVoltage = 0;
 
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
@@ -595,8 +596,8 @@ void DMAinit(void)
 
 	/* DMA2 Stream0 channel0 configuration **************************************/
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;  
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)ADC3_DR_ADDRESS;
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)&ADC3ConvertedValue;
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue; // this will hold the value
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_InitStructure.DMA_BufferSize = 1;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
