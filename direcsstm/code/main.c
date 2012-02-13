@@ -106,27 +106,27 @@
 
 
 // The port bits -------------------------------------------------------------
-#define LEDCLOCK				RCC_AHB1Periph_GPIOD
 #define LEDPORT					GPIOD
 #define LEDGREEN				GPIO_Pin_12
 #define LEDORANGE				GPIO_Pin_13
 #define LEDRED					GPIO_Pin_14
 #define LEDBLUE					GPIO_Pin_15
+#define LEDCLOCK				RCC_AHB1Periph_GPIOD
 
-#define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
 #define MOTOR1PORT				GPIOB
 #define MOTOR1BITA				GPIO_Pin_0
 #define MOTOR1BITB				GPIO_Pin_1
+#define MOTOR1PERIPH			RCC_AHB1Periph_GPIOB
 
 // TIM4, PB7 (channel 2) for motor speed (PWM)
 #define MOTORPWMTIMER			TIM4
 #define	MOTORPWMCHANNEL			2
-#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
-#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
-#define MOTORPWMAF 				GPIO_AF_TIM4
 #define MOTORPWMPORT			GPIOB
 #define MOTORPWMBIT				GPIO_Pin_7
 #define MOTORPWMTIMBIT			GPIO_PinSource7
+#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
+#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
+#define MOTORPWMAF 				GPIO_AF_TIM4
 
 
 // Private variables ---------------------------------------------------------
