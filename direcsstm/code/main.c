@@ -15,41 +15,47 @@
 // this code works fine.
 // now issues with PD12 when using this timer and portbit
 
-/* not okay !! 
+// ok
 // TIM4, PB7 (channel 2)
 #define MOTORPWMTIMER			TIM4
+#define	MOTORPWMCHANNEL			2
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
 #define MOTORPWMAF 				GPIO_AF_TIM4
 #define MOTORPWMPORT			GPIOB
 #define MOTORPWMBIT				GPIO_Pin_7
 #define MOTORPWMTIMBIT			GPIO_PinSource7
-*/
 
-/* not okay !! 
-// TIM2, PB11 (channel 2) -> does not work. Why? TIM2 and 5 are 23 bit timers... hm...
+
+/* ok
+// TIM2, PB11 (channel 4)
 #define MOTORPWMTIMER			TIM2
+#define	MOTORPWMCHANNEL			4
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM2
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
 #define MOTORPWMAF 				GPIO_AF_TIM2
 #define MOTORPWMPORT			GPIOB
 #define MOTORPWMBIT				GPIO_Pin_11
 #define MOTORPWMTIMBIT			GPIO_PinSource11
-*/
 
+
+/*
 // ok
 // TIM3, PB4 (channel 1)
 #define MOTORPWMTIMER			TIM3
+#define	MOTORPWMCHANNEL			1
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
 #define MOTORPWMAF 				GPIO_AF_TIM3
 #define MOTORPWMPORT			GPIOB
 #define MOTORPWMBIT				GPIO_Pin_4
 #define MOTORPWMTIMBIT			GPIO_PinSource4
+*/
 
 /* ok
 // TIM3, PC6 (channel 1)
 #define MOTORPWMTIMER			TIM3
+#define	MOTORPWMCHANNEL			1
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOC
 #define MOTORPWMAF 				GPIO_AF_TIM3
@@ -102,7 +108,7 @@ void TimerInit(void)
 {
 	GPIO_InitTypeDef 		GPIO_InitStructureTimer;
 	TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
-	TIM_OCInitTypeDef		TIM_OCInitStructure;
+	TIM_OCInitTypeDef		TIM_OCInitStructure; // Timer Output Compare Init structure definition
 	uint32_t TimerCounterClock = 0;
 	uint32_t TimerOutputClock = 0;
 	uint16_t PrescalerValue = 0;
@@ -125,12 +131,11 @@ void TimerInit(void)
 	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
 	GPIO_Init(MOTORPWMPORT, &GPIO_InitStructureTimer); 
 
-	// Connect TIM pin to AF
+	// Connect TIM pin to Alternate Function (AF)
 	GPIO_PinAFConfig(MOTORPWMPORT, MOTORPWMTIMBIT, MOTORPWMAF);
 
 
 	// Timer base configuration
-	// 	Don't know why, but this code has to be here (not in a seperate method)
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
 	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
@@ -145,8 +150,27 @@ void TimerInit(void)
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-	TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+
+	// Output Compare channels
+	switch (MOTORPWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			break;
+	}
 
 	// preload timer config
 	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
