@@ -215,6 +215,9 @@ int main(void)
 	// init timer for PWM
 	timerInit();
 
+	// init DMA
+	DMAinit();
+
 	// LEDs off
 	turnLED(LEDGREEN, OFF);
 	turnLED(LEDORANGE, OFF);
@@ -385,12 +388,20 @@ void clockInit()
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
+
+	// ADC clock
+	RCC_ADCCLKConfig(RCC_PCLK2_Div2); // ADCCLK = PCLK2/2
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+
+	// DMA clock
+//	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 }
 
 
 void gpioPortInit()
 {
 	GPIO_InitTypeDef GPIO_InitStructureLED;
+	GPIO_InitTypeDef GPIO_InitStructureADC;
 
 
 /*
@@ -422,9 +433,7 @@ void gpioPortInit()
 	//	--------------------------------------------------------------------------------
 */
 
-	//	--------------------------------------------------------------------------------
-	//	GPIOPort init, Port B (Motor bits)
-	//	--------------------------------------------------------------------------------
+	// Motor bits
 	// Configure port bits in output pushpull mode
 	GPIO_InitStructureLED.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
 	GPIO_InitStructureLED.GPIO_Mode = GPIO_Mode_OUT;
@@ -432,7 +441,12 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
-	//	--------------------------------------------------------------------------------
+
+	// Configure ADC channel as anlog input
+	GPIO_InitStructureADC.GPIO_Mode = GPIO_Mode_AIN;
+	GPIO_InitStructureADC.GPIO_Pin = SENSOR7PIN;
+	GPIO_InitStructureADC.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(SENSOR7PORT, &GPIO_InitStructureADC);
 }
 
 
