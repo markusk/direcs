@@ -145,8 +145,18 @@
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
 #define MOTORPWMAF 				GPIO_AF_TIM4
 
+// ADC as battery voltage sensor
+#define SENSOR7PORT				GPIOC
+#define SENSOR7PIN				GPIO_Pin_0
+
+
+
+// ADC DMA stuff
+#define ADC1_DR_Address	((uint32_t)0x4001244C)
+
 
 // Private variables ---------------------------------------------------------
+__IO uint16_t ADC10Value; // stores the ADC result
 
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
@@ -167,6 +177,9 @@ void timerInit(void);
 
 // Timer speed / PWM duty cycle update
 void timerUpdate(int speed);
+
+// initialize DMA
+void DMAinit(void);
 
 void LEDblink();
 
@@ -546,6 +559,37 @@ void timerUpdate(int speed)
 
 	// enable timer / counter
 	TIM_Cmd(MOTORPWMTIMER, ENABLE);
+}
+
+void DMAinit(void)
+{
+	DMA_InitTypeDef DMA_InitStructure;
+
+
+	// Stop DMA 1 channel 1
+	DMA_DeInit(DMA1_Channel1);
+
+	// Source
+	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_DR_Address;
+
+	// Destination
+	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &ADC10Value;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+	
+	// Buffer size
+	DMA_InitStructure.DMA_BufferSize = 1;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+
+	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+
+	// Enable DMA 1 channel 1
+	DMA_Cmd(DMA1_Channel1, ENABLE);
 }
 
 
