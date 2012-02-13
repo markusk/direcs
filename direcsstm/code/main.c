@@ -143,7 +143,7 @@ void clockInit();
 void gpioPortInit();
 
 // Timer init for PWM
-void TimerInit(void);
+void timerInit(void);
 
 // Timer speed / PWM duty cycle update
 void timerUpdate(int speed);
@@ -180,7 +180,7 @@ int main(void)
 	usartInit();
 	
 	// init timer for PWM
-	TimerInit();
+	timerInit();
 
 	// LEDs off
 	turnLED(LEDGREEN, OFF);
@@ -408,7 +408,7 @@ void gpioPortInit()
   * @param  None
   * @retval None
   */
-void TimerInit(void)
+void timerInit(void)
 {
 	GPIO_InitTypeDef 		GPIO_InitStructureTimer;
 	TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
