@@ -392,12 +392,14 @@ void clockInit()
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
 
-	// ADC clock
-	RCC_ADCCLKConfig(RCC_PCLK2_Div2); // ADCCLK = PCLK2/2
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+	// Port clock enable for ADC for battery voltage
+	RCC_AHB1PeriphClockCmd(SENSOR7CLOCK, ENABLE);
 
-	// DMA clock
-//	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+	// ADC clock enable for battery voltage
+	RCC_APB2PeriphClockCmd(SENSOR7ADCCLOCK, ENABLE);
+
+	// DMA clock for ADC
+	RCC_AHB1PeriphClockCmd(SENSOR7DMACLOCK, ENABLE);
 }
 
 
@@ -584,14 +586,14 @@ void DMAinit(void)
 
 
 	// Stop DMA 1 channel 1
-	DMA_DeInit(DMA1_Channel1);
+	DMA_DeInit(DMA_Channel_1);
 
 	// Source
 	DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_DR_Address;
 
 	// Destination
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &ADC10Value;
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC10Value;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	
 	// Buffer size
 	DMA_InitStructure.DMA_BufferSize = 1;
@@ -601,12 +603,11 @@ void DMAinit(void)
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
 
-	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+	DMA_Init(DMA1_Stream0, &DMA_InitStructure);
 
 	// Enable DMA 1 channel 1
-	DMA_Cmd(DMA1_Channel1, ENABLE);
+	DMA_Cmd(DMA1_Stream0, ENABLE);
 }
 
 
