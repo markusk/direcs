@@ -317,6 +317,25 @@ int main(void)
 				// answer with "ok"
 				put_string("*md1cc#");
 			}
+			else
+			// MOTOR1_SPEED_SET
+			if (strncmp(stringbuffer, "*mv1", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate( i );
+
+				// answer with "ok"
+				put_string("*mv1#");
+			}
 		} // stringReceived()
 
 	} // while (1)
