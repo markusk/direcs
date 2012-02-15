@@ -68,7 +68,7 @@ int main(void)
 	usartInit();
 	
 	// init DMA
-	DMAinit();
+	ADCDMAinit();
 
 	// Start ADC3 Software Conversion
 	ADC_SoftwareStartConv(ADC3);
