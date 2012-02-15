@@ -49,12 +49,6 @@ int i;
 // the prototypes ------------------------------------------------------------
 int main(void);
 
-// init of the several system clocks
-void clockInit();
-
-// GPIOPort init
-void gpioPortInit();
-
 // initialize DMA
 void DMAinit(void);
 
@@ -166,33 +160,6 @@ int main(void)
 		} // stringReceived()
 
 	} // while (1)
-}
-
-
-void clockInit()
-{
-	// Port clock enable for ADC for battery voltage
-	RCC_AHB1PeriphClockCmd(SENSOR7CLOCK, ENABLE);
-
-	// ADC clock enable for battery voltage
-	RCC_APB2PeriphClockCmd(SENSOR7ADCCLOCK, ENABLE);
-
-	// DMA clock for ADC
-	RCC_AHB1PeriphClockCmd(SENSOR7DMACLOCK, ENABLE);
-}
-
-
-void gpioPortInit()
-{
-	GPIO_InitTypeDef GPIO_InitStructureADC;
-
-/*
-	// Configure ADC channel as anlog input
-	GPIO_InitStructureADC.GPIO_Mode = GPIO_Mode_AIN;
-	GPIO_InitStructureADC.GPIO_Pin = SENSOR7PIN;
-	GPIO_InitStructureADC.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_Init(SENSOR7PORT, &GPIO_InitStructureADC);
-*/
 }
 
 
