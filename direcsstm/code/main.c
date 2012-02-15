@@ -50,7 +50,7 @@ int i;
 int main(void);
 
 // initialize DMA
-void DMAinit(void);
+void ADCDMAinit(void);
 
 // sends a u int value over the serial line as ASCII
 void sendUInt(uint16_t value);
@@ -163,7 +163,7 @@ int main(void)
 }
 
 
-void DMAinit(void)
+void ADCDMAinit(void)
 {
 	ADC_InitTypeDef       ADC_InitStructure;
 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
