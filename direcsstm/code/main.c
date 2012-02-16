@@ -156,7 +156,7 @@
 
 
 // ADC DMA stuff
-#define ADC3_DR_ADDRESS	((uint32_t)0x4001244C)
+#define ADC3_DR_ADDRESS	((uint32_t)0x4001224C)
 
 
 // Private variables ---------------------------------------------------------
@@ -386,12 +386,11 @@ int main(void)
 			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
 				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
-				ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
-
-				i = ADC3ConvertedVoltage;
+				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
 
 				// read ADC and send answer over serial port
-				sendUInt( i );
+				// 0 - 4095d
+				sendUInt( ADC3ConvertedValue );
 			}
 		} // stringReceived()
 
