@@ -76,53 +76,23 @@ int main(void)
 
 	while (1)
 	{
-//		serialBlockingReadString();
+		// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
+		ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
 
-		uint16_t buchstabe = 0;
+		ltoa(ADC3ConvertedValue, stringbuffer);
 
+		put_string("Value: ");
+		put_string(stringbuffer);
+		put_string("\r\n");
 
-		// blocking read on serial port USART2
-		while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
-		{
-		}
+		// read ADC and send answer over serial port
+		// sendUInt( ADC3ConvertedVoltage );
 
-		buchstabe = USART_ReceiveData(USART2);
-		
-		// build string
-		receiveChar(buchstabe);
-
-
-
-		if (stringReceived())
-		{
-			// Get complete string and delete uart_rx_flag
-			get_string(stringbuffer);
-
-
-			// RESET / INIT
-			if (strcmp(stringbuffer, "*re#") == 0)
-			{
-				put_string("*re#");				
-			}
-			else
-			// READ_SENSOR_7 (24 V supply)
-//			if (strcmp(stringbuffer, "*s7#") == 0)
-			if (strcmp(stringbuffer, "*s#") == 0)
-			{
-				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
-				ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
-
-				ltoa(ADC3ConvertedValue, stringbuffer);
-				put_string("Value: ");
-				put_string(stringbuffer);
-				put_string("\r\n");
-
-				// read ADC and send answer over serial port
-				// sendUInt( ADC3ConvertedVoltage );
-			}
-		} // stringReceived()
-
-	} // while (1)
+		Delay(1000000);
+		Delay(1000000);
+		Delay(1000000);
+		Delay(1000000);
+	}
 }
 
 
