@@ -34,11 +34,11 @@
 
 
 // ADC DMA stuff
-#define ADC3_DR_ADDRESS	((uint32_t)0x4001244C)
+#define ADC3_DR_ADDRESS	((uint32_t)0x4001224C)
 
 
 // Private variables ---------------------------------------------------------
-__IO uint16_t ADC3ConvertedValue = 0;
+__IO uint16_t ADC3ConvertedValue = 0; // 0 - 4095
 __IO uint32_t ADC3ConvertedVoltage = 0;
 
 // stores the serial received command and the string which will be sent as an answer
@@ -79,7 +79,7 @@ int main(void)
 		// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
 		ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
 
-		ltoa(ADC3ConvertedValue, stringbuffer);
+		ltoa(ADC3ConvertedVoltage, stringbuffer);
 
 		put_string("Value: ");
 		put_string(stringbuffer);
