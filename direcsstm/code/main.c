@@ -106,15 +106,23 @@ int main(void)
 			}
 			else
 			// READ_SENSOR_7 (24 V supply)
-			if (strcmp(stringbuffer, "*s7#") == 0)
+//			if (strcmp(stringbuffer, "*s7#") == 0)
+			if (strcmp(stringbuffer, "*s#") == 0)
 			{
 				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
 				ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
 
 				i = ADC3ConvertedVoltage;
+				i=42;
+
+				ltoa(i, stringbuffer);
+				put_string("Wert: ");
+				put_string(stringbuffer);
+				put_string("\r\n");
+
 
 				// read ADC and send answer over serial port
-				sendUInt( i );
+				// sendUInt( ADC3ConvertedValue );
 			}
 		} // stringReceived()
 
