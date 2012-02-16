@@ -112,17 +112,13 @@ int main(void)
 				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
 				ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
 
-				i = ADC3ConvertedVoltage;
-				i=42;
-
-				ltoa(i, stringbuffer);
-				put_string("Wert: ");
+				ltoa(ADC3ConvertedValue, stringbuffer);
+				put_string("Value: ");
 				put_string(stringbuffer);
 				put_string("\r\n");
 
-
 				// read ADC and send answer over serial port
-				// sendUInt( ADC3ConvertedValue );
+				// sendUInt( ADC3ConvertedVoltage );
 			}
 		} // stringReceived()
 
@@ -144,7 +140,7 @@ void ADCDMAinit(void)
 	/* DMA2 Stream0 channel0 configuration **************************************/
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;  
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue; // this will hold the value
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_InitStructure.DMA_BufferSize = 1;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
