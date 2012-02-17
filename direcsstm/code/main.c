@@ -72,8 +72,6 @@
 #define SENSOR7DMACLOCK			RCC_AHB1Periph_DMA2
 #define SENSOR7ADCCLOCK			RCC_APB2Periph_ADC3
 
-
-
 // ADC DMA stuff
 #define ADC3_DR_ADDRESS	((uint32_t)0x4001224C)
 
@@ -102,8 +100,8 @@ void timerInit(void);
 // Timer speed / PWM duty cycle update
 void timerUpdate(int speed);
 
-// initialize DMA
-void DMAinit(void);
+// initialize DMA + ACD
+void DMAACDinit(void);
 
 void LEDblink();
 
@@ -140,7 +138,7 @@ int main(void)
 	timerInit();
 
 	// init DMA
-	DMAinit();
+	DMAACDinit();
 
 	// Start ADC3 Software Conversion
 	ADC_SoftwareStartConv(ADC3);
@@ -517,18 +515,18 @@ void timerUpdate(int speed)
 	TIM_Cmd(MOTORPWMTIMER, ENABLE);
 }
 
-void DMAinit(void)
+void DMAACDinit(void)
 {
 	ADC_InitTypeDef       ADC_InitStructure;
 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
 	DMA_InitTypeDef       DMA_InitStructure;
 	GPIO_InitTypeDef      GPIO_InitStructure;
 
-	/* Enable ADC3, DMA2 and GPIO clocks ****************************************/
+	// Enable ADC3, DMA2 and GPIO clocks ****************************************
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
 
-	/* DMA2 Stream0 channel0 configuration **************************************/
+	// DMA2 Stream0 channel0 configuration **************************************
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;  
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
 	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue; // this will hold the value
