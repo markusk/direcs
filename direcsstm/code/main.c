@@ -80,6 +80,9 @@
 __IO uint16_t ADC3ConvertedValue = 0;
 __IO uint32_t ADC3ConvertedVoltage = 0;
 
+__IO uint16_t ADC3ConvertedValue2 = 0;
+__IO uint32_t ADC3ConvertedVoltage2 = 0;
+
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
 int i;
@@ -309,6 +312,17 @@ int main(void)
 				// 0 - 4095d
 				sendUInt( ADC3ConvertedValue );
 			}
+			else
+			// READ_SENSOR_8 (12 V supply)
+			if (strcmp(stringbuffer, "*s8#") == 0)
+			{
+				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
+				// ADC3ConvertedVoltage2 = ADC3ConvertedValue2 * 3300 / 0xFFF;
+
+				// read ADC and send answer over serial port
+				// 0 - 4095d
+				sendUInt( ADC3ConvertedValue2 );
+			}
 		} // stringReceived()
 
 	} // while (1)
@@ -522,6 +536,7 @@ void DMAACDinit(void)
 	DMA_InitTypeDef       DMA_InitStructure;
 	GPIO_InitTypeDef      GPIO_InitStructure;
 
+
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
@@ -543,10 +558,37 @@ void DMAACDinit(void)
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
 	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
+//	DMA_Cmd(DMA2_Stream0, ENABLE);
+
+	// DMA 2 Stream 0 channel 3 configuration **************************************
+	DMA_InitStructure.DMA_Channel = DMA_Channel_3;
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue2; // this will hold the value
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
+	DMA_InitStructure.DMA_BufferSize = 1;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;         
+	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
+	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
+
+	// Enable DMA stream (with several channels)
 	DMA_Cmd(DMA2_Stream0, ENABLE);
 
 	// Configure ADC3 Channel12 pin as analog input ******************************
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+	// Configure ADC3 Channel11 pin as analog input ******************************
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
@@ -569,6 +611,9 @@ void DMAACDinit(void)
 
 	// ADC3 regular channel12 configuration *************************************
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles);
+
+	// ADC3 regular channel11 configuration *************************************
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 1, ADC_SampleTime_3Cycles);
 
 	// Enable DMA request after last transfer (Single-ADC mode)
 	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
