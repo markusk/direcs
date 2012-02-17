@@ -545,20 +545,20 @@ void DMAACDinit(void)
 	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
 	DMA_Cmd(DMA2_Stream0, ENABLE);
 
-	/* Configure ADC3 Channel12 pin as analog input ******************************/
+	// Configure ADC3 Channel12 pin as analog input ******************************
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-	/* ADC Common Init **********************************************************/
+	// ADC Common Init **********************************************************
 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
 	ADC_CommonInit(&ADC_CommonInitStructure);
 
-	/* ADC3 Init ****************************************************************/
+	// ADC3 Init ****************************************************************
 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
 	ADC_InitStructure.ADC_ScanConvMode = DISABLE;
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
@@ -567,16 +567,16 @@ void DMAACDinit(void)
 	ADC_InitStructure.ADC_NbrOfConversion = 1;
 	ADC_Init(ADC3, &ADC_InitStructure);
 
-	/* ADC3 regular channel12 configuration *************************************/
+	// ADC3 regular channel12 configuration *************************************
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles);
 
-	/* Enable DMA request after last transfer (Single-ADC mode) */
+	// Enable DMA request after last transfer (Single-ADC mode)
 	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
 
-	/* Enable ADC3 DMA */
+	// Enable ADC3 DMA
 	ADC_DMACmd(ADC3, ENABLE);
 
-	/* Enable ADC3 */
+	// Enable ADC3
 	ADC_Cmd(ADC3, ENABLE);
 }
 
@@ -716,17 +716,17 @@ void Delay(__IO uint32_t nCount)
 
 int atoi(const char *s)
 {
-	static const char digits[] = "0123456789";  /* legal digits in order */
-	unsigned val=0;         /* value we're accumulating */
-	int neg=0;              /* set to true if we see a minus sign */
+	static const char digits[] = "0123456789";  // legal digits in order
+	unsigned val=0;         // value we're accumulating
+	int neg=0;              // set to true if we see a minus sign
 
-	/* skip whitespace */
+	// skip whitespace
 	while (*s==' ' || *s=='\t')
 	{
 		s++;
 	}
 
-	/* check for sign */
+	// check for sign
 	if (*s=='-')
 	{
 		neg=1;
@@ -737,39 +737,39 @@ int atoi(const char *s)
 		s++;
 	}
 
-	/* process each digit */
+	// process each digit
 	while (*s)
 	{
 		const char *where;
 		unsigned digit;
 
-		/* look for the digit in the list of digits */
+		// look for the digit in the list of digits
 		where = strchr(digits, *s);
 		if (where==NULL)
 		{
-			/* not found; not a digit, so stop */
+			// not found; not a digit, so stop
 			break;
 		}
 
-		/* get the index into the digit list, which is the value */
+		// get the index into the digit list, which is the value
 		digit = (where - digits);
 
-		/* could (should?) check for overflow here */
+		// could (should?) check for overflow here
 
-		/* shift the number over and add in the new digit */
+		// shift the number over and add in the new digit
 		val = val*10 + digit;
 
-		/* look at the next character */
+		// look at the next character
 		s++;
 	}
 
-	/* handle negative numbers */
+	// handle negative numbers
 	if (neg)
 	{
 		return -val;
 	}
 
-	/* done */
+	// done
 	return val;
  }
 
