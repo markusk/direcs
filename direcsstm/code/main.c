@@ -538,8 +538,8 @@ void DMAACDinit(void)
 
 
 	// to be safe we disable potentially enabled streams first
-	DMA_Cmd(DMA2_Stream0, DISABLE);
-	DMA_Cmd(DMA2_Stream1, DISABLE);
+//	DMA_Cmd(DMA2_Stream0, DISABLE);
+//	DMA_Cmd(DMA2_Stream1, DISABLE);
 
 
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
