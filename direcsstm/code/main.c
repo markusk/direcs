@@ -537,11 +537,16 @@ void DMAACDinit(void)
 	GPIO_InitTypeDef      GPIO_InitStructure;
 
 
+	// to be safe we disable potentially enabled streams first
+	DMA_Cmd(DMA2_Stream0, DISABLE);
+	DMA_Cmd(DMA2_Stream1, DISABLE);
+
+
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
 
-	// DMA2 Stream0 channel0 configuration **************************************
+	// DMA 2 Stream 0 channel 2 configuration **************************************
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;  
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
 	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue; // this will hold the value
@@ -558,10 +563,10 @@ void DMAACDinit(void)
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
 	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
-//	DMA_Cmd(DMA2_Stream0, ENABLE);
-
-	// DMA 2 Stream 0 channel 3 configuration **************************************
-	DMA_InitStructure.DMA_Channel = DMA_Channel_3;
+	DMA_Cmd(DMA2_Stream0, ENABLE);
+/*
+	// DMA 2 Stream 1 channel 2 configuration **************************************
+	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
 	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue2; // this will hold the value
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
@@ -576,19 +581,11 @@ void DMAACDinit(void)
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
-	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
-
-	// Enable DMA stream (with several channels)
-	DMA_Cmd(DMA2_Stream0, ENABLE);
-
-	// Configure ADC3 Channel12 pin as analog input ******************************
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-	// Configure ADC3 Channel11 pin as analog input ******************************
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+	DMA_Init(DMA2_Stream1, &DMA_InitStructure);
+	DMA_Cmd(DMA2_Stream1, ENABLE);
+*/
+	// Configure ADC 3 Channel1 2 pins as analog input ******************************
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_1;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
@@ -611,10 +608,10 @@ void DMAACDinit(void)
 
 	// ADC3 regular channel12 configuration *************************************
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles);
-
+/*
 	// ADC3 regular channel11 configuration *************************************
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 1, ADC_SampleTime_3Cycles);
-
+*/
 	// Enable DMA request after last transfer (Single-ADC mode)
 	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
 
