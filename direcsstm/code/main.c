@@ -63,7 +63,7 @@
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
 #define MOTORPWMAF 				GPIO_AF_TIM4
-
+/*
 // ADC PC0 for battery voltage sensor
 #define SENSOR7DMACHANNEL		DMA_Channel_2;
 #define SENSOR7PORT				GPIOC
@@ -71,9 +71,10 @@
 #define SENSOR7CLOCK			RCC_AHB1Periph_GPIOC
 #define SENSOR7DMACLOCK			RCC_AHB1Periph_DMA2
 #define SENSOR7ADCCLOCK			RCC_APB2Periph_ADC3
-
+*/
 // ADC DMA stuff
 #define ADC3_DR_ADDRESS	((uint32_t)0x4001224C)
+// 0x4001224C = 0x40012000 + 0x200 for ADC3 + 0x4C for ADC_DR) see p. 51, 247 and 248 in the Referance Manual for STM32F4
 
 
 // Private variables ---------------------------------------------------------
@@ -339,7 +340,7 @@ void clockInit()
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
-
+/*
 	// Port clock enable for ADC for battery voltage
 	RCC_AHB1PeriphClockCmd(SENSOR7CLOCK, ENABLE);
 
@@ -348,6 +349,7 @@ void clockInit()
 
 	// DMA clock for ADC
 	RCC_AHB1PeriphClockCmd(SENSOR7DMACLOCK, ENABLE);
+*/
 }
 
 
@@ -537,18 +539,20 @@ void DMAACDinit(void)
 	GPIO_InitTypeDef      GPIO_InitStructure;
 
 
-	// to be safe we disable potentially enabled streams first
-//	DMA_Cmd(DMA2_Stream0, DISABLE);
-//	DMA_Cmd(DMA2_Stream1, DISABLE);
-
+	// to be safe we reset potentially enabled streams first
+//	DMA_DeInit(DMA2_Stream0);
+	DMA_DeInit(DMA2_Stream1);
 
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
-
+/*
 	// DMA 2 Stream 0 channel 2 configuration **************************************
-	DMA_InitStructure.DMA_Channel = DMA_Channel_2;  
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
+	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
+
+	// Specifies the peripheral base address for DMAy Streamx
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS; // this is 0x4001224C
+
 	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue; // this will hold the value
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_InitStructure.DMA_BufferSize = 1;
@@ -562,12 +566,17 @@ void DMAACDinit(void)
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+
 	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
 	DMA_Cmd(DMA2_Stream0, ENABLE);
-/*
+*/
+
 	// DMA 2 Stream 1 channel 2 configuration **************************************
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
+
+	// Specifies the peripheral base address for DMAy Streamx
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
+
 	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue2; // this will hold the value
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_InitStructure.DMA_BufferSize = 1;
@@ -581,9 +590,13 @@ void DMAACDinit(void)
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+
 	DMA_Init(DMA2_Stream1, &DMA_InitStructure);
 	DMA_Cmd(DMA2_Stream1, ENABLE);
-*/
+
+	//  Function used to set the ADC configuration to the default reset state
+	ADC_DeInit();
+
 	// Configure ADC 3 Channel1 2 pins as analog input ******************************
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_1;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
@@ -608,10 +621,10 @@ void DMAACDinit(void)
 
 	// ADC3 regular channel12 configuration *************************************
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles);
-/*
+
 	// ADC3 regular channel11 configuration *************************************
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 1, ADC_SampleTime_3Cycles);
-*/
+
 	// Enable DMA request after last transfer (Single-ADC mode)
 	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
 
