@@ -606,16 +606,16 @@ void DMAACDinit(void)
 	// ADC Common Init **********************************************************
 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
 	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
-	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled; // Disabled. Only relevant for multimode
 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
 	ADC_CommonInit(&ADC_CommonInitStructure);
 
 	// ADC3 Init ****************************************************************
-	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
-	ADC_InitStructure.ADC_ScanConvMode = DISABLE;
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  // 12 bit resolution
+	ADC_InitStructure.ADC_ScanConvMode = DISABLE;			// < < < for multi channel ?!?!? enable ?!?
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	// alignment of data in ADC_DR after data conversion
 	ADC_InitStructure.ADC_NbrOfConversion = 1;
 	ADC_Init(ADC3, &ADC_InitStructure);
 
