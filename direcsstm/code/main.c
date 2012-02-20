@@ -612,11 +612,11 @@ void DMAACDinit(void)
 
 	// ADC3 Init ****************************************************************
 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  // 12 bit resolution
-	ADC_InitStructure.ADC_ScanConvMode = ENABLE;			// < < < for multi channels ?!??
+	ADC_InitStructure.ADC_ScanConvMode = DISABLE;			// < < < for multi channels ?!??
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	// alignment of data in ADC_DR after data conversion
-	ADC_InitStructure.ADC_NbrOfConversion = 2; // we scan 2 channels ?!??
+	ADC_InitStructure.ADC_NbrOfConversion = 1; // we scan 2 channels ?!??
 	ADC_Init(ADC3, &ADC_InitStructure);
 
 	// ADC3 regular channel12 configuration *************************************
