@@ -540,13 +540,13 @@ void DMAACDinit(void)
 
 
 	// to be safe we reset potentially enabled streams first
-//	DMA_DeInit(DMA2_Stream0);
+	DMA_DeInit(DMA2_Stream0);
 	DMA_DeInit(DMA2_Stream1);
 
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
-/*
+
 	// DMA 2 Stream 0 channel 2 configuration **************************************
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
 
@@ -569,7 +569,7 @@ void DMAACDinit(void)
 
 	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
 	DMA_Cmd(DMA2_Stream0, ENABLE);
-*/
+
 
 	// DMA 2 Stream 1 channel 2 configuration **************************************
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
@@ -612,18 +612,18 @@ void DMAACDinit(void)
 
 	// ADC3 Init ****************************************************************
 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  // 12 bit resolution
-	ADC_InitStructure.ADC_ScanConvMode = DISABLE;			// < < < for multi channel ?!?!? enable ?!?
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;			// < < < for multi channels ?!??
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	// alignment of data in ADC_DR after data conversion
-	ADC_InitStructure.ADC_NbrOfConversion = 1;
+	ADC_InitStructure.ADC_NbrOfConversion = 2; // we scan 2 channels ?!??
 	ADC_Init(ADC3, &ADC_InitStructure);
 
 	// ADC3 regular channel12 configuration *************************************
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles);
 
 	// ADC3 regular channel11 configuration *************************************
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 1, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 2, ADC_SampleTime_3Cycles);
 
 	// Enable DMA request after last transfer (Single-ADC mode)
 	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
