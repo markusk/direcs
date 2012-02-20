@@ -620,10 +620,10 @@ void DMAACDinit(void)
 	ADC_Init(ADC3, &ADC_InitStructure);
 
 	// ADC3 regular channel12 configuration *************************************
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles); // Rank 1 ?
 
 	// ADC3 regular channel11 configuration *************************************
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 2, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 2, ADC_SampleTime_3Cycles); // Rank 1 ?
 
 	// Enable DMA request after last transfer (Single-ADC mode)
 	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
