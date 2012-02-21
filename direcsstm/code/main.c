@@ -199,13 +199,6 @@ int main(void)
 				relais(OFF);
 				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
 				redLED(OFF);
-				
-				// setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-				// setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-				// setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-				// setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-				// setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-				// setServoPosition(6, 22); // <- exact position now in the mrs.ini!
 */
 				// answer with "ok"
 				// this answer is used to see if the robot is "on"
@@ -374,8 +367,7 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(LEDPORT, &GPIO_InitStructureLED);
-	//	--------------------------------------------------------------------------------
-*/
+
 
 	// Motor bits
 	// Configure port bits in output pushpull mode
