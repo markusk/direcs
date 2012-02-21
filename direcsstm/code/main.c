@@ -370,6 +370,34 @@ int main(void)
 				// answer with "ok"
 				put_string("*md3cc#");
 			}
+			else
+			// MOTOR 4 OFF
+			if (strcmp(stringbuffer, "*mp4of#") == 0)
+			{
+				GPIO_ResetBits(MOTORPORT, MOTOR4BITA | MOTOR4BITB);
+				// answer with "ok"
+				put_string("*mp4of#");
+			}
+			else
+			// MOTOR 4 CLOCKWISE = forward
+			if (strcmp(stringbuffer, "*md4cw#") == 0)
+			{
+				GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
+				GPIO_SetBits(MOTORPORT, MOTOR4BITB);
+
+				// answer with "ok"
+				put_string("*md4cw#");
+			}
+			else
+			// MOTOR 4 COUNTERCLOCKWISE = backward
+			if (strcmp(stringbuffer, "*md4cc#") == 0)
+			{
+				GPIO_SetBits(MOTORPORT, MOTOR4BITA);
+				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
+				
+				// answer with "ok"
+				put_string("*md4cc#");
+			}
 		} // stringReceived()
 
 	} // while (1)
