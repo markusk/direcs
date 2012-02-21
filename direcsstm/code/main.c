@@ -344,6 +344,7 @@ void clockInit()
 void gpioPortInit()
 {
 	GPIO_InitTypeDef GPIO_InitStructureLED;
+	GPIO_InitTypeDef GPIO_InitStructureMOTOR;
 	GPIO_InitTypeDef GPIO_InitStructureADC;
 
 
@@ -378,12 +379,12 @@ void gpioPortInit()
 
 	// Motor bits
 	// Configure port bits in output pushpull mode
-	GPIO_InitStructureLED.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
-	GPIO_InitStructureLED.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructureLED.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
+	GPIO_InitStructureMOTOR.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
+	GPIO_InitStructureMOTOR.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructureMOTOR.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureMOTOR.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureMOTOR.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureMOTOR);
 
 	// Configure ADC pins / channel pins as analog input
 	GPIO_InitStructureADC.GPIO_Pin = SENSORPIN24VOLT | SENSORPIN12VOLT;
