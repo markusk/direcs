@@ -444,7 +444,7 @@ void gpioPortInit()
 
 	// Motor bits
 	// Configure port bits in output pushpull mode
-	GPIO_InitStructureMOTOR.GPIO_Pin = MOTOR1BITA | MOTOR1BITB;
+	GPIO_InitStructureMOTOR.GPIO_Pin = MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB;
 	GPIO_InitStructureMOTOR.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructureMOTOR.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructureMOTOR.GPIO_Speed = GPIO_Speed_100MHz;
