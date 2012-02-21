@@ -341,6 +341,11 @@ void clockInit()
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
+
+	// Enable ADC, DMA and corresponding GPIO clocks
+	RCC_AHB1PeriphClockCmd(SENSORDMACLOCK, ENABLE);
+	RCC_AHB1PeriphClockCmd(SENSORPORTCLOCK, ENABLE);
+	RCC_APB2PeriphClockCmd(SENSORADCCLOCK, ENABLE);
 }
 
 
@@ -387,6 +392,12 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
+
+	// Configure ADC pins / channel pins as analog input
+	GPIO_InitStructureADC.GPIO_Pin = SENSORPIN24VOLT | SENSORPIN12VOLT;
+	GPIO_InitStructureADC.GPIO_Mode = GPIO_Mode_AN;
+	GPIO_InitStructureADC.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+	GPIO_Init(SENSORPORT, &GPIO_InitStructureADC);
 }
 
 
@@ -530,10 +541,6 @@ void DMAACDinit(void)
 	// to be safe we reset potentially enabled streams first
 	DMA_DeInit(SENSORDMASTREAM);
 
-	// Enable ADC3, DMA2 and GPIO clocks ****************************************
-	RCC_AHB1PeriphClockCmd(SENSORDMACLOCK | SENSORPORTCLOCK, ENABLE);
-	RCC_APB2PeriphClockCmd(SENSORADCCLOCK, ENABLE);
-
 	// DMA 2 Stream 0 channel 2 configuration **************************************
 	DMA_InitStructure.DMA_Channel = SENSORDMACHANNEL;
 
@@ -559,12 +566,6 @@ void DMAACDinit(void)
 
 	//  Function used to set the ADC configuration to the default reset state
 	ADC_DeInit();
-
-	// Configure ADC 3 Channel1 two pins as analog input ******************************
-	GPIO_InitStructure.GPIO_Pin = SENSORPIN24VOLT | SENSORPIN12VOLT;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-	GPIO_Init(SENSORPORT, &GPIO_InitStructure);
 
 	// ADC Common Init **********************************************************
 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
