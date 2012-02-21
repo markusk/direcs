@@ -112,8 +112,6 @@ void timerUpdate(int speed);
 // initialize DMA + ACD
 void DMAACDinit(void);
 
-void LEDblink();
-
 // turns a LED on or off
 void turnLED(int led, int state);
 
@@ -574,44 +572,6 @@ void DMAACDinit(void)
 	// Start AD conversion
 	ADC_SoftwareStartConv(SENSORADC);
 }
-
-
-/*
-void LEDblink()
-{
-	//
-	// LED blink blink blink
-	//
-	// PD12 to be toggled
-	GPIO_SetBits(GPIOD, GPIO_Pin_12);
-
-	// Insert delay
-	delay(0x3FFFFF);
-
-	// PD13 to be toggled
-	GPIO_SetBits(GPIOD, GPIO_Pin_13);
-
-	// Insert delay
-	delay(0x3FFFFF);
-
-	// PD14 to be toggled
-	GPIO_SetBits(GPIOD, GPIO_Pin_14);
-
-	// Insert delay
-	delay(0x3FFFFF);
-
-	// PD15 to be toggled
-	GPIO_SetBits(GPIOD, GPIO_Pin_15);
-
-	// Insert delay
-	delay(0x7FFFFF);
-
-	GPIO_ResetBits(GPIOD, GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);
-
-	// Insert delay
-	delay(0xFFFFFF);
-}
-*/
 
 
 void turnLED(int led, int state)
