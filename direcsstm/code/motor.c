@@ -39,39 +39,30 @@ int motorControl(int motor, int power, int direction)
 			{
 				case FORWARD:
 					// bot drive forward
-					command = "bdf";
 					break;
 				case BACKWARD:
 					// bot drive backward
-					command = "bdb";
 					break;
 				case LEFT:
 					// bot drive left
-					command = "bdl";
 					break;
 				case RIGHT:
 					// bot drive right
-					command = "bdr";
 					break;
 				case TURNLEFT:
 					// bot turn left
-					command = "btl";
 					break;
 				case TURNRIGHT:
 					// bot turn right
-					command = "btr";
 					break;
 				case START:
 					// bot "go"
-					command = "bgo";
 					break;
 				case STOP:
 					// bot stop
-					command = "bst";
 					break;
 				case WAIT:
 					// bot wait
-					command = "bwa";
 					break;
 			}
 
