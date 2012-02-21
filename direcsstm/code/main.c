@@ -27,7 +27,7 @@
 #define SENSOR1					0  // ADC0
 #define SENSOR2					1  // ADC1
 #define SENSOR3					2  // ADC2
-#define SENSOR4					3  // ADC3
+#define SENSOR4					3  //
 #define SENSOR5					4  // ADC4
 #define SENSOR6					5  // ADC5
 #define SENSOR7					6  // ADC6
@@ -63,16 +63,23 @@
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
 #define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
 #define MOTORPWMAF 				GPIO_AF_TIM4
-/*
-// ADC PC0 for battery voltage sensor
-#define SENSOR7DMACHANNEL		DMA_Channel_2;
-#define SENSOR7PORT				GPIOC
-#define SENSOR7PIN				GPIO_Pin_0
-#define SENSOR7CLOCK			RCC_AHB1Periph_GPIOC
-#define SENSOR7DMACLOCK			RCC_AHB1Periph_DMA2
-#define SENSOR7ADCCLOCK			RCC_APB2Periph_ADC3
-*/
+
+// ADC and DMA for battery / voltage sensors
+#define SENSORDMACHANNEL		DMA_Channel_2;
+#define SENSORPORT				GPIOC
+#define SENSORPIN24VOLT			GPIO_Pin_1
+#define SENSORPIN12VOLT			GPIO_Pin_2
+#define SENSORPORTCLOCK			RCC_AHB1Periph_GPIOC
+#define SENSORDMACLOCK			RCC_AHB1Periph_DMA2
+#define SENSORDMASTREAM			DMA2_Stream0
+#define SENSORADC 				ADC3
+#define SENSORADCCLOCK			RCC_APB2Periph_ADC3
+#define	SENSORCHANNEL24VOLT		ADC_Channel_11
+#define	SENSORCHANNEL12VOLT		ADC_Channel_12
+
 #define NUMBEROFADCHANNELS		2
+
+
 // ADC DMA stuff
 #define ADC3_DR_ADDRESS	((uint32_t)0x4001224C)
 // 0x4001224C = 0x40012000 + 0x200 for ADC3 + 0x4C for ADC_DR) see p. 51, 247 and 248 in the Referance Manual for STM32F4
@@ -525,14 +532,14 @@ void DMAACDinit(void)
 
 
 	// to be safe we reset potentially enabled streams first
-	DMA_DeInit(DMA2_Stream0);
+	DMA_DeInit(SENSORDMASTREAM);
 
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
+	RCC_AHB1PeriphClockCmd(SENSORDMACLOCK | SENSORPORTCLOCK, ENABLE);
+	RCC_APB2PeriphClockCmd(SENSORADCCLOCK, ENABLE);
 
 	// DMA 2 Stream 0 channel 2 configuration **************************************
-	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
+	DMA_InitStructure.DMA_Channel = SENSORDMACHANNEL;
 
 	// Specifies the peripheral base address for DMAy Streamx
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
@@ -551,17 +558,17 @@ void DMAACDinit(void)
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
 
-	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
-	DMA_Cmd(DMA2_Stream0, ENABLE);
+	DMA_Init(SENSORDMASTREAM, &DMA_InitStructure);
+	DMA_Cmd(SENSORDMASTREAM, ENABLE);
 
 	//  Function used to set the ADC configuration to the default reset state
 	ADC_DeInit();
 
 	// Configure ADC 3 Channel1 two pins as analog input ******************************
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2;
+	GPIO_InitStructure.GPIO_Pin = SENSORPIN24VOLT | SENSORPIN12VOLT;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	GPIO_Init(SENSORPORT, &GPIO_InitStructure);
 
 	// ADC Common Init **********************************************************
 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
@@ -571,29 +578,30 @@ void DMAACDinit(void)
 	ADC_CommonInit(&ADC_CommonInitStructure);
 
 	// ADC3 Init ****************************************************************
-	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  // 12 bit resolution
-	ADC_InitStructure.ADC_ScanConvMode = ENABLE;			// enabled since we use more than once AD channel!
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  	// 12 bit resolution
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;				// enabled since we use more than once AD channel!
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	// alignment of data in ADC_DR after data conversion
-	ADC_Init(ADC3, &ADC_InitStructure);
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;		// alignment of data in ADC_DR after data conversion
 	ADC_InitStructure.ADC_NbrOfConversion = NUMBEROFADCHANNELS;	// for two AD channels !
+	ADC_Init(SENSORADC, &ADC_InitStructure);
 
 	// ADC3 regular channel11 configuration *************************************
-	// '1' is the order (rank) of the AD channel to be scanned
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 1, ADC_SampleTime_3Cycles); 
+	// '1' is the order (rank) of the AD channels to be scanned
+	ADC_RegularChannelConfig(SENSORADC, SENSORCHANNEL24VOLT, 1, ADC_SampleTime_3Cycles); 
 
 	// ADC3 regular channel12 configuration *************************************
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 2, ADC_SampleTime_3Cycles);
+	// '2' is the order (rank) of the AD channels to be scanned
+	ADC_RegularChannelConfig(SENSORADC, SENSORCHANNEL12VOLT, 2, ADC_SampleTime_3Cycles);
 
 	// Enable DMA request after last transfer (Single-ADC mode)
-	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
+	ADC_DMARequestAfterLastTransferCmd(SENSORADC, ENABLE);
 
 	// Enable ADC3 DMA
-	ADC_DMACmd(ADC3, ENABLE);
+	ADC_DMACmd(SENSORADC, ENABLE);
 
 	// Enable ADC3
-	ADC_Cmd(ADC3, ENABLE);
+	ADC_Cmd(SENSORADC, ENABLE);
 }
 
 
