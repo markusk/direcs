@@ -263,7 +263,7 @@ int main(void)
 				sendUInt( ADC3ConvertedValues[1] );
 			}
 			else
-			// MOTOR1_OFF
+			// MOTOR 1 OFF
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
 				// delete Motor1 A and B bits
@@ -296,7 +296,7 @@ int main(void)
 				put_string("*md1cc#");
 			}
 			else
-			// MOTOR1_SPEED_SET
+			// MOTOR 1 SPEED SET
 			if (strncmp(stringbuffer, "*mv1", 4) == 0)
 			{
 				// change first four chars for upcoming string conversion
@@ -315,7 +315,7 @@ int main(void)
 				put_string("*mv1#");
 			}
 			else
-			// MOTOR2_OFF
+			// MOTOR 2 OFF
 			if (strcmp(stringbuffer, "*mp2of#") == 0)
 			{
 				GPIO_ResetBits(MOTORPORT, MOTOR2BITA | MOTOR2BITB);
