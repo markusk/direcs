@@ -244,12 +244,26 @@ int main(void)
 				put_string("*sl#");
 			}
 			else
-			// READ_SENSOR_1
-			if (strcmp(stringbuffer, "*s1#") == 0)
+			// READ_SENSOR_7 (24 V supply)
+			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
+				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
+				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
+
 				// read ADC and send answer over serial port
-// @todo:				sendUInt( readADC(SENSOR1) );
-				sendUInt( 42 );
+				// 0 - 4095d
+				sendUInt( ADC3ConvertedValues[0] );
+			}
+			else
+			// READ_SENSOR_8 (12 V supply)
+			if (strcmp(stringbuffer, "*s8#") == 0)
+			{
+				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
+				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
+
+				// read ADC and send answer over serial port
+				// 0 - 4095d
+				sendUInt( ADC3ConvertedValues[1] );
 			}
 			else
 			// MOTOR1_OFF
@@ -302,28 +316,6 @@ int main(void)
 
 				// answer with "ok"
 				put_string("*mv1#");
-			}
-			else
-			// READ_SENSOR_7 (24 V supply)
-			if (strcmp(stringbuffer, "*s7#") == 0)
-			{
-				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
-				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
-
-				// read ADC and send answer over serial port
-				// 0 - 4095d
-				sendUInt( ADC3ConvertedValues[0] );
-			}
-			else
-			// READ_SENSOR_8 (12 V supply)
-			if (strcmp(stringbuffer, "*s8#") == 0)
-			{
-				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
-				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
-
-				// read ADC and send answer over serial port
-				// 0 - 4095d
-				sendUInt( ADC3ConvertedValues[1] );
 			}
 		} // stringReceived()
 
