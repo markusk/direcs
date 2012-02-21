@@ -79,12 +79,7 @@
 
 // Private variables ---------------------------------------------------------
 __IO uint16_t ADC3ConvertedValues[2];
-
-__IO uint16_t ADC3ConvertedValue = 0;
 __IO uint32_t ADC3ConvertedVoltage = 0;
-
-__IO uint16_t ADC3ConvertedValue2 = 0;
-__IO uint32_t ADC3ConvertedVoltage2 = 0;
 
 // stores the serial received command and the string which will be sent as an answer
 char stringbuffer[64];
@@ -320,7 +315,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
 				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
-				// ADC3ConvertedVoltage2 = ADC3ConvertedValue2 * 3300 / 0xFFF;
+				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
 
 				// read ADC and send answer over serial port
 				// 0 - 4095d
@@ -342,16 +337,6 @@ void clockInit()
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
-/*
-	// Port clock enable for ADC for battery voltage
-	RCC_AHB1PeriphClockCmd(SENSOR7CLOCK, ENABLE);
-
-	// ADC clock enable for battery voltage
-	RCC_APB2PeriphClockCmd(SENSOR7ADCCLOCK, ENABLE);
-
-	// DMA clock for ADC
-	RCC_AHB1PeriphClockCmd(SENSOR7DMACLOCK, ENABLE);
-*/
 }
 
 
@@ -398,13 +383,6 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureLED);
-/*
-	// Configure ADC channel as anlog input
-	GPIO_InitStructureADC.GPIO_Mode = GPIO_Mode_AIN;
-	GPIO_InitStructureADC.GPIO_Pin = SENSOR7PIN;
-	GPIO_InitStructureADC.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_Init(SENSOR7PORT, &GPIO_InitStructureADC);
-*/
 }
 
 
@@ -547,7 +525,6 @@ void DMAACDinit(void)
 
 	// to be safe we reset potentially enabled streams first
 	DMA_DeInit(DMA2_Stream0);
-//	DMA_DeInit(DMA2_Stream1);
 
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
@@ -557,13 +534,13 @@ void DMAACDinit(void)
 	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
 
 	// Specifies the peripheral base address for DMAy Streamx
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS; // this is 0x4001224C
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
 
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValues; // this will hold the value
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValues; // this will hold the converted values
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
-	DMA_InitStructure.DMA_BufferSize = 1;
+	DMA_InitStructure.DMA_BufferSize = 2;									 // for two AD channels !
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;					 // enabled since we use more than one AD channel!
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
@@ -576,35 +553,11 @@ void DMAACDinit(void)
 	DMA_Init(DMA2_Stream0, &DMA_InitStructure);
 	DMA_Cmd(DMA2_Stream0, ENABLE);
 
-
-	// DMA 2 Stream 1 channel 2 configuration **************************************
-	DMA_InitStructure.DMA_Channel = DMA_Channel_2;
-
-	// Specifies the peripheral base address for DMAy Streamx
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
-
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue2; // this will hold the value
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
-	DMA_InitStructure.DMA_BufferSize = 1;
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;         
-	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
-	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
-	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
-
-	DMA_Init(DMA2_Stream1, &DMA_InitStructure);
-	DMA_Cmd(DMA2_Stream1, ENABLE);
-/*
 	//  Function used to set the ADC configuration to the default reset state
 	ADC_DeInit();
 
-	// Configure ADC 3 Channel1 2 pins as analog input ******************************
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_1;
+	// Configure ADC 3 Channel1 two pins as analog input ******************************
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
@@ -615,21 +568,22 @@ void DMAACDinit(void)
 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled; // Disabled. Only relevant for multimode
 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
 	ADC_CommonInit(&ADC_CommonInitStructure);
-*/
+
 	// ADC3 Init ****************************************************************
 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  // 12 bit resolution
-	ADC_InitStructure.ADC_ScanConvMode = ENABLE;			// < < < for multi channels ?!??
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;			// enabled since we use more than once AD channel!
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	// alignment of data in ADC_DR after data conversion
-	ADC_InitStructure.ADC_NbrOfConversion = 2; // we scan 2 channels ?!??
+	ADC_InitStructure.ADC_NbrOfConversion = 1;
 	ADC_Init(ADC3, &ADC_InitStructure);
 
-	// ADC3 regular channel12 configuration *************************************
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_3Cycles); // Rank 1 ?
-
 	// ADC3 regular channel11 configuration *************************************
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 2, ADC_SampleTime_3Cycles); // Rank 1 ?
+	// '1' is the order (rank) of the AD channel to be scanned
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_11, 1, ADC_SampleTime_3Cycles); 
+
+	// ADC3 regular channel12 configuration *************************************
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 2, ADC_SampleTime_3Cycles);
 
 	// Enable DMA request after last transfer (Single-ADC mode)
 	ADC_DMARequestAfterLastTransferCmd(ADC3, ENABLE);
