@@ -121,6 +121,9 @@ void DMAACDinit(void);
 // turns a LED on or off
 void turnLED(int led, int state);
 
+// brings the bot into my own reset state
+void resetRobot(void);
+
 // sends a u int value over the serial line as ASCII
 void sendUInt(uint16_t value);
 
@@ -153,12 +156,8 @@ int main(void)
 	// init DMA
 	DMAACDinit();
 
-	// LEDs off
-	turnLED(LEDGREEN, OFF);
-	turnLED(LEDORANGE, OFF);
-	turnLED(LEDRED, OFF);
-	turnLED(LEDBLUE, OFF);
-
+	// reset robot to a defined state
+	resetRobot();
 
 	while (1)
 	{
@@ -188,16 +187,8 @@ int main(void)
 			// RESET / INIT
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
+				resetRobot();
 /*
-				// turn all drive motor bits off (except PWM bits)
-				PORTL &= ~(1<<PIN0);
-				PORTL &= ~(1<<PIN1);
-				PORTL &= ~(1<<PIN2);
-				PORTL &= ~(1<<PIN3);
-				PORTL &= ~(1<<PIN6);
-				PORTL &= ~(1<<PIN7);
-				PORTD &= ~(1<<PIN6);
-				PORTD &= ~(1<<PIN7);
 				// flashlight off
 				relais(OFF);
 */
@@ -217,17 +208,8 @@ int main(void)
 			// SLEEP (and turn off watchdog)
 			if (strcmp(stringbuffer, "*sl#") == 0)
 			{
-/*
-				// turn all drive motor bits off (except PWM bits)
-				PORTL &= ~(1<<PIN0);
-				PORTL &= ~(1<<PIN1);
-				PORTL &= ~(1<<PIN2);
-				PORTL &= ~(1<<PIN3);
-				PORTL &= ~(1<<PIN6);
-				PORTL &= ~(1<<PIN7);
-				PORTD &= ~(1<<PIN6);
-				PORTD &= ~(1<<PIN7);
-	
+				resetRobot();
+/*	
 				// flashlight off
 				relais(OFF);
 */
@@ -401,6 +383,19 @@ int main(void)
 		} // stringReceived()
 
 	} // while (1)
+}
+
+
+void resetRobot(void)
+{
+	// LEDs off
+	turnLED(LEDGREEN, OFF);
+	turnLED(LEDORANGE, OFF);
+	turnLED(LEDRED, OFF);
+	turnLED(LEDBLUE, OFF);
+
+	// turn all drive motor bits off (except PWM bits)
+	GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
 }
 
 
