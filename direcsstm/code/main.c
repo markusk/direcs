@@ -78,6 +78,8 @@
 
 
 // Private variables ---------------------------------------------------------
+__IO uint16_t ADC3ConvertedValues[2];
+
 __IO uint16_t ADC3ConvertedValue = 0;
 __IO uint32_t ADC3ConvertedVoltage = 0;
 
@@ -311,7 +313,7 @@ int main(void)
 
 				// read ADC and send answer over serial port
 				// 0 - 4095d
-				sendUInt( ADC3ConvertedValue );
+				sendUInt( ADC3ConvertedValues[0] );
 			}
 			else
 			// READ_SENSOR_8 (12 V supply)
@@ -322,7 +324,7 @@ int main(void)
 
 				// read ADC and send answer over serial port
 				// 0 - 4095d
-				sendUInt( ADC3ConvertedValue2 );
+				sendUInt( ADC3ConvertedValues[1] );
 			}
 		} // stringReceived()
 
@@ -539,9 +541,13 @@ void DMAACDinit(void)
 	GPIO_InitTypeDef      GPIO_InitStructure;
 
 
+	ADC3ConvertedValues[0] = 0;
+	ADC3ConvertedValues[1] = 0;
+
+
 	// to be safe we reset potentially enabled streams first
 	DMA_DeInit(DMA2_Stream0);
-	DMA_DeInit(DMA2_Stream1);
+//	DMA_DeInit(DMA2_Stream1);
 
 	// Enable ADC3, DMA2 and GPIO clocks ****************************************
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOC, ENABLE);
@@ -553,7 +559,7 @@ void DMAACDinit(void)
 	// Specifies the peripheral base address for DMAy Streamx
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS; // this is 0x4001224C
 
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValue; // this will hold the value
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValues; // this will hold the value
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_InitStructure.DMA_BufferSize = 1;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
@@ -593,7 +599,7 @@ void DMAACDinit(void)
 
 	DMA_Init(DMA2_Stream1, &DMA_InitStructure);
 	DMA_Cmd(DMA2_Stream1, ENABLE);
-
+/*
 	//  Function used to set the ADC configuration to the default reset state
 	ADC_DeInit();
 
@@ -609,14 +615,14 @@ void DMAACDinit(void)
 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled; // Disabled. Only relevant for multimode
 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
 	ADC_CommonInit(&ADC_CommonInitStructure);
-
+*/
 	// ADC3 Init ****************************************************************
 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  // 12 bit resolution
-	ADC_InitStructure.ADC_ScanConvMode = DISABLE;			// < < < for multi channels ?!??
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;			// < < < for multi channels ?!??
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	// alignment of data in ADC_DR after data conversion
-	ADC_InitStructure.ADC_NbrOfConversion = 1; // we scan 2 channels ?!??
+	ADC_InitStructure.ADC_NbrOfConversion = 2; // we scan 2 channels ?!??
 	ADC_Init(ADC3, &ADC_InitStructure);
 
 	// ADC3 regular channel12 configuration *************************************
