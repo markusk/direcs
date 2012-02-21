@@ -5,8 +5,6 @@ int motorControl(int motor, int power, int direction)
 
 	if (robotState == ON)
 	{
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
 
 		switch (motor)
 		{
@@ -80,15 +78,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*mp1of#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -102,15 +96,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md1cw#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -124,15 +114,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md1cc#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -141,8 +127,6 @@ int motorControl(int motor, int power, int direction)
 					// don't change the direction (motor was only turned on or off)!
 				}
 
-				// Unlocks the mutex
-				mutex->unlock();
 				break;
 
 
@@ -166,15 +150,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*mp2of#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -188,15 +168,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md2cw#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -210,15 +186,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md2cc#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -227,8 +199,6 @@ int motorControl(int motor, int power, int direction)
 					// don't change the direction (motor was only turned on or off)!
 				}
 
-				// Unlocks the mutex
-				mutex->unlock();
 				break;
 
 
@@ -252,15 +222,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*mp3of#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -274,15 +240,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md3cw#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -296,15 +258,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md3cc#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -313,8 +271,6 @@ int motorControl(int motor, int power, int direction)
 					// don't change the direction (motor was only turned on or off)!
 				}
 
-				// Unlocks the mutex
-				mutex->unlock();
 				break;
 
 
@@ -338,15 +294,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*mp4of#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -360,15 +312,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md4cw#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -382,15 +330,11 @@ int motorControl(int motor, int power, int direction)
 						{
 							if (answer == "*md4cc#")
 							{
-								// Unlock the mutex
-								mutex->unlock();
 								return 0;
 							}
 						}
 					}
 					//qDebug("ERROR sending to serial port (MotorControl)");
-					// Unlocks the mutex
-					mutex->unlock();
 					return -1;
 				}
 
@@ -399,15 +343,10 @@ int motorControl(int motor, int power, int direction)
 					// don't change the direction (motor was only turned on or off)!
 				}
 
-				// Unlocks the mutex
-				mutex->unlock();
 				break;
 		}
 
-		// Unlocks the mutex, if no case statement fits in the switch command
-		mutex->unlock();
 	} // robot is ON
-
 
 	return -1;
 }
