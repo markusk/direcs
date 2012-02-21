@@ -314,6 +314,34 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv1#");
 			}
+			else
+			// MOTOR2_OFF
+			if (strcmp(stringbuffer, "*mp2of#") == 0)
+			{
+				GPIO_ResetBits(MOTORPORT, MOTOR2BITA | MOTOR2BITB);
+				// answer with "ok"
+				put_string("*mp2of#");
+			}
+			else
+			// MOTOR 2 CLOCKWISE = forward
+			if (strcmp(stringbuffer, "*md2cw#") == 0)
+			{
+				GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
+				GPIO_SetBits(MOTORPORT, MOTOR2BITB);
+
+				// answer with "ok"
+				put_string("*md2cw#");
+			}
+			else
+			// MOTOR 2 COUNTERCLOCKWISE = backward
+			if (strcmp(stringbuffer, "*md2cc#") == 0)
+			{
+				GPIO_SetBits(MOTORPORT, MOTOR2BITA);
+				GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
+				
+				// answer with "ok"
+				put_string("*md2cc#");
+			}
 		} // stringReceived()
 
 	} // while (1)
