@@ -184,7 +184,6 @@ int main(void)
 			// RESET / INIT
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
-//				turnLED(LEDGREEN, ON);
 /*
 				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
@@ -197,9 +196,10 @@ int main(void)
 				PORTD &= ~(1<<PIN7);
 				// flashlight off
 				relais(OFF);
-				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
-				redLED(OFF);
 */
+				// green LED on. Know we know, that the program on the PC/Mac has initialised the Atmel
+				turnLED(LEDGREEN, ON);
+				
 				// answer with "ok"
 				// this answer is used to see if the robot is "on"
 				put_string("*re#");
@@ -226,10 +226,10 @@ int main(void)
 	
 				// flashlight off
 				relais(OFF);
-
-				// red LED off
-				redLED(OFF);
-
+*/
+				// green LED off
+				turnLED(LEDGREEN, OFF);
+/*
 				// d i s a b l e  watchdog!
 				watchdog(DISABLE);
 */				
