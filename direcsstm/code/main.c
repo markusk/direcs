@@ -49,7 +49,7 @@
 #define LEDBLUE					GPIO_Pin_15
 #define LEDCLOCK				RCC_AHB1Periph_GPIOD
 
-#define MOTOR1PORT				GPIOB
+#define MOTORPORT				GPIOB
 #define MOTOR1BITA				GPIO_Pin_0
 #define MOTOR1BITB				GPIO_Pin_1
 #define MOTOR2BITA				GPIO_Pin_2
@@ -58,7 +58,7 @@
 #define MOTOR3BITB				GPIO_Pin_7
 #define MOTOR4BITA				GPIO_Pin_8
 #define MOTOR4BITB				GPIO_Pin_12
-#define MOTOR1CLOCK				RCC_AHB1Periph_GPIOB
+#define MOTORCLOCK				RCC_AHB1Periph_GPIOB
 
 // TIM4, PB7, Channel 2 for motor speed (PWM)
 #define MOTORPWMPORT			GPIOB
@@ -267,7 +267,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
 				// delete Motor1 A and B bits
-				GPIO_ResetBits(MOTOR1PORT, MOTOR1BITA | MOTOR1BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB);
 				// answer with "ok"
 				put_string("*mp1of#");
 			}
@@ -276,9 +276,9 @@ int main(void)
 			if (strcmp(stringbuffer, "*md1cw#") == 0)
 			{
 				// delete Motor1 A bit
-				GPIO_ResetBits(MOTOR1PORT, MOTOR1BITA);
+				GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
 				// set Motor1 B bit
-				GPIO_SetBits(MOTOR1PORT, MOTOR1BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR1BITB);
 
 				// answer with "ok"
 				put_string("*md1cw#");
@@ -288,9 +288,9 @@ int main(void)
 			if (strcmp(stringbuffer, "*md1cc#") == 0)
 			{
 				// set Motor1 A bit
-				GPIO_SetBits(MOTOR1PORT, MOTOR1BITA);
+				GPIO_SetBits(MOTORPORT, MOTOR1BITA);
 				// delete Motor1 B bit
-				GPIO_ResetBits(MOTOR1PORT, MOTOR1BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
 				
 				// answer with "ok"
 				put_string("*md1cc#");
@@ -326,7 +326,7 @@ void clockInit()
 	RCC_AHB1PeriphClockCmd(LEDCLOCK	, ENABLE);
 
 	// GPIOD Periph clock enable for Motor bits
-	RCC_AHB1PeriphClockCmd(MOTOR1CLOCK, ENABLE);
+	RCC_AHB1PeriphClockCmd(MOTORCLOCK, ENABLE);
 
 	// Timer clock enable for Motor PWM
 	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
@@ -360,12 +360,12 @@ void gpioPortInit()
 
 	// Motor bits
 	// Configure port bits in output pushpull mode
-	GPIO_InitStructureMOTOR.GPIO_Pin = MOTOR1BITA | MOTOR1BITB; // enable motor 1 A+B
+	GPIO_InitStructureMOTOR.GPIO_Pin = MOTOR1BITA | MOTOR1BITB;
 	GPIO_InitStructureMOTOR.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructureMOTOR.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructureMOTOR.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureMOTOR.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(MOTOR1PORT, &GPIO_InitStructureMOTOR);
+	GPIO_Init(MOTORPORT, &GPIO_InitStructureMOTOR);
 
 
 	// Configure ADC pins / channel pins as analog input
