@@ -72,13 +72,14 @@
 #define SENSOR7DMACLOCK			RCC_AHB1Periph_DMA2
 #define SENSOR7ADCCLOCK			RCC_APB2Periph_ADC3
 */
+#define NUMBEROFADCHANNELS		2
 // ADC DMA stuff
 #define ADC3_DR_ADDRESS	((uint32_t)0x4001224C)
 // 0x4001224C = 0x40012000 + 0x200 for ADC3 + 0x4C for ADC_DR) see p. 51, 247 and 248 in the Referance Manual for STM32F4
 
 
 // Private variables ---------------------------------------------------------
-__IO uint16_t ADC3ConvertedValues[2];
+__IO uint16_t ADC3ConvertedValues[NUMBEROFADCHANNELS];
 __IO uint32_t ADC3ConvertedVoltage = 0;
 
 // stores the serial received command and the string which will be sent as an answer
@@ -538,7 +539,7 @@ void DMAACDinit(void)
 
 	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValues; // this will hold the converted values
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
-	DMA_InitStructure.DMA_BufferSize = 2;									 // for two AD channels !
+	DMA_InitStructure.DMA_BufferSize = NUMBEROFADCHANNELS;					 // for two AD channels !
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;					 // enabled since we use more than one AD channel!
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
@@ -575,8 +576,8 @@ void DMAACDinit(void)
 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	// alignment of data in ADC_DR after data conversion
-	ADC_InitStructure.ADC_NbrOfConversion = 1;
 	ADC_Init(ADC3, &ADC_InitStructure);
+	ADC_InitStructure.ADC_NbrOfConversion = NUMBEROFADCHANNELS;	// for two AD channels !
 
 	// ADC3 regular channel11 configuration *************************************
 	// '1' is the order (rank) of the AD channel to be scanned
