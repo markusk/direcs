@@ -149,10 +149,6 @@ int main(void)
 	// init DMA
 	DMAACDinit();
 
-	// Start ADC3 Software Conversion
-	ADC_SoftwareStartConv(ADC3);
-
-
 	// LEDs off
 	turnLED(LEDGREEN, OFF);
 	turnLED(LEDORANGE, OFF);
@@ -602,6 +598,9 @@ void DMAACDinit(void)
 
 	// Enable ADC3
 	ADC_Cmd(SENSORADC, ENABLE);
+
+	// Start AD conversion
+	ADC_SoftwareStartConv(SENSORADC);
 }
 
 
