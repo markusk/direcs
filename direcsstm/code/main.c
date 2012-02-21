@@ -123,7 +123,7 @@ void sendUInt(uint16_t value);
 char* ltoa(long value, char* result);
 int atoi(const char *s);
 
-void Delay(__IO uint32_t nCount);
+void delay(__IO uint32_t nCount);
 
 
 
@@ -586,30 +586,30 @@ void LEDblink()
 	GPIO_SetBits(GPIOD, GPIO_Pin_12);
 
 	// Insert delay
-	Delay(0x3FFFFF);
+	delay(0x3FFFFF);
 
 	// PD13 to be toggled
 	GPIO_SetBits(GPIOD, GPIO_Pin_13);
 
 	// Insert delay
-	Delay(0x3FFFFF);
+	delay(0x3FFFFF);
 
 	// PD14 to be toggled
 	GPIO_SetBits(GPIOD, GPIO_Pin_14);
 
 	// Insert delay
-	Delay(0x3FFFFF);
+	delay(0x3FFFFF);
 
 	// PD15 to be toggled
 	GPIO_SetBits(GPIOD, GPIO_Pin_15);
 
 	// Insert delay
-	Delay(0x7FFFFF);
+	delay(0x7FFFFF);
 
 	GPIO_ResetBits(GPIOD, GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);
 
 	// Insert delay
-	Delay(0xFFFFFF);
+	delay(0xFFFFFF);
 }
 */
 
@@ -697,11 +697,11 @@ char* ltoa(long value, char* result)
 
 
 /**
-	* @brief  Delay Function.
-	* @param  nCount:specifies the Delay time length.
+	* @brief  delay Function.
+	* @param  nCount:specifies the delay time length.
   * @retval None
 	*/
-void Delay(__IO uint32_t nCount)
+void delay(__IO uint32_t nCount)
 {
 	while(nCount--)
 	{
