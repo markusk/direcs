@@ -738,8 +738,8 @@ int atoi(const char *s)
 		const char *where;
 		unsigned digit;
 
-		// look for the digit in the list of digits
-		where = strchr(digits, *s);
+		// look for the digit in the list of digits (using  char * strchr ( const char *, int ); )
+		where = strchr(digits, *s); // warning: assignment makes pointer from integer without a cast
 		if (where==NULL)
 		{
 			// not found; not a digit, so stop
