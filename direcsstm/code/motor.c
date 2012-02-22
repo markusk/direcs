@@ -3,9 +3,6 @@
 
 int motorControl(int motor, int power, int direction)
 {
-	char command[64] = "bst"; // stop robot
-
-
 	switch (motor)
 	{
 		//----------------------------------------------------------------------------------
