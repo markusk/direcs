@@ -296,10 +296,22 @@ int main(void)
 			// BOTWAIT
 			if (strcmp(stringbuffer, "*bwa#") == 0)
 			{
+				motorControl(ALLMOTORS, STOP, SAME);
 				put_string("*bwa#");
 			}
+			else
+			if (strcmp(stringbuffer, "*bgo#") == 0)
+			{
+				motorControl(ALLMOTORS, START, SAME);
+				put_string("*bgo#");
+			}
+			else
+			if (strcmp(stringbuffer, "*bdf#") == 0)
+			{
+				motorControl(ALLMOTORS, FORWARD, SAME);
+				put_string("*bdf#");
+			}
 		} // stringReceived()
-
 	} // while (1)
 }
 
