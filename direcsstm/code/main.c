@@ -286,6 +286,7 @@ int main(void)
 				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
 				put_string("*md4cc#");
 			}
+			else
 			// BOTSTOP
 			if (strcmp(stringbuffer, "*bst#") == 0)
 			{
