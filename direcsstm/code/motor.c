@@ -29,21 +29,27 @@ int motorControl(int motor, int power, int direction)
 				break;
 				case BACKWARD:
 					// bot drive backward
+					return;
 					break;
 				case LEFT:
 					// bot drive left
+					return;
 					break;
 				case RIGHT:
 					// bot drive right
+					return;
 					break;
 				case TURNLEFT:
 					// bot turn left
+					return;
 					break;
 				case TURNRIGHT:
 					// bot turn right
+					return;
 					break;
 				case START:
 					// bot "go"
+					return;
 					break;
 				case STOP:
 					// bot stop
