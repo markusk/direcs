@@ -300,24 +300,28 @@ int main(void)
 				put_string("*bwa#");
 			}
 			else
+			// BOTGO = "bot go"
 			if (strcmp(stringbuffer, "*bgo#") == 0)
 			{
 				motorControl(ALLMOTORS, START, SAME);
 				put_string("*bgo#");
 			}
 			else
+			// BOTFORWARD = "bot drive forward"
 			if (strcmp(stringbuffer, "*bdf#") == 0)
 			{
 				motorControl(ALLMOTORS, FORWARD, SAME);
 				put_string("*bdf#");
 			}
 			else
+			// DRIVELEFT = "bot drive left"
 			if (strcmp(stringbuffer, "*bdl#") == 0)
 			{
 				motorControl(ALLMOTORS, LEFT, SAME);
 				put_string("*bdl#");
 			}
 			else
+			// DRIVERIGHT = "bot drive right"
 			if (strcmp(stringbuffer, "*bdr#") == 0)
 			{
 				motorControl(ALLMOTORS, RIGHT, SAME);
