@@ -311,6 +311,18 @@ int main(void)
 				motorControl(ALLMOTORS, FORWARD, SAME);
 				put_string("*bdf#");
 			}
+			else
+			if (strcmp(stringbuffer, "*bdl#") == 0)
+			{
+				motorControl(ALLMOTORS, LEFT, SAME);
+				put_string("*bdl#");
+			}
+			else
+			if (strcmp(stringbuffer, "*bdr#") == 0)
+			{
+				motorControl(ALLMOTORS, RIGHT, SAME);
+				put_string("*bdr#");
+			}
 		} // stringReceived()
 	} // while (1)
 }
