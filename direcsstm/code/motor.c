@@ -1,3 +1,6 @@
+#include "main.h"
+
+
 #define FORWARD 	10 /// Motor direction (formerly "clockwise")
 #define BACKWARD 	20 /// Motor direction (formerly "counterclockwise"
 #define LEFT		30
