@@ -29,6 +29,14 @@ int motorControl(int motor, int power, int direction)
 				break;
 				case BACKWARD:
 					// bot drive backward
+					GPIO_SetBits(MOTORPORT, MOTOR1BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
+					GPIO_SetBits(MOTORPORT, MOTOR2BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
+					GPIO_SetBits(MOTORPORT, MOTOR3BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
+					GPIO_SetBits(MOTORPORT, MOTOR4BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
 					return;
 					break;
 				case LEFT:
