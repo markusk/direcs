@@ -315,6 +315,12 @@ int main(void)
 				put_string("*bdf#");
 			}
 			else
+			// BOTBACKWARD = "bot drive backward"
+			if (strcmp(stringbuffer, "*bdb#") == 0)
+			{
+				put_string("*bdb#");
+			}
+			else
 			// DRIVELEFT = "bot drive left"
 			if (strcmp(stringbuffer, "*bdl#") == 0)
 			{
