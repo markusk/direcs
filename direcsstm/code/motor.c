@@ -89,6 +89,18 @@ int motorControl(int motor, int power, int direction)
 					break;
 				case TURNRIGHT:
 					// bot turn right
+					// MOTOR 1 COUNTERCLOCKWISE = backward
+					GPIO_SetBits(MOTORPORT, MOTOR1BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
+					// MOTOR 2 CLOCKWISE = forward
+					GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
+					GPIO_SetBits(MOTORPORT, MOTOR2BITB);
+					// MOTOR 3 COUNTERCLOCKWISE = backward
+					GPIO_SetBits(MOTORPORT, MOTOR3BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
+					// MOTOR 4 CLOCKWISE = forward
+					GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
+					GPIO_SetBits(MOTORPORT, MOTOR4BITB);
 					return;
 					break;
 				case START:
