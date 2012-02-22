@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include "stm32f4xx_conf.h"
+#include "motor.h"
 
 
 // these numbers represent the Ports of the A/D converter C  !!!
