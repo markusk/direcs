@@ -26,7 +26,7 @@ int motorControl(int motor, int power, int direction)
 					GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
 					GPIO_SetBits(MOTORPORT, MOTOR4BITB);
 					return;
-				break;
+					break;
 				case BACKWARD:
 					// bot drive backward = all motors counterclockwise
 					GPIO_SetBits(MOTORPORT, MOTOR1BITA);
@@ -57,6 +57,18 @@ int motorControl(int motor, int power, int direction)
 					break;
 				case RIGHT:
 					// bot drive right
+					// MOTOR 1 CLOCKWISE = forward
+					GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
+					GPIO_SetBits(MOTORPORT, MOTOR1BITB);
+					// MOTOR 2 COUNTERCLOCKWISE = backward
+					GPIO_SetBits(MOTORPORT, MOTOR2BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
+					// MOTOR 3 COUNTERCLOCKWISE = backward
+					GPIO_SetBits(MOTORPORT, MOTOR3BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
+					// MOTOR 4 CLOCKWISE = forward
+					GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
+					GPIO_SetBits(MOTORPORT, MOTOR4BITB);
 					return;
 					break;
 				case TURNLEFT:
