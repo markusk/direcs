@@ -311,6 +311,18 @@ int main(void)
 				// answer with "ok"
 				put_string("*md4cc#");
 			}
+			// BOTSTOP
+			if (strcmp(stringbuffer, "*bst#") == 0)
+			{
+				motorControl(ALLMOTORS, STOP, SAME);
+				put_string("*bst#");
+			}
+			else
+			// BOTWAIT
+			if (strcmp(stringbuffer, "*bwa#") == 0)
+			{
+				put_string("*bwa#");
+			}
 		} // stringReceived()
 
 	} // while (1)
