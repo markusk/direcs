@@ -323,6 +323,20 @@ int main(void)
 				motorControl(ALLMOTORS, RIGHT, SAME);
 				put_string("*bdr#");
 			}
+			else
+			// TURNLEFT = "bot turn left"
+			if (strcmp(stringbuffer, "*btl#") == 0)
+			{
+				motorControl(ALLMOTORS, TURNLEFT, SAME);
+				put_string("*btl#");
+			}
+			else
+			// TURNRIGHT = "bot turn right"
+			if (strcmp(stringbuffer, "*btr#") == 0)
+			{
+				motorControl(ALLMOTORS, TURNRIGHT, SAME);
+				put_string("*btr#");
+			}
 		} // stringReceived()
 	} // while (1)
 }
