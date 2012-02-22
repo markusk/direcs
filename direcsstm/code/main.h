@@ -18,9 +18,30 @@
 #define SENSORMOTOR1			38 // ADC14
 #define SENSORMOTOR2			39 // ADC15
 
-// just nice to have
+#define FORWARD 				10 /// Motor direction (formerly "clockwise")
+#define BACKWARD 				20 /// Motor direction (formerly "counterclockwise"
+#define LEFT					30
+#define RIGHT					40
+#define TURNLEFT				50
+#define TURNRIGHT				60
+#define START					70
+#define STOP					80
+#define WAIT					90
+// #define DIAGONAL_FORWARD_LEFT
+// #define DIAGONAL_FORWARD_RIGHT
+// #define DIAGONAL_BACKWARD_LEFT
+// #define DIAGONAL_BACKWARD_RIGHT
+
+#define SAME 					200 /// Motor direction/power "same like before"
+#define MOTOR1    				210 /// Motor 1 front left
+#define MOTOR2    				220 /// Motor 2 front right
+#define MOTOR3    				230 /// Motor 3 back left
+#define MOTOR4    				240 /// Motor 4 back right
+#define ALLMOTORS 				250 /// used for letting the robot getting only one command for all motors (like 'forward all').
+
 #define ON						1
 #define OFF						0
+
 
 // The port bits -------------------------------------------------------------
 #define LEDPORT					GPIOD
