@@ -473,11 +473,14 @@ void DMAACDinit(void)
 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
 	DMA_InitTypeDef       DMA_InitStructure;
 	GPIO_InitTypeDef      GPIO_InitStructure;
+	int n=0;
 
 
-	ADC3ConvertedValues[0] = 0;
-	ADC3ConvertedValues[1] = 0;
-
+	// init array of ADC results
+	for (n=0; n<NUMBEROFADCHANNELS; n++)
+	{
+		ADC3ConvertedValues[n] = 0;
+	}
 
 	// to be safe we reset potentially enabled streams first
 	DMA_DeInit(SENSORDMASTREAM);
