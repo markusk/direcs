@@ -19,11 +19,8 @@
  *************************************************************************/
 
 #include "main.h"
-
-
-
-#include <stdlib.h>
 #include "stm32f4xx_conf.h"
+#include <stdlib.h>
 
 
 // Private variables ---------------------------------------------------------
@@ -66,8 +63,6 @@ char* ltoa(long value, char* result);
 int atoi(const char *s);
 
 void delay(__IO uint32_t nCount);
-
-
 
 
 /**
