@@ -26,6 +26,13 @@
 #include "stm32f4xx_conf.h"
 
 
+// Private variables ---------------------------------------------------------
+__IO uint16_t ADC3ConvertedValues[NUMBEROFADCHANNELS];
+__IO uint32_t ADC3ConvertedVoltage = 0;
+
+// stores the serial received command and the string which will be sent as an answer
+char stringbuffer[64];
+int i;
 
 
 // the prototypes ------------------------------------------------------------
