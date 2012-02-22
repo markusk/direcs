@@ -66,5 +66,17 @@
 
 #define NUMBEROFADCHANNELS		2
 
+// ADC DMA stuff
+#define ADC3_DR_ADDRESS			0x4001224C
+// 0x4001224C = 0x40012000 + 0x200 for ADC3 + 0x4C for ADC_DR) see p. 51, 247 and 248 in the Referance Manual for STM32F4
+
+// Private variables ---------------------------------------------------------
+__IO uint16_t ADC3ConvertedValues[NUMBEROFADCHANNELS];
+__IO uint32_t ADC3ConvertedVoltage = 0;
+
+// stores the serial received command and the string which will be sent as an answer
+char stringbuffer[64];
+int i;
+
 
 #endif
