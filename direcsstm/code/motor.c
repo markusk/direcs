@@ -16,7 +16,7 @@ int motorControl(int motor, int power, int direction)
 			switch (direction)
 			{
 				case FORWARD:
-					// bot drive forward
+					// bot drive forward = all motors clockwise
 					GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
 					GPIO_SetBits(MOTORPORT, MOTOR1BITB);
 					GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
@@ -28,7 +28,7 @@ int motorControl(int motor, int power, int direction)
 					return;
 				break;
 				case BACKWARD:
-					// bot drive backward
+					// bot drive backward = all motors counterclockwise
 					GPIO_SetBits(MOTORPORT, MOTOR1BITA);
 					GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
 					GPIO_SetBits(MOTORPORT, MOTOR2BITA);
@@ -41,6 +41,18 @@ int motorControl(int motor, int power, int direction)
 					break;
 				case LEFT:
 					// bot drive left
+					// MOTOR 1 COUNTERCLOCKWISE = backward
+					GPIO_SetBits(MOTORPORT, MOTOR1BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
+					// MOTOR 2 CLOCKWISE = forward
+					GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
+					GPIO_SetBits(MOTORPORT, MOTOR2BITB);
+					// MOTOR 3 CLOCKWISE = forward
+					GPIO_ResetBits(MOTORPORT, MOTOR3BITA);
+					GPIO_SetBits(MOTORPORT, MOTOR3BITB);
+					// MOTOR 4 COUNTERCLOCKWISE = backward
+					GPIO_SetBits(MOTORPORT, MOTOR4BITA);
+					GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
 					return;
 					break;
 				case RIGHT:
@@ -57,7 +69,7 @@ int motorControl(int motor, int power, int direction)
 					break;
 				case START:
 					// bot "go"
-					// bot drive forward
+					// bot drive forward = all motors clockwise
 					GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
 					GPIO_SetBits(MOTORPORT, MOTOR1BITB);
 					GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
