@@ -179,33 +179,23 @@ int main(void)
 			// MOTOR 1 OFF
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
-				// delete Motor1 A and B bits
 				GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB);
-				// answer with "ok"
 				put_string("*mp1of#");
 			}
 			else
 			// MOTOR 1 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md1cw#") == 0)
 			{
-				// delete Motor1 A bit
 				GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
-				// set Motor1 B bit
 				GPIO_SetBits(MOTORPORT, MOTOR1BITB);
-
-				// answer with "ok"
 				put_string("*md1cw#");
 			}
 			else
 			// MOTOR 1 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md1cc#") == 0)
 			{
-				// set Motor1 A bit
 				GPIO_SetBits(MOTORPORT, MOTOR1BITA);
-				// delete Motor1 B bit
 				GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
-				
-				// answer with "ok"
 				put_string("*md1cc#");
 			}
 			else
@@ -232,7 +222,6 @@ int main(void)
 			if (strcmp(stringbuffer, "*mp2of#") == 0)
 			{
 				GPIO_ResetBits(MOTORPORT, MOTOR2BITA | MOTOR2BITB);
-				// answer with "ok"
 				put_string("*mp2of#");
 			}
 			else
@@ -241,8 +230,6 @@ int main(void)
 			{
 				GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
 				GPIO_SetBits(MOTORPORT, MOTOR2BITB);
-
-				// answer with "ok"
 				put_string("*md2cw#");
 			}
 			else
@@ -251,8 +238,6 @@ int main(void)
 			{
 				GPIO_SetBits(MOTORPORT, MOTOR2BITA);
 				GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
-				
-				// answer with "ok"
 				put_string("*md2cc#");
 			}
 			else
@@ -260,7 +245,6 @@ int main(void)
 			if (strcmp(stringbuffer, "*mp3of#") == 0)
 			{
 				GPIO_ResetBits(MOTORPORT, MOTOR3BITA | MOTOR3BITB);
-				// answer with "ok"
 				put_string("*mp3of#");
 			}
 			else
@@ -269,8 +253,6 @@ int main(void)
 			{
 				GPIO_ResetBits(MOTORPORT, MOTOR3BITA);
 				GPIO_SetBits(MOTORPORT, MOTOR3BITB);
-
-				// answer with "ok"
 				put_string("*md3cw#");
 			}
 			else
@@ -279,8 +261,6 @@ int main(void)
 			{
 				GPIO_SetBits(MOTORPORT, MOTOR3BITA);
 				GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
-				
-				// answer with "ok"
 				put_string("*md3cc#");
 			}
 			else
@@ -288,7 +268,6 @@ int main(void)
 			if (strcmp(stringbuffer, "*mp4of#") == 0)
 			{
 				GPIO_ResetBits(MOTORPORT, MOTOR4BITA | MOTOR4BITB);
-				// answer with "ok"
 				put_string("*mp4of#");
 			}
 			else
@@ -297,8 +276,6 @@ int main(void)
 			{
 				GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
 				GPIO_SetBits(MOTORPORT, MOTOR4BITB);
-
-				// answer with "ok"
 				put_string("*md4cw#");
 			}
 			else
@@ -307,8 +284,6 @@ int main(void)
 			{
 				GPIO_SetBits(MOTORPORT, MOTOR4BITA);
 				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
-				
-				// answer with "ok"
 				put_string("*md4cc#");
 			}
 			// BOTSTOP
