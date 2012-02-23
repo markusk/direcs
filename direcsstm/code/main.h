@@ -65,6 +65,9 @@
 // TIM4, PB7, Channel 2 for motor speed (PWM)
 #define MOTORPWMPORT			GPIOB
 #define MOTOR1PWMBIT			GPIO_Pin_7
+#define MOTOR2PWMBIT			GPIO_Pin_7
+#define MOTOR3PWMBIT			GPIO_Pin_7
+#define MOTOR4PWMBIT			GPIO_Pin_7
 #define MOTORPWMTIMBIT			GPIO_PinSource7
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOE
 #define MOTORPWMTIMER			TIM1
