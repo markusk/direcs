@@ -531,6 +531,9 @@ void timerInit(void)
 
 	// Connect TIM pin to Alternate Function (AF)
 	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR1PWMTIMBIT, MOTORPWMAF);
+	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR2PWMTIMBIT, MOTORPWMAF);
+	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR3PWMTIMBIT, MOTORPWMAF);
+	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR4PWMTIMBIT, MOTORPWMAF);
 
 	// Timer base configuration
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
