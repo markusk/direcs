@@ -78,7 +78,7 @@
 #define	MOTORPWMCHANNEL2		ON
 #define	MOTORPWMCHANNEL3		ON
 #define	MOTORPWMCHANNEL4		ON
-#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM1
+#define MOTORPWMTIMCLOCK		RCC_APB2Periph_TIM1
 #define MOTORPWMAF 				GPIO_AF_TIM1
 
 // ADC and DMA for battery / voltage sensors
