@@ -59,7 +59,7 @@
 #define MOTOR3BITA				GPIO_Pin_5
 #define MOTOR3BITB				GPIO_Pin_7
 #define MOTOR4BITA				GPIO_Pin_8
-#define MOTOR4BITB				GPIO_Pin_12
+#define MOTOR4BITB				GPIO_Pin_14
 #define MOTORCLOCK				RCC_AHB1Periph_GPIOB
 
 // TIM4, PB7, Channel 2 for motor speed (PWM)
