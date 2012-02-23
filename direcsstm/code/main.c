@@ -522,7 +522,7 @@ void timerInit(void)
 	PulseDurationInMicroSeconds = 50;
 
 	// Set PWM Port, Pin and method
-	GPIO_InitStructureTimer.GPIO_Pin = MOTOR1PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Pin = MOTOR1PWMBIT | MOTOR2PWMBIT | MOTOR3PWMBIT | MOTOR3PWMBIT;
 	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
