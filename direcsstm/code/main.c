@@ -548,24 +548,28 @@ void timerInit(void)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
-	switch (MOTORPWMCHANNEL)
+	if (MOTORPWMCHANNEL1 == ON)
 	{
-		case 1:
-			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-			break;
-		case 2:
-			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-			break;
-		case 3:
-			TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-			break;
-		case 4:
-			TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-			break;
+		TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+		TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+	}
+
+	if (MOTORPWMCHANNEL2 == ON)
+	{
+		TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+		TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+	}
+
+	if (MOTORPWMCHANNEL3 == ON)
+	{
+		TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+		TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+	}
+
+	if (MOTORPWMCHANNEL4 == ON)
+	{
+		TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
+		TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
 	}
 
 	// preload timer config
