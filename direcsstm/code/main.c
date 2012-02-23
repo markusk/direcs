@@ -179,23 +179,23 @@ int main(void)
 			// MOTOR 1 OFF
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A | MOTOR1B);
 				put_string("*mp1of#");
 			}
 			else
 			// MOTOR 1 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md1cw#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR1BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A);
+				GPIO_SetBits(MOTORPORT, MOTOR1B);
 				put_string("*md1cw#");
 			}
 			else
 			// MOTOR 1 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md1cc#") == 0)
 			{
-				GPIO_SetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR1A);
+				GPIO_ResetBits(MOTORPORT, MOTOR1B);
 				put_string("*md1cc#");
 			}
 			else
@@ -221,69 +221,69 @@ int main(void)
 			// MOTOR 2 OFF
 			if (strcmp(stringbuffer, "*mp2of#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITA | MOTOR2BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR2A | MOTOR2B);
 				put_string("*mp2of#");
 			}
 			else
 			// MOTOR 2 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md2cw#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR2BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR2A);
+				GPIO_SetBits(MOTORPORT, MOTOR2B);
 				put_string("*md2cw#");
 			}
 			else
 			// MOTOR 2 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md2cc#") == 0)
 			{
-				GPIO_SetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR2A);
+				GPIO_ResetBits(MOTORPORT, MOTOR2B);
 				put_string("*md2cc#");
 			}
 			else
 			// MOTOR 3 OFF
 			if (strcmp(stringbuffer, "*mp3of#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITA | MOTOR3BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR3A | MOTOR3B);
 				put_string("*mp3of#");
 			}
 			else
 			// MOTOR 3 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md3cw#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR3BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR3A);
+				GPIO_SetBits(MOTORPORT, MOTOR3B);
 				put_string("*md3cw#");
 			}
 			else
 			// MOTOR 3 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md3cc#") == 0)
 			{
-				GPIO_SetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR3A);
+				GPIO_ResetBits(MOTORPORT, MOTOR3B);
 				put_string("*md3cc#");
 			}
 			else
 			// MOTOR 4 OFF
 			if (strcmp(stringbuffer, "*mp4of#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITA | MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR4A | MOTOR4B);
 				put_string("*mp4of#");
 			}
 			else
 			// MOTOR 4 CLOCKWISE = forward
 			if (strcmp(stringbuffer, "*md4cw#") == 0)
 			{
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR4A);
+				GPIO_SetBits(MOTORPORT, MOTOR4B);
 				put_string("*md4cw#");
 			}
 			else
 			// MOTOR 4 COUNTERCLOCKWISE = backward
 			if (strcmp(stringbuffer, "*md4cc#") == 0)
 			{
-				GPIO_SetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR4A);
+				GPIO_ResetBits(MOTORPORT, MOTOR4B);
 				put_string("*md4cc#");
 			}
 			else
@@ -291,7 +291,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*bst#") == 0)
 			{
 				// turn all drive motor bits off (except PWM bits)
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A | MOTOR1B | MOTOR2A | MOTOR2B | MOTOR3A | MOTOR3B | MOTOR4A | MOTOR4B);
 				put_string("*bst#");
 			}
 			else
@@ -299,7 +299,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*bwa#") == 0)
 			{
 				// turn all drive motor bits off (except PWM bits)
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A | MOTOR1B | MOTOR2A | MOTOR2B | MOTOR3A | MOTOR3B | MOTOR4A | MOTOR4B);
 				put_string("*bwa#");
 			}
 			else
@@ -307,14 +307,14 @@ int main(void)
 			if (strcmp(stringbuffer, "*bgo#") == 0)
 			{
 				// bot drive forward = all motors clockwise
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR1BITB);
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR2BITB);
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR3BITB);
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A);
+				GPIO_SetBits(MOTORPORT, MOTOR1B);
+				GPIO_ResetBits(MOTORPORT, MOTOR2A);
+				GPIO_SetBits(MOTORPORT, MOTOR2B);
+				GPIO_ResetBits(MOTORPORT, MOTOR3A);
+				GPIO_SetBits(MOTORPORT, MOTOR3B);
+				GPIO_ResetBits(MOTORPORT, MOTOR4A);
+				GPIO_SetBits(MOTORPORT, MOTOR4B);
 				put_string("*bgo#");
 			}
 			else
@@ -322,14 +322,14 @@ int main(void)
 			if (strcmp(stringbuffer, "*bdf#") == 0)
 			{
 				// bot drive forward = all motors clockwise
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR1BITB);
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR2BITB);
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR3BITB);
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A);
+				GPIO_SetBits(MOTORPORT, MOTOR1B);
+				GPIO_ResetBits(MOTORPORT, MOTOR2A);
+				GPIO_SetBits(MOTORPORT, MOTOR2B);
+				GPIO_ResetBits(MOTORPORT, MOTOR3A);
+				GPIO_SetBits(MOTORPORT, MOTOR3B);
+				GPIO_ResetBits(MOTORPORT, MOTOR4A);
+				GPIO_SetBits(MOTORPORT, MOTOR4B);
 				put_string("*bdf#");
 			}
 			else
@@ -337,14 +337,14 @@ int main(void)
 			if (strcmp(stringbuffer, "*bdb#") == 0)
 			{
 				// bot drive backward = all motors counterclockwise
-				GPIO_SetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
-				GPIO_SetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
-				GPIO_SetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
-				GPIO_SetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR1A);
+				GPIO_ResetBits(MOTORPORT, MOTOR1B);
+				GPIO_SetBits(MOTORPORT, MOTOR2A);
+				GPIO_ResetBits(MOTORPORT, MOTOR2B);
+				GPIO_SetBits(MOTORPORT, MOTOR3A);
+				GPIO_ResetBits(MOTORPORT, MOTOR3B);
+				GPIO_SetBits(MOTORPORT, MOTOR4A);
+				GPIO_ResetBits(MOTORPORT, MOTOR4B);
 				put_string("*bdb#");
 			}
 			else
@@ -353,17 +353,17 @@ int main(void)
 			{
 				// bot drive left
 				// MOTOR 1 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR1A);
+				GPIO_ResetBits(MOTORPORT, MOTOR1B);
 				// MOTOR 2 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR2BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR2A);
+				GPIO_SetBits(MOTORPORT, MOTOR2B);
 				// MOTOR 3 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR3BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR3A);
+				GPIO_SetBits(MOTORPORT, MOTOR3B);
 				// MOTOR 4 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR4A);
+				GPIO_ResetBits(MOTORPORT, MOTOR4B);
 				put_string("*bdl#");
 			}
 			else
@@ -372,17 +372,17 @@ int main(void)
 			{
 				// bot drive right
 				// MOTOR 1 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR1BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A);
+				GPIO_SetBits(MOTORPORT, MOTOR1B);
 				// MOTOR 2 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR2A);
+				GPIO_ResetBits(MOTORPORT, MOTOR2B);
 				// MOTOR 3 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR3A);
+				GPIO_ResetBits(MOTORPORT, MOTOR3B);
 				// MOTOR 4 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR4A);
+				GPIO_SetBits(MOTORPORT, MOTOR4B);
 				put_string("*bdr#");
 			}
 			else
@@ -391,17 +391,17 @@ int main(void)
 			{
 				// bot turn left
 				// MOTOR 1 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR1BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR1A);
+				GPIO_SetBits(MOTORPORT, MOTOR1B);
 				// MOTOR 2 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR2A);
+				GPIO_ResetBits(MOTORPORT, MOTOR2B);
 				// MOTOR 3 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR3BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR3A);
+				GPIO_SetBits(MOTORPORT, MOTOR3B);
 				// MOTOR 4 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR4A);
+				GPIO_ResetBits(MOTORPORT, MOTOR4B);
 				put_string("*btl#");
 			}
 			else
@@ -410,17 +410,17 @@ int main(void)
 			{
 				// bot turn right
 				// MOTOR 1 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR1BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR1BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR1A);
+				GPIO_ResetBits(MOTORPORT, MOTOR1B);
 				// MOTOR 2 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR2BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR2BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR2A);
+				GPIO_SetBits(MOTORPORT, MOTOR2B);
 				// MOTOR 3 COUNTERCLOCKWISE = backward
-				GPIO_SetBits(MOTORPORT, MOTOR3BITA);
-				GPIO_ResetBits(MOTORPORT, MOTOR3BITB);
+				GPIO_SetBits(MOTORPORT, MOTOR3A);
+				GPIO_ResetBits(MOTORPORT, MOTOR3B);
 				// MOTOR 4 CLOCKWISE = forward
-				GPIO_ResetBits(MOTORPORT, MOTOR4BITA);
-				GPIO_SetBits(MOTORPORT, MOTOR4BITB);
+				GPIO_ResetBits(MOTORPORT, MOTOR4A);
+				GPIO_SetBits(MOTORPORT, MOTOR4B);
 				put_string("*btr#");
 			}
 		} // stringReceived()
@@ -437,7 +437,7 @@ void resetRobot(void)
 	turnLED(LEDBLUE, OFF);
 
 	// turn all drive motor bits off (except PWM bits)
-	GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
+	GPIO_ResetBits(MOTORPORT, MOTOR1A | MOTOR1B | MOTOR2A | MOTOR2B | MOTOR3A | MOTOR3B | MOTOR4A | MOTOR4B);
 }
 
 
@@ -481,7 +481,7 @@ void gpioPortInit()
 
 	// Motor bits
 	// Configure port bits in output pushpull mode
-	GPIO_InitStructureMOTOR.GPIO_Pin = MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB;
+	GPIO_InitStructureMOTOR.GPIO_Pin = MOTOR1A | MOTOR1B | MOTOR2A | MOTOR2B | MOTOR3A | MOTOR3B | MOTOR4A | MOTOR4B;
 	GPIO_InitStructureMOTOR.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructureMOTOR.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructureMOTOR.GPIO_Speed = GPIO_Speed_100MHz;
