@@ -8,7 +8,18 @@
 
 // The port bits -------------------------------------------------------------
 
-// TIM4, PB7 (channel 2)
+// okay, and ~50 micro secs
+#define MOTORPWMTIMER			TIM2
+#define MOTORPWMAF 				GPIO_AF_TIM2
+#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM2
+#define B1_OR_B2_TIMPERIPH		1
+#define	MOTORPWMCHANNEL			4
+#define MOTORPWMPORT			GPIOB
+#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
+#define MOTORPWMBIT				GPIO_Pin_11
+#define MOTORPWMTIMBIT			GPIO_PinSource11
+
+/* okay, ~22 micro secs
 #define MOTORPWMTIMER			TIM1
 #define MOTORPWMAF 				GPIO_AF_TIM1
 #define MOTORPWMTIMCLOCK		RCC_APB2Periph_TIM1
@@ -18,7 +29,7 @@
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOE
 #define MOTORPWMBIT				GPIO_Pin_9
 #define MOTORPWMTIMBIT			GPIO_PinSource9
-
+*/
 
 // the prototypes ------------------------------------------------------------
 int main(void);
