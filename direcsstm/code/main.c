@@ -147,6 +147,13 @@ void TimerInit(void)
 
 	// enable timer / counter
 	TIM_Cmd(MOTORPWMTIMER, ENABLE);
+
+	// these feature is only valid for TIM1 and TIM8
+	if ((MOTORPWMTIMER == TIM1) || (MOTORPWMTIMER == TIM8))
+	{
+		// Main Output Enable
+		TIM_CtrlPWMOutputs(MOTORPWMTIMER, ENABLE);
+	}
 }
 
 
