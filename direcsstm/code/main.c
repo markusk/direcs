@@ -13,10 +13,10 @@
 #define MOTORPWMAF 				GPIO_AF_TIM1
 #define MOTORPWMTIMCLOCK		RCC_APB2Periph_TIM1
 #define	MOTORPWMCHANNEL			1
-#define MOTORPWMPORT			GPIOA
-#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOA
-#define MOTORPWMBIT				GPIO_Pin_8
-#define MOTORPWMTIMBIT			GPIO_PinSource8
+#define MOTORPWMPORT			GPIOE
+#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOE
+#define MOTORPWMBIT				GPIO_Pin_9
+#define MOTORPWMTIMBIT			GPIO_PinSource9
 
 
 // the prototypes ------------------------------------------------------------
