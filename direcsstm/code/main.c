@@ -89,6 +89,8 @@ void TimerInit(void)
 
 
 	// Timer base configuration
+//	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure); // what for?
+
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
 	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
