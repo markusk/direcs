@@ -17,14 +17,14 @@
 
 // ok kein übersprechen!
 // TIM4, PB7 (channel 2)
-#define MOTORPWMTIMER			TIM4
-#define	MOTORPWMCHANNEL			2
-#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM4
-#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
-#define MOTORPWMAF 				GPIO_AF_TIM4
-#define MOTORPWMPORT			GPIOB
-#define MOTORPWMBIT				GPIO_Pin_7
-#define MOTORPWMTIMBIT			GPIO_PinSource7
+#define MOTORPWMTIMER			TIM1
+#define	MOTORPWMCHANNEL			1
+#define MOTORPWMTIMCLOCK		RCC_APB2Periph_TIM1
+#define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOE
+#define MOTORPWMAF 				GPIO_AF_TIM1
+#define MOTORPWMPORT			GPIOE
+#define MOTORPWMBIT				GPIO_Pin_9
+#define MOTORPWMTIMBIT			GPIO_PinSource9
 
 
 /* übersprechen auf PD12, TIM4, channel 1
@@ -138,6 +138,13 @@ void TimerInit(void)
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
 	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+
+	// this feature is only valid for TIM1 and TIM8
+	if ((MOTORPWMTIMER == TIM1) || (MOTORPWMTIMER == TIM8))
+	{
+		TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+	}
+
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
 	// basic timer init
