@@ -12,6 +12,7 @@
 #define MOTORPWMTIMER			TIM1
 #define MOTORPWMAF 				GPIO_AF_TIM1
 #define MOTORPWMTIMCLOCK		RCC_APB2Periph_TIM1
+#define B1_OR_B2_TIMPERIPH		1
 #define	MOTORPWMCHANNEL			1
 #define MOTORPWMPORT			GPIOE
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOE
@@ -49,8 +50,15 @@ int main(void)
 void clockInit()
 {
 	// Timer clock enable for Motor PWM
-//	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
-	RCC_APB2PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+	if (B1_OR_B2_TIMPERIPH == 1)
+	{
+		RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+	}
+
+	if (B1_OR_B2_TIMPERIPH == 2)
+	{
+		RCC_APB2PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+	}
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
