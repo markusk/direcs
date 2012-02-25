@@ -157,6 +157,16 @@ void TimerInit(void)
 	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
+	// these feature is only valid for TIM1 and TIM8
+	if ((MOTORPWMTIMER == TIM1) || (MOTORPWMTIMER == TIM8))
+	{
+		TIM_OCInitStructure.TIM_OutputNState = TIM_OutputNState_Disable;  // Specifies the TIM complementary Output Compare state.
+		TIM_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_High;   // Specifies the complementary output polarity. < < < not in use, so not relevant!
+		TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Reset;   // Specifies the TIM Output Compare pin state during Idle state.
+		TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCNIdleState_Reset; // Specifies the TIM Output Compare pin state during Idle state.
+	}
+
+
 	// Output Compare channels
 	switch (MOTORPWMCHANNEL)
 	{
