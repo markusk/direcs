@@ -49,7 +49,8 @@ int main(void)
 void clockInit()
 {
 	// Timer clock enable for Motor PWM
-	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+//	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+	RCC_APB2PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
