@@ -20,6 +20,14 @@
 
 #include "stm32f4xx_conf.h"
 
+// The port bits -------------------------------------------------------------
+#define USARTNAME		USART3
+#define USARTPORT		GPIOD
+#define USARTPINTX		GPIO_Pin_8
+#define USARTPINRX		GPIO_Pin_9
+#define USARTAF			GPIO_AF_USART3
+#define USARTCLOCK		RCC_APB1Periph_USART3
+#define	USARTPORTCLOCK	RCC_AHB1Periph_GPIOD
 
 // Private typedef -----------------------------------------------------------
 GPIO_InitTypeDef  GPIO_InitStructure;
