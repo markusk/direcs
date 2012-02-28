@@ -7,29 +7,31 @@
 
 
 // The port bits -------------------------------------------------------------
-
+/*
 // okay, and ~50 micro secs
-#define MOTORPWMTIMER			TIM2
-#define MOTORPWMAF 				GPIO_AF_TIM2
-#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM2
+#define MOTORPWMTIMER			TIM3 // 16 bit
+#define MOTORPWMAF 				GPIO_AF_TIM3
+#define MOTORPWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define B1_OR_B2_TIMPERIPH		1
-#define	MOTORPWMCHANNEL			4
+#define	MOTORPWMCHANNEL			1
 #define MOTORPWMPORT			GPIOB
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOB
-#define MOTORPWMBIT				GPIO_Pin_11
-#define MOTORPWMTIMBIT			GPIO_PinSource11
+#define MOTORPWMBIT				GPIO_Pin_4
+#define MOTORPWMTIMBIT			GPIO_PinSource4
+*/
 
-/* okay, ~22 micro secs
-#define MOTORPWMTIMER			TIM1
+
+// not okay! Why do we get ~22 micro secs for the pulse width here ???
+#define MOTORPWMTIMER			TIM1 // 16 bit
 #define MOTORPWMAF 				GPIO_AF_TIM1
 #define MOTORPWMTIMCLOCK		RCC_APB2Periph_TIM1
-#define B1_OR_B2_TIMPERIPH		1
+#define B1_OR_B2_TIMPERIPH		2
 #define	MOTORPWMCHANNEL			1
 #define MOTORPWMPORT			GPIOE
 #define MOTORPWMPORTCLOCK		RCC_AHB1Periph_GPIOE
 #define MOTORPWMBIT				GPIO_Pin_9
 #define MOTORPWMTIMBIT			GPIO_PinSource9
-*/
+
 
 // the prototypes ------------------------------------------------------------
 int main(void);
