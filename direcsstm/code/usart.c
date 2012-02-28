@@ -271,9 +271,9 @@ void sendChar()
 		else
 		{
 			// nein, Daten senden
-			// blocking send on USART3
-			while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET);
-			USART_SendData(USART3, data);
+			// blocking send on USARTNAME
+			while (USART_GetFlagStatus(USARTNAME, USART_FLAG_TC) == RESET);
+			USART_SendData(USARTNAME, data);
 		}
 	} while (!TXcompleted);
 }
@@ -318,10 +318,10 @@ void usartInit(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-	USART_Init(USART3, &USART_InitStructure);
+	USART_Init(USARTNAME, &USART_InitStructure);
 
 	/* Enable USART3 */
-	USART_Cmd(USART3, ENABLE);
+	USART_Cmd(USARTNAME, ENABLE);
 
 	// - - - -
 
@@ -339,11 +339,11 @@ void serialBlockingReadString()
 
 
 	// blocking read on serial port USART3
-	while (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == RESET)
+	while (USART_GetFlagStatus(USARTNAME, USART_FLAG_RXNE) == RESET)
 	{
 	}
 
-	buchstabe = USART_ReceiveData(USART3);
+	buchstabe = USART_ReceiveData(USARTNAME);
 	
 	// build string
 	receiveChar(buchstabe);
