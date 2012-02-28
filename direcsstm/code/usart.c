@@ -301,8 +301,8 @@ void usartInit(void)
 	RCC_AHB1PeriphClockCmd(USARTPORTCLOCK, ENABLE);
 
 	//configure AF, Port A
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_USART3);
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_USART3);
+	GPIO_PinAFConfig(USARTPORT, GPIO_PinSource8, USARTAF);
+	GPIO_PinAFConfig(USARTPORT, GPIO_PinSource9, USARTAF);
 
 	//configure ports, &GPIO_InitStructure);
 	// TX
