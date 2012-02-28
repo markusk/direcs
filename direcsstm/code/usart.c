@@ -295,10 +295,10 @@ void usartInit(void)
 	//   GPIO_InitTypeDef GPIO_InitStructure;
 
 	//configure clock for USART
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+	RCC_APB1PeriphClockCmd(USARTCLOCK, ENABLE);
 
 	//configure clock for GPIO, Port D
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	RCC_AHB1PeriphClockCmd(USARTPORTCLOCK, ENABLE);
 
 	//configure AF, Port A
 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_USART3);
