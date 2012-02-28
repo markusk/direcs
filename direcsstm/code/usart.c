@@ -306,17 +306,17 @@ void usartInit(void)
 
 	//configure ports, &GPIO_InitStructure);
 	// TX
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+	GPIO_InitStructure.GPIO_Pin = USARTPINTX;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
+	GPIO_Init(USARTPORT, &GPIO_InitStructure);
 
 	// RX
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+	GPIO_InitStructure.GPIO_Pin = USARTPINRX;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
+	GPIO_Init(USARTPORT, &GPIO_InitStructure);
 
 	USART_Init(USARTNAME, &USART_InitStructure);
 
