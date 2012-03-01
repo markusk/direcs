@@ -453,7 +453,7 @@ void clockInit()
 	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
 
 	// Port clock enable for Motor PWM
-	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
+	RCC_AHB1PeriphClockCmd(MOTOR1PWMPORTCLOCK, ENABLE);
 
 	// Enable ADC, DMA and corresponding GPIO clocks
 	RCC_AHB1PeriphClockCmd(SENSORDMACLOCK, ENABLE);
@@ -527,10 +527,10 @@ void timerInit(void)
 	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
-	GPIO_Init(MOTORPWMPORT, &GPIO_InitStructureTimer); 
+	GPIO_Init(MOTOR1PWMPORT, &GPIO_InitStructureTimer); 
 
 	// Connect TIM pin to Alternate Function (AF)
-	GPIO_PinAFConfig(MOTORPWMPORT, MOTORPWMTIMBIT, MOTORPWMAF);
+	GPIO_PinAFConfig(MOTOR1PWMPORT, MOTORPWMTIMBIT, MOTORPWMAF);
 
 	// Timer base configuration
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
