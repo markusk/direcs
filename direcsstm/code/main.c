@@ -539,7 +539,7 @@ void timerInit(void)
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
 	// basic timer init
-	TIM_TimeBaseInit(MOTORPWMTIMER, &TIM_TimeBaseStructure);
+	TIM_TimeBaseInit(MOTOR1PWMTIMER, &TIM_TimeBaseStructure);
 
 	// configure PWM mode and duration
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
@@ -551,28 +551,28 @@ void timerInit(void)
 	switch (MOTORPWMCHANNEL)
 	{
 		case 1:
-			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC1Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 		case 2:
-			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC2Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 		case 3:
-			TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC3Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 		case 4:
-			TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC4Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 	}
 
 	// preload timer config
-	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
+	TIM_ARRPreloadConfig(MOTOR1PWMTIMER, ENABLE);
 
 	// enable timer / counter
-	TIM_Cmd(MOTORPWMTIMER, ENABLE);
+	TIM_Cmd(MOTOR1PWMTIMER, ENABLE);
 }
 
 
@@ -587,7 +587,7 @@ void timerUpdate(int speed)
 		return;
 	}
 
-	TIM_Cmd(MOTORPWMTIMER, DISABLE);
+	TIM_Cmd(MOTOR1PWMTIMER, DISABLE);
 
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
@@ -598,28 +598,28 @@ void timerUpdate(int speed)
 	switch (MOTORPWMCHANNEL)
 	{
 		case 1:
-			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC1Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 		case 2:
-			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC2Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 		case 3:
-			TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC3Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 		case 4:
-			TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+			TIM_OC4Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
 	}
 
 	// preload timer config
-	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
+	TIM_ARRPreloadConfig(MOTOR1PWMTIMER, ENABLE);
 
 	// enable timer / counter
-	TIM_Cmd(MOTORPWMTIMER, ENABLE);
+	TIM_Cmd(MOTOR1PWMTIMER, ENABLE);
 }
 
 void DMAACDinit(void)
