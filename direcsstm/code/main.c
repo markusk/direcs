@@ -548,7 +548,7 @@ void timerInit(void)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
-	switch (MOTORPWMCHANNEL)
+	switch (MOTOR1PWMCHANNEL)
 	{
 		case 1:
 			TIM_OC1Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
@@ -595,7 +595,7 @@ void timerUpdate(int speed)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
-	switch (MOTORPWMCHANNEL)
+	switch (MOTOR1PWMCHANNEL)
 	{
 		case 1:
 			TIM_OC1Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
