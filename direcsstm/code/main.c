@@ -450,7 +450,7 @@ void clockInit()
 	RCC_AHB1PeriphClockCmd(MOTORCLOCK, ENABLE);
 
 	// Timer clock enable for Motor PWM
-	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+	RCC_APB1PeriphClockCmd(MOTOR1PWMTIMCLOCK, ENABLE);
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTOR1PWMPORTCLOCK, ENABLE);
