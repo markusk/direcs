@@ -522,7 +522,7 @@ void timerInit(void)
 	PulseDurationInMicroSeconds = 50;
 
 	// Set PWM Port, Pin and method
-	GPIO_InitStructureTimer.GPIO_Pin = MOTORPWMBIT;
+	GPIO_InitStructureTimer.GPIO_Pin = MOTOR1PWMBIT;
 	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
@@ -530,7 +530,7 @@ void timerInit(void)
 	GPIO_Init(MOTOR1PWMPORT, &GPIO_InitStructureTimer); 
 
 	// Connect TIM pin to Alternate Function (AF)
-	GPIO_PinAFConfig(MOTOR1PWMPORT, MOTORPWMTIMBIT, MOTORPWMAF);
+	GPIO_PinAFConfig(MOTOR1PWMPORT, MOTOR1PWMTIMBIT, MOTORPWMAF);
 
 	// Timer base configuration
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
