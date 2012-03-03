@@ -799,7 +799,8 @@ void timerInit(void)
 
 void timerUpdate(int motor, int speed)
 {
-	TIM_OCInitTypeDef TIM_OCInitStructure;
+	TIM_OCInitTypeDef	TIM_OCInitStructure;
+	TIM_TypeDef* 		timer;
 
 
 	// are within a valid range?
@@ -807,6 +808,27 @@ void timerUpdate(int motor, int speed)
 	{
 		return;
 	}
+
+	// which timer?
+	switch (motor)
+	{
+		case MOTOR1:
+			timer = MOTOR1PWMTIMER;
+			break;
+		case MOTOR2:
+			timer = MOTOR2PWMTIMER;
+			break;
+		case MOTOR3:
+			timer = MOTOR3PWMTIMER;
+			break;
+		case MOTOR4:
+			timer = MOTOR4PWMTIMER;
+			break;
+		default:
+			// error
+			return;
+	}
+
 
 	TIM_Cmd(MOTOR1PWMTIMER, DISABLE);
 
