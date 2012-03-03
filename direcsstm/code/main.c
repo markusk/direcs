@@ -45,7 +45,7 @@ void gpioPortInit();
 void timerInit(void);
 
 // Timer speed / PWM duty cycle update
-void timerUpdate(int speed);
+void timerUpdate(int motor, int speed);
 
 // initialize DMA + ACD
 void DMAACDinit(void);
@@ -212,7 +212,7 @@ int main(void)
 				i = atoi(stringbuffer);
 
 				// set speed / PWM
-				timerUpdate( i );
+				timerUpdate(MOTOR1, i );
 
 				// answer with "ok"
 				put_string("*mv1#");
@@ -785,7 +785,7 @@ void timerInit(void)
 }
 
 
-void timerUpdate(int speed)
+void timerUpdate(int motor, int speed)
 {
 	TIM_OCInitTypeDef TIM_OCInitStructure;
 
