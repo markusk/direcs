@@ -51,6 +51,7 @@
 #define LEDBLUE					GPIO_Pin_15
 #define LEDCLOCK				RCC_AHB1Periph_GPIOD
 
+// the motor control bits (go to the motor driver board)
 #define MOTORPORT				GPIOE
 #define MOTOR1BITA				GPIO_Pin_8
 #define MOTOR1BITB				GPIO_Pin_9
@@ -105,6 +106,8 @@
 #define MOTOR4RCC_B1_OR_B2		1
 #define MOTOR4PWMAF				GPIO_AF_TIM2
 #define	MOTOR4PWMCHANNEL		3
+
+#define MOTORPWMINITIALSPEED	90 // this defines the itial speed when the ARM is powered on
 
 // ADC and DMA for battery / voltage sensors
 #define SENSORPORT				GPIOC

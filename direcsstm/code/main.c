@@ -496,11 +496,10 @@ void resetRobot(void)
 	// turn all drive motor bits off (except PWM bits)
 	GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
 
-	// @todo put this in a #define statement. @sa timerUpdate
-	timerUpdate(MOTOR1, 20);
-	timerUpdate(MOTOR2, 20);
-	timerUpdate(MOTOR3, 20);
-	timerUpdate(MOTOR4, 20);
+	timerUpdate(MOTOR1, MOTORPWMINITIALSPEED);
+	timerUpdate(MOTOR2, MOTORPWMINITIALSPEED);
+	timerUpdate(MOTOR3, MOTORPWMINITIALSPEED);
+	timerUpdate(MOTOR4, MOTORPWMINITIALSPEED);
 }
 
 
@@ -616,7 +615,7 @@ void timerInit(void)
 
 	// set pulse duration in mili seconds (HIGH time)
 	// can be up to from 0 to 99 (due to a TimerOutputClock of 10 kHz)
-	PulseDurationInMicroSeconds = 50;
+	PulseDurationInMicroSeconds = MOTORPWMINITIALSPEED;
 
 
 	//---------
