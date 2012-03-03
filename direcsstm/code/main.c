@@ -604,6 +604,9 @@ void timerInit(void)
 			TIM_OC4Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
 			TIM_OC4PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
+		default:
+			// error
+			return;
 	}
 
 	// preload timer config
@@ -661,6 +664,9 @@ void timerInit(void)
 			TIM_OC4Init(MOTOR2PWMTIMER, &TIM_OCInitStructure);
 			TIM_OC4PreloadConfig(MOTOR2PWMTIMER, TIM_OCPreload_Enable);
 			break;
+		default:
+			// error
+			return;
 	}
 
 	// preload timer config
@@ -718,6 +724,9 @@ void timerInit(void)
 			TIM_OC4Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
 			TIM_OC4PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
 			break;
+		default:
+			// error
+			return;
 	}
 
 	// preload timer config
@@ -775,6 +784,9 @@ void timerInit(void)
 			TIM_OC4Init(MOTOR4PWMTIMER, &TIM_OCInitStructure);
 			TIM_OC4PreloadConfig(MOTOR4PWMTIMER, TIM_OCPreload_Enable);
 			break;
+		default:
+			// error
+			return;
 	}
 
 	// preload timer config
@@ -822,6 +834,9 @@ void timerUpdate(int motor, int speed)
 			TIM_OC4Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
 			TIM_OC4PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
 			break;
+		default:
+			// error
+			return;
 	}
 
 	// preload timer config
