@@ -212,7 +212,7 @@ int main(void)
 				i = atoi(stringbuffer);
 
 				// set speed / PWM
-				timerUpdate(MOTOR1, i );
+				timerUpdate(MOTOR1, i);
 
 				// answer with "ok"
 				put_string("*mv1#");
@@ -254,7 +254,7 @@ int main(void)
 				i = atoi(stringbuffer);
 
 				// set speed / PWM
-				timerUpdate(MOTOR2, i );
+				timerUpdate(MOTOR2, i);
 
 				// answer with "ok"
 				put_string("*mv2#");
@@ -296,7 +296,7 @@ int main(void)
 				i = atoi(stringbuffer);
 
 				// set speed / PWM
-				timerUpdate(MOTOR3, i );
+				timerUpdate(MOTOR3, i);
 
 				// answer with "ok"
 				put_string("*mv3#");
@@ -338,7 +338,7 @@ int main(void)
 				i = atoi(stringbuffer);
 
 				// set speed / PWM
-				timerUpdate(MOTOR4, i );
+				timerUpdate(MOTOR4, i);
 
 				// answer with "ok"
 				put_string("*mv4#");
@@ -495,6 +495,12 @@ void resetRobot(void)
 
 	// turn all drive motor bits off (except PWM bits)
 	GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
+
+	// @todo put this in a #define statement. @sa timerUpdate
+	timerUpdate(MOTOR1, 20);
+	timerUpdate(MOTOR2, 20);
+	timerUpdate(MOTOR3, 20);
+	timerUpdate(MOTOR4, 20);
 }
 
 
