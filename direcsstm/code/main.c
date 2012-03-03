@@ -507,10 +507,10 @@ void timerInit(void)
 	GPIO_InitTypeDef 		GPIO_InitStructureTimer;
 	TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef		TIM_OCInitStructure; // Timer Output Compare Init structure definition
-	uint32_t TimerCounterClock = 0;
-	uint32_t TimerOutputClock = 0;
-	uint16_t PrescalerValue = 0;
-	uint32_t PulseDurationInMicroSeconds = 0;
+	uint32_t				TimerCounterClock = 0;
+	uint32_t				TimerOutputClock = 0;
+	uint16_t				PrescalerValue = 0;
+	uint32_t				PulseDurationInMicroSeconds = 0;
 
 
 	// set timer frequencies

@@ -62,7 +62,7 @@
 #define MOTOR4BITB				GPIO_Pin_15
 #define MOTORCLOCK				RCC_AHB1Periph_GPIOE
 
-// TIM4, PB7, Channel 2 for motor speed (PWM)
+// timer / PWM stuff for motor 1
 #define MOTOR1PWMPORT			GPIOC
 #define MOTOR1PWMPORTCLOCK		RCC_AHB1Periph_GPIOC
 #define MOTOR1PWMBIT			GPIO_Pin_8
@@ -71,6 +71,16 @@
 #define MOTOR1PWMTIMCLOCK		RCC_APB1Periph_TIM3
 #define MOTOR1PWMAF				GPIO_AF_TIM3
 #define	MOTOR1PWMCHANNEL		3
+
+// timer / PWM stuff for motor 2
+#define MOTOR2PWMPORT			GPIOC
+#define MOTOR2PWMPORTCLOCK		RCC_AHB1Periph_GPIOC
+#define MOTOR2PWMBIT			GPIO_Pin_9
+#define MOTOR2PWMTIMBIT			GPIO_PinSource9
+#define MOTOR2PWMTIMER			TIM3
+#define MOTOR2PWMTIMCLOCK		RCC_APB1Periph_TIM3
+#define MOTOR2PWMAF				GPIO_AF_TIM3
+#define	MOTOR2PWMCHANNEL		4
 
 // ADC and DMA for battery / voltage sensors
 #define SENSORPORT				GPIOC
