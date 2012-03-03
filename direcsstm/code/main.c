@@ -801,6 +801,7 @@ void timerUpdate(int motor, int speed)
 {
 	TIM_OCInitTypeDef	TIM_OCInitStructure;
 	TIM_TypeDef* 		timer;
+	int					channel;
 
 
 	// are within a valid range?
@@ -814,15 +815,19 @@ void timerUpdate(int motor, int speed)
 	{
 		case MOTOR1:
 			timer = MOTOR1PWMTIMER;
+			channel = MOTOR1PWMCHANNEL;
 			break;
 		case MOTOR2:
 			timer = MOTOR2PWMTIMER;
+			channel = MOTOR2PWMCHANNEL;
 			break;
 		case MOTOR3:
 			timer = MOTOR3PWMTIMER;
+			channel = MOTOR3PWMCHANNEL;
 			break;
 		case MOTOR4:
 			timer = MOTOR4PWMTIMER;
+			channel = MOTOR4PWMCHANNEL;
 			break;
 		default:
 			// error
@@ -838,7 +843,7 @@ void timerUpdate(int motor, int speed)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
-	switch (MOTOR1PWMCHANNEL)
+	switch (channel)
 	{
 		case 1:
 			TIM_OC1Init(timer, &TIM_OCInitStructure);
