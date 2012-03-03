@@ -241,6 +241,25 @@ int main(void)
 				put_string("*md2cc#");
 			}
 			else
+			// MOTOR 2 SPEED SET
+			if (strncmp(stringbuffer, "*mv2", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(MOTOR2, i );
+
+				// answer with "ok"
+				put_string("*mv2#");
+			}
+			else
 			// MOTOR 3 OFF
 			if (strcmp(stringbuffer, "*mp3of#") == 0)
 			{
@@ -264,6 +283,25 @@ int main(void)
 				put_string("*md3cc#");
 			}
 			else
+			// MOTOR 3 SPEED SET
+			if (strncmp(stringbuffer, "*mv3", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(MOTOR3, i );
+
+				// answer with "ok"
+				put_string("*mv3#");
+			}
+			else
 			// MOTOR 4 OFF
 			if (strcmp(stringbuffer, "*mp4of#") == 0)
 			{
@@ -285,6 +323,25 @@ int main(void)
 				GPIO_SetBits(MOTORPORT, MOTOR4BITA);
 				GPIO_ResetBits(MOTORPORT, MOTOR4BITB);
 				put_string("*md4cc#");
+			}
+			else
+			// MOTOR 4 SPEED SET
+			if (strncmp(stringbuffer, "*mv4", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(MOTOR4, i );
+
+				// answer with "ok"
+				put_string("*mv4#");
 			}
 			else
 			// BOTSTOP
