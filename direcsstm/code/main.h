@@ -82,6 +82,16 @@
 #define MOTOR2PWMAF				GPIO_AF_TIM3
 #define	MOTOR2PWMCHANNEL		4
 
+// timer / PWM stuff for motor 3
+#define MOTOR3PWMPORT			GPIOE
+#define MOTOR3PWMPORTCLOCK		RCC_AHB1Periph_GPIOE
+#define MOTOR3PWMBIT			GPIO_Pin_5
+#define MOTOR3PWMTIMBIT			GPIO_PinSource5
+#define MOTOR3PWMTIMER			TIM9
+#define MOTOR3PWMTIMCLOCK		RCC_APB1Periph_TIM9
+#define MOTOR3PWMAF				GPIO_AF_TIM9
+#define	MOTOR3PWMCHANNEL		1
+
 // ADC and DMA for battery / voltage sensors
 #define SENSORPORT				GPIOC
 #define SENSORPIN24VOLT			GPIO_Pin_1

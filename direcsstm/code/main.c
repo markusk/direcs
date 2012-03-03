@@ -634,6 +634,63 @@ void timerInit(void)
 
 	// enable timer / counter
 	TIM_Cmd(MOTOR2PWMTIMER, ENABLE);
+
+
+	//---------
+	// motor 3
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = MOTOR3PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(MOTOR3PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(MOTOR3PWMPORT, MOTOR3PWMTIMBIT, MOTOR3PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(MOTOR3PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (MOTOR3PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(MOTOR3PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(MOTOR3PWMTIMER, ENABLE);
 }
 
 
