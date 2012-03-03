@@ -896,7 +896,7 @@ void timerUpdate(int motor, int speed)
 
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_Pulse = speed; // set the duty cycle / pulse here!
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
