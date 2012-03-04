@@ -51,6 +51,7 @@
 #define LEDBLUE					GPIO_Pin_15
 #define LEDCLOCK				RCC_AHB1Periph_GPIOD
 
+<<<<<<< HEAD
 #define MOTORPORT				GPIOB
 #define MOTOR1A					GPIO_Pin_0
 #define MOTOR1B					GPIO_Pin_1
@@ -80,6 +81,65 @@
 #define	MOTORPWMCHANNEL4		ON
 #define MOTORPWMTIMCLOCK		RCC_APB2Periph_TIM1
 #define MOTORPWMAF 				GPIO_AF_TIM1
+=======
+// the motor control bits (go to the motor driver board)
+#define MOTORPORT				GPIOE
+#define MOTOR1BITA				GPIO_Pin_8
+#define MOTOR1BITB				GPIO_Pin_9
+#define MOTOR2BITA				GPIO_Pin_10
+#define MOTOR2BITB				GPIO_Pin_11
+#define MOTOR3BITA				GPIO_Pin_12
+#define MOTOR3BITB				GPIO_Pin_13
+#define MOTOR4BITA				GPIO_Pin_14
+#define MOTOR4BITB				GPIO_Pin_15
+#define MOTORCLOCK				RCC_AHB1Periph_GPIOE
+
+// timer / PWM stuff for motor 1
+#define MOTOR1PWMPORT			GPIOC
+#define MOTOR1PWMPORTCLOCK		RCC_AHB1Periph_GPIOC
+#define MOTOR1PWMBIT			GPIO_Pin_8
+#define MOTOR1PWMTIMBIT			GPIO_PinSource8
+#define MOTOR1PWMTIMER			TIM3
+#define MOTOR1PWMTIMCLOCK		RCC_APB1Periph_TIM3
+#define MOTOR1RCC_B1_OR_B2		1
+#define MOTOR1PWMAF				GPIO_AF_TIM3
+#define	MOTOR1PWMCHANNEL		3
+
+// timer / PWM stuff for motor 2
+#define MOTOR2PWMPORT			GPIOC
+#define MOTOR2PWMPORTCLOCK		RCC_AHB1Periph_GPIOC
+#define MOTOR2PWMBIT			GPIO_Pin_9
+#define MOTOR2PWMTIMBIT			GPIO_PinSource9
+#define MOTOR2PWMTIMER			TIM3
+#define MOTOR2PWMTIMCLOCK		RCC_APB1Periph_TIM3
+#define MOTOR2RCC_B1_OR_B2		1
+#define MOTOR2PWMAF				GPIO_AF_TIM3
+#define	MOTOR2PWMCHANNEL		4
+
+// timer / PWM stuff for motor 3
+#define MOTOR3PWMPORT			GPIOA
+#define MOTOR3PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define MOTOR3PWMBIT			GPIO_Pin_1
+#define MOTOR3PWMTIMBIT			GPIO_PinSource1
+#define MOTOR3PWMTIMER			TIM2
+#define MOTOR3PWMTIMCLOCK		RCC_APB1Periph_TIM2
+#define MOTOR3RCC_B1_OR_B2		1
+#define MOTOR3PWMAF				GPIO_AF_TIM2
+#define	MOTOR3PWMCHANNEL		2
+
+// timer / PWM stuff for motor 4
+#define MOTOR4PWMPORT			GPIOA
+#define MOTOR4PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define MOTOR4PWMBIT			GPIO_Pin_2
+#define MOTOR4PWMTIMBIT			GPIO_PinSource2
+#define MOTOR4PWMTIMER			TIM2
+#define MOTOR4PWMTIMCLOCK		RCC_APB1Periph_TIM2
+#define MOTOR4RCC_B1_OR_B2		1
+#define MOTOR4PWMAF				GPIO_AF_TIM2
+#define	MOTOR4PWMCHANNEL		3
+
+#define MOTORPWMINITIALSPEED	90 // this defines the itial speed when the ARM is powered on
+>>>>>>> 8e1d6c67c2f7bbfe77a4920942e4a049ba0def63
 
 // ADC and DMA for battery / voltage sensors
 #define SENSORPORT				GPIOC

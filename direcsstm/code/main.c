@@ -45,7 +45,7 @@ void gpioPortInit();
 void timerInit(void);
 
 // Timer speed / PWM duty cycle update
-void timerUpdate(int speed);
+void timerUpdate(int motor, int speed);
 
 // initialize DMA + ACD
 void DMAACDinit(void);
@@ -97,12 +97,12 @@ int main(void)
 		uint16_t buchstabe = 0;
 
 
-		// blocking read on serial port USART2
-		while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
+		// blocking read on serial port USART3
+		while (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == RESET)
 		{
 		}
 
-		buchstabe = USART_ReceiveData(USART2);
+		buchstabe = USART_ReceiveData(USART3);
 		
 		// build string
 		receiveChar(buchstabe);
@@ -212,7 +212,7 @@ int main(void)
 				i = atoi(stringbuffer);
 
 				// set speed / PWM
-				timerUpdate( i );
+				timerUpdate(MOTOR1, i);
 
 				// answer with "ok"
 				put_string("*mv1#");
@@ -241,6 +241,25 @@ int main(void)
 				put_string("*md2cc#");
 			}
 			else
+			// MOTOR 2 SPEED SET
+			if (strncmp(stringbuffer, "*mv2", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(MOTOR2, i);
+
+				// answer with "ok"
+				put_string("*mv2#");
+			}
+			else
 			// MOTOR 3 OFF
 			if (strcmp(stringbuffer, "*mp3of#") == 0)
 			{
@@ -264,6 +283,25 @@ int main(void)
 				put_string("*md3cc#");
 			}
 			else
+			// MOTOR 3 SPEED SET
+			if (strncmp(stringbuffer, "*mv3", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(MOTOR3, i);
+
+				// answer with "ok"
+				put_string("*mv3#");
+			}
+			else
 			// MOTOR 4 OFF
 			if (strcmp(stringbuffer, "*mp4of#") == 0)
 			{
@@ -285,6 +323,25 @@ int main(void)
 				GPIO_SetBits(MOTORPORT, MOTOR4A);
 				GPIO_ResetBits(MOTORPORT, MOTOR4B);
 				put_string("*md4cc#");
+			}
+			else
+			// MOTOR 4 SPEED SET
+			if (strncmp(stringbuffer, "*mv4", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(MOTOR4, i);
+
+				// answer with "ok"
+				put_string("*mv4#");
 			}
 			else
 			// BOTSTOP
@@ -437,7 +494,12 @@ void resetRobot(void)
 	turnLED(LEDBLUE, OFF);
 
 	// turn all drive motor bits off (except PWM bits)
-	GPIO_ResetBits(MOTORPORT, MOTOR1A | MOTOR1B | MOTOR2A | MOTOR2B | MOTOR3A | MOTOR3B | MOTOR4A | MOTOR4B);
+	GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
+
+	timerUpdate(MOTOR1, MOTORPWMINITIALSPEED);
+	timerUpdate(MOTOR2, MOTORPWMINITIALSPEED);
+	timerUpdate(MOTOR3, MOTORPWMINITIALSPEED);
+	timerUpdate(MOTOR4, MOTORPWMINITIALSPEED);
 }
 
 
@@ -450,10 +512,44 @@ void clockInit()
 	RCC_AHB1PeriphClockCmd(MOTORCLOCK, ENABLE);
 
 	// Timer clock enable for Motor PWM
-	RCC_APB1PeriphClockCmd(MOTORPWMTIMCLOCK, ENABLE);
+	if (MOTOR1RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(MOTOR1PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(MOTOR1PWMTIMCLOCK, ENABLE);
+	}
+
+	if (MOTOR2RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(MOTOR2PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(MOTOR2PWMTIMCLOCK, ENABLE);
+	}
+
+	if (MOTOR3RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(MOTOR3PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(MOTOR3PWMTIMCLOCK, ENABLE);
+	}
+
+	if (MOTOR4RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(MOTOR4PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(MOTOR4PWMTIMCLOCK, ENABLE);
+	}
 
 	// Port clock enable for Motor PWM
-	RCC_AHB1PeriphClockCmd(MOTORPWMPORTCLOCK, ENABLE);
+	RCC_AHB1PeriphClockCmd(MOTOR1PWMPORTCLOCK | MOTOR2PWMPORTCLOCK | MOTOR3PWMPORTCLOCK | MOTOR4PWMPORTCLOCK, ENABLE);
 
 	// Enable ADC, DMA and corresponding GPIO clocks
 	RCC_AHB1PeriphClockCmd(SENSORDMACLOCK, ENABLE);
@@ -507,10 +603,10 @@ void timerInit(void)
 	GPIO_InitTypeDef 		GPIO_InitStructureTimer;
 	TIM_TimeBaseInitTypeDef	TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef		TIM_OCInitStructure; // Timer Output Compare Init structure definition
-	uint32_t TimerCounterClock = 0;
-	uint32_t TimerOutputClock = 0;
-	uint16_t PrescalerValue = 0;
-	uint32_t PulseDurationInMicroSeconds = 0;
+	uint32_t				TimerCounterClock = 0;
+	uint32_t				TimerOutputClock = 0;
+	uint16_t				PrescalerValue = 0;
+	uint32_t				PulseDurationInMicroSeconds = 0;
 
 
 	// set timer frequencies
@@ -519,21 +615,22 @@ void timerInit(void)
 
 	// set pulse duration in mili seconds (HIGH time)
 	// can be up to from 0 to 99 (due to a TimerOutputClock of 10 kHz)
-	PulseDurationInMicroSeconds = 50;
+	PulseDurationInMicroSeconds = MOTORPWMINITIALSPEED;
 
+
+	//---------
+	// motor 1
+	//---------
 	// Set PWM Port, Pin and method
-	GPIO_InitStructureTimer.GPIO_Pin = MOTOR1PWMBIT | MOTOR2PWMBIT | MOTOR3PWMBIT | MOTOR3PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Pin = MOTOR1PWMBIT;
 	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
-	GPIO_Init(MOTORPWMPORT, &GPIO_InitStructureTimer); 
+	GPIO_Init(MOTOR1PWMPORT, &GPIO_InitStructureTimer);
 
 	// Connect TIM pin to Alternate Function (AF)
-	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR1PWMTIMBIT, MOTORPWMAF);
-	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR2PWMTIMBIT, MOTORPWMAF);
-	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR3PWMTIMBIT, MOTORPWMAF);
-	GPIO_PinAFConfig(MOTORPWMPORT, MOTOR4PWMTIMBIT, MOTORPWMAF);
+	GPIO_PinAFConfig(MOTOR1PWMPORT, MOTOR1PWMTIMBIT, MOTOR1PWMAF);
 
 	// Timer base configuration
 	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
@@ -542,7 +639,7 @@ void timerInit(void)
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
 	// basic timer init
-	TIM_TimeBaseInit(MOTORPWMTIMER, &TIM_TimeBaseStructure);
+	TIM_TimeBaseInit(MOTOR1PWMTIMER, &TIM_TimeBaseStructure);
 
 	// configure PWM mode and duration
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
@@ -551,41 +648,222 @@ void timerInit(void)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
-	if (MOTORPWMCHANNEL1 == ON)
+	switch (MOTOR1PWMCHANNEL)
 	{
-		TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-		TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-	}
-
-	if (MOTORPWMCHANNEL2 == ON)
-	{
-		TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-		TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-	}
-
-	if (MOTORPWMCHANNEL3 == ON)
-	{
-		TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-		TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-	}
-
-	if (MOTORPWMCHANNEL4 == ON)
-	{
-		TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-		TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+		case 1:
+			TIM_OC1Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(MOTOR1PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTOR1PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
 	}
 
 	// preload timer config
-	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
+	TIM_ARRPreloadConfig(MOTOR1PWMTIMER, ENABLE);
 
 	// enable timer / counter
-	TIM_Cmd(MOTORPWMTIMER, ENABLE);
+	TIM_Cmd(MOTOR1PWMTIMER, ENABLE);
+
+
+	//---------
+	// motor 2
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = MOTOR2PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(MOTOR2PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(MOTOR2PWMPORT, MOTOR2PWMTIMBIT, MOTOR2PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(MOTOR2PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (MOTOR2PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(MOTOR2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTOR2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(MOTOR2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTOR2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(MOTOR2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTOR2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(MOTOR2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTOR2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(MOTOR2PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(MOTOR2PWMTIMER, ENABLE);
+
+
+	//---------
+	// motor 3
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = MOTOR3PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(MOTOR3PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(MOTOR3PWMPORT, MOTOR3PWMTIMBIT, MOTOR3PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(MOTOR3PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (MOTOR3PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(MOTOR3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTOR3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(MOTOR3PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(MOTOR3PWMTIMER, ENABLE);
+
+
+	//---------
+	// motor 4
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = MOTOR4PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(MOTOR4PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(MOTOR4PWMPORT, MOTOR4PWMTIMBIT, MOTOR4PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(MOTOR4PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (MOTOR4PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(MOTOR4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(MOTOR4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(MOTOR4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(MOTOR4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(MOTOR4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(MOTOR4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(MOTOR4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(MOTOR4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(MOTOR4PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(MOTOR4PWMTIMER, ENABLE);
 }
 
 
-void timerUpdate(int speed)
+void timerUpdate(int motor, int speed)
 {
-	TIM_OCInitTypeDef TIM_OCInitStructure;
+	TIM_OCInitTypeDef	TIM_OCInitStructure;
+	TIM_TypeDef* 		timer;
+	int					channel;
 
 
 	// are within a valid range?
@@ -594,43 +872,67 @@ void timerUpdate(int speed)
 		return;
 	}
 
-	TIM_Cmd(MOTORPWMTIMER, DISABLE);
+	// which timer?
+	switch (motor)
+	{
+		case MOTOR1:
+			timer = MOTOR1PWMTIMER;
+			channel = MOTOR1PWMCHANNEL;
+			break;
+		case MOTOR2:
+			timer = MOTOR2PWMTIMER;
+			channel = MOTOR2PWMCHANNEL;
+			break;
+		case MOTOR3:
+			timer = MOTOR3PWMTIMER;
+			channel = MOTOR3PWMCHANNEL;
+			break;
+		case MOTOR4:
+			timer = MOTOR4PWMTIMER;
+			channel = MOTOR4PWMCHANNEL;
+			break;
+		default:
+			// error
+			return;
+	}
+
+
+	TIM_Cmd(timer, DISABLE);
 
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = i; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_Pulse = speed; // set the duty cycle / pulse here!
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 
 	// Output Compare channels
-	if (MOTORPWMCHANNEL1 == ON)
+	switch (channel)
 	{
-			TIM_OC1Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC1PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-	}
-
-	if (MOTORPWMCHANNEL2 == ON)
-	{
-			TIM_OC2Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC2PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-	}
-
-	if (MOTORPWMCHANNEL3 == ON)
-	{
-			TIM_OC3Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC3PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
-	}
-
-	if (MOTORPWMCHANNEL4 == ON)
-	{
-			TIM_OC4Init(MOTORPWMTIMER, &TIM_OCInitStructure);
-			TIM_OC4PreloadConfig(MOTORPWMTIMER, TIM_OCPreload_Enable);
+		case 1:
+			TIM_OC1Init(timer, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(timer, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(timer, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(timer, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(timer, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(timer, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(timer, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(timer, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
 	}
 
 	// preload timer config
-	TIM_ARRPreloadConfig(MOTORPWMTIMER, ENABLE);
+	TIM_ARRPreloadConfig(timer, ENABLE);
 
 	// enable timer / counter
-	TIM_Cmd(MOTORPWMTIMER, ENABLE);
+	TIM_Cmd(timer, ENABLE);
 }
 
 void DMAACDinit(void)

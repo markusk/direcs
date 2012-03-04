@@ -20,6 +20,14 @@
 
 #include "stm32f4xx_conf.h"
 
+// The port bits -------------------------------------------------------------
+#define USARTNAME		USART3
+#define USARTPORT		GPIOD
+#define USARTPINTX		GPIO_Pin_8
+#define USARTPINRX		GPIO_Pin_9
+#define USARTAF			GPIO_AF_USART3
+#define USARTCLOCK		RCC_APB1Periph_USART3
+#define	USARTPORTCLOCK	RCC_AHB1Periph_GPIOD
 
 // Private typedef -----------------------------------------------------------
 GPIO_InitTypeDef  GPIO_InitStructure;
@@ -263,9 +271,9 @@ void sendChar()
 		else
 		{
 			// nein, Daten senden
-			// blocking send on USART2
-			while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
-			USART_SendData(USART2, data);
+			// blocking send on USARTNAME
+			while (USART_GetFlagStatus(USARTNAME, USART_FLAG_TC) == RESET);
+			USART_SendData(USARTNAME, data);
 		}
 	} while (!TXcompleted);
 }
@@ -287,33 +295,33 @@ void usartInit(void)
 	//   GPIO_InitTypeDef GPIO_InitStructure;
 
 	//configure clock for USART
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	RCC_APB1PeriphClockCmd(USARTCLOCK, ENABLE);
 
-	//configure clock for GPIO, Port A
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	//configure clock for GPIO, Port D
+	RCC_AHB1PeriphClockCmd(USARTPORTCLOCK, ENABLE);
 
 	//configure AF, Port A
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);
+	GPIO_PinAFConfig(USARTPORT, GPIO_PinSource8, USARTAF);
+	GPIO_PinAFConfig(USARTPORT, GPIO_PinSource9, USARTAF);
 
 	//configure ports, &GPIO_InitStructure);
 	// TX
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+	GPIO_InitStructure.GPIO_Pin = USARTPINTX;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_Init(USARTPORT, &GPIO_InitStructure);
 
 	// RX
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+	GPIO_InitStructure.GPIO_Pin = USARTPINRX;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_Init(USARTPORT, &GPIO_InitStructure);
 
-	USART_Init(USART2, &USART_InitStructure);
+	USART_Init(USARTNAME, &USART_InitStructure);
 
-	/* Enable USART2 */
-	USART_Cmd(USART2, ENABLE);
+	/* Enable USART3 */
+	USART_Cmd(USARTNAME, ENABLE);
 
 	// - - - -
 
@@ -330,12 +338,12 @@ void serialBlockingReadString()
 	uint16_t buchstabe = 0;
 
 
-	// blocking read on serial port USART2
-	while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET)
+	// blocking read on serial port USART3
+	while (USART_GetFlagStatus(USARTNAME, USART_FLAG_RXNE) == RESET)
 	{
 	}
 
-	buchstabe = USART_ReceiveData(USART2);
+	buchstabe = USART_ReceiveData(USARTNAME);
 	
 	// build string
 	receiveChar(buchstabe);
