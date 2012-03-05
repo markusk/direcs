@@ -495,7 +495,7 @@ void test::testSlot()
 		}
 	}
 */
-
+/*
 	//
 	// using laser thread values !
 	//
@@ -517,6 +517,7 @@ void test::testSlot()
 		if (angle>= 270*2)
 			break;
 	}
+*/
 }
 
 
