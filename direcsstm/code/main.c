@@ -358,6 +358,106 @@ int main(void)
 				put_string("*rgb1#");
 			}
 			else
+			// RGB LED 2
+			if (strncmp(stringbuffer, "*rgb2", 5) == 0)
+			{
+				// change first five chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				stringbuffer[4] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(RGB2, i);
+
+				// answer with "ok"
+				put_string("*rgb2#");
+			}
+			else
+			// RGB LED 3
+			if (strncmp(stringbuffer, "*rgb3", 5) == 0)
+			{
+				// change first five chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				stringbuffer[4] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(RGB3, i);
+
+				// answer with "ok"
+				put_string("*rgb3#");
+			}
+			else
+			// RGB LED 4
+			if (strncmp(stringbuffer, "*rgb4", 5) == 0)
+			{
+				// change first five chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				stringbuffer[4] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(RGB4, i);
+
+				// answer with "ok"
+				put_string("*rgb4#");
+			}
+			else
+			// RGB LED 5
+			if (strncmp(stringbuffer, "*rgb5", 5) == 0)
+			{
+				// change first five chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				stringbuffer[4] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(RGB5, i);
+
+				// answer with "ok"
+				put_string("*rgb5#");
+			}
+			else
+			// RGB LED 6
+			if (strncmp(stringbuffer, "*rgb6", 5) == 0)
+			{
+				// change first five chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				stringbuffer[4] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(RGB6, i);
+
+				// answer with "ok"
+				put_string("*rgb6#");
+			}
+			else
 			// BOTSTOP
 			if (strcmp(stringbuffer, "*bst#") == 0)
 			{
