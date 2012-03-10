@@ -1003,6 +1003,306 @@ void timerInit(void)
 
 	// enable timer / counter
 	TIM_Cmd(RGB1PWMTIMER, ENABLE);
+
+
+	//---------
+	// RGB 2
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = RGB2PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(RGB2PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(RGB2PWMPORT, RGB2PWMTIMBIT, RGB2PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(RGB2PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (RGB2PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(RGB2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(RGB2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(RGB2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(RGB2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(RGB2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(RGB2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(RGB2PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(RGB2PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(RGB2PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(RGB2PWMTIMER, ENABLE);
+
+
+	//---------
+	// RGB 3
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = RGB3PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(RGB3PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(RGB3PWMPORT, RGB3PWMTIMBIT, RGB3PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(RGB3PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (RGB3PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(RGB3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(RGB3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(RGB3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(RGB3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(RGB3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(RGB3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(RGB3PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(RGB3PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(RGB3PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(RGB3PWMTIMER, ENABLE);
+
+
+	//---------
+	// RGB 4
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = RGB4PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(RGB4PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(RGB4PWMPORT, RGB4PWMTIMBIT, RGB4PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(RGB4PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (RGB4PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(RGB4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(RGB4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(RGB4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(RGB4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(RGB4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(RGB4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(RGB4PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(RGB4PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(RGB4PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(RGB4PWMTIMER, ENABLE);
+
+
+	//---------
+	// RGB 5
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = RGB5PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(RGB5PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(RGB5PWMPORT, RGB5PWMTIMBIT, RGB5PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(RGB5PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (RGB5PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(RGB5PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(RGB5PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(RGB5PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(RGB5PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(RGB5PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(RGB5PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(RGB5PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(RGB5PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(RGB5PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(RGB5PWMTIMER, ENABLE);
+
+
+	//---------
+	// RGB 6
+	//---------
+	// Set PWM Port, Pin and method
+	GPIO_InitStructureTimer.GPIO_Pin = RGB6PWMBIT;
+	GPIO_InitStructureTimer.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructureTimer.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureTimer.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureTimer.GPIO_PuPd = GPIO_PuPd_UP ;
+	GPIO_Init(RGB6PWMPORT, &GPIO_InitStructureTimer);
+
+	// Connect TIM pin to Alternate Function (AF)
+	GPIO_PinAFConfig(RGB6PWMPORT, RGB6PWMTIMBIT, RGB6PWMAF);
+
+	// Timer base configuration
+	TIM_TimeBaseStructure.TIM_Period = (uint16_t) (TimerCounterClock / TimerOutputClock);
+	TIM_TimeBaseStructure.TIM_Prescaler = (uint16_t) ((SystemCoreClock /2) / TimerCounterClock) - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	// basic timer init
+	TIM_TimeBaseInit(RGB6PWMTIMER, &TIM_TimeBaseStructure);
+
+	// configure PWM mode and duration
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStructure.TIM_Pulse = PulseDurationInMicroSeconds; // set the duty cycle / pulse here!
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// Output Compare channels
+	switch (RGB6PWMCHANNEL)
+	{
+		case 1:
+			TIM_OC1Init(RGB6PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(RGB6PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 2:
+			TIM_OC2Init(RGB6PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(RGB6PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 3:
+			TIM_OC3Init(RGB6PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(RGB6PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		case 4:
+			TIM_OC4Init(RGB6PWMTIMER, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(RGB6PWMTIMER, TIM_OCPreload_Enable);
+			break;
+		default:
+			// error
+			return;
+	}
+
+	// preload timer config
+	TIM_ARRPreloadConfig(RGB6PWMTIMER, ENABLE);
+
+	// enable timer / counter
+	TIM_Cmd(RGB6PWMTIMER, ENABLE);
 }
 
 
