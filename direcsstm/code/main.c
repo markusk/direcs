@@ -337,6 +337,25 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv4#");
 			}
+			// RGB LED 1
+			if (strncmp(stringbuffer, "*rgb1", 5) == 0)
+			{
+				// change first five chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+				stringbuffer[4] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(RGB1, i);
+
+				// answer with "ok"
+				put_string("*rgb1#");
+			}
 			else
 			// BOTSTOP
 			if (strcmp(stringbuffer, "*bst#") == 0)
@@ -490,10 +509,14 @@ void resetRobot(void)
 	// turn all drive motor bits off (except PWM bits)
 	GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
 
+	// motor PWM speed
 	timerUpdate(MOTOR1, MOTORPWMINITIALSPEED);
 	timerUpdate(MOTOR2, MOTORPWMINITIALSPEED);
 	timerUpdate(MOTOR3, MOTORPWMINITIALSPEED);
 	timerUpdate(MOTOR4, MOTORPWMINITIALSPEED);
+
+	// RGB PWM
+	timerUpdate(RGB1, RGBPWMINITIALVALUE);
 }
 
 
@@ -884,6 +907,10 @@ void timerUpdate(int timer, int speed)
 		case MOTOR4:
 			tim = MOTOR4PWMTIMER;
 			channel = MOTOR4PWMCHANNEL;
+			break;
+		case RGB1:
+			tim = RGB1PWMTIMER;
+			channel = RGB1PWMCHANNEL;
 			break;
 		default:
 			// error
