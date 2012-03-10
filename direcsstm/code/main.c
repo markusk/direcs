@@ -517,6 +517,11 @@ void resetRobot(void)
 
 	// RGB PWM
 	timerUpdate(RGB1, RGBPWMINITIALVALUE);
+	timerUpdate(RGB2, RGBPWMINITIALVALUE);
+	timerUpdate(RGB3, RGBPWMINITIALVALUE);
+	timerUpdate(RGB4, RGBPWMINITIALVALUE);
+	timerUpdate(RGB5, RGBPWMINITIALVALUE);
+	timerUpdate(RGB6, RGBPWMINITIALVALUE);
 }
 
 
