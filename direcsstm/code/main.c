@@ -581,12 +581,62 @@ void clockInit()
 		RCC_APB2PeriphClockCmd(RGB1PWMTIMCLOCK, ENABLE);
 	}
 
+	// Timer clock enable for RGB LED PWM
+	if (RGB2RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(RGB2PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(RGB2PWMTIMCLOCK, ENABLE);
+	}
+
+	// Timer clock enable for RGB LED PWM
+	if (RGB3RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(RGB3PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(RGB3PWMTIMCLOCK, ENABLE);
+	}
+
+	// Timer clock enable for RGB LED PWM
+	if (RGB4RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(RGB4PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(RGB4PWMTIMCLOCK, ENABLE);
+	}
+
+	// Timer clock enable for RGB LED PWM
+	if (RGB5RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(RGB5PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(RGB5PWMTIMCLOCK, ENABLE);
+	}
+
+	// Timer clock enable for RGB LED PWM
+	if (RGB6RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(RGB6PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(RGB6PWMTIMCLOCK, ENABLE);
+	}
+
 
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTOR1PWMPORTCLOCK | MOTOR2PWMPORTCLOCK | MOTOR3PWMPORTCLOCK | MOTOR4PWMPORTCLOCK, ENABLE);
 
 	// Port clock enable for RGB LED PWM
-	RCC_AHB1PeriphClockCmd(RGB1PWMPORTCLOCK, ENABLE);
+	RCC_AHB1PeriphClockCmd(RGB1PWMPORTCLOCK | RGB2PWMPORTCLOCK | RGB3PWMPORTCLOCK | RGB4PWMPORTCLOCK | RGB5PWMPORTCLOCK | RGB6PWMPORTCLOCK, ENABLE);
 
 	// Enable ADC, DMA and corresponding GPIO clocks
 	RCC_AHB1PeriphClockCmd(SENSORDMACLOCK, ENABLE);
