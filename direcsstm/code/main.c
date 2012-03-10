@@ -337,6 +337,7 @@ int main(void)
 				// answer with "ok"
 				put_string("*mv4#");
 			}
+			else
 			// RGB LED 1
 			if (strncmp(stringbuffer, "*rgb1", 5) == 0)
 			{
