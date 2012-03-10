@@ -39,12 +39,12 @@
 #define MOTOR4    				240 /// Motor 4 back right
 #define ALLMOTORS 				250 /// used for letting the robot getting only one command for all motors (like 'forward all').
 
-#define RGBLEFTRED				260 // the underfloor lighthing (RGB LED stripes, using PWM)
-#define RGBLEFTGREEN			270
-#define	RGBLEFTBLUE				280
-#define RGBRIGHTRED				290
-#define RGBRIGHTGREEN			300
-#define	RGBRIGHTBLUE			310
+#define RGB1					260 // the underfloor lighthing (RGB LED stripes, using PWM)
+#define RGB2					270
+#define	RGB3					280
+#define RGB4					290
+#define RGB5					300
+#define	RGB6					310
 
 
 #define ON						1
