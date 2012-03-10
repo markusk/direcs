@@ -856,7 +856,7 @@ void timerInit(void)
 void timerUpdate(int timer, int speed)
 {
 	TIM_OCInitTypeDef	TIM_OCInitStructure;
-	TIM_TypeDef* 		timer;
+	TIM_TypeDef* 		tim;
 	int					channel;
 
 
@@ -870,19 +870,19 @@ void timerUpdate(int timer, int speed)
 	switch (timer)
 	{
 		case MOTOR1:
-			timer = MOTOR1PWMTIMER;
+			tim = MOTOR1PWMTIMER;
 			channel = MOTOR1PWMCHANNEL;
 			break;
 		case MOTOR2:
-			timer = MOTOR2PWMTIMER;
+			tim = MOTOR2PWMTIMER;
 			channel = MOTOR2PWMCHANNEL;
 			break;
 		case MOTOR3:
-			timer = MOTOR3PWMTIMER;
+			tim = MOTOR3PWMTIMER;
 			channel = MOTOR3PWMCHANNEL;
 			break;
 		case MOTOR4:
-			timer = MOTOR4PWMTIMER;
+			tim = MOTOR4PWMTIMER;
 			channel = MOTOR4PWMCHANNEL;
 			break;
 		default:
@@ -891,7 +891,7 @@ void timerUpdate(int timer, int speed)
 	}
 
 
-	TIM_Cmd(timer, DISABLE);
+	TIM_Cmd(tim, DISABLE);
 
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
@@ -902,20 +902,20 @@ void timerUpdate(int timer, int speed)
 	switch (channel)
 	{
 		case 1:
-			TIM_OC1Init(timer, &TIM_OCInitStructure);
-			TIM_OC1PreloadConfig(timer, TIM_OCPreload_Enable);
+			TIM_OC1Init(tim, &TIM_OCInitStructure);
+			TIM_OC1PreloadConfig(tim, TIM_OCPreload_Enable);
 			break;
 		case 2:
-			TIM_OC2Init(timer, &TIM_OCInitStructure);
-			TIM_OC2PreloadConfig(timer, TIM_OCPreload_Enable);
+			TIM_OC2Init(tim, &TIM_OCInitStructure);
+			TIM_OC2PreloadConfig(tim, TIM_OCPreload_Enable);
 			break;
 		case 3:
-			TIM_OC3Init(timer, &TIM_OCInitStructure);
-			TIM_OC3PreloadConfig(timer, TIM_OCPreload_Enable);
+			TIM_OC3Init(tim, &TIM_OCInitStructure);
+			TIM_OC3PreloadConfig(tim, TIM_OCPreload_Enable);
 			break;
 		case 4:
-			TIM_OC4Init(timer, &TIM_OCInitStructure);
-			TIM_OC4PreloadConfig(timer, TIM_OCPreload_Enable);
+			TIM_OC4Init(tim, &TIM_OCInitStructure);
+			TIM_OC4PreloadConfig(tim, TIM_OCPreload_Enable);
 			break;
 		default:
 			// error
@@ -923,10 +923,10 @@ void timerUpdate(int timer, int speed)
 	}
 
 	// preload timer config
-	TIM_ARRPreloadConfig(timer, ENABLE);
+	TIM_ARRPreloadConfig(tim, ENABLE);
 
 	// enable timer / counter
-	TIM_Cmd(timer, ENABLE);
+	TIM_Cmd(tim, ENABLE);
 }
 
 void DMAACDinit(void)
