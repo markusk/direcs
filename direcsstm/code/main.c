@@ -45,7 +45,7 @@ void gpioPortInit();
 void timerInit(void);
 
 // Timer speed / PWM duty cycle update
-void timerUpdate(int motor, int speed);
+void timerUpdate(int timer, int speed);
 
 // initialize DMA + ACD
 void DMAACDinit(void);
@@ -859,7 +859,7 @@ void timerInit(void)
 }
 
 
-void timerUpdate(int motor, int speed)
+void timerUpdate(int timer, int speed)
 {
 	TIM_OCInitTypeDef	TIM_OCInitStructure;
 	TIM_TypeDef* 		timer;
@@ -873,7 +873,7 @@ void timerUpdate(int motor, int speed)
 	}
 
 	// which timer?
-	switch (motor)
+	switch (timer)
 	{
 		case MOTOR1:
 			timer = MOTOR1PWMTIMER;
