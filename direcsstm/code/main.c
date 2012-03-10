@@ -565,8 +565,23 @@ void clockInit()
 		RCC_APB2PeriphClockCmd(MOTOR4PWMTIMCLOCK, ENABLE);
 	}
 
+
+	// Timer clock enable for RGB LED PWM
+	if (RGB1RCC_B1_OR_B2 == 1)
+	{
+		RCC_APB1PeriphClockCmd(RGB1PWMTIMCLOCK, ENABLE);
+	}
+	else
+	{
+		RCC_APB2PeriphClockCmd(RGB1PWMTIMCLOCK, ENABLE);
+	}
+
+
 	// Port clock enable for Motor PWM
 	RCC_AHB1PeriphClockCmd(MOTOR1PWMPORTCLOCK | MOTOR2PWMPORTCLOCK | MOTOR3PWMPORTCLOCK | MOTOR4PWMPORTCLOCK, ENABLE);
+
+	// Port clock enable for RGB LED PWM
+	RCC_AHB1PeriphClockCmd(RGB1PWMPORTCLOCK, ENABLE);
 
 	// Enable ADC, DMA and corresponding GPIO clocks
 	RCC_AHB1PeriphClockCmd(SENSORDMACLOCK, ENABLE);
