@@ -1342,6 +1342,26 @@ void timerUpdate(int timer, int speed)
 			tim = RGB1PWMTIMER;
 			channel = RGB1PWMCHANNEL;
 			break;
+		case RGB2:
+			tim = RGB2PWMTIMER;
+			channel = RGB2PWMCHANNEL;
+			break;
+		case RGB3:
+			tim = RGB3PWMTIMER;
+			channel = RGB3PWMCHANNEL;
+			break;
+		case RGB4:
+			tim = RGB4PWMTIMER;
+			channel = RGB4PWMCHANNEL;
+			break;
+		case RGB5:
+			tim = RGB5PWMTIMER;
+			channel = RGB5PWMCHANNEL;
+			break;
+		case RGB6:
+			tim = RGB6PWMTIMER;
+			channel = RGB6PWMCHANNEL;
+			break;
 		default:
 			// error
 			return;
