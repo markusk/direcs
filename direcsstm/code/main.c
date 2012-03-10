@@ -24,7 +24,7 @@
 
 
 // Private variables ---------------------------------------------------------
-__IO uint16_t ADC3ConvertedValues[NUMBEROFADCHANNELS];
+__IO uint16_t ADCValues[NUMBEROFADCHANNELS];
 __IO uint32_t ADC3ConvertedVoltage = 0;
 
 // stores the serial received command and the string which will be sent as an answer
@@ -157,23 +157,17 @@ int main(void)
 			// READ_SENSOR_7 (24 V supply)
 			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
-				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
-				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
-
-				// read ADC and send answer over serial port
-				// 0 - 4095d
-				sendUInt( ADC3ConvertedValues[0] );
+				// send ADC value over serial port
+				// max. 25 Volt = 4095
+				sendUInt( ADCValues[0] );
 			}
 			else
 			// READ_SENSOR_8 (12 V supply)
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
-				// convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
-				// ADC3ConvertedVoltage = ADC3ConvertedValue * 3300 / 0xFFF;
-
-				// read ADC and send answer over serial port
-				// 0 - 4095d
-				sendUInt( ADC3ConvertedValues[1] );
+				// send ADC value over serial port
+				// max. 13 Volt = 4095
+				sendUInt( ADCValues[1] );
 			}
 			else
 			// MOTOR 1 OFF
@@ -947,7 +941,7 @@ void DMAACDinit(void)
 	// init array of ADC results
 	for (n=0; n<NUMBEROFADCHANNELS; n++)
 	{
-		ADC3ConvertedValues[n] = 0;
+		ADCValues[n] = 0;
 	}
 
 	// to be safe we reset potentially enabled streams first
@@ -959,7 +953,7 @@ void DMAACDinit(void)
 	// Specifies the peripheral base address for DMAy Streamx
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) ADC3_DR_ADDRESS;
 
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADC3ConvertedValues; // this will hold the converted values
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t) &ADCValues; // this will hold the converted values
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_InitStructure.DMA_BufferSize = NUMBEROFADCHANNELS;					 // for two AD channels !
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
