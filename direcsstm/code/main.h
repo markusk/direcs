@@ -39,6 +39,14 @@
 #define MOTOR4    				240 /// Motor 4 back right
 #define ALLMOTORS 				250 /// used for letting the robot getting only one command for all motors (like 'forward all').
 
+#define RGBLEFTRED				260 // the underfloor lighthing (RGB LED stripes, using PWM)
+#define RGBLEFTGREEN			270
+#define	RGBLEFTBLUE				280
+#define RGBRIGHTRED				290
+#define RGBRIGHTGREEN			300
+#define	RGBRIGHTBLUE			310
+
+
 #define ON						1
 #define OFF						0
 
@@ -108,6 +116,74 @@
 #define	MOTOR4PWMCHANNEL		3
 
 #define MOTORPWMINITIALSPEED	90 // this defines the itial speed when the ARM is powered on
+
+// timer / PWM stuff for RGB LED 1
+#define RGB1PWMPORT				GPIOA
+#define RGB1PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define RGB1PWMBIT				GPIO_Pin_2
+#define RGB1PWMTIMBIT			GPIO_PinSource2
+#define RGB1PWMTIMER			TIM2
+#define RGB1PWMTIMCLOCK			RCC_APB1Periph_TIM2
+#define RGB1RCC_B1_OR_B2		1
+#define RGB1PWMAF				GPIO_AF_TIM2
+#define	RGB1PWMCHANNEL			3
+
+// timer / PWM stuff for RGB LED 2
+#define RGB2PWMPORT				GPIOA
+#define RGB2PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define RGB2PWMBIT				GPIO_Pin_2
+#define RGB2PWMTIMBIT			GPIO_PinSource2
+#define RGB2PWMTIMER			TIM2
+#define RGB2PWMTIMCLOCK			RCC_APB1Periph_TIM2
+#define RGB2RCC_B1_OR_B2		1
+#define RGB2PWMAF				GPIO_AF_TIM2
+#define	RGB2PWMCHANNEL			3
+
+// timer / PWM stuff for RGB LED 3
+#define RGB3PWMPORT				GPIOA
+#define RGB3PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define RGB3PWMBIT				GPIO_Pin_2
+#define RGB3PWMTIMBIT			GPIO_PinSource2
+#define RGB3PWMTIMER			TIM2
+#define RGB3PWMTIMCLOCK			RCC_APB1Periph_TIM2
+#define RGB3RCC_B1_OR_B2		1
+#define RGB3PWMAF				GPIO_AF_TIM2
+#define	RGB3PWMCHANNEL			3
+
+// timer / PWM stuff for RGB LED 4
+#define RGB4PWMPORT				GPIOA
+#define RGB4PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define RGB4PWMBIT				GPIO_Pin_2
+#define RGB4PWMTIMBIT			GPIO_PinSource2
+#define RGB4PWMTIMER			TIM2
+#define RGB4PWMTIMCLOCK			RCC_APB1Periph_TIM2
+#define RGB4RCC_B1_OR_B2		1
+#define RGB4PWMAF				GPIO_AF_TIM2
+#define	RGB4PWMCHANNEL			3
+
+// timer / PWM stuff for RGB LED 5
+#define RGB5PWMPORT				GPIOA
+#define RGB5PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define RGB5PWMBIT				GPIO_Pin_2
+#define RGB5PWMTIMBIT			GPIO_PinSource2
+#define RGB5PWMTIMER			TIM2
+#define RGB5PWMTIMCLOCK			RCC_APB1Periph_TIM2
+#define RGB5RCC_B1_OR_B2		1
+#define RGB5PWMAF				GPIO_AF_TIM2
+#define	RGB5PWMCHANNEL			3
+
+// timer / PWM stuff for RGB LED 6
+#define RGB6PWMPORT				GPIOA
+#define RGB6PWMPORTCLOCK		RCC_AHB1Periph_GPIOA
+#define RGB6PWMBIT				GPIO_Pin_2
+#define RGB6PWMTIMBIT			GPIO_PinSource2
+#define RGB6PWMTIMER			TIM2
+#define RGB6PWMTIMCLOCK			RCC_APB1Periph_TIM2
+#define RGB6RCC_B1_OR_B2		1
+#define RGB6PWMAF				GPIO_AF_TIM2
+#define	RGB6PWMCHANNEL			3
+
+#define RGBPWMINITIALVALUE		90 // this defines the itial timer / PWM speed when the ARM is powered on (RGB LED light brightness)
 
 // ADC and DMA for battery / voltage sensors
 #define SENSORPORT				GPIOC
