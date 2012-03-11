@@ -53,6 +53,9 @@ void DMAACDinit(void);
 // turns a LED on or off
 void turnLED(int led, int state);
 
+// turns the flashing light on or off
+void flashlight(int state);
+
 // brings the bot into my own reset state
 void resetRobot(void);
 
@@ -1598,6 +1601,19 @@ void turnLED(int led, int state)
 	else
 	{
 		GPIO_ResetBits(LEDPORT, led);
+	}
+}
+
+
+void flashlight(int state)
+{
+	if (state == ON)
+	{
+		GPIO_SetBits(FLASHLIGHTPORT, FLASHLIGHT);
+	}
+	else
+	{
+		GPIO_ResetBits(FLASHLIGHTPORT, FLASHLIGHT);
 	}
 }
 
