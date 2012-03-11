@@ -631,7 +631,7 @@ void resetRobot(void)
 	turnLED(LEDBLUE, OFF);
 
 	// flashing light off
-	flashlight(FLASHLIGHT, OFF);
+	flashlight(OFF);
 
 	// turn all drive motor bits off (except PWM bits)
 	GPIO_ResetBits(MOTORPORT, MOTOR1BITA | MOTOR1BITB | MOTOR2BITA | MOTOR2BITB | MOTOR3BITA | MOTOR3BITB | MOTOR4BITA | MOTOR4BITB);
