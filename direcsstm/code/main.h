@@ -59,6 +59,10 @@
 #define LEDBLUE					GPIO_Pin_15
 #define LEDCLOCK				RCC_AHB1Periph_GPIOD
 
+#define FLASHLIGHTPORT			GPIOB
+#define FLASHLIGHT				GPIO_Pin_2
+#define FLASHLIGHTCLOCK			RCC_AHB1Periph_GPIOB
+
 // the motor control bits (go to the motor driver board)
 #define MOTORPORT				GPIOE
 #define MOTOR1BITA				GPIO_Pin_8
