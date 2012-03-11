@@ -157,6 +157,26 @@ int main(void)
 				put_string("*sl#");
 			}
 			else
+			// flashlight on
+			if (strcmp(stringbuffer, "*f0on#") == 0)
+			{
+				// flashlight on
+				flashlight(ON);
+
+				// answer
+				put_string("*f0on#");
+			}
+			else
+			// flashlight off
+			if (strcmp(stringbuffer, "*f0of#") == 0)
+			{
+				// flashlight off
+				flashlight(OFF);
+
+				// answer
+				put_string("*f0of#");
+			}
+			else
 			// READ_SENSOR_7 (24 V supply)
 			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
