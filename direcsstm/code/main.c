@@ -631,12 +631,13 @@ void resetRobot(void)
 
 void clockInit()
 {
-	// GPIOD Periph clock enable
+	// Enable Periph clock for LEDs
 	RCC_AHB1PeriphClockCmd(LEDCLOCK	, ENABLE);
 
-	// GPIOD Periph clock enable for Motor bits
 	// Enable Periph clock for flashlight
 	RCC_AHB1PeriphClockCmd(FLASHLIGHTCLOCK, ENABLE);
+
+	// Enable Periph clock for Motor bits
 	RCC_AHB1PeriphClockCmd(MOTORCLOCK, ENABLE);
 
 	// Timer clock enable for Motor PWM
