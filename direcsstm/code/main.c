@@ -635,6 +635,8 @@ void clockInit()
 	RCC_AHB1PeriphClockCmd(LEDCLOCK	, ENABLE);
 
 	// GPIOD Periph clock enable for Motor bits
+	// Enable Periph clock for flashlight
+	RCC_AHB1PeriphClockCmd(FLASHLIGHTCLOCK, ENABLE);
 	RCC_AHB1PeriphClockCmd(MOTORCLOCK, ENABLE);
 
 	// Timer clock enable for Motor PWM
