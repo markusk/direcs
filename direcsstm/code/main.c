@@ -780,6 +780,7 @@ void clockInit()
 void gpioPortInit()
 {
 	GPIO_InitTypeDef GPIO_InitStructureLED;
+	GPIO_InitTypeDef GPIO_InitStructureFlashlight;
 	GPIO_InitTypeDef GPIO_InitStructureMOTOR;
 	GPIO_InitTypeDef GPIO_InitStructureADC;
 
@@ -793,6 +794,14 @@ void gpioPortInit()
 	GPIO_InitStructureLED.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(LEDPORT, &GPIO_InitStructureLED);
 
+	// GPIOPort init, (Flashlight)
+	// Configure port bits in output pushpull mode
+	GPIO_InitStructureFlashlight.GPIO_Pin = FLASHLIGHT;
+	GPIO_InitStructureFlashlight.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructureFlashlight.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructureFlashlight.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructureFlashlight.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(FLASHLIGHTPORT, &GPIO_InitStructureFlashlight);
 
 	// Motor bits
 	// Configure port bits in output pushpull mode
@@ -802,7 +811,6 @@ void gpioPortInit()
 	GPIO_InitStructureMOTOR.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructureMOTOR.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(MOTORPORT, &GPIO_InitStructureMOTOR);
-
 
 	// Configure ADC pins / channel pins as analog input
 	GPIO_InitStructureADC.GPIO_Pin = SENSORPIN24VOLT | SENSORPIN12VOLT;
