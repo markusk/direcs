@@ -122,10 +122,10 @@ int main(void)
 			if (strcmp(stringbuffer, "*re#") == 0)
 			{
 				resetRobot();
-/*
+
 				// flashlight off
-				relais(OFF);
-*/
+				flashlight(OFF);
+
 				// green LED on. Know we know, that the program on the PC/Mac has initialised the Atmel
 				turnLED(LEDGREEN, ON);
 				
@@ -143,10 +143,10 @@ int main(void)
 			if (strcmp(stringbuffer, "*sl#") == 0)
 			{
 				resetRobot();
-/*	
+	
 				// flashlight off
-				relais(OFF);
-*/
+				flashlight(OFF);
+
 				// green LED off
 				turnLED(LEDGREEN, OFF);
 /*
