@@ -181,7 +181,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*s7#") == 0)
 			{
 				// send ADC value over serial port
-				// max. 25 Volt = 4095
+				// max. 26.4 Volt = 4095
 				sendUInt( ADCValues[0] );
 			}
 			else
@@ -189,7 +189,7 @@ int main(void)
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
 				// send ADC value over serial port
-				// max. 13 Volt = 4095
+				// max. 13.2 Volt = 4095
 				sendUInt( ADCValues[1] );
 			}
 			else
