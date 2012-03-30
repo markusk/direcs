@@ -187,7 +187,7 @@
 #define RGB6PWMAF				GPIO_AF_TIM12
 #define	RGB6PWMCHANNEL			2
 
-#define RGBPWMINITIALVALUE		90 // this defines the itial timer / PWM speed when the ARM is powered on (RGB LED light brightness)
+#define RGBPWMINITIALVALUE		1 // this defines the itial timer / PWM speed when the ARM is powered on (RGB LED light brightness)
 
 // ADC and DMA for battery / voltage sensors
 #define SENSORPORT				GPIOC
