@@ -193,6 +193,28 @@ int main(void)
 				sendUInt( ADCValues[1] );
 			}
 			else
+			// MOTOR 0 SPEED SET > this means *all* 4 motors!
+			if (strncmp(stringbuffer, "*mv0", 4) == 0)
+			{
+				// change first four chars for upcoming string conversion
+				stringbuffer[0] = '0';
+				stringbuffer[1] = '0';
+				stringbuffer[2] = '0';
+				stringbuffer[3] = '0';
+
+				// convert to int
+				i = atoi(stringbuffer);
+
+				// set speed / PWM
+				timerUpdate(MOTOR1, i);
+				timerUpdate(MOTOR2, i);
+				timerUpdate(MOTOR3, i);
+				timerUpdate(MOTOR4, i);
+
+				// answer with "ok"
+				put_string("*mv0#");
+			}
+			else
 			// MOTOR 1 OFF
 			if (strcmp(stringbuffer, "*mp1of#") == 0)
 			{
