@@ -637,12 +637,12 @@ void Direcs::init()
 				//-------------------------------------------------------
 				// set the read motor speed
 				//-------------------------------------------------------
-				motors->setMotorSpeed(1, mot1Speed);
-				motors->setMotorSpeed(2, mot2Speed);
-				motors->setMotorSpeed(3, mot3Speed);
-				motors->setMotorSpeed(4, mot4Speed);
-				emit message("Motor speed set in microcontroller");
-
+				emit message("Setting motor speed in microcontroller");
+				motors->setMotorSpeed(MOTOR1, mot1Speed);
+				motors->setMotorSpeed(MOTOR2, mot2Speed);
+				motors->setMotorSpeed(MOTOR3, mot3Speed);
+				motors->setMotorSpeed(MOTOR4, mot4Speed);
+				emit message("Motor speed set.");
 				//-------------------------------------------------------
 				// move all servos in their default positions
 				//-------------------------------------------------------
