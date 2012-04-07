@@ -462,10 +462,24 @@ void test::appendLog(QString message)
 
 void test::testSlot()
 {
+	QString string;
+
+
 	// clear content
-	textEdit->clear();
-	// add current date & time
-	textEdit->append( QString("%1").arg(QDateTime::currentDateTime().toString() ) );
+	// textEdit->clear();
+
+	// send re
+	interface1->sendString("re");
+
+	// debug msg
+	textEdit->append( QString("%1: %2 sent").arg(QDateTime::currentDateTime().toString() ).arg(string) );
+
+	// receive answer
+	interface1->receiveString(string);
+
+	// debug msg
+	textEdit->append( QString("%1: %2 received.").arg(QDateTime::currentDateTime().toString() ).arg(string) );
+
 
 	/*
 	if (sickS300->readRequestTelegram() == -1)
