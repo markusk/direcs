@@ -643,11 +643,14 @@ void Direcs::init()
 				motors->setMotorSpeed(MOTOR3, mot3Speed);
 				motors->setMotorSpeed(MOTOR4, mot4Speed);
 				emit message("Motor speed set.");
+
+				/* we have no servis right now @todo: check if we need this for the RGB lights !!
 				//-------------------------------------------------------
 				// move all servos in their default positions
 				//-------------------------------------------------------
 				servos->init();
 				emit message("Servos moved to default positions");
+				*/
 
 				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
