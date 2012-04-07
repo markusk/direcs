@@ -615,7 +615,7 @@ void Direcs::init()
 			if (circuit1->initCircuit() == true)
 			{
 				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
-
+/*
 				// check compass module
 				if (circuit1->initCompass() == true)
 				{
@@ -633,7 +633,7 @@ void Direcs::init()
 						gui->setLEDCompass(RED);
 					}
 				}
-
+*/
 				//-------------------------------------------------------
 				// set the read motor speed
 				//-------------------------------------------------------
