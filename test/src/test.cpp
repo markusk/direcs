@@ -468,17 +468,30 @@ void test::testSlot()
 	// clear content
 	// textEdit->clear();
 
+	/*
 	// send re
 	interface1->sendString("re");
-
 	// debug msg
 	textEdit->append( QString("%1: %2 sent").arg(QDateTime::currentDateTime().toString() ).arg(string) );
 
 	// receive answer
 	interface1->receiveString(string);
-
 	// debug msg
 	textEdit->append( QString("%1: %2 received.").arg(QDateTime::currentDateTime().toString() ).arg(string) );
+*/
+
+
+
+	// send s7
+	interface1->sendString("s7");
+	// debug msg
+	textEdit->append( QString("%1: %2 sent").arg(QDateTime::currentDateTime().toString() ).arg(string) );
+
+	// receive answer
+	interface1->receiveString(string);
+	// debug msg
+	textEdit->append( QString("%1: %2 received.").arg(QDateTime::currentDateTime().toString() ).arg(string) );
+
 
 
 	/*
