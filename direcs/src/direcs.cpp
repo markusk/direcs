@@ -2694,9 +2694,6 @@ void Direcs::readSettings()
 	// read setting
 	switch (inifile1->readSetting("Config", "writeLogFile"))
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"writeLogFile\"not found in ini-file!</font>");
 			break;
@@ -2812,9 +2809,6 @@ void Direcs::readSettings()
 
 							switch (laserscannerAngleFront)
 							{
-							case -2:
-								emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-								break;
 							case -1:
 								emit message("<font color=\"#FF0000\">Value \"laserscannerAngleFront\"not found in ini-file!</font>");
 								break;
@@ -2932,9 +2926,6 @@ void Direcs::readSettings()
 
 							switch (laserscannerAngleRear)
 							{
-							case -2:
-								emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-								break;
 							case -1:
 								emit message("<font color=\"#FF0000\">Value \"laserscannerAngleRear\"not found in ini-file!</font>");
 								break;
@@ -2994,9 +2985,6 @@ void Direcs::readSettings()
 	// read setting
 	switch (inifile1->readSetting("Config", "useCamera"))
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"useCamera\"not found in ini-file!</font>");
 			break;
@@ -3096,9 +3084,6 @@ void Direcs::readSettings()
 	// read setting / and error handling
 	switch (inifile1->readSetting("Config", "noHardwareErrorMessages"))
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"noHardwareErrorMessages\"not found in ini-file!</font>");
 			break;
@@ -3115,9 +3100,6 @@ void Direcs::readSettings()
 	// read setting
 	switch (inifile1->readSetting("Config", "saveOnExit"))
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"saveOnExit\"not found in ini-file!</font>");
 			break;
@@ -3141,9 +3123,6 @@ void Direcs::readSettings()
 	// read setting
 	switch (inifile1->readSetting("Config", "exitDialog"))
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"exitDialog\"not found in ini-file!</font>");
 			break;
@@ -3161,9 +3140,6 @@ void Direcs::readSettings()
 
 	switch (minObstacleDistance)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"minObstacleDistance\"not found in ini-file!</font>");
 			break;
@@ -3187,9 +3163,6 @@ void Direcs::readSettings()
 
 	switch (minObstacleDistanceLaserScanner)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
 			break;
@@ -3213,9 +3186,6 @@ void Direcs::readSettings()
 
 	switch (robotSlot)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
 			break;
@@ -3239,9 +3209,6 @@ void Direcs::readSettings()
 
 	switch (robotSlotWidth)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"robotSlotWidth\"not found in ini-file!</font>");
 			break;
@@ -3265,9 +3232,6 @@ void Direcs::readSettings()
 
 	switch (straightForwardDeviation)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"straightForwardDeviation\"not found in ini-file!</font>");
 			break;
@@ -3316,10 +3280,6 @@ void Direcs::readSettings()
 
 	switch (mot1Speed)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			mot1Speed = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"motor1Speed\" not found in ini-file!</font>");
 			mot1Speed = 0;
@@ -3348,10 +3308,6 @@ void Direcs::readSettings()
 
 	switch (mot2Speed)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			mot2Speed = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"motor2Speed\" not found in ini-file!</font>");
 			mot2Speed = 0;
@@ -3380,10 +3336,6 @@ void Direcs::readSettings()
 
 	switch (mot3Speed)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			mot3Speed = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"motor3Speed\" not found in ini-file!</font>");
 			mot3Speed = 0;
@@ -3412,10 +3364,6 @@ void Direcs::readSettings()
 
 	switch (mot4Speed)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			mot4Speed = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"motor4Speed\" not found in ini-file!</font>");
 			mot4Speed = 0;
@@ -3444,10 +3392,6 @@ void Direcs::readSettings()
 
 	switch (minimumSpeed)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			minimumSpeed = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"minimumSpeed\" not found in ini-file!</font>");
 			minimumSpeed = 0;
@@ -3476,10 +3420,6 @@ void Direcs::readSettings()
 
 	switch (maximumSpeed)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			maximumSpeed = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"maximumSpeed\" not found in ini-file!</font>");
 			maximumSpeed = 0;
@@ -3511,10 +3451,6 @@ void Direcs::readSettings()
 
 		switch (settingValue)
 		{
-			case -2:
-				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-				settingValue = 0;
-				break;
 			case -1:
 				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
@@ -3545,10 +3481,6 @@ void Direcs::readSettings()
 
 		switch (settingValue)
 		{
-			case -2:
-				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-				settingValue = 0;
-				break;
 			case -1:
 				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
@@ -3578,10 +3510,6 @@ void Direcs::readSettings()
 
 		switch (settingValue)
 		{
-			case -2:
-				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-				settingValue = 0;
-				break;
 			case -1:
 				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
@@ -3611,10 +3539,6 @@ void Direcs::readSettings()
 
 		switch (settingValue)
 		{
-			case -2:
-				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-				settingValue = 0;
-				break;
 			case -1:
 				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
@@ -3644,10 +3568,6 @@ void Direcs::readSettings()
 
 		switch (settingValue)
 		{
-			case -2:
-				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-				settingValue = 0;
-				break;
 			case -1:
 				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
 				settingValue = 0;
@@ -3675,10 +3595,6 @@ void Direcs::readSettings()
 
 	switch (value)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			value = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"networkPort\" not found in ini-file!</font>");
 			value = 0;
@@ -3711,10 +3627,6 @@ void Direcs::readSettings()
 
 	switch (value)
 	{
-		case -2:
-			emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
-			value = 0;
-			break;
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"threshold\" not found in ini-file!</font>");
 			value = 0;
