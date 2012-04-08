@@ -196,6 +196,7 @@ void test::closeEvent(QCloseEvent *event)
 	  */
 }
 
+/*
 void test::newFile()
 {
 	  if (maybeSave()) {
@@ -203,6 +204,7 @@ void test::newFile()
 			setCurrentFile("");
 	  }
 }
+
 
 void test::open()
 {
@@ -230,6 +232,7 @@ bool test::saveAs()
 
 	  return saveFile(fileName);
 }
+*/
 
 void test::about()
 {
@@ -246,6 +249,7 @@ void test::documentWasModified()
 
 void test::createActions()
 {
+/*
 	  newAct = new QAction(QIcon(":/filenew.xpm"), tr("&New"), this);
 	  newAct->setShortcut(tr("Ctrl+N"));
 	  newAct->setStatusTip(tr("Create a new file"));
@@ -264,7 +268,7 @@ void test::createActions()
 	  saveAsAct = new QAction(tr("Save &As..."), this);
 	  saveAsAct->setStatusTip(tr("Save the document under a new name"));
 	  connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
-
+*/
 	  exitAct = new QAction(tr("E&xit"), this);
 	  exitAct->setShortcut(tr("Ctrl+Q"));
 	  exitAct->setStatusTip(tr("Exit the application"));
@@ -312,10 +316,10 @@ void test::createActions()
 void test::createMenus()
 {
 	  fileMenu = menuBar()->addMenu(tr("&File"));
-	  fileMenu->addAction(newAct);
-	  fileMenu->addAction(openAct);
-	  fileMenu->addAction(saveAct);
-	  fileMenu->addAction(saveAsAct);
+//	  fileMenu->addAction(newAct);
+//	  fileMenu->addAction(openAct);
+//	  fileMenu->addAction(saveAct);
+//	  fileMenu->addAction(saveAsAct);
 	  fileMenu->addSeparator();
 	  fileMenu->addAction(exitAct);
 
@@ -339,9 +343,9 @@ void test::createMenus()
 void test::createToolBars()
 {
 	  fileToolBar = addToolBar(tr("File"));
-	  fileToolBar->addAction(newAct);
-	  fileToolBar->addAction(openAct);
-	  fileToolBar->addAction(saveAct);
+//	  fileToolBar->addAction(newAct);
+//	  fileToolBar->addAction(openAct);
+//	  fileToolBar->addAction(saveAct);
 
 	  editToolBar = addToolBar(tr("Edit"));
 	  editToolBar->addAction(cutAct);
@@ -372,7 +376,7 @@ void test::writeSettings()
 	  settings.setValue("pos", pos());
 	  settings.setValue("size", size());
 }
-
+/*
 bool test::maybeSave()
 {
 	  if (textEdit->document()->isModified()) {
@@ -389,7 +393,7 @@ bool test::maybeSave()
 	  }
 	  return true;
 }
-
+*/
 void test::loadFile(const QString &fileName)
 {
 	  QFile file(fileName);
