@@ -282,6 +282,8 @@ class SensorThread : public QThread
 		*/
 		bool readContact(short int contact);
 
+
+		QString className;	/// this will contain the name of this class at runtime for debug messages
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;

@@ -22,6 +22,9 @@
 
 SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 {
+	// get the name of this class (this is for debugging messages)
+	className = this->staticMetaObject.className();
+
 	stopped = false;
 	simulationMode = false;
 
@@ -184,7 +187,7 @@ void SensorThread::run()
 			//-----------------
 			if (readVoltageSensor(VOLTAGESENSOR1) == false) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
-				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 1. Stopping sensorThread!</font>");
+				emit message(QString("<font color=\"#FF0000\">ERROR reading voltage sensor 1. Stopping %1!</font>").arg(className));
 				// Unlock the mutex.
 				 mutex->unlock();
 				 // stop this thread
