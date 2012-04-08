@@ -761,14 +761,14 @@ class Gui : public QMainWindow
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
 
-		static const float MINIMUMVOLTAGE1 = 10.80; /// \todo put min. voltage 1 in the ini-file
-		static const float MINIMUMVOLTAGE2 = 21.60; // \todo put min. voltage 2 in the ini-file
+		static const float MINIMUMVOLTAGE1 = 12.00; /// \todo put min. voltage 1 in the ini-file
+		static const float MINIMUMVOLTAGE2 = 24.00; // \todo put min. voltage 2 in the ini-file
 
-		static const float MAXIMUMVOLTAGE1 = 12.00; /// for progress bars \todo put max. voltage 1 in the ini-file
-		static const float MAXIMUMVOLTAGE2 = 24.00; /// for progress bars \todo put max. voltage 2 in the ini-file
+		static const float MAXIMUMVOLTAGE1 = 14.00; /// for progress bars \todo put max. voltage 1 in the ini-file
+		static const float MAXIMUMVOLTAGE2 = 28.00; /// for progress bars \todo put max. voltage 2 in the ini-file
 
-		static const float MAXIMUMPLOTVOLTAGE1 = 13.00; /// for plot widgets \todo put to ini-file
-		static const float MAXIMUMPLOTVOLTAGE2 = 26.00; /// for plot widgets \todo put to ini-file
+		static const float MAXIMUMPLOTVOLTAGE1 = 14.00; /// for plot widgets \todo put to ini-file
+		static const float MAXIMUMPLOTVOLTAGE2 = 28.00; /// for plot widgets \todo put to ini-file
 
 		static const float MAXIMUMPLOTHEARTBEAT = 5.00; /// theoratically 5 Volt for heartbeat "high" @sa SensorThread::run
 
