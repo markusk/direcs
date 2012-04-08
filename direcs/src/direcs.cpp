@@ -3632,7 +3632,7 @@ void Direcs::readSettings()
 				break;
 		}
 	}
-	emit message("Servo min. settings read and set.");
+	emit message("RGB LED min. settings read and set.");
 
 	//---------------------------------------------------------------------
 	// read RGB LED MAX brightness
@@ -3662,7 +3662,7 @@ void Direcs::readSettings()
 				break;
 		}
 	}
-	emit message("Servo max. settings read and set.");
+	emit message("RGB LED max. settings read and set.");
 
 	//---------------------------------------------------------------------
 	// read RGB LED DEFAULT brightness
@@ -3692,7 +3692,7 @@ void Direcs::readSettings()
 				break;
 		}
 	}
-	emit message("Servo default settings read and set.");
+	emit message("RGB LED default settings read and set.");
 
 
 	//---------------------------------------------------------------------
