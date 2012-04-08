@@ -182,7 +182,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
-		qDebug() << "error at receiveString";
+		qDebug() << "error at receiveString called from" << callingClassName;
 		return false;
 	}
 
@@ -210,7 +210,7 @@ bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 	//-----------------
 	// receive MS-Byte
 	//-----------------
-	if (receiveChar(&character) == false)
+	if (receiveChar(&character, callingClassName) == false)
 	{
 // 		receiveErrorCounter++;
 		// emit error message already in calling receiveChar!
@@ -239,7 +239,7 @@ bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 	//-----------------
 	// receive LS-Byte
 	//-----------------
-	if (receiveChar(&character) == false)
+	if (receiveChar(&character, callingClassName) == false)
 	{
 		// emit error message already in calling receiveChar!
 		value = 0;
