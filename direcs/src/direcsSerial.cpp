@@ -23,6 +23,9 @@
 
 DirecsSerial::DirecsSerial()
 {
+	// get the name of this class (this is for debugging messages)
+	className = this->staticMetaObject.className();
+
 	mDev_fd = -1; // the file descriptor !!
 }
 

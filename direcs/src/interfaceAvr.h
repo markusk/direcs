@@ -131,6 +131,7 @@ class InterfaceAvr : public QObject
 
 
 	private:
+		QString className;	/// this will contain the name of this class at runtime for debug messages
 		DirecsSerial *serialPort;
 
 		static const bool ON  = true;   /// For robot is "ON"

@@ -216,6 +216,8 @@ class DirecsSerial : public QObject
 
 
 	private:
+		QString className;	/// this will contain the name of this class at runtime for debug messages
+
 		/**
 		Set RTS
 		*/

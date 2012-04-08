@@ -22,6 +22,9 @@
 
 InterfaceAvr::InterfaceAvr()
 {
+	// get the name of this class (this is for debugging messages)
+	className = this->staticMetaObject.className();
+
 	// creating the serial port object
 	serialPort = new DirecsSerial();
 
