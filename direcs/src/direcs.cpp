@@ -4713,7 +4713,6 @@ void Direcs::test()
 	{
 		color++;
 		drivingLight(WHITE);
-		rgbLeds->setBrightness(SERVO6, 255);
 		return;
 	}
 
