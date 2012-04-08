@@ -134,9 +134,10 @@ class DirecsSerial : public QObject
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
 
 		@param *c Pointer to unsiged char buffer to the data to be send over the serial line
+		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes sent to the serial line.
 		 */
-		int writeAtmelPort(unsigned char *c);
+		int writeAtmelPort(unsigned char *c, QString callingClassName = "none");
 
 		/**
 		Reads data from the serial line
@@ -155,9 +156,10 @@ class DirecsSerial : public QObject
 
 		@param *buf Pointer to unsigned char buffer for the data to be read.
 		@param nChars Number of bytes to be written (<= size of the buffer array).
+		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes read.
 		 */
-		int readAtmelPort(unsigned char *buf, int nChars);
+		int readAtmelPort(unsigned char *buf, int nChars, QString callingClassName = "none");
 
 
 		/**

@@ -59,39 +59,44 @@ class InterfaceAvr : public QObject
 		/**
 		Sends a character to the serial port/device.
 		@param character
+		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool sendChar(unsigned char character);
+		bool sendChar(unsigned char character, QString callingClassName = "none");
 
 		/**
 		Receives a character from the serial port/device.
 		@param character
+		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveChar(unsigned char *character);
+		bool receiveChar(unsigned char *character, QString callingClassName = "none");
 
 		/**
 		Sends a string to the serial port/device. When sending it prepends a start char and appends a terminator char wich the corresponting receiving Atmel expects.
 		Example: *s8# sends the command 's8' to the receiver.
 		@param string is the information to send - without starter and terminator!
+		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool sendString(QString string);
+		bool sendString(QString string, QString callingClassName = "none");
 
 		/**
 		Receives a string from the serial port/device. It expects a starter at the beginning and a termintator at the end of the string which is currently defined as a const.
 		Example: With *42# the 42 is the 'string' here.
 		@param &string is the complete result - including the starter and the terminator!
+		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveString(QString &string);
+		bool receiveString(QString &string, QString callingClassName = "none");
 
 		/**
 		Receives an integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).
 		@param *value
+		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveInt(int *value);
+		bool receiveInt(int *value, QString callingClassName = "none");
 
 		/**
 		Returns an integer value which comes from a former recevied string.

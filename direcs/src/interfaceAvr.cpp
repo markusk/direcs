@@ -73,7 +73,7 @@ void InterfaceAvr::closeComPort()
 }
 
 
-bool InterfaceAvr::sendChar(unsigned char character)
+bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 {
 	int result = 0;
 // 	static int receiveErrorCounter = 0;
@@ -101,7 +101,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 }
 
 
-bool InterfaceAvr::receiveChar(unsigned char *character)
+bool InterfaceAvr::receiveChar(unsigned char *character, QString callingClassName)
 {
 	int result = 0;
 
@@ -122,7 +122,7 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 }
 
 
-bool InterfaceAvr::sendString(QString string)
+bool InterfaceAvr::sendString(QString string, QString callingClassName)
 {
 //	QString debugstring;
 
@@ -156,7 +156,7 @@ bool InterfaceAvr::sendString(QString string)
 }
 
 
-bool InterfaceAvr::receiveString(QString &string)
+bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 {
 	int result = 0;
 	unsigned char character;
@@ -197,7 +197,7 @@ bool InterfaceAvr::receiveString(QString &string)
 }
 
 
-bool InterfaceAvr::receiveInt(int *value)
+bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 {
 // 	static int receiveErrorCounter = 0;
 	unsigned char character = 0;

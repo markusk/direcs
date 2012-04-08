@@ -537,7 +537,7 @@ int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
-int DirecsSerial::writeAtmelPort(unsigned char *c)
+int DirecsSerial::writeAtmelPort(unsigned char *c, QString callingClassName)
 {
 	int n = write(mDev_fd, c, 1);
 
@@ -586,7 +586,7 @@ int DirecsSerial::readPort(int dev_fd, unsigned char *buf, int nChars)
 }
 
 
-int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars)
+int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars, QString callingClassName)
 {
 	//
 	// Original code from method readPort
