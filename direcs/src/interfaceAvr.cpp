@@ -84,7 +84,7 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 
 	// send one byte to the serial port with direcsSerial
 	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeAtmelPort(&character);
+	result = serialPort->writeAtmelPort(&character, callingClassName);
 
 	if (result < 0)
 	{
@@ -131,14 +131,14 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 
 
 	// send starter
-	if (sendChar(starter) == true)
+	if (sendChar(starter, callingClassName) == true)
 	{
 		// send 'content' of string
 //		debugstring = "*";
 		for (int i=0; i<string.length(); i++)
 		{
 			// char by char
-			if (sendChar( string.at(i).toAscii() ) == false)
+			if (sendChar(string.at(i).toAscii(), callingClassName) == false)
 			{
 				return false;
 			}
@@ -146,7 +146,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 		}
 
 		// send terminator
-		if (sendChar(terminator) == true)
+		if (sendChar(terminator, callingClassName) == true)
 		{
 			// success
 //			debugstring.append("#");
