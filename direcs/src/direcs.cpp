@@ -3527,7 +3527,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setServoPosition(servo, SVSTART, settingValue);
+				rgbLeds->setRgbLedBrightness(servo, SVSTART, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3561,7 +3561,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setServoPosition(servo, SVEND, settingValue);
+				rgbLeds->setRgbLedBrightness(servo, SVEND, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3594,7 +3594,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setServoPosition(servo, SVMIN, settingValue);
+				rgbLeds->setRgbLedBrightness(servo, SVMIN, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3627,7 +3627,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setServoPosition(servo, SVMAX, settingValue);
+				rgbLeds->setRgbLedBrightness(servo, SVMAX, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3660,7 +3660,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setServoPosition(servo, SVDEFAULT, settingValue);
+				rgbLeds->setRgbLedBrightness(servo, SVDEFAULT, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3951,8 +3951,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (eyeTestMode==true)
 			{
 				// eyes down
-				rgbLeds->setServoPosition( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
-				rgbLeds->setServoPosition( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setRgbLedBrightness( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setRgbLedBrightness( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
 
 				rgbLeds->setBrightness(SERVO2, rgbLeds->getServoPosition(SERVO2));
 				rgbLeds->setBrightness(SERVO5, rgbLeds->getServoPosition(SERVO5));
@@ -4005,9 +4005,9 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				// eyes down
 				// left eye
-				rgbLeds->setServoPosition( SERVO2, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setRgbLedBrightness( SERVO2, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 				// right eye
-				rgbLeds->setServoPosition( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setRgbLedBrightness( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 
 				rgbLeds->setBrightness(SERVO2, rgbLeds->getServoPosition(SERVO2));
 				rgbLeds->setBrightness(SERVO5, rgbLeds->getServoPosition(SERVO5));
@@ -4144,7 +4144,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				// --
 				int wert = rgbLeds->getServoPosition(currentTestServo);
-				rgbLeds->setServoPosition( currentTestServo, SVCURRENT, wert-1 );
+				rgbLeds->setRgbLedBrightness( currentTestServo, SVCURRENT, wert-1 );
 			}
 
 			//------------------
@@ -4154,8 +4154,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				// ++
 				int wert = rgbLeds->getServoPosition(currentTestServo);
-				rgbLeds->setServoPosition( currentTestServo, SVCURRENT, wert+1 );
-				//rgbLeds->setServoPosition( currentTestServo, SVCURRENT, (rgbLeds->getServoPosition(currentTestServo))+1 );
+				rgbLeds->setRgbLedBrightness( currentTestServo, SVCURRENT, wert+1 );
+				//rgbLeds->setRgbLedBrightness( currentTestServo, SVCURRENT, (rgbLeds->getServoPosition(currentTestServo))+1 );
 			}
 
 			// only move, when button is pressed - not, when released (=0)
