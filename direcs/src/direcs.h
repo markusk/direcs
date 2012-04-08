@@ -47,6 +47,7 @@
 //#include "heartbeat.h"
 #include "sensorThread.h"
 #include "motor.h"
+#include "servo.h"
 #include "rgbLed.h"
 #include "obstacleCheckThread.h"
 #include "inifile.h"
