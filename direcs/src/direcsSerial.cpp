@@ -51,7 +51,7 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// See tty(4) ("man 4 tty") and ioctl(2) ("man 2 ioctl") for details.
 	if (ioctl(mDev_fd, TIOCEXCL) == -1)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR %1 setting TIOCEXCL on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 setting TIOCEXCL on serial device:<br>%2 in %3.</font>").arg(errno).arg(strerror(errno)).arg(className));
 		emit message(QString("<font color=\"#FF0000\">Serial port already opened?</font>"));
 		return -1;
 	}
@@ -60,13 +60,13 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 	// See fcntl(2) ("man 2 fcntl") for details.
 	if (fcntl(mDev_fd, F_SETFL, 0) == -1)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 clearing O_NONBLOCK on serial device:<br>%2 in %3.</font>").arg(errno).arg(strerror(errno)).arg(className));
 		return -1;
 	}
 
 	if (mDev_fd < 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening serial device:<br>%2 in %3.</font>").arg(errno).arg(strerror(errno)).arg(className));
 		return errno;
 	}
 
@@ -546,7 +546,7 @@ int DirecsSerial::writeAtmelPort(unsigned char *c, QString callingClassName)
 
 	if (n < 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when writing to serial device at DirecsSerial::writeAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when writing to serial device at DirecsSerial::writeAtmelPort called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
 //		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
@@ -618,7 +618,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars, QString callingC
 		// check if timeout or an error occured
 		if (returnValue == -1)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
 			return errno;
 		}
 		else
@@ -630,7 +630,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars, QString callingC
 			else
 			{
 				// timeout
-				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 microseconds when using select() on serial device (DirecsSerial::readAtmelPort).</font>").arg(READ_TIMEOUT_ATMEL));
+				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 ms when using select() on serial device at DirecsSerial::readAtmelPort called from %2.</font>").arg(READ_TIMEOUT_ATMEL).arg(callingClassName));
 				emit message(QString("<font color=\"#FF0000\">ERROR %1: %2.</font>").arg(errno).arg(strerror(errno)));
 
 				return errno;
@@ -642,7 +642,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars, QString callingC
 
 		if (amountRead < 0 && errno != EWOULDBLOCK)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerial::readAtmelPort.</font>").arg(errno).arg(strerror(errno)));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerial::readAtmelPort called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
 // FIXME: was, wenn return 0 ?!?!?
 			return errno;
 		}
