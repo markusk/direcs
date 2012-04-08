@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) 2011 by Markus Knapp                                  *
+ *   Copyright (C) Markus Knapp                                          *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -97,7 +97,7 @@ class RgbLed : public QObject
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 100; // Default: 25 ms
+		static const unsigned long THREADSLEEPTIME = 500; // Default: 25 ms
 
 		//! defines the size of the rgbLed[] arrays.
 		static const unsigned char NUMBEROFRGBLEDS = 6; /// \todo also defined in direcs.h !!!
