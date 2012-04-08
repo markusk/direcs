@@ -101,24 +101,19 @@ class RgbLed : public QObject
 
 		//! defines the size of the rgbLed[] arrays.
 		static const unsigned char NUMBEROFRGBLEDS = 6; /// \todo also defined in direcs.h !!!
-		int rgbLedStartPosition[NUMBEROFRGBLEDS];
-		int rgbLedEndPosition[NUMBEROFRGBLEDS];
-		int rgbLedMinPosition[NUMBEROFRGBLEDS];
-		int rgbLedMaxPosition[NUMBEROFRGBLEDS];
-		int rgbLedDefaultPosition[NUMBEROFRGBLEDS];
-		int rgbLedPosition[NUMBEROFRGBLEDS]; //! the current position of the rgbLed!
-		//int rgbLedPositionConvHelper[NUMBEROFRGBLEDS]; //! a conversion helper, if the rgbLed is fixed the other way round!
+		int minBrightness[NUMBEROFRGBLEDS-1];
+		int maxBrightness[NUMBEROFRGBLEDS-1];
+		int defaultBrightness[NUMBEROFRGBLEDS-1];
+		int brightness[NUMBEROFRGBLEDS]; //! the current position of the rgbLed!
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
 
 		//! the possible rgbLed data
-		static const unsigned char RGBLEDSTART   = 0;
-		static const unsigned char RGBLEDEND     = 1;
-		static const unsigned char RGBLEDDEFAULT = 2;
-		static const unsigned char RGBLEDCURRENT = 3;
-		static const unsigned char RGBLEDMIN     = 4;
-		static const unsigned char RGBLEDMAX     = 5;
+		static const unsigned char RGBLEDDEFAULT = 0;
+		static const unsigned char RGBLEDACTUAL  = 1;
+//		static const unsigned char RGBLEDMIN     = 2;
+//		static const unsigned char RGBLEDMAX     = 3;
 
 		//! the rgbLed numbers
 		static const unsigned char RGBLED1 = 0;

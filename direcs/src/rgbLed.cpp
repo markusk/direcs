@@ -32,12 +32,10 @@ RgbLed::RgbLed(InterfaceAvr *i, QMutex *m)
 	// init arrays
 	for (int rgbLed=0; rgbLed<NUMBEROFRGBLEDS; rgbLed++)
 	{
-		rgbLedStartPosition[rgbLed] = 0;
-		rgbLedMinPosition[rgbLed] = 0;
-		rgbLedDefaultPosition[rgbLed] = 64;
-		rgbLedEndPosition[rgbLed] = 255;
-		rgbLedMaxPosition[rgbLed] = 255;
-		rgbLedPosition[rgbLed] = rgbLedDefaultPosition[rgbLed];
+		minBrightness[rgbLed] = 0;
+		defaultBrightness[rgbLed] = 64;
+		maxBrightness[rgbLed] = 255;
+		brightness[rgbLed] = defaultBrightness[rgbLed];
 	}
 
 	robotState = ON; // Wer're thinking positive. The robot is ON until we know nothing other. :-)
@@ -59,21 +57,21 @@ bool RgbLed::moveRgbLed(unsigned char rgbLed, unsigned char position)
 		// rgbLed number okay?
 		if (rgbLed > NUMBEROFRGBLEDS-1)
 		{
-			emit message(QString("<font color=\"#FF0000\">RgbLed%1 is not an allowed rgbLed numer (1-%2)! (moveRgbLed)</font>").arg(rgbLed+1).arg(NUMBEROFRGBLEDS-1) );
+			emit message(QString("<font color=\"#FF0000\">RgbLed%1 is not an allowed rgbLed numer (1-%2)! (setRgbLed)</font>").arg(rgbLed+1).arg(NUMBEROFRGBLEDS-1) );
 			return false;
 		}
 
 
 		// wanted rgbLed position okay?
-		if ( (position < rgbLedMinPosition[rgbLed]) || (position > rgbLedMaxPosition[rgbLed]) )
+		if ( (bness < minBrightness[rgbLed]) || (bness > maxBrightness[rgbLed]) )
 		{
-			emit message(QString("<font color=\"#FF0000\">RgbLed%1 position %2 out of allowed range (%3-%4)! (moveRgbLed)</font>").arg(rgbLed+1).arg(position).arg(rgbLedStartPosition[rgbLed]).arg(rgbLedEndPosition[rgbLed]));
+			emit message(QString("<font color=\"#FF0000\">RGBLED%1 brightness %2 out of allowed range (%3-%4)! (setRgbLed)</font>").arg(rgbLed+1).arg(bness).arg(minBrightness[rgbLed]).arg(maxBrightness[rgbLed]));
 			return false;
 		}
 
 
 		// store the new rgbLed position
-		rgbLedPosition[rgbLed] = position;
+		brightness[rgbLed] = bness;
 
 		// Lock the mutex.
 		mutex->lock();
@@ -114,41 +112,27 @@ void RgbLed::setRgbLedBrightness(int rgbLed, unsigned char type, unsigned char p
 	switch (type)
 	{
 		case RGBLEDSTART:
-			rgbLedStartPosition[rgbLed] = position;
+			startBrightness[rgbLed] = position;
 			return;
 			break;
 		case RGBLEDEND:
-			rgbLedEndPosition[rgbLed] = position;
+			endBrightness[rgbLed] = position;
 			return;
 			break;
 		case RGBLEDMIN:
-			rgbLedMinPosition[rgbLed] = position;
+			minBrightness[rgbLed] = position;
 			return;
 			break;
 		case RGBLEDMAX:
-			rgbLedMaxPosition[rgbLed] = position;
+			maxBrightness[rgbLed] = position;
 			return;
 			break;
 		case RGBLEDDEFAULT:
-			rgbLedDefaultPosition[rgbLed] = position;
+			defaultBrightness[rgbLed] = position;
 			return;
 			break;
-		case RGBLEDCURRENT:
-			// converting RGBLED5 value, because of reverse fixing on the robot!
-			if (rgbLed==RGBLED5)
-			{
-			}
-
-			// only within the allowd ranges!
-			if (position < rgbLedMinPosition[rgbLed])
-			{
-				position = rgbLedMinPosition[rgbLed];
-			}
-			if (position > rgbLedMaxPosition[rgbLed])
-			{
-				position = rgbLedMaxPosition[rgbLed];
-			}
-			rgbLedPosition[rgbLed] = position;
+		case RGBLEDACTUAL
+			rgbLed [rgbLed] = position;
 			return;
 			break;
 	}
@@ -180,22 +164,22 @@ unsigned char RgbLed::getRgbLedPosition(int rgbLed, unsigned char type)
 	switch (type)
 	{
 		case RGBLEDSTART:
-			return rgbLedStartPosition[rgbLed];
+			return startBrightness[rgbLed];
 			break;
 		case RGBLEDEND:
-			return rgbLedEndPosition[rgbLed];
+			return endBrightness[rgbLed];
 			break;
 		case RGBLEDMIN:
-			return rgbLedMinPosition[rgbLed];
+			return minBrightness[rgbLed];
 			break;
 		case RGBLEDMAX:
-			return rgbLedMaxPosition[rgbLed];
+			return maxBrightness[rgbLed];
 			break;
 		case RGBLEDDEFAULT:
-			return rgbLedDefaultPosition[rgbLed];
+			return defaultBrightness[rgbLed];
 			break;
-		case RGBLEDCURRENT:
-			return rgbLedPosition[rgbLed];
+		case RGBLEDACTUAL:
+			return brightness[rgbLed];
 			break;
 	}
 
