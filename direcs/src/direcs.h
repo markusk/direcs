@@ -47,7 +47,6 @@
 //#include "heartbeat.h"
 #include "sensorThread.h"
 #include "motor.h"
-#include "servo.h"
 #include "rgbLed.h"
 #include "obstacleCheckThread.h"
 #include "inifile.h"
@@ -335,7 +334,6 @@ class Direcs : public QObject
 		/// \todo Heartbeat *heartbeat;
 		SensorThread *sensorThread;
 		Motor *motors;
-		Servo *servos;
 		RgbLed *rgbLeds;
 		ObstacleCheckThread *obstCheckThread;
 		Inifile *inifile1;
