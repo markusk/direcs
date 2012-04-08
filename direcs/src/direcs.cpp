@@ -1249,12 +1249,12 @@ void Direcs::shutdown()
 	if (forceShutdown==false)
 	{
 		// turn off all RGB LEDs
-		rgbLeds->setBrightness(SERVO1, 0);
-		rgbLeds->setBrightness(SERVO2, 0);
-		rgbLeds->setBrightness(SERVO3, 0);
-		rgbLeds->setBrightness(SERVO4, 0);
-		rgbLeds->setBrightness(SERVO5, 0);
-		rgbLeds->setBrightness(SERVO6, 0);
+		rgbLeds->setBrightness(RGBLED1, 0);
+		rgbLeds->setBrightness(RGBLED2, 0);
+		rgbLeds->setBrightness(RGBLED3, 0);
+		rgbLeds->setBrightness(RGBLED4, 0);
+		rgbLeds->setBrightness(RGBLED5, 0);
+		rgbLeds->setBrightness(RGBLED6, 0);
 	}
 
 	/// \todo a universal quit-threads-method
@@ -4629,47 +4629,47 @@ void Direcs::drivingLight(unsigned char color)
 	switch (color)
 	{
 		case RED:
-			rgbLeds->setBrightness(SERVO1, 255);
-			rgbLeds->setBrightness(SERVO2, 1);
-			rgbLeds->setBrightness(SERVO3, 1);
-			rgbLeds->setBrightness(SERVO4, 255);
-			rgbLeds->setBrightness(SERVO5, 1);
-			rgbLeds->setBrightness(SERVO6, 1);
+			rgbLeds->setBrightness(RGBLED1, 255);
+			rgbLeds->setBrightness(RGBLED2, 1);
+			rgbLeds->setBrightness(RGBLED3, 1);
+			rgbLeds->setBrightness(RGBLED4, 255);
+			rgbLeds->setBrightness(RGBLED5, 1);
+			rgbLeds->setBrightness(RGBLED6, 1);
 			break;
 		case GREEN:
-			rgbLeds->setBrightness(SERVO1, 1);
-			rgbLeds->setBrightness(SERVO2, 255);
-			rgbLeds->setBrightness(SERVO3, 1);
-			rgbLeds->setBrightness(SERVO4, 1);
-			rgbLeds->setBrightness(SERVO5, 255);
-			rgbLeds->setBrightness(SERVO6, 1);
+			rgbLeds->setBrightness(RGBLED1, 1);
+			rgbLeds->setBrightness(RGBLED2, 255);
+			rgbLeds->setBrightness(RGBLED3, 1);
+			rgbLeds->setBrightness(RGBLED4, 1);
+			rgbLeds->setBrightness(RGBLED5, 255);
+			rgbLeds->setBrightness(RGBLED6, 1);
 			break;
 
 		case BLUE:
-			rgbLeds->setBrightness(SERVO1, 1);
-			rgbLeds->setBrightness(SERVO2, 1);
-			rgbLeds->setBrightness(SERVO3, 255);
-			rgbLeds->setBrightness(SERVO4, 1);
-			rgbLeds->setBrightness(SERVO5, 1);
-			rgbLeds->setBrightness(SERVO6, 255);
+			rgbLeds->setBrightness(RGBLED1, 1);
+			rgbLeds->setBrightness(RGBLED2, 1);
+			rgbLeds->setBrightness(RGBLED3, 255);
+			rgbLeds->setBrightness(RGBLED4, 1);
+			rgbLeds->setBrightness(RGBLED5, 1);
+			rgbLeds->setBrightness(RGBLED6, 255);
 			break;
 
 		case WHITE:
-			rgbLeds->setBrightness(SERVO1, 255);
-			rgbLeds->setBrightness(SERVO2, 255);
-			rgbLeds->setBrightness(SERVO3, 255);
-			rgbLeds->setBrightness(SERVO4, 255);
-			rgbLeds->setBrightness(SERVO5, 255);
-			rgbLeds->setBrightness(SERVO6, 255);
+			rgbLeds->setBrightness(RGBLED1, 255);
+			rgbLeds->setBrightness(RGBLED2, 255);
+			rgbLeds->setBrightness(RGBLED3, 255);
+			rgbLeds->setBrightness(RGBLED4, 255);
+			rgbLeds->setBrightness(RGBLED5, 255);
+			rgbLeds->setBrightness(RGBLED6, 255);
 			break;
 
 		case LEDOFF:
-			rgbLeds->setBrightness(SERVO1, 1);
-			rgbLeds->setBrightness(SERVO2, 1);
-			rgbLeds->setBrightness(SERVO3, 1);
-			rgbLeds->setBrightness(SERVO4, 1);
-			rgbLeds->setBrightness(SERVO5, 1);
-			rgbLeds->setBrightness(SERVO6, 1);
+			rgbLeds->setBrightness(RGBLED1, 1);
+			rgbLeds->setBrightness(RGBLED2, 1);
+			rgbLeds->setBrightness(RGBLED3, 1);
+			rgbLeds->setBrightness(RGBLED4, 1);
+			rgbLeds->setBrightness(RGBLED5, 1);
+			rgbLeds->setBrightness(RGBLED6, 1);
 			break;
 	}
 }
@@ -4722,39 +4722,39 @@ void Direcs::test()
 	if (color==4)
 	{
 		color++;
-		rgbLeds->setBrightness(SERVO1, 255);
-		rgbLeds->setBrightness(SERVO2, 1);
-		rgbLeds->setBrightness(SERVO3, 1);
+		rgbLeds->setBrightness(RGBLED1, 255);
+		rgbLeds->setBrightness(RGBLED2, 1);
+		rgbLeds->setBrightness(RGBLED3, 1);
 
-		rgbLeds->setBrightness(SERVO4, 1);
-		rgbLeds->setBrightness(SERVO5, 255);
-		rgbLeds->setBrightness(SERVO6, 1);
+		rgbLeds->setBrightness(RGBLED4, 1);
+		rgbLeds->setBrightness(RGBLED5, 255);
+		rgbLeds->setBrightness(RGBLED6, 1);
 		return;
 	}
 
 	if (color==5)
 	{
 		color++;
-		rgbLeds->setBrightness(SERVO1, 1);
-		rgbLeds->setBrightness(SERVO2, 255);
-		rgbLeds->setBrightness(SERVO3, 1);
+		rgbLeds->setBrightness(RGBLED1, 1);
+		rgbLeds->setBrightness(RGBLED2, 255);
+		rgbLeds->setBrightness(RGBLED3, 1);
 
-		rgbLeds->setBrightness(SERVO4, 1);
-		rgbLeds->setBrightness(SERVO5, 1);
-		rgbLeds->setBrightness(SERVO6, 255);
+		rgbLeds->setBrightness(RGBLED4, 1);
+		rgbLeds->setBrightness(RGBLED5, 1);
+		rgbLeds->setBrightness(RGBLED6, 255);
 		return;
 	}
 
 	if (color==6)
 	{
 		color++;
-		rgbLeds->setBrightness(SERVO1, 1);
-		rgbLeds->setBrightness(SERVO2, 1);
-		rgbLeds->setBrightness(SERVO3, 255);
+		rgbLeds->setBrightness(RGBLED1, 1);
+		rgbLeds->setBrightness(RGBLED2, 1);
+		rgbLeds->setBrightness(RGBLED3, 255);
 
-		rgbLeds->setBrightness(SERVO4, 255);
-		rgbLeds->setBrightness(SERVO5, 1);
-		rgbLeds->setBrightness(SERVO6, 1);
+		rgbLeds->setBrightness(RGBLED4, 255);
+		rgbLeds->setBrightness(RGBLED5, 1);
+		rgbLeds->setBrightness(RGBLED6, 1);
 		return;
 	}
 
