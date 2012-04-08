@@ -377,9 +377,11 @@ class SensorThread : public QThread
 		/**
 		Defines the conversion factor for the voltage sensors to convert the sensor value in a "real world" value.
 		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57.0 results in 12 V.
+		4095 / 13.2 Volt = 310.22727272
+		4095 / 26.4 Volt = 155.11363636
 		*/
-		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 57.000;
-		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 36.125;
+		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 310.22727272;
+		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 155.11363636;
 
 		/**
 		The x, y, z axis value from the 3D magnetic sensor and the heading
