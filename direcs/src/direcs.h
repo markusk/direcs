@@ -48,6 +48,7 @@
 #include "sensorThread.h"
 #include "motor.h"
 #include "servo.h"
+#include "rgbLed.h"
 #include "obstacleCheckThread.h"
 #include "inifile.h"
 #include "logfile.h"
@@ -335,6 +336,7 @@ class Direcs : public QObject
 		SensorThread *sensorThread;
 		Motor *motors;
 		Servo *servos;
+		RgbLed *rgbLeds;
 		ObstacleCheckThread *obstCheckThread;
 		Inifile *inifile1;
 		NetworkThread *netThread;

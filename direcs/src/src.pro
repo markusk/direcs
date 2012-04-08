@@ -40,6 +40,7 @@ unix|macx {
 				obstacleCheckThread.h \
 				plotThread.h \
 				QtGLContext.h \
+				rgbLed.h \
 				sensorThread.h \
 				servo.h \
 				settingsDialog.h \
@@ -68,6 +69,7 @@ unix|macx {
 				obstacleCheckThread.cpp \
 				plotThread.cpp \
 				QtGLContext.cpp \
+				rgbLed.cpp \
 				sensorThread.cpp \
 				servo.cpp \
 				settingsDialog.cpp \
