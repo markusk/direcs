@@ -604,7 +604,8 @@ void Direcs::init()
 			{
 				// init the circuit & Co. when hitting the button in the GUI
 				connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
-				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) );
+				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
+//				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) ); // @todo: build this < < < < < < <
 			}
 
 
