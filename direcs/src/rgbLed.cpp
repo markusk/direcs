@@ -109,7 +109,7 @@ bool RgbLed::moveRgbLed(unsigned char rgbLed, unsigned char position)
 }
 
 
-void RgbLed::setRgbLedPosition(int rgbLed, unsigned char type, unsigned char position)
+void RgbLed::setRgbLedBrightness(int rgbLed, unsigned char type, unsigned char position)
 {
 	switch (type)
 	{
