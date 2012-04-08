@@ -179,6 +179,7 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 ///	\todo heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
+	servos = new Servo(interface1, mutex);
 	rgbLeds = new RgbLed(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
@@ -1709,6 +1710,7 @@ Direcs::~Direcs()
 
 	delete inifile1;
 	delete obstCheckThread;
+	delete servos;
 	delete rgbLeds;
 	delete motors;
 	delete sensorThread;
@@ -3816,7 +3818,7 @@ void Direcs::executeRemoteCommand(QString command)
 
 void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 {
-	static unsigned char servo1Pos = rgbLeds->getServoPosition(SERVO1);
+	static unsigned char servo1Pos = servos->getServoPosition(SERVO1);
 
 	//
 	// Y axis
@@ -3870,11 +3872,11 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (eyeTestMode==true)
 			{
 				// eyes down
-				rgbLeds->setRgbLedBrightness( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
-				rgbLeds->setRgbLedBrightness( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				servos->setServoPosition( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				servos->setServoPosition( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
 
-				rgbLeds->setBrightness(SERVO2, rgbLeds->getServoPosition(SERVO2));
-				rgbLeds->setBrightness(SERVO5, rgbLeds->getServoPosition(SERVO5));
+				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
+				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
 
 			return;
@@ -3924,12 +3926,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				// eyes down
 				// left eye
-				rgbLeds->setRgbLedBrightness( SERVO2, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				servos->setServoPosition( SERVO2, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 				// right eye
-				rgbLeds->setRgbLedBrightness( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				servos->setServoPosition( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 
-				rgbLeds->setBrightness(SERVO2, rgbLeds->getServoPosition(SERVO2));
-				rgbLeds->setBrightness(SERVO5, rgbLeds->getServoPosition(SERVO5));
+				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
+				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
 			}
 
 			return;
@@ -4062,8 +4064,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue > 0)
 			{
 				// --
-				int wert = rgbLeds->getServoPosition(currentTestServo);
-				rgbLeds->setRgbLedBrightness( currentTestServo, SVCURRENT, wert-1 );
+				int wert = servos->getServoPosition(currentTestServo);
+				servos->setServoPosition( currentTestServo, SVCURRENT, wert-1 );
 			}
 
 			//------------------
@@ -4072,16 +4074,16 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue < 0)
 			{
 				// ++
-				int wert = rgbLeds->getServoPosition(currentTestServo);
-				rgbLeds->setRgbLedBrightness( currentTestServo, SVCURRENT, wert+1 );
-				//rgbLeds->setRgbLedBrightness( currentTestServo, SVCURRENT, (rgbLeds->getServoPosition(currentTestServo))+1 );
+				int wert = servos->getServoPosition(currentTestServo);
+				servos->setServoPosition( currentTestServo, SVCURRENT, wert+1 );
+				//servos->setServoPosition( currentTestServo, SVCURRENT, (servos->getServoPosition(currentTestServo))+1 );
 			}
 
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				rgbLeds->setBrightness(currentTestServo, rgbLeds->getServoPosition(currentTestServo));
-				emit message(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(rgbLeds->getServoPosition(currentTestServo)));
+				servos->moveServo(currentTestServo, servos->getServoPosition(currentTestServo));
+				emit message(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(servos->getServoPosition(currentTestServo)));
 			}
 
 			return;
@@ -4233,7 +4235,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				rgbLeds->setBrightness(SERVO1, servo1Pos);
+				servos->moveServo(SERVO1, servo1Pos);
 				emit message(QString("Servo 1 moved to %1.").arg(servo1Pos));
 			}
 			return;
