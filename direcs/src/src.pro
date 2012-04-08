@@ -123,7 +123,7 @@ macx {
 	LIBS -=		-lespeak \
 				-lqwt-qt4
 
-	message("Changing qwt lib name. Has to be installed via macports or manually (QWT 5.2.1 !!")
+	message("Changing qwt lib name. Has to be installed via macports or manually (QWT 5.2.1 !!)")
 	LIBS +=		-lqwt
 	INCLUDEPATH+=/usr/local/qwt-5.2.1/include
 
