@@ -194,7 +194,7 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	netThread = new NetworkThread();
 	// creation of kinect instance moved to init method to see something on the splash screen
 	joystick = new Joystick();
-	head = new Head(servos);
+	// head = new Head(servos);  disabled since the head is not in use use!
 
 	if (!consoleMode)
 	{
