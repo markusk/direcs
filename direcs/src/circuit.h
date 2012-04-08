@@ -101,6 +101,8 @@ class Circuit : public QObject
 
 
 	private:
+		QString className;	/// this will contain the name of this class at runtime for debug messages
+
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 

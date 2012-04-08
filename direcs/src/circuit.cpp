@@ -22,6 +22,9 @@
 
 Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 {
+	// get the name of this class (this is for debugging messages)
+	className = this->staticMetaObject.className();
+
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
