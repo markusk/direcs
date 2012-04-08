@@ -179,7 +179,7 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 ///	\todo heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
-	servos = new Servo(interface1, mutex);
+	rgbLeds = new Servo(interface1, mutex);
 	laserThread = new LaserThread();
 	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
 
@@ -366,7 +366,7 @@ void Direcs::init()
 	connect(interface1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
+	connect(interface1,	SIGNAL( robotState(bool) ), rgbLeds,			SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 	if (!consoleMode)
 	{
@@ -377,7 +377,7 @@ void Direcs::init()
 	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), servos,			SLOT( setRobotState(bool) ));
+	connect(circuit1,	SIGNAL( robotState(bool) ), rgbLeds,			SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 	if (!consoleMode)
 	{
@@ -446,7 +446,7 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		// let the GUI show servo messages in the log
 		//--------------------------------------------------------------------------
-		connect(servos, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+		connect(rgbLeds, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 	}
 
 
@@ -603,7 +603,7 @@ void Direcs::init()
 			{
 				// init the circuit & Co. when hitting the button in the GUI
 				connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
-				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
+				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) );
 			}
 
 
@@ -646,9 +646,9 @@ void Direcs::init()
 
 				/* we have no servis right now @todo: check if we need this for the RGB lights !!
 				//-------------------------------------------------------
-				// move all servos in their default positions
+				// move all rgbLeds in their default positions
 				//-------------------------------------------------------
-				servos->init();
+				rgbLeds->init();
 				emit message("Servos moved to default positions");
 				*/
 
@@ -1249,12 +1249,12 @@ void Direcs::shutdown()
 	if (forceShutdown==false)
 	{
 		// turn off all RGB LEDs
-		servos->moveServo(SERVO1, 0);
-		servos->moveServo(SERVO2, 0);
-		servos->moveServo(SERVO3, 0);
-		servos->moveServo(SERVO4, 0);
-		servos->moveServo(SERVO5, 0);
-		servos->moveServo(SERVO6, 0);
+		rgbLeds->setBrightness(SERVO1, 0);
+		rgbLeds->setBrightness(SERVO2, 0);
+		rgbLeds->setBrightness(SERVO3, 0);
+		rgbLeds->setBrightness(SERVO4, 0);
+		rgbLeds->setBrightness(SERVO5, 0);
+		rgbLeds->setBrightness(SERVO6, 0);
 	}
 
 	/// \todo a universal quit-threads-method
@@ -1702,7 +1702,7 @@ Direcs::~Direcs()
 
 	delete inifile1;
 	delete obstCheckThread;
-	delete servos;
+	delete rgbLeds;
 	delete motors;
 	delete sensorThread;
 	// \todo delete heartbeat;
@@ -3527,7 +3527,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				servos->setServoPosition(servo, SVSTART, settingValue);
+				rgbLeds->setServoPosition(servo, SVSTART, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3561,7 +3561,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				servos->setServoPosition(servo, SVEND, settingValue);
+				rgbLeds->setServoPosition(servo, SVEND, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3594,7 +3594,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				servos->setServoPosition(servo, SVMIN, settingValue);
+				rgbLeds->setServoPosition(servo, SVMIN, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3627,7 +3627,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				servos->setServoPosition(servo, SVMAX, settingValue);
+				rgbLeds->setServoPosition(servo, SVMAX, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3660,7 +3660,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				servos->setServoPosition(servo, SVDEFAULT, settingValue);
+				rgbLeds->setServoPosition(servo, SVDEFAULT, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3897,7 +3897,7 @@ void Direcs::executeRemoteCommand(QString command)
 
 void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 {
-	static unsigned char servo1Pos = servos->getServoPosition(SERVO1);
+	static unsigned char servo1Pos = rgbLeds->getServoPosition(SERVO1);
 
 	//
 	// Y axis
@@ -3951,11 +3951,11 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (eyeTestMode==true)
 			{
 				// eyes down
-				servos->setServoPosition( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
-				servos->setServoPosition( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setServoPosition( SERVO2, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setServoPosition( SERVO5, SVCURRENT, (axisValue / JOYSTICKDIVISOR) );
 
-				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
-				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
+				rgbLeds->setBrightness(SERVO2, rgbLeds->getServoPosition(SERVO2));
+				rgbLeds->setBrightness(SERVO5, rgbLeds->getServoPosition(SERVO5));
 			}
 
 			return;
@@ -4005,12 +4005,12 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			{
 				// eyes down
 				// left eye
-				servos->setServoPosition( SERVO2, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setServoPosition( SERVO2, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 				// right eye
-				servos->setServoPosition( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
+				rgbLeds->setServoPosition( SERVO5, SVCURRENT, (-axisValue / JOYSTICKDIVISOR) );
 
-				servos->moveServo(SERVO2, servos->getServoPosition(SERVO2));
-				servos->moveServo(SERVO5, servos->getServoPosition(SERVO5));
+				rgbLeds->setBrightness(SERVO2, rgbLeds->getServoPosition(SERVO2));
+				rgbLeds->setBrightness(SERVO5, rgbLeds->getServoPosition(SERVO5));
 			}
 
 			return;
@@ -4143,8 +4143,8 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue > 0)
 			{
 				// --
-				int wert = servos->getServoPosition(currentTestServo);
-				servos->setServoPosition( currentTestServo, SVCURRENT, wert-1 );
+				int wert = rgbLeds->getServoPosition(currentTestServo);
+				rgbLeds->setServoPosition( currentTestServo, SVCURRENT, wert-1 );
 			}
 
 			//------------------
@@ -4153,16 +4153,16 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			if (axisValue < 0)
 			{
 				// ++
-				int wert = servos->getServoPosition(currentTestServo);
-				servos->setServoPosition( currentTestServo, SVCURRENT, wert+1 );
-				//servos->setServoPosition( currentTestServo, SVCURRENT, (servos->getServoPosition(currentTestServo))+1 );
+				int wert = rgbLeds->getServoPosition(currentTestServo);
+				rgbLeds->setServoPosition( currentTestServo, SVCURRENT, wert+1 );
+				//rgbLeds->setServoPosition( currentTestServo, SVCURRENT, (rgbLeds->getServoPosition(currentTestServo))+1 );
 			}
 
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				servos->moveServo(currentTestServo, servos->getServoPosition(currentTestServo));
-				emit message(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(servos->getServoPosition(currentTestServo)));
+				rgbLeds->setBrightness(currentTestServo, rgbLeds->getServoPosition(currentTestServo));
+				emit message(QString("Servo %1 moved to %2.").arg(currentTestServo+1).arg(rgbLeds->getServoPosition(currentTestServo)));
 			}
 
 			return;
@@ -4314,7 +4314,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 			// only move, when button is pressed - not, when released (=0)
 			if (axisValue != 0)
 			{
-				servos->moveServo(SERVO1, servo1Pos);
+				rgbLeds->setBrightness(SERVO1, servo1Pos);
 				emit message(QString("Servo 1 moved to %1.").arg(servo1Pos));
 			}
 			return;
@@ -4717,47 +4717,47 @@ void Direcs::drivingLight(unsigned char color)
 	switch (color)
 	{
 		case RED:
-			servos->moveServo(SERVO1, 255);
-			servos->moveServo(SERVO2, 1);
-			servos->moveServo(SERVO3, 1);
-			servos->moveServo(SERVO4, 255);
-			servos->moveServo(SERVO5, 1);
-			servos->moveServo(SERVO6, 1);
+			rgbLeds->setBrightness(SERVO1, 255);
+			rgbLeds->setBrightness(SERVO2, 1);
+			rgbLeds->setBrightness(SERVO3, 1);
+			rgbLeds->setBrightness(SERVO4, 255);
+			rgbLeds->setBrightness(SERVO5, 1);
+			rgbLeds->setBrightness(SERVO6, 1);
 			break;
 		case GREEN:
-			servos->moveServo(SERVO1, 1);
-			servos->moveServo(SERVO2, 255);
-			servos->moveServo(SERVO3, 1);
-			servos->moveServo(SERVO4, 1);
-			servos->moveServo(SERVO5, 255);
-			servos->moveServo(SERVO6, 1);
+			rgbLeds->setBrightness(SERVO1, 1);
+			rgbLeds->setBrightness(SERVO2, 255);
+			rgbLeds->setBrightness(SERVO3, 1);
+			rgbLeds->setBrightness(SERVO4, 1);
+			rgbLeds->setBrightness(SERVO5, 255);
+			rgbLeds->setBrightness(SERVO6, 1);
 			break;
 
 		case BLUE:
-			servos->moveServo(SERVO1, 1);
-			servos->moveServo(SERVO2, 1);
-			servos->moveServo(SERVO3, 255);
-			servos->moveServo(SERVO4, 1);
-			servos->moveServo(SERVO5, 1);
-			servos->moveServo(SERVO6, 255);
+			rgbLeds->setBrightness(SERVO1, 1);
+			rgbLeds->setBrightness(SERVO2, 1);
+			rgbLeds->setBrightness(SERVO3, 255);
+			rgbLeds->setBrightness(SERVO4, 1);
+			rgbLeds->setBrightness(SERVO5, 1);
+			rgbLeds->setBrightness(SERVO6, 255);
 			break;
 
 		case WHITE:
-			servos->moveServo(SERVO1, 255);
-			servos->moveServo(SERVO2, 255);
-			servos->moveServo(SERVO3, 255);
-			servos->moveServo(SERVO4, 255);
-			servos->moveServo(SERVO5, 255);
-			servos->moveServo(SERVO6, 255);
+			rgbLeds->setBrightness(SERVO1, 255);
+			rgbLeds->setBrightness(SERVO2, 255);
+			rgbLeds->setBrightness(SERVO3, 255);
+			rgbLeds->setBrightness(SERVO4, 255);
+			rgbLeds->setBrightness(SERVO5, 255);
+			rgbLeds->setBrightness(SERVO6, 255);
 			break;
 
 		case LEDOFF:
-			servos->moveServo(SERVO1, 1);
-			servos->moveServo(SERVO2, 1);
-			servos->moveServo(SERVO3, 1);
-			servos->moveServo(SERVO4, 1);
-			servos->moveServo(SERVO5, 1);
-			servos->moveServo(SERVO6, 1);
+			rgbLeds->setBrightness(SERVO1, 1);
+			rgbLeds->setBrightness(SERVO2, 1);
+			rgbLeds->setBrightness(SERVO3, 1);
+			rgbLeds->setBrightness(SERVO4, 1);
+			rgbLeds->setBrightness(SERVO5, 1);
+			rgbLeds->setBrightness(SERVO6, 1);
 			break;
 	}
 }
@@ -4801,7 +4801,7 @@ void Direcs::test()
 	{
 		color++;
 		drivingLight(WHITE);
-		servos->moveServo(SERVO6, 255);
+		rgbLeds->setBrightness(SERVO6, 255);
 		return;
 	}
 
@@ -4810,39 +4810,39 @@ void Direcs::test()
 	if (color==4)
 	{
 		color++;
-		servos->moveServo(SERVO1, 255);
-		servos->moveServo(SERVO2, 1);
-		servos->moveServo(SERVO3, 1);
+		rgbLeds->setBrightness(SERVO1, 255);
+		rgbLeds->setBrightness(SERVO2, 1);
+		rgbLeds->setBrightness(SERVO3, 1);
 
-		servos->moveServo(SERVO4, 1);
-		servos->moveServo(SERVO5, 255);
-		servos->moveServo(SERVO6, 1);
+		rgbLeds->setBrightness(SERVO4, 1);
+		rgbLeds->setBrightness(SERVO5, 255);
+		rgbLeds->setBrightness(SERVO6, 1);
 		return;
 	}
 
 	if (color==5)
 	{
 		color++;
-		servos->moveServo(SERVO1, 1);
-		servos->moveServo(SERVO2, 255);
-		servos->moveServo(SERVO3, 1);
+		rgbLeds->setBrightness(SERVO1, 1);
+		rgbLeds->setBrightness(SERVO2, 255);
+		rgbLeds->setBrightness(SERVO3, 1);
 
-		servos->moveServo(SERVO4, 1);
-		servos->moveServo(SERVO5, 1);
-		servos->moveServo(SERVO6, 255);
+		rgbLeds->setBrightness(SERVO4, 1);
+		rgbLeds->setBrightness(SERVO5, 1);
+		rgbLeds->setBrightness(SERVO6, 255);
 		return;
 	}
 
 	if (color==6)
 	{
 		color++;
-		servos->moveServo(SERVO1, 1);
-		servos->moveServo(SERVO2, 1);
-		servos->moveServo(SERVO3, 255);
+		rgbLeds->setBrightness(SERVO1, 1);
+		rgbLeds->setBrightness(SERVO2, 1);
+		rgbLeds->setBrightness(SERVO3, 255);
 
-		servos->moveServo(SERVO4, 255);
-		servos->moveServo(SERVO5, 1);
-		servos->moveServo(SERVO6, 1);
+		rgbLeds->setBrightness(SERVO4, 255);
+		rgbLeds->setBrightness(SERVO5, 1);
+		rgbLeds->setBrightness(SERVO6, 1);
 		return;
 	}
 
