@@ -99,26 +99,26 @@ class RgbLed : public QObject
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 500; // Default: 25 ms
 
-		//! defines the size of the rgbLed[] arrays.
+		/// defines the size of the rgbLed[] arrays.
 		static const unsigned char NUMBEROFRGBLEDS = 6; /// \todo also defined in direcs.h !!!
 		int minBrightness[NUMBEROFRGBLEDS-1];
 		int maxBrightness[NUMBEROFRGBLEDS-1];
 		int defaultBrightness[NUMBEROFRGBLEDS-1];
 		int brightness[NUMBEROFRGBLEDS]; //! the current position of the rgbLed!
 
-		static const bool ON  = true;   /** For motor or robot "ON" */
-		static const bool OFF = false;  /** For motor or robot "OFF" */
+		static const bool ON  = true;   /// For motor or robot "ON"
+		static const bool OFF = false;  /// For motor or robot "OFF"
 
 		static const int MINPWM = 1;  /// this is analog to the value in  microcontroller software @sa direcsSTM
 		static const int MAXPWM = 99; /// this is analog to the value in  microcontroller software @sa direcsSTM
 
-		//! the possible rgbLed data
+		/// the possible rgbLed data
 		static const unsigned char RGBLEDDEFAULT = 0;
 		static const unsigned char RGBLEDACTUAL  = 1;
 		static const unsigned char RGBLEDMIN     = 2;
 		static const unsigned char RGBLEDMAX     = 3;
 
-		//! the rgbLed numbers
+		/// the RGB LED numbers
 		static const unsigned char RGBLED1 = 0;
 		static const unsigned char RGBLED2 = 1;
 		static const unsigned char RGBLED3 = 2;
@@ -126,7 +126,7 @@ class RgbLed : public QObject
 		static const unsigned char RGBLED5 = 4;
 		static const unsigned char RGBLED6 = 5;
 
-		//! the command for the microcontroller
+		/// the command for the microcontroller
 		static const unsigned char SET_RGBLED1 = 42;
 		static const unsigned char SET_RGBLED2 = 43;
 		static const unsigned char SET_RGBLED3 = 44;

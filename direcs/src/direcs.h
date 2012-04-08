@@ -489,6 +489,14 @@ class Direcs : public QObject
 		static const unsigned char SERVO5 = 4;
 		static const unsigned char SERVO6 = 5;
 
+		/// the RGB LED numbers
+		static const unsigned char RGBLED1 = 0;
+		static const unsigned char RGBLED2 = 1;
+		static const unsigned char RGBLED3 = 2;
+		static const unsigned char RGBLED4 = 3;
+		static const unsigned char RGBLED5 = 4;
+		static const unsigned char RGBLED6 = 5;
+
 		/// the possible servo data
 		static const unsigned char SVSTART   = 0;
 		static const unsigned char SVEND     = 1;
