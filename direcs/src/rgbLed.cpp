@@ -77,14 +77,14 @@ bool RgbLed::setBrightness(unsigned char rgbLed, unsigned char bness)
 		mutex->lock();
 
 
-		// move rgbLed
+		// set brightness
 		// send command to microcontroller
-		if (interface1->sendString(QString("*sv%1%2#").arg(rgbLed + 1).arg(bness), className) == true)
+		if (interface1->sendString(QString("*rgb%1%2#").arg(rgbLed + 1).arg(bness), className) == true)
 		{
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer, className) == true)
 			{
-				if (answer == QString("*sv%1#").arg(rgbLed + 1))
+				if (answer == QString("*rgb%1#").arg(rgbLed + 1))
 				{
 					// Unlock the mutex
 					mutex->unlock();
@@ -97,7 +97,7 @@ bool RgbLed::setBrightness(unsigned char rgbLed, unsigned char bness)
 		// Unlock the mutex.
 		mutex->unlock();
 
-		emit message(QString("<font color=\"#FF0000\">Error moving rgbLed%1 (moveRgbLed)</font>").arg(rgbLed+1));
+		emit message(QString("<font color=\"#FF0000\">Error setting RGBLED%1 brightness (setBrightness)</font>").arg(rgbLed+1));
 		return false;
 
 	} // robot is ON
