@@ -3510,6 +3510,7 @@ void Direcs::readSettings()
 		}
 	}
 	emit message("Servo end settings read and set.");
+
 	//---------------------------------------------------------------------
 	// read servo MIN settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -3539,6 +3540,7 @@ void Direcs::readSettings()
 		}
 	}
 	emit message("Servo min. settings read and set.");
+
 	//---------------------------------------------------------------------
 	// read servo MAX settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -3568,6 +3570,7 @@ void Direcs::readSettings()
 		}
 	}
 	emit message("Servo max. settings read and set.");
+
 	//---------------------------------------------------------------------
 	// read servo DEFAULT settings
 	for (int servo=0; servo<NUMBEROFSERVOS; servo++)
@@ -3597,6 +3600,99 @@ void Direcs::readSettings()
 		}
 	}
 	emit message("Servo default settings read and set.");
+
+
+
+	//---------------------------------------------------------------------
+	// read RGB LED MIN brightness
+	for (int led=0; led<NUMBEROFRGBLEDS; led++)
+	{
+		QString settingName = QString("RGBLED%1").arg(led+1).append("MinBrightness");
+		int settingValue = inifile1->readSetting("Config", settingName);
+
+		switch (settingValue)
+		{
+			case -1:
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > MAXPWM)
+				{
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than %2!! Value set to %2!</font>").arg(settingName).arg(MAXPWM));
+					settingValue = MAXPWM;
+				}
+
+				// store the LED values
+				rgbLeds->storeBrightness(led, RGBLEDMIN, settingValue);
+
+				// show text
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
+	}
+	emit message("Servo min. settings read and set.");
+
+	//---------------------------------------------------------------------
+	// read RGB LED MAX brightness
+	for (int led=0; led<NUMBEROFRGBLEDS; led++)
+	{
+		QString settingName = QString("RGBLED%1").arg(led+1).append("MaxBrightness");
+		int settingValue = inifile1->readSetting("Config", settingName);
+
+		switch (settingValue)
+		{
+			case -1:
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > MAXPWM)
+				{
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than %2!! Value set to %2!</font>").arg(settingName).arg(MAXPWM));
+					settingValue = MAXPWM;
+				}
+
+				// store the LED values
+				rgbLeds->storeBrightness(led, RGBLEDMAX, settingValue);
+
+				// show text
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
+	}
+	emit message("Servo max. settings read and set.");
+
+	//---------------------------------------------------------------------
+	// read RGB LED DEFAULT brightness
+	for (int led=0; led<NUMBEROFRGBLEDS; led++)
+	{
+		QString settingName = QString("RGBLED%1").arg(led+1).append("DefaultBrightness");
+		int settingValue = inifile1->readSetting("Config", settingName);
+
+		switch (settingValue)
+		{
+			case -1:
+				emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(settingName));
+				settingValue = 0;
+				break;
+			default:
+				if (settingValue > MAXPWM)
+				{
+					emit message(QString("<font color=\"#FF0000\">Value \"%1\" is greater than %2!! Value set to %2!</font>").arg(settingName).arg(MAXPWM));
+					settingValue = MAXPWM;
+				}
+
+				// store the LED values
+				rgbLeds->storeBrightness(led, RGBLEDDEFAULT, settingValue);
+
+				// show text
+				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				break;
+		}
+	}
+	emit message("Servo default settings read and set.");
+
 
 	//---------------------------------------------------------------------
 	// read setting
