@@ -62,7 +62,7 @@ bool Circuit::initCircuit()
 		//-------------------------------------------------------
 
 		// sending RESET (INIT) command
-		if (interface1->sendString("re") == true)
+		if (interface1->sendString("re", className) == true)
 		{
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer, className) == true)
@@ -108,7 +108,7 @@ bool Circuit::initCompass()
 		mutex->lock();
 
 		// check if the 3D compass sensor is connected to the Atmel board
-		if (interface1->sendString("cc") == true)
+		if (interface1->sendString("cc", className) == true)
 		{
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer, className) == true)
@@ -183,7 +183,7 @@ bool Circuit::sleep()
 		mutex->lock();
 
 		// sending SLEEP command
-		if (interface1->sendString("sl") == true)
+		if (interface1->sendString("sl", className) == true)
 		{
 			// check if the robot answers with "sl"
 			if ( interface1->receiveString(answer, className) == true)

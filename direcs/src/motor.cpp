@@ -182,7 +182,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				}
 
 				// send command to bot
-				if (interface1->sendString(command) == true)
+				if (interface1->sendString(command, className) == true)
 				{
 					// check if the robot answers with the sent command
 					if (interface1->receiveString(answer, className) == true)
@@ -214,7 +214,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp1of") == true)
+					if (interface1->sendString("mp1of", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -236,7 +236,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == FORWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md1cw") == true)
+					if (interface1->sendString("md1cw", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -258,7 +258,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == BACKWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md1cc") == true)
+					if (interface1->sendString("md1cc", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -300,7 +300,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp2of") == true)
+					if (interface1->sendString("mp2of", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -322,7 +322,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == FORWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md2cw") == true)
+					if (interface1->sendString("md2cw", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -344,7 +344,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == BACKWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md2cc") == true)
+					if (interface1->sendString("md2cc", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -386,7 +386,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp3of") == true)
+					if (interface1->sendString("mp3of", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -408,7 +408,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == FORWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md3cw") == true)
+					if (interface1->sendString("md3cw", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -430,7 +430,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == BACKWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md3cc") == true)
+					if (interface1->sendString("md3cc", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -472,7 +472,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				else
 				{
 					// turn off the MOTOR -> break!
-					if (interface1->sendString("mp4of") == true)
+					if (interface1->sendString("mp4of", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -494,7 +494,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == FORWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md4cw") == true)
+					if (interface1->sendString("md4cw", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -516,7 +516,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (direction == BACKWARD)
 				{
 					// set the direction
-					if (interface1->sendString("md4cc") == true)
+					if (interface1->sendString("md4cc", className) == true)
 					{
 						// check if the robot answers with the sent command
 						if ( interface1->receiveString(answer, className) == true)
@@ -1023,7 +1023,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				motor3Speed = speed;
 				motor4Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("*mv0%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv0%1#").arg(speed), className) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer, className) == true)
@@ -1046,7 +1046,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor1Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("*mv1%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv1%1#").arg(speed), className) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer, className) == true)
@@ -1069,7 +1069,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor2Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("*mv2%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv2%1#").arg(speed), className) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer, className) == true)
@@ -1092,7 +1092,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor3Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("*mv3%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv3%1#").arg(speed), className) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer, className) == true)
@@ -1115,7 +1115,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				// store the speed
 				motor4Speed = speed;
 				// send command to microcontroller
-				if (interface1->sendString(QString("*mv4%1#").arg(speed)) == true)
+				if (interface1->sendString(QString("*mv4%1#").arg(speed), className) == true)
 				{
 					// check if the robot answers with "ok"
 					if ( interface1->receiveString(answer, className) == true)
@@ -1187,7 +1187,7 @@ bool Motor::flashlight(bool state)
 		if (state == ON)
 		{
 			// send command to microcontroller
-			if (interface1->sendString("*f0on#") == true)
+			if (interface1->sendString("*f0on#", className) == true)
 			{
 				// check if the robot answers with "ok"
 				if ( interface1->receiveString(answer, className) == true)
@@ -1208,7 +1208,7 @@ bool Motor::flashlight(bool state)
 		else
 		{
 			// send command to microcontroller
-			if (interface1->sendString("*f0of#") == true)
+			if (interface1->sendString("*f0of#", className) == true)
 			{
 				// check if the robot answers with "ok"
 				if ( interface1->receiveString(answer, className) == true)

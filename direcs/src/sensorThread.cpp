@@ -801,7 +801,7 @@ bool SensorThread::resetDrivenDistance(int sensor)
 	{
 		case MOTORSENSOR1:
 			// send command 'init distance 1'
-			if (interface1->sendString("id1") == true)
+			if (interface1->sendString("id1", className) == true)
 			{
 				// check if the robot answers with "ok"
 				if ( interface1->receiveString(answer, className) == true)
@@ -827,7 +827,7 @@ bool SensorThread::resetDrivenDistance(int sensor)
 			break;
 		case MOTORSENSOR2:
 			// send command 'init distance 2'
-			if (interface1->sendString("id2") == true)
+			if (interface1->sendString("id2", className) == true)
 			{
 				// check if the robot answers with "ok"
 				if ( interface1->receiveString(answer, className) == true)
@@ -1341,7 +1341,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 	{
 		case VOLTAGESENSOR1:
 			// read sensor
-			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
+			if (interface1->sendString("s8", className) == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1362,7 +1362,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			break;
 		case VOLTAGESENSOR2:
 			// read sensor
-			if (interface1->sendString("s7") == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
+			if (interface1->sendString("s7", className) == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1398,7 +1398,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 	{
 		case MOTORSENSOR1:
 			// read sensor
-			if (interface1->sendString("ms1") == true)
+			if (interface1->sendString("ms1", className) == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1419,7 +1419,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 			break;
 		case MOTORSENSOR2:
 			// read sensor
-			if (interface1->sendString("ms2") == true)
+			if (interface1->sendString("ms2", className) == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1506,7 +1506,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 	{
 		case DRIVENDISTANCE1:
 			// read sensor
-			if (interface1->sendString("dd1") == true)
+			if (interface1->sendString("dd1", className) == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1527,7 +1527,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 			break;
 		case DRIVENDISTANCE2:
 			// read sensor
-			if (interface1->sendString("dd2") == true)
+			if (interface1->sendString("dd2", className) == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1564,7 +1564,7 @@ bool SensorThread::readCompassAxis(short int axis)
 	{
 		case XAXIS:
 			// read sensor
-			if (interface1->sendString("cx") == true)
+			if (interface1->sendString("cx", className) == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1585,7 +1585,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			break;
 		case YAXIS:
 			// read sensor
-			if (interface1->sendString("cy") == true)
+			if (interface1->sendString("cy", className) == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
@@ -1606,7 +1606,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			break;
 		case ZAXIS:
 			// read sensor
-			if (interface1->sendString("cz") == true)
+			if (interface1->sendString("cz", className) == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)

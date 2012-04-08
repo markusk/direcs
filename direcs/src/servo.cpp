@@ -22,6 +22,7 @@
 
 Servo::Servo(InterfaceAvr *i, QMutex *m)
 {
+	// get the name of this class (this is for debugging messages)
 	className = this->staticMetaObject.className();
 
 	// copy the pointer from the original object
@@ -80,10 +81,10 @@ bool Servo::moveServo(unsigned char servo, unsigned char position)
 
 		// move servo
 		// send command to microcontroller
-		if (interface1->sendString(QString("*sv%1%2#").arg(servo + 1).arg(position)) == true)
+		if (interface1->sendString(QString("*sv%1%2#").arg(servo + 1).arg(position), className) == true)
 		{
 			// check if the robot answers with "ok"
-			if ( interface1->receiveString(answer) == true)
+			if ( interface1->receiveString(answer, className) == true)
 			{
 				if (answer == QString("*sv%1#").arg(servo + 1))
 				{
