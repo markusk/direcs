@@ -39,8 +39,6 @@ test::test()
 
 	  readSettings();
 
-	  // connect(textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(documentWasModified()));
-
 	  setCurrentFile("");
 
 
@@ -185,54 +183,8 @@ test::~test()
 void test::closeEvent(QCloseEvent *event)
 {
 	Q_UNUSED(event);
-
-	/*
-	  if (maybeSave()) {
-			writeSettings();
-			event->accept();
-	  } else {
-			event->ignore();
-	  }
-	  */
 }
 
-/*
-void test::newFile()
-{
-	  if (maybeSave()) {
-			textEdit->clear();
-			setCurrentFile("");
-	  }
-}
-
-
-void test::open()
-{
-	  if (maybeSave()) {
-			QString fileName = QFileDialog::getOpenFileName(this);
-			if (!fileName.isEmpty())
-			loadFile(fileName);
-	  }
-}
-
-bool test::save()
-{
-	  if (curFile.isEmpty()) {
-			return saveAs();
-	  } else {
-			return saveFile(curFile);
-	  }
-}
-
-bool test::saveAs()
-{
-	  QString fileName = QFileDialog::getSaveFileName(this);
-	  if (fileName.isEmpty())
-			return false;
-
-	  return saveFile(fileName);
-}
-*/
 
 void test::about()
 {
@@ -249,26 +201,6 @@ void test::documentWasModified()
 
 void test::createActions()
 {
-/*
-	  newAct = new QAction(QIcon(":/filenew.xpm"), tr("&New"), this);
-	  newAct->setShortcut(tr("Ctrl+N"));
-	  newAct->setStatusTip(tr("Create a new file"));
-	  connect(newAct, SIGNAL(triggered()), this, SLOT(newFile()));
-
-	  openAct = new QAction(QIcon(":/fileopen.xpm"), tr("&Open..."), this);
-	  openAct->setShortcut(tr("Ctrl+O"));
-	  openAct->setStatusTip(tr("Open an existing file"));
-	  connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
-
-	  saveAct = new QAction(QIcon(":/filesave.xpm"), tr("&Save"), this);
-	  saveAct->setShortcut(tr("Ctrl+S"));
-	  saveAct->setStatusTip(tr("Save the document to disk"));
-	  connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
-
-	  saveAsAct = new QAction(tr("Save &As..."), this);
-	  saveAsAct->setStatusTip(tr("Save the document under a new name"));
-	  connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
-*/
 	  exitAct = new QAction(tr("E&xit"), this);
 	  exitAct->setShortcut(tr("Ctrl+Q"));
 	  exitAct->setStatusTip(tr("Exit the application"));
@@ -316,11 +248,6 @@ void test::createActions()
 void test::createMenus()
 {
 	  fileMenu = menuBar()->addMenu(tr("&File"));
-//	  fileMenu->addAction(newAct);
-//	  fileMenu->addAction(openAct);
-//	  fileMenu->addAction(saveAct);
-//	  fileMenu->addAction(saveAsAct);
-	  fileMenu->addSeparator();
 	  fileMenu->addAction(exitAct);
 
 	  editMenu = menuBar()->addMenu(tr("&Edit"));
@@ -340,12 +267,10 @@ void test::createMenus()
 	  testMenu->addAction(testAct);
 }
 
+
 void test::createToolBars()
 {
-	  fileToolBar = addToolBar(tr("File"));
-//	  fileToolBar->addAction(newAct);
-//	  fileToolBar->addAction(openAct);
-//	  fileToolBar->addAction(saveAct);
+	  fileToolBar = addToolBar(tr("File"));  // < < < < <
 
 	  editToolBar = addToolBar(tr("Edit"));
 	  editToolBar->addAction(cutAct);
@@ -356,10 +281,12 @@ void test::createToolBars()
 	  testToolBar->addAction(testAct);
 }
 
+
 void test::createStatusBar()
 {
 	  statusBar()->showMessage(tr("Ready"));
 }
+
 
 void test::readSettings()
 {
@@ -370,30 +297,15 @@ void test::readSettings()
 	  move(pos);
 }
 
+
 void test::writeSettings()
 {
 	  QSettings settings("Trolltech", "Application Example");
 	  settings.setValue("pos", pos());
 	  settings.setValue("size", size());
 }
-/*
-bool test::maybeSave()
-{
-	  if (textEdit->document()->isModified()) {
-			int ret = QMessageBox::warning(this, tr("Application"),
-						tr("The document has been modified.\n"
-						"Do you want to save your changes?"),
-						QMessageBox::Yes | QMessageBox::Default,
-						QMessageBox::No,
-						QMessageBox::Cancel | QMessageBox::Escape);
-			if (ret == QMessageBox::Yes)
-			return save();
-			else if (ret == QMessageBox::Cancel)
-			return false;
-	  }
-	  return true;
-}
-*/
+
+
 void test::loadFile(const QString &fileName)
 {
 	  QFile file(fileName);
@@ -413,6 +325,7 @@ void test::loadFile(const QString &fileName)
 	  setCurrentFile(fileName);
 	  statusBar()->showMessage(tr("File loaded"), 2000);
 }
+
 
 bool test::saveFile(const QString &fileName)
 {

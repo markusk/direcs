@@ -59,10 +59,6 @@ public slots:
 
 
 private slots:
-//	  void newFile();
-//	  void open();
-//	  bool save();
-//	  bool saveAs();
 	  void about();
 	  void documentWasModified();
 	  void testSlot();      //    < < < <   this is the test slot where all magic happens
@@ -74,7 +70,6 @@ private:
 	  void createStatusBar();
 	  void readSettings();
 	  void writeSettings();
-//	  bool maybeSave();
 	  void loadFile(const QString &fileName);
 	  bool saveFile(const QString &fileName);
 	  void setCurrentFile(const QString &fileName);
@@ -90,10 +85,6 @@ private:
 	  QToolBar *fileToolBar;
 	  QToolBar *editToolBar;
 	  QToolBar *testToolBar;
-//	  QAction *newAct;
-//	  QAction *openAct;
-//	  QAction *saveAct;
-//	  QAction *saveAsAct;
 	  QAction *exitAct;
 	  QAction *cutAct;
 	  QAction *copyAct;
