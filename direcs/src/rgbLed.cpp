@@ -47,7 +47,7 @@ RgbLed::~RgbLed()
 }
 
 
-bool RgbLed::moveRgbLed(unsigned char rgbLed, unsigned char position)
+bool RgbLed::setBrightness(unsigned char rgbLed, unsigned char bness)
 {
 	QString answer = "error";
 
@@ -79,7 +79,7 @@ bool RgbLed::moveRgbLed(unsigned char rgbLed, unsigned char position)
 
 		// move rgbLed
 		// send command to microcontroller
-		if (interface1->sendString(QString("*sv%1%2#").arg(rgbLed + 1).arg(position), className) == true)
+		if (interface1->sendString(QString("*sv%1%2#").arg(rgbLed + 1).arg(bness), className) == true)
 		{
 			// check if the robot answers with "ok"
 			if ( interface1->receiveString(answer, className) == true)
@@ -145,14 +145,14 @@ void RgbLed::init(void)
 	{
 		for (int rgbLed=0; rgbLed<NUMBEROFRGBLEDS; rgbLed++)
 		{
-			moveRgbLed(rgbLed, rgbLedDefaultPosition[rgbLed]);
+			setRgbLed(rgbLed, defaultBrightness[rgbLed]);
 			//emit message(QString("Init rgbLed%1 to def-pos: %2").arg(rgbLed+1).arg(rgbLedDefaultPosition[rgbLed]));
 		}
 	} // robot is ON
 }
 
 
-unsigned char RgbLed::getRgbLedPosition(int rgbLed, unsigned char type)
+unsigned char RgbLed::getRgbLedBrightness(int rgbLed, unsigned char type)
 {
 	if ( (rgbLed < RGBLED1) || (rgbLed > (NUMBEROFRGBLEDS-1)) )
 	{

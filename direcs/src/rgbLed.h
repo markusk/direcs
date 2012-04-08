@@ -57,20 +57,20 @@ class RgbLed : public QObject
 		@param type can be SVMIN, SVMAX, SVSTART, SVEND, SVDEFAULT or SVCURRENT=default
 		@return the rgbLed position (0 - 255)
 		 */
-		unsigned char getRgbLedPosition(int rgbLed, unsigned char type=RGBLEDCURRENT);
+		unsigned char getRgbLedBrightness(int rgbLed, unsigned char type=RGBLEDACTUAL);
 
 
 	public slots:
 		/**
-		Moves a rgbLed.
-		@param rgbLed is the rgbLed number.
-		@param position is the position (0 - 255).
+		Sets the brightness of a RGB LED.
+		@param rgbLed is the RGBLED number.
+		@param bness is the brightness.
 		@return true on success
 		 */
-		bool moveRgbLed(unsigned char rgbLed, unsigned char position);
+		bool setBrightness(unsigned char rgbLed, unsigned char bness);
 
 		/**
-		Moves all rgbLeds into their default positions.
+		Inits all RGB LEDs to their default brightness.
 		 */
 		void init(void);
 
@@ -108,6 +108,9 @@ class RgbLed : public QObject
 
 		static const bool ON  = true;   /** For motor or robot "ON" */
 		static const bool OFF = false;  /** For motor or robot "OFF" */
+
+		static const int MINPWM = 1;  /// this is analog to the value in  microcontroller software @sa direcsSTM
+		static const int MAXPWM = 99; /// this is analog to the value in  microcontroller software @sa direcsSTM
 
 		//! the possible rgbLed data
 		static const unsigned char RGBLEDDEFAULT = 0;
