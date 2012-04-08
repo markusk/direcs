@@ -107,7 +107,7 @@ bool RgbLed::setBrightness(unsigned char rgbLed, unsigned char bness)
 }
 
 
-void RgbLed::setRgbLedBrightness(int rgbLed, unsigned char type, unsigned char bness)
+void RgbLed::storeBrightness(int rgbLed, unsigned char type, unsigned char bness)
 {
 	switch (type)
 	{

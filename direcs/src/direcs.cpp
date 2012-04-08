@@ -3463,7 +3463,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setRgbLedBrightness(servo, SVSTART, settingValue);
+				rgbLeds->storeBrightness(servo, SVSTART, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3493,7 +3493,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setRgbLedBrightness(servo, SVEND, settingValue);
+				rgbLeds->storeBrightness(servo, SVEND, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3522,7 +3522,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setRgbLedBrightness(servo, SVMIN, settingValue);
+				rgbLeds->storeBrightness(servo, SVMIN, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3551,7 +3551,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setRgbLedBrightness(servo, SVMAX, settingValue);
+				rgbLeds->storeBrightness(servo, SVMAX, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
@@ -3580,7 +3580,7 @@ void Direcs::readSettings()
 				}
 
 				// store the servo values
-				rgbLeds->setRgbLedBrightness(servo, SVDEFAULT, settingValue);
+				rgbLeds->storeBrightness(servo, SVDEFAULT, settingValue);
 
 				// show text
 				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));

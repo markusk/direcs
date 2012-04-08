@@ -44,12 +44,12 @@ class RgbLed : public QObject
 		~RgbLed();
 
 		/**
-		Sets the RGB LEDs minimum and maximum brightness and its default brightness.
+		Stores the RGB LEDs minimum and maximum brightness and its default brightness.
 		@param rgbLed is the RGB LED number.
 		@param type can be RGBLEDMIN, RGBLEDMAX, RGBLEDSTART, RGBLEDDEFAULT or RGBLEDACTUAL
 		@param bness is the brightness (0 - 255).
 		 */
-		void setRgbLedBrightness(int rgbLed, unsigned char type, unsigned char bness);
+		void storeBrightness(int rgbLed, unsigned char type, unsigned char bness);
 
 		/**
 		Returns the rgbLed start, end, default or current position.
