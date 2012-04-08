@@ -185,7 +185,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 				if (interface1->sendString(command) == true)
 				{
 					// check if the robot answers with the sent command
-					if (interface1->receiveString(answer) == true)
+					if (interface1->receiveString(answer, className) == true)
 					{
 						if (answer == QString("*%1#").arg(command))
 						{
@@ -217,7 +217,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("mp1of") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*mp1of#")
 							{
@@ -239,7 +239,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md1cw") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md1cw#")
 							{
@@ -261,7 +261,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md1cc") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md1cc#")
 							{
@@ -303,7 +303,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("mp2of") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*mp2of#")
 							{
@@ -325,7 +325,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md2cw") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md2cw#")
 							{
@@ -347,7 +347,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md2cc") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md2cc#")
 							{
@@ -389,7 +389,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("mp3of") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*mp3of#")
 							{
@@ -411,7 +411,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md3cw") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md3cw#")
 							{
@@ -433,7 +433,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md3cc") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md3cc#")
 							{
@@ -475,7 +475,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("mp4of") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*mp4of#")
 							{
@@ -497,7 +497,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md4cw") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md4cw#")
 							{
@@ -519,7 +519,7 @@ bool Motor::motorControl(int motor, bool power, int direction)
 					if (interface1->sendString("md4cc") == true)
 					{
 						// check if the robot answers with the sent command
-						if ( interface1->receiveString(answer) == true)
+						if ( interface1->receiveString(answer, className) == true)
 						{
 							if (answer == "*md4cc#")
 							{
@@ -1026,7 +1026,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				if (interface1->sendString(QString("*mv0%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
-					if ( interface1->receiveString(answer) == true)
+					if ( interface1->receiveString(answer, className) == true)
 					{
 						if (answer == "*mv0#")
 						{
@@ -1049,7 +1049,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				if (interface1->sendString(QString("*mv1%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
-					if ( interface1->receiveString(answer) == true)
+					if ( interface1->receiveString(answer, className) == true)
 					{
 						if (answer == "*mv1#")
 						{
@@ -1072,7 +1072,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				if (interface1->sendString(QString("*mv2%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
-					if ( interface1->receiveString(answer) == true)
+					if ( interface1->receiveString(answer, className) == true)
 					{
 						if (answer == "*mv2#")
 						{
@@ -1095,7 +1095,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				if (interface1->sendString(QString("*mv3%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
-					if ( interface1->receiveString(answer) == true)
+					if ( interface1->receiveString(answer, className) == true)
 					{
 						if (answer == "*mv3#")
 						{
@@ -1118,7 +1118,7 @@ bool Motor::setMotorSpeed(int motor, int speed)
 				if (interface1->sendString(QString("*mv4%1#").arg(speed)) == true)
 				{
 					// check if the robot answers with "ok"
-					if ( interface1->receiveString(answer) == true)
+					if ( interface1->receiveString(answer, className) == true)
 					{
 						if (answer == "*mv4#")
 						{
@@ -1190,7 +1190,7 @@ bool Motor::flashlight(bool state)
 			if (interface1->sendString("*f0on#") == true)
 			{
 				// check if the robot answers with "ok"
-				if ( interface1->receiveString(answer) == true)
+				if ( interface1->receiveString(answer, className) == true)
 				{
 					if (answer == "*f0on")
 					{
@@ -1211,7 +1211,7 @@ bool Motor::flashlight(bool state)
 			if (interface1->sendString("*f0of#") == true)
 			{
 				// check if the robot answers with "ok"
-				if ( interface1->receiveString(answer) == true)
+				if ( interface1->receiveString(answer, className) == true)
 				{
 					if (answer == "*f0of")
 					{

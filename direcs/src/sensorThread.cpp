@@ -804,7 +804,7 @@ bool SensorThread::resetDrivenDistance(int sensor)
 			if (interface1->sendString("id1") == true)
 			{
 				// check if the robot answers with "ok"
-				if ( interface1->receiveString(answer) == true)
+				if ( interface1->receiveString(answer, className) == true)
 				{
 					if (answer == "*ok#")
 					{
@@ -830,7 +830,7 @@ bool SensorThread::resetDrivenDistance(int sensor)
 			if (interface1->sendString("id2") == true)
 			{
 				// check if the robot answers with "ok"
-				if ( interface1->receiveString(answer) == true)
+				if ( interface1->receiveString(answer, className) == true)
 				{
 					if (answer == "*ok#")
 					{
@@ -1344,7 +1344,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			if (interface1->sendString("s8") == true) // sensor 8 is the former infrared sensor 8 ! This is now the 12 V battery!
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1365,7 +1365,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			if (interface1->sendString("s7") == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1401,7 +1401,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 			if (interface1->sendString("ms1") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1422,7 +1422,7 @@ bool SensorThread::readMotorSensor(short int sensor)
 			if (interface1->sendString("ms2") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1509,7 +1509,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 			if (interface1->sendString("dd1") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1530,7 +1530,7 @@ bool SensorThread::readDrivenDistance(short int sensor)
 			if (interface1->sendString("dd2") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1567,7 +1567,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			if (interface1->sendString("cx") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1588,7 +1588,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			if (interface1->sendString("cy") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
@@ -1609,7 +1609,7 @@ bool SensorThread::readCompassAxis(short int axis)
 			if (interface1->sendString("cz") == true)
 			{
 				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer) == true)
+				if (interface1->receiveString(answer, className) == true)
 				{
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))

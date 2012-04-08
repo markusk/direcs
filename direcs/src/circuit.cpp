@@ -62,7 +62,7 @@ bool Circuit::initCircuit()
 		if (interface1->sendString("re") == true)
 		{
 			// check if the robot answers with "ok"
-			if ( interface1->receiveString(answer) == true)
+			if ( interface1->receiveString(answer, className) == true)
 			{
 				// everthing's fine :-)
 				if (answer == "*re#")
@@ -108,7 +108,7 @@ bool Circuit::initCompass()
 		if (interface1->sendString("cc") == true)
 		{
 			// check if the robot answers with "ok"
-			if ( interface1->receiveString(answer) == true)
+			if ( interface1->receiveString(answer, className) == true)
 			{
 				if (answer == "*ok#")
 				{
@@ -183,7 +183,7 @@ bool Circuit::sleep()
 		if (interface1->sendString("sl") == true)
 		{
 			// check if the robot answers with "sl"
-			if ( interface1->receiveString(answer) == true)
+			if ( interface1->receiveString(answer, className) == true)
 			{
 				// everthing's fine
 				if (answer == "*sl#")
