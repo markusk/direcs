@@ -57,7 +57,7 @@ class RgbLed : public QObject
 		@param type can be SVMIN, SVMAX, SVSTART, SVEND, SVDEFAULT or SVCURRENT=default
 		@return the rgbLed position (0 - 255)
 		 */
-		unsigned char getRgbLedBrightness(int rgbLed, unsigned char type=RGBLEDACTUAL);
+		unsigned char getBrightness(int rgbLed, unsigned char type=RGBLEDACTUAL);
 
 
 	public slots:

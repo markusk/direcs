@@ -144,7 +144,7 @@ void RgbLed::init(void)
 }
 
 
-unsigned char RgbLed::getRgbLedBrightness(int rgbLed, unsigned char type)
+unsigned char RgbLed::getBrightness(int rgbLed, unsigned char type)
 {
 	if ( (rgbLed < RGBLED1) || (rgbLed > (NUMBEROFRGBLEDS-1)) )
 	{
