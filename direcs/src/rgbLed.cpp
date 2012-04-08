@@ -107,32 +107,24 @@ bool RgbLed::setBrightness(unsigned char rgbLed, unsigned char bness)
 }
 
 
-void RgbLed::setRgbLedBrightness(int rgbLed, unsigned char type, unsigned char position)
+void RgbLed::setRgbLedBrightness(int rgbLed, unsigned char type, unsigned char bness)
 {
 	switch (type)
 	{
-		case RGBLEDSTART:
-			startBrightness[rgbLed] = position;
-			return;
-			break;
-		case RGBLEDEND:
-			endBrightness[rgbLed] = position;
-			return;
-			break;
 		case RGBLEDMIN:
-			minBrightness[rgbLed] = position;
+			minBrightness[rgbLed] = bness;
 			return;
 			break;
 		case RGBLEDMAX:
-			maxBrightness[rgbLed] = position;
+			maxBrightness[rgbLed] = bness;
 			return;
 			break;
 		case RGBLEDDEFAULT:
-			defaultBrightness[rgbLed] = position;
+			defaultBrightness[rgbLed] = bness;
 			return;
 			break;
-		case RGBLEDACTUAL
-			rgbLed [rgbLed] = position;
+		case RGBLEDACTUAL:
+			brightness[rgbLed] = bness;
 			return;
 			break;
 	}
@@ -145,10 +137,10 @@ void RgbLed::init(void)
 	{
 		for (int rgbLed=0; rgbLed<NUMBEROFRGBLEDS; rgbLed++)
 		{
-			setRgbLed(rgbLed, defaultBrightness[rgbLed]);
+			setBrightness(rgbLed, defaultBrightness[rgbLed]);
 			//emit message(QString("Init rgbLed%1 to def-pos: %2").arg(rgbLed+1).arg(rgbLedDefaultPosition[rgbLed]));
 		}
-	} // robot is ON
+	}
 }
 
 
@@ -163,12 +155,6 @@ unsigned char RgbLed::getRgbLedBrightness(int rgbLed, unsigned char type)
 
 	switch (type)
 	{
-		case RGBLEDSTART:
-			return startBrightness[rgbLed];
-			break;
-		case RGBLEDEND:
-			return endBrightness[rgbLed];
-			break;
 		case RGBLEDMIN:
 			return minBrightness[rgbLed];
 			break;
