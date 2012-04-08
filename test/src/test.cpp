@@ -39,8 +39,6 @@ test::test()
 
 	  readSettings();
 
-	  setCurrentFile("");
-
 
 /*
 	  //---------------------------------------------------------------------------------------------------
@@ -194,10 +192,6 @@ void test::about()
 				  "toolbars, and a status bar."));
 }
 
-void test::documentWasModified()
-{
-	  setWindowModified(true);
-}
 
 void test::createActions()
 {
@@ -270,8 +264,6 @@ void test::createMenus()
 
 void test::createToolBars()
 {
-	  fileToolBar = addToolBar(tr("File"));  // < < < < <
-
 	  editToolBar = addToolBar(tr("Edit"));
 	  editToolBar->addAction(cutAct);
 	  editToolBar->addAction(copyAct);
@@ -303,71 +295,6 @@ void test::writeSettings()
 	  QSettings settings("Trolltech", "Application Example");
 	  settings.setValue("pos", pos());
 	  settings.setValue("size", size());
-}
-
-
-void test::loadFile(const QString &fileName)
-{
-	  QFile file(fileName);
-	  if (!file.open(QFile::ReadOnly | QFile::Text)) {
-			QMessageBox::warning(this, tr("Application"),
-							  tr("Cannot read file %1:\n%2.")
-							  .arg(fileName)
-							  .arg(file.errorString()));
-			return;
-	  }
-
-	  QTextStream in(&file);
-	  QApplication::setOverrideCursor(Qt::WaitCursor);
-	  textEdit->setPlainText(in.readAll());
-	  QApplication::restoreOverrideCursor();
-
-	  setCurrentFile(fileName);
-	  statusBar()->showMessage(tr("File loaded"), 2000);
-}
-
-
-bool test::saveFile(const QString &fileName)
-{
-	  QFile file(fileName);
-	  if (!file.open(QFile::WriteOnly | QFile::Text)) {
-			QMessageBox::warning(this, tr("Application"),
-							  tr("Cannot write file %1:\n%2.")
-							  .arg(fileName)
-							  .arg(file.errorString()));
-			return false;
-	  }
-
-	  QTextStream out(&file);
-	  QApplication::setOverrideCursor(Qt::WaitCursor);
-	  out << textEdit->toPlainText();
-	  QApplication::restoreOverrideCursor();
-
-	  setCurrentFile(fileName);
-	  statusBar()->showMessage(tr("File saved"), 2000);
-	  return true;
-}
-
-
-void test::setCurrentFile(const QString &fileName)
-{
-	  curFile = fileName;
-	  textEdit->document()->setModified(false);
-	  setWindowModified(false);
-
-	  QString shownName;
-	  if (curFile.isEmpty())
-			shownName = "direcs test app";
-	  else
-			shownName = strippedName(curFile);
-
-	  setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("Application")));
-}
-
-
-QString test::strippedName(const QString &fullFileName)
-{
-	  return QFileInfo(fullFileName).fileName();
 }
 
 

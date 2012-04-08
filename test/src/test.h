@@ -57,10 +57,8 @@ public slots:
 	  void appendLog(QString message);
 	  void refreshLaserViewFront(QList <float> laserScannerValues, QList <int> laserScannerFlags);
 
-
 private slots:
 	  void about();
-	  void documentWasModified();
 	  void testSlot();      //    < < < <   this is the test slot where all magic happens
 
 private:
@@ -70,10 +68,6 @@ private:
 	  void createStatusBar();
 	  void readSettings();
 	  void writeSettings();
-	  void loadFile(const QString &fileName);
-	  bool saveFile(const QString &fileName);
-	  void setCurrentFile(const QString &fileName);
-	  QString strippedName(const QString &fullFileName);
 
 	  QTextEdit *textEdit;
 	  QString curFile;
@@ -82,7 +76,6 @@ private:
 	  QMenu *editMenu;
 	  QMenu *helpMenu;
 	  QMenu *testMenu;
-	  QToolBar *fileToolBar;
 	  QToolBar *editToolBar;
 	  QToolBar *testToolBar;
 	  QAction *exitAct;
