@@ -61,6 +61,14 @@ private slots:
 	  void about();
 	  void testSlot();      //    < < < <   this is the test slot where all magic happens
 
+signals:
+	  /**
+	  Emits a string to the GUI log / console.
+	  @sa this::appendLog()
+	  @param text is the message to be emitted
+	  */
+	  void message(QString text);
+
 private:
 	  void createActions();
 	  void createMenus();

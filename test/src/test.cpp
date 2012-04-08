@@ -115,7 +115,7 @@ test::test()
 	  serialPortPath = "/dev/tty.usbserial-A900J1TU"; // ARM board with STM32F4 and FTDI RS232R chip
 
 	  // send messages from the other class to this class (to the GUI)
-	  connect(interface1, SIGNAL( emitMessage(QString) ), this, SLOT( appendLog(QString) ));
+	  connect(interface1, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
 
 	  //--------------------------------------------------------------------------
 	  // let some classes know the robots state
