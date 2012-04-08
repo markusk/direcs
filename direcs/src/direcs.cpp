@@ -650,6 +650,14 @@ void Direcs::init()
 				//-------------------------------------------------------
 				servos->init();
 				emit message("Servos moved to default positions");
+*/
+
+				//-------------------------------------------------------
+				// set all RGB LEDs in their default brightness
+				//-------------------------------------------------------
+				rgbLeds->init();
+				emit message("RGB LEDs set to default brightness");
+
 
 				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 				//-----------------------------------------------------------
