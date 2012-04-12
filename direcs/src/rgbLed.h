@@ -101,9 +101,9 @@ class RgbLed : public QObject
 
 		/// defines the size of the rgbLed[] arrays.
 		static const unsigned char NUMBEROFRGBLEDS = 6; /// \todo also defined in direcs.h !!!
-		int minBrightness[NUMBEROFRGBLEDS-1];
-		int maxBrightness[NUMBEROFRGBLEDS-1];
-		int defaultBrightness[NUMBEROFRGBLEDS-1];
+		int minBrightness[NUMBEROFRGBLEDS];
+		int maxBrightness[NUMBEROFRGBLEDS];
+		int defaultBrightness[NUMBEROFRGBLEDS];
 		int brightness[NUMBEROFRGBLEDS]; //! the current position of the rgbLed!
 
 		static const bool ON  = true;   /// For motor or robot "ON"
