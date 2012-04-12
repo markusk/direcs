@@ -3295,10 +3295,10 @@ void Direcs::readSettings()
 			mot1Speed = 0;
 			break;
 		default:
-			if (mot1Speed > 254)
+			if (mot1Speed > MAXPWM)
 			{
-				emit message("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than 255!! Value set to 255!</font>");
-				mot1Speed = 255;
+				emit message(QString("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than %1!! Value set to %1!</font>").arg(MAXPWM));
+				mot1Speed = MAXPWM;
 			}
 
 			if (!consoleMode)
@@ -3323,10 +3323,10 @@ void Direcs::readSettings()
 			mot2Speed = 0;
 			break;
 		default:
-			if (mot2Speed > 254)
+			if (mot2Speed > MAXPWM)
 			{
-				emit message("<font color=\"#FF0000\">Value \"motor2Speed\" is greater than 255!! Value set to 255!</font>");
-				mot2Speed = 255;
+				emit message(QString("<font color=\"#FF0000\">Value \"motor2Speed\" is greater than %1!! Value set to %1!</font>").arg(MAXPWM));
+				mot2Speed = MAXPWM;
 			}
 
 			if (!consoleMode)
@@ -3351,10 +3351,10 @@ void Direcs::readSettings()
 			mot3Speed = 0;
 			break;
 		default:
-			if (mot3Speed > 254)
+			if (mot3Speed > MAXPWM)
 			{
-				emit message("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than 255!! Value set to 255!</font>");
-				mot3Speed = 255;
+				emit message(QString("<font color=\"#FF0000\">Value \"motor3Speed\" is greater than %1!! Value set to %1!</font>").arg(MAXPWM));
+				mot3Speed = MAXPWM;
 			}
 
 			if (!consoleMode)
@@ -3379,10 +3379,10 @@ void Direcs::readSettings()
 			mot4Speed = 0;
 			break;
 		default:
-			if (mot4Speed > 254)
+			if (mot4Speed > MAXPWM)
 			{
-				emit message("<font color=\"#FF0000\">Value \"motor4Speed\" is greater than 255!! Value set to 255!</font>");
-				mot4Speed = 255;
+				emit message(QString("<font color=\"#FF0000\">Value \"motor1Speed\" is greater than %1!! Value set to %1!</font>").arg(MAXPWM));
+				mot4Speed = MAXPWM;
 			}
 
 			if (!consoleMode)
@@ -3407,10 +3407,10 @@ void Direcs::readSettings()
 			minimumSpeed = 0;
 			break;
 		default:
-			if (minimumSpeed > 254)
+			if (minimumSpeed > MAXPWM)
 			{
-				emit message("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than 255!! Value set to 255!</font>");
-				minimumSpeed = 255;
+				emit message(QString("<font color=\"#FF0000\">Value \"minimumSpeed\" is greater than %1!! Value set to %1!</font>").arg(MAXPWM));
+				minimumSpeed = MAXPWM;
 			}
 
 			if (!consoleMode)
@@ -3435,10 +3435,10 @@ void Direcs::readSettings()
 			maximumSpeed = 0;
 			break;
 		default:
-			if (maximumSpeed > 254)
+			if (maximumSpeed > MAXPWM)
 			{
-				emit message("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than 255!! Value set to 255!</font>");
-				maximumSpeed = 255;
+				emit message(QString("<font color=\"#FF0000\">Value \"maximumSpeed\" is greater than %1!! Value set to %1!</font>").arg(MAXPWM));
+				maximumSpeed = MAXPWM;
 			}
 
 			if (!consoleMode)
@@ -3628,7 +3628,7 @@ void Direcs::readSettings()
 				rgbLeds->storeBrightness(led, RGBLEDMIN, settingValue);
 
 				// show text
-				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
@@ -3658,7 +3658,7 @@ void Direcs::readSettings()
 				rgbLeds->storeBrightness(led, RGBLEDMAX, settingValue);
 
 				// show text
-				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
@@ -3688,7 +3688,7 @@ void Direcs::readSettings()
 				rgbLeds->storeBrightness(led, RGBLEDDEFAULT, settingValue);
 
 				// show text
-				//emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
+				emit message(QString("%1 set to <b>%2</b>.").arg(settingName).arg(settingValue));
 				break;
 		}
 	}
@@ -4735,47 +4735,47 @@ void Direcs::drivingLight(unsigned char color)
 	switch (color)
 	{
 		case RED:
-			rgbLeds->setBrightness(RGBLED1, 255);
-			rgbLeds->setBrightness(RGBLED2, 1);
-			rgbLeds->setBrightness(RGBLED3, 1);
-			rgbLeds->setBrightness(RGBLED4, 255);
-			rgbLeds->setBrightness(RGBLED5, 1);
-			rgbLeds->setBrightness(RGBLED6, 1);
+			rgbLeds->setBrightness(RGBLED1, MAXPWM);
+			rgbLeds->setBrightness(RGBLED2, MINPWM);
+			rgbLeds->setBrightness(RGBLED3, MINPWM);
+			rgbLeds->setBrightness(RGBLED4, MAXPWM);
+			rgbLeds->setBrightness(RGBLED5, MINPWM);
+			rgbLeds->setBrightness(RGBLED6, MINPWM);
 			break;
 		case GREEN:
-			rgbLeds->setBrightness(RGBLED1, 1);
-			rgbLeds->setBrightness(RGBLED2, 255);
-			rgbLeds->setBrightness(RGBLED3, 1);
-			rgbLeds->setBrightness(RGBLED4, 1);
-			rgbLeds->setBrightness(RGBLED5, 255);
-			rgbLeds->setBrightness(RGBLED6, 1);
+			rgbLeds->setBrightness(RGBLED1, MINPWM);
+			rgbLeds->setBrightness(RGBLED2, MAXPWM);
+			rgbLeds->setBrightness(RGBLED3, MINPWM);
+			rgbLeds->setBrightness(RGBLED4, MINPWM);
+			rgbLeds->setBrightness(RGBLED5, MAXPWM);
+			rgbLeds->setBrightness(RGBLED6, MINPWM);
 			break;
 
 		case BLUE:
-			rgbLeds->setBrightness(RGBLED1, 1);
-			rgbLeds->setBrightness(RGBLED2, 1);
-			rgbLeds->setBrightness(RGBLED3, 255);
-			rgbLeds->setBrightness(RGBLED4, 1);
-			rgbLeds->setBrightness(RGBLED5, 1);
-			rgbLeds->setBrightness(RGBLED6, 255);
+			rgbLeds->setBrightness(RGBLED1, MINPWM);
+			rgbLeds->setBrightness(RGBLED2, MINPWM);
+			rgbLeds->setBrightness(RGBLED3, MAXPWM);
+			rgbLeds->setBrightness(RGBLED4, MINPWM);
+			rgbLeds->setBrightness(RGBLED5, MINPWM);
+			rgbLeds->setBrightness(RGBLED6, MAXPWM);
 			break;
 
 		case WHITE:
-			rgbLeds->setBrightness(RGBLED1, 255);
-			rgbLeds->setBrightness(RGBLED2, 255);
-			rgbLeds->setBrightness(RGBLED3, 255);
-			rgbLeds->setBrightness(RGBLED4, 255);
-			rgbLeds->setBrightness(RGBLED5, 255);
-			rgbLeds->setBrightness(RGBLED6, 255);
+			rgbLeds->setBrightness(RGBLED1, MAXPWM);
+			rgbLeds->setBrightness(RGBLED2, MAXPWM);
+			rgbLeds->setBrightness(RGBLED3, MAXPWM);
+			rgbLeds->setBrightness(RGBLED4, MAXPWM);
+			rgbLeds->setBrightness(RGBLED5, MAXPWM);
+			rgbLeds->setBrightness(RGBLED6, MAXPWM);
 			break;
 
 		case LEDOFF:
-			rgbLeds->setBrightness(RGBLED1, 1);
-			rgbLeds->setBrightness(RGBLED2, 1);
-			rgbLeds->setBrightness(RGBLED3, 1);
-			rgbLeds->setBrightness(RGBLED4, 1);
-			rgbLeds->setBrightness(RGBLED5, 1);
-			rgbLeds->setBrightness(RGBLED6, 1);
+			rgbLeds->setBrightness(RGBLED1, MINPWM);
+			rgbLeds->setBrightness(RGBLED2, MINPWM);
+			rgbLeds->setBrightness(RGBLED3, MINPWM);
+			rgbLeds->setBrightness(RGBLED4, MINPWM);
+			rgbLeds->setBrightness(RGBLED5, MINPWM);
+			rgbLeds->setBrightness(RGBLED6, MINPWM);
 			break;
 	}
 }
@@ -4827,12 +4827,12 @@ void Direcs::test()
 	if (color==4)
 	{
 		color++;
-		rgbLeds->setBrightness(RGBLED1, 255);
+		rgbLeds->setBrightness(RGBLED1, MAXPWM);
 		rgbLeds->setBrightness(RGBLED2, 1);
 		rgbLeds->setBrightness(RGBLED3, 1);
 
 		rgbLeds->setBrightness(RGBLED4, 1);
-		rgbLeds->setBrightness(RGBLED5, 255);
+		rgbLeds->setBrightness(RGBLED5, MAXPWM);
 		rgbLeds->setBrightness(RGBLED6, 1);
 		return;
 	}
@@ -4841,12 +4841,12 @@ void Direcs::test()
 	{
 		color++;
 		rgbLeds->setBrightness(RGBLED1, 1);
-		rgbLeds->setBrightness(RGBLED2, 255);
+		rgbLeds->setBrightness(RGBLED2, MAXPWM);
 		rgbLeds->setBrightness(RGBLED3, 1);
 
 		rgbLeds->setBrightness(RGBLED4, 1);
 		rgbLeds->setBrightness(RGBLED5, 1);
-		rgbLeds->setBrightness(RGBLED6, 255);
+		rgbLeds->setBrightness(RGBLED6, MAXPWM);
 		return;
 	}
 
@@ -4855,9 +4855,9 @@ void Direcs::test()
 		color++;
 		rgbLeds->setBrightness(RGBLED1, 1);
 		rgbLeds->setBrightness(RGBLED2, 1);
-		rgbLeds->setBrightness(RGBLED3, 255);
+		rgbLeds->setBrightness(RGBLED3, MAXPWM);
 
-		rgbLeds->setBrightness(RGBLED4, 255);
+		rgbLeds->setBrightness(RGBLED4, MAXPWM);
 		rgbLeds->setBrightness(RGBLED5, 1);
 		rgbLeds->setBrightness(RGBLED6, 1);
 		return;
