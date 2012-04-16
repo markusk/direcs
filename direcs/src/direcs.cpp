@@ -2724,25 +2724,26 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	serialPortMicrocontroller = inifile1->readString("Config", "serialPortMicrocontroller");
+#ifdef Q_OS_LINUX
+	QString portString = "serialPortMicrocontrollerLinux";
+#endif
 
-	if (serialPortMicrocontroller == "error2")
+#ifdef Q_OS_MAC
+	QString portString = "serialPortMicrocontrollerMac";
+#endif
+
+	serialPortMicrocontroller = inifile1->readString("Config", portString);
+
+	if (serialPortMicrocontroller == "error1")
 	{
-		emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
+		emit message(QString("<font color=\"#FF0000\">Value \"%1\" not found in ini-file!</font>").arg(portString));
 	}
 	else
 	{
-		if (serialPortMicrocontroller == "error1")
-		{
-			emit message("<font color=\"#FF0000\">Value \"serialPortMicrocontroller\" not found in ini-file!</font>");
-		}
-		else
-		{
-			//
-			// everything okay
-			//
-			emit message(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
-		}
+		//
+		// everything okay
+		//
+		emit message(QString("Serial port for microcontroller set to <b>%1</b>.").arg(serialPortMicrocontroller));
 	}
 
 
