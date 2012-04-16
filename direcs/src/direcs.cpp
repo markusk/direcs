@@ -56,6 +56,15 @@ int main(int argc, char *argv[])
 				forceLargeGUI = true;
 				qDebug() << "Using large GUI.";
 			}
+
+			// now search for the "console" parameter (case insensitive)
+			if ((strcasecmp(argv[i], "-h") == 0) || (strcasecmp(argv[i], "-help") == 0) || (strcasecmp(argv[i], "help") == 0) || (strcasecmp(argv[i], "?") == 0) || (strcasecmp(argv[i], "-?") == 0))
+			{
+				qDebug() << "Possible parameters:\n\n";
+				qDebug() << "console\tuse console mode";
+				qDebug() << "small\tforce small GUI";
+				qDebug() << "large\tforce large GUI\n\n";
+			}
 		}
 	}
 
