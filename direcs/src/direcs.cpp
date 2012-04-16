@@ -2724,13 +2724,13 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-#ifdef Q_OS_LINUX
-	QString portString = "serialPortMicrocontrollerLinux";
-#endif
+	#ifdef Q_OS_LINUX
+		QString portString = "serialPortMicrocontrollerLinux";
+	#endif
 
-#ifdef Q_OS_MAC
-	QString portString = "serialPortMicrocontrollerMac";
-#endif
+	#ifdef Q_OS_MAC
+		QString portString = "serialPortMicrocontrollerMac";
+	#endif
 
 	serialPortMicrocontroller = inifile1->readString("Config", portString);
 
