@@ -35,7 +35,7 @@ DirecsSerial::~DirecsSerial()
 }
 
 
-int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
+int DirecsSerial::openPort(char *dev_name, int baudrate)
 {
 	struct termios  options;
 	int spd = -1;

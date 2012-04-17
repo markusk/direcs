@@ -99,7 +99,7 @@ bool SickS300::openComPort()
 
 
 	// serial port config (57600, no HWFLCTRL, 8N1) and flush also done in openAtmelPort!
-	if (serialPort->openAtmelPort( ba.data(), baudRate ) == -1)
+	if (serialPort->openPort( ba.data(), baudRate ) == -1)
 	{
 		return false;
 	}

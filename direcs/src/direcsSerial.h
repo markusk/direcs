@@ -60,7 +60,7 @@
 \author Markus Knapp
 \brief Class to read data from and write data to the serial port.
 
-This class is used to communicate with the laser scanners and with the robot (with the Atmel controller).
+This class is used to communicate with laser scanners and with the robot (with the microcontroller).
 */
 class DirecsSerial : public QObject
 {
@@ -78,7 +78,7 @@ class DirecsSerial : public QObject
 		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
 		@return the file descriptor if everything is fine, -1 in case of an error.
 		**/
-		int openAtmelPort(char *dev_name, int baudrate);
+		int openPort(char *dev_name, int baudrate);
 
 		/**
 		Returns the number of availabe bytes. Currently this is *only* used in the @sa Laser class!
