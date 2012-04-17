@@ -175,7 +175,7 @@ bool SickS300::receiveChar(unsigned char *character)
 {
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	if (serialPort->readAtmelPort(character, 1) != 1)
+	if (serialPort->readData(character, 1) != 1)
 	{
 		// ERROR
 		emit message("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, SickS300)!<font>");

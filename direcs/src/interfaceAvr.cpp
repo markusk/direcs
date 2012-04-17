@@ -111,7 +111,7 @@ bool InterfaceAvr::receiveChar(unsigned char *character, QString callingClassNam
 
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	result = serialPort->readAtmelPort(character, 1, callingClassName);
+	result = serialPort->readData(character, 1, callingClassName);
 
 	if (result != 1)
 	{
@@ -169,7 +169,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 	do
 	{
 		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readAtmelPort(&character, 1, callingClassName);
+		result = serialPort->readData(&character, 1, callingClassName);
 
 		if (result == 1)
 		{

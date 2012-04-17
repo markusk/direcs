@@ -225,7 +225,7 @@ int DirecsSerial::writeData(unsigned char *c, QString callingClassName)
 }
 
 
-int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars, QString callingClassName)
+int DirecsSerial::readData(unsigned char *buf, int nChars, QString callingClassName)
 {
 	//
 	// Original code from method readPort

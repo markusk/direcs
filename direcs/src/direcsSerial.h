@@ -71,8 +71,9 @@ class DirecsSerial : public QObject
 		~DirecsSerial();
 
 		/**
-		Open a connection to the serial line. This method is only used for the microcontroller serial port *and* for the SICK laser S300!
-		The serial port settings (8,N,1) for the serial port are set in this method, too!!
+		Open a connection to the serial line.
+
+		The serial port settings (8,N,1) for the serial port are set in this method, too!
 
 		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
 		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
@@ -81,7 +82,8 @@ class DirecsSerial : public QObject
 		int openPort(char *dev_name, int baudrate);
 
 		/**
-		Clears the read buffer. Currently this is *only* used in the @sa laserSickS300 class!
+		Clears the read buffer.
+
 		@return Upon successful completion, this function returns zero.
 		*/
 		int purgeRx();
@@ -97,18 +99,16 @@ class DirecsSerial : public QObject
 
 		/**
 		Reads data from the serial line
-		This method is only used for the atmel serial port! *Not* for the laser scanners!
 
 		@param *buf Pointer to unsigned char buffer for the data to be read.
 		@param nChars Number of bytes to be written (<= size of the buffer array).
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes read.
 		 */
-		int readAtmelPort(unsigned char *buf, int nChars, QString callingClassName = "none");
+		int readData(unsigned char *buf, int nChars, QString callingClassName = "none");
 
 		/**
 		Closes the serial port.
-		This method is only used for the atmel serial port! *Not* for the laser scanners!
 
 		@return the results reported by close.
 		**/
