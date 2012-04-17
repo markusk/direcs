@@ -206,30 +206,6 @@ int DirecsSerial::purgeRx()
 }
 
 
-int DirecsSerial::writeDataToLaser(int dev_fd, unsigned char *buf, int nChars)
-{
-	int amountWritten = 0;
-
-	while(nChars > 0)
-	{
-		amountWritten = write(dev_fd, buf, nChars);
-		if(amountWritten < 0) {
-		if(errno == EWOULDBLOCK) {
-			fprintf(stderr, "\nWARNING: writeN: EWOULDBLOCK: trying again!\n");
-		}
-		else {
-			return -1;
-		}
-		}
-		else {
-		nChars -= amountWritten;
-		buf += amountWritten;
-		}
-	}
-	return 0;
-}
-
-
 int DirecsSerial::writeAtmelPort(unsigned char *c, QString callingClassName)
 {
 	int n = write(mDev_fd, c, 1);

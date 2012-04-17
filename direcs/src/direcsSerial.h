@@ -71,7 +71,7 @@ class DirecsSerial : public QObject
 		~DirecsSerial();
 
 		/**
-		Open a connection to the serial line. This method is only used for the Atmel serial port *and* for the SICK laser S300!
+		Open a connection to the serial line. This method is only used for the microcontroller serial port *and* for the SICK laser S300!
 		The serial port settings (8,N,1) for the serial port are set in this method, too!!
 
 		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
@@ -85,16 +85,6 @@ class DirecsSerial : public QObject
 		@return Upon successful completion, this function returns zero.
 		*/
 		int purgeRx();
-
-		/**
-		Writes data to the serial line. Currently this is *only* used in the @sa Laser class!
-
-		@param dev_fd The file descriptor associated to the serial line.
-		@param *buf Pointer to unsiged char buffer to the data to be send over the serial line
-		@param nChars Number of bytes in buf
-		@return The number of bytes sent to the serial line.
-		**/
-		int writeDataToLaser(int dev_fd, unsigned char *buf, int nChars);
 
 		/**
 		Writes data to the serial line.
