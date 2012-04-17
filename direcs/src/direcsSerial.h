@@ -98,13 +98,14 @@ class DirecsSerial : public QObject
 		**/
 		long numChars(int dev_fd);
 
-		/**
+		/* *    c u r r e n t l y   n o t   i n   u s e   !
 		Returns the number of availabe bytes. Currently this is *only* used in the @sa Laser class!
 		This method is provided for convenience and uses the internal member for the file descriptor. It needs no parameters!
 
 		@return number of available bytes or -1 in case of an error.
-		**/
+		** /
 		long numChars();
+		*/
 
 		/**
 		Clears the buffer of the serial line. Currently this is *only* used in the @sa Laser class!
@@ -173,8 +174,8 @@ class DirecsSerial : public QObject
 
 
 		/* *    c u r r e n t l y   n o t   i n   u s e   !
-
 		Sets the serial port parameters
+
 		@param fd The file descriptor associated to the serial port.
 		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
 		@param par The parity bit can be 0, E, M or S (parityOdd, parityEven, parityM or parityS)
@@ -199,8 +200,8 @@ class DirecsSerial : public QObject
 
 
 		/* *    c u r r e n t l y   n o t   i n   u s e   !
-
 		Avtivates the low latency mode for the serial line.
+
 		This works with real serial devices, USB-to-RS232 often does not work.
 		In this case, the system continues in the standard operational mode.
 		Note: Low latency does not run with cygwin.

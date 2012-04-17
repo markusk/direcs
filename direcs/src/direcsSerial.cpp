@@ -461,6 +461,7 @@ long DirecsSerial::numChars(int dev_fd)
 }
 
 
+/* *    c u r r e n t l y   n o t   i n   u s e   !
 long DirecsSerial::numChars()
 {
 	int available = 0;
@@ -486,6 +487,7 @@ long DirecsSerial::numChars()
 		return errno;
 	}
 }
+*/
 
 
 int DirecsSerial::clearInputBuffer(int dev_fd)
@@ -711,7 +713,6 @@ int DirecsSerial::setLowLatency(int fd)
 
 
 /* *    c u r r e n t l y   n o t   i n   u s e   !
-
 int DirecsSerial::setLowLatency()
 {
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
