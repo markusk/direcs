@@ -21,7 +21,6 @@
 #ifndef LASERTHREAD_H
 #define LASERTHREAD_H
 
-#include "laser.h"
 #include "laserSickS300.h"
 #include "inifile.h" // for reading the sim values
 #include <QThread>
@@ -58,7 +57,7 @@ class LaserThread : public QThread
 		/**
 		Sets the type of the laser
 		@param laserScanner can be LASER1 or LASER2
-		@param laserType can be PLS or S300 (others possible, but not implemented completely. @sa Laser::direcs_laser_laser_type_t )
+		@param laserType can be S300
 		*/
 		void setType(short int laserScanner, QString laserType);
 
@@ -187,7 +186,6 @@ class LaserThread : public QThread
 		float laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
 		float laserscannerResolutionRear;  /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
 
-		Laser *laser; // the object for the PLS or LMS laserscanner
 		SickS300 *laserS300; // the object for the S300 laserscanner
 		Inifile *inifile1; //  for reading simulation values
 

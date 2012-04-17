@@ -46,20 +46,10 @@ LaserThread::~LaserThread()
 	// laserScannerFrontIsConnected is set in the isConnected method!
 	if (laserScannerFrontIsConnected || laserScannerRearIsConnected)
 	{
-			// This shuts down *all* PLS lasers (managed internaly in laser.cpp)!
-		if ((laserscannerTypeFront == PLS) || ((laserscannerTypeRear == PLS)) )
-		{
-			// shutdown laser (parameter '0' is not in use)
-			laser->direcs_laser_shutdown(0);
-			delete laser;
-		}
-		else
-		{
 		if ((laserscannerTypeFront == S300) || ((laserscannerTypeRear == S300)) )
-			{
-				// closing com port etc. is done in the laser class destructor
-				delete laserS300;
-			}
+		{
+			// closing com port etc. is done in the laser class destructor
+			delete laserS300;
 		}
 	}
 
@@ -77,7 +67,6 @@ void LaserThread::stop()
 
 void LaserThread::run()
 {
-	int laserValue = 0;
 	static int errorCounter = 0;
 
 
@@ -106,62 +95,35 @@ void LaserThread::run()
 			((simulationMode==false) && (laserScannerRearIsConnected == true))
 		   )
 		{
-			if ( (laserscannerTypeFront==PLS) || (laserscannerTypeRear==PLS)) // this is stupid, but the direcs_laser_run gets always ALL laser scanner values (wasn't my idea)
+			if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
 			{
-				// asks ALL lasers (managed internaly in laser_main.cpp) for data.
-				// this calls code for PLS laser scanners!
-				laserValue = laser->direcs_laser_run();
+				/// \todo add support for 2 lasers...
+				if (laserS300->readRequestTelegram() != -1)
+				{
+					getAndStoreLaserValuesFront();
+					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
 
-				switch (laserValue)
-				{
-				case LASER1:
-					getAndStoreLaserValuesFront();
-					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
-					break;
-				case LASER2:
-					getAndStoreLaserValuesRear();
-					emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
-					break;
-				case (LASER1+LASER2):
-					getAndStoreLaserValuesFront();
-					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
-					getAndStoreLaserValuesRear();
-					emit laserDataCompleteRear(laserScannerValuesRear, laserScannerFlagsRear);
-					break;
-				}
-			}
-			else
-			{
-				if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
-				{
-					/// \todo add support for 2 lasers...
-					if (laserS300->readRequestTelegram() != -1)
+					// resetting error counter one by one (for each good read, we are moving to "0".
+					if (errorCounter > 0)
 					{
-						getAndStoreLaserValuesFront();
-						emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+						errorCounter--;
+					}
+				}
+				else
+				{
+					if (errorCounter >= MAXERRORS)
+					{
+						// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+						emit systemerror(-1);
 
-						// resetting error counter one by one (for each good read, we are moving to "0".
-						if (errorCounter > 0)
-						{
-							errorCounter--;
-						}
+						stopped = true;
+						emit message(QString("%1 ERRORs reading S300 data. Laser thread stopped!").arg(MAXERRORS));
+						errorCounter = 0;
 					}
 					else
 					{
-						if (errorCounter >= MAXERRORS)
-						{
-							// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
-							emit systemerror(-1);
-
-							stopped = true;
-							emit message(QString("%1 ERRORs reading S300 data. Laser thread stopped!").arg(MAXERRORS));
-							errorCounter = 0;
-						}
-						else
-						{
-							errorCounter++;
-							emit message(QString("%1. error reading S300 laser.").arg(errorCounter));
-						}
+						errorCounter++;
+						emit message(QString("%1. error reading S300 laser.").arg(errorCounter));
 					}
 				}
 			}
@@ -186,120 +148,72 @@ void LaserThread::run()
 
 void LaserThread::getAndStoreLaserValuesFront()
 {
-	if (laserscannerTypeFront == PLS)
+	if (laserscannerTypeFront == S300)
 	{
-		// check if all 180 beams were read (in the laser module)
-		numReadingsFront = laser->getLaserNumReadings(LASER1);
+		float currentDistance = 0.0;
 
-		// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
-		if (numReadingsFront > laserscannerAngleFront)
-			numReadingsFront = laserscannerAngleFront;
 
-		// if YES
-		if (numReadingsFront > 0)
+		if (mountingLaserscannerFront == "normal")
 		{
-			if (mountingLaserscannerFront == "normal")
+			// /get the data from 0 to 270 degrees (left to right)
+			// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
+			for (int angleIndex=0; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++)
 			{
-				// /get the data from 0 to 180 degrees (left to right)
-				for (int angle=0; angle<numReadingsFront; angle++)
+				//  get distance
+				currentDistance = laserS300->getDistance(angleIndex);
+
+				// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
+				if (measureMode)
 				{
-					// get value from laser
-					// store the value in an array in this thread
-					laserScannerValuesFront[angle] = laser->getLaserDistance(LASER1, angle);
-
-					// send value over the network
-					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( (int) (laserScannerValuesFront[angle]*100) ) );
-				}
-			}
-			else
-			{
-				// flip the data, due to a flipped mounting of the hardware!
-				//
-				// get the data from 0 to 180 degrees (left to right)
-				// 'flip' will be increased every step - 1, so the data are stored from 180 deg to 0 deg
-				for (int angle=0, flip=numReadingsFront-1; angle<numReadingsFront; angle++, flip--)
-				{
-					// get value from laser
-					// store the value in an array in this thread
-					laserScannerValuesFront[flip] = laser->getLaserDistance(LASER1, angle);
-
-					// send value over the network
-					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angle).arg( (int) (laserScannerValuesFront[angle]*100) ) );
-				}
-			}
-		}
-	}
-	else
-	{
-		if (laserscannerTypeFront == S300)
-		{
-			float currentDistance = 0.0;
-
-
-			if (mountingLaserscannerFront == "normal")
-			{
-				// /get the data from 0 to 270 degrees (left to right)
-				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
-				for (int angleIndex=0; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++)
-				{
-					//  get distance
-					currentDistance = laserS300->getDistance(angleIndex);
-
-					// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
-					if (measureMode)
-					{
-						// only store value from laser if the new value (current distance) is less than the last stored value
-						if (currentDistance < laserScannerValuesFront[angleIndex])
-						{
-							// store the value in an array in this thread
-							laserScannerValuesFront[angleIndex] = currentDistance;
-						}
-					}
-					else
+					// only store value from laser if the new value (current distance) is less than the last stored value
+					if (currentDistance < laserScannerValuesFront[angleIndex])
 					{
 						// store the value in an array in this thread
 						laserScannerValuesFront[angleIndex] = currentDistance;
 					}
-
-					// send value over the network
-					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
 				}
-			}
-			else
-			{
-				// flip the data, due to a flipped mounting of the hardware!
-				//
-				// get the data from 0 to 270 degrees (left to right)
-				// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
-				// 'flip' will be increased every step - 1, so the data are stored from 270 deg to 0 deg
-				for (int angleIndex=0, flip=(laserscannerAngleFront/laserscannerResolutionFront)-1; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++, flip--)
+				else
 				{
-					//  get distance
-					currentDistance = laserS300->getDistance(angleIndex);
+					// store the value in an array in this thread
+					laserScannerValuesFront[angleIndex] = currentDistance;
+				}
 
-					// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
-					if (measureMode)
-					{
-						// only store value from laser if the new value (current distance) is less than the last stored value
-						if (currentDistance < laserScannerValuesFront[angleIndex])
-						{
-							// store the value in an array in this thread
-							laserScannerValuesFront[flip] = currentDistance;
-						}
-					}
-					else
+				// send value over the network
+				// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
+				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
+			}
+		}
+		else
+		{
+			// flip the data, due to a flipped mounting of the hardware!
+			//
+			// get the data from 0 to 270 degrees (left to right)
+			// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
+			// 'flip' will be increased every step - 1, so the data are stored from 270 deg to 0 deg
+			for (int angleIndex=0, flip=(laserscannerAngleFront/laserscannerResolutionFront)-1; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++, flip--)
+			{
+				//  get distance
+				currentDistance = laserS300->getDistance(angleIndex);
+
+				// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
+				if (measureMode)
+				{
+					// only store value from laser if the new value (current distance) is less than the last stored value
+					if (currentDistance < laserScannerValuesFront[angleIndex])
 					{
 						// store the value in an array in this thread
 						laserScannerValuesFront[flip] = currentDistance;
 					}
-
-					// send value over the network
-					// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
 				}
+				else
+				{
+					// store the value in an array in this thread
+					laserScannerValuesFront[flip] = currentDistance;
+				}
+
+				// send value over the network
+				// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
+				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
 			}
 		}
 	}
@@ -308,57 +222,9 @@ void LaserThread::getAndStoreLaserValuesFront()
 
 void LaserThread::getAndStoreLaserValuesRear()
 {
-	if (laserscannerTypeRear == PLS)
+	if (laserscannerTypeRear == S300)
 	{
-		// check if all 180 beams were read (in the laser module)
-		numReadingsRear = laser->getLaserNumReadings(LASER2);
-
-		// numReadings can't be over the number of elements in the QList 'laserScannerValues'!!
-		if (numReadingsRear > laserscannerAngleRear)
-			numReadingsRear = laserscannerAngleRear;
-
-		// if YES
-		if (numReadingsRear > 0)
-		{
-			if (mountingLaserscannerFront == "normal")
-			{
-				// /get the data from 0° to 180° (left to right)
-				for (int angle=0; angle<numReadingsRear; angle++)
-				{
-					// get value from laser
-					// store the value in an array in this thread
-					laserScannerValuesRear[angle] = laser->getLaserDistance(LASER2, angle);
-
-					// send value over the network
-					// *1l23a42# means LASER2 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( (int) (laserScannerValuesRear[angle]*100) ) );
-				}
-			}
-			else
-			{
-				// flip the data, due to a flipped mounting of the hardware!
-				//
-				// get the data from 0° to 180° (left to right)
-				// 'flip' will be increased every step - 1, so the data are stored from 180° to 0°
-				for (int angle=0, flip=numReadingsRear-1; angle<numReadingsRear; angle++, flip--)
-				{
-					// get value from laser
-					// store the value in an array in this thread
-					laserScannerValuesRear[flip] = laser->getLaserDistance(LASER2, angle);
-
-					// send value over the network
-					// *1l23a42# means LASER2 has at angle 23 a length of 42 cm
-					emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER2).arg(angle).arg( (int) (laserScannerValuesRear[angle]*100) ) );
-				}
-			}
-		}
-	}
-	else
-	{
-		if (laserscannerTypeRear == S300)
-		{
-			/// \todo add S300 stuff
-		}
+		/// \todo add S300 stuff
 	}
 }
 
@@ -554,13 +420,6 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 			return;
 		}
 
-		if (laserscannerTypeFront == PLS)
-		{
-			// for laser.cpp:
-			laser->setDevicePort(laserScanner, serialPort);
-			return;
-		}
-
 		if (laserscannerTypeFront == S300)
 		{
 			laserS300->setDevicePort(serialPort);
@@ -573,13 +432,6 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 	case LASER2:
 		if (laserscannerTypeFront == NONE)
 		{
-			return;
-		}
-
-		if (laserscannerTypeRear == PLS)
-		{
-			// for laser.cpp:
-			laser->setDevicePort(laserScanner, serialPort);
 			return;
 		}
 
@@ -622,64 +474,36 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 		switch (laserScanner)
 		{
 			case LASER1:
-			if (laserType=="LMS")
-			{
-				laserscannerTypeFront = LMS;
-			}
-			else
-			{
-				if (laserType=="PLS")
+				if (laserType=="S300")
 				{
-					laserscannerTypeFront = PLS;
+					laserscannerTypeFront = S300;
 				}
 				else
 				{
-					if (laserType=="S300")
+					if (laserType=="none")
 					{
-						laserscannerTypeFront = S300;
+						laserscannerTypeFront = NONE;
 					}
 					else
 					{
-						if (laserType=="none")
-						{
-							laserscannerTypeFront = NONE;
-						}
-						else
-						{
-							qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER1");
-						}
+						qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER1");
 					}
 				}
-			}
-			break;
+				break;
 		case LASER2:
-			if (laserType=="LMS")
+			if (laserType=="S300")
 			{
-				laserscannerTypeRear = LMS;
+				laserscannerTypeRear = S300;
 			}
 			else
 			{
-				if (laserType=="PLS")
+				if (laserType=="none")
 				{
-					laserscannerTypeRear = PLS;
+					laserscannerTypeRear = NONE;
 				}
 				else
 				{
-					if (laserType=="S300")
-					{
-						laserscannerTypeRear = S300;
-					}
-					else
-					{
-						if (laserType=="none")
-						{
-							laserscannerTypeRear = NONE;
-						}
-						else
-						{
-							qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER2");
-						}
-					}
+					qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER2");
 				}
 			}
 			break;
@@ -689,19 +513,7 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 		}
 
 
-		// create the laser objects
-		if ((laserType=="PLS") || (laserType=="LMS"))
-		{
-			// this is the 'old' laser stuff for the LMS or PLS
-			laser = new Laser();
-
-			// let the splash screen from the direcs class show laser init messages
-			// (connect the signal from the laser class to the signal from this class)
-			connect(laser, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
-
-			return;
-		}
-
+		// create the laser object
 		// S300 stuff
 		if  (laserType=="S300")
 		{
@@ -823,46 +635,29 @@ bool LaserThread::isConnected(short int laserScanner)
 			simulationValuesFront.append(0.0);
 		}
 
-		if (laserscannerTypeFront == PLS)
+		if (laserscannerTypeFront == S300)
 		{
-			// try to start the laser module LASER1
-			if (laser->direcs_laser_start(laserScanner) == 0)
+			/// \todo Support two S300 scanners
+			if (laserS300->openComPort() == true)
 			{
-				laserScannerFrontIsConnected = true;
-				return true;
+				if (laserS300->setup() == 0)
+				{
+					laserScannerFrontIsConnected = true;
+					return true;
+				}
 			}
-			else
-			{
-				laserScannerFrontIsConnected = false;
-				return false;
-			}
+
+			laserScannerFrontIsConnected = false;
+			return false;
 		}
 		else
 		{
-			if (laserscannerTypeFront == S300)
+			if (laserscannerTypeFront != NONE)
 			{
-				/// \todo Support two S300 scanners
-				if (laserS300->openComPort() == true)
-				{
-					if (laserS300->setup() == 0)
-					{
-						laserScannerFrontIsConnected = true;
-						return true;
-					}
-				}
-
-				laserScannerFrontIsConnected = false;
-				return false;
+				qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
 			}
-			else
-			{
-				if (laserscannerTypeFront != NONE)
-				{
-					qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
-				}
-				laserScannerFrontIsConnected = false;
-				return false;
-			}
+			laserScannerFrontIsConnected = false;
+			return false;
 		}
 		break;
 	case LASER2:
@@ -896,38 +691,21 @@ bool LaserThread::isConnected(short int laserScanner)
 			simulationValuesRear.append(0.0);
 		}
 
-		if (laserscannerTypeRear == PLS)
+		if (laserscannerTypeRear == S300)
 		{
-			// try to start the laser module LASER2
-			if (laser->direcs_laser_start(laserScanner) == 0)
-			{
-				laserScannerRearIsConnected = true;
-				return true;
-			}
-			else
-			{
-				laserScannerRearIsConnected = false;
-				return false;
-			}
+			/// \todo S300 stuff
+			qDebug("Support for a second S300 as rear laser scanner not implemented yet");
+			laserScannerRearIsConnected = false;
+			return false;
 		}
 		else
 		{
-			if (laserscannerTypeRear == S300)
+			if (laserscannerTypeRear != NONE)
 			{
-				/// \todo S300 stuff
-				qDebug("Support for a second S300 as rear laser scanner not implemented yet");
-				laserScannerRearIsConnected = false;
-				return false;
+				qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
 			}
-			else
-			{
-				if (laserscannerTypeRear != NONE)
-				{
-					qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
-				}
-				laserScannerRearIsConnected = false;
-				return false;
-			}
+			laserScannerRearIsConnected = false;
+			return false;
 		}
 		break;
 	default:
