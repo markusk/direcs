@@ -206,7 +206,7 @@ int DirecsSerial::purgeRx()
 }
 
 
-int DirecsSerial::writeAtmelPort(unsigned char *c, QString callingClassName)
+int DirecsSerial::writeData(unsigned char *c, QString callingClassName)
 {
 	int n = write(mDev_fd, c, 1);
 

@@ -161,7 +161,7 @@ bool SickS300::sendChar(unsigned char character)
 
 
 	// send one byte to the serial port with direcsSerial
-	if (serialPort->writeAtmelPort(&character) <= 0)
+	if (serialPort->writeData(&character) <= 0)
 	{
 		emit message("<font color=\"#FF0000\">ERROR writing serial port (sendChar, SickS300)!<font>");
 		return false;

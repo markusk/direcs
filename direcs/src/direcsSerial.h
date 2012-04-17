@@ -88,13 +88,12 @@ class DirecsSerial : public QObject
 
 		/**
 		Writes data to the serial line.
-		This method is only used for the atmel serial port! *Not* for the laser scanners!
 
 		@param *c Pointer to unsiged char buffer to the data to be send over the serial line
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes sent to the serial line.
 		 */
-		int writeAtmelPort(unsigned char *c, QString callingClassName = "none");
+		int writeData(unsigned char *c, QString callingClassName = "none");
 
 		/**
 		Reads data from the serial line. Currently this is *only* used in the @sa Laser class!
