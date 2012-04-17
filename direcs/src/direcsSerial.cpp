@@ -196,25 +196,6 @@ int DirecsSerial::openAtmelPort(char *dev_name, int baudrate)
 }
 
 
-#if (defined(TIOCM_RTS) && defined(TIOCMODG)) || defined(_COHERENT)
-void DirecsSerial::setRTS(int fd)
-#else
-void DirecsSerial::setRTS(int fd  __attribute__ ((unused)))
-#endif
-{
-	#if defined(TIOCM_RTS) && defined(TIOCMODG)
-	int mcs = 0;
-
-	ioctl(fd, TIOCMODG, &mcs);
-	mcs |= TIOCM_RTS;
-	ioctl(fd, TIOCMODS, &mcs);
-	#endif
-	#ifdef _COHERENT
-	ioctl(fd, TIOCSRTS, 0);
-	#endif
-}
-
-
 long DirecsSerial::numChars(int dev_fd)
 {
 	int available = 0;

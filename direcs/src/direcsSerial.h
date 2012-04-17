@@ -176,15 +176,6 @@ class DirecsSerial : public QObject
 	private:
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 
-		/**
-		Set RTS
-		*/
-		#if (defined(TIOCM_RTS) && defined(TIOCMODG)) || defined(_COHERENT)
-		void setRTS(int fd);
-		#else
-		void setRTS(int fd  __attribute__ ((unused)));
-		#endif
-
 		int mDev_fd; //! the file descriptor of the serial port
 
 
