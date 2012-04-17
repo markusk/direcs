@@ -1209,7 +1209,7 @@ int Laser::sick_write_command(sick_laser_p laser, unsigned char command, unsigne
 	check = sick_compute_checksum(buffer, length + 4);
 	buffer[pos++] = check & 0x00ff;
 	buffer[pos++] = check / 256;
-	serialPort->writePort(laser->dev.fd, buffer, pos);
+	serialPort->writeDataToLaser(laser->dev.fd, buffer, pos);
 
 	/* wait for acknowledgement */
 	loop = 1;

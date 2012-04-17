@@ -110,7 +110,7 @@ class DirecsSerial : public QObject
 		@param nChars Number of bytes in buf
 		@return The number of bytes sent to the serial line.
 		**/
-		int writePort(int dev_fd, unsigned char *buf, int nChars);
+		int writeDataToLaser(int dev_fd, unsigned char *buf, int nChars);
 
 		/**
 		Writes data to the serial line.

@@ -248,7 +248,7 @@ int DirecsSerial::purgeRx()
 }
 
 
-int DirecsSerial::writePort(int dev_fd, unsigned char *buf, int nChars)
+int DirecsSerial::writeDataToLaser(int dev_fd, unsigned char *buf, int nChars)
 {
 	int amountWritten = 0;
 
