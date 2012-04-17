@@ -710,6 +710,8 @@ int DirecsSerial::setLowLatency(int fd)
 }
 
 
+/* *    c u r r e n t l y   n o t   i n   u s e   !
+
 int DirecsSerial::setLowLatency()
 {
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS, Windoze at the moment)
@@ -745,3 +747,4 @@ int DirecsSerial::setLowLatency()
 	return -1;
 #endif
 }
+*/

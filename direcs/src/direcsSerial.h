@@ -91,7 +91,7 @@ class DirecsSerial : public QObject
 		*/
 
 		/**
-		Returns the number of availabe bytes
+		Returns the number of availabe bytes. Currently this is *only* used in the @sa Laser class!
 
 		@param dev_fd returns the file descriptor associated to the serial line
 		@return number of available bytes or -1 in case of an error.
@@ -99,7 +99,7 @@ class DirecsSerial : public QObject
 		long numChars(int dev_fd);
 
 		/**
-		Returns the number of availabe bytes.
+		Returns the number of availabe bytes. Currently this is *only* used in the @sa Laser class!
 		This method is provided for convenience and uses the internal member for the file descriptor. It needs no parameters!
 
 		@return number of available bytes or -1 in case of an error.
@@ -107,7 +107,7 @@ class DirecsSerial : public QObject
 		long numChars();
 
 		/**
-		Clears the buffer of the serial line.
+		Clears the buffer of the serial line. Currently this is *only* used in the @sa Laser class!
 
 		@param *dev_fd returns the file descriptor associated to the serial line
 		@return number of bytes removed from the serial line.
@@ -187,7 +187,7 @@ class DirecsSerial : public QObject
 		*/
 
 		/**
-		Avtivates the low latency mode for the serial line.
+		Avtivates the low latency mode for the serial line.  Currently this is *only* used in the @sa Laser class!
 		This works with real serial devices, USB-to-RS232 often does not work.
 		In this case, the system continues in the standard operational mode.
 		Note: Low latency does not run with cygwin.
@@ -197,7 +197,9 @@ class DirecsSerial : public QObject
 		**/
 		int setLowLatency(int fd);
 
-		/**
+
+		/* *    c u r r e n t l y   n o t   i n   u s e   !
+
 		Avtivates the low latency mode for the serial line.
 		This works with real serial devices, USB-to-RS232 often does not work.
 		In this case, the system continues in the standard operational mode.
@@ -206,8 +208,9 @@ class DirecsSerial : public QObject
 		This method is provided for convenience and uses the internal member for the file descriptor. It needs no parameters!
 
 		@return 0=successful switched to low latency mode. 0=continue in normal mode.
-		**/
+		** /
 		int setLowLatency();
+		*/
 
 
 	signals:
