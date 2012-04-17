@@ -96,17 +96,6 @@ class DirecsSerial : public QObject
 		int writeData(unsigned char *c, QString callingClassName = "none");
 
 		/**
-		Reads data from the serial line. Currently this is *only* used in the @sa Laser class!
-
-		@param dev_fd The file descriptor associated to the serial line.
-		@param *buf Pointer to unsiged char buffer for the data to be read
-		@param nChars Number of bytes to be read (<= size of the buffer array).
-		@return The number of bytes written.
-		**/
-		int readPort(int dev_fd, unsigned char *buf, int nChars);
-
-
-		/**
 		Reads data from the serial line
 		This method is only used for the atmel serial port! *Not* for the laser scanners!
 
@@ -116,7 +105,6 @@ class DirecsSerial : public QObject
 		@return The number of bytes read.
 		 */
 		int readAtmelPort(unsigned char *buf, int nChars, QString callingClassName = "none");
-
 
 		/**
 		Closes the serial port.
