@@ -196,48 +196,6 @@ int DirecsSerial::openPort(char *dev_name, int baudrate)
 }
 
 
-long DirecsSerial::numChars(int dev_fd)
-{
-	int available = 0;
-
-
-	int err = ioctl(dev_fd, FIONREAD, &available);
-	if (err == 0)
-	{
-		emit message(QString("Bytes available at readAtmelPort: %1").arg(available));
-		return available;
-	}
-	else
-	{
-		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using ioctl() on serial device at DirecsSerial::numChars().</font>").arg(errno).arg(strerror(errno)));
-		return errno;
-	}
-}
-
-
-int DirecsSerial::clearInputBuffer(int dev_fd)
-{
-	int max_serial_buffer_size = 16384;
-	unsigned char buffer[max_serial_buffer_size];
-	int val = 0;
-	int val_total = 0;
-
-	val_total = numChars(dev_fd);
-	val = val_total;
-
-	while (val > max_serial_buffer_size)
-	{
-		read(dev_fd, &buffer, max_serial_buffer_size);
-		val -= max_serial_buffer_size;
-	}
-
-	if(val > 0)
-		read(dev_fd, &buffer, val);
-
-	return(val_total);
-}
-
-
 int DirecsSerial::purgeRx()
 {
 		/**

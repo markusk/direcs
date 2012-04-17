@@ -81,22 +81,6 @@ class DirecsSerial : public QObject
 		int openPort(char *dev_name, int baudrate);
 
 		/**
-		Returns the number of availabe bytes. Currently this is *only* used in the @sa Laser class!
-
-		@param dev_fd returns the file descriptor associated to the serial line
-		@return number of available bytes or -1 in case of an error.
-		**/
-		long numChars(int dev_fd);
-
-		/**
-		Clears the buffer of the serial line. Currently this is *only* used in the @sa Laser class!
-
-		@param *dev_fd returns the file descriptor associated to the serial line
-		@return number of bytes removed from the serial line.
-		**/
-		int clearInputBuffer(int dev_fd);
-
-		/**
 		Clears the read buffer. Currently this is *only* used in the @sa laserSickS300 class!
 		@return Upon successful completion, this function returns zero.
 		*/
