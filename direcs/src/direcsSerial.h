@@ -80,16 +80,6 @@ class DirecsSerial : public QObject
 		**/
 		int openAtmelPort(char *dev_name, int baudrate);
 
-		/* *    c u r r e n t l y   n o t   i n   u s e   !
-		Sets the parameters for (a connected) serial line.
-
-		@param dev_fd The file descriptor associated to the serial line.
-		@param baudrate The baud rate to use (e.g. 9600, 19200, etc.).
-		@param parity The parity bit can be 0, E, M or S (parityOdd, parityEven, parityM or parityS)
-		** /
-		void configurePort(int dev_fd, int baudrate, char parity);
-		*/
-
 		/**
 		Returns the number of availabe bytes. Currently this is *only* used in the @sa Laser class!
 
@@ -97,15 +87,6 @@ class DirecsSerial : public QObject
 		@return number of available bytes or -1 in case of an error.
 		**/
 		long numChars(int dev_fd);
-
-		/* *    c u r r e n t l y   n o t   i n   u s e   !
-		Returns the number of availabe bytes. Currently this is *only* used in the @sa Laser class!
-		This method is provided for convenience and uses the internal member for the file descriptor. It needs no parameters!
-
-		@return number of available bytes or -1 in case of an error.
-		** /
-		long numChars();
-		*/
 
 		/**
 		Clears the buffer of the serial line. Currently this is *only* used in the @sa Laser class!
@@ -172,21 +153,6 @@ class DirecsSerial : public QObject
 		**/
 		int closeAtmelPort();
 
-
-		/* *    c u r r e n t l y   n o t   i n   u s e   !
-		Sets the serial port parameters
-
-		@param fd The file descriptor associated to the serial port.
-		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
-		@param par The parity bit can be 0, E, M or S (parityOdd, parityEven, parityM or parityS)
-		@param bits The data bits can be 5, 6, 7, 8, bitsM or bitS.
-		@param hwf The flow control
-		@param swf The flow control
-		@param stopb The stop bits (default=0). This parameter is optional!
-		* /
-		void setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb = 0);
-		*/
-
 		/**
 		Avtivates the low latency mode for the serial line.  Currently this is *only* used in the @sa Laser class!
 		This works with real serial devices, USB-to-RS232 often does not work.
@@ -197,21 +163,6 @@ class DirecsSerial : public QObject
 		@return 0=successful switched to low latency mode. 0=continue in normal mode.
 		**/
 		int setLowLatency(int fd);
-
-
-		/* *    c u r r e n t l y   n o t   i n   u s e   !
-		Avtivates the low latency mode for the serial line.
-
-		This works with real serial devices, USB-to-RS232 often does not work.
-		In this case, the system continues in the standard operational mode.
-		Note: Low latency does not run with cygwin.
-
-		This method is provided for convenience and uses the internal member for the file descriptor. It needs no parameters!
-
-		@return 0=successful switched to low latency mode. 0=continue in normal mode.
-		** /
-		int setLowLatency();
-		*/
 
 
 	signals:
