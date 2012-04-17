@@ -139,15 +139,6 @@ class DirecsSerial : public QObject
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 
 		int mDev_fd; //! the file descriptor of the serial port
-
-
-		static const char parityOdd = 1;  /// @sa setParms() @sa configurePort()
-		static const char parityEven = 2; /// @sa setParms() @sa configurePort()
-		static const char parityM = 3;    /// @sa setParms() @sa configurePort()
-		static const char parityS = 4;    /// @sa setParms() @sa configurePort()
-
-		static const char bitsM = 1  ;    /// @sa setParms() @sa configurePort()
-		static const char bitsS = 2;      /// @sa setParms() @sa configurePort()
 };
 
 #endif
