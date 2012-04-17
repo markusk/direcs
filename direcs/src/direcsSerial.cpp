@@ -326,7 +326,7 @@ int DirecsSerial::readAtmelPort(unsigned char *buf, int nChars, QString callingC
 }
 
 
-int DirecsSerial::closeAtmelPort()
+int DirecsSerial::closePort()
 {
   return close(mDev_fd);
 }

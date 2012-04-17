@@ -149,7 +149,7 @@ int SickS300::closeComPort()
 
 
 	// close serial port
-	serialPort->closeAtmelPort();
+	serialPort->closePort();
 
 	return 0;
 }

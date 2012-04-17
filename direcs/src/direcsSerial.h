@@ -124,7 +124,7 @@ class DirecsSerial : public QObject
 
 		@return the results reported by close.
 		**/
-		int closeAtmelPort();
+		int closePort();
 
 		/**
 		Avtivates the low latency mode for the serial line.  Currently this is *only* used in the @sa Laser class!
