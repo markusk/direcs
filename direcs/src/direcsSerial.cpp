@@ -215,6 +215,7 @@ void DirecsSerial::setRTS(int fd  __attribute__ ((unused)))
 }
 
 
+/* *    c u r r e n t l y   n o t   i n   u s e   !
 void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb)
 {
 	int spd = -1;
@@ -230,12 +231,12 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	#endif
 
 
-	/* We generate mark and space parity ourself. */
+	// We generate mark and space parity ourself.
 	if(bits == 7 && (par == parityM || par == parityS))
 		bits = 8;
 
 
-	/* Check if 'baudr' is really a number */
+	// Check if 'baudr' is really a number
 // 	if((newbaud = (atol(baudr) / 100)) == 0 && baudr[0] != '0')
 // 		newbaud = -1;
 	newbaud = (baudr/100);
@@ -302,7 +303,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	if(spd != -1)
 		tty.sg_ispeed = tty.sg_ospeed = spd;
 
-	/* Number of bits is ignored */
+	// Number of bits is ignored
 	tty.sg_flags = RAW | TANDEM;
 
 	if(par == parityEven) // even
@@ -314,7 +315,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 
 	ioctl(fd, TIOCSETP, &tty);
 	#ifdef TIOCSDTR
-	/*  huh? - MvS */
+	//  huh? - MvS
 	ioctl(fd, TIOCSDTR, 0);
 	#endif
 	#endif
@@ -337,7 +338,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	}
 
 
-	/* The data bits */
+	// The data bits
 	switch (bits)
 	{
 		case 5:
@@ -355,14 +356,14 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 			break;
 	}
 
-	/* Set into raw, no echo mode */
+	// Set into raw, no echo mode
 	#if !defined(_DGUX_SOURCE)
-	tty.c_iflag &= ~(IGNBRK | IGNCR | INLCR | ICRNL | /* IUCLC | */ IXANY | IXON | IXOFF | INPCK | ISTRIP);
+	tty.c_iflag &= ~(IGNBRK | IGNCR | INLCR | ICRNL | / * IUCLC | * / IXANY | IXON | IXOFF | INPCK | ISTRIP);
 	tty.c_iflag |= (BRKINT | IGNPAR);
 	tty.c_oflag &= ~OPOST;
 	tty.c_lflag = ~(ICANON | ISIG | ECHO | ECHONL | ECHOE | ECHOK | IEXTEN);
 	tty.c_cflag |= CREAD | CRTSCTS;
-	#else /* Okay, this is better. XXX - Fix the above. */
+	#else // Okay, this is better. XXX - Fix the above.
 	tty.c_iflag =  IGNBRK;
 	tty.c_lflag = 0;
 	tty.c_oflag = 0;
@@ -371,7 +372,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	tty.c_cc[VMIN] = 1;
 	tty.c_cc[VTIME] = 5;
 
-	/* Flow control. */
+	// Flow control.
 	if(hwf)
 	{
 		// enable Hardware flow control
@@ -406,7 +407,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 
 
 
-	/* The stop bit */
+	// The stop bit
 	switch (stopb)
 	{
 		case 0:
@@ -418,7 +419,7 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	}
 
 
-	/* Set the new settings for the serial port NOW! */
+	// Set the new settings for the serial port NOW!
 	tcsetattr(fd, TCSANOW, &tty);
 
 	setRTS(fd);
@@ -427,8 +428,10 @@ void DirecsSerial::setParms(int fd, int baudr, char par, char bits, int hwf, int
 	#endif
 	#endif
 }
+*/
 
 
+/* *    c u r r e n t l y   n o t   i n   u s e   !
 void DirecsSerial::configurePort(int dev_fd, int baudrate, char parity)
 {
 	if (baudrate == 55555)
@@ -436,6 +439,8 @@ void DirecsSerial::configurePort(int dev_fd, int baudrate, char parity)
 
 	setParms(dev_fd, baudrate, parity, 8, 0, 0);
 }
+*/
+
 
 long DirecsSerial::numChars(int dev_fd)
 {

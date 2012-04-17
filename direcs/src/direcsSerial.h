@@ -80,14 +80,15 @@ class DirecsSerial : public QObject
 		**/
 		int openAtmelPort(char *dev_name, int baudrate);
 
-		/**
+		/* *    c u r r e n t l y   n o t   i n   u s e   !
 		Sets the parameters for (a connected) serial line.
 
 		@param dev_fd The file descriptor associated to the serial line.
 		@param baudrate The baud rate to use (e.g. 9600, 19200, etc.).
 		@param parity The parity bit can be 0, E, M or S (parityOdd, parityEven, parityM or parityS)
-		**/
+		** /
 		void configurePort(int dev_fd, int baudrate, char parity);
+		*/
 
 		/**
 		Returns the number of availabe bytes
@@ -114,13 +115,13 @@ class DirecsSerial : public QObject
 		int clearInputBuffer(int dev_fd);
 
 		/**
-		Clears the read buffer.
+		Clears the read buffer. Currently this is *only* used in the @sa laserSickS300 class!
 		@return Upon successful completion, this function returns zero.
 		*/
 		int purgeRx();
 
 		/**
-		Writes data to the serial line
+		Writes data to the serial line. Currently this is *only* used in the @sa Laser class!
 
 		@param dev_fd The file descriptor associated to the serial line.
 		@param *buf Pointer to unsiged char buffer to the data to be send over the serial line
@@ -140,7 +141,7 @@ class DirecsSerial : public QObject
 		int writeAtmelPort(unsigned char *c, QString callingClassName = "none");
 
 		/**
-		Reads data from the serial line
+		Reads data from the serial line. Currently this is *only* used in the @sa Laser class!
 
 		@param dev_fd The file descriptor associated to the serial line.
 		@param *buf Pointer to unsiged char buffer for the data to be read
@@ -171,7 +172,8 @@ class DirecsSerial : public QObject
 		int closeAtmelPort();
 
 
-		/**
+		/* *    c u r r e n t l y   n o t   i n   u s e   !
+
 		Sets the serial port parameters
 		@param fd The file descriptor associated to the serial port.
 		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
@@ -180,8 +182,9 @@ class DirecsSerial : public QObject
 		@param hwf The flow control
 		@param swf The flow control
 		@param stopb The stop bits (default=0). This parameter is optional!
-		*/
+		* /
 		void setParms(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb = 0);
+		*/
 
 		/**
 		Avtivates the low latency mode for the serial line.
