@@ -126,17 +126,6 @@ class DirecsSerial : public QObject
 		**/
 		int closePort();
 
-		/**
-		Avtivates the low latency mode for the serial line.  Currently this is *only* used in the @sa Laser class!
-		This works with real serial devices, USB-to-RS232 often does not work.
-		In this case, the system continues in the standard operational mode.
-		Note: Low latency does not run with cygwin.
-
-		@param fd The file descriptor associated to the serial line.
-		@return 0=successful switched to low latency mode. 0=continue in normal mode.
-		**/
-		int setLowLatency(int fd);
-
 
 	signals:
 		/**
