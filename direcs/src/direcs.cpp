@@ -3174,49 +3174,47 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	int minObstacleDistanceLaserScanner1 = inifile1->readSetting("Config", "minObstacleDistanceLaserScanner1");
+	int minObstacleDistanceLaserScannerFront = inifile1->readSetting("Config", "minObstacleDistanceLaserScannerFront");
 
-	switch (minObstacleDistanceLaserScanner1)
+	switch (minObstacleDistanceLaserScannerFront)
 	{
 		case -1:
-			emit message("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScannerFront\"not found in ini-file!</font>");
 			break;
 		default:
 			if (!consoleMode)
 			{
 				// set slider to the read value
-				settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner1);
+				settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScannerFront);
 			}
 
 			// tell it the obstacle check thread
-			obstCheckThread->setMinObstacleDistanceLaser(LASER1, minObstacleDistanceLaserScanner1);
-			obstCheckThread->setMinObstacleDistanceLaser(LASER2, minObstacleDistanceLaserScanner1);
+			obstCheckThread->setMinObstacleDistanceLaser(LASER1, minObstacleDistanceLaserScannerFront);
 			// show text
-			emit message(QString("Min. obstacle distance Laser scanner 1 set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner1));
+			emit message(QString("Min. obstacle distance front laser scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScannerFront));
 			break;
 	}
 
 	//---------------------------------------------------------------------
 	// read setting
-	int minObstacleDistanceLaserScanner2 = inifile1->readSetting("Config", "minObstacleDistanceLaserScanner2");
+	int minObstacleDistanceLaserScannerRear = inifile1->readSetting("Config", "minObstacleDistanceLaserScannerRear");
 
-	switch (minObstacleDistanceLaserScanner2)
+	switch (minObstacleDistanceLaserScannerRear)
 	{
 		case -1:
-			emit message("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScanner2\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"minObstacleDistanceLaserScannerRear\"not found in ini-file!</font>");
 			break;
 		default:
 			if (!consoleMode)
 			{
 				// set slider to the read value
-				settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScanner2);
+// @todo				settingsDialog->setSliderObstacleLaserScannerValue(minObstacleDistanceLaserScannerRear);
 			}
 
 			// tell it the obstacle check thread
-			obstCheckThread->setMinObstacleDistanceLaser(LASER1, minObstacleDistanceLaserScanner2);
-			obstCheckThread->setMinObstacleDistanceLaser(LASER2, minObstacleDistanceLaserScanner2);
+			obstCheckThread->setMinObstacleDistanceLaser(LASER2, minObstacleDistanceLaserScannerRear);
 			// show text
-			emit message(QString("Min. obstacle distance Laser scanner 2 set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner2));
+			emit message(QString("Min. obstacle distance rear laser scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScannerRear));
 			break;
 	}
 
