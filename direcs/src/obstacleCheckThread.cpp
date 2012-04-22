@@ -42,8 +42,8 @@ ObstacleCheckThread::~ObstacleCheckThread()
 void ObstacleCheckThread::init()
 {
 	minObstacleDistance = 0;
-	minObstacleDistanceLaser1 = 0;
-	minObstacleDistanceLaser2 = 0;
+	minObstacleDistanceLaserFront = 0;
+	minObstacleDistanceLaserRear = 0;
 	sensorValue = NONE;
 
 	actualFreeAreaStart = -1;
@@ -236,7 +236,7 @@ void ObstacleCheckThread::run()
 		for (int angle=0; angle < ( laserAngle1 / laserResolution1 ); angle++)
 		{
 			// if obstacle detected
-			if ( ((int) (laserThread->getValue(LASER1, angle) * 100)) < minObstacleDistanceLaser1)
+			if ( ((int) (laserThread->getValue(LASER1, angle) * 100)) < minObstacleDistanceLaserFront)
 			{
 				//-----------------------------
 				// set the "obstacle flag"
@@ -476,7 +476,7 @@ void ObstacleCheckThread::run()
 		for (int angle=0; angle < (laserAngle2 / laserResolution2); angle++)
 		{
 			// if obstacle detected
-			if ( ((int) (laserThread->getValue(LASER2, angle) * 100)) < minObstacleDistanceLaser2)
+			if ( ((int) (laserThread->getValue(LASER2, angle) * 100)) < minObstacleDistanceLaserRear)
 			{
 				//-----------------------------
 				// set the "obstacle flag"
@@ -631,10 +631,10 @@ void ObstacleCheckThread::setMinObstacleDistance(int distance)
 void ObstacleCheckThread::setMinObstacleDistanceLaser(short int laser, int distance)
 {
 	if (laser==LASER1)
-		minObstacleDistanceLaser1 = distance;
+		minObstacleDistanceLaserFront = distance;
 
 	if (laser==LASER2)
-		minObstacleDistanceLaser2 = distance;
+		minObstacleDistanceLaserRear = distance;
 }
 
 

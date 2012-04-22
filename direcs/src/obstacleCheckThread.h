@@ -133,8 +133,8 @@ class ObstacleCheckThread : public QThread
 		volatile bool stopped;
 		bool initCompleted; /// see if the init method of this class was already called
 		int minObstacleDistance; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for the old infrared sensors.
-		int minObstacleDistanceLaser1; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for laser scanner 1.
-		int minObstacleDistanceLaser2; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for laser scanner 2.
+		int minObstacleDistanceLaserFront; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for laser scanner 1.
+		int minObstacleDistanceLaserRear; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for laser scanner 2.
 		unsigned char sensorValue;
 		bool simulationMode;
 
