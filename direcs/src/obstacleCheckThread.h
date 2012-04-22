@@ -131,8 +131,9 @@ class ObstacleCheckThread : public QThread
 		LaserThread *laserThread;
 		volatile bool stopped;
 		bool initCompleted; /// see if the init method of this class was already called
-		int minObstacleDistance;
-		int minObstacleDistanceLaser1;
+		int minObstacleDistance; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for the old infrared sensors.
+		int minObstacleDistanceLaser1; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for laser scanner 1.
+		int minObstacleDistanceLaser2; /// if the measured distance from a sensor is *smaller* than this value, than we have an obstacle! This is for laser scanner 2.
 		unsigned char sensorValue;
 		bool simulationMode;
 
@@ -145,7 +146,9 @@ class ObstacleCheckThread : public QThread
 		int centerOfFreeWay;
 
 		float laserResolution1; /// stores the laser resolution when getting the value from the laser thread
+		float laserResolution2; /// stores the laser resolution when getting the value from the laser thread
 		float laserAngle1; /// stores the laser angle when getting the value from the laser thread
+		float laserAngle2; /// stores the laser angle when getting the value from the laser thread
 
 		double width;
 		double b;
