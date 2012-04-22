@@ -132,7 +132,7 @@ class ObstacleCheckThread : public QThread
 		volatile bool stopped;
 		bool initCompleted; /// see if the init method of this class was already called
 		int minObstacleDistance;
-		int minObstacleDistanceLaserScanner;
+		int minObstacleDistanceLaser1;
 		unsigned char sensorValue;
 		bool simulationMode;
 
@@ -144,8 +144,8 @@ class ObstacleCheckThread : public QThread
 
 		int centerOfFreeWay;
 
-		float laserResolution; /// stores the laser resolution when getting the value from the laser thread
-		float laserAngle; /// stores the laser angle when getting the value from the laser thread
+		float laserResolution1; /// stores the laser resolution when getting the value from the laser thread
+		float laserAngle1; /// stores the laser angle when getting the value from the laser thread
 
 		double width;
 		double b;
