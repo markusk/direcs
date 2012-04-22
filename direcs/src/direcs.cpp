@@ -451,7 +451,7 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		// set the minimum laser distance, when signal comes from Gui
 		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(int)));
+		connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(short int, int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(short int, int)));
 
 		//--------------------------------------------------------------------------
 		// let the GUI show servo messages in the log
