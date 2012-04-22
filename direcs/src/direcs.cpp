@@ -3094,27 +3094,39 @@ void Direcs::readSettings()
 
 									//---------------------------------------------------------------------
 									// read next setting
-									laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerRearIgnoreArea2End");
+									laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerRearIgnoreArea2Start");
 
-									if (laserscannerIgnoreAreaEnd == -1.0)
+									if (laserscannerIgnoreAreaStart == -1.0)
 									{
-										emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea2End\"not found in ini-file!</font>");
+										emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea2Start\"not found in ini-file!</font>");
 									}
 									else
 									{
 
-										if (consoleMode)
+										//---------------------------------------------------------------------
+										// read next setting
+										laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerRearIgnoreArea2End");
+
+										if (laserscannerIgnoreAreaEnd == -1.0)
 										{
-											/// @todo add this: consoleGui->setLaserscannerAngle(LASER1, laserscanner...Front);
+											emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea2End\"not found in ini-file!</font>");
 										}
 										else
 										{
-											/// @todo gui->setLaserscannerAngle(LASER1, laserscanner...Front);
-										}
-										emit message(QString("Rear laser scanner ignore area %1 set to <b>%2-%3%1</b>.").arg(AREA2).arg(laserscannerIgnoreAreaStart).arg(laserscannerIgnoreAreaEnd));
 
-										// store settings in obstacle check thread
-										obstCheckThread->setIgnoreArea(LASER2, AREA2, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
+											if (consoleMode)
+											{
+												/// @todo add this: consoleGui->setLaserscannerAngle(LASER2, laserscanner...Rear);
+											}
+											else
+											{
+												/// @todo gui->setLaserscannerAngle(LASER1, laserscanner...Rear);
+											}
+											emit message(QString("Rear laser scanner ignore area %1 set to <b>%2-%3%1</b>.").arg(AREA2).arg(laserscannerIgnoreAreaStart).arg(laserscannerIgnoreAreaEnd));
+
+											// store settings in obstacle check thread
+											obstCheckThread->setIgnoreArea(LASER2, AREA2, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
+										}
 									}
 
 								}
