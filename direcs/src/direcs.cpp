@@ -2876,7 +2876,6 @@ void Direcs::readSettings()
 							else
 							{
 
-
 								//---------------------------------------------------------------------
 								// read next setting
 								laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea1End");
@@ -2887,7 +2886,6 @@ void Direcs::readSettings()
 								}
 								else
 								{
-
 
 									if (consoleMode)
 									{
@@ -3007,6 +3005,7 @@ void Direcs::readSettings()
 								}
 								else
 								{
+									// everything okay
 									laserThread->setResolution(LASER2, floatValue);
 									if (consoleMode)
 									{
@@ -3017,6 +3016,44 @@ void Direcs::readSettings()
 										gui->setLaserscannerResolution(LASER2, floatValue);
 									}
 									emit message(QString("Rear laser scanner resolution set to <b>%1</b>.").arg(floatValue));
+
+									//---------------------------------------------------------------------
+									// read next setting
+									laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerRearIgnoreArea1Start");
+
+									if (laserscannerIgnoreAreaStart == -1.0)
+									{
+										emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea1Start\"not found in ini-file!</font>");
+									}
+									else
+									{
+
+										//---------------------------------------------------------------------
+										// read next setting
+										laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerRearIgnoreArea1End");
+
+										if (laserscannerIgnoreAreaEnd == -1.0)
+										{
+											emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea1End\"not found in ini-file!</font>");
+										}
+										else
+										{
+
+											if (consoleMode)
+											{
+												/// @todo add this: consoleGui->setLaserscannerAngle(LASER2, laserscanner...Rear);
+											}
+											else
+											{
+												/// @todo gui->setLaserscannerAngle(LASER1, laserscanner...Rear);
+											}
+											emit message(QString("Rear laser scanner ignore area %1 set to <b>%2-%3%1</b>.").arg(AREA1).arg(laserscannerIgnoreAreaStart).arg(laserscannerIgnoreAreaEnd));
+
+											// store settings in obstacle check thread
+											obstCheckThread->setIgnoreArea(LASER2, AREA1, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
+										}
+									}
+
 								}
 								break;
 							}
