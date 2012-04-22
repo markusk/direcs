@@ -64,7 +64,29 @@ void ObstacleCheckThread::init()
 	laserAngle1 = 0;
 	laserAngle2 = 0;
 
-	// init of the laser scanner flags is now done in the laserThread
+
+	// Note: init of the laser scanner flags is now done in the laserThread
+
+
+	// get resolution and angle from the laser thread for LASER 1
+	if (laserThread->isRunning())
+	{
+		laserResolution1 = laserThread->getResolution(LASER1);
+		laserAngle1 = laserThread->getAngle(LASER1);
+
+		laserResolution2 = laserThread->getResolution(LASER2);
+		laserAngle2 = laserThread->getAngle(LASER2);
+	}
+	else
+	{
+		emit message("ERROR getting laser angle and resolution from laserThread for LASER1. LaserThread is not running! ObstacleCheckThread::run()");
+		laserResolution1 = 0.0;
+		laserAngle1 = 0;
+
+		emit message("ERROR getting laser angle and resolution from laserThread for LASER2. LaserThread is not running! ObstacleCheckThread::run()");
+		laserResolution2 = 0.0;
+		laserAngle2 = 0;
+	}
 }
 
 
@@ -99,21 +121,6 @@ void ObstacleCheckThread::run()
 
 		// This value contains the sum of all SENSORx values!
 		sensorValue = NONE;
-
-
-		// get resolution and angle from the laser thread for LASER 1
-		if (laserThread->isRunning())
-		{
-			laserResolution1 = laserThread->getResolution(LASER1);
-			laserAngle1 = laserThread->getAngle(LASER1);
-		}
-		else
-		{
-			qDebug("ERROR getting laser angle and resolution from laserThread for LASER1. LaserThread is not running! ObstacleCheckThread::run()");
-			laserResolution1 = 0.0;
-			laserAngle1 = 0;
-		}
-
 
 		// reset "drive to angle" to "middle of the number of laser lines" -> FORWARD
 		centerOfFreeWay1 = ( (laserAngle1 / laserResolution1) / 2);
@@ -458,19 +465,6 @@ void ObstacleCheckThread::run()
 		//================================= START LASER 2 =========================================
 		//================================= START LASER 2 =========================================
 		//================================= START LASER 2 =========================================
-
-		// get resolution and angle from the laser thread for LASER 2
-		if (laserThread->isRunning())
-		{
-			laserResolution1 = laserThread->getResolution(LASER2);
-			laserAngle1 = laserThread->getAngle(LASER2);
-		}
-		else
-		{
-			qDebug("ERROR getting laser angle and resolution from laserThread for LASER2. LaserThread is not running! ObstacleCheckThread::run()");
-			laserResolution1 = 0.0;
-			laserAngle1 = 0;
-		}
 
 
 		//---------------------------------------------------------
