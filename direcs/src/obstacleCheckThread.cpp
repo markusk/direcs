@@ -22,6 +22,8 @@
 
 ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 {
+	// get the name of this class (this is for debugging messages)
+	className = this->staticMetaObject.className();
 	stopped = false;
 
 	// copy the pointer from the original SensorThread object

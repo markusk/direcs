@@ -119,6 +119,7 @@ class ObstacleCheckThread : public QThread
 
 
 	private:
+		QString className;	/// this will contain the name of this class at runtime for debug messages
 		SensorThread *sensThread;
 		LaserThread *laserThread;
 		volatile bool stopped;
