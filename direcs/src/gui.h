@@ -797,11 +797,12 @@ class Gui : public QMainWindow
 		//! Distances between the lines to show the laser distances in pixels
 		static const int LASERDISTANCEDISTANCE = 60;
 
-		// the tags for the laser lines
+		/// the tags for the laser lines @sa ObstacleCheckThread
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
 		static const int LARGESTFREEWAY = 2;
 		static const int CENTEROFLARGESTFREEWAY = 3;
+		static const int IGNORETHIS = 4;
 
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		/**

@@ -68,7 +68,7 @@ void ObstacleCheckThread::init()
 	// Note: init of the laser scanner flags is now done in the laserThread
 
 
-	// get resolution and angle from the laser thread for LASER 1
+	// get resolution and angle from the laser thread for all laser scanners
 	if (laserThread->isRunning())
 	{
 		laserResolutionFront = laserThread->getResolution(LASER1);
@@ -79,11 +79,11 @@ void ObstacleCheckThread::init()
 	}
 	else
 	{
-		emit message("ERROR getting laser angle and resolution from laserThread for LASER1. LaserThread is not running! ObstacleCheckThread::run()");
+		emit message("ERROR getting laser angle and resolution from laserThread for front laser. LaserThread is not running! ObstacleCheckThread::run()");
 		laserResolutionFront = 0.0;
 		laserAngleFront = 0;
 
-		emit message("ERROR getting laser angle and resolution from laserThread for LASER2. LaserThread is not running! ObstacleCheckThread::run()");
+		emit message("ERROR getting laser angle and resolution from laserThread for rear laser. LaserThread is not running! ObstacleCheckThread::run()");
 		laserResolutionRear = 0.0;
 		laserAngleRear = 0;
 	}
@@ -637,6 +637,16 @@ void ObstacleCheckThread::setMinObstacleDistanceLaser(short int laser, int dista
 
 	if (laser==LASER2)
 		minObstacleDistanceLaserRear = distance;
+}
+
+
+void ObstacleCheckThread::setIgnoreArea(short int laser, int area, float start, float end)
+{
+	if (laser==LASER1)
+		int x=start; // @todo implement laser area ignore tags
+
+	if (laser==LASER1)
+		int x=start;
 }
 
 

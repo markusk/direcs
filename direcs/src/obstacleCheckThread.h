@@ -96,6 +96,15 @@ class ObstacleCheckThread : public QThread
 		void setMinObstacleDistanceLaser(short int laser, int distance);
 
 		/**
+		Set the laser area which will be ignored when checking for an obstacle.
+		@param laser is the number of the laser
+		@param area is the number of the area
+		@param start is the start angle in degrees
+		@param end is the end angle in degrees
+		*/
+		void setIgnoreArea(short int laser, int area, float start, float end);
+
+		/**
 		This slot catches all signals from the signal @sa systemerror
 		*/
 		void systemerrorcatcher(int errorlevel);
@@ -162,11 +171,12 @@ class ObstacleCheckThread : public QThread
 
 		int straightForwardDeviation; /// and this is the deviation to 90 degrees, when driving forward
 
-		// the tags for the laser lines
+		/// the tags for the laser lines @sa Gui
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
 		static const int LARGESTFREEWAY = 2;
 		static const int CENTEROFLARGESTFREEWAY = 3;
+		static const int IGNORETHIS = 4;
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
