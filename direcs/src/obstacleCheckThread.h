@@ -52,6 +52,13 @@ class ObstacleCheckThread : public QThread
 		virtual void run();
 
 
+	public:
+		/**
+		Init all important class members, get settings/parameters from laser or sensor thread.
+		*/
+		void init();
+
+
 	public slots:
 		/**
 		This slot enables or disables the simulation mode.
@@ -123,6 +130,7 @@ class ObstacleCheckThread : public QThread
 		SensorThread *sensThread;
 		LaserThread *laserThread;
 		volatile bool stopped;
+		bool initCompleted; /// see if the init method of this class was already called
 		int minObstacleDistance;
 		int minObstacleDistanceLaserScanner;
 		unsigned char sensorValue;

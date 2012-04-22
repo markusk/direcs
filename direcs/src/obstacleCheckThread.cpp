@@ -24,12 +24,23 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 {
 	// get the name of this class (this is for debugging messages)
 	className = this->staticMetaObject.className();
+
+	initCompleted = false;
 	stopped = false;
 
 	// copy the pointer from the original SensorThread object
 	sensThread = s;
 	laserThread = l;
+}
 
+
+ObstacleCheckThread::~ObstacleCheckThread()
+{
+}
+
+
+void ObstacleCheckThread::init()
+{
 	minObstacleDistance = 0;
 	minObstacleDistanceLaserScanner = 0;
 	sensorValue = NONE;
@@ -53,11 +64,6 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 }
 
 
-ObstacleCheckThread::~ObstacleCheckThread()
-{
-}
-
-
 void ObstacleCheckThread::stop()
 {
 	stopped = true;
@@ -67,6 +73,15 @@ void ObstacleCheckThread::stop()
 void ObstacleCheckThread::run()
 {
 	float middleOfLaser = 0;
+
+
+	if (initCompleted == false)
+	{
+		emit message(QString("<font color=\"#FF0000\">%1::init not called! Stopping thread!</font>").arg(className));
+		stopped = false;
+
+		return;
+	}
 
 
 	//  start "threading"...
