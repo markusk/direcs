@@ -2852,6 +2852,7 @@ void Direcs::readSettings()
 						}
 						else
 						{
+							// everything okay
 							laserThread->setResolution(LASER1, floatValue);
 							if (consoleMode)
 							{
@@ -2862,8 +2863,48 @@ void Direcs::readSettings()
 								gui->setLaserscannerResolution(LASER1, floatValue);
 							}
 							emit message(QString("Front laser scanner resolution set to <b>%1</b>.").arg(floatValue));
+
+
+							//---------------------------------------------------------------------
+							// read next setting
+							laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea1Start");
+
+							if (laserscannerIgnoreAreaStart == -1.0)
+							{
+								emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea1Start\"not found in ini-file!</font>");
+							}
+							else
+							{
+
+
+								//---------------------------------------------------------------------
+								// read next setting
+								laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea1End");
+
+								if (laserscannerIgnoreAreaEnd == -1.0)
+								{
+									emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea1End\"not found in ini-file!</font>");
+								}
+								else
+								{
+
+
+									if (consoleMode)
+									{
+										/// @todo add this: consoleGui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+									}
+									else
+									{
+										/// @todo gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+									}
+									emit message(QString("Front laser scanner ignore area %1 set to <b>%2-%3%1</b>.").arg(AREA1).arg(laserscannerIgnoreAreaStart).arg(laserscannerIgnoreAreaEnd));
+
+									// store settings in obstacle check thread
+									obstCheckThread->setIgnoreArea(LASER1, AREA1, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
+								}
+							}
 						}
-						break;
+					break;
 				}
 			}
 		}
