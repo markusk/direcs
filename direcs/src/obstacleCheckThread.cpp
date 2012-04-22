@@ -126,6 +126,7 @@ void ObstacleCheckThread::run()
 		centerOfFreeWay1 = ( (laserAngle1 / laserResolution1) / 2);
 
 
+/*			infrared Sensors temporarily removed from robot!!
 		//-------------------------------------------------------------
 		// if obstacle in front of sensor 1
 		// (measured distance is smaller than the minObStacleDistance)
@@ -223,8 +224,9 @@ void ObstacleCheckThread::run()
 		//   First  e m i t  of the sensor data
 		//
 		//qDebug("obstacleCheckThread:  emit sensorValue: %d", sensorValue);
-//		emit obstacleDetected(sensorValue, QDateTime::currentDateTime());
+		emit obstacleDetected(sensorValue, QDateTime::currentDateTime());
 		//=======================================================================================================
+*/
 
 
 		//---------------------------------------------------------
