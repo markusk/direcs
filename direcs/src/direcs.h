@@ -353,6 +353,8 @@ class Direcs : public QObject
 		QString laserscannerTypeRear;  // PLS, LMS, S300. just for reading the value here. @sa laserThread
 		int laserscannerAngleFront; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
 		int laserscannerAngleRear; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
+		float laserscannerIgnoreAreaStart; // this is only temporary needed when reading a setting
+		float laserscannerIgnoreAreaEnd; // this is only temporary needed when reading a setting
 		QString laserscannerMounting; // just for reading the value here. @sa laserThread
 		QString commaSeparator;
 		QTimer *drivingSpeedTimer;
@@ -532,6 +534,12 @@ class Direcs : public QObject
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+
+		/**
+		For the obstacleCheckThread
+		*/
+		static const short int AREA1 = 1;
+		static const short int AREA2 = 2;
 
 		/**
 		The GUI LED colors. Also used for @sa drivingLight()

@@ -178,6 +178,12 @@ class ObstacleCheckThread : public QThread
 		static const int CENTEROFLARGESTFREEWAY = 3;
 		static const int IGNORETHIS = 4;
 
+		/**
+		This are areas to be ignored when checking the laser distances.
+		*/
+		static const short int AREA1 = 1;
+		static const short int AREA2 = 2;
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 250; // 250 ! original !
