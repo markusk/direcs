@@ -43,6 +43,7 @@ void ObstacleCheckThread::init()
 {
 	minObstacleDistance = 0;
 	minObstacleDistanceLaser1 = 0;
+	minObstacleDistanceLaser2 = 0;
 	sensorValue = NONE;
 
 	actualFreeAreaStart = -1;
@@ -58,7 +59,9 @@ void ObstacleCheckThread::init()
 	straightForwardDeviation = 0;
 
 	laserResolution1 = 0.0;
+	laserResolution2 = 0.0;
 	laserAngle1 = 0;
+	laserAngle2 = 0;
 
 	// init of the laser scanner flags is now done in the laserThread
 }
