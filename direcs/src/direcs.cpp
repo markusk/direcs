@@ -2889,16 +2889,54 @@ void Direcs::readSettings()
 
 									if (consoleMode)
 									{
-										/// @todo add this: consoleGui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+										/// @todo add this: consoleGui->setLaserscannerAngle(LASER1, laserscanner...Front);
 									}
 									else
 									{
-										/// @todo gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
+										/// @todo gui->setLaserscannerAngle(LASER1, laserscanner...Front);
 									}
 									emit message(QString("Front laser scanner ignore area %1 set to <b>%2-%3%1</b>.").arg(AREA1).arg(laserscannerIgnoreAreaStart).arg(laserscannerIgnoreAreaEnd));
 
 									// store settings in obstacle check thread
 									obstCheckThread->setIgnoreArea(LASER1, AREA1, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
+								}
+							}
+
+
+							//---------------------------------------------------------------------
+							// read next setting
+							laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea2Start");
+
+							if (laserscannerIgnoreAreaStart == -1.0)
+							{
+								emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea2Start\"not found in ini-file!</font>");
+							}
+							else
+							{
+
+								//---------------------------------------------------------------------
+								// read next setting
+								laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea2End");
+
+								if (laserscannerIgnoreAreaEnd == -1.0)
+								{
+									emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea2End\"not found in ini-file!</font>");
+								}
+								else
+								{
+
+									if (consoleMode)
+									{
+										/// @todo add this: consoleGui->setLaserscannerAngle(LASER1, laserscanner...Front);
+									}
+									else
+									{
+										/// @todo gui->setLaserscannerAngle(LASER1, laserscanner...Front);
+									}
+									emit message(QString("Front laser scanner ignore area %1 set to <b>%2-%3%1</b>.").arg(AREA2).arg(laserscannerIgnoreAreaStart).arg(laserscannerIgnoreAreaEnd));
+
+									// store settings in obstacle check thread
+									obstCheckThread->setIgnoreArea(LASER1, AREA2, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
 								}
 							}
 						}
@@ -3052,6 +3090,31 @@ void Direcs::readSettings()
 											// store settings in obstacle check thread
 											obstCheckThread->setIgnoreArea(LASER2, AREA1, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
 										}
+									}
+
+									//---------------------------------------------------------------------
+									// read next setting
+									laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerRearIgnoreArea2End");
+
+									if (laserscannerIgnoreAreaEnd == -1.0)
+									{
+										emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea2End\"not found in ini-file!</font>");
+									}
+									else
+									{
+
+										if (consoleMode)
+										{
+											/// @todo add this: consoleGui->setLaserscannerAngle(LASER1, laserscanner...Front);
+										}
+										else
+										{
+											/// @todo gui->setLaserscannerAngle(LASER1, laserscanner...Front);
+										}
+										emit message(QString("Rear laser scanner ignore area %1 set to <b>%2-%3%1</b>.").arg(AREA2).arg(laserscannerIgnoreAreaStart).arg(laserscannerIgnoreAreaEnd));
+
+										// store settings in obstacle check thread
+										obstCheckThread->setIgnoreArea(LASER2, AREA2, laserscannerIgnoreAreaStart, laserscannerIgnoreAreaEnd);
 									}
 
 								}
