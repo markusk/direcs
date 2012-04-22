@@ -626,6 +626,7 @@ void Direcs::init()
 			if (circuit1->initCircuit() == true)
 			{
 				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
+
 /*
 				// check compass module
 				if (circuit1->initCompass() == true)
@@ -1137,6 +1138,16 @@ void Direcs::init()
 			// one time init for the laser view
 			gui->initLaserView();
 #endif
+
+
+			//-----------------------------------------------------------
+			// check voltages and write them to logfile
+			//-----------------------------------------------------------
+			emit splashMessage("Checking voltages...");
+			logfile->appendLog(QString("INFO: Voltage of Sensor %1 is %2 Volt.").arg(VOLTAGESENSOR1).arg(sensorThread->getVoltage(VOLTAGESENSOR1)));
+			logfile->appendLog(QString("INFO: Voltage of Sensor %1 is %2 Volt.").arg(VOLTAGESENSOR2).arg(sensorThread->getVoltage(VOLTAGESENSOR2)));
+
+
 			// delete the splash screen
 			finishSplash();
 		}
