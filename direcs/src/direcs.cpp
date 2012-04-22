@@ -3189,7 +3189,8 @@ void Direcs::readSettings()
 			}
 
 			// tell it the obstacle check thread
-			obstCheckThread->setMinObstacleDistanceLaser(minObstacleDistanceLaserScanner);
+			obstCheckThread->setMinObstacleDistanceLaser(LASER1, minObstacleDistanceLaserScanner);
+			obstCheckThread->setMinObstacleDistanceLaser(LASER2, minObstacleDistanceLaserScanner);
 			// show text
 			emit message(QString("Min. obstacle distance Laser Scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScanner));
 			break;

@@ -90,9 +90,10 @@ class ObstacleCheckThread : public QThread
 
 		/**
 		This slot set the minimum distance, which the robot needs. Used by the Laser scanner.
+		@param laser is the number of the laser
 		@param distance in centimeters
 		*/
-		void setMinObstacleDistanceLaser(int distance);
+		void setMinObstacleDistanceLaser(short int laser, int distance);
 
 		/**
 		This slot catches all signals from the signal @sa systemerror

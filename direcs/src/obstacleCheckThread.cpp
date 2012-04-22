@@ -628,9 +628,13 @@ void ObstacleCheckThread::setMinObstacleDistance(int distance)
 }
 
 
-void ObstacleCheckThread::setMinObstacleDistanceLaser(int distance)
+void ObstacleCheckThread::setMinObstacleDistanceLaser(short int laser, int distance)
 {
-	minObstacleDistanceLaser1 = distance;
+	if (laser==LASER1)
+		minObstacleDistanceLaser1 = distance;
+
+	if (laser==LASER2)
+		minObstacleDistanceLaser2 = distance;
 }
 
 
