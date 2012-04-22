@@ -144,13 +144,13 @@ class ObstacleCheckThread : public QThread
 		int largestFreeAreaStart;
 		int largestFreeAreaEnd;
 
-		int centerOfFreeWay1; /// this is user for laser1
-		int centerOfFreeWay2; /// this is user for laser2
+		int centerOfFreeWayFront; /// this is user for laser1
+		int centerOfFreeWayRear; /// this is user for laser2
 
-		float laserResolution1; /// stores the laser resolution when getting the value from the laser thread
-		float laserResolution2; /// stores the laser resolution when getting the value from the laser thread
-		float laserAngle1; /// stores the laser angle when getting the value from the laser thread
-		float laserAngle2; /// stores the laser angle when getting the value from the laser thread
+		float laserResolutionFront; /// stores the laser resolution when getting the value from the laser thread
+		float laserResolutionRear; /// stores the laser resolution when getting the value from the laser thread
+		float laserAngleFront; /// stores the laser angle when getting the value from the laser thread
+		float laserAngleRear; /// stores the laser angle when getting the value from the laser thread
 
 		double width;
 		double b;
