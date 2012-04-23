@@ -653,10 +653,41 @@ void ObstacleCheckThread::setMinObstacleDistanceLaser(short int laser, int dista
 void ObstacleCheckThread::setIgnoreArea(short int laser, int area, float start, float end)
 {
 	if (laser==LASER1)
-		int x=start; // @todo implement laser area ignore tags
+	{
+		if (area==AREA1)
+		{
+			laserscannerFrontIgnoreArea1Start = start;
+			laserscannerFrontIgnoreArea1End = end;
+			return;
+		}
 
-	if (laser==LASER1)
-		int x=start;
+		if (area==AREA2)
+		{
+			laserscannerFrontIgnoreArea2Start = start;
+			laserscannerFrontIgnoreArea2End = end;
+			return;
+		}
+	}
+
+
+	if (laser==LASER2)
+	{
+		if (area==AREA1)
+		{
+			laserscannerRearIgnoreArea1Start = start;
+			laserscannerRearIgnoreArea1End = end;
+			return;
+		}
+
+		if (area==AREA2)
+		{
+			laserscannerRearIgnoreArea2Start = start;
+			laserscannerRearIgnoreArea2End = end;
+			return;
+		}
+	}
+
+	emit message(QString("ERROR in %1::setIgnoreArea: laser number %2 or area %3 not implemented!").arg(className).arg(laser).arg(area));
 }
 
 
