@@ -658,21 +658,15 @@ void ObstacleCheckThread::setMinObstacleDistance(int distance)
 }
 
 
-void ObstacleCheckThread::setMinObstacleDistanceLaser(short int laser, int distance)
+void ObstacleCheckThread::setMinObstacleDistanceLaserFront(int distance)
 {
-	if (laser==LASER1)
-	{
-		minObstacleDistanceLaserFront = distance;
-		return;
-	}
+	minObstacleDistanceLaserFront = distance;
+}
 
-	if (laser==LASER2)
-	{
-		minObstacleDistanceLaserRear = distance;
-		return;
-	}
 
-	emit message(QString("ERROR in %1::setMinObstacleDistanceLaser: laser number %2 not implemented!").arg(className).arg(laser));
+void ObstacleCheckThread::setMinObstacleDistanceLaserRear(int distance)
+{
+	minObstacleDistanceLaserRear = distance;
 }
 
 

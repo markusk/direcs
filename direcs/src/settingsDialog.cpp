@@ -23,8 +23,8 @@
 SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 {
 	ui.setupUi(this);
-	
-	
+
+
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMotor1Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor1Speed, SLOT(setValue(int)));
 	connect(ui.sliderMotor2Speed, SIGNAL(valueChanged(int)), ui.spinBoxMotor2Speed, SLOT(setValue(int)));
@@ -35,7 +35,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	connect(ui.spinBoxMotor2Speed, SIGNAL(valueChanged(int)), ui.sliderMotor2Speed, SLOT(setValue(int)));
 	connect(ui.spinBoxMotor3Speed, SIGNAL(valueChanged(int)), ui.sliderMotor3Speed, SLOT(setValue(int)));
 	connect(ui.spinBoxMotor4Speed, SIGNAL(valueChanged(int)), ui.sliderMotor4Speed, SLOT(setValue(int)));
-	
+
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderMaximumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMaximumSpeed, SLOT(setValue(int)));
 	connect(ui.sliderMinimumSpeed, SIGNAL(valueChanged(int)), ui.spinBoxMinimumSpeed, SLOT(setValue(int)));
@@ -44,7 +44,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	connect(ui.spinBoxMaximumSpeed, SIGNAL(valueChanged(int)), ui.sliderMaximumSpeed, SLOT(setValue(int)));
 	connect(ui.spinBoxMinimumSpeed, SIGNAL(valueChanged(int)), ui.sliderMinimumSpeed, SLOT(setValue(int)));
 	connect(ui.spinBoxAllMotorsSpeed, SIGNAL(valueChanged(int)), ui.sliderAllMotorsSpeed, SLOT(setValue(int)));
-	
+
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderRobotSlot, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlot, SLOT(setValue(int)));
 	// and vice versa
@@ -59,17 +59,17 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.sliderStraightForwardDeviation, SLOT(setValue(int)));
-	
+
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.spinBoxObstacleLaserScanner, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxObstacleLaserScanner, SIGNAL(valueChanged(int)), ui.sliderObstacleLaserScanner, SLOT(setValue(int)));
-	
+
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), ui.spinBoxObstacle, SLOT(setValue(int)));
 	// and vice versa
 	connect(ui.spinBoxObstacle, SIGNAL(valueChanged(int)), ui.sliderObstacle, SLOT(setValue(int)));
-	
+
 	//----------------------------------
 	// and now the important stuff...
 	//----------------------------------
@@ -79,10 +79,11 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 
 	// emit the signal from Gui to obstacleCheckThread via Direcs!
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), SIGNAL(setStraightForwardDeviation(int)));
-	
+
 	// emit the signal from Gui to obstacleCheckThread via Direcs!
-	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), SIGNAL(setMinObstacleDistanceLaser(int)));
-	
+	connect(ui.sliderObstacleLaserScanner, SIGNAL(valueChanged(int)), SIGNAL(setMinObstacleDistanceLaserFront(int)));
+	/// @todo implement second signal for second laser!
+
 	// emit the signal from Gui to obstacleCheckThread via Direcs!
 	connect(ui.sliderObstacle, SIGNAL(valueChanged(int)), SIGNAL(setMinObstacleDistance(int)));
 }
@@ -99,8 +100,8 @@ int SettingsDialog::getSliderMotorSpeed(int motor)
 			return ui.sliderMotor2Speed->value();
 			break;
 	}
-	
-	
+
+
 	return -1;
 }
 
@@ -173,9 +174,9 @@ void SettingsDialog::on_sliderMotor1Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(MOTOR1, ui.sliderMotor1Speed->value());
-	
+
 	//int value = ui.sliderMotor1Speed->value();
-	
+
 	//laserDistanceLineListFront->at(0)->setStartAngle(ui.sliderMotor1Speed->value() * 16);
 	//laserDistanceLineListFront->at(0)->setPos(value, value);
 	//appendLog(QString("x,y=%1").arg(value));
@@ -186,7 +187,7 @@ void SettingsDialog::on_sliderMotor2Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(MOTOR2, ui.sliderMotor2Speed->value());
-	
+
 	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor2Speed->value() * 16);
 	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor2Speed->value()));
 }
@@ -196,7 +197,7 @@ void SettingsDialog::on_sliderMotor3Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(MOTOR3, ui.sliderMotor3Speed->value());
-	
+
 	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor3Speed->value() * 16);
 	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor3Speed->value()));
 }
@@ -206,7 +207,7 @@ void SettingsDialog::on_sliderMotor4Speed_sliderReleased()
 {
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(MOTOR4, ui.sliderMotor4Speed->value());
-	
+
 	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor4Speed->value() * 16);
 	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor4Speed->value()));
 }
@@ -216,7 +217,7 @@ void SettingsDialog::on_sliderAllMotorsSpeed_sliderReleased()
 {
 	/*
 	int speed = ui.sliderAllMotorsSpeed->value();
-	
+
 
 	// set same speed to 4 other motor speed sliders
 	ui.sliderMotor1Speed->setValue(speed);
@@ -224,10 +225,10 @@ void SettingsDialog::on_sliderAllMotorsSpeed_sliderReleased()
 	ui.sliderMotor3Speed->setValue(speed);
 	ui.sliderMotor4Speed->setValue(speed);
 	*/
-	
+
 	// no auto connect in constructor, because this slot has no "value" parameter!
 	emit setMotorSpeed(ALLMOTORS, ui.sliderAllMotorsSpeed->value());
-	
+
 	//laserDistanceLineListFront->at(0)->setSpanAngle(ui.sliderMotor4Speed->value() * 16);
 	//appendLog(QString("spanAngle=%1").arg(ui.sliderMotor4Speed->value()));
 }

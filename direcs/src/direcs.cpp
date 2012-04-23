@@ -451,7 +451,8 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		// set the minimum laser distance, when signal comes from Gui
 		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaser(short int, int)), obstCheckThread, SLOT(setMinObstacleDistanceLaser(short int, int)));
+		connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaserFront(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaserFront(int)));
+		/// @todo implement signal forwarding for second laser!
 
 		//--------------------------------------------------------------------------
 		// let the GUI show servo messages in the log
@@ -3347,7 +3348,7 @@ void Direcs::readSettings()
 			}
 
 			// tell it the obstacle check thread
-			obstCheckThread->setMinObstacleDistanceLaser(LASER1, minObstacleDistanceLaserScannerFront);
+			obstCheckThread->setMinObstacleDistanceLaserFront(minObstacleDistanceLaserScannerFront);
 			// show text
 			emit message(QString("Min. obstacle distance front laser scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScannerFront));
 			break;
@@ -3370,7 +3371,7 @@ void Direcs::readSettings()
 			}
 
 			// tell it the obstacle check thread
-			obstCheckThread->setMinObstacleDistanceLaser(LASER2, minObstacleDistanceLaserScannerRear);
+			obstCheckThread->setMinObstacleDistanceLaserRear(minObstacleDistanceLaserScannerRear);
 			// show text
 			emit message(QString("Min. obstacle distance rear laser scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScannerRear));
 			break;

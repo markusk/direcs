@@ -182,11 +182,17 @@ class SettingsDialog : public QDialog
 
 		/**
 		This signal emits the minimum distance, which the robot needs. Used by the laser scanner.
-		@param laser is the number of the laser
 		@param distance in centimeters
-		@sa ObstacleCheckThread::setMinObstacleDistanceLaser
+		@sa ObstacleCheckThread::setMinObstacleDistanceLaserFront
 		 */
-		void setMinObstacleDistanceLaser(short int laser, int distance);
+		void setMinObstacleDistanceLaserFront(int distance);
+
+		/**
+		This signal emits the minimum distance, which the robot needs. Used by the laser scanner.
+		@param distance in centimeters
+		@sa ObstacleCheckThread::setMinObstacleDistanceLaserRear
+		 */
+		void setMinObstacleDistanceLaserRear(int distance);
 
 
 	private slots:
