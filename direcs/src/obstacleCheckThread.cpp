@@ -55,6 +55,16 @@ void ObstacleCheckThread::init()
 	centerOfFreeWayFront = -1;
 	centerOfFreeWayRear = -1;
 
+	laserscannerFrontIgnoreArea1Start = 0.0;
+	laserscannerFrontIgnoreArea1End = 0.0;
+	laserscannerFrontIgnoreArea2Start = 0.0;
+	laserscannerFrontIgnoreArea2End = 0.0;
+
+	laserscannerRearIgnoreArea1Start = 0.0;
+	laserscannerRearIgnoreArea1End = 0.0;
+	laserscannerRearIgnoreArea2Start = 0.0;
+	laserscannerRearIgnoreArea2End = 0.0;
+
 	robotSlot = 1;      // 1 degree
 	robotSlotWidth = 1; // 1 cm
 	straightForwardDeviation = 0;

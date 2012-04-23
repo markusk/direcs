@@ -156,6 +156,16 @@ class ObstacleCheckThread : public QThread
 		int centerOfFreeWayFront; /// this is user for laser1
 		int centerOfFreeWayRear; /// this is user for laser2
 
+		float laserscannerFrontIgnoreArea1Start;/// this area will be ignored when there is an obstacle
+		float laserscannerFrontIgnoreArea1End;/// this area will be ignored when there is an obstacle
+		float laserscannerFrontIgnoreArea2Start;/// this area will be ignored when there is an obstacle
+		float laserscannerFrontIgnoreArea2End;/// this area will be ignored when there is an obstacle
+
+		float laserscannerRearIgnoreArea1Start;/// this area will be ignored when there is an obstacle
+		float laserscannerRearIgnoreArea1End;/// this area will be ignored when there is an obstacle
+		float laserscannerRearIgnoreArea2Start;/// this area will be ignored when there is an obstacle
+		float laserscannerRearIgnoreArea2End;/// this area will be ignored when there is an obstacle
+
 		float laserResolutionFront; /// stores the laser resolution when getting the value from the laser thread
 		float laserResolutionRear; /// stores the laser resolution when getting the value from the laser thread
 		float laserAngleFront; /// stores the laser angle when getting the value from the laser thread
