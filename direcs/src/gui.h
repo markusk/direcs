@@ -636,6 +636,7 @@ class Gui : public QMainWindow
 		QColor colorLaserFreeWay;
 		QColor colorLaserPreferredDrivingDirection;
 		QColor colorLaserCenterDrivingDirection;
+		QColor colorLaserIgnoreArea;
 		QColor colorHelpLine;
 		QColor colorHelpLineText;
 		QColor colorGraphicsSceneBackground;
