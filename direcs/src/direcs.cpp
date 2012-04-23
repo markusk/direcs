@@ -1078,6 +1078,11 @@ void Direcs::init()
 
 			if (obstCheckThread->isRunning() == false)
 			{
+				emit splashMessage("Initializing obstacle check thread...");
+				emit message("Initializing obstacle check thread...", false);
+				obstCheckThread->init();
+				emit message("Obstacle check thread initialized.");
+
 				emit splashMessage("Starting obstacle check thread...");
 				emit message("Starting obstacle check thread...", false);
 				obstCheckThread->start();
@@ -4839,6 +4844,9 @@ void Direcs::setSimulationMode(bool status)
 
 		if (obstCheckThread->isRunning() == false)
 		{
+			emit message("Initializing obstacle check thread...", false);
+			obstCheckThread->init();
+			emit message("Initialized.");
 			emit message("Starting obstacle check thread...", false);
 			obstCheckThread->start();
 			emit message("Started.");
