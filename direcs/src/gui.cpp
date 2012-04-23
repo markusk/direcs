@@ -2988,8 +2988,16 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 				}
 				else
 				{
-					//   n o   o b s t a c l e
-					laserLineListFront->at(i)->setPen(QPen(colorLaserFreeWay));
+					if (laserScannerFlags[i] == IGNORETHIS)
+					{
+						// mark the ignored areas
+						laserLineListFront->at(i)->setPen(QPen(colorLaserIgnoreArea));
+					}
+					else
+					{
+						//   n o   o b s t a c l e
+						laserLineListFront->at(i)->setPen(QPen(colorLaserFreeWay));
+					}
 				}
 			}
 		}
@@ -3181,8 +3189,16 @@ void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> las
 				}
 				else
 				{
-					//   n o   o b s t a c l e
-					laserLineListRear->at(i)->setPen(QPen(colorLaserFreeWay));
+					if (laserScannerFlags[i] == IGNORETHIS)
+					{
+						// mark the ignored areas
+						laserLineListRear->at(i)->setPen(QPen(colorLaserIgnoreArea));
+					}
+					else
+					{
+						//   n o   o b s t a c l e
+						laserLineListRear->at(i)->setPen(QPen(colorLaserFreeWay));
+					}
 				}
 			}
 		}
@@ -3420,6 +3436,7 @@ void Gui::createLaserScannerObjects()
 	colorLaserFreeWay = Qt::darkRed;
 	colorLaserPreferredDrivingDirection = QColor(7, 68, 30); // green
 	colorLaserCenterDrivingDirection = Qt::green;
+	colorLaserIgnoreArea =  Qt::darkYellow;
 	colorGraphicsSceneBackground = Qt::black;
 
 
