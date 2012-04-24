@@ -670,7 +670,7 @@ void ObstacleCheckThread::setMinObstacleDistanceLaserRear(int distance)
 }
 
 
-void ObstacleCheckThread::setIgnoreArea(short int laser, int area, float start, float end)
+void ObstacleCheckThread::setIgnoreArea(short int laser, int area, int start, int end)
 {
 	if (laser==LASER1)
 	{

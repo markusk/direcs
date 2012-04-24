@@ -109,7 +109,7 @@ class ObstacleCheckThread : public QThread
 		@param start is the start angle in degrees
 		@param end is the end angle in degrees
 		*/
-		void setIgnoreArea(short int laser, int area, float start, float end);
+		void setIgnoreArea(short int laser, int area, int start, int end);
 
 		/**
 		This slot catches all signals from the signal @sa systemerror
@@ -163,15 +163,15 @@ class ObstacleCheckThread : public QThread
 		int centerOfFreeWayFront; /// this is user for laser1
 		int centerOfFreeWayRear; /// this is user for laser2
 
-		float laserscannerFrontIgnoreArea1Start;/// this area will be ignored when there is an obstacle
-		float laserscannerFrontIgnoreArea1End;/// this area will be ignored when there is an obstacle
-		float laserscannerFrontIgnoreArea2Start;/// this area will be ignored when there is an obstacle
-		float laserscannerFrontIgnoreArea2End;/// this area will be ignored when there is an obstacle
+		int laserscannerFrontIgnoreArea1Start;/// this area will be ignored when there is an obstacle
+		int laserscannerFrontIgnoreArea1End;/// this area will be ignored when there is an obstacle
+		int laserscannerFrontIgnoreArea2Start;/// this area will be ignored when there is an obstacle
+		int laserscannerFrontIgnoreArea2End;/// this area will be ignored when there is an obstacle
 
-		float laserscannerRearIgnoreArea1Start;/// this area will be ignored when there is an obstacle
-		float laserscannerRearIgnoreArea1End;/// this area will be ignored when there is an obstacle
-		float laserscannerRearIgnoreArea2Start;/// this area will be ignored when there is an obstacle
-		float laserscannerRearIgnoreArea2End;/// this area will be ignored when there is an obstacle
+		int laserscannerRearIgnoreArea1Start;/// this area will be ignored when there is an obstacle
+		int laserscannerRearIgnoreArea1End;/// this area will be ignored when there is an obstacle
+		int laserscannerRearIgnoreArea2Start;/// this area will be ignored when there is an obstacle
+		int laserscannerRearIgnoreArea2End;/// this area will be ignored when there is an obstacle
 
 		float laserResolutionFront; /// stores the laser resolution when getting the value from the laser thread
 		float laserResolutionRear; /// stores the laser resolution when getting the value from the laser thread

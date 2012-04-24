@@ -2873,9 +2873,9 @@ void Direcs::readSettings()
 
 							//---------------------------------------------------------------------
 							// read next setting
-							laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea1Start");
+							laserscannerIgnoreAreaStart = inifile1->readSetting("Config", "laserscannerFrontIgnoreArea1Start");
 
-							if (laserscannerIgnoreAreaStart == -1.0)
+							if (laserscannerIgnoreAreaStart == -1)
 							{
 								emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea1Start\"not found in ini-file!</font>");
 							}
@@ -2884,9 +2884,9 @@ void Direcs::readSettings()
 
 								//---------------------------------------------------------------------
 								// read next setting
-								laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea1End");
+								laserscannerIgnoreAreaEnd = inifile1->readSetting("Config", "laserscannerFrontIgnoreArea1End");
 
-								if (laserscannerIgnoreAreaEnd == -1.0)
+								if (laserscannerIgnoreAreaEnd == -1)
 								{
 									emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea1End\"not found in ini-file!</font>");
 								}
@@ -2911,9 +2911,9 @@ void Direcs::readSettings()
 
 							//---------------------------------------------------------------------
 							// read next setting
-							laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea2Start");
+							laserscannerIgnoreAreaStart = inifile1->readSetting("Config", "laserscannerFrontIgnoreArea2Start");
 
-							if (laserscannerIgnoreAreaStart == -1.0)
+							if (laserscannerIgnoreAreaStart == -1)
 							{
 								emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea2Start\"not found in ini-file!</font>");
 							}
@@ -2922,9 +2922,9 @@ void Direcs::readSettings()
 
 								//---------------------------------------------------------------------
 								// read next setting
-								laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerFrontIgnoreArea2End");
+								laserscannerIgnoreAreaEnd = inifile1->readSetting("Config", "laserscannerFrontIgnoreArea2End");
 
-								if (laserscannerIgnoreAreaEnd == -1.0)
+								if (laserscannerIgnoreAreaEnd == -1)
 								{
 									emit message("<font color=\"#FF0000\">Value \"laserscannerFrontIgnoreArea2End\"not found in ini-file!</font>");
 								}
@@ -3063,9 +3063,9 @@ void Direcs::readSettings()
 
 									//---------------------------------------------------------------------
 									// read next setting
-									laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerRearIgnoreArea1Start");
+									laserscannerIgnoreAreaStart = inifile1->readSetting("Config", "laserscannerRearIgnoreArea1Start");
 
-									if (laserscannerIgnoreAreaStart == -1.0)
+									if (laserscannerIgnoreAreaStart == -1)
 									{
 										emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea1Start\"not found in ini-file!</font>");
 									}
@@ -3074,9 +3074,9 @@ void Direcs::readSettings()
 
 										//---------------------------------------------------------------------
 										// read next setting
-										laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerRearIgnoreArea1End");
+										laserscannerIgnoreAreaEnd = inifile1->readSetting("Config", "laserscannerRearIgnoreArea1End");
 
-										if (laserscannerIgnoreAreaEnd == -1.0)
+										if (laserscannerIgnoreAreaEnd == -1)
 										{
 											emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea1End\"not found in ini-file!</font>");
 										}
@@ -3100,9 +3100,9 @@ void Direcs::readSettings()
 
 									//---------------------------------------------------------------------
 									// read next setting
-									laserscannerIgnoreAreaStart = inifile1->readFloat("Config", "laserscannerRearIgnoreArea2Start");
+									laserscannerIgnoreAreaStart = inifile1->readSetting("Config", "laserscannerRearIgnoreArea2Start");
 
-									if (laserscannerIgnoreAreaStart == -1.0)
+									if (laserscannerIgnoreAreaStart == -1)
 									{
 										emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea2Start\"not found in ini-file!</font>");
 									}
@@ -3111,9 +3111,9 @@ void Direcs::readSettings()
 
 										//---------------------------------------------------------------------
 										// read next setting
-										laserscannerIgnoreAreaEnd = inifile1->readFloat("Config", "laserscannerRearIgnoreArea2End");
+										laserscannerIgnoreAreaEnd = inifile1->readSetting("Config", "laserscannerRearIgnoreArea2End");
 
-										if (laserscannerIgnoreAreaEnd == -1.0)
+										if (laserscannerIgnoreAreaEnd == -1)
 										{
 											emit message("<font color=\"#FF0000\">Value \"laserscannerRearIgnoreArea2End\"not found in ini-file!</font>");
 										}

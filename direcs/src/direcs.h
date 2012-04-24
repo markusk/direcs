@@ -353,8 +353,8 @@ class Direcs : public QObject
 		QString laserscannerTypeRear;  // PLS, LMS, S300. just for reading the value here. @sa laserThread
 		int laserscannerAngleFront; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
 		int laserscannerAngleRear; // this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
-		float laserscannerIgnoreAreaStart; // this is only temporary needed when reading a setting
-		float laserscannerIgnoreAreaEnd; // this is only temporary needed when reading a setting
+		int laserscannerIgnoreAreaStart; // this is only temporary needed when reading a setting
+		int laserscannerIgnoreAreaEnd; // this is only temporary needed when reading a setting
 		QString laserscannerMounting; // just for reading the value here. @sa laserThread
 		QString commaSeparator;
 		QTimer *drivingSpeedTimer;
