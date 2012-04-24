@@ -253,8 +253,8 @@ void ObstacleCheckThread::run()
 		{
 			// first set if we ignore this area and than mark this as such
 			if (
-					((angleIndex >= laserscannerFrontIgnoreArea1Start) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) )) ||
-					((angleIndex >= laserscannerFrontIgnoreArea2Start) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
+					((angleIndex >= (laserscannerFrontIgnoreArea1Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)))) ||
+					((angleIndex >= (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
 			   )
 			{
 				//------------------------------
