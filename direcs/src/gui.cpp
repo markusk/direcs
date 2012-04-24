@@ -3167,32 +3167,32 @@ void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> las
 	//----------------------------------------------------------------------------------------
 	for (int i=0; i<laserLineListRear->size(); i++)
 	{
-		// check if there was an obstacle
-		if (laserScannerFlags[i] == OBSTACLE)
+		if (laserScannerFlags[i] == IGNORETHIS)
 		{
-			// obstacle detected!
-			laserLineListRear->at(i)->setPen(QPen(colorLaserObstacle));
+			//  i g n o r e d   a r e a s
+			laserLineListRear->at(i)->setPen(QPen(colorLaserIgnoreArea));
 		}
 		else
 		{
-			if (laserScannerFlags[i] == LARGESTFREEWAY)
+			// check if there was an obstacle
+			if (laserScannerFlags[i] == OBSTACLE)
 			{
-				// l a r g e s t   f r e e   w a y
-				laserLineListRear->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
+				// obstacle detected!
+				laserLineListRear->at(i)->setPen(QPen(colorLaserObstacle));
 			}
 			else
 			{
-				if (laserScannerFlags[i] == CENTEROFLARGESTFREEWAY)
+				if (laserScannerFlags[i] == LARGESTFREEWAY)
 				{
-					//  center of free way (only one line)
-					laserLineListRear->at(i)->setPen(QPen(colorLaserCenterDrivingDirection));
+					// l a r g e s t   f r e e   w a y
+					laserLineListRear->at(i)->setPen(QPen(colorLaserPreferredDrivingDirection));
 				}
 				else
 				{
-					if (laserScannerFlags[i] == IGNORETHIS)
+					if (laserScannerFlags[i] == CENTEROFLARGESTFREEWAY)
 					{
-						// mark the ignored areas
-						laserLineListRear->at(i)->setPen(QPen(colorLaserIgnoreArea));
+						//  center of free way (only one line)
+						laserLineListRear->at(i)->setPen(QPen(colorLaserCenterDrivingDirection));
 					}
 					else
 					{
