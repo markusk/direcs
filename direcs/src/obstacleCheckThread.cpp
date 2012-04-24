@@ -253,8 +253,8 @@ void ObstacleCheckThread::run()
 		{
 			// first set if we ignore this area and than mark this as such
 			if (
-					((angleIndex >= laserscannerFrontIgnoreArea1Start) && (angleIndex <= laserscannerFrontIgnoreArea1End)) ||
-					((angleIndex >= laserscannerFrontIgnoreArea2Start) && (angleIndex <= laserscannerFrontIgnoreArea2End))
+					((angleIndex >= laserscannerFrontIgnoreArea1Start) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) )) ||
+					((angleIndex >= laserscannerFrontIgnoreArea2Start) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
 			   )
 			{
 				//------------------------------
@@ -505,20 +505,34 @@ void ObstacleCheckThread::run()
 		//---------------------------------------------------------
 		for (int angleIndex=0; angleIndex < (laserAngleRear / laserResolutionRear); angleIndex++)
 		{
-			// if obstacle detected
-			if ( ((int) (laserThread->getValue(LASER2, angleIndex) * 100)) < minObstacleDistanceLaserRear)
+			// first set if we ignore this area and than mark this as such
+			if (
+					((angleIndex >= laserscannerRearIgnoreArea1Start) && (angleIndex <= (laserscannerRearIgnoreArea1End*(1/laserResolutionRear)) )) ||
+					((angleIndex >= laserscannerRearIgnoreArea2Start) && (angleIndex <= (laserscannerRearIgnoreArea2End*(1/laserResolutionRear)) ))
+			   )
 			{
-				//-----------------------------
-				// set the "obstacle flag"
-				//-----------------------------
-				laserThread->setFlag(LASER2, angleIndex, OBSTACLE);
+				//------------------------------
+				// first set the "ignore flag"
+				//------------------------------
+				laserThread->setFlag(LASER1, angleIndex, IGNORETHIS);
 			}
 			else
 			{
-				//-------------------------------------------------------------
-				// delete the "obstacle flag" -> free way at the actual angle
-				//-------------------------------------------------------------
-				laserThread->setFlag(LASER2, angleIndex, FREEWAY);
+				// if obstacle detected
+				if ( ((int) (laserThread->getValue(LASER2, angleIndex) * 100)) < minObstacleDistanceLaserRear)
+				{
+					//-----------------------------
+					// set the "obstacle flag"
+					//-----------------------------
+					laserThread->setFlag(LASER2, angleIndex, OBSTACLE);
+				}
+				else
+				{
+					//-------------------------------------------------------------
+					// delete the "obstacle flag" -> free way at the actual angle
+					//-------------------------------------------------------------
+					laserThread->setFlag(LASER2, angleIndex, FREEWAY);
+				}
 			}
 		}
 
