@@ -253,9 +253,14 @@ void ObstacleCheckThread::run()
 		{
 			// first set if we ignore this area and than mark this as such
 			if (
+					(
+					(angleIndex >=   0*(1/laserResolutionFront)) && (angleIndex <=  45*(1/laserResolutionFront)) ||
+					(angleIndex >= 225*(1/laserResolutionFront)) && (angleIndex <= 270*(1/laserResolutionFront))
+					)
+/*
 					((angleIndex >= (laserscannerFrontIgnoreArea1Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)))) ||
-					((angleIndex >= (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
-			   )
+					((angleIndex >= (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront))))
+*/			   )
 			{
 				//------------------------------
 				// first set the "ignore flag"
@@ -368,7 +373,27 @@ void ObstacleCheckThread::run()
 		{
 			for (int angleIndex=largestFreeAreaStart; angleIndex<=largestFreeAreaEnd; angleIndex++)
 			{
-				laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
+				// first set if we ignore this area and than mark this as such
+				if (
+						(
+						(angleIndex >=   0*(1/laserResolutionFront)) && (angleIndex <=  45*(1/laserResolutionFront)) ||
+						(angleIndex >= 225*(1/laserResolutionFront)) && (angleIndex <= 270*(1/laserResolutionFront))
+						)
+/*
+						((angleIndex >= laserscannerFrontIgnoreArea1Start) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) )) ||
+						((angleIndex >= laserscannerFrontIgnoreArea2Start) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
+*/
+				   )
+				{
+					//------------------------------
+					// first set the "ignore flag"
+					//------------------------------
+					laserThread->setFlag(LASER1, angleIndex, IGNORETHIS);
+				}
+				else
+				{
+					laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
+				}
 			}
 		}
 		else
@@ -376,9 +401,26 @@ void ObstacleCheckThread::run()
 			// only *one* large free area found (actual area), so tag this one
 			if (actualFreeAreaEnd != -1)
 			{
-				for (int angle=actualFreeAreaStart; angle<=actualFreeAreaEnd; angle++)
+				for (int angleIndex=actualFreeAreaStart; angleIndex<=actualFreeAreaEnd; angleIndex++)
 				{
-					laserThread->setFlag(LASER1, angle, LARGESTFREEWAY);
+					// first set if we ignore this area and than mark this as such
+					if (
+							(angleIndex >= 0) && (angleIndex <= 10)
+/*
+							((angleIndex >= laserscannerFrontIgnoreArea1Start) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) )) ||
+							((angleIndex >= laserscannerFrontIgnoreArea2Start) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
+*/
+					   )
+					{
+						//------------------------------
+						// first set the "ignore flag"
+						//------------------------------
+						laserThread->setFlag(LASER1, angleIndex, IGNORETHIS);
+					}
+					else
+					{
+						laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
+					}
 				}
 			}
 		}
