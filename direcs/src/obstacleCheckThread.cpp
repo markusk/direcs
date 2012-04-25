@@ -362,7 +362,10 @@ void ObstacleCheckThread::run()
 			}
 		}
 
-
+		qDebug() << "laserscannerFrontIgnoreArea1Start:" << laserscannerFrontIgnoreArea1Start;
+		qDebug() << "laserscannerFrontIgnoreArea1End:" << laserscannerFrontIgnoreArea1End;
+		qDebug() << "laserscannerFrontIgnoreArea2Start:" << laserscannerFrontIgnoreArea2Start;
+		qDebug() << "laserscannerFrontIgnoreArea2End:" << laserscannerFrontIgnoreArea2End;
 
 		//------------------------------------------------------------
 		// Then tag the *largest* free area, if multiple were found
