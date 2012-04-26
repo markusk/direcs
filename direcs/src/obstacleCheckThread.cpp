@@ -757,7 +757,7 @@ void ObstacleCheckThread::setIgnoreArea(short int laser, int area, int start, in
 		}
 	}
 
-	emit message(QString("ERROR in %1::setIgnoreArea: laser number %2 or area %3 not implemented!").arg(className).arg(laser).arg(area));
+	emit message(QString("<font color=\"#FF0000\">ERROR in %1::setIgnoreArea: laser number %2 or area %3 not implemented!<font>").arg(className).arg(laser).arg(area));
 }
 
 
