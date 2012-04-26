@@ -31,16 +31,7 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	// copy the pointer from the original SensorThread object
 	sensThread = s;
 	laserThread = l;
-}
 
-
-ObstacleCheckThread::~ObstacleCheckThread()
-{
-}
-
-
-void ObstacleCheckThread::init()
-{
 	minObstacleDistance = 0;
 	minObstacleDistanceLaserFront = 0;
 	minObstacleDistanceLaserRear = 0;
@@ -73,8 +64,16 @@ void ObstacleCheckThread::init()
 	laserResolutionRear = 0.0;
 	laserAngleFront = 0;
 	laserAngleRear = 0;
+}
 
 
+ObstacleCheckThread::~ObstacleCheckThread()
+{
+}
+
+
+void ObstacleCheckThread::init()
+{
 	// Note: init of the laser scanner flags is now done in the laserThread
 
 
@@ -253,14 +252,15 @@ void ObstacleCheckThread::run()
 		{
 			// first set if we ignore this area and than mark this as such
 			if (
+/*
 					(
 					(angleIndex >=   0*(1/laserResolutionFront)) && (angleIndex <=  45*(1/laserResolutionFront)) ||
 					(angleIndex >= 225*(1/laserResolutionFront)) && (angleIndex <= 270*(1/laserResolutionFront))
 					)
-/*
+*/
 					((angleIndex >= (laserscannerFrontIgnoreArea1Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)))) ||
 					((angleIndex >= (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront))))
-*/			   )
+			   )
 			{
 				//------------------------------
 				// first set the "ignore flag"
@@ -325,7 +325,6 @@ void ObstacleCheckThread::run()
 				{
 					// store current free area beginning
 					actualFreeAreaStart = angleIndex;
-					//qDebug("angle=%d / actualFreeAreaStart=%d", angle, actualFreeAreaStart);
 				}
 
 				// If current angle has "free" sight (no obstacles) [checked with instruction before!]
@@ -362,10 +361,6 @@ void ObstacleCheckThread::run()
 			}
 		}
 
-		qDebug() << "laserscannerFrontIgnoreArea1Start:" << laserscannerFrontIgnoreArea1Start;
-		qDebug() << "laserscannerFrontIgnoreArea1End:" << laserscannerFrontIgnoreArea1End;
-		qDebug() << "laserscannerFrontIgnoreArea2Start:" << laserscannerFrontIgnoreArea2Start;
-		qDebug() << "laserscannerFrontIgnoreArea2End:" << laserscannerFrontIgnoreArea2End;
 
 		//------------------------------------------------------------
 		// Then tag the *largest* free area, if multiple were found
@@ -378,14 +373,14 @@ void ObstacleCheckThread::run()
 			{
 				// first set if we ignore this area and than mark this as such
 				if (
+/*
 						(
 						(angleIndex >=   0*(1/laserResolutionFront)) && (angleIndex <=  45*(1/laserResolutionFront)) ||
 						(angleIndex >= 225*(1/laserResolutionFront)) && (angleIndex <= 270*(1/laserResolutionFront))
 						)
-/*
+*/
 						((angleIndex >= laserscannerFrontIgnoreArea1Start) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) )) ||
 						((angleIndex >= laserscannerFrontIgnoreArea2Start) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
-*/
 				   )
 				{
 					//------------------------------
@@ -408,11 +403,8 @@ void ObstacleCheckThread::run()
 				{
 					// first set if we ignore this area and than mark this as such
 					if (
-							(angleIndex >= 0) && (angleIndex <= 10)
-/*
 							((angleIndex >= laserscannerFrontIgnoreArea1Start) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) )) ||
 							((angleIndex >= laserscannerFrontIgnoreArea2Start) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront)) ))
-*/
 					   )
 					{
 						//------------------------------
@@ -618,7 +610,6 @@ void ObstacleCheckThread::run()
 				{
 					// store current free area beginning
 					actualFreeAreaStart = angleIndex;
-					//qDebug("angle=%d / actualFreeAreaStart=%d", angle, actualFreeAreaStart);
 				}
 
 				// If current angle has "free" sight (no obstacles)
