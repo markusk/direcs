@@ -538,8 +538,8 @@ class Direcs : public QObject
 		/**
 		For the obstacleCheckThread
 		*/
-		static const short int AREA1 = 1;
-		static const short int AREA2 = 2;
+		static const int AREA1 = 1;
+		static const int AREA2 = 2;
 
 		/**
 		The GUI LED colors. Also used for @sa drivingLight()
