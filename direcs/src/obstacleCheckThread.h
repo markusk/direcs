@@ -188,6 +188,10 @@ class ObstacleCheckThread : public QThread
 
 		int straightForwardDeviation; /// and this is the deviation to 90 degrees, when driving forward
 
+		QList <int> freeStartAreas;  /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
+		QList <int> freeEndAreas;    /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
+
+
 		/// the tags for the laser lines @sa Gui
 		static const int FREEWAY = 0;
 		static const int OBSTACLE = 1;
