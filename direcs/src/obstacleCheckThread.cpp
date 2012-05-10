@@ -339,6 +339,22 @@ void ObstacleCheckThread::run()
 					// store this angle index as free
 					freeEndAreas.append(angleIndex);
 				}
+
+				// white
+				if(
+						((angleIndex == firstAngle) &&
+						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
+						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
+						||
+						((angleIndex != firstAngle) && (angleIndex != lastAngle) && // any in between
+						(laserThread->getFlag(LASER1, angleIndex-1) == OBSTACLE) &&
+						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
+						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
+				  )
+				{
+					// store this angle index as free
+					freeStartAreas.append(angleIndex);
+				}
 			} // flag != IGNORETHIS
 		}
 
