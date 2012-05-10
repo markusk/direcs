@@ -314,7 +314,7 @@ void ObstacleCheckThread::run()
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
 						||
-						((angleIndex != firstAngle) && (angleIndex != lastAngle)
+						((angleIndex != firstAngle) && (angleIndex != lastAngle) &&
 						(laserThread->getFlag(LASER1, angleIndex-1) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
