@@ -352,6 +352,8 @@ void ObstacleCheckThread::run()
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
 				  )
 				{
+					// store next angle index as free
+					freeStartAreas.append(angleIndex + 1);
 					// store this angle index as free
 					freeStartAreas.append(angleIndex);
 				}
