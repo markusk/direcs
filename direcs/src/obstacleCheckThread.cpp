@@ -312,11 +312,11 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		for (int angleIndex = first; angleIndex <= last; angleIndex++)
 		{
+			qDebug("%d -----------", angleIndex);
+
 			// check only lines with which are *not* in an area to be ognored
 			if (laserThread->getFlag(LASER1, angleIndex) != IGNORETHIS )
 			{
-				qDebug("-----------");
-
 				// green
 				if(
 						((angleIndex == first) &&
@@ -331,6 +331,7 @@ void ObstacleCheckThread::run()
 				{
 					// store current angle index as free
 					freeStartAreas.append(angleIndex);
+					qDebug("%d = green", angleIndex);
 				}
 else
 				// blue
@@ -347,7 +348,9 @@ else
 				{
 					// store current angle index as free
 					freeEndAreas.append(angleIndex);
+					qDebug("%d = blue", angleIndex);
 				}
+/*
 else
 				// white
 				if(
@@ -363,7 +366,9 @@ else
 				{
 					// store next angle index as free
 					freeStartAreas.append(angleIndex + 1);
+					qDebug("%d = white", angleIndex);
 				}
+*/
 else
 				// yellow
 				if(
@@ -384,7 +389,9 @@ else
 					// store current angle index as free
 					freeStartAreas.append(angleIndex);
 					freeEndAreas.append(angleIndex);
+					qDebug("%d = yellow", angleIndex);
 				}
+/*
 else
 				// red
 				if(
@@ -405,9 +412,24 @@ else
 				{
 					// store previous angle index as free
 					freeEndAreas.append(angleIndex - 1);
+					qDebug("%d = red", angleIndex);
 				}
+*/
 			} // flag != IGNORETHIS
 		}
+
+
+
+
+		//  t e s t
+		//  t e s t
+		//  t e s t
+
+//		for (int i=0; i<freeStartAreas.count() ;i++)
+//		{
+		qDebug() << "freeStartAreas:" << freeStartAreas;
+		qDebug() << "freeEndAreas:"   << freeEndAreas;
+//		}
 
 
 
