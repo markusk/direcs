@@ -99,6 +99,13 @@ void ObstacleCheckThread::init()
 	}
 
 
+	// Delete the previous found areas for the next analysis.
+	freeStartAreas.clear();
+	freeEndAreas.clear();
+	first = 0;
+	last = 0;
+
+
 	// init completed
 	initCompleted = true;
 }
@@ -533,15 +540,8 @@ else
 		//----------------------------------------------------------------------------
 		// Delete the previous found areas for the next analysis.
 		//----------------------------------------------------------------------------
-		while (!freeStartAreas.isEmpty())
-		{
-			freeStartAreas.removeLast();
-		}
-
-		while (!freeEndAreas.isEmpty())
-		{
-			freeEndAreas.removeLast();
-		}
+		freeStartAreas.clear();
+		freeEndAreas.clear();
 
 
 
