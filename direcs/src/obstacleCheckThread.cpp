@@ -300,8 +300,8 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// Check all angles
 		//--------------------------------------------------------------------------------
-		int first = 0;
-		int last  = (laserAngleFront / laserResolutionFront) - 1;
+		first = 0;
+		last  = (laserAngleFront / laserResolutionFront) - 1;
 
 		for (int angleIndex=0; angleIndex < (laserAngleFront / laserResolutionFront); angleIndex++)
 		{
