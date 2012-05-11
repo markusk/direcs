@@ -308,9 +308,9 @@ void ObstacleCheckThread::run()
 		// Check all angles
 		//--------------------------------------------------------------------------------
 		first = 0;
-		last  = (laserAngleFront / laserResolutionFront) - 1;
+		last  = (laserAngleFront / laserResolutionFront);
 
-		for (int angleIndex=0; angleIndex < (laserAngleFront / laserResolutionFront); angleIndex++)
+		for (int angleIndex = first; angleIndex < last; angleIndex++)
 		{
 			// check only lines with which are *not* in an area to be ognored
 			if (laserThread->getFlag(LASER1, angleIndex) != IGNORETHIS )
