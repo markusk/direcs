@@ -312,7 +312,7 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		for (int angleIndex = first; angleIndex <= last; angleIndex++)
 		{
-			qDebug("%d -----------", angleIndex);
+			//qDebug("%d -----------", angleIndex);
 
 			// check only lines with which are *not* in an area to be ognored
 			if (laserThread->getFlag(LASER1, angleIndex) != IGNORETHIS )
@@ -331,7 +331,7 @@ void ObstacleCheckThread::run()
 				{
 					// store current angle index as free
 					freeStartAreas.append(angleIndex);
-					qDebug("%d = green", angleIndex);
+					//qDebug("%d = green", angleIndex);
 				}
 				else
 				// blue
@@ -348,7 +348,7 @@ void ObstacleCheckThread::run()
 				{
 					// store current angle index as free
 					freeEndAreas.append(angleIndex);
-					qDebug("%d = blue", angleIndex);
+					//qDebug("%d = blue", angleIndex);
 				}
 				else
 				// yellow
@@ -370,7 +370,7 @@ void ObstacleCheckThread::run()
 					// store current angle index as free
 					freeStartAreas.append(angleIndex);
 					freeEndAreas.append(angleIndex);
-					qDebug("%d = yellow", angleIndex);
+					//qDebug("%d = yellow", angleIndex);
 				}
 			} // flag != IGNORETHIS
 		}
@@ -380,7 +380,7 @@ void ObstacleCheckThread::run()
 		if (freeStartAreas.count() != freeEndAreas.count())
 		{
 			emit message(QString("ERROR in logical check of free laser areas in %1!").arg(className));
-			emit message(QString("Reaction to be implemented!!!");
+			emit message("Reaction to be implemented!!!");
 			qDebug() << "ERROR in logical check of free laser areas in:" << className;
 		}
 
