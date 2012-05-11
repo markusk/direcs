@@ -402,6 +402,8 @@ else
 
 
 
+/*
+
 		//------------------------------------------------------------
 		// Then tag the *largest* free area, if multiple were found
 		// (to show it in the GUI and to know, where to drive)
@@ -523,6 +525,7 @@ else
 				}
 			}
 		}
+*/
 
 
 		//----------------------------------------------------------------------------
