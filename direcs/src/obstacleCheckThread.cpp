@@ -323,7 +323,7 @@ void ObstacleCheckThread::run()
 					// store current angle index as free
 					freeStartAreas.append(angleIndex);
 				}
-
+else
 				// blue
 				if(
 						((angleIndex == last) &&
@@ -339,7 +339,7 @@ void ObstacleCheckThread::run()
 					// store current angle index as free
 					freeEndAreas.append(angleIndex);
 				}
-
+else
 				// white
 				if(
 						((angleIndex == first) &&
@@ -355,7 +355,7 @@ void ObstacleCheckThread::run()
 					// store next angle index as free
 					freeStartAreas.append(angleIndex + 1);
 				}
-
+else
 				// yellow
 				if(
 						((angleIndex == last) &&
@@ -376,7 +376,7 @@ void ObstacleCheckThread::run()
 					freeStartAreas.append(angleIndex);
 					freeEndAreas.append(angleIndex);
 				}
-
+else
 				// red
 				if(
 						((angleIndex == last) &&
