@@ -333,7 +333,7 @@ void ObstacleCheckThread::run()
 					freeStartAreas.append(angleIndex);
 					qDebug("%d = green", angleIndex);
 				}
-else
+				else
 				// blue
 				if(
 						((angleIndex == last) &&
@@ -350,26 +350,7 @@ else
 					freeEndAreas.append(angleIndex);
 					qDebug("%d = blue", angleIndex);
 				}
-/*
-else
-				// white
-				if(
-						((angleIndex == first) &&
-						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
-						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
-						||
-						((angleIndex != first) && (angleIndex != last) && // any in between
-						(laserThread->getFlag(LASER1, angleIndex-1) == OBSTACLE) &&
-						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
-						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
-				  )
-				{
-					// store next angle index as free
-					freeStartAreas.append(angleIndex + 1);
-					qDebug("%d = white", angleIndex);
-				}
-*/
-else
+				else
 				// yellow
 				if(
 						((angleIndex == last) &&
@@ -391,30 +372,6 @@ else
 					freeEndAreas.append(angleIndex);
 					qDebug("%d = yellow", angleIndex);
 				}
-/*
-else
-				// red
-				if(
-						((angleIndex == last) &&
-						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
-						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE))
-						||
-						((angleIndex != first) && (angleIndex != last) && // any in between
-						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
-						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
-						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
-						||
-						((angleIndex != first) && (angleIndex != last) && // any in between
-						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
-						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
-						(laserThread->getFlag(LASER1, angleIndex+1) == OBSTACLE))
-				  )
-				{
-					// store previous angle index as free
-					freeEndAreas.append(angleIndex - 1);
-					qDebug("%d = red", angleIndex);
-				}
-*/
 			} // flag != IGNORETHIS
 		}
 
