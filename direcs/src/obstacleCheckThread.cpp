@@ -300,7 +300,7 @@ void ObstacleCheckThread::run()
 		// Since we analyse the previos, the current and the next angle
 		// and we have to take caere of the first, "middle" and last angle
 		// we have to check all 24x3 posibilities and react on these.
-		// In the end I ended up in five different "actions".
+		// In the end I ended up in three different "actions".
 		//------------------------------------------------------------------
 		largestFreeAreaStart = -1;
 		largestFreeAreaEnd   = -1;
@@ -391,6 +391,20 @@ void ObstacleCheckThread::run()
 //		qDebug() << "freeStartAreas:" << freeStartAreas;
 //		qDebug() << "freeEndAreas:"   << freeEndAreas;
 
+/*
+		//------------------------------------------------------------------
+		// LASER SCANNER 1 DATA ANALYSIS - STEP III
+		//------------------------------------------------------------------
+		// Mark all free areas as 'green'
+		//------------------------------------------------------------------
+		for (int i=0; i<freeStartAreas.count() ; i++ )
+		{
+			for (int angleIndex=freeStartAreas.at(i); angleIndex<=freeEndAreas.at(i); angleIndex++)
+			{
+				laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
+			}
+		}
+*/
 
 
 /*
