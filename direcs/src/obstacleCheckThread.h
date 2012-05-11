@@ -191,6 +191,8 @@ class ObstacleCheckThread : public QThread
 		QList <int> freeStartAreas;  /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
 		QList <int> freeEndAreas;    /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
 
+		int first;
+		int last;
 
 		/// the tags for the laser lines @sa Gui
 		static const int FREEWAY = 0;

@@ -185,9 +185,6 @@ class LaserThread : public QThread
 		int laserscannerAngleRear; /// this values holds the range of the laserscanner viewing angle. e.g. 180 or 270 degrees
 		float laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
 		float laserscannerResolutionRear;  /// this values holds the resolution of the laserscanner. e.g. 0.5 degrees
-		int first;
-		int last;
-
 
 		SickS300 *laserS300; // the object for the S300 laserscanner
 		Inifile *inifile1; //  for reading simulation values
