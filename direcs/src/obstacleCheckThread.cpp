@@ -376,17 +376,20 @@ void ObstacleCheckThread::run()
 		}
 
 
+		// do a logic check of the found free areas
+		if (freeStartAreas.count() != freeEndAreas.count())
+		{
+			emit message(QString("ERROR in logical check of free laser areas in %1!").arg(className));
+			emit message(QString("Reaction to be implemented!!!");
+			qDebug() << "ERROR in logical check of free laser areas in:" << className;
+		}
 
 
 		//  t e s t
 		//  t e s t
 		//  t e s t
-
-//		for (int i=0; i<freeStartAreas.count() ;i++)
-//		{
-		qDebug() << "freeStartAreas:" << freeStartAreas;
-		qDebug() << "freeEndAreas:"   << freeEndAreas;
-//		}
+//		qDebug() << "freeStartAreas:" << freeStartAreas;
+//		qDebug() << "freeEndAreas:"   << freeEndAreas;
 
 
 
