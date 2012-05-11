@@ -300,8 +300,8 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// Check all angles
 		//--------------------------------------------------------------------------------
-		int firstAngle = 0;
-		int lastAngle  = (laserAngleFront / laserResolutionFront) - 1;
+		int first = 0;
+		int last  = (laserAngleFront / laserResolutionFront) - 1;
 
 		for (int angleIndex=0; angleIndex < (laserAngleFront / laserResolutionFront); angleIndex++)
 		{
@@ -310,11 +310,11 @@ void ObstacleCheckThread::run()
 			{
 				// green
 				if(
-						((angleIndex == firstAngle) &&
+						((angleIndex == first) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
 						||
-						((angleIndex != firstAngle) && (angleIndex != lastAngle) && // any in between
+						((angleIndex != first) && (angleIndex != last) && // any in between
 						(laserThread->getFlag(LASER1, angleIndex-1) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
@@ -326,11 +326,11 @@ void ObstacleCheckThread::run()
 
 				// blue
 				if(
-						((angleIndex == lastAngle) &&
+						((angleIndex == last) &&
 						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY))
 						||
-						((angleIndex != firstAngle) && (angleIndex != lastAngle) && // any in between
+						((angleIndex != first) && (angleIndex != last) && // any in between
 						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == OBSTACLE))
@@ -342,11 +342,11 @@ void ObstacleCheckThread::run()
 
 				// white
 				if(
-						((angleIndex == firstAngle) &&
+						((angleIndex == first) &&
 						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
 						||
-						((angleIndex != firstAngle) && (angleIndex != lastAngle) && // any in between
+						((angleIndex != first) && (angleIndex != last) && // any in between
 						(laserThread->getFlag(LASER1, angleIndex-1) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
@@ -358,15 +358,15 @@ void ObstacleCheckThread::run()
 
 				// yellow
 				if(
-						((angleIndex == lastAngle) &&
+						((angleIndex == last) &&
 						(laserThread->getFlag(LASER1, angleIndex-1) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY))
 						||
-						((angleIndex == firstAngle) &&
+						((angleIndex == first) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == OBSTACLE))
 						||
-						((angleIndex != firstAngle) && (angleIndex != lastAngle) && // any in between
+						((angleIndex != first) && (angleIndex != last) && // any in between
 						(laserThread->getFlag(LASER1, angleIndex-1) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == OBSTACLE))
@@ -379,16 +379,16 @@ void ObstacleCheckThread::run()
 
 				// red
 				if(
-						((angleIndex == lastAngle) &&
+						((angleIndex == last) &&
 						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE))
 						||
-						((angleIndex != firstAngle) && (angleIndex != lastAngle) && // any in between
+						((angleIndex != first) && (angleIndex != last) && // any in between
 						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == FREEWAY))
 						||
-						((angleIndex != firstAngle) && (angleIndex != lastAngle) && // any in between
+						((angleIndex != first) && (angleIndex != last) && // any in between
 						(laserThread->getFlag(LASER1, angleIndex-1) == FREEWAY) &&
 						(laserThread->getFlag(LASER1, angleIndex) == OBSTACLE) &&
 						(laserThread->getFlag(LASER1, angleIndex+1) == OBSTACLE))
