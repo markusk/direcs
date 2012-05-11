@@ -433,55 +433,29 @@ void ObstacleCheckThread::run()
 			}
 		}
 
-
+*/
 		//----------------------------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP III
 		//----------------------------------------------------------------------------
-		// Find the center of the largest free area for the robot
+		// Calculate the width of the drive-trough direction/area
 		//----------------------------------------------------------------------------
+		for (int i=0; i<freeStartAreas.count() ; i++ )
+		{
+			// get the width of one side of the triangle using alpha, b and c.
+			// where b and c have to be in cm here!
+			qDebug() << "width:" << calculateDriveThroughWidth( (freeEndAreas.at(i) - freeStartAreas.at(i)), (laserThread->getValue(LASER1, freeStartAreas.at(i)) * 100), (laserThread->getValue(LASER1, freeEndAreas.at(i)) * 100));
+
+			//laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
+		}
+
 
 		// free area found  :-)
 			// set flag to "light green"
 //			laserThread->setFlag(LASER1, centerOfFreeWayFront, CENTEROFLARGESTFREEWAY);
 
 
-		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP III a
-		//--------------------------------------------------------------------------------------
-		// Calculate the width of the estimated drive-tru direction/area with the 'Kosinussatz'
-		// (a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
-		//--------------------------------------------------------------------------------------
-		if ( (largestFreeAreaStart > 0)  &&  ( largestFreeAreaEnd < (laserAngleFront / laserResolutionFront) ))
-		{
-			// b and c are the sides of the triangle
-			b = laserThread->getValue(LASER1, largestFreeAreaStart) * 100; // converted in cm, here!
-			c = laserThread->getValue(LASER1, largestFreeAreaEnd) * 100; // converted in cm, here!
-			alpha = (largestFreeAreaEnd - largestFreeAreaStart);
 
-			// to get the 'true drive-tru width':
-			// make the triangle to be one with same-length-sides of b and c
-			if (c < b)
-			{
-				b = c;
-			}
-			else
-			{
-				if (b < c)
-				{
-					c = b;
-				}
-			}
-
-			// calculate
-			// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
-			width = sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) );
-		}
-		else
-		{
-			width = -1;
-		}
-
-
+/*
 		//----------------------------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP IV
 		//----------------------------------------------------------------------------
@@ -562,6 +536,28 @@ void ObstacleCheckThread::run()
 	} // while
 
 	stopped = false;
+}
+
+
+double ObstacleCheckThread::calculateDriveThroughWidth(int alpha, float b, float c)
+{
+	// get the width between two angles, use the shorter angle to get sure we fit really through.
+	// make the triangle to be one with same-length-sides of b and c!
+	if (c < b)
+	{
+		b = c;
+	}
+	else
+	{
+		if (b < c)
+		{
+			c = b;
+		}
+	}
+
+	// calculate
+	// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
+	return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) );
 }
 
 
