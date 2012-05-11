@@ -251,12 +251,18 @@ void ObstacleCheckThread::run()
 
 
 		//---------------------------------------------------------
+		// set the indexes for the upcoming loops
+		//---------------------------------------------------------
+		first = 0;
+		last  = (laserAngleFront / laserResolutionFront) - 1;
+
+		//---------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP I
 		//---------------------------------------------------------
 		// If obstacle in front of the laser scanner,
 		// set a flag at the corresponding angles
 		//---------------------------------------------------------
-		for (int angleIndex=0; angleIndex < ( laserAngleFront / laserResolutionFront ); angleIndex++)
+		for (int angleIndex=first; angleIndex < last; angleIndex++)
 		{
 			// first set if we ignore this area and than mark this as such
 			if (
@@ -307,9 +313,6 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// Check all angles
 		//--------------------------------------------------------------------------------
-		first = 0;
-		last  = (laserAngleFront / laserResolutionFront);
-
 		for (int angleIndex = first; angleIndex < last; angleIndex++)
 		{
 			// check only lines with which are *not* in an area to be ognored
