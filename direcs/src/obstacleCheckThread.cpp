@@ -137,12 +137,6 @@ void ObstacleCheckThread::run()
 	//  start "threading"...
 	while (!stopped)
 	{
-		//-------------------------------------------------
-		// Let the thread sleep some time,
-		// for having a bit more time fo the other threads!
-		//-------------------------------------------------
-		msleep(THREADSLEEPTIME);
-
 		// This value contains the sum of all SENSORx values!
 		sensorValue = NONE;
 
@@ -562,6 +556,11 @@ else
 		//================================= END LASER 2 =========================================
 		//================================= END LASER 2 =========================================
 
+		//-------------------------------------------------
+		// Let the thread sleep some time,
+		// for having a bit more time fo the other threads!
+		//-------------------------------------------------
+		msleep(THREADSLEEPTIME);
 	} // while
 
 	stopped = false;
