@@ -31,16 +31,9 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	// copy the pointer from the original SensorThread object
 	sensThread = s;
 	laserThread = l;
-}
 
-
-ObstacleCheckThread::~ObstacleCheckThread()
-{
-}
-
-
-void ObstacleCheckThread::init()
-{
+	// basic init
+	// has to be here, not in init() since we would reset these values when calling init again!
 	minObstacleDistance = 0;
 	minObstacleDistanceLaserFront = 0;
 	minObstacleDistanceLaserRear = 0;
@@ -73,41 +66,51 @@ void ObstacleCheckThread::init()
 	laserResolutionRear = 0.0;
 	laserAngleFront = 0;
 	laserAngleRear = 0;
+}
 
 
-	// Note: init of the laser scanner flags is now done in the laserThread
+ObstacleCheckThread::~ObstacleCheckThread()
+{
+}
 
 
-	// get resolution and angle from the laser thread for all laser scanners
-	if (laserThread->isRunning())
+void ObstacleCheckThread::init()
+{
+	if (initCompleted == false)
 	{
-		laserResolutionFront = laserThread->getResolution(LASER1);
-		laserAngleFront = laserThread->getAngle(LASER1);
+		// Note: init of the laser scanner flags is now done in the laserThread
 
-		laserResolutionRear = laserThread->getResolution(LASER2);
-		laserAngleRear = laserThread->getAngle(LASER2);
+		// get resolution and angle from the laser thread for all laser scanners
+		if (laserThread->isRunning())
+		{
+			laserResolutionFront = laserThread->getResolution(LASER1);
+			laserAngleFront = laserThread->getAngle(LASER1);
+
+			laserResolutionRear = laserThread->getResolution(LASER2);
+			laserAngleRear = laserThread->getAngle(LASER2);
+		}
+		else
+		{
+			emit message("ERROR getting laser angle and resolution from laserThread for front laser. LaserThread is not running! ObstacleCheckThread::run()");
+			laserResolutionFront = 0.0;
+			laserAngleFront = 0;
+
+			emit message("ERROR getting laser angle and resolution from laserThread for rear laser. LaserThread is not running! ObstacleCheckThread::run()");
+			laserResolutionRear = 0.0;
+			laserAngleRear = 0;
+		}
+
+
+		// Delete the previous found areas for the next analysis.
+		freeStartAreas.clear();
+		freeEndAreas.clear();
+		first = 0;
+		last = 0;
+
+
+		// init completed
+		initCompleted = true;
 	}
-	else
-	{
-		emit message("ERROR getting laser angle and resolution from laserThread for front laser. LaserThread is not running! ObstacleCheckThread::run()");
-		laserResolutionFront = 0.0;
-		laserAngleFront = 0;
-
-		emit message("ERROR getting laser angle and resolution from laserThread for rear laser. LaserThread is not running! ObstacleCheckThread::run()");
-		laserResolutionRear = 0.0;
-		laserAngleRear = 0;
-	}
-
-
-	// Delete the previous found areas for the next analysis.
-	freeStartAreas.clear();
-	freeEndAreas.clear();
-	first = 0;
-	last = 0;
-
-
-	// init completed
-	initCompleted = true;
 }
 
 
