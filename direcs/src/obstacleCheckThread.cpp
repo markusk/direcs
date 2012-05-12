@@ -450,7 +450,7 @@ void ObstacleCheckThread::run()
 
 					// store the corresponing angles, too!
 					largestFreeAreaStart = freeStartAreas.at(i);
-					largestFreeAreaEnd   = freeStartAreas.at(i);
+					largestFreeAreaEnd   = freeEndAreas.at(i);
 				}
 			}
 
