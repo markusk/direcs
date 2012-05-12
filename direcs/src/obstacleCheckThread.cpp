@@ -42,9 +42,6 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	actualFreeAreaStart = -1;
 	actualFreeAreaEnd = -1;
 
-	largestFreeAreaStart = -1;
-	largestFreeAreaEnd = -1;
-
 	centerOfFreeWayFront = -1;
 	centerOfFreeWayRear = -1;
 
@@ -104,9 +101,6 @@ void ObstacleCheckThread::init()
 		// Delete the previous found areas for the next analysis.
 		freeStartAreas.clear();
 		freeEndAreas.clear();
-		first = 0;
-		last = 0;
-
 
 		// init completed
 		initCompleted = true;
@@ -482,7 +476,8 @@ void ObstacleCheckThread::run()
 					farestDistance = currentDistance;
 
 					// store the corresponing angles, too!
-
+					largestFreeAreaStart = freeStartAreas.at(i);
+					largestFreeAreaEnd   = freeStartAreas.at(i);
 				}
 			}
 
@@ -490,6 +485,12 @@ void ObstacleCheckThread::run()
 
 			//laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
 		}
+
+
+
+		qDebug() << "largestFreeAreaStart:" << largestFreeAreaStart;
+		qDebug() << "largestFreeAreaEnd:"   << largestFreeAreaEnd;
+
 
 
 		// free area found  :-)
@@ -553,10 +554,19 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP V
 		//----------------------------------------------------------------------------
-		// Delete the previous found areas for the next analysis.
+		// Delete the previous found areas, angles and width for the next analysis.
 		//----------------------------------------------------------------------------
 		freeStartAreas.clear();
 		freeEndAreas.clear();
+		lastWidth = 0.0;
+		currentWidth = 0.0;
+		farestDistance = 0.0;
+		currentDistance = 0.0;
+		b = 0.0;
+		c = 0.0;
+		largestFreeAreaStart = 0;
+		largestFreeAreaEnd = 0;
+		middleOfLaser = 0;
 
 
 
