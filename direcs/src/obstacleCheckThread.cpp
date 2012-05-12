@@ -122,7 +122,18 @@ void ObstacleCheckThread::stop()
 
 void ObstacleCheckThread::run()
 {
+	int first = 0;					/// holds the first angle index
+	int last = 0;					/// holds the last last angle index
+	double lastWidth = 0.0;			/// holds the last width
+	double currentWidth = 0.0;		///
+	float farestDistance = 0.0;		///
+	float currentDistance = 0.0;	///
+	float b = 0.0;
+	float c = 0.0;
+	int largestFreeAreaStart = 0;
+	int largestFreeAreaEnd = 0;
 	float middleOfLaser = 0;
+
 
 
 	if (initCompleted == false)

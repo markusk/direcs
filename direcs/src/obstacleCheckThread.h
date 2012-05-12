@@ -147,8 +147,8 @@ class ObstacleCheckThread : public QThread
 		Calculate the width of the estimated drive-trough direction/area with the 'Kosinussatz'
 		(a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
 		@param alpha is the angle
-		@param a is one length
-		@param b is the other length
+		@param b is one length
+		@param c is the other length
 		@return width
 		*/
 		double calculateDriveThroughWidth(int alpha, float b, float c);
@@ -167,9 +167,6 @@ class ObstacleCheckThread : public QThread
 
 		int actualFreeAreaStart;
 		int actualFreeAreaEnd;
-
-		int largestFreeAreaStart;
-		int largestFreeAreaEnd;
 
 		int centerOfFreeWayFront; /// this is user for laser1
 		int centerOfFreeWayRear; /// this is user for laser2
@@ -196,9 +193,6 @@ class ObstacleCheckThread : public QThread
 
 		QList <int> freeStartAreas;  /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
 		QList <int> freeEndAreas;    /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
-
-		int first;
-		int last;
 
 		/// the tags for the laser lines @sa Gui
 		static const int FREEWAY = 0;
