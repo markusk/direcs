@@ -402,7 +402,7 @@ void ObstacleCheckThread::run()
 		for (int i=0; i<freeStartAreas.count() ; i++ )
 		{
 			// set the triangle sides
-			b = (laserThread->getValue(LASER1, freeStartAreas.at(i)) * 100);
+			b = (laserThread->getValue(LASER1, freeStartAreas.at(i)) * 100); // * 100 since we se cm here
 			c = (laserThread->getValue(LASER1, freeEndAreas.at(i))   * 100);
 
 			// use the shorter angle to be sure we fit really through.
