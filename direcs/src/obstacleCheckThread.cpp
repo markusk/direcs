@@ -418,12 +418,16 @@ void ObstacleCheckThread::run()
 				currentDistance = c;
 			}
 
+
 			// get the width of one side of the triangle using alpha, b and c.
 			// where b and c have to be in cm here!
 			currentWidth = calculateDriveThroughWidth( (freeEndAreas.at(i) - freeStartAreas.at(i)), currentDistance, currentDistance);
 
+//			qDebug("currentWidth: %.1f",currentWidth);
+//			qDebug("largestWidth: %.1f",largestWidth);
+
 			// check the width
-			if (currentWidth > lastWidth)
+			if (currentWidth > largestWidth)
 			{
 				// use this width as the most far (only to emit it to the GUI)
 				largestWidth = currentWidth;
@@ -440,11 +444,14 @@ void ObstacleCheckThread::run()
 				}
 			}
 
-			// Nothing *else* here! we use the last width and distance as the best choice
+//			qDebug("Using largestWidth: %.1f",largestWidth);
+			// Nothing *else* here! we use the last width and distance as the best choice  ? ? ? ? ? ?
 
 			//laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
 		}
 
+//		qDebug("Final largestWidth: %.1f",largestWidth);
+//		qDebug() << "\n";
 
 //		qDebug() << "largestFreeAreaStart:" << largestFreeAreaStart;
 //		qDebug() << "largestFreeAreaEnd:"   << largestFreeAreaEnd;
