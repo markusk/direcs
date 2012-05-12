@@ -465,6 +465,32 @@ void ObstacleCheckThread::run()
 		qDebug() << "largestFreeAreaEnd:"   << largestFreeAreaEnd;
 
 
+		//------------------------------------------------------------
+		// Then tag the *largest* free area
+		// (to show it in the GUI and to know, where to drive)
+		//------------------------------------------------------------
+		if (largestFreeAreaEnd != 0)
+		{
+			for (int angleIndex=largestFreeAreaStart; angleIndex<=largestFreeAreaEnd; angleIndex++)
+			{
+				laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
+			}
+
+			// get the middle of the free area (this is for displaying reasons in the GUI only)
+			centerOfFreeWayFront = largestFreeAreaStart + ((largestFreeAreaEnd - largestFreeAreaStart) / 2);
+
+			// set driving direction flag to "light green"
+			laserThread->setFlag(LASER1, centerOfFreeWayFront, CENTEROFLARGESTFREEWAY);
+
+			// since this signal is only used to display the values in the gui,
+			// the values are multiplied by the resolution to have the correct value in degrees!
+			emit newDrivingAngleSet((largestFreeAreaStart * laserResolutionFront), (largestFreeAreaEnd * laserResolutionFront), (centerOfFreeWayFront * laserResolutionFront), largestWidth);
+		}
+		else
+		{
+			// obstacles EVERYWHERE IN FRONT
+			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
+		}
 
 
 
