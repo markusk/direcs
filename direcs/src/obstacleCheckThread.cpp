@@ -452,9 +452,41 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		for (int i=0; i<freeStartAreas.count() ; i++ )
 		{
+			// set the triangle sides
+			b = (laserThread->getValue(LASER1, freeStartAreas.at(i)) * 100);
+			c = (laserThread->getValue(LASER1, freeEndAreas.at(i))   * 100);
+
+			// use the shorter angle to be sure we fit really through.
+			// make the triangle to be one with same-length-sides of b and c!
+			if (c < b)
+			{
+				b = c;
+			}
+			else
+			{
+				c = b;
+			}
+
 			// get the width of one side of the triangle using alpha, b and c.
 			// where b and c have to be in cm here!
-			qDebug() << "width:" << calculateDriveThroughWidth( (freeEndAreas.at(i) - freeStartAreas.at(i)), (laserThread->getValue(LASER1, freeStartAreas.at(i)) * 100), (laserThread->getValue(LASER1, freeEndAreas.at(i)) * 100));
+			currentDistance = b;
+			currentWidth = calculateDriveThroughWidth( (freeEndAreas.at(i) - freeStartAreas.at(i)), b, c);
+
+			// check the width
+			if (currentWidth > lastWidth)
+			{
+				// check if this width is the width which is the farest away
+				if (currentDistance > farestDistance)
+				{
+					// use this!
+					farestDistance = currentDistance;
+
+					// store the corresponing angles, too!
+
+				}
+			}
+
+			// Nothing *else* here! we use the last width and distance as the best choice
 
 			//laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
 		}
@@ -552,23 +584,9 @@ void ObstacleCheckThread::run()
 
 double ObstacleCheckThread::calculateDriveThroughWidth(int alpha, float b, float c)
 {
-	// get the width between two angles, use the shorter angle to get sure we fit really through.
-	// make the triangle to be one with same-length-sides of b and c!
-	if (c < b)
-	{
-		b = c;
-	}
-	else
-	{
-		if (b < c)
-		{
-			c = b;
-		}
-	}
-
 	// calculate
 	// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
-	return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) );
+	return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) ); /// < << < <  @todo LASER 1  and LASER 2
 }
 
 
