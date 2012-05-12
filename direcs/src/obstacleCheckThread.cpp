@@ -308,10 +308,6 @@ void ObstacleCheckThread::run()
 		// we have to check all 24x3 posibilities and react on these.
 		// In the end I ended up in three different "actions".
 		//------------------------------------------------------------------
-		largestFreeAreaStart = -1;
-		largestFreeAreaEnd   = -1;
-		centerOfFreeWayFront = -1;
-
 
 		//--------------------------------------------------------------------------------
 		// Check all angles
