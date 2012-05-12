@@ -410,16 +410,17 @@ void ObstacleCheckThread::run()
 			if (c < b)
 			{
 				b = c;
+				currentDistance = b;
 			}
 			else
 			{
 				c = b;
+				currentDistance = c;
 			}
 
 			// get the width of one side of the triangle using alpha, b and c.
 			// where b and c have to be in cm here!
-			currentDistance = b;
-			currentWidth = calculateDriveThroughWidth( (freeEndAreas.at(i) - freeStartAreas.at(i)), b, c);
+			currentWidth = calculateDriveThroughWidth( (freeEndAreas.at(i) - freeStartAreas.at(i)), currentDistance, currentDistance);
 
 			// check the width
 			if (currentWidth > lastWidth)
