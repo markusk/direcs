@@ -127,6 +127,7 @@ void ObstacleCheckThread::run()
 	int largestFreeAreaStart = 0;
 	int largestFreeAreaEnd = 0;
 	float centerOfFreeWayFront = 0;
+	float middleOfLaser = 0.0;		/// this is for detecting the driving direction ("drive left" means "drive left from the middle of the laser")
 
 
 
@@ -146,7 +147,7 @@ void ObstacleCheckThread::run()
 		sensorValue = NONE;
 
 		// reset "drive to angle" to "middle of the number of laser lines" -> FORWARD
-		centerOfFreeWayFront = ( (laserAngleFront / laserResolutionFront) / 2);
+		centerOfFreeWayFront = ( (laserAngleFront / laserResolutionFront) / 2);  /// @todo  correct to reset the centerOfFreeway here?!? Seesm to work for forbidden aread, too!
 
 
 /*			infrared Sensors temporarily removed from robot!!
@@ -487,56 +488,45 @@ void ObstacleCheckThread::run()
 
 
 
-/*
+
 		//----------------------------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP IV
 		//----------------------------------------------------------------------------
-		// Emit the result for the GUI
+		// Emit driving directiomn to the GUI
 		//----------------------------------------------------------------------------
 
-		// since this signal is only used to display the values in the gui,
-		// the values are multiplied by the resolution to have the correct value in degrees!
-		emit newDrivingAngleSet((largestFreeAreaStart * laserResolutionFront), (largestFreeAreaEnd * laserResolutionFront), (centerOfFreeWayFront * laserResolutionFront), width);
 
 		// get the middle of the laser (when we have 180 deg, the middle is as 90 deg)
+		// this is needed later for detecting the driving direction
 		middleOfLaser = (laserAngleFront / laserResolutionFront) / 2;
 
-		if (centerOfFreeWayFront == -1)
+		// value within the tolerance range (deviation to 90 deg.)?
+		if (
+			/// @todo FIXME: why -1 ?!? But works so far!
+			( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront >= (middleOfLaser - (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
+			( (centerOfFreeWayFront > middleOfLaser) && (centerOfFreeWayFront <= (middleOfLaser + (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
+			(  centerOfFreeWayFront == middleOfLaser )
+		   )
 		{
-			// obstacles EVERYWHERE IN FRONT
-			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
+			// NO obstacle
+			emit obstacleDetected(NONE, QDateTime::currentDateTime());
 		}
 		else
 		{
-			// value within the tolerance range (deviation to 90 deg.)?
-			if (
-				// FIXME: why -1 ?!? But works so far!
-				( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront >= (middleOfLaser - (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
-				( (centerOfFreeWayFront > middleOfLaser) && (centerOfFreeWayFront <= (middleOfLaser + (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
-				(  centerOfFreeWayFront == middleOfLaser )
-			   )
+			if ( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront > -1) )
 			{
-				// NO obstacle
-				emit obstacleDetected(NONE, QDateTime::currentDateTime());
+				// free way left  ->  obstacle RIGHT
+				emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
 			}
 			else
 			{
-				if ( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront > -1) )
+				if (centerOfFreeWayFront > middleOfLaser)
 				{
-					// free way left  ->  obstacle RIGHT
-					emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
-				}
-				else
-				{
-					if (centerOfFreeWayFront > middleOfLaser)
-					{
-						// free way right  ->  obstacle LEFT
-						emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
-					}
+					// free way right  ->  obstacle LEFT
+					emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
 				}
 			}
 		}
-*/
 
 
 		//----------------------------------------------------------------------------
