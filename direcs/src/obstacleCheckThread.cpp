@@ -120,13 +120,14 @@ void ObstacleCheckThread::run()
 	int last = 0;					/// holds the last last angle index
 	double lastWidth = 0.0;			/// holds the last width
 	double currentWidth = 0.0;		///
+	double largestWidth = 0.0;
 	float farestDistance = 0.0;		///
 	float currentDistance = 0.0;	///
 	float b = 0.0;
 	float c = 0.0;
 	int largestFreeAreaStart = 0;
 	int largestFreeAreaEnd = 0;
-	float middleOfLaser = 0;
+	float centerOfFreeWayFront = 0;
 
 
 
@@ -469,6 +470,9 @@ void ObstacleCheckThread::run()
 			// check the width
 			if (currentWidth > lastWidth)
 			{
+				// use this width as the most far (only to emit it to the GUI)
+				largestWidth = currentWidth;
+
 				// check if this width is the width which is the farest away
 				if (currentDistance > farestDistance)
 				{
@@ -560,13 +564,14 @@ void ObstacleCheckThread::run()
 		freeEndAreas.clear();
 		lastWidth = 0.0;
 		currentWidth = 0.0;
+		largestWidth = 0.0;
 		farestDistance = 0.0;
 		currentDistance = 0.0;
 		b = 0.0;
 		c = 0.0;
 		largestFreeAreaStart = 0;
 		largestFreeAreaEnd = 0;
-		middleOfLaser = 0;
+		centerOfFreeWayFront = 0.0;
 
 
 
