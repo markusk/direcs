@@ -393,21 +393,6 @@ void ObstacleCheckThread::run()
 //		qDebug() << "freeStartAreas:" << freeStartAreas;
 //		qDebug() << "freeEndAreas:"   << freeEndAreas;
 
-/*
-		//------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP III
-		//------------------------------------------------------------------
-		// Mark all free areas as 'green'
-		//------------------------------------------------------------------
-		for (int i=0; i<freeStartAreas.count() ; i++ )
-		{
-			for (int angleIndex=freeStartAreas.at(i); angleIndex<=freeEndAreas.at(i); angleIndex++)
-			{
-				laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
-			}
-		}
-*/
-
 
 		//----------------------------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP III
@@ -460,9 +445,8 @@ void ObstacleCheckThread::run()
 		}
 
 
-
-		qDebug() << "largestFreeAreaStart:" << largestFreeAreaStart;
-		qDebug() << "largestFreeAreaEnd:"   << largestFreeAreaEnd;
+//		qDebug() << "largestFreeAreaStart:" << largestFreeAreaStart;
+//		qDebug() << "largestFreeAreaEnd:"   << largestFreeAreaEnd;
 
 
 		//------------------------------------------------------------
@@ -550,7 +534,7 @@ void ObstacleCheckThread::run()
 		//----------------------------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP V
 		//----------------------------------------------------------------------------
-		// Delete the previous found areas, angles and width for the next analysis.
+		// Reset the previous found areas, angles and width for the next analysis.
 		//----------------------------------------------------------------------------
 		freeStartAreas.clear();
 		freeEndAreas.clear();
