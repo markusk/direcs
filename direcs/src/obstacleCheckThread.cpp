@@ -409,33 +409,6 @@ void ObstacleCheckThread::run()
 */
 
 
-/*
-
-		//------------------------------------------------------------
-		// Then tag the *largest* free area, if multiple were found
-		// (to show it in the GUI and to know, where to drive)
-		// The old flags were set to new values above in this code!
-		//------------------------------------------------------------
-		if (largestFreeAreaEnd != -1)
-		{
-			for (int angleIndex=largestFreeAreaStart; angleIndex<=largestFreeAreaEnd; angleIndex++)
-			{
-				laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
-			}
-		}
-		else
-		{
-			// only *one* large free area found (actual area), so tag this one
-			if (actualFreeAreaEnd != -1)
-			{
-				for (int angle=actualFreeAreaStart; angle<=actualFreeAreaEnd; angle++)
-				{
-					laserThread->setFlag(LASER1, angle, LARGESTFREEWAY);
-				}
-			}
-		}
-
-*/
 		//----------------------------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP III
 		//----------------------------------------------------------------------------
@@ -493,9 +466,6 @@ void ObstacleCheckThread::run()
 
 
 
-		// free area found  :-)
-			// set flag to "light green"
-//			laserThread->setFlag(LASER1, centerOfFreeWayFront, CENTEROFLARGESTFREEWAY);
 
 
 
