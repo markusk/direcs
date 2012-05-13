@@ -258,6 +258,8 @@ void ObstacleCheckThread::run()
 		//---------------------------------------------------------
 		first = 0;
 		last  = (laserAngleFront / laserResolutionFront) -1;
+		// e.g. 180 degrees with resolution   1 degree  result in an index from 0 to 179
+		// e.g. 270 degrees with resolution 0,5 degrees result in an index from 0 to 539
 
 		//---------------------------------------------------------
 		// LASER SCANNER 1 DATA ANALYSIS - STEP I
@@ -446,27 +448,25 @@ void ObstacleCheckThread::run()
 				// use this width as the most far
 				largestWidth = currentWidth;
 
-				/*
 				//
 				// Enable *this* code to chose the widest area, which is also the area with the largest free distance!!
 				//
 
 				// check if this width is the width which is the farest away
-				if (currentDistance > farestDistance)
-				{
-					// use this!
-					farestDistance = currentDistance;
-
-					// store the corresponing angles, too!
-					largestFreeAreaStart = freeStartAreas.at(i);
-					largestFreeAreaEnd   = freeEndAreas.at(i);
-				}
+//				if (currentDistance > farestDistance)
+//				{
+//					// use this!
+//					farestDistance = currentDistance;
+//
+//					// store the corresponing angles, too!
+//					largestFreeAreaStart = freeStartAreas.at(i);
+//					largestFreeAreaEnd   = freeEndAreas.at(i);
+//				}
 
 
 				//
 				// alternatively use *the following* code for just using the widest area as direction of choice
 				//
-				*/
 				// store the corresponing angles
 				largestFreeAreaStart = freeStartAreas.at(i);
 				largestFreeAreaEnd   = freeEndAreas.at(i);
