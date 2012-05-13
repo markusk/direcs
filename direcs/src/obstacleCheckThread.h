@@ -130,7 +130,7 @@ class ObstacleCheckThread : public QThread
 		@param largestFreeAreaStart is the start angle of the largest free area.
 		@param largestFreeAreaEnd is the end angle of the largest free area.
 		@param centerOfFreeWay is the center of the largest free area.
-		@param width of the estimated drive-tru area
+		@param width of the estimated drive-trough area
 		*/
 		void newDrivingAngleSet(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width);
 
@@ -143,6 +143,18 @@ class ObstacleCheckThread : public QThread
 
 
 	private:
+		/**
+		Calculate the width of the estimated drive-trough direction/area with the 'Kosinussatz'
+		(a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
+		@param laserscanner can be LASER1 or LASER2
+		@param alpha is the angle
+		@param b is one length
+		@param c is the other length
+		@return width
+		*/
+		double calculateDriveThroughWidth(short int laserscanner, int alpha, float b, float c);
+
+
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 		SensorThread *sensThread;
 		LaserThread *laserThread;
@@ -156,9 +168,6 @@ class ObstacleCheckThread : public QThread
 
 		int actualFreeAreaStart;
 		int actualFreeAreaEnd;
-
-		int largestFreeAreaStart;
-		int largestFreeAreaEnd;
 
 		int centerOfFreeWayFront; /// this is user for laser1
 		int centerOfFreeWayRear; /// this is user for laser2
@@ -178,15 +187,13 @@ class ObstacleCheckThread : public QThread
 		float laserAngleFront; /// stores the laser angle when getting the value from the laser thread
 		float laserAngleRear; /// stores the laser angle when getting the value from the laser thread
 
-		double width;
-		double b;
-		double c;
-		double alpha;
-
 		int robotSlot; /// defines the minimum slot in degrees, where the robot has to fit through
 		int robotSlotWidth; /// defines the minimum slot in centimeters (cm), where the robot has to fit through
 
 		int straightForwardDeviation; /// and this is the deviation to 90 degrees, when driving forward
+
+		QList <int> freeStartAreas;  /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
+		QList <int> freeEndAreas;    /// This stores the free areas after a scan. These will than be analysed and the "best" is chosen.
 
 		/// the tags for the laser lines @sa Gui
 		static const int FREEWAY = 0;

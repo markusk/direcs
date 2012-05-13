@@ -1886,7 +1886,23 @@ void Gui::showPreferredDirection(QString direction)
 		}
 		return;
 	}
+
+	if (direction == "NONE")
+	{
+		if (useLargeGUI)
+		{
+			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/middle.png"));
+		}
+		else
+		{
+			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/middle.png"));
+		}
+		return;
+	}
+
+	appendLog(QString("ERROR: direction '%1' not supported in showPreferredDirection::Gui").arg(direction));
 }
+
 
 void Gui::showFaceTrackDirection(QString direction)
 {

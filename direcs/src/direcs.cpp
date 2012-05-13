@@ -1984,7 +1984,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	if (sensorAlarm == OBSTACLESEVERYWHEREINFRONT)
 	{
 		// show driving direction in the GUI
-		emit showPreferredDirection("*NONE*");
+		emit showPreferredDirection("NONE");
 
 		// clear alarm buffers
 		obstacleAlarmFrontLeftList.clear();
