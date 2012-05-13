@@ -501,7 +501,7 @@ void ObstacleCheckThread::run()
 			// set driving direction flag to "light green"
 			laserThread->setFlag(LASER1, centerOfFreeWayFront, CENTEROFLARGESTFREEWAY);
 
-			// this signal is only used to display the values in the GUI
+			// this signal is only used to display the values and the "driection arrow" in the GUI
 			// // the values are multiplied by the resolution to have the correct value in degrees!
 			// emit newDrivingAngleSet((largestFreeAreaStart * laserResolutionFront), (largestFreeAreaEnd * laserResolutionFront), (centerOfFreeWayFront * laserResolutionFront), largestWidth);
 			emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWayFront, largestWidth);
