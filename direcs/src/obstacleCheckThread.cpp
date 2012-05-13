@@ -440,6 +440,11 @@ void ObstacleCheckThread::run()
 				// use this width as the most far
 				largestWidth = currentWidth;
 
+				/*
+				//
+				// Enable *this* code to chose the widest area, which is also the area with the largest free distance!!
+				//
+
 				// check if this width is the width which is the farest away
 				if (currentDistance > farestDistance)
 				{
@@ -450,6 +455,16 @@ void ObstacleCheckThread::run()
 					largestFreeAreaStart = freeStartAreas.at(i);
 					largestFreeAreaEnd   = freeEndAreas.at(i);
 				}
+
+				//
+				// alternatively use *the following* code for just using the widest area as direction of choice
+				//
+				*/
+
+				// store the corresponing angles
+				largestFreeAreaStart = freeStartAreas.at(i);
+				largestFreeAreaEnd   = freeEndAreas.at(i);
+
 			}
 
 //			qDebug("Using largestWidth: %.1f",largestWidth);
