@@ -378,7 +378,12 @@ void ObstacleCheckThread::run()
 		}
 
 
-		// do a logic check of the found free areas
+		//------------------------------------------------------------------
+		// LASER SCANNER 1 DATA ANALYSIS - STEP III
+		//------------------------------------------------------------------
+		// do a logic check of the found free areas:
+		// do have the same amount of 'start' and 'end' angles?
+		//------------------------------------------------------------------
 		if (freeStartAreas.count() != freeEndAreas.count())
 		{
 			emit message(QString("ERROR in logical check of free laser areas in %1!").arg(className));
@@ -395,10 +400,13 @@ void ObstacleCheckThread::run()
 
 
 		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP III
+		// LASER SCANNER 1 DATA ANALYSIS - STEP IV
 		//----------------------------------------------------------------------------
 		// Calculate the width of the drive-trough direction/area
+		// and chose the area whoch is the widest free one.
 		//----------------------------------------------------------------------------
+
+		// Look in all free found areas
 		for (int i=0; i<freeStartAreas.count() ; i++ )
 		{
 			// set the triangle sides
@@ -426,10 +434,10 @@ void ObstacleCheckThread::run()
 //			qDebug("currentWidth: %.1f",currentWidth);
 //			qDebug("largestWidth: %.1f",largestWidth);
 
-			// check the width
+			// is the current width the widest so far?
 			if (currentWidth > largestWidth)
 			{
-				// use this width as the most far (only to emit it to the GUI)
+				// use this width as the most far
 				largestWidth = currentWidth;
 
 				// check if this width is the width which is the farest away
@@ -457,10 +465,12 @@ void ObstacleCheckThread::run()
 //		qDebug() << "largestFreeAreaEnd:"   << largestFreeAreaEnd;
 
 
-		//------------------------------------------------------------
+		//----------------------------------------------------------------------------
+		// LASER SCANNER 1 DATA ANALYSIS - STEP V
+		//----------------------------------------------------------------------------
 		// Then tag the *largest* free area
 		// (to show it in the GUI and to know, where to drive)
-		//------------------------------------------------------------
+		//----------------------------------------------------------------------------
 		if (largestFreeAreaEnd != 0)
 		{
 			for (int angleIndex=largestFreeAreaStart; angleIndex<=largestFreeAreaEnd; angleIndex++)
@@ -487,14 +497,11 @@ void ObstacleCheckThread::run()
 
 
 
-
-
 		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP IV
+		// LASER SCANNER 1 DATA ANALYSIS - STEP VI
 		//----------------------------------------------------------------------------
 		// Emit driving directiomn to the GUI
 		//----------------------------------------------------------------------------
-
 
 		// get the middle of the laser (when we have 180 deg, the middle is as 90 deg)
 		// this is needed later for detecting the driving direction
@@ -530,7 +537,7 @@ void ObstacleCheckThread::run()
 
 
 		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP V
+		// LASER SCANNER 1 DATA ANALYSIS - STEP VII
 		//----------------------------------------------------------------------------
 		// Reset the previous found areas, angles and width for the next analysis.
 		//----------------------------------------------------------------------------
