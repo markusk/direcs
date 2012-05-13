@@ -429,7 +429,7 @@ void ObstacleCheckThread::run()
 
 			// get the width of one side of the triangle using alpha, b and c.
 			// where b and c have to be in cm here!
-			currentWidth = calculateDriveThroughWidth( (freeEndAreas.at(i) - freeStartAreas.at(i)), currentDistance, currentDistance);
+			currentWidth = calculateDriveThroughWidth(LASER1, (freeEndAreas.at(i) - freeStartAreas.at(i)), currentDistance, currentDistance);
 
 //			qDebug("currentWidth: %.1f",currentWidth);
 //			qDebug("largestWidth: %.1f",largestWidth);
@@ -594,11 +594,16 @@ void ObstacleCheckThread::run()
 }
 
 
-double ObstacleCheckThread::calculateDriveThroughWidth(int alpha, float b, float c)
+double ObstacleCheckThread::calculateDriveThroughWidth(short int laserScanner, int alpha, float b, float c)
 {
 	// calculate
 	// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
-	return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) ); /// < << < <  @todo LASER 1  and LASER 2
+
+	if (laserScanner == LASER1)
+		return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) );
+
+	if (laserScanner == LASER2)
+		return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleRear) );
 }
 
 
