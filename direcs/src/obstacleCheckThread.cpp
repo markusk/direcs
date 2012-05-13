@@ -547,6 +547,9 @@ void ObstacleCheckThread::run()
 		}
 		else
 		{
+			// this signal is only used to display the values and the "driection arrow" in the GUI
+			emit newDrivingAngleSet(0, 0, 0, 0);
+
 			// obstacles EVERYWHERE IN FRONT (no free area found)
 			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
 		}
