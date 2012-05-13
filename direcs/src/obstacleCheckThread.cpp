@@ -602,8 +602,11 @@ double ObstacleCheckThread::calculateDriveThroughWidth(short int laserscanner, i
 	if (laserscanner == LASER1)
 		return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) );
 
-	if (laserScanner == LASER2)
+	if (laserscanner == LASER2)
 		return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleRear) );
+
+	emit message(QString("ERROR: laser no. %1 not supported (calculateDriveThroughWidth::%2)").arg(laserscanner).arg(className));
+	return 0.0;
 }
 
 
