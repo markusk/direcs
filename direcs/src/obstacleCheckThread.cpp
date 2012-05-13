@@ -594,12 +594,12 @@ void ObstacleCheckThread::run()
 }
 
 
-double ObstacleCheckThread::calculateDriveThroughWidth(short int laserScanner, int alpha, float b, float c)
+double ObstacleCheckThread::calculateDriveThroughWidth(short int laserscanner, int alpha, float b, float c)
 {
 	// calculate
 	// WARNING: "cos" functions use radians!! so we convert the degrees to radions here!
 
-	if (laserScanner == LASER1)
+	if (laserscanner == LASER1)
 		return sqrt( pow(b, 2.0) + pow(c, 2.0) - 2.0*b*c * cos(alpha*M_PI / (double) laserAngleFront) );
 
 	if (laserScanner == LASER2)

@@ -146,13 +146,13 @@ class ObstacleCheckThread : public QThread
 		/**
 		Calculate the width of the estimated drive-trough direction/area with the 'Kosinussatz'
 		(a² = b² + c² - 2bc * cos alpha)  where 'a' is the width
-		@param laserScanner can be LASER1 or LASER2
+		@param laserscanner can be LASER1 or LASER2
 		@param alpha is the angle
 		@param b is one length
 		@param c is the other length
 		@return width
 		*/
-		double calculateDriveThroughWidth(short int laserScanner, int alpha, float b, float c);
+		double calculateDriveThroughWidth(short int laserscanner, int alpha, float b, float c);
 
 
 		QString className;	/// this will contain the name of this class at runtime for debug messages
