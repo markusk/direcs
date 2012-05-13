@@ -456,11 +456,11 @@ void ObstacleCheckThread::run()
 					largestFreeAreaEnd   = freeEndAreas.at(i);
 				}
 
+
 				//
 				// alternatively use *the following* code for just using the widest area as direction of choice
 				//
 				*/
-
 				// store the corresponing angles
 				largestFreeAreaStart = freeStartAreas.at(i);
 				largestFreeAreaEnd   = freeEndAreas.at(i);
@@ -486,6 +486,8 @@ void ObstacleCheckThread::run()
 		// Then tag the *largest* free area
 		// (to show it in the GUI and to know, where to drive)
 		//----------------------------------------------------------------------------
+
+		// free area found?
 		if (largestFreeAreaEnd != 0)
 		{
 			for (int angleIndex=largestFreeAreaStart; angleIndex<=largestFreeAreaEnd; angleIndex++)
@@ -503,52 +505,52 @@ void ObstacleCheckThread::run()
 			// // the values are multiplied by the resolution to have the correct value in degrees!
 			// emit newDrivingAngleSet((largestFreeAreaStart * laserResolutionFront), (largestFreeAreaEnd * laserResolutionFront), (centerOfFreeWayFront * laserResolutionFront), largestWidth);
 			emit newDrivingAngleSet(largestFreeAreaStart, largestFreeAreaEnd, centerOfFreeWayFront, largestWidth);
-		}
-		else
-		{
-			// obstacles EVERYWHERE IN FRONT
-			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
-		}
 
 
+			//----------------------------------------------------------------------------
+			// LASER SCANNER 1 DATA ANALYSIS - STEP VI
+			//----------------------------------------------------------------------------
+			// Emit driving directiomn to the GUI
+			//----------------------------------------------------------------------------
 
-		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP VI
-		//----------------------------------------------------------------------------
-		// Emit driving directiomn to the GUI
-		//----------------------------------------------------------------------------
+			// get the middle of the laser (when we have 180 deg, the middle is as 90 deg)
+			// this is needed later for detecting the driving direction
+			middleOfLaser = (laserAngleFront / laserResolutionFront) / 2;
 
-		// get the middle of the laser (when we have 180 deg, the middle is as 90 deg)
-		// this is needed later for detecting the driving direction
-		middleOfLaser = (laserAngleFront / laserResolutionFront) / 2;
-
-		// value within the tolerance range (deviation to 90 deg.)?
-		if (
-			/// @todo FIXME: why -1 ?!? But works so far!
-			( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront >= (middleOfLaser - (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
-			( (centerOfFreeWayFront > middleOfLaser) && (centerOfFreeWayFront <= (middleOfLaser + (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
-			(  centerOfFreeWayFront == middleOfLaser )
-		   )
-		{
-			// NO obstacle
-			emit obstacleDetected(NONE, QDateTime::currentDateTime());
-		}
-		else
-		{
-			if ( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront > -1) )
+			// value within the tolerance range (deviation to 90 deg.)?
+			if (
+				/// @todo FIXME: why -1 ?!? But works so far!
+				( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront >= (middleOfLaser - (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
+				( (centerOfFreeWayFront > middleOfLaser) && (centerOfFreeWayFront <= (middleOfLaser + (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
+				(  centerOfFreeWayFront == middleOfLaser )
+			   )
 			{
-				// free way left  ->  obstacle RIGHT
-				emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
+				// NO obstacle
+				emit obstacleDetected(NONE, QDateTime::currentDateTime());
 			}
 			else
 			{
-				if (centerOfFreeWayFront > middleOfLaser)
+				if ( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront > -1) )
 				{
-					// free way right  ->  obstacle LEFT
-					emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
+					// free way left  ->  obstacle RIGHT
+					emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
+				}
+				else
+				{
+					if (centerOfFreeWayFront > middleOfLaser)
+					{
+						// free way right  ->  obstacle LEFT
+						emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
+					}
 				}
 			}
 		}
+		else
+		{
+			// obstacles EVERYWHERE IN FRONT (no free area found)
+			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
+		}
+
 
 
 		//----------------------------------------------------------------------------
