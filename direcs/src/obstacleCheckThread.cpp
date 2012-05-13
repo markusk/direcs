@@ -147,7 +147,7 @@ void ObstacleCheckThread::run()
 		sensorValue = NONE;
 
 		// reset "drive to angle" to "middle of the number of laser lines" -> FORWARD
-		centerOfFreeWayFront = ( (laserAngleFront / laserResolutionFront) / 2);  /// @todo  correct to reset the centerOfFreeway here?!? Seesm to work for forbidden aread, too!
+		centerOfFreeWayFront = ( (laserAngleFront / laserResolutionFront) / 2);  /// @todo  correct to reset the centerOfFreeway here?!?
 
 
 /*			infrared Sensors temporarily removed from robot!!
@@ -519,10 +519,10 @@ void ObstacleCheckThread::run()
 
 			// value within the tolerance range (deviation to 90 deg.)?
 			if (
-				/// @todo FIXME: why -1 ?!? But works so far!
-				( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront >= (middleOfLaser - (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
-				( (centerOfFreeWayFront > middleOfLaser) && (centerOfFreeWayFront <= (middleOfLaser + (straightForwardDeviation / laserResolutionFront) - 1)) ) ||
-				(  centerOfFreeWayFront == middleOfLaser )
+				// when we are within the allowed deviation from the center, we still drive forward
+				( (centerOfFreeWayFront < middleOfLaser) && (centerOfFreeWayFront >= (middleOfLaser - (straightForwardDeviation / laserResolutionFront))) ) ||
+				( (centerOfFreeWayFront > middleOfLaser) && (centerOfFreeWayFront <= (middleOfLaser + (straightForwardDeviation / laserResolutionFront))) ) ||
+				(  centerOfFreeWayFront == middleOfLaser ) // straight forward
 			   )
 			{
 				// NO obstacle
