@@ -66,11 +66,6 @@ class SettingsDialog : public QDialog
 		int getSliderObstacleLaserScannerValue();
 
 		/**
-		@return The angle in degrees to which the robot has to fit between.
-		*/
-		int getSliderRobotSlotValue();
-
-		/**
 		@return The width of a possible robot slot in centimeters (cm) where to drive through.
 		*/
 		int getSliderRobotSlotWidth();
@@ -116,12 +111,6 @@ class SettingsDialog : public QDialog
 		@param value is distance in cm.
 		*/
 		void setSliderObstacleLaserScannerValue(int value);
-
-		/**
-		Sets the slider value of the robot slot, where it has to fit through.
-		@param angle is the minimum angle in degrees.
-		*/
-		void setSliderRobotSlot(int angle);
 
 		/**
 		Sets the slider value of the robot slot, where it has to fit through.

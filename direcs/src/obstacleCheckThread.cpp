@@ -55,7 +55,6 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	laserscannerRearIgnoreArea2Start = 0.0;
 	laserscannerRearIgnoreArea2End = 0.0;
 
-	robotSlot = 1;      // 1 degree
 	robotSlotWidth = 1; // 1 cm
 	straightForwardDeviation = 0;
 
@@ -690,12 +689,6 @@ void ObstacleCheckThread::setIgnoreArea(short int laser, int area, int start, in
 	}
 
 	emit message(QString("<font color=\"#FF0000\">ERROR in %1::setIgnoreArea: laser number %2 or area %3 not implemented!<font>").arg(className).arg(laser).arg(area));
-}
-
-
-void ObstacleCheckThread::setRobotSlot(int angle)
-{
-	robotSlot = angle;
 }
 
 
