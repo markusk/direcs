@@ -400,7 +400,7 @@ void ObstacleCheckThread::run()
 		{
 			emit message(QString("ERROR in logical check of free laser areas in %1!").arg(className));
 			emit message("Reaction to be implemented!!!");
-			qDebug() << "ERROR in logical check of free laser areas in:" << className;
+			// qDebug() << "ERROR in logical check of free laser areas in:" << className;
 		}
 
 
