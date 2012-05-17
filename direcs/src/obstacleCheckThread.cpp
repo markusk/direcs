@@ -314,6 +314,16 @@ void ObstacleCheckThread::run()
 		//--------------------------------------------------------------------------------
 		// Check all angles
 		//--------------------------------------------------------------------------------
+
+		//--------------------------------------------------------------------------------
+		// Set the 'new' first and 'last' angles
+		// due to the 'ignore areas' at the beging and at the and of all lines
+		//
+		// Be aware of setting the ignore areas than only at start and end lines!
+		//--------------------------------------------------------------------------------
+		first = laserscannerFrontIgnoreArea1End + 1;
+		last  = laserscannerFrontIgnoreArea2Start - 1;
+
 		for (int angleIndex = first; angleIndex <= last; angleIndex++)
 		{
 			//qDebug("%d -----------", angleIndex);
