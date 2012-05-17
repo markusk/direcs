@@ -89,6 +89,7 @@
     <includes id="sensorThread_8h" name="sensorThread.h" local="yes" imported="no">sensorThread.h</includes>
     <includes id="motor_8h" name="motor.h" local="yes" imported="no">motor.h</includes>
     <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
+    <includes id="rgbLed_8h" name="rgbLed.h" local="yes" imported="no">rgbLed.h</includes>
     <includes id="obstacleCheckThread_8h" name="obstacleCheckThread.h" local="yes" imported="no">obstacleCheckThread.h</includes>
     <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
     <includes id="logfile_8h" name="logfile.h" local="yes" imported="no">logfile.h</includes>
@@ -851,7 +852,6 @@
     <name>laserThread.h</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>laserThread_8h</filename>
-    <includes id="laser_8h" name="laser.h" local="yes" imported="no">laser.h</includes>
     <includes id="laserSickS300_8h" name="laserSickS300.h" local="yes" imported="no">laserSickS300.h</includes>
     <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
     <class kind="class">LaserThread</class>
@@ -944,6 +944,19 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>QtGLContext_8h</filename>
     <class kind="class">QtGLContext</class>
+  </compound>
+  <compound kind="file">
+    <name>rgbLed.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>rgbLed_8cpp</filename>
+    <includes id="rgbLed_8h" name="rgbLed.h" local="yes" imported="no">rgbLed.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>rgbLed.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>rgbLed_8h</filename>
+    <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
+    <class kind="class">RgbLed</class>
   </compound>
   <compound kind="file">
     <name>RGBWindow.cpp</name>
@@ -1811,9 +1824,9 @@
     </member>
     <member kind="signal">
       <type>void</type>
-      <name>emitMessage</name>
+      <name>message</name>
       <anchorfile>classCircuit.html</anchorfile>
-      <anchor>aa97204ff505f7b6a92141915d7db3c18</anchor>
+      <anchor>acccd26ab4b6ea7b7e6e2944d28ed1bec</anchor>
       <arglist>(QString text)</arglist>
     </member>
     <member kind="signal">
@@ -1852,6 +1865,20 @@
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>atmelAnswer</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a2f32bd265fdb80458cd5414462ad12f1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>atmelCommand</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a3d0ba43d825b42b9822867b579ac4418</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>bool</type>
       <name>circuitState</name>
       <anchorfile>classCircuit.html</anchorfile>
@@ -1859,10 +1886,45 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a950c173c34c26c903943387d5174817d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>commandInitCircuit</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>aaeb6fdd742b966481c31fe37a3094b51</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>commandInitCompass</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>ac7d93c6744275a7bfb9716f28ce2adab</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>commandSleep</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a36ab7604534d46b1b9c7a96c0c3fb351</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>bool</type>
       <name>compassCircuitState</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a902f4c4c2ee18244a5a0f1cb9c97588d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>expectedAtmelAnswer</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a8940d6e8b267a52193b26ede67105de9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -1884,6 +1946,13 @@
       <name>mutex</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a3dba8e1656340fc0789d37491cfadfba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const char</type>
+      <name>divider</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a6c84bb26ea422a6e1155075f25053bd2</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -1912,6 +1981,20 @@
       <name>ON</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a1e9f513b37c42e97d6855165af8a3687</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const char</type>
+      <name>starter</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>aea04f65ff2b6639f84ae3013dad28f69</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const char</type>
+      <name>terminator</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a9a4807264054c990cddbc2708ad0aafa</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -3068,8 +3151,8 @@
       <type></type>
       <name>Direcs</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a0b7fc551e4a1c15f0b04b23f657f5428</anchor>
-      <arglist>(bool bConsoleMode)</arglist>
+      <anchor>a6021478b388a8f60fbcbb615f52de4de</anchor>
+      <arglist>(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -3255,9 +3338,23 @@
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
+      <name>forceLargeGUI</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a7532bee7abac075837ab239533f7013b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
       <name>forceShutdown</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>aa7faa7212b2ce6e016da23a413914585</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>forceSmallGUI</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a39fa5dc53bf684ff967837fb08a34c74</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3321,6 +3418,20 @@
       <name>laserScannerFrontFound</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a23a2da85297f4d35c443634c9cdbb5d3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerIgnoreAreaEnd</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>acaef31b919a14e97ec84594a0c96d035</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerIgnoreAreaStart</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a308ab3fff30f4abf019aaef4c324b18d</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3464,6 +3575,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>RgbLed *</type>
+      <name>rgbLeds</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a269388348c6fb5d9b720ab1239885ef6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>bool</type>
       <name>robotDrives</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3583,6 +3701,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>useSmallGUI</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a6350dad719a14137a4042d606ecf73e4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>unsigned int</type>
       <name>value</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3601,6 +3726,20 @@
       <name>ALLMOTORS</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>ae12b28b84f08e80fa8504c0d913a7532</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>AREA1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>af691c935f613db281d66c9b48387fee3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>AREA2</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ad4e6124efad877ccf6a821fb86d71aa5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3730,6 +3869,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MAXPWM</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a09983fe12d3ffbf05c5ba233a34f8e41</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
       <type>static const float</type>
       <name>MINIMUMVOLTAGE1</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3741,6 +3887,13 @@
       <name>MINIMUMVOLTAGE2</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a739d772616ea656896d7df1fb4b5d7eb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MINPWM</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a6aecd5ee1f539ed0be349f42484da746</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3878,6 +4031,13 @@
     </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const unsigned char</type>
+      <name>NUMBEROFRGBLEDS</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>add26ffb65280d71f5e71073f037853c5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
       <name>NUMBEROFSERVOS</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>ae42088382211811eba984ef2b95a91b2</anchor>
@@ -3944,6 +4104,76 @@
       <name>RED</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a4af079c6c47c144e0aa0bc5577374fa5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED1</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a1ca0ae29c94d2306b7adaaf4dea6e841</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED2</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a27638c32c426f8319e257ae49948e429</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED3</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a5706897756d2d1b329349e4f2f59e010</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED4</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a54a411cd5d39650e3e2483480d331fbf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED5</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>aa244247acadcc0af86007361dbbdb219</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED6</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>aeb0df55868cfcb4cb87d729118052102</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDACTUAL</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a026ac48312a4c26141ac9b0640dfedba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDDEFAULT</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a68147448f9ebfc95ee3b9900c7f816c3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDMAX</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a7acd30868565b0be085b300a8ca83097</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDMIN</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a770a938697964fbf1fb8c30ea02e89cd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -4183,24 +4413,10 @@
     </member>
     <member kind="function">
       <type>int</type>
-      <name>clearInputBuffer</name>
+      <name>closePort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>aef57369781ddf862e6693333f8de1d71</anchor>
-      <arglist>(int dev_fd)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>closeAtmelPort</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a98a49841006ff59ed3d5079093520794</anchor>
+      <anchor>a4e14ccd1236192ddc3d50505a86cea6d</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>configurePort</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a2ff8a69329b7120f74fe05a4ad2cddd7</anchor>
-      <arglist>(int dev_fd, int baudrate, char parity)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -4210,24 +4426,10 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>long</type>
-      <name>numChars</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a08b97d7107cf3f6e2715aa5a6a352bfe</anchor>
-      <arglist>(int dev_fd)</arglist>
-    </member>
-    <member kind="function">
-      <type>long</type>
-      <name>numChars</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>ad48df4c8f50ce278b32ce0281c5a3e25</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>int</type>
-      <name>openAtmelPort</name>
+      <name>openPort</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>ac23f4100ceb4ffd34442452aefc6f6d6</anchor>
+      <anchor>aff6d5db83b1837f7f15cfd570883abce</anchor>
       <arglist>(char *dev_name, int baudrate)</arglist>
     </member>
     <member kind="function">
@@ -4239,52 +4441,17 @@
     </member>
     <member kind="function">
       <type>int</type>
-      <name>readAtmelPort</name>
+      <name>readData</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a72878aa61a2c92cf0558807c61e32116</anchor>
-      <arglist>(unsigned char *buf, int nChars)</arglist>
+      <anchor>a1926b93957c3f538ff47e0f2e94cd08d</anchor>
+      <arglist>(unsigned char *buf, int nChars, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
-      <name>readPort</name>
+      <name>writeData</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>ade208108a72af2b4cc8ba5a55a953048</anchor>
-      <arglist>(int dev_fd, unsigned char *buf, int nChars)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>setLowLatency</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a826686798c2996a89271b8c3acb77658</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>setLowLatency</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a5094c91ecd0c5b22e8e8bf8edd99bb7d</anchor>
-      <arglist>(int fd)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setParms</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a7761de7e0070cff5219ca7c4120fd0d2</anchor>
-      <arglist>(int fd, int baudr, char par, char bits, int hwf, int swf, int stopb=0)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>writeAtmelPort</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a04cffdd5af59f90e8a55e70dd0c68ae0</anchor>
-      <arglist>(unsigned char *c)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>writePort</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a9b8781d335484f5366761f2c9e68bdc8</anchor>
-      <arglist>(int dev_fd, unsigned char *buf, int nChars)</arglist>
+      <anchor>a44f9f515a77b022017a0ab3f7fba0d28</anchor>
+      <arglist>(unsigned char *c, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -4293,60 +4460,18 @@
       <anchor>add59642ee3375a50aac0432eb623b827</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" protection="private">
-      <type>void</type>
-      <name>setRTS</name>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a39985474030619f18b5e88edb6739ef8</anchor>
-      <arglist>(int fd __attribute__((unused)))</arglist>
+      <anchor>ad60abd614177a1469d9183e10402562c</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>int</type>
       <name>mDev_fd</name>
       <anchorfile>classDirecsSerial.html</anchorfile>
       <anchor>a9ca8597d128e288bcdb6d7ff22275463</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>bitsM</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a079027e356e813133d881c8fe7dec3b8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>bitsS</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a5b0e03955c167c99500a2f76b1885c37</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>parityEven</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a35864683084afe53ce16b00f4756cdf5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>parityM</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>a096b968d67ea62e7f53998a2f1b20c94</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>parityOdd</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>afcfedb4db7056a29782eebb29b1db565</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const char</type>
-      <name>parityS</name>
-      <anchorfile>classDirecsSerial.html</anchorfile>
-      <anchor>afcf31451f5134e950cf8f7476fbed0eb</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -4901,8 +5026,8 @@
       <type></type>
       <name>Gui</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a0c5de9aaf5d08ea3b34ad3cd909676a6</anchor>
-      <arglist>(SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent=0)</arglist>
+      <anchor>af8ae942115cbfd03258fe69fadc1ca1d</anchor>
+      <arglist>(bool useSmallGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent=0)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -5200,6 +5325,13 @@
     </member>
     <member kind="variable" protection="private">
       <type>QColor</type>
+      <name>colorLaserIgnoreArea</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a043682c0fab343bfae638197af8f3911</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QColor</type>
       <name>colorLaserObstacle</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a5010766c685d3afdb676769e8a45d039</anchor>
@@ -5471,6 +5603,20 @@
       <anchor>a8fcadbbe5e95e759b8e5ebae7e226b6c</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable" protection="private">
+      <type>Ui::mainWindowSmall</type>
+      <name>uiSmall</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ab2a22b3ad83ce91d448798c46e5ca496</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>useLargeGUI</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a61b082b70d14b58c7a92136efcf9b2ed</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="variable" protection="private" static="yes">
       <type>static const int</type>
       <name>ALLMOTORS</name>
@@ -5518,6 +5664,13 @@
       <name>GREEN</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>ad647951692f125160fd6bf7f1f069aca</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>IGNORETHIS</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a9bd571faed7e0cf3c5eaddc7952a9643</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -6373,8 +6526,8 @@
       <type>void</type>
       <name>message</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>af2065a20f61b955efe4e20a2b60c86d4</anchor>
-      <arglist>(QString text)</arglist>
+      <anchor>a17b36e7f5055682809feb76f1c18226a</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -6422,36 +6575,36 @@
       <type>bool</type>
       <name>receiveChar</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>a2c96dad63e7ac544967c4b1e6283ddb8</anchor>
-      <arglist>(unsigned char *character)</arglist>
+      <anchor>a45743fd856d0e0102ae79e1bff8bafce</anchor>
+      <arglist>(unsigned char *character, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>receiveInt</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>aa283340c1a4421b8f18fd5437100403d</anchor>
-      <arglist>(int *value)</arglist>
+      <anchor>af70dab56ef9cc8924ff8fc58660b23f3</anchor>
+      <arglist>(int *value, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>receiveString</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>a06730c6c7873ccfad0404345d5dc2c89</anchor>
-      <arglist>(QString &amp;string)</arglist>
+      <anchor>a7fd3c5af0812af6a7137f65c944748ae</anchor>
+      <arglist>(QString &amp;string, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>sendChar</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>ab65e275f6616bba685a7df2b19e2eb0e</anchor>
-      <arglist>(unsigned char character)</arglist>
+      <anchor>aeab013b632a18e04c47e70ddecd200b4</anchor>
+      <arglist>(unsigned char character, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>sendString</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>a1f537b5a5d758ec55ba21101e3eece4a</anchor>
-      <arglist>(QString string)</arglist>
+      <anchor>a8c4ad247b7c6fb4730b1d15b5934c572</anchor>
+      <arglist>(QString string, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -6461,10 +6614,24 @@
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a9f355b3ec606e6dec437c0b55794625e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>DirecsSerial *</type>
       <name>serialPort</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
       <anchor>aedab59c98eb5d3c751ac30ce9fd617d2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>BAUDRATE</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a93a7cea46e5965a36509a8cb655835e6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -8504,13 +8671,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>Laser *</type>
-      <name>laser</name>
-      <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>a7b0cb8b1046abcf73544fbf564a0fde3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>SickS300 *</type>
       <name>laserS300</name>
       <anchorfile>classLaserThread.html</anchorfile>
@@ -8861,6 +9021,13 @@
       <anchor>a2a1d4668d9e1cd818b74f7098ab78af6</anchor>
       <arglist>(bool state)</arglist>
     </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>a621058f9120a618c4497e06d3924a2ea</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
+    </member>
     <member kind="function">
       <type>bool</type>
       <name>flashlight</name>
@@ -8923,6 +9090,13 @@
       <anchorfile>classMotor.html</anchorfile>
       <anchor>a06d643e086f7af4c94cfa25420e915e9</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
+      <anchorfile>classMotor.html</anchorfile>
+      <anchor>aad68c0075c72c21fa743e6182973b323</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>double</type>
@@ -9662,6 +9836,13 @@
     <filename>classObstacleCheckThread.html</filename>
     <member kind="slot">
       <type>void</type>
+      <name>setIgnoreArea</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>ad527f7500f7b96a6bf5b5deefafd4247</anchor>
+      <arglist>(short int laser, int area, int start, int end)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setMinObstacleDistance</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>a01a259d27606cec9083bae0c839690fb</anchor>
@@ -9669,9 +9850,16 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>setMinObstacleDistanceLaser</name>
+      <name>setMinObstacleDistanceLaserFront</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>acddf0c088ba034accd01fba3fdcb00ec</anchor>
+      <anchor>a8399a666218db895a6e2bb7f1f36a1ba</anchor>
+      <arglist>(int distance)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setMinObstacleDistanceLaserRear</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a52f1debee8f408a747ab0a7eca4c5cc8</anchor>
       <arglist>(int distance)</arglist>
     </member>
     <member kind="slot">
@@ -9731,6 +9919,13 @@
       <arglist>(int sensors, QDateTime timestamp)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>init</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a7a7ec8f8173d19fc7d476a74f96385d8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type></type>
       <name>ObstacleCheckThread</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
@@ -9758,6 +9953,13 @@
       <anchor>a4ee218c717c38cf23df5fd3ca4f44164</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function" protection="private">
+      <type>double</type>
+      <name>calculateDriveThroughWidth</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a63d4050c06cb325055ad9fa0e455e6dc</anchor>
+      <arglist>(short int laserscanner, int alpha, float b, float c)</arglist>
+    </member>
     <member kind="variable" protection="private">
       <type>int</type>
       <name>actualFreeAreaEnd</name>
@@ -9773,59 +9975,129 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>double</type>
-      <name>alpha</name>
+      <type>int</type>
+      <name>centerOfFreeWayFront</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a5442aa15296be7b50d37bb9e59fff999</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>double</type>
-      <name>b</name>
-      <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a12d3bfe2b8b27c62233008f9d1c447b3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>double</type>
-      <name>c</name>
-      <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a4742c94819bec5659db0f74022d72291</anchor>
+      <anchor>a964fe13864eb2402ef4e0baa4a34419f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>int</type>
-      <name>centerOfFreeWay</name>
+      <name>centerOfFreeWayRear</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a1ac1c32da69b57689749600b73d50255</anchor>
+      <anchor>a6e6c5728b6f37e7efbcd5856e01afe92</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
-      <name>largestFreeAreaEnd</name>
+      <type>QString</type>
+      <name>className</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a00d0ac6cf1c308892c21aa867a0e871a</anchor>
+      <anchor>afa5506d8a6c65dd357d348a6062da0c5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>int</type>
-      <name>largestFreeAreaStart</name>
+      <type>QList&lt; int &gt;</type>
+      <name>freeEndAreas</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a7955b2eb3d6e8832ee6e221d71b157b8</anchor>
+      <anchor>afa6e98fc579ef7187c43b9bc9fe1077c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QList&lt; int &gt;</type>
+      <name>freeStartAreas</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>aef92c954761dc8c773a098b1f83702fa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>initCompleted</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a9370e1d31d75f43f03f6cb26837d4b99</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>float</type>
-      <name>laserAngle</name>
+      <name>laserAngleFront</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a0878a6e943f3b7ed636a3641dae0282c</anchor>
+      <anchor>aa9cf0123b06e7a1b752fcc20a59c2b47</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>float</type>
-      <name>laserResolution</name>
+      <name>laserAngleRear</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a2d1f158153e88324962bd5fdaa89653f</anchor>
+      <anchor>aed1c834e2c036bd716ccd345fa6cce28</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserResolutionFront</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>af4ef83db7efdc167ddee347658bac4d2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>float</type>
+      <name>laserResolutionRear</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>ae2092be9738fad2347936e335b989453</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerFrontIgnoreArea1End</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a5c3e44f0bc08f4126616260b2d743507</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerFrontIgnoreArea1Start</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a783c62969fafeffd823fb5d3c322e4fa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerFrontIgnoreArea2End</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>ac6a1b1e14105aca6141f5587023b3587</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerFrontIgnoreArea2Start</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a65fbe833bc155fafd954d86d00ca4277</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerRearIgnoreArea1End</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a15136b367b9c1125c6c159ddce91ee25</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerRearIgnoreArea1Start</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a156706eb04bc530f311d1d4f91af3b85</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerRearIgnoreArea2End</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a1c01d18d8a3137c00f3f42e2d14b76d2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>laserscannerRearIgnoreArea2Start</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a64ffefdac9527e17b837273a7e8c347f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -9844,9 +10116,16 @@
     </member>
     <member kind="variable" protection="private">
       <type>int</type>
-      <name>minObstacleDistanceLaserScanner</name>
+      <name>minObstacleDistanceLaserFront</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>ab49de7cf3adbbf50cfabe308a0cbeab3</anchor>
+      <anchor>adb37630fec50acd518a50ad4b905c497</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>minObstacleDistanceLaserRear</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a3901f307f7059573f8f0843fd1dc40b1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -9898,11 +10177,18 @@
       <anchor>a26744426d1243a185c1947798bbcb714</anchor>
       <arglist></arglist>
     </member>
-    <member kind="variable" protection="private">
-      <type>double</type>
-      <name>width</name>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>AREA1</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a42a1b2ee7c754daf1821973079091b30</anchor>
+      <anchor>ab329129d597ec78c17e0b21ca5beafad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>AREA2</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a033f7d72e310e54d56bead670f4b64ef</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9917,6 +10203,13 @@
       <name>FREEWAY</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>a9856a29d47d4eb97320cdc9d1d077bef</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>IGNORETHIS</name>
+      <anchorfile>classObstacleCheckThread.html</anchorfile>
+      <anchor>a8f3cf0b0fc8ce39b41eab8200d65dc1e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -10744,15 +11037,15 @@
       <type></type>
       <name>QtGLContext</name>
       <anchorfile>classQtGLContext.html</anchorfile>
-      <anchor>a27795554b49c306bfe9398e8c4513769</anchor>
-      <arglist>(const QGLFormat &amp;format, QWidget *parent=0, const QGLWidget *sharedWidget=0, Qt::WFlags f=0)</arglist>
+      <anchor>a53f346d90357afcf2928a4020f80c720</anchor>
+      <arglist>(QWidget *parent=0, const QGLWidget *sharedWidget=0, Qt::WFlags f=0)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>QtGLContext</name>
       <anchorfile>classQtGLContext.html</anchorfile>
-      <anchor>a53f346d90357afcf2928a4020f80c720</anchor>
-      <arglist>(QWidget *parent=0, const QGLWidget *sharedWidget=0, Qt::WFlags f=0)</arglist>
+      <anchor>a27795554b49c306bfe9398e8c4513769</anchor>
+      <arglist>(const QGLFormat &amp;format, QWidget *parent=0, const QGLWidget *sharedWidget=0, Qt::WFlags f=0)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -10934,6 +11227,276 @@
       <name>textureGL</name>
       <anchorfile>classQtGLContext.html</anchorfile>
       <anchor>a119e18e76086267a340f824ff50cc360</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>RgbLed</name>
+    <filename>classRgbLed.html</filename>
+    <member kind="slot">
+      <type>void</type>
+      <name>init</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>ab39f69aaa11384c62e683cb38e4d54bb</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
+      <name>setBrightness</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>ad362f400a3ec9ca0ab25dd844fe6e99d</anchor>
+      <arglist>(unsigned char rgbLed, unsigned char bness)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a1fc1cf1e7b9a3c2d5cf3770c277e155d</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>adf440c9b4c527ef2f8949900e10403af</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned char</type>
+      <name>getBrightness</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a867c8f51fe1e647de6d37794bacaf7f7</anchor>
+      <arglist>(int rgbLed, unsigned char type=RGBLEDACTUAL)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>RgbLed</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a42e4223ad1523d8069d068aab7faa419</anchor>
+      <arglist>(InterfaceAvr *i, QMutex *m)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>storeBrightness</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a11af2dc0511e5a6b86f4c90541f2bddb</anchor>
+      <arglist>(int rgbLed, unsigned char type, unsigned char bness)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~RgbLed</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a81bff5113c71fdf794d9e0e6c13ffc64</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>brightness</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>adc29aca778ff27572408b110545087a0</anchor>
+      <arglist>[NUMBEROFRGBLEDS]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>afdc4bf0a00925e7c7bd5dd068944323d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>defaultBrightness</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a991f7116da7b55cf4e37eb61ff80fa6a</anchor>
+      <arglist>[NUMBEROFRGBLEDS]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>InterfaceAvr *</type>
+      <name>interface1</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a43be72b65b1da05f3c523b3108878aaa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>maxBrightness</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a3072979f06e27f4a4753f0e4eccbe43b</anchor>
+      <arglist>[NUMBEROFRGBLEDS]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>minBrightness</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a49638e046a89758f903bf08b45e9c0b6</anchor>
+      <arglist>[NUMBEROFRGBLEDS]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QMutex *</type>
+      <name>mutex</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a00ed2ca1021c8261804fb1af84690df1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotState</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a9caf070d20c4b653692f7258b59039f3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MAXPWM</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a6fe21a394ccba6b21e1410df0cf07494</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MINPWM</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a7f638fe11fbc657e76e946e74920308b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>NUMBEROFRGBLEDS</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>af6881fefe35fb00a623d0b36565369f9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a00d11adeb709a471235dd639792f92cb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a2e53a7186a4a45ac28ca909eb075b294</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED1</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>ab725e48129655c3c0446fed1807d79cc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED2</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a97231f3fe67cf78829212fbffd7cc8e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED3</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>aa4f545f2ce6a0f7d7674e6eb8902e033</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED4</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a56c59e207476f42429256490da914ece</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED5</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a97ba30491480d89cc5e5a874aa47ab59</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED6</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a5f6657806a4aad9b3c4a80e9cdd1c776</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDACTUAL</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>aa977b5ea4bb2d94de459374b2d7d129b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDDEFAULT</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>ac586fe451f520da4b5ce99d8618bea91</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDMAX</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>aa21715b5c13b5ae6fac90c2ceaea6dc1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLEDMIN</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>ac9c0f9af5a1cd0e2c61a8ed3fa3e2e6c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SET_RGBLED1</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a9d47b891dd005eaaba45aa4ba469cc5b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SET_RGBLED2</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a57d2a54c376e8dd1d0e9ffddec29c757</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SET_RGBLED3</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>af9d0192c6cb0cc92bc2683111954dbaf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SET_RGBLED4</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a27b9773e749e4674684691916deb9183</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SET_RGBLED5</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a57592a7c09bb9a4132e4e785bf45b913</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>SET_RGBLED6</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>a5541bd2d34ac3b47e6a5bfcf82442a05</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned long</type>
+      <name>THREADSLEEPTIME</name>
+      <anchorfile>classRgbLed.html</anchorfile>
+      <anchor>ad5920a022a7495bbae719dc20b13e19b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11293,6 +11856,13 @@
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>a6b40c764fab6b32cb84fef5aef8b93ad</anchor>
       <arglist>(short int sensor)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>a3da6d5455ef2e83d8055aa2a1be59ec9</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
@@ -11943,6 +12513,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
+      <anchorfile>classServo.html</anchorfile>
+      <anchor>a3f3d822dd70699dbbb12e4acae8324ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>InterfaceAvr *</type>
       <name>interface1</name>
       <anchorfile>classServo.html</anchorfile>
@@ -12179,9 +12756,16 @@
     </member>
     <member kind="signal">
       <type>void</type>
-      <name>setMinObstacleDistanceLaser</name>
+      <name>setMinObstacleDistanceLaserFront</name>
       <anchorfile>classSettingsDialog.html</anchorfile>
-      <anchor>ab3a4e77660cbf192d0a60087b3955128</anchor>
+      <anchor>a30fbd6d8e2b1b7d948f33a7c9b9bd7a6</anchor>
+      <arglist>(int distance)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>setMinObstacleDistanceLaserRear</name>
+      <anchorfile>classSettingsDialog.html</anchorfile>
+      <anchor>a7714f6f9cd507b851d577a217aca92f0</anchor>
       <arglist>(int distance)</arglist>
     </member>
     <member kind="signal">
@@ -12440,13 +13024,6 @@
       <anchor>a9858c104a949532c2a29f19877a0e048</anchor>
       <arglist>(QString text)</arglist>
     </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>systemerror</name>
-      <anchorfile>classSickS300.html</anchorfile>
-      <anchor>a57c66cffe2c5e3f756992aeedd3ab4b1</anchor>
-      <arglist>(int errorlevel)</arglist>
-    </member>
     <member kind="function">
       <type>int</type>
       <name>closeComPort</name>
@@ -12686,13 +13263,13 @@
   <compound kind="dir">
     <name>direcs/</name>
     <path>/Users/markus/develop/direcs/direcs/</path>
-    <filename>dir_71a4500c209c1e535175f547c28a5047.html</filename>
+    <filename>dir_80dc7bca5204cedab60b23d5b342d4fe.html</filename>
     <dir>direcs/src/</dir>
   </compound>
   <compound kind="dir">
     <name>direcs/src/</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>dir_7247c972b1f19cf3b4b12605e29a3e2b.html</filename>
+    <filename>dir_7ef440ae0700ba264a3b28778b9d15f1.html</filename>
     <file>aboutDialog.cpp</file>
     <file>aboutDialog.h</file>
     <file>camThread.cpp</file>
@@ -12748,6 +13325,8 @@
     <file>QKinect.h</file>
     <file>QtGLContext.cpp</file>
     <file>QtGLContext.h</file>
+    <file>rgbLed.cpp</file>
+    <file>rgbLed.h</file>
     <file>RGBWindow.cpp</file>
     <file>RGBWindow.h</file>
     <file>sensorThread.cpp</file>

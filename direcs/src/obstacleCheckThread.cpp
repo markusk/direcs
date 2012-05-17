@@ -321,8 +321,12 @@ void ObstacleCheckThread::run()
 		//
 		// Be aware of setting the ignore areas than only at start and end lines!
 		//--------------------------------------------------------------------------------
-		first = laserscannerFrontIgnoreArea1End + 1;
-		last  = laserscannerFrontIgnoreArea2Start - 1;
+
+		// this is one angle index after the 1st ignore area ends
+		first = (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) + 1;
+
+		// this is one angle index before the 2nd ignore area starts
+		last  = (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront)) - 1;
 
 		for (int angleIndex = first; angleIndex <= last; angleIndex++)
 		{
