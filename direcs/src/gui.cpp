@@ -3448,10 +3448,10 @@ void Gui::createLaserScannerObjects()
 	//laserRearYPos  = INITIALLASERYPOSREAR;
 
 	// set some nice colors for some widgets
-	colorLaserObstacle =  Qt::darkRed;
-	colorLaserFreeWay = Qt::darkGreen;
-	colorLaserPreferredDrivingDirection = Qt::green;
-	colorLaserCenterDrivingDirection = Qt::white;
+	colorLaserObstacle =  Qt::red;
+	colorLaserFreeWay = Qt::darkRed;
+	colorLaserPreferredDrivingDirection = Qt::darkGreen;
+	colorLaserCenterDrivingDirection = Qt::yellow;
 	colorLaserIgnoreArea =  Qt::darkYellow;
 	colorGraphicsSceneBackground = Qt::black;
 
