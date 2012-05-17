@@ -220,7 +220,6 @@ void Direcs::init()
 	if (!consoleMode)
 	{
 		aboutDialog->setVersion("0.9"); /// \todo put this at a nicer place // this is also shown in the about dialog
-		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashTextColor = Qt::white;
 	}
 	forceShutdown = false;
@@ -1794,7 +1793,7 @@ void Direcs::showSplashMessage(QString text)
 {
 	if (!consoleMode)
 	{
-		splash->showMessage(text, splashPosition, splashTextColor);
+		splash->showMessage(text, Qt::AlignHCenter | Qt::AlignBottom, splashTextColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
 	}
