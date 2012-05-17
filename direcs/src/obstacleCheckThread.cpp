@@ -447,38 +447,45 @@ void ObstacleCheckThread::run()
 			// where b and c have to be in cm here!
 			currentWidth = calculateDriveThroughWidth(LASER1, (freeEndAreas.at(i) - freeStartAreas.at(i)), currentDistance, currentDistance);
 
-//			qDebug("currentWidth: %.1f",currentWidth);
-//			qDebug("largestWidth: %.1f",largestWidth);
-
-			// is the current width the widest so far?
-			if (currentWidth > largestWidth)
+			//----------------------------------------------------------------------------
+			// LASER SCANNER 1 DATA ANALYSIS - STEP V
+			//----------------------------------------------------------------------------
+			// Is the current width wide enough for the robot ("robot slot")
+			//----------------------------------------------------------------------------
+			if (currentWidth >= robotSlotWidth)
 			{
-				// use this width as the most far
-				largestWidth = currentWidth;
+	//			qDebug("currentWidth: %.1f",currentWidth);
+	//			qDebug("largestWidth: %.1f",largestWidth);
 
-				//
-				// Enable *this* code to chose the widest area, which is also the area with the largest free distance!!
-				//
+				// is the current width the widest so far?
+				if (currentWidth > largestWidth)
+				{
+					// use this width as the most far
+					largestWidth = currentWidth;
 
-				// check if this width is the width which is the farest away
-//				if (currentDistance > farestDistance)
-//				{
-//					// use this!
-//					farestDistance = currentDistance;
-//
-//					// store the corresponing angles, too!
-//					largestFreeAreaStart = freeStartAreas.at(i);
-//					largestFreeAreaEnd   = freeEndAreas.at(i);
-//				}
+					//
+					// Enable *this* code to chose the widest area, which is also the area with the largest free distance!!
+					//
+
+					// check if this width is the width which is the farest away
+	//				if (currentDistance > farestDistance)
+	//				{
+	//					// use this!
+	//					farestDistance = currentDistance;
+	//
+	//					// store the corresponing angles, too!
+	//					largestFreeAreaStart = freeStartAreas.at(i);
+	//					largestFreeAreaEnd   = freeEndAreas.at(i);
+	//				}
 
 
-				//
-				// alternatively use *the following* code for just using the widest area as direction of choice
-				//
-				// store the corresponing angles
-				largestFreeAreaStart = freeStartAreas.at(i);
-				largestFreeAreaEnd   = freeEndAreas.at(i);
-
+					//
+					// alternatively use *the following* code for just using the widest area as direction of choice
+					//
+					// store the corresponing angles
+					largestFreeAreaStart = freeStartAreas.at(i);
+					largestFreeAreaEnd   = freeEndAreas.at(i);
+				}
 			}
 
 //			qDebug("Using largestWidth: %.1f",largestWidth);
@@ -495,7 +502,7 @@ void ObstacleCheckThread::run()
 
 
 		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP V
+		// LASER SCANNER 1 DATA ANALYSIS - STEP VI
 		//----------------------------------------------------------------------------
 		// Then tag the *largest* free area
 		// (to show it in the GUI and to know, where to drive)
@@ -522,7 +529,7 @@ void ObstacleCheckThread::run()
 
 
 			//----------------------------------------------------------------------------
-			// LASER SCANNER 1 DATA ANALYSIS - STEP VI
+			// LASER SCANNER 1 DATA ANALYSIS - STEP VII
 			//----------------------------------------------------------------------------
 			// Emit driving directiomn to the GUI
 			//----------------------------------------------------------------------------
@@ -571,7 +578,7 @@ void ObstacleCheckThread::run()
 
 
 		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP VII
+		// LASER SCANNER 1 DATA ANALYSIS - STEP VIII
 		//----------------------------------------------------------------------------
 		// Reset the previous found areas, angles and width for the next analysis.
 		//----------------------------------------------------------------------------
