@@ -3450,8 +3450,8 @@ void Gui::createLaserScannerObjects()
 	// set some nice colors for some widgets
 	colorLaserObstacle =  Qt::darkRed;
 	colorLaserFreeWay = Qt::darkGreen;
-	colorLaserPreferredDrivingDirection = Qt::blue;
-	colorLaserCenterDrivingDirection = Qt::yellow;
+	colorLaserPreferredDrivingDirection = Qt::green;
+	colorLaserCenterDrivingDirection = Qt::white;
 	colorLaserIgnoreArea =  Qt::darkYellow;
 	colorGraphicsSceneBackground = Qt::black;
 
