@@ -116,7 +116,7 @@ void Inifile::writeSetting(QString group, QString name, int value)
 }
 
 
-void Inifile::writeSetting(QString group, QString name, float value)
+void Inifile::writeSetting(QString group, QString name, QString value)
 {
 	settings->beginGroup(group);
 
