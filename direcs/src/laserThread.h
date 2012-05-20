@@ -133,7 +133,7 @@ class LaserThread : public QThread
 		Resulting filename will look like direcs-YYYY_MM_DD__HH_MM_SS.sim
 		@return true on success
 		*/
-		bool saveSimulationValues();
+		bool saveLaserData();
 
 		/**
 		  This slot sets the measure mode. If activated one can walk around the laser, and the lessest value will only be stored.

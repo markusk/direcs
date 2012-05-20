@@ -768,9 +768,10 @@ bool LaserThread::readSimulationValues()
 }
 
 
-bool LaserThread::saveSimulationValues()
+bool LaserThread::saveLaserData()
 {
-	qDebug("Laser data written to .sim file.");
+	emit message(QString("Laser data written to <b>%1.sim</b>").arg("direcs-YYYY_MM_DD__HH_MM_SS"));
+	// qDebug("Laser data written to .sim file.");
 
 	return true;
 }
