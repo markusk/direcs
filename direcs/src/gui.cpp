@@ -2613,6 +2613,13 @@ void Gui::on_actionSimulate_activated()
 }
 
 
+void Gui::on_actionSaveLaserData_activated()
+{
+	qDebug("Save laser data button pressed.");
+}
+
+
+
 #ifdef ACTIVELASERVIEW
 void Gui::on_sliderZoom_valueChanged(int value)
 {
