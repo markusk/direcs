@@ -766,3 +766,11 @@ bool LaserThread::readSimulationValues()
 
 	return true;
 }
+
+
+bool LaserThread::saveSimulationValues()
+{
+	qDebug("Laser data written to .sim file.");
+
+	return true;
+}
