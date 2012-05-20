@@ -2615,6 +2615,7 @@ void Gui::on_actionSimulate_activated()
 
 void Gui::on_actionSaveLaserData_activated()
 {
+	emit writeLaserData();
 	qDebug("Save laser data button pressed.");
 }
 
