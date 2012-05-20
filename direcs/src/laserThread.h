@@ -131,9 +131,8 @@ class LaserThread : public QThread
 		/**
 		Saves the current laser line simulation values to disk (.sim file).
 		Resulting filename will look like direcs-YYYY_MM_DD__HH_MM_SS.sim
-		@return true on success
 		*/
-		bool saveLaserData();
+		void saveLaserData();
 
 		/**
 		  This slot sets the measure mode. If activated one can walk around the laser, and the lessest value will only be stored.
