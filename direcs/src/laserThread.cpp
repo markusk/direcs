@@ -345,7 +345,7 @@ void LaserThread::setSimulationMode(bool state)
 	if (simulationMode == true)
 	{
 		// sim value init
-		if (setSimulationValues() == false)
+		if (readSimulationValues() == false)
 		{
 			simulationMode = false;
 			return;
@@ -719,7 +719,7 @@ bool LaserThread::isConnected(short int laserScanner)
 }
 
 
-bool LaserThread::setSimulationValues()
+bool LaserThread::readSimulationValues()
 {
 	float floatValue = -1.0;
 
