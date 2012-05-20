@@ -55,7 +55,6 @@ ObstacleCheckThread::ObstacleCheckThread(SensorThread *s, LaserThread *l)
 	laserscannerRearIgnoreArea2Start = 0.0;
 	laserscannerRearIgnoreArea2End = 0.0;
 
-	robotSlot = 1;      // 1 degree
 	robotSlotWidth = 1; // 1 cm
 	straightForwardDeviation = 0;
 
@@ -321,8 +320,12 @@ void ObstacleCheckThread::run()
 		//
 		// Be aware of setting the ignore areas than only at start and end lines!
 		//--------------------------------------------------------------------------------
-		first = laserscannerFrontIgnoreArea1End + 1;
-		last  = laserscannerFrontIgnoreArea2Start - 1;
+
+		// this is one angle index after the 1st ignore area ends
+		first = (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) + 1;
+
+		// this is one angle index before the 2nd ignore area starts
+		last  = (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront)) - 1;
 
 		for (int angleIndex = first; angleIndex <= last; angleIndex++)
 		{
@@ -400,7 +403,7 @@ void ObstacleCheckThread::run()
 		{
 			emit message(QString("ERROR in logical check of free laser areas in %1!").arg(className));
 			emit message("Reaction to be implemented!!!");
-			qDebug() << "ERROR in logical check of free laser areas in:" << className;
+			// qDebug() << "ERROR in logical check of free laser areas in:" << className;
 		}
 
 
@@ -443,38 +446,45 @@ void ObstacleCheckThread::run()
 			// where b and c have to be in cm here!
 			currentWidth = calculateDriveThroughWidth(LASER1, (freeEndAreas.at(i) - freeStartAreas.at(i)), currentDistance, currentDistance);
 
-//			qDebug("currentWidth: %.1f",currentWidth);
-//			qDebug("largestWidth: %.1f",largestWidth);
-
-			// is the current width the widest so far?
-			if (currentWidth > largestWidth)
+			//----------------------------------------------------------------------------
+			// LASER SCANNER 1 DATA ANALYSIS - STEP V
+			//----------------------------------------------------------------------------
+			// Is the current width wide enough for the robot ("robot slot")
+			//----------------------------------------------------------------------------
+			if (currentWidth >= robotSlotWidth)
 			{
-				// use this width as the most far
-				largestWidth = currentWidth;
+	//			qDebug("currentWidth: %.1f",currentWidth);
+	//			qDebug("largestWidth: %.1f",largestWidth);
 
-				//
-				// Enable *this* code to chose the widest area, which is also the area with the largest free distance!!
-				//
+				// is the current width the widest so far?
+				if (currentWidth > largestWidth)
+				{
+					// use this width as the most far
+					largestWidth = currentWidth;
 
-				// check if this width is the width which is the farest away
-//				if (currentDistance > farestDistance)
-//				{
-//					// use this!
-//					farestDistance = currentDistance;
-//
-//					// store the corresponing angles, too!
-//					largestFreeAreaStart = freeStartAreas.at(i);
-//					largestFreeAreaEnd   = freeEndAreas.at(i);
-//				}
+					//
+					// Enable *this* code to chose the widest area, which is also the area with the largest free distance!!
+					//
+
+					// check if this width is the width which is the farest away
+	//				if (currentDistance > farestDistance)
+	//				{
+	//					// use this!
+	//					farestDistance = currentDistance;
+	//
+	//					// store the corresponing angles, too!
+	//					largestFreeAreaStart = freeStartAreas.at(i);
+	//					largestFreeAreaEnd   = freeEndAreas.at(i);
+	//				}
 
 
-				//
-				// alternatively use *the following* code for just using the widest area as direction of choice
-				//
-				// store the corresponing angles
-				largestFreeAreaStart = freeStartAreas.at(i);
-				largestFreeAreaEnd   = freeEndAreas.at(i);
-
+					//
+					// alternatively use *the following* code for just using the widest area as direction of choice
+					//
+					// store the corresponing angles
+					largestFreeAreaStart = freeStartAreas.at(i);
+					largestFreeAreaEnd   = freeEndAreas.at(i);
+				}
 			}
 
 //			qDebug("Using largestWidth: %.1f",largestWidth);
@@ -491,7 +501,7 @@ void ObstacleCheckThread::run()
 
 
 		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP V
+		// LASER SCANNER 1 DATA ANALYSIS - STEP VI
 		//----------------------------------------------------------------------------
 		// Then tag the *largest* free area
 		// (to show it in the GUI and to know, where to drive)
@@ -518,7 +528,7 @@ void ObstacleCheckThread::run()
 
 
 			//----------------------------------------------------------------------------
-			// LASER SCANNER 1 DATA ANALYSIS - STEP VI
+			// LASER SCANNER 1 DATA ANALYSIS - STEP VII
 			//----------------------------------------------------------------------------
 			// Emit driving directiomn to the GUI
 			//----------------------------------------------------------------------------
@@ -567,7 +577,7 @@ void ObstacleCheckThread::run()
 
 
 		//----------------------------------------------------------------------------
-		// LASER SCANNER 1 DATA ANALYSIS - STEP VII
+		// LASER SCANNER 1 DATA ANALYSIS - STEP VIII
 		//----------------------------------------------------------------------------
 		// Reset the previous found areas, angles and width for the next analysis.
 		//----------------------------------------------------------------------------
@@ -679,12 +689,6 @@ void ObstacleCheckThread::setIgnoreArea(short int laser, int area, int start, in
 	}
 
 	emit message(QString("<font color=\"#FF0000\">ERROR in %1::setIgnoreArea: laser number %2 or area %3 not implemented!<font>").arg(className).arg(laser).arg(area));
-}
-
-
-void ObstacleCheckThread::setRobotSlot(int angle)
-{
-	robotSlot = angle;
 }
 
 

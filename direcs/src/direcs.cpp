@@ -220,7 +220,6 @@ void Direcs::init()
 	if (!consoleMode)
 	{
 		aboutDialog->setVersion("0.9"); /// \todo put this at a nicer place // this is also shown in the about dialog
-		splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
 		splashTextColor = Qt::white;
 	}
 	forceShutdown = false;
@@ -435,7 +434,6 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		// set the robot slot, when signal comes from Gui
 		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setRobotSlot(int)), obstCheckThread, SLOT(setRobotSlot(int)));
 		connect(settingsDialog, SIGNAL(setRobotSlotWidth(int)), obstCheckThread, SLOT(setRobotSlotWidth(int)));
 
 		//--------------------------------------------------------------------------
@@ -1241,7 +1239,7 @@ void Direcs::shutdown()
 			inifile1->writeSetting("Config", "maximumSpeed", settingsDialog->getSliderMaximumSpeed());
 			inifile1->writeSetting("Config", "minObstacleDistance", settingsDialog->getSliderObstacleValue());
 			inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", settingsDialog->getSliderObstacleLaserScannerValue());
-			inifile1->writeSetting("Config", "robotSlot", settingsDialog->getSliderRobotSlotValue());
+			inifile1->writeSetting("Config", "robotSlotWidth", settingsDialog->getSliderRobotSlotWidth());
 			inifile1->writeSetting("Config", "straightForwardDeviation", settingsDialog->getSliderStraightForwardDeviationValue());
 
 			// save check box status
@@ -1798,7 +1796,7 @@ void Direcs::showSplashMessage(QString text)
 {
 	if (!consoleMode)
 	{
-		splash->showMessage(text, splashPosition, splashTextColor);
+		splash->showMessage(text, Qt::AlignHCenter | Qt::AlignBottom, splashTextColor);
 		// for refreshing the splash...
 		QApplication::processEvents();
 	}
@@ -3378,29 +3376,6 @@ void Direcs::readSettings()
 			obstCheckThread->setMinObstacleDistanceLaserRear(minObstacleDistanceLaserScannerRear);
 			// show text
 			emit message(QString("Min. obstacle distance rear laser scanner set to <b>%1 cm</b>.").arg(minObstacleDistanceLaserScannerRear));
-			break;
-	}
-
-	//---------------------------------------------------------------------
-	// read setting
-	int robotSlot = inifile1->readSetting("Config", "robotSlot");
-
-	switch (robotSlot)
-	{
-		case -1:
-			emit message("<font color=\"#FF0000\">Value \"robotSlot\"not found in ini-file!</font>");
-			break;
-		default:
-			if (!consoleMode)
-			{
-				// set slider to the read value
-				settingsDialog->setSliderRobotSlot(robotSlot);
-			}
-
-			// tell it the obstacle check thread
-			obstCheckThread->setRobotSlot(robotSlot);
-			// show text
-			emit message(QString("Robot slot set to <b>%1 deg.</b>").arg(robotSlot));
 			break;
 	}
 

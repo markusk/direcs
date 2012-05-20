@@ -66,11 +66,6 @@ class ObstacleCheckThread : public QThread
 		void setSimulationMode(bool status);
 
 		/**
-		This slot sets the angle, where the robots has to fit through.
-		*/
-		void setRobotSlot(int angle);
-
-		/**
 		This slot sets the width in centimeters (cm), where the robots has to fit through.
 		*/
 		void setRobotSlotWidth(int width);
@@ -187,7 +182,6 @@ class ObstacleCheckThread : public QThread
 		float laserAngleFront; /// stores the laser angle when getting the value from the laser thread
 		float laserAngleRear; /// stores the laser angle when getting the value from the laser thread
 
-		int robotSlot; /// defines the minimum slot in degrees, where the robot has to fit through
 		int robotSlotWidth; /// defines the minimum slot in centimeters (cm), where the robot has to fit through
 
 		int straightForwardDeviation; /// and this is the deviation to 90 degrees, when driving forward
