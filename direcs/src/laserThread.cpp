@@ -777,27 +777,28 @@ bool LaserThread::saveLaserData()
 {
 	QDateTime now; // this is for the timestamp in the log
 	QString filename;
+	QString string;
 
+
+
+	// get current date and time
+	now = QDateTime::currentDateTime(); // get the current date and time
+
+	// set filenam
+	filename = QString("direcs_%1-%2-%3_%4-%5-%6.sim").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss"));
+	inifileLaserdata->setFilename(filename);
 
 	/// @todo Stop laser thread here for saving the values or is a mutex lock for the QList okay or are QLists able to handle this?
-/*
+
 	// read the FRONT laser sim values from file
 	for (int i=0; i<(laserscannerAngleFront/laserscannerResolutionFront); i++)
 	{
+		// convert i to string
+		string = QString("%1").arg(i);
 
-*/
 		// write value to ini file
-//	inifileLaserdata->
-//		floatValue = inifile1->readFloat("Rearlaser", QString("%1").arg(i) );
-
-		// get current date and time
-		now = QDateTime::currentDateTime(); // get the current date and time
-
-		// set filenam
-		filename = QString("direcs_%1-%2-%3_%4-%5-%6.sim").arg(now.toString("yyyy")).arg(now.toString("MM")).arg(now.toString("dd")).arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss"));
-		inifileLaserdata->setFilename(filename);
-
-//	}
+		inifileLaserdata->writeSetting("Frontlaser", string, laserScannerValuesFront.at(i));
+	}
 
 
 	emit message(QString("Laser data written to <b>%1</b>").arg(filename));
