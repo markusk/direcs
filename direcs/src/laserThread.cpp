@@ -38,6 +38,10 @@ LaserThread::LaserThread()
 	// for the simulation values
 	inifile1 = new Inifile();
 	inifile1->setFilename("direcs.sim");
+
+	// for the simulation values
+	// file name will be set during call of saveLaserData
+	inifileLaserdata = new Inifile();
 }
 
 
@@ -53,6 +57,7 @@ LaserThread::~LaserThread()
 		}
 	}
 
+	delete inifileLaserdata;
 	delete inifile1;
 }
 

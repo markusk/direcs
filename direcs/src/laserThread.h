@@ -195,6 +195,7 @@ class LaserThread : public QThread
 
 		SickS300 *laserS300; // the object for the S300 laserscanner
 		Inifile *inifile1; //  for reading simulation values
+		inifile *inifileLaserdata; // for writing the current laser values to a file
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
