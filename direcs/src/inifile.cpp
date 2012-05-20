@@ -107,9 +107,17 @@ QString Inifile::getInifileName()
 
 void Inifile::writeSetting(QString group, QString name, int value)
 {
-	//-------------------------------------
-	// store the programm settings
-	//-------------------------------------
+	settings->beginGroup(group);
+
+	// save setting
+	settings->setValue(name, value);
+
+	settings->endGroup();
+}
+
+
+void Inifile::writeSetting(QString group, QString name, float value)
+{
 	settings->beginGroup(group);
 
 	// save setting

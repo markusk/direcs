@@ -62,9 +62,21 @@ class Inifile : public QObject
 		motor1Speed=23
 		@param group is the group area in the file (e.g. \e Config).
 		@param name is the name of the parameter (e.g. \e motor1speed).
-		@param value is the value of the parameter (e.g. \e 23).
+		@param value is the (int) value of the parameter (e.g. \e 23).
 		*/
 		void writeSetting(QString group, QString name, int value);
+
+		/**
+		Stores a settings in an ini-file. The settings are stored in the typical ini-file-format.\n
+		Example ini-file:\n
+		\n
+		[Config]\n
+		distance=42.23
+		@param group is the group area in the file (e.g. \e Config).
+		@param name is the name of the parameter (e.g. \e motor1speed).
+		@param value is the (float) value of the parameter (e.g. \e 42).
+		*/
+		void writeSetting(QString group, QString name, float value);
 
 		/**
 		Reads an integer setting from an ini-file. The settings are read in the typical ini-file-format.\n
