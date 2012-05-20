@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1733</width>
+    <width>1710</width>
     <height>1054</height>
    </rect>
   </property>
@@ -125,7 +125,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1733</width>
+     <width>1710</width>
      <height>22</height>
     </rect>
    </property>
@@ -137,6 +137,7 @@
     <addaction name="actionReset"/>
     <addaction name="actionTest"/>
     <addaction name="actionSimulate"/>
+    <addaction name="actionSaveLaserData"/>
     <addaction name="actionRemote"/>
     <addaction name="actionResetDrivenDistance"/>
     <addaction name="separator"/>
@@ -189,6 +190,7 @@
    <addaction name="actionReset"/>
    <addaction name="actionTest"/>
    <addaction name="actionSimulate"/>
+   <addaction name="actionSaveLaserData"/>
    <addaction name="actionRemote"/>
    <addaction name="actionResetDrivenDistance"/>
    <addaction name="separator"/>
@@ -2021,10 +2023,25 @@
      <normaloff>:/images/images/measure.png</normaloff>:/images/images/measure.png</iconset>
    </property>
    <property name="text">
-    <string>Reset Driven Distance</string>
+    <string>Reset driven distance</string>
    </property>
    <property name="toolTip">
-    <string>Reset Driven Distance</string>
+    <string>Reset driven distance</string>
+   </property>
+  </action>
+  <action name="actionSaveLaserData">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/drive-harddisk.png</normaloff>:/images/images/drive-harddisk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save laser &amp;data</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves the current laser data to a .sim file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>
