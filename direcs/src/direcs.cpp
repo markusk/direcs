@@ -1017,6 +1017,9 @@ void Direcs::init()
 			connect(gui, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
 			connect(gui, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
 			connect(gui, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
+
+			// let the laserThread write a data file from its laser values if requested by the GUI
+			connect(gui, SIGNAL( writeLaserData() ), laserThread, SLOT( saveLaserData() ));
 		}
 
 

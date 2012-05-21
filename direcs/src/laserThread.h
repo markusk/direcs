@@ -129,6 +129,12 @@ class LaserThread : public QThread
 		void setSimulationMode(bool state);
 
 		/**
+		Saves the current laser line simulation values to disk (.sim file).
+		Resulting filename will look like direcs-YYYY_MM_DD__HH_MM_SS.sim
+		*/
+		void saveLaserData();
+
+		/**
 		  This slot sets the measure mode. If activated one can walk around the laser, and the lessest value will only be stored.
 		  With this one can set a new alarm distance by walking around the robot.
 		  */
@@ -168,7 +174,7 @@ class LaserThread : public QThread
 	private:
 		void getAndStoreLaserValuesFront(); /// \todo use one common getAndStoreLaserValue method!
 		void getAndStoreLaserValuesRear();  /// \todo use one common getAndStoreLaserValue method!
-		bool setSimulationValues(); // Sets the laser line simulatiov values in the QList
+		bool readSimulationValues(); /// Reads the laser line simulation values and sets these as currrent 'real' laser values.
 		//mutable QMutex mutex; // make this class thread-safe
 		volatile bool stopped;
 		unsigned char laserscannerTypeFront;
@@ -188,6 +194,7 @@ class LaserThread : public QThread
 
 		SickS300 *laserS300; // the object for the S300 laserscanner
 		Inifile *inifile1; //  for reading simulation values
+		Inifile *inifileLaserdata; // for writing the current laser values to a file
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

@@ -471,6 +471,11 @@ class Gui : public QMainWindow
 		void simulate(bool state);
 
 		/**
+		Saves the current laser data to a file. This signal is sent to the @sa LaserThread::writeLaserData via @sa Direcs
+		*/
+		void writeLaserData();
+
+		/**
 		Enables or disables the face detection. When activated, a circle for each face is drawn on the camera live image.
 		@param state has to be Qt::Checked to enable the detection. All other states disable.
 		*/
@@ -531,6 +536,7 @@ class Gui : public QMainWindow
 		void on_actionTest_activated();
 		void on_actionRemote_activated();
 		void on_actionSimulate_activated();
+		void on_actionSaveLaserData_activated();
 
 
 	private slots:
