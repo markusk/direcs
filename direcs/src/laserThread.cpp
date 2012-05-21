@@ -790,7 +790,7 @@ void LaserThread::saveLaserData()
 
 	/// @todo Stop laser thread here for saving the values or is a mutex lock for the QList okay or are QLists able to handle this?
 
-	// read the FRONT laser sim values from file
+	// write the FRONT laser sim values to file
 	for (int i=0; i<(laserscannerAngleFront/laserscannerResolutionFront); i++)
 	{
 		// convert i to string
@@ -803,6 +803,21 @@ void LaserThread::saveLaserData()
 		// write value to ini file
 		inifileLaserdata->writeSetting("Frontlaser", stringName, stringValue);
 	}
+
+	// write the REAR laser sim values to file
+	for (int i=0; i<(laserscannerAngleRear/laserscannerResolutionRear); i++)
+	{
+		// convert i to string
+		stringName = QString("%1").arg(i);
+
+		// convert laser float values to string
+		// we are using a string instead of float here, since Qt write float in a quite non human readable format like 'settingt=@Variant(\0\0\0\x87@\xa0\0\0)'.
+		stringValue = QString("%1").arg( laserScannerValuesRear.at(i) );
+
+		// write value to ini file
+		inifileLaserdata->writeSetting("Rearlaser", stringName, stringValue);
+	}
+
 
 	emit message(QString("Laser data written to <b>%1</b>").arg(filename));
 }
