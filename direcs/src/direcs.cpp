@@ -465,6 +465,7 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	if (inifile1->checkFiles() == true)
 	{
+/*
 		//----------------------------------------------------------------------------
 		// say a text
 		//----------------------------------------------------------------------------
@@ -484,7 +485,7 @@ void Direcs::init()
 			emit message("Speak thread started.");
 		}
 		#endif
-
+*/
 
 		// file found-Msg
 		emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
