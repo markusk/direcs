@@ -111,9 +111,6 @@ unix|macx {
 	message("See http://www.openkinect.org for details how to install libfreenect.")
 }
 
-CONFIG(debug, debug|release):LIBS  += -lqextserialportd
-else:LIBS  += -lqextserialport
-
 
 macx {
 	message("Processing MAC OS scope...")
