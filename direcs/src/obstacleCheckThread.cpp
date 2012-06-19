@@ -267,19 +267,19 @@ void ObstacleCheckThread::run()
 		//---------------------------------------------------------
 		for (int angleIndex=first; angleIndex <= last; angleIndex++)
 		{
-			// first set if we ignore this area and than mark this as such
-			if (
-					((angleIndex >= (laserscannerFrontIgnoreArea1Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)))) ||
-					((angleIndex >= (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront))))
-			   )
-			{
-				//------------------------------
-				// first set the "ignore flag"
-				//------------------------------
-				laserThread->setFlag(LASER1, angleIndex, IGNORETHIS);
-			}
-			else
-			{
+//			// first set if we ignore this area and than mark this as such
+//			if (
+//					((angleIndex >= (laserscannerFrontIgnoreArea1Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)))) ||
+//					((angleIndex >= (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront))) && (angleIndex <= (laserscannerFrontIgnoreArea2End*(1/laserResolutionFront))))
+//			   )
+//			{
+//				//------------------------------
+//				// first set the "ignore flag"
+//				//------------------------------
+//				laserThread->setFlag(LASER1, angleIndex, IGNORETHIS);
+//			}
+//			else
+//			{
 				// if obstacle detected
 				if ( ((int) (laserThread->getValue(LASER1, angleIndex) * 100)) < minObstacleDistanceLaserFront)
 				{
@@ -296,7 +296,7 @@ void ObstacleCheckThread::run()
 					laserThread->setFlag(LASER1, angleIndex, FREEWAY);
 				}
 			}
-		}
+//		}
 
 
 		//------------------------------------------------------------------
