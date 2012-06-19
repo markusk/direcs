@@ -320,19 +320,29 @@ void ObstacleCheckThread::run()
 		// Be aware of setting the ignore areas than only at start and end lines!
 		//--------------------------------------------------------------------------------
 
-		// this is one angle index after the 1st ignore area ends
-		first = (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) + 1;
+//		// this is one angle index after the 1st ignore area ends
+//		first = (laserscannerFrontIgnoreArea1End*(1/laserResolutionFront)) + 1;
 
-		// this is one angle index before the 2nd ignore area starts
-		last  = (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront)) - 1;
+//		// this is one angle index before the 2nd ignore area starts
+//		last  = (laserscannerFrontIgnoreArea2Start*(1/laserResolutionFront)) - 1;
+
+
+// TEST TEST TEST
+
+// ingore the IGNORE AREAS and mark ALL areas
+
+		first = 0;
+		last  = (laserAngleFront / laserResolutionFront) -1;
+// TEST TEST TEST
+
 
 		for (int angleIndex = first; angleIndex <= last; angleIndex++)
 		{
 			//qDebug("%d -----------", angleIndex);
 
-			// check only lines with which are *not* in an area to be ognored
-			if (laserThread->getFlag(LASER1, angleIndex) != IGNORETHIS )
-			{
+//			// check only lines with which are *not* in an area to be ognored
+//			if (laserThread->getFlag(LASER1, angleIndex) != IGNORETHIS )
+//			{
 				// green
 				if(
 						((angleIndex == first) &&
@@ -388,7 +398,7 @@ void ObstacleCheckThread::run()
 					freeEndAreas.append(angleIndex);
 					//qDebug("%d = yellow", angleIndex);
 				}
-			} // flag != IGNORETHIS
+//			} // flag != IGNORETHIS
 		}
 
 
