@@ -119,7 +119,6 @@ void ObstacleCheckThread::run()
 	int last = 0;					/// holds the last last angle index
 	double currentWidth = 0.0;		///
 	double largestWidth = 0.0;
-	float farestDistance = 0.0;		///
 	float currentDistance = 0.0;	///
 	float b = 0.0;
 	float c = 0.0;
@@ -305,7 +304,7 @@ void ObstacleCheckThread::run()
 		//------------------------------------------------------------------
 		// Find all free areas and store start and end angle.
 		// Since we analyse the previos, the current and the next angle
-		// and we have to take caere of the first, "middle" and last angle
+		// and we have to take care of the first, "middle" and last angle
 		// we have to check all 24x3 posibilities and react on these.
 		// In the end I ended up in three different "actions".
 		//------------------------------------------------------------------
@@ -418,7 +417,7 @@ void ObstacleCheckThread::run()
 		// LASER SCANNER 1 DATA ANALYSIS - STEP IV
 		//----------------------------------------------------------------------------
 		// Calculate the width of the drive-trough direction/area
-		// and chose the area whoch is the widest free one.
+		// and choose the area which is the widest free one.
 		//----------------------------------------------------------------------------
 
 		// Look in all free found areas
@@ -463,9 +462,8 @@ void ObstacleCheckThread::run()
 					largestWidth = currentWidth;
 
 					//
-					// Enable *this* code to chose the widest area, which is also the area with the largest free distance!!
+					// Enable *this* code to chose the widest area, which is also the area with the largest free distance:
 					//
-
 					// check if this width is the width which is the farest away
 	//				if (currentDistance > farestDistance)
 	//				{
@@ -479,7 +477,7 @@ void ObstacleCheckThread::run()
 
 
 					//
-					// alternatively use *the following* code for just using the widest area as direction of choice
+					// Use *the following* code for just using the widest area as direction of choice:
 					//
 					// store the corresponing angles
 					largestFreeAreaStart = freeStartAreas.at(i);
@@ -530,7 +528,7 @@ void ObstacleCheckThread::run()
 			//----------------------------------------------------------------------------
 			// LASER SCANNER 1 DATA ANALYSIS - STEP VII
 			//----------------------------------------------------------------------------
-			// Emit driving directiomn to the GUI
+			// Emit driving direction to the GUI
 			//----------------------------------------------------------------------------
 
 			// get the middle of the laser (when we have 180 deg, the middle is as 90 deg)
@@ -585,7 +583,6 @@ void ObstacleCheckThread::run()
 		freeEndAreas.clear();
 		currentWidth = 0.0;
 		largestWidth = 0.0;
-		farestDistance = 0.0;
 		currentDistance = 0.0;
 		b = 0.0;
 		c = 0.0;
