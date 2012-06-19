@@ -686,6 +686,7 @@ class Gui : public QMainWindow
 		CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui
+		QString string; // this is a free to use string
 /*
 		cv::Mat frame;
 */

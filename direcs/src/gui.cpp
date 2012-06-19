@@ -3038,8 +3038,29 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
+
 		// set tool tip of the line to the distance
-		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m / %2 deg / Flag=%3 / %4 Pixel").arg(laserScannerValues[i]).arg(i).arg(laserScannerFlags[i]).arg(laserLineLength) );
+		int flag = laserScannerFlags[i];
+
+		if (flag == FREEWAY)
+		{
+			string = "FREEWAY";
+		} else if (flag == OBSTACLE)
+		{
+			string = "OBSTACLE";
+		} else if (flag == LARGESTFREEWAY)
+		{
+			string = "LARGESTFREEWAY";
+		} else if (flag == CENTEROFLARGESTFREEWAY)
+		{
+			string = "CENTEROFLARGESTFREEWAY";
+		} else if (flag == IGNORETHIS)
+		{
+			string = "IGNORETHIS";
+		}
+
+		laserLineListFront->at(i)->setToolTip( QString("FRONT: %1 m, %2, %3 deg, %4 Pixel").arg(laserScannerValues[i]).arg(string).arg(i).arg(laserLineLength) );
+
 
 		// get the current scene positions of the laser line
 		x = laserLineListFront->at(i)->scenePos().x();
