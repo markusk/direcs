@@ -443,7 +443,7 @@ void ObstacleCheckThread::run()
 
 			// get the width of one side of the triangle using alpha, b and c.
 			// where b and c have to be in cm here!
-			currentWidth = calculateDriveThroughWidth(LASER1, (freeEndAreas.at(i) - freeStartAreas.at(i)), currentDistance, currentDistance);
+			currentWidth = calculateDriveThroughWidth(LASER1, ((freeEndAreas.at(i) - freeStartAreas.at(i)) * laserResolutionFront ), currentDistance, currentDistance);
 
 			//----------------------------------------------------------------------------
 			// LASER SCANNER 1 DATA ANALYSIS - STEP V
