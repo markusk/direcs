@@ -157,26 +157,26 @@ int DirecsSerial::openPort(char *dev_name, int baudrate)
 	{
 		if (cfsetispeed(&options, (speed_t) spd) != 0)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port input speed at DirecsSerial::openAtmelPort!</font>"));
+			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port input speed at DirecsSerial::openPort!</font>"));
 			return -1;
 		}
 
 		if (cfsetospeed(&options, (speed_t) spd) != 0)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port output speed at DirecsSerial::openAtmelPort!</font>"));
+			emit message(QString("<font color=\"#FF0000\">ERROR setting serial port output speed at DirecsSerial::openPort!</font>"));
 			return -1;
 		}
 	}
 	else
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR: Wrong value for speed parameter at DirecsSerial::openAtmelPort!</font>"));
+		emit message(QString("<font color=\"#FF0000\">ERROR: Wrong value for speed parameter at DirecsSerial::openPort!</font>"));
 		return -1;
 	}
 
 	// Flushes all pending I/O to the serial port. This clears only the read buffer!
 	if (tcflush(mDev_fd, TCIFLUSH) != 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR fluhsing serial input buffer at DirecsSerial::openAtmelPort!</font>"));
+		emit message(QString("<font color=\"#FF0000\">ERROR fluhsing serial input buffer at DirecsSerial::openPort!</font>"));
 		return -1;
 	}
 
@@ -187,7 +187,7 @@ int DirecsSerial::openPort(char *dev_name, int baudrate)
 	// Cause the new options to take effect immediately.
 	if (tcsetattr(mDev_fd, TCSANOW, &options) != 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR setting serial port attributes at DirecsSerial::openAtmelPort!</font>"));
+		emit message(QString("<font color=\"#FF0000\">ERROR setting serial port attributes at DirecsSerial::openPort!</font>"));
 		return -1;
 	}
 
@@ -212,7 +212,7 @@ int DirecsSerial::writeData(unsigned char *c, QString callingClassName)
 
 	if (n < 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when writing to serial device at DirecsSerial::writeAtmelPort called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when writing to serial device at DirecsSerial::writeData called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
 //		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
 		return errno;
 	}
@@ -254,7 +254,7 @@ int DirecsSerial::readData(unsigned char *buf, int nChars, QString callingClassN
 		// check if timeout or an error occured
 		if (returnValue == -1)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readAtmelPort called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerial::readData called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
 			return errno;
 		}
 		else
@@ -266,7 +266,7 @@ int DirecsSerial::readData(unsigned char *buf, int nChars, QString callingClassN
 			else
 			{
 				// timeout
-				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 ms when using select() on serial device at DirecsSerial::readAtmelPort called from %2.</font>").arg(READ_TIMEOUT_ATMEL).arg(callingClassName));
+				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 ms when using select() on serial device at DirecsSerial::readData called from %2.</font>").arg(READ_TIMEOUT_ATMEL).arg(callingClassName));
 				emit message(QString("<font color=\"#FF0000\">ERROR %1: %2.</font>").arg(errno).arg(strerror(errno)));
 
 				return errno;
@@ -278,7 +278,7 @@ int DirecsSerial::readData(unsigned char *buf, int nChars, QString callingClassN
 
 		if (amountRead < 0 && errno != EWOULDBLOCK)
 		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerial::readAtmelPort called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerial::readData called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
 // FIXME: was, wenn return 0 ?!?!?
 			return errno;
 		}
