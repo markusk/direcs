@@ -2049,13 +2049,13 @@
      <normaloff>:/images/images/drive-harddisk.png</normaloff>:/images/images/drive-harddisk.png</iconset>
    </property>
    <property name="text">
-    <string>actionSaveLaserData</string>
+    <string>Save laser data</string>
    </property>
    <property name="toolTip">
     <string>Saves the current laser data to a .sim file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+D</string>
+    <string>Ctrl+L</string>
    </property>
   </action>
  </widget>
