@@ -2315,7 +2315,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 			return;
 			break;
@@ -2338,7 +2338,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 			return;
 			break;
@@ -2361,7 +2361,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 			return;
 			break;
@@ -2384,7 +2384,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 			return;
 			break;
@@ -2407,7 +2407,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 			return;
 			break;
@@ -2430,7 +2430,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 			return;
 			break;
@@ -2469,7 +2469,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 */
 
@@ -2501,7 +2501,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 
 			// Don't stop the motThread (PWM)!
@@ -2531,7 +2531,7 @@ void Direcs::drive(const int command)
 			}
 			else
 			{
-				emit message("Atmel-Error!");
+				emit message("Serial error!");
 			}
 
 			// Don't stop the motThread (clock)!
