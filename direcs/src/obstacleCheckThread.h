@@ -37,9 +37,14 @@ class SensorThread;
 
 /**
 \author Markus Knapp
-\brief Checks if there is an obstacle in front of any sensor.
+\brief Checks if there is an obstacle in front the robot.
 
- Emits the number of the sensor(s). This value contains the sum of all SENSORx values!
+ If there is an obstacle in front of the robot the robot ("forward"), the signal @sa obstacleDetected() will be emitted
+ which contains the direction, where the obstacle is. e.g. OBSTACLEFRONTLEFT.
+ If there is no obstacle, NONE is emitted.
+ If there is no free way, OBSTACLESEVERYWHEREINFRONT is emitted.
+ The signal @sa newDrivingAngleSet() with all some from the laserscanner is also emmited which shows where we should drive to.
+ This for displaying them in the GUI.
 */
 class ObstacleCheckThread : public QThread
 {
