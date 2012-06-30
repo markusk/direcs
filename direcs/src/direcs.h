@@ -367,6 +367,7 @@ class Direcs : public QObject
 		bool laserScannerRearFound;
 		bool testDriveMode; /// is enabled, when the robot is controlled via joystick
 		bool mecanumDriveMode; /// is enabled, when the robot is controlled via joystick and should use special mecanum wheel driving
+		int  currentPreferredDirection;
 		bool servoTestMode;
 		bool eyeTestMode;
 		int currentTestServo;
