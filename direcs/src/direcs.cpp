@@ -1861,8 +1861,12 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	}
 
 
-	// if all sensor values are the same like the last, do nothing!
-	if (sensorAlarm == lastSensorValue)
+	// If all sensor values/the last alarm are/is the same like the last *and* the robot drives (already),
+	// do nothing!
+	//
+	// So if the robot does *not* drive, we skip this step to store the 'prefrerred driving direction'.
+	// This will be then used in the drive method, when the roboter later received the START command.
+	if ((sensorAlarm == lastSensorValue) && (robotDrives))
 	{
 		// store this sensor alarm value
 		lastSensorValue = sensorAlarm;
@@ -1884,6 +1888,9 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 		lastSensorValue = sensorAlarm;
 		// reset the alarm counter
 		//alarmCounter = 0;
+
+		// store the preferred driving direction for the drive() slot, when we use the START command
+		preferredDrivingDirection = FORWARD;
 
 		if (robotDrives)
 		{
@@ -1926,6 +1933,8 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 			// reset the alarm counter
 			//alarmCounter = 0;
 
+			// store the preferred driving direction for the drive() slot, when we use the START command
+			preferredDrivingDirection = TURNRIGHT;
 			if (robotDrives)
 			{
 				emit message("<b>Obstacle front left. Turning right.</b>");
@@ -1967,6 +1976,8 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 			// reset the alarm counter
 			//alarmCounter = 0;
 
+			// store the preferred driving direction for the drive() slot, when we use the START command
+			preferredDrivingDirection = TURNLEFT;
 			if (robotDrives)
 			{
 				emit message("<b>Obstacle front right. Turning left.</b>");
@@ -1977,7 +1988,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 				drive(TURNLEFT);
 				motors->flashlight(OFF);
 			}
-		}
+//		}
 
 		return;
 	}
@@ -1997,6 +2008,9 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 		lastSensorValue = sensorAlarm;
 		// reset the alarm counter
 		//alarmCounter = 0;
+
+		// store the preferred driving direction for the drive() slot, when we use the START command
+		preferredDrivingDirection = WAIT;
 
 		if (robotDrives)
 		{
@@ -2423,8 +2437,10 @@ void Direcs::drive(const int command)
 
 		case START:
 			robotDrives = true;
-			emit message("Starting to drive forward...");
+			emit message("Starting to drive...");
 			emit message("START... ", false);
+
+		/*
 			// set the motors to "drive FORWARD"
 			if (!consoleMode)
 			{
@@ -2433,7 +2449,7 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR3, ON, FORWARD);
 				gui->showMotorStatus(MOTOR4, ON, FORWARD);
 			}
-			/*	FIXME: to much data over serial port?!?
+			/ *	FIXME: to much data over serial port?!?
 			motors->setMotorSpeed(MOTOR1, 0); /// \todo check if this works
 			motors->setMotorSpeed(MOTOR2, 0); /// \todo check if this works
 			motors->setMotorSpeed(MOTOR3, 0); /// \todo check if this works
@@ -2443,10 +2459,10 @@ void Direcs::drive(const int command)
 			drivingSpeedTimer->start(DRIVINGSPEEDINCREASER);
 			/// \TODO put that to a slider in the config menu / file.
 			/// \TODO make this speed increaser optional!
-			*/
-
+			* /
+*/
 			drivingLight(GREEN);
-
+/*
 			if (motors->motorControl(ALLMOTORS, SAME, command))
 			{
 				emit message("ok", true, false, false);
@@ -2455,6 +2471,11 @@ void Direcs::drive(const int command)
 			{
 				emit message("Atmel-Error!");
 			}
+*/
+
+			// use the preferred driving start direction, already set in the logicalUnit
+			drive(preferredDrivingDirection);
+
 			return;
 			break;
 

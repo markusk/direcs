@@ -139,7 +139,8 @@ class Direcs : public QObject
 		/**
 		The locialUnit handles the behavior of the robot. This slot is called if an obstacle is detected from the obstacleCheckThread.
 		It lets the robot "react" depending on which sensor made the alarm. The number of alarms are also counted.
-		@param sensorAlarm consists of the sum of all infrared and ultrasonic sensor numbers, which had an alarm.
+		The class member preferredDrivingDirection is also set here and will be used when the robot gets the @sa drive() command START.
+		@param sensorAlarm consists of the sum of all infrared and ultrasonic sensor numbers, which had an alarm  *or* if we use a laser scanner, a value like OBSTACLEFRONTLEFT.
 		@param timestamp is the timestmap when the signal was emitted.
 		*/
 		void logicalUnit(int sensorAlarm, QDateTime timestamp);
@@ -357,6 +358,7 @@ class Direcs : public QObject
 		QString laserscannerMounting; // just for reading the value here. @sa laserThread
 		QString commaSeparator;
 		QTimer *drivingSpeedTimer;
+		int preferredDrivingDirection; /// @sa logicalUnit
 		//bool robotIsOn; /// Stores the robots (circuits) state.ON or OFF
 		bool robotDrives; /// Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; /// Stores the robots simulation state
