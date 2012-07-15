@@ -427,6 +427,9 @@ void ObstacleCheckThread::run()
 			b = (laserThread->getValue(LASER1, freeStartAreas.at(i)) * 100); // * 100 since we se cm here
 			c = (laserThread->getValue(LASER1, freeEndAreas.at(i))   * 100);
 
+//			qDebug("b=%.1f", b);
+//			qDebug("c=%.1f", c);
+
 			// use the shorter angle to be sure we fit really through.
 			// make the triangle to be one with same-length-sides of b and c!
 			if (c < b)
@@ -445,15 +448,18 @@ void ObstacleCheckThread::run()
 			// where b and c have to be in cm here!
 			currentWidth = calculateDriveThroughWidth(LASER1, ((freeEndAreas.at(i) - freeStartAreas.at(i)) * laserResolutionFront ), currentDistance, currentDistance);
 
+//			qDebug("robotSlotWidth: %d cm", robotSlotWidth);
+//			qDebug("currentWidth: %.1f cm",currentWidth);
+//			qDebug("largestWidth: %.1f cm",largestWidth);
+
+
 			//----------------------------------------------------------------------------
 			// LASER SCANNER 1 DATA ANALYSIS - STEP V
 			//----------------------------------------------------------------------------
-			// Is the current width wide enough for the robot ("robot slot")
+			// Is the current width wide enough for the robot ("robot slot width")
 			//----------------------------------------------------------------------------
 			if (currentWidth >= robotSlotWidth)
 			{
-	//			qDebug("currentWidth: %.1f",currentWidth);
-	//			qDebug("largestWidth: %.1f",largestWidth);
 
 				// is the current width the widest so far?
 				if (currentWidth > largestWidth)
@@ -487,8 +493,6 @@ void ObstacleCheckThread::run()
 
 //			qDebug("Using largestWidth: %.1f",largestWidth);
 			// Nothing *else* here! we use the last width and distance as the best choice  ? ? ? ? ? ?
-
-			//laserThread->setFlag(LASER1, angleIndex, LARGESTFREEWAY);
 		}
 
 //		qDebug("Final largestWidth: %.1f",largestWidth);
@@ -568,7 +572,7 @@ void ObstacleCheckThread::run()
 		}
 		else
 		{
-			// this signal is only used to display the values and the "driection arrow" in the GUI
+			// this signal is only used to display the values and the "direction arrow" in the GUI
 			emit newDrivingAngleSet(0, 0, 0, 0);
 
 			// obstacles EVERYWHERE IN FRONT (no free area found)
