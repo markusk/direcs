@@ -68,7 +68,7 @@ class SettingsDialog : public QDialog
 		/**
 		@return The width of a possible robot slot in centimeters (cm) where to drive through.
 		*/
-		int getSliderRobotSlotWidth();
+		int getSliderPassageWidth();
 
 		/**
 		@return The slider value of the deviation to drive forward (deviation to 90 degrees).

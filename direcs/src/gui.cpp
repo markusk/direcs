@@ -1730,7 +1730,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 
 void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd, int centerOfFreeWay, float width)
 {
-	int configuredRobotSlotWidth = settingsDialog->getSliderRobotSlotWidth();
+	int configuredPassageWidth = settingsDialog->getSliderPassageWidth();
 	/// \todo do all this stuff for the rear scanner?
 
 	// store the values in the class local for refreshLaserView()
@@ -1786,26 +1786,26 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		}
 
 		// show the currently configured robot slot with with a prepended '>' or '<'
-		if ( width > configuredRobotSlotWidth)
+		if ( width > configuredPassageWidth)
 		{
 			if (useLargeGUI)
 			{
-				ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+				ui.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 			}
 			else
 			{
-				uiSmall.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+				uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 			}
 		}
 		else
 		{
 			if (useLargeGUI)
 			{
-				ui.lblRobotSlotWidth->setText( QString("< %1 cm").arg(configuredRobotSlotWidth) );
+				ui.lblPassageWidth->setText( QString("< %1 cm").arg(configuredPassageWidth) );
 			}
 			else
 			{
-				uiSmall.lblRobotSlotWidth->setText( QString("< %1 cm").arg(configuredRobotSlotWidth) );
+				uiSmall.lblPassageWidth->setText( QString("< %1 cm").arg(configuredPassageWidth) );
 			}
 		}
 	}
@@ -1823,11 +1823,11 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		// show the currently configured robot slot with with a prepended '>' or '<'
 		if (useLargeGUI)
 		{
-			ui.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+			ui.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 		}
 		else
 		{
-			uiSmall.lblRobotSlotWidth->setText( QString("> %1 cm").arg(configuredRobotSlotWidth) );
+			uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 		}
 	}
 

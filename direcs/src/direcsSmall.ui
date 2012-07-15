@@ -48,7 +48,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tabState">
      <attribute name="title">
@@ -787,7 +787,7 @@
        <enum>QGraphicsView::ScrollHandDrag</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="lblRobotSlotWidth">
+     <widget class="QLabel" name="lblPassageWidth">
       <property name="geometry">
        <rect>
         <x>590</x>
@@ -2068,7 +2068,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../direcs.qrc"/>
   <include location="../direcs.qrc"/>
  </resources>
  <connections>

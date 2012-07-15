@@ -630,7 +630,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lblRobotSlotWidth">
+              <widget class="QLabel" name="lblPassageWidth">
                <property name="font">
                 <font>
                  <family>Verdana</family>

@@ -1240,7 +1240,7 @@ void Direcs::shutdown()
 			inifile1->writeSetting("Config", "maximumSpeed", settingsDialog->getSliderMaximumSpeed());
 			inifile1->writeSetting("Config", "minObstacleDistance", settingsDialog->getSliderObstacleValue());
 			inifile1->writeSetting("Config", "minObstacleDistanceLaserScanner", settingsDialog->getSliderObstacleLaserScannerValue());
-			inifile1->writeSetting("Config", "robotSlotWidth", settingsDialog->getSliderRobotSlotWidth());
+			inifile1->writeSetting("Config", "robotSlotWidth", settingsDialog->getSliderPassageWidth());
 			inifile1->writeSetting("Config", "straightForwardDeviation", settingsDialog->getSliderStraightForwardDeviationValue());
 
 			// save check box status

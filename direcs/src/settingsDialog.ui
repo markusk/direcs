@@ -129,7 +129,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Robot Slot</string>
+               <string>Passage Width</string>
               </property>
               <property name="wordWrap">
                <bool>false</bool>
@@ -158,7 +158,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QSlider" name="sliderRobotSlotWidth">
+             <widget class="QSlider" name="sliderPassageWidth">
               <property name="font">
                <font>
                 <family>Verdana</family>

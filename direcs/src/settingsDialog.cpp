@@ -46,9 +46,9 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	connect(ui.spinBoxAllMotorsSpeed, SIGNAL(valueChanged(int)), ui.sliderAllMotorsSpeed, SLOT(setValue(int)));
 
 	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderRobotSlotWidth, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlotWidth, SLOT(setValue(int)));
+	connect(ui.sliderPassageWidth, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlotWidth, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxRobotSlotWidth, SIGNAL(valueChanged(int)), ui.sliderRobotSlotWidth, SLOT(setValue(int)));
+	connect(ui.spinBoxRobotSlotWidth, SIGNAL(valueChanged(int)), ui.sliderPassageWidth, SLOT(setValue(int)));
 
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
@@ -69,7 +69,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	// and now the important stuff...
 	//----------------------------------
 	// emit the signal from the widget to obstacleCheckThread via Direcs!
-	connect(ui.sliderRobotSlotWidth, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlotWidth(int)));
+	connect(ui.sliderPassageWidth, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlotWidth(int)));
 
 	// emit the signal from Gui to obstacleCheckThread via Direcs!
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), SIGNAL(setStraightForwardDeviation(int)));
@@ -124,9 +124,9 @@ int SettingsDialog::getSliderObstacleLaserScannerValue()
 }
 
 
-int SettingsDialog::getSliderRobotSlotWidth()
+int SettingsDialog::getSliderPassageWidth()
 {
-	return ui.sliderRobotSlotWidth->value();
+	return ui.sliderPassageWidth->value();
 }
 
 
@@ -255,7 +255,7 @@ void SettingsDialog::setSliderObstacleLaserScannerValue(int value)
 
 void SettingsDialog::setSliderRobotSlotWidth(int width)
 {
-	ui.sliderRobotSlotWidth->setValue(width);
+	ui.sliderPassageWidth->setValue(width);
 }
 
 
