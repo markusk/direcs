@@ -66,7 +66,7 @@ class SettingsDialog : public QDialog
 		int getSliderObstacleLaserScannerValue();
 
 		/**
-		@return The width of a possible robot slot in centimeters (cm) where to drive through.
+		@return The width of a possible robot passage in centimeters (cm) where to drive through.
 		*/
 		int getSliderPassageWidth();
 

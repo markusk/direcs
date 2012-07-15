@@ -137,7 +137,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="spinBoxRobotSlotWidth">
+             <widget class="QSpinBox" name="spinBoxPassageWidth">
               <property name="font">
                <font>
                 <family>Verdana</family>

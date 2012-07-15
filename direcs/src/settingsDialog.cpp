@@ -46,9 +46,9 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	connect(ui.spinBoxAllMotorsSpeed, SIGNAL(valueChanged(int)), ui.sliderAllMotorsSpeed, SLOT(setValue(int)));
 
 	// change the value of a spinBox when the value of the corresponding slider changes
-	connect(ui.sliderPassageWidth, SIGNAL(valueChanged(int)), ui.spinBoxRobotSlotWidth, SLOT(setValue(int)));
+	connect(ui.sliderPassageWidth, SIGNAL(valueChanged(int)), ui.spinBoxPassageWidth, SLOT(setValue(int)));
 	// and vice versa
-	connect(ui.spinBoxRobotSlotWidth, SIGNAL(valueChanged(int)), ui.sliderPassageWidth, SLOT(setValue(int)));
+	connect(ui.spinBoxPassageWidth, SIGNAL(valueChanged(int)), ui.sliderPassageWidth, SLOT(setValue(int)));
 
 	// change the value of a spinBox when the value of the corresponding slider changes
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), ui.spinBoxStraightForwardDeviation, SLOT(setValue(int)));
