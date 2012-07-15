@@ -3673,13 +3673,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>Qt::Alignment</type>
-      <name>splashPosition</name>
-      <anchorfile>classDirecs.html</anchorfile>
-      <anchor>ab7d46ab971a48986b47a47a063dd1d31</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
       <type>QColor</type>
       <name>splashTextColor</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -5022,6 +5015,13 @@
       <anchor>a588226e185e5a2b60be455301ee6c63d</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>writeLaserData</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>af3f4295f0c6a41cf378d8ed418ce14bf</anchor>
+      <arglist>()</arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>Gui</name>
@@ -5132,6 +5132,13 @@
       <name>on_actionReset_activated</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>aac4ab0f5a50fa56afe9cf0dfc05b4e2b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="protected">
+      <type>void</type>
+      <name>on_actionSaveLaserData_activated</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a6ddbdcabbdfb970db00ab5918034bc33</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="slot" protection="protected">
@@ -6489,6 +6496,13 @@
       <anchorfile>classInifile.html</anchorfile>
       <anchor>abd4f9da76277e7b3c2ce1472058a1b18</anchor>
       <arglist>(QString group, QString name, int value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>writeSetting</name>
+      <anchorfile>classInifile.html</anchorfile>
+      <anchor>a7bb0c29b702dc8b978c5e9de9055e6be</anchor>
+      <arglist>(QString group, QString name, QString value)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -8490,6 +8504,13 @@
     <filename>classLaserThread.html</filename>
     <member kind="slot">
       <type>void</type>
+      <name>saveLaserData</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a09d71da387f3c7135c83319f01d3621f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setMeasureMode</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>a97b5de789a3b15696a5fec9e77efbdb9</anchor>
@@ -8658,9 +8679,9 @@
     </member>
     <member kind="function" protection="private">
       <type>bool</type>
-      <name>setSimulationValues</name>
+      <name>readSimulationValues</name>
       <anchorfile>classLaserThread.html</anchorfile>
-      <anchor>aa2f070cd22120f57e6e10d35a38d5615</anchor>
+      <anchor>a949c9839524ee52ff7293a8baa64a8f1</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
@@ -8668,6 +8689,13 @@
       <name>inifile1</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>a6d224fef2e2756bc6dea64471d03e269</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Inifile *</type>
+      <name>inifileLaserdata</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a317607af5e59ab0a576b7160193eb521</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -9864,13 +9892,6 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>setRobotSlot</name>
-      <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a80a8ed404e08e4218cc373a138f45077</anchor>
-      <arglist>(int angle)</arglist>
-    </member>
-    <member kind="slot">
-      <type>void</type>
       <name>setRobotSlotWidth</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>a0fcfc20d27579ece95e5eac26cc3c90a</anchor>
@@ -10126,13 +10147,6 @@
       <name>minObstacleDistanceLaserRear</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
       <anchor>a3901f307f7059573f8f0843fd1dc40b1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>int</type>
-      <name>robotSlot</name>
-      <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a21bc45e106322880f241e0f1141c4aae</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -12840,13 +12854,6 @@
     </member>
     <member kind="function">
       <type>int</type>
-      <name>getSliderRobotSlotValue</name>
-      <anchorfile>classSettingsDialog.html</anchorfile>
-      <anchor>a4b4c6dfa8e39b1afad7592f97b47698e</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
       <name>getSliderRobotSlotWidth</name>
       <anchorfile>classSettingsDialog.html</anchorfile>
       <anchor>ab6da3f6ca1980ee8bdcf876acb7187da</anchor>
@@ -12900,13 +12907,6 @@
       <anchorfile>classSettingsDialog.html</anchorfile>
       <anchor>a640e6dab89c605b864f116e293b5a441</anchor>
       <arglist>(int value)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setSliderRobotSlot</name>
-      <anchorfile>classSettingsDialog.html</anchorfile>
-      <anchor>a578c896e09a1c5d4b52e8043c381e2e9</anchor>
-      <arglist>(int angle)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
