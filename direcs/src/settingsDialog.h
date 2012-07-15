@@ -113,10 +113,10 @@ class SettingsDialog : public QDialog
 		void setSliderObstacleLaserScannerValue(int value);
 
 		/**
-		Sets the slider value of the robot slot, where it has to fit through.
+		Sets the slider value of the passage width, where the robot has to fit through.
 		@param width is the minimum width in centimeters (cm).
 		*/
-		void setSliderRobotSlotWidth(int width);
+		void setSliderPassageWidth(int width);
 
 		/**
 		Sets the slider value of the deviation to drive forward (deviation to 90 degrees).
@@ -150,10 +150,10 @@ class SettingsDialog : public QDialog
 		void setRobotSlot(int angle);
 
 		/**
-		This signal emits the width in centimeters (cm), where the robots has to fit through.
+		This signal emits the passage width in centimeters (cm), where the robots has to fit through.
 		@sa ObstacleCheckThread
 		*/
-		void setRobotSlotWidth(int width);
+		void setPassageWidth(int width);
 
 		/**
 		This signal emit the deviation to 90 degrees when the robot drives forward.

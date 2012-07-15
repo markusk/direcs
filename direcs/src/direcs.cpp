@@ -434,7 +434,7 @@ void Direcs::init()
 		//--------------------------------------------------------------------------
 		// set the robot slot, when signal comes from Gui
 		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setRobotSlotWidth(int)), obstCheckThread, SLOT(setRobotSlotWidth(int)));
+		connect(settingsDialog, SIGNAL(setPassageWidth(int)), obstCheckThread, SLOT(setPassageWidth(int)));
 
 		//--------------------------------------------------------------------------
 		// set the straight forward deviation, when signal comes from Gui
@@ -3403,24 +3403,24 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	int robotSlotWidth = inifile1->readSetting("Config", "robotSlotWidth");
+	int passageWidth = inifile1->readSetting("Config", "robotPassageWidth");
 
-	switch (robotSlotWidth)
+	switch (passageWidth)
 	{
 		case -1:
-			emit message("<font color=\"#FF0000\">Value \"robotSlotWidth\"not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"robotPassageWidth\"not found in ini-file!</font>");
 			break;
 		default:
 			if (!consoleMode)
 			{
 				// set slider to the read value
-				settingsDialog->setSliderRobotSlotWidth(robotSlotWidth);
+				settingsDialog->setSliderPassageWidth(passageWidth);
 			}
 
 			// tell it the obstacle check thread
-			obstCheckThread->setRobotSlotWidth(robotSlotWidth);
+			obstCheckThread->setPassageWidth(passageWidth);
 			// show text
-			emit message(QString("Robot slot width set to <b>%1 cm.</b>").arg(robotSlotWidth));
+			emit message(QString("Robot passage width width set to <b>%1 cm.</b>").arg(passageWidth));
 			break;
 	}
 

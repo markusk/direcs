@@ -69,7 +69,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	// and now the important stuff...
 	//----------------------------------
 	// emit the signal from the widget to obstacleCheckThread via Direcs!
-	connect(ui.sliderPassageWidth, SIGNAL(valueChanged(int)), SIGNAL(setRobotSlotWidth(int)));
+	connect(ui.sliderPassageWidth, SIGNAL(valueChanged(int)), SIGNAL(setPassageWidth(int)));
 
 	// emit the signal from Gui to obstacleCheckThread via Direcs!
 	connect(ui.sliderStraightForwardDeviation, SIGNAL(valueChanged(int)), SIGNAL(setStraightForwardDeviation(int)));
@@ -253,7 +253,7 @@ void SettingsDialog::setSliderObstacleLaserScannerValue(int value)
 }
 
 
-void SettingsDialog::setSliderRobotSlotWidth(int width)
+void SettingsDialog::setSliderPassageWidth(int width)
 {
 	ui.sliderPassageWidth->setValue(width);
 }

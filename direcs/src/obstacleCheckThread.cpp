@@ -705,7 +705,7 @@ void ObstacleCheckThread::setIgnoreArea(short int laser, int area, int start, in
 }
 
 
-void ObstacleCheckThread::setRobotSlotWidth(int width)
+void ObstacleCheckThread::setPassageWidth(int width)
 {
 	robotSlotWidth = width;
 }

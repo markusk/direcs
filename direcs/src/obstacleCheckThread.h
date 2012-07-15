@@ -73,7 +73,7 @@ class ObstacleCheckThread : public QThread
 		/**
 		This slot sets the width in centimeters (cm), where the robots has to fit through.
 		*/
-		void setRobotSlotWidth(int width);
+		void setPassageWidth(int width);
 
 		/**
 		This slot sets the deviation to 90 degrees when the robot drives forward.
