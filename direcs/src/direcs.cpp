@@ -1988,7 +1988,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 				drive(TURNLEFT);
 				motors->flashlight(OFF);
 			}
-//		}
+		}
 
 		return;
 	}
