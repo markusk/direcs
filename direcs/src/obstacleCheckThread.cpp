@@ -434,13 +434,11 @@ void ObstacleCheckThread::run()
 			// make the triangle to be one with same-length-sides of b and c!
 			if (c < b)
 			{
-				b = c;
-				currentDistance = b;
+				currentDistance = c;
 			}
 			else
 			{
-				c = b;
-				currentDistance = c;
+				currentDistance = b;
 			}
 
 
