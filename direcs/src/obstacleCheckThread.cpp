@@ -557,7 +557,7 @@ void ObstacleCheckThread::run()
 			{
 				// NO obstacle
 				emit obstacleDetected(NONE, QDateTime::currentDateTime());
-				qDebug("NONE");
+//				qDebug("NONE");
 			}
 			else
 			{
@@ -565,7 +565,7 @@ void ObstacleCheckThread::run()
 				{
 					// free way left  ->  obstacle RIGHT
 					emit obstacleDetected(OBSTACLEFRONTRIGHT, QDateTime::currentDateTime());
-					qDebug("OBSTACLEFRONTRIGHT");
+//					qDebug("OBSTACLEFRONTRIGHT");
 				}
 				else
 				{
@@ -573,7 +573,7 @@ void ObstacleCheckThread::run()
 					{
 						// free way right  ->  obstacle LEFT
 						emit obstacleDetected(OBSTACLEFRONTLEFT, QDateTime::currentDateTime());
-						qDebug("OBSTACLEFRONTLEFT");
+//						qDebug("OBSTACLEFRONTLEFT");
 					}
 				}
 			}
@@ -585,7 +585,7 @@ void ObstacleCheckThread::run()
 
 			// obstacles EVERYWHERE IN FRONT (no free area found)
 			emit obstacleDetected(OBSTACLESEVERYWHEREINFRONT, QDateTime::currentDateTime());
-			qDebug("OBSTACLESEVERYWHEREINFRONT");
+//			qDebug("OBSTACLESEVERYWHEREINFRONT");
 		}
 
 
