@@ -22,6 +22,7 @@
 #define TIMERTHREAD_H
 
 #include <QThread>
+#include <QDateTime>
 
 
 /**
@@ -80,7 +81,7 @@ class TimerThread : public QThread
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 3000; // 3000 ms
+		static const unsigned long THREADSLEEPTIME = 1000; // 1000 ms
 };
 
 #endif

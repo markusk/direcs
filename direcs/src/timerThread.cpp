@@ -23,10 +23,6 @@
 TimerThread::TimerThread()
 {
 	stopped = false;
-
-	// get the current date and time
-	startTime = QDateTime::currentDateTime();
-	// out << now.toString("yyyy") << "-" << now.toString("MM") << "-" << now.toString("dd") << "  " << now.toString("hh") << ":" << now.toString("mm") << ":" << now.toString("ss") << "." << now.toString("zzz") << "  " << text << "\n";
 }
 
 
@@ -43,6 +39,11 @@ void TimerThread::stop()
 
 void TimerThread::run()
 {
+	// get the current date and time
+	startTime = QDateTime::currentDateTime();
+	emit message(QString("Timer thread run at %1-%2-%3 %4:%5:%6.%7.").arg(startTime.toString("yyyy")).arg(startTime.toString("MM")).arg(startTime.toString("dd")).arg(startTime.toString("hh")).arg(startTime.toString("mm")).arg(startTime.toString("ss")).arg(startTime.toString("zzz")));
+
+
 	//
 	//  start "threading"...
 	//
