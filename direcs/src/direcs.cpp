@@ -3895,7 +3895,7 @@ void Direcs::readSettings()
 			break;
 		default:
 			// set value in networkThread, bind port
-			if (netThread->setPort(value) == true)
+			if (netThread->init(value) == true)
 			{
 				emit message(QString("Setting network port to <b>%1</b>.").arg(value));
 				if (!consoleMode)

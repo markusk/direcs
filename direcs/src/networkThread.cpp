@@ -103,7 +103,7 @@ void NetworkThread::sendNetworkCommand(QString text)
 }
 
 
-bool NetworkThread::setPort(unsigned int port)
+bool NetworkThread::init(unsigned int port)
 {
 	// store port locally
 	networkPort = port;

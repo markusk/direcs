@@ -58,7 +58,7 @@ class NetworkThread : public QThread
 		@param port is the network port where the class receives data. Sending will be done on this port increased by one!
 		@return true on success, false on error
 		*/
-		bool setPort(unsigned int port);
+		bool init(unsigned int port);
 
 
 	public slots:
