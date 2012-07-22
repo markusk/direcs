@@ -51,7 +51,7 @@
     <pixmap resource="../direcs.qrc">:/images/images/splash.png</pixmap>
    </property>
    <property name="scaledContents">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -139,7 +139,7 @@ p, li { white-space: pre-wrap; }
     <item row="3" column="1">
      <widget class="QLabel" name="lblVersion">
       <property name="text">
-       <string>0.9</string>
+       <string>1.0</string>
       </property>
      </widget>
     </item>
@@ -206,7 +206,7 @@ p, li { white-space: pre-wrap; }
     <item row="6" column="1" colspan="3">
      <widget class="QLabel" name="label_12">
       <property name="text">
-       <string>© 2005 - 2011 Markus Knapp</string>
+       <string>© 2005 - 2012 Markus Knapp</string>
       </property>
      </widget>
     </item>

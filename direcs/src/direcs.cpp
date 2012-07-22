@@ -219,7 +219,7 @@ void Direcs::init()
 {
 	if (!consoleMode)
 	{
-		aboutDialog->setVersion("0.9"); /// \todo put this at a nicer place // this is also shown in the about dialog
+		aboutDialog->setVersion("1.0"); /// \todo put this at a nicer place // this is also shown in the about dialog
 		splashTextColor = Qt::white;
 	}
 	forceShutdown = false;
