@@ -23,6 +23,10 @@
 TimerThread::TimerThread()
 {
 	stopped = false;
+
+	// get the current date and time
+	startTime = QDateTime::currentDateTime();
+	// out << now.toString("yyyy") << "-" << now.toString("MM") << "-" << now.toString("dd") << "  " << now.toString("hh") << ":" << now.toString("mm") << ":" << now.toString("ss") << "." << now.toString("zzz") << "  " << text << "\n";
 }
 
 

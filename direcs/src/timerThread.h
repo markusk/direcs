@@ -55,7 +55,27 @@ class TimerThread : public QThread
 		bool init();
 
 
+	signals:
+		/**
+		Emits a string to the GUI log / console.
+		@sa Gui::appendLog()
+		@param text is the message to be emitted
+		@param CR is true when a CR/LF should be added at the end of the line (default)
+		@param sayIt is true when the text for the log also should be spoken (default=false)
+		@param addTimestamp If true, the a timestamp is added in front of the text. This parameter is optional.
+		*/
+		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
+
+		/**
+		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
+		@param errorlevel needs to be defined. Temporariliy we use -2 in case of error in this thread.
+		*/
+		void systemerror(int errorlevel);
+
+
 	private:
+		QDateTime startTime; /// this is for getting the current time
+		QDateTime now; /// this is for getting the current time
 		volatile bool stopped;
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
