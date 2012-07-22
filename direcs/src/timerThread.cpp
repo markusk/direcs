@@ -23,6 +23,7 @@
 TimerThread::TimerThread()
 {
 	stopped = false;
+	networkStateSet = false;
 }
 
 
@@ -53,9 +54,18 @@ void TimerThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-		//
-		// do somethin...
-		//
+		// get current time
+		now = QDateTime::currentDateTime();
+		// qDebug("%d seconds from pgm start.", startTime.secsTo( QDateTime::currentDateTime() ));
+
+		if (networkStateSet==false)
+		{
+			if (startTime.secsTo(now) >= timeToNetworkCheck)
+			{
+				networkStateSet = true;
+				emit checkNetworkState();
+			}
+		}
 
 	}
 	stopped = false;

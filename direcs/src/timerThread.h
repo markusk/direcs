@@ -78,9 +78,13 @@ class TimerThread : public QThread
 		QDateTime now; /// this is for getting the current time
 		volatile bool stopped;
 
+		bool networkStateSet;
+		static const int timeToNetworkCheck = 3; // time in seconds
+
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 1000; // 1000 ms
+
 };
 
 #endif
