@@ -168,7 +168,7 @@ void Circuit::setRobotState(bool state)
 {
 	// store the state within this class
 	circuitState = state;
-	qDebug("Circuit::setRobotState: state=%d", circuitState);
+//	qDebug("Circuit::setRobotState: state=%d", circuitState);
 }
 
 
