@@ -44,6 +44,7 @@ unix|macx {
 				servo.h \
 				settingsDialog.h \
 				speakThread.h \
+				timerThread.h \
 				logfile.h
 
 	SOURCES +=	aboutDialog.cpp \
@@ -72,6 +73,7 @@ unix|macx {
 				servo.cpp \
 				settingsDialog.cpp \
 				speakThread.cpp \
+				timerThread.cpp \
 				logfile.cpp
 
 	FORMS +=	direcs.ui \

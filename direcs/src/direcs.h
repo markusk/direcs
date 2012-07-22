@@ -58,6 +58,7 @@
 #include "head.h"
 #include "camThread.h"
 #include "speakThread.h"
+#include "timerThread.h"
 
 
 //-------------------------------------------------------------------
