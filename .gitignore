@@ -4,6 +4,7 @@
 ui_*.h
 qrc_*.cpp
 moc_*.cpp
+*.pro.user
 
 *.eep
 *.elf
@@ -59,4 +60,3 @@ Icon
 test/test
 direcs-avrsim/src/Makefile
 direcs-avrsim/Makefile
-direcs-avrsim/direcs-avrsim.pro.user
