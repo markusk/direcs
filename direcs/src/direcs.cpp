@@ -240,6 +240,8 @@ void Direcs::init()
 	mot4Speed = 0;
 	robotSimulationMode = false;
 	robotRemoteMode = false;
+	iAmTheMaster = true;
+	firstDataReceived = false;
 	servoTestMode = false;
 	testDriveMode = false;
 	mecanumDriveMode = false; // if false, a joystick move to the right, lets the robot "turn right". If true, the robots "moves right" - without turning around itself.
@@ -4028,6 +4030,36 @@ void Direcs::enableRemoteControlListening(bool state)
 			}
 			netThread->stop();
 			emit message("Network thread stopped.");
+		}
+	}
+}
+
+
+void Direcs::setNetworkState()
+{
+	// first and one time check if this is the master or the slave program
+	if (firstDataReceived == false)
+	{
+		// is there already a master, sending its data over network?
+		if (command.contains("*master#"))
+		{
+			firstDataReceived = true;
+
+			// 'master' received, so we are slave now!
+			iAmTheMaster = false;
+
+			gui->appendNetworkLog("%1 received.");
+			gui->appendNetworkLog("I am the slave now.");
+		}
+		else
+		{
+			firstDataReceived = true;
+
+			// 'master' *not* received, so we are master now!
+			iAmTheMaster = true;
+
+			gui->appendNetworkLog("%1 received.");
+			gui->appendNetworkLog("I am the master.");
 		}
 	}
 }

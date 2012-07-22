@@ -183,6 +183,13 @@ class Direcs : public QObject
 		void executeRemoteCommand(QString command);
 
 		/**
+		Sets the network state of this program.
+		If it receives / received a 'master' strin form another direcs program, running on a robot,
+		it sets *this* program to slave mode. Otherwise we will run in (normal) master mode.
+		*/
+		void setNetworkState();
+
+		/**
 		This slot executes commands from a connected joystick.
 		*/
 		void executeJoystickCommand(int axisNumber, int axisValue);
@@ -365,6 +372,8 @@ class Direcs : public QObject
 		bool robotDrives; /// Stores the robots driving state. TRUE, when the robot drives.
 		bool robotSimulationMode; /// Stores the robots simulation state
 		bool robotRemoteMode; /// Stores the state, if the remote mode is enabled (control via LAN or joystick es enabled
+		bool iAmTheMaster; /// Indicates if this program is the master and sends data from the robot over the network.
+		bool firstDataReceived; /// Indicates that network data were received already and we do not check if we are master or slave
 		bool writeLogFile; /// if true, a logfile is written of all pgm messages (see ini-file)
 		bool useCamera; /// if a camera is connected, but should not be used (just for testing, for a faster program start)
 		bool laserScannerFrontFound;
