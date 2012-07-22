@@ -431,7 +431,7 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 			return;
 		}
 
-		qDebug("Laser1 type %d not supported (LaserThreadd::setSerialPort", laserscannerTypeFront);
+		qDebug("Laser1 type %d not supported (LaserThread::setSerialPort", laserscannerTypeFront);
 		return;
 		break;
 	case LASER2:
@@ -443,15 +443,15 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 		if (laserscannerTypeFront == S300)
 		{
 			/// \todo support two S300 lasers
-			qDebug("Laser2 for S300 not yet supported (LaserThreadd::setSerialPort");
+			qDebug("Laser2 for S300 not yet supported (LaserThread::setSerialPort)");
 			return;
 		}
 
-		qDebug("Laser2 type %d not supported (LaserThreadd::setSerialPort", laserscannerTypeRear);
+		qDebug("Laser2 type %d not supported (LaserThread::setSerialPort)", laserscannerTypeRear);
 		return;
 		break;
 	default:
-		qDebug("Laser number %d not yet supported (LaserThreadd::setSerialPort", laserScanner);
+		qDebug("Laser number %d not yet supported (LaserThread::setSerialPort)", laserScanner);
 		break;
 	}
 }
@@ -468,7 +468,7 @@ void LaserThread::setMounting(short int laserScanner, QString mounting)
 				mountingLaserscannerRear = mounting;
 				break;
 			default:
-				qDebug("laser number not yet supported (LaserThreadd::setMounting");
+				qDebug("laser number not yet supported (LaserThread::setMounting");
 				break;
 		}
 }
@@ -491,7 +491,7 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 					}
 					else
 					{
-						qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER1");
+						qDebug("laser type not yet supported  (LaserThread::setLaserscannerType, LASER1");
 					}
 				}
 				break;
@@ -508,12 +508,12 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 				}
 				else
 				{
-					qDebug("laser type not yet supported  (LaserThreadd::setLaserscannerType, LASER2");
+					qDebug("laser type not yet supported  (LaserThread::setLaserscannerType, LASER2");
 				}
 			}
 			break;
 		default:
-			qDebug("laser number not yet supported  (LaserThreadd::setLaserscannerType");
+			qDebug("laser number not yet supported  (LaserThread::setLaserscannerType");
 			break;
 		}
 
@@ -583,7 +583,7 @@ int LaserThread::getAngle(short int laserScanner)
 			break;
 		}
 
-		qDebug("laser number not yet supported  (LaserThreadd::getAngle");
+		qDebug("laser number not yet supported  (LaserThread::getAngle");
 		return 0;
 }
 
@@ -600,7 +600,7 @@ float LaserThread::getResolution(short int laserScanner)
 			break;
 		}
 
-		qDebug("laser number not yet supported  (LaserThreadd::getResolution");
+		qDebug("laser number not yet supported  (LaserThread::getResolution");
 		return 0;
 }
 
@@ -714,7 +714,7 @@ bool LaserThread::isConnected(short int laserScanner)
 		}
 		break;
 	default:
-		qDebug("laser number not yet supported (LaserThreadd::setMounting");
+		qDebug("laser number not yet supported (LaserThread::setMounting");
 		break;
 	}
 
