@@ -4042,7 +4042,24 @@ void Direcs::enableRemoteControlListening(bool state)
 
 void Direcs::setNetworkState()
 {
-	// first and one time check if this is the master or the slave program
+	// if still no data received (in executeRemoteCommand()
+	if (firstDataReceived == false)
+	{
+		// from now on, we're no longer waiting for data (looking for a 'master
+		firstDataReceived = true;
+
+		// 'master' *not* received, so we are master now!
+		iAmTheMaster = true;
+
+		gui->appendNetworkLog("No network data received.");
+		gui->appendNetworkLog("I am the master.");
+	}
+}
+
+
+void Direcs::executeRemoteCommand(QString command)
+{
+	// if still no first and one time check if this is the master or the slave program
 	if (firstDataReceived == false)
 	{
 		// is there already a master, sending its data over network?
@@ -4053,7 +4070,7 @@ void Direcs::setNetworkState()
 			// 'master' received, so we are slave now!
 			iAmTheMaster = false;
 
-			gui->appendNetworkLog("%1 received.");
+			gui->appendNetworkLog(QString("%1 received.").arg(command));
 			gui->appendNetworkLog("I am the slave now.");
 		}
 		else
@@ -4063,15 +4080,12 @@ void Direcs::setNetworkState()
 			// 'master' *not* received, so we are master now!
 			iAmTheMaster = true;
 
-			gui->appendNetworkLog("%1 received.");
+			gui->appendNetworkLog(QString("%1 received.").arg(command));
 			gui->appendNetworkLog("I am the master.");
 		}
 	}
-}
 
 
-void Direcs::executeRemoteCommand(QString command)
-{
 	// only react, when remote mode is activated in the GUI!
 	if (robotRemoteMode==true)
 	{
