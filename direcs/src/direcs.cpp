@@ -849,6 +849,11 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		connect(netThread, SIGNAL( dataReceived(QString) ), this, SLOT( executeRemoteCommand(QString) ));
 
+		//---------------------------------------------------------------------------------------
+		// check the network state after some seconds after pgm start (are we master or slave?)
+		//---------------------------------------------------------------------------------------
+		connect(timerThread, SIGNAL(checkNetworkState()), this, SLOT(setNetworkState()));
+
 		//----------------------------------------------------------------------------
 		// connect networkThread signal to "dataReceived"
 		// (Whenever data were received, the data are shown in the GUI)
