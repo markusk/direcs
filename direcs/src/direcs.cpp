@@ -4965,7 +4965,7 @@ void Direcs::systemerrorcatcher(int errorlevel)
 #ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
-			// stopping plot thread
+			/// @todo why stopping plot thread here?
 			plotThread->stop();
 		}
 #endif
