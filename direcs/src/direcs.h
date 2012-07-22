@@ -347,6 +347,7 @@ class Direcs : public QObject
 		Joystick *joystick;
 		Head *head;
 		Logfile *logfile;
+		TimerThread *timerThread;
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;

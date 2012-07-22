@@ -211,6 +211,8 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 		camThread = new CamThread();
 	}
 
+	timerThread = new TimerThread();
+
 	drivingSpeedTimer = new QTimer();
 }
 
@@ -726,6 +728,18 @@ void Direcs::init()
 				emit message("Plot thread NOT started!");
 			}
 		} // robot is ON
+
+
+		//-----------------------------------------------------------
+		// start the timer thread
+		//-----------------------------------------------------------
+		if (timerThread->isRunning() == false)
+		{
+			emit splashMessage("Starting timer thread...");
+			emit message("Starting timer thread...", false);
+			timerThread->start();
+			emit message("Timer thread started.");
+		}
 
 
 		//-----------------------------------------------------------
@@ -1497,6 +1511,46 @@ void Direcs::shutdown()
 	}
 
 
+	//--------------------------------
+	// quit the timerThread
+	//--------------------------------
+	if (timerThread->isRunning() == true)
+	{
+		emit message("Stopping timer thread...");
+		emit splashMessage("Stopping timer thread...");
+
+		// my own stop routine :-)
+		timerThread->stop();
+
+		// slowing thread down
+		timerThread->setPriority(QThread::IdlePriority);
+		timerThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((timerThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (timerThread->isFinished() == true)
+		{
+			emit message("Timer thread stopped.");
+		}
+		else
+		{
+			emit message("ERROR: Terminating timer thread because it doesn't answer...");
+			emit splashMessage("Terminating timer thread because it doesn't answer...");
+			timerThread->terminate();
+			timerThread->wait(1000);
+			emit message("Timer thread terminated.");
+		}
+	}
+
+
+
 #ifndef BUILDFORROBOT
 	if (!consoleMode)
 	{
@@ -1723,6 +1777,7 @@ Direcs::~Direcs()
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
+	delete timerThread;
 	delete logfile;
 	#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	delete speakThread;
