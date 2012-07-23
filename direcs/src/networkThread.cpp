@@ -25,6 +25,7 @@ NetworkThread::NetworkThread()
 	stopped = false;
 	networkPort = 0;
 	iAmTheMaster = false;
+	iAmTheSlave = false;
 
 	udpSocket = new QUdpSocket(this);
 }
@@ -129,9 +130,19 @@ bool NetworkThread::init(unsigned int port)
 }
 
 
-void NetworkThread::setNetworkState()
+void NetworkThread::setNetworkMaster()
 {
 	// we are master now
 	// from now on we will send this over network, that we we are master
 	iAmTheMaster = true;
+	iAmTheSlave = false;
+}
+
+
+void NetworkThread::setNetworkSlave()
+{
+	// we are slave now
+	// from now on we will receive data over the network
+	iAmTheSlave = true;
+	iAmTheMaster = false;
 }

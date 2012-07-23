@@ -855,7 +855,7 @@ void Direcs::init()
 		connect(timerThread, SIGNAL(checkNetworkState()), this, SLOT(setNetworkState()));
 
 		// connect signal from timerThread to networkThread (enable sending 'master' signal every second
-		connect(timerThread, SIGNAL(checkNetworkState()), netThread, SLOT(setNetworkState()));
+		connect(timerThread, SIGNAL(checkNetworkState()), netThread, SLOT(setNetworkMaster()));
 
 		// show network master/slave state in GUI LED
 		if (!consoleMode)

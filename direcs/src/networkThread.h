@@ -70,7 +70,12 @@ class NetworkThread : public QThread
 		/**
 		Enables sending the 'master' signal over network every second
 		*/
-		void setNetworkState();
+		void setNetworkMaster();
+
+		/**
+		Setting the network 'slave' state.
+		*/
+		void setNetworkSlave();
 
 
 	signals:
@@ -97,6 +102,7 @@ class NetworkThread : public QThread
 		volatile bool stopped;
 		unsigned int networkPort;
 		bool iAmTheMaster; /// Indicates if this program is the master and sends data from the robot over the network.
+		bool iAmTheSlave; /// Indicates if this program is the slave and receives data from the robot over the network.
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
