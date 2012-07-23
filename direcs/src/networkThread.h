@@ -79,6 +79,11 @@ class NetworkThread : public QThread
 		*/
 		void dataReceived(QString text);
 
+		/**
+		This signal is emitted every MSLEEP seconds to show that we are sending a master signal. @sa Gui::setLEDMasterSlave()
+		*/
+		void heartbeat(unsigned char state);
+
 
 	private slots:
 		/**
@@ -96,6 +101,13 @@ class NetworkThread : public QThread
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 1000; // Default: 25 ms  (old: 5 ms)
+
+		/**
+		This is for the @sa heartbeat signal (the GUI LED colors)
+		*/
+		static const unsigned char LEDOFF	= 0;
+		static const unsigned char RED		= 1;
+		static const unsigned char GREEN	= 2;
 };
 
 #endif

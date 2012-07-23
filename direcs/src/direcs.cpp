@@ -857,6 +857,12 @@ void Direcs::init()
 		// connect signal from timerThread to networkThread (enable sending 'master' signal every second
 		connect(timerThread, SIGNAL(checkNetworkState()), netThread, SLOT(setNetworkState()));
 
+		// show network master/slave state in GUI LED
+		if (!consoleMode)
+		{
+			connect(netThread, SIGNAL(heartbeat(unsigned char)), gui, SLOT( setLEDMasterSlave(unsigned char) ) );
+		}
+
 		//----------------------------------------------------------------------------
 		// connect networkThread signal to "dataReceived"
 		// (Whenever data were received, the data are shown in the GUI)
@@ -4054,6 +4060,9 @@ void Direcs::setNetworkState()
 		// 'master' *not* received, so we are master now!
 		iAmTheMaster = true;
 
+		// show state in GUI
+		gui->setLabelMasterSlave("Master");
+
 		gui->appendNetworkLog("No network data received.");
 		gui->appendNetworkLog("I am the master.");
 	}
@@ -4073,6 +4082,9 @@ void Direcs::executeRemoteCommand(QString command)
 			// 'master' received, so we are slave now!
 			iAmTheMaster = false;
 
+			// show state in GUI
+			gui->setLabelMasterSlave("Slave");
+
 			gui->appendNetworkLog(QString("%1 received.").arg(command));
 			gui->appendNetworkLog("I am the slave now.");
 		}
@@ -4082,6 +4094,9 @@ void Direcs::executeRemoteCommand(QString command)
 
 			// 'master' *not* received, so we are master now!
 			iAmTheMaster = true;
+
+			// show state in GUI
+			gui->setLabelMasterSlave("Master");
 
 			gui->appendNetworkLog(QString("%1 received.").arg(command));
 			gui->appendNetworkLog("I am the master.");

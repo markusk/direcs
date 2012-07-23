@@ -44,14 +44,12 @@ void NetworkThread::stop()
 
 void NetworkThread::run()
 {
-	//------------------------------------------------------------
-	// description
-	//------------------------------------------------------------
+	bool heartbeatToggle = false;
+
 
 	//
 	//  start "threading"...
 	//
-
 	emit dataReceived(tr("Listening on port %1...").arg(networkPort));
 
 	while (!stopped)
@@ -65,6 +63,18 @@ void NetworkThread::run()
 		if (iAmTheMaster)
 		{
 			sendNetworkCommand("*master#"); /// @todo add *master# string to ini-file
+
+			// send an optical heartbeat signal to the GUI
+			if (heartbeatToggle)
+			{
+				emit heartbeat(GREEN);
+			}
+			else
+			{
+				emit heartbeat(LEDOFF);
+			}
+
+			heartbeatToggle = !heartbeatToggle;
 		}
 	}
 	stopped = false;
