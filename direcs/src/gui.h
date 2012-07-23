@@ -389,10 +389,22 @@ class Gui : public QMainWindow
 		void setLEDNetwork(unsigned char state);
 
 		/**
+		Turns the network master/slave GUI LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDMasterSlave(unsigned char state);
+
+		/**
 		Turns the lase scanner GUI LED red, green or off.
 		@param state can be RED, GREEN or OFF.
 		*/
 		void setLEDLaser(unsigned char state);
+
+		/**
+		Changes the text of the netowrk master/slave label
+		@param text is the etxt to be shown (normally 'Master' or 'Slave)
+		*/
+		void setLabelMasterSlave(QString text);
 
 		/**
 		Turns the CONSOLE mode on or off.

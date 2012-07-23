@@ -4354,6 +4354,44 @@ void Gui::setLEDNetwork(unsigned char state)
 }
 
 
+void Gui::setLEDMasterSlave(unsigned char state)
+{
+	switch (state)
+	{
+			case RED:
+			if (useLargeGUI)
+			{
+				ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_red.gif"));
+			}
+			break;
+		case GREEN:
+			if (useLargeGUI)
+			{
+				ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_green.gif"));
+			}
+			break;
+		case LEDOFF:
+			if (useLargeGUI)
+			{
+				ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+			}
+			break;
+	}
+}
+
+
 void Gui::setLEDLaser(unsigned char state)
 {
 	switch (state)
@@ -4388,6 +4426,19 @@ void Gui::setLEDLaser(unsigned char state)
 				uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
+	}
+}
+
+
+void Gui::setLabelMasterSlave(QString text)
+{
+	if (useLargeGUI)
+	{
+		ui.lblMasterSlave->setText(text);
+	}
+	else
+	{
+		uiSmall.lblMasterSlave->setText(text);
 	}
 }
 
