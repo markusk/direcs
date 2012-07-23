@@ -63,6 +63,7 @@ void TimerThread::run()
 		//------------------
 		if (networkStateSet==false)
 		{
+			// time elapsed for receiving a master signal.
 			if (startTime.secsTo(now) >= timeToNetworkCheck)
 			{
 				networkStateSet = true;

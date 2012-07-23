@@ -4087,6 +4087,9 @@ void Direcs::executeRemoteCommand(QString command)
 
 			gui->appendNetworkLog(QString("%1 received.").arg(command));
 			gui->appendNetworkLog("I am the slave now.");
+
+			// let the networkThread know this
+			netThread->setNetworkSlave();
 		}
 		else
 		{
