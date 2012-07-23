@@ -41,7 +41,7 @@ void TimerThread::stop()
 void TimerThread::run()
 {
 	// get the current date and time
-	startTime = QDateTime::currentDateTime();
+	startTime = QTime::currentTime();
 //	emit message(QString("Timer thread start at %1-%2-%3 %4:%5:%6.%7.").arg(startTime.toString("yyyy")).arg(startTime.toString("MM")).arg(startTime.toString("dd")).arg(startTime.toString("hh")).arg(startTime.toString("mm")).arg(startTime.toString("ss")).arg(startTime.toString("zzz")));
 	emit message("Timer thread started now (run).");
 
@@ -55,7 +55,7 @@ void TimerThread::run()
 		msleep(THREADSLEEPTIME);
 
 		// get current time
-		now = QDateTime::currentDateTime();
+		now = QTime::currentTime();
 		// qDebug("%d seconds from pgm start.", startTime.secsTo( QDateTime::currentDateTime() ));
 
 		if (networkStateSet==false)

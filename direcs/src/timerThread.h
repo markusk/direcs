@@ -22,7 +22,7 @@
 #define TIMERTHREAD_H
 
 #include <QThread>
-#include <QDateTime>
+#include <QTime>
 
 
 /**
@@ -74,8 +74,8 @@ class TimerThread : public QThread
 
 
 	private:
-		QDateTime startTime; /// this is for getting the current time
-		QDateTime now; /// this is for getting the current time
+		QTime startTime; /// this is for getting the current time
+		QTime now; /// this is for getting the current time
 		volatile bool stopped;
 
 		bool networkStateSet;
