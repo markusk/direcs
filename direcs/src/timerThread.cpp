@@ -58,6 +58,9 @@ void TimerThread::run()
 		now = QTime::currentTime();
 		// qDebug("%d seconds from pgm start.", startTime.secsTo( QDateTime::currentDateTime() ));
 
+		//------------------
+		// master or slave?
+		//------------------
 		if (networkStateSet==false)
 		{
 			if (startTime.secsTo(now) >= timeToNetworkCheck)
@@ -67,6 +70,12 @@ void TimerThread::run()
 			}
 		}
 
+
+		//----------------------
+		// send 'master' signal
+		// every second
+		//----------------------
+		emit networkMessage();
 	}
 	stopped = false;
 }

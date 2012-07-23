@@ -854,6 +854,9 @@ void Direcs::init()
 		//---------------------------------------------------------------------------------------
 		connect(timerThread, SIGNAL(checkNetworkState()), this, SLOT(setNetworkState()));
 
+		// connect signal from timerThread to networkThread (enable sending 'master' signal every second
+		connect(timerThread, SIGNAL(checkNetworkState()), netThread, SLOT(setNetworkState()));
+
 		//----------------------------------------------------------------------------
 		// connect networkThread signal to "dataReceived"
 		// (Whenever data were received, the data are shown in the GUI)
@@ -4063,7 +4066,7 @@ void Direcs::executeRemoteCommand(QString command)
 	if (firstDataReceived == false)
 	{
 		// is there already a master, sending its data over network?
-		if (command.contains("*master#"))
+		if (command.contains("*master#")) /// @todo add *master# string to ini-file
 		{
 			firstDataReceived = true;
 

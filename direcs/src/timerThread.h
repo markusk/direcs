@@ -72,6 +72,11 @@ class TimerThread : public QThread
 		*/
 		void checkNetworkState();
 
+		/**
+		Sends a signal over the network. E.g. if we are 'master' or 'slave. @sa Direcs::sendNetworkMessage
+		*/
+		void networkMessage();
+
 
 	private:
 		QTime startTime; /// this is for getting the current time

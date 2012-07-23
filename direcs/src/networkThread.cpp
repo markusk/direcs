@@ -60,14 +60,12 @@ void NetworkThread::run()
 		// let the thread sleep some time (kind of timer, because we sleep for one second here)
 		msleep(THREADSLEEPTIME);
 
-		//
-		// do somethin...
-		//
 
-		//====================================================================
-		//  e m i t  Signal
-		//====================================================================
-		//emit sensorDataComplete();
+		// send master signal when we are the network master
+		if (iAmTheMaster)
+		{
+			sendNetworkCommand("*master#"); /// @todo add *master# string to ini-file
+		}
 	}
 	stopped = false;
 }
