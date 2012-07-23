@@ -23,7 +23,8 @@
 NetworkThread::NetworkThread()
 {
 	stopped = false;
-	networkPort = 0;
+	networkPortListen = 0;
+	networkPortSend = 0;
 	iAmTheMaster = false;
 	iAmTheSlave = false;
 
@@ -51,7 +52,7 @@ void NetworkThread::run()
 	//
 	//  start "threading"...
 	//
-	emit dataReceived(tr("Listening on port %1...").arg(networkPort));
+	emit dataReceived(tr("Listening on port %1...").arg(networkPortListen));
 
 	while (!stopped)
 	{
@@ -100,25 +101,26 @@ void NetworkThread::processPendingDatagrams()
 
 void NetworkThread::sendNetworkCommand(QString text)
 {
-	if (networkPort > 0)
+	if (networkPortSend > 0)
 	{
 		QByteArray datagram = text.toAscii();
-		udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, networkPort + 1);
+		udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, networkPortSend);
 	}
 	else
 	{
-		emit dataReceived(tr("ERROR sending network command: Network port not set! Port is still %1...").arg(networkPort));
+		emit dataReceived(tr("ERROR sending network command: Network 'send' port not set! Port is still %1...").arg(networkPortSend));
 	}
 }
 
 
-bool NetworkThread::init(unsigned int port)
+bool NetworkThread::init(unsigned int portListen, unsigned int portSend)
 {
-	// store port locally
-	networkPort = port;
+	// store ports locally
+	networkPortListen = portListen;
+	networkPortSend   = portSend;
 
-	// bind the socket to the given port
-	if (udpSocket->bind(networkPort) == true)
+	// bind the socket to the given port for listening
+	if (udpSocket->bind(networkPortListen) == true)
 	{
 		// do something with the network received data, when completely received
 		connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));

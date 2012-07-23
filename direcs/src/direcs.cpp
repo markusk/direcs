@@ -3959,32 +3959,47 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	value = inifile1->readSetting("Config", "networkPort");
+	value = inifile1->readSetting("Config", "networkPortListen");
 
 	switch (value)
 	{
 		case -1:
-			emit message("<font color=\"#FF0000\">Value \"networkPort\" not found in ini-file!</font>");
+			emit message("<font color=\"#FF0000\">Value \"networkPortListen\" not found in ini-file!</font>");
 			value = 0;
 			break;
+
 		default:
-			// set value in networkThread, bind port
-			if (netThread->init(value) == true)
+			//---------------------------------------------------------------------
+			// read next network port
+			unsigned int valueSend =  inifile1->readSetting("Config", "networkPortSend");
+
+			switch (value)
 			{
-				emit message(QString("Setting network port to <b>%1</b>.").arg(value));
-				if (!consoleMode)
-				{
-					gui->setLEDNetwork(GREEN);
-				}
-			}
-			else
-			{
-				// Error
-				emit message(QString("<font color=\"#FF0000\">Error setting network to port <b>%1</b>.</font>").arg(value));
-				if (!consoleMode)
-				{
-					gui->setLEDNetwork(RED);
-				}
+				case -1:
+					emit message("<font color=\"#FF0000\">Value \"networkPortSend\" not found in ini-file!</font>");
+					value = 0;
+					break;
+
+				default:
+					// set value in networkThread, bind port
+					if (netThread->init(value, valueSend) == true)
+					{
+						emit message(QString("Setting network ports to <b>%1 and %2</b>.").arg(value).arg(valueSend));
+						if (!consoleMode)
+						{
+							gui->setLEDNetwork(GREEN);
+						}
+					}
+					else
+					{
+						// Error
+						emit message(QString("<font color=\"#FF0000\">Error setting network ports to <b>%1 and %2</b>.</font>").arg(value).arg(valueSend));
+						if (!consoleMode)
+						{
+							gui->setLEDNetwork(RED);
+						}
+					}
+					break;
 			}
 			break;
 	}

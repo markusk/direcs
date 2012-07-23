@@ -54,11 +54,12 @@ class NetworkThread : public QThread
 		virtual void run();
 
 		/**
-		Sets the network port
-		@param port is the network port where the class receives data. Sending will be done on this port increased by one!
+		Sets the network ports
+		@param portListen is the network port where the class receives data.
+		@param portSend is the network port where the class sends data.
 		@return true on success, false on error
 		*/
-		bool init(unsigned int port);
+		bool init(unsigned int portListen, unsigned int portSend);
 
 
 	public slots:
@@ -100,7 +101,8 @@ class NetworkThread : public QThread
 	private:
 		QUdpSocket *udpSocket;
 		volatile bool stopped;
-		unsigned int networkPort;
+		unsigned int networkPortListen;
+		unsigned int networkPortSend;
 		bool iAmTheMaster; /// Indicates if this program is the master and sends data from the robot over the network.
 		bool iAmTheSlave; /// Indicates if this program is the slave and receives data from the robot over the network.
 
