@@ -24,6 +24,7 @@ NetworkThread::NetworkThread()
 {
 	stopped = false;
 	networkPort = 0;
+	iAmTheMaster = false;
 
 	udpSocket = new QUdpSocket(this);
 }
@@ -56,8 +57,7 @@ void NetworkThread::run()
 	while (!stopped)
 	{
 
-		// let the thread sleep some time
-		// for having more time for the other threads
+		// let the thread sleep some time (kind of timer, because we sleep for one second here)
 		msleep(THREADSLEEPTIME);
 
 		//
@@ -118,4 +118,12 @@ bool NetworkThread::init(unsigned int port)
 
 	// error
 	return false;
+}
+
+
+void NetworkThread::setNetworkState()
+{
+	// we are master now
+	// from now on we will send this over network, that we we are master
+	iAmTheMaster = true;
 }

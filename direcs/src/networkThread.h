@@ -67,6 +67,11 @@ class NetworkThread : public QThread
 		*/
 		void sendNetworkCommand(QString text);
 
+		/**
+		Enables sending the 'master' signal over network every second
+		*/
+		void setNetworkState();
+
 
 	signals:
 		/**
@@ -86,6 +91,7 @@ class NetworkThread : public QThread
 		QUdpSocket *udpSocket;
 		volatile bool stopped;
 		unsigned int networkPort;
+		bool iAmTheMaster; /// Indicates if this program is the master and sends data from the robot over the network.
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
