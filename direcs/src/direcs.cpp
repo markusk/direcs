@@ -3971,9 +3971,9 @@ void Direcs::readSettings()
 		default:
 			//---------------------------------------------------------------------
 			// read next network port
-			unsigned int valueSend =  inifile1->readSetting("Config", "networkPortSend");
+			unsigned int valueSend = inifile1->readSetting("Config", "networkPortSend");
 
-			switch (value)
+			switch (valueSend)
 			{
 				case -1:
 					emit message("<font color=\"#FF0000\">Value \"networkPortSend\" not found in ini-file!</font>");
@@ -3984,7 +3984,7 @@ void Direcs::readSettings()
 					// set value in networkThread, bind port
 					if (netThread->init(value, valueSend) == true)
 					{
-						emit message(QString("Setting network ports to <b>%1 and %2</b>.").arg(value).arg(valueSend));
+						emit message(QString("Network ports set to <b>%1 and %2</b>.").arg(value).arg(valueSend));
 						if (!consoleMode)
 						{
 							gui->setLEDNetwork(GREEN);
@@ -3999,6 +3999,7 @@ void Direcs::readSettings()
 							gui->setLEDNetwork(RED);
 						}
 					}
+
 					break;
 			}
 			break;
