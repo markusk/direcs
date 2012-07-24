@@ -115,16 +115,15 @@ void NetworkThread::sendNetworkCommand(QString text)
 
 void NetworkThread::swapPorts()
 {
-	if (udpSocket->isOpen())
-	{
-		udpSocket->close();
-	}
+	// first disconnect the signal!
+	udpSocket->disconnect(SIGNAL(readyRead()));
+	udpSocket->close();
 
+	// swap ports
 	unsigned int temp = networkPortListen;
 	networkPortListen = networkPortSend;
 	networkPortSend = temp;
 
-	disconnect(this, SIGNAL(readyRead()), 0, 0);
 
 	if (init(networkPortListen, networkPortSend) == false)
 	{
