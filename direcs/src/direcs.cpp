@@ -547,9 +547,13 @@ void Direcs::init()
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
+
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
 		//-------------------------------------------------------
+
+		// we swap the ports for first listening for a network master
+		netThread->swapPorts();
 		enableRemoteControlListening(true);
 
 		//-------------------------------------------------------
@@ -4081,6 +4085,9 @@ void Direcs::setNetworkState()
 
 		gui->appendNetworkLog("No network data received.");
 		gui->appendNetworkLog("I am the master.");
+
+		// we swap the ports back (to initial values) after listening for a network master
+		netThread->swapPorts();
 	}
 }
 
@@ -4119,6 +4126,9 @@ void Direcs::executeRemoteCommand(QString command)
 
 			gui->appendNetworkLog(QString("%1 received.").arg(command));
 			gui->appendNetworkLog("I am the master.");
+
+			// we swap the ports back (to initial values) after listening for a network master
+			netThread->swapPorts();
 		}
 	}
 
