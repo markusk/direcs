@@ -61,6 +61,11 @@ class NetworkThread : public QThread
 		*/
 		bool init(unsigned int portListen, unsigned int portSend);
 
+		/**
+		Swaps the sender and listener port. This is at the beginning, when we have two instances of this program in one network
+		*/
+		void swapPorts();
+
 
 	public slots:
 		/**

@@ -113,6 +113,27 @@ void NetworkThread::sendNetworkCommand(QString text)
 }
 
 
+void NetworkThread::swapPorts()
+{
+	if (udpSocket->isOpen())
+	{
+		udpSocket->close();
+	}
+
+	unsigned int temp = networkPortListen;
+	networkPortListen = networkPortSend;
+	networkPortSend = temp;
+
+	disconnect(this, SIGNAL(readyRead()), 0, 0);
+
+	if (init(networkPortListen, networkPortSend) == false)
+	{
+		qDebug("ERROR swapping network ports.");
+		return;
+	}
+}
+
+
 bool NetworkThread::init(unsigned int portListen, unsigned int portSend)
 {
 	// store ports locally
