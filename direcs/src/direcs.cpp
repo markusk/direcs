@@ -3963,9 +3963,9 @@ void Direcs::readSettings()
 
 	//---------------------------------------------------------------------
 	// read setting
-	value = inifile1->readSetting("Config", "networkPortListen");
+	networkPortListen = inifile1->readSetting("Config", "networkPortListen");
 
-	switch (value)
+	switch (networkPortListen)
 	{
 		case -1:
 			emit message("<font color=\"#FF0000\">Value \"networkPortListen\" not found in ini-file!</font>");
@@ -3975,20 +3975,20 @@ void Direcs::readSettings()
 		default:
 			//---------------------------------------------------------------------
 			// read next network port
-			unsigned int valueSend = inifile1->readSetting("Config", "networkPortSend");
+			networkPortSend = inifile1->readSetting("Config", "networkPortSend");
 
-			switch (valueSend)
+			switch (networkPortSend)
 			{
 				case -1:
 					emit message("<font color=\"#FF0000\">Value \"networkPortSend\" not found in ini-file!</font>");
-					value = 0;
+					networkPortListen = 0;
 					break;
 
 				default:
 					// set value in networkThread, bind port
-					if (netThread->init(value, valueSend) == true)
+					if (netThread->init(networkPortListen, networkPortSend) == true)
 					{
-						emit message(QString("Network ports set to <b>%1 and %2</b>.").arg(value).arg(valueSend));
+						emit message(QString("Network ports set to <b>%1 and %2</b>.").arg(networkPortListen).arg(networkPortSend));
 						if (!consoleMode)
 						{
 							gui->setLEDNetwork(GREEN);
@@ -3997,7 +3997,7 @@ void Direcs::readSettings()
 					else
 					{
 						// Error
-						emit message(QString("<font color=\"#FF0000\">Error setting network ports to <b>%1 and %2</b>.</font>").arg(value).arg(valueSend));
+						emit message(QString("<font color=\"#FF0000\">Error setting network ports to <b>%1 and %2</b>.</font>").arg(value).arg(networkPortSend));
 						if (!consoleMode)
 						{
 							gui->setLEDNetwork(RED);
@@ -4032,7 +4032,7 @@ void Direcs::readSettings()
 }
 
 
-void Direcs::enableRemoteControlListening(bool state)
+void Direcs::enableRemoteControlListening(bool state) /// @todo check if we still need the enableRemoteControlListening method
 {
 	// store the state gobal to Direcs
 	robotRemoteMode = state;
@@ -4044,13 +4044,17 @@ void Direcs::enableRemoteControlListening(bool state)
 		//-----------------------------------------------------------
 		if (netThread->isRunning() == false)
 		{
-			emit message("Starting network thread...", false);
+			emit message("Starting network thread... ", false);
 			if (!consoleMode)
 			{
-				gui->appendNetworkLog("Starting network thread...");
+				gui->appendNetworkLog("Starting network thread... ", false);
 			}
 			netThread->start();
-			emit message("Network thread started.");
+			emit message("started.", true, false, false);
+			if (!consoleMode)
+			{
+				gui->appendNetworkLog("started");
+			}
 		}
 	}
 	else
