@@ -469,7 +469,6 @@ void Direcs::init()
 	//--------------------------------------------------------------------------
 	if (inifile1->checkFiles() == true)
 	{
-/*
 		//----------------------------------------------------------------------------
 		// say a text
 		//----------------------------------------------------------------------------
@@ -489,7 +488,6 @@ void Direcs::init()
 			emit message("Speak thread started.");
 		}
 		#endif
-*/
 
 		// file found-Msg
 		emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
@@ -5138,10 +5136,11 @@ void Direcs::test()
 
 
 	toggle = !toggle;
+/*
 	laserThread->setMeasureMode(toggle);
 	emit message(QString("Measure mode = %1").arg(toggle));
 
-/*
+
 	static int color = 0;
 
 
@@ -5226,7 +5225,7 @@ void Direcs::test()
 	/*
 	static bool toggle = OFF;
 
-
+*/
 	if (toggle == OFF)
 	{
 		toggle = ON;
@@ -5265,7 +5264,7 @@ void Direcs::test()
 	}
 		//head->look("RIGHT");
 
-
+/*
 	motors->flashlight(toggle);
 	*/
 }
