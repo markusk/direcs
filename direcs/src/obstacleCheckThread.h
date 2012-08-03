@@ -204,7 +204,7 @@ class ObstacleCheckThread : public QThread
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 1000; // 250 ! original !
+		static const unsigned long THREADSLEEPTIME = 10; // 250 ! original !
 
 		// Give the sensors some names
 		//
