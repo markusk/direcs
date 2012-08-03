@@ -5132,10 +5132,16 @@ void Direcs::drivingLight(unsigned char color)
 
 void Direcs::test()
 {
-	static bool toggle = false;
+//	static bool toggle = false;
 
 
-	toggle = !toggle;
+	speakThread->setLanguage("en");
+	emit speak(tr("Hello world"));
+	emit speak(tr("The voltage for battery %1 is around %2 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ));
+	emit speak(tr("The voltage for battery %1 is around %2 Volt.").arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ));
+
+
+//	toggle = !toggle;
 /*
 	laserThread->setMeasureMode(toggle);
 	emit message(QString("Measure mode = %1").arg(toggle));
@@ -5222,10 +5228,10 @@ void Direcs::test()
 */
 
 
-	/*
+/*
 	static bool toggle = OFF;
 
-*/
+
 	if (toggle == OFF)
 	{
 		toggle = ON;
@@ -5264,7 +5270,7 @@ void Direcs::test()
 	}
 		//head->look("RIGHT");
 
-/*
+
 	motors->flashlight(toggle);
 	*/
 }
