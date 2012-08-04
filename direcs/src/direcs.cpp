@@ -5137,8 +5137,7 @@ void Direcs::test()
 
 	speakThread->setLanguage("en");
 	emit speak(tr("Hello world"));
-	emit speak(tr("The voltage for battery %1 is around %2 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ));
-	emit speak(tr("The voltage for battery %1 is around %2 Volt.").arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ));
+	emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 
 
 //	toggle = !toggle;
