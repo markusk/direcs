@@ -60,6 +60,7 @@
 #include "camThread.h"
 #include "speakThread.h"
 #include "timerThread.h"
+#include "partyThread.h"
 
 
 //-------------------------------------------------------------------

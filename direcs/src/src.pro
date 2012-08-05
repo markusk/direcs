@@ -37,6 +37,7 @@ unix|macx {
 				direcs.h \
 				networkThread.h \
 				obstacleCheckThread.h \
+				partyThread.h \
 				plotThread.h \
 				QtGLContext.h \
 				rgbLed.h \
@@ -66,6 +67,7 @@ unix|macx {
 				direcs.cpp \
 				networkThread.cpp \
 				obstacleCheckThread.cpp \
+				partyThread.cpp \
 				plotThread.cpp \
 				QtGLContext.cpp \
 				rgbLed.cpp \
