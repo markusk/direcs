@@ -31,6 +31,7 @@
 #include <QSplashScreen>
 #include <QMetaType>
 #include <QtCore/QCoreApplication>
+#include <Phonon>
 //-------------------------------------------------------------------
 #include "consoleGui.h"
 #include "gui.h"
