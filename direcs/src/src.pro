@@ -83,7 +83,8 @@ unix|macx {
 				direcsSmall.ui
 
 	QT +=		network \
-				opengl
+				opengl \
+				phonon
 
 	INCLUDEPATH += /opt/local/include \
 				/opt/local/libexec/qt4-mac/include \
