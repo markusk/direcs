@@ -766,18 +766,6 @@ void Direcs::init()
 
 
 		//-----------------------------------------------------------
-		// start the party thread
-		//-----------------------------------------------------------
-		if (partyThread->isRunning() == false)
-		{
-			emit splashMessage("Starting party thread...");
-			emit message("Starting party thread...", false);
-			partyThread->start();
-			emit message("Party thread started.");
-		}
-
-
-		//-----------------------------------------------------------
 		// check if a joystick is connected
 		//-----------------------------------------------------------
 		if (joystick->isConnected())
