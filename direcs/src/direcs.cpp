@@ -289,11 +289,14 @@ void Direcs::init()
 	#endif
 
 	//--------------------------------------------------------------------------
-	// show the splash screen
+	// show the splash screen and set application name
 	//--------------------------------------------------------------------------
 	if (!consoleMode)
 	{
 		splash->show();
+
+		// this is for the Phonon library to export audio output names through the DBUS interface
+		QCoreApplication::setApplicationName("direcs");
 	}
 
 	//--------------------------------------------------------------------------
@@ -5132,7 +5135,15 @@ void Direcs::drivingLight(unsigned char color)
 
 void Direcs::test()
 {
-	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("shuutobi - Moxie.mp3"));
+	#ifdef Q_OS_LINUX
+	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
+	#endif
+
+	#ifdef Q_OS_MAC
+	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
+	#endif
+
+
 	music->play();
 
 
