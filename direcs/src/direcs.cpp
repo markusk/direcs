@@ -1358,12 +1358,12 @@ void Direcs::shutdown()
 	if (forceShutdown==false)
 	{
 		// turn off all RGB LEDs
-		rgbLeds->setBrightness(RGBLED1, 0);
-		rgbLeds->setBrightness(RGBLED2, 0);
-		rgbLeds->setBrightness(RGBLED3, 0);
-		rgbLeds->setBrightness(RGBLED4, 0);
-		rgbLeds->setBrightness(RGBLED5, 0);
-		rgbLeds->setBrightness(RGBLED6, 0);
+		rgbLeds->setBrightness(RGBLED1, 1);
+		rgbLeds->setBrightness(RGBLED2, 1);
+		rgbLeds->setBrightness(RGBLED3, 1);
+		rgbLeds->setBrightness(RGBLED4, 1);
+		rgbLeds->setBrightness(RGBLED5, 1);
+		rgbLeds->setBrightness(RGBLED6, 1);
 	}
 
 	/// \todo a universal quit-threads-method
