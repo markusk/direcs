@@ -412,6 +412,7 @@ class Direcs : public QObject
 		QList <QDateTime> obstacleAlarmFrontRightList;		/// A list of obstacle alarms that occured right the last n times.
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
 		//QList <QDateTime> obstacleAlarmRightTimestampList;	/// A list of the timestamps of the obstacle alarms that right occured.
+		Phonon::MediaObject *mediaObject; /// A Phonon media player for e.g. playing a mp3 file
 
 		/// The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;

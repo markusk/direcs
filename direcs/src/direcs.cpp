@@ -1150,6 +1150,14 @@ void Direcs::init()
 		{
 			// create phonon player and set filename
 //			music->Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
+
+			mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
+			Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+			Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+		}
+
+		if (!consoleMode)
+		{
 			//------------------------------------------------------------------
 			// hide some dialogues
 			//------------------------------------------------------------------
