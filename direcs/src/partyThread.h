@@ -80,7 +80,7 @@ class PartyThread : public QThread
 		static const int timeToNetworkCheck = 3; // time in seconds
 
 		// Time in milliseconds every ms the run method is called
-		static const unsigned long THREADSLEEPTIME = 250; // 250 ms
+		static const unsigned long THREADSLEEPTIME = 200; // 250 ms
 
 		/// the RGB LED numbers @sa rgbLed::rgbLed()
 		static const unsigned char RGBLED1 = 0;

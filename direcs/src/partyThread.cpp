@@ -24,6 +24,9 @@ PartyThread::PartyThread()
 {
 	stopped = false;
 	partyMode = false;
+
+	// start random number generator
+	srand(time(NULL));
 }
 
 
@@ -40,22 +43,40 @@ void PartyThread::stop()
 
 void PartyThread::run()
 {
-	static bool toggle = false;
+	int number1 = 1;
+	int number2 = 1;
+	int number3 = 1;
+	//	static bool toggle = false;
 
 	//
 	//  start "threading"...
 	//
 	while (!stopped)
 	{
-		toggle = !toggle;
+//		toggle = !toggle;
 
-		if (toggle)
+		if (0)
 		{
-			emit setRGBLEDBrightness(RGBLED1, 50);
+			emit setRGBLEDBrightness(RGBLED1, rand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED2, rand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED3, rand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED4, rand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED5, rand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED6, rand() % 99 +1);
 		}
 		else
 		{
-			emit setRGBLEDBrightness(RGBLED1, 1);
+			number1 = rand() % 99 +1;
+			number2 = rand() % 99 +1;
+			number3 = rand() % 99 +1;
+
+			emit setRGBLEDBrightness(RGBLED1, number1);
+			emit setRGBLEDBrightness(RGBLED2, number2);
+			emit setRGBLEDBrightness(RGBLED3, number3);
+
+			emit setRGBLEDBrightness(RGBLED4, number1);
+			emit setRGBLEDBrightness(RGBLED5, number2);
+			emit setRGBLEDBrightness(RGBLED6, number3);
 		}
 
 		// let the thread sleep some time - kind of timer...
