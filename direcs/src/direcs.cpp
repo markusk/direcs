@@ -214,6 +214,9 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	timerThread = new TimerThread();
 
 	drivingSpeedTimer = new QTimer();
+
+	// create Phonon media player
+	mediaObject = new Phonon::MediaObject();
 }
 
 
@@ -1145,6 +1148,8 @@ void Direcs::init()
 
 		if (!consoleMode)
 		{
+			// create phonon player and set filename
+//			music->Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
 			//------------------------------------------------------------------
 			// hide some dialogues
 			//------------------------------------------------------------------
@@ -5135,6 +5140,7 @@ void Direcs::drivingLight(unsigned char color)
 
 void Direcs::test()
 {
+/*
 	#ifdef Q_OS_LINUX
 	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
 	#endif
@@ -5142,9 +5148,8 @@ void Direcs::test()
 	#ifdef Q_OS_MAC
 	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
 	#endif
+*/
 
-
-	music->play();
 
 
 	//	static bool toggle = false;
