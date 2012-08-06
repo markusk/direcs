@@ -24,6 +24,11 @@
 #include <QThread>
 #include <QTime>
 
+#ifdef Q_OS_LINUX
+#include <time.h> // for rand
+#include <stdlib.h> // for rand
+#endif
+
 
 /**
 \author Markus Knapp
