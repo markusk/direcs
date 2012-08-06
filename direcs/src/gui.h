@@ -526,6 +526,12 @@ class Gui : public QMainWindow
 		 */
 		void setThreshold(int value);
 
+		/**
+		Emits the demo mode signal
+		@param state can be true or false.
+		*/
+		void demo(bool state);
+
 
 	protected slots:
 		/**
@@ -549,6 +555,7 @@ class Gui : public QMainWindow
 		void on_actionRemote_activated();
 		void on_actionSimulate_activated();
 		void on_actionSaveLaserData_activated();
+		void on_actionDemo_activated();
 
 
 	private slots:

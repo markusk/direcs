@@ -2064,9 +2064,13 @@
    </property>
   </action>
   <action name="actionDemo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/media-playback-start.png</normaloff>:/images/images/media-playback-start.png</iconset>
+     <normaloff>:/images/images/media-playback-start.png</normaloff>
+     <normalon>:/images/images/media-playback-pause.png</normalon>:/images/images/media-playback-start.png</iconset>
    </property>
    <property name="text">
     <string>Demo</string>

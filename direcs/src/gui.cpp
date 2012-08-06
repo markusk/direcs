@@ -2619,6 +2619,33 @@ void Gui::on_actionSaveLaserData_activated()
 }
 
 
+void Gui::on_actionDemo_activated()
+{
+	if (useLargeGUI)
+	{
+		if (ui.actionDemo->isChecked())
+		{
+			emit demo(true);
+		}
+		else
+		{
+			emit demo(false);
+		}
+	}
+	else
+	{
+		if (uiSmall.actionDemo->isChecked())
+		{
+			emit demo(true);
+		}
+		else
+		{
+			emit demo(false);
+		}
+	}
+}
+
+
 #ifdef ACTIVELASERVIEW
 void Gui::on_sliderZoom_valueChanged(int value)
 {
