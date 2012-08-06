@@ -27,7 +27,7 @@
 
 /**
 \author Markus Knapp
-\brief tbd
+\brief Some test code for presenting the robot itself.
 
 tbd
 */
@@ -68,28 +68,27 @@ class PartyThread : public QThread
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/**
-		Emits a signal to check network state of this program. @sa Direcs::setNetworkState
+		Sends a signal fro setting the robots RGB brightness to do some nive blinky flashy stuff.
 		*/
-		void checkNetworkState();
-
-		/**
-		Sends a signal over the network. E.g. if we are 'master' or 'slave. @sa Direcs::sendNetworkMessage
-		*/
-		void partyMessage();
+		bool setRGBLEDBrightness(unsigned char rgbLed, unsigned char brightness);
 
 
 	private:
-		QTime startTime; /// this is for getting the current time
-		QTime now; /// this is for getting the current time
 		volatile bool stopped;
+		bool partyMode;
 
-		bool networkStateSet;
 		static const int timeToNetworkCheck = 3; // time in seconds
 
-		// Every thread sleeps some time, for having a bit more time fo the other threads!
-		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 1000; // 1000 ms
+		// Time in milliseconds every ms the run method is called
+		static const unsigned long THREADSLEEPTIME = 250; // 250 ms
 
+		/// the RGB LED numbers @sa rgbLed::rgbLed()
+		static const unsigned char RGBLED1 = 0;
+		static const unsigned char RGBLED2 = 1;
+		static const unsigned char RGBLED3 = 2;
+		static const unsigned char RGBLED4 = 3;
+		static const unsigned char RGBLED5 = 4;
+		static const unsigned char RGBLED6 = 5;
 };
 
 #endif

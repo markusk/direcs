@@ -23,7 +23,7 @@
 PartyThread::PartyThread()
 {
 	stopped = false;
-	networkStateSet = false;
+	partyMode = false;
 }
 
 
@@ -40,43 +40,26 @@ void PartyThread::stop()
 
 void PartyThread::run()
 {
-	// get the current date and time
-	startTime = QTime::currentTime();
-//	emit message(QString("Timer thread start at %1-%2-%3 %4:%5:%6.%7.").arg(startTime.toString("yyyy")).arg(startTime.toString("MM")).arg(startTime.toString("dd")).arg(startTime.toString("hh")).arg(startTime.toString("mm")).arg(startTime.toString("ss")).arg(startTime.toString("zzz")));
-	emit message("Timer thread started now (run).");
+	static bool toggle = false;
 
 	//
 	//  start "threading"...
 	//
 	while (!stopped)
 	{
-		// let the thread sleep some time
-		// for having more time for the other threads
-		msleep(THREADSLEEPTIME);
+		toggle = !toggle;
 
-		// get current time
-		now = QTime::currentTime();
-		// qDebug("%d seconds from pgm start.", startTime.secsTo( QDateTime::currentDateTime() ));
-
-		//------------------
-		// master or slave?
-		//------------------
-		if (networkStateSet==false)
+		if (toggle)
 		{
-			// time elapsed for receiving a master signal.
-			if (startTime.secsTo(now) >= timeToNetworkCheck)
-			{
-				networkStateSet = true;
-				emit checkNetworkState();
-			}
+			emit setRGBLEDBrightness(RGBLED1, 50);
+		}
+		else
+		{
+			emit setRGBLEDBrightness(RGBLED1, 1);
 		}
 
-
-		//----------------------
-		// send 'master' signal
-		// every second
-		//----------------------
-		emit partyMessage();
+		// let the thread sleep some time - kind of timer...
+		msleep(THREADSLEEPTIME);
 	}
 	stopped = false;
 }
