@@ -204,6 +204,12 @@ class Direcs : public QObject
 		void setSimulationMode(bool status);
 
 		/**
+		This slot enables or disables the party mode.
+		@param status
+		*/
+		void setPartyMode(bool status);
+
+		/**
 		Shows a text on the current splash screen.
 		*/
 		void showSplashMessage(QString text);

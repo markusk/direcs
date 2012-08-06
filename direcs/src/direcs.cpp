@@ -557,6 +557,10 @@ void Direcs::init()
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
+		//----------------------------------------------------------------------------
+		// connect demo button from gui to activate the party mode
+		//----------------------------------------------------------------------------
+		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setPartyMode(bool) ));
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -5124,6 +5128,43 @@ void Direcs::checkArguments()
 		consoleMode = true;
 		emit publishConsoleMode(consoleMode);
 		qDebug("CONSOLE mode activated. Now passing all messages to the console.");
+	}
+}
+
+
+void Direcs::setPartyMode(bool status)
+{
+	// save state locally
+	partyMode = status;
+
+
+	if (status == true)
+	{
+		emit message("<font color=\"#0000FF\">Party mode enabled!!</front>");
+
+		if (partyThread->isRunning() == false)
+		{
+			emit message("Starting party thread...", false);
+			partyThread->start();
+			emit message("Started.");
+
+			// play some music
+			mediaObject->play();
+		}
+	}
+	else
+	{
+		emit message("<font color=\"#0000FF\">Party mode disabled!!</front>");
+
+		// stop the music
+		if (mediaObject->state() ==  Phonon::PlayingState)
+		{
+			mediaObject->pause();
+		}
+
+		emit message("Stopping party thread...", false);
+		partyThread->stop();
+		emit message("Stopped.");
 	}
 }
 
