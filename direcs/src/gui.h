@@ -39,7 +39,7 @@
 	#include "laserScene.h"
 #endif
 
-#include "compassWidget.h"
+//#include "compassWidget.h"
 
 //#ifdef USEROBOTGUI
 	#include "ui_direcsSmall.h"
@@ -695,7 +695,7 @@ class Gui : public QMainWindow
 
 		QPixmap pixmap; // for IplImageToQImage()
 
-		CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
+//		CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui
 		QString string; // this is a free to use string
