@@ -31,7 +31,12 @@
 #include <QSplashScreen>
 #include <QMetaType>
 #include <QtCore/QCoreApplication>
+
+#ifdef Q_OS_LINUX
+#include <phonon>
+#else
 #include <Phonon>
+#endif
 //-------------------------------------------------------------------
 #include "consoleGui.h"
 #include "gui.h"

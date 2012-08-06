@@ -93,7 +93,8 @@ unix|macx {
 				/usr/include/qwt-qt4 \
 				/opt/local/include/qwt \
 				/usr/local/include \
-				/usr/local/include/libfreenect
+				/usr/local/include/libfreenect \
+				/usr/include/phonon
 
 	LIBS +=		-L/opt/local/lib \
 				-L/usr/lib \
@@ -103,7 +104,8 @@ unix|macx {
 				-lfreenect_sync \
 				-lopencv_core \
 				-lopencv_highgui \
-				-lopencv_imgproc
+				-lopencv_imgproc \
+				-lphonon
 
 	QMAKE_CXXFLAGS_DEBUG += -pg
 	QMAKE_CXXFLAGS_RELEASE += -pg
