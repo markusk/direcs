@@ -21,7 +21,7 @@ unix|macx {
 	HEADERS +=	aboutDialog.h \
 				camThread.h \
 				circuit.h \
-				compassWidget.h \
+#				compassWidget.h \
 				consoleGui.h \
 				direcsSerial.h \
 				gui.h \
@@ -51,7 +51,7 @@ unix|macx {
 	SOURCES +=	aboutDialog.cpp \
 				camThread.cpp \
 				circuit.cpp \
-				compassWidget.cpp \
+#				compassWidget.cpp \
 				consoleGui.cpp \
 				direcsSerial.cpp \
 				gui.cpp \

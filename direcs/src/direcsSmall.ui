@@ -48,7 +48,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabState">
      <attribute name="title">
@@ -550,7 +550,7 @@
      <attribute name="title">
       <string>Compass</string>
      </attribute>
-     <widget class="CompassWidget" name="frameCompass" native="true">
+     <widget class="QWidget" name="frameCompass" native="true">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -2102,14 +2102,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CompassWidget</class>
-   <extends>QWidget</extends>
-   <header>compassWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../direcs.qrc"/>
  </resources>

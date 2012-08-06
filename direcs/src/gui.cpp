@@ -4163,6 +4163,7 @@ void Gui::initCompass()
 
 void Gui::showCompassData(float x, float y, float z, float heading)
 {
+/*
 	// also formats the string to 1 digits precision!
 	if (useLargeGUI)
 	{
@@ -4188,6 +4189,7 @@ void Gui::showCompassData(float x, float y, float z, float heading)
 		// set the 3D OpenGL compass!
 		uiSmall.frameCompass->setAllRotations(x, y, z); /// \todo and what to do with the 'heading'?
 	}
+*/
 }
 
 
