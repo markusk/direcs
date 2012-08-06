@@ -1766,6 +1766,7 @@
     <addaction name="actionDrive"/>
     <addaction name="actionReset"/>
     <addaction name="actionTest"/>
+    <addaction name="actionDemo"/>
     <addaction name="actionSimulate"/>
     <addaction name="actionSaveLaserData"/>
     <addaction name="separator"/>
@@ -1801,6 +1802,7 @@
    <addaction name="actionDrive"/>
    <addaction name="actionReset"/>
    <addaction name="actionTest"/>
+   <addaction name="actionDemo"/>
    <addaction name="actionSimulate"/>
    <addaction name="actionSaveLaserData"/>
    <addaction name="actionRemote"/>
@@ -1930,6 +1932,9 @@
    </property>
    <property name="text">
     <string>Test</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
   <action name="actionSimulate">
@@ -2075,6 +2080,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionDemo">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/media-playback-start.png</normaloff>:/images/images/media-playback-start.png</iconset>
+   </property>
+   <property name="text">
+    <string>Demo</string>
+   </property>
+   <property name="toolTip">
+    <string>Demonstrates the robots capabilities</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
  </widget>

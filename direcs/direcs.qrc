@@ -46,5 +46,7 @@
         <file>images/window-duplicate.png</file>
         <file>images/system-reboot.png</file>
         <file>images/applications-internet.png</file>
+        <file>images/media-playback-pause.png</file>
+        <file>images/media-playback-start.png</file>
     </qresource>
 </RCC>
