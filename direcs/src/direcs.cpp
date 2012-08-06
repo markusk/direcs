@@ -5255,6 +5255,7 @@ void Direcs::test()
 	#endif
 */
 
+	/*
 	if (mediaObject->state() !=  Phonon::PlayingState)
 	{
 		mediaObject->play();
@@ -5266,13 +5267,14 @@ void Direcs::test()
 		mediaObject->pause();
 		return;
 	}
+*/
 
-	//	static bool toggle = false;
+//	static bool toggle = false;
 
 
-//	speakThread->setLanguage("en");
-//	emit speak(tr("Hello world"));
-//	emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
+	speakThread->setLanguage("en");
+	emit speak(tr("Hello world"));
+	emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 
 
 //	toggle = !toggle;
