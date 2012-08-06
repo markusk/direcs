@@ -217,6 +217,8 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 
 	// create Phonon media player
 	mediaObject = new Phonon::MediaObject();
+
+	partyThread = new PartyThread();
 }
 
 
@@ -261,6 +263,7 @@ void Direcs::init()
 	endSpeedMotor2Reached = false;
 	endSpeedMotor3Reached = false;
 	endSpeedMotor4Reached = false;
+	partyMode = false;
 
 
 	//-----------------------------------------------------------------------------------------------------------------------------------------
@@ -533,6 +536,7 @@ void Direcs::init()
 			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(timerThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(partyThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 		}
 		else
 		{
@@ -540,6 +544,7 @@ void Direcs::init()
 			connect(interface1, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 			connect(timerThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
+			connect(partyThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 		}
 
 		// also emit interface class messages to the *logfile*
@@ -547,6 +552,7 @@ void Direcs::init()
 		connect(circuit1,			SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 		connect(obstCheckThread,   SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 		connect(timerThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+		connect(partyThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
@@ -756,6 +762,18 @@ void Direcs::init()
 
 
 		//-----------------------------------------------------------
+		// start the party thread
+		//-----------------------------------------------------------
+		if (partyThread->isRunning() == false)
+		{
+			emit splashMessage("Starting party thread...");
+			emit message("Starting party thread...", false);
+			partyThread->start();
+			emit message("Party thread started.");
+		}
+
+
+		//-----------------------------------------------------------
 		// check if a joystick is connected
 		//-----------------------------------------------------------
 		if (joystick->isConnected())
@@ -889,6 +907,9 @@ void Direcs::init()
 		// (Whenever the signal is emmited, send the given string over the net)
 		//----------------------------------------------------------------------------
 		connect(this, SIGNAL(sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ));
+
+		// connect signal from partyThread to rgbLed class (enable setting RGB LEDs from partyThread)
+		connect(partyThread, SIGNAL(setRGBLEDBrightness(unsigned char, unsigned char)), rgbLeds, SLOT(setBrightness(unsigned char,unsigned char)));
 
 #ifdef ACTIVELASERVIEW
 		if (!consoleMode)
@@ -1594,6 +1615,45 @@ void Direcs::shutdown()
 	}
 
 
+	//--------------------------------
+	// quit the partyThread
+	//--------------------------------
+	if (partyThread->isRunning() == true)
+	{
+		emit message("Stopping party thread...");
+		emit splashMessage("Stopping party thread...");
+
+		// my own stop routine :-)
+		partyThread->stop();
+
+		// slowing thread down
+		partyThread->setPriority(QThread::IdlePriority);
+		partyThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((partyThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (partyThread->isFinished() == true)
+		{
+			emit message("Timer thread stopped.");
+		}
+		else
+		{
+			emit message("ERROR: Terminating party thread because it doesn't answer...");
+			emit splashMessage("Terminating party thread because it doesn't answer...");
+			partyThread->terminate();
+			partyThread->wait(1000);
+			emit message("Party thread terminated.");
+		}
+	}
+
+
 
 #ifndef BUILDFORROBOT
 	if (!consoleMode)
@@ -1821,6 +1881,7 @@ Direcs::~Direcs()
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
+	delete partyThread;
 	delete timerThread;
 	delete logfile;
 	#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)

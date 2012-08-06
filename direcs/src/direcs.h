@@ -357,6 +357,7 @@ class Direcs : public QObject
 		Head *head;
 		Logfile *logfile;
 		TimerThread *timerThread;
+		PartyThread *partyThread;
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
@@ -413,6 +414,7 @@ class Direcs : public QObject
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
 		//QList <QDateTime> obstacleAlarmRightTimestampList;	/// A list of the timestamps of the obstacle alarms that right occured.
 		Phonon::MediaObject *mediaObject; /// A Phonon media player for e.g. playing a mp3 file
+		bool partyMode;
 
 		/// The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;
