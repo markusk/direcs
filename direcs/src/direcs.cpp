@@ -1258,6 +1258,13 @@ void Direcs::shutdown()
 
 		splash->show();
 		emit splashMessage("Shutting down...");
+
+		// stop phonon media player
+		if (mediaObject->state() ==  Phonon::PlayingState)
+		{
+			emit splashMessage("Stopping media player...");
+			mediaObject->stop();
+		}
 	}
 
 	// just 4 fun
@@ -5158,7 +5165,17 @@ void Direcs::test()
 	#endif
 */
 
+	if (mediaObject->state() !=  Phonon::PlayingState)
+	{
+		mediaObject->play();
+		return;
+	}
 
+	if (mediaObject->state() ==  Phonon::PlayingState)
+	{
+		mediaObject->pause();
+		return;
+	}
 
 	//	static bool toggle = false;
 
