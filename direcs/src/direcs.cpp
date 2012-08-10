@@ -263,6 +263,7 @@ void Direcs::init()
 	endSpeedMotor2Reached = false;
 	endSpeedMotor3Reached = false;
 	endSpeedMotor4Reached = false;
+	preferredDrivingDirection = FORWARD; // this is to allow the robot to drive forward, if the obstacleCheckThread is not running (because of offline laser). Mainly for testing reasons!
 	partyMode = false;
 
 
@@ -2812,6 +2813,11 @@ void Direcs::drive(const int command)
 				gui->showMotorStatus(MOTOR4, OFF, SAME);
 			}
 			motors->motorControl(MOTOR4, OFF, SAME);
+			return;
+			break;
+		default:
+			// this case should never occur
+			emit message(QString("<font color=\"#FF0000\">ERROR: Driving direction '%1' not implemented or set in Drive()!</font>").arg(command));
 			return;
 			break;
 	}
