@@ -1168,6 +1168,9 @@ void Direcs::init()
 			mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
 			Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
 			Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+
+			// let the media player restart when files endend and party mode is enabled
+			connect(mediaObject, SIGNAL( finished() ), this, SLOT( mediaPlayerFinished() ));
 		}
 
 		if (!consoleMode)
@@ -5159,6 +5162,21 @@ void Direcs::setPartyMode(bool status)
 		emit message("Stopping party thread...", false);
 		partyThread->stop();
 		emit message("Stopped.");
+	}
+}
+
+
+void Direcs::mediaPlayerFinished()
+{
+	if (partyMode)
+	{
+		emit message("Media player restart.");
+
+		/// same file again @todo put media filename or list somewehre else
+		mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
+
+		// restart music, since the player finished
+		mediaObject->play();
 	}
 }
 

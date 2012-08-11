@@ -215,6 +215,11 @@ class Direcs : public QObject
 		void setPartyMode(bool status);
 
 		/**
+		Restarts the mediaplayer because this Slot recevied the 'finished' Signal from the mediaplayer
+		*/
+		void mediaPlayerFinished();
+
+		/**
 		Shows a text on the current splash screen.
 		*/
 		void showSplashMessage(QString text);
