@@ -31,7 +31,13 @@
 //-------------------------------------------------------------------
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+
+#ifdef Q_OS_MAC
 #include <libfreenect/libfreenect_sync.h>
+#else
+#include <libfreenect_sync.h>
+#endif
+
 
 #include <iostream>
 #include <vector>
