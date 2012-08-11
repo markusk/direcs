@@ -1165,9 +1165,10 @@ void Direcs::init()
 			// create phonon player and set filename
 //			music->Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
 
+			/// @todo put media filename or list somewehre else
 			mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
 			Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-			Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+			Phonon::createPath(mediaObject, audioOutput);
 
 			// let the media player restart when files endend and party mode is enabled
 			connect(mediaObject, SIGNAL( finished() ), this, SLOT( mediaPlayerFinished() ));
