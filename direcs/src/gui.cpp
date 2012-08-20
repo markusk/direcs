@@ -3984,7 +3984,7 @@ void Gui::initPlots()
 	if (useLargeGUI)
 	{
 		// set title
-		qwtPlotVoltage1.setTitle("12 V Battery");
+		qwtPlotVoltage1.setTitle("12 V Battery [16.8 V]"); /// @todo put plot voltage title to method or init call
 	}
 
 	// Set axis scale (instead of using autoscale, which is default)
@@ -4023,7 +4023,7 @@ void Gui::initPlots()
 	if (useLargeGUI)
 	{
 		// set title
-		qwtPlotVoltage2.setTitle("24 V Battery");
+		qwtPlotVoltage2.setTitle("24 V Battery [25.2 V]"); /// @todo put plot voltage title to method or init call
 	}
 
 	// Set axis scale (instead of using autoscale, which is default)
