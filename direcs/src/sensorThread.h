@@ -379,11 +379,15 @@ class SensorThread : public QThread
 		/**
 		Defines the conversion factor for the voltage sensors to convert the sensor value in a "real world" value.
 		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57.0 results in 12 V.
+		Lead-Gel:
 		4095 / 13.2 Volt = 310.22727272
 		4095 / 26.4 Volt = 155.11363636
+		LiPo:
+		4095 / 16.8 Volt = 243.75 (4S)
+		4095 / 25.2 Volt = 162.50 (6S)
 		*/
-		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 310.22727272;
-		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 155.11363636;
+		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 243.75;
+		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 162.50;
 
 		/**
 		The x, y, z axis value from the 3D magnetic sensor and the heading
