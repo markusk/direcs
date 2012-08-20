@@ -27,6 +27,12 @@
 /// this project source here https://github.com/OpenKinect/libfreenect
 //----------------------------------------------------------------------------------------------------------------------
 
+#define         FREENECT_FRAME_W   640
+#define         FREENECT_FRAME_H   480
+#define         FREENECT_FRAME_PIX   (FREENECT_FRAME_H*FREENECT_FRAME_W) // width*height pixels in the image
+#define         FREENECT_VIDEO_RGB_SIZE   (FREENECT_FRAME_PIX*3) //3 bytes per pixel
+
+
 #ifndef __QKINECT_H__
 #define __QKINECT_H__
 
