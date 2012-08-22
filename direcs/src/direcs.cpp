@@ -1162,12 +1162,15 @@ void Direcs::init()
 
         if (!consoleMode)
         {
+            // start random number generator
+            srand(time(NULL));
+
             // create phonon player and set filename
 //			music->Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
 
             /// @todo put media filename or list somewehre else
 //            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
-            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/MrRoboto.mp3"));
+            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
             Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
             Phonon::createPath(mediaObject, audioOutput);
 
@@ -5176,7 +5179,8 @@ void Direcs::mediaPlayerFinished()
 
         /// same file again @todo put media filename or list somewehre else
 //        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
-        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/MrRoboto.mp3"));
+//        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/MrRoboto.mp3"));
+        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
 
         // restart music, since the player finished
         mediaObject->play();
