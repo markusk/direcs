@@ -137,7 +137,7 @@
     <addaction name="actionReset"/>
     <addaction name="actionTest"/>
     <addaction name="actionDemo"/>
-    <addaction name="actionMedia_Skip"/>
+    <addaction name="actionMediaSkip"/>
     <addaction name="actionSimulate"/>
     <addaction name="actionSaveLaserData"/>
     <addaction name="actionRemote"/>
@@ -192,7 +192,7 @@
    <addaction name="actionReset"/>
    <addaction name="actionTest"/>
    <addaction name="actionDemo"/>
-   <addaction name="actionMedia_Skip"/>
+   <addaction name="actionMediaSkip"/>
    <addaction name="actionSimulate"/>
    <addaction name="actionSaveLaserData"/>
    <addaction name="actionRemote"/>
@@ -2084,7 +2084,7 @@
     <string>Ctrl+M</string>
    </property>
   </action>
-  <action name="actionMedia_Skip">
+  <action name="actionMediaSkip">
    <property name="icon">
     <iconset resource="../direcs.qrc">
      <normaloff>:/images/images/media-skip-forward.png</normaloff>:/images/images/media-skip-forward.png</iconset>
