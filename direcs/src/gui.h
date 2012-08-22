@@ -532,6 +532,11 @@ class Gui : public QMainWindow
 		*/
 		void demo(bool state);
 
+		/**
+		Emits a mediaplayer skip (track) signal
+		*/
+		void mediaSkip();
+
 
 	protected slots:
 		/**
@@ -556,6 +561,7 @@ class Gui : public QMainWindow
 		void on_actionSimulate_activated();
 		void on_actionSaveLaserData_activated();
 		void on_actionDemo_activated();
+		void on_actionMediaSkip_activated();
 
 
 	private slots:

@@ -2646,6 +2646,12 @@ void Gui::on_actionDemo_activated()
 }
 
 
+void Gui::on_actionMediaSkip_activated()
+{
+	emit mediaSkip();
+}
+
+
 #ifdef ACTIVELASERVIEW
 void Gui::on_sliderZoom_valueChanged(int value)
 {
