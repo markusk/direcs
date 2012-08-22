@@ -1165,12 +1165,18 @@ void Direcs::init()
             // start random number generator
             srand(time(NULL));
 
+            // generate one number
+            int number = rand() % 6 +1; // (1 to 6)
+            qDebug("file number %d", number);
+
             // create phonon player and set filename
 //			music->Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
 
             /// @todo put media filename or list somewehre else
 //            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
-            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
+//            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
+            mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
+
             Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
             Phonon::createPath(mediaObject, audioOutput);
 
@@ -5173,14 +5179,17 @@ void Direcs::setPartyMode(bool status)
 
 void Direcs::mediaPlayerFinished()
 {
+    int number = rand() % 6 +1; // (1 to 6)
+
+
     if (partyMode)
     {
-        emit message("Media player restart.");
+        emit message(QString("Media player restart with file %1.").arg(number));
 
         /// same file again @todo put media filename or list somewehre else
 //        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
 //        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/MrRoboto.mp3"));
-        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
+        mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
 
         // restart music, since the player finished
         mediaObject->play();
