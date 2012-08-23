@@ -264,7 +264,7 @@ void Direcs::init()
 	endSpeedMotor3Reached = false;
 	endSpeedMotor4Reached = false;
 	preferredDrivingDirection = FORWARD; // this is to allow the robot to drive forward, if the obstacleCheckThread is not running (because of offline laser). Mainly for testing reasons!
-	partyMode = false;
+	demoMode = false;
 
 
 	//-----------------------------------------------------------------------------------------------------------------------------------------
@@ -561,7 +561,7 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		// connect demo button from gui to activate the party mode
 		//----------------------------------------------------------------------------
-		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setPartyMode(bool) ));
+		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setDemoMode(bool) ));
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -5147,10 +5147,10 @@ void Direcs::checkArguments()
 }
 
 
-void Direcs::setPartyMode(bool status)
+void Direcs::setDemoMode(bool status)
 {
 	// save state locally
-	partyMode = status;
+	demoMode = status;
 	// which demo phase are we right now?
 	static int phase = 0;
 
@@ -5202,7 +5202,7 @@ void Direcs::mediaPlayerFinished()
 	int number = rand() % 6 +1; // (1 to 6)
 
 
-	if (partyMode)
+	if (demoMode)
 	{
 		emit message(QString("Media player restart with file %1.").arg(number));
 
