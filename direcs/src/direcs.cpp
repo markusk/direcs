@@ -5172,17 +5172,20 @@ void Direcs::nextDemoPhase(int phase)
 		// blink
 		case 1:
 			// say something, next phase is no. 2
-			emit speak("hello", 2);
+			emit speak("hello", ++phase);
 			break;
 		case 2:
 			// say something, next phase is no. 3
-			emit speak("campuseros", 3);
+			emit speak("campuseros", ++phase);
 			break;
 		case 3:
 			// say something, next phase is no. 4
-			emit speak("this is a test.", 2);
+			emit speak("this is a test.", ++phase);
 			break;
 		case 4:
+			break;
+		default:
+			emit speak("Thanks you guys. Thats it.", -1);
 			break;
 		}
 	}
