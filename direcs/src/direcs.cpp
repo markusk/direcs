@@ -5197,14 +5197,6 @@ void Direcs::setDemoMode(bool status)
 			demoThread->start();
 			emit message("Started.");
 
-
-			// do some weird stuff here
-			// mabye talk a bit
-			// drive around for some seconds
-			// blink
-
-
-
 			// play some music
 			mediaObject->play();
 		}
@@ -5222,9 +5214,6 @@ void Direcs::setDemoMode(bool status)
 		emit message("Stopping demo thread...", false);
 		demoThread->stop();
 		emit message("Stopped.");
-
-		// reset phase to start again
-		phase = 0;
 	}
 }
 
