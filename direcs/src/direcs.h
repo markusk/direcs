@@ -222,6 +222,11 @@ class Direcs : public QObject
 		void setDemoMode(bool status);
 
 		/**
+		Enters the next demo phase and says some more text, drives around or whatever.
+		*/
+		void nextDemoPhase(int phase);
+
+		/**
 		Restarts the mediaplayer because this Slot recevied the 'finished' Signal from the mediaplayer
 		*/
 		void mediaPlayerFinished();

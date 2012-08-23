@@ -5147,12 +5147,44 @@ void Direcs::checkArguments()
 }
 
 
+void Direcs::nextDemoPhase(int phase)
+{
+	static int iPhase = phase;
+
+
+	if (demoMode)
+	{
+		emit message(QString("demo phase=%1").arg(iPhase));
+
+		switch (phase)
+		{
+		// do some weird stuff here
+		// mabye talk a bit
+		// drive around for some seconds
+		// blink
+		case 1:
+			// say something, next phase is no. 2
+			emit speak("hello", 2);
+			break;
+		case 2:
+			// say something, next phase is no. 3
+			emit speak("campuseros", 3);
+			break;
+		case 3:
+			// say something, next phase is no. 4
+			emit speak("this is a test.", 2);
+			break;
+		case 4:
+			break;
+		}
+	}
+}
+
+
 void Direcs::setDemoMode(bool status)
 {
 	// save state locally
 	demoMode = status;
-	// which demo phase are we right now?
-	static int phase = 0;
 
 
 	if (status == true)
