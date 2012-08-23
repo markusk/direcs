@@ -60,12 +60,21 @@ class SpeakThread : public QThread
 		void speak(QString text);
 
 
+	signals:
+		/**
+		This is to let other methods or classes know that we completed the speech.
+		@param mPhase could be a phase we where other program continue with their actions.
+		*/
+		void speechCompleted(int mPhase);
+
+
 	private:
 		QString removeHTML(QString string);
 
 		volatile bool stopped;
 		bool saySomething; /// this is for the thread, which waits for something to say.
 		QString textToSpeak;
+		int mPhase;
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

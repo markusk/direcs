@@ -25,13 +25,14 @@ SpeakThread::SpeakThread()
 {
 	stopped = false;
 	saySomething = false;
-	
+	mPhase = 0;
+
 #ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 	// Synchronous playback
 	// 0 ms length sound buffer for SynthCallBack
 	// default location for espeak-data directory
 	// dont allow espeakEVENT_PHONEME events
-	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL,0); 
+	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL,0);
 	// set speech rate down to 150 words per minute
 	setRate(150);
 #endif
@@ -58,7 +59,7 @@ void SpeakThread::stop()
 		espeak_Cancel();
 	}
 #endif
-	
+
 	stopped = true;
 }
 
@@ -73,34 +74,41 @@ void SpeakThread::run()
 		// let the thread sleep some time
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-		
+
 #ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 		if (saySomething == true)
 		{
 			saySomething = false;
-			
+
 			// remove HTML tags from string (needed for reading messages from the GUI log)
 			textToSpeak = removeHTML(textToSpeak);
-			
+
 			// speak!
-			espeak_Synth( textToSpeak.toAscii(), textToSpeak.length()+1, 0, POS_CHARACTER, 0, espeakCHARS_AUTO, NULL, NULL ); 
-			espeak_Synchronize(); 
+			espeak_Synth( textToSpeak.toAscii(), textToSpeak.length()+1, 0, POS_CHARACTER, 0, espeakCHARS_AUTO, NULL, NULL );
+			espeak_Synchronize();
+
+			// let other Slots know that we completed the sentence.
+			emit speechCompleted(phase);
 		}
 #endif
-		
+
 	}
 	stopped = false;
 }
 
 
-void SpeakThread::speak(QString text)
+void SpeakThread::speak(QString text, int phase)
 {
 #ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
 	// store the text in the class member
 	textToSpeak = text;
+
+	// store the phase locally
+	mPhase = phase;
+
 	// enbale the run method to speak :-)
 	saySomething = true;
-	
+
 	// check if already speaking
 	if (espeak_IsPlaying() == 1)
 	{
@@ -109,6 +117,7 @@ void SpeakThread::speak(QString text)
 	}
 #else
 	Q_UNUSED(text);
+	Q_UNUSED(phase);
 #endif
 }
 
@@ -150,8 +159,8 @@ void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 QString SpeakThread::removeHTML(QString string)
 {
 	int start= -1;
-	
-	
+
+
 	do
 	{
 		// search for the first HTML "<"
@@ -163,6 +172,6 @@ QString SpeakThread::removeHTML(QString string)
 		}
 	} while (string.contains(">"));
 	// to the last HTML ">" found
-	
+
 	return string;
 }
