@@ -5180,7 +5180,7 @@ void Direcs::nextDemoPhase(int phase)
 			break;
 		case 3:
 			// say something, next phase is no. 3
-			emit speak("But I do not want to bore you any longer. See me driving around and enjoy it. We should do some party now. The music is played by random. Because Sebastian complained that I played the same title all night long. So if the next song is still boring, Markus cann skip it on the touchscreen. Okay. lets go! Put your hands in the air and wave them like you just dont care!", ++phase);
+			emit speak("But I do not want to bore you any longer. See me driving around and enjoy it. We should do some party now. The music is played by random. Because Sebastian complained that I played the same title all night long. So if the next song is still boring, Markus cann skip it on the touchscreen. Okay. lets go! Put your hands up in the air and wave them like you just dont care!", ++phase);
 			break;
 		case 4:
 			// play some music
