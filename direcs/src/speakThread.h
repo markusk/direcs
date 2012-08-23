@@ -56,8 +56,9 @@ class SpeakThread : public QThread
 		/**
 		Speaks a text with espeak. All HTML-Code in the parameter (text) is also removed internally).
 		@param text is the text to speak.
+		@param phase is an optional value. This could be a special phase which could be returned when the speech ends or so.
 		*/
-		void speak(QString text);
+		void speak(QString text, int phase=0);
 
 
 	signals:
