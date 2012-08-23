@@ -79,8 +79,7 @@ class SpeakThread : public QThread
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 600; // Default value: 600 ms
-
+		static const unsigned long THREADSLEEPTIME = 200; // Default value: 600 ms
 };
 
 #endif
