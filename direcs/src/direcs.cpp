@@ -5147,6 +5147,8 @@ void Direcs::setPartyMode(bool status)
 {
 	// save state locally
 	partyMode = status;
+	// which demo phase are we right now?
+	static int phase = 0;
 
 
 	if (status == true)
@@ -5158,6 +5160,14 @@ void Direcs::setPartyMode(bool status)
 			emit message("Starting party thread...", false);
 			partyThread->start();
 			emit message("Started.");
+
+
+			// do some weird stuff here
+			// mabye talk a bit
+			// drive around for some seconds
+			// blink
+
+
 
 			// play some music
 			mediaObject->play();
@@ -5176,6 +5186,9 @@ void Direcs::setPartyMode(bool status)
 		emit message("Stopping party thread...", false);
 		partyThread->stop();
 		emit message("Stopped.");
+
+		// reset phase to start again
+		phase = 0;
 	}
 }
 
