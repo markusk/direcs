@@ -1175,7 +1175,11 @@ void Direcs::init()
 			/// @todo put media filename or list somewehre else
 //            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
 //            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
+#ifdef Q_OS_LINUX
 			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
+#else
+			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1.mp3").arg(number)));
+#endif
 
 			Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
 			Phonon::createPath(mediaObject, audioOutput);
@@ -5205,7 +5209,11 @@ void Direcs::mediaPlayerFinished()
 		/// same file again @todo put media filename or list somewehre else
 //        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
 //        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/MrRoboto.mp3"));
-		mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
+#ifdef Q_OS_LINUX
+			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
+#else
+			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1.mp3").arg(number)));
+#endif
 
 		// restart music, since the player finished
 		mediaObject->play();
