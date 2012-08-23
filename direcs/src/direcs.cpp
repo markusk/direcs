@@ -5205,8 +5205,10 @@ void Direcs::setDemoMode(bool status)
 			demoThread->start();
 			emit message("Started.");
 
+emit speak("Okay, here we go.", 1);
+
 			// play some music
-			mediaObject->play();
+//			mediaObject->play();
 		}
 	}
 	else
