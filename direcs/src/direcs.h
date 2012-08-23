@@ -292,8 +292,9 @@ class Direcs : public QObject
 
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.
+		@param phase is an optional value. This could be a special phase which could be returned when the speech ends or so.
 		*/
-		void speak(QString text);
+		void speak(QString text, int phase=0);
 
 		/**
 		Initialize the robots basic circuit.

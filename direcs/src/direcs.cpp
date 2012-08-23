@@ -483,7 +483,8 @@ void Direcs::init()
 		// say a text
 		//----------------------------------------------------------------------------
 		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-		connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+		// a phase can also be emitted to the regarding slot (int parameter here)
+		connect(this, SIGNAL( speak(QString, int) ), speakThread, SLOT( speak(QString, int) ));
 
 		if (!consoleMode)
 		{
@@ -562,6 +563,13 @@ void Direcs::init()
 		// connect demo button from gui to activate the demo mode
 		//----------------------------------------------------------------------------
 		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setDemoMode(bool) ));
+
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
+		//----------------------------------------------------------------------------
+		// also let the speakThread inform the nextDemoPhase Slot about that the speech was completed to enter the next demo phase
+		//----------------------------------------------------------------------------
+		connect(speakThread, SIGNAL( speechCompleted(int) ), this, SLOT( nextDemoPhase(int) ));
+#endif
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
