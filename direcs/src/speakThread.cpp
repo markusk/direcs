@@ -88,7 +88,7 @@ void SpeakThread::run()
 			espeak_Synchronize();
 
 			// let other Slots know that we completed the sentence.
-			emit speechCompleted(phase);
+			emit speechCompleted(mPhase);
 		}
 #endif
 
