@@ -18,8 +18,8 @@
  *                                                                       *
  *************************************************************************/
 
-#ifndef PARTYTHREAD_H
-#define PARTYTHREAD_H
+#ifndef DEMOTHREAD_H
+#define DEMOTHREAD_H
 
 #include <QThread>
 #include <QTime>
@@ -36,13 +36,13 @@
 
 tbd
 */
-class PartyThread : public QThread
+class DemoThread : public QThread
 {
 	Q_OBJECT
 
 	public:
-		PartyThread();
-		~PartyThread();
+		DemoThread();
+		~DemoThread();
 
 		/**
 		Stops the thread.
@@ -80,7 +80,7 @@ class PartyThread : public QThread
 
 	private:
 		volatile bool stopped;
-		bool partyMode;
+		bool demoMode;
 
 		static const int timeToNetworkCheck = 3; // time in seconds
 
