@@ -616,10 +616,18 @@ class Gui : public QMainWindow
 
 #ifdef ACTIVELASERVIEW
 		/**
-		Creates all objects, lines, scene, view etc.
+		Creates all laser lines, pixmaps, scene, view for the laser scanner view.
 		*/
 		void createLaserScannerObjects();
+
+		/**
+		Creates the semi circles showing the distances around the robot in the laser scanner view.
+		*/
 		void createLaserDistanceObjects();
+
+		/**
+		Creates the graphical objects to show the drive through width for the robot in the laser scanner view.
+		*/
 		void createLaserWidthObjects();
 #endif
 
