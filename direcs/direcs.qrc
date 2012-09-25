@@ -48,5 +48,6 @@
         <file>images/applications-internet.png</file>
         <file>images/media-playback-pause.png</file>
         <file>images/media-playback-start.png</file>
+        <file>images/media-skip-forward.png</file>
     </qresource>
 </RCC>

@@ -1767,6 +1767,7 @@
     <addaction name="actionReset"/>
     <addaction name="actionTest"/>
     <addaction name="actionDemo"/>
+    <addaction name="actionMediaSkip"/>
     <addaction name="actionSimulate"/>
     <addaction name="actionSaveLaserData"/>
     <addaction name="separator"/>
@@ -1803,6 +1804,7 @@
    <addaction name="actionReset"/>
    <addaction name="actionTest"/>
    <addaction name="actionDemo"/>
+   <addaction name="actionMediaSkip"/>
    <addaction name="actionSimulate"/>
    <addaction name="actionSaveLaserData"/>
    <addaction name="actionRemote"/>
@@ -1811,12 +1813,6 @@
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
    <addaction name="actionAbout"/>
-   <addaction name="actionBlanc"/>
-   <addaction name="actionBlanc_2"/>
-   <addaction name="actionBlanc_3"/>
-   <addaction name="actionBlanc_4"/>
-   <addaction name="actionBlanc_5"/>
-   <addaction name="actionBlanc_6"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
   </widget>
@@ -2004,69 +2000,6 @@
     <string>Reset Driven Distance</string>
    </property>
   </action>
-  <action name="actionBlanc">
-   <property name="icon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
-   </property>
-   <property name="text">
-    <string>blanc</string>
-   </property>
-  </action>
-  <action name="actionBlanc_2">
-   <property name="icon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
-   </property>
-   <property name="text">
-    <string>blanc</string>
-   </property>
-  </action>
-  <action name="actionBlanc_3">
-   <property name="icon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
-   </property>
-   <property name="text">
-    <string>blanc</string>
-   </property>
-  </action>
-  <action name="actionBlanc_4">
-   <property name="icon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
-   </property>
-   <property name="text">
-    <string>blanc</string>
-   </property>
-  </action>
-  <action name="actionBlanc_5">
-   <property name="icon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
-   </property>
-   <property name="text">
-    <string>blanc</string>
-   </property>
-  </action>
-  <action name="actionBlanc_6">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/blanc.png</normaloff>:/images/images/blanc.png</iconset>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="visible">
-    <bool>false</bool>
-   </property>
-   <property name="iconVisibleInMenu">
-    <bool>false</bool>
-   </property>
-  </action>
   <action name="actionSaveLaserData">
    <property name="icon">
     <iconset resource="../direcs.qrc">
@@ -2099,6 +2032,15 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionMediaSkip">
+   <property name="icon">
+    <iconset resource="../direcs.qrc">
+     <normaloff>:/images/images/media-skip-forward.png</normaloff>:/images/images/media-skip-forward.png</iconset>
+   </property>
+   <property name="text">
+    <string>Media Skip</string>
    </property>
   </action>
  </widget>

@@ -18,30 +18,30 @@
  *                                                                       *
  *************************************************************************/
 
-#include "partyThread.h"
+#include "demoThread.h"
 
-PartyThread::PartyThread()
+DemoThread::DemoThread()
 {
 	stopped = false;
-	partyMode = false;
+	demoMode = false;
 
 	// start random number generator
 	srand(time(NULL));
 }
 
 
-PartyThread::~PartyThread()
+DemoThread::~DemoThread()
 {
 }
 
 
-void PartyThread::stop()
+void DemoThread::stop()
 {
 	stopped = true;
 }
 
 
-void PartyThread::run()
+void DemoThread::run()
 {
 	int number1 = 1;
 	int number2 = 1;
@@ -86,7 +86,7 @@ void PartyThread::run()
 }
 
 
-bool PartyThread::init()
+bool DemoThread::init()
 {
 	return true;
 }

@@ -218,7 +218,7 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	// create Phonon media player
 	mediaObject = new Phonon::MediaObject();
 
-	partyThread = new PartyThread();
+	demoThread = new DemoThread();
 }
 
 
@@ -264,7 +264,7 @@ void Direcs::init()
 	endSpeedMotor3Reached = false;
 	endSpeedMotor4Reached = false;
 	preferredDrivingDirection = FORWARD; // this is to allow the robot to drive forward, if the obstacleCheckThread is not running (because of offline laser). Mainly for testing reasons!
-	partyMode = false;
+	demoMode = false;
 
 
 	//-----------------------------------------------------------------------------------------------------------------------------------------
@@ -483,7 +483,8 @@ void Direcs::init()
 		// say a text
 		//----------------------------------------------------------------------------
 		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-		connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+		// a phase can also be emitted to the regarding slot (int parameter here)
+		connect(this, SIGNAL( speak(QString, int) ), speakThread, SLOT( speak(QString, int) ));
 
 		if (!consoleMode)
 		{
@@ -537,7 +538,7 @@ void Direcs::init()
 			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(timerThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-			connect(partyThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(demoThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 		}
 		else
 		{
@@ -545,7 +546,7 @@ void Direcs::init()
 			connect(interface1, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
 			connect(obstCheckThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 			connect(timerThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
-			connect(partyThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
+			connect(demoThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
 		}
 
 		// also emit interface class messages to the *logfile*
@@ -553,15 +554,22 @@ void Direcs::init()
 		connect(circuit1,			SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 		connect(obstCheckThread,   SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 		connect(timerThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-		connect(partyThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+		connect(demoThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		//----------------------------------------------------------------------------
-		// connect demo button from gui to activate the party mode
+		// connect demo button from gui to activate the demo mode
 		//----------------------------------------------------------------------------
-		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setPartyMode(bool) ));
+		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setDemoMode(bool) ));
+
+#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
+		//----------------------------------------------------------------------------
+		// also let the speakThread inform the nextDemoPhase Slot about that the speech was completed to enter the next demo phase
+		//----------------------------------------------------------------------------
+		connect(speakThread, SIGNAL( speechCompleted(int) ), this, SLOT( nextDemoPhase(int) ));
+#endif
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -901,8 +909,8 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		connect(this, SIGNAL(sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ));
 
-		// connect signal from partyThread to rgbLed class (enable setting RGB LEDs from partyThread)
-		connect(partyThread, SIGNAL(setRGBLEDBrightness(unsigned char, unsigned char)), rgbLeds, SLOT(setBrightness(unsigned char,unsigned char)));
+		// connect signal from demoThread to rgbLed class (enable setting RGB LEDs from demoThread)
+		connect(demoThread, SIGNAL(setRGBLEDBrightness(unsigned char, unsigned char)), rgbLeds, SLOT(setBrightness(unsigned char,unsigned char)));
 
 #ifdef ACTIVELASERVIEW
 		if (!consoleMode)
@@ -1162,16 +1170,33 @@ void Direcs::init()
 
 		if (!consoleMode)
 		{
+			// start random number generator
+			srand(time(NULL));
+
+			// generate one number
+			int number = rand() % 6 +1; // (1 to 6)
+			qDebug("file number %d", number);
+
 			// create phonon player and set filename
 //			music->Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
 
 			/// @todo put media filename or list somewehre else
-			mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
+//            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
+//            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
+#ifdef Q_OS_LINUX
+			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
+#else
+			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1.mp3").arg(number)));
+#endif
+
 			Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
 			Phonon::createPath(mediaObject, audioOutput);
 
-			// let the media player restart when files endend and party mode is enabled
+			// let the media player restart when files endend and demo mode is enabled
 			connect(mediaObject, SIGNAL( finished() ), this, SLOT( mediaPlayerFinished() ));
+
+			// let the media player skip a track if the button is pressed in the GUI
+			connect(gui, SIGNAL( mediaSkip() ), this, SLOT( mediaPlayerFinished() ));
 		}
 
 		if (!consoleMode)
@@ -1613,19 +1638,19 @@ void Direcs::shutdown()
 
 
 	//--------------------------------
-	// quit the partyThread
+	// quit the demoThread
 	//--------------------------------
-	if (partyThread->isRunning() == true)
+	if (demoThread->isRunning() == true)
 	{
-		emit message("Stopping party thread...");
-		emit splashMessage("Stopping party thread...");
+		emit message("Stopping demo thread...");
+		emit splashMessage("Stopping demo thread...");
 
 		// my own stop routine :-)
-		partyThread->stop();
+		demoThread->stop();
 
 		// slowing thread down
-		partyThread->setPriority(QThread::IdlePriority);
-		partyThread->quit();
+		demoThread->setPriority(QThread::IdlePriority);
+		demoThread->quit();
 
 		//-------------------------------------------
 		// start measuring time for timeout ckecking
@@ -1634,19 +1659,19 @@ void Direcs::shutdown()
 		t.start();
 		do
 		{
-		} while ((partyThread->isFinished() == false) && (t.elapsed() <= 2000));
+		} while ((demoThread->isFinished() == false) && (t.elapsed() <= 2000));
 
-		if (partyThread->isFinished() == true)
+		if (demoThread->isFinished() == true)
 		{
 			emit message("Timer thread stopped.");
 		}
 		else
 		{
-			emit message("ERROR: Terminating party thread because it doesn't answer...");
-			emit splashMessage("Terminating party thread because it doesn't answer...");
-			partyThread->terminate();
-			partyThread->wait(1000);
-			emit message("Party thread terminated.");
+			emit message("ERROR: Terminating demo thread because it doesn't answer...");
+			emit splashMessage("Terminating demo thread because it doesn't answer...");
+			demoThread->terminate();
+			demoThread->wait(1000);
+			emit message("Demo thread terminated.");
 		}
 	}
 
@@ -1878,7 +1903,7 @@ Direcs::~Direcs()
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
-	delete partyThread;
+	delete demoThread;
 	delete timerThread;
 	delete logfile;
 	#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
@@ -5130,29 +5155,78 @@ void Direcs::checkArguments()
 }
 
 
-void Direcs::setPartyMode(bool status)
+void Direcs::nextDemoPhase(int phase)
+{
+	static int iPhase = phase;
+
+
+	if (demoMode)
+	{
+		emit message(QString("demo phase=%1").arg(iPhase));
+
+		switch (phase)
+		{
+		// do some weird stuff here
+		// mabye talk a bit
+		// drive around for some seconds
+		// blink
+		case 1:
+			// say something, next phase is no. 2
+			emit speak("Hello Campuseros. I will introduce myself now for you guys. My name is direx 1. And I hope everything works fine now in the next minutes. Since Marcus updated my software yesterday night very late.", ++phase);
+			break;
+		case 2:
+			// say something, next phase is no. 3
+			emit speak("I am able of driving araound autonomically without hitting any obstacles. Well. Hopefully. I am using a laserscanner. and I can show my status with some R G B LEDs. I can also send my data over wireless network to show them on another laptop, or so.", ++phase);
+			break;
+		case 3:
+			// say something, next phase is no. 3
+			emit speak("But I do not want to bore you any longer. See me driving around and enjoy it. We should do some party now. The music is played by random. Because Sebastian complained that I played the same title all night long. So if the next song is still boring, Markus cann skip it on the touchscreen. Okay. lets go! Put your hands up in the air and wave them like you just dont care!", ++phase);
+			break;
+		case 4:
+			// play some music
+			mediaObject->play();
+			break;
+		case 5:
+/*
+			if (mediaObject->state() ==  Phonon::PlayingState)
+			{
+				mediaObject->pause();
+			}
+*/
+			break;
+		default:
+//            emit speak("Thanks you guys. Thats it.", -1);
+			break;
+		}
+	}
+}
+
+
+void Direcs::setDemoMode(bool status)
 {
 	// save state locally
-	partyMode = status;
+	demoMode = status;
 
 
 	if (status == true)
 	{
-		emit message("<font color=\"#0000FF\">Party mode enabled!!</front>");
+		emit message("<font color=\"#0000FF\">Demo mode enabled!!</front>");
 
-		if (partyThread->isRunning() == false)
+		if (demoThread->isRunning() == false)
 		{
-			emit message("Starting party thread...", false);
-			partyThread->start();
+			emit message("Starting demo thread...", false);
+			demoThread->start();
 			emit message("Started.");
 
+emit speak("Okay, here we go.", 1);
+
 			// play some music
-			mediaObject->play();
+//			mediaObject->play();
 		}
 	}
 	else
 	{
-		emit message("<font color=\"#0000FF\">Party mode disabled!!</front>");
+		emit message("<font color=\"#0000FF\">Demo mode disabled!!</front>");
 
 		// stop the music
 		if (mediaObject->state() ==  Phonon::PlayingState)
@@ -5160,8 +5234,8 @@ void Direcs::setPartyMode(bool status)
 			mediaObject->pause();
 		}
 
-		emit message("Stopping party thread...", false);
-		partyThread->stop();
+		emit message("Stopping demo thread...", false);
+		demoThread->stop();
 		emit message("Stopped.");
 	}
 }
@@ -5169,12 +5243,21 @@ void Direcs::setPartyMode(bool status)
 
 void Direcs::mediaPlayerFinished()
 {
-	if (partyMode)
+	int number = rand() % 6 +1; // (1 to 6)
+
+
+	if (demoMode)
 	{
-		emit message("Media player restart.");
+		emit message(QString("Media player restart with file %1.").arg(number));
 
 		/// same file again @todo put media filename or list somewehre else
-		mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
+//        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
+//        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/MrRoboto.mp3"));
+#ifdef Q_OS_LINUX
+			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
+#else
+			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1.mp3").arg(number)));
+#endif
 
 		// restart music, since the player finished
 		mediaObject->play();

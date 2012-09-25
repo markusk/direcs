@@ -37,6 +37,13 @@
 #else
 #include <Phonon>
 #endif
+
+#ifdef Q_OS_LINUX
+#include <time.h> // for rand       (for the media player / demo mode)
+#include <stdlib.h> // for rand     (for the media player / demo mode)
+#endif
+
+
 //-------------------------------------------------------------------
 #include "consoleGui.h"
 #include "gui.h"
@@ -65,7 +72,7 @@
 #include "camThread.h"
 #include "speakThread.h"
 #include "timerThread.h"
-#include "partyThread.h"
+#include "demoThread.h"
 
 
 //-------------------------------------------------------------------
@@ -209,10 +216,15 @@ class Direcs : public QObject
 		void setSimulationMode(bool status);
 
 		/**
-		This slot enables or disables the party mode.
+		This slot enables or disables the demo mode.
 		@param status
 		*/
-		void setPartyMode(bool status);
+		void setDemoMode(bool status);
+
+		/**
+		Enters the next demo phase and says some more text, drives around or whatever.
+		*/
+		void nextDemoPhase(int phase);
 
 		/**
 		Restarts the mediaplayer because this Slot recevied the 'finished' Signal from the mediaplayer
@@ -280,8 +292,9 @@ class Direcs : public QObject
 
 		/**
 		Emits a speak signal. This signal is sent to the speakThread.
+		@param phase is an optional value. This could be a special phase which could be returned when the speech ends or so.
 		*/
-		void speak(QString text);
+		void speak(QString text, int phase=0);
 
 		/**
 		Initialize the robots basic circuit.
@@ -373,7 +386,7 @@ class Direcs : public QObject
 		Head *head;
 		Logfile *logfile;
 		TimerThread *timerThread;
-		PartyThread *partyThread;
+		DemoThread *demoThread;
 		QString serialPortMicrocontroller;
 		QString serialPortLaserscannerFront;
 		QString serialPortLaserscannerRear;
@@ -430,7 +443,7 @@ class Direcs : public QObject
 		//QList <QDateTime> obstacleAlarmLeftTimestampList;	/// A list of the timestamps of the obstacle alarms that left occured.
 		//QList <QDateTime> obstacleAlarmRightTimestampList;	/// A list of the timestamps of the obstacle alarms that right occured.
 		Phonon::MediaObject *mediaObject; /// A Phonon media player for e.g. playing a mp3 file
-		bool partyMode;
+		bool demoMode;
 
 		/// The splash screen time of view in ms
 		static const unsigned int SPLASHTIME  = 2000;

@@ -56,8 +56,17 @@ class SpeakThread : public QThread
 		/**
 		Speaks a text with espeak. All HTML-Code in the parameter (text) is also removed internally).
 		@param text is the text to speak.
+		@param phase is an optional value. This could be a special phase which could be returned when the speech ends or so.
 		*/
-		void speak(QString text);
+		void speak(QString text, int phase=0);
+
+
+	signals:
+		/**
+		This is to let other methods or classes know that we completed the speech.
+		@param mPhase could be a phase we where other program continue with their actions.
+		*/
+		void speechCompleted(int mPhase);
 
 
 	private:
@@ -66,11 +75,11 @@ class SpeakThread : public QThread
 		volatile bool stopped;
 		bool saySomething; /// this is for the thread, which waits for something to say.
 		QString textToSpeak;
+		int mPhase;
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
-		static const unsigned long THREADSLEEPTIME = 600; // Default value: 600 ms
-
+		static const unsigned long THREADSLEEPTIME = 200; // Default value: 600 ms
 };
 
 #endif
