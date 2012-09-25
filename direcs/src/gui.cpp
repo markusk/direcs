@@ -2919,7 +2919,7 @@ void Gui::initLaserView()
 	//--------------
 	// FRONT laser
 	//--------------
-	// rotate every laser line by one degree
+	// rotate every laser line by 'resolution' degree (e.g. 0.1 or 0.5 or 1.0)
 	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
 	// (Rotate laser line counterclockwise by 180 degrees and further by the half of the laserAngle)
 	i = 0;
