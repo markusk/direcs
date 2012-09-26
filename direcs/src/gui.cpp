@@ -2915,7 +2915,7 @@ void Gui::initLaserView()
 
 	y = laserYPos;// INITIALLASERYPOSREAR has no effect here, only in on_sliderZoom_valueChanged !!
 
-/*
+
 	//--------------
 	// FRONT laser
 	//--------------
@@ -2927,12 +2927,13 @@ void Gui::initLaserView()
 
 	while (i<laserLineListFront->size())
 	{
-		laserLineListFront->at(i)->rotate(angle);
+// org:		laserLineListFront->at(i)->rotate(angle);
+		laserLineListFront->at(i)->rotate(180);        //  rotate by 180 deg to show them bottom up
 
 		i++;
-		angle += laserscannerResolutionFront;
+// org:		angle += laserscannerResolutionFront;
 	}
-*/
+
 	//==========================================================
 	// refresh the view with the actual zoom (after gui came up)
 	//==========================================================
