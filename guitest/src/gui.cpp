@@ -65,7 +65,7 @@ void Gui::init()
 	if (useLargeGUI)
 		ui.setupUi(this);
 	else
-		uiSmall.setupUi(this);
+		// uiSmall.setupUi(this);
 
 
 	// get background color for compass widget
@@ -85,7 +85,7 @@ void Gui::init()
 	if (useLargeGUI)
 		ui.actionRemote->setChecked(true);
 	else
-		uiSmall.actionRemote->setChecked(true);
+		// uiSmall.actionRemote->setChecked(true);
 
 	//----------------------------------------------------------------------------
 	// Voltage stuff (progressBars)
@@ -118,23 +118,6 @@ infrared Sensors temporarily removed from robot!!
 */
 
 
-	//----------------------------------------------------------------------------------
-	// Whenever the state of the face detect check box changes, set the detection mode
-	//----------------------------------------------------------------------------------
-	if (useLargeGUI)
-		connect(ui.checkBoxFaceDetection, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
-	else
-		connect(uiSmall.checkBoxFaceDetection, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceDetection(int) ));
-
-	//----------------------------------------------------------------------------------
-	// Whenever the state of the face tracking check box changes, set the tracking mode
-	//----------------------------------------------------------------------------------
-	if (useLargeGUI)
-		connect(ui.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
-	else
-		connect(uiSmall.checkBoxFaceTracking, SIGNAL( stateChanged(int) ), SIGNAL( enableFaceTracking(int) ));
-
-
 #ifndef BUILDFORROBOT
 	//----------------------------------------------------------------------------
 	// Plot stuff
@@ -159,9 +142,9 @@ infrared Sensors temporarily removed from robot!!
 	}
 	else
 	{
-		uiSmall.actionDrive->setText("&Drive");
-		uiSmall.actionDrive->setToolTip("Start driving");
-		uiSmall.actionDrive->setStatusTip("Start driving");
+		// uiSmall.actionDrive->setText("&Drive");
+		// uiSmall.actionDrive->setToolTip("Start driving");
+		// uiSmall.actionDrive->setStatusTip("Start driving");
 	}
 }
 
@@ -274,13 +257,13 @@ void Gui::setRobotControls(bool state)
 	}
 	else
 	{
-		uiSmall.actionDrive->setEnabled(state);
-		uiSmall.actionReset->setEnabled(state);
+		// uiSmall.actionDrive->setEnabled(state);
+		// uiSmall.actionReset->setEnabled(state);
 		/*
-		uiSmall.btnResetMovement1->setEnabled(state);
-		uiSmall.btnResetMovement2->setEnabled(state);
-		uiSmall.btnResetMovement3->setEnabled(state);
-		uiSmall.btnResetMovement4->setEnabled(state);
+		// uiSmall.btnResetMovement1->setEnabled(state);
+		// uiSmall.btnResetMovement2->setEnabled(state);
+		// uiSmall.btnResetMovement3->setEnabled(state);
+		// uiSmall.btnResetMovement4->setEnabled(state);
 		*/
 	}
 
@@ -319,7 +302,7 @@ void Gui::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 	}
 	else
 	{
-		uiSmall.textEditGlobalLog->insertHtml(text);
+		// uiSmall.textEditGlobalLog->insertHtml(text);
 	}
 
 	if (CR == true) // default!
@@ -330,7 +313,7 @@ void Gui::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 		}
 		else
 		{
-			uiSmall.textEditGlobalLog->insertHtml("<br>");
+			// uiSmall.textEditGlobalLog->insertHtml("<br>");
 		}
 	}
 
@@ -341,7 +324,7 @@ void Gui::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 	}
 	else
 	{
-		uiSmall.textEditGlobalLog->ensureCursorVisible();
+		// uiSmall.textEditGlobalLog->ensureCursorVisible();
 	}
 
 
@@ -381,7 +364,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	}
 	else
 	{
-		uiSmall.textEditNetworkLog->insertHtml(newText);
+		// uiSmall.textEditNetworkLog->insertHtml(newText);
 	}
 
 	if (CR == true) // default!
@@ -393,7 +376,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 		}
 		else
 		{
-			uiSmall.textEditNetworkLog->insertHtml("<br>");
+			// uiSmall.textEditNetworkLog->insertHtml("<br>");
 		}
 	}
 
@@ -404,7 +387,7 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	}
 	else
 	{
-		uiSmall.textEditNetworkLog->ensureCursorVisible();
+		// uiSmall.textEditNetworkLog->ensureCursorVisible();
 	}
 
 
@@ -444,7 +427,7 @@ void Gui::appendSerialLog(QString text, bool CR)
 	}
 	else
 	{
-		uiSmall.textEditSerialLog->insertHtml(newText);
+		// uiSmall.textEditSerialLog->insertHtml(newText);
 	}
 
 	if (CR == true) // default!
@@ -456,7 +439,7 @@ void Gui::appendSerialLog(QString text, bool CR)
 		}
 		else
 		{
-			uiSmall.textEditSerialLog->insertHtml("<br>");
+			// uiSmall.textEditSerialLog->insertHtml("<br>");
 		}
 	}
 
@@ -467,7 +450,7 @@ void Gui::appendSerialLog(QString text, bool CR)
 	}
 	else
 	{
-		uiSmall.textEditSerialLog->ensureCursorVisible();
+		// uiSmall.textEditSerialLog->ensureCursorVisible();
 	}
 
 
@@ -502,9 +485,9 @@ void Gui::on_actionDrive_activated()
 		}
 		else
 		{
-			uiSmall.actionDrive->setText("Stop &driving");
-			uiSmall.actionDrive->setToolTip("Stop driving");
-			uiSmall.actionDrive->setStatusTip("Stop driving");
+			// uiSmall.actionDrive->setText("Stop &driving");
+			// uiSmall.actionDrive->setToolTip("Stop driving");
+			// uiSmall.actionDrive->setStatusTip("Stop driving");
 		}
 
 		//----------------
@@ -526,9 +509,9 @@ void Gui::on_actionDrive_activated()
 		}
 		else
 		{
-			uiSmall.actionDrive->setText("&Drive");
-			uiSmall.actionDrive->setToolTip("Start driving");
-			uiSmall.actionDrive->setStatusTip("Start driving");
+			// uiSmall.actionDrive->setText("&Drive");
+			// uiSmall.actionDrive->setToolTip("Start driving");
+			// uiSmall.actionDrive->setStatusTip("Start driving");
 		}
 
 		//****************
@@ -568,15 +551,15 @@ void Gui::on_actionReset_activated()
   }
   else
   {
- uiSmall.progressBarSensor1->setValue(0);
- uiSmall.progressBarSensor2->setValue(0);
- uiSmall.progressBarSensor3->setValue(0);
- uiSmall.progressBarSensor4->setValue(0);
- uiSmall.progressBarSensor5->setValue(0);
- uiSmall.progressBarSensor6->setValue(0);
- uiSmall.progressBarSensor7->setValue(0);
- uiSmall.progressBarSensor8->setValue(0);
- uiSmall.progressBarSensor16->setValue(0);
+ // uiSmall.progressBarSensor1->setValue(0);
+ // uiSmall.progressBarSensor2->setValue(0);
+ // uiSmall.progressBarSensor3->setValue(0);
+ // uiSmall.progressBarSensor4->setValue(0);
+ // uiSmall.progressBarSensor5->setValue(0);
+ // uiSmall.progressBarSensor6->setValue(0);
+ // uiSmall.progressBarSensor7->setValue(0);
+ // uiSmall.progressBarSensor8->setValue(0);
+ // uiSmall.progressBarSensor16->setValue(0);
   }
 	*/
 
@@ -591,10 +574,10 @@ void Gui::on_actionReset_activated()
   }
   else
   {
- uiSmall.btnDirection1->setText("FORWARD");
- uiSmall.btnDirection2->setText("FORWARD");
- uiSmall.btnDirection3->setText("FORWARD");
- uiSmall.btnDirection4->setText("FORWARD");
+ // uiSmall.btnDirection1->setText("FORWARD");
+ // uiSmall.btnDirection2->setText("FORWARD");
+ // uiSmall.btnDirection3->setText("FORWARD");
+ // uiSmall.btnDirection4->setText("FORWARD");
   }
 */
 }
@@ -612,8 +595,8 @@ void Gui::on_actionResetDrivenDistance_activated()
 	}
 	else
 	{
-		uiSmall.labelDrivenDistance1->setText("0 cm");
-		uiSmall.labelRevolutions1->setText("0");
+		// uiSmall.labelDrivenDistance1->setText("0 cm");
+		// uiSmall.labelRevolutions1->setText("0");
 	}
 
 	// reset counter
@@ -626,8 +609,8 @@ void Gui::on_actionResetDrivenDistance_activated()
 	}
 	else
 	{
-		uiSmall.labelDrivenDistance2->setText("0 cm");
-		uiSmall.labelRevolutions2->setText("0");
+		// uiSmall.labelDrivenDistance2->setText("0 cm");
+		// uiSmall.labelRevolutions2->setText("0");
 	}
 
 	// reset counter
@@ -640,8 +623,8 @@ void Gui::on_actionResetDrivenDistance_activated()
 	}
 	else
 	{
-		uiSmall.labelDrivenDistance3->setText("0 cm");
-		uiSmall.labelRevolutions3->setText("0");
+		// uiSmall.labelDrivenDistance3->setText("0 cm");
+		// uiSmall.labelRevolutions3->setText("0");
 	}
 
 	// reset counter
@@ -654,8 +637,8 @@ void Gui::on_actionResetDrivenDistance_activated()
 	}
 	else
 	{
-		uiSmall.labelDrivenDistance4->setText("0 cm");
-		uiSmall.labelRevolutions4->setText("0");
+		// uiSmall.labelDrivenDistance4->setText("0 cm");
+		// uiSmall.labelRevolutions4->setText("0");
 	}
 }
 
@@ -674,8 +657,8 @@ void Gui::on_btnResetMovement1_clicked()
   }
   else
   {
- uiSmall.labelDrivenDistance1->setText("0 cm");
- uiSmall.labelRevolutions1->setText("0");
+ // uiSmall.labelDrivenDistance1->setText("0 cm");
+ // uiSmall.labelRevolutions1->setText("0");
   }
 }
 
@@ -693,8 +676,8 @@ void Gui::on_btnResetMovement2_clicked()
   }
   else
   {
- uiSmall.labelDrivenDistance2->setText("0 cm");
- uiSmall.labelRevolutions2->setText("0");
+ // uiSmall.labelDrivenDistance2->setText("0 cm");
+ // uiSmall.labelRevolutions2->setText("0");
   }
 }
 
@@ -712,8 +695,8 @@ void Gui::on_btnResetMovement3_clicked()
   }
   else
   {
- uiSmall.labelDrivenDistance3->setText("0 cm");
- uiSmall.labelRevolutions3->setText("0");
+ // uiSmall.labelDrivenDistance3->setText("0 cm");
+ // uiSmall.labelRevolutions3->setText("0");
   }
 }
 
@@ -731,8 +714,8 @@ void Gui::on_btnResetMovement4_clicked()
   }
   else
   {
- uiSmall.labelDrivenDistance4->setText("0 cm");
- uiSmall.labelRevolutions4->setText("0");
+ // uiSmall.labelDrivenDistance4->setText("0 cm");
+ // uiSmall.labelRevolutions4->setText("0");
   }
 }
 */
@@ -901,13 +884,13 @@ void Gui::on_actionCurrent_activated()
   }
   else
   {
- if (uiSmall.dockCurrent->isVisible())
+ if (// uiSmall.dockCurrent->isVisible())
  {
-	 uiSmall.dockCurrent->hide();
+	 // uiSmall.dockCurrent->hide();
  }
  else
  {
-	 uiSmall.dockCurrent->show();
+	 // uiSmall.dockCurrent->show();
  }
   }
 }
@@ -1128,7 +1111,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 			}
 			else
 			{
-				uiSmall.labelDrivenDistance1->setText(QString("%1 cm").arg(distance));
+				// uiSmall.labelDrivenDistance1->setText(QString("%1 cm").arg(distance));
 			}
 			return;
 			break;
@@ -1139,7 +1122,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 			}
 			else
 			{
-				uiSmall.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
+				// uiSmall.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
 			}
 			return;
 			break;
@@ -1150,7 +1133,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 			}
 			else
 			{
-				uiSmall.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
+				// uiSmall.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
 			}
 			return;
 			break;
@@ -1161,7 +1144,7 @@ void Gui::showDrivenDistance(int sensor, int distance)
 			}
 			else
 			{
-				uiSmall.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
+				// uiSmall.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
 			}
 			return;
 			break;
@@ -1189,8 +1172,8 @@ void Gui::showVoltage(int sensor, float voltage)
 			}
 			else
 			{
-				uiSmall.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 1).append(" V"));
-// 				uiSmall.progressBarVoltage1->setValue(voltage);
+				// uiSmall.lblVoltage1->setText(QString("%1").setNum(voltage, 'f', 1).append(" V"));
+// 				// uiSmall.progressBarVoltage1->setValue(voltage);
 			}
 
 			// change color of the label depending on the voltage
@@ -1205,7 +1188,7 @@ void Gui::showVoltage(int sensor, float voltage)
 					}
 					else
 					{
-						uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-060.png"));
+						// uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-060.png"));
 					}
 				}
 				else
@@ -1216,7 +1199,7 @@ void Gui::showVoltage(int sensor, float voltage)
 					}
 					else
 					{
-						uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+						// uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-missing.png"));
 					}
 				}
 			}
@@ -1229,7 +1212,7 @@ void Gui::showVoltage(int sensor, float voltage)
 				}
 				else
 				{
-					uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
+					// uiSmall.lblBattery1->setPixmap(QPixmap(":/images/images/battery-100.png"));
 				}
 			}
 
@@ -1243,8 +1226,8 @@ void Gui::showVoltage(int sensor, float voltage)
 			}
 			else
 			{
-				uiSmall.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 1).append(" V"));
-//				uiSmall.progressBarVoltage2->setValue(voltage);
+				// uiSmall.lblVoltage2->setText(QString("%1").setNum(voltage, 'f', 1).append(" V"));
+//				// uiSmall.progressBarVoltage2->setValue(voltage);
 			}
 
 			// change color of the label depending on the voltage
@@ -1259,7 +1242,7 @@ void Gui::showVoltage(int sensor, float voltage)
 					}
 					else
 					{
-						uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-060.png"));
+						// uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-060.png"));
 					}
 				}
 				else
@@ -1270,7 +1253,7 @@ void Gui::showVoltage(int sensor, float voltage)
 					}
 					else
 					{
-						uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-missing.png"));
+						// uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-missing.png"));
 					}
 				}
 			}
@@ -1283,7 +1266,7 @@ void Gui::showVoltage(int sensor, float voltage)
 				}
 				else
 				{
-					uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
+					// uiSmall.lblBattery2->setPixmap(QPixmap(":/images/images/battery-100.png"));
 				}
 			}
 
@@ -1522,7 +1505,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+						// uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					}
 					break;
 			}
@@ -1538,7 +1521,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_green.gif"));
+						// uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					}
 					break;
 				case BACKWARD:
@@ -1550,7 +1533,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_red.gif"));
+						// uiSmall.lblLEDBackRight1->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					}
 					break;
 				case SAME:
@@ -1576,7 +1559,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+						// uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					}
 					break;
 			}
@@ -1592,7 +1575,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_green.gif"));
+						// uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					}
 					break;
 				case BACKWARD:
@@ -1604,7 +1587,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_red.gif"));
+						// uiSmall.lblLEDBackLeft2->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					}
 					break;
 				case SAME:
@@ -1630,7 +1613,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+						// uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					}
 					break;
 			}
@@ -1646,7 +1629,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_green.gif"));
+						// uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					}
 					break;
 				case BACKWARD:
@@ -1658,7 +1641,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_red.gif"));
+						// uiSmall.lblLEDFrontRight3->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					}
 					break;
 				case SAME:
@@ -1684,7 +1667,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+						// uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 					}
 					break;
 			}
@@ -1700,7 +1683,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_green.gif"));
+						// uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_green.gif"));
 					}
 					break;
 				case BACKWARD:
@@ -1712,7 +1695,7 @@ void Gui::showMotorStatus(int motor, bool power, int direction)
 					}
 					else
 					{
-						uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_red.gif"));
+						// uiSmall.lblLEDFrontLeft4->setPixmap(QPixmap(":/images/images/led_red.gif"));
 					}
 					break;
 				case SAME:
@@ -1756,9 +1739,9 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	}
 	else
 	{
-		uiSmall.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
-	//	uiSmall.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
-		uiSmall.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
+		// uiSmall.lblLaserFrontFreeArea->setText(QString("%1 - %2 deg").arg(largestFreeAreaStart).arg(largestFreeAreaEnd));
+	//	// uiSmall.lblLaserFrontFreeEnd->setText(QString("%1 deg").arg(largestFreeAreaEnd));
+		// uiSmall.lblLaserFrontFreeCenter->setText(QString("%1 deg").arg(centerOfFreeWay));
 	}
 
 
@@ -1777,7 +1760,7 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		}
 		else
 		{
-			uiSmall.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
+			// uiSmall.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
 		}
 
 		// show the currently configured robot slot with with a prepended '>' or '<'
@@ -1789,7 +1772,7 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 			}
 			else
 			{
-				uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
+				// uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 			}
 		}
 		else
@@ -1800,7 +1783,7 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 			}
 			else
 			{
-				uiSmall.lblPassageWidth->setText( QString("< %1 cm").arg(configuredPassageWidth) );
+				// uiSmall.lblPassageWidth->setText( QString("< %1 cm").arg(configuredPassageWidth) );
 			}
 		}
 	}
@@ -1812,7 +1795,7 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		}
 		else
 		{
-			uiSmall.lblLaserFrontFreeWidth->setText("oo");
+			// uiSmall.lblLaserFrontFreeWidth->setText("oo");
 		}
 
 		// show the currently configured robot slot with with a prepended '>' or '<'
@@ -1822,7 +1805,7 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 		}
 		else
 		{
-			uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
+			// uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 		}
 	}
 
@@ -1835,7 +1818,7 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 	}
 	else
 	{
-		widthTextFront->setText( uiSmall.lblLaserFrontFreeWidth->text() );
+		widthTextFront->setText( // uiSmall.lblLaserFrontFreeWidth->text() );
 	}
 #endif
 }
@@ -1851,7 +1834,7 @@ void Gui::showPreferredDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
+			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
 		}
 		return;
 	}
@@ -1864,7 +1847,7 @@ void Gui::showPreferredDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
+			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
 		}
 		return;
 	}
@@ -1877,7 +1860,7 @@ void Gui::showPreferredDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
+			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
 		}
 		return;
 	}
@@ -1890,7 +1873,7 @@ void Gui::showPreferredDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/middle.png"));
+			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/middle.png"));
 		}
 		return;
 	}
@@ -1909,7 +1892,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/up.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/up.png"));
 		}
 		return;
 	}
@@ -1922,7 +1905,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upleft.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upleft.png"));
 		}
 		return;
 	}
@@ -1935,7 +1918,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upright.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/upright.png"));
 		}
 		return;
 	}
@@ -1948,7 +1931,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/down.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/down.png"));
 		}
 		return;
 	}
@@ -1961,7 +1944,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downleft.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downleft.png"));
 		}
 		return;
 	}
@@ -1974,7 +1957,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downright.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/downright.png"));
 		}
 		return;
 	}
@@ -1987,7 +1970,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/left.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/left.png"));
 		}
 		return;
 	}
@@ -2000,7 +1983,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/right.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/right.png"));
 		}
 		return;
 	}
@@ -2013,7 +1996,7 @@ void Gui::showFaceTrackDirection(QString direction)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
 		}
 		return;
 	}
@@ -2063,8 +2046,8 @@ void Gui::disableFaceDetection()
 	}
 	else
 	{
-		uiSmall.checkBoxFaceDetection->setEnabled(false);
-		uiSmall.checkBoxFaceTracking->setEnabled(false);
+		// uiSmall.checkBoxFaceDetection->setEnabled(false);
+		// uiSmall.checkBoxFaceTracking->setEnabled(false);
 	}
 }
 
@@ -2100,8 +2083,8 @@ void Gui::setCamImage(QImage* image)
 	}
 	else
 	{
-		uiSmall.lblCamera->setPixmap(pixmap.fromImage(*(image)));
-		//uiSmall.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
+		// uiSmall.lblCamera->setPixmap(pixmap.fromImage(*(image)));
+		//// uiSmall.imageFrame->setPixmap( QPixmap::fromImage( tmp ) );
 	}
 
 /*
@@ -2123,7 +2106,7 @@ void Gui::setCamImageDepth(QImage* image)
 	}
 	else
 	{
-		uiSmall.lblCameraDepth->setPixmap(pixmap.fromImage(*(image)));
+		// uiSmall.lblCameraDepth->setPixmap(pixmap.fromImage(*(image)));
 	}
 }
 
@@ -2136,7 +2119,7 @@ void Gui::setCamImageOpenCV(QImage* image)
 	}
 	else
 	{
-		uiSmall.lblCameraOpenCV->setPixmap(pixmap.fromImage(*(image)));
+		// uiSmall.lblCameraOpenCV->setPixmap(pixmap.fromImage(*(image)));
 	}
 }
 
@@ -2177,7 +2160,7 @@ void Gui::on_btnKinectResetAngle_clicked()
 	}
 	else
 	{
-		uiSmall.spinBoxKinectAngle->setValue(0);
+		// uiSmall.spinBoxKinectAngle->setValue(0);
 	}
 
 	emit resetKinectAngle();
@@ -2556,16 +2539,16 @@ void Gui::on_actionRemote_activated()
 	}
 	else
 	{
-		if (uiSmall.actionRemote->isChecked())
+		if (// uiSmall.actionRemote->isChecked())
 		{
-			uiSmall.actionDrive->setEnabled(false);
+			// uiSmall.actionDrive->setEnabled(false);
 			emit enableRemoteControlListening(true);
 		}
 		else
 		{
 			if (robotIsOn)
 			{
-				uiSmall.actionDrive->setEnabled(true);
+				// uiSmall.actionDrive->setEnabled(true);
 			}
 			emit enableRemoteControlListening(false);
 		}
@@ -2592,16 +2575,16 @@ void Gui::on_actionSimulate_activated()
 	}
 	else
 	{
-		if (uiSmall.actionSimulate->isChecked())
+		if (// uiSmall.actionSimulate->isChecked())
 		{
-			uiSmall.actionSimulate->setStatusTip("Disable simulation");
-			uiSmall.actionSimulate->setToolTip("Disable simulation");
+			// uiSmall.actionSimulate->setStatusTip("Disable simulation");
+			// uiSmall.actionSimulate->setToolTip("Disable simulation");
 			emit simulate(true);
 		}
 		else
 		{
-			uiSmall.actionSimulate->setStatusTip("Simulate");
-			uiSmall.actionSimulate->setToolTip("Simulate");
+			// uiSmall.actionSimulate->setStatusTip("Simulate");
+			// uiSmall.actionSimulate->setToolTip("Simulate");
 			emit simulate(false);
 		}
 	}
@@ -2629,7 +2612,7 @@ void Gui::on_actionDemo_activated()
 	}
 	else
 	{
-		if (uiSmall.actionDemo->isChecked())
+		if (// uiSmall.actionDemo->isChecked())
 		{
 			emit demo(true);
 		}
@@ -2797,7 +2780,7 @@ void Gui::on_checkBoxMirror_stateChanged(int state)
 
 	// QtGL class!!
 	//	ui.frameCamera->enableMirrorMode(state);
-	//	uiSmall.frameCamera->enableMirrorMode(state);
+	//	// uiSmall.frameCamera->enableMirrorMode(state);
 }
 
 
@@ -2812,7 +2795,7 @@ void Gui::on_checkBoxFaceDetection_stateChanged(int state)
 		}
 		else
 		{
-			uiSmall.checkBoxFaceTracking->setEnabled(true);
+			// uiSmall.checkBoxFaceTracking->setEnabled(true);
 		}
 	}
 	else
@@ -2823,7 +2806,7 @@ void Gui::on_checkBoxFaceDetection_stateChanged(int state)
 		}
 		else
 		{
-			uiSmall.checkBoxFaceTracking->setEnabled(false);
+			// uiSmall.checkBoxFaceTracking->setEnabled(false);
 		}
 	}
 }
@@ -2846,7 +2829,7 @@ void Gui::on_checkBoxFaceTracking_stateChanged(int state)
 		}
 		else
 		{
-			uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
+			// uiSmall.lblFaceTrackTo->setPixmap(QPixmap(":/images/images/middle.png"));
 		}
 	}
 }
@@ -2886,8 +2869,8 @@ void Gui::initLaserView()
 	}
 	else
 	{
-		laserXPos = (uiSmall.graphicsViewLaser->width()  / 2);
-		laserYPos = (uiSmall.graphicsViewLaser->height() / 2);
+		laserXPos = (// uiSmall.graphicsViewLaser->width()  / 2);
+		laserYPos = (// uiSmall.graphicsViewLaser->height() / 2);
 	}
 
 
@@ -2983,7 +2966,7 @@ void Gui::initLaserView()
 	}
 	else
 	{
-		uiSmall.sliderZoom->setValue(STARTZOOMLEVEL);
+		// uiSmall.sliderZoom->setValue(STARTZOOMLEVEL);
 	}
 }
 #endif
@@ -3013,7 +2996,7 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	}
 	else
 	{
-		zoomView = uiSmall.sliderZoom->value(); // get a scale to fit the beams into the window
+		zoomView = // uiSmall.sliderZoom->value(); // get a scale to fit the beams into the window
 	}
 
 
@@ -3245,7 +3228,7 @@ void Gui::refreshLaserViewRear(QList <float> laserScannerValues, QList <int> las
 	}
 	else
 	{
-		zoomView = uiSmall.sliderZoom->value(); // get a scale to fit the beams into the window
+		zoomView = // uiSmall.sliderZoom->value(); // get a scale to fit the beams into the window
 	}
 
 
@@ -3431,7 +3414,7 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 	}
 	else
 	{
-		on_sliderZoom_valueChanged(uiSmall.sliderZoom->value());
+		on_sliderZoom_valueChanged(// uiSmall.sliderZoom->value());
 	}
 }
 #endif
@@ -3485,7 +3468,7 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 	}
 	else
 	{
-		zoomValue = uiSmall.sliderZoom->value();
+		zoomValue = // uiSmall.sliderZoom->value();
 	}
 
 
@@ -3505,7 +3488,7 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 	}
 	else
 	{
-		uiSmall.sliderZoom->setValue(zoomValue);
+		// uiSmall.sliderZoom->setValue(zoomValue);
 	}
 }
 #endif
@@ -3546,7 +3529,7 @@ void Gui::createLaserScannerObjects()
 	}
 	else
 	{
-		uiSmall.graphicsViewLaser->setScene(scene);
+		// uiSmall.graphicsViewLaser->setScene(scene);
 	}
 
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet by the hardware))
@@ -3556,7 +3539,7 @@ void Gui::createLaserScannerObjects()
 	}
 	else
 	{
-		uiSmall.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
+		// uiSmall.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 	}
 
 	//=======================================================
@@ -3572,7 +3555,7 @@ void Gui::createLaserScannerObjects()
 	}
 	else
 	{
-		lastZoom = uiSmall.sliderZoom->value();
+		lastZoom = // uiSmall.sliderZoom->value();
 	}
 
 	//--------------------------------------------------------------
@@ -3882,14 +3865,14 @@ void Gui::initPlots()
 	}
 	else
 	{
-		qwtPlotVoltage1.setParent(uiSmall.widgetVoltage1);
-		qwtPlotVoltage2.setParent(uiSmall.widgetVoltage2);
+		qwtPlotVoltage1.setParent(// uiSmall.widgetVoltage1);
+		qwtPlotVoltage2.setParent(// uiSmall.widgetVoltage2);
 	}
 
 	//	qwtPlotCurrent1.setParent(ui.widgetCurrent1and2);
 	//	qwtPlotCurrent2.setParent(ui.widgetCurrent3and4);       or
-	//	qwtPlotCurrent1.setParent(uiSmall.widgetCurrent1and2);
-	//	qwtPlotCurrent2.setParent(uiSmall.widgetCurrent3and4);
+	//	qwtPlotCurrent1.setParent(// uiSmall.widgetCurrent1and2);
+	//	qwtPlotCurrent2.setParent(// uiSmall.widgetCurrent3and4);
 
 	if (useLargeGUI)
 	{
@@ -3899,8 +3882,8 @@ void Gui::initPlots()
 	}
 	else
 	{
-		qwtPlotHeartbeat.setParent(uiSmall.widgetHeartbeat);
-	//	uiSmall.widgetHeartbeat->resize(205, 100); // 305 x 161
+		qwtPlotHeartbeat.setParent(// uiSmall.widgetHeartbeat);
+	//	// uiSmall.widgetHeartbeat->resize(205, 100); // 305 x 161
 	//	qwtPlotHeartbeat.resize(205, 100);
 	}
 
@@ -4109,13 +4092,13 @@ void Gui::initPlots()
 	}
 	else
 	{
-		qwtPlotVoltage1.setGeometry( uiSmall.widgetVoltage1->rect() );
-		qwtPlotVoltage2.setGeometry( uiSmall.widgetVoltage2->rect() );
+		qwtPlotVoltage1.setGeometry( // uiSmall.widgetVoltage1->rect() );
+		qwtPlotVoltage2.setGeometry( // uiSmall.widgetVoltage2->rect() );
 
-	//	qwtPlotCurrent1.setGeometry( uiSmall.widgetCurrent1and2->rect() );
-	//	qwtPlotCurrent2.setGeometry( uiSmall.widgetCurrent1and2->rect() );
+	//	qwtPlotCurrent1.setGeometry( // uiSmall.widgetCurrent1and2->rect() );
+	//	qwtPlotCurrent2.setGeometry( // uiSmall.widgetCurrent1and2->rect() );
 
-		qwtPlotHeartbeat.setGeometry( uiSmall.widgetHeartbeat->rect() );
+		qwtPlotHeartbeat.setGeometry( // uiSmall.widgetHeartbeat->rect() );
 	}
 }
 #endif
@@ -4198,15 +4181,15 @@ void Gui::showCompassData(float x, float y, float z, float heading)
 	}
 	else
 	{
-		uiSmall.lblCompassX->setText( QString("%1").setNum(x, 'f', 1).append(" deg") );
-		uiSmall.lblCompassY->setText( QString("%1").setNum(y, 'f', 1).append(" deg") );
-		uiSmall.lblCompassZ->setText( QString("%1").setNum(z, 'f', 1).append(" deg") );
-		uiSmall.lblCompassHeading->setText( QString("%1").setNum(heading, 'f', 1).append(" deg") );
+		// uiSmall.lblCompassX->setText( QString("%1").setNum(x, 'f', 1).append(" deg") );
+		// uiSmall.lblCompassY->setText( QString("%1").setNum(y, 'f', 1).append(" deg") );
+		// uiSmall.lblCompassZ->setText( QString("%1").setNum(z, 'f', 1).append(" deg") );
+		// uiSmall.lblCompassHeading->setText( QString("%1").setNum(heading, 'f', 1).append(" deg") );
 
-	// 	uiSmall.qwtCompass->setValue(x);
+	// 	// uiSmall.qwtCompass->setValue(x);
 
 		// set the 3D OpenGL compass!
-		uiSmall.frameCompass->setAllRotations(x, y, z); /// \todo and what to do with the 'heading'?
+		// uiSmall.frameCompass->setAllRotations(x, y, z); /// \todo and what to do with the 'heading'?
 	}
 */
 }
@@ -4223,7 +4206,7 @@ void Gui::setLEDHeartbeat(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
+				// uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			}
 			break;
 		case GREEN:
@@ -4233,7 +4216,7 @@ void Gui::setLEDHeartbeat(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
+				// uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
 		case LEDOFF:
@@ -4243,7 +4226,7 @@ void Gui::setLEDHeartbeat(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+				// uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
 	}
@@ -4261,7 +4244,7 @@ void Gui::setLEDCompass(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
+				// uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			}
 			break;
 		case GREEN:
@@ -4271,7 +4254,7 @@ void Gui::setLEDCompass(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
+				// uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
 		case LEDOFF:
@@ -4281,7 +4264,7 @@ void Gui::setLEDCompass(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+				// uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
 	}
@@ -4299,7 +4282,7 @@ void Gui::setLEDJoystick(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
+				// uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			}
 			break;
 		case GREEN:
@@ -4309,7 +4292,7 @@ void Gui::setLEDJoystick(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
+				// uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
 		case LEDOFF:
@@ -4319,7 +4302,7 @@ void Gui::setLEDJoystick(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+				// uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
 	}
@@ -4337,7 +4320,7 @@ void Gui::setLEDCamera(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
+				// uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			}
 			break;
 		case GREEN:
@@ -4347,7 +4330,7 @@ void Gui::setLEDCamera(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
+				// uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
 		case LEDOFF:
@@ -4357,7 +4340,7 @@ void Gui::setLEDCamera(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+				// uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
 	}
@@ -4375,7 +4358,7 @@ void Gui::setLEDNetwork(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
+				// uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			}
 			break;
 		case GREEN:
@@ -4385,7 +4368,7 @@ void Gui::setLEDNetwork(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
+				// uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
 		case LEDOFF:
@@ -4395,7 +4378,7 @@ void Gui::setLEDNetwork(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+				// uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
 	}
@@ -4413,7 +4396,7 @@ void Gui::setLEDMasterSlave(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_red.gif"));
+				// uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			}
 			break;
 		case GREEN:
@@ -4423,7 +4406,7 @@ void Gui::setLEDMasterSlave(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_green.gif"));
+				// uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
 		case LEDOFF:
@@ -4433,7 +4416,7 @@ void Gui::setLEDMasterSlave(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+				// uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
 	}
@@ -4451,7 +4434,7 @@ void Gui::setLEDLaser(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
+				// uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			}
 			break;
 		case GREEN:
@@ -4461,7 +4444,7 @@ void Gui::setLEDLaser(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
+				// uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			}
 			break;
 		case LEDOFF:
@@ -4471,7 +4454,7 @@ void Gui::setLEDLaser(unsigned char state)
 			}
 			else
 			{
-				uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
+				// uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			}
 			break;
 	}
@@ -4486,7 +4469,7 @@ void Gui::setLabelMasterSlave(QString text)
 	}
 	else
 	{
-		uiSmall.lblMasterSlave->setText(text);
+		// uiSmall.lblMasterSlave->setText(text);
 	}
 }
 
@@ -4500,7 +4483,7 @@ void Gui::showKinectAngle(double angle)
 	}
 	else
 	{
-		uiSmall.spinBoxKinectAngle->setValue((int) angle);
+		// uiSmall.spinBoxKinectAngle->setValue((int) angle);
 	}
 }
 
@@ -4513,7 +4496,7 @@ void Gui::showThreshold(int threshold)
 	}
 	else
 	{
-		uiSmall.sliderThreshold->setValue(threshold);
+		// uiSmall.sliderThreshold->setValue(threshold);
 	}
 }
 

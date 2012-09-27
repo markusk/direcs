@@ -51,7 +51,7 @@ class GuiTest : public QObject
 		/**
 		The parameters are given from a main method which gets them from the console (startup arguments).
 		*/
-		GuiTest(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI);
+		GuiTest();
 		~GuiTest();
 
 
@@ -97,11 +97,6 @@ class GuiTest : public QObject
 		void shutdown();
 
 		/**
-		This slot catches all signals from the signal @sa systemerror
-		*/
-		void systemerrorcatcher(int errorlevel);
-
-		/**
 		The method for the test button in the GUI.
 		 */
 		void test();
@@ -130,6 +125,8 @@ class GuiTest : public QObject
 		Checks the command-line arguments passed to the program.
 		*/
 		void checkArguments();
+
+		void readSettings();
 
 		//Events *myEvent; /// my event filter for grabbing ctrl+c in the console mode
 		Gui *gui;
@@ -199,6 +196,15 @@ class GuiTest : public QObject
 		static const short int LASER3 = 4;
 		static const short int LASER4 = 8;
 		static const short int LASER5 = 16;
+
+		/**
+		The GUI LED colors. Also used for @sa drivingLight()
+		*/
+		static const unsigned char LEDOFF	= 0;
+		static const unsigned char RED		= 1;
+		static const unsigned char GREEN	= 2;
+		static const unsigned char BLUE	    = 3;
+		static const unsigned char WHITE	= 4;
 };
 
 #endif

@@ -54,19 +54,3 @@ macx {
 	QMAKE_CXXFLAGS+= -arch x86_64
 	INCLUDEPATH+=/usr/local/boost/
 }
-
-
-win32 {
-	message("****************************")
-	message("Sorry guys, no Win* support!")
-	message("****************************")
-	HEADERS =
-
-	SOURCES =
-
-	FORMS =
-
-	DEFINES =
-
-	LIBS =
-}
