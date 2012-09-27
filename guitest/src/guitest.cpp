@@ -78,8 +78,6 @@ int main(int argc, char *argv[])
 		// The QCoreApplication class provides an event loop for console Qt applications.
 		QCoreApplication app(argc, argv);
 
-		CleanExit cleanExit;
-
 		// create Direcs class object
 		GuiTest d(consoleMode, forceSmallGUI, forceLargeGUI);
 
@@ -95,7 +93,7 @@ int main(int argc, char *argv[])
 		//----------------------
 
 		// Initialize the resource file
-		Q_INIT_RESOURCE(direcs);
+		Q_INIT_RESOURCE(guitest);
 
 		// The QApplication class manages the GUI application's control flow and main settings.
 		QApplication app(argc, argv);
@@ -114,301 +112,46 @@ int main(int argc, char *argv[])
 GuiTest::GuiTest(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 {
 	// store mode from main method
-	consoleMode = bConsoleMode;
-	forceSmallGUI = bForceSmallGUI;
-	forceLargeGUI = bForceLargeGUI;
-
-	//-------------------------
-	// Creating logfile object
-	//-------------------------
-	logfile = new Logfile();
-	logfile->setFilename("direcs.log");
-	logfile->appendLog("- start -------------------------------------------------------------------------------------------");
-
-
-	//----------------------
-	// check local hostname
-	//----------------------
-	QString hostname = QHostInfo::localHostName();
-
-	logfile->appendLog(QString("The hostname of this machine is %1").arg(hostname));
-
-	if (hostname.contains("robot"))
-	{
-		logfile->appendLog("Hostname contains 'robot'. We will use the small robot GUI.");
-		useSmallGUI = true;
-	}
-	else
-	{
-		logfile->appendLog("Hostname does not contain 'robot'. We will use the large GUI.");
-		useSmallGUI = false;
-	}
-
-	if (forceSmallGUI)
-	{
-		logfile->appendLog("Overriding GUI use due to command line argument. We will use the small robot GUI!");
-		useSmallGUI = true;
-	}
-
-	if (forceLargeGUI)
-	{
-		logfile->appendLog("Overriding GUI use due to command line argument. We will use the large robot GUI!");
-		useSmallGUI = false;
-	}
-
+	consoleMode = false;
 
 	//--------------------------
 	// create all other objects
 	//--------------------------
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-	speakThread = new SpeakThread();
-#endif
-
-	if (consoleMode)
-	{
-		consoleGui = new ConsoleGui();
-//		myEvent = new Events();
-		/// \todo install an event filter to grab CTRL+C
-//  		consoleGui->installEventFilter(myEvent);
-//			this->installEventFilter(myEvent);
-	}
-	else
-	{
-		settingsDialog = new SettingsDialog();
-		joystickDialog = new JoystickDialog();
-		aboutDialog = new AboutDialog();
-		gui = new Gui(useSmallGUI, settingsDialog, joystickDialog, aboutDialog);
-		splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
-	}
-
-
-	mutex = new QMutex();
-	interface1 = new InterfaceAvr();
-	circuit1 = new Circuit(interface1, mutex);
-///	\todo heartbeat = new Heartbeat(interface1, mutex);
-	motors = new Motor(interface1, mutex);
-	sensorThread = new SensorThread(interface1, mutex);
-	servos = new Servo(interface1, mutex);
-	rgbLeds = new RgbLed(interface1, mutex);
-	laserThread = new LaserThread();
-	obstCheckThread = new ObstacleCheckThread(sensorThread, laserThread);
-
-#ifndef BUILDFORROBOT
-	if (!consoleMode)
-	{
-		plotThread = new PlotThread(sensorThread);
-	}
-#endif
-
-	inifile1 = new Inifile();
-	netThread = new NetworkThread();
-	// creation of kinect instance moved to init method to see something on the splash screen
-	joystick = new Joystick();
-	// head = new Head(servos);  disabled since the head is not in use use!
-
-	if (!consoleMode)
-	{
-		camThread = new CamThread();
-	}
-
-	timerThread = new TimerThread();
-
-	drivingSpeedTimer = new QTimer();
-
-	// create Phonon media player
-	mediaObject = new Phonon::MediaObject();
-
-	demoThread = new DemoThread();
+	gui = new Gui(false);
 }
 
 
 void GuiTest::init()
 {
-	if (!consoleMode)
-	{
-		aboutDialog->setVersion("1.0"); /// \todo put this at a nicer place // this is also shown in the about dialog
-		splashTextColor = Qt::white;
-	}
 	forceShutdown = false;
-	inifile1->setFilename("direcs.ini");
-	useSmallGUI=false;
-	serialPortMicrocontroller = "error1";
-	serialPortLaserscannerFront = "error1";
 	laserscannerTypeFront= "error1";
 	laserscannerTypeRear= "error1";
-	writeLogFile = false;
 	// 	robotIsOn = false;
 	robotDrives = false;
-	mot1Speed = 0;
-	mot2Speed = 0;
-	mot3Speed = 0;
-	mot4Speed = 0;
 	robotSimulationMode = false;
-	robotRemoteMode = false;
-	iAmTheMaster = true;
-	firstDataReceived = false;
-	servoTestMode = false;
-	testDriveMode = false;
-	mecanumDriveMode = false; // if false, a joystick move to the right, lets the robot "turn right". If true, the robots "moves right" - without turning around itself.
-	eyeTestMode = false;
-	currentTestServo = SERVO1;
-	useCamera = false;
-	cameraTestMode = false;
-	faceTrackingIsEnabled = false;
 	laserScannerFrontFound = false;
 	laserScannerRearFound = false;
 	laserscannerAngleFront=0;
 	laserscannerAngleRear=0;
-	endSpeedMotor1Reached = false;
-	endSpeedMotor2Reached = false;
-	endSpeedMotor3Reached = false;
-	endSpeedMotor4Reached = false;
 	preferredDrivingDirection = FORWARD; // this is to allow the robot to drive forward, if the obstacleCheckThread is not running (because of offline laser). Mainly for testing reasons!
-	demoMode = false;
-
-
-	//-----------------------------------------------------------------------------------------------------------------------------------------
-	// check which OS we have. ACTUALLY we check for the WINDOW system, since the OS check doesn't worked (unix was recognized under mac os x)
-	//-----------------------------------------------------------------------------------------------------------------------------------------
-	#ifdef Q_OS_UNIX
-	qDebug("UNIX OS detected.");
-	logfile->appendLog("UNIX OS detected.");
-	#endif
-
-	#ifdef Q_OS_LINUX
-	qDebug("Linux OS detected.");
-	logfile->appendLog("Linux OS detected.");
-	#endif
-
-	#ifdef Q_WS_X11
-	qDebug("X11 detected.");
-	logfile->appendLog("X11 detected.");
-	#endif
-
-	#ifdef Q_OS_MAC
-	qDebug("MAC OS detected.");
-	logfile->appendLog("MAC OS detected.");
-	#endif
-
-	#ifdef Q_WS_MAC
-	qDebug("MAC OS WS detected.");
-	logfile->appendLog("MAC OS WS detected.");
-	#endif
-
-	//--------------------------------------------------------------------------
-	// show the splash screen and set application name
-	//--------------------------------------------------------------------------
-	if (!consoleMode)
-	{
-		splash->show();
-
-		// this is for the Phonon library to export audio output names through the DBUS interface
-		QCoreApplication::setApplicationName("direcs");
-	}
-
-	//--------------------------------------------------------------------------
-	// show splash messages in the splash screen
-	//--------------------------------------------------------------------------
-	connect(this, SIGNAL( splashMessage(QString) ), this, SLOT( showSplashMessage(QString) ));
-
-	//--------------------------------------------------------------------------
-	// let the splash screen also show laser init messages
-	//--------------------------------------------------------------------------
-	connect(laserThread, SIGNAL(message(QString)), this, SLOT(showSplashMessage(QString)));
-
-	//--------------------------------------------------------------------------
-	// let the GUI (or console) also show laser init messages
-	//--------------------------------------------------------------------------
-	if (consoleMode)
-	{
-		connect(laserThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
-	}
-	else
-	{
-		connect(laserThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-	}
-
-	//--------------------------------------------------------------------------
-	// let some other classes know if we are in the console mode
-	//--------------------------------------------------------------------------
-	/// \todo not in use anymore! connect(this, SIGNAL(publishConsoleMode(bool)), gui, SLOT(setConsoleMode(bool)));
-
-	/*
-	not in use at the moment...
-
-	//--------------------------------------------------------------------------------
-	// create the commmand line arguments list
-	//--------------------------------------------------------------------------------
-	arguments = QCoreApplication::arguments();
-	int count = arguments.count() - 1;
-
-	// check if arguments were passed on the command-line
-	if (count > 0)
-	{
-		qDebug() << count << "argument(s) passed...";
-		// check the arguments
-		checkArguments();
-	}
-	*/
 
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
 	// For example: 1.234,00 EUR
 	//------------------------------------------------------------------
 	QLocale::setDefault(QLocale::German);
-	commaSeparator = ",";
 
 	//--------------------------------------------------------------------------
-	// show messages in the GUI log or in the console
-	//--------------------------------------------------------------------------
-	if (consoleMode)
-	{
-		connect(this, SIGNAL( message(QString) ), consoleGui, SLOT( appendLog(QString) ));
-	}
-	else
-	{
-		connect(this, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
-	}
+	connect(this, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
 
 	//--------------------------------------------------------------------------
 	// Check for the current programm path
 	//--------------------------------------------------------------------------
-	emit splashMessage("Loading config file...");
 	emit message(QString("Current path: %1").arg(inifile1->checkPath()));
 
 	//--------------------------------------------------------------------------
 	// show a QMessage wth the possibility to exit the main programm, when errors occured!
 	//--------------------------------------------------------------------------
-	connect(interface1, SIGNAL(tooMuchErrors()), this, SLOT(showExitDialog()));
-
-	//--------------------------------------------------------------------------
-	// let some classes know the robots state
-	//--------------------------------------------------------------------------
-	// this is needed, when the first openCOMPort method fails:
-	connect(interface1,	SIGNAL( robotState(bool) ), circuit1,		SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-//	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), rgbLeds,			SLOT( setRobotState(bool) ));
-//	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
-	if (!consoleMode)
-	{
-		connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
-	}
-
-	// also set the robot to OFF, when there are problems with the circuit
-	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-//	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), rgbLeds,			SLOT( setRobotState(bool) ));
-//	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
-	if (!consoleMode)
-	{
-		connect(circuit1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
-	}
-
-	// let the sensorthread know, if only the compass is not connected
-	connect(circuit1,	SIGNAL( compassState(bool) ), sensorThread,	SLOT( setCompassState(bool) ));
 
 
 	if (!consoleMode)
@@ -436,37 +179,6 @@ void GuiTest::init()
 	if (!consoleMode)
 	{
 		//--------------------------------------------------------------------------
-		// set the motor speed, when signal comes from Gui
-		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setMotorSpeed(int, int)), motors, SLOT(setMotorSpeed(int, int)));
-
-		//--------------------------------------------------------------------------
-		// set the maximum robot speed, when signal comes from Gui
-		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setMaximumSpeed(int)), motors, SLOT(setMaximumSpeed(int)));
-
-		//--------------------------------------------------------------------------
-		// set the robot slot, when signal comes from Gui
-		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setPassageWidth(int)), obstCheckThread, SLOT(setPassageWidth(int)));
-
-		//--------------------------------------------------------------------------
-		// set the straight forward deviation, when signal comes from Gui
-		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setStraightForwardDeviation(int)), obstCheckThread, SLOT(setStraightForwardDeviation(int)));
-
-		//--------------------------------------------------------------------------
-		// set the minimum distance, when signal comes from Gui
-		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setMinObstacleDistance(int)), obstCheckThread, SLOT(setMinObstacleDistance(int)));
-
-		//--------------------------------------------------------------------------
-		// set the minimum laser distance, when signal comes from Gui
-		//--------------------------------------------------------------------------
-		connect(settingsDialog, SIGNAL(setMinObstacleDistanceLaserFront(int)), obstCheckThread, SLOT(setMinObstacleDistanceLaserFront(int)));
-		/// @todo implement signal forwarding for second laser!
-
-		//--------------------------------------------------------------------------
 		// let the GUI show servo messages in the log
 		//--------------------------------------------------------------------------
 		connect(rgbLeds, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
@@ -477,440 +189,17 @@ void GuiTest::init()
 	// Check for the programm ini file
 	// AND read the settings  AND   d o   a l l   t h e   r e s t  ! ! !
 	//--------------------------------------------------------------------------
-	if (inifile1->checkFiles() == true)
+	if (true)
 	{
-		//----------------------------------------------------------------------------
-		// say a text
-		//----------------------------------------------------------------------------
-		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-		// a phase can also be emitted to the regarding slot (int parameter here)
-		connect(this, SIGNAL( speak(QString, int) ), speakThread, SLOT( speak(QString, int) ));
 
 		if (!consoleMode)
 		{
-			connect(gui,  SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
-		}
-
-
-		if (speakThread->isRunning() == false)
-		{
-			emit message("Starting speak thread...", false);
-			speakThread->start();
-			emit message("Speak thread started.");
-		}
-		#endif
-
-		// file found-Msg
-		emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
-
-		//=========================
-		// read all settings
-		//=========================
-		emit splashMessage("Reading settings...");
-		readSettings();
-
-#ifndef BUILDFORROBOT
-		if (!consoleMode)
-		{
-			//----------------------------------------------------------------------------
-			// connect plotThread signal to "setPlotData"
-			// (Whenever the plot thread has new data, the data are show in the GUI)
-			//----------------------------------------------------------------------------
-/* plot of motor currents disabled
-			connect(plotThread, SIGNAL( plotDataComplete1(double *, double *, int) ), gui, SLOT( setPlotData1(double *, double *, int) ));
-			connect(plotThread, SIGNAL( plotDataComplete2(double *, double *, int) ), gui, SLOT( setPlotData2(double *, double *, int) ));
-			connect(plotThread, SIGNAL( plotDataComplete3(double *, double *, int) ), gui, SLOT( setPlotData3(double *, double *, int) ));
-			connect(plotThread, SIGNAL( plotDataComplete4(double *, double *, int) ), gui, SLOT( setPlotData4(double *, double *, int) ));
-*/
-			connect(plotThread, SIGNAL( plotDataComplete5(double *, double *, int) ), gui, SLOT( setPlotData5(double *, double *, int) ));
-			connect(plotThread, SIGNAL( plotDataComplete6(double *, double *, int) ), gui, SLOT( setPlotData6(double *, double *, int) ));
-			connect(plotThread, SIGNAL( plotDataCompleteHeartbeat(double *, double *, int) ), gui, SLOT( setPlotDataHeartbeat(double*, double*, int) ));
-		}
-#endif
-
-		//----------------------------------------------------------------------------
-		// let the GUI show messages in the logs
-		//----------------------------------------------------------------------------
-		if (!consoleMode)
-		{
-			connect(joystick, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
-			connect(circuit1, SIGNAL(message(QString)), gui, SLOT(appendSerialLog(QString)));
-			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-			connect(timerThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-			connect(demoThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-		}
-		else
-		{
-			connect(joystick, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
-			connect(interface1, SIGNAL(message(QString)), consoleGui, SLOT(appendSerialLog(QString)));
-			connect(obstCheckThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
-			connect(timerThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
-			connect(demoThread, SIGNAL(message(QString)), consoleGui, SLOT(appendLog(QString)));
-		}
-
-		// also emit interface class messages to the *logfile*
-		connect(interface1,			SIGNAL(message(QString)), logfile, SLOT(appendLog(QString))); // FIXME: to fast in case of error for writing the logfile!
-		connect(circuit1,			SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-		connect(obstCheckThread,   SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-		connect(timerThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-		connect(demoThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-
-		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
-		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-
-		//----------------------------------------------------------------------------
-		// connect demo button from gui to activate the demo mode
-		//----------------------------------------------------------------------------
-		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setDemoMode(bool) ));
-
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
-		//----------------------------------------------------------------------------
-		// also let the speakThread inform the nextDemoPhase Slot about that the speech was completed to enter the next demo phase
-		//----------------------------------------------------------------------------
-		connect(speakThread, SIGNAL( speechCompleted(int) ), this, SLOT( nextDemoPhase(int) ));
-#endif
-
-		//-------------------------------------------------------
-		// start the network thread (waiting for commands)
-		//-------------------------------------------------------
-
-		// we swap the ports for first listening for a network master
-		netThread->swapPorts();
-		enableRemoteControlListening(true);
-
-		//-------------------------------------------------------
-		// Open serial port for microcontroller communication
-		//-------------------------------------------------------
-		emit splashMessage("Opening serial port for microcontroller communication...");
-		emit message(QString("Opening serial port %1 for microcontroller communication...").arg(serialPortMicrocontroller));
-
-		if (interface1->openComPort(serialPortMicrocontroller) == false)
-		{
-			//*****************************
-			//* ERROR opening serial port *
-			//*****************************
-			// Error message will be send via signals to the GUI or Console!
-			emit message("<font color=\"#FF0000\">The robot is OFF!</font>");
-			if (consoleMode)
-			{
-				consoleGui->appendSerialLog("<font color=\"#FF0000\">+++++++++++++++++++++</font>");
-				consoleGui->appendSerialLog("<font color=\"#FF0000\">+ The robot is OFF! +</font>");
-				consoleGui->appendSerialLog("<font color=\"#FF0000\">+++++++++++++++++++++</font>");
-			}
-			else
-			{
-				gui->appendSerialLog("<font color=\"#FF0000\">The robot is OFF!</font>");
-			}
-			logfile->appendLog("ERROR: The robot is OFF!");
-
-			/* not in use. Don't show a message box
-			if (!consoleMode)
-			{
-				// show a warning dialog!
-				QMessageBox msgbox(QMessageBox::Warning,	tr("Error with robots serial port"),
-															tr("Error opening serial port %1").arg(serialPortMicrocontroller),
-															QMessageBox::Ok | QMessageBox::Default);
-				msgbox.exec();
-			}
-			*/
-
-			if (!consoleMode)
-			{
-				// set GUI LED for compass module
-				// has to be OFF, since the Atmel circuit is OFF
-				gui->setLEDCompass(LEDOFF);
-				gui->disableCompass();
-			}
-		}
-		else
-		{
-			//**********************
-			//* Serial port opened *
-			//**********************
-			emit message("Serial port opened.");
-			if (consoleMode)
-			{
-				consoleGui->appendSerialLog("Serial port opened.");
-			}
-			else
-			{
-				gui->appendSerialLog("Serial port opened.");
-			}
-			logfile->appendLog("Serial port opened.");
-
-
-			//-------------------------------------------------------
-			// Basic init for all the bits on the robot circuit
-			// AND check, if the robot is "on" (it answers correct)
-			//-------------------------------------------------------
-			if (!consoleMode)
-			{
-				// init the circuit & Co. when hitting the button in the GUI
-				connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
-				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
-//				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) ); // @todo: build this < < < < < < <
-			}
-
-
-			//==========================
-			// init the robots circuit
-			//==========================
-			emit splashMessage("Searching robot...");
-
-			if (circuit1->initCircuit() == true)
-			{
-				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
-
-/*
-				// check compass module
-				if (circuit1->initCompass() == true)
-				{
-					emit message("3D compass module detected.");
-					if (!consoleMode)
-					{
-						gui->setLEDCompass(GREEN);
-					}
-				}
-				else
-				{
-					emit message("<font color=\"#FF0000\">3D compass module not connected!</font>");
-					if (!consoleMode)
-					{
-						gui->setLEDCompass(RED);
-					}
-				}
-*/
-				//-------------------------------------------------------
-				// set the read motor speed
-				//-------------------------------------------------------
-				emit message("Setting motor speed in microcontroller");
-				motors->setMotorSpeed(MOTOR1, mot1Speed);
-				motors->setMotorSpeed(MOTOR2, mot2Speed);
-				motors->setMotorSpeed(MOTOR3, mot3Speed);
-				motors->setMotorSpeed(MOTOR4, mot4Speed);
-				emit message("Motor speed set.");
-
-/*
-				//-------------------------------------------------------
-				// move all Servos in their default positions
-				//-------------------------------------------------------
-				servos->init();
-				emit message("Servos moved to default positions");
-*/
-
-				//-------------------------------------------------------
-				// set all RGB LEDs in their default brightness
-				//-------------------------------------------------------
-				rgbLeds->init();
-				emit message("RGB LEDs set to default brightness");
-
-
-				/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
-				//-----------------------------------------------------------
-				// start the heartbeat thread
-				//-----------------------------------------------------------
-				/*
-				if (heartbeat->isRunning() == false)
-				{
-					emit splashMessage("Starting heartbeat thread...");
-
-					emit message("Starting heartbeat thread...", false);
-					heartbeat->start();
-					emit message("Heartbeat thread started.");
-				}
-				*/
-
-				//-----------------------------------------------------------
-				// start the sensor thread for reading the sensors)
-				//-----------------------------------------------------------
-				if (sensorThread->isRunning() == false)
-				{
-					emit splashMessage("Starting sensor thread...");
-					emit message("Starting sensor thread...", false);
-					sensorThread->start();
-					emit message("Sensor thread started.");
-
-					// whenever there is a material error, react!
-					connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-				}
-
-#ifndef BUILDFORROBOT
-				if (!consoleMode)
-				{
-					//-----------------------------------------------------------
-					// start the plot thread ("clock" for plotting the curves)
-					//-----------------------------------------------------------
-					if (plotThread->isRunning() == false)
-					{
-						emit splashMessage("Starting plot thread...");
-						emit message("Starting plot thread...", false);
-						plotThread->start();
-						emit message("Plot thread started.");
-					}
-				}
-#endif
-			} // init was successfull
-			else
-			{
-				logfile->appendLog("Robot is OFF! Please turn it ON!");
-				emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-				emit message("Heartbeat thread NOT started!");
-				emit message("Sensor thread NOT started!");
-				emit message("Plot thread NOT started!");
-			}
-		} // robot is ON
-
-
-		//-----------------------------------------------------------
-		// start the timer thread
-		//-----------------------------------------------------------
-		if (timerThread->isRunning() == false)
-		{
-			emit splashMessage("Starting timer thread...");
-			emit message("Starting timer thread...", false);
-			timerThread->start();
-			emit message("Timer thread started.");
-		}
-
-
-		//-----------------------------------------------------------
-		// check if a joystick is connected
-		//-----------------------------------------------------------
-		if (joystick->isConnected())
-		{
-			// set GUI LED
-			if (!consoleMode)
-				gui->setLEDJoystick(GREEN);
-
-			// start the joystick thread
-			if (joystick->isRunning() == false)
-			{
-				emit splashMessage("Starting joystick thread...");
-				emit message("Starting joystick thread...", false);
-				joystick->start();
-				emit message("Joystick thread started.");
-			}
-		}
-		else
-		{
-			// set GUI LED
-			if (!consoleMode)
-				gui->setLEDJoystick(RED);
-
-			emit message("Joystick thread NOT started.");
-		}
-
-		if (!consoleMode)
-		{
-			//----------------------------------------------------------------------------
-			// drive in the direction which was emited from the gui
-			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( drive(int) ), this, SLOT( drive(int) ));
-		}
-
-		//----------------------------------------------------------------------------
-		// increase the speed by an interval defined as a const in the header file
-		// this is used when starting to drive
-		//----------------------------------------------------------------------------
-		connect(drivingSpeedTimer, SIGNAL( timeout() ), this, SLOT( increaseDrivingSpeed() ));
-
-		//----------------------------------------------------------------------------
-		// connect sensor signals to "show sensor data"
-		// (Whenever the sensor data are completely read, show the result in the GUI)
-		//----------------------------------------------------------------------------
-		connect(sensorThread, SIGNAL( sensorDataComplete() ), this, SLOT( showSensorData() ) );
-		connect(sensorThread, SIGNAL( sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ) );
-		// show error messages in GUI, too
-		connect(sensorThread, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
-		// write error messages to logfile
-		connect(sensorThread, SIGNAL( message(QString, bool) ), logfile, SLOT( appendLog(QString, bool) ));
-
-		if (!consoleMode)
-		{
-			connect(sensorThread, SIGNAL( compassDataComplete(float, float, float, float) ), gui, SLOT( showCompassData(float, float, float, float) ) );
-		}
-
-
-		//----------------------------------------------------------------------------
-		// connect sensor signals to "show that the robot is still alive"
-		// (Whenever a specifiv sensor data is received, show the result in the GUI)
-		//----------------------------------------------------------------------------
-		if (!consoleMode)
-		{
-			connect(sensorThread, SIGNAL( heartbeat(unsigned char)), gui, SLOT( setLEDHeartbeat(unsigned char) ) );
-		}
-		//----------------------------------------------------------------------------
-		// connect sensor signals and write the heartbeat to the logfile
-		// (Whenever a specific sensor data is received, write this to the logfile)
-		//----------------------------------------------------------------------------
-		// 	connect(sensorThread, SIGNAL( heartbeat(unsigned char)), logfile, SLOT( writeHeartbeat(unsigned char) ) );
-		// FIXME: this is too often!! Because of 10ms sensor thread!!
-
-		//----------------------------------------------------------------------------
-		// connect obstacle check (alarm!) sensor signal to "logical unit"
-		//----------------------------------------------------------------------------
-		connect(obstCheckThread, SIGNAL(obstacleDetected(int, QDateTime)), this, SLOT(logicalUnit(int, QDateTime)));
-
-		if (!consoleMode)
-		{
-			//----------------------------------------------------------------------------
-			// show the angle where to drive in a GUI label
-			//----------------------------------------------------------------------------
-			connect(obstCheckThread, SIGNAL(newDrivingAngleSet(int, int, int, float)), gui, SLOT(showLaserFrontAngles(int, int, int, float)));
-
 			//----------------------------------------------------------------------------
 			// show the preferred driving direction in a GUI label
 			//----------------------------------------------------------------------------
 			connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
-
-			//----------------------------------------------------------------------------
-			// connect remote control button from gui to remote control method here
-			// (Whenever the button is pushed, enable the network remote control)
-			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( enableRemoteControlListening(bool) ), this, SLOT( enableRemoteControlListening(bool) ));
 		}
 
-		//----------------------------------------------------------------------------
-		// execute the received remote commands
-		//----------------------------------------------------------------------------
-		connect(netThread, SIGNAL( dataReceived(QString) ), this, SLOT( executeRemoteCommand(QString) ));
-
-		//---------------------------------------------------------------------------------------
-		// check the network state after some seconds after pgm start (are we master or slave?)
-		//---------------------------------------------------------------------------------------
-		connect(timerThread, SIGNAL(checkNetworkState()), this, SLOT(setNetworkState()));
-
-		// connect signal from timerThread to networkThread (enable sending 'master' signal every second)
-		connect(timerThread, SIGNAL(checkNetworkState()), netThread, SLOT(setNetworkMaster()));
-
-		// show network master/slave state in GUI LED
-		if (!consoleMode)
-		{
-			connect(netThread, SIGNAL(heartbeat(unsigned char)), gui, SLOT( setLEDMasterSlave(unsigned char) ) );
-		}
-
-		//----------------------------------------------------------------------------
-		// connect networkThread signal to "dataReceived"
-		// (Whenever data were received, the data are shown in the GUI)
-		//----------------------------------------------------------------------------
-		if (!consoleMode)
-		{
-			connect(netThread, SIGNAL( dataReceived(QString) ), gui, SLOT( appendNetworkLog(QString) ));
-		}
-		else
-		{
-			connect(netThread, SIGNAL( dataReceived(QString) ), consoleGui, SLOT( appendNetworkLog(QString) ));
-		}
-
-		//----------------------------------------------------------------------------
-		// connect sendNetworkString signal to netThreads slot "sendNetworkCommand"
-		// (Whenever the signal is emmited, send the given string over the net)
-		//----------------------------------------------------------------------------
-		connect(this, SIGNAL(sendNetworkString(QString) ), netThread, SLOT( sendNetworkCommand(QString) ));
-
-		// connect signal from demoThread to rgbLed class (enable setting RGB LEDs from demoThread)
-		connect(demoThread, SIGNAL(setRGBLEDBrightness(unsigned char, unsigned char)), rgbLeds, SLOT(setBrightness(unsigned char,unsigned char)));
 
 #ifdef ACTIVELASERVIEW
 		if (!consoleMode)
@@ -945,131 +234,6 @@ void GuiTest::init()
 		// write laser thread messages to logfile, too
 		connect(laserThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
-		//----------------------------------------------------------------------------
-		// connect joystick signals to "show joystick data"
-		// (Whenever the joystick is moved or a button is pressed, show the result in the GUI)
-		//----------------------------------------------------------------------------
-		if (!consoleMode)
-		{
-			connect(joystick, SIGNAL(joystickMoved(int, int)), joystickDialog, SLOT(showJoystickAxes(int, int)));
-			connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), joystickDialog, SLOT(showJoystickButtons(int, bool)));
-#ifdef Q_OS_MAC // for Mac OS only:
-			connect(joystick, SIGNAL(joystickPOVButtonPressed(int)), joystickDialog, SLOT(showJoystickPOVButtons(int)));
-#endif
-		}
-
-		connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
-		connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
-
-		if (!consoleMode)
-		{
-			emit splashMessage("Detecting Kinect camera...");
-			emit message("Detecting Kinect camera...");
-
-			// show Kinect messages in GUI
-			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-
-
-			//-----------------------------------------------------------
-			// check if Kinect camera is connected
-			//-----------------------------------------------------------
-			emit splashMessage("Initialising Kinect camera...");
-			emit message("Initialising Kinect camera...");
-
-			if (camThread->init() == true)
-			{
-				emit splashMessage("Kinect found.");
-				emit message("Kinect found.");
-
-				// connect sensor contact signals to "show contact alarm"
-				// (Whenever the an alarm contact was closed, show the result in the cam image)
-				// connect(sensorThread, SIGNAL(contactAlarm(char, bool)), camThread, SLOT(drawContactAlarm(char, bool)));
-
-				// connect camDataComplete from the cam thread to signal "setCamImage"
-				// (Whenever the image is complete, the image is shown in the GUI)
-				connect(camThread, SIGNAL( camImageComplete(QImage*) ), gui, SLOT( setCamImage(QImage*) ));
-				connect(camThread, SIGNAL( camImageDepthComplete(QImage*) ), gui, SLOT( setCamImageDepth(QImage*) ));
-				connect(camThread, SIGNAL( camImageOpenCVComplete(QImage*) ), gui, SLOT( setCamImageOpenCV(QImage*) ));
-
-				// connect faceDetected from the camThread to the faceTracking unit and to the GUI (to show some values)
-				connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ), this, SLOT( faceTracking(int, int, int, int) ));
-				connect(camThread, SIGNAL( faceDetected(int, int, int, int, int, int) ),  gui, SLOT( showFaceTrackData(int, int, int, int, int, int) ));
-
-				// enable face detection, when activated in the GUI
-				connect(gui, SIGNAL( enableFaceDetection(int) ), camThread, SLOT( enableFaceDetection(int) ));
-
-				// enable face tracking, when activated in the GUI
-				connect(gui, SIGNAL( enableFaceTracking(int) ), this, SLOT( enableFaceTracking(int) ));
-
-				// show the face track direction in the gui
-				connect(this, SIGNAL( showFaceTrackDirection(QString) ), gui, SLOT( showFaceTrackDirection(QString)) );
-
-				//-------------------------------------------------------------------------------------
-				// disable face detection in the GUI, on error with loading haar cascade in CamThread
-				// Must be before readSettings!
-				//-------------------------------------------------------------------------------------
-		///		connect(camThread, SIGNAL( disableFaceDetection() ), gui, SLOT( disableFaceDetection() )); \todo kinect stuff
-
-				//-------------------------------------------------------------------------------------
-				// disable camera controls in the GUI, on error opeing the camera in the CamThread
-				// Must be before readSettings!
-				//-------------------------------------------------------------------------------------
-		///		connect(camThread, SIGNAL( disableCamera() ), gui, SLOT( disableCamera() )); \todo kinect stuff
-
-				// send error messages to the gui
-				connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-
-				// set the Threshold in the camThread when changed in GUI
-				connect(gui, SIGNAL(setThreshold(int)), camThread, SLOT(setThreshold(int)));
-
-				//--------------------------------------------
-				// start threading and grabbing live pictures
-				//--------------------------------------------
-				camThread->start();
-
-				// look a bit up
-				// kinect->setAngle(5); /// \todo: put angle value to ini file and settings dialog
-				// gui->showKinectAngle(5);
-
-				// show kinect camera state in gui
-				gui->setLEDCamera(GREEN);
-
-				// the signals for the LED actions
-
-				// connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
-				// connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
-				// connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
-				// connect(gui, SIGNAL(setYellowLed()), kinect, SLOT(setYellowLed()));
-				// connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
-				// connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
-				// connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));/
-
-				/// \todo the signal for setting the camera angle
-				//connect(gui, SIGNAL(setKinectAngle(double)), kinect, SLOT(setAngle(double)));
-
-				/// \todo the signal for resetting the camera angle
-				//connect(gui, SIGNAL(resetKinectAngle()), kinect, SLOT(resetAngle()));
-
-				// the signal for setting the video mode
-				// connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
-			}
-			else
-			{
-				emit splashMessage("Kinect not found.");
-				emit message("Kinect camera not found.", false);
-
-				// show kinect camera state in gui
-				gui->setLEDCamera(RED);
-				gui->hideCameraControls();
-
-				//gui->disableCamera();
-				emit message("No Kinect detected.");
-
-			}
-
-		}
-
 
 		if (!consoleMode)
 		{
@@ -1078,9 +242,7 @@ void GuiTest::init()
 			// (sets the direcs an the threads to simulation mode)
 			//----------------------------------------------------------------------------
 			connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
-			connect(gui, SIGNAL( simulate(bool) ), sensorThread, SLOT( setSimulationMode(bool) ));
 			connect(gui, SIGNAL( simulate(bool) ), laserThread, SLOT( setSimulationMode(bool) ));
-			connect(gui, SIGNAL( simulate(bool) ), obstCheckThread, SLOT( setSimulationMode(bool) ));
 
 			// let the laserThread write a data file from its laser values if requested by the GUI
 			connect(gui, SIGNAL( writeLaserData() ), laserThread, SLOT( saveLaserData() ));
@@ -1091,12 +253,10 @@ void GuiTest::init()
 		// check if laser scanners are connected
 		//---------------------------------------------------------------------
 		// check FRONT laser
-		emit splashMessage("Searching front laser...");
-		laserScannerFrontFound = laserThread->isConnected(LASER1);
+		laserScannerFrontFound = true;
 
 		// check REAR laser
-		emit splashMessage("Searching rear laser...");
-		laserScannerRearFound = laserThread->isConnected(LASER2);
+		laserScannerRearFound = false;
 
 		if (laserScannerFrontFound || laserScannerRearFound)
 		{
@@ -1143,18 +303,6 @@ void GuiTest::init()
 			}
 
 
-			if (obstCheckThread->isRunning() == false)
-			{
-				emit splashMessage("Initializing obstacle check thread...");
-				emit message("Initializing obstacle check thread...", false);
-				obstCheckThread->init();
-				emit message("Obstacle check thread initialized.");
-
-				emit splashMessage("Starting obstacle check thread...");
-				emit message("Starting obstacle check thread...", false);
-				obstCheckThread->start();
-				emit message("Obstacle check thread started.");
-			}
 		}
 		else
 		{
@@ -1170,43 +318,6 @@ void GuiTest::init()
 
 		if (!consoleMode)
 		{
-			// start random number generator
-			srand(time(NULL));
-
-			// generate one number
-			int number = rand() % 6 +1; // (1 to 6)
-			qDebug("file number %d", number);
-
-			// create phonon player and set filename
-//			music->Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
-
-			/// @todo put media filename or list somewehre else
-//            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
-//            mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/1"));
-#ifdef Q_OS_LINUX
-			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
-#else
-			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1.mp3").arg(number)));
-#endif
-
-			Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-			Phonon::createPath(mediaObject, audioOutput);
-
-			// let the media player restart when files endend and demo mode is enabled
-			connect(mediaObject, SIGNAL( finished() ), this, SLOT( mediaPlayerFinished() ));
-
-			// let the media player skip a track if the button is pressed in the GUI
-			connect(gui, SIGNAL( mediaSkip() ), this, SLOT( mediaPlayerFinished() ));
-		}
-
-		if (!consoleMode)
-		{
-			//------------------------------------------------------------------
-			// hide some dialogues
-			//------------------------------------------------------------------
-			settingsDialog->hide();
-			joystickDialog->hide();
-			aboutDialog->hide();
 
 			//------------------------------------------------------------------
 			// for getting the screen resolution
@@ -1227,55 +338,13 @@ void GuiTest::init()
 				// delete the splash screen
 				//QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 			}
-			else
-			{
-				// resolution too smal for this window. Maximizing...
-				// show the main window
-				gui->showMaximized();
 
-				// delete the splash screen
-				// QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
-			}
-
-#ifdef ACTIVELASERVIEW
 			// one time init for the laser view
 			gui->initLaserView();
-#endif
 
 
-			//-----------------------------------------------------------
-			// check voltages and write them to logfile
-			//-----------------------------------------------------------
-			emit splashMessage("Checking voltages...");
-			logfile->appendLog(QString("INFO: Voltage of Sensor %1 is %2 Volt.").arg(VOLTAGESENSOR1).arg(sensorThread->getVoltage(VOLTAGESENSOR1)));
-			logfile->appendLog(QString("INFO: Voltage of Sensor %1 is %2 Volt.").arg(VOLTAGESENSOR2).arg(sensorThread->getVoltage(VOLTAGESENSOR2)));
-
-
-			// delete the splash screen
-			finishSplash();
 		}
 	} // ini-file found
-	else
-	{
-		if (!consoleMode)
-		{
-			// file not found-Msg
-			QMessageBox msgbox(QMessageBox::Critical,
-							   tr("direcs"),
-							   tr("Required configuration file \"%1\" not found! File perhaps not in the same directory?\n%2\n\nSorry, exiting direcs NOW...").arg(inifile1->getInifileName()).arg( QDir::currentPath() ),
-							   QMessageBox::Ok | QMessageBox::Default);
-			msgbox.exec();
-			forceShutdown = true; // don't ask for AreYouSure, later when shutting down
-			emit message(QString("<b><font color=\"#FF0000\">File '%1' not found!</font></b>").arg(inifile1->getInifileName()));
-
-			// call my own exit routine
-			shutdown();
-
-			// here we're back from the shutdown method, so bye bye
-			// QCoreApplication::exit(-1); does not work!
-			exit(1); // FIXME: works, but doesn't call the destructor :-(
-		}
-	}
 }
 
 

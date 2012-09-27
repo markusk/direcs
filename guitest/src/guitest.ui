@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1710</width>
-    <height>1054</height>
+    <width>1346</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,7 +26,7 @@
    <string>direcs</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../direcs.qrc">
+   <iconset>
     <normaloff>:/images/images/direcs_256x256.png</normaloff>:/images/images/direcs_256x256.png</iconset>
   </property>
   <property name="dockNestingEnabled">
@@ -125,7 +125,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1710</width>
+     <width>1346</width>
      <height>22</height>
     </rect>
    </property>
@@ -212,7 +212,7 @@
   </widget>
   <widget class="QDockWidget" name="dockState">
    <property name="windowIcon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/led_green.gif</normaloff>:/images/images/led_green.gif</iconset>
    </property>
    <property name="windowTitle">
@@ -232,7 +232,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="lblLEDHeartbeat">
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+              <pixmap>:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
@@ -246,7 +246,7 @@
            <item row="3" column="0">
             <widget class="QLabel" name="lblLEDCompass">
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+              <pixmap>:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
@@ -260,7 +260,7 @@
            <item row="6" column="0">
             <widget class="QLabel" name="lblLEDJoystick">
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+              <pixmap>:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
@@ -281,14 +281,14 @@
            <item row="1" column="0">
             <widget class="QLabel" name="lblLEDLaser">
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+              <pixmap>:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="lblLEDCamera">
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+              <pixmap>:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
@@ -302,7 +302,7 @@
            <item row="4" column="0">
             <widget class="QLabel" name="lblLEDNetwork">
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+              <pixmap>:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
@@ -323,7 +323,7 @@
            <item row="5" column="0">
             <widget class="QLabel" name="lblLEDMasterSlave">
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+              <pixmap>:/images/images/led_gray.gif</pixmap>
              </property>
             </widget>
            </item>
@@ -343,37 +343,7 @@
           </spacer>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_22">
-           <item>
-            <widget class="QWidget" name="widgetHeartbeat" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>305</width>
-               <height>161</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          <layout class="QHBoxLayout" name="horizontalLayout_22"/>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -382,7 +352,7 @@
              <item>
               <widget class="QLabel" name="lblLEDFrontLeft4">
                <property name="pixmap">
-                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap>:/images/images/led_gray.gif</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -405,7 +375,7 @@
              <item>
               <widget class="QLabel" name="lblLEDFrontRight3">
                <property name="pixmap">
-                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap>:/images/images/led_gray.gif</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -426,7 +396,7 @@
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/bot_from_above.png</pixmap>
+              <pixmap resource="../guitest.qrc">:/images/images/bot_from_above.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -441,7 +411,7 @@
              <item>
               <widget class="QLabel" name="lblLEDBackLeft2">
                <property name="pixmap">
-                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap>:/images/images/led_gray.gif</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -464,7 +434,7 @@
              <item>
               <widget class="QLabel" name="lblLEDBackRight1">
                <property name="pixmap">
-                <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap>:/images/images/led_gray.gif</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -698,7 +668,7 @@
                 </font>
                </property>
                <property name="pixmap">
-                <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
+                <pixmap>:/images/images/middle.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -1245,589 +1215,9 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockVoltage">
-   <property name="windowIcon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/battery-100.png</normaloff>:/images/images/battery-100.png</iconset>
-   </property>
-   <property name="windowTitle">
-    <string>Voltage</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_4">
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QWidget" name="widgetVoltage1" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>305</width>
-           <height>161</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="layoutVoltage1">
-         <item>
-          <widget class="QLabel" name="lblBattery1">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblVoltage1">
-           <property name="font">
-            <font>
-             <pointsize>24</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string>0,00 V</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="2">
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <item>
-        <widget class="QWidget" name="widgetVoltage2" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>305</width>
-           <height>161</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="layoutVoltage2">
-         <item>
-          <widget class="QLabel" name="lblBattery2">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../direcs.qrc">:/images/images/battery-missing.png</pixmap>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblVoltage2">
-           <property name="font">
-            <font>
-             <pointsize>24</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string>0,00 V</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="1">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QDockWidget" name="dockCamera">
-   <property name="minimumSize">
-    <size>
-     <width>360</width>
-     <height>981</height>
-    </size>
-   </property>
-   <property name="windowIcon">
-    <iconset resource="../direcs.qrc">
-     <normaloff>:/images/images/camera-web.png</normaloff>:/images/images/camera-web.png</iconset>
-   </property>
-   <property name="windowTitle">
-    <string>Camera</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_9">
-    <layout class="QGridLayout" name="gridLayout_9">
-     <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="lblCamera">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>320</width>
-           <height>240</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>320</width>
-           <height>240</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
-         </property>
-         <property name="text">
-          <string>Kinect RGB Video</string>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="lblCameraDepth">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>320</width>
-           <height>240</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>320</width>
-           <height>240</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
-         </property>
-         <property name="text">
-          <string>Kinect Depth Video</string>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="lblCameraOpenCV">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>320</width>
-           <height>240</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>320</width>
-           <height>240</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
-         </property>
-         <property name="text">
-          <string>OpenCV</string>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>Threshold</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="sliderThreshold">
-             <property name="maximum">
-              <number>200</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>20</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblThreshold">
-             <property name="text">
-              <string>100</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <item>
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Angle</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="spinBoxKinectAngle">
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="minimum">
-              <number>-30</number>
-             </property>
-             <property name="maximum">
-              <number>30</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnKinectResetAngle">
-             <property name="text">
-              <string>Reset</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QGridLayout" name="gridLayout_6">
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBoxMirror">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>Mirror</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="checkBoxFaceDetection">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>Face Detection</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QCheckBox" name="checkBoxFaceTracking">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="font">
-              <font>
-               <family>Verdana</family>
-              </font>
-             </property>
-             <property name="text">
-              <string>Face Tracking</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="textLabel2_14">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="text">
-                <string>Faces:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_12">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="lblFaces">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="4" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLabel" name="textLabel2_11">
-               <property name="text">
-                <string>Track to:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lblFaceTrackTo">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>32</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../direcs.qrc">:/images/images/middle.png</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="5" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QPushButton" name="btnSavePicture">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Verdana</family>
-                </font>
-               </property>
-               <property name="text">
-                <string>Save</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../direcs.qrc">
-                 <normaloff>:/images/images/drive-harddisk.png</normaloff>:/images/images/drive-harddisk.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_9">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="dockLog">
    <property name="windowIcon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/text-plain.png</normaloff>:/images/images/text-plain.png</iconset>
    </property>
    <property name="windowTitle">
@@ -1871,7 +1261,7 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/system-shutdown.png</normaloff>:/images/images/system-shutdown.png</iconset>
    </property>
    <property name="text">
@@ -1883,7 +1273,7 @@
   </action>
   <action name="actionLaser_View">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/sick.png</normaloff>:/images/images/sick.png</iconset>
    </property>
    <property name="text">
@@ -1892,7 +1282,7 @@
   </action>
   <action name="actionCamera">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/camera-web.png</normaloff>:/images/images/camera-web.png</iconset>
    </property>
    <property name="text">
@@ -1901,7 +1291,7 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/configure.png</normaloff>:/images/images/configure.png</iconset>
    </property>
    <property name="text">
@@ -1910,7 +1300,7 @@
   </action>
   <action name="actionLog">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/text-plain.png</normaloff>:/images/images/text-plain.png</iconset>
    </property>
    <property name="text">
@@ -1919,7 +1309,7 @@
   </action>
   <action name="actionJoystick">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/input-gaming.png</normaloff>:/images/images/input-gaming.png</iconset>
    </property>
    <property name="text">
@@ -1937,7 +1327,7 @@
   </action>
   <action name="actionDrive">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/direcs_256x256.png</normaloff>:/images/images/direcs_256x256.png</iconset>
    </property>
    <property name="text">
@@ -1949,7 +1339,7 @@
   </action>
   <action name="actionReset">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/system-reboot.png</normaloff>:/images/images/system-reboot.png</iconset>
    </property>
    <property name="text">
@@ -1964,7 +1354,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/network-wireless.png</normaloff>:/images/images/network-wireless.png</iconset>
    </property>
    <property name="text">
@@ -1973,7 +1363,7 @@
   </action>
   <action name="actionTest">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/media-flash.png</normaloff>:/images/images/media-flash.png</iconset>
    </property>
    <property name="text">
@@ -1988,7 +1378,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/utilities-system-monitor.png</normaloff>
      <normalon>:/images/images/utilities-system-monitor-active.png</normalon>:/images/images/utilities-system-monitor.png</iconset>
    </property>
@@ -2001,7 +1391,7 @@
   </action>
   <action name="actionAll">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/window-duplicate.png</normaloff>:/images/images/window-duplicate.png</iconset>
    </property>
    <property name="text">
@@ -2013,7 +1403,7 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/help-about.png</normaloff>:/images/images/help-about.png</iconset>
    </property>
    <property name="text">
@@ -2022,7 +1412,7 @@
   </action>
   <action name="actionVoltage">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/battery-100.png</normaloff>:/images/images/battery-100.png</iconset>
    </property>
    <property name="text">
@@ -2031,7 +1421,7 @@
   </action>
   <action name="actionState">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/led_green.gif</normaloff>:/images/images/led_green.gif</iconset>
    </property>
    <property name="text">
@@ -2040,7 +1430,7 @@
   </action>
   <action name="actionResetDrivenDistance">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/measure.png</normaloff>:/images/images/measure.png</iconset>
    </property>
    <property name="text">
@@ -2052,7 +1442,7 @@
   </action>
   <action name="actionSaveLaserData">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/drive-harddisk.png</normaloff>:/images/images/drive-harddisk.png</iconset>
    </property>
    <property name="text">
@@ -2070,7 +1460,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/media-playback-start.png</normaloff>
      <normalon>:/images/images/media-playback-pause.png</normalon>:/images/images/media-playback-start.png</iconset>
    </property>
@@ -2086,7 +1476,7 @@
   </action>
   <action name="actionMediaSkip">
    <property name="icon">
-    <iconset resource="../direcs.qrc">
+    <iconset>
      <normaloff>:/images/images/media-skip-forward.png</normaloff>:/images/images/media-skip-forward.png</iconset>
    </property>
    <property name="text">
@@ -2095,24 +1485,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../direcs.qrc"/>
+  <include location="../guitest.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>sliderThreshold</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lblThreshold</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>27</x>
-     <y>934</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>48</x>
-     <y>1015</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

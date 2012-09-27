@@ -18,11 +18,13 @@ DEFINES += ACTIVELASERVIEW
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
 	HEADERS +=	gui.h \
-				guitest.h
+				guitest.h \
+				laserScene.h
 #				QtGLContext.h \
 
 	SOURCES +=	gui.cpp \
-				guitest.cpp
+				guitest.cpp \
+				laserScene.cpp
 #				QtGLContext.cpp \
 
 	FORMS +=	guitest.ui

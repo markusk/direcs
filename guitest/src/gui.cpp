@@ -21,13 +21,8 @@
 #include "gui.h"
 
 
-Gui::Gui(bool useSmallGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(bool useSmallGUI, QMainWindow *parent) : QMainWindow(parent)
 {
-	// copy the pointer from the original SensorThread object
-	settingsDialog = s;
-	joystickDialog = j;
-	aboutDialog = a;
-
 	robotIsOn = false;
 	consoleMode = false;
 	useLargeGUI = true;

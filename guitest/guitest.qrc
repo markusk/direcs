@@ -1,53 +1,19 @@
 <RCC>
     <qresource prefix="/images">
-        <file>images/battery-040.png</file>
-        <file>images/battery-060.png</file>
-        <file>images/battery-080.png</file>
-        <file>images/battery-100.png</file>
-        <file>images/battery-low.png</file>
-        <file>images/battery-missing.png</file>
-        <file>images/black.png</file>
-        <file>images/blanc.png</file>
-        <file>images/bot_back.png</file>
-        <file>images/bot_from_above_TOP2.png</file>
         <file>images/bot_from_above.png</file>
-        <file>images/bot_front.png</file>
-        <file>images/bot_left.png</file>
-        <file>images/bot_right.png</file>
-        <file>images/camera-web.png</file>
-        <file>images/configure.png</file>
-        <file>images/direcs_256x256.png</file>
         <file>images/down.png</file>
         <file>images/downleft.png</file>
         <file>images/downright.png</file>
-        <file>images/drive-harddisk.png</file>
-        <file>images/help-about.png</file>
-        <file>images/input-gaming.png</file>
-        <file>images/led_gray.gif</file>
-        <file>images/led_green.gif</file>
-        <file>images/led_red.gif</file>
+        <file>images/led_grays.png</file>
+        <file>images/led_green.png</file>
+        <file>images/led_red.png</file>
         <file>images/left.png</file>
-        <file>images/measure.png</file>
-        <file>images/media-flash.png</file>
-        <file>images/middle.png</file>
-        <file>images/network-wireless.png</file>
         <file>images/right.png</file>
-        <file>images/sick.png</file>
-        <file>images/sickfront.png</file>
-        <file>images/sickrear.png</file>
-        <file>images/splash.png</file>
-        <file>images/system-shutdown.png</file>
-        <file>images/text-plain.png</file>
         <file>images/up.png</file>
         <file>images/upleft.png</file>
         <file>images/upright.png</file>
+        <file>images/system-sutdown.png</file>
         <file>images/utilities-system-monitor-active.png</file>
         <file>images/utilities-system-monitor.png</file>
-        <file>images/window-duplicate.png</file>
-        <file>images/system-reboot.png</file>
-        <file>images/applications-internet.png</file>
-        <file>images/media-playback-pause.png</file>
-        <file>images/media-playback-start.png</file>
-        <file>images/media-skip-forward.png</file>
     </qresource>
 </RCC>

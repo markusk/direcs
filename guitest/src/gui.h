@@ -25,39 +25,10 @@
 #include <QtGlobal> // for Q_OS_* Makro!
 #include <QtGui>
 #include <QtOpenGL>
-
-#ifdef ACTIVELASERVIEW
-	#include <QGraphicsScene> // for OpenGL (Laser lines)
-#endif
-
+#include <QGraphicsScene> // for OpenGL (Laser lines)
 //-------------------------------------------------------------------
-#include "joystickDialog.h"
-#include "settingsDialog.h"
-#include "aboutDialog.h"
 
-#ifdef ACTIVELASERVIEW
-	#include "laserScene.h"
-#endif
-
-//#include "compassWidget.h"
-
-//#ifdef USEROBOTGUI
-	#include "ui_direcsSmall.h"
-//#else
-	#include "ui_direcs.h"
-//#endif
-
-#ifndef BUILDFORROBOT
-	#include <qwt_plot_layout.h>
-	#include <qwt_plot_curve.h>
-	#include <qwt_plot_grid.h>
-	#include <qwt_scale_draw.h>
-	#include <qwt_scale_widget.h>
-	#include <qwt_legend.h>
-	#include <qwt_legend_item.h>
-	// #include <qwt_compass.h>
-	#include <qwt_dial_needle.h>
-#endif
+#include "laserScene.h"
 
 
 /**
@@ -69,7 +40,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(bool useSmallGUI, SettingsDialog *s, JoystickDialog *j, AboutDialog *a, QMainWindow *parent = 0);
+		Gui(bool useSmallGUI, QMainWindow *parent = 0);
 		~Gui();
 
 		/*
@@ -116,7 +87,6 @@ class Gui : public QMainWindow
 		*/
 		void showMotorStatus(int motor, bool power, int direction);
 
-#ifdef ACTIVELASERVIEW
 		/**
 		Initialise the laser view (find the middle of the now fresh shown control etc.)
 		*/
@@ -127,7 +97,6 @@ class Gui : public QMainWindow
 		Has to be called AFTER the laserType and angles are known (read from an ini-file) or so.
 		*/
 		void initLaserStuff();
-#endif
 
 
 	public slots:
@@ -210,51 +179,6 @@ class Gui : public QMainWindow
 		 */
 		void setRobotControls(bool state);
 
-/*
-#ifndef BUILDFORROBOT
-		/ **
-		Shows the actual plot data (e.g. measured current from motor 1). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		* /
-		void setPlotData1(double *xval, double *yval, int size);
-#endif
-
-#ifndef BUILDFORROBOT
-		/ **
-		Shows the actual plot data (e.g. measured current from motor 2). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		* /
-		void setPlotData2(double *xval, double *yval, int size);
-#endif
-
-#ifndef BUILDFORROBOT
-		/ **
-		Shows the actual plot data (e.g. measured current from motor 3). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		* /
-		void setPlotData3(double *xval, double *yval, int size);
-#endif
-
-#ifndef BUILDFORROBOT
-		/ **
-		Shows the actual plot data (e.g. measured current from motor 4). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		* /
-		void setPlotData4(double *xval, double *yval, int size);
-#endif
-*/
 
 #ifndef BUILDFORROBOT
 		/**
@@ -641,31 +565,6 @@ class Gui : public QMainWindow
 		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		bool useLargeGUI; /// if true, we will use the large GUI. If false, we will use the small one for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Direcs
 		Ui::mainWindow ui; /// This is the large default GUI, when not running on the robot
-		Ui::mainWindowSmall uiSmall; /// This is the small GUI, when running on the robots small TFT
-		SettingsDialog *settingsDialog; // just a pointer to the object created in the direcs class!
-		JoystickDialog *joystickDialog; // just a pointer to the object created in the direcs class!
-		AboutDialog *aboutDialog;       // just a pointer to the object created in the direcs class!
-#ifndef BUILDFORROBOT
-		QwtPlot qwtPlotVoltage1; // this plot object will be added to the GUI layout if we don't build on the robot directly!
-		QwtPlot qwtPlotVoltage2; // this plot object will be added to the GUI layout if we don't build on the robot directly!
-		QwtPlot qwtPlotCurrent1; // this plot object will be added to the GUI layout if we don't build on the robot directly!
-		QwtPlot qwtPlotCurrent2; // this plot object will be added to the GUI layout if we don't build on the robot directly!
-		QwtPlot qwtPlotHeartbeat; // this plot object will be added to the GUI layout if we don't build on the robot directly!
-		QwtPlotCurve curveVoltage1;
-		QwtPlotCurve curveVoltage2;
-		QwtPlotCurve curveCurrent1;
-		QwtPlotCurve curveCurrent2;
-		QwtPlotCurve curveCurrent3;
-		QwtPlotCurve curveCurrent4;
-		QwtPlotCurve curveHeartbeat;
-		QwtPlotGrid gridVoltage1;
-		QwtPlotGrid gridVoltage2;
-		QwtPlotGrid gridCurrent1;
-		QwtPlotGrid gridCurrent2;
-		QwtPlotGrid gridHeartbeat;
-// 		QwtCompassMagnetNeedle needle;
-#endif
-		QPixmap cameraPicToSave;
 
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
