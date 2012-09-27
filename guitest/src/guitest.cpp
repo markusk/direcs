@@ -18,7 +18,7 @@
  *                                                                       *
  *************************************************************************/
 
-#include "direcs.h"
+#include "guitest.h"
 
 
 int main(int argc, char *argv[])
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 		CleanExit cleanExit;
 
 		// create Direcs class object
-		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI);
+		GuiTest d(consoleMode, forceSmallGUI, forceLargeGUI);
 
 		// init direcs
 		d.init();
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 		QApplication app(argc, argv);
 
 		// create the Direcs class object
-		Direcs d(consoleMode, forceSmallGUI, forceLargeGUI);
+		GuiTest d(consoleMode, forceSmallGUI, forceLargeGUI);
 
 		// init direcs
 		d.init();
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 }
 
 
-Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
+GuiTest::GuiTest(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 {
 	// store mode from main method
 	consoleMode = bConsoleMode;
@@ -222,7 +222,7 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 }
 
 
-void Direcs::init()
+void GuiTest::init()
 {
 	if (!consoleMode)
 	{
@@ -1279,7 +1279,7 @@ void Direcs::init()
 }
 
 
-void Direcs::shutdown()
+void GuiTest::shutdown()
 {
 	emit message("----------------");
 	emit message("Shutting down...");
@@ -1898,7 +1898,7 @@ void Direcs::shutdown()
 }
 
 
-Direcs::~Direcs()
+GuiTest::~GuiTest()
 {
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
@@ -1951,7 +1951,7 @@ Direcs::~Direcs()
 }
 
 
-void Direcs::showExitDialog()
+void GuiTest::showExitDialog()
 {
 		emit message("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
 
@@ -1975,7 +1975,7 @@ void Direcs::showExitDialog()
 }
 
 
-void Direcs::showSplashMessage(QString text)
+void GuiTest::showSplashMessage(QString text)
 {
 	if (!consoleMode)
 	{
@@ -2011,7 +2011,7 @@ void Direcs::showSplashMessage(QString text)
 }
 
 
-void Direcs::finishSplash()
+void GuiTest::finishSplash()
 {
 	if (!consoleMode)
 	{
@@ -2020,7 +2020,7 @@ void Direcs::finishSplash()
 }
 
 
-void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
+void GuiTest::logicalUnit(int sensorAlarm, QDateTime timestamp)
 {
 	//Q_UNUSED(timestamp);
 
@@ -2211,7 +2211,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 }
 
 
-void Direcs::enableFaceTracking(int state)
+void GuiTest::enableFaceTracking(int state)
 {
 	if (state == Qt::Checked)
 	{
@@ -2224,7 +2224,7 @@ void Direcs::enableFaceTracking(int state)
 }
 
 
-void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
+void GuiTest::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 {
 	Q_UNUSED(faces);
 	Q_UNUSED(faceX);
@@ -2377,7 +2377,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 }
 
 
-void Direcs::showSensorData()
+void GuiTest::showSensorData()
 {
 	if (!consoleMode)
 	{
@@ -2463,7 +2463,7 @@ void Direcs::showSensorData()
 }
 
 
-void Direcs::drive(const int command)
+void GuiTest::drive(const int command)
 {
 	static unsigned char lastCommand = 255;
 
@@ -2853,7 +2853,7 @@ void Direcs::drive(const int command)
 }
 
 
-void Direcs::resetDrivingSpeedTimer(void)
+void GuiTest::resetDrivingSpeedTimer(void)
 {
 	endSpeedMotor1Reached = false;
 	endSpeedMotor2Reached = false;
@@ -2862,7 +2862,7 @@ void Direcs::resetDrivingSpeedTimer(void)
 }
 
 
-void Direcs::increaseDrivingSpeed(void)
+void GuiTest::increaseDrivingSpeed(void)
 {
 	int currentSpeed1 = 0;
 	int currentSpeed2 = 0;
@@ -2929,7 +2929,7 @@ void Direcs::increaseDrivingSpeed(void)
 }
 
 
-void Direcs::readSettings()
+void GuiTest::readSettings()
 {
 	//---------------------------------------------------------------------
 	// get the programm settings and set the items on the gui (sliders...)
@@ -4141,7 +4141,7 @@ void Direcs::readSettings()
 }
 
 
-void Direcs::enableRemoteControlListening(bool state) /// @todo check if we still need the enableRemoteControlListening method
+void GuiTest::enableRemoteControlListening(bool state) /// @todo check if we still need the enableRemoteControlListening method
 {
 	// store the state gobal to Direcs
 	robotRemoteMode = state;
@@ -4182,7 +4182,7 @@ void Direcs::enableRemoteControlListening(bool state) /// @todo check if we stil
 }
 
 
-void Direcs::setNetworkState()
+void GuiTest::setNetworkState()
 {
 	// if still no data received (in executeRemoteCommand()
 	if (firstDataReceived == false)
@@ -4205,7 +4205,7 @@ void Direcs::setNetworkState()
 }
 
 
-void Direcs::executeRemoteCommand(QString command)
+void GuiTest::executeRemoteCommand(QString command)
 {
 	// if still no first and one time check if this is the master or the slave program
 	if (firstDataReceived == false)
@@ -4370,7 +4370,7 @@ void Direcs::executeRemoteCommand(QString command)
 }
 
 
-void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
+void GuiTest::executeJoystickCommand(int axisNumber, int axisValue)
 {
 	static unsigned char servo1Pos = servos->getServoPosition(SERVO1);
 
@@ -4933,7 +4933,7 @@ void Direcs::executeJoystickCommand(int axisNumber, int axisValue)
 }
 
 
-void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
+void GuiTest::executeJoystickCommand(int buttonNumber, bool buttonState)
 {
 	/// @sa Gui::showJoystickButtons
 	static bool toggle0 = false;
@@ -5073,13 +5073,13 @@ void Direcs::executeJoystickCommand(int buttonNumber, bool buttonState)
 }
 
 
-bool Direcs::simulationMode() const
+bool GuiTest::simulationMode() const
 {
 	return robotSimulationMode;
 }
 
 
-void Direcs::setSimulationMode(bool status)
+void GuiTest::setSimulationMode(bool status)
 {
 	robotSimulationMode = status;
 
@@ -5144,7 +5144,7 @@ void Direcs::setRobotState(bool state)
 */
 
 
-void Direcs::checkArguments()
+void GuiTest::checkArguments()
 {
 	if (arguments.contains("console", Qt::CaseInsensitive))
 	{
@@ -5155,7 +5155,7 @@ void Direcs::checkArguments()
 }
 
 
-void Direcs::nextDemoPhase(int phase)
+void GuiTest::nextDemoPhase(int phase)
 {
 	static int iPhase = phase;
 
@@ -5202,7 +5202,7 @@ void Direcs::nextDemoPhase(int phase)
 }
 
 
-void Direcs::setDemoMode(bool status)
+void GuiTest::setDemoMode(bool status)
 {
 	// save state locally
 	demoMode = status;
@@ -5241,7 +5241,7 @@ emit speak("Okay, here we go.", 1);
 }
 
 
-void Direcs::mediaPlayerFinished()
+void GuiTest::mediaPlayerFinished()
 {
 	int number = rand() % 6 +1; // (1 to 6)
 
@@ -5265,7 +5265,7 @@ void Direcs::mediaPlayerFinished()
 }
 
 
-void Direcs::systemerrorcatcher(int errorlevel)
+void GuiTest::systemerrorcatcher(int errorlevel)
 {
 	switch (errorlevel)
 	{
@@ -5300,7 +5300,7 @@ void Direcs::systemerrorcatcher(int errorlevel)
 }
 
 
-void Direcs::drivingLight(unsigned char color)
+void GuiTest::drivingLight(unsigned char color)
 {
 	switch (color)
 	{
@@ -5351,7 +5351,7 @@ void Direcs::drivingLight(unsigned char color)
 }
 
 
-void Direcs::test()
+void GuiTest::test()
 {
 /*
 	#ifdef Q_OS_LINUX
