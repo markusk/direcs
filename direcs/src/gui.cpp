@@ -2925,7 +2925,7 @@ void Gui::initLaserView()
 	//--------------
 	// FRONT laser
 	//--------------
-	// rotate every laser line by 'resolution' degree (e.g. 0.1 or 0.5 or 1.0)
+	// rotate every laser line by 'resolution' degree (e.g. 0.1 or 0.5 or 1.0) [initLaserView]
 	// Be sure to rotate that the middle of the laserAngle is always at a vertical 90 degree in the scene!
 	// (Rotate laser line counterclockwise by 180 degrees and further by the half of the laserAngle)
 	i = 0;
@@ -2935,6 +2935,7 @@ void Gui::initLaserView()
 	{
 // org:		laserLineListFront->at(i)->rotate(angle);
 		laserLineListFront->at(i)->rotate(180);        //  rotate by 180 deg to show them bottom up
+// test		laserLineListFront->at(i)->setTransform(QTransform().translate(x, y).rotate(45).translate(-x,-y));
 
 		i++;
 // org:		angle += laserscannerResolutionFront;
