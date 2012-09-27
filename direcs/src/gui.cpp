@@ -2693,17 +2693,21 @@ void Gui::on_sliderZoom_valueChanged(int value)
 
 
 	//------------------------------------------------------
-	// change the x and y position of the FRONT laser lines
+	// change the x and y position of the FRONT laser lines [on_sliderZoom_valueChanged]
 	//------------------------------------------------------
-	x = laserXPos;
+// org:	x = laserXPos;
+	x = laserXPos - (laserLineListFront->size()/2);
+
 	y = laserYPos - (INITIALLASERYPOSFRONT / startScale * lastZoom);
 
-	for (int i=0; i<laserLineListFront->size(); i++)
+// org:	for (int i=0; i<laserLineListFront->size(); i++)
+	for (int i=0, m=0; i<laserLineListFront->size(); i++, m++)
 	{
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
-		laserLineListFront->at(i)->setPos(x, y);
+// org:		laserLineListFront->at(i)->setPos(x, y);
+		laserLineListFront->at(i)->setPos(x+m, y);
 	}
 
 
@@ -3068,9 +3072,15 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 	{
 		// get value from laser and
 		// draw the lines at every 1
-		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
+// org:		laserLineLength = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView); // length in Pixel!!!
+		laserLineLength = 10; // length in Pixel!!!
 
+		// set line length
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
+
+		// new:
+		// set new line y position. x is untouched [refreshLaserViewFront]
+		laserLineListFront->at(i)->setPos(laserLineListFront->at(i)->scenePos().x(), laserLineLength);
 
 
 		// set tool tip of the line to the distance
