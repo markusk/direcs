@@ -3078,9 +3078,10 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 		// set line length
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
-		// new:
 		// set new line y position. x is untouched [refreshLaserViewFront]
-		laserLineListFront->at(i)->setPos(laserLineListFront->at(i)->scenePos().x(), laserLineLength);
+// org:		laserLineListFront->at(i)->setPos(laserLineListFront->at(i)->scenePos().x(), laserLineLength);
+		// use length to change y position (distance from robot to obstacle)
+		laserLineListFront->at(i)->setPos(laserLineListFront->at(i)->scenePos().x(), qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView));
 
 
 		// set tool tip of the line to the distance
