@@ -2697,12 +2697,14 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	//------------------------------------------------------
 // org:	x = laserXPos;
 	x = laserXPos - (laserLineListFront->size()/2);
-
-	y = laserYPos - (INITIALLASERYPOSFRONT / startScale * lastZoom);
+// org:	y = laserYPos - (INITIALLASERYPOSFRONT / startScale * lastZoom);
 
 // org:	for (int i=0; i<laserLineListFront->size(); i++)
 	for (int i=0, m=0; i<laserLineListFront->size(); i++, m++)
 	{
+		// use current y position, which is the length to change y position (distance from robot to obstacle)
+		y = laserYPos - (laserLineListFront->at(i)->y() / startScale * lastZoom);
+
 		// horizontal center:
 		// x = middle of the bot pixmap in the view
 		// y = set manually
@@ -2996,6 +2998,7 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 {
 	qreal x = 0.0;
 	qreal y = 0.0;
+	qreal distance = 0.0;
 	/*
 	int r = 0;
 	qreal xKart;
@@ -3078,10 +3081,12 @@ void Gui::refreshLaserViewFront(QList <float> laserScannerValues, QList <int> la
 		// set line length
 		laserLineListFront->at(i)->setLine(0, 0, 0, laserLineLength);
 
+		// use length to change y position (distance from robot to obstacle)
+		distance = qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView);
+
 		// set new line y position. x is untouched [refreshLaserViewFront]
 // org:		laserLineListFront->at(i)->setPos(laserLineListFront->at(i)->scenePos().x(), laserLineLength);
-		// use length to change y position (distance from robot to obstacle)
-		laserLineListFront->at(i)->setPos(laserLineListFront->at(i)->scenePos().x(), qRound(laserScannerValues[i]*FITTOFRAMEFACTOR*zoomView));
+		laserLineListFront->at(i)->setPos(laserLineListFront->at(i)->scenePos().x(), distance);
 
 
 		// set tool tip of the line to the distance
