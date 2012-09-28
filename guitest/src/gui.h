@@ -28,6 +28,7 @@
 #include <QGraphicsScene> // for OpenGL (Laser lines)
 //-------------------------------------------------------------------
 
+#include "ui_guitest.h"
 #include "laserScene.h"
 
 
