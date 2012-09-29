@@ -8,7 +8,7 @@ OBJECTS_DIR = ../tmp
 
 RESOURCES = ../guitest.qrc
 
-CONFIG += warn_on \
+CONFIG += release \
 		  qt
 
 TEMPLATE = app
