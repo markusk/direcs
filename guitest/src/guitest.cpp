@@ -147,6 +147,15 @@ void GuiTest::init()
 	//----------------------------------------------------------------------------
 	// show the gui
 	//----------------------------------------------------------------------------
+	QDesktopWidget *desktop = QApplication::desktop();
+
+	//------------------------------------------------------------------
+	// place gui window at a nice position on the screen
+	//------------------------------------------------------------------
+	// move mainWindow to the center of the screen
+	gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
+
+	// show the gui
 	gui->show();
 
 	// delete the splash screen
