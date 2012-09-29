@@ -11,13 +11,17 @@ RESOURCES = ../guitest.qrc
 CONFIG += release \
 	qt
 
+QT +=	opengl
+
 TEMPLATE = app
 
 HEADERS +=	gui.h \
-	guitest.h
+			guitest.h \
+			laserScene.h
 
 SOURCES +=	gui.cpp \
-	guitest.cpp
+			guitest.cpp \
+			laserScene.cpp
 
 FORMS +=	mainWindow.ui
 

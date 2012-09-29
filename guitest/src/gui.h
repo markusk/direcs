@@ -25,8 +25,11 @@
 //-------------------------------------------------------------------
 #include <QtGui>
 #include <QDateTime>
+#include <QtOpenGL>
+#include <QGraphicsScene> // for OpenGL (Laser lines)
 //-------------------------------------------------------------------
 #include "ui_mainWindow.h"
+#include "laserScene.h"
 //-------------------------------------------------------------------
 
 
