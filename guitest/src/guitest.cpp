@@ -28,12 +28,14 @@ int main(int argc, char *argv[])
 
 	// The QApplication class manages the GUI application's control flow and main settings.
 	QApplication app(argc, argv);
+	qDebug("	QAppl");
 
 	// create the Direcs class object
 	Guitest g();
+	qDebug("	Guitest g()");
 
 	// init direcs
-	g.init();
+	g.init();		// < < < < <  guitest.cpp:38: error: request for member 'init' in 'g', which is of non-class type 'Guitest ()()'      < < < < < <
 
 	return app.exec();
 }
@@ -41,7 +43,9 @@ int main(int argc, char *argv[])
 
 Guitest::Guitest()
 {
-	gui = new Gui(false);
+	qDebug("this line is never reached ! ! ! !");
+
+	gui = new Gui();
 }
 
 
@@ -90,106 +94,92 @@ void Guitest::init()
 	// Check for the programm ini file
 	// AND read the settings  AND   d o   a l l   t h e   r e s t  ! ! !
 	//--------------------------------------------------------------------------
-	if (true)
+
+	//----------------------------------------------------------------------------
+	// show the preferred driving direction in a GUI label
+	//----------------------------------------------------------------------------
+	connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
+
+
+	//----------------------------------------------------------------------------
+	// connect laserThread signal to "dataReceived"
+	// (Whenever data were received, the data are shown in the GUI)
+	//----------------------------------------------------------------------------
+	qRegisterMetaType < QList <float> > ("QList <float>");
+	qRegisterMetaType < QList <int> > ("QList <int>");
+
+
+	//----------------------------------------------------------------------------
+	// connect simulation button from gui to activate the simulation mode
+	// (sets the direcs an the threads to simulation mode)
+	//----------------------------------------------------------------------------
+	connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
+
+
+	//---------------------------------------------------------------------
+	// check if laser scanners are connected
+	//---------------------------------------------------------------------
+	// check FRONT laser
+	laserScannerFrontFound = true;
+
+	// check REAR laser
+	laserScannerRearFound = false;
+
+	if (laserScannerFrontFound || laserScannerRearFound)
 	{
-
-		if (true)
+		if (laserScannerFrontFound)
 		{
-			//----------------------------------------------------------------------------
-			// show the preferred driving direction in a GUI label
-			//----------------------------------------------------------------------------
-			connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
-		}
-
-
-		if (true)
-		{
-			//----------------------------------------------------------------------------
-			// connect laserThread signal to "dataReceived"
-			// (Whenever data were received, the data are shown in the GUI)
-			//----------------------------------------------------------------------------
-			qRegisterMetaType < QList <float> > ("QList <float>");
-			qRegisterMetaType < QList <int> > ("QList <int>");
-		}
-
-
-		if (true)
-		{
-			//----------------------------------------------------------------------------
-			// connect simulation button from gui to activate the simulation mode
-			// (sets the direcs an the threads to simulation mode)
-			//----------------------------------------------------------------------------
-			connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
-		}
-
-
-		//---------------------------------------------------------------------
-		// check if laser scanners are connected
-		//---------------------------------------------------------------------
-		// check FRONT laser
-		laserScannerFrontFound = true;
-
-		// check REAR laser
-		laserScannerRearFound = false;
-
-		if (laserScannerFrontFound || laserScannerRearFound)
-		{
-			if (laserScannerFrontFound)
-			{
-				if (true)
-				{
-					gui->setLEDLaser(GREEN);
-				}
-				emit message("Front laser scanner found.");
-			}
-			else
-			{
-				emit message("Front laser scanner NOT found.");
-			}
-
-			if (laserScannerRearFound)
-			{
-				emit message("Rear laser scanner found.");
-			}
-			else
-			{
-				emit message("Rear laser scanner NOT found.");
-			}
-
 			if (true)
 			{
-				/// \todo nice exit point and error message
-				if (!QGLFormat::hasOpenGL())
-				{
-					qDebug() << "This system has no OpenGL support" << endl;
-					showExitDialog();
-				}
+				gui->setLEDLaser(GREEN);
 			}
-
+			emit message("Front laser scanner found.");
 		}
 		else
 		{
-			emit message("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
+			emit message("Front laser scanner NOT found.");
+		}
 
-			if (true)
+		if (laserScannerRearFound)
+		{
+			emit message("Rear laser scanner found.");
+		}
+		else
+		{
+			emit message("Rear laser scanner NOT found.");
+		}
+
+		if (true)
+		{
+			/// \todo nice exit point and error message
+			if (!QGLFormat::hasOpenGL())
 			{
-				// choose a red instead of a off LED since this looks more important
-				gui->setLEDLaser(RED);
+				qDebug() << "This system has no OpenGL support" << endl;
+				showExitDialog();
 			}
 		}
 
+	}
+	else
+	{
+		emit message("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 
-		//--------------
-		// show the gui
-		//--------------
-		gui->show();
+		if (true)
+		{
+			// choose a red instead of a off LED since this looks more important
+			gui->setLEDLaser(RED);
+		}
+	}
 
 
-		// one time init for the laser view
-		gui->initLaserView();
+	//--------------
+	// show the gui
+	//--------------
+	gui->show();
 
 
-	} // ini-file found
+	// one time init for the laser view
+	gui->initLaserView();
 }
 
 
