@@ -133,8 +133,6 @@ class Gui : public QMainWindow
 		 */
 		void setRobotControls(bool state);
 
-
-#ifdef ACTIVELASERVIEW
 		/**
 		Refreshes the view of the lines from the front laser scanner.
 		*/
@@ -149,7 +147,6 @@ class Gui : public QMainWindow
 		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
 		*/
 		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
-#endif
 
 		/**
 		Gets the angle of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 180 or 270 degrees)
@@ -165,12 +162,10 @@ class Gui : public QMainWindow
 		*/
 		void setLaserscannerResolution(short int laserscanner, float resolution);
 
-#ifdef ACTIVELASERVIEW
 		/**
 		Zoom into the graphicsView/scene, if the mouse wheel was used.
 		*/
 		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
-#endif
 
 		/**
 		Shows the angles of the free area where to drive in lables.
@@ -385,15 +380,12 @@ class Gui : public QMainWindow
 	private slots:
 		void on_actionResetDrivenDistance_activated();
 
-#ifdef ACTIVELASERVIEW
 		void on_sliderZoom_valueChanged(int);
-#endif
 
 
 	private:
 		void init();
 
-#ifdef ACTIVELASERVIEW
 		/**
 		Creates all laser lines, pixmaps, scene, view for the laser scanner view.
 		*/
@@ -408,7 +400,6 @@ class Gui : public QMainWindow
 		Creates the graphical objects to show the drive through width for the robot in the laser scanner view.
 		*/
 		void createLaserWidthObjects();
-#endif
 
 		/**
 		Removes HTML code from a given string.
@@ -442,7 +433,6 @@ class Gui : public QMainWindow
 		int mLargestFreeAreaStartRear;  /// this stores the free area angle from the rear  laser. Got it from @sa showLaserFrontAngles()
 		int mLargestFreeAreaEndRear;    /// this stores the free area angle from the rear  laser. Got it from @sa showLaserFrontAngles()
 
-#ifdef ACTIVELASERVIEW
 		QPen laserLinePen;
 		int lastZoom;
 		qreal startScale;
@@ -466,25 +456,15 @@ class Gui : public QMainWindow
 		QGraphicsLineItem *widthLineRear;            /// shows the width for the robots drive-trough for the rear laser
 		QGraphicsSimpleTextItem *widthTextRear;      /// shows the width for the robots drive-trough for the rear laser
 		qreal widthCirclesWidth; /// the width of the robots drive-tru circles
-#endif
 
 		QPixmap pixmap; // for IplImageToQImage()
 
-//		CompassWidget *compassWidget;							/// The 3D OpenGL compass widget
 		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui
 		QString string; // this is a free to use string
-/*
-		cv::Mat frame;
-*/
 
 		static const int SENSORPROGRESSBARMAXIR = 50; /** max value in cm for ir sensor */
 		static const int SENSORPROGRESSBARMAXUS = 400; /** max value in cm for us sensor */
-
-//		static const float AMPERESMAXPLOTCURVE1 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 1
-//		static const float AMPERESMAXPLOTCURVE2 = 3000.0; /// The maximum axis Y value in Amperes (A) for plot curve number 2
-//		static const float AMPERESSTEPPLOTCURVE1 = 500.0; /// The step value for the y axis for plot curve number 1
-//		static const float AMPERESSTEPPLOTCURVE2 = 500.0; /// The step value for the y axis for plot curve number 1
 
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
