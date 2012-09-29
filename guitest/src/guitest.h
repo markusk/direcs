@@ -42,7 +42,7 @@
 
  All objects are created here. This method also starts the GUI and its splash screen.
 */
-class GuiTest : public QObject
+class Guitest : public QObject
 {
 	Q_OBJECT
 
@@ -51,8 +51,8 @@ class GuiTest : public QObject
 		/**
 		The parameters are given from a main method which gets them from the console (startup arguments).
 		*/
-		GuiTest();
-		~GuiTest();
+		Guitest();
+		~Guitest();
 
 
 		/**

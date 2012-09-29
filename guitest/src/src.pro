@@ -9,7 +9,7 @@ OBJECTS_DIR = ../tmp
 RESOURCES = ../guitest.qrc
 
 CONFIG += warn_on \
-	qt
+		  qt
 
 TEMPLATE = app
 

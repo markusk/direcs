@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// create the Direcs class object
-	GuiTest g();
+	Guitest g();
 
 	// init direcs
 	g.init();
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 }
 
 
-GuiTest::GuiTest()
+Guitest::Guitest()
 {
 	// store mode from main method
 	consoleMode = false;
@@ -51,7 +51,7 @@ GuiTest::GuiTest()
 }
 
 
-void GuiTest::init()
+void Guitest::init()
 {
 	forceShutdown = false;
 	laserscannerTypeFront= "error1";
@@ -190,13 +190,9 @@ void GuiTest::init()
 		}
 
 
-		//------------------------------------------------------------------
-		// place gui window at a nice position on the screen
-		//------------------------------------------------------------------
-		// move mainWindow to the center of the screen
-		gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
-
+		//--------------
 		// show the gui
+		//--------------
 		gui->show();
 
 
@@ -208,7 +204,7 @@ void GuiTest::init()
 }
 
 
-void GuiTest::shutdown()
+void Guitest::shutdown()
 {
 	emit message("----------------");
 	emit message("Shutting down...");
@@ -251,7 +247,7 @@ void GuiTest::shutdown()
 }
 
 
-GuiTest::~GuiTest()
+Guitest::~Guitest()
 {
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
@@ -263,7 +259,7 @@ GuiTest::~GuiTest()
 }
 
 
-void GuiTest::showExitDialog()
+void Guitest::showExitDialog()
 {
 		emit message("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
 
@@ -287,7 +283,7 @@ void GuiTest::showExitDialog()
 }
 
 
-void GuiTest::readSettings()
+void Guitest::readSettings()
 {
 	//---------------------------------------------------------------------
 	// get the programm settings and set the items on the gui (sliders...)
@@ -347,13 +343,13 @@ void GuiTest::readSettings()
 }
 
 
-bool GuiTest::simulationMode() const
+bool Guitest::simulationMode() const
 {
 	return robotSimulationMode;
 }
 
 
-void GuiTest::setSimulationMode(bool status)
+void Guitest::setSimulationMode(bool status)
 {
 	robotSimulationMode = status;
 
@@ -368,7 +364,7 @@ void GuiTest::setSimulationMode(bool status)
 }
 
 
-void GuiTest::checkArguments()
+void Guitest::checkArguments()
 {
 	if (arguments.contains("console", Qt::CaseInsensitive))
 	{
@@ -378,7 +374,7 @@ void GuiTest::checkArguments()
 }
 
 
-void GuiTest::test()
+void Guitest::test()
 {
 //	static bool toggle = false;
 
