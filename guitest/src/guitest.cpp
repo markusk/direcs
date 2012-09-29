@@ -72,14 +72,14 @@ GuiTest::GuiTest(bool bConsoleMode)
 	// create the objects
 	//------------------------------------------------------------------
 	gui = new Gui();
-	splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
+//	splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 }
 
 
 void GuiTest::init()
 {
-	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
-	splashColor = Qt::red;
+//	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
+//	splashColor = Qt::red;
 //	serialPortMicrocontroller = "/dev/tty.SLAB_USBtoUART"; /// this is the seperate serial adapter, but the same as on the Atmel-Board!
 	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
 //	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
@@ -89,12 +89,12 @@ void GuiTest::init()
 	//--------------------------------------------------------------------------
 	// show the splash screen
 	//--------------------------------------------------------------------------
-	splash->show();
+//	splash->show();
 
 	//--------------------------------------------------------------------------
 	// show splash messages in the splash screen
 	//--------------------------------------------------------------------------
-	connect(this, SIGNAL( splashMessage(QString) ), this, SLOT( showSplashMessage(QString) ));
+//	connect(this, SIGNAL( splashMessage(QString) ), this, SLOT( showSplashMessage(QString) ));
 
 
 	/*
@@ -150,7 +150,7 @@ void GuiTest::init()
 	gui->show();
 
 	// delete the splash screen
-	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
+//	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 
 
 
@@ -168,8 +168,8 @@ void GuiTest::shutdown()
 {
 	qDebug("Direcs-avrsim shutdown...");
 
-	splash->show();
-	emit splashMessage("Shutting down...");
+//	splash->show();
+//	emit splashMessage("Shutting down...");
 
 
 	//-----------------------------
@@ -190,7 +190,7 @@ GuiTest::~GuiTest()
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
 	qDebug("Bye.");
-	delete splash;
+//	delete splash;
 	delete gui;
 }
 
