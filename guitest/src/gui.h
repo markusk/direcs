@@ -178,11 +178,6 @@ class Gui : public QMainWindow
 		QColor colorGraphicsSceneBackground;
 		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
 		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
-		QList <QGraphicsLineItem*> *laserLineListRear;		/** A pointer to a QList of pointers to the rear laser lines (QGraphicsLineItems) */
-		QList <QGraphicsEllipseItem*> *laserDistanceLineListFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
-		QList <QGraphicsSimpleTextItem*> *laserDistanceTextFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
-		QList <QGraphicsEllipseItem*> *laserDistanceLineListRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
-		QList <QGraphicsSimpleTextItem*> *laserDistanceTextRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
 		QGraphicsPixmapItem *pixmapBot1;
 		QGraphicsPixmapItem *pixmapBot2;
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

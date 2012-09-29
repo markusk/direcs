@@ -46,6 +46,8 @@ void Gui::init()
 	laserYPos = 0; // correct value is set in the initLaserView()!!
 
 
+	laserscannerAngleFront = 270;
+	laserscannerResolutionFront = 0.5;
 }
 
 
@@ -285,41 +287,6 @@ void Gui::initLaserView()
 	//==========================================================
 	on_sliderZoom_valueChanged(lastZoom);
 
-
-	//=============================================================================
-	// move the FRONT distance lines to their x and y positions
-	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
-	//=============================================================================
-	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
-	x = laserXPos - (laserDistanceLineListFront->at(0)->rect().width() / 2);
-	y = laserYPos - (laserDistanceLineListFront->at(0)->rect().height() / 2);
-
-	//-----------------
-	// FRONT distances
-	//-----------------
-	for (int i=0; i<laserDistanceLineListFront->size(); i++)
-	{
-		laserDistanceLineListFront->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
-	}
-
-
-	//=============================================================================
-	// move the REAR distance lines to their x and y positions
-	// has to be *after* sliderZoom_valueChanged for correct 'distance' positions!
-	//=============================================================================
-	// in the middle of the front of bot, minus a half of the innerst circle (no. 0)
-	x = laserXPos - (laserDistanceLineListRear->at(0)->rect().width() / 2);
-	y = laserYPos - (laserDistanceLineListRear->at(0)->rect().height() / 2);
-
-	//-----------------
-	// REAR distances
-	//-----------------
-	for (int i=0; i<laserDistanceLineListRear->size(); i++)
-	{
-		laserDistanceLineListRear->at(i)->setPos( (x - (i*LASERDISTANCEDISTANCE/2)), y - (i*LASERDISTANCEDISTANCE/2) );
-	}
-
-
 	// zoom into the laser lines by default factor
 	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 }
@@ -389,7 +356,6 @@ void Gui::createLaserScannerObjects()
 	// create the laser line lists
 	//=====================================================
 	laserLineListFront = new QList <QGraphicsLineItem*>();
-	laserLineListRear = new QList <QGraphicsLineItem*>();
 
 
 	//-------------------------------------
@@ -446,7 +412,6 @@ void Gui::on_sliderZoom_valueChanged(int value)
 	qreal x = 0;
 	qreal y = 0;
 	qreal newSize = 0;
-	QString text;
 
 
 	// show the zoom value in a label /// @todo put his in a signal slot in qt desginer
@@ -498,86 +463,5 @@ void Gui::on_sliderZoom_valueChanged(int value)
 		// y = set manually
 // org:		laserLineListFront->at(i)->setPos(x, y);
 		laserLineListFront->at(i)->setPos(x+m, y);
-	}
-
-
-	//------------------------------------------------
-	// change the y position of the REAR laser lines
-	//------------------------------------------------
-	x = laserXPos;
-	y = laserYPos + (INITIALLASERYPOSREAR / startScale * lastZoom);
-
-	for (int i=0; i<laserLineListRear->size(); i++)
-	{
-		// horizontal center:
-		// x = middle of the bot pixmap in the view
-		// y = set manually
-		laserLineListRear->at(i)->setPos(x, y);
-	}
-
-
-	//------------------------------------------------------------------
-	// change the y position of the FRONT laser distance lines and text
-	//------------------------------------------------------------------
-	for (int i=0; i<laserDistanceLineListFront->size(); i++)
-	{
-		// (LASERDISTANCEFIRSTCIRCLE/STARTZOOMLEVEL) is the 'factor'
-		// value is the zoomSlider value
-		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
-
-		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
-		x = laserXPos - (newSize / 2);
-		y = laserYPos - (newSize / 2) + (INITIALLASERYPOSFRONT / startScale * lastZoom);
-
-		// change the width and height
-		laserDistanceLineListFront->at(i)->setRect(0, 0, newSize, newSize);
-		// set the circle position!
-		laserDistanceLineListFront->at(i)->setPos(x, y);
-
-
-		// recalculate the new text position
-		x = laserXPos;
-		y = laserYPos + (newSize/2);
-
-		// set the text position!
-		laserDistanceTextFront->at(i)->setPos(x, y);
-
-		// set the text
-		text = QString("%1").arg(newSize/(FITTOFRAMEFACTOR*value*2));
-		// only show 2 digits after the ','
-		laserDistanceTextFront->at(i)->setText(text.left(text.indexOf(".") + 3) + "m");
-	}
-
-
-	//------------------------------------------------------------------
-	// change the y position of the REAR laser distance lines and text
-	//------------------------------------------------------------------
-	for (int i=0; i<laserDistanceLineListRear->size(); i++)
-	{
-		// (LASERDISTANCEFIRSTCIRCLE/STARTZOOMLEVEL) is the 'factor'
-		// value is the zoomSlider value
-		newSize = (LASERDISTANCEFIRSTCIRCLE / STARTZOOMLEVEL * value) + (i * LASERDISTANCEDISTANCE);
-
-		// recalculate the new position (put the middle of the circle in the middle of the graphics view)
-		x = laserXPos - (newSize / 2);
-		y = laserYPos - (newSize / 2) - (INITIALLASERYPOSREAR / startScale * lastZoom);
-
-		// change the width and height
-		laserDistanceLineListRear->at(i)->setRect(0, 0, newSize, newSize);
-		// set the circle position!
-		laserDistanceLineListRear->at(i)->setPos(x, y);
-
-
-		// recalculate the new text position
-		x = laserXPos;
-		y = laserYPos - (newSize/2);
-
-		// set the text position!
-		laserDistanceTextRear->at(i)->setPos(x, y);
-
-		// set the text
-		text = QString("%1").arg(newSize/(FITTOFRAMEFACTOR*value*2));
-		// only show 2 digits after the ','
-		laserDistanceTextRear->at(i)->setText(text.left(text.indexOf(".") + 3) + "m");
 	}
 }
