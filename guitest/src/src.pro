@@ -13,44 +13,34 @@ CONFIG += warn_on \
 
 TEMPLATE = app
 
-DEFINES += ACTIVELASERVIEW
+HEADERS +=	gui.h \
+			guitest.h \
+			laserScene.h
+#			QtGLContext.h \
 
-unix|macx {
-	message("Processing UNIX / MAC OS scope...")
-	HEADERS +=	gui.h \
-				guitest.h \
-				laserScene.h
-#				QtGLContext.h \
+SOURCES +=	gui.cpp \
+			guitest.cpp \
+			laserScene.cpp
+#			QtGLContext.cpp \
 
-	SOURCES +=	gui.cpp \
-				guitest.cpp \
-				laserScene.cpp
-#				QtGLContext.cpp \
+FORMS +=	guitest.ui
 
-	FORMS +=	guitest.ui
+QT +=		opengl
 
-	QT +=		opengl
+INCLUDEPATH += /opt/local/include \
+			/opt/local/libexec/qt4-mac/include \
+			/usr/local/include
 
-	INCLUDEPATH += /opt/local/include \
-				/opt/local/libexec/qt4-mac/include \
-				/usr/local/include
+LIBS +=		-L/opt/local/lib \
+			-L/usr/lib \
+			-L/usr/local/lib
 
-	LIBS +=		-L/opt/local/lib \
-				-L/usr/lib \
-				-L/usr/local/lib
+QMAKE_CXXFLAGS_DEBUG += -pg
+QMAKE_CXXFLAGS_RELEASE += -pg
 
-	QMAKE_CXXFLAGS_DEBUG += -pg
-	QMAKE_CXXFLAGS_RELEASE += -pg
+QMAKE_CXXFLAGS+= -msse -msse2 -msse3
 
-	QMAKE_CXXFLAGS+= -msse -msse2 -msse3
-}
+ICON = ../images/guitest.icns
 
-
-macx {
-	message("Processing MAC OS scope...")
-
-	ICON = ../images/guitest.icns
-
-	QMAKE_CXXFLAGS+= -arch x86_64
-	INCLUDEPATH+=/usr/local/boost/
-}
+QMAKE_CXXFLAGS+= -arch x86_64
+INCLUDEPATH+=/usr/local/boost/
