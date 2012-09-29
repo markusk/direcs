@@ -23,52 +23,6 @@
 
 int main(int argc, char *argv[])
 {
-	bool consoleMode = false;
-	bool forceSmallGUI = false;
-	bool forceLargeGUI = false;
-
-
-	// Check for command-line argument "console".
-	// A deeper argument check will be done later within the class Direcs!
-	if (argc > 1)
-	{
-		qDebug() << argc - 1 << "argument(s) passed...";
-
-		for (int i=1; i<argc; i++)
-		{
-			// now search for the "console" parameter (case insensitive)
-			if (strcasecmp(argv[i], "console") == 0)
-			{
-				consoleMode = true;
-				qDebug() << "Console mode enabled.";
-			}
-
-			// force small GUI ?
-			if (strcasecmp(argv[i], "small") == 0)
-			{
-				forceSmallGUI = true;
-				qDebug() << "Using small GUI.";
-			}
-
-			// force large GUI ?
-			if (strcasecmp(argv[i], "large") == 0)
-			{
-				forceLargeGUI = true;
-				qDebug() << "Using large GUI.";
-			}
-
-			// now search for the "console" parameter (case insensitive)
-			if ((strcasecmp(argv[i], "-h") == 0) || (strcasecmp(argv[i], "-help") == 0) || (strcasecmp(argv[i], "help") == 0) || (strcasecmp(argv[i], "?") == 0) || (strcasecmp(argv[i], "-?") == 0))
-			{
-				qDebug() << "Possible parameters:\n\n";
-				qDebug() << "console\tuse console mode";
-				qDebug() << "small\tforce small GUI";
-				qDebug() << "large\tforce large GUI\n\n";
-			}
-		}
-	}
-
-
 	// Initialize the resource file
 	Q_INIT_RESOURCE(guitest);
 
