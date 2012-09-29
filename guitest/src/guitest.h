@@ -24,12 +24,10 @@
 //-------------------------------------------------------------------
 #include "gui.h"
 //-------------------------------------------------------------------
-#include <QtGlobal> // for Q_OS_* Makro!
 #include <QObject>
 #include <QtDebug>
 #include <QtGui>
 #include <QMetaType>
-#include <QtCore/QCoreApplication>
 //-------------------------------------------------------------------
 
 
