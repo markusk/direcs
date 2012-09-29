@@ -1,5 +1,5 @@
 /*************************************************************************
- *   Copyright (C) Markus Knapp                                          *
+ *   Copyright (C) 2011 by Markus Knapp                                  *
  *   www.direcs.de                                                       *
  *                                                                       *
  *   This file is part of direcs.                                        *
@@ -23,63 +23,112 @@
 
 int main(int argc, char *argv[])
 {
+	bool consoleMode = false;
+
+
+	// Check for command-line argument "console".
+	// A deeper argument check will be done later within the class Direcs-avrsim!
+	if (argc > 1)
+	{
+		qDebug() << argc - 1 << "argument(s) passed...";
+
+		for (int i=1; i<argc; i++)
+		{
+			// now search for the "console" parameter (case insensitive)
+			if (strcasecmp(argv[i], "console") == 0)
+			{
+				consoleMode = true;
+				qDebug() << "Console mode enabled.";
+			}
+		}
+	}
+
+
+	//----------------------
+	// CREATE A GUI APP
+	//----------------------
+
 	// Initialize the resource file
 	Q_INIT_RESOURCE(guitest);
 
 	// The QApplication class manages the GUI application's control flow and main settings.
 	QApplication app(argc, argv);
-	qDebug("	QAppl");
 
-	// create the Direcs class object
-	Guitest g();
-	qDebug("	Guitest g()");
+	// create the Direcs-avrsim class object
+	GuiTest d(consoleMode);
 
 	// init direcs
-	g.init();		// < < < < <  guitest.cpp:38: error: request for member 'init' in 'g', which is of non-class type 'Guitest ()()'      < < < < < <
+	d.init();
 
 	return app.exec();
 }
 
 
-Guitest::Guitest()
+GuiTest::GuiTest(bool bConsoleMode)
 {
-	qDebug("this line is never reached ! ! ! !");
+	Q_UNUSED(bConsoleMode);
 
+	//------------------------------------------------------------------
+	// create the objects
+	//------------------------------------------------------------------
 	gui = new Gui();
+	splash = new QSplashScreen(QPixmap(":/images/images/splash.png"));
 }
 
 
-void Guitest::init()
+void GuiTest::init()
 {
-	forceShutdown = false;
-	laserscannerTypeFront= "error1";
-	laserscannerTypeRear= "error1";
-	// 	robotIsOn = false;
-	robotDrives = false;
+	splashPosition = Qt::AlignHCenter | Qt::AlignBottom;
+	splashColor = Qt::red;
+//	serialPortMicrocontroller = "/dev/tty.SLAB_USBtoUART"; /// this is the seperate serial adapter, but the same as on the Atmel-Board!
+	serialPortMicrocontroller = "/dev/tty.PL2303-003014FA"; /// this is the PL2303, old 'LaserScanerFront' adapter
+//	serialPortMicrocontroller = "/dev/ttyLaserScannerFront"; /// this is the PL2303, old 'LaserScanerFront' adapter
+//	serialPortMicrocontroller = "/dev/ttyAtmelBoard";
 	robotSimulationMode = false;
-	laserScannerFrontFound = false;
-	laserScannerRearFound = false;
-	laserscannerAngleFront=0;
-	laserscannerAngleRear=0;
-	preferredDrivingDirection = FORWARD; // this is to allow the robot to drive forward, if the obstacleCheckThread is not running (because of offline laser). Mainly for testing reasons!
+
+	//--------------------------------------------------------------------------
+	// show the splash screen
+	//--------------------------------------------------------------------------
+	splash->show();
+
+	//--------------------------------------------------------------------------
+	// show splash messages in the splash screen
+	//--------------------------------------------------------------------------
+	connect(this, SIGNAL( splashMessage(QString) ), this, SLOT( showSplashMessage(QString) ));
+
+
+	/*
+	not in use at the moment...
+
+	//--------------------------------------------------------------------------------
+	// create the commmand line arguments list
+	//--------------------------------------------------------------------------------
+	arguments = QCoreApplication::arguments();
+	int count = arguments.count() - 1;
+
+	// check if arguments were passed on the command-line
+	if (count > 0)
+	{
+		qDebug() << count << "argument(s) passed...";
+		// check the arguments
+		checkArguments();
+	}
+	*/
 
 	//------------------------------------------------------------------
 	// Set the number format to "," for comma and 1000 separator to "."
 	// For example: 1.234,00 EUR
 	//------------------------------------------------------------------
 	QLocale::setDefault(QLocale::German);
+	commaSeparator = ",";
 
 	//--------------------------------------------------------------------------
-	connect(this, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
-
+	// send status messages to the GUI
+	//--------------------------------------------------------------------------
+	connect(this,             SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
 
 	//--------------------------------------------------------------------------
-	// show a QMessage wth the possibility to exit the main programm, when errors occured!
-	//--------------------------------------------------------------------------
-
-
-	//--------------------------------------------------------------------------
-	// shutdown Direcs program on exit button
+	// shutdown Direcs-avrsim program on exit button
 	// shutdown is also called, when the gui is closed
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
@@ -89,243 +138,81 @@ void Guitest::init()
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(test()), this, SLOT(test()));
 
-
-	//--------------------------------------------------------------------------
-	// Check for the programm ini file
-	// AND read the settings  AND   d o   a l l   t h e   r e s t  ! ! !
-	//--------------------------------------------------------------------------
-
-	//----------------------------------------------------------------------------
-	// show the preferred driving direction in a GUI label
-	//----------------------------------------------------------------------------
-	connect(this, SIGNAL(showPreferredDirection(QString)), gui, SLOT(showPreferredDirection(QString)));
-
-
-	//----------------------------------------------------------------------------
-	// connect laserThread signal to "dataReceived"
-	// (Whenever data were received, the data are shown in the GUI)
-	//----------------------------------------------------------------------------
-	qRegisterMetaType < QList <float> > ("QList <float>");
-	qRegisterMetaType < QList <int> > ("QList <int>");
-
-
 	//----------------------------------------------------------------------------
 	// connect simulation button from gui to activate the simulation mode
 	// (sets the direcs an the threads to simulation mode)
 	//----------------------------------------------------------------------------
 	connect(gui, SIGNAL( simulate(bool) ), this, SLOT( setSimulationMode(bool) ));
 
-
-	//---------------------------------------------------------------------
-	// check if laser scanners are connected
-	//---------------------------------------------------------------------
-	// check FRONT laser
-	laserScannerFrontFound = true;
-
-	// check REAR laser
-	laserScannerRearFound = false;
-
-	if (laserScannerFrontFound || laserScannerRearFound)
-	{
-		if (laserScannerFrontFound)
-		{
-			if (true)
-			{
-				gui->setLEDLaser(GREEN);
-			}
-			emit message("Front laser scanner found.");
-		}
-		else
-		{
-			emit message("Front laser scanner NOT found.");
-		}
-
-		if (laserScannerRearFound)
-		{
-			emit message("Rear laser scanner found.");
-		}
-		else
-		{
-			emit message("Rear laser scanner NOT found.");
-		}
-
-		if (true)
-		{
-			/// \todo nice exit point and error message
-			if (!QGLFormat::hasOpenGL())
-			{
-				qDebug() << "This system has no OpenGL support" << endl;
-				showExitDialog();
-			}
-		}
-
-	}
-	else
-	{
-		emit message("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
-
-		if (true)
-		{
-			// choose a red instead of a off LED since this looks more important
-			gui->setLEDLaser(RED);
-		}
-	}
-
-
-	//--------------
+	//----------------------------------------------------------------------------
 	// show the gui
-	//--------------
+	//----------------------------------------------------------------------------
 	gui->show();
 
+	// delete the splash screen
+	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 
-	// one time init for the laser view
-	gui->initLaserView();
+	//--------------------------
+	// lets have fun, now
+	//--------------------------
+
+	// we do not wait for the GUI button to be clicked
+	this->setSimulationMode(true);
 }
 
 
-void Guitest::shutdown()
+void GuiTest::shutdown()
 {
-	emit message("----------------");
-	emit message("Shutting down...");
-	emit message("----------------");
+	qDebug("Direcs-avrsim shutdown...");
+
+	splash->show();
+	emit splashMessage("Shutting down...");
 
 
+	//-----------------------------
+	// close serial port to mc
+	//-----------------------------
+	emit message("Closing serial port to microcontroller...");
 
-
-
-	// show dialog if set in ini-file
-	if (exitDialog == true)
-	{
-		if (true)
-		{
-			if (forceShutdown==false) // this is true, if no ini-file was found at startup
-			{
-				// ask user if he really wants to exit.
-				if (QMessageBox::question(0, "Exiting...", "Are you sure?", QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
-				{
-					//---------
-					// if NO
-					//---------
-					// don't leave! :-)
-					return;
-				}
-			}
-		}
-		/// \todo ask for exit on console!
-	}
-
-
-	/// \todo a universal quit-threads-method
-
-	// In the gui mode the quit is done automatically by the close signal.
-	// In the Console mode, the following line automaticall calls the Direcs destructor.
-	QCoreApplication::quit();
+	//-----------------------------
+	// close serial port to mc
+	//-----------------------------
+	emit message("Closing serial port to microcontroller...");
 }
 
 
-Guitest::~Guitest()
+GuiTest::~GuiTest()
 {
 	//--------------------------------------------------
 	// clean up in reverse order (except from the gui)
 	//--------------------------------------------------
-
 	qDebug("Bye.");
-
+	delete splash;
 	delete gui;
 }
 
 
-void Guitest::showExitDialog()
+void GuiTest::showSplashMessage(QString text)
 {
-		emit message("<font color=\"#FF0000\">THERE IS A BIG COMMUNICATION PROBLEM WITH THE SERIAL PORT TO THE ROBOT!</font>");
-
-		/*
-		// ask user if he really wants to exit.
-		if (QMessageBox::question(0, "Too much errors!",
-									"Exit?",
-									QMessageBox::Yes | QMessageBox::Default,
-									QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
-		{
-			//---------
-			// if NO
-			//---------
-			// don't leave! :-)
-			return;
-		}
-
-		//\todo Is is the correct method to call the destrucotr, to end the program?!?
-		QApplication::exit();
-		*/
+	splash->showMessage(text, splashPosition, splashColor);
+	// for refreshing the splash...
+	QApplication::processEvents();
 }
 
 
-void Guitest::readSettings()
+void GuiTest::finishSplash()
 {
-	//---------------------------------------------------------------------
-	// get the programm settings and set the items on the gui (sliders...)
-	//---------------------------------------------------------------------
-	emit message("Reading settings...");
-
-
-	//---------------------------------------------------------------------
-	// read first FRONT laser setting
-	laserscannerTypeFront = "S300";
-
-	if (true)
-	{
-
-		if (true)
-		{
-			// everything okay
-
-			//---------------------------------------------------------------------
-			// read next laser setting
-			laserscannerMounting = "normal";
-
-			if (true)
-			{
-				emit message(QString("Front laser scanner mounting set to <b>%1</b>.").arg(laserscannerMounting));
-
-				//---------------------------------------------------------------------
-				// read next setting
-				laserscannerAngleFront = 270;
-
-				switch (laserscannerAngleFront)
-				{
-					default:
-							gui->setLaserscannerAngle(LASER1, laserscannerAngleFront);
-						emit message(QString("Front laser scanner angle set to <b>%1</b>.").arg(laserscannerAngleFront));
-
-						//---------------------------------------------------------------------
-						// read next setting
-						floatValue = 0.5;
-
-						if (1)
-						{
-							gui->setLaserscannerResolution(LASER1, floatValue);
-							emit message(QString("Front laser scanner resolution set to <b>%1</b>.").arg(floatValue));
-						}
-					break;
-				}
-			}
-		}
-	}
-
-
-	//---------------------------------------------------------------------
-	// Create the laser lines and pixmaps in the GUI and place them nicely
-	//---------------------------------------------------------------------
-	gui->initLaserStuff();
+	splash->finish(gui);
 }
 
 
-bool Guitest::simulationMode() const
+bool GuiTest::simulationMode() const
 {
 	return robotSimulationMode;
 }
 
 
-void Guitest::setSimulationMode(bool status)
+void GuiTest::setSimulationMode(bool status)
 {
 	robotSimulationMode = status;
 
@@ -340,15 +227,26 @@ void Guitest::setSimulationMode(bool status)
 }
 
 
-void Guitest::checkArguments()
+void GuiTest::checkArguments()
 {
+	if (arguments.contains("console", Qt::CaseInsensitive))
+	{
+		qDebug("CONSOLE mode activated. Now passing all messages to the console.");
+	}
 }
 
 
-void Guitest::test()
+void GuiTest::test()
 {
-//	static bool toggle = false;
+	static bool toggle = OFF;
 
 
-//	toggle = !toggle;
+	if (toggle == OFF)
+	{
+		toggle = ON;
+	}
+	else
+	{
+		toggle = OFF;
+	}
 }
