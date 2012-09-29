@@ -1,6 +1,6 @@
-TARGET = guitest
-
 DESTDIR = ../bin
+
+TARGET = guitest
 
 MOC_DIR = ../tmp
 
@@ -35,12 +35,4 @@ LIBS +=		-L/opt/local/lib \
 			-L/usr/lib \
 			-L/usr/local/lib
 
-QMAKE_CXXFLAGS_DEBUG += -pg
-QMAKE_CXXFLAGS_RELEASE += -pg
-
-QMAKE_CXXFLAGS+= -msse -msse2 -msse3
-
 ICON = ../images/guitest.icns
-
-QMAKE_CXXFLAGS+= -arch x86_64
-INCLUDEPATH+=/usr/local/boost/
