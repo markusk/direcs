@@ -30,10 +30,10 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// create the Direcs class object
-	GuiTest d();
+	GuiTest g();
 
 	// init direcs
-//		d.init();
+	g.init();
 
 	return app.exec();
 }
@@ -190,34 +190,20 @@ void GuiTest::init()
 		}
 
 
-		if (!consoleMode)
-		{
+		//------------------------------------------------------------------
+		// place gui window at a nice position on the screen
+		//------------------------------------------------------------------
+		// move mainWindow to the center of the screen
+		gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
 
-			//------------------------------------------------------------------
-			// for getting the screen resolution
-			//------------------------------------------------------------------
-			QDesktopWidget *desktop = QApplication::desktop();
-
-			//------------------------------------------------------------------
-			// place gui window at a nice position on the screen
-			//------------------------------------------------------------------
-			if (desktop->width() > 1024)
-			{
-				// move mainWindow to the center of the screen
-				gui->move( (desktop->width() - gui->width())/2, (desktop->height() - gui->height())/2 );
-
-				// show the gui
-				gui->show();
-
-				// delete the splash screen
-				//QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
-			}
-
-			// one time init for the laser view
-			gui->initLaserView();
+		// show the gui
+		gui->show();
 
 
-		}
+		// one time init for the laser view
+		gui->initLaserView();
+
+
 	} // ini-file found
 }
 
