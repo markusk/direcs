@@ -82,6 +82,23 @@ class Gui : public QMainWindow
 		*/
 		void setFlashlight(bool state);
 
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// laser line dot test
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		/**
+		Initialise the laser view (find the middle of the now fresh shown control etc.)
+		*/
+		void initLaserView();
+
+		/**
+		This creates all the pixmaps, laser objects etc.
+		Has to be called AFTER the laserType and angles are known (read from an ini-file) or so.
+		*/
+		void initLaserStuff();
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// laser line dot test
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -118,6 +135,7 @@ class Gui : public QMainWindow
 		void on_actionExit_activated();
 		void on_actionSimulate_activated();
 		void on_actionTest_activated();
+		void on_sliderZoom_valueChanged(int);
 
 
 	private:
@@ -130,11 +148,47 @@ class Gui : public QMainWindow
 		*/
 		QString removeHtml(QString text);
 
+		/**
+		Creates all laser lines, pixmaps, scene, view for the laser scanner view.
+		*/
+		void createLaserScannerObjects();
+
 		Ui::mainWindow ui;
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
 		QColor labelFillColorBlue;
 		QDateTime now; /// this is for the timestamp in the logs in the gui
+
+
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// laser line dot test
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+		int laserscannerAngleFront; /// this values holds the range of the laserscanner viewing angle. e.g. 180 oder 270 degrees.  just for reading the value here. @sa laserThread
+		float laserscannerResolutionFront; /// this values holds the resolution of the laserscanner. @sa laserThread
+		int lastZoom;
+		qreal startScale;
+		qreal laserXPos;
+		qreal laserYPos;
+		QColor colorLaserObstacle;
+		QColor colorLaserFreeWay;
+		QColor colorLaserPreferredDrivingDirection;
+		QColor colorLaserCenterDrivingDirection;
+		QColor colorLaserIgnoreArea;
+		QColor colorGraphicsSceneBackground;
+		QGraphicsScene *scene;								/** The QGraphicsScene for showing the laser lines in the GUI */
+		QList <QGraphicsLineItem*> *laserLineListFront;		/** A pointer to a QList of pointers to the front laser lines (QGraphicsLineItems) */
+		QList <QGraphicsLineItem*> *laserLineListRear;		/** A pointer to a QList of pointers to the rear laser lines (QGraphicsLineItems) */
+		QList <QGraphicsEllipseItem*> *laserDistanceLineListFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
+		QList <QGraphicsSimpleTextItem*> *laserDistanceTextFront;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
+		QList <QGraphicsEllipseItem*> *laserDistanceLineListRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (kind of coordinate system) */
+		QList <QGraphicsSimpleTextItem*> *laserDistanceTextRear;	/** A pointer to a QList of pointers to the shown distances from the front laser lines (text) */
+		QGraphicsPixmapItem *pixmapBot1;
+		QGraphicsPixmapItem *pixmapBot2;
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// laser line dot test
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 		static const bool ON  = true;   /** For motor "ON" */
 		static const bool OFF = false;  /** For motor "OFF" */
