@@ -21,7 +21,7 @@
 #include "gui.h"
 
 
-Gui::Gui(bool useSmallGUI, QMainWindow *parent) : QMainWindow(parent)
+Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 {
 	robotIsOn = false;
 	consoleMode = false;
@@ -61,7 +61,7 @@ void Gui::init()
 	// startup the GUI
 	//-----------------
 	ui.setupUi(this);
-
+qDebug("gui init okay");
 
 	// remote control is enabled by default. @sa Direcs::init()
 	ui.actionRemote->setChecked(true);
