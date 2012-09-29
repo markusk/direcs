@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1003</width>
-    <height>759</height>
+    <width>1124</width>
+    <height>1126</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -46,23 +46,74 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <widget class="QGroupBox" name="groupBoxMainLog">
+       <widget class="QGroupBox" name="groupBoxMain">
         <property name="minimumSize">
          <size>
-          <width>400</width>
-          <height>0</height>
+          <width>600</width>
+          <height>600</height>
          </size>
         </property>
         <property name="title">
-         <string>Main Log</string>
+         <string>Main</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_6">
          <item row="0" column="0">
-          <widget class="QTextEdit" name="textEditLog">
-           <property name="font">
-            <font>
-             <family>Verdana</family>
-            </font>
+          <widget class="QGraphicsView" name="graphicsViewLaser">
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>0</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>212</red>
+                 <green>208</green>
+                 <blue>200</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSlider" name="sliderZoom">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
            </property>
           </widget>
          </item>
@@ -183,19 +234,6 @@
                 </spacer>
                </item>
                <item>
-                <spacer name="verticalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
                 <widget class="QLabel" name="lblFlashlight">
                  <property name="text">
                   <string/>
@@ -221,63 +259,22 @@
        </widget>
       </widget>
       <widget class="QGroupBox" name="groupBoxAnswerLog">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>400</height>
+        </size>
+       </property>
        <property name="title">
-        <string>Answer Log</string>
+        <string>LOG</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="1">
-         <widget class="QTextEdit" name="textEditAnswerLog">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>80</height>
-           </size>
-          </property>
+         <widget class="QTextEdit" name="textEditLog">
           <property name="font">
            <font>
             <family>Verdana</family>
            </font>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QGraphicsView" name="graphicsViewLaser">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>0</red>
-                <green>0</green>
-                <blue>0</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>0</red>
-                <green>0</green>
-                <blue>0</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>212</red>
-                <green>208</green>
-                <blue>200</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
           </property>
          </widget>
         </item>
@@ -314,7 +311,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1003</width>
+     <width>1124</width>
      <height>22</height>
     </rect>
    </property>
