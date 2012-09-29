@@ -45,9 +45,8 @@ void Gui::init()
 	laserXPos = 0; // correct value is set in the initLaserView()!!
 	laserYPos = 0; // correct value is set in the initLaserView()!!
 
-
-	laserscannerAngleFront = 270;
-	laserscannerResolutionFront = 0.5;
+	laserscannerAngleFront = 0;
+	laserscannerResolutionFront = 0;
 }
 
 
@@ -407,6 +406,44 @@ void Gui::createLaserScannerObjects()
 }
 
 
+void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	//qreal diff = laserFrontYPos - laserRearYPos;
+
+	// new y pos
+	laserYPos = mouseEvent->scenePos().y();
+	//laserRearYPos = laserFrontYPos - diff;
+
+	// new x pos
+	laserXPos = mouseEvent->scenePos().x();
+
+	// refresh laserView
+	on_sliderZoom_valueChanged(ui.sliderZoom->value());
+}
+
+
+void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
+{
+	int zoomValue = 0;
+
+
+	zoomValue = ui.sliderZoom->value();
+
+
+	if (wheelEvent->delta() > 0)
+	{
+		zoomValue++;
+	}
+	else
+	{
+		zoomValue--;
+	}
+
+	// refresh laserView (set zoom slider)
+	ui.sliderZoom->setValue(zoomValue);
+}
+
+
 void Gui::on_sliderZoom_valueChanged(int value)
 {
 	qreal x = 0;
@@ -464,4 +501,32 @@ void Gui::on_sliderZoom_valueChanged(int value)
 // org:		laserLineListFront->at(i)->setPos(x, y);
 		laserLineListFront->at(i)->setPos(x+m, y);
 	}
+}
+
+
+void Gui::setLaserscannerAngle(short int laserscanner, int angle)
+{
+		switch (laserscanner)
+		{
+		case LASER1:
+			laserscannerAngleFront = angle;
+			return;
+			break;
+		}
+
+		qDebug("laser number not yet supported  (Gui::setLaserscannerAngle");
+}
+
+
+void Gui::setLaserscannerResolution(short int laserscanner, float resolution)
+{
+	switch (laserscanner)
+	{
+	case LASER1:
+		laserscannerResolutionFront = resolution;
+		return;
+		break;
+	}
+
+	qDebug("laser number not yet supported  (Gui::setLaserscannerResolution");
 }

@@ -128,7 +128,7 @@ void GuiTest::init()
 	connect(this, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
 
 	//--------------------------------------------------------------------------
-	// shutdown Direcs-avrsim program on exit button
+	// shutdown this program on exit button
 	// shutdown is also called, when the gui is closed
 	//--------------------------------------------------------------------------
 	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
@@ -167,29 +167,21 @@ void GuiTest::init()
 	//--------------------------
 	// lets have fun, now
 	//--------------------------
+	gui->setLaserscannerAngle(LASER1, 270);
+	gui->setLaserscannerResolution(LASER1, 0.5);
 
-	// one time init for the laser view
+	gui->initLaserStuff();
 //	gui->initLaserView();				// < < < < < < < < <
 }
 
 
 void GuiTest::shutdown()
 {
-	qDebug("Direcs-avrsim shutdown...");
+	qDebug("Shutdown...");
 
 //	splash->show();
 //	emit splashMessage("Shutting down...");
 
-
-	//-----------------------------
-	// close serial port to mc
-	//-----------------------------
-	emit message("Closing serial port to microcontroller...");
-
-	//-----------------------------
-	// close serial port to mc
-	//-----------------------------
-	emit message("Closing serial port to microcontroller...");
 }
 
 

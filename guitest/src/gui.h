@@ -86,6 +86,30 @@ class Gui : public QMainWindow
 		// laser line dot test
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		/**
+		Gets the angle of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 180 or 270 degrees)
+		@param laserScanner can be LASER1 or LASER2
+		@param angle in degrees
+		*/
+		void setLaserscannerAngle(short int laserscanner, int angle);
+
+		/**
+		Gets the resolution of a laser from the @sa laserThread for drawing the correct laser scanner angles (e.g. 0.5 or 1.0 degrees)
+		@param laserScanner can be LASER1 or LASER2
+		@param angle in degrees
+		*/
+		void setLaserscannerResolution(short int laserscanner, float resolution);
+
+		/**
+		Zoom into the graphicsView/scene, if the mouse wheel was used.
+		*/
+		void zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent);
+
+		/**
+		Change the robot position in the graphicsView/scene, if the robot is moved via mouse
+		*/
+		void setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent);
+
+		/**
 		Initialise the laser view (find the middle of the now fresh shown control etc.)
 		*/
 		void initLaserView();
