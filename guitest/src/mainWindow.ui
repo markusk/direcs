@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>480</height>
+    <width>1003</width>
+    <height>759</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,11 +23,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>direcs - avrsim</string>
+   <string>guitest</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../direcsAvrsim.qrc">
-    <normaloff>:/images/images/media-flash.png</normaloff>:/images/images/media-flash.png</iconset>
+   <iconset resource="../guitest.qrc">
+    <normaloff>:/images/images/bot_from_above.png</normaloff>:/images/images/bot_from_above.png</iconset>
   </property>
   <property name="dockNestingEnabled">
    <bool>true</bool>
@@ -83,7 +83,7 @@
              <item row="0" column="0">
               <widget class="QLabel" name="lblLEDRed">
                <property name="pixmap">
-                <pixmap resource="../direcsAvrsim.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../guitest.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
@@ -103,7 +103,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="lblLEDGreen">
                <property name="pixmap">
-                <pixmap resource="../direcsAvrsim.qrc">:/images/images/led_gray.gif</pixmap>
+                <pixmap resource="../guitest.qrc">:/images/images/led_gray.gif</pixmap>
                </property>
               </widget>
              </item>
@@ -153,7 +153,7 @@
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap resource="../direcsAvrsim.qrc">:/images/images/relais_off.png</pixmap>
+                    <pixmap>:/images/images/relais_off.png</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -201,7 +201,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../direcsAvrsim.qrc">:/images/images/strobo_off.png</pixmap>
+                  <pixmap>:/images/images/strobo_off.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -225,7 +225,7 @@
         <string>Answer Log</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
+        <item row="0" column="1">
          <widget class="QTextEdit" name="textEditAnswerLog">
           <property name="minimumSize">
            <size>
@@ -237,6 +237,47 @@
            <font>
             <family>Verdana</family>
            </font>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGraphicsView" name="graphicsViewLaser">
+          <property name="palette">
+           <palette>
+            <active>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </active>
+            <inactive>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </inactive>
+            <disabled>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>212</red>
+                <green>208</green>
+                <blue>200</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </disabled>
+           </palette>
           </property>
          </widget>
         </item>
@@ -264,6 +305,7 @@
    </attribute>
    <addaction name="separator"/>
    <addaction name="actionSimulate"/>
+   <addaction name="actionTest"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
   </widget>
@@ -272,7 +314,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1003</width>
      <height>22</height>
     </rect>
    </property>
@@ -281,6 +323,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionSimulate"/>
+    <addaction name="actionTest"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -288,14 +331,14 @@
   </widget>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="../direcsAvrsim.qrc">
+    <iconset resource="../guitest.qrc">
      <normaloff>:/images/images/system-shutdown.png</normaloff>:/images/images/system-shutdown.png</iconset>
    </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
    <property name="shortcut">
-    <string>Alt+X</string>
+    <string>Ctrl+X</string>
    </property>
   </action>
   <action name="actionSimulate">
@@ -303,7 +346,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../direcsAvrsim.qrc">
+    <iconset resource="../guitest.qrc">
      <normaloff>:/images/images/utilities-system-monitor.png</normaloff>:/images/images/utilities-system-monitor.png</iconset>
    </property>
    <property name="text">
@@ -313,9 +356,21 @@
     <string>Ctrl+S</string>
    </property>
   </action>
+  <action name="actionTest">
+   <property name="icon">
+    <iconset resource="../guitest.qrc">
+     <normaloff>:/images/images/media-flash.png</normaloff>:/images/images/media-flash.png</iconset>
+   </property>
+   <property name="text">
+    <string>Test</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
  </widget>
  <resources>
-  <include location="../direcsAvrsim.qrc"/>
+  <include location="../guitest.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -136,6 +136,13 @@ void Gui::on_actionSimulate_activated()
 }
 
 
+void Gui::on_actionTest_activated()
+{
+	appendLog("Test!");
+	emit test();
+}
+
+
 void Gui::setLEDGreen(bool state)
 {
 	if (state)

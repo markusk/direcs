@@ -125,7 +125,7 @@ void GuiTest::init()
 	//--------------------------------------------------------------------------
 	// send status messages to the GUI
 	//--------------------------------------------------------------------------
-	connect(this,             SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
+	connect(this, SIGNAL( message(QString, bool, bool, bool) ), gui, SLOT( appendLog(QString, bool, bool, bool) ));
 
 	//--------------------------------------------------------------------------
 	// shutdown Direcs-avrsim program on exit button
@@ -155,9 +155,6 @@ void GuiTest::init()
 	//--------------------------
 	// lets have fun, now
 	//--------------------------
-
-	// we do not wait for the GUI button to be clicked
-	this->setSimulationMode(true);
 }
 
 

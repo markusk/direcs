@@ -114,6 +114,7 @@ class Gui : public QMainWindow
 		*/
 		void on_actionExit_activated();
 		void on_actionSimulate_activated();
+		void on_actionTest_activated();
 
 
 	private:
