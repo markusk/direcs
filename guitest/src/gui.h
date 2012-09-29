@@ -127,92 +127,12 @@ class Gui : public QMainWindow
 		void appendSerialLog(QString text, bool CR=true);
 
 		/**
-		Shows the new RGB picture from the Kienct camera.
-		@param frame
-		@sa CamThread::camDataComplete()
-		*/
-		void setCamImage(QImage* image);
-
-		/**
-		Shows the new depth picture from the Kienct camera.
-		@param frame
-		@sa CamThread::camDepthComplete()
-		*/
-		void setCamImageDepth(QImage* image);
-
-		/**
-		Shows the OpenCV processed picture from the Kienct camera.
-		@param frame
-		@sa CamThread::camOpenCVComplete()
-		*/
-		void setCamImageOpenCV(QImage* image);
-
-		/**
-		Show some face track data in the GUI.
-		@param faces is the number of detected faces
-		@param faceX is the X coordinate to the middle of a detected face (0, if none)
-		@param faceY is the Y coordinate to the middle of a detected face (0, if none)
-		@param faceRadius is the radius (0, if none)
-		*/
-		void showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int lastFaceX, int lastFaceY);
-
-		/**
-		Hides the camera controls in the GUI (e.g. no camera detected). But can be enabled again anyway.
-		@sa CameraThread::init()
-		 */
-		void hideCameraControls();
-
-		/**
-		Disables face detection checkBoxes in the GUI.
-		@sa CameraThread::setCascadePath()
-		 */
-		void disableFaceDetection();
-
-		/**
-		Disables the compass window in the GUI.
-		 */
-		void disableCompass();
-
-		/**
 		Enables/Disables some controls in the GUI if the robot, depending on the robots state.
 		@param state can be ON or OFF
 		@sa CameraThread::robotState()
 		 */
 		void setRobotControls(bool state);
 
-
-#ifndef BUILDFORROBOT
-		/**
-		Shows the actual plot data (e.g. measured voltage from sensor 1). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		*/
-		void setPlotData5(double *xval, double *yval, int size);
-#endif
-
-#ifndef BUILDFORROBOT
-		/**
-		Shows the actual plot data (e.g. measured voltage from sensor 2). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		*/
-		void setPlotData6(double *xval, double *yval, int size);
-#endif
-
-#ifndef BUILDFORROBOT
-		/**
-		Shows the actual plot data (heartbeat from the robot). This slot is called from the plot thread.
-		@param xval points to an array with the values for the x axis (usually the time line).
-		@param yval points to an array with the values for the y axis (usually the measured values).
-		@param size is the size of the array.
-		@sa PlotThread()
-		*/
-		void setPlotDataHeartbeat(double *xval, double *yval, int size);
-#endif
 
 #ifdef ACTIVELASERVIEW
 		/**
@@ -267,21 +187,6 @@ class Gui : public QMainWindow
 		@sa Direcs::logicalUnit
 		*/
 		void showPreferredDirection(QString direction);
-
-		/**
-		Shows the face tracking direction in a lable.
-		@param direction can be UP, DOWN, LEFT, RIGHT or NONE
-		 */
-		void showFaceTrackDirection(QString direction);
-
-		/**
-		Shows the compass axes values in labels. Also sets the compass needle to the value of the x axis and sets the 3D OpenGL compass!
-		@param x is the x axis value
-		@param y is the y axis value
-		@param z is the z axis value
-		@param heading is the heading of the compass
-		*/
-		void showCompassData(float x, float y, float z, float heading);
 
 		/**
 		Turns the heartbeat/state GUI LED red, green or off.
@@ -342,18 +247,6 @@ class Gui : public QMainWindow
 		This slot catches all signals from the signal @sa systemerror
 		*/
 		void systemerrorcatcher(int errorlevel);
-
-		/**
-		Shows the angle of the Kinect
-		@param angle is the angle in degrees
-		*/
-		void showKinectAngle(double angle);
-
-		/**
-		Shows the threshold / sets the threshold slider regarding to the value from e.g. an inifile or CamThread.
-		@param threshold
-		*/
-		void showThreshold(int threshold);
 
 
 	protected:
@@ -491,53 +384,14 @@ class Gui : public QMainWindow
 
 	private slots:
 		void on_actionResetDrivenDistance_activated();
-/*
-		void on_btnResetMovement1_clicked();
-		void on_btnResetMovement2_clicked();
-		void on_btnResetMovement3_clicked();
-		void on_btnResetMovement4_clicked();
-*/
-		//void on_ckeckBoxSaveSettings_stateChanged(int state);
-		void on_btnSavePicture_clicked();
 
 #ifdef ACTIVELASERVIEW
 		void on_sliderZoom_valueChanged(int);
 #endif
 
-		void on_checkBoxMirror_stateChanged(int);
-		void on_checkBoxFaceDetection_stateChanged(int);
-		void on_checkBoxFaceTracking_stateChanged(int);
-/*
-		void on_btnPower1_toggled(bool);
-		void on_btnPower2_toggled(bool);
-		void on_btnPower3_toggled(bool);
-		void on_btnPower4_toggled(bool);
-		void on_btnDirection1_toggled(bool);
-		void on_btnDirection2_toggled(bool);
-		void on_btnDirection3_toggled(bool);
-		void on_btnDirection4_toggled(bool);
-*/
-//		void on_btnKinectVideoRGB_clicked(bool checked);
-//		void on_btnKinectVideoYUVRGB_clicked(bool checked);
-//		void on_btnKinectVideoIR8Bit_clicked(bool checked);
-		void on_spinBoxKinectAngle_valueChanged(int i);
-		void on_btnKinectResetAngle_clicked();
-		void on_sliderThreshold_valueChanged(int);
-
-		/**
-		Saves the current picture to disk (one time shot).
-		*/
-		void saveCamImage(void);
-
-		void processCam();
-
 
 	private:
 		void init();
-#ifndef BUILDFORROBOT
-		void initPlots();
-#endif
-		void initCompassView();
 
 #ifdef ACTIVELASERVIEW
 		/**

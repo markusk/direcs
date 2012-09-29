@@ -73,12 +73,6 @@ class GuiTest : public QObject
 
 	public slots:
 		/**
-		Shows the sensor data in a graphical way (progressBars) and as a number in the GUI.
-		This slot is called from the Signal sensorDataComplete from the sensorThread.
-		*/
-		void showSensorData();
-
-		/**
 		Shows the yes-no exit dialog for the main program.
 		This slot is called when massive communication errors occur while talking to the robots interface!
 		*/

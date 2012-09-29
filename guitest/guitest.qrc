@@ -4,15 +4,15 @@
         <file>images/down.png</file>
         <file>images/downleft.png</file>
         <file>images/downright.png</file>
-        <file>images/led_gray.png</file>
-        <file>images/led_green.png</file>
-        <file>images/led_red.png</file>
+        <file>images/led_gray.gif</file>
+        <file>images/led_green.gif</file>
+        <file>images/led_red.gif</file>
         <file>images/left.png</file>
         <file>images/right.png</file>
         <file>images/up.png</file>
         <file>images/upleft.png</file>
         <file>images/upright.png</file>
-        <file>images/system-sutdown.png</file>
+        <file>images/system-shutdown.png</file>
         <file>images/utilities-system-monitor-active.png</file>
         <file>images/utilities-system-monitor.png</file>
     </qresource>
