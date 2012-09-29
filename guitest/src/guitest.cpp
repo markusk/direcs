@@ -171,7 +171,7 @@ void GuiTest::init()
 	gui->setLaserscannerResolution(LASER1, 0.5);
 
 	gui->initLaserStuff();
-//	gui->initLaserView();				// < < < < < < < < <
+	gui->initLaserView();
 }
 
 
