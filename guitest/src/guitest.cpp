@@ -152,9 +152,15 @@ void GuiTest::init()
 	// delete the splash screen
 	QTimer::singleShot(SPLASHTIME, this, SLOT( finishSplash() ));
 
+
+
+
 	//--------------------------
 	// lets have fun, now
 	//--------------------------
+
+	// one time init for the laser view
+//	gui->initLaserView();				// < < < < < < < < <
 }
 
 
