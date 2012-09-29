@@ -41,12 +41,6 @@ int main(int argc, char *argv[])
 
 Guitest::Guitest()
 {
-	// store mode from main method
-	consoleMode = false;
-
-	//--------------------------
-	// create all other objects
-	//--------------------------
 	gui = new Gui(false);
 }
 
@@ -80,19 +74,16 @@ void Guitest::init()
 	//--------------------------------------------------------------------------
 
 
-	if (!consoleMode)
-	{
-		//--------------------------------------------------------------------------
-		// shutdown Direcs program on exit button
-		// shutdown is also called, when the gui is closed
-		//--------------------------------------------------------------------------
-		connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
+	//--------------------------------------------------------------------------
+	// shutdown Direcs program on exit button
+	// shutdown is also called, when the gui is closed
+	//--------------------------------------------------------------------------
+	connect(gui, SIGNAL(shutdown()), this, SLOT(shutdown()));
 
-		//--------------------------------------------------------------------------
-		// call (a) test method(s) when clicking the test button
-		//--------------------------------------------------------------------------
-		connect(gui, SIGNAL(test()), this, SLOT(test()));
-	}
+	//--------------------------------------------------------------------------
+	// call (a) test method(s) when clicking the test button
+	//--------------------------------------------------------------------------
+	connect(gui, SIGNAL(test()), this, SLOT(test()));
 
 
 	//--------------------------------------------------------------------------
@@ -102,7 +93,7 @@ void Guitest::init()
 	if (true)
 	{
 
-		if (!consoleMode)
+		if (true)
 		{
 			//----------------------------------------------------------------------------
 			// show the preferred driving direction in a GUI label
@@ -111,8 +102,7 @@ void Guitest::init()
 		}
 
 
-#ifdef ACTIVELASERVIEW
-		if (!consoleMode)
+		if (true)
 		{
 			//----------------------------------------------------------------------------
 			// connect laserThread signal to "dataReceived"
@@ -121,10 +111,9 @@ void Guitest::init()
 			qRegisterMetaType < QList <float> > ("QList <float>");
 			qRegisterMetaType < QList <int> > ("QList <int>");
 		}
-#endif
 
 
-		if (!consoleMode)
+		if (true)
 		{
 			//----------------------------------------------------------------------------
 			// connect simulation button from gui to activate the simulation mode
@@ -147,7 +136,7 @@ void Guitest::init()
 		{
 			if (laserScannerFrontFound)
 			{
-				if (!consoleMode)
+				if (true)
 				{
 					gui->setLEDLaser(GREEN);
 				}
@@ -167,7 +156,7 @@ void Guitest::init()
 				emit message("Rear laser scanner NOT found.");
 			}
 
-			if (!consoleMode)
+			if (true)
 			{
 				/// \todo nice exit point and error message
 				if (!QGLFormat::hasOpenGL())
@@ -182,7 +171,7 @@ void Guitest::init()
 		{
 			emit message("<font color=\"#FF0000\">NO laser scanners found! Thread NOT started!</font>");
 
-			if (!consoleMode)
+			if (true)
 			{
 				// choose a red instead of a off LED since this looks more important
 				gui->setLEDLaser(RED);
@@ -217,7 +206,7 @@ void Guitest::shutdown()
 	// show dialog if set in ini-file
 	if (exitDialog == true)
 	{
-		if (!consoleMode)
+		if (true)
 		{
 			if (forceShutdown==false) // this is true, if no ini-file was found at startup
 			{
@@ -238,12 +227,9 @@ void Guitest::shutdown()
 
 	/// \todo a universal quit-threads-method
 
-	if (consoleMode)
-	{
-		// In the gui mode the quit is done automatically by the close signal.
-		// In the Console mode, the following line automaticall calls the Direcs destructor.
-		QCoreApplication::quit();
-	}
+	// In the gui mode the quit is done automatically by the close signal.
+	// In the Console mode, the following line automaticall calls the Direcs destructor.
+	QCoreApplication::quit();
 }
 
 
@@ -366,11 +352,6 @@ void Guitest::setSimulationMode(bool status)
 
 void Guitest::checkArguments()
 {
-	if (arguments.contains("console", Qt::CaseInsensitive))
-	{
-		consoleMode = true;
-		qDebug("CONSOLE mode activated. Now passing all messages to the console.");
-	}
 }
 
 
