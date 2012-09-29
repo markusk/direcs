@@ -41,7 +41,7 @@ class Gui : public QMainWindow
 	Q_OBJECT
 
 	public:
-		Gui(bool useSmallGUI, QMainWindow *parent = 0);
+		Gui(QMainWindow *parent = 0);
 		~Gui();
 
 		/*
@@ -408,10 +408,10 @@ class Gui : public QMainWindow
 		*/
 		QString removeHtml(QString text); /// @todo fix me to leave the last char in the string. @sa Logfile
 
-		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
-		bool useLargeGUI; /// if true, we will use the large GUI. If false, we will use the small one for fitting on a small onboard TFT. By default this is decided by the local hostname of the system. @sa Direcs
-		Ui::mainWindow ui; /// This is the large default GUI, when not running on the robot
 
+		Ui::mainWindow ui; /// This is the GUI mainwindow
+
+		bool robotIsOn; //! Stores the robots (circuits) state.ON or OFF
 		QColor labelFillColorRed;
 		QColor labelFillColorGreen;
 		QColor labelFillColorBlue;
@@ -459,7 +459,6 @@ class Gui : public QMainWindow
 
 		QPixmap pixmap; // for IplImageToQImage()
 
-		bool consoleMode; /// is enabled if the argument 'console' was passed by command-line. Sends all GUI messages to the command line.
 		QDateTime now; /// this is for the timestamp in the logs in the gui
 		QString string; // this is a free to use string
 

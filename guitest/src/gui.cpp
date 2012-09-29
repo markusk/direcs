@@ -24,8 +24,6 @@
 Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 {
 	robotIsOn = false;
-	consoleMode = false;
-	useLargeGUI = true;
 
 	laserXPos = 0; // correct value is set in the initLaserView()!!
 	laserYPos = 0; // correct value is set in the initLaserView()!!
@@ -44,10 +42,6 @@ Gui::Gui(QMainWindow *parent) : QMainWindow(parent)
 	labelFillColorRed   = QColor(255, 64, 64);
 	labelFillColorBlue  = QColor(64, 64, 255);
 	gridColor = QColor(Qt::black);
-
-	// store which GUI to use
-	// the robot GUI is the small one
-	useLargeGUI = !useSmallGUI;
 
 
 	// do the rest of my init stuff
@@ -168,11 +162,8 @@ void Gui::setRobotControls(bool state)
 	robotIsOn = state;
 
 	// set the controls
-	if (useLargeGUI)
-	{
-		ui.actionDrive->setEnabled(state);
-		ui.actionReset->setEnabled(state);
-	}
+	ui.actionDrive->setEnabled(state);
+	ui.actionReset->setEnabled(state);
 
 	if (!robotIsOn)
 	{
@@ -195,48 +186,15 @@ void Gui::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 	}
 
 	// insert the new text in the GUI
-	if (useLargeGUI)
-	{
-		ui.textEditGlobalLog->insertHtml(text);
-	}
-	else
-	{
-		// uiSmall.textEditGlobalLog->insertHtml(text);
-	}
+	ui.textEditGlobalLog->insertHtml(text);
 
 	if (CR == true) // default!
 	{
-		if (useLargeGUI)
-		{
-			ui.textEditGlobalLog->insertHtml("<br>");
-		}
-		else
-		{
-			// uiSmall.textEditGlobalLog->insertHtml("<br>");
-		}
+		ui.textEditGlobalLog->insertHtml("<br>");
 	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	if (useLargeGUI)
-	{
-		ui.textEditGlobalLog->ensureCursorVisible();
-	}
-	else
-	{
-		// uiSmall.textEditGlobalLog->ensureCursorVisible();
-	}
-
-
-	if (consoleMode)
-	{
-		// remove HTML code
-		text = removeHtml(text);
-		// print text to console
-		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
-		QByteArray textForConsole = text.toLatin1();
-		qDebug("%s", textForConsole.data());
-	}
-
+	ui.textEditGlobalLog->ensureCursorVisible();
 
 	// say the message via Linux espeak
 	if (sayIt == true)
@@ -257,49 +215,16 @@ void Gui::appendNetworkLog(QString text, bool CR, bool sayIt)
 	newText = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
 
 	// insert the text
-	if (useLargeGUI)
-	{
-		ui.textEditNetworkLog->insertHtml(newText);
-	}
-	else
-	{
-		// uiSmall.textEditNetworkLog->insertHtml(newText);
-	}
+	ui.textEditNetworkLog->insertHtml(newText);
 
 	if (CR == true) // default!
 	{
 		// insert a line break
-		if (useLargeGUI)
-		{
-			ui.textEditNetworkLog->insertHtml("<br>");
-		}
-		else
-		{
-			// uiSmall.textEditNetworkLog->insertHtml("<br>");
-		}
+		ui.textEditNetworkLog->insertHtml("<br>");
 	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	if (useLargeGUI)
-	{
-		ui.textEditNetworkLog->ensureCursorVisible();
-	}
-	else
-	{
-		// uiSmall.textEditNetworkLog->ensureCursorVisible();
-	}
-
-
-	if (consoleMode)
-	{
-		// remove HTML code
-		text = removeHtml(newText);
-		// print text to console
-		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
-		QByteArray textForConsole = text.toLatin1();
-		qDebug("%s", textForConsole.data());
-	}
-
+	ui.textEditNetworkLog->ensureCursorVisible();
 
 	// say the message via Linux espeak
 	if (sayIt == true)
@@ -320,48 +245,15 @@ void Gui::appendSerialLog(QString text, bool CR)
 	newText = QString("%1:%2:%3 %4").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(text);
 
 	// insert the text
-	if (useLargeGUI)
-	{
-		ui.textEditSerialLog->insertHtml(newText);
-	}
-	else
-	{
-		// uiSmall.textEditSerialLog->insertHtml(newText);
-	}
+	ui.textEditSerialLog->insertHtml(newText);
 
 	if (CR == true) // default!
 	{
-		// insert a line break
-		if (useLargeGUI)
-		{
-			ui.textEditSerialLog->insertHtml("<br>");
-		}
-		else
-		{
-			// uiSmall.textEditSerialLog->insertHtml("<br>");
-		}
+		ui.textEditSerialLog->insertHtml("<br>");
 	}
 
 	// Ensures that the cursor is visible by scrolling the text edit if necessary.
-	if (useLargeGUI)
-	{
-		ui.textEditSerialLog->ensureCursorVisible();
-	}
-	else
-	{
-		// uiSmall.textEditSerialLog->ensureCursorVisible();
-	}
-
-
-	if (consoleMode)
-	{
-		// remove HTML code
-		text = removeHtml(newText);
-		// print text to console
-		// qDebug() << text; is NOT used, because it adds quotation marks to all strings
-		QByteArray textForConsole = text.toLatin1();
-		qDebug("%s", textForConsole.data());
-	}
+	ui.textEditSerialLog->ensureCursorVisible();
 }
 
 
@@ -376,12 +268,9 @@ void Gui::on_actionDrive_activated()
 		toggle = true;
 
 		// change text of "drive button"
-		if (useLargeGUI)
-		{
-			ui.actionDrive->setText("Stop &driving");
-			ui.actionDrive->setToolTip("Stop driving");
-			ui.actionDrive->setStatusTip("Stop driving");
-		}
+		ui.actionDrive->setText("Stop &driving");
+		ui.actionDrive->setToolTip("Stop driving");
+		ui.actionDrive->setStatusTip("Stop driving");
 
 		//----------------
 		// start driving
@@ -394,12 +283,9 @@ void Gui::on_actionDrive_activated()
 		appendLog("Stop driving...");
 
 		// change text of "drive button"
-		if (useLargeGUI)
-		{
-			ui.actionDrive->setText("&Drive");
-			ui.actionDrive->setToolTip("Start driving");
-			ui.actionDrive->setStatusTip("Start driving");
-		}
+		ui.actionDrive->setText("&Drive");
+		ui.actionDrive->setToolTip("Start driving");
+		ui.actionDrive->setStatusTip("Start driving");
 
 		//****************
 		// stop driving
@@ -429,38 +315,26 @@ void Gui::on_actionResetDrivenDistance_activated()
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR1);
 	// reset labels
-	if (useLargeGUI)
-	{
-		ui.labelDrivenDistance1->setText("0 cm");
-		ui.labelRevolutions1->setText("0");
-	}
+	ui.labelDrivenDistance1->setText("0 cm");
+	ui.labelRevolutions1->setText("0");
 
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR2);
 	// reset labels
-	if (useLargeGUI)
-	{
-		ui.labelDrivenDistance2->setText("0 cm");
-		ui.labelRevolutions2->setText("0");
-	}
+	ui.labelDrivenDistance2->setText("0 cm");
+	ui.labelRevolutions2->setText("0");
 
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR3);
 	// reset labels
-	if (useLargeGUI)
-	{
-		ui.labelDrivenDistance3->setText("0 cm");
-		ui.labelRevolutions3->setText("0");
-	}
+	ui.labelDrivenDistance3->setText("0 cm");
+	ui.labelRevolutions3->setText("0");
 
 	// reset counter
 	emit resetDrivenDistance(MOTORSENSOR4);
 	// reset labels
-	if (useLargeGUI)
-	{
-		ui.labelDrivenDistance4->setText("0 cm");
-		ui.labelRevolutions4->setText("0");
-	}
+	ui.labelDrivenDistance4->setText("0 cm");
+	ui.labelRevolutions4->setText("0");
 }
 
 
@@ -494,16 +368,13 @@ void Gui::on_actionVoltage_activated()
 #ifndef USEROBOTGUI
 void Gui::on_actionState_activated()
 {
-	if (useLargeGUI)
+	if (ui.dockState->isVisible())
 	{
-		if (ui.dockState->isVisible())
-		{
-			ui.dockState->hide();
-		}
-		else
-		{
-			ui.dockState->show();
-		}
+		ui.dockState->hide();
+	}
+	else
+	{
+		ui.dockState->show();
 	}
 }
 #endif
@@ -517,16 +388,13 @@ void Gui::on_actionSettings_activated()
 #ifndef USEROBOTGUI
 void Gui::on_actionLog_activated()
 {
-	if (useLargeGUI)
+	if (ui.dockLog->isVisible())
 	{
-		if (ui.dockLog->isVisible())
-		{
-			ui.dockLog->hide();
-		}
-		else
-		{
-			ui.dockLog->show();
-		}
+		ui.dockLog->hide();
+	}
+	else
+	{
+		ui.dockLog->show();
 	}
 }
 #endif
@@ -563,33 +431,16 @@ void Gui::showDrivenDistance(int sensor, int distance)
 	switch (sensor)
 	{
 		case MOTORSENSOR1:
-			if (useLargeGUI)
-			{
-				ui.labelDrivenDistance1->setText(QString("%1 cm").arg(distance));
-			}
-			return;
+			ui.labelDrivenDistance1->setText(QString("%1 cm").arg(distance));
 			break;
 		case MOTORSENSOR2:
-			if (useLargeGUI)
-			{
-				ui.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
-			}
-			return;
+			ui.labelDrivenDistance2->setText(QString("%1 cm").arg(distance));
 			break;
 		case MOTORSENSOR3:
-			if (useLargeGUI)
-			{
-				ui.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
-			}
-			return;
+			ui.labelDrivenDistance3->setText(QString("%1 cm").arg(distance));
 			break;
 		case MOTORSENSOR4:
-			if (useLargeGUI)
-			{
-				ui.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
-			}
-			else
-			return;
+			ui.labelDrivenDistance4->setText(QString("%1 cm").arg(distance));
 			break;
 	}
 }
@@ -747,59 +598,24 @@ void Gui::showLaserFrontAngles(int largestFreeAreaStart, int largestFreeAreaEnd,
 //		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 2).append(" m"));
 
 		// show the text with 0 decimals (Nachkommastellen)
-		if (useLargeGUI)
-		{
-			ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
-		}
-		else
-		{
-			// uiSmall.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
-		}
+		ui.lblLaserFrontFreeWidth->setText(QString("%1").setNum(width, 'f', 0).append(" cm"));
 
 		// show the currently configured robot slot with with a prepended '>' or '<'
 		if ( width > configuredPassageWidth)
-		{
-			if (useLargeGUI)
-			{
-				ui.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
-			}
-			else
-			{
-				// uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
-			}
-		}
-		else
-		{
-			if (useLargeGUI)
-			{
-				ui.lblPassageWidth->setText( QString("< %1 cm").arg(configuredPassageWidth) );
-			}
-			else
-			{
-				// uiSmall.lblPassageWidth->setText( QString("< %1 cm").arg(configuredPassageWidth) );
-			}
-		}
-	}
-	else
-	{
-		if (useLargeGUI)
-		{
-			ui.lblLaserFrontFreeWidth->setText("oo");
-		}
-		else
-		{
-			// uiSmall.lblLaserFrontFreeWidth->setText("oo");
-		}
-
-		// show the currently configured robot slot with with a prepended '>' or '<'
-		if (useLargeGUI)
 		{
 			ui.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 		}
 		else
 		{
-			// uiSmall.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
+			ui.lblPassageWidth->setText( QString("< %1 cm").arg(configuredPassageWidth) );
 		}
+	}
+	else
+	{
+		ui.lblLaserFrontFreeWidth->setText("oo");
+
+		// show the currently configured robot slot with with a prepended '>' or '<'
+		ui.lblPassageWidth->setText( QString("> %1 cm").arg(configuredPassageWidth) );
 	}
 
 
@@ -812,53 +628,25 @@ void Gui::showPreferredDirection(QString direction)
 {
 	if (direction == "FORWARD")
 	{
-		if (useLargeGUI)
-		{
-			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
-		}
-		else
-		{
-			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
-		}
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/up.png"));
 		return;
 	}
 
 	if (direction == "LEFT")
 	{
-		if (useLargeGUI)
-		{
-			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
-		}
-		else
-		{
-			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
-		}
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/left.png"));
 		return;
 	}
 
 	if (direction == "RIGHT")
 	{
-		if (useLargeGUI)
-		{
-			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
-		}
-		else
-		{
-			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
-		}
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/right.png"));
 		return;
 	}
 
 	if (direction == "NONE")
 	{
-		if (useLargeGUI)
-		{
-			ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/middle.png"));
-		}
-		else
-		{
-			// uiSmall.lblPreferredDirection->setPixmap(QPixmap(":/images/images/middle.png"));
-		}
+		ui.lblPreferredDirection->setPixmap(QPixmap(":/images/images/middle.png"));
 		return;
 	}
 
@@ -1170,14 +958,7 @@ void Gui::initLaserView()
 
 
 	// zoom into the laser lines by default factor
-	if (useLargeGUI)
-	{
-		ui.sliderZoom->setValue(STARTZOOMLEVEL);
-	}
-	else
-	{
-		// uiSmall.sliderZoom->setValue(STARTZOOMLEVEL);
-	}
+	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 }
 
 
@@ -1688,24 +1469,10 @@ void Gui::createLaserScannerObjects()
 	//scene->setSceneRect(0, 0, ui.graphicsViewLaser->width(), ui.graphicsViewLaser->height());	-> DISABLED to enable dragging the robot in the laserView!!
 
 	// set scene to the GUI
-	if (useLargeGUI)
-	{
-		ui.graphicsViewLaser->setScene(scene);
-	}
-	else
-	{
-		// uiSmall.graphicsViewLaser->setScene(scene);
-	}
+	ui.graphicsViewLaser->setScene(scene);
 
 	// enable OpenGL rendering with antialiasing (and direct hardware rendering (if supportet by the hardware))
-	if (useLargeGUI)
-	{
-		ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
-	}
-	else
-	{
-		// uiSmall.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
-	}
+	ui.graphicsViewLaser->setViewport(new QGLWidget(QGLFormat(QGL::DoubleBuffer | QGL::DirectRendering)));
 
 	//=======================================================
 	// add robot picture1
@@ -2010,34 +1777,13 @@ void Gui::setLEDHeartbeat(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			if (useLargeGUI)
-			{
-				ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			break;
 		case GREEN:
-			if (useLargeGUI)
-			{
-				ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			break;
 		case LEDOFF:
-			if (useLargeGUI)
-			{
-				ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
+			ui.lblLEDHeartbeat->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }
@@ -2048,34 +1794,13 @@ void Gui::setLEDCompass(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			if (useLargeGUI)
-			{
-				ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			break;
 		case GREEN:
-			if (useLargeGUI)
-			{
-				ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			break;
 		case LEDOFF:
-			if (useLargeGUI)
-			{
-				ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
+			ui.lblLEDCompass->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }
@@ -2086,34 +1811,13 @@ void Gui::setLEDJoystick(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			if (useLargeGUI)
-			{
-				ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
+			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			break;
 		case GREEN:
-			if (useLargeGUI)
-			{
-				ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
+			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			break;
 		case LEDOFF:
-			if (useLargeGUI)
-			{
-				ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
+			ui.lblLEDJoystick->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }
@@ -2124,34 +1828,13 @@ void Gui::setLEDCamera(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			if (useLargeGUI)
-			{
-				ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
+			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			break;
 		case GREEN:
-			if (useLargeGUI)
-			{
-				ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
+			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			break;
 		case LEDOFF:
-			if (useLargeGUI)
-			{
-				ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
+			ui.lblLEDCamera->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }
@@ -2162,34 +1845,13 @@ void Gui::setLEDNetwork(unsigned char state)
 	switch (state)
 	{
 			case RED:
-			if (useLargeGUI)
-			{
-				ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
+			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			break;
 		case GREEN:
-			if (useLargeGUI)
-			{
-				ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
+			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			break;
 		case LEDOFF:
-			if (useLargeGUI)
-			{
-				ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
+			ui.lblLEDNetwork->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }
@@ -2200,34 +1862,13 @@ void Gui::setLEDMasterSlave(unsigned char state)
 	switch (state)
 	{
 			case RED:
-			if (useLargeGUI)
-			{
-				ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
+			ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			break;
 		case GREEN:
-			if (useLargeGUI)
-			{
-				ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
+			ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			break;
 		case LEDOFF:
-			if (useLargeGUI)
-			{
-				ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
+			ui.lblLEDMasterSlave->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }
@@ -2238,34 +1879,13 @@ void Gui::setLEDLaser(unsigned char state)
 	switch (state)
 	{
 		case RED:
-			if (useLargeGUI)
-			{
-				ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
-			}
+			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_red.gif"));
 			break;
 		case GREEN:
-			if (useLargeGUI)
-			{
-				ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
-			}
+			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_green.gif"));
 			break;
 		case LEDOFF:
-			if (useLargeGUI)
-			{
-				ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
-			else
-			{
-				// uiSmall.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
-			}
+			ui.lblLEDLaser->setPixmap(QPixmap(":/images/images/led_gray.gif"));
 			break;
 	}
 }
@@ -2273,20 +1893,13 @@ void Gui::setLEDLaser(unsigned char state)
 
 void Gui::setLabelMasterSlave(QString text)
 {
-	if (useLargeGUI)
-	{
-		ui.lblMasterSlave->setText(text);
-	}
-	else
-	{
-		// uiSmall.lblMasterSlave->setText(text);
-	}
+	ui.lblMasterSlave->setText(text);
 }
 
 
 void Gui::setConsoleMode(bool state)
 {
-	consoleMode = state;
+	Q_UNUSED(state);
 }
 
 
