@@ -59,6 +59,11 @@ void delay_ms(unsigned int ms);
 int main(void)
 {
   lcdInit();
+
+  lcd_drawstart();
+  lcd_draw(COLOR_BLACK);
+  lcd_area(1, 1, 20, 20);
+  lcd_drawstop();
 }
 
 
