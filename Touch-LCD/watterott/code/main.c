@@ -45,7 +45,10 @@ void lcd_cmd(unsigned int reg, unsigned int param);
 void lcd_data(unsigned int c);
 void lcd_reset(void);
 // - -
+void spi_wait(void);
+void spi_write(uint8_t byte);
 void delay(__IO uint32_t nCount);
+void delay_ms(unsigned int ms);
 
 
 /**
@@ -312,9 +315,14 @@ void lcdInit()
    }
 }
 
-#define spi_wait() while (SPI1->SR & SPI_SR_BSY)
 
-static inline void spi_write(uint8_t byte)
+void spi_wait(void)
+{
+  while (SPI1->SR & SPI_SR_BSY);
+}
+
+
+void spi_write(uint8_t byte)
 {
    SPI1->DR = byte;
 
@@ -333,6 +341,13 @@ void delay(__IO uint32_t nCount)
 	while(nCount--)
 	{
 	}
+}
+
+
+void delay_ms(unsigned int ms)
+{
+
+  delay(16795 * ms);
 }
 
 
