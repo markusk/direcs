@@ -261,7 +261,7 @@ void Gui::initLaserView()
 	x = laserXPos;
 	y = laserYPos; // INITIALLASERYPOSFRONT has no effect here, only in on_sliderZoom_valueChanged !!
 
-
+/*
 	//--------------
 	// FRONT laser
 	//--------------
@@ -280,7 +280,7 @@ void Gui::initLaserView()
 		i++;
 // org:		angle += laserscannerResolutionFront;
 	}
-
+*/
 	//==========================================================
 	// refresh the view with the actual zoom (after gui came up)
 	//==========================================================
@@ -366,8 +366,8 @@ void Gui::createLaserScannerObjects()
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
-		// the length (and position) of the laser line in pixel
-		line->setLine(0,0,0,0);
+		// the length (and position) of the laser line in pixel (x1, y1, x2, y2)
+		line->setLine(i, 20, i, 40);
 
 		// set the laser line color
 		//line->setPen(QPen(colorLaserFreeWay, 3));
