@@ -1,4 +1,5 @@
 // Quelle: http://www.watterott.net/forum/topic/243#1352
+// Quelle: spi_wait and wpi_write von: http://www.watterott.net/forum/topic/243#1355
 
 
 void delay_ms(uint32_t delayMs);
@@ -92,7 +93,7 @@ void lcdInit()
    }
 }
 
-#define spi_wait() /* do nothing */
+#define spi_wait() while (SPI1->SR & SPI_SR_BSY)
 
 static inline void spi_write(uint8_t byte)
 {
@@ -100,10 +101,4 @@ static inline void spi_write(uint8_t byte)
 
    // Loop while DR register in not empty
    while (! (SPI1->SR & SPI_SR_TXE));
-
-   // Loop while Receive Buffer is not empty
-   while (! (SPI1->SR & SPI_SR_RXNE));
-
-   // Receive byte
-   volatile uint16_t tmp = SPI1->DR;
 }
