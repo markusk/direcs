@@ -357,6 +357,9 @@ void Gui::createLaserScannerObjects()
 	laserLineListFront = new QList <QGraphicsLineItem*>();
 
 
+	qreal botHalfWidth = pixmapBot1->boundingRect().width()/2;
+	qreal botHalfHeight = pixmapBot1->boundingRect().height()/2;
+
 	//-------------------------------------
 	// create the FRONT laser line list
 	//-------------------------------------
@@ -366,8 +369,11 @@ void Gui::createLaserScannerObjects()
 	{
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
+		// set robot picuture to be the parent for the laser lines!
+		line->setParentItem(pixmapBot1);
+
 		// the length (and position) of the laser line in pixel (x1, y1, x2, y2)
-		line->setLine(i, 20, i, 40);
+		line->setLine(botHalfWidth+i, botHalfHeight-20, botHalfWidth /* + INITIALLASERYPOSFRONT */, botHalfHeight+i);
 
 		// set the laser line color
 		//line->setPen(QPen(colorLaserFreeWay, 3));
