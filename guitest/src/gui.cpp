@@ -287,7 +287,7 @@ void Gui::initLaserView()
 	on_sliderZoom_valueChanged(lastZoom);
 
 	// zoom into the laser lines by default factor
-	ui.sliderZoom->setValue(STARTZOOMLEVEL);
+//	ui.sliderZoom->setValue(STARTZOOMLEVEL);
 }
 
 
@@ -330,19 +330,22 @@ void Gui::createLaserScannerObjects()
 	// add items to the scene
 	pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
 
+	qreal botHalfWidth = pixmapBot1->boundingRect().width()/2;
+	qreal botHalfHeight = pixmapBot1->boundingRect().height()/2;
+
 	// init the scale for the laser line / distances drawing stuff
 	lastZoom = ui.sliderZoom->value();
 
 	//--------------------------------------------------------------
 	// set the start scale
 	//--------------------------------------------------------------
-	startScale = 10;
+	startScale = 1;
 
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot1->scale( (1.0 / startScale), (1.0 / startScale));
 
-	// horizontal center
-	pixmapBot1->setPos(laserXPos, laserYPos);
+	// horizontal and vertical center (right in the middle of the graphicsView
+	pixmapBot1->setPos(laserXPos - botHalfWidth, laserYPos - botHalfHeight);
 
 	// add the pixmap
 	scene->addItem(pixmapBot1);
@@ -357,8 +360,6 @@ void Gui::createLaserScannerObjects()
 	laserLineListFront = new QList <QGraphicsLineItem*>();
 
 
-	qreal botHalfWidth = pixmapBot1->boundingRect().width()/2;
-	qreal botHalfHeight = pixmapBot1->boundingRect().height()/2;
 
 	//-------------------------------------
 	// create the FRONT laser line list
@@ -373,7 +374,11 @@ void Gui::createLaserScannerObjects()
 		line->setParentItem(pixmapBot1);
 
 		// the length (and position) of the laser line in pixel (x1, y1, x2, y2)
-		line->setLine(botHalfWidth+i, botHalfHeight-20, botHalfWidth /* + INITIALLASERYPOSFRONT */, botHalfHeight+i);
+		line->setLine(botHalfWidth+i, botHalfHeight-20 /* + INITIALLASERYPOSFRONT */, botHalfWidth+i, botHalfHeight/* + INITIALLASERYPOSFRONT */);
+//		line->setLine(i, -40, i, 0);
+
+		// set same scale as robot!!
+//		line->scale( (1.0 / startScale), (1.0 / startScale));
 
 		// set the laser line color
 		//line->setPen(QPen(colorLaserFreeWay, 3));
@@ -397,7 +402,7 @@ void Gui::createLaserScannerObjects()
 	pixmapBot2 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above_TOP2.png"));
 
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
-	pixmapBot2->scale( (1.0 / startScale), (1.0 / startScale));
+//	pixmapBot2->scale( (1.0 / startScale), (1.0 / startScale));
 
 	// horizontal center
 	pixmapBot2->setPos(laserXPos, laserYPos);
