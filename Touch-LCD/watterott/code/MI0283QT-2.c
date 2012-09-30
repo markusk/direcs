@@ -1,3 +1,6 @@
+#include "stm32f4xx_conf.h"
+#include <stdlib.h>
+
 
 //Multi-Inno MI0283QT-2 (HX8347D) - http://www.watterott.com
 
