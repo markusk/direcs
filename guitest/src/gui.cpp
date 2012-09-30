@@ -215,6 +215,11 @@ QString Gui::removeHtml(QString text)
 
 void Gui::initLaserStuff()
 {
+	// init the reference spot pos at startup!
+	// (horicontal and vertical middle of the view)
+	laserXPos = (ui.graphicsViewLaser->width()  / 2);
+	laserYPos = (ui.graphicsViewLaser->height() / 2);
+
 	// called after all the laser settings have been read in the direcs mail class!
 	createLaserScannerObjects();
 //	createLaserDistanceObjects();
@@ -252,11 +257,6 @@ void Gui::initLaserView()
 	// move the laser lines to their x and y positions
 	//==================================================
 
-	// init the reference spot pos at startup!
-	// (horicontal and vertical middle of the view)
-	laserXPos = (ui.graphicsViewLaser->width()  / 2);
-	laserYPos = (ui.graphicsViewLaser->height() / 2);
-
 	// init laser y pos at startup!
 	x = laserXPos;
 	y = laserYPos; // INITIALLASERYPOSFRONT has no effect here, only in on_sliderZoom_valueChanged !!
@@ -284,7 +284,7 @@ void Gui::initLaserView()
 	//==========================================================
 	// refresh the view with the actual zoom (after gui came up)
 	//==========================================================
-	on_sliderZoom_valueChanged(lastZoom);
+//	on_sliderZoom_valueChanged(lastZoom);							< < < < < <  disabled!
 
 	// zoom into the laser lines by default factor
 //	ui.sliderZoom->setValue(STARTZOOMLEVEL);
@@ -293,12 +293,6 @@ void Gui::initLaserView()
 
 void Gui::createLaserScannerObjects()
 {
-	// the start position for the pos. calculation
-	laserXPos = 0;
-	laserYPos = 0;
-	//laserFrontYPos = INITIALLASERYPOSFRONT;
-	//laserRearYPos  = INITIALLASERYPOSREAR;
-
 	// set some nice colors for some widgets
 	colorLaserObstacle =  Qt::red;
 	colorLaserFreeWay = Qt::darkRed;
@@ -330,36 +324,35 @@ void Gui::createLaserScannerObjects()
 	// add items to the scene
 	pixmapBot1 = new QGraphicsPixmapItem(QPixmap(":/images/images/bot_from_above.png"));
 
-	qreal botHalfWidth = pixmapBot1->boundingRect().width()/2;
-	qreal botHalfHeight = pixmapBot1->boundingRect().height()/2;
-
 	// init the scale for the laser line / distances drawing stuff
 	lastZoom = ui.sliderZoom->value();
-
+/*
 	//--------------------------------------------------------------
 	// set the start scale
 	//--------------------------------------------------------------
-	startScale = 1;
+	startScale = 5;
 
 	// change scale of the robot pic to 1/10 to fit in the window and to fit on the size of the laser lines
 	pixmapBot1->scale( (1.0 / startScale), (1.0 / startScale));
-
-	// horizontal and vertical center (right in the middle of the graphicsView
-	pixmapBot1->setPos(laserXPos - botHalfWidth, laserYPos - botHalfHeight);
-
+*/
 	// add the pixmap
 	scene->addItem(pixmapBot1);
+
+	// horizontal and vertical center (right in the middle of the graphicsView
+	pixmapBot1->setPos(laserXPos, laserYPos);
 
 	// put one layer up (layer 2).
 	pixmapBot1->setZValue(2);
 
+	qreal botHalfWidth = pixmapBot1->boundingRect().width()/2;
+	qreal botHalfHeight = pixmapBot1->boundingRect().height()/2;
+	qreal botX = pixmapBot1->x();
+	qreal botY = pixmapBot1->y();
 
 	//=====================================================
 	// create the laser line lists
 	//=====================================================
 	laserLineListFront = new QList <QGraphicsLineItem*>();
-
-
 
 	//-------------------------------------
 	// create the FRONT laser line list
@@ -371,11 +364,12 @@ void Gui::createLaserScannerObjects()
 		QGraphicsLineItem *line = new QGraphicsLineItem();
 
 		// set robot picuture to be the parent for the laser lines!
-		line->setParentItem(pixmapBot1);
+//		line->setParentItem(pixmapBot1);
 
 		// the length (and position) of the laser line in pixel (x1, y1, x2, y2)
-		line->setLine(botHalfWidth+i, botHalfHeight-20 /* + INITIALLASERYPOSFRONT */, botHalfWidth+i, botHalfHeight/* + INITIALLASERYPOSFRONT */);
-//		line->setLine(i, -40, i, 0);
+		line->setLine(botX+botHalfWidth+i, botY+botHalfHeight-20 /* + INITIALLASERYPOSFRONT */, botX+botHalfWidth+i, botY+botHalfHeight /* + INITIALLASERYPOSFRONT */);
+
+//		line->setPos(laserXPos, laserYPos);
 
 		// set same scale as robot!!
 //		line->scale( (1.0 / startScale), (1.0 / startScale));
@@ -391,10 +385,11 @@ void Gui::createLaserScannerObjects()
 		laserLineListFront->append(line);
 
 		// add line to scene
-		scene->addItem(line);
+		scene->addItem(line); // already added by setLine command
 	}
 
 
+/*
 	//=======================================================
 	// add robot picture2
 	//=======================================================
@@ -414,11 +409,13 @@ void Gui::createLaserScannerObjects()
 	pixmapBot2->setZValue(4);
 //	pixmapBot1->setVisible(false); // just for testing
 //	pixmapBot2->setVisible(false); // just for testing
+*/
 }
 
 
-void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
+void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent) // disabled temp
 {
+/*
 	//qreal diff = laserFrontYPos - laserRearYPos;
 
 	// new y pos
@@ -430,11 +427,13 @@ void Gui::setRobotPosition(QGraphicsSceneMouseEvent* mouseEvent)
 
 	// refresh laserView
 	on_sliderZoom_valueChanged(ui.sliderZoom->value());
+*/
 }
 
 
-void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
+void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent) // disabled temp
 {
+/*
 	int zoomValue = 0;
 
 
@@ -452,11 +451,13 @@ void Gui::zoomLaserView(QGraphicsSceneWheelEvent* wheelEvent)
 
 	// refresh laserView (set zoom slider)
 	ui.sliderZoom->setValue(zoomValue);
+*/
 }
 
 
-void Gui::on_sliderZoom_valueChanged(int value)
+void Gui::on_sliderZoom_valueChanged(int value) // disabled temp
 {
+/*
 	qreal x = 0;
 	qreal y = 0;
 	qreal newSize = 0;
@@ -512,6 +513,7 @@ void Gui::on_sliderZoom_valueChanged(int value)
 // org:		laserLineListFront->at(i)->setPos(x, y);
 		laserLineListFront->at(i)->setPos(x+m, y);
 	}
+*/
 }
 
 
