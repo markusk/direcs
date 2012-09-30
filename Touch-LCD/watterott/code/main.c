@@ -58,6 +58,7 @@ void delay_ms(unsigned int ms);
   */
 int main(void)
 {
+  lcdInit();
 }
 
 
