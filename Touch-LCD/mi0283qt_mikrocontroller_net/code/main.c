@@ -2,6 +2,7 @@
 #include "config.h"
 #include "mi0283qt.h"
 
+
 volatile uint16_t millisec_countdown = 0;
 
 int main(void)
@@ -23,7 +24,9 @@ int main(void)
 	}
 }
 
+/*
 void SysTick_Handler(void)
 {
 	if(millisec_countdown) millisec_countdown--;
 }
+*/

@@ -1,32 +1,36 @@
 /**
-*****************************************************************************
-**
-**  File        : stm32f4xx_it.c
-**
-**  Abstract    : Main Interrupt Service Routines.
-**                This file provides template for all exceptions handler and
-**                peripherals interrupt service routine.
-**
-**  Environment : Atollic TrueSTUDIO(R)
-**                STMicroelectronics STM32F4xx Standard Peripherals Library
-**
-**  Distribution: The file is distributed “as is,” without any warranty
-**                of any kind.
-**
-**  (c)Copyright Atollic AB.
-**  You may use this file as-is or modify it according to the needs of your
-**  project. Distribution of this file (unmodified or modified) is not
-**  permitted. Atollic AB permit registered Atollic TrueSTUDIO(R) users the
-**  rights to distribute the assembled, compiled & linked contents of this
-**  file as part of an application binary file, provided that it is built
-**  using the Atollic TrueSTUDIO(R) toolchain.
-**
-**
-*****************************************************************************
-*/
+  ******************************************************************************
+  * @file    IO_Toggle/stm32f4xx_it.c 
+  * @author  MCD Application Team
+  * @version V1.0.0
+  * @date    19-September-2011
+  * @brief   Main Interrupt Service Routines.
+  *          This file provides template for all exceptions handler and 
+  *          peripherals interrupt service routine.
+  ******************************************************************************
+  * @attention
+  *
+  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
+  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
+  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
+  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
+  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  *
+  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  ******************************************************************************
+  */ 
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
+
+/** @addtogroup STM32F4_Discovery_Peripheral_Examples
+  * @{
+  */
+
+/** @addtogroup IO_Toggle
+  * @{
+  */ 
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -132,9 +136,9 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-/*void SysTick_Handler(void)
+void SysTick_Handler(void)
 {
-}*/
+}
 
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
@@ -152,3 +156,12 @@ void PendSV_Handler(void)
 {
 }*/
 
+/**
+  * @}
+  */ 
+
+/**
+  * @}
+  */ 
+
+/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

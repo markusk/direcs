@@ -2,15 +2,15 @@
   ******************************************************************************
   * @file      startup_stm32f4xx.s
   * @author    MCD Application Team
-  * @version   V1.0.0RC1
-  * @date      25-August-2011
-  * @brief     STM32F4xx Devices vector table for Atollic TrueSTUDIO toolchain. 
+  * @version   V1.0.0
+  * @date      30-September-2011
+  * @brief     STM32F4xx Devices vector table for RIDE7 toolchain. 
   *            This module performs:
   *                - Set the initial SP
   *                - Set the initial PC == Reset_Handler,
   *                - Set the vector table entries with the exceptions ISR address
   *                - Configure the clock system and the external SRAM mounted on 
-  *                  STM3220F-EVAL board to be used as data memory (optional, 
+  *                  STM324xG-EVAL board to be used as data memory (optional, 
   *                  to be enabled by user)
   *                - Branches to main in the C library (which eventually
   *                  calls main()).
@@ -92,18 +92,9 @@ LoopFillZerobss:
   ldr  r3, = _ebss
   cmp  r2, r3
   bcc  FillZerobss
-  
-  
-/*FPU settings*/
- ldr     r0, =0xE000ED88           /* Enable CP10,CP11 */
- ldr     r1,[r0]
- orr     r1,r1,#(0xF << 20)
- str     r1,[r0]
-	
+
 /* Call the clock system intitialization function.*/
   bl  SystemInit   
-/* Call static constructors */
-    bl __libc_init_array
 /* Call the application's entry point.*/
   bl  main
   bx  lr    
@@ -233,8 +224,7 @@ g_pfnVectors:
   .word     DCMI_IRQHandler                   /* DCMI                         */                   
   .word     CRYP_IRQHandler                   /* CRYP crypto                  */                   
   .word     HASH_RNG_IRQHandler               /* Hash and Rng                 */
-  .word     FPU_IRQHandler                    /* FPU                          */
-                         
+  .word     FPU_IRQHandler                    /* FPU                          */                         
                          
 /*******************************************************************************
 *
@@ -515,5 +505,5 @@ g_pfnVectors:
 
    .weak      FPU_IRQHandler                  
    .thumb_set FPU_IRQHandler,Default_Handler  
-
+   
 /*******************   (C)   COPYRIGHT   2011   STMicroelectronics   *****END   OF   FILE****/
