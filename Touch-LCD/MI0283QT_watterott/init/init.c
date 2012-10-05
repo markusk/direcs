@@ -1,7 +1,8 @@
 void delay_ms(uint32_t delayMs);
 void lcd_reset(void);
 
-#define LED_PIN (1 << 6)
+// Port B, Pin 6, 7, 8
+#define LED_PIN (1 << 6)         // why not use GPIO_Pin_6 etc. here ??
 #define LCD_CS_PIN (1 << 7)
 #define LCD_RESET_PIN (1 << 8)
 
@@ -19,11 +20,13 @@ void lcdInit()
 
    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 
+   // SPI = Port B, Pin 3, 4, 5
    GPIO_PinAFConfig(GPIOB, GPIO_PinSource3, GPIO_AF_SPI1);
    GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_SPI1);
    GPIO_PinAFConfig(GPIOB, GPIO_PinSource5, GPIO_AF_SPI1);
 
-   // LCD_CS_PIN / LCD_RESET_PIN / LED_PIN
+   // Port B
+   // LCD_CS_PIN=7 / LCD_RESET_PIN=8 / LED_PIN=6
    GPIO_InitTypeDef lcdGpio;
    lcdGpio.GPIO_Mode = GPIO_Mode_OUT;
    lcdGpio.GPIO_OType = GPIO_OType_PP;
@@ -33,6 +36,7 @@ void lcdInit()
 
    GPIO_Init(GPIOB, &lcdGpio);
 
+   // Port B
    // SCK (PB3) / MISO (PB4) / MOSI (PB5)
    GPIO_InitTypeDef spiGpio;
    spiGpio.GPIO_Mode = GPIO_Mode_AF;

@@ -24,7 +24,7 @@
 //#define LCD_CS_ENABLE()      CS low
 
 // - - - - - 
-#define LED_PIN (1 << 6)
+#define LED_PIN (1 << 6)       // why not use GPIO_Pin_6 etc. here ??
 #define LCD_CS_PIN (1 << 7)
 #define LCD_RESET_PIN (1 << 8)
 
