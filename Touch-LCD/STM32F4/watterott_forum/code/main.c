@@ -60,10 +60,33 @@ int main(void)
 {
   lcdInit();
 
+/*
+// code from mikorcontroller.net graphics example with jpg pic:
+  uint16_t x;
+  uint8_t y;
+  uint8_t r,g,b;
+  lcd_area(0, 0, (LCD_WIDTH-1), (LCD_HEIGHT-1));
+  lcd_drawstart();
+  for(y = 0; y < LCD_HEIGHT; y++)
+  {
+    for(x = 0; x < LCD_WIDTH; x++)
+    {
+      r = x + y;
+      g = x - y;
+      b = y - x;
+      lcd_draw(RGB(r,g,b));
+    }
+  }
+  lcd_drawstop();
+*/
+
+
+// mk
+  lcd_area(1, 1, 20, 20);
   lcd_drawstart();
   lcd_draw(COLOR_BLACK);
-  lcd_area(1, 1, 20, 20);
   lcd_drawstop();
+  
 }
 
 
@@ -255,6 +278,7 @@ void lcdInit()
    GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_SPI1);
    GPIO_PinAFConfig(GPIOB, GPIO_PinSource5, GPIO_AF_SPI1);
 
+   // Port B
    // LCD_CS_PIN / LCD_RESET_PIN / LED_PIN
    GPIO_InitTypeDef lcdGpio;
    lcdGpio.GPIO_Mode = GPIO_Mode_OUT;
