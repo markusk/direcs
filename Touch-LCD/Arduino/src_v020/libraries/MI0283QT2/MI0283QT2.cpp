@@ -26,7 +26,7 @@ extern "C" {
 #define LCD_REGISTER    ((0x70)|(LCD_ID<<2))
 
 //#define SOFTWARE_SPI
-
+/*
 #if (defined(__AVR_ATmega1280__) || \
      defined(__AVR_ATmega1281__) || \
      defined(__AVR_ATmega2560__) || \
@@ -56,16 +56,23 @@ extern "C" {
 # define CLK_PIN        (7)
 
 #else                                  //--- Arduino Uno ---
-
+*/
 # define LED_PIN        (9) //PB1: OC1
 # define RST_PIN        (8)
 # define CS_PIN         (7)
+
+/* markus änderung org:
 # define MOSI_PIN       (11)
 # define MISO_PIN       (12)
 # define CLK_PIN        (13)
-
+*/
+// Markus for Arduino Leonardo (SPI is on the ICSP header !)
+# define MOSI_PIN       (16)
+# define MISO_PIN       (14)
+# define CLK_PIN        (15)
+/*
 #endif
-
+*/
 
 #define LED_ENABLE()    digitalWriteFast(LED_PIN, HIGH)
 #define LED_DISABLE()   digitalWriteFast(LED_PIN, LOW)
@@ -111,7 +118,7 @@ void MI0283QT2::init(uint8_t clock_div)
   pinMode(MOSI_PIN, OUTPUT);
   pinMode(MISO_PIN, INPUT);
   digitalWriteFast(MISO_PIN, HIGH); //pull-up
-
+/* markus org:
 #if !defined(SOFTWARE_SPI)
   //SS has to be output or input with pull-up
 # if (defined(__AVR_ATmega1280__) || \
@@ -125,11 +132,12 @@ void MI0283QT2::init(uint8_t clock_div)
 # else                                 //--- Arduino Uno ---
 #  define SS_PORTBIT (2) //PB2
 # endif
+
   if(!(DDRB & (1<<SS_PORTBIT))) //SS is input
   {
       PORTB |= (1<<SS_PORTBIT); //pull-up on
   }
-
+*/
   //init hardware spi
   switch(clock_div)
   {
@@ -154,7 +162,7 @@ void MI0283QT2::init(uint8_t clock_div)
       SPSR = (1<<SPI2X); //clk*2 = Fcpu/32
       break;
   }
-#endif
+// markus org: #endif
 
   //reset display
   reset();

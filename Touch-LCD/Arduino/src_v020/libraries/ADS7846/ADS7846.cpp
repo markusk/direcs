@@ -37,7 +37,7 @@ extern "C" {
 #define CMD_ALWAYSON    (0x03)
 
 //#define SOFTWARE_SPI
-
+/*
 #if (defined(__AVR_ATmega1280__) || \
      defined(__AVR_ATmega1281__) || \
      defined(__AVR_ATmega2560__) || \
@@ -67,16 +67,26 @@ extern "C" {
 # define CLK_PIN        (7)
 
 #else                                  //--- Arduino Uno ---
-
+*/
 //# define BUSY_PIN       (5)
 //# define IRQ_PIN        (3)
+
 # define CS_PIN         (6)
+
+/* markus änderung org:
 # define MOSI_PIN       (11)
 # define MISO_PIN       (12)
 # define CLK_PIN        (13)
+*/
 
+// Markus for Arduino Leonardo (SPI is on the ICSP header !)
+# define MOSI_PIN       (16)
+# define MISO_PIN       (14)
+# define CLK_PIN        (15)
+
+/*
 #endif
-
+*/
 
 #define CS_DISABLE()    digitalWriteFast(CS_PIN, HIGH)
 #define CS_ENABLE()     digitalWriteFast(CS_PIN, LOW)
@@ -123,7 +133,7 @@ void ADS7846::init(void)
   pinMode(BUSY_PIN, INPUT);
   digitalWriteFast(BUSY_PIN, HIGH); //pull-up
 #endif
-
+/*
 #if !defined(SOFTWARE_SPI)
   //SS has to be output or input with pull-up
 # if (defined(__AVR_ATmega1280__) || \
@@ -137,13 +147,14 @@ void ADS7846::init(void)
 # else                                 //--- Arduino Uno ---
 #  define SS_PORTBIT (2) //PB2
 # endif
+
   if(!(DDRB & (1<<SS_PORTBIT))) //SS is input
   {
       PORTB |= (1<<SS_PORTBIT); //pull-up on
   }
 
 #endif
-
+*/
   //set vars
   tp_matrix.div  = 0;
   tp.x           = 0;
