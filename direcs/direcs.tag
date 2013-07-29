@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' standalone='yes' ?>
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <tagfile>
   <compound kind="file">
     <name>aboutDialog.cpp</name>
@@ -62,6 +62,18 @@
     <class kind="class">ConsoleGui</class>
   </compound>
   <compound kind="file">
+    <name>demoThread.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>demoThread_8cpp</filename>
+    <includes id="demoThread_8h" name="demoThread.h" local="yes" imported="no">demoThread.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>demoThread.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>demoThread_8h</filename>
+    <class kind="class">DemoThread</class>
+  </compound>
+  <compound kind="file">
     <name>direcs.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>direcs_8cpp</filename>
@@ -99,6 +111,8 @@
     <includes id="head_8h" name="head.h" local="yes" imported="no">head.h</includes>
     <includes id="camThread_8h" name="camThread.h" local="yes" imported="no">camThread.h</includes>
     <includes id="speakThread_8h" name="speakThread.h" local="yes" imported="no">speakThread.h</includes>
+    <includes id="timerThread_8h" name="timerThread.h" local="yes" imported="no">timerThread.h</includes>
+    <includes id="demoThread_8h" name="demoThread.h" local="yes" imported="no">demoThread.h</includes>
     <class kind="struct">CleanExit</class>
     <class kind="class">Direcs</class>
   </compound>
@@ -161,7 +175,6 @@
     <includes id="joystickDialog_8h" name="joystickDialog.h" local="yes" imported="no">joystickDialog.h</includes>
     <includes id="settingsDialog_8h" name="settingsDialog.h" local="yes" imported="no">settingsDialog.h</includes>
     <includes id="aboutDialog_8h" name="aboutDialog.h" local="yes" imported="no">aboutDialog.h</includes>
-    <includes id="compassWidget_8h" name="compassWidget.h" local="yes" imported="no">compassWidget.h</includes>
     <class kind="class">Gui</class>
   </compound>
   <compound kind="file">
@@ -1509,6 +1522,18 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8h</filename>
     <class kind="class">SpeakThread</class>
+  </compound>
+  <compound kind="file">
+    <name>timerThread.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>timerThread_8cpp</filename>
+    <includes id="timerThread_8h" name="timerThread.h" local="yes" imported="no">timerThread.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>timerThread.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>timerThread_8h</filename>
+    <class kind="class">TimerThread</class>
   </compound>
   <compound kind="class">
     <name>AboutDialog</name>
@@ -2963,6 +2988,129 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>DemoThread</name>
+    <filename>classDemoThread.html</filename>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a670cd20764a03fad3694ff2d1314c1fd</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
+    </member>
+    <member kind="signal">
+      <type>bool</type>
+      <name>setRGBLEDBrightness</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a89e9f9d05e18a16030fd4eb9a482f437</anchor>
+      <arglist>(unsigned char rgbLed, unsigned char brightness)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>DemoThread</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a8e0a7626932ac086a2aa85484333e9da</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>init</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>ab49c025ce0bafeb656b103fdc37d2bee</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>run</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>ad4cde4041dedb294548cc134b0012082</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>stop</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a044d1dd877aaed834b0305a8fadcccc4</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~DemoThread</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a1f5a39df3abac06dcc1d5eb6dd1c32c6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>demoMode</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>ae23554dcf6ae7b478e56eb6239e2ed17</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>volatile bool</type>
+      <name>stopped</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>af4d71b10407249b4d71931a7435fd89f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED1</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a979ed76b627be76a6e4d90e6f60ce381</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED2</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>ae68ce46cd8bd71d3ff299649d98845ff</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED3</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>acf06552a175f702f3994920ae3117a78</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED4</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>acfe53f9d9d2da1967ecbe1190de48e4a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED5</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a32c45089bc34fe72b81132e3e2a79c56</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RGBLED6</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>ac6a69437855ac14224d0c5ba69750e44</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned long</type>
+      <name>THREADSLEEPTIME</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a536778191d23aaccae70006b5f4cd854</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>timeToNetworkCheck</name>
+      <anchorfile>classDemoThread.html</anchorfile>
+      <anchor>a433dbacf44e9e3c8e805c6be68ab7ec0</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>Direcs</name>
     <filename>classDirecs.html</filename>
     <member kind="slot">
@@ -3034,6 +3182,34 @@
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a251d1e2714448ce7c40c729fe0c35a8f</anchor>
       <arglist>(int sensorAlarm, QDateTime timestamp)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>mediaPlayerFinished</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>aa6f0e22068b5e481c0d2d70ae091127b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>nextDemoPhase</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a4b98817df19b061d07f361df729db432</anchor>
+      <arglist>(int phase)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setDemoMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ab22262be6fe0ddc16264a0bb33942b1a</anchor>
+      <arglist>(bool status)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setNetworkState</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a487814de9fd5b5925a2517d6291ccb55</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -3137,8 +3313,8 @@
       <type>void</type>
       <name>speak</name>
       <anchorfile>classDirecs.html</anchorfile>
-      <anchor>a1a7c097a9e6d5b7f2189e7192d363147</anchor>
-      <arglist>(QString text)</arglist>
+      <anchor>ade30122bd99a4072a0f04f8a72cd161d</anchor>
+      <arglist>(QString text, int phase=0)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -3275,9 +3451,30 @@
     </member>
     <member kind="variable" protection="private">
       <type>int</type>
+      <name>currentPreferredDirection</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>abf82a29c57cd63d2bf1fa3fba672249b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
       <name>currentTestServo</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a110d317dfd87fb511f0b7d992bafc383</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>demoMode</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a5011aa4651a128a925ef8a00bd9f6244</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>DemoThread *</type>
+      <name>demoThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a8654f43f65a3353502c2804f2efca748</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3330,6 +3527,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>firstDataReceived</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>ac8f8fd9d345a13fc964295604d326e70</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>float</type>
       <name>floatValue</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3369,6 +3573,13 @@
       <name>head</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a327e53395812cbf416ae50252ae5c29c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>iAmTheMaster</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a8f349c99344ff26c644c5de479db3b4a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3491,6 +3702,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>Phonon::MediaObject *</type>
+      <name>mediaObject</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a3eea3b076af7af9c8b276071326dfe08</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>int</type>
       <name>minimumSpeed</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3547,6 +3765,20 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>unsigned int</type>
+      <name>networkPortListen</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a87676ed9ab6694ebb1d3aecd76738c55</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>unsigned int</type>
+      <name>networkPortSend</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a1fb1fb144616afc0aa1915296bc094fe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>QList&lt; QDateTime &gt;</type>
       <name>obstacleAlarmFrontLeftList</name>
       <anchorfile>classDirecs.html</anchorfile>
@@ -3572,6 +3804,13 @@
       <name>plotThread</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>abea6085dc320b0740f23cde75a20976c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>preferredDrivingDirection</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a7f13be793890a5da0d8b85ec95b0ef57</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -3684,6 +3923,13 @@
       <name>testDriveMode</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a9a340ed2d02723298eedebc2591258d0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>TimerThread *</type>
+      <name>timerThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a19463d96d97fae5ce17f76cc8b32a8f4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -4772,6 +5018,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>setLabelMasterSlave</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>aecf083ef285b6805b911e4c6358aa427</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setLaserscannerAngle</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a35b8eea007e6dab7fabf155259dc98bc</anchor>
@@ -4817,6 +5070,13 @@
       <name>setLEDLaser</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a1524ac6d9d31b26c94b376946e3dcd57</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLEDMasterSlave</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a754266eb36ed9b16a41abc877cd9bcd6</anchor>
       <arglist>(unsigned char state)</arglist>
     </member>
     <member kind="slot">
@@ -4912,6 +5172,13 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>demo</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a8f215f34b199227039452a2198f3666a</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>drive</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>adb2ebda9e3369b6e52168462fe7f33a2</anchor>
@@ -4950,6 +5217,13 @@
       <name>initServos</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a953ae5151f6154952f7c9b557f14373f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>mediaSkip</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a6636e84c8556956909495391c3537170</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="signal">
@@ -5094,6 +5368,13 @@
     </member>
     <member kind="slot" protection="protected">
       <type>void</type>
+      <name>on_actionDemo_activated</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a2a181451eb419c6de6557e6c2b08639a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="protected">
+      <type>void</type>
       <name>on_actionDrive_activated</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a016b879a781b48e9d627540d7c3ede06</anchor>
@@ -5118,6 +5399,13 @@
       <name>on_actionLog_activated</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>a9bd98bfbc1e68d40a4672ac9170bf424</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot" protection="protected">
+      <type>void</type>
+      <name>on_actionMediaSkip_activated</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>ab3f8cec744ce38efc41df7ca98e99c1e</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="slot" protection="protected">
@@ -5349,13 +5637,6 @@
       <name>colorLaserPreferredDrivingDirection</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>af2fdc3742f6ca52dfb0e28f314394c64</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>CompassWidget *</type>
-      <name>compassWidget</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a636485e9326a26074751ae86ab2f63d5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -5601,6 +5882,13 @@
       <name>settingsDialog</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>af658f642e79fea947cb6abdde144187f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>string</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>a511ab266ccad43bfb360dabbcfd91594</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -6839,6 +7127,13 @@
       <anchor>a4fc9bec0e3239d982b4c936b713fe87b</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderElement</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
+      <arglist>()</arglist>
+    </member>
     <member kind="variable">
       <type>int</type>
       <name>calibCenter</name>
@@ -6888,6 +7183,27 @@
       <anchor>a88486c721e228a03f403b0a8b902c7c2</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable">
+      <type>IOHIDElementRef</type>
+      <name>elem</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>exist</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>JoyReaderButton</name>
@@ -6899,6 +7215,34 @@
       <anchorfile>classJoyReaderButton.html</anchorfile>
       <anchor>a002a9cfb449247174cb53fac43c019d4</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderElement</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>IOHIDElementRef</type>
+      <name>elem</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>exist</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -6951,6 +7295,13 @@
       <anchor>ae03b04d18d0afbe4e3defa3328b01352</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type></type>
+      <name>JoyReaderElement</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
+      <arglist>()</arglist>
+    </member>
     <member kind="variable">
       <type>int</type>
       <name>value0Deg</name>
@@ -6984,6 +7335,27 @@
       <name>valueNeutral</name>
       <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
       <anchor>ac43e66ab9b1b912be4917c15246bb1ff</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>IOHIDElementRef</type>
+      <name>elem</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>exist</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>value</name>
+      <anchorfile>classJoyReaderElement.html</anchorfile>
+      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -9781,12 +10153,40 @@
       <anchor>a638c5285bb5a95907b0bb6321316f8e6</anchor>
       <arglist>(QString text)</arglist>
     </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setNetworkMaster</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>a3d29c8724713ed4f9f543f3b57b78f70</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setNetworkSlave</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>afb497bafc3a7e5a5bb767b0ae2af21ab</anchor>
+      <arglist>()</arglist>
+    </member>
     <member kind="signal">
       <type>void</type>
       <name>dataReceived</name>
       <anchorfile>classNetworkThread.html</anchorfile>
       <anchor>a840ca71214490cfdeb32af1fe8a8da6f</anchor>
       <arglist>(QString text)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>heartbeat</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>ad13bdb77d610dbe8854ffa1f80ad45f1</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>init</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>a39f5a4f501c143d34b91fd31311042d9</anchor>
+      <arglist>(unsigned int portListen, unsigned int portSend)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -9803,17 +10203,17 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>bool</type>
-      <name>setPort</name>
-      <anchorfile>classNetworkThread.html</anchorfile>
-      <anchor>a7ddb37cd7b760d5db47389723a477630</anchor>
-      <arglist>(unsigned int port)</arglist>
-    </member>
-    <member kind="function">
       <type>void</type>
       <name>stop</name>
       <anchorfile>classNetworkThread.html</anchorfile>
       <anchor>ad00403b687698c2f3e1ed09a09bf1b41</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>swapPorts</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>a83274c47fb04c75acd536c0d80aca11d</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -9831,10 +10231,31 @@
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>unsigned int</type>
-      <name>networkPort</name>
+      <type>bool</type>
+      <name>iAmTheMaster</name>
       <anchorfile>classNetworkThread.html</anchorfile>
-      <anchor>ab64acfb63d81390eb4aa7378eb584420</anchor>
+      <anchor>ab853557181938746c6ab454cbe4e6b59</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>iAmTheSlave</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>a962ec1734bf046ab146572bfb007d656</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>unsigned int</type>
+      <name>networkPortListen</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>aa03eb888d162800f92efaa0661727eaf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>unsigned int</type>
+      <name>networkPortSend</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>aad547fb97f2f4235dd2cc0cc6d1d6d50</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -9849,6 +10270,27 @@
       <name>udpSocket</name>
       <anchorfile>classNetworkThread.html</anchorfile>
       <anchor>a892986032dd0a523de81da28c68001db</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>GREEN</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>aa83ce9e225cb693e1be7a88d81bad3a1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>LEDOFF</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>a2ebb497e4ee0c2dc71d5958f3f0c26e2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RED</name>
+      <anchorfile>classNetworkThread.html</anchorfile>
+      <anchor>a8587880bed8bbbf0929d0a8d60c25b3c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9892,9 +10334,9 @@
     </member>
     <member kind="slot">
       <type>void</type>
-      <name>setRobotSlotWidth</name>
+      <name>setPassageWidth</name>
       <anchorfile>classObstacleCheckThread.html</anchorfile>
-      <anchor>a0fcfc20d27579ece95e5eac26cc3c90a</anchor>
+      <anchor>a92f264215b213e3ed5cd5df74d96cddf</anchor>
       <arglist>(int width)</arglist>
     </member>
     <member kind="slot">
@@ -12791,17 +13233,17 @@
     </member>
     <member kind="signal">
       <type>void</type>
+      <name>setPassageWidth</name>
+      <anchorfile>classSettingsDialog.html</anchorfile>
+      <anchor>a530b17fc49e2fb2dbebb36fcc8b80a93</anchor>
+      <arglist>(int width)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
       <name>setRobotSlot</name>
       <anchorfile>classSettingsDialog.html</anchorfile>
       <anchor>afc79edf2ec4e0c69ca6cd40b9c36a951</anchor>
       <arglist>(int angle)</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
-      <name>setRobotSlotWidth</name>
-      <anchorfile>classSettingsDialog.html</anchorfile>
-      <anchor>a37c904a8bbcc6b6f75e397133458d922</anchor>
-      <arglist>(int width)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -12854,9 +13296,9 @@
     </member>
     <member kind="function">
       <type>int</type>
-      <name>getSliderRobotSlotWidth</name>
+      <name>getSliderPassageWidth</name>
       <anchorfile>classSettingsDialog.html</anchorfile>
-      <anchor>ab6da3f6ca1980ee8bdcf876acb7187da</anchor>
+      <anchor>a9d23bc8b059c023ef6a595b521b12fad</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -12910,9 +13352,9 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>setSliderRobotSlotWidth</name>
+      <name>setSliderPassageWidth</name>
       <anchorfile>classSettingsDialog.html</anchorfile>
-      <anchor>a8cea3b576d700f6f8248f3c327d18d89</anchor>
+      <anchor>ae518628ec8970c17a5a65a942c42d844</anchor>
       <arglist>(int width)</arglist>
     </member>
     <member kind="function">
@@ -13172,8 +13614,15 @@
       <type>void</type>
       <name>speak</name>
       <anchorfile>classSpeakThread.html</anchorfile>
-      <anchor>ae106a8077974e14f58b4e7a71c9f600a</anchor>
-      <arglist>(QString text)</arglist>
+      <anchor>a145d521b9e1da326771d52926a7ab68e</anchor>
+      <arglist>(QString text, int phase=0)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>speechCompleted</name>
+      <anchorfile>classSpeakThread.html</anchorfile>
+      <anchor>a8982210ea96c6b44b176acf66e31b627</anchor>
+      <arglist>(int mPhase)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -13232,6 +13681,13 @@
       <arglist>(QString string)</arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>int</type>
+      <name>mPhase</name>
+      <anchorfile>classSpeakThread.html</anchorfile>
+      <anchor>a50e7876c5dc60e80f99b5d678f780984</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>bool</type>
       <name>saySomething</name>
       <anchorfile>classSpeakThread.html</anchorfile>
@@ -13260,6 +13716,108 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="class">
+    <name>TimerThread</name>
+    <filename>classTimerThread.html</filename>
+    <member kind="signal">
+      <type>void</type>
+      <name>checkNetworkState</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a84906eaba9c8bc731ecf13264aeb6dff</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a66441ee8588da1614b8f608a835d16f6</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>networkMessage</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>adf60d1322c6433d301877b29bcaccf33</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>init</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a5b36ea00e6910b8e585f248b69dc13a1</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>run</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a287c65c726c43077ef9a8909f085072a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>stop</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a4fd2545a0220a49e62cf6e56a3ad36d5</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TimerThread</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>af9e222c64909e68f6fb9ec7882389d0f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~TimerThread</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a9a2794b74ed5381470f768e34eee272d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>networkStateSet</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a699dd86ca725e108d124bebf1cdd7941</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QTime</type>
+      <name>now</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a3cee1dce09905a594f76bdb15694d3ad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QTime</type>
+      <name>startTime</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a7b115c76eb98db838e4eb0b4c140c803</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>volatile bool</type>
+      <name>stopped</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>ad9b90da6ec953b90fbb6b616ee3a9e12</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned long</type>
+      <name>THREADSLEEPTIME</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a5e5617bebc798a047ecf9a5608706571</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>timeToNetworkCheck</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a63d9748f8d266ed158dc1ddfd71ba090</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="dir">
     <name>direcs/</name>
     <path>/Users/markus/develop/direcs/direcs/</path>
@@ -13280,6 +13838,8 @@
     <file>compassWidget.h</file>
     <file>consoleGui.cpp</file>
     <file>consoleGui.h</file>
+    <file>demoThread.cpp</file>
+    <file>demoThread.h</file>
     <file>direcs.cpp</file>
     <file>direcs.h</file>
     <file>direcsSerial.cpp</file>
@@ -13338,5 +13898,7 @@
     <file>speak_lib.h</file>
     <file>speakThread.cpp</file>
     <file>speakThread.h</file>
+    <file>timerThread.cpp</file>
+    <file>timerThread.h</file>
   </compound>
 </tagfile>
