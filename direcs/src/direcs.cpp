@@ -5172,7 +5172,7 @@ void Direcs::nextDemoPhase(int phase)
 		// blink
 		case 1:
 			// say something, next phase is no. 2
-			emit speak("Hello Campuseros. I will introduce myself now for you guys. My name is direx 1. And I hope everything works fine now in the next minutes. Since Marcus updated my software yesterday night very late.", ++phase);
+			emit speak("Hello Makers. I will introduce myself now for you guys. My name is direx 1. And I hope everything works fine now in the next minutes. Since Marcus updated my software yesterday night very late.", ++phase);
 			break;
 		case 2:
 			// say something, next phase is no. 3
@@ -5180,7 +5180,7 @@ void Direcs::nextDemoPhase(int phase)
 			break;
 		case 3:
 			// say something, next phase is no. 3
-			emit speak("But I do not want to bore you any longer. See me driving around and enjoy it. We should do some party now. The music is played by random. Because Sebastian complained that I played the same title all night long. So if the next song is still boring, Markus cann skip it on the touchscreen. Okay. lets go! Put your hands up in the air and wave them like you just dont care!", ++phase);
+			emit speak("But I do not want to bore you any longer. See me driving around and enjoy it. We should do some party now. I will play music by random. So if the next song is still boring, Markus cann skip it on the touchscreen. Okay. lets go! Put your hands up in the air and wave them like you just dont care!", ++phase);
 			break;
 		case 4:
 			// play some music
@@ -5250,9 +5250,6 @@ void Direcs::mediaPlayerFinished()
 	{
 		emit message(QString("Media player restart with file %1.").arg(number));
 
-		/// same file again @todo put media filename or list somewehre else
-//        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../dr.mp3"));
-//        mediaObject->setCurrentSource(Phonon::MediaSource("../../../../media/MrRoboto.mp3"));
 #ifdef Q_OS_LINUX
 			mediaObject->setCurrentSource(Phonon::MediaSource(QString("../../../../media/%1").arg(number)));
 #else
