@@ -2688,6 +2688,7 @@ void Direcs::drive(const int command)
 
 			// Don't stop the motThread (PWM)!
 			// Only switching motors off!
+			robotDrives = false;
 			return;
 			break;
 
