@@ -529,8 +529,8 @@ class Direcs : public QObject
 		static const short int VOLTAGESENSOR2 = 1;
 
 		/// The minimum voltages for an acoustic and optical alarm. @sa Gui::showVoltage
-		static const float MINIMUMVOLTAGE1 = 10.80; /// \todo put min. voltage 1 in the ini-file
-		static const float MINIMUMVOLTAGE2 = 21.60; /// \todo put min. voltage 2 in the ini-file
+		static const float MINIMUMVOLTAGE1 = 10.80; // @todo put min. voltage 1 in the ini-file
+		static const float MINIMUMVOLTAGE2 = 21.60; // @todo put min. voltage 2 in the ini-file
 
 		/// The servos
 		static const unsigned char NUMBEROFSERVOS = 6; /// @todo also defined in servo.h !!!

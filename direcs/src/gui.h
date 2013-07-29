@@ -794,14 +794,14 @@ class Gui : public QMainWindow
 		static const short int VOLTAGESENSOR1 = 0;
 		static const short int VOLTAGESENSOR2 = 1;
 
-		static const float MINIMUMVOLTAGE1 = 13.20; /// \todo put min. voltage 1 in the ini-file (LiPo: 3,3 Volt x 4S = 13,2 Volt)
-		static const float MINIMUMVOLTAGE2 = 24.00; /// \todo put min. voltage 2 in the ini-file (LiPo: 3.3 Volt x 6S = 19,8 Volt)
+		static const float MINIMUMVOLTAGE1 = 13.20; // @todo put min. voltage 1 in the ini-file (LiPo: 3,3 Volt x 4S = 13,2 Volt)
+		static const float MINIMUMVOLTAGE2 = 24.00; // @todo put min. voltage 2 in the ini-file (LiPo: 3.3 Volt x 6S = 19,8 Volt)
 
-		static const float MAXIMUMVOLTAGE1 = 18.00; /// for progress bars \todo put max. voltage 1 in the ini-file (LiPo: 4,2 Volt x 4S = 16,8 Volt)
-		static const float MAXIMUMVOLTAGE2 = 26.00; /// for progress bars \todo put max. voltage 2 in the ini-file (LiPo: 4,2 Volt x 6S = 25,2 Volt)
+		static const float MAXIMUMVOLTAGE1 = 18.00; // for progress bars @todo put max. voltage 1 in the ini-file (LiPo: 4,2 Volt x 4S = 16,8 Volt)
+		static const float MAXIMUMVOLTAGE2 = 26.00; // for progress bars @todo put max. voltage 2 in the ini-file (LiPo: 4,2 Volt x 6S = 25,2 Volt)
 
-		static const float MAXIMUMPLOTVOLTAGE1 = 18.00; /// for plot widgets \todo put to ini-file
-		static const float MAXIMUMPLOTVOLTAGE2 = 26.00; /// for plot widgets \todo put to ini-file
+		static const float MAXIMUMPLOTVOLTAGE1 = 18.00; /// for plot widgets @todo put to ini-file
+		static const float MAXIMUMPLOTVOLTAGE2 = 26.00; /// for plot widgets @todo put to ini-file
 
 		static const float MAXIMUMPLOTHEARTBEAT = 5.00; /// theoratically 5 Volt for heartbeat "high" @sa SensorThread::run
 
