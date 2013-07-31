@@ -2057,6 +2057,16 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	}
 
 
+	// set motor speed again (if this was reset via GUI slider or by reset button)
+	//
+	emit message("Setting motor speed in microcontroller");
+	motors->setMotorSpeed(MOTOR1, mot1Speed);
+	motors->setMotorSpeed(MOTOR2, mot2Speed);
+	motors->setMotorSpeed(MOTOR3, mot3Speed);
+	motors->setMotorSpeed(MOTOR4, mot4Speed);
+	emit message("Motor speed set.");
+
+
 	if (sensorAlarm == NONE)
 	{
 		// show new driving direction in the GUI
