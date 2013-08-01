@@ -1177,7 +1177,7 @@ void Direcs::init()
 			srand(time(NULL));
 
 			// generate one number
-			int number = rand() % 6 +1; // (1 to 6)
+			int number = rand() % 7 +1; // (1 to 7)
 			qDebug("file number %d", number);
 
 			// create phonon player and set filename
@@ -5249,11 +5249,20 @@ emit speak("Okay, here we go.", 1);
 
 void Direcs::mediaPlayerFinished()
 {
-	int number = rand() % 6 +1; // (1 to 6)
+	static int number = 0;
+	       int randNumber = 0;
 
 
 	if (demoMode)
 	{
+		do 
+		{
+			randNumber = rand() % 7 +1; // (1 to 7)
+		} while (randNumber == number);
+
+		// store current number for next call of this method
+		number = randNumber;
+
 		emit message(QString("Media player restart with file %1.").arg(number));
 
 #ifdef Q_OS_LINUX
