@@ -649,7 +649,7 @@ void Direcs::init()
 				// init the circuit & Co. when hitting the button in the GUI
 				connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 				connect(gui, SIGNAL( initCircuit() ), this, SLOT( resetMotorSpeed() ) ); // also reset motor speed to ini-file values < < @todo: workaround!
-				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
+///				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) ); @todo: servos currently not in use. Would cause an error message on reset.
 //				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) ); // @todo: build this < < < < < < <
 			}
 
