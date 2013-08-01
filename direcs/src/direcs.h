@@ -265,6 +265,11 @@ class Direcs : public QObject
 		 */
 		void test();
 
+		/**
+		 * @brief resets the motor speed to the values from the ini-file
+		 */
+		void resetMotorSpeed();
+
 
 	signals:
 		/**

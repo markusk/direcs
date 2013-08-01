@@ -648,6 +648,7 @@ void Direcs::init()
 			{
 				// init the circuit & Co. when hitting the button in the GUI
 				connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+				connect(gui, SIGNAL( initCircuit() ), this, SLOT( resetMotorSpeed() ) ); // also reset motor speed to ini-file values < < @todo: workaround!
 				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 //				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) ); // @todo: build this < < < < < < <
 			}
@@ -5349,6 +5350,27 @@ void Direcs::drivingLight(unsigned char color)
 			rgbLeds->setBrightness(RGBLED5, MINPWM);
 			rgbLeds->setBrightness(RGBLED6, MINPWM);
 			break;
+	}
+}
+
+void Direcs::resetMotorSpeed()
+{
+	// when speed already read from ini-file
+	if (mot1Speed != 0)
+	{
+		//-------------------------------------------------------
+		// set the read motor speed
+		//-------------------------------------------------------
+		emit message("Setting motor speed in microcontroller");
+		motors->setMotorSpeed(MOTOR1, mot1Speed);
+		motors->setMotorSpeed(MOTOR2, mot2Speed);
+		motors->setMotorSpeed(MOTOR3, mot3Speed);
+		motors->setMotorSpeed(MOTOR4, mot4Speed);
+		emit message("Motor speed set.");
+	}
+	else
+	{
+		emit message("ERROR: Motor speed not read! (Direcs::resetMotorSpeed)");
 	}
 }
 
