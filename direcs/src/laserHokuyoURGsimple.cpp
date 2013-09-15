@@ -31,30 +31,6 @@ HokuyoURGsimple::HokuyoURGsimple()
 
 	laserSerialPort = "NOTSET";
 
-	// -----------------------------------------------------------------------------------------
-	// The scanner S300 has a half degree resolution! and a field of view (fov) of 270 degrees!
-	// -----------------------------------------------------------------------------------------
-
-	// some laser data init
-	/*
-	data.min_angle = -45*M_PI/270; // 270 degrees has the laser
-	data.max_angle = 225*M_PI/270; // 270 degrees: angle from -45 deg to 225 deg
-	data.resolution = 0.5*M_PI/270;// 270 degreed
-
-	data.max_range = 5.0;
-	data.ranges_count = DEFAULT_LASER_SAMPLES;
-
-	data.intensity_count = 0; // do not know this
-	data.id = 0;
-	*/
-
-	/*
-	for (int i=0; i<LASERSAMPLES; i++)
-	{
-		scanResult[i] = 0.0;
-	}
-	*/
-
 	emit message(QString("Using baudrate of %1 baud.").arg(baudRate));
 }
 
@@ -63,7 +39,7 @@ HokuyoURGsimple::~HokuyoURGsimple()
 {
 //	QTime x;
 //	qDebug("S300 shut down @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
-	emit message("Shutting laserscanner SICK S300 down");
+	emit message("Shutting laserscanner HOKUYO URG simple down");
 	closeComPort();
 	emit message("OKAY");
 
@@ -86,7 +62,7 @@ bool HokuyoURGsimple::openComPort()
 	// check if serial port was set
 	if (laserSerialPort == "NOTSET")
 	{
-		emit message("<font color=\"#FF0000\">Serial port not set! (SickS300::openComPortd)</font>");
+		emit message("<font color=\"#FF0000\">Serial port not set! (HokuyoURGsimple::openComPortd)</font>");
 		return false;
 	}
 
@@ -110,15 +86,18 @@ bool HokuyoURGsimple::openComPort()
 
 int HokuyoURGsimple::closeComPort()
 {
+/*
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Release Token" (Telegram type SEND (0x41 0x44))
 	const unsigned char releaseTokenCommand[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x00,0x00,0xE7,0xB8};
 	unsigned int i = 0;
+*/
 
-
-	emit message("Shutting down Sick S300:");
+	emit message("Shutting down Hokuyo URG simple laser:");
 
 	// send "release token" to laser
 	emit message("Sending 'release token'...");
+
+/*
 	for (i=0; i<sizeof(releaseTokenCommand); i++)
 	{
 		if (sendChar(releaseTokenCommand[i]) == false)
@@ -146,7 +125,7 @@ int HokuyoURGsimple::closeComPort()
 			}
 		}
 	}
-
+*/
 
 	// close serial port
 	serialPort->closePort();
@@ -163,7 +142,7 @@ bool HokuyoURGsimple::sendChar(unsigned char character)
 	// send one byte to the serial port with direcsSerial
 	if (serialPort->writeData(&character) <= 0)
 	{
-		emit message("<font color=\"#FF0000\">ERROR writing serial port (sendChar, SickS300)!<font>");
+		emit message("<font color=\"#FF0000\">ERROR writing serial port (sendChar, HokuyoURGsimple)!<font>");
 		return false;
 	}
 
@@ -178,7 +157,7 @@ bool HokuyoURGsimple::receiveChar(unsigned char *character)
 	if (serialPort->readData(character, 1) != 1)
 	{
 		// ERROR
-		emit message("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, SickS300)!<font>");
+		emit message("<font color=\"#FF0000\">ERROR reading serial port (receiveChar, HokuyoURGsimple)!<font>");
 		return false;
 	}
 
@@ -188,21 +167,22 @@ bool HokuyoURGsimple::receiveChar(unsigned char *character)
 
 int HokuyoURGsimple::setup()
 {
+/*
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Get Token" (Telegram type SEND (0x41 0x44))
 	const unsigned char getTokenCommand[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
 	unsigned char answer = 255;
 	unsigned int i = 0;
+*/
 
-
-	emit message("Initialising Sick S300:");
-
+	emit message("Initialising HOKUYO URG laser:");
+/*
 	// send "get token" to laser
 	emit message("Sending 'get token'...");
 	for (i=0; i<sizeof(getTokenCommand); i++)
 	{
 		if (sendChar(getTokenCommand[i]) == false)
 		{
-			emit message( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (SickS300::setup).</font>").arg(i+1) );
+			emit message( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (HokuyoURGsimple::setup).</font>").arg(i+1) );
 			return -1;
 		}
 	}
@@ -216,7 +196,7 @@ int HokuyoURGsimple::setup()
 		{
 			if (answer != 0)
 			{
-				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
 				return -1;
 			}
 		}
@@ -229,8 +209,8 @@ int HokuyoURGsimple::setup()
 
 		// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
 	}
-	emit message("Sick laser S300 setup OKAY");
-
+	emit message("HOKUYO URG laser setup OKAY");
+*/
 	return 0;
 }
 
@@ -262,7 +242,7 @@ int HokuyoURGsimple::readRequestTelegram()
 
 	if (result != 0)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR %1 flushing serial port (SickS300::readRequestTelegram).</font>").arg(result));
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 flushing serial port (HokuyoURGsimple::readRequestTelegram).</font>").arg(result));
 		return -1;
 	}
 
@@ -272,7 +252,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	{
 		if (sendChar(readScandataCommand[i]) == false)
 		{
-			emit message( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1) );
+			emit message( QString("<font color=\"#FF0000\">ERROR sending byte no. %1 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1) );
 			return -1;
 		}
 	}
@@ -288,14 +268,14 @@ int HokuyoURGsimple::readRequestTelegram()
 			// the last byte (no 4) contains the error code if != 0.
 			if (answer != 0x00)
 			{
-				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
+				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
 				return -1;
 			}
 		}
 		else
 		{
 			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1));
 			return -1;
 		}
 	}
@@ -316,7 +296,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 1 (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 1 (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -332,7 +312,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 2 (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 2 (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -348,7 +328,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 3 (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 3 (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -364,7 +344,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 4 (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 4 (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -380,7 +360,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 5 (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 5 (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -396,7 +376,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 6 (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 6 (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -416,7 +396,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving 1st 'unknown byte' (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving 1st 'unknown byte' (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -432,13 +412,13 @@ int HokuyoURGsimple::readRequestTelegram()
 	else
 	{
 		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving 2nd 'unknown byte' (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR receiving 2nd 'unknown byte' (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
 
 	//-------------------------------------------------------------------------------
-	// Reading scan data (the distances!), LASERSAMPLES bytes (@sa laserSickS300.h)
+	// Reading scan data (the distances!), LASERSAMPLES bytes (@sa laserHokuyoURGsimple.h)
 	//-------------------------------------------------------------------------------
 	for (i=0; i<LASERSAMPLES; i++)
 	{
@@ -451,7 +431,7 @@ int HokuyoURGsimple::readRequestTelegram()
 		else
 		{
 			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving scan data at byte no. %1 from %2 (SickS300::readRequestTelegram).</font>").arg(i+1).arg(LASERSAMPLES+1));
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving scan data at byte no. %1 from %2 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1).arg(LASERSAMPLES+1));
 			return -1;
 		}
 	}
@@ -478,7 +458,7 @@ int HokuyoURGsimple::readRequestTelegram()
 		else
 		{
 			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving CRC at byte no. %1 (SickS300::readRequestTelegram).</font>").arg(i+1));
+			emit message(QString("<font color=\"#FF0000\">ERROR receiving CRC at byte no. %1 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1));
 			return -1;
 		}
 	}
@@ -540,7 +520,7 @@ int HokuyoURGsimple::readUnknownTelegram()
 
 	if (result != 0)
 	{
-		emit message("<font color=\"#FF0000\">ERROR flushing serial port (SickS300::readRequestTelegram).</font>");
+		emit message("<font color=\"#FF0000\">ERROR flushing serial port (HokuyoURGsimple::readRequestTelegram).</font>");
 		return -1;
 	}
 
@@ -672,9 +652,9 @@ int HokuyoURGsimple::readUnknownTelegram()
 
 float HokuyoURGsimple::getDistance(int angleIndex)
 {
-	if ( (angleIndex<0) || (angleIndex>(270*2)) )
+	if ( (angleIndex<0) || (angleIndex>(270*2)) ) /// @todo check why ew have a fixed 270*2 here!! add/use constant from header file!
 	{
-		emit message(QString("ERROR: angle index with %1 out of range (0 - 549) (SickS300::getDistance)").arg(angleIndex));
+		emit message(QString("ERROR: angle index with %1 out of range (0 - 549) (HokuyoURGsimple::getDistance)").arg(angleIndex));
 		return 0;
 	}
 

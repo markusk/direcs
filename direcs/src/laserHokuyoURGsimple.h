@@ -18,8 +18,8 @@
 *                                                                       *
 *************************************************************************/
 
-#ifndef LASERSICKS300_H
-#define LASERSICKS300_H
+#ifndef HOKUYOURGSIMPLE_H
+#define HOKUYOURGSIMPLE_H
 
 #include <QtGlobal> // for Q_OS_* Makro!
 #include <QObject>
