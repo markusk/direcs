@@ -21,7 +21,7 @@
 #include "laserHokuyoURGsimple.h"
 
 
-SickS300::SickS300()
+HokuyoURGsimple::HokuyoURGsimple()
 {
 	// The S300 Standard works only with a fixed baudrate of 38400 thru the diagnostic port.
 	baudRate = 38400;
@@ -59,7 +59,7 @@ SickS300::SickS300()
 }
 
 
-SickS300::~SickS300()
+HokuyoURGsimple::~HokuyoURGsimple()
 {
 //	QTime x;
 //	qDebug("S300 shut down @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
@@ -71,13 +71,13 @@ SickS300::~SickS300()
 }
 
 
-void SickS300::setDevicePort(QString serialPort)
+void HokuyoURGsimple::setDevicePort(QString serialPort)
 {
 	laserSerialPort = serialPort;
 }
 
 
-bool SickS300::openComPort()
+bool HokuyoURGsimple::openComPort()
 {
 	// for QString to char* conversion
 	QByteArray ba = laserSerialPort.toLatin1();
@@ -108,7 +108,7 @@ bool SickS300::openComPort()
 }
 
 
-int SickS300::closeComPort()
+int HokuyoURGsimple::closeComPort()
 {
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Release Token" (Telegram type SEND (0x41 0x44))
 	const unsigned char releaseTokenCommand[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x00,0x00,0xE7,0xB8};
@@ -155,7 +155,7 @@ int SickS300::closeComPort()
 }
 
 
-bool SickS300::sendChar(unsigned char character)
+bool HokuyoURGsimple::sendChar(unsigned char character)
 {
 // 	static int receiveErrorCounter = 0;
 
@@ -171,7 +171,7 @@ bool SickS300::sendChar(unsigned char character)
 }
 
 
-bool SickS300::receiveChar(unsigned char *character)
+bool HokuyoURGsimple::receiveChar(unsigned char *character)
 {
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
@@ -186,7 +186,7 @@ bool SickS300::receiveChar(unsigned char *character)
 }
 
 
-int SickS300::setup()
+int HokuyoURGsimple::setup()
 {
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Get Token" (Telegram type SEND (0x41 0x44))
 	const unsigned char getTokenCommand[]={0x00,0x00,0x41,0x44,0x19,0x00,0x00,0x05,0xFF,0x07,0x19,0x00,0x00,0x05,0xFF,0x07,0x07,0x0F,0x9F,0xD0};
@@ -235,7 +235,7 @@ int SickS300::setup()
 }
 
 
-int SickS300::readRequestTelegram()
+int HokuyoURGsimple::readRequestTelegram()
 {
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
 	// 00 00
@@ -515,7 +515,7 @@ int SickS300::readRequestTelegram()
 }
 
 
-int SickS300::readUnknownTelegram()
+int HokuyoURGsimple::readUnknownTelegram()
 {
 	// see also SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
 	// 00 00
@@ -670,7 +670,7 @@ int SickS300::readUnknownTelegram()
 }
 
 
-float SickS300::getDistance(int angleIndex)
+float HokuyoURGsimple::getDistance(int angleIndex)
 {
 	if ( (angleIndex<0) || (angleIndex>(270*2)) )
 	{
