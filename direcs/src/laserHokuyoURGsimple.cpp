@@ -23,11 +23,10 @@
 
 HokuyoURGsimple::HokuyoURGsimple()
 {
-	// The S300 Standard works only with a fixed baudrate of 38400 thru the diagnostic port.
-	baudRate = 38400;
+	baudRate = 115200;
 
 	// creating the serial port object
-	serialPort = new DirecsSerial();
+//	serialPort = new DirecsSerial();
 
 	laserSerialPort = "NOTSET";
 

@@ -127,12 +127,12 @@ class HokuyoURGsimple : public QObject
 		int baudRate;
 		QString laserSerialPort; /// the path to the serial device. e.g. /dev/tty.usbmodemfa1411
 
-		static const unsigned int LASERSAMPLES = 1082;
+		static const unsigned int LASERSAMPLES = 667;  // 667 is the maximum of this laserscanner, because we have 240 degrees at a resolution of 0.36 (strange value...)
 		unsigned char scanData[LASERSAMPLES];
 
-		static const float LASERMAXLENGTH = 2000; /// if a measured laser distance is greater than this value in cm, it will be set to 0 cm! (This is due to a bug when reading angle 0)
+		static const float LASERMAXLENGTH = 600; /// if a measured laser distance is greater than this value in cm, it will be set to 0 cm! (This is due to a bug when reading angle 0)
 
-		float distances[540]; // 540 is the maximum of this laserscanner, because we have 270 degrees at a resolution of 0.5
+		float distances[LASERSAMPLES]; // holds the distances in cm
 
 		static const bool ON  = true;   /// For laser is "ON"
 		static const bool OFF = false;  /// For laser is "OFF"
