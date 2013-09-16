@@ -42,6 +42,7 @@ unix|macx {
 				plotThread.h \
 				QtGLContext.h \
 				rgbLed.h \
+				urg_serial_utils.h \
 				sensorThread.h \
 				servo.h \
 				settingsDialog.h \
@@ -73,6 +74,8 @@ unix|macx {
 				plotThread.cpp \
 				QtGLContext.cpp \
 				rgbLed.cpp \
+				urg_serial_utils.cpp \
+				urg_serial_utils_linux.cpp \
 				sensorThread.cpp \
 				servo.cpp \
 				settingsDialog.cpp \
