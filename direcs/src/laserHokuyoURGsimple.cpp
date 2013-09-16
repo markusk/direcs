@@ -49,8 +49,27 @@ HokuyoURGsimple::~HokuyoURGsimple()
 
 int HokuyoURGsimple::findPort()
 {
+	int found_port_size = urg_serial_find_port();
+	int i;
 
 
+	if (found_port_size == 0)
+	{
+		emit message("Could not found ports for HOKUYO URG simple laser scanner.");
+		return 1;
+	}
+
+	for (i = 0; i < found_port_size; ++i)
+	{
+		if (urg_serial_is_urg_port(i))
+		{
+			emit message(QString("%1 [URG]").arg(urg_serial_port_name(i)));
+		}
+		else
+		{
+			emit message(QString("%1").arg(urg_serial_port_name(i)));
+		}
+	}
 
 	return 0;
 }

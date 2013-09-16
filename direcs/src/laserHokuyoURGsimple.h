@@ -29,6 +29,7 @@
 
 
 #include "direcsSerial.h"
+#include "urg_serial_utils.h" // for method findPort
 
 
 /**
