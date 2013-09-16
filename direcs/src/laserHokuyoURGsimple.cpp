@@ -47,6 +47,15 @@ HokuyoURGsimple::~HokuyoURGsimple()
 }
 
 
+int HokuyoURGsimple::findPort()
+{
+
+
+
+	return 0;
+}
+
+
 void HokuyoURGsimple::setDevicePort(QString serialPort)
 {
 	laserSerialPort = serialPort;

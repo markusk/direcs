@@ -51,6 +51,11 @@ class HokuyoURGsimple : public QObject
 		~HokuyoURGsimple();
 
 		/**
+		  Finds the portname of the device
+		  */
+		int findPort();
+
+		/**
 		Set up the device.
 		@return 0 if things go well, and -1 otherwise.
 		*/
