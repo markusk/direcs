@@ -2184,8 +2184,6 @@ void Gui::on_btnKinectResetAngle_clicked()
 	{
 		uiSmall.spinBoxKinectAngle->setValue(0);
 	}
-
-	emit resetKinectAngle();
 }
 
 void Gui::on_sliderThreshold_valueChanged(int value)

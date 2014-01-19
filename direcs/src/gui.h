@@ -519,11 +519,6 @@ class Gui : public QMainWindow
 		void setKinectAngle(int i);
 
 		/**
-		Resets the angle for the Kinect camera motor to default.
-		*/
-		void resetKinectAngle();
-
-		/**
 		  Sets the threshold on the OpenCV iamge stuff. This Signal is sent to the @sa CamThread
 		 */
 		void setThreshold(int value);

@@ -1030,10 +1030,6 @@ void Direcs::init()
 				emit message("Starting camThread...", false);
 				camThread->start();
 
-				// look a bit up
-				camThread->setAngle(5); /// \todo: put angle value to ini file and settings dialog
-				gui->showKinectAngle(5);
-
 				// show kinect camera state in gui
 				gui->setLEDCamera(GREEN);
 
@@ -1049,9 +1045,6 @@ void Direcs::init()
 
 				// the signal for setting the Kinect camera angle
 				connect(gui, SIGNAL(setKinectAngle(int)), camThread, SLOT(setAngle(int)));
-
-				/// \todo the signal for resetting the camera angle
-				//connect(gui, SIGNAL(resetKinectAngle()), kinect, SLOT(resetAngle()));
 
 				// the signal for setting the video mode
 				// connect(gui, SIGNAL(setKinectVideoMode(int)), kinect, SLOT(setVideoMode(int)));
