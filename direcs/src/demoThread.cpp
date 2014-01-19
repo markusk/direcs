@@ -26,7 +26,7 @@ DemoThread::DemoThread()
 	demoMode = false;
 
 	// start random number generator
-	srand(time(NULL));
+	qsrand(time(NULL));
 }
 
 
@@ -57,18 +57,18 @@ void DemoThread::run()
 
 		if (0)
 		{
-			emit setRGBLEDBrightness(RGBLED1, rand() % 99 +1);
-			emit setRGBLEDBrightness(RGBLED2, rand() % 99 +1);
-			emit setRGBLEDBrightness(RGBLED3, rand() % 99 +1);
-			emit setRGBLEDBrightness(RGBLED4, rand() % 99 +1);
-			emit setRGBLEDBrightness(RGBLED5, rand() % 99 +1);
-			emit setRGBLEDBrightness(RGBLED6, rand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED1, qrand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED2, qrand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED3, qrand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED4, qrand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED5, qrand() % 99 +1);
+			emit setRGBLEDBrightness(RGBLED6, qrand() % 99 +1);
 		}
 		else
 		{
-			number1 = rand() % 99 +1;
-			number2 = rand() % 99 +1;
-			number3 = rand() % 99 +1;
+			number1 = qrand() % 99 +1;
+			number2 = qrand() % 99 +1;
+			number3 = qrand() % 99 +1;
 
 			emit setRGBLEDBrightness(RGBLED1, number1);
 			emit setRGBLEDBrightness(RGBLED2, number2);
