@@ -1031,14 +1031,14 @@ void Direcs::init()
 				camThread->start();
 
 				// look a bit up
-				// kinect->setAngle(5); /// \todo: put angle value to ini file and settings dialog
-				// gui->showKinectAngle(5);
+				camThread->setAngle(5); /// \todo: put angle value to ini file and settings dialog
+				gui->showKinectAngle(5);
 
 				// show kinect camera state in gui
 				gui->setLEDCamera(GREEN);
 
 				// the signals for the LED actions
-
+				/// @todo add kinect stuff / code
 				// connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
 				// connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
 				// connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
@@ -1047,8 +1047,8 @@ void Direcs::init()
 				// connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
 				// connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));/
 
-				/// \todo the signal for setting the camera angle
-				//connect(gui, SIGNAL(setKinectAngle(double)), kinect, SLOT(setAngle(double)));
+				// the signal for setting the Kinect camera angle
+				connect(gui, SIGNAL(setKinectAngle(int)), camThread, SLOT(setAngle(int)));
 
 				/// \todo the signal for resetting the camera angle
 				//connect(gui, SIGNAL(resetKinectAngle()), kinect, SLOT(resetAngle()));
