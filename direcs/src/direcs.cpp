@@ -649,7 +649,7 @@ void Direcs::init()
 				// init the circuit & Co. when hitting the button in the GUI
 				connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
 				connect(gui, SIGNAL( initCircuit() ), this, SLOT( resetMotorSpeed() ) ); // also reset motor speed to ini-file values < < @todo: workaround!
-				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
+///				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) ); @todo: servos currently not in use. Would cause an error message on reset.
 //				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) ); // @todo: build this < < < < < < <
 			}
 
@@ -1172,7 +1172,7 @@ void Direcs::init()
 			srand(time(NULL));
 
 			// generate one number
-			int number = rand() % 6 +1; // (1 to 6)
+			int number = rand() % 7 +1; // (1 to 7)
 			qDebug("file number %d", number);
 
 			// create phonon player and set filename
@@ -5151,10 +5151,17 @@ void Direcs::checkArguments()
 void Direcs::nextDemoPhase(int phase)
 {
 	static int iPhase = phase;
+	static bool introductionComplete = false;
+	
+	
 
 
 	if (demoMode)
 	{
+		// do not speak the text any longer, if spoken before
+		if (introductionComplete)
+		    phase = 4;
+
 		emit message(QString("demo phase=%1").arg(iPhase));
 
 		switch (phase)
@@ -5169,11 +5176,15 @@ void Direcs::nextDemoPhase(int phase)
 			break;
 		case 2:
 			// say something, next phase is no. 3
-			emit speak("I am able of driving araound autonomically without hitting any obstacles. Well. Hopefully. I am using a laserscanner. and I can show my status with some R G B LEDs. I can also send my data over wireless network to show them on another laptop, or so.", ++phase);
+			emit speak("I am able of driving around autonomically without hitting any obstacles. Well. Hopefully. I am using a laserscanner. and I can show my status with some R G B LEDs. I can also send my data over wireless network to show them on another laptop, or so.", ++phase);
 			break;
 		case 3:
 			// say something, next phase is no. 3
 			emit speak("But I do not want to bore you any longer. See me driving around and enjoy it. We should do some party now. I will play music by random. So if the next song is still boring, Markus cann skip it on the touchscreen. Okay. lets go! Put your hands up in the air and wave them like you just dont care!", ++phase);
+			
+			// speech completed! do not say it again, if called!
+			introductionComplete = true;
+			
 			break;
 		case 4:
 			// play some music
@@ -5236,11 +5247,20 @@ emit speak("Okay, here we go.", 1);
 
 void Direcs::mediaPlayerFinished()
 {
-	int number = rand() % 6 +1; // (1 to 6)
+	static int number = 0;
+	       int randNumber = 0;
 
 
 	if (demoMode)
 	{
+		do 
+		{
+			randNumber = rand() % 7 +1; // (1 to 7)
+		} while (randNumber == number);
+
+		// store current number for next call of this method
+		number = randNumber;
+
 		emit message(QString("Media player restart with file %1.").arg(number));
 
 #ifdef Q_OS_LINUX
