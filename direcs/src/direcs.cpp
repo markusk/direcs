@@ -206,10 +206,10 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	joystick = new Joystick();
 	// head = new Head(servos);  disabled since the head is not in use use!
 
-	if (!consoleMode)
-	{
-		camThread = new CamThread();
-	}
+//	if (!consoleMode)
+//	{
+//		camThread = new CamThread();
+//	}
 
 	timerThread = new TimerThread();
 
@@ -648,6 +648,7 @@ void Direcs::init()
 			{
 				// init the circuit & Co. when hitting the button in the GUI
 				connect(gui, SIGNAL( initCircuit() ), circuit1, SLOT( initCircuit() ) );
+				connect(gui, SIGNAL( initCircuit() ), this, SLOT( resetMotorSpeed() ) ); // also reset motor speed to ini-file values < < @todo: workaround!
 				connect(gui, SIGNAL( initServos() ), servos, SLOT( init() ) );
 //				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) ); // @todo: build this < < < < < < <
 			}
@@ -967,8 +968,8 @@ void Direcs::init()
 			emit message("Detecting Kinect camera...");
 
 			// show Kinect messages in GUI
-			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+//			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+//			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 
 
 			//-----------------------------------------------------------
@@ -976,7 +977,7 @@ void Direcs::init()
 			//-----------------------------------------------------------
 			emit splashMessage("Initialising Kinect camera...");
 			emit message("Initialising Kinect camera...");
-
+/*
 			if (camThread->init() == true)
 			{
 				emit splashMessage("Kinect found.");
@@ -1053,6 +1054,9 @@ void Direcs::init()
 			{
 				emit splashMessage("Kinect not found.");
 				emit message("Kinect camera not found.", false);
+*/
+				emit splashMessage("Kinect DISABLED.");
+				emit message("Kinect camera DISABLED.", false);
 
 				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
@@ -1060,11 +1064,10 @@ void Direcs::init()
 
 				//gui->disableCamera();
 				emit message("No Kinect detected.");
-
+/*
 			}
-
+*/
 		}
-
 
 		if (!consoleMode)
 		{
@@ -1391,6 +1394,7 @@ void Direcs::shutdown()
 		rgbLeds->setBrightness(RGBLED6, 1);
 	}
 
+/*
 	/// \todo a universal quit-threads-method
 	if (!consoleMode)
 	{
@@ -1432,6 +1436,7 @@ void Direcs::shutdown()
 			}
 		}
 	}
+*/
 
 
 	//--------------------------------
@@ -1926,7 +1931,7 @@ Direcs::~Direcs()
 	delete interface1;
 	if (!consoleMode)
 	{
-		delete camThread;
+//		delete camThread;
 		delete aboutDialog;
 		delete joystickDialog;
 		delete settingsDialog;
@@ -4120,7 +4125,7 @@ void Direcs::readSettings()
 			if (!consoleMode)
 			{
 				// set value in camThread and GUI
-				camThread->setThreshold(value);
+//				camThread->setThreshold(value);
 				gui->showThreshold(value);
 				emit message(QString("Setting threshold to <b>%1</b>.").arg(value));
 			}
@@ -5332,6 +5337,27 @@ void Direcs::drivingLight(unsigned char color)
 			rgbLeds->setBrightness(RGBLED5, MINPWM);
 			rgbLeds->setBrightness(RGBLED6, MINPWM);
 			break;
+	}
+}
+
+void Direcs::resetMotorSpeed()
+{
+	// when speed already read from ini-file
+	if (mot1Speed != 0)
+	{
+		//-------------------------------------------------------
+		// set the read motor speed
+		//-------------------------------------------------------
+		emit message("Setting motor speed in microcontroller");
+		motors->setMotorSpeed(MOTOR1, mot1Speed);
+		motors->setMotorSpeed(MOTOR2, mot2Speed);
+		motors->setMotorSpeed(MOTOR3, mot3Speed);
+		motors->setMotorSpeed(MOTOR4, mot4Speed);
+		emit message("Motor speed set.");
+	}
+	else
+	{
+		emit message("ERROR: Motor speed not read! (Direcs::resetMotorSpeed)");
 	}
 }
 

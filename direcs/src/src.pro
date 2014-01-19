@@ -19,7 +19,7 @@ DEFINES += ACTIVELASERVIEW
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
 	HEADERS +=	aboutDialog.h \
-				camThread.h \
+##				camThread.h \
 				circuit.h \
 #				compassWidget.h \
 				consoleGui.h \
@@ -49,7 +49,7 @@ unix|macx {
 				logfile.h
 
 	SOURCES +=	aboutDialog.cpp \
-				camThread.cpp \
+##				camThread.cpp \
 				circuit.cpp \
 #				compassWidget.cpp \
 				consoleGui.cpp \
@@ -101,7 +101,7 @@ unix|macx {
 				-L/usr/local/lib \
 				-lespeak \
 				-lqwt-qt4 \
-				-lfreenect_sync \
+##				-lfreenect_sync \
 				-lopencv_core \
 				-lopencv_highgui \
 				-lopencv_imgproc \
