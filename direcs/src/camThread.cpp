@@ -44,6 +44,17 @@ CamThread::~CamThread()
 }
 
 
+void CamThread::disable()
+{
+	stop();
+
+	initDone = true;
+	cameraIsOn = false; // double safe
+
+	emit message("+++ camThread disabled! +++");
+}
+
+
 void CamThread::stop()
 {
 	stopped = true;

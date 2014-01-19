@@ -78,6 +78,11 @@ class CamThread : public QThread
 		 */
 		void setCascadePath(QString haarClassifierCascade);
 
+		/**
+		 * @brief Disable the camera thread. I.E. when no camera usage is forced by a global ini-file.
+		 */
+		void disable();
+
 		void stop();
 		virtual void run();
 
