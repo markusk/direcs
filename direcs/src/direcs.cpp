@@ -961,7 +961,7 @@ void Direcs::init()
 		connect(joystick, SIGNAL(joystickMoved(int, int)), this, SLOT(executeJoystickCommand(int, int)));
 		connect(joystick, SIGNAL(joystickButtonPressed(int, bool)), this, SLOT(executeJoystickCommand(int, bool)));
 
-		if (!consoleMode)
+		if ((!consoleMode) && (useCamera))
 		{
 			emit splashMessage("Detecting Kinect camera...");
 			emit message("Detecting Kinect camera...");
@@ -1026,6 +1026,8 @@ void Direcs::init()
 				//--------------------------------------------
 				// start threading and grabbing live pictures
 				//--------------------------------------------
+				emit splashMessage("Starting camThread...");
+				emit message("Starting camThread...", false);
 				camThread->start();
 
 				// look a bit up
@@ -3389,10 +3391,9 @@ void Direcs::readSettings()
 			if (!consoleMode)
 			{
 				// turning "off" camera
-				//camThread->setCameraDevice(-2);
-//				gui->disableCamera();
+				camThread->disable();
 			}
-			emit message("<font color=\"#FF0000\">No camera usage! (see ini-file)</font>");
+			emit message("<font color=\"#FF0000\">No camera usage! (Disabled in ini-file)</font>");
 			break;
 		case 1:
 			useCamera = true;
@@ -3409,14 +3410,16 @@ void Direcs::readSettings()
 
 			if (cameraDevice == -2)
 			{
-				/// camThread->setCameraDevice(-2); \todo kinect stuff
+				// turning "off" camera
+				camThread->disable();
 				emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 			}
 			else
 			{
 				if (cameraDevice == -1)
 				{
-					/// camThread->setCameraDevice(-2); \todo kinect stuff
+					// turning "off" camera
+					camThread->disable();
 					emit message("<font color=\"#FF0000\">Value \"cameraDevice\" not found in ini-file!</font>");
 				}
 				else
@@ -3425,8 +3428,6 @@ void Direcs::readSettings()
 					// everything okay
 					//
 					// set it in the cam thread
-///					camThread->setCameraDevice(cameraDevice); \todo kinect stuff
-
 //					emit message(QString("Camera file set to <b>%1</b>.").arg(cameraDevice));
 
 
@@ -3436,14 +3437,12 @@ void Direcs::readSettings()
 
 					if (haarClassifierCascade == "error2")
 					{
-						/// camThread->setCascadePath("none"); \todo kinect stuff
 						emit message("<font color=\"#FF0000\">ini-file is not writeable!</font>");
 					}
 					else
 					{
 						if (haarClassifierCascade == "error1")
 						{
-							/// camThread->setCascadePath("none"); \todo kinect stuff
 							emit message("<font color=\"#FF0000\">Value \"haarClassifierCascade\" not found in ini-file!</font>");
 						}
 						else
@@ -3452,22 +3451,7 @@ void Direcs::readSettings()
 							// everything okay
 							//
 							// set it in the cam thread
-							/// camThread->setCascadePath(haarClassifierCascade); \todo kinect stuff
 							emit message(QString("Haar classifier cascade file set to<br><b>%1</b>.").arg(haarClassifierCascade));
-							emit splashMessage("Initialising camera...");
-
-///  \todo kinect stuff
-/*
-							// initialise the cam
-							if (camThread->init())
-							{
-								emit message("Camera initialised.");
-							}
-							else
-							{
-								emit message("Error initialising camera.");
-							}
-*/
 						}
 					}
 					//---------------------------------------------------------------------
