@@ -243,7 +243,10 @@ bool CamThread::init()
 
 			return false;
 		}
-
+		else
+		{
+			emit message("Kinect camera moved to 0 deg.");
+		}
 	}
 
 
