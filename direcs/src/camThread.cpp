@@ -58,6 +58,9 @@ void CamThread::disable()
 void CamThread::stop()
 {
 	stopped = true;
+
+	// move Kinect camera down ("sleep")
+	setAngle(KINECTANGLEMIN);
 }
 
 
@@ -213,9 +216,6 @@ void CamThread::setCascadePath(QString haarClassifierCascade)
 
 bool CamThread::init()
 {
-	double angle = 0;
-
-
 	// do only *one* init!
 	if (initDone == false)
 	{
