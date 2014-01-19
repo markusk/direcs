@@ -272,7 +272,7 @@ bool CamThread::setAngle(int angle)
 	}
 	else
 	{
-		emit message("Kinect camera moved to 0 deg.");
+		emit message(QString("Kinect camera moved to %1 deg.").arg(angle));
 	}
 
 
