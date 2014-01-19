@@ -206,10 +206,10 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	joystick = new Joystick();
 	// head = new Head(servos);  disabled since the head is not in use use!
 
-//	if (!consoleMode)
-//	{
-//		camThread = new CamThread();
-//	}
+	if (!consoleMode)
+	{
+		camThread = new CamThread();
+	}
 
 	timerThread = new TimerThread();
 
@@ -968,8 +968,8 @@ void Direcs::init()
 			emit message("Detecting Kinect camera...");
 
 			// show Kinect messages in GUI
-//			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
-//			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(camThread, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+			connect(camThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 
 
 			//-----------------------------------------------------------
@@ -977,7 +977,7 @@ void Direcs::init()
 			//-----------------------------------------------------------
 			emit splashMessage("Initialising Kinect camera...");
 			emit message("Initialising Kinect camera...");
-/*
+
 			if (camThread->init() == true)
 			{
 				emit splashMessage("Kinect found.");
@@ -1054,7 +1054,7 @@ void Direcs::init()
 			{
 				emit splashMessage("Kinect not found.");
 				emit message("Kinect camera not found.", false);
-*/
+
 				emit splashMessage("Kinect DISABLED.");
 				emit message("Kinect camera DISABLED.", false);
 
@@ -1064,9 +1064,7 @@ void Direcs::init()
 
 				//gui->disableCamera();
 				emit message("No Kinect detected.");
-/*
 			}
-*/
 		}
 
 		if (!consoleMode)
@@ -1394,7 +1392,7 @@ void Direcs::shutdown()
 		rgbLeds->setBrightness(RGBLED6, 1);
 	}
 
-/*
+
 	/// \todo a universal quit-threads-method
 	if (!consoleMode)
 	{
@@ -1436,7 +1434,7 @@ void Direcs::shutdown()
 			}
 		}
 	}
-*/
+
 
 
 	//--------------------------------
@@ -1931,7 +1929,7 @@ Direcs::~Direcs()
 	delete interface1;
 	if (!consoleMode)
 	{
-//		delete camThread;
+		delete camThread;
 		delete aboutDialog;
 		delete joystickDialog;
 		delete settingsDialog;
@@ -5152,15 +5150,15 @@ void Direcs::nextDemoPhase(int phase)
 {
 	static int iPhase = phase;
 	static bool introductionComplete = false;
-	
-	
+
+
 
 
 	if (demoMode)
 	{
 		// do not speak the text any longer, if spoken before
 		if (introductionComplete)
-		    phase = 4;
+			phase = 4;
 
 		emit message(QString("demo phase=%1").arg(iPhase));
 
@@ -5181,10 +5179,10 @@ void Direcs::nextDemoPhase(int phase)
 		case 3:
 			// say something, next phase is no. 3
 			emit speak("But I do not want to bore you any longer. See me driving around and enjoy it. We should do some party now. I will play music by random. So if the next song is still boring, Markus cann skip it on the touchscreen. Okay. lets go! Put your hands up in the air and wave them like you just dont care!", ++phase);
-			
+
 			// speech completed! do not say it again, if called!
 			introductionComplete = true;
-			
+
 			break;
 		case 4:
 			// play some music
@@ -5248,12 +5246,12 @@ emit speak("Okay, here we go.", 1);
 void Direcs::mediaPlayerFinished()
 {
 	static int number = 0;
-	       int randNumber = 0;
+		   int randNumber = 0;
 
 
 	if (demoMode)
 	{
-		do 
+		do
 		{
 			randNumber = rand() % 7 +1; // (1 to 7)
 		} while (randNumber == number);
