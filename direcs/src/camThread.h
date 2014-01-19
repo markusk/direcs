@@ -100,6 +100,13 @@ class CamThread : public QThread
 		  */
 		void setThreshold(int threshold);
 
+		/**
+		Sets the angle of the kinect camera (moves the motor!)
+		@param angle is the angle
+		@return false on error.
+		*/
+		bool setAngle(int angle);
+
 
 	signals:
 		/**
@@ -178,6 +185,11 @@ class CamThread : public QThread
 		bool faceDetectionWasActive;
 		QString haarClassifierCascadeFilename;
 		volatile bool stopped;
+
+		// Kinect angles (motor movement room)
+		static const int KINECTANGLEMIN = -30;
+		static const int KINECTANGLEMID =   0;
+		static const int KINECTANGLEMAX =  30;
 
 		// Every thread sleeps some time, for having a bit more time for the other threads!
 		// Time in milliseconds

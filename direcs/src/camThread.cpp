@@ -221,20 +221,8 @@ bool CamThread::init()
 	{
 		initDone = true;
 
-
-		// constrain the angle from -30 to +30
-		if (angle > 30)
-		{
-			angle = 30;
-		}
-		else if (angle <-30)
-		{
-			angle=-30;
-		}
-
-
-		// try to set angle
-		if (freenect_sync_set_tilt_degs(angle, 0))
+		// set angle
+		if (setAngle(KINECTANGLEMID) == false)
 		{
 			emit message("<font color=\"#FF0000\">ERROR: could not initialize Kinect camera.</font>");
 
@@ -243,12 +231,7 @@ bool CamThread::init()
 
 			return false;
 		}
-		else
-		{
-			emit message("Kinect camera moved to 0 deg.");
-		}
 	}
-
 
 	emit message("Kinect camera initialized.");
 	cameraIsOn = true;
@@ -260,4 +243,39 @@ bool CamThread::init()
 void CamThread::setThreshold(int threshold)
 {
 	mThreshold = threshold;
+}
+
+
+bool CamThread::setAngle(int angle)
+{
+	// constrain the angle from -30 to +30
+	if (angle > KINECTANGLEMAX)
+	{
+		angle = KINECTANGLEMAX;
+	}
+	else if (angle < KINECTANGLEMIN)
+	{
+		angle = KINECTANGLEMIN;
+	}
+
+
+	// try to set angle
+	// (0 is the first camera)
+	if (freenect_sync_set_tilt_degs(angle, 0) != 0)
+	{
+		emit message("<font color=\"#FF0000\">ERROR: could not set Kinect angle.</font>");
+
+		cameraIsOn = false;
+		stopped = true;
+
+		return false;
+	}
+	else
+	{
+		emit message("Kinect camera moved to 0 deg.");
+	}
+
+
+	// everything is okay
+	return true;
 }
