@@ -514,11 +514,13 @@ class Gui : public QMainWindow
 		void setKinectVideoMode(int mode);
 
 		/**
-		 */
-		void setKinectAngle(double i);
+		Emits the angle for the Kinect camera motor to be moved to.
+		*/
+		void setKinectAngle(int i);
 
 		/**
-		 */
+		Resets the angle for the Kinect camera motor to default.
+		*/
 		void resetKinectAngle();
 
 		/**
