@@ -2046,7 +2046,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	//
 	// So if the robot does *not* drive, we skip this step to store the 'prefrerred driving direction'.
 	// This will be then used in the drive method, when the roboter later received the START command.
-	if ((sensorAlarm == lastSensorValue) && (robotDrives))
+	if ((sensorAlarm == lastSensorValue) && (robotDrives))  ///  < < < < < < < < robotDrives = false, in WAIT sate
 	{
 		// store this sensor alarm value
 		lastSensorValue = sensorAlarm;
@@ -2209,9 +2209,9 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 			//----------------
 			// drive WAIT
 			//----------------
-			drive(WAIT);
+			drive(WAIT); /// < < < < sets robotDrives = false !!
 			motors->flashlight(ON);
-			emit speak("I think, I need some help!");
+			emit speak("Could you please clear the way for me? Thanks.");
 		}
 
 		return;
@@ -2696,7 +2696,7 @@ void Direcs::drive(const int command)
 
 			// Don't stop the motThread (PWM)!
 			// Only switching motors off!
-			robotDrives = false;
+///			robotDrives = false;				@todo TEST: DISABLED TO BRING THE ROBOT TO DRIVE AGAIN when obstacles are gone!!
 			return;
 			break;
 
