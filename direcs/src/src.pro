@@ -31,6 +31,7 @@ unix|macx {
 				interfaceAvr.h \
 				joystick.h \
 				joystickDialog.h \
+				laserHokuyoURGsimple.h \
 				laserScene.h \
 				laserSickS300.h \
 				laserThread.h \
@@ -41,6 +42,7 @@ unix|macx {
 				plotThread.h \
 				QtGLContext.h \
 				rgbLed.h \
+				urg_serial_utils.h \
 				sensorThread.h \
 				servo.h \
 				settingsDialog.h \
@@ -61,6 +63,7 @@ unix|macx {
 				interfaceAvr.cpp \
 				joystick.cpp \
 				joystickDialog.cpp \
+				laserHokuyoURGsimple.cpp \
 				laserSickS300.cpp \
 				laserScene.cpp \
 				laserThread.cpp \
@@ -71,6 +74,8 @@ unix|macx {
 				plotThread.cpp \
 				QtGLContext.cpp \
 				rgbLed.cpp \
+				urg_serial_utils.cpp \
+				urg_serial_utils_linux.cpp \
 				sensorThread.cpp \
 				servo.cpp \
 				settingsDialog.cpp \
