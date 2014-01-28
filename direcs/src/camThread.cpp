@@ -279,3 +279,16 @@ bool CamThread::setAngle(int angle)
 	// everything is okay
 	return true;
 }
+
+
+bool CamThread::turnLED(freenect_led_options state)
+{
+	// turn LED for camera 0 (first camera)
+	if (freenect_sync_set_led(state, 0) != 0)
+	{
+		return false;
+	}
+
+
+	return true;
+}

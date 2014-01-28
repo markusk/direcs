@@ -2060,7 +2060,7 @@ void Gui::showFaceTrackData(int faces, int faceX, int faceY, int faceRadius, int
 
 void Gui::disableFaceDetection()
 {
-	appendLog("Face detection disabled!");
+	appendLog("Face detection controls disabled in GUI.");
 	if (useLargeGUI)
 	{
 		ui.checkBoxFaceDetection->setEnabled(false);

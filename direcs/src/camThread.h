@@ -107,6 +107,13 @@ class CamThread : public QThread
 		*/
 		bool setAngle(int angle);
 
+		/**
+		 * @brief Turns the camera LED on or off or let it flash.
+		 * @param state can be LED_OFF, LED_GREEN, LED_RED, LED_YELLOW, LED_BLINK_GREEN or LED_BLINK_RED_YELLOW.
+		 * @return false on error
+		 */
+		bool turnLED(freenect_led_options state);
+
 
 	signals:
 		/**

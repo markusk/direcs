@@ -1034,16 +1034,6 @@ void Direcs::init()
 				// show kinect camera state in gui
 				gui->setLEDCamera(GREEN);
 
-				// the signals for the LED actions
-				/// @todo add kinect stuff / code
-				// connect(gui, SIGNAL(setLedOff()), kinect, SLOT(setLedOff()));
-				// connect(gui, SIGNAL(setRedLed()), kinect, SLOT(setRedLed()));
-				// connect(gui, SIGNAL(setGreenLed()), kinect, SLOT(setGreenLed()));
-				// connect(gui, SIGNAL(setYellowLed()), kinect, SLOT(setYellowLed()));
-				// connect(gui, SIGNAL(setRedLedFlash()), kinect, SLOT(setRedLedFlash()));
-				// connect(gui, SIGNAL(setGreenLedFlash()), kinect, SLOT(setGreenLedFlash()));
-				// connect(gui, SIGNAL(setYellowLedFlash()), kinect, SLOT(setYellowLedFlash()));/
-
 				// the signal for setting the Kinect camera angle
 				connect(gui, SIGNAL(setKinectAngle(int)), camThread, SLOT(setAngle(int)));
 
