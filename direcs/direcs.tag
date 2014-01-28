@@ -1100,264 +1100,308 @@
       <arglist>)(short *, int, espeak_EVENT *)</arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>espeak_AUDIO_OUTPUT</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a23dea85b1ce61e5ce20312cf6512471b</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>AUDIO_OUTPUT_PLAYBACK</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a23dea85b1ce61e5ce20312cf6512471baf9276fb14cedc1f380452dc0d10a7af0</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>AUDIO_OUTPUT_RETRIEVAL</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a23dea85b1ce61e5ce20312cf6512471ba3f879b5e9a9f82c536a27747ae201a74</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>AUDIO_OUTPUT_SYNCHRONOUS</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a23dea85b1ce61e5ce20312cf6512471ba639877b8e2621b5897c487db183d19ac</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>AUDIO_OUTPUT_SYNCH_PLAYBACK</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a23dea85b1ce61e5ce20312cf6512471baefca8e2c4393d4ac3e1b0275d78fa3e3</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>espeak_ERROR</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1c9e117cca2ea4fdb7d11395f8e01c5d</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>EE_OK</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1c9e117cca2ea4fdb7d11395f8e01c5da950dd5af648ddef4fd586c0db2a1dad6</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>EE_INTERNAL_ERROR</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1c9e117cca2ea4fdb7d11395f8e01c5da130c9ce94b70f542ac5cddc2fdd83ff4</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>EE_BUFFER_FULL</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1c9e117cca2ea4fdb7d11395f8e01c5da17817d21810de77cfb3aebda4f207382</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>EE_NOT_FOUND</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1c9e117cca2ea4fdb7d11395f8e01c5da067653f94e43fa692e0f220f7f6b9064</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>espeak_EVENT_TYPE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3a</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_LIST_TERMINATED</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aa8fe2f8edc14729dfe7770c12dd5c7446</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_WORD</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aa1f4a469ea6c3228316ec615800f345d6</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_SENTENCE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aa82fe00ad2a36ab7a2bfdf2fba1f92dfd</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_MARK</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aa09b24e282eaee025d499499c7fa49494</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_PLAY</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aad8675c02305dbbf8df612cb2d9b59c95</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_END</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aa6085aa4a2bc45adabbe6cc87f44e3313</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_MSG_TERMINATED</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aa7a124d35f31b71ae4acca40aa542099b</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEVENT_PHONEME</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a733d14390c664816340338f3d4443e3aa87612fcf05c59d8b8966cd8ff144cf1d</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>espeak_PARAMETER</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143dec</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakSILENCE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca8fcc6eb4d7dd509891acb93a0f2b8b5e</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakRATE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca8f530605c1777eebfb2b3053569d04c8</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakVOLUME</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca6f9f6b9e7de987713f881e8e0269abb7</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakPITCH</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca7cab746b6e0a53d82ca32a892ba51bd0</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakRANGE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca0b2a8ba75516a6a5d3f2c241daf803e9</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakPUNCTUATION</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143decaecc684f64b8f146e4ebf16a7279ce98f</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakCAPITALS</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143decaea9310e49717c41c3c0ad231cc2755b3</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakWORDGAP</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca6ebccbda58716b2b891eaee31f4c82f7</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakOPTIONS</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca7ce72f21ca46c91344c4fe9daa7ea284</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakINTONATION</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca84b96ec238db50a6d69da9531a6c509e</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakRESERVED1</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143decacee03d994dc2104096712ecba05486e9</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakRESERVED2</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143decae77bd03ab7a2744a544310ee8354ca56</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakEMPHASIS</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca5b77ba9ce3c4703df4557c480c7c9fe0</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakLINELENGTH</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca6fc8a2a5638f775c01ae081aa8afb61c</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakVOICETYPE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca5c03f6e4315bf92e987510c630089f18</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>N_SPEECH_PARAM</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>ad954721bea738a74e20120a828143deca28aaf5337520edb910f38a2a4de2a48d</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>espeak_POSITION_TYPE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a346d1f0d723d42370ad1866189c571ce</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>POS_CHARACTER</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a346d1f0d723d42370ad1866189c571cea27fe2613c6be410a12b23de6de085e38</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>POS_WORD</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a346d1f0d723d42370ad1866189c571ceac33dcba5a7510c7b1ab4e6db0d57d677</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>POS_SENTENCE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a346d1f0d723d42370ad1866189c571ceaa2ce87ecd833ec0126e8178908950d26</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>espeak_PUNCT_TYPE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1fb70081343a9d94f86d371e640999bc</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakPUNCT_NONE</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1fb70081343a9d94f86d371e640999bca4f69e262e17934a0e1ad362f8e4645a3</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakPUNCT_ALL</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1fb70081343a9d94f86d371e640999bca5deb26b79fcdffec5d2cc1c2fa670dd3</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>espeakPUNCT_SOME</name>
       <anchorfile>speak__lib_8h.html</anchorfile>
       <anchor>a1fb70081343a9d94f86d371e640999bcab7c8d5db81cbfd48acbebd7e1d0425df</anchor>
@@ -1578,6 +1622,13 @@
       <arglist>(int state)</arglist>
     </member>
     <member kind="slot">
+      <type>bool</type>
+      <name>setAngle</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a1e1fbcfdc0f0741faa5d1c50c9206e0f</anchor>
+      <arglist>(int angle)</arglist>
+    </member>
+    <member kind="slot">
       <type>void</type>
       <name>setThreshold</name>
       <anchorfile>classCamThread.html</anchorfile>
@@ -1638,6 +1689,13 @@
       <name>CamThread</name>
       <anchorfile>classCamThread.html</anchorfile>
       <anchor>adc6544efeb00ce345f1200425398f2ab</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>disable</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a2dbd35a6a4b5ae78c6aedeb8067510a2</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -1799,6 +1857,27 @@
       <name>timestamp</name>
       <anchorfile>classCamThread.html</anchorfile>
       <anchor>ad4ff6715abba211c4a39c3e4001f3f11</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>KINECTANGLEMAX</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a32b754845c82eb625c68b6e805432590</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>KINECTANGLEMID</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a8ebd8f024f06a3428adb800a15749c8c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>KINECTANGLEMIN</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a6559afe4c284463dcbe17c46e618ec8f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3196,6 +3275,13 @@
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a4b98817df19b061d07f361df729db432</anchor>
       <arglist>(int phase)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>resetMotorSpeed</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a8fd26b507bc1f14a6faae80a2a6b7abd</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="slot">
       <type>void</type>
@@ -4732,20 +4818,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>const char *</type>
-      <name>name</name>
-      <anchorfile>unionespeak__EVENT_1_1@0.html</anchorfile>
-      <anchor>a867cfe2e47128c6bc20faba75f3471e4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>number</name>
-      <anchorfile>unionespeak__EVENT_1_1@0.html</anchorfile>
-      <anchor>aa6eebd2b48d5b439d1f0be3baea85904</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
       <type>int</type>
       <name>length</name>
       <anchorfile>structespeak__EVENT.html</anchorfile>
@@ -5235,17 +5307,10 @@
     </member>
     <member kind="signal">
       <type>void</type>
-      <name>resetKinectAngle</name>
-      <anchorfile>classGui.html</anchorfile>
-      <anchor>a391a1ed65473043c675fa7da7cdc2603</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="signal">
-      <type>void</type>
       <name>setKinectAngle</name>
       <anchorfile>classGui.html</anchorfile>
-      <anchor>a34396558942376ffc04c3a329192191d</anchor>
-      <arglist>(double i)</arglist>
+      <anchor>a478e6e75895d22f439d3dd999d75f95f</anchor>
+      <arglist>(int i)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -7216,66 +7281,10 @@
       <anchor>a002a9cfb449247174cb53fac43c019d4</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function">
-      <type></type>
-      <name>JoyReaderElement</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable">
-      <type>IOHIDElementRef</type>
-      <name>elem</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>exist</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>value</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
-      <arglist></arglist>
-    </member>
   </compound>
   <compound kind="class">
     <name>JoyReaderElement</name>
     <filename>classJoyReaderElement.html</filename>
-    <member kind="function">
-      <type></type>
-      <name>JoyReaderElement</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable">
-      <type>IOHIDElementRef</type>
-      <name>elem</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>exist</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>value</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
-      <arglist></arglist>
-    </member>
   </compound>
   <compound kind="class">
     <name>JoyReaderHatSwitch</name>
@@ -7293,13 +7302,6 @@
       <name>JoyReaderHatSwitch</name>
       <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
       <anchor>ae03b04d18d0afbe4e3defa3328b01352</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>JoyReaderElement</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a73b68fb846643621b4cf8c9f5b0f51a8</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable">
@@ -7335,27 +7337,6 @@
       <name>valueNeutral</name>
       <anchorfile>classJoyReaderHatSwitch.html</anchorfile>
       <anchor>ac43e66ab9b1b912be4917c15246bb1ff</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>IOHIDElementRef</type>
-      <name>elem</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a75512041c37025a804f40ea06d582bf3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>exist</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>ae71d1ba769202656b4e1d4d4dc949ba6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>value</name>
-      <anchorfile>classJoyReaderElement.html</anchorfile>
-      <anchor>a30ec596a464a8fd73250252939d1d8aa</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7558,60 +7539,70 @@
     <class kind="struct">Laser::laser_settings_t</class>
     <class kind="struct">Laser::sick_laser_t</class>
     <member kind="enumeration">
+      <type></type>
       <name>direcs_laser_laser_type_t</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ad0466944e33bc54688f720d1fca18648</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SICK_LMS</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ad0466944e33bc54688f720d1fca18648a4f90cb30f0984f934e9695defa288f2b</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SICK_PLS</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ad0466944e33bc54688f720d1fca18648a6d23e92190b30ecec657580b8a68e61c</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>HOKUYO_URG</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ad0466944e33bc54688f720d1fca18648a35aea8ccef3938da61e44cb33743413b</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SIMULATED_LASER</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ad0466944e33bc54688f720d1fca18648afbaec63751401d1a2d888a1494be7e3d</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>UMKNOWN_PROXIMITY_SENSOR</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ad0466944e33bc54688f720d1fca18648a4c0afe52eaa77fb0f1badd67cf3cec20</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>direcs_laser_remission_type_t</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>acb07fed449ab39caa95f79d31581f695</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>REMISSION_NONE</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>acb07fed449ab39caa95f79d31581f695ae26eba6b0c9110817ac2c6368b61c4fd</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>REMISSION_DIRECT</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>acb07fed449ab39caa95f79d31581f695a0910ce85e22bb5871a34dd0da2de62fa</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>REMISSION_NORMALIZED</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>acb07fed449ab39caa95f79d31581f695a8929fa5f7efb1d9f16182c4fcaa54a08</anchor>
@@ -7646,102 +7637,119 @@
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>laser_model_t</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a135cd55fa9a98a47e2aaf6904eb2dd29</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>PLS</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a135cd55fa9a98a47e2aaf6904eb2dd29a6e8a2a257b9860a43687eadb40569bd1</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>LMS</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a135cd55fa9a98a47e2aaf6904eb2dd29aed77b942cc9bf09ff3606dee888c2486</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>parity_t</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a9de3e625fd14cdfa8a82e3e978b218c5</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>N</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a9de3e625fd14cdfa8a82e3e978b218c5ab3f008b6955f4b34e9352275164cc8ef</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>E</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a9de3e625fd14cdfa8a82e3e978b218c5a001f6d014fe14e47df0be513e183b22c</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>O</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a9de3e625fd14cdfa8a82e3e978b218c5ab604a80f21f483f1579017d06971d3eb</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>range_dist_t</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a2e87397b3c5194e1ee246e985010afc4</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SICK_RANGE80M</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a2e87397b3c5194e1ee246e985010afc4a47f9dc259106199bfeb344afefc8abbb</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SICK_RANGE160M</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a2e87397b3c5194e1ee246e985010afc4a415393916e35abc009e5b614b6dc5442</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SICK_RANGE320M</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a2e87397b3c5194e1ee246e985010afc4a6ba34162e98a9c694d004dfff55e6659</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SICK_REMISSION_NORM</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a2e87397b3c5194e1ee246e985010afc4a9cdb36323e3cbfee5fcdf1951a385e9c</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>SICK_REMISSION_DIRECT</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>a2e87397b3c5194e1ee246e985010afc4ac7efa2d17320cd0f1024312327536969</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
+      <type></type>
       <name>range_res_t</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ab04292a54df79206c48ed3bee627b84a</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>CM</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ab04292a54df79206c48ed3bee627b84aae7b456af2eab49babcdba7a6ab0883f0</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>MM</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ab04292a54df79206c48ed3bee627b84aa8ba4e17b490d6a9c1f06e57be0d4ddd1</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumvalue">
+      <type>@</type>
       <name>DM</name>
       <anchorfile>classLaser.html</anchorfile>
       <anchor>ab04292a54df79206c48ed3bee627b84aa3b5576383d00567eb3c3143005a89c19</anchor>
@@ -13819,13 +13827,13 @@
     </member>
   </compound>
   <compound kind="dir">
-    <name>direcs/</name>
+    <name>direcs</name>
     <path>/Users/markus/develop/direcs/direcs/</path>
     <filename>dir_80dc7bca5204cedab60b23d5b342d4fe.html</filename>
-    <dir>direcs/src/</dir>
+    <dir>direcs/src</dir>
   </compound>
   <compound kind="dir">
-    <name>direcs/src/</name>
+    <name>direcs/src</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>dir_7ef440ae0700ba264a3b28778b9d15f1.html</filename>
     <file>aboutDialog.cpp</file>
