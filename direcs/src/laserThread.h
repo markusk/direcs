@@ -22,6 +22,7 @@
 #define LASERTHREAD_H
 
 #include "laserSickS300.h"
+#include "laserHokuyoURGsimple.h"
 #include "inifile.h" // for reading the sim values
 #include <QThread>
 
@@ -220,6 +221,7 @@ class LaserThread : public QThread
         /**
         The names for addressing the laser scanner array
         */
+		HokuyoURGsimple *laserHokuyoURGsimple; // the object for the Hokuyo URG simple laserscanner
 //		static const unsigned char DISTANCE = 0;
 //		static const unsigned char FLAG = 1;
 
