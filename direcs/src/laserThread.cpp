@@ -55,6 +55,12 @@ LaserThread::~LaserThread()
 			// closing com port etc. is done in the laser class destructor
 			delete laserS300;
 		}
+
+		if ((laserscannerTypeFront == HOKUYO_URG) || ((laserscannerTypeRear == HOKUYO_URG)) )
+		{
+			// closing com port etc. is done in the laser class destructor
+			delete laserHokuyoURGsimple;
+		}
 	}
 
 	delete inifileLaserdata;
@@ -431,6 +437,12 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 			return;
 		}
 
+		if (laserscannerTypeFront == HOKUYO_URG)
+		{
+			laserHokuyoURGsimple->setDevicePort(serialPort);
+			return;
+		}
+
 		emit message(QString("ERROR: Laser1 type %1 not supported (LaserThread::setSerialPort").arg(laserscannerTypeFront));
 		return;
 		break;
@@ -446,6 +458,14 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 			emit message("ERROR: Laser2 for S300 not yet supported (LaserThread::setSerialPort)");
 			return;
 		}
+
+		if (laserscannerTypeFront == HOKUYO_URG)
+		{
+			/// \todo support two HOKUYO lasers
+			emit message("ERROR: Laser2 for HOKUYO not yet supported (LaserThread::setSerialPort)");
+			return;
+		}
+
 
 		emit message(QString("ERROR: Laser1 type %1 not supported (LaserThread::setSerialPort").arg(laserscannerTypeRear));
 		return;
@@ -485,13 +505,20 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 				}
 				else
 				{
-					if (laserType=="none")
+					if (laserType=="HokuyoURG")
 					{
-						laserscannerTypeFront = NONE;
+						laserscannerTypeFront = HOKUYO_URG;
 					}
 					else
 					{
-						qDebug("laser type not yet supported  (LaserThread::setLaserscannerType, LASER1");
+						if (laserType=="none")
+						{
+							laserscannerTypeFront = NONE;
+						}
+						else
+						{
+							emit message("ERROR: Laser type not yet supported  (LaserThread::setLaserscannerType, LASER1");
+						}
 					}
 				}
 				break;
@@ -502,13 +529,20 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 			}
 			else
 			{
-				if (laserType=="none")
+				if (laserType=="HokuyoURG")
 				{
-					laserscannerTypeRear = NONE;
+					laserscannerTypeFront = HOKUYO_URG;
 				}
 				else
 				{
-					qDebug("laser type not yet supported  (LaserThread::setLaserscannerType, LASER2");
+					if (laserType=="none")
+					{
+						laserscannerTypeRear = NONE;
+					}
+					else
+					{
+						emit message("ERROR: Laser type not yet supported  (LaserThread::setLaserscannerType, LASER2");
+					}
 				}
 			}
 			break;
@@ -527,6 +561,20 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 			// let the splash screen and the GUI / log file from the direcs class show laser init messages
 			// (connect the signal from the laser class to the signal from this class)
 			connect(laserS300, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
+
+			return;
+		}
+
+
+		// create the laser object
+		// Hokuyo URG simple stuff
+		if  (laserType=="HokuyoURG")
+		{
+			laserHokuyoURGsimple = new HokuyoURGsimple();
+
+			// let the splash screen and the GUI / log file from the direcs class show laser init messages
+			// (connect the signal from the laser class to the signal from this class)
+			connect(laserHokuyoURGsimple, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 
 			return;
 		}
