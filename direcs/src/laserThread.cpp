@@ -705,6 +705,22 @@ bool LaserThread::isConnected(short int laserScanner)
 		}
 		else
 		{
+			if (laserscannerTypeFront == HOKUYO_URG)
+			{
+				/// \todo Support two Hokuyo scanners
+				if (laserHokuyoURGsimple->openComPort() == true)
+				{
+					if (laserHokuyoURGsimple->setup() == 0)
+					{
+						laserScannerFrontIsConnected = true;
+						return true;
+					}
+				}
+
+				laserScannerFrontIsConnected = false;
+				return false;
+			}
+
 			if (laserscannerTypeFront != NONE)
 			{
 				emit message("ERROR: Unsupported laser type! (LaserThread::isConnected)");
@@ -753,6 +769,14 @@ bool LaserThread::isConnected(short int laserScanner)
 		}
 		else
 		{
+			if (laserscannerTypeRear == HOKUYO_URG)
+			{
+				/// \todo Hokuyo stuff
+				emit message("INFO: Support for a second Hokuyo as rear laser scanner not implemented yet");
+				laserScannerRearIsConnected = false;
+				return false;
+			}
+
 			if (laserscannerTypeRear != NONE)
 			{
 				emit message("ERROR: Unsupported laser type! (LaserThread::isConnected)");
