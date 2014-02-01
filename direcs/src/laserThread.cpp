@@ -241,7 +241,7 @@ float LaserThread::getValue(short int laserScanner, int angle)
 		case LASER1:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleFront/laserscannerResolutionFront) ) ) )
 			{
-				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getValue).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
+				emit message(QString("ERROR: Laser1 angle %1 out of allowed range 0-%2 (LaserThread::getValue).").arg(angle).arg(laserscannerAngleFront/laserscannerResolutionFront));
 				return 0;
 			}
 			return laserScannerValuesFront[angle];
@@ -249,7 +249,7 @@ float LaserThread::getValue(short int laserScanner, int angle)
 		case LASER2:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleRear/laserscannerResolutionRear) ) ) )
 			{
-				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getValue).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
+				emit message(QString("ERROR: Laser1 angle %1 out of allowed range 0-%2 (LaserThread::getValue).").arg(angle).arg(laserscannerAngleRear/laserscannerResolutionRear));
 				return 0;
 			}
 			return laserScannerValuesRear[angle];
@@ -267,7 +267,7 @@ int LaserThread::getFlag(short int laserScanner, int angle)
 		case LASER1:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleFront/laserscannerResolutionFront) ) ) )
 			{
-//				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
+//				emit message("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
 				return 0;
 			}
 			return laserScannerFlagsFront[angle];
@@ -275,7 +275,7 @@ int LaserThread::getFlag(short int laserScanner, int angle)
 		case LASER2:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleRear/laserscannerResolutionRear) ) ) )
 			{
-//				qDebug("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
+//				emit message("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::getFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
 				return 0;
 			}
 			return laserScannerFlagsRear[angle];
@@ -293,7 +293,7 @@ void LaserThread::setFlag(short int laserScanner, int angle, int flag)
 		case LASER1:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleFront/laserscannerResolutionFront) ) ) )
 			{
-//				qDebug("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::setFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
+//				emit message("Laser1 angle %d out of allowed range 0-%.1f (LaserThread::setFlag).", angle, (laserscannerAngleFront/laserscannerResolutionFront));
 				break;
 			}
 			laserScannerFlagsFront[angle] = flag;
@@ -301,7 +301,7 @@ void LaserThread::setFlag(short int laserScanner, int angle, int flag)
 		case LASER2:
 			if ( (angle < 0) || ((angle >= (laserscannerAngleRear/laserscannerResolutionRear) ) ) )
 			{
-//				qDebug("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::setFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
+//				emit message("Laser2 angle %d out of allowed range 0-%.1f (LaserThread::setFlag).", angle, (laserscannerAngleRear/laserscannerResolutionRear));
 				break;
 			}
 			laserScannerFlagsRear[angle] = flag;
@@ -319,12 +319,12 @@ void LaserThread::setSimulationMode(bool state)
 	{
 		if (laserscannerAngleFront == -1)
 		{
-			qDebug("Front laser angle not set before calling LaserThread::setSimulationMode()!");
+			emit message("ERROR: Front laser angle not set before calling LaserThread::setSimulationMode()!");
 			return;
 		}
 		if (laserscannerResolutionFront == -1)
 		{
-			qDebug("Front laser resolution not set before calling LaserThread::setSimulationMode()!");
+			emit message("ERROR: Front laser resolution not set before calling LaserThread::setSimulationMode()!");
 			return;
 		}
 	}
@@ -333,12 +333,12 @@ void LaserThread::setSimulationMode(bool state)
 	{
 		if (laserscannerAngleRear == -1)
 		{
-			qDebug("Rear laser angle not set before calling LaserThread::setSimulationMode()!");
+			emit message("ERROR: Rear laser angle not set before calling LaserThread::setSimulationMode()!");
 			return;
 		}
 		if (laserscannerResolutionRear == -1)
 		{
-			qDebug("Rear laser resolution not set before calling LaserThread::setSimulationMode()!");
+			emit message("ERROR: Rear laser resolution not set before calling LaserThread::setSimulationMode()!");
 			return;
 		}
 	}
@@ -431,7 +431,7 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 			return;
 		}
 
-		qDebug("Laser1 type %d not supported (LaserThread::setSerialPort", laserscannerTypeFront);
+		emit message(QString("ERROR: Laser1 type %1 not supported (LaserThread::setSerialPort").arg(laserscannerTypeFront));
 		return;
 		break;
 	case LASER2:
@@ -443,15 +443,15 @@ void LaserThread::setSerialPort(short int laserScanner, QString serialPort)
 		if (laserscannerTypeFront == S300)
 		{
 			/// \todo support two S300 lasers
-			qDebug("Laser2 for S300 not yet supported (LaserThread::setSerialPort)");
+			emit message("ERROR: Laser2 for S300 not yet supported (LaserThread::setSerialPort)");
 			return;
 		}
 
-		qDebug("Laser2 type %d not supported (LaserThread::setSerialPort)", laserscannerTypeRear);
+		emit message(QString("ERROR: Laser1 type %1 not supported (LaserThread::setSerialPort").arg(laserscannerTypeRear));
 		return;
 		break;
 	default:
-		qDebug("Laser number %d not yet supported (LaserThread::setSerialPort)", laserScanner);
+		emit message(QString("ERROR: Laser1 number %1 not supported (LaserThread::setSerialPort").arg(laserScanner));
 		break;
 	}
 }
@@ -468,7 +468,7 @@ void LaserThread::setMounting(short int laserScanner, QString mounting)
 				mountingLaserscannerRear = mounting;
 				break;
 			default:
-				qDebug("laser number not yet supported (LaserThread::setMounting");
+				emit message("ERROR: Laser number not yet supported (LaserThread::setMounting");
 				break;
 		}
 }
@@ -513,7 +513,7 @@ void LaserThread::setType(short int laserScanner, QString laserType)
 			}
 			break;
 		default:
-			qDebug("laser number not yet supported  (LaserThread::setLaserscannerType");
+			emit message("ERROR: Laser number not yet supported  (LaserThread::setLaserscannerType");
 			break;
 		}
 
@@ -546,7 +546,7 @@ void LaserThread::setAngle(short int laserScanner, int angle)
 				laserscannerAngleRear = angle;
 				break;
 			default:
-				qDebug("laser number not yet supported  (LaserThread::setLaserscannerAngle");
+				emit message("ERROR: Laser number not yet supported  (LaserThread::setLaserscannerAngle");
 				break;
 		}
 }
@@ -565,7 +565,7 @@ void LaserThread::setResolution(short int laserScanner, float resolution)
 			laserscannerResolutionRear = resolution;
 			break;
 		default:
-			qDebug("laser number not yet supported  (LaserThread::setLaserscannerResolution");
+			emit message("ERROR: Laser number not yet supported  (LaserThread::setLaserscannerResolution");
 			break;
 	}
 }
@@ -583,7 +583,7 @@ int LaserThread::getAngle(short int laserScanner)
 			break;
 		}
 
-		qDebug("laser number not yet supported  (LaserThread::getAngle");
+		emit message("ERROR: Laser number not yet supported  (LaserThread::getAngle");
 		return 0;
 }
 
@@ -600,7 +600,7 @@ float LaserThread::getResolution(short int laserScanner)
 			break;
 		}
 
-		qDebug("laser number not yet supported  (LaserThread::getResolution");
+		emit message("ERROR: Laser number not yet supported  (LaserThread::getResolution");
 		return 0;
 }
 
@@ -613,12 +613,12 @@ bool LaserThread::isConnected(short int laserScanner)
 		// check if all necessary values have been initialised
 		if (laserscannerAngleFront == -1)
 		{
-			qDebug("Front laser angle not set before calling LaserThread::isConnecteed()!");
+			emit message("ERROR: Front laser angle not set before calling LaserThread::isConnecteed()!");
 			return false;
 		}
 		if (laserscannerResolutionFront == -1)
 		{
-			qDebug("Front laser resolution not set before calling LaserThread::isConnecteed()!");
+			emit message("ERROR: Front laser resolution not set before calling LaserThread::isConnecteed()!");
 			return false;
 		}
 
@@ -659,7 +659,7 @@ bool LaserThread::isConnected(short int laserScanner)
 		{
 			if (laserscannerTypeFront != NONE)
 			{
-				qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
+				emit message("ERROR: Unsupported laser type! (LaserThread::isConnected)");
 			}
 			laserScannerFrontIsConnected = false;
 			return false;
@@ -669,12 +669,12 @@ bool LaserThread::isConnected(short int laserScanner)
 		// check if all necessary values have been initialised
 		if (laserscannerAngleRear == -1)
 		{
-			qDebug("Rear laser angle not set before calling LaserThread::isConnecteed()!");
+			emit message("ERROR: Rear laser angle not set before calling LaserThread::isConnecteed()!");
 			return false;
 		}
 		if (laserscannerResolutionRear == -1)
 		{
-			qDebug("Rear laser resolution not set before calling LaserThread::isConnecteed()!");
+			emit message("ERROR: Rear laser resolution not set before calling LaserThread::isConnecteed()!");
 			return false;
 		}
 
@@ -699,7 +699,7 @@ bool LaserThread::isConnected(short int laserScanner)
 		if (laserscannerTypeRear == S300)
 		{
 			/// \todo S300 stuff
-			qDebug("Support for a second S300 as rear laser scanner not implemented yet");
+			emit message("INFO: Support for a second S300 as rear laser scanner not implemented yet");
 			laserScannerRearIsConnected = false;
 			return false;
 		}
@@ -707,14 +707,14 @@ bool LaserThread::isConnected(short int laserScanner)
 		{
 			if (laserscannerTypeRear != NONE)
 			{
-				qDebug("ERROR: Unsupported laser type! (LaserThread::isConnected)");
+				emit message("ERROR: Unsupported laser type! (LaserThread::isConnected)");
 			}
 			laserScannerRearIsConnected = false;
 			return false;
 		}
 		break;
 	default:
-		qDebug("laser number not yet supported (LaserThread::setMounting");
+		emit message("ERROR: Laser number not yet supported (LaserThread::setMounting");
 		break;
 	}
 
@@ -738,8 +738,8 @@ bool LaserThread::readSimulationValues()
 		if (floatValue == -1)
 		{
 			simulationValuesFront[i] = 0.0;
-			qDebug("Simulation value \"%d\" not found in sim file at [Frontlaser]! LaserThread::setSimulationValues", i);
-			qDebug("Stopping to read!");
+			emit message(QString("ERROR: Simulation value \"%1\" not found in sim file at [Frontlaser]! LaserThread::setSimulationValues").arg(i));
+			emit message("Stopping to read!");
 			return false;
 		}
 		else
@@ -758,8 +758,8 @@ bool LaserThread::readSimulationValues()
 		if (floatValue == -1)
 		{
 			simulationValuesRear[i] = 0.0;
-			qDebug("Simulation value \"%d\" not found in sim file at [Rearlaser]! LaserThread::setSimulationValues", i);
-			qDebug("Stopping to read!");
+			emit message(QString("ERROR: Simulation value \"%1\" not found in sim file at [Rearlaser]! LaserThread::setSimulationValues").arg(i));
+			emit message("Stopping to read!");
 			return false;
 		}
 		else
