@@ -70,12 +70,6 @@ class HokuyoURGsimple : public QObject
 		int readRequestTelegram();
 
 		/**
-		Reads a special unknown telegram from the laser scanner in the request mode. It reads block 0B, but I don't know whats stored there...
-		@return 0 if things go well, and -1 otherwise.
-		*/
-		int readUnknownTelegram();
-
-		/**
 		  Sets the serial port. Has to be set before using @sa openComPort. On POSIX systems this looks like "/dev/tty4" or "/dev/ttyUSB0".
 		  */
 		void setDevicePort(QString serialPort);
@@ -138,7 +132,7 @@ class HokuyoURGsimple : public QObject
 		urg_t urg; // connection
 
 
-		static const unsigned int LASERSAMPLES = 667;  // 667 is the maximum of this laserscanner, because we have 240 degrees at a resolution of 0.36 (strange value...)
+		static const unsigned int LASERSAMPLES = 726;  // 667 is the maximum of this laserscanner, because we have 240 degrees at a resolution of 0.36 (strange value...)
 		unsigned char scanData[LASERSAMPLES];
 
 		static const float LASERMAXLENGTH = 600; /// if a measured laser distance is greater than this value in cm, it will be set to 0 cm! (This is due to a bug when reading angle 0)

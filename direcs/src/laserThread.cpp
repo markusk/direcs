@@ -100,7 +100,6 @@ void LaserThread::run()
 		// let the thread sleep some time
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
-
 		if (
 			((simulationMode==false) && (laserScannerFrontIsConnected == true)) ||
 			((simulationMode==false) && (laserScannerRearIsConnected == true))
@@ -108,10 +107,12 @@ void LaserThread::run()
 		{
 			if ( (laserscannerTypeFront==S300) || (laserscannerTypeRear==S300))
 			{
-				/// \todo add support for 2 lasers...
 				if (laserS300->readRequestTelegram() != -1)
 				{
+					//
 					getAndStoreLaserValuesFront();
+					/// \todo add support for rear lasers...
+
 					emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
 
 					// resetting error counter one by one (for each good read, we are moving to "0".
@@ -137,7 +138,44 @@ void LaserThread::run()
 						emit message(QString("%1. error reading S300 laser.").arg(errorCounter));
 					}
 				}
-			}
+			} // S300 laser
+			else
+			{
+				if ( (laserscannerTypeFront==HOKUYO_URG) || (laserscannerTypeRear==HOKUYO_URG))
+				{
+					if (laserHokuyoURGsimple->readRequestTelegram() != -1)
+					{
+						//
+						getAndStoreLaserValuesFront();
+						/// \todo add support for rear laser...
+
+						emit laserDataCompleteFront(laserScannerValuesFront, laserScannerFlagsFront);
+
+						// resetting error counter one by one (for each good read, we are moving to "0".
+						if (errorCounter > 0)
+						{
+							errorCounter--;
+						}
+					}
+					else
+					{
+						if (errorCounter >= MAXERRORS)
+						{
+							// emitting a signal to other modules which don't get the return value but need to know that we have a sensor error here.
+							emit systemerror(-1);
+
+							stopped = true;
+							emit message(QString("%1 ERRORs reading URG data. Laser thread stopped!").arg(MAXERRORS));
+							errorCounter = 0;
+						}
+						else
+						{
+							errorCounter++;
+							emit message(QString("%1. error reading URG laser.").arg(errorCounter));
+						}
+					}
+				}
+			} // URG laser
 		}
 		else
 		{
@@ -227,7 +265,79 @@ void LaserThread::getAndStoreLaserValuesFront()
 				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
 			}
 		}
-	}
+
+		return;
+	} // S300
+
+
+	if (laserscannerTypeFront == HOKUYO_URG)
+	{
+		float currentDistance = 0.0;
+
+		if (mountingLaserscannerFront == "normal")
+		{
+			// /get the data from 0 to 270 degrees (left to right)
+			// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
+			for (int angleIndex=0; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++)
+			{
+				//  get distance
+				currentDistance = laserHokuyoURGsimple->getDistance(angleIndex);
+
+				// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
+				if (measureMode)
+				{
+					// only store value from laser if the new value (current distance) is less than the last stored value
+					if (currentDistance < laserScannerValuesFront[angleIndex])
+					{
+						// store the value in an array in this thread
+						laserScannerValuesFront[angleIndex] = currentDistance;
+					}
+				}
+				else
+				{
+					// store the value in an array in this thread
+					laserScannerValuesFront[angleIndex] = currentDistance;
+				}
+
+				// send value over the network
+				// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
+				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
+			}
+		}
+		else
+		{
+			// flip the data, due to a flipped mounting of the hardware!
+			//
+			// get the data from 0 to 270 degrees (left to right)
+			// since we have a resolution at 0.5 degrees, this is an index for the array with 540 values!
+			// 'flip' will be increased every step - 1, so the data are stored from 270 deg to 0 deg
+			for (int angleIndex=0, flip=(laserscannerAngleFront/laserscannerResolutionFront)-1; angleIndex<(laserscannerAngleFront/laserscannerResolutionFront); angleIndex++, flip--)
+			{
+				//  get distance
+				currentDistance = laserHokuyoURGsimple->getDistance(angleIndex);
+
+				// are we in a the special measure mode? (e.g. walking around the robot for saving a special distance)
+				if (measureMode)
+				{
+					// only store value from laser if the new value (current distance) is less than the last stored value
+					if (currentDistance < laserScannerValuesFront[angleIndex])
+					{
+						// store the value in an array in this thread
+						laserScannerValuesFront[flip] = currentDistance;
+					}
+				}
+				else
+				{
+					// store the value in an array in this thread
+					laserScannerValuesFront[flip] = currentDistance;
+				}
+
+				// send value over the network
+				// *0l23a42# means LASER1 has at angle 23 a length of 42 cm
+				emit sendNetworkString( QString("*%1l%2a%3#").arg(LASER1).arg(angleIndex).arg( (int) (laserScannerValuesFront[angleIndex]*100) ) );
+			}
+		}
+	} // URG laser
 }
 
 
@@ -708,20 +818,19 @@ bool LaserThread::isConnected(short int laserScanner)
 			if (laserscannerTypeFront == HOKUYO_URG)
 			{
 
-// TEST TEST TEST
-laserHokuyoURGsimple->findPort();
+				// TEST TEST TEST
+				laserHokuyoURGsimple->findPort();
 
 				/// \todo Support two Hokuyo scanners
 				if (laserHokuyoURGsimple->openComPort() == true)
 				{
 					if (laserHokuyoURGsimple->readRequestTelegram() == 0)
 					{
-						qDebug("URG OKAY");
+						laserScannerFrontIsConnected = true;
 						return true;
 					}
 				}
 
-				qDebug("URG not OKAY");
 				laserScannerFrontIsConnected = false;
 				return false;
 			}

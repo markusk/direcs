@@ -331,9 +331,14 @@ int HokuyoURGsimple::readRequestTelegram()
 		return -1;
 	}
 
-	/* Reception */
+
+	//-------------------------------------
+	// Reception
+	//-------------------------------------
+	// The data we receive are in mm !!!
+	//-------------------------------------
 	numberOfLaserData = urg_receiveData(&urg, data, data_max);
-	emit message(QString("readRequestTelegram: numberOfLaserData = %1.").arg(numberOfLaserData));
+	// emit message(QString("readRequestTelegram: numberOfLaserData = %1.").arg(numberOfLaserData));
 
 	if (numberOfLaserData < 0)
 	{
@@ -344,13 +349,16 @@ int HokuyoURGsimple::readRequestTelegram()
 
 	/* Display */
 	timestamp = urg_recentTimestamp(&urg);
-
-	emit message(QString("readRequestTelegram: timestamp = %1.").arg(timestamp));
+	// emit message(QString("readRequestTelegram: timestamp = %1.").arg(timestamp));
 
 	for (i = 0; i < numberOfLaserData; ++i)
 	{
 		/*Neglect the distance less than  urg_minDistance()  */
-//		qDebug("%d=%ld mm.", i, data[i]);
+		// qDebug("%d=%ld mm.", i, data[i]);
+
+		// transfer read data from URG own variables to my class vars
+		distances[i] = (data[i] / 10); // convert form mm to cm here !!!!
+
 		// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to the maximum of possible "free" meters!
 		// (This is due to a bug when reading angle 0, which results in a lenght of 2048 cm)
 		//
@@ -390,171 +398,16 @@ int HokuyoURGsimple::readRequestTelegram()
 		}
 	}
 */
-//	qDebug("S300 scan end @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
-	return 0;
-}
-
-
-int HokuyoURGsimple::readUnknownTelegram()
-{
-	// see also SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
-	// 00 00
-	// 45		0x45 means fetch telegram (request data)
-	// 44		0x44 means data typ: block access
-	// 0B		destination address, block 11 (0x0B) > > > > > > > I don't know what this block means! I logged it with a serial port logger!
-	// 00		source address
-	// 00 7B	size (this one was measured with a serial port analyser, using the original SICK software CDS.
-	// FF		coordination flag, always 0xFF
-	// 07		device address is always 0x07, when we have only one S300
-	const unsigned char unknownCommand[]={0x00,0x00,0x45,0x44,0x0B,0x00,0x00,0x7B,0xFF,0x07};
-	unsigned char answer = 255;
-	unsigned int i = 0;
-	int result = -1;
-
-
-//	QTime x;
-//	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
-
-	// flushing serial input buffer
-	result = serialPort->purgeRx();
-
-	if (result != 0)
-	{
-		emit message("<font color=\"#FF0000\">ERROR flushing serial port (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-	// send "read block 0B" to laser
-	 emit message("Sending 'read block 0B'...");
-	for (i=0; i<sizeof(unknownCommand); i++)
-	{
-		if (sendChar(unknownCommand[i]) == false)
-		{
-			emit message( QString("ERROR sending byte no. %1.").arg(i+1) );
-			return -1;
-		}
-	}
-
-
-	// Reading answer, 4 byte (00 00 00 00)
-	emit message("Receiving answer...");
-	for (i=0; i<4; i++)
-	{
-		if (receiveChar(&answer) == true)
-		{
-			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
-			if (answer != 0)
-			{
-				emit message(QString("ERROR: answer byte no. %1 was 0x%2 instead 0x00").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
-				return -1;
-			}
-		}
-		else
-		{
-			// error
-			emit message(QString("ERROR receiving 00 00 00 00 answer at byte no. %1").arg(i+1));
-			return -1;
-		}
-	}
-
-
-	// reading repeated header, 6 byte (0B 00 00 7B FF 07)
-	emit message("Reading repeated header...");
-	for (i=0; i<6; i++)
-	{
-		if (receiveChar(&answer) == true)
-		{
-			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
-/*
-			if (answer != 0)
-			{
-				emit message(QString("ERROR: answer byte no. %1 was not XXXX").arg(i+1)); // FIXME: check the repeated header
-				return -1;
-			}
-*/
-		}
-		else
-		{
-			// error
-			emit message(QString("ERROR receiving repeated header at byte no. %1").arg(i+1));
-			return -1;
-		}
-	}
-
-
-	// Reading resulting data (don't know, what they mead!)
-	emit message("Now reading resulting unknown data...");
-	for (i=0; i<236; i++) // why 240 steps?
-	{
-		if (receiveChar(&answer) == true)
-		{
-			// emit message( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
-			// store the data temporary because we get them separated by LowByte and HighByte
-			// unknownData[i] = answer;
-		}
-		else
-		{
-			// error
-			emit message(QString("ERROR receiving scan data at byte no. %1").arg(i+1));
-			return -1;
-		}
-	}
-	emit message("OKAY");
-
-
-	// Reading CRC, 4 bytes
-	emit message("Reading CRC...");
-	for (i=0; i<4; i++)
-	{
-		if (receiveChar(&answer) == true)
-		{
-			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
-			/// @todo check laser S300 CRC !!
-/*
-			if (answer != 0)
-			{
-				emit message(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
-				return -1;
-			}
-*/
-		}
-		else
-		{
-			// error
-			emit message(QString("ERROR receiving CRC at byte no. %1").arg(i+1));
-			return -1;
-		}
-	}
-	emit message("OKAY");
-
-/*
-	// convert data from 2 x 16 Bit to one 16 Bit value
-	// and RETURN the data
-	for (i=0; i<LASERSAMPLES; i++)
-	{
-		if (angle < 270.0)
-		{
-			data[i] = (float) ( ((unknownData[2*i+1] & 0x1f)<<8) | unknownData[2*i] );
-			// qDebug("Copied: no. %d from %d values at %f�. Distance %f cm", i, LASERSAMPLES, angle, distances[i]);
-			// emit message( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
-			angle += 0.5;
-		}
-	}
-*/
-//	qDebug("S300 scan end @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
-
+//	qDebug("URG scan end @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 	return 0;
 }
 
 
 float HokuyoURGsimple::getDistance(int angleIndex)
 {
-	if ( (angleIndex<0) || (angleIndex>(270*2)) ) /// @todo check why ew have a fixed 270*2 here!! add/use constant from header file!
+	if ( (angleIndex<0) || (angleIndex>LASERSAMPLES) )
 	{
-		emit message(QString("ERROR: angle index with %1 out of range (0 - 549) (HokuyoURGsimple::getDistance)").arg(angleIndex));
+		emit message(QString("ERROR: angle index %1 is out of range (0 - %2) (HokuyoURGsimple::getDistance)").arg(angleIndex).arg(LASERSAMPLES));
 		return 0;
 	}
 
