@@ -54,19 +54,20 @@ int HokuyoURGsimple::findPort()
 
 	if (found_port_size == 0)
 	{
-		emit message("Could not found ports for HOKUYO URG simple laser scanner.");
+		emit message("ERROR: Could not found ports for HOKUYO URG simple laser scanner.");
 		return 1;
 	}
 
 	for (i = 0; i < found_port_size; ++i)
 	{
+		// do we have an URG laser here?
 		if (urg_serial_is_urg_port(i))
 		{
-			emit message(QString("%1 [URG]").arg(urg_serial_port_name(i)));
+			emit message(QString("laserHokuyoURGsimple: Serial port %1 found.").arg(urg_serial_port_name(i)));
 		}
 		else
 		{
-			emit message(QString("%1").arg(urg_serial_port_name(i)));
+			emit message(QString("laserHokuyoURGsimple: Serial port %1 found.").arg(urg_serial_port_name(i)));
 		}
 	}
 
