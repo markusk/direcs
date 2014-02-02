@@ -30,6 +30,7 @@
 
 #include "direcsSerial.h"
 #include "urg_serial_utils.h" // for method findPort
+#include "urg_ctrl.h" // for urg_t
 
 
 /**
@@ -89,7 +90,7 @@ class HokuyoURGsimple : public QObject
 		Closes the serial port
 		@return 0 if things go well, and -1 otherwise.
 		*/
-		int closeComPort();
+		int closeComPort(urg_t *urg);
 
 		/**
 		Sends a character to the serial port/device.
@@ -126,6 +127,16 @@ class HokuyoURGsimple : public QObject
 		DirecsSerial *serialPort;
 		int baudRate;
 		QString laserSerialPort; /// the path to the serial device. e.g. /dev/tty.usbmodemfa1411
+
+		// URG stuff
+		int data_max;
+		long *data;
+		int timestamp;
+		int ret;
+		int n;
+		int i;
+		urg_t urg; // connection
+
 
 		static const unsigned int LASERSAMPLES = 667;  // 667 is the maximum of this laserscanner, because we have 240 degrees at a resolution of 0.36 (strange value...)
 		unsigned char scanData[LASERSAMPLES];

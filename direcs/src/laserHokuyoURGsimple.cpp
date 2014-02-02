@@ -38,8 +38,8 @@ HokuyoURGsimple::~HokuyoURGsimple()
 {
 //	QTime x;
 //	qDebug("S300 shut down @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
-	emit message("Shutting laserscanner HOKUYO URG simple down");
-	closeComPort();
+	emit message("Shutting laserscanner HOKUYO URG simple down...");
+	closeComPort(&urg);
 	emit message("OKAY");
 
 	delete serialPort;
@@ -83,6 +83,30 @@ void HokuyoURGsimple::setDevicePort(QString serialPort)
 
 bool HokuyoURGsimple::openComPort()
 {
+#ifdef WINDOWS_OS
+	const char device[] = "COM3"; /* For Windows */
+#else
+	const char device[] = "/dev/tty.usbmodemfa1411"; /* For Linux */
+#endif
+
+
+	/* Connection */
+	urg_initialize(&urg);
+
+	ret = urg_connect(&urg, device, 115200);
+
+	if (ret < 0)
+	{
+		closeComPort(&urg);
+		return false;
+	}
+
+
+	return true;
+
+
+
+/*
 	// for QString to char* conversion
 	QByteArray ba = laserSerialPort.toLatin1();
 
@@ -107,12 +131,12 @@ bool HokuyoURGsimple::openComPort()
 	{
 		return false;
 	}
-
+*/
 	return true;
 }
 
 
-int HokuyoURGsimple::closeComPort()
+int HokuyoURGsimple::closeComPort(urg_t *urg) // replaces urg_exit
 {
 /*
 	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Release Token" (Telegram type SEND (0x41 0x44))
@@ -154,6 +178,8 @@ int HokuyoURGsimple::closeComPort()
 		}
 	}
 */
+	emit message(QString("HokuyoURGsimple::closeComPort: %1").arg(urg_error(urg)));
+	urg_disconnect(urg);
 
 	// close serial port
 	serialPort->closePort();
