@@ -24,6 +24,7 @@ unix|macx {
 #				compassWidget.h \
 				consoleGui.h \
 				demoThread.h \
+				detect_os.h \
 				direcsSerial.h \
 				gui.h \
 				head.h \
@@ -41,18 +42,26 @@ unix|macx {
 				obstacleCheckThread.h \
 				plotThread.h \
 				QtGLContext.h \
+				ring_buffer.h \
 				rgbLed.h \
 				urg_ctrl.h \
+				urg_errno.h \
 				urg_parameter_t.h \
 				urg_serial_utils.h \
 				urg_t.h \
+				scip_handler.h \
 				sensorThread.h \
+				serial_ctrl.h \
+				serial_errno.h \
 				serial_t.h \
 				serial_t_lin.h \
+				serial_utils.h \
 				servo.h \
 				settingsDialog.h \
 				speakThread.h \
 				timerThread.h \
+				urg_delay.h \
+				urg_ticks.h \
 				logfile.h
 
 	SOURCES +=	aboutDialog.cpp \
@@ -78,15 +87,22 @@ unix|macx {
 				obstacleCheckThread.cpp \
 				plotThread.cpp \
 				QtGLContext.cpp \
+				ring_buffer.cpp \
 				rgbLed.cpp \
 				urg_ctrl.cpp \
+				urg_errno.cpp \
 				urg_serial_utils.cpp \
 				urg_serial_utils_linux.cpp \
+				scip_handler.cpp \
 				sensorThread.cpp \
+				serial_ctrl.cpp \
+				serial_utils.cpp \
 				servo.cpp \
 				settingsDialog.cpp \
 				speakThread.cpp \
 				timerThread.cpp \
+				urg_delay.cpp \
+				urg_ticks.cpp \
 				logfile.cpp
 
 	FORMS +=	direcs.ui \
