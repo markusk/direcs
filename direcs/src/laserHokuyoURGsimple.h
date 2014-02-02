@@ -103,7 +103,7 @@ class HokuyoURGsimple : public QObject
 		/**
 		Returns the measured distance of a specific laser angle index.
 		@param angleIndex is the number of the angle. Since we have a half degree resolution, an angeleIndex of 0 means 0.0 deg, 1 means 0.5, 2 means 1.0 degrees, and so on.
-		@returns the distance
+		@returns the distance in meter (m)
 		*/
 		float getDistance(int angleIndex);
 
