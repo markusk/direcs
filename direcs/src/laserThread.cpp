@@ -707,16 +707,21 @@ bool LaserThread::isConnected(short int laserScanner)
 		{
 			if (laserscannerTypeFront == HOKUYO_URG)
 			{
+
+// TEST TEST TEST
+laserHokuyoURGsimple->findPort();
+
 				/// \todo Support two Hokuyo scanners
 				if (laserHokuyoURGsimple->openComPort() == true)
 				{
-					if (laserHokuyoURGsimple->setup() == 0)
+					if (laserHokuyoURGsimple->readRequestTelegram() == 0)
 					{
-						laserScannerFrontIsConnected = true;
+						qDebug("URG OKAY");
 						return true;
 					}
 				}
 
+				qDebug("URG not OKAY");
 				laserScannerFrontIsConnected = false;
 				return false;
 			}

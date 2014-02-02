@@ -281,13 +281,15 @@ int HokuyoURGsimple::readRequestTelegram()
 	//			The following is the original code, regarding the original SICK documentation:	 02 FE = size
 	// FF		coordination flag, always 0xFF
 	// 07		device address is always 0x07, when we have only one S300
+/*
 	const unsigned char readScandataCommand[]={0x00,0x00,0x45,0x44,0x0C,0x00,0x02,0x22,0xFF,0x07};
 	unsigned char answer = 255;
 	unsigned int i = 0;
 	float angle = 0.0;
 	int result = -1;
+*/
 
-
+/*
 //	QTime x;
 //	qDebug("S300 start scan @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 
@@ -310,214 +312,58 @@ int HokuyoURGsimple::readRequestTelegram()
 			return -1;
 		}
 	}
-
-
-	// Reading answer, 4 byte (00 00 00 00)
-	//emit message("Receiving answer...");
-	for (i=0; i<4; i++)
-	{
-		if (receiveChar(&answer) == true)
-		{
-			// check if every answer bit is 0x00
-			// the last byte (no 4) contains the error code if != 0.
-			if (answer != 0x00)
-			{
-				emit message(QString("<font color=\"#FF0000\">ERROR: answer byte no. %1 was 0x%2 instead 0x00 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')));
-				return -1;
-			}
-		}
-		else
-		{
-			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving 00 00 00 00 answer at byte no. %1 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1));
-			return -1;
-		}
-	}
-
-
-	//-----------------------------------------------------
-	// reading repeated header, 6 byte (0C 00 02 22 FF 07)
-	//-----------------------------------------------------
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0x0C)
-		{
-			emit message(QString("ERROR: answer byte no.1 was 0x%1 instead of 0x0C.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 1 (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0x00)
-		{
-			emit message(QString("ERROR: answer byte no.2 was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 2 (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0x02)
-		{
-			emit message(QString("ERROR: answer byte no.3 was 0x%1 instead of 0x02.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 3 (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0x22)
-		{
-			emit message(QString("ERROR: answer byte no.4 was 0x%1 instead of 0x22.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 4 (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0xFF)
-		{
-			emit message(QString("ERROR: answer byte no.5 was 0x%1 instead of 0xFF.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 5 (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0x07)
-		{
-			emit message(QString("ERROR: answer byte no.6 was 0x%1 instead of 0x07.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving repeated header at byte no. 6 (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-
-	//-----------------------------------------------------
-	// reading 2 unknow bytes, 6 byte (usually 0x00 0x08 ??)
-	//-----------------------------------------------------
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0x00)
-		{
-			emit message(QString("ERROR: 1st answer byte was 0x%1 instead of 0x00.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving 1st 'unknown byte' (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-	if (receiveChar(&answer) == true)
-	{
-
-		if (answer != 0x08)
-		{
-			emit message(QString("ERROR: 2nd answer byte was 0x%1 instead of 0x08.").arg( answer, 2, 16, QLatin1Char('0') ));
-			return -1;
-		}
-	}
-	else
-	{
-		// error
-		emit message("<font color=\"#FF0000\">ERROR receiving 2nd 'unknown byte' (HokuyoURGsimple::readRequestTelegram).</font>");
-		return -1;
-	}
-
-
-	//-------------------------------------------------------------------------------
-	// Reading scan data (the distances!), LASERSAMPLES bytes (@sa laserHokuyoURGsimple.h)
-	//-------------------------------------------------------------------------------
-	for (i=0; i<LASERSAMPLES; i++)
-	{
-		if (receiveChar(&answer) == true)
-		{
-			// emit message( QString("Received byte no. %1: 0x%2").arg(i+1).arg(answer, 2, 16, QLatin1Char('0')) );
-			// store the data temporary because we get them separated by LowByte and HighByte
-			scanData[i] = answer;
-		}
-		else
-		{
-			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving scan data at byte no. %1 from %2 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1).arg(LASERSAMPLES+1));
-			return -1;
-		}
-	}
-
-
-	//----------------------
-	// Reading CRC, 2 bytes
-	//----------------------
-	for (i=0; i<2; i++)
-	{
-		if (receiveChar(&answer) == true)
-		{
-			// emit message(QString("Received byte: 0x%1").arg(answer, 2, 16, QLatin1Char('0')));
-
-			/// @todo check laser S300 CRC !!
-/*
-			if (answer != 0)
-			{
-				emit message(QString("ERROR: answer byte no. %1 was not 0x00").arg(i+1));
-				return -1;
-			}
 */
-		}
-		else
-		{
-			// error
-			emit message(QString("<font color=\"#FF0000\">ERROR receiving CRC at byte no. %1 (HokuyoURGsimple::readRequestTelegram).</font>").arg(i+1));
-			return -1;
-		}
+	int data_max;
+	long *data;
+	int timestamp;
+	int ret;
+	int n;
+	int i;
+
+
+	/* Reserve for reception data */
+	data_max = urg_dataMax(&urg);
+	data = (long*)malloc(sizeof(long) * data_max);
+
+	if (data == NULL)
+	{
+		perror("malloc");
+		return -1;
 	}
 
+	/* Request for GD data */
+	ret = urg_requestData(&urg, URG_GD, URG_FIRST, URG_LAST);
 
+	if (ret < 0)
+	{
+		emit message("ERROR in urg_requestData():");
+		closeComPort(&urg);
+		return -1;
+	}
+
+	/* Reception */
+	n = urg_receiveData(&urg, data, data_max);
+	printf("# n = %d\n", n);
+	if (n < 0)
+	{
+		emit message("ERROR in urg_receiveData():");
+		closeComPort(&urg);
+		return -1;
+	}
+
+	/* Display */
+	timestamp = urg_recentTimestamp(&urg);
+	printf("# timestamp: %d\n", timestamp);
+	for (i = 0; i < n; ++i)
+	{
+		/*Neglect the distance less than  urg_minDistance()  */
+		printf("%d %ld, ", i, data[i]);
+	}
+	printf("\n");
+
+
+
+/*
 	//----------------------------------------------------
 	// convert data from 2 x 16 Bit to one 16 Bit value
 	// and RETURN the distances
@@ -531,7 +377,7 @@ int HokuyoURGsimple::readRequestTelegram()
 			// emit message( QString("Measured distance at angle %1: %2 cm.").arg(angle, 4, 'f', 1).arg(scanResult[i]) );
 			angle += 0.5;
 
-			/*
+			/ *
 			// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to the maximum of possible "free" meters!
 			// (This is due to a bug when reading angle 0, which results in a lenght of 2048 cm)
 			//
@@ -540,10 +386,10 @@ int HokuyoURGsimple::readRequestTelegram()
 			{
 				distances[i] = LASERMAXLENGTH;
 			}
-			*/
+			* /
 		}
 	}
-
+*/
 //	qDebug("S300 scan end @ %d:%d:%d-%d", x.currentTime().hour(), x.currentTime().minute(), x.currentTime().second(), x.currentTime().msec());
 	return 0;
 }
