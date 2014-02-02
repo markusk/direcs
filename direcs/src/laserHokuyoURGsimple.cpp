@@ -271,16 +271,6 @@ int HokuyoURGsimple::setup()
 
 int HokuyoURGsimple::readRequestTelegram()
 {
-	// see SICK document "telegram listing standard", 9090807/2007-05-09, page 9, "Read Scandata (block 12)" (Telegram type FETCH (0x45 0x44))
-	// 00 00
-	// 45		0x45 means fetch telegram (request data)
-	// 44		0x44 means data typ: block access
-	// 0C		destination address, e.g. block 12 (0x0C) for scan data
-	// 00		source address
-	// 02 22	size (this one was measured with a serial port analyzer, using the original SICK software CDS.
-	//			The following is the original code, regarding the original SICK documentation:	 02 FE = size
-	// FF		coordination flag, always 0xFF
-	// 07		device address is always 0x07, when we have only one S300
 /*
 	const unsigned char readScandataCommand[]={0x00,0x00,0x45,0x44,0x0C,0x00,0x02,0x22,0xFF,0x07};
 	unsigned char answer = 255;
@@ -317,7 +307,7 @@ int HokuyoURGsimple::readRequestTelegram()
 	long *data;
 	int timestamp;
 	int ret;
-	int n;
+	int numberOfLaserData;
 	int i;
 
 
@@ -342,9 +332,10 @@ int HokuyoURGsimple::readRequestTelegram()
 	}
 
 	/* Reception */
-	n = urg_receiveData(&urg, data, data_max);
-	printf("# n = %d\n", n);
-	if (n < 0)
+	numberOfLaserData = urg_receiveData(&urg, data, data_max);
+	emit message(QString("readRequestTelegram: numberOfLaserData = %1.").arg(numberOfLaserData));
+
+	if (numberOfLaserData < 0)
 	{
 		emit message("ERROR in urg_receiveData():");
 		closeComPort(&urg);
@@ -353,13 +344,22 @@ int HokuyoURGsimple::readRequestTelegram()
 
 	/* Display */
 	timestamp = urg_recentTimestamp(&urg);
-	printf("# timestamp: %d\n", timestamp);
-	for (i = 0; i < n; ++i)
+
+	emit message(QString("readRequestTelegram: timestamp = %1.").arg(timestamp));
+
+	for (i = 0; i < numberOfLaserData; ++i)
 	{
 		/*Neglect the distance less than  urg_minDistance()  */
-		printf("%d %ld, ", i, data[i]);
+//		qDebug("%d=%ld mm.", i, data[i]);
+		// If a measured laser distance is greater than LASERMAXLENGTH, it will be set to the maximum of possible "free" meters!
+		// (This is due to a bug when reading angle 0, which results in a lenght of 2048 cm)
+		//
+		// This value was set to 0.0 m in the past, but doesn't help if we have a 0m line in the middle of "free" lines when navigation...!!
+		if (distances[i] > LASERMAXLENGTH)
+		{
+			distances[i] = LASERMAXLENGTH;
+		}
 	}
-	printf("\n");
 
 
 
