@@ -10,10 +10,6 @@
   $Id: urg_delay.h 1975 2012-02-17 01:44:20Z satofumi $
 */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 
 /*!
   \brief ‘Ò‹@
@@ -24,8 +20,5 @@ extern "C" {
 */
 void urg_delay(int msec);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* !QRK_C_DELAY_H */
