@@ -99,7 +99,7 @@ unix|macx {
 				/opt/local/include/qwt \
 				/usr/local/include \
 				/usr/local/include/libfreenect \
-				/usr/include/phonon
+				/opt/local/include/phonon
 
 	LIBS +=		-L/opt/local/lib \
 				-L/usr/lib \
