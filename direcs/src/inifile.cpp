@@ -60,6 +60,7 @@ QString Inifile::checkPath()
 
 	// get the current path and store it
 	programPath = QDir::currentPath();
+	qDebug() << QString("QDir::currentPath() = %1").arg(programPath);
 
 	return programPath;
 }
