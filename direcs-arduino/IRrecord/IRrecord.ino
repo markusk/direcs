@@ -1,32 +1,32 @@
 #include <IRremote.h>
 
 // Werte, die die Apple Remote "runder Donut, Alu" sendet
-unsigned long oben = 2011287637;
-unsigned long unten = 2011279445;
-unsigned long links = 2011238485;
+unsigned long oben   = 2011287637;
+unsigned long unten  = 2011279445;
+unsigned long links  = 2011238485;
 unsigned long rechts = 2011291733;
-unsigned long ok = 2011282005;
-unsigned long menu = 2011250773;
-unsigned long play = 2011265621;
+unsigned long ok     = 2011282005;
+unsigned long menu   = 2011250773;
+unsigned long play   = 2011265621;
 unsigned long repeat = 2011242581; // Wird bei ok und play zusätzlich gesendet
 
 /*
 // Werte, die die Apple Remote "flacher Donut, Alu" sendet
-unsigned long oben = 2011287644;
-unsigned long unten = 2011279452;
-unsigned long links = 2011238492;
+unsigned long oben   = 2011287644;
+unsigned long unten  = 2011279452;
+unsigned long links  = 2011238492;
 unsigned long rechts = 2011291740;
-unsigned long ok = 2011282012;
-unsigned long menu = 2011250780;
-unsigned long play = 2011265628;
+unsigned long ok     = 2011282012;
+unsigned long menu   = 2011250780;
+unsigned long play   = 2011265628;
 unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
 */
 
-const int RECV_PIN   = 2;
-const int LED_PIN    = 13;
-const int RELAIS_PIN = 5;
+const int RECV_PIN  = 2;  // pin for TSOP1736 IR sensor output
+const int LED_PIN   = 13; // pin for the onboard LED
+const int RELAY_PIN = 5;  // pin to switch a relay
 
-boolean relaisState = false;
+boolean relayState = false;
 
 IRrecv irrecv(RECV_PIN);
 
@@ -39,7 +39,7 @@ void setup()
   irrecv.enableIRIn(); // Start the receiver
 
   pinMode(LED_PIN, OUTPUT);
-  pinMode(RELAIS_PIN, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT);
 }
 
 
@@ -193,15 +193,15 @@ void loop()
               {
                 if (codeValue == ok)
                 {
-                    // toggle relais state
-                    relaisState = !relaisState;
+                    // toggle relay state
+                    relayState = !relayState;
 
-                    // switch relais
-                    digitalWrite(RELAIS_PIN, relaisState);
+                    // switch relay
+                    digitalWrite(RELAY_PIN, relayState);
 
                     Serial.print("Relais ");
 
-                    if (relaisState)
+                    if (relayState)
                     {
                       Serial.println("on.");
                     }
