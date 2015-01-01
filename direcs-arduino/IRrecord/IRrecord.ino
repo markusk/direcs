@@ -22,8 +22,8 @@ unsigned long play = 2011265628;
 unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
 */
 
-const int RECV_PIN   = 2;
-const int LED_PIN    = 13;
+const int RECV_PIN   = 11;
+const int LED_PIN    = 13; // used for the 5V power supply for the TSOP1736!!
 const int RELAIS_PIN = 5;
 
 boolean relaisState = false;
@@ -40,6 +40,9 @@ void setup()
 
   pinMode(LED_PIN, OUTPUT);
   pinMode(RELAIS_PIN, OUTPUT);
+
+  // LED on
+  digitalWrite(LED_PIN, HIGH);
 }
 
 
@@ -144,7 +147,7 @@ void loop()
   if (irrecv.decode(&results))
   {
     // LED on
-    digitalWrite(LED_PIN, HIGH);
+//    digitalWrite(LED_PIN, HIGH);
 
     // store result for convenience    
     storeCode(&results);
@@ -220,7 +223,7 @@ void loop()
     }
   
     // LED off
-    digitalWrite(LED_PIN, LOW);
+//    digitalWrite(LED_PIN, LOW);
   }
 }
 
