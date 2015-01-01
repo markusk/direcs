@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QFile>
+#include <QDebug>
 //-------------------------------------------------------------------
 
 /**
