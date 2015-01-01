@@ -22,8 +22,11 @@ unsigned long play = 2011265628;
 unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
 */
 
-int RECV_PIN = 2;
-int STATUS_PIN = 13;
+const int RECV_PIN   = 2;
+const int LED_PIN    = 13;
+const int RELAIS_PIN = 5;
+
+boolean relaisState = false;
 
 IRrecv irrecv(RECV_PIN);
 
@@ -34,6 +37,9 @@ void setup()
 {
   Serial.begin(9600);
   irrecv.enableIRIn(); // Start the receiver
+
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(RELAIS_PIN, OUTPUT);
 }
 
 
@@ -55,7 +61,9 @@ void storeCode(decode_results *results)
   if (codeType == UNKNOWN)
   {
     Serial.println("Received unknown code, saving as raw");
+
     codeLen = results->rawlen - 1;
+
     // To store raw codes:
     // Drop first value (gap)
     // Convert from ticks to microseconds
@@ -82,14 +90,16 @@ void storeCode(decode_results *results)
   {
     if (codeType == NEC)
     {
-      Serial.print("Received NEC: ");
+//      Serial.print("Received NEC / Apple: ");
+
       if (results->value == REPEAT) 
       {
         // Don't record a NEC repeat value as that's useless.
-        Serial.println("repeat; ignoring.");
+//        Serial.println("repeat; ignoring.");
         return;
       }
-    } 
+    }
+/* 
     else
     {    
       if (codeType == SONY)
@@ -117,9 +127,10 @@ void storeCode(decode_results *results)
         }
       }
     }
+*/
 
-    Serial.println(results->value, HEX);
-    Serial.println(results->value, DEC);
+//    Serial.println(results->value, HEX);
+//    Serial.println(results->value, DEC);
     
     codeValue = results->value;
     codeLen = results->bits;
@@ -133,7 +144,7 @@ void loop()
   if (irrecv.decode(&results))
   {
     // LED on
-    digitalWrite(STATUS_PIN, HIGH);
+    digitalWrite(LED_PIN, HIGH);
 
     // store result for convenience    
     storeCode(&results);
@@ -182,6 +193,23 @@ void loop()
               {
                 if (codeValue == ok)
                 {
+                    // toggle relais state
+                    relaisState = !relaisState;
+
+                    // switch relais
+                    digitalWrite(RELAIS_PIN, relaisState);
+
+                    Serial.print("Relais ");
+
+                    if (relaisState)
+                    {
+                      Serial.println("on.");
+                    }
+                    else
+                    {
+                      Serial.println("off.");
+                    }
+
                     Serial.println("[OK]");
                 }
               }
@@ -192,7 +220,7 @@ void loop()
     }
   
     // LED off
-    digitalWrite(STATUS_PIN, LOW);
+    digitalWrite(LED_PIN, LOW);
   }
 }
 
