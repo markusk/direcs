@@ -2047,7 +2047,7 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	}
 
 
-	/// set motor speed again (if this was reset via GUI slider or by reset button) @todo: every time?!??
+	/// set motor speed again (if this was reset via GUI slider or by reset button)  < < < <  @todo move motor speed to slot when robot is reset via GUI!!
 	//
 	emit message("Setting motor speed in microcontroller");
 	motors->setMotorSpeed(MOTOR1, mot1Speed);
