@@ -35,7 +35,8 @@
 #ifdef Q_OS_LINUX
 #include <phonon>
 #else
-#include <Phonon>
+#include <phonon/AudioOutput>
+#include <phonon/MediaObject>
 #endif
 
 #ifdef Q_OS_LINUX

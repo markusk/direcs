@@ -2037,7 +2037,8 @@ void Direcs::logicalUnit(int sensorAlarm, QDateTime timestamp)
 	//
 	// So if the robot does *not* drive, we skip this step to store the 'prefrerred driving direction'.
 	// This will be then used in the drive method, when the roboter later received the START command.
-	if ((sensorAlarm == lastSensorValue) && (robotDrives))  ///  < < < < < < < < robotDrives = false, in WAIT sate
+//	if ((sensorAlarm == lastSensorValue) && (robotDrives))  ///  < < < < < < < < robotDrives = false, in WAIT state
+	if (sensorAlarm == lastSensorValue)
 	{
 		// store this sensor alarm value
 		lastSensorValue = sensorAlarm;
