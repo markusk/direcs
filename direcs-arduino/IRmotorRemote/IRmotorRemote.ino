@@ -41,15 +41,15 @@ unsigned long repeat = 2011242581; // Wird bei ok und play zusätzlich gesendet
 
 /*
 // Werte, die die Apple Remote "flacher Donut, Alu" sendet
-unsigned long oben   = 2011287644;
-unsigned long unten  = 2011279452;
-unsigned long links  = 2011238492;
-unsigned long rechts = 2011291740;
-unsigned long ok     = 2011282012;
-unsigned long menu   = 2011250780;
-unsigned long play   = 2011265628;
-unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
-*/
+ unsigned long oben   = 2011287644;
+ unsigned long unten  = 2011279452;
+ unsigned long links  = 2011238492;
+ unsigned long rechts = 2011291740;
+ unsigned long ok     = 2011282012;
+ unsigned long menu   = 2011250780;
+ unsigned long play   = 2011265628;
+ unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
+ */
 
 const int RECV_PIN  = 2;  // pin for TSOP1736 IR sensor output
 const int LED_PIN   = 13; // pin for the onboard LED
@@ -70,7 +70,7 @@ void setup()
 
   AFMS.begin();  // create with the default PWM frequency 1.6KHz
   //AFMS.begin(1000);  // OR with a different PWM frequency, say 1KHz
-  
+
   // Set the speed to start, from 0 (off) to 255 (max speed)
   myMotor1->setSpeed(motorSpeed1);
   myMotor2->setSpeed(motorSpeed2);
@@ -88,7 +88,7 @@ void loop()
 
     // store result for convenience    
     storeCode(&results);
-    
+
     // resume receiver
     irrecv.resume();
 
@@ -109,18 +109,29 @@ void loop()
       {
         if (codeValue == oben)
         {
+          // drive forward (direction to motor 3)
+          myMotor1->run(FORWARD);
+          myMotor2->run(BACKWARD);
+          myMotor3->run(RELEASE);
+
           Serial.println("[OBEN]");
         }
         else
         {
           if (codeValue == unten)
           {
+            // drive backward (direction away from motor 3)
+            myMotor1->run(BACKWARD);
+            myMotor2->run(FORWARD);
+            myMotor3->run(RELEASE);
+
             Serial.println("[UNTEN]");
           }
           else
           {
             if (codeValue == links)
             {
+              // turn left
               myMotor1->run(FORWARD);
               myMotor2->run(FORWARD);
               myMotor3->run(FORWARD);
@@ -131,6 +142,7 @@ void loop()
             {
               if (codeValue == rechts)
               {
+                // turn right
                 myMotor1->run(BACKWARD);
                 myMotor2->run(BACKWARD);
                 myMotor3->run(BACKWARD);
@@ -154,7 +166,7 @@ void loop()
         }
       }
     }
-  
+
     // LED off
     digitalWrite(LED_PIN, LOW);
   }
@@ -167,7 +179,7 @@ void storeCode(decode_results *results)
 {
   codeType = results->decode_type;
   int count = results->rawlen;
-  
+
   if (codeType == UNKNOWN)
   {
     Serial.println("Received unknown code, saving as raw");
@@ -200,50 +212,51 @@ void storeCode(decode_results *results)
   {
     if (codeType == NEC)
     {
-//      Serial.print("Received NEC / Apple: ");
+      //      Serial.print("Received NEC / Apple: ");
 
       if (results->value == REPEAT) 
       {
         // Don't record a NEC repeat value as that's useless.
-//        Serial.println("repeat; ignoring.");
+        //        Serial.println("repeat; ignoring.");
         return;
       }
     }
-/* 
-    else
-    {    
-      if (codeType == SONY)
-      {
-        Serial.print("Received SONY: ");
-      } 
-      else
-      {
-        if (codeType == RC5)
-        {
-          Serial.print("Received RC5: ");
-        } 
-        else
-        {
-          if (codeType == RC6)
-          {
-            Serial.print("Received RC6: ");
-          } 
-          else
-          {
-            Serial.print("Unexpected codeType ");
-            Serial.print(codeType, DEC);
-            Serial.println("");
-          }
-        }
-      }
-    }
-*/
+    /* 
+     else
+     {    
+     if (codeType == SONY)
+     {
+     Serial.print("Received SONY: ");
+     } 
+     else
+     {
+     if (codeType == RC5)
+     {
+     Serial.print("Received RC5: ");
+     } 
+     else
+     {
+     if (codeType == RC6)
+     {
+     Serial.print("Received RC6: ");
+     } 
+     else
+     {
+     Serial.print("Unexpected codeType ");
+     Serial.print(codeType, DEC);
+     Serial.println("");
+     }
+     }
+     }
+     }
+     */
 
-//    Serial.println(results->value, HEX);
-//    Serial.println(results->value, DEC);
-    
+    //    Serial.println(results->value, HEX);
+    //    Serial.println(results->value, DEC);
+
     codeValue = results->value;
     codeLen = results->bits;
   }
 }
+
 
