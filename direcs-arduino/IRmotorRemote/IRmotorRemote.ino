@@ -15,6 +15,15 @@ Adafruit_DCMotor *myMotor2 = AFMS.getMotor(2);
 // You can also make another motor on port M3
 Adafruit_DCMotor *myMotor3 = AFMS.getMotor(3);
 
+
+// Storage for the recorded code
+         int  codeType = -1;     // The type of code
+unsigned long codeValue;         // The code value if not raw
+unsigned int  rawCodes[RAWBUF];  // The durations if raw
+         int  codeLen;           // The length of the code
+         int toggle = 0;         // The RC5/6 toggle state
+
+
 // Werte, die die Apple Remote "runder Donut, Alu" sendet
 unsigned long oben   = 2011287637;
 unsigned long unten  = 2011279445;
@@ -64,12 +73,87 @@ void setup()
 }
 
 
-// Storage for the recorded code
-         int  codeType = -1;     // The type of code
-unsigned long codeValue;         // The code value if not raw
-unsigned int  rawCodes[RAWBUF];  // The durations if raw
-         int  codeLen;           // The length of the code
-         int toggle = 0;         // The RC5/6 toggle state
+void loop()
+{
+  // wait for IR signal
+  if (irrecv.decode(&results))
+  {
+    // LED on
+    digitalWrite(LED_PIN, HIGH);
+
+    // store result for convenience    
+    storeCode(&results);
+    
+    // resume receiver
+    irrecv.resume();
+
+    //---------------------    
+    // "translate" to text
+    //---------------------    
+    if (codeValue == menu)
+    {
+      Serial.println("[MENU]");
+    }
+    else
+    {
+      if (codeValue == play)
+      {
+        Serial.println("[PLAY]");
+      }
+      else
+      {
+        if (codeValue == oben)
+        {
+          Serial.println("[OBEN]");
+        }
+        else
+        {
+          if (codeValue == unten)
+          {
+            Serial.println("[UNTEN]");
+          }
+          else
+          {
+            if (codeValue == links)
+            {
+              myMotor1->run(FORWARD);
+              myMotor2->run(FORWARD);
+              myMotor3->run(FORWARD);
+
+              Serial.println("[LINKS]");
+            }
+            else
+            {
+              if (codeValue == rechts)
+              {
+                myMotor1->run(BACKWARD);
+                myMotor2->run(BACKWARD);
+                myMotor3->run(BACKWARD);
+
+                Serial.println("[RECHTS]");
+              }
+              else
+              {
+                if (codeValue == ok)
+                {
+                  // turn OFF motors
+                  myMotor1->run(RELEASE);
+                  myMotor2->run(RELEASE);
+                  myMotor3->run(RELEASE);
+
+                  Serial.println("[OK]");
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    // LED off
+    digitalWrite(LED_PIN, LOW);
+  }
+}
 
 
 // Stores the code for later playback
@@ -155,89 +239,6 @@ void storeCode(decode_results *results)
     
     codeValue = results->value;
     codeLen = results->bits;
-  }
-}
-
-
-void loop()
-{
-  // wait for IR signal
-  if (irrecv.decode(&results))
-  {
-    // LED on
-    digitalWrite(LED_PIN, HIGH);
-
-    // store result for convenience    
-    storeCode(&results);
-    
-    // resume receiver
-    irrecv.resume();
-
-    //---------------------    
-    // "translate" to text
-    //---------------------    
-    if (codeValue == menu)
-    {
-      Serial.println("[MENU]");
-    }
-    else
-    {
-      if (codeValue == play)
-      {
-        Serial.println("[PLAY]");
-      }
-      else
-      {
-        if (codeValue == oben)
-        {
-          Serial.println("[OBEN]");
-        }
-        else
-        {
-          if (codeValue == unten)
-          {
-            Serial.println("[UNTEN]");
-          }
-          else
-          {
-            if (codeValue == links)
-            {
-              myMotor1->run(BACKWARD);
-              myMotor2->run(BACKWARD);
-              myMotor3->run(BACKWARD);
-
-              Serial.println("[LINKS]");
-            }
-            else
-            {
-              if (codeValue == rechts)
-              {
-                myMotor1->run(FORWARD);
-                myMotor2->run(FORWARD);
-                myMotor3->run(FORWARD);
-
-                Serial.println("[RECHTS]");
-              }
-              else
-              {
-                if (codeValue == ok)
-                {
-                  // turn OFF motors
-                  myMotor1->run(RELEASE);
-                  myMotor2->run(RELEASE);
-                  myMotor3->run(RELEASE);
-
-                  Serial.println("[OK]");
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  
-    // LED off
-    digitalWrite(LED_PIN, LOW);
   }
 }
 
