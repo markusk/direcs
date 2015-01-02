@@ -39,7 +39,7 @@ void setup() {
   myMotor2->run(FORWARD);
   myMotor3->run(FORWARD);
 
-  // turn on motor
+  // turn OFF motors
   myMotor1->run(RELEASE);
   myMotor2->run(RELEASE);
   myMotor3->run(RELEASE);
@@ -87,6 +87,8 @@ void loop() {
   }
 
   // Serial.print("tech");
+  //
+  // STOP motors
   myMotor1->run(RELEASE);
   myMotor2->run(RELEASE);
   myMotor3->run(RELEASE);
