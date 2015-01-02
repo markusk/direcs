@@ -39,7 +39,6 @@ unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
 
 const int RECV_PIN  = 2;  // pin for TSOP1736 IR sensor output
 const int LED_PIN   = 13; // pin for the onboard LED
-const int RELAY_PIN = 5;  // pin to switch a relay
 
 boolean relayState = false;
 
@@ -179,60 +178,56 @@ void loop()
     //---------------------    
     if (codeValue == menu)
     {
-        Serial.println("[MENU]");
+      Serial.println("[MENU]");
     }
     else
     {
       if (codeValue == play)
       {
-          Serial.println("[PLAY]");
+        Serial.println("[PLAY]");
       }
       else
       {
         if (codeValue == oben)
         {
-            Serial.println("[OBEN]");
+          Serial.println("[OBEN]");
         }
         else
         {
           if (codeValue == unten)
           {
-              Serial.println("[UNTEN]");
+            Serial.println("[UNTEN]");
           }
           else
           {
             if (codeValue == links)
             {
-                Serial.println("[LINKS]");
+              myMotor1->run(BACKWARD);
+              myMotor2->run(BACKWARD);
+              myMotor3->run(BACKWARD);
+
+              Serial.println("[LINKS]");
             }
             else
             {
               if (codeValue == rechts)
               {
-                  Serial.println("[RECHTS]");
+                myMotor1->run(FORWARD);
+                myMotor2->run(FORWARD);
+                myMotor3->run(FORWARD);
+
+                Serial.println("[RECHTS]");
               }
               else
               {
                 if (codeValue == ok)
                 {
-                    // toggle relay state
-                    relayState = !relayState;
+                  // turn OFF motors
+                  myMotor1->run(RELEASE);
+                  myMotor2->run(RELEASE);
+                  myMotor3->run(RELEASE);
 
-                    // switch relay
-                    digitalWrite(RELAY_PIN, relayState);
-
-                    Serial.print("Relais ");
-
-                    if (relayState)
-                    {
-                      Serial.println("on.");
-                    }
-                    else
-                    {
-                      Serial.println("off.");
-                    }
-
-                    Serial.println("[OK]");
+                  Serial.println("[OK]");
                 }
               }
             }
