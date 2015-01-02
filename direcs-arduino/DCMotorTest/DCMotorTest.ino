@@ -27,8 +27,8 @@ void setup() {
   // Serial.begin(9600);           // set up Serial library at 9600 bps
   // Serial.println("Adafruit Motorshield v2 - DC Motor test!");
 
-  AFMS.begin();  // create with the default frequency 1.6KHz
-  //AFMS.begin(1000);  // OR with a different frequency, say 1KHz
+  AFMS.begin();  // create with the default PWM frequency 1.6KHz
+  //AFMS.begin(1000);  // OR with a different PWM frequency, say 1KHz
   
   // Set the speed to start, from 0 (off) to 255 (max speed)
   myMotor1->setSpeed(150);
