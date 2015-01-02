@@ -15,6 +15,11 @@ Adafruit_DCMotor *myMotor2 = AFMS.getMotor(2);
 // You can also make another motor on port M3
 Adafruit_DCMotor *myMotor3 = AFMS.getMotor(3);
 
+// speed for the motors (max. 255)
+unsigned char motorSpeed1 = 110;
+unsigned char motorSpeed2 = 110;
+unsigned char motorSpeed3 = 110;
+
 
 // Storage for the recorded code
          int  codeType = -1;     // The type of code
@@ -67,9 +72,9 @@ void setup()
   //AFMS.begin(1000);  // OR with a different PWM frequency, say 1KHz
   
   // Set the speed to start, from 0 (off) to 255 (max speed)
-  myMotor1->setSpeed(150);
-  myMotor2->setSpeed(150);
-  myMotor3->setSpeed(150);
+  myMotor1->setSpeed(motorSpeed1);
+  myMotor2->setSpeed(motorSpeed2);
+  myMotor3->setSpeed(motorSpeed3);
 }
 
 
