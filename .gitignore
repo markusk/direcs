@@ -61,3 +61,4 @@ test/test
 direcs-avrsim/src/Makefile
 direcs-avrsim/Makefile
 Makefile
+qt-speech/*.dylib
