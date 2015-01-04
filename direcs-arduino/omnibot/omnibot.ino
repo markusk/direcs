@@ -168,6 +168,7 @@ void loop()
 	// I/O definitions
 	//-----------------
 
+/* omnibot to pe ported
 
 	// switch port C bits to input / output
 	//
@@ -201,7 +202,7 @@ void loop()
 	
 	// switch some bits on port E to output [2 more servos]
 	DDRE |= (1 << DDE3) | (1 << DDE4);
-	
+*/	
 	// red LED on. Now we know, that the program runs.
 	redLED(ON);
 
@@ -217,6 +218,8 @@ void loop()
 	// flashlight off
 	relais(OFF);
 
+
+/* omnibot to pe ported
 
 	// turn all drive motor bits off (except PWM bits)
 	// motor 1
@@ -264,26 +267,7 @@ void loop()
 	// Bit2 = Cam R Pan Endswitch
 	// Bit3 = Cam L Pan Endswitch
 	//DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
-/*
-	//----------------------------------------------------------------------------
-	// Set the "Pin Change Interrupt Control Register"
-	// -> any change on any enabled PCINT15:8 pin will now cause an interrupt!
-	//----------------------------------------------------------------------------
-	PCICR = (1 << PCIE1);
-	// activate the pins which can cause an interrupt
-	// At this time use only the FORWARD sensor to generate an interrupt
-	// PCMSK1 =  (1 << PCINT12) | (1 << PCINT13) | (1 << PCINT14) | (1 << PCINT15);
-	PCMSK1 =  (1 << PCINT12) | (1 << PCINT15);
-	
-	//----------------------------------------------------------------------------
-	// Set the "Pin Change Interrupt Control Register"
-	// -> any change on any enabled PCINT23:16 pin will now cause an interrupt!
-	//----------------------------------------------------------------------------
-	PCICR = (1 << PCIE2);
-	// activate the pins which can cause an interrupt
-	// At this time use only the FORWARD sensor to generate an interrupt
-	PCMSK2 =  (1 << PCINT16) | (1 << PCINT17) | (1 << PCINT18) | (1 << PCINT19);
-*/
+
 	//----------------------------------------------------------------------------
 	// initialzie SPI stuff
 	//----------------------------------------------------------------------------
@@ -350,10 +334,8 @@ void loop()
 	// enable global interrupts
 	//----------------------------------------------------------------------------
 	sei();
+*/ // end to be ported
 	
-	// Endlose Hauptschleife
-	while(1)
-	{
 		
 		// Wurde ein kompletter String empfangen und ist der Buffer ist leer?
 		if (RXcompleted == 1)
@@ -1298,109 +1280,9 @@ void loop()
 			}
 		
 		} // RXcompleted
-    } // while (1)
 
 
-}
-
-
-
-/*
-		switch (value)
-		{
-			case MOTOR1_OFF:
-			case MOTOR1_CLOCKWISE:
-			case MOTOR1_COUNTERCLOCKWISE:
-			case MOTOR1_SPEED_SET:
-			case MOTOR2_OFF:
-			case MOTOR2_CLOCKWISE:
-			case MOTOR2_COUNTERCLOCKWISE:
-			case MOTOR2_SPEED_SET:
-			case MOTOR3_OFF:
-			case MOTOR3_CLOCKWISE: // cam pan R
-			case MOTOR3_COUNTERCLOCKWISE: // cam pan L
-			case MOTOR3_SPEED_SET:
-			case MOTOR4_OFF:
-			case MOTOR4_CLOCKWISE: // cam tilt top
-			case MOTOR4_COUNTERCLOCKWISE: // cam tilt bottom
-			case MOTOR4_SPEED_SET:
-			case SPEED_SET_ALLMOTORS:
-			case BOTSTOP:
-			case BOTWAIT:
-			case BOTSTART:
-			case BOTFORWARD:
-			case BOTBACKWARD:
-			case BOTLEFT:
-			case BOTRIGHT:
-			case BOTSTOP:
-			case BOTWAIT:
-			case BOTTURNLEFT:
-			case BOTTURNRIGHT:
-			case FLASHLIGHT_ON:
-			case FLASHLIGHT_OFF:
-		
-				
-			case SET_SERVO1:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setServoPosition(1, value);
-				break;
-
-			case SET_SERVO2:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setServoPosition(2, value);
-				break;
-
-			case SET_SERVO3:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setServoPosition(3, value);
-				break;
-
-			case SET_SERVO4:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setServoPosition(4, value);
-				break;
-
-			case SET_SERVO5:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setServoPosition(5, value);
-				break;
-
-			case SET_SERVO6:
-				// wait for the (second) value to set the pwm!
-				value = UsartReceive();
-				setServoPosition(6, value);
-				break;
-
-			case READ_CONTACT1:
-				// contact cam tilt R/BOTTOM
-				// send 1 Byte (8 bit!)
-				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN3) );
-				break;
-
-			case READ_CONTACT2:
-				// contact cam tilt L/TOP
-				// send 1 Byte (8 bit!)
-				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN2) );
-				break;
-
-			case READ_CONTACT3:
-				// contact cam pan R
-				// send 1 Byte (8 bit!)
-				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN1) );
-				break;
-
-			case READ_CONTACT4:
-				// contact cam pan L
-				// send 1 Byte (8 bit!)
-				UsartTransmit( (uint8_t) bit_is_set(PINK,PIN0) );
-				break;
-		}
-*/
+} // loop
 
 
 void sendUInt(uint16_t value)
@@ -1499,224 +1381,8 @@ void relais(uint8_t state)
 }
 
 
-
-/*
-SIGNAL(PCINT1_vect) // todo: replace this old SIGNAL by ISR with correct _vect name!!
-{
-	//
-	// The circumference of one wheel is 428 mm (42,8 cm).
-	//
-	// The disk has 120.which generate 2 interrupts per slit (one low-to-high transistion and one high-to-low transistion).
-	// So we have 240 interrupts per circumference
-	//
-	// At each interrupt the wheel moves:  195 mm / 240 = 1,783 mm.
-	// For 10 mm (1 cm) we need:  10 mm / 1,783mm = 5,60747 interrupts  ->  After 6 interruupts the robot moves 10 mm (1 cm).
-
-
-
-	//static uint8_t value = 0;
-
-
-
-	//----------------------------
-	// if left wheel moves
-	//----------------------------
-	if ( bit_is_set(PINJ,PIN3) )
-	{
-		leftWheelCounter++;
-
-
-		if (leftWheelCounter == 6)
-		{
-			leftDistanceCounter++;
-			leftWheelCounter = 0;
-
-
-			//
-			// TEST TEST TEST
-			//
-// 			if (value == 0)
-// 			{
-// 				value = 1;
-// 				PORTC &= ~(1<<PIN0); // yellow led ON (low)
-// 			}
-// 			else
-// 			{
-// 				value = 0;
-// 				PORTC |= (1<<PIN0); // yelow LED off (low active -> high)
-// 			}
-			//
-			// TEST TEST TEST
-			//
-		}
-	}
-
-
-	//----------------------------
-	// if right wheel moves
-	//----------------------------
-	if ( bit_is_set(PINJ,PIN6) )
-	{
-		rightWheelCounter++;
-
-
-		if (rightWheelCounter == 6)
-		{
-			rightDistanceCounter++;
-			rightWheelCounter = 0;
-		}
-	}
-}
-*/
-/*
-SIGNAL(PCINT2_vect) // todo: replace this old SIGNAL by ISR with correct _vect name!!
-{
-	//----------------------------
-	// if Cam Pan L switch set
-	//----------------------------
-	if ( bit_is_set(PINK,PIN0) )
-	{
-		// turn off MOTOR3 pan L bit (A)
-//		PORTL &= ~(1<<PIN6);
-
-
-//		camPanLSwitch = 1;
-	}
-	else
-	{
-//		camPanLSwitch = 0;
-	}
-
-
-	//----------------------------
-	// if Cam Pan R switch set
-	//----------------------------
-	if ( bit_is_set(PINK,PIN1) )
-	{
-		// turn off MOTOR3 pan R bit (B)
-//		PORTL &= ~(1<<PIN7);
-
-
-//		camPanRSwitch = 1;
-	}
-	else
-	{
-//		camPanRSwitch = 0;
-	}
-
-
-	//----------------------------
-	// if Cam Tilt L/TOP switch set
-	//----------------------------
-	if ( bit_is_set(PINK,PIN2) )
-	{
-		// turn off MOTOR4 tilt L bit (A)
-//		PORTD &= ~(1<<PIN6);
-
-
-//		camTiltLSwitch = 1;
-	}
-	else
-	{
-//		camTiltLSwitch = 0;
-	}
-
-
-	//----------------------------
-	// if Cam Tilt R/BOTTOM switch set
-	//----------------------------
-	if ( bit_is_set(PINK,PIN3) )
-	{
-		// turn off MOTOR4 tilt R bit (B)
-//		PORTD &= ~(1<<PIN7);
-
-
-//		camTiltRSwitch = 1;
-	}
-	else
-	{
-//		camTiltRSwitch = 0;
-	}
-}
-*/
-
-
-
 void long_delay(uint16_t ms)
 {
     for (; ms>0; ms--) _delay_ms(1);
 }
 
-
-void watchdog(uint8_t state)
-{
-/*	
-	// Disable global interrupts.
-	// This is here for setting the interrupt control registers
-	cli();
-
-	// Reset the watchdog timer (wdt).
-	// When the wdt is enabled, a call to this instruction is required before the timer expires,
-	// otherwise a watchdog-initiated device reset will occur.
-	wdt_reset();
-
-
-	//--------------------
-	// Enable watchdog
-	//--------------------
-	if (state == ENABLE)
-	{
-		// start timed sequence
-		WDTCSR |= (1<<WDCE) | (1<<WDE);
-		
-		// set new prescaler (time-out) to 64K (65536 cycles) which means a time-out after 0.5 s
-//		WDTCSR = (1<<WDP2) | (1<<WDP1); // 12K = 1.0s
-		WDTCSR = (1<<WDP2) | (1<<WDP0); // 64K = 0.5s
-
-		// And here we enable the watchdog interrupt!
-		// So if a time-out occurs, the correspondig interrupt routine is executed
-		WDTCSR |= (1<<WDIE);
-	
-		// Enable global interrupts
-		sei();
-
-		return;
-	}
-
-
-	//--------------------
-	// Disable watchdog
-	//--------------------
-	// Clear WDRF in MCUSR
-	MCUSR &= ~(1<<WDRF);
-	
-	// write logical 1 to WDCE and WDE
-	// keep old prescaler setting to prevent unintentional time-out
-	WDTCSR |= (1<<WDCE) | (1<<WDE);
-	
-	// turn off WDT
-	WDTCSR = 0x00;
-
-	// Enable global interrupts
-	sei();
-	*/
-}
-
-
-/*
-SIGNAL(WDT_vect)
-{
-	// turn all drive motor bits off (except PWM bits)
-	PORTL &= ~(1<<PIN0);
-	PORTL &= ~(1<<PIN1);
-	PORTL &= ~(1<<PIN2);
-	PORTL &= ~(1<<PIN3);
-	PORTL &= ~(1<<PIN6);
-	PORTL &= ~(1<<PIN7);
-	PORTD &= ~(1<<PIN6);
-	PORTD &= ~(1<<PIN7);
-
-	// turn flashlight on !
-	relais(ON);
-}
-*/
