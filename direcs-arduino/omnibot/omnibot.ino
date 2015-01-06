@@ -135,6 +135,9 @@ uint16_t rightDistanceCounter = 0;
 
 void setup()
 {
+  // initialize serial
+  Serial.begin(9600);
+
   // initialize the digital pin as an output.
   pinMode(led, OUTPUT);
 }
@@ -142,15 +145,14 @@ void setup()
 
 void loop()
 {
-	// usart stuff
+/* to be ported
+  	// usart stuff
 	RXcompleted = 0;	// Flag, String komplett empfangen
 	TXcompleted = 1;	// Flag, String komplett gesendet
+
 	setStarter(42);    //42 = '*'
 	setTerminator(35); //35 = '#'
-
-
-	redLEDtoggle = 0; // toggle for showing receiving traffic on a LED
-
+*/
 
 	leftWheelCounter = 0;
 	rightWheelCounter = 0;
@@ -336,7 +338,8 @@ void loop()
 	sei();
 */ // end to be ported
 	
-		
+
+/* to be ported		
 		// Wurde ein kompletter String empfangen und ist der Buffer ist leer?
 		if (RXcompleted == 1)
 		{
@@ -345,17 +348,21 @@ void loop()
 
 			// ja, dann String lesen und uart_rx_flag löschen
 			get_string(stringbuffer);
-
-
-			//--------------------------
+*/
+  // if there's any serial available, read it:
+  while (Serial.available())
+  {
+                        //--------------------------
 			// check what was received
 			//--------------------------
 
 
 			// RESET / INIT
-			if (strcmp(stringbuffer, "*re#") == 0)
+			if (Serial.findUntil("*re", "#"))
 			{
-				// turn all drive motor bits off (except PWM bits)
+/* to be ported		
+
+  				// turn all drive motor bits off (except PWM bits)
 				PORTL &= ~(1<<PIN0);
 				PORTL &= ~(1<<PIN1);
 				PORTL &= ~(1<<PIN2);
@@ -366,6 +373,7 @@ void loop()
 				PORTD &= ~(1<<PIN7);
 				// flashlight off
 				relais(OFF);
+*/
 				// red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
 				redLED(OFF);
 				
@@ -378,11 +386,14 @@ void loop()
 				
 				// answer with "ok"
 				// this answer is used to see if the robot is "on"
-				put_string("*re#");
+                                Serial.print("*re#");
 				
 				// e n a b l e  watchdog!
+/* to be ported		
 				watchdog(ENABLE);
+*/
 			}
+/* to be ported		
 			else
 			// SLEEP (and turn off watchdog)
 			if (strcmp(stringbuffer, "*sl#") == 0)
@@ -1278,8 +1289,8 @@ void loop()
 				// answer with "ok"
 				put_string("*sv6#");
 			}
-		
-		} // RXcompleted
+*/ // to be ported		
+		} // serial data available
 
 
 } // loop
@@ -1287,7 +1298,9 @@ void loop()
 
 void sendUInt(uint16_t value)
 {
-	uint8_t length = 0;
+/* // to be ported		
+
+  	uint8_t length = 0;
 	
 	// start the answer string to send with a '*'
 	stringbuffer[0] = starter;
@@ -1312,22 +1325,23 @@ void sendUInt(uint16_t value)
 
 	// send answer
 	put_string(stringbuffer);
+*/ // to be ported		
 }
 
 
 void redLED(uint8_t state)
 {
-	if (state == ON)
+  	if (state == ON)
 	{
 		// red LED on
-		// (low active!)
-		PORTD &= ~(1<<PIN5);
+		// yellow LED on
+                digitalWrite(led, HIGH);
 	}
 	else
 	{
 		// red LED off
-		// (low active!)
-		PORTD |= (1<<PIN5);
+		// yellow LED off
+                digitalWrite(led, LOW);
 	}
 }
 
@@ -1337,21 +1351,21 @@ void yellowLED(uint8_t state)
 	if (state == ON)
 	{
 		// yellow LED on
-		// (low active!)
-		PORTC &= ~(1<<PIN0);
+                digitalWrite(led, HIGH);
 	}
 	else
 	{
 		// yellow LED off
-		// (low active!)
-		PORTC |= (1<<PIN0);
+                digitalWrite(led, LOW);
 	}
 }
 
 
 void greenLED(uint8_t state)
 {
-	if (state == ON)
+/* // to be ported		
+
+  	if (state == ON)
 	{
 		// green LED on
 		// (low active!)
@@ -1363,11 +1377,13 @@ void greenLED(uint8_t state)
 		// (low active!)
 		PORTC |= (1<<PIN4);
 	}
+*/
 }
 
 
 void relais(uint8_t state)
 {
+/* // to be ported		
 	if (state == ON)
 	{
 		// relais on
@@ -1378,11 +1394,14 @@ void relais(uint8_t state)
 		// relais off
 		PORTC &= ~(1<<PIN1);
 	}
+*/
 }
 
 
+/* not needed anymore. replace calls w/ delay(n);
 void long_delay(uint16_t ms)
 {
     for (; ms>0; ms--) _delay_ms(1);
 }
+*/
 
