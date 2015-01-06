@@ -140,11 +140,7 @@ void setup()
 
   // initialize the digital pin as an output.
   pinMode(led, OUTPUT);
-}
 
-
-void loop()
-{
 /* to be ported
   	// usart stuff
 	RXcompleted = 0;	// Flag, String komplett empfangen
@@ -208,14 +204,11 @@ void loop()
 	// red LED on. Now we know, that the program runs.
 	redLED(ON);
 
-
 	// yelow LED off
-	yellowLED(OFF);
-
+//	yellowLED(OFF);
 
 	// green LED off
 	greenLED(OFF);
-
 
 	// flashlight off
 	relais(OFF);
@@ -337,8 +330,11 @@ void loop()
 	//----------------------------------------------------------------------------
 	sei();
 */ // end to be ported
-	
+}
 
+
+void loop()
+{
 /* to be ported		
 		// Wurde ein kompletter String empfangen und ist der Buffer ist leer?
 		if (RXcompleted == 1)
@@ -358,7 +354,7 @@ void loop()
 
 
 			// RESET / INIT
-			if (Serial.findUntil("*re", "#"))
+			if (Serial.find("*re#"))
 			{
 /* to be ported		
 
