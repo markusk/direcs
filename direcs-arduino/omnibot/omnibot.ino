@@ -2,6 +2,10 @@
 // give it a name:
 int led = 13;
 
+// test:
+const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
+int sensorValue = 0;        // value read from the poti
+
 
 //-------  from main.h  -------------------------------
 
@@ -87,7 +91,7 @@ int led = 13;
 // #define BOTDIAGONAL_BACKWARD_RIGHT
 
 
-// these numbers represent the Ports of the A/D converter C  !!!
+// these numbers represent the pins on the Arduino !!
 // for the infrared sensors and the motor sensors
 #define SENSOR1					0  // ADC0
 #define SENSOR2					1  // ADC1
@@ -95,7 +99,7 @@ int led = 13;
 #define SENSOR4					3  // ADC3
 #define SENSOR5					4  // ADC4
 #define SENSOR6					5  // ADC5
-#define SENSOR7					6  // ADC6
+#define SENSOR7					A0
 #define SENSOR8					7  // ADC7
 
 #define SENSORMOTOR1			38 // ADC14
@@ -140,6 +144,10 @@ void setup()
 
   // initialize the digital pin as an output.
   pinMode(led, OUTPUT);
+  
+  // this an input
+  pinMode(analogInPin, INPUT);
+  
 
 /* to be ported
   	// usart stuff
@@ -339,6 +347,9 @@ void loop()
 	// Everything's fine, so reset the watchdog timer (wdt).
 //	wdt_reset();
 */
+  // if there's any serial available, read it:
+  while (Serial.available())
+  {
                         //--------------------------
 			// check what was received
 			//--------------------------
@@ -448,14 +459,17 @@ void loop()
 				// read ADC and send answer over serial port
 				sendUInt( readADC(SENSOR6) );
 			}
-			else
+*/			else
 			// READ_SENSOR_7 (24 V supply)
-			if (strcmp(stringbuffer, "*s7#") == 0)
+			if (Serial.find("*s7#"))
 			{
-				// read ADC and send answer over serial port
-				sendUInt( readADC(SENSOR7) );
+                          // read the analog in value
+                          // print the results to the serial monitor:
+                          Serial.print("*");
+                          Serial.print( analogRead(SENSOR7) );
+                          Serial.print("#");
 			}
-			else
+/*			else
 			// READ_SENSOR_8 (12 V supply)
 			if (strcmp(stringbuffer, "*s8#") == 0)
 			{
@@ -1276,6 +1290,11 @@ void loop()
 				put_string("*sv6#");
 			}
 */ // to be ported		
+                  else
+                  {
+                    // flush serial port, because no recognised command
+                    Serial.flush();
+                  }
 		} // serial data available
 
 
