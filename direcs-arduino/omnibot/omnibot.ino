@@ -137,6 +137,25 @@ uint16_t rightDistanceCounter = 0;
 //uint8_t camTiltRSwitch = 0;
 
 
+// Puffergrösse in Bytes, RX und TX sind gleich gross
+#define uart_buffer_size 32
+
+// some global variables for ISR routines
+// beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
+int RXcompleted; // Flag, String komplett empfangen
+int TXcompleted; // Flag, String komplett gesendet
+
+int starter    = '42'; // this marks the beginning of a received string. which is '*' at the moment.
+int terminator = '35'; // this marks the end of a string. which is '#' at the moment.
+
+char uart_rx_buffer[uart_buffer_size+1]; // Empfangspuffer (+1 wg. zusätzlichem \0 in ISR RX)
+char uart_tx_buffer[uart_buffer_size+1]; // Sendepuffer    (+1 wg. zusätzlichem \0 in ISR RX)
+
+// @todo: remove one of these buffers!!
+// stores the serial received command and the string which will be sent as an answer
+char stringbuffer[64];
+
+
 void setup()
 {
   // initialize serial
@@ -149,14 +168,10 @@ void setup()
   pinMode(analogInPin, INPUT);
   
 
-/* to be ported
-  	// usart stuff
-	RXcompleted = 0;	// Flag, String komplett empfangen
-	TXcompleted = 1;	// Flag, String komplett gesendet
+  // serial stuff
+  RXcompleted = 0;	// Flag, String komplett empfangen
+  TXcompleted = 1;	// Flag, String komplett gesendet
 
-	setStarter(42);    //42 = '*'
-	setTerminator(35); //35 = '#'
-*/
 
 	leftWheelCounter = 0;
 	rightWheelCounter = 0;
@@ -343,13 +358,17 @@ void setup()
 
 void loop()
 {
+  // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
+  if (RXcompleted == 1)
+  {
 /* to be ported		
 	// Everything's fine, so reset the watchdog timer (wdt).
 //	wdt_reset();
 */
-  // if there's any serial available, read it:
-  while (Serial.available())
-  {
+
+  // ja, dann String lesen und uart_rx_flag löschen
+  get_string(stringbuffer);
+
                         //--------------------------
 			// check what was received
 			//--------------------------
@@ -1411,22 +1430,6 @@ void long_delay(uint16_t ms)
 */
 
 
-
-// Puffergrösse in Bytes, RX und TX sind gleich gross
-#define uart_buffer_size 32
-
-// some global variables for ISR routines
-// beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
-int RXcompleted; // Flag, String komplett empfangen
-int TXcompleted; // Flag, String komplett gesendet
-
-int starter;    // this marks the beginning of a received string. which is '*' at the moment.
-int terminator; // this marks the end of a string. which is '#' at the moment.
-
-char uart_rx_buffer[uart_buffer_size+1]; // Empfangspuffer (+1 wg. zusätzlichem \0 in ISR RX)
-char uart_tx_buffer[uart_buffer_size+1]; // Sendepuffer    (+1 wg. zusätzlichem \0 in ISR RX)
-
-
 void serialEvent()
 {
 	static uint8_t counter = 0;    	// Zähler für empfangene Zeichen
@@ -1505,5 +1508,18 @@ void serialEvent()
 			return;
 		}
 	}
+}
+
+
+void get_string(char *daten)
+{
+  if (RXcompleted == 1)
+  {
+    // String kopieren
+    strcpy(daten, uart_rx_buffer);
+
+    // Flag löschen
+    RXcompleted = 0;
+  }
 }
 
