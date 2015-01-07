@@ -1410,3 +1410,100 @@ void long_delay(uint16_t ms)
 }
 */
 
+
+
+// Puffergrösse in Bytes, RX und TX sind gleich gross
+#define uart_buffer_size 32
+
+// some global variables for ISR routines
+// beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
+int RXcompleted; // Flag, String komplett empfangen
+int TXcompleted; // Flag, String komplett gesendet
+
+int starter;    // this marks the beginning of a received string. which is '*' at the moment.
+int terminator; // this marks the end of a string. which is '#' at the moment.
+
+char uart_rx_buffer[uart_buffer_size+1]; // Empfangspuffer (+1 wg. zusätzlichem \0 in ISR RX)
+char uart_tx_buffer[uart_buffer_size+1]; // Sendepuffer    (+1 wg. zusätzlichem \0 in ISR RX)
+
+
+void serialEvent()
+{
+	static uint8_t counter = 0;    	// Zähler für empfangene Zeichen
+	static uint8_t string_started = 0;	// Sind wir jetzt im String?
+	uint8_t data;
+
+ 
+	// Daten auslesen, dadurch wird das Interruptflag gelöscht              
+//	data = UDR3;
+
+
+
+	// Ist Puffer frei für neue Daten?
+	if (RXcompleted == 0)
+	{
+		// Puffer voll?
+		if (counter < (uart_buffer_size-1))
+		{     
+			// string start
+			// string speichern, wenn mit 'starter' begonnen!
+			if  (data == starter)
+			{
+				greenLED(ON);
+				// da string startet, zähler auf 0!
+				counter = 0;
+				// Daten in Puffer speichern
+				uart_rx_buffer[counter] = data;
+				// Zähler erhöhen
+				counter++;
+				// string has started
+				string_started = 1;
+				return;
+			}
+
+			// string stop
+			// Ist das Ende des Strings (terminator) erreicht?
+			if (data == terminator)
+			{
+				// ja, dann String terminieren
+				uart_rx_buffer[counter] = terminator;
+				// String terminieren
+				uart_rx_buffer[counter+1] = 0;
+				// Flag für 'Empfangspuffer voll' setzen
+				RXcompleted = 1;
+				// Zähler zurücksetzen
+				counter = 0;
+				// green LED off
+				greenLED(OFF);
+				// reset flag
+				string_started = 0;
+				return;
+			}
+
+			// string middle
+			// string nur speichern, wenn zuvor der starter mal war.
+			if  (string_started == 1)
+			{
+				// Daten in Puffer speichern
+				uart_rx_buffer[counter] = data;
+				// Zähler erhöhen
+				counter++;
+				return;
+			}
+		}
+		else
+		{
+			// Puffer ist vollgelaufen!
+			// Flag auf 'Empfangspuffer wurde geleert' zurücksetzen
+			RXcompleted = 0;
+			// Zähler zurücksetzen
+			counter = 0;
+			// green LED off
+			greenLED(OFF);
+			// reset flag
+			string_started = 0;
+			return;
+		}
+	}
+}
+
