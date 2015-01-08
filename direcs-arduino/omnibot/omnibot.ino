@@ -1452,93 +1452,116 @@ void relais(uint8_t state)
 
 void serialEvent()
 {
+  static uint8_t counter = 0;      // Zähler für empfangene Zeichen
+  static uint8_t string_started = 0;  // Sind wir jetzt im String?
+
+
   while (Serial.available())
   {
     // get the new byte:
     char inChar = (char)Serial.read(); 
-  
-    // add it to the inputString:
-    inputString += inChar;
-  
+
+    // string start
+    // string speichern, wenn mit 'starter' begonnen!
+    if  (inChar == starter)
+    {
+      // da string startet, zähler auf 0!
+      counter = 0;
+
+      // add it to the inputString:
+      inputString += inChar;
+
+      // Zähler erhöhen
+      counter++;
+
+      // string has started
+      string_started = 1;
+      return;
+    }
+
+
+
+
+
     // if the incoming character is a newline, set a flag
     // so the main loop can do something about it:
-    if (inChar == '\n')
+    if (inChar == '#')
     {
       stringComplete = true;
     } 
   }
 
-/*
+  /*
   static uint8_t counter = 0;      // Zähler für empfangene Zeichen
-  static uint8_t string_started = 0;  // Sind wir jetzt im String?
-  uint8_t data;
-
-
-  // Daten auslesen
-  data = Serial.read();
-
-  // Ist Puffer frei für neue Daten?
-  if (RXcompleted == 0)
-  {
-    // Puffer voll?
-    if (counter < (uart_buffer_size-1))
-    {     
-      // string start
-      // string speichern, wenn mit 'starter' begonnen!
-      if  (data == starter)
-      {
-        // da string startet, zähler auf 0!
-        counter = 0;
-        // Daten in Puffer speichern
-        uart_rx_buffer[counter] = data;
-        // Zähler erhöhen
-        counter++;
-        // string has started
-        string_started = 1;
-        return;
-      }
-
-      // string stop
-      // Ist das Ende des Strings (terminator) erreicht?
-      if (data == terminator)
-      {
-        // ja, dann String terminieren
-        uart_rx_buffer[counter] = terminator;
-        // String terminieren
-        uart_rx_buffer[counter+1] = 0;
-        // Flag für 'Empfangspuffer voll' setzen
-        RXcompleted = 1;
-        // Zähler zurücksetzen
-        counter = 0;
-        // reset flag
-        string_started = 0;
-        return;
-      }
-
-      // string middle
-      // string nur speichern, wenn zuvor der starter mal war.
-      if  (string_started == 1)
-      {
-        // Daten in Puffer speichern
-        uart_rx_buffer[counter] = data;
-        // Zähler erhöhen
-        counter++;
-        return;
-      }
-    }
-    else
-    {
-      // Puffer ist vollgelaufen!
-      // Flag auf 'Empfangspuffer wurde geleert' zurücksetzen
-      RXcompleted = 0;
-      // Zähler zurücksetzen
-      counter = 0;
-      // reset flag
-      string_started = 0;
-      return;
-    }
-  }
-*/
+   static uint8_t string_started = 0;  // Sind wir jetzt im String?
+   uint8_t data;
+   
+   
+   // Daten auslesen
+   data = Serial.read();
+   
+   // Ist Puffer frei für neue Daten?
+   if (RXcompleted == 0)
+   {
+     // Puffer voll?
+     if (counter < (uart_buffer_size-1))
+     {     
+       // string start
+       // string speichern, wenn mit 'starter' begonnen!
+       if  (data == starter)
+       {
+         // da string startet, zähler auf 0!
+         counter = 0;
+         // Daten in Puffer speichern
+         uart_rx_buffer[counter] = data;
+         // Zähler erhöhen
+         counter++;
+         // string has started
+         string_started = 1;
+         return;
+       }
+   
+   // string stop
+   // Ist das Ende des Strings (terminator) erreicht?
+   if (data == terminator)
+   {
+   // ja, dann String terminieren
+   uart_rx_buffer[counter] = terminator;
+   // String terminieren
+   uart_rx_buffer[counter+1] = 0;
+   // Flag für 'Empfangspuffer voll' setzen
+   RXcompleted = 1;
+   // Zähler zurücksetzen
+   counter = 0;
+   // reset flag
+   string_started = 0;
+   return;
+   }
+   
+   // string middle
+   // string nur speichern, wenn zuvor der starter mal war.
+   if  (string_started == 1)
+   {
+   // Daten in Puffer speichern
+   uart_rx_buffer[counter] = data;
+   // Zähler erhöhen
+   counter++;
+   return;
+   }
+   }
+   else
+   {
+   // Puffer ist vollgelaufen!
+   // Flag auf 'Empfangspuffer wurde geleert' zurücksetzen
+   RXcompleted = 0;
+   // Zähler zurücksetzen
+   counter = 0;
+   // reset flag
+   string_started = 0;
+   return;
+   }
+   }
+   */
 }
 
 
