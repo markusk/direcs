@@ -1479,17 +1479,58 @@ void serialEvent()
       return;
     }
 
-
-
-
-
-    // if the incoming character is a newline, set a flag
-    // so the main loop can do something about it:
-    if (inChar == '#')
+    // string stop
+    // Ist das Ende des Strings (terminator) erreicht?
+    if (inChar == terminator)
     {
+      // ja, dann String terminieren
+      inputString += terminator;
+
+      // String terminieren
+      inputString += 0;
+
+      // if the incoming character is a "terminator", set a flag
+      // so the main loop can do something about it:
       stringComplete = true;
-    } 
-  }
+
+      // Zähler zurücksetzen
+      counter = 0;
+
+      // reset flag
+      string_started = 0;
+
+      return;
+    }
+
+    // string middle
+    // string nur speichern, wenn zuvor der starter mal war.
+    if  (string_started == 1)
+    {
+      // Daten in Puffer speichern
+      inputString += inChar;
+
+      // Zähler erhöhen
+      counter++;
+
+      return;
+    }
+
+/* todo
+    }
+    else
+    {
+      // Puffer ist vollgelaufen!
+      // Flag auf 'Empfangspuffer wurde geleert' zurücksetzen
+      RXcompleted = 0;
+      // Zähler zurücksetzen
+      counter = 0;
+      // reset flag
+      string_started = 0;
+      return;
+    }
+*/
+
+  } // Serial.available
 
 /*
   static uint8_t counter = 0;      // Zähler für empfangene Zeichen
