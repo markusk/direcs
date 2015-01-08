@@ -156,10 +156,18 @@ char uart_tx_buffer[uart_buffer_size+1]; // Sendepuffer    (+1 wg. zusätzlichem
 char stringbuffer[64];
 
 
+String inputString = "";         // a string to hold incoming data
+boolean stringComplete = false;  // whether the string is complete
+
+
+
 void setup()
 {
   // initialize serial
   Serial.begin(9600);
+
+  // reserve 200 bytes for the inputString
+  inputString.reserve(200);
 
   // initialize the digital pin as an output.
   pinMode(led, OUTPUT);
@@ -358,6 +366,18 @@ void setup()
 
 void loop()
 {
+  // print the string when a newline arrives:
+  if (stringComplete) 
+  {
+    Serial.println(inputString); 
+
+    // clear the string
+    inputString = "";
+
+    stringComplete = false;
+  }
+
+
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
   if (RXcompleted == 1)
   {
@@ -374,7 +394,7 @@ void loop()
     //--------------------------
 
     // RESET / INIT
-    if (Serial.find("*re#"))
+    if (strcmp(stringbuffer, "*re#") == 0)
     {
       /* to be ported    
        
@@ -1432,6 +1452,23 @@ void relais(uint8_t state)
 
 void serialEvent()
 {
+  while (Serial.available())
+  {
+    // get the new byte:
+    char inChar = (char)Serial.read(); 
+  
+    // add it to the inputString:
+    inputString += inChar;
+  
+    // if the incoming character is a newline, set a flag
+    // so the main loop can do something about it:
+    if (inChar == '\n')
+    {
+      stringComplete = true;
+    } 
+  }
+
+/*
   static uint8_t counter = 0;      // Zähler für empfangene Zeichen
   static uint8_t string_started = 0;  // Sind wir jetzt im String?
   uint8_t data;
@@ -1501,11 +1538,13 @@ void serialEvent()
       return;
     }
   }
+*/
 }
 
 
 void get_string(char *daten)
 {
+/*
   if (RXcompleted == 1)
   {
     // String kopieren
@@ -1514,6 +1553,6 @@ void get_string(char *daten)
     // Flag löschen
     RXcompleted = 0;
   }
+  */
 }
-
 
