@@ -369,9 +369,11 @@ void loop()
   // print the string when a newline arrives:
   if (stringComplete) 
   {
-Serial.println("stringComplete (loop)"); 
+Serial.print("stringComplete (loop):"); 
 
-    Serial.println(inputString); 
+    Serial.print(inputString); 
+
+Serial.println("<END>"); 
 
     // clear the string
     inputString = "";
