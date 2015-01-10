@@ -158,7 +158,7 @@ char stringbuffer[64];
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
-
+String command = "";
 
 
 void setup()
@@ -168,6 +168,7 @@ void setup()
 
   // reserve 200 bytes for the inputString
   inputString.reserve(200);
+  command.reserve(200);
 
   // initialize the digital pin as an output.
   pinMode(led, OUTPUT);
@@ -366,40 +367,40 @@ void setup()
 
 void loop()
 {
+/*
   // print the string when a newline arrives:
   if (stringComplete) 
   {
-Serial.print("stringComplete (loop):"); 
+    Serial.print("stringComplete (loop):"); 
 
     Serial.print(inputString); 
 
-Serial.println("<END>"); 
+    Serial.println("<END>"); 
 
     // clear the string
     inputString = "";
 
     stringComplete = false;
   }
-
+*/
 
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
-  if (false) // TEST TEST TEST
-// to do:  if (stringComplete)
+  if (stringComplete)
   {
+    // delete flag
+    stringComplete = false;
+
     /* to be ported    
      // Everything's fine, so reset the watchdog timer (wdt).
      //  wdt_reset();
      */
-
-    // ja, dann String lesen und uart_rx_flag löschen
-    get_string(stringbuffer);
 
     //--------------------------
     // check what was received
     //--------------------------
 
     // RESET / INIT
-    if (strcmp(stringbuffer, "*re#") == 0)
+    if (command == "*re#")
     {
       /* to be ported    
        
@@ -1336,6 +1337,8 @@ Serial.println("<END>");
      */    // to be ported    
   } // serial data available
 
+  // delete command string
+  command == "";
 
 } // loop
 
@@ -1467,12 +1470,14 @@ void serialEvent()
   // Ist Puffer frei für neue Daten?
   if (stringComplete == false)
   {
-
+    //-----------------
     // string start
+    //-----------------
     // string speichern, wenn mit 'starter' begonnen!
     if  (inChar == starter)
     {
-Serial.println("STARTER");
+      //Serial.println("STARTER");
+
       // da string startet, zähler auf 0!
       counter = 0;
 
@@ -1489,16 +1494,25 @@ Serial.println("STARTER");
       return;
     }
 
+    //-----------------
     // string stop
+    //-----------------
     // Ist das Ende des Strings (terminator) erreicht?
     if (inChar == terminator)
     {
-Serial.println("TERMINATOR");
+      //Serial.println("TERMINATOR");
+
       // ja, dann terminator anhängen
       inputString += inChar;
 
       // String terminieren
       //inputString += '\0';
+
+      // copy input string to command string (used in loop)
+      command = inputString;
+
+      // clear input striing
+      inputString = "";
 
       // if the incoming character is a "terminator", set a flag
       // so the main loop can do something about it:
@@ -1513,11 +1527,14 @@ Serial.println("TERMINATOR");
       return;
     }
 
+    //-----------------
     // string middle
+    //-----------------
     // string nur speichern, wenn zuvor der starter mal war.
     if  (string_started == 1)
     {
-Serial.println("MITTE");
+      //Serial.println("MITTE");
+      
       // Daten in Puffer speichern
       inputString += inChar;
 
