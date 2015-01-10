@@ -137,9 +137,6 @@ uint16_t rightDistanceCounter = 0;
 //uint8_t camTiltRSwitch = 0;
 
 
-// Puffergrösse in Bytes, RX und TX sind gleich gross
-#define uart_buffer_size 32
-
 // some global variables for ISR routines
 // beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
 // int RXcompleted; // Flag, String komplett empfangen  -> replaced by 'stringComplete'
@@ -148,17 +145,14 @@ int TXcompleted; // Flag, String komplett gesendet
 int starter    = 42; // this marks the beginning of a received string. which is '*' at the moment.
 int terminator = 35; // this marks the end of a string. which is '#' at the moment.
 
-char uart_rx_buffer[uart_buffer_size+1]; // Empfangspuffer (+1 wg. zusätzlichem \0 in ISR RX)
-char uart_tx_buffer[uart_buffer_size+1]; // Sendepuffer    (+1 wg. zusätzlichem \0 in ISR RX)
-
-// @todo: remove one of these buffers!!
-// stores the serial received command and the string which will be sent as an answer
-char stringbuffer[64];
-
+// Puffergrösse in Bytes für den Serial port
+#define stringSize 32
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 String command = "";
+
+char uart_tx_buffer[stringSize]; // Sendepuffer    (+1 wg. zusätzlichem \0 in ISR RX)
 
 
 void setup()
@@ -167,8 +161,8 @@ void setup()
   Serial.begin(9600);
 
   // reserve 200 bytes for the inputString
-  inputString.reserve(200);
-  command.reserve(200);
+  inputString.reserve(stringSize);
+  command.reserve(stringSize);
 
   // initialize the digital pin as an output.
   pinMode(led, OUTPUT);
@@ -176,23 +170,18 @@ void setup()
   // this an input
   pinMode(analogInPin, INPUT);
 
-
   // serial stuff
   stringComplete = false;  // Flag, String komplett empfangen
   TXcompleted = 1;  // Flag, String komplett gesendet
 
-
   leftWheelCounter = 0;
   rightWheelCounter = 0;
-
 
   //  leftRevolutionsCounter = 0;
   //  rightRevolutionsCounter = 0;
 
-
   leftDistanceCounter = 0;
   rightDistanceCounter = 0;
-
 
   //-----------------
   // I/O definitions
@@ -1455,198 +1444,90 @@ void relais(uint8_t state)
 
 void serialEvent()
 {
-  static uint8_t counter = 0;      // Zähler für empfangene Zeichen
   static uint8_t string_started = 0;  // Sind wir jetzt im String?
 
 // Serial.println("serialEvent"); Okay
 
-
   while (Serial.available())
   {
-    // get the new byte:
+    // get the new byte
     char inChar = (char)Serial.read(); 
 
-
-  // Ist Puffer frei für neue Daten?
-  if (stringComplete == false)
-  {
-    //-----------------
-    // string start
-    //-----------------
-    // string speichern, wenn mit 'starter' begonnen!
-    if  (inChar == starter)
+    // max String length reached?
+    if (inputString.length() >= stringSize)
     {
-      //Serial.println("STARTER");
+      //Serial.println("OVERFLOW");
 
-      // da string startet, zähler auf 0!
-      counter = 0;
-
-      // clear the string
-      inputString = "";
-      // start inputString:
-      inputString += inChar;
-
-      // Zähler erhöhen
-      counter++;
-
-      // string has started
-      string_started = 1;
-      return;
-    }
-
-    //-----------------
-    // string stop
-    //-----------------
-    // Ist das Ende des Strings (terminator) erreicht?
-    if (inChar == terminator)
-    {
-      //Serial.println("TERMINATOR");
-
-      // ja, dann terminator anhängen
-      inputString += inChar;
-
-      // String terminieren
-      //inputString += '\0';
-
-      // copy input string to command string (used in loop)
-      command = inputString;
-
-      // clear input striing
+      // clear string
       inputString = "";
 
-      // if the incoming character is a "terminator", set a flag
-      // so the main loop can do something about it:
-      stringComplete = true;
-
-      // Zähler zurücksetzen
-      counter = 0;
-
-      // reset flag
+      // delete flags
+      stringComplete = false;
       string_started = 0;
 
       return;
     }
 
-    //-----------------
-    // string middle
-    //-----------------
-    // string nur speichern, wenn zuvor der starter mal war.
-    if  (string_started == 1)
+    // Ist Puffer frei für neue Daten?
+    if (stringComplete == false)
     {
-      //Serial.println("MITTE");
-      
-      // Daten in Puffer speichern
-      inputString += inChar;
-
-      // Zähler erhöhen
-      counter++;
-
-      return;
-    }
-  } // stringComplete == false
-
-/* todo
-    }
-    else
-    {
-      // Puffer ist vollgelaufen!
-      // Flag auf 'Empfangspuffer wurde geleert' zurücksetzen
-      RXcompleted = 0;
-      // Zähler zurücksetzen
-      counter = 0;
-      // reset flag
-      string_started = 0;
-      return;
-    }
-*/
-
-  } // Serial.available
-
-/*
-  static uint8_t counter = 0;      // Zähler für empfangene Zeichen
-  static uint8_t string_started = 0;  // Sind wir jetzt im String?
-  uint8_t data;
-
-
-  // Daten auslesen
-  data = Serial.read();
-
-  // Ist Puffer frei für neue Daten?
-  if (RXcompleted == 0)
-  {
-    // Puffer voll?
-    if (counter < (uart_buffer_size-1))
-    {     
+      //-----------------
       // string start
+      //-----------------
       // string speichern, wenn mit 'starter' begonnen!
-      if  (data == starter)
+      if (inChar == starter)
       {
-        // da string startet, zähler auf 0!
-        counter = 0;
-        // Daten in Puffer speichern
-        uart_rx_buffer[counter] = data;
-        // Zähler erhöhen
-        counter++;
+        //Serial.println("STARTER");
+
+        // clear the string
+        inputString = "";
+        // start inputString:
+        inputString += inChar;
+
         // string has started
         string_started = 1;
         return;
       }
 
+      //-----------------
       // string stop
+      //-----------------
       // Ist das Ende des Strings (terminator) erreicht?
-      if (data == terminator)
+      if (inChar == terminator)
       {
-        // ja, dann String terminieren
-        uart_rx_buffer[counter] = terminator;
+        //Serial.println("TERMINATOR");
+
+        // ja, dann terminator anhängen
+        inputString += inChar;
+
         // String terminieren
-        uart_rx_buffer[counter+1] = 0;
-        // Flag für 'Empfangspuffer voll' setzen
-        RXcompleted = 1;
-        // Zähler zurücksetzen
-        counter = 0;
+        //inputString += '\0';
+        // clear input striing
+        inputString = "";
+
+        // if the incoming character is a "terminator", set a flag
+        // so //the main loop can do something about it:
+        stringComplete = true;
+
         // reset flag
         string_started = 0;
+
         return;
       }
 
+      //-----------------
       // string middle
+      //-----------------
       // string nur speichern, wenn zuvor der starter mal war.
       if  (string_started == 1)
       {
+        //Serial.println("MITTE");
+        
         // Daten in Puffer speichern
-        uart_rx_buffer[counter] = data;
-        // Zähler erhöhen
-        counter++;
+        inputString += inChar;
+
         return;
-      }
-    }
-    else
-    {
-      // Puffer ist vollgelaufen!
-      // Flag auf 'Empfangspuffer wurde geleert' zurücksetzen
-      RXcompleted = 0;
-      // Zähler zurücksetzen
-      counter = 0;
-      // reset flag
-      string_started = 0;
-      return;
-    }
-  }
-*/
+      } // string complete
+    } // serial data avialable
+  } // Serial.available
 }
-
-
-void get_string(char *daten)
-{
-/*
-  if (RXcompleted == 1)
-  {
-    // String kopieren
-    strcpy(daten, uart_rx_buffer);
-
-    // Flag löschen
-    RXcompleted = 0;
-  }
-  */
-}
-
