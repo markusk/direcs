@@ -130,17 +130,10 @@ uint8_t rightWheelCounter = 0;
 uint16_t leftDistanceCounter = 0;
 uint16_t rightDistanceCounter = 0;
 
-
 //uint8_t camPanLSwitch = 0;
 //uint8_t camPanRSwitch = 0;
 //uint8_t camTiltLSwitch = 0;
 //uint8_t camTiltRSwitch = 0;
-
-
-// some global variables for ISR routines
-// beachte: volatile damit Wert auch außerhalb der ISR gelesen werden kann! Wird sonst vom Compiler wegoptimiert.
-// int RXcompleted; // Flag, String komplett empfangen  -> replaced by 'stringComplete'
-int TXcompleted; // Flag, String komplett gesendet
 
 int starter    = 42; // this marks the beginning of a received string. which is '*' at the moment.
 int terminator = 35; // this marks the end of a string. which is '#' at the moment.
@@ -151,8 +144,6 @@ int terminator = 35; // this marks the end of a string. which is '#' at the mome
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 String command = "";
-
-char uart_tx_buffer[stringSize]; // Sendepuffer    (+1 wg. zusätzlichem \0 in ISR RX)
 
 
 void setup()
@@ -172,7 +163,6 @@ void setup()
 
   // serial stuff
   stringComplete = false;  // Flag, String komplett empfangen
-  TXcompleted = 1;  // Flag, String komplett gesendet
 
   leftWheelCounter = 0;
   rightWheelCounter = 0;
