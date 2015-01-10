@@ -495,7 +495,7 @@ void loop()
      }
      */    else
       // READ_SENSOR_7 (24 V supply)
-      if (Serial.find("*s7#"))
+      if (command == "*s7#")
       {
         // read the analog in value
         // print the results to the serial monitor:
@@ -1500,8 +1500,9 @@ void serialEvent()
         // ja, dann terminator anhängen
         inputString += inChar;
 
-        // String terminieren
-        //inputString += '\0';
+        // copy input string to command string (used in loop)
+        command = inputString;
+
         // clear input striing
         inputString = "";
 
