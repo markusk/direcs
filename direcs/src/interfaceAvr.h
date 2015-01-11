@@ -137,7 +137,7 @@ class InterfaceAvr : public QObject
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"
 
-		static const int BAUDRATE = 38400;	/// This is the baudrate with which the serial port will be opened. The other (not parameterized) settings are "8N1".
+		static const int BAUDRATE = 9600;	/// This is the baudrate with which the serial port will be opened. The other (not parameterized) settings are "8N1".
 
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #
