@@ -24,6 +24,7 @@ TimerThread::TimerThread()
 {
 	stopped = false;
 	networkStateSet = false;
+	arduinoStateSet = false;
 }
 
 
@@ -68,6 +69,19 @@ void TimerThread::run()
 			{
 				networkStateSet = true;
 				emit checkNetworkState();
+			}
+		}
+
+		//------------------
+		// Arduino called`?
+		//------------------
+		if (arduinoStateSet == false)
+		{
+			// time elapsed for receiving a master signal.
+			if (startTime.secsTo(now) >= timeToArduinoCheck)
+			{
+				arduinoStateSet = true;
+				emit checkArduinoState();
 			}
 		}
 

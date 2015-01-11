@@ -59,6 +59,12 @@ class Circuit : public QObject
 		bool initCircuit();
 
 		/**
+		 * @brief initArduino
+		 * @return
+		 */
+		bool initArduino();
+
+		/**
 		Puts the robot's circuits to sleep. This also disables the robot's watchdog!
 		@return true, when everything was fine
 		*/

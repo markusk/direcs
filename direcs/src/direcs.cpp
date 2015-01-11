@@ -885,6 +885,12 @@ void Direcs::init()
 		// connect signal from timerThread to networkThread (enable sending 'master' signal every second)
 		connect(timerThread, SIGNAL(checkNetworkState()), netThread, SLOT(setNetworkMaster()));
 
+		//--------
+		// try to init Arduino after some seconds, not during exact start
+		//--------
+		// call Slot initArduino on Signal checkArduinoState
+		connect(timerThread, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
+
 		// show network master/slave state in GUI LED
 		if (!consoleMode)
 		{

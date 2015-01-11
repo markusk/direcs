@@ -73,6 +73,11 @@ class TimerThread : public QThread
 		void checkNetworkState();
 
 		/**
+		 * @brief checkArduinoState
+		 */
+		void checkArduinoState();
+
+		/**
 		Sends a signal over the network. E.g. if we are 'master' or 'slave. @sa Direcs::sendNetworkMessage
 		*/
 		void networkMessage();
@@ -83,8 +88,10 @@ class TimerThread : public QThread
 		QTime now; /// this is for getting the current time
 		volatile bool stopped;
 
-		bool networkStateSet;
+		bool networkStateSet; // event occured?
+		bool arduinoStateSet; // event occured?
 		static const int timeToNetworkCheck = 3; // time in seconds
+		static const int timeToArduinoCheck = 3; // time in seconds
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
