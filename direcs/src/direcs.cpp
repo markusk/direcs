@@ -653,7 +653,7 @@ void Direcs::init()
 //				connect(gui, SIGNAL( initServos() ), rgbLeds, SLOT( init() ) ); // @todo: build this < < < < < < <
 			}
 
-
+/* @todo arduino port
 			//==========================
 			// init the robots circuit
 			//==========================
@@ -663,7 +663,7 @@ void Direcs::init()
 			{
 				emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 
-/*
+/ *
 				// check compass module
 				if (circuit1->initCompass() == true)
 				{
@@ -681,7 +681,7 @@ void Direcs::init()
 						gui->setLEDCompass(RED);
 					}
 				}
-*/
+* /
 				//-------------------------------------------------------
 				// set the read motor speed
 				//-------------------------------------------------------
@@ -692,13 +692,13 @@ void Direcs::init()
 				motors->setMotorSpeed(MOTOR4, mot4Speed);
 				emit message("Motor speed set.");
 
-/*
+/ *
 				//-------------------------------------------------------
 				// move all Servos in their default positions
 				//-------------------------------------------------------
 				servos->init();
 				emit message("Servos moved to default positions");
-*/
+* /
 
 				//-------------------------------------------------------
 				// set all RGB LEDs in their default brightness
@@ -711,7 +711,7 @@ void Direcs::init()
 				//-----------------------------------------------------------
 				// start the heartbeat thread
 				//-----------------------------------------------------------
-				/*
+				/ *
 				if (heartbeat->isRunning() == false)
 				{
 					emit splashMessage("Starting heartbeat thread...");
@@ -720,7 +720,7 @@ void Direcs::init()
 					heartbeat->start();
 					emit message("Heartbeat thread started.");
 				}
-				*/
+				* /
 
 				//-----------------------------------------------------------
 				// start the sensor thread for reading the sensors)
@@ -751,7 +751,7 @@ void Direcs::init()
 					}
 				}
 #endif
-			} // init was successfull
+			} // init circuit was successfull
 			else
 			{
 				logfile->appendLog("Robot is OFF! Please turn it ON!");
@@ -760,8 +760,8 @@ void Direcs::init()
 				emit message("Sensor thread NOT started!");
 				emit message("Plot thread NOT started!");
 			}
-		} // robot is ON
-
+*/
+		} // serial port opened
 
 		//-----------------------------------------------------------
 		// start the timer thread
