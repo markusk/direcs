@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QDebug>
+#include <QTimer>
 #include <qextserialport.h>
 
 namespace Ui {
@@ -21,6 +22,9 @@ public:
 
 public slots:
 	void transmitCmd(int value); // fonction d'envoi
+
+private slots:
+	void arduinoInit();
 
 private:
 	Ui::MainWindow *ui;

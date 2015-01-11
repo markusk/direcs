@@ -15,14 +15,23 @@ MainWindow::MainWindow(QWidget *parent) :
 //    connect(ui->slider, SIGNAL(sliderMoved(int)), this, SLOT(transmitCmd(int)));
 
 	// On connecte le mouvement du slider a l'envoi de la commande
-	transmitCmd(90);
-	// On initialise le servo à 90°
+
+	QTimer::singleShot(3000, this, SLOT(arduinoInit()));
 }
 
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+
+void MainWindow::arduinoInit()
+{
+	transmitCmd('*');
+	transmitCmd('r');
+	transmitCmd('e');
+	transmitCmd('#');
 }
 
 
