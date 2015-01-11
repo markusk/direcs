@@ -64,10 +64,10 @@ bool Circuit::initCircuit()
 		// sending RESET (INIT) command
 		if (interface1->sendString("re", className) == true)
 		{
-			// check if the robot answers with "ok"
+			// check if the robot answers
 			if ( interface1->receiveString(answer, className) == true)
 			{
-				// everthing's fine :-)
+				// check if the robot answers with "ok"
 				if (answer == "*re#")
 				{
 					// Unlock the mutex
