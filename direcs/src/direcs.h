@@ -32,6 +32,7 @@
 #include <QMetaType>
 #include <QtCore/QCoreApplication>
 
+/* @todo qt5port with QAudioOutout. See also: http://doc.qt.io/qt-5/qaudiooutput.html
 #ifdef Q_OS_LINUX
 #include <phonon>
 #else

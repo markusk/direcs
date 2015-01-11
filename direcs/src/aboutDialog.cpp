@@ -20,7 +20,7 @@
 
 #include "aboutDialog.h"
 
-AboutDialog::AboutDialog(QWidget* parent, Qt::WFlags fl) : QDialog(parent, fl)
+AboutDialog::AboutDialog(QWidget* parent, QFlag fl) : QDialog(parent, fl)
 {
 	ui.setupUi(this);
 }

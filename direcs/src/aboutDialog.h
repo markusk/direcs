@@ -24,7 +24,7 @@
 #include <QtGui>
 #include <QDialog>
 
-#include "ui_aboutDialog.h"
+//#include "ui_aboutDialog.h"
 
 
 /**
@@ -36,7 +36,7 @@ class AboutDialog : public QDialog
 	Q_OBJECT
 
 	public:
-		AboutDialog(QWidget* parent = 0, Qt::WFlags fl = 0);
+		AboutDialog(QWidget* parent = 0, QFlag fl = 0);
 
 	public slots:
 		/**
