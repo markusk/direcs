@@ -6,10 +6,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// show MainWindow (GUI)
 	ui->setupUi(this);
 
-	/*
-		foreach (QextPortInfo info, QextSerialEnumerator::getPorts())
-			ui->portBox->addItem(info.portName);
-	*/
+	// get a list of available serial ports.
+	// this is not used in the code and only for demontration.
+	QList <QextPortInfo> ports = QextSerialEnumerator::getPorts();
+	foreach (QextPortInfo portInfo, ports)
+	{
+		qDebug("\n");
+		qDebug() << "port name:" << portInfo.portName;   /// Port name (QString)
+		qDebug() << "physical name:" << portInfo.physName;   /// Physical name (QString)
+		qDebug() << "friendly name:" << portInfo.friendName; /// Friendly name (QString)
+		qDebug() << "enumerator name:" << portInfo.enumName;   /// Enumerator name (QString)
+		qDebug() << "vendor ID:" << portInfo.vendorID;       /// Vendor ID (int)
+		qDebug() << "product ID:" << portInfo.productID;      /// Product ID (int)
+		qDebug("\n");
+	}
 
 	// the settings for the serial port
 	PortSettings settings = {BAUD9600, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 10}; // 10 = timeout in ms
@@ -18,13 +28,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// on Windows, this would be i.e. COM5
 	serialPortName = "/dev/tty.usbmodem1451";
 
-	// Create the serial port object.
-	// We get the serial data on the port "event driven".
+	// create the serial port object.
+	// we get the serial data on the port "event driven".
 	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
-
-	//
-	enumerator = new QextSerialEnumerator(this);
-	enumerator->setUpNotifications();
 
 	/*
 	// On parametre la liaison :
