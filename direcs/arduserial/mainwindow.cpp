@@ -6,6 +6,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// show MainWindow (GUI)
 	ui->setupUi(this);
 
+	/*
+		foreach (QextPortInfo info, QextSerialEnumerator::getPorts())
+			ui->portBox->addItem(info.portName);
+	*/
+
+	// the settings for the serial port
+	PortSettings settings = {BAUD9600, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 10}; // 10 = timeout in ms
+
+	// the name of the serial port
+	// on Windows, this would be i.e. COM5
+	serialPortName = "/dev/tty.usbmodem1451";
+
+	// Create the serial port object.
+	// We get the serial data on the port "event driven".
+	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
+
+	//
+	enumerator = new QextSerialEnumerator(this);
+	enumerator->setUpNotifications();
+
+	/*
+	// On parametre la liaison :
+	port->setBaudRate(BAUD9600);
+	port->setFlowControl(FLOW_OFF);
+	port->setParity(PAR_NONE);
+	port->setDataBits(DATA_8);
+	port->setStopBits(STOP_1);
+	*/
+
 	// initialise the serial port
 	initSerialPort();
 
@@ -46,22 +75,6 @@ void MainWindow::arduinoInit()
 
 void MainWindow::initSerialPort(void)
 {
-/*
-	foreach (QextPortInfo info, QextSerialEnumerator::getPorts())
-		ui->portBox->addItem(info.portName);
-*/
-
-	PortSettings settings = {BAUD9600, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 10}; // 10 = timeout
-	QString serialPortName = "/dev/tty.usbmodem1451";
-
-	// Create the serial port object.
-	// We get the serial data on the port "event driven".
-	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
-
-	//
-	enumerator = new QextSerialEnumerator(this);
-	enumerator->setUpNotifications();
-
 	// open the serial port
 	port->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
 
@@ -70,15 +83,6 @@ void MainWindow::initSerialPort(void)
 	{
 		QMessageBox::warning(this, "Unable to open the serial port.", serialPortName);
 	}
-
-/*
-	// On parametre la liaison :
-	port->setBaudRate(BAUD9600);
-	port->setFlowControl(FLOW_OFF);
-	port->setParity(PAR_NONE);
-	port->setDataBits(DATA_8);
-	port->setStopBits(STOP_1);
-*/
 }
 
 
