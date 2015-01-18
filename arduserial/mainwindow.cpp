@@ -135,7 +135,7 @@ void MainWindow::sendValue(int value)
 		bw = port->write(byte);
 
 		// show sent data
-		ui->textEdit->insertHtml(QString("%1 byte(s) written. Written value: %2 (DEC), %3 (HEX), %4 (ASCII)<br>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
+		ui->textEdit->insertHtml(QString("%1 byte(s) written. Written value: %2 (DEC) / %3 (HEX) / %4 (ASCII)<br>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
 
 		// flush serial port
 		port->flush();
@@ -145,24 +145,44 @@ void MainWindow::sendValue(int value)
 
 void MainWindow::onReadyRead()
 {
-	QString receivedData; // the data received from the serial port
+//	QString receivedData; // the data received from the serial port
+	QByteArray receivedData; // the data received from the serial port
+	QString str;
 //	int receivedInt = 0;
 	qint64 ba = 0; // bytes available
+	QChar ch = 0;
+	int dec = 0;
 
 
 	// how many bytes are available?
 	ba = port->bytesAvailable();
 
+	// position in the string (index!)
+	n = 0;
+
 	// if data available (should _always_ be the case, since this method is called automatically by an event)
 	if (ba > 0)
 	{
 		// read data and convert them to a QString
-//		receivedInt = (int) port->readAll();
-		receivedData = (QString::fromLatin1( port->readAll() ));
+		// receivedData = (QString::fromLatin1( port->readAll() ));
+		receivedData = port->readAll();
+
+		// convert from QByteArray to QString
+		str = QString::fromUtf8(receivedData.constData());
 
 		// show received data
-		ui->textEdit->insertHtml(QString("%1 byte(s) received. Received data: %2 (ASCII)<br>").arg(ba).arg(receivedData));
-//		ui->textEdit->insertHtml(QString("%1 byte(s) received. Written value: %2 (DEC), %3 (HEX), %4 (ASCII)<br>").arg(ba).arg(value).arg(value, 0, 16).arg(receivedData));
+		ui->textEdit->insertHtml(QString("%1 byte(s) received. ASCII: %2<br>").arg(ba).arg(str));
+
+		// show DEC and HEX of each char
+		//
+		// convert one byte to QChar
+		ch = receivedData.at(n);
+
+		// convert to int
+		dec = (int) ch.toAscii();
+
+		// show in GUI
+		ui->textEdit->insertHtml(QString("Byte No.%1: %2 (DEC)<br>").arg(n).arg(dec));
 	}
 }
 
