@@ -32,15 +32,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// we get the serial data on the port "event driven".
 	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
 
-	/*
-	// On parametre la liaison :
-	port->setBaudRate(BAUD9600);
-	port->setFlowControl(FLOW_OFF);
-	port->setParity(PAR_NONE);
-	port->setDataBits(DATA_8);
-	port->setStopBits(STOP_1);
-	*/
-
 	// initialise the serial port
 	initSerialPort();
 
