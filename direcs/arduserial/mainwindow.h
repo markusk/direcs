@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
 #include <qextserialport.h> /// This is for serial port communication
@@ -61,9 +60,9 @@ private slots:
 	/**
 	 * @brief showPorts shows the ports found by event.
 	 * @param portInfos contains the found port to be shown
+	 * @param added can be set to true. Only then the physical name will be shown.
 	 */
-	void showPorts(QextPortInfo portInfos);
-
+	void showPorts(QextPortInfo portInfos, bool added = false);
 
 
 private:

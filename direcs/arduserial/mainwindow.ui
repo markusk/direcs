@@ -23,6 +23,11 @@
       <height>531</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Courier</family>
+     </font>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

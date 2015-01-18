@@ -51,6 +51,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// continue only on success (true)
 	if (initSerialPort() == true)
 	{
+		// display message in GUI
+		ui->textEdit->insertPlainText("Sending data to Arduino in some seconds (arduinoInit)...\n\n");
+
 		// Special timer, needed for Arduino!
 		//
 		// Reason:
@@ -115,7 +118,7 @@ void MainWindow::sendValue(int value)
 		bw = port->write(byte);
 
 		// show sent data
-		qDebug() << bw << "byte(s) written | Value sent:" << value << "(dec)";
+		ui->textEdit->insertHtml(QString("%1 byte(s) written. Written value: %2 (DEC), %3 (HEX), %4 (ASCII)<br>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
 
 		// flush serial port
 		port->flush();
@@ -146,8 +149,8 @@ void MainWindow::onPortAdded(QextPortInfo newPortInfo)
 	ui->textEdit->ensureCursorVisible();
 	ui->textEdit->insertHtml("<br><b><i>Serial port added!</i></b><br>");
 
-	// show ports
-	showPorts(newPortInfo);
+	// show ports, with physical name
+	showPorts(newPortInfo, true);
 }
 
 
@@ -162,10 +165,15 @@ void MainWindow::onPortRemoved(QextPortInfo newPortInfo)
 }
 
 
-void MainWindow::showPorts(QextPortInfo portInfos)
+void MainWindow::showPorts(QextPortInfo portInfos, bool added)
 {
 	ui->textEdit->insertHtml(QString("<b>Port name:</b> %1<br>").arg(portInfos.portName));
-	ui->textEdit->insertHtml(QString("<b>Physical name:</b> %1<br>").arg(portInfos.physName));
+
+	if (added)
+	{
+		ui->textEdit->insertHtml(QString("<b>Physical name:</b> %1<br>").arg(portInfos.physName));
+	}
+
 	ui->textEdit->insertHtml(QString("<b>Friendly name:</b> %1<br>").arg(portInfos.friendName));
 	ui->textEdit->insertHtml(QString("<b>Enumerator name:</b> %1<br>").arg(portInfos.enumName));
 	ui->textEdit->insertHtml(QString("<b>Vendor ID:</b> %1<br>").arg(portInfos.vendorID));
