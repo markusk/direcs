@@ -56,21 +56,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// if data are received on the serial port, call onReadyRead
 	connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
 
-	// initialise the serial port
-	// continue only on success (true)
-	if (initSerialPort() == true)
-	{
-		// display message in GUI
-		ui->textEdit->insertHtml("<b>Sending data to Arduino in some seconds (arduinoInit)...</b><br><br>");
-
-		// Special timer, needed for Arduino!
-		//
-		// Reason:
-		// When the serial (USB) port is opened, the Arduino is not ready for serial communication immediately.
-		// Therefore we start a timer. After 3000 ms (3 seconds), it will call the function arduinoInit().
-		// This can then be used for a first command to the Arduino, like "Hey Arduino, Qt-Software now startet!".
-		QTimer::singleShot(3000, this, SLOT(arduinoInit()));
-	}
+	// try to open Arduino serial port
+	initArduino();
 }
 
 
@@ -81,7 +68,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::arduinoInit()
+void MainWindow::timerSlot()
 {
 	// send values to Arduino (insert your own initialisation here!)
 	sendValue('*');
@@ -93,7 +80,27 @@ void MainWindow::arduinoInit()
 }
 
 
-bool MainWindow::initSerialPort(void)
+void MainWindow::initArduino()
+{
+	// initialise the serial port
+	// continue only on success (true)
+	if (openSerialPort() == true)
+	{
+		// display message in GUI
+		ui->textEdit->insertHtml("<b>Sending data to Arduino in some seconds (arduinoInit)...</b><br><br>");
+
+		// Special timer, needed for Arduino!
+		//
+		// Reason:
+		// When the serial (USB) port is opened, the Arduino is not ready for serial communication immediately.
+		// Therefore we start a timer. After 3000 ms (3 seconds), it will call the function arduinoInit().
+		// This can then be used for a first command to the Arduino, like "Hey Arduino, Qt-Software now startet!".
+		QTimer::singleShot(3000, this, SLOT(timerSlot()));
+	}
+}
+
+
+bool MainWindow::openSerialPort(void)
 {
 	// open the serial port
 	port->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
@@ -161,12 +168,27 @@ void MainWindow::onReadyRead()
 
 void MainWindow::onPortAdded(QextPortInfo newPortInfo)
 {
+	QStringRef subString = serialPortName.rightRef(serialPortName.lastIndexOf("."));
+
+
 	// scroll to end
 	ui->textEdit->ensureCursorVisible();
 	ui->textEdit->insertHtml("<br><b><i>Serial port added!</i></b><br>");
 
 	// show ports, with physical name
 	showPorts(newPortInfo, true);
+
+	// Wanted serial port (Arduino) found!
+	if (newPortInfo.portName.contains(subString))
+	{
+		// show success message!
+		ui->textEdit->insertHtml("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>");
+		ui->textEdit->insertHtml(QString("+++ Yeah, Arduino '%1' found! +++<br>").arg(subString.toString()));
+		ui->textEdit->insertHtml("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br><br>");
+
+		// try to open Arduino serial port
+		initArduino();
+	}
 }
 
 

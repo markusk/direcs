@@ -24,7 +24,7 @@ public:
 	 * @brief initSerialPort Initialisation of the serial port
 	 * @return true on success
 	 */
-	bool initSerialPort();
+	bool openSerialPort();
 
 
 public slots:
@@ -37,10 +37,10 @@ public slots:
 
 private slots:
 	/**
-	 * @brief arduinoInit Sends data to the Arduino on programm startup.
+	 * @brief timerSlot Sends init data to the Arduino.
 	 * Please note, that this is a Slot, called by the @sa timerEvent
 	 */
-	void arduinoInit();
+	void timerSlot();
 
 	/**
 	 * @brief onReadyRead is automatically called, when data on the serial port are available from the Arduino.
@@ -66,6 +66,11 @@ private slots:
 
 
 private:
+	/**
+	 * @brief initArduino initialises my Arduino with my own instructuins
+	 */
+	void initArduino();
+
 	Ui::MainWindow *ui; /// The main window (GUI)
 	QextSerialPort *port; /// The serial port
 	QextSerialEnumerator *enumerator; /// This is for getting a list of serial ports (filenames like /dev/ttyUSB0)
