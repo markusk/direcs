@@ -6,11 +6,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// show MainWindow (GUI)
 	ui->setupUi(this);
 
+	// display message in GUI
+	ui->plainTextEdit->insertPlainText("Looking for serial ports...\n\n");
+
 	// get a list of available serial ports.
 	// this is not used in the code and only for demontration.
 	QList <QextPortInfo> ports = QextSerialEnumerator::getPorts();
 	foreach (QextPortInfo portInfo, ports)
 	{
+		int n = 1;
+
+		// display found ports in GUI
+		ui->plainTextEdit->insertPlainText(QString("Port name:\n").append(portInfo.portName).append("\n"));
+		ui->plainTextEdit->insertPlainText(QString("Physical name:\n").append(portInfo.physName).append("\n"));
+		ui->plainTextEdit->insertPlainText(QString("Friendly name:\n").append(portInfo.friendName).append("\n"));
+		ui->plainTextEdit->insertPlainText(QString("Enumerator name:\n").append(portInfo.enumName).append("\n"));
+		ui->plainTextEdit->insertPlainText(QString("Vendor ID:\n").append(portInfo.vendorID).append("\n"));
+		ui->plainTextEdit->insertPlainText(QString("Product ID:\n").append(portInfo.productID).append("\n"));
+		ui->plainTextEdit->insertPlainText("\n");
+
+		/*
 		qDebug("\n");
 		qDebug() << "port name:" << portInfo.portName;   /// Port name (QString)
 		qDebug() << "physical name:" << portInfo.physName;   /// Physical name (QString)
@@ -19,9 +34,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 		qDebug() << "vendor ID:" << portInfo.vendorID;       /// Vendor ID (int)
 		qDebug() << "product ID:" << portInfo.productID;      /// Product ID (int)
 		qDebug("\n");
+		*/
 	}
 
+	ui->plainTextEdit->insertPlainText("\n");
+
 	// the settings for the serial port
+	// Be aware, that the Arduino has to use the same speed (9600 Baud)
 	PortSettings settings = {BAUD9600, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 10}; // 10 = timeout in ms
 
 	// the name of the serial port
@@ -81,7 +100,10 @@ bool MainWindow::initSerialPort(void)
 	// error opening port
 	if ( port->isOpen() == false)
 	{
-		QMessageBox::warning(this, "Unable to open the serial port.", serialPortName);
+		// show error message
+		ui->plainTextEdit->insertPlainText(QString("ERROR OPENING SERIAL PORT ").append(serialPortName).append("\n\n"));
+
+//		QMessageBox::warning(this, "Unable to open the serial port.", serialPortName);
 
 		return false;
 	}
