@@ -53,6 +53,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// we get the serial data on the port "event driven".
 	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
 
+	// if data are received on the serial port, call onReadyRead
+	connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
+
 	// initialise the serial port
 	// continue only on success (true)
 	if (initSerialPort() == true)
@@ -67,9 +70,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 		// Therefore we start a timer. After 3000 ms (3 seconds), it will call the function arduinoInit().
 		// This can then be used for a first command to the Arduino, like "Hey Arduino, Qt-Software now startet!".
 		QTimer::singleShot(3000, this, SLOT(arduinoInit()));
-
-		// if data are received on the serial port, call onReadyRead
-		connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
 	}
 }
 
