@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
       <x>10</x>

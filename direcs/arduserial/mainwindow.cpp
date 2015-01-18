@@ -3,41 +3,35 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+	int n = 1;
+
+
 	// show MainWindow (GUI)
 	ui->setupUi(this);
 
 	// display message in GUI
-	ui->plainTextEdit->insertPlainText("Looking for serial ports...\n\n");
+	ui->textEdit->insertPlainText("Looking for serial ports...\n\n");
 
 	// get a list of available serial ports.
 	// this is not used in the code and only for demontration.
 	QList <QextPortInfo> ports = QextSerialEnumerator::getPorts();
+
 	foreach (QextPortInfo portInfo, ports)
 	{
-		int n = 1;
-
 		// display found ports in GUI
-		ui->plainTextEdit->insertPlainText(QString("Port name:\n").append(portInfo.portName).append("\n"));
-		ui->plainTextEdit->insertPlainText(QString("Physical name:\n").append(portInfo.physName).append("\n"));
-		ui->plainTextEdit->insertPlainText(QString("Friendly name:\n").append(portInfo.friendName).append("\n"));
-		ui->plainTextEdit->insertPlainText(QString("Enumerator name:\n").append(portInfo.enumName).append("\n"));
-		ui->plainTextEdit->insertPlainText(QString("Vendor ID:\n").append(portInfo.vendorID).append("\n"));
-		ui->plainTextEdit->insertPlainText(QString("Product ID:\n").append(portInfo.productID).append("\n"));
-		ui->plainTextEdit->insertPlainText("\n");
+		ui->textEdit->insertHtml(QString("<b>%1. port name:</b> %2<br>").arg(n).arg(portInfo.portName));
+		ui->textEdit->insertHtml(QString("<b>%1. physical name:</b> %2<br>").arg(n).arg(portInfo.physName));
+		ui->textEdit->insertHtml(QString("<b>%1. friendly name:</b> %2<br>").arg(n).arg(portInfo.friendName));
+		ui->textEdit->insertHtml(QString("<b>%1. enumerator name:</b> %2<br>").arg(n).arg(portInfo.enumName));
+		ui->textEdit->insertHtml(QString("<b>%1. vendor ID:</b> %2<br>").arg(n).arg(portInfo.vendorID));
+		ui->textEdit->insertHtml(QString("<b>%1. product ID:</b> %2<br>").arg(n).arg(portInfo.productID));
+		ui->textEdit->insertHtml("<br>");
 
-		/*
-		qDebug("\n");
-		qDebug() << "port name:" << portInfo.portName;   /// Port name (QString)
-		qDebug() << "physical name:" << portInfo.physName;   /// Physical name (QString)
-		qDebug() << "friendly name:" << portInfo.friendName; /// Friendly name (QString)
-		qDebug() << "enumerator name:" << portInfo.enumName;   /// Enumerator name (QString)
-		qDebug() << "vendor ID:" << portInfo.vendorID;       /// Vendor ID (int)
-		qDebug() << "product ID:" << portInfo.productID;      /// Product ID (int)
-		qDebug("\n");
-		*/
+		// n plus 1
+		n++;
 	}
 
-	ui->plainTextEdit->insertPlainText("\n");
+	ui->textEdit->insertPlainText("\n");
 
 	// the settings for the serial port
 	// Be aware, that the Arduino has to use the same speed (9600 Baud)
@@ -68,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 		// This can then be used for a first command to the Arduino, like "Hey Arduino, Qt-Software now startet!".
 		QTimer::singleShot(3000, this, SLOT(arduinoInit()));
 
-		// If data are received on the serial port, call onReadyRead
+		// if data are received on the serial port, call onReadyRead
 		connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
 
 		// connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAddedOrRemoved()));
@@ -101,9 +95,7 @@ bool MainWindow::initSerialPort(void)
 	if ( port->isOpen() == false)
 	{
 		// show error message
-		ui->plainTextEdit->insertPlainText(QString("ERROR OPENING SERIAL PORT ").append(serialPortName).append("\n\n"));
-
-//		QMessageBox::warning(this, "Unable to open the serial port.", serialPortName);
+		ui->textEdit->insertHtml(QString("<b>Error opening serial port <i>%1</i>.</b>").arg(serialPortName));
 
 		return false;
 	}
