@@ -18,13 +18,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	foreach (QextPortInfo portInfo, ports)
 	{
 		// display found ports in GUI
-		ui->textEdit->insertHtml(QString("<b>%1. port name:</b> %2<br>").arg(n).arg(portInfo.portName));
-		ui->textEdit->insertHtml(QString("<b>%1. physical name:</b> %2<br>").arg(n).arg(portInfo.physName));
-		ui->textEdit->insertHtml(QString("<b>%1. friendly name:</b> %2<br>").arg(n).arg(portInfo.friendName));
-		ui->textEdit->insertHtml(QString("<b>%1. enumerator name:</b> %2<br>").arg(n).arg(portInfo.enumName));
-		ui->textEdit->insertHtml(QString("<b>%1. vendor ID:</b> %2<br>").arg(n).arg(portInfo.vendorID));
-		ui->textEdit->insertHtml(QString("<b>%1. product ID:</b> %2<br>").arg(n).arg(portInfo.productID));
-		ui->textEdit->insertHtml("<br>");
+		ui->textEdit->insertHtml(QString("<b><u>Port %1</u></b><br>").arg(n));
+
+		showPorts(portInfo);
 
 		// n plus 1
 		n++;
@@ -168,12 +164,12 @@ void MainWindow::onPortRemoved(QextPortInfo newPortInfo)
 
 void MainWindow::showPorts(QextPortInfo portInfos)
 {
-	ui->textEdit->insertHtml(QString("<b>port name:</b> %1<br>").arg(portInfos.portName));
-	ui->textEdit->insertHtml(QString("<b>physical name:</b> %1<br>").arg(portInfos.physName));
-	ui->textEdit->insertHtml(QString("<b>friendly name:</b> %1<br>").arg(portInfos.friendName));
-	ui->textEdit->insertHtml(QString("<b>enumerator name:</b> %1<br>").arg(portInfos.enumName));
-	ui->textEdit->insertHtml(QString("<b>vendor ID:</b> %1<br>").arg(portInfos.vendorID));
-	ui->textEdit->insertHtml(QString("<b>product ID:</b> %1<br>").arg(portInfos.productID));
+	ui->textEdit->insertHtml(QString("<b>Port name:</b> %1<br>").arg(portInfos.portName));
+	ui->textEdit->insertHtml(QString("<b>Physical name:</b> %1<br>").arg(portInfos.physName));
+	ui->textEdit->insertHtml(QString("<b>Friendly name:</b> %1<br>").arg(portInfos.friendName));
+	ui->textEdit->insertHtml(QString("<b>Enumerator name:</b> %1<br>").arg(portInfos.enumName));
+	ui->textEdit->insertHtml(QString("<b>Vendor ID:</b> %1<br>").arg(portInfos.vendorID));
+	ui->textEdit->insertHtml(QString("<b>Product ID:</b> %1<br>").arg(portInfos.productID));
 	ui->textEdit->insertHtml("<br>");
 
 	// scroll to end
