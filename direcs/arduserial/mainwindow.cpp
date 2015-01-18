@@ -3,8 +3,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-	int n = 1;
-
+	n = 1;
 
 	// show MainWindow (GUI)
 	ui->setupUi(this);
@@ -33,6 +32,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	ui->textEdit->insertPlainText("\n");
 
+	// if a USB device is added or removed, call the Slot onPortAddedOrRemoved
+	enumerator = new QextSerialEnumerator(this);
+	enumerator->setUpNotifications();
+
+	connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAddedOrRemoved(QextPortInfo)));
+	connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(onPortAddedOrRemoved(QextPortInfo)));
+
 	// the settings for the serial port
 	// Be aware, that the Arduino has to use the same speed (9600 Baud)
 	PortSettings settings = {BAUD9600, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 10}; // 10 = timeout in ms
@@ -49,11 +55,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// continue only on success (true)
 	if (initSerialPort() == true)
 	{
-		//	connect(ui->dial, SIGNAL(sliderMoved(int)), this, SLOT(transmitCmd(int)));
-
-			// On connecte le mouvement du bouton a l'envoi de la commande
-		//    connect(ui->slider, SIGNAL(sliderMoved(int)), this, SLOT(transmitCmd(int)));
-
 		// Special timer, needed for Arduino!
 		//
 		// Reason:
@@ -64,9 +65,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 		// if data are received on the serial port, call onReadyRead
 		connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
-
-		// connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAddedOrRemoved()));
-		// connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(onPortAddedOrRemoved()));
 	}
 }
 
@@ -74,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
 	delete ui;
+	delete port;
 }
 
 
@@ -95,7 +94,7 @@ bool MainWindow::initSerialPort(void)
 	if ( port->isOpen() == false)
 	{
 		// show error message
-		ui->textEdit->insertHtml(QString("<b>Error opening serial port <i>%1</i>.</b>").arg(serialPortName));
+		ui->textEdit->insertHtml(QString("<b>Error opening serial port <i>%1</i>.</b><br>").arg(serialPortName));
 
 		return false;
 	}
@@ -142,4 +141,24 @@ void MainWindow::onReadyRead()
 		// show received data
 		qDebug() << "Data received:" << receivedData;
 	}
+}
+
+
+void MainWindow::onPortAddedOrRemoved(QextPortInfo newPortInfo)
+{
+	// scroll to end
+	ui->textEdit->ensureCursorVisible();
+
+	// display found port in GUI
+	ui->textEdit->insertHtml("<br><b><i>Serial port added!</i></b><br>");
+	ui->textEdit->insertHtml(QString("<b>port name:</b> %1<br>").arg(newPortInfo.portName));
+	ui->textEdit->insertHtml(QString("<b>physical name:</b> %1<br>").arg(newPortInfo.physName));
+	ui->textEdit->insertHtml(QString("<b>friendly name:</b> %1<br>").arg(newPortInfo.friendName));
+	ui->textEdit->insertHtml(QString("<b>enumerator name:</b> %1<br>").arg(newPortInfo.enumName));
+	ui->textEdit->insertHtml(QString("<b>vendor ID:</b> %1<br>").arg(newPortInfo.vendorID));
+	ui->textEdit->insertHtml(QString("<b>product ID:</b> %1<br>").arg(newPortInfo.productID));
+	ui->textEdit->insertHtml("<br>");
+
+	// scroll to end
+	ui->textEdit->ensureCursorVisible();
 }

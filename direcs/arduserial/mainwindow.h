@@ -48,12 +48,18 @@ private slots:
 	 */
 	void onReadyRead();
 
+	/**
+	 * @brief onPortAddedOrRemoved is called, if a USB device is added or removed.
+	 */
+	void onPortAddedOrRemoved(QextPortInfo newPortInfo);
+
 
 private:
 	Ui::MainWindow *ui; /// The main window (GUI)
 	QextSerialPort *port; /// The serial port
 	QextSerialEnumerator *enumerator; /// This is for getting a list of serial ports (filenames like /dev/ttyUSB0)
 	QString serialPortName; /// for the (file)name of the serial port, like /dev/ttyUSB0 or COM1
+	int n;
 };
 
 #endif // MAINWINDOW_H
