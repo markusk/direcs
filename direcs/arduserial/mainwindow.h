@@ -23,8 +23,9 @@ public:
 
 	/**
 	 * @brief initSerialPort Initialisation of the serial port
+	 * @return true on success
 	 */
-	void initSerialPort();
+	bool initSerialPort();
 
 
 public slots:

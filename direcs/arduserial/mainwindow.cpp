@@ -33,25 +33,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
 
 	// initialise the serial port
-	initSerialPort();
+	// continue only on success (true)
+	if (initSerialPort() == true)
+	{
+		//	connect(ui->dial, SIGNAL(sliderMoved(int)), this, SLOT(transmitCmd(int)));
 
-//	connect(ui->dial, SIGNAL(sliderMoved(int)), this, SLOT(transmitCmd(int)));
+			// On connecte le mouvement du bouton a l'envoi de la commande
+		//    connect(ui->slider, SIGNAL(sliderMoved(int)), this, SLOT(transmitCmd(int)));
 
-	// On connecte le mouvement du bouton a l'envoi de la commande
-//    connect(ui->slider, SIGNAL(sliderMoved(int)), this, SLOT(transmitCmd(int)));
+		// Special timer, needed for Arduino!
+		//
+		// Reason:
+		// When the serial (USB) port is opened, the Arduino is not ready for serial communication immediately.
+		// Therefore we start a timer. After 3000 ms (3 seconds), it will call the function arduinoInit().
+		// This can then be used for a first command to the Arduino, like "Hey Arduino, Qt-Software now startet!".
+		QTimer::singleShot(3000, this, SLOT(arduinoInit()));
 
-	// Special timer, needed for Arduino.
-	// Reason:
-	// When the serial (USB) port is opened, the Arduino is not ready for serial communication immediately.
-	// Therefore we start a timer. After 3000 ms (3 seconds), it will call the function arduinoInit().
-	// This can then be used for a first command to the Arduino, like "Hey Arduino, Qt-Software now startet!".
-	QTimer::singleShot(3000, this, SLOT(arduinoInit()));
+		// If data are received on the serial port, call onReadyRead
+		connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
 
-	// If data are received on the serial port, call onReadyRead
-	connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
-
-	// connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAddedOrRemoved()));
-	// connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(onPortAddedOrRemoved()));
+		// connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAddedOrRemoved()));
+		// connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(onPortAddedOrRemoved()));
+	}
 }
 
 
@@ -70,16 +73,21 @@ void MainWindow::arduinoInit()
 }
 
 
-void MainWindow::initSerialPort(void)
+bool MainWindow::initSerialPort(void)
 {
 	// open the serial port
 	port->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
 
-	// port not opened
-	if ( !port->isOpen() )
+	// error opening port
+	if ( port->isOpen() == false)
 	{
 		QMessageBox::warning(this, "Unable to open the serial port.", serialPortName);
+
+		return false;
 	}
+
+	// success
+	return true;
 }
 
 
