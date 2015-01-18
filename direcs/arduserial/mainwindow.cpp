@@ -3,8 +3,6 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-	n = 1;
-
 	// show MainWindow (GUI)
 	ui->setupUi(this);
 
@@ -16,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QList <QextPortInfo> ports = QextSerialEnumerator::getPorts();
 
 	ui->textEdit->insertHtml("Done.<br><br>");
+
+	// for displaying the number of found ports
+	n = 1;
 
 	foreach (QextPortInfo portInfo, ports)
 	{
@@ -168,6 +169,8 @@ void MainWindow::onReadyRead()
 
 void MainWindow::onPortAdded(QextPortInfo newPortInfo)
 {
+	// get part of string
+	// (i.e. looking only for the "usbmodem1451" within "/dev/tty.usbmodem1451")
 	QStringRef subString = serialPortName.rightRef(serialPortName.lastIndexOf("."));
 
 
