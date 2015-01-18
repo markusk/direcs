@@ -49,9 +49,21 @@ private slots:
 	void onReadyRead();
 
 	/**
-	 * @brief onPortAddedOrRemoved is called, if a USB device is added or removed.
+	 * @brief onPortAdded is called, if a USB device is added.
 	 */
-	void onPortAddedOrRemoved(QextPortInfo newPortInfo);
+	void onPortAdded(QextPortInfo newPortInfo);
+
+	/**
+	 * @brief onPortRemoved is called, if a USB device is removed.
+	 */
+	void onPortRemoved(QextPortInfo newPortInfo);
+
+	/**
+	 * @brief showPorts shows the ports found by event.
+	 * @param portInfos contains the found port to be shown
+	 */
+	void showPorts(QextPortInfo portInfos);
+
 
 
 private:

@@ -36,8 +36,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	enumerator = new QextSerialEnumerator(this);
 	enumerator->setUpNotifications();
 
-	connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAddedOrRemoved(QextPortInfo)));
-	connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(onPortAddedOrRemoved(QextPortInfo)));
+	connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAdded(QextPortInfo)));
+	connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(onPortRemoved(QextPortInfo)));
 
 	// the settings for the serial port
 	// Be aware, that the Arduino has to use the same speed (9600 Baud)
@@ -144,19 +144,36 @@ void MainWindow::onReadyRead()
 }
 
 
-void MainWindow::onPortAddedOrRemoved(QextPortInfo newPortInfo)
+void MainWindow::onPortAdded(QextPortInfo newPortInfo)
 {
 	// scroll to end
 	ui->textEdit->ensureCursorVisible();
-
-	// display found port in GUI
 	ui->textEdit->insertHtml("<br><b><i>Serial port added!</i></b><br>");
-	ui->textEdit->insertHtml(QString("<b>port name:</b> %1<br>").arg(newPortInfo.portName));
-	ui->textEdit->insertHtml(QString("<b>physical name:</b> %1<br>").arg(newPortInfo.physName));
-	ui->textEdit->insertHtml(QString("<b>friendly name:</b> %1<br>").arg(newPortInfo.friendName));
-	ui->textEdit->insertHtml(QString("<b>enumerator name:</b> %1<br>").arg(newPortInfo.enumName));
-	ui->textEdit->insertHtml(QString("<b>vendor ID:</b> %1<br>").arg(newPortInfo.vendorID));
-	ui->textEdit->insertHtml(QString("<b>product ID:</b> %1<br>").arg(newPortInfo.productID));
+
+	// show ports
+	showPorts(newPortInfo);
+}
+
+
+void MainWindow::onPortRemoved(QextPortInfo newPortInfo)
+{
+	// scroll to end
+	ui->textEdit->ensureCursorVisible();
+	ui->textEdit->insertHtml("<br><b><i>Serial port removed!</i></b><br>");
+
+	// show ports
+	showPorts(newPortInfo);
+}
+
+
+void MainWindow::showPorts(QextPortInfo portInfos)
+{
+	ui->textEdit->insertHtml(QString("<b>port name:</b> %1<br>").arg(portInfos.portName));
+	ui->textEdit->insertHtml(QString("<b>physical name:</b> %1<br>").arg(portInfos.physName));
+	ui->textEdit->insertHtml(QString("<b>friendly name:</b> %1<br>").arg(portInfos.friendName));
+	ui->textEdit->insertHtml(QString("<b>enumerator name:</b> %1<br>").arg(portInfos.enumName));
+	ui->textEdit->insertHtml(QString("<b>vendor ID:</b> %1<br>").arg(portInfos.vendorID));
+	ui->textEdit->insertHtml(QString("<b>product ID:</b> %1<br>").arg(portInfos.productID));
 	ui->textEdit->insertHtml("<br>");
 
 	// scroll to end
