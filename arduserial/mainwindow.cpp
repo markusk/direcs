@@ -145,13 +145,11 @@ void MainWindow::sendValue(int value)
 
 void MainWindow::onReadyRead()
 {
-//	QString receivedData; // the data received from the serial port
 	QByteArray receivedData; // the data received from the serial port
-	QString str;
-//	int receivedInt = 0;
 	qint64 ba = 0; // bytes available
-	QChar ch = 0;
-	int dec = 0;
+	QString str; // a string to show it
+	QChar ch = 0; // the char of the received data
+	int dec = 0; // the int of the received data
 
 
 	// how many bytes are available?
@@ -164,25 +162,31 @@ void MainWindow::onReadyRead()
 	if (ba > 0)
 	{
 		// read data and convert them to a QString
-		// receivedData = (QString::fromLatin1( port->readAll() ));
 		receivedData = port->readAll();
 
 		// convert from QByteArray to QString
 		str = QString::fromUtf8(receivedData.constData());
 
-		// show received data
+		// show received data as QString
 		ui->textEdit->insertHtml(QString("%1 byte(s) received. ASCII: %2<br>").arg(ba).arg(str));
 
-		// show DEC and HEX of each char
-		//
-		// convert one byte to QChar
-		ch = receivedData.at(n);
+		// show each byte
+		while (n < receivedData.length())
+		{
+			// show DEC of each char
+			//
+			// convert one byte to QChar
+			ch = receivedData.at(n);
 
-		// convert to int
-		dec = (int) ch.toAscii();
+			// convert to int
+			dec = (int) ch.toAscii();
 
-		// show in GUI
-		ui->textEdit->insertHtml(QString("Byte No.%1: %2 (DEC)<br>").arg(n).arg(dec));
+			// show in GUI
+			ui->textEdit->insertHtml(QString("Byte No.%1: %2 (DEC)<br>").arg(n).arg(dec));
+
+			// counter +1
+			n++;
+		}
 	}
 }
 
