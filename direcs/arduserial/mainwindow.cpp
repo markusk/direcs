@@ -9,11 +9,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->setupUi(this);
 
 	// display message in GUI
-	ui->textEdit->insertPlainText("Looking for serial ports...\n\n");
+	ui->textEdit->insertHtml("Scanning for serial ports... ");
 
 	// get a list of available serial ports.
 	// this is not used in the code and only for demontration.
 	QList <QextPortInfo> ports = QextSerialEnumerator::getPorts();
+
+	ui->textEdit->insertHtml("Done.<br><br>");
 
 	foreach (QextPortInfo portInfo, ports)
 	{
@@ -26,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 		n++;
 	}
 
-	ui->textEdit->insertPlainText("\n");
+	ui->textEdit->insertHtml("<br><br>");
 
 	// if a USB device is added or removed, call the Slot onPortAddedOrRemoved
 	enumerator = new QextSerialEnumerator(this);
@@ -35,13 +37,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(onPortAdded(QextPortInfo)));
 	connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(onPortRemoved(QextPortInfo)));
 
+	//--------------------------------------------------------------------------------------------------
 	// the settings for the serial port
 	// Be aware, that the Arduino has to use the same speed (9600 Baud)
 	PortSettings settings = {BAUD9600, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 10}; // 10 = timeout in ms
+	//--------------------------------------------------------------------------------------------------
 
+	//--------------------------------------------------------------------------------------------------
 	// the name of the serial port
 	// on Windows, this would be i.e. COM5
 	serialPortName = "/dev/tty.usbmodem1451";
+	//--------------------------------------------------------------------------------------------------
 
 	// create the serial port object.
 	// we get the serial data on the port "event driven".
@@ -52,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	if (initSerialPort() == true)
 	{
 		// display message in GUI
-		ui->textEdit->insertPlainText("Sending data to Arduino in some seconds (arduinoInit)...\n\n");
+		ui->textEdit->insertHtml("<b>Sending data to Arduino in some seconds (arduinoInit)...</b><br><br>");
 
 		// Special timer, needed for Arduino!
 		//
@@ -77,10 +83,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::arduinoInit()
 {
+	// send values to Arduino (insert your own initialisation here!)
 	sendValue('*');
 	sendValue('r');
 	sendValue('e');
 	sendValue('#');
+
+	ui->textEdit->insertHtml("<br><b>Waiting for Arduino answer...</b><br><br>");
 }
 
 
@@ -90,7 +99,7 @@ bool MainWindow::initSerialPort(void)
 	port->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
 
 	// error opening port
-	if ( port->isOpen() == false)
+	if (port->isOpen() == false)
 	{
 		// show error message
 		ui->textEdit->insertHtml(QString("<b>Error opening serial port <i>%1</i>.</b><br>").arg(serialPortName));
@@ -129,16 +138,23 @@ void MainWindow::sendValue(int value)
 void MainWindow::onReadyRead()
 {
 	QString receivedData; // the data received from the serial port
+//	int receivedInt = 0;
+	qint64 ba = 0; // bytes available
 
+
+	// how many bytes are available?
+	ba = port->bytesAvailable();
 
 	// if data available (should _always_ be the case, since this method is called automatically by an event)
-	if (port->bytesAvailable())
+	if (ba > 0)
 	{
 		// read data and convert them to a QString
-		receivedData = (QString::fromLatin1(port->readAll()));
+//		receivedInt = (int) port->readAll();
+		receivedData = (QString::fromLatin1( port->readAll() ));
 
 		// show received data
-		qDebug() << "Data received:" << receivedData;
+		ui->textEdit->insertHtml(QString("%1 byte(s) received. Received data: %2 (ASCII)<br>").arg(ba).arg(receivedData));
+//		ui->textEdit->insertHtml(QString("%1 byte(s) received. Written value: %2 (DEC), %3 (HEX), %4 (ASCII)<br>").arg(ba).arg(value).arg(value, 0, 16).arg(receivedData));
 	}
 }
 
