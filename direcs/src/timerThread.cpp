@@ -25,6 +25,9 @@ TimerThread::TimerThread()
 	stopped = false;
 	networkStateSet = false;
 	arduinoStateSet = false;
+
+	// unless otherwise told by the circuit class
+	robotState = true;
 }
 
 

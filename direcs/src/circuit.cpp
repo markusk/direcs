@@ -105,7 +105,7 @@ bool Circuit::initArduino()
 	firstInitDone = false;
 	circuitState = true;
 
-	initCircuit();
+	return initCircuit();
 }
 
 
