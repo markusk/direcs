@@ -10,7 +10,8 @@ RESOURCES = ../direcs.qrc
 
 CONFIG += warn_on \
 	thread \
-	qt
+	qt \
+	extserialport
 
 TEMPLATE = app
 
@@ -25,6 +26,7 @@ unix|macx {
 				consoleGui.h \
 				demoThread.h \
 				direcsSerial.h \
+				direcsSerialQext.h \
 				gui.h \
 				head.h \
 				inifile.h \
@@ -57,6 +59,7 @@ unix|macx {
 				consoleGui.cpp \
 				demoThread.cpp \
 				direcsSerial.cpp \
+				direcsSerialQext.cpp \
 				gui.cpp \
 				head.cpp \
 				inifile.cpp \
@@ -99,7 +102,8 @@ unix|macx {
 				/opt/local/include/qwt \
 				/usr/local/include \
 				/usr/local/include/libfreenect \
-				/opt/local/include/phonon
+				/opt/local/include/phonon \
+				/opt/local/include/QtExtSerialPort/
 
 	LIBS +=		-L/opt/local/lib \
 				-L/usr/lib \
