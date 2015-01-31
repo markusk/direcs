@@ -82,12 +82,22 @@ class TimerThread : public QThread
 		*/
 		void networkMessage();
 
+	public slots:
+		/**
+		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
+		When the class knows this, unnecessary communication with the interface can be avoided.
+
+		@param state can be ON or OFF
+		 */
+		void setRobotState(bool state);
+
 
 	private:
 		QTime startTime; /// this is for getting the current time
 		QTime now; /// this is for getting the current time
 		volatile bool stopped;
 
+		bool robotState; // stores the robot state within this class
 		bool networkStateSet; // event occured?
 		bool arduinoStateSet; // event occured?
 		static const int timeToNetworkCheck = 3; // time in seconds

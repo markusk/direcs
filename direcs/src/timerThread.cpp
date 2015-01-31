@@ -39,6 +39,13 @@ void TimerThread::stop()
 }
 
 
+void TimerThread::setRobotState(bool state)
+{
+	// store the state within this class
+	robotState = state;
+}
+
+
 void TimerThread::run()
 {
 	// get the current date and time
@@ -73,9 +80,11 @@ void TimerThread::run()
 		}
 
 		//------------------
-		// Arduino called`?
+		// Arduino called?
+		//
+		// only do this, when robot is not already identified as 'off'. i.e. open com port did not work
 		//------------------
-		if (arduinoStateSet == false)
+		if ((arduinoStateSet == false) && (robotState == true))
 		{
 			// time elapsed for receiving a master signal.
 			if (startTime.secsTo(now) >= timeToArduinoCheck)

@@ -391,6 +391,10 @@ void Direcs::init()
 //	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), rgbLeds,			SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
+
+	// let the tiemr thread know, so it does not call arduino init via signal
+	connect(interface1, SIGNAL( robotState(bool) ), timerThread,		SLOT( setRobotState(bool) ));
+
 	if (!consoleMode)
 	{
 		connect(interface1,	SIGNAL( robotState(bool) ), gui,			SLOT( setRobotControls(bool) ));
