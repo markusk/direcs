@@ -37,6 +37,13 @@ DirecsSerialQext::DirecsSerialQext()
 	settings.Timeout_Millisec = 10;
 
 	portOpened = false;
+
+	// create the serial port object.
+	// we get the serial data on the port "event driven".
+	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
+
+	// if data are received on the serial port, call onReadyRead
+	connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
 }
 
 
@@ -48,18 +55,13 @@ DirecsSerialQext::~DirecsSerialQext()
 
 bool DirecsSerialQext::openPort(QString portName, BaudRateType baudrate)
 {
-	// set baudrate
-	settings.BaudRate = baudrate;
-
 	//set port name
 	serialPortName = portName;
 
-	// create the serial port object.
-	// we get the serial data on the port "event driven".
-	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
+	// set baudrate
+	settings.BaudRate = baudrate;
 
-	// if data are received on the serial port, call onReadyRead
-	connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
+	port->setPortName(serialPortName);
 
 	// open the serial port
 	port->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
