@@ -138,6 +138,8 @@ class Circuit : public QObject
 		static const bool ON  = true;
 		static const bool OFF = false;
 
+		static const int atmelTimout = 500; // time in ms for waiting for an answer
+
 		/**
 		example answer string without value from Atmel: *re#
 		example answer string with value from Atmel:    *s7=42#

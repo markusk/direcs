@@ -28,9 +28,6 @@ InterfaceAvr::InterfaceAvr()
 	// creating the serial port object
 	serialPort = new DirecsSerialQext();
 
-	commandStarted = false;
-	commandCompleted = false;
-
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
 	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
@@ -305,70 +302,60 @@ void InterfaceAvr::receiveData(QString data)
 	}
 
 
-//	if (commandCompleted == false)
-//	{
-		// starts with * ?
-		if (data.startsWith(starter))
-		{
-			// ends with # ?
-			if (data.endsWith(terminator))
-			{
-				//-------------------
-				// commmand complete
-				//-------------------
-
-				emit message("*# AT ONCE!");
-
-				// command complete "at once" in data!
-				emit commandComplete(data);
-
-				answer.clear();
-
-//				commandStarted = false;
-//				commandCompleted = true;
-			}
-
-
-			//-----------------
-			// command started
-			//-----------------
-//			commandStarted = true;
-
-			// store data locally
-			answer = data;
-
-			return;
-		}
-//	}
-
-	// command started with previous data
-//	if (commandStarted)
-//	{
-		//--------------------
-		// middle of command
-		//--------------------
-
-		// add data to previous string
-		answer.append(data);
-
-
+	// starts with * ?
+	if (data.startsWith(starter))
+	{
 		// ends with # ?
-		if (answer.endsWith(terminator))
+		if (data.endsWith(terminator))
 		{
-			//--------------------
-			// commmand completed
-			//--------------------
+			//-------------------
+			// commmand complete
+			//-------------------
 
-			emit message("*# BUILT.");
+			// emit message("*# AT ONCE!");
 
-			// command complete!
-			emit commandComplete(answer);
+			// command complete "at once" in data!
+			emit commandComplete(data);
 
-			// delete string
 			answer.clear();
 
-//			commandStarted = false;
-//			commandCompleted = true;
 		}
-//	}
+
+
+		//-----------------
+		// command started
+		//-----------------
+		// emit message("STARTED");
+
+		// store data locally
+		answer = data;
+
+		return;
+	}
+
+
+	//--------------------
+	// middle of command
+	//--------------------
+
+	// add data to previous string
+	answer.append(data);
+
+
+	// ends with # ?
+	if (answer.endsWith(terminator))
+	{
+		//--------------------
+		// commmand completed
+		//--------------------
+
+		// emit message("*# BUILT.");
+
+		// command complete!
+		emit commandComplete(answer);
+
+		// delete string
+		answer.clear();
+
+	}
 }

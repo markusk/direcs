@@ -96,7 +96,7 @@ bool Circuit::initCircuit()
 			{
 				// this is needed that alls Signals and Slots work in the backround...
 				QCoreApplication::processEvents();
-			} while ((atmelAnswer != expectedAtmelAnswer) && (startTime.elapsed() < 1000)); // wait for 1000ms
+			} while ((atmelAnswer != expectedAtmelAnswer) && (startTime.elapsed() < atmelTimout));
 
 			// OKAY!
 			if (atmelAnswer == expectedAtmelAnswer)
