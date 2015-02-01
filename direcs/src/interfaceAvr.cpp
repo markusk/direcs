@@ -300,12 +300,18 @@ void InterfaceAvr::receiveData(QString data)
 	// starts with * ?
 	if (data.startsWith(starter))
 	{
+		//--------------------
+		// command complete!
+		//--------------------
 		if (data.endsWith(terminator))
 		{
 			// store data locally
 			answer = data;
 
 			emit message("*# COMPLETE!");
+
+			// command complete!
+			emit commandComplete(answer);
 		}
 	}
 }

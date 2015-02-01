@@ -39,11 +39,23 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	commandInitCircuit	= "re";
 	commandInitCompass	= "cc";
 	commandSleep		= "sl";
+
+	// receive serial commands from direcsSerial
+	connect(interface1, SIGNAL(commandComplete(QString)), this, SLOT(getCommand(QString)));
 }
 
 
 Circuit::~Circuit()
 {
+}
+
+
+void Circuit::getCommand(QString command)
+{
+	//store anser
+	atmelAnswer = command;
+
+	emit message(QString(">>> Circuit::getCommand: %1.").arg(atmelAnswer));
 }
 
 

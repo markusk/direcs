@@ -129,6 +129,12 @@ class InterfaceAvr : public QObject
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
+		/**
+		  * Send this Signal from @sa receiveData when a command is complete. i.e. *re#
+		**/
+		void commandComplete(QString command);
+
+
 	public slots:
 		/**
 		 * @brief receiveData takes the data recevied on the serial port

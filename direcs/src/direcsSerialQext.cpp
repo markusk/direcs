@@ -228,7 +228,7 @@ void DirecsSerialQext::onReadyRead()
 			dec = (int) ch.toAscii();
 
 			// show in GUI / debug...
-			emit message(QString("<font color=\"#0000FF\">Byte No.%1: %2 (DEC)</font>").arg(n).arg(dec));
+			// emit message(QString("<font color=\"#0000FF\">Byte No.%1: %2 (DEC)</font>").arg(n).arg(dec));
 
 			// counter +1
 			n++;
