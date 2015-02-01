@@ -35,6 +35,8 @@ DirecsSerialQext::DirecsSerialQext()
 	settings.StopBits = STOP_1;
 	settings.FlowControl = FLOW_OFF;
 	settings.Timeout_Millisec = 10;
+
+	portOpened = false;
 }
 
 
@@ -58,6 +60,8 @@ bool DirecsSerialQext::openPort(BaudRateType baudrate)
 
 		return false;
 	}
+
+	portOpened = true;
 
 	// success
 	return true;
@@ -223,5 +227,8 @@ void DirecsSerialQext::onReadyRead()
 
 void DirecsSerialQext::closePort()
 {
-  port->close();
+	if (portOpened)
+	{
+		port->close();
+	}
 }

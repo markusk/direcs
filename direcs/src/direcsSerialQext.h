@@ -110,6 +110,7 @@ class DirecsSerialQext : public QObject
 		QextSerialEnumerator *enumerator; /// This is for getting a list of serial ports (filenames like /dev/ttyUSB0)
 		QString serialPortName; /// for the (file)name of the serial port, like /dev/ttyUSB0 or COM1
 		int n;
+		bool portOpened; /// will be set in port open and checked in close port to avoid crash when trying to close an unopend port
 };
 
 #endif
