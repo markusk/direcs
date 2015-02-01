@@ -47,9 +47,10 @@ class DirecsSerialQext : public QObject
 
 		/**
 		 * Open a connection to the serial line.
+		 * @param baudrate i.e. BAUD9600
 		 * @return true on success
 		 */
-		bool openSerialPort();
+		bool openPort(BaudRateType baudrate);
 
 		/**
 		 * Flushes the serial buffer.

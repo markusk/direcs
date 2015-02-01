@@ -29,7 +29,7 @@ DirecsSerialQext::DirecsSerialQext()
 	mDev_fd = -1; // the file descriptor !!
 
 	// settings for the serial port
-	settings.BaudRate = BAUD9600;
+	settings.BaudRate = BAUD9600; // dummy, can be changed with openPort(baudrate)
 	settings.DataBits = DATA_8;
 	settings.Parity = PAR_NONE;
 	settings.StopBits = STOP_1;
@@ -43,31 +43,24 @@ DirecsSerialQext::~DirecsSerialQext()
 }
 
 
-bool DirecsSerialQext::openSerialPort()
+bool DirecsSerialQext::openPort(BaudRateType baudrate)
 {
-	// initialise the serial port
-	// continue only on success (true)
-	if (openSerialPort() == true)
+	settings.BaudRate = baudrate;
+
+	// open the serial port
+	port->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
+
+	// error opening port
+	if (port->isOpen() == false)
 	{
-		emit message("Serial port openend.");
+		// show error message
+		emit message(QString("<font color=\"#FF0000\">ERROR opening serial port %1 (%2).</font>").arg(serialPortName).arg(className));
 
-/*
-		// display message in GUI
-		ui->textEdit->insertHtml("<b>Sending data to Arduino in some seconds (arduinoInit)...</b><br><br>");
-
-		// Special timer, needed for Arduino!
-		//
-		// Reason:
-		// When the serial (USB) port is opened, the Arduino is not ready for serial communication immediately.
-		// Therefore we start a timer. After 3000 ms (3 seconds), it will call the function arduinoInit().
-		// This can then be used for a first command to the Arduino, like "Hey Arduino, Qt-Software now startet!".
- @todo: where do we put this?!? already a timerthread in direcs.cpp!!		QTimer::singleShot(3000, this, SLOT(timerSlot()));
- */
+		return false;
 	}
 
-	// error
-	emit message(QString("<font color=\"#FF0000\">ERROR opening serial port %1 (%2).</font>").arg(serialPortName).arg(className));
-	return false;
+	// success
+	return true;
 }
 
 
