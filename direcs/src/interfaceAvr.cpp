@@ -28,6 +28,9 @@ InterfaceAvr::InterfaceAvr()
 	// creating the serial port object
 	serialPort = new DirecsSerialQext();
 
+	commandStarted = false;
+	commandCompleted = false;
+
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
 	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
@@ -286,6 +289,7 @@ void InterfaceAvr::receiveData(QString data)
 {
 	// check string / received data
 
+	// discard string if too long!
 	if (data.length() > MAXCOMMANDLENGTH)
 	{
 		// delete string
@@ -294,24 +298,77 @@ void InterfaceAvr::receiveData(QString data)
 		// discard data!
 		emit message("STRING DISCARDED!");
 
+		commandStarted = false;
+		commandCompleted = false;
+
 		return;
 	}
 
-	// starts with * ?
-	if (data.startsWith(starter))
-	{
-		//--------------------
-		// command complete!
-		//--------------------
-		if (data.endsWith(terminator))
+
+//	if (commandCompleted == false)
+//	{
+		// starts with * ?
+		if (data.startsWith(starter))
 		{
+			// ends with # ?
+			if (data.endsWith(terminator))
+			{
+				//-------------------
+				// commmand complete
+				//-------------------
+
+				emit message("*# AT ONCE!");
+
+				// command complete "at once" in data!
+				emit commandComplete(data);
+
+				answer.clear();
+
+//				commandStarted = false;
+//				commandCompleted = true;
+			}
+
+
+			//-----------------
+			// command started
+			//-----------------
+//			commandStarted = true;
+
 			// store data locally
 			answer = data;
 
-			emit message("*# COMPLETE!");
+			return;
+		}
+//	}
+
+	// command started with previous data
+//	if (commandStarted)
+//	{
+		//--------------------
+		// middle of command
+		//--------------------
+
+		// add data to previous string
+		answer.append(data);
+
+
+		// ends with # ?
+		if (answer.endsWith(terminator))
+		{
+			//--------------------
+			// commmand completed
+			//--------------------
+
+			emit message("*# BUILT.");
 
 			// command complete!
 			emit commandComplete(answer);
+
+			// delete string
+			answer.clear();
+
+//			commandStarted = false;
+//			commandCompleted = true;
 		}
-	}
+//	}
 }
