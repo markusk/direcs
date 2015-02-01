@@ -101,7 +101,7 @@ int DirecsSerialQext::writeData(int value, QString callingClassName)
 		bw = port->write(byte);
 
 		// show sent data / debug...
-		emit message(QString("<font color=\"#0000FF\">%1 byte(s) written. Written value: %2 (DEC) / %3 (HEX) / %4 (ASCII)</font>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
+		// emit message(QString("<font color=\"#0000FF\">%1 byte(s) written. Written value: %2 (DEC) / %3 (HEX) / %4 (ASCII)</font>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
 
 		// flush serial port
 		port->flush();

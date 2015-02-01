@@ -62,6 +62,9 @@ void Circuit::getCommand(QString command)
 
 bool Circuit::initCircuit()
 {
+	QTime startTime;
+
+
 	emit message(">>> initCircuit()");
 
 
@@ -87,16 +90,21 @@ bool Circuit::initCircuit()
 
 			// check if the robot answers
 			// (event driven answer, @sa getCommand)
-//			do
-//			{
-//				// timer stuff!
-//			} while (atmelAnswer != expectedAtmelAnswer);
+			startTime.start();
+
+			do
+			{
+				// this is needed that alls Signals and Slots work in the backround...
+				QCoreApplication::processEvents();
+			} while ((atmelAnswer != expectedAtmelAnswer) && (startTime.elapsed() < 1000)); // wait for 1000ms
 
 			// OKAY!
 			if (atmelAnswer == expectedAtmelAnswer)
 			{
 				// Unlock the mutex
 				mutex->unlock();
+
+				emit message(">>> OKAY");
 
 				// ciruit init okay
 				firstInitDone = true;
