@@ -51,6 +51,8 @@ bool Circuit::initCircuit()
 {
 	QString answer = "error";
 
+	emit message(">>> initCircuit()");
+
 
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
@@ -99,7 +101,7 @@ bool Circuit::initCircuit()
 
 bool Circuit::initArduino()
 {
-	emit message(">>> Arduino check now!");
+	emit message(">>> initArduino()");
 
 	// check again!
 	firstInitDone = false;

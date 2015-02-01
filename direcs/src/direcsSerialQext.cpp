@@ -100,15 +100,15 @@ int DirecsSerialQext::writeData(int value, QString callingClassName)
 		// write byte to serial port
 		bw = port->write(byte);
 
-		// show sent data
-		// ui->textEdit->insertHtml(QString("%1 byte(s) written. Written value: %2 (DEC) / %3 (HEX) / %4 (ASCII)<br>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
+		// show sent data / debug...
+		emit message(QString("<font color=\"#0000FF\">%1 byte(s) written. Written value: %2 (DEC) / %3 (HEX) / %4 (ASCII)</font>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
 
 		// flush serial port
 		port->flush();
 
 		if (bw == -1)
 		{
-//			emit message(QString("<font color=\"#FF0000\">ERROR '%1' when writing to serial port (%2 called from %3.</font>").arg(port->errorString()).arg(className).arg(callingClassName));
+			emit message(QString("<font color=\"#FF0000\">ERROR '%1' when writing to serial port (%2 called from %3.</font>").arg(port->errorString()).arg(className).arg(callingClassName));
 		}
 	}
 
@@ -213,8 +213,8 @@ void DirecsSerialQext::onReadyRead()
 		// convert from QByteArray to QString
 		str = QString::fromUtf8(receivedData.constData());
 
-		// show received data as QString
-//		ui->textEdit->insertHtml(QString("%1 byte(s) received. ASCII: %2<br>").arg(ba).arg(str));
+		// show in GUI / debug...
+		emit message(QString("<font color=\"#0000FF\">%1 byte(s) received. ASCII: %2<font>").arg(ba).arg(str));
 
 		// show each byte
 		while (n < receivedData.length())
@@ -227,8 +227,8 @@ void DirecsSerialQext::onReadyRead()
 			// convert to int
 			dec = (int) ch.toAscii();
 
-			// show in GUI
-//			ui->textEdit->insertHtml(QString("Byte No.%1: %2 (DEC)<br>").arg(n).arg(dec));
+			// show in GUI / debug...
+			emit message(QString("<font color=\"#0000FF\">Byte No.%1: %2 (DEC)</font>").arg(n).arg(dec));
 
 			// counter +1
 			n++;
