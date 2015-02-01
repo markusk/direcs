@@ -34,6 +34,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	compassCircuitState = false;
 
 	expectedAtmelAnswer = "error";
+	atmelAnswer.clear();
 
 	// theAtmelcommands
 	commandInitCircuit	= "re";
@@ -61,8 +62,6 @@ void Circuit::getCommand(QString command)
 
 bool Circuit::initCircuit()
 {
-	QString answer = "error";
-
 	emit message(">>> initCircuit()");
 
 
@@ -76,30 +75,44 @@ bool Circuit::initCircuit()
 		//-------------------------------------------------------
 
 		// sending RESET (INIT) command
+
+		//reset previous answer
+		atmelAnswer.clear();
+
 		if (interface1->sendString("re", className) == true)
 		{
+			expectedAtmelAnswer = "*re#";
+
+			emit message(">>> waiting for answer");
+
 			// check if the robot answers
-			if ( interface1->receiveString(answer, className) == true)
+			// (event driven answer, @sa getCommand)
+//			do
+//			{
+//				// timer stuff!
+//			} while (atmelAnswer != expectedAtmelAnswer);
+
+			// OKAY!
+			if (atmelAnswer == expectedAtmelAnswer)
 			{
-				// check if the robot answers with "ok"
-				if (answer == "*re#")
-				{
-					// Unlock the mutex
-					mutex->unlock();
+				// Unlock the mutex
+				mutex->unlock();
 
-					// ciruit init okay
-					firstInitDone = true;
-					circuitState = true;
-					emit robotState(true);
+				// ciruit init okay
+				firstInitDone = true;
+				circuitState = true;
+				emit robotState(true);
 
-					return true;
-				}
+				return true;
 			}
+
+			// okay, we had a timout, waiting for the answer!
+			emit message(">>> TIMEOUT");
+
 		}
 
 		// Unlock the mutex.
 		mutex->unlock();
-
 	}
 
 	qDebug("INFO from initCircuit: Robot is OFF.");
