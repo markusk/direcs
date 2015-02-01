@@ -65,9 +65,6 @@ bool Circuit::initCircuit()
 	QTime startTime;
 
 
-	emit message(">>> initCircuit()");
-
-
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -86,8 +83,6 @@ bool Circuit::initCircuit()
 		{
 			expectedAtmelAnswer = "*re#";
 
-			emit message(">>> waiting for answer");
-
 			// check if the robot answers
 			// (event driven answer, @sa getCommand)
 			startTime.start();
@@ -103,8 +98,6 @@ bool Circuit::initCircuit()
 			{
 				// Unlock the mutex
 				mutex->unlock();
-
-				emit message(">>> OKAY");
 
 				// ciruit init okay
 				firstInitDone = true;
@@ -134,8 +127,6 @@ bool Circuit::initCircuit()
 
 bool Circuit::initArduino()
 {
-	emit message(">>> initArduino()");
-
 	// check again!
 	firstInitDone = false;
 	circuitState = true;

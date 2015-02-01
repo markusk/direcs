@@ -214,7 +214,8 @@ void DirecsSerialQext::onReadyRead()
 		str = QString::fromUtf8(receivedData.constData());
 
 		// show in GUI / debug...
-		emit message(QString("<font color=\"#0000FF\">%1 byte(s) received. ASCII: %2<font>").arg(ba).arg(str));
+		// emit message(QString("<font color=\"#0000FF\">%1 byte(s) received. ASCII: %2<font>").arg(ba).arg(str));
+		emit message(QString("<font color=\"#0000FF\">%1 byte/s: %2<font>").arg(ba).arg(str));
 
 		// show each byte
 		while (n < receivedData.length())
