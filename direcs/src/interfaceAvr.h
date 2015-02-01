@@ -132,7 +132,7 @@ class InterfaceAvr : public QObject
 		/**
 		  * Send this Signal from @sa receiveData when a command is complete. i.e. *re#
 		**/
-		void commandComplete(QString command);
+		void answerComplete(QString command);
 
 
 	public slots:

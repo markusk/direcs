@@ -94,7 +94,7 @@ class DirecsSerialQext : public QObject
 		  * This signal is sent when the received data are 'complete'
 		  * @param data contains the data as a QString
 		**/
-		void dataComplete(QString data);
+		void dataReceived(QString data);
 
 
 	private slots:

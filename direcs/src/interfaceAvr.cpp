@@ -315,7 +315,7 @@ void InterfaceAvr::receiveData(QString data)
 			// emit message("*# AT ONCE!");
 
 			// command complete "at once" in data!
-			emit commandComplete(data);
+			emit answerComplete(data);
 
 			answer.clear();
 
@@ -352,7 +352,7 @@ void InterfaceAvr::receiveData(QString data)
 		// emit message("*# BUILT.");
 
 		// command complete!
-		emit commandComplete(answer);
+		emit answerComplete(answer);
 
 		// delete string
 		answer.clear();
