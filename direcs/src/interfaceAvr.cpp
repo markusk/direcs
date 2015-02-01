@@ -58,7 +58,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 
 	// serial port config and flush also done in openAtmelPort!
-	if (serialPort->openPort(BAUDRATE ) == false)
+	if (serialPort->openPort(comPort, BAUDRATE ) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
@@ -84,7 +84,7 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 
 	// send one byte to the serial port with direcsSerial
 	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeData(&character, callingClassName);
+	result = serialPort->writeData((int) character, callingClassName); /// @todo convert character to int before!!
 
 	if (result < 0)
 	{

@@ -47,10 +47,11 @@ class DirecsSerialQext : public QObject
 
 		/**
 		 * Open a connection to the serial line.
+		 * @param portName i.e. /dev/tty.usbmodemfd1411
 		 * @param baudrate i.e. BAUD9600
 		 * @return true on success
 		 */
-		bool openPort(BaudRateType baudrate);
+		bool openPort(QString portName, BaudRateType baudrate);
 
 		/**
 		 * Flushes the serial buffer.
