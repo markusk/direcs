@@ -26,7 +26,7 @@ InterfaceAvr::InterfaceAvr()
 	className = this->staticMetaObject.className();
 
 	// creating the serial port object
-	serialPort = new DirecsSerial();
+	serialPort = new DirecsSerialQext();
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
@@ -58,7 +58,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 
 	// serial port config and flush also done in openAtmelPort!
-	if (serialPort->openPort( ba.data(), BAUDRATE ) == -1)
+	if (serialPort->openPort(BAUDRATE ) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
