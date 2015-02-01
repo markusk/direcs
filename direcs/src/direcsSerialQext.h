@@ -90,6 +90,12 @@ class DirecsSerialQext : public QObject
 		*/
 		void message(QString text);
 
+		/**
+		  * This signal is sent when the received data are 'complete'
+		  * @param data contains the data as a QString
+		**/
+		void dataComplete(QString data);
+
 
 	private slots:
 		/**

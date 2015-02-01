@@ -129,6 +129,13 @@ class InterfaceAvr : public QObject
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
+	public slots:
+		/**
+		 * @brief receiveData takes the data recevied on the serial port
+		 * @param data as QString
+		 */
+		void receiveData(QString data);
+
 
 	private:
 		QString className;	/// this will contain the name of this class at runtime for debug messages

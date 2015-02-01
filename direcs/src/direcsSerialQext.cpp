@@ -233,6 +233,9 @@ void DirecsSerialQext::onReadyRead()
 			// counter +1
 			n++;
 		}
+
+		// all data received
+		emit dataComplete(str);
 	}
 }
 
