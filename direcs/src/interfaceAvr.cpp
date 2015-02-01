@@ -284,5 +284,28 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 
 void InterfaceAvr::receiveData(QString data)
 {
-	emit message(QString("receivedData in InterfaceAvr: %1").arg(data));
+	// check string / received data
+
+	if (data.length() > MAXCOMMANDLENGTH)
+	{
+		// delete string
+		answer.clear();
+
+		// discard data!
+		emit message("STRING DISCARDED!");
+
+		return;
+	}
+
+	// starts with * ?
+	if (data.startsWith(starter))
+	{
+		if (data.endsWith(terminator))
+		{
+			// store data locally
+			answer = data;
+
+			emit message("*# COMPLETE!");
+		}
+	}
 }

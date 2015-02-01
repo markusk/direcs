@@ -140,6 +140,8 @@ class InterfaceAvr : public QObject
 	private:
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 		DirecsSerialQext *serialPort;
+		QString answer; /// this will contain the event driven answer when data are received @sa receiveData Slot.
+		const int MAXCOMMANDLENGTH = 32; /// Max. length of a command from the Arduino.
 
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"
