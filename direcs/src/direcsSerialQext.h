@@ -35,6 +35,9 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 
+#include <qextserialport.h> /// This is for serial port communication
+#include <qextserialenumerator.h> /// This is for getting a list of serial ports
+
 #include <QtGlobal> // for Q_OS_* Makro!
 
 #ifdef CYGWIN
@@ -71,15 +74,10 @@ class DirecsSerialQext : public QObject
 		~DirecsSerialQext();
 
 		/**
-		Open a connection to the serial line.
-
-		The serial port settings (8,N,1) for the serial port are set in this method, too!
-
-		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
-		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
-		@return the file descriptor if everything is fine, -1 in case of an error.
-		**/
-		int openPort(char *dev_name, int baudrate);
+		 * Open a connection to the serial line.
+		 * @return true on success
+		 */
+		bool openSerialPort();
 
 		/**
 		Clears the read buffer.
@@ -127,6 +125,15 @@ class DirecsSerialQext : public QObject
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 
 		int mDev_fd; //! the file descriptor of the serial port
+
+		QextSerialPort *port; /// The serial port
+		/// the settings for the serial port (Baudrate, Parity etc.)
+		/// Be aware, that the Arduino has to use the same speed (9600 Baud)
+		PortSettings settings;
+
+		QextSerialEnumerator *enumerator; /// This is for getting a list of serial ports (filenames like /dev/ttyUSB0)
+		QString serialPortName; /// for the (file)name of the serial port, like /dev/ttyUSB0 or COM1
+		int n;
 };
 
 #endif
