@@ -42,7 +42,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	commandSleep		= "sl";
 
 	// receive serial commands from direcsSerial
-	connect(interface1, SIGNAL(commandComplete(QString)), this, SLOT(getCommand(QString)));
+	connect(interface1, SIGNAL(answerComplete(QString)), this, SLOT(getCommand(QString)));
 }
 
 

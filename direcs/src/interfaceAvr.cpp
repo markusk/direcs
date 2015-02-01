@@ -33,7 +33,7 @@ InterfaceAvr::InterfaceAvr()
 	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
 
 	// receive data from the diresSerial class - event driven!
-	connect(serialPort, SIGNAL(dataComplete(QString)), this, SLOT(receiveData(QString)));
+	connect(serialPort, SIGNAL(dataReceived(QString)), this, SLOT(receiveData(QString)));
 }
 
 
