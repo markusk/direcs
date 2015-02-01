@@ -80,11 +80,9 @@ class DirecsSerialQext : public QObject
 		bool openSerialPort();
 
 		/**
-		Clears the read buffer.
-
-		@return Upon successful completion, this function returns zero.
+		 * Flushes the serial buffer.
 		*/
-		int purgeRx();
+		void purgeRx(); /// @todo rename to flush
 
 		/**
 		Writes data to the serial line.
@@ -106,11 +104,9 @@ class DirecsSerialQext : public QObject
 		int readData(unsigned char *buf, int nChars, QString callingClassName = "none");
 
 		/**
-		Closes the serial port.
-
-		@return the results reported by close.
+		 * Closes the serial port.
 		**/
-		int closePort();
+		void closePort();
 
 
 	signals:

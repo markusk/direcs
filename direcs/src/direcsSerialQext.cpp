@@ -49,7 +49,7 @@ bool DirecsSerialQext::openSerialPort()
 	// continue only on success (true)
 	if (openSerialPort() == true)
 	{
-		emit message("Serial device openend.");
+		emit message("Serial port openend.");
 
 /*
 		// display message in GUI
@@ -71,13 +71,9 @@ bool DirecsSerialQext::openSerialPort()
 }
 
 
-int DirecsSerialQext::purgeRx()
+void DirecsSerialQext::purgeRx()
 {
-		/**
-		Clears the read buffer.
-		TCIFLUSH = Flush data received but not read.
-		 */
-		return tcflush(mDev_fd, TCIFLUSH);
+	port->flush();
 }
 
 
@@ -171,7 +167,7 @@ int DirecsSerialQext::readData(unsigned char *buf, int nChars, QString callingCl
 }
 
 
-int DirecsSerialQext::closePort()
+void DirecsSerialQext::closePort()
 {
-  return close(mDev_fd);
+  port->close();
 }
