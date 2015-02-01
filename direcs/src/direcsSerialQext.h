@@ -22,41 +22,13 @@
 #ifndef DIRECS_SERIAL_QEXT_H
 #define DIRECS_SERIAL_QEXT_H
 
-#include <errno.h>
-#include <fcntl.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <termios.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-
 #include <qextserialport.h> /// This is for serial port communication
 #include <qextserialenumerator.h> /// This is for getting a list of serial ports
 
-#include <QtGlobal> // for Q_OS_* Makro!
-
-#ifdef CYGWIN
-#include <sys/socket.h>
-#else
-
-#ifdef Q_OS_LINUX
-#include <linux/serial.h>
-#endif
-
-#endif
-
 #define READ_TIMEOUT          250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
 #define READ_TIMEOUT_ATMEL    250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
-#define _POSIX
 
-#include <QtGlobal>
 #include <QString>
-#include <QDebug>
 
 
 /**
@@ -91,7 +63,7 @@ class DirecsSerialQext : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes sent to the serial line.
 		 */
-		int writeData(unsigned char *c, QString callingClassName = "none");
+		int writeData(int value, QString callingClassName);
 
 		/**
 		Reads data from the serial line
@@ -115,6 +87,13 @@ class DirecsSerialQext : public QObject
 		This slot can be used to display a text on a splash screen, log file, to print it to a console...
 		*/
 		void message(QString text);
+
+
+	private slots:
+		/**
+		 * @brief onReadyRead is automatically called, when data on the serial port are available.
+		 */
+		void onReadyRead();
 
 
 	private:

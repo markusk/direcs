@@ -77,22 +77,33 @@ void DirecsSerialQext::purgeRx()
 }
 
 
-int DirecsSerialQext::writeData(unsigned char *c, QString callingClassName)
+int DirecsSerialQext::writeData(int value, QString callingClassName)
 {
-	int n = write(mDev_fd, c, 1);
+	QByteArray byte; // byte to sent to the port
+	qint64 bw = -1;   // bytes really written
 
-	if (n < 0)
+
+	byte.clear(); // clear buffer to be sent
+	byte.append(value); // fill buffer with value to be sent
+
+	if (port != NULL)
 	{
-		emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when writing to serial device at DirecsSerialQext::writeData called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
-//		qDebug("Error %d writing to serial device: %s\n", errno, strerror(errno));
-		return errno;
-	}
-	else
-	{
-		//qDebug("%1 byte(s) written.", n);
+		// write byte to serial port
+		bw = port->write(byte);
+
+		// show sent data
+		// ui->textEdit->insertHtml(QString("%1 byte(s) written. Written value: %2 (DEC) / %3 (HEX) / %4 (ASCII)<br>").arg(bw).arg(value).arg(value, 0, 16).arg(QChar(value)));
+
+		// flush serial port
+		port->flush();
+
+		if (bw == -1)
+		{
+//			emit message(QString("<font color=\"#FF0000\">ERROR '%1' when writing to serial port (%2 called from %3.</font>").arg(port->errorString()).arg(className).arg(callingClassName));
+		}
 	}
 
-	return n;
+	return bw;
 }
 
 
@@ -103,6 +114,7 @@ int DirecsSerialQext::readData(unsigned char *buf, int nChars, QString callingCl
 	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
 	//
 	int amountRead = 0, bytes_read = 0;
+/*
 	struct timeval t;
 	fd_set set;
 	int returnValue;
@@ -163,7 +175,56 @@ int DirecsSerialQext::readData(unsigned char *buf, int nChars, QString callingCl
 			}
 		}
 	}
+*/
 	return bytes_read;
+}
+
+
+void DirecsSerialQext::onReadyRead()
+{
+	QByteArray receivedData; // the data received from the serial port
+	qint64 ba = 0; // bytes available
+	QString str; // a string to show it
+	QChar ch = 0; // the char of the received data
+	int dec = 0; // the int of the received data
+
+
+	// how many bytes are available?
+	ba = port->bytesAvailable();
+
+	// position in the string (index!)
+	n = 0;
+
+	// if data available (should _always_ be the case, since this method is called automatically by an event)
+	if (ba > 0)
+	{
+		// read data and convert them to a QString
+		receivedData = port->readAll();
+
+		// convert from QByteArray to QString
+		str = QString::fromUtf8(receivedData.constData());
+
+		// show received data as QString
+//		ui->textEdit->insertHtml(QString("%1 byte(s) received. ASCII: %2<br>").arg(ba).arg(str));
+
+		// show each byte
+		while (n < receivedData.length())
+		{
+			// show DEC of each char
+			//
+			// convert one byte to QChar
+			ch = receivedData.at(n);
+
+			// convert to int
+			dec = (int) ch.toAscii();
+
+			// show in GUI
+//			ui->textEdit->insertHtml(QString("Byte No.%1: %2 (DEC)<br>").arg(n).arg(dec));
+
+			// counter +1
+			n++;
+		}
+	}
 }
 
 
