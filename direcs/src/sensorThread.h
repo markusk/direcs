@@ -26,6 +26,7 @@
 //-------------------------------------------------------------------
 #include <QThread>
 #include <QMutex>
+#include <QTime>
 #include <math.h>
 //-------------------------------------------------------------------
 
@@ -160,6 +161,13 @@ class SensorThread : public QThread
 		*/
 		void setCompassState(bool state);
 
+		/**
+		 * @brief getCommand receives a _complete_ command from @sa DirecsSerialQext i.e. *s7#
+		  * @param callingClass is the name of the class, which currently interacts with this interface and wants an answer
+		  * @param command is the answer for the calling class
+		 */
+		void getCommand(QString callingClass, QString command);
+
 
 	signals:
 		/**
@@ -283,13 +291,17 @@ class SensorThread : public QThread
 		bool readContact(short int contact);
 
 
-		QString className;	/// this will contain the name of this class at runtime for debug messages
+		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
 		volatile bool stopped;
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 		bool compassState; // stores the robot state within this class
+		QString atmelAnswer;
+		QString expectedAtmelAnswer;
+		QTime startTime;
+		static const int atmelTimout = 500; // time in ms for waiting for an answer
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

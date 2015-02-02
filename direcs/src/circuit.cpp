@@ -42,7 +42,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	commandSleep		= "sl";
 
 	// receive serial commands from direcsSerial
-	connect(interface1, SIGNAL(answerComplete(QString)), this, SLOT(getCommand(QString)));
+	connect(interface1, SIGNAL(answerComplete(QString, QString)), this, SLOT(getCommand(QString, QString)));
 }
 
 
@@ -51,8 +51,17 @@ Circuit::~Circuit()
 }
 
 
-void Circuit::getCommand(QString command)
+void Circuit::getCommand(QString name, QString command)
 {
+	// is the answer for this class?
+	if (name != className)
+	{
+		// debug message
+		emit message(QString(">>> %1: answer was for %2!").arg(className).arg(name));
+
+		return;
+	}
+
 	//store anser
 	atmelAnswer = command;
 

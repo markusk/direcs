@@ -91,7 +91,7 @@ class Circuit : public QObject
 		 * @brief getCommand receives a _complete_ command from @sa DirecsSerialQext i.e. *re#
 		 * @param command
 		 */
-		void getCommand(QString command);
+		void getCommand(QString name, QString command);
 
 
 	signals:
@@ -116,7 +116,7 @@ class Circuit : public QObject
 
 
 	private:
-		QString className;	/// this will contain the name of this class at runtime for debug messages
+		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
 
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;

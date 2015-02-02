@@ -139,6 +139,12 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 	compassState = false;
+
+	expectedAtmelAnswer = "error";
+	atmelAnswer.clear();
+
+	// receive serial commands from direcsSerial
+	connect(interface1, SIGNAL(answerComplete(QString, QString)), this, SLOT(getCommand(QString, QString)));
 }
 
 
@@ -150,6 +156,25 @@ SensorThread::~SensorThread()
 	// send heartbeat over the network
 	// *0h2# means 'heartbeat no. 0 is DEAD'
 	emit sendNetworkString("*0h2#");
+}
+
+
+void SensorThread::getCommand(QString name, QString command)
+{
+	// is the answer for this class?
+	if (name != className)
+	{
+		// debug message
+		emit message(QString(">>> %1: answer was for %2!").arg(className).arg(name));
+
+		return;
+	}
+
+
+	//store anser
+	atmelAnswer = command;
+
+	emit message(QString(">>> sensorThread::getCommand: %1.").arg(atmelAnswer));
 }
 
 
@@ -181,7 +206,7 @@ void SensorThread::run()
 		{
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
-
+/* >>> port to Arduino
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -199,7 +224,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-
+*/
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");

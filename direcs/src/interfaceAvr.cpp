@@ -25,6 +25,9 @@ InterfaceAvr::InterfaceAvr()
 	// get the name of this class (this is for debugging messages)
 	className = this->staticMetaObject.className();
 
+	// init caller class name
+	callerClass.clear();
+
 	// creating the serial port object
 	serialPort = new DirecsSerialQext();
 
@@ -131,6 +134,9 @@ bool InterfaceAvr::receiveChar(unsigned char *character, QString callingClassNam
 bool InterfaceAvr::sendString(QString string, QString callingClassName)
 {
 //	QString debugstring;
+
+	// store name of the calling class. This will wait for the next answer from the Arduino.
+	callerClass = callingClassName;
 
 
 	// send starter
@@ -315,7 +321,8 @@ void InterfaceAvr::receiveData(QString data)
 			// emit message("*# AT ONCE!");
 
 			// command complete "at once" in data!
-			emit answerComplete(data);
+			// also emit the name of the class, which (hopefully) waits for this answer
+			emit answerComplete(callerClass, data);
 
 			answer.clear();
 
@@ -352,7 +359,7 @@ void InterfaceAvr::receiveData(QString data)
 		// emit message("*# BUILT.");
 
 		// command complete!
-		emit answerComplete(answer);
+		emit answerComplete(callerClass, answer);
 
 		// delete string
 		answer.clear();

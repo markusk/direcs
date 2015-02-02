@@ -131,8 +131,10 @@ class InterfaceAvr : public QObject
 
 		/**
 		  * Send this Signal from @sa receiveData when a command is complete. i.e. *re#
+		  * @param callingClass is the name of the class, which currently interacts with this interface and wants an answer
+		  * @param command is the answer for the calling class
 		**/
-		void answerComplete(QString command);
+		void answerComplete(QString callingClass, QString answer);
 
 
 	public slots:
@@ -144,7 +146,8 @@ class InterfaceAvr : public QObject
 
 
 	private:
-		QString className;	/// this will contain the name of this class at runtime for debug messages
+		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
+		QString callerClass; /// contains the name of the class, which currently interacts with this interface and wants an answer
 		DirecsSerialQext *serialPort;
 		QString answer; /// this will contain the event driven answer when data are received @sa receiveData Slot.
 		const int MAXCOMMANDLENGTH = 32; /// Max. length of a command from the Arduino.
