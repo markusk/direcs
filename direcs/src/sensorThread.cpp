@@ -1359,9 +1359,13 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 
 bool SensorThread::readVoltageSensor(short int sensor)
 {
+	QTime startTime;
 	int value = 0;
 	QString answer = "error";
 
+
+	// reset atmelAnswerInt
+	atmelAnswerInt = 0;
 
 	switch (sensor)
 	{
@@ -1390,17 +1394,30 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			// read sensor
 			if (interface1->sendString("s7", className) == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
-				// check if the robot answers with answer. e.g. "*42#"
-				if (interface1->receiveString(answer, className) == true)
+				// check if the robot answers
+				// (event driven answer, @sa getCommand)
+				startTime.start();
+
+				do
 				{
-					// convert to int
-					if (interface1->convertStringToInt(answer, value))
-					{
-						// store measured value
-						voltageSensorValue[VOLTAGESENSOR2] = value;
-						return true;
-					}
+					// this is needed that alls Signals and Slots work in the backround...
+					QCoreApplication::processEvents();
+				} while ((atmelAnswerInt != 0) && (startTime.elapsed() < atmelTimout));
+
+				// OKAY!
+				if (atmelAnswerInt != 0)
+				{
+					// Unlock the mutex
+					mutex->unlock();
+
+					// store measured value
+					voltageSensorValue[VOLTAGESENSOR2] = value;
+
+					return true;
 				}
+
+				// okay, we had a timout, waiting for the answer!
+				emit message(">>> TIMEOUT");
 			}
 
 			// error

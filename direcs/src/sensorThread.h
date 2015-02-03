@@ -27,6 +27,7 @@
 #include <QThread>
 #include <QMutex>
 #include <QTime>
+#include <QCoreApplication>
 #include <math.h>
 //-------------------------------------------------------------------
 

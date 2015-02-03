@@ -88,7 +88,7 @@ class InterfaceAvr : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveString(QString &string, QString callingClassName = "none");
+		bool receiveString(QString &string, QString callingClassName = "none"); /// @todo REMOVE THIS CLASS AFTER ARDUINO PORT !!!
 
 		/**
 		Receives an integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).
@@ -96,7 +96,7 @@ class InterfaceAvr : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveInt(int *value, QString callingClassName = "none");
+		bool receiveInt(int *value, QString callingClassName = "none"); /// @todo REMOVE THIS CLASS AFTER ARDUINO PORT !!!
 
 		/**
 		Returns an integer value which comes from a former recevied string.
