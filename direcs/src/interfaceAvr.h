@@ -132,9 +132,16 @@ class InterfaceAvr : public QObject
 		/**
 		  * Send this Signal from @sa receiveData when a command is complete. i.e. *re#
 		  * @param callingClass is the name of the class, which currently interacts with this interface and wants an answer
-		  * @param command is the answer for the calling class
+		  * @param answer is the QString answer for the calling class
 		**/
-		void answerComplete(QString callingClass, QString answer);
+		void answerCompleteString(QString callingClass, QString answer);
+
+		/**
+		  * Send this Signal from @sa receiveData when a command is complete. i.e. *s7#
+		  * @param callingClass is the name of the class, which currently interacts with this interface and wants an answer
+		  * @param answer is the int answer for the calling class
+		**/
+		void answerCompleteInt(QString callingClass, int answer);
 
 
 	public slots:

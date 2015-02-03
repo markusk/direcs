@@ -290,7 +290,12 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 
 void InterfaceAvr::receiveData(QString data)
 {
+	int value = 0;
+
+
+	//-------------------
 	// check string / received data
+	//-------------------
 
 	// discard string if too long!
 	if (data.length() > MAXCOMMANDLENGTH)
@@ -308,7 +313,9 @@ void InterfaceAvr::receiveData(QString data)
 	}
 
 
+	//-------------------
 	// starts with * ?
+	//-------------------
 	if (data.startsWith(starter))
 	{
 		// ends with # ?
@@ -318,11 +325,24 @@ void InterfaceAvr::receiveData(QString data)
 			// commmand complete
 			//-------------------
 
+			// command complete "at once" in data!
 			// emit message("*# AT ONCE!");
 
-			// command complete "at once" in data!
-			// also emit the name of the class, which (hopefully) waits for this answer
-			emit answerComplete(callerClass, data);
+			// do we received a value?
+			if (convertStringToInt(data, value) == true)
+			{
+				// emit int
+				// also emit the name of the class, which (hopefully) waits for this answer
+				emit answerCompleteInt(callerClass, value);
+				emit message(">>> emit int");
+			}
+			else
+			{
+				// emit string
+				// also emit the name of the class, which (hopefully) waits for this answer
+				emit answerCompleteString(callerClass, data);
+				emit message(">>> emit string");
+			}
 
 			answer.clear();
 
@@ -349,7 +369,9 @@ void InterfaceAvr::receiveData(QString data)
 	answer.append(data);
 
 
+	//-------------------
 	// ends with # ?
+	//-------------------
 	if (answer.endsWith(terminator))
 	{
 		//--------------------
@@ -358,8 +380,21 @@ void InterfaceAvr::receiveData(QString data)
 
 		// emit message("*# BUILT.");
 
-		// command complete!
-		emit answerComplete(callerClass, answer);
+		// do we received a value?
+		if (convertStringToInt(data, value) == true)
+		{
+			// emit int
+			// also emit the name of the class, which (hopefully) waits for this answer
+			emit answerCompleteInt(callerClass, value);
+			emit message(">>> emit int");
+		}
+		else
+		{
+			// emit string
+			// also emit the name of the class, which (hopefully) waits for this answer
+			emit answerCompleteString(callerClass, data);
+			emit message(">>> emit string");
+		}
 
 		// delete string
 		answer.clear();

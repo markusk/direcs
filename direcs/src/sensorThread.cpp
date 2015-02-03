@@ -141,10 +141,11 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 	compassState = false;
 
 	expectedAtmelAnswer = "error";
-	atmelAnswer.clear();
+	atmelAnswerInt = 0;
 
 	// receive serial commands from direcsSerial
-	connect(interface1, SIGNAL(answerComplete(QString, QString)), this, SLOT(getCommand(QString, QString)));
+	// in this class we only expect to receive INT !
+	connect(interface1, SIGNAL(answerCompleteInt(QString, int)), this, SLOT(getCommand(QString, int)));
 }
 
 
@@ -159,7 +160,7 @@ SensorThread::~SensorThread()
 }
 
 
-void SensorThread::getCommand(QString name, QString command)
+void SensorThread::getCommand(QString name, int value)
 {
 	// is the answer for this class?
 	if (name != className)
@@ -172,9 +173,9 @@ void SensorThread::getCommand(QString name, QString command)
 
 
 	//store anser
-	atmelAnswer = command;
+	atmelAnswerInt = value;
 
-	emit message(QString(">>> sensorThread::getCommand: %1.").arg(atmelAnswer));
+	emit message(QString(">>> sensorThread::getCommand: %1.").arg(atmelAnswerInt));
 }
 
 

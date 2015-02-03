@@ -164,9 +164,9 @@ class SensorThread : public QThread
 		/**
 		 * @brief getCommand receives a _complete_ command from @sa DirecsSerialQext i.e. *s7#
 		  * @param callingClass is the name of the class, which currently interacts with this interface and wants an answer
-		  * @param command is the answer for the calling class
+		  * @param value is the answer/value for the calling class
 		 */
-		void getCommand(QString callingClass, QString command);
+		void getCommand(QString callingClass, int value);
 
 
 	signals:
@@ -298,7 +298,7 @@ class SensorThread : public QThread
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 		bool compassState; // stores the robot state within this class
-		QString atmelAnswer;
+		int atmelAnswerInt;
 		QString expectedAtmelAnswer;
 		QTime startTime;
 		static const int atmelTimout = 500; // time in ms for waiting for an answer
