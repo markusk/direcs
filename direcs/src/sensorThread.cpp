@@ -171,7 +171,6 @@ void SensorThread::getCommand(QString name, int value)
 		return;
 	}
 
-
 	//store anser
 	atmelAnswerInt = value;
 
@@ -1402,7 +1401,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 				{
 					// this is needed that alls Signals and Slots work in the backround...
 					QCoreApplication::processEvents();
-				} while ((atmelAnswerInt != 0) && (startTime.elapsed() < atmelTimout));
+				} while ((atmelAnswerInt == 0) && (startTime.elapsed() < atmelTimout));
 
 				// OKAY!
 				if (atmelAnswerInt != 0)
