@@ -153,7 +153,8 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 			//--------------------------------------------------------------------
 			// read a maximum of 'ba' available bytes into the buffer as char *
 			//--------------------------------------------------------------------
-			bytesRead = port->read(buf, ba);
+//			bytesRead = port->read(buf, ba);
+			bytesRead = port->read(buf, charsToRead);
 
 			// ERROR
 			if (bytesRead == -1)
@@ -192,15 +193,23 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 			// add a new line
 			emit message("<br>");
 
+
+			// FINISHED READING :-)
+			if (bytesRead == charsToRead)
+			{
+				return bytesRead;
+			}
+
 		} // bytes available
 
 	} while (startTime.elapsed() < serialReadTimout);
 
 	// show whole string in GUI
-	emit message(QString("Complete String: %1").arg(str));
+	// emit message(QString("Complete String: %1").arg(str));
+	// ERROR
+	emit message(QString("ERROR: Timeout at readData, called from %1").arg(callingClassName));
 
-
-	return bytesRead;
+	return -1;
 }
 
 
