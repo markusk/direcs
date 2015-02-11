@@ -147,8 +147,8 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 		// if data available (should _always_ be the case, since this method is called automatically by an event)
 		if (ba > 0)
 		{
-			// show message
-			emit message(QString("<em>%1 byte(s) available.</em>").arg(ba));
+			// show in GUI / log to file (debugging)
+			// emit message(QString("<em>%1 byte(s) available.</em>").arg(ba));
 
 			//--------------------------------------------------------------------
 			// read a maximum of 'ba' available bytes into the buffer as char *
@@ -165,8 +165,8 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 				return -1;
 			}
 
-			// show message
-			emit message(QString("<em>%1 byte(s) received.</em><br>").arg(bytesRead));
+			// show in GUI / log to file (debugging)
+			// emit message(QString("<em>%1 byte(s) received.</em><br>").arg(bytesRead));
 
 			// position in the string (index)
 			n = 0;
@@ -183,15 +183,16 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 				// build a QString for convenience
 				str.append(ch);
 
-				// show in GUI
-				emit message(QString("Byte No.%1: %2 (ASCII) / %3 (DEC) / %4 (HEX)<br>").arg(n+1).arg(ch).arg(dec).arg(dec, 0, 16));
+				// show in GUI / log to file (debugging)
+				// emit message(QString("Byte No.%1: %2 (ASCII) / %3 (DEC) / %4 (HEX)<br>").arg(n+1).arg(ch).arg(dec).arg(dec, 0, 16));
 
 				// counter +1
 				n++;
 			}
 
+			// show in GUI / log to file (debugging)
 			// add a new line
-			emit message("<br>");
+			// emit message("<br>");
 
 
 			// FINISHED READING :-)
@@ -204,8 +205,7 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 
 	} while (startTime.elapsed() < serialReadTimout);
 
-	// show whole string in GUI
-	// emit message(QString("Complete String: %1").arg(str));
+
 	// ERROR
 	emit message(QString("ERROR: Timeout at readData, called from %1").arg(callingClassName));
 

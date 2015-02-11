@@ -180,8 +180,8 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 		// reading one char. Must return 1 (one character succussfull read).
 		result = serialPort->readData(&character, 1, callingClassName);
 
-		// debug
-		emit message(QString("character from readData: %1").arg(character));
+		// show in GUI / log to file (debugging)
+		// emit message(QString("character from readData: %1").arg(character));
 
 
 		if (result == 1)
@@ -195,15 +195,17 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
-		qDebug() << "error at receiveString called from" << callingClassName;
+		// show in GUI / log to file (debugging)
+		emit message(QString("ERROR at receiveString called from %1").arg(callingClassName));
+
 		return false;
 	}
 
 	// copy chars to QString to pointer to return the QString
 	string = QString::fromUtf8(ba.data(), ba.length());
 
-	// debug
-	emit message(QString("QByteArray: %1").arg(string));
+	// show in GUI / log to file (debugging)
+	// emit message(QString("QByteArray: %1").arg(string));
 
 	// check result!
 	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
