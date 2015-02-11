@@ -34,9 +34,6 @@ InterfaceAvr::InterfaceAvr()
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
 	connect(serialPort, SIGNAL(message(QString)), this, SIGNAL(message(QString)));
-
-	// receive data from the diresSerial class - event driven!
-	connect(serialPort, SIGNAL(dataReceived(QString)), this, SLOT(receiveData(QString)));
 }
 
 
@@ -288,6 +285,7 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 }
 
 
+/*
 void InterfaceAvr::receiveData(QString data)
 {
 	int value = 0;
@@ -401,3 +399,4 @@ void InterfaceAvr::receiveData(QString data)
 
 	}
 }
+*/

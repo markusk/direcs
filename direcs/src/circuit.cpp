@@ -34,39 +34,16 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	compassCircuitState = false;
 
 	expectedAtmelAnswer = "error";
-	atmelAnswer.clear();
 
 	// theAtmelcommands
 	commandInitCircuit	= "re";
 	commandInitCompass	= "cc";
 	commandSleep		= "sl";
-
-	// receive serial commands from direcsSerial
-	// in this class we only expect to receive STRINGS !
-	connect(interface1, SIGNAL(answerCompleteString(QString, QString)), this, SLOT(getCommand(QString, QString)));
 }
 
 
 Circuit::~Circuit()
 {
-}
-
-
-void Circuit::getCommand(QString name, QString command)
-{
-	// is the answer for this class?
-	if (name != className)
-	{
-		// debug message
-		emit message(QString(">>> %1: answer was for %2!").arg(className).arg(name));
-
-		return;
-	}
-
-	//store anser
-	atmelAnswer = command;
-
-	emit message(QString(">>> Circuit::getCommand: %1.").arg(atmelAnswer));
 }
 
 

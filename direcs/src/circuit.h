@@ -24,8 +24,6 @@
 //-------------------------------------------------------------------
 #include "interfaceAvr.h"
 #include <QMutex>
-#include <QTime>
-#include <QCoreApplication>
 //-------------------------------------------------------------------
 
 /**
@@ -85,13 +83,6 @@ class Circuit : public QObject
 		@param state can be ON or OFF
 		 */
 		void setRobotState(bool state);
-
-	private slots:
-		/**
-		 * @brief getCommand receives a _complete_ command from @sa DirecsSerialQext i.e. *re#
-		 * @param command
-		 */
-		void getCommand(QString name, QString command);
 
 
 	signals:

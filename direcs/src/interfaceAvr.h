@@ -88,7 +88,7 @@ class InterfaceAvr : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveString(QString &string, QString callingClassName = "none"); /// @todo REMOVE THIS CLASS AFTER ARDUINO PORT !!!
+		bool receiveString(QString &string, QString callingClassName = "none");
 
 		/**
 		Receives an integer value from the serial port/device (consisting of two char values, which are receivced one after another and combined to an int back).
@@ -96,7 +96,7 @@ class InterfaceAvr : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveInt(int *value, QString callingClassName = "none"); /// @todo REMOVE THIS CLASS AFTER ARDUINO PORT !!!
+		bool receiveInt(int *value, QString callingClassName = "none");
 
 		/**
 		Returns an integer value which comes from a former recevied string.
@@ -128,28 +128,6 @@ class InterfaceAvr : public QObject
 		@param text is the message to be emitted
 		*/
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
-
-		/**
-		  * Send this Signal from @sa receiveData when a command is complete. i.e. *re#
-		  * @param callingClass is the name of the class, which currently interacts with this interface and wants an answer
-		  * @param answer is the QString answer for the calling class
-		**/
-		void answerCompleteString(QString callingClass, QString answer);
-
-		/**
-		  * Send this Signal from @sa receiveData when a command is complete. i.e. *s7#
-		  * @param callingClass is the name of the class, which currently interacts with this interface and wants an answer
-		  * @param answer is the int answer for the calling class
-		**/
-		void answerCompleteInt(QString callingClass, int answer);
-
-
-	public slots:
-		/**
-		 * @brief receiveData takes the data recevied on the serial port
-		 * @param data as QString
-		 */
-		void receiveData(QString data);
 
 
 	private:

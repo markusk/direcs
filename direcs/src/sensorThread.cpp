@@ -139,13 +139,6 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 	compassState = false;
-
-	expectedAtmelAnswer = "error";
-	atmelAnswerInt = 0;
-
-	// receive serial commands from direcsSerial
-	// in this class we only expect to receive INT !
-	connect(interface1, SIGNAL(answerCompleteInt(QString, int)), this, SLOT(getCommand(QString, int)));
 }
 
 
@@ -157,24 +150,6 @@ SensorThread::~SensorThread()
 	// send heartbeat over the network
 	// *0h2# means 'heartbeat no. 0 is DEAD'
 	emit sendNetworkString("*0h2#");
-}
-
-
-void SensorThread::getCommand(QString name, int value)
-{
-	// is the answer for this class?
-	if (name != className)
-	{
-		// debug message
-		emit message(QString(">>> %1: answer was for %2!").arg(className).arg(name));
-
-		return;
-	}
-
-	//store anser
-	atmelAnswerInt = value;
-
-	emit message(QString(">>> sensorThread::getCommand: %1.").arg(atmelAnswerInt));
 }
 
 
@@ -206,7 +181,7 @@ void SensorThread::run()
 		{
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
-/* >>> port to Arduino
+
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -224,7 +199,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-*/
+
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");
@@ -1358,13 +1333,9 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 
 bool SensorThread::readVoltageSensor(short int sensor)
 {
-	QTime startTime;
 	int value = 0;
 	QString answer = "error";
 
-
-	// reset atmelAnswerInt
-	atmelAnswerInt = 0;
 
 	switch (sensor)
 	{
@@ -1393,30 +1364,17 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			// read sensor
 			if (interface1->sendString("s7", className) == true) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
-				// check if the robot answers
-				// (event driven answer, @sa getCommand)
-				startTime.start();
-
-				do
+				// check if the robot answers with answer. e.g. "*42#"
+				if (interface1->receiveString(answer, className) == true)
 				{
-					// this is needed that alls Signals and Slots work in the backround...
-					QCoreApplication::processEvents();
-				} while ((atmelAnswerInt == 0) && (startTime.elapsed() < atmelTimout));
-
-				// OKAY!
-				if (atmelAnswerInt != 0)
-				{
-					// Unlock the mutex
-					mutex->unlock();
-
-					// store measured value
-					voltageSensorValue[VOLTAGESENSOR2] = value;
-
-					return true;
+					// convert to int
+					if (interface1->convertStringToInt(answer, value))
+					{
+						// store measured value
+						voltageSensorValue[VOLTAGESENSOR2] = value;
+						return true;
+					}
 				}
-
-				// okay, we had a timout, waiting for the answer!
-				emit message(">>> TIMEOUT");
 			}
 
 			// error
