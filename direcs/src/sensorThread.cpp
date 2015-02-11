@@ -183,7 +183,7 @@ void SensorThread::run()
 		{
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
-/* >>>> TO BE PORTED ON ARDUINO  <<<<<
+
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -201,7 +201,7 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-*/
+
 			emit message(QString("%1. read s7").arg(testCounter));
 			testCounter++;
 

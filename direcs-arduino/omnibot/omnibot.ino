@@ -100,7 +100,7 @@ int sensorValue = 0;        // value read from the poti
 #define SENSOR5          4  // ADC4
 #define SENSOR6          5  // ADC5
 #define SENSOR7          A0
-#define SENSOR8          7  // ADC7
+#define SENSOR8          A1
 
 #define SENSORMOTOR1      38 // ADC14
 #define SENSORMOTOR2      39 // ADC15
@@ -493,14 +493,17 @@ void loop()
         Serial.print( analogRead(SENSOR7) );
         Serial.print("#");
       }
-    /*      else
+      else
      // READ_SENSOR_8 (12 V supply)
-     if (strcmp(stringbuffer, "*s8#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSOR8) );
-     }
-     else
+      if (command == "*s8#")
+      {
+        // read the analog in value
+        // print the results to the serial monitor:
+        Serial.print("*");
+        Serial.print( analogRead(SENSOR8) );
+        Serial.print("#");
+      }
+    /*     else
      // READ_SENSOR_16
      // ultra sonic sensor !!
      if (strcmp(stringbuffer, "*s16#") == 0)
