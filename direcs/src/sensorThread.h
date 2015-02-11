@@ -458,6 +458,8 @@ class SensorThread : public QThread
 		static const unsigned char LEDOFF	= 0;
 		static const unsigned char RED		= 1;
 		static const unsigned char GREEN	= 2;
+
+		qint64 testCounter;
 };
 
 #endif

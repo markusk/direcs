@@ -139,6 +139,8 @@ SensorThread::SensorThread(InterfaceAvr *i, QMutex *m)
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 	compassState = false;
+
+	testCounter = 1;
 }
 
 
@@ -200,6 +202,9 @@ void SensorThread::run()
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
 */
+			emit message(QString("%1. read s7").arg(testCounter));
+			testCounter++;
+
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
 				emit message("<font color=\"#FF0000\">ERROR reading voltage sensor 2. Stopping sensorThread!</font>");
