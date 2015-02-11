@@ -41,9 +41,6 @@ DirecsSerialQext::DirecsSerialQext()
 	// create the serial port object.
 	// we get the serial data on the port "event driven".
 	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
-
-	// if data are received on the serial port, call onReadyRead
-	connect(port, SIGNAL(readyRead()), SLOT(onReadyRead()));
 }
 
 
@@ -118,76 +115,92 @@ int DirecsSerialQext::writeData(int value, QString callingClassName)
 }
 
 
-int DirecsSerialQext::readData(unsigned char *buf, int nChars, QString callingClassName)
+int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassName)
 {
-	//
-	// Original code from method readPort
-	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
-	//
-	int amountRead = 0, bytes_read = 0;
-/*
-	struct timeval t;
-	fd_set set;
-	int returnValue;
+	QTime startTime; // For measuring elapsed time while waiting for an answer on the serial port
+	qint64 ba = 0; // bytes available on the serial port
+	qint64 bytesRead = 0;
+	//char buf[1024]; // stores all recieved data from the serial port
+
+	// the following varaibles are not needed an only fro displaying different formats in the GUI
+	QChar ch = 0; // the char of the received data
+	int dec = 0;  // the int of the received data
+	QString str;  // a string to show the received data
 
 
-	while (nChars > 0)
+	// just to make sure...
+	if (port->isOpen() == false)
 	{
-		// wait up to 0,25 seconds (250000 microseconds)
-		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
-		t.tv_sec  = 0;
-		t.tv_usec = READ_TIMEOUT_ATMEL; // 0,25 seconds
+		emit message("ERROR: serial port not opened!");
 
-		// watch serial port to see when it has input
-		FD_ZERO(&set);
-		FD_SET(mDev_fd, &set);
-
-		// is the serial port ready for reading?
-		returnValue = select(mDev_fd + 1, &set, NULL, NULL, &t);
-
-		// check if timeout or an error occured
-		if (returnValue == -1)
-		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' <br>when selecting serial device at DirecsSerialQext::readData called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
-			return errno;
-		}
-		else
-		{
-			if (returnValue)
-			{
-				// data available now
-			}
-			else
-			{
-				// timeout
-				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 µs when using select() on serial device at DirecsSerialQext::readData called from %2.</font>").arg(READ_TIMEOUT_ATMEL).arg(callingClassName));
-				emit message(QString("<font color=\"#FF0000\">ERROR %1: %2.</font>").arg(errno).arg(strerror(errno)));
-
-				return errno;
-			}
-		}
-
-		// read from the serial device
-		amountRead = read(mDev_fd, buf, nChars);
-
-		if (amountRead < 0 && errno != EWOULDBLOCK)
-		{
-			emit message(QString("<font color=\"#FF0000\">ERROR '%1=%2' when using read() on serial device at DirecsSerialQext::readData called from %3.</font>").arg(errno).arg(strerror(errno)).arg(callingClassName));
-// FIXME: was, wenn return 0 ?!?!?
-			return errno;
-		}
-		else
-		{
-			if(amountRead > 0)
-			{
-				bytes_read += amountRead;
-				nChars -= amountRead;
-				buf += amountRead;
-			}
-		}
+		return -1;
 	}
-*/
-	return bytes_read;
+
+	// check if the Arduino sends all data within an wanted time...
+	startTime.start();
+
+	do
+	{
+		// how many bytes are available?
+		ba = port->bytesAvailable();
+
+		// if data available (should _always_ be the case, since this method is called automatically by an event)
+		if (ba > 0)
+		{
+			// show message
+			emit message(QString("<em>%1 byte(s) available.</em>").arg(ba));
+
+			//--------------------------------------------------------------------
+			// read a maximum of 'ba' available bytes into the buffer as char *
+			//--------------------------------------------------------------------
+			bytesRead = port->read(buf, ba);
+
+			// ERROR
+			if (bytesRead == -1)
+			{
+				// show error code and message
+				emit message(QString("ERROR %1 at readData: %2").arg(bytesRead).arg(port->errorString()));
+
+				return -1;
+			}
+
+			// show message
+			emit message(QString("<em>%1 byte(s) received.</em><br>").arg(bytesRead));
+
+			// position in the string (index)
+			n = 0;
+
+			// show each byte
+			while (n < bytesRead)
+			{
+				// convert char to int
+				dec = (int) buf[n];
+
+				// convert chcar to QChar
+				ch = buf[n];
+
+				// build a QString for convenience
+				str.append(ch);
+
+				// show in GUI
+				emit message(QString("Byte No.%1: %2 (ASCII) / %3 (DEC) / %4 (HEX)<br>").arg(n+1).arg(ch).arg(dec).arg(dec, 0, 16));
+
+				// counter +1
+				n++;
+			}
+
+			// add a new line
+			emit message("<br>");
+
+		} // bytes available
+
+	} while (startTime.elapsed() < serialReadTimout);
+
+	// show whole string in GUI
+	emit message(QString("Complete String: %1").arg(str));
+
+
+	return bytesRead;
 }
 
 

@@ -25,10 +25,8 @@
 #include <qextserialport.h> /// This is for serial port communication
 #include <qextserialenumerator.h> /// This is for getting a list of serial ports
 
-#define READ_TIMEOUT          250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
-#define READ_TIMEOUT_ATMEL    250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
-
 #include <QString>
+#include <QTime> /// For measuring elapsed time while waiting for an answer on the serial port
 
 
 /**
@@ -70,12 +68,12 @@ class DirecsSerialQext : public QObject
 		/**
 		Reads data from the serial line
 
-		@param *buf Pointer to unsigned char buffer for the data to be read.
-		@param nChars Number of bytes to be written (<= size of the buffer array).
+		@param *buf Pointer to char buffer for the data to be read.
+		@param nChars Number of bytes to be reaad (<= size of the buffer array).
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes read.
 		 */
-		int readData(unsigned char *buf, int nChars, QString callingClassName = "none");
+		int readData(char *buf, int charsToRead, QString callingClassName = "none");
 
 		/**
 		 * Closes the serial port.
@@ -118,6 +116,8 @@ class DirecsSerialQext : public QObject
 		QString serialPortName; /// for the (file)name of the serial port, like /dev/ttyUSB0 or COM1
 		int n;
 		bool portOpened; /// will be set in port open and checked in close port to avoid crash when trying to close an unopend port
+
+		static const int serialReadTimout = 500; /// time in ms for waiting for an answer for all bytes. @sa readData
 };
 
 #endif
