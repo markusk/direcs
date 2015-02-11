@@ -72,7 +72,7 @@ void Circuit::getCommand(QString name, QString command)
 
 bool Circuit::initCircuit()
 {
-	QTime startTime;
+	QString answer = "error";
 
 
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
@@ -85,45 +85,30 @@ bool Circuit::initCircuit()
 		//-------------------------------------------------------
 
 		// sending RESET (INIT) command
-
-		//reset previous answer
-		atmelAnswer.clear();
-
 		if (interface1->sendString("re", className) == true)
 		{
-			expectedAtmelAnswer = "*re#";
-
 			// check if the robot answers
-			// (event driven answer, @sa getCommand)
-			startTime.start();
-
-			do
+			if ( interface1->receiveString(answer, className) == true)
 			{
-				// this is needed that alls Signals and Slots work in the backround...
-				QCoreApplication::processEvents();
-			} while ((atmelAnswer != expectedAtmelAnswer) && (startTime.elapsed() < atmelTimout));
+				// check if the robot answers with "ok"
+				if (answer == "*re#")
+				{
+					// Unlock the mutex
+					mutex->unlock();
 
-			// OKAY!
-			if (atmelAnswer == expectedAtmelAnswer)
-			{
-				// Unlock the mutex
-				mutex->unlock();
+					// ciruit init okay
+					firstInitDone = true;
+					circuitState = true;
+					emit robotState(true);
 
-				// ciruit init okay
-				firstInitDone = true;
-				circuitState = true;
-				emit robotState(true);
-
-				return true;
+					return true;
+				}
 			}
-
-			// okay, we had a timout, waiting for the answer!
-			emit message(">>> TIMEOUT");
-
 		}
 
 		// Unlock the mutex.
 		mutex->unlock();
+
 	}
 
 	qDebug("INFO from initCircuit: Robot is OFF.");
@@ -137,6 +122,8 @@ bool Circuit::initCircuit()
 
 bool Circuit::initArduino()
 {
+	emit message(">>> Arduino check now!");
+
 	// check again!
 	firstInitDone = false;
 	circuitState = true;
