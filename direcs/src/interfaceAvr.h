@@ -70,7 +70,7 @@ class InterfaceAvr : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return true on access or false if an error occured.
 		*/
-		bool receiveChar(unsigned char *character, QString callingClassName = "none");
+		bool receiveChar(char *character, QString callingClassName = "none");
 
 		/**
 		Sends a string to the serial port/device. When sending it prepends a start char and appends a terminator char wich the corresponting receiving Atmel expects.

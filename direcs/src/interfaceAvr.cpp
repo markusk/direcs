@@ -110,7 +110,7 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 }
 
 
-bool InterfaceAvr::receiveChar(unsigned char *character, QString callingClassName)
+bool InterfaceAvr::receiveChar(char *character, QString callingClassName)
 {
 	int result = 0;
 
@@ -171,7 +171,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 {
 	int result = 0;
-	unsigned char character;
+	char character;
 	QByteArray ba;
 
 
@@ -212,7 +212,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 {
 // 	static int receiveErrorCounter = 0;
-	unsigned char character = 0;
+	char character = 0;
 	int intValue = 0;
 
 
