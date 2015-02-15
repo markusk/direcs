@@ -34,13 +34,16 @@ DirecsSerialQext::DirecsSerialQext()
 	settings.Parity = PAR_NONE;
 	settings.StopBits = STOP_1;
 	settings.FlowControl = FLOW_OFF;
-	settings.Timeout_Millisec = 10;
+	settings.Timeout_Millisec = 10; // dummy, will be changed by member 'serialReadTimout'
 
 	portOpened = false;
 
 	// create the serial port object.
 	// we get the serial data on the port "event driven".
 	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
+
+	// sets the read and write timeouts for the port to the given milliseconds.
+	port->setTimeout(serialReadTimout);
 }
 
 
@@ -120,12 +123,6 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 	QTime startTime; // For measuring elapsed time while waiting for an answer on the serial port
 	qint64 ba = 0; // bytes available on the serial port
 	qint64 bytesRead = 0;
-	//char buf[1024]; // stores all recieved data from the serial port
-
-	// the following varaibles are not needed an only fro displaying different formats in the GUI
-	QChar ch = 0; // the char of the received data
-	int dec = 0;  // the int of the received data
-	QString str;  // a string to show the received data
 
 
 	// just to make sure...
@@ -151,9 +148,8 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 			// emit message(QString("<em>%1 byte(s) available.</em>").arg(ba));
 
 			//--------------------------------------------------------------------
-			// read a maximum of 'ba' available bytes into the buffer as char *
+			// read a maximum of 'charsToRead' of all available bytes
 			//--------------------------------------------------------------------
-//			bytesRead = port->read(buf, ba);
 			bytesRead = port->read(buf, charsToRead);
 
 			// ERROR
@@ -167,39 +163,13 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 
 			// show in GUI / log to file (debugging)
 			// emit message(QString("<em>%1 byte(s) received.</em><br>").arg(bytesRead));
-
-			// position in the string (index)
-			n = 0;
-
-			// show each byte
-			while (n < bytesRead)
-			{
-				// convert char to int
-				dec = (int) buf[n];
-
-				// convert chcar to QChar
-				ch = buf[n];
-
-				// build a QString for convenience
-				str.append(ch);
-
-				// show in GUI / log to file (debugging)
-				// emit message(QString("Byte No.%1: %2 (ASCII) / %3 (DEC) / %4 (HEX)<br>").arg(n+1).arg(ch).arg(dec).arg(dec, 0, 16));
-
-				// counter +1
-				n++;
-			}
-
-			// show in GUI / log to file (debugging)
-			// add a new line
 			// emit message("<br>");
 
-
 			// FINISHED READING :-)
-			if (bytesRead == charsToRead)
-			{
+//			if (bytesRead == charsToRead)
+//			{
 				return bytesRead;
-			}
+//			}
 
 		} // bytes available
 
