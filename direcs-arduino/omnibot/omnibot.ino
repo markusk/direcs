@@ -1,6 +1,8 @@
 // Pin 13 has an LED connected on most Arduino boards.
 // give it a name:
-int led = 13;
+int ledRed    = 13; /// @todo change name (color)
+int ledGreen  =  2;
+int ledYellow =  3;
 
 // test:
 const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
@@ -185,7 +187,9 @@ void setup()
   command.reserve(stringSize);
 
   // initialize the digital pin as an output.
-  pinMode(led, OUTPUT);
+  pinMode(ledRed, OUTPUT);
+  pinMode(ledGreen, OUTPUT);
+  pinMode(ledYellow, OUTPUT);
 
   // this an input
   pinMode(analogInPin, INPUT);
@@ -245,7 +249,7 @@ void setup()
   redLED(ON);
 
   // yelow LED off
-  //  yellowLED(OFF);
+  yellowLED(OFF);
 
   // green LED off
   greenLED(OFF);
@@ -379,115 +383,132 @@ void loop()
 
 // Serial.println("serialEvent"); Okay
 
-do
-{
-  if (Serial.available())
+  do
   {
-    // get the new byte
-    char inChar = (char)Serial.read(); 
-
-    // max String length reached?
-    if (inputString.length() >= stringSize)
+    if (Serial.available())
     {
-      /*------------------ DEBUG ------------------------
-      lcd.setCursor(0,0);
-      lcd.print("ERROR:");
-      lcd.setCursor(1,0);
-      lcd.print("OVERFLOW");
-      lcd.setBacklight(RED);
-      //------------------ DEBUG ------------------------*/
+      // get the new byte
+      char inChar = (char)Serial.read(); 
 
-      // clear string
-      inputString = "";
-
-      // delete flags
-      stringComplete = false;
-      string_started = 0;
-
-      return;
-    }
-
-    // Ist Puffer frei für neue Daten?
-    if (stringComplete == false)
-    {
-      //-----------------
-      // string start
-      //-----------------
-      // string speichern, wenn mit 'starter' begonnen!
-      if (inChar == starter)
+      // max String length reached?
+      if (inputString.length() >= stringSize)
       {
-        //Serial.println("STARTER");
-        /*------------------ DEBUG ------------------------
-        lcd.setCursor(0,0);
-        lcd.print(inChar);
-        lcd.setBacklight(YELLOW);
-        //------------------ DEBUG ------------------------*/
-
-        // clear the string
-        inputString = "";
-        // start inputString:
-        inputString += inChar;
-
-        // string has started
-        string_started = 1;
-        return;
-      }
-
-      //-----------------
-      // string stop
-      //-----------------
-      // Ist das Ende des Strings (terminator) erreicht?
-      if (inChar == terminator)
-      {
-        //Serial.println("TERMINATOR");
-        /*------------------ DEBUG ------------------------
-        lcd.print(inChar);
-        lcd.setBacklight(GREEN);
-        //------------------ DEBUG ------------------------*/
-
-        // ja, dann terminator anhängen
-        inputString += inChar;
-
-        // copy input string to command string (used in loop)
-        command = inputString;
-
-        // clear input striing
-        inputString = "";
-
-        // if the incoming character is a "terminator", set a flag
-        // so //the main loop can do something about it:
-        stringComplete = true;
-
-        // reset flag
-        string_started = 0;
-
-        /*------------------ DEBUG ------------------------
-        lcd.setCursor(0,0);
-        //------------------ DEBUG ------------------------*/
-
-        return;
-      }
-
-      //-----------------
-      // string middle
-      //-----------------
-      // string nur speichern, wenn zuvor der starter mal war.
-      if  (string_started == 1)
-      {
-        //Serial.println("MITTE");
-        /*------------------ DEBUG ------------------------
-        lcd.print(inChar);
-        lcd.setBacklight(WHITE);
-        //------------------ DEBUG ------------------------*/
+        greenLED(OFF);
+        yellowLED(OFF);
         
-        // Daten in Puffer speichern
-        inputString += inChar;
+        /*------------------ DEBUG ------------------------
+        lcd.setCursor(0,0);
+        lcd.print("ERROR:");
+        lcd.setCursor(1,0);
+        lcd.print("OVERFLOW");
+        lcd.setBacklight(RED);
+        //------------------ DEBUG ------------------------*/
 
-        return;
-      } // string complete
-    } // string complete = false
-  } // Serial.available
-} while (stringComplete == false);
+        // clear string
+        inputString = "";
+
+        // delete flags
+        stringComplete = false;
+        string_started = 0;
+      }
+      else
+      {
+        // Ist Puffer frei für neue Daten?
+        if (stringComplete == false)
+        {
+          //-----------------
+          // string start
+          //-----------------
+          // string speichern, wenn mit 'starter' begonnen!
+          if (inChar == starter)
+          {
+            greenLED(ON);
+            yellowLED(OFF);
+
+            //Serial.println("STARTER");
+            /*------------------ DEBUG ------------------------
+            lcd.setCursor(0,0);
+            lcd.print(inChar);
+            lcd.setBacklight(YELLOW);
+            //------------------ DEBUG ------------------------*/
+
+            // clear the string
+            inputString = "";
+            // start inputString:
+            inputString += inChar;
+
+            // string has started
+            string_started = 1;
+          }
+          else
+          {
+            //-----------------
+            // string stop
+            //-----------------
+            // Ist das Ende des Strings (terminator) erreicht?
+            if (inChar == terminator)
+            {
+              yellowLED(ON);
+              greenLED(OFF);
+
+              //Serial.println("TERMINATOR");
+              /*------------------ DEBUG ------------------------
+              lcd.print(inChar);
+              lcd.setBacklight(GREEN);
+              //------------------ DEBUG ------------------------*/
+
+              // ja, dann terminator anhängen
+              inputString += inChar;
+
+              // copy input string to command string (used in loop)
+              command = inputString;
+
+              // clear input striing
+              inputString = "";
+
+              // if the incoming character is a "terminator", set a flag
+              // so //the main loop can do something about it:
+              stringComplete = true;
+
+              // reset flag
+              string_started = 0;
+
+              /*------------------ DEBUG ------------------------
+              lcd.setCursor(0,0);
+              //------------------ DEBUG ------------------------*/
+            }
+            else
+            {
+              //-----------------
+              // string middle
+              //-----------------
+              // string nur speichern, wenn zuvor der starter mal war.
+              if  (string_started == 1)
+              {
+                greenLED(OFF);
+                yellowLED(OFF);
+
+                //Serial.println("MITTE");
+                /*------------------ DEBUG ------------------------
+                lcd.print(inChar);
+                lcd.setBacklight(WHITE);
+                //------------------ DEBUG ------------------------*/
+                
+                // Daten in Puffer speichern
+                inputString += inChar;
+              } // string complete
+              else
+              {
+                // everything else
+                greenLED(OFF);
+                yellowLED(OFF);
+              } // any string
+            }
+          }
+        } // string complete = false
+      }
+    } // Serial.available
+  } while (stringComplete == false);
 
 /*
   // print the string when a newline arrives:
@@ -507,8 +528,6 @@ do
 */
 
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
-  if (stringComplete)
-  {
     // delete flag
     stringComplete = false;
 
@@ -532,6 +551,12 @@ do
     // RESET / INIT
     if (command == "*re#")
     {
+      greenLED(OFF);
+      yellowLED(OFF);
+      
+        greenLED(OFF);
+        yellowLED(OFF);
+      
       /* to be ported    
        
        // turn all drive motor bits off (except PWM bits)
@@ -542,6 +567,9 @@ do
        PORTL &= ~(1<<PIN6);
        PORTL &= ~(1<<PIN7);
        PORTD &= ~(1<<PIN6);
+        greenLED(OFF);
+        yellowLED(OFF);
+      
        PORTD &= ~(1<<PIN7);
        // flashlight off
        relais(OFF);
@@ -638,6 +666,9 @@ do
       // READ_SENSOR_7 (24 V supply)
       if (command == "*s7#")
       {
+        greenLED(OFF);
+        yellowLED(OFF);
+      
         // read the analog in value
         // print the results to the serial monitor:
         Serial.print("*");
@@ -648,6 +679,9 @@ do
      // READ_SENSOR_8 (12 V supply)
       if (command == "*s8#")
       {
+        greenLED(OFF);
+        yellowLED(OFF);
+      
         // read the analog in value
         // print the results to the serial monitor:
         Serial.print("*");
@@ -1468,8 +1502,9 @@ do
      put_string("*sv6#");
      }
      */    // to be ported    
-  } // serial data available
+  // } // serial data available
 
+  // no valid command found (i.e. *wtf# )
   // delete command string
   command = "";
 
@@ -1514,14 +1549,12 @@ void redLED(uint8_t state)
   if (state == ON)
   {
     // red LED on
-    // yellow LED on
-    digitalWrite(led, HIGH);
+    digitalWrite(ledRed, HIGH);
   }
   else
   {
     // red LED off
-    // yellow LED off
-    digitalWrite(led, LOW);
+    digitalWrite(ledRed, LOW);
   }
 }
 
@@ -1531,33 +1564,28 @@ void yellowLED(uint8_t state)
   if (state == ON)
   {
     // yellow LED on
-    digitalWrite(led, HIGH);
+    digitalWrite(ledYellow, HIGH);
   }
   else
   {
     // yellow LED off
-    digitalWrite(led, LOW);
+    digitalWrite(ledYellow, LOW);
   }
 }
 
 
 void greenLED(uint8_t state)
 {
-  /* // to be ported    
-   
    if (state == ON)
    {
    // green LED on
-   // (low active!)
-   PORTC &= ~(1<<PIN4);
+    digitalWrite(ledGreen, HIGH);
    }
    else
    {
    // green LED off
-   // (low active!)
-   PORTC |= (1<<PIN4);
+    digitalWrite(ledGreen, LOW);
    }
-   */
 }
 
 

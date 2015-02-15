@@ -132,7 +132,6 @@ class InterfaceAvr : public QObject
 
 	private:
 		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
-		QString callerClass; /// contains the name of the class, which currently interacts with this interface and wants an answer
 		DirecsSerialQext *serialPort;
 		QString answer; /// this will contain the event driven answer when data are received @sa receiveData Slot.
 		const int MAXCOMMANDLENGTH = 32; /// Max. length of a command from the Arduino.
