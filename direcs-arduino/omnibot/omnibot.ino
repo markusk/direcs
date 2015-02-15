@@ -7,6 +7,29 @@ const int analogInPin = A0;  // Analog input pin that the potentiometer is attac
 int sensorValue = 0;        // value read from the poti
 
 
+//------------------ DEBUG ------------------------
+#include <Wire.h>
+#include <Adafruit_MCP23017.h>
+#include <Adafruit_RGBLCDShield.h>
+
+// The shield uses the I2C SCL and SDA pins. On classic Arduinos
+// this is Analog 4 and 5 so you can't use those for analogRead() anymore
+// However, you can connect other I2C sensors to the I2C bus and share
+// the I2C bus.
+Adafruit_RGBLCDShield lcd = Adafruit_RGBLCDShield();
+
+// These #defines make it easy to set the backlight color
+#define RED 0x1
+#define YELLOW 0x3
+#define GREEN 0x2
+#define TEAL 0x6
+#define BLUE 0x4
+#define VIOLET 0x5
+#define WHITE 0x7
+//------------------ DEBUG ------------------------
+
+
+
 //-------  from main.h  -------------------------------
 
 //
@@ -148,8 +171,14 @@ String command = "";
 
 void setup()
 {
+  //------------------ DEBUG ------------------------
+  // set up the LCD's number of columns and rows: 
+  lcd.begin(16, 2);
+  lcd.setBacklight(RED);
+//------------------ DEBUG ------------------------
+
   // initialize serial
-  Serial.begin(9600);
+  Serial.begin(14400);
 
   // reserve 200 bytes for the inputString
   inputString.reserve(stringSize);
@@ -377,6 +406,14 @@ void loop()
     //--------------------------
     // check what was received
     //--------------------------
+
+    //------------------ DEBUG ------------------------
+    lcd.setBacklight(BLUE);
+    lcd.setCursor(0,1);
+    lcd.print("commmand=");
+    lcd.print(command);
+    lcd.print(".");
+    //------------------ DEBUG ------------------------
 
     // RESET / INIT
     if (command == "*re#")
@@ -1320,7 +1357,7 @@ void loop()
   } // serial data available
 
   // delete command string
-  command == "";
+  command = "";
 
 } // loop
 
@@ -1449,7 +1486,13 @@ void serialEvent()
     // max String length reached?
     if (inputString.length() >= stringSize)
     {
-      //Serial.println("OVERFLOW");
+      //------------------ DEBUG ------------------------
+      lcd.setCursor(0,0);
+      lcd.print("ERROR:");
+      lcd.setCursor(1,0);
+      lcd.print("OVERFLOW");
+      lcd.setBacklight(RED);
+      //------------------ DEBUG ------------------------
 
       // clear string
       inputString = "";
@@ -1471,6 +1514,11 @@ void serialEvent()
       if (inChar == starter)
       {
         //Serial.println("STARTER");
+        //------------------ DEBUG ------------------------
+        lcd.setCursor(0,0);
+        lcd.print(inChar);
+        lcd.setBacklight(YELLOW);
+        //------------------ DEBUG ------------------------
 
         // clear the string
         inputString = "";
@@ -1489,6 +1537,10 @@ void serialEvent()
       if (inChar == terminator)
       {
         //Serial.println("TERMINATOR");
+        //------------------ DEBUG ------------------------
+        lcd.print(inChar);
+        lcd.setBacklight(GREEN);
+        //------------------ DEBUG ------------------------
 
         // ja, dann terminator anhängen
         inputString += inChar;
@@ -1506,6 +1558,10 @@ void serialEvent()
         // reset flag
         string_started = 0;
 
+        //------------------ DEBUG ------------------------
+        lcd.setCursor(0,0);
+        //------------------ DEBUG ------------------------
+
         return;
       }
 
@@ -1516,6 +1572,10 @@ void serialEvent()
       if  (string_started == 1)
       {
         //Serial.println("MITTE");
+        //------------------ DEBUG ------------------------
+        lcd.print(inChar);
+        lcd.setBacklight(WHITE);
+        //------------------ DEBUG ------------------------
         
         // Daten in Puffer speichern
         inputString += inChar;
