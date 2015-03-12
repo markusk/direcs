@@ -123,6 +123,7 @@ test::test()
 	connect(circuit1, SIGNAL(message(QString)), this, SLOT(appendLog(QString)));
 	connect(interface1, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
 	connect(timerThread, SIGNAL(message(QString)), this, SLOT(appendLog(QString)));
+	connect(sensorThread, SIGNAL(message(QString)), this, SLOT(appendLog(QString)));
 
 	//--------
 	// try to init Arduino after some seconds, not during exact start

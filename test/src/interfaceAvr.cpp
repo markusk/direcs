@@ -129,6 +129,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 {
 //	QString debugstring;
 
+//	emit message(">>> sendString");
 
 	// send starter
 	if (sendChar(starter, callingClassName) == true)
