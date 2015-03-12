@@ -68,6 +68,10 @@ private slots:
 	   * @param state can be ON or OFF
 	   */
 	  void setRobotState(bool state);
+	  /**
+	  This slot catches all signals from the signal @sa systemerror
+	  */
+	  void systemerrorcatcher(int errorlevel);
 
 signals:
 	  /**
