@@ -29,15 +29,15 @@
 
 test::test()
 {
-	  textEdit = new QTextEdit;
-	  setCentralWidget(textEdit);
+	textEdit = new QTextEdit;
+	setCentralWidget(textEdit);
 
-	  createActions();
-	  createMenus();
-	  createToolBars();
-	  createStatusBar();
+	createActions();
+	createMenus();
+	createToolBars();
+	createStatusBar();
 
-	  readSettings();
+	readSettings();
 
 
 /*
@@ -104,55 +104,56 @@ test::test()
 */
 
 
-	  //---------------------------------------------------------------------------------------------------
-	  // AtmelBoard test stuff
+	//---------------------------------------------------------------------------------------------------
+	// AtmelBoard test stuff
 
-	  mutex = new QMutex();
-	  interface1 = new InterfaceAvr();
-	  circuit1 = new Circuit(interface1, mutex);
+	mutex = new QMutex();
+	interface1 = new InterfaceAvr();
+	circuit1 = new Circuit(interface1, mutex);
 
-	 // serialPortPath = "/dev/tty.SLAB_USBtoUART"; // Original driver "CP210x Macintosh OSX Driver v2." from SiLabs used.
-	  serialPortPath = "/dev/tty.usbserial-A900J1TU"; // ARM board with STM32F4 and FTDI RS232R chip
+	// serialPortPath = "/dev/tty.SLAB_USBtoUART"; // Original driver "CP210x Macintosh OSX Driver v2." from SiLabs used.
+	// serialPortPath = "/dev/tty.usbserial-A900J1TU"; // ARM board with STM32F4 and FTDI RS232R chip
+	serialPortPath = "/dev/tty.usbmodem1451"; // Arduino Uno
 
-	  // send messages from the other class to this class (to the GUI)
-	  connect(interface1, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
+	// send messages from the other class to this class (to the GUI)
+	connect(interface1, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
 
-	  //--------------------------------------------------------------------------
-	  // let some classes know the robots state
-	  //--------------------------------------------------------------------------
-	  // this is needed, when the first openCOMPort method fails:
-	  connect(interface1,	SIGNAL( robotState(bool) ), circuit1,		SLOT( setRobotState(bool) ));
-
-
-	  textEdit->append("Opening serial port for microcontroller communication...");
-
-	  if (interface1->openComPort(serialPortPath) == false)
-	  {
-		  // ********************
-		  // * The robot is OFF *
-		  // ********************
-		  textEdit->append(QString("Error opening serial port '%1'").arg(serialPortPath));
-
-	  }
-	  else
-	  {
-		  // *******************
-		  // * The robot is ON *
-		  // *******************
-		  textEdit->append("Serial port opened.");
+	//--------------------------------------------------------------------------
+	// let some classes know the robots state
+	//--------------------------------------------------------------------------
+	// this is needed, when the first openCOMPort method fails:
+	connect(interface1,	SIGNAL( robotState(bool) ), circuit1,		SLOT( setRobotState(bool) ));
 
 
-		  //==========================
-		  // init the robots circuit
-		  //==========================
-		  textEdit->append("Searching robot...");
+	textEdit->append("Opening serial port for microcontroller communication...");
 
-		  if (circuit1->initCircuit() == true)
-		  {
-			  textEdit->append("Robot is <font color=\"#00FF00\">ON</font> and answers.");
-		  }
-	  }
-	  //---------------------------------------------------------------------------------------------------
+	if (interface1->openComPort(serialPortPath) == false)
+	{
+		// ********************
+		// * The robot is OFF *
+		// ********************
+		textEdit->append(QString("Error opening serial port '%1'").arg(serialPortPath));
+
+	}
+	else
+	{
+		// *******************
+		// * The robot is ON *
+		// *******************
+		textEdit->append("Serial port opened.");
+
+
+		//==========================
+		// init the robots circuit
+		//==========================
+		textEdit->append("Searching robot...");
+
+		if (circuit1->initCircuit() == true)
+		{
+			textEdit->append("Robot is <font color=\"#00FF00\">ON</font> and answers.");
+		}
+	}
+	//---------------------------------------------------------------------------------------------------
 
 }
 
@@ -170,6 +171,7 @@ test::~test()
 	{
 		laserThread->stop();
 	}
+
 	delete laserThread;
 
 	// SICK laser S300 test stuff
@@ -186,115 +188,111 @@ void test::closeEvent(QCloseEvent *event)
 
 void test::about()
 {
-	  QMessageBox::about(this, tr("About Application"),
-			tr("The <b>Application</b> example demonstrates how to "
-				  "write modern GUI applications using Qt, with a menu bar, "
-				  "toolbars, and a status bar."));
+	QMessageBox::about(this, tr("About Application"),
+		tr("The <b>Application</b> example demonstrates how to "
+		"write modern GUI applications using Qt, with a menu bar, "
+		"toolbars, and a status bar."));
 }
 
 
 void test::createActions()
 {
-	  exitAct = new QAction(tr("E&xit"), this);
-	  exitAct->setShortcut(tr("Ctrl+Q"));
-	  exitAct->setStatusTip(tr("Exit the application"));
-	  connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
+	exitAct = new QAction(tr("E&xit"), this);
+	exitAct->setShortcut(tr("Ctrl+Q"));
+	exitAct->setStatusTip(tr("Exit the application"));
+	connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-	  cutAct = new QAction(QIcon(":/editcut.xpm"), tr("Cu&t"), this);
-	  cutAct->setShortcut(tr("Ctrl+X"));
-	  cutAct->setStatusTip(tr("Cut the current selection's contents to the "
-							  "clipboard"));
-	  connect(cutAct, SIGNAL(triggered()), textEdit, SLOT(cut()));
+	cutAct = new QAction(QIcon(":/editcut.xpm"), tr("Cu&t"), this);
+	cutAct->setShortcut(tr("Ctrl+X"));
+	cutAct->setStatusTip(tr("Cut the current selection's contents to the clipboard"));
+	connect(cutAct, SIGNAL(triggered()), textEdit, SLOT(cut()));
 
-	  copyAct = new QAction(QIcon(":/editcopy.xpm"), tr("&Copy"), this);
-	  copyAct->setShortcut(tr("Ctrl+C"));
-	  copyAct->setStatusTip(tr("Copy the current selection's contents to the "
-							  "clipboard"));
-	  connect(copyAct, SIGNAL(triggered()), textEdit, SLOT(copy()));
+	copyAct = new QAction(QIcon(":/editcopy.xpm"), tr("&Copy"), this);
+	copyAct->setShortcut(tr("Ctrl+C"));
+	copyAct->setStatusTip(tr("Copy the current selection's contents to the clipboard"));
+	connect(copyAct, SIGNAL(triggered()), textEdit, SLOT(copy()));
 
-	  pasteAct = new QAction(QIcon(":/editpaste.xpm"), tr("&Paste"), this);
-	  pasteAct->setShortcut(tr("Ctrl+V"));
-	  pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
-							  "selection"));
-	  connect(pasteAct, SIGNAL(triggered()), textEdit, SLOT(paste()));
+	pasteAct = new QAction(QIcon(":/editpaste.xpm"), tr("&Paste"), this);
+	pasteAct->setShortcut(tr("Ctrl+V"));
+	pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current selection"));
+	connect(pasteAct, SIGNAL(triggered()), textEdit, SLOT(paste()));
 
-	  aboutAct = new QAction(tr("&About"), this);
-	  aboutAct->setStatusTip(tr("Show the application's About box"));
-	  connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+	aboutAct = new QAction(tr("&About"), this);
+	aboutAct->setStatusTip(tr("Show the application's About box"));
+	connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
-	  aboutQtAct = new QAction(tr("About &Qt"), this);
-	  aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
-	  connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+	aboutQtAct = new QAction(tr("About &Qt"), this);
+	aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
+	connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-	  cutAct->setEnabled(false);
-	  copyAct->setEnabled(false);
-	  connect(textEdit, SIGNAL(copyAvailable(bool)),
-			cutAct, SLOT(setEnabled(bool)));
-	  connect(textEdit, SIGNAL(copyAvailable(bool)),
-			copyAct, SLOT(setEnabled(bool)));
+	cutAct->setEnabled(false);
+	copyAct->setEnabled(false);
+	connect(textEdit, SIGNAL(copyAvailable(bool)), cutAct, SLOT(setEnabled(bool)));
+	connect(textEdit, SIGNAL(copyAvailable(bool)), copyAct, SLOT(setEnabled(bool)));
 
-	  testAct = new QAction(QIcon(":/utilities-system-monitor-active.png"), tr("&Test"), this);
-	  testAct->setShortcut(tr("Ctrl+T"));
-	  testAct->setStatusTip(tr("Test"));
-	  connect(testAct, SIGNAL(triggered()), this, SLOT(testSlot()));
+	testAct = new QAction(QIcon(":/utilities-system-monitor-active.png"), tr("&Test"), this);
+	testAct->setShortcut(tr("Ctrl+T"));
+	testAct->setStatusTip(tr("Test"));
+	connect(testAct, SIGNAL(triggered()), this, SLOT(testSlot()));
 }
+
 
 void test::createMenus()
 {
-	  fileMenu = menuBar()->addMenu(tr("&File"));
-	  fileMenu->addAction(exitAct);
+	fileMenu = menuBar()->addMenu(tr("&File"));
+	fileMenu->addAction(exitAct);
 
-	  editMenu = menuBar()->addMenu(tr("&Edit"));
-	  editMenu->addAction(cutAct);
-	  editMenu->addAction(copyAct);
-	  editMenu->addAction(pasteAct);
+	editMenu = menuBar()->addMenu(tr("&Edit"));
+	editMenu->addAction(cutAct);
+	editMenu->addAction(copyAct);
+	editMenu->addAction(pasteAct);
 
-	  menuBar()->addSeparator();
+	menuBar()->addSeparator();
 
-	  helpMenu = menuBar()->addMenu(tr("&Help"));
-	  helpMenu->addAction(aboutAct);
-	  helpMenu->addAction(aboutQtAct);
+	helpMenu = menuBar()->addMenu(tr("&Help"));
+	helpMenu->addAction(aboutAct);
+	helpMenu->addAction(aboutQtAct);
 
-	  menuBar()->addSeparator();
+	menuBar()->addSeparator();
 
-	  testMenu = menuBar()->addMenu(tr("&Test"));
-	  testMenu->addAction(testAct);
+	testMenu = menuBar()->addMenu(tr("&Test"));
+	testMenu->addAction(testAct);
 }
 
 
 void test::createToolBars()
 {
-	  editToolBar = addToolBar(tr("Edit"));
-	  editToolBar->addAction(cutAct);
-	  editToolBar->addAction(copyAct);
-	  editToolBar->addAction(pasteAct);
+	editToolBar = addToolBar(tr("Edit"));
+	editToolBar->addAction(cutAct);
+	editToolBar->addAction(copyAct);
+	editToolBar->addAction(pasteAct);
 
-	  testToolBar = addToolBar(tr("Test"));
-	  testToolBar->addAction(testAct);
+	testToolBar = addToolBar(tr("Test"));
+	testToolBar->addAction(testAct);
 }
 
 
 void test::createStatusBar()
 {
-	  statusBar()->showMessage(tr("Ready"));
+	statusBar()->showMessage(tr("Ready"));
 }
 
 
 void test::readSettings()
 {
-	  QSettings settings("Trolltech", "Application Example");
-	  QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
-	  QSize size = settings.value("size", QSize(400, 400)).toSize();
-	  resize(size);
-	  move(pos);
+	QSettings settings("Markus", "Test Application");
+	QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
+	QSize size = settings.value("size", QSize(400, 400)).toSize();
+	resize(size);
+	move(pos);
 }
 
 
 void test::writeSettings()
 {
-	  QSettings settings("Trolltech", "Application Example");
-	  settings.setValue("pos", pos());
-	  settings.setValue("size", size());
+	QSettings settings("Trolltech", "Application Example");
+	settings.setValue("pos", pos());
+	settings.setValue("size", size());
 }
 
 
