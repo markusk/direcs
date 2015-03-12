@@ -60,6 +60,7 @@ QString Inifile::checkPath()
 
 	// get the current path and store it
 	programPath = QDir::currentPath();
+	qDebug() << QString("QDir::currentPath() = %1").arg(programPath);
 
 	return programPath;
 }
@@ -107,9 +108,17 @@ QString Inifile::getInifileName()
 
 void Inifile::writeSetting(QString group, QString name, int value)
 {
-	//-------------------------------------
-	// store the programm settings
-	//-------------------------------------
+	settings->beginGroup(group);
+
+	// save setting
+	settings->setValue(name, value);
+
+	settings->endGroup();
+}
+
+
+void Inifile::writeSetting(QString group, QString name, QString value)
+{
 	settings->beginGroup(group);
 
 	// save setting
@@ -121,12 +130,6 @@ void Inifile::writeSetting(QString group, QString name, int value)
 
 int Inifile::readSetting(QString group, QString name)
 {
-	// check if ini-file is writable
-	if (settings->isWritable() == false)
-	{
-		return -2;
-	}
-
 	// string for group+value in inifile
 	QString iniSection = group + "/" + name;
 
@@ -281,7 +284,7 @@ void Inifile::commandClock()
 			//str = QString("command: '%1'").arg(command);
 			//ui.textEdit1->append(str);
 
-			// Find the "command" of the instruction to do.
+			/// Find the "command" of the instruction \todo.
 			//
 			// copy the rest of the iniString from last blank till the end
 			str = iniString.mid(iniString.lastIndexOf(" ")+1);

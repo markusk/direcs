@@ -22,8 +22,11 @@
 
 InterfaceAvr::InterfaceAvr()
 {
+	// get the name of this class (this is for debugging messages)
+	className = this->staticMetaObject.className();
+
 	// creating the serial port object
-	serialPort = new DirecsSerial();
+	serialPort = new DirecsSerialQext();
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
@@ -55,7 +58,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 
 	// serial port config and flush also done in openAtmelPort!
-	if (serialPort->openAtmelPort( ba.data(), 38400 ) == -1)
+	if (serialPort->openPort(comPort, BAUDRATE ) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
@@ -69,11 +72,11 @@ bool InterfaceAvr::openComPort(QString comPort)
 void InterfaceAvr::closeComPort()
 {
 	// using direcsSerial
-	serialPort->closeAtmelPort();
+	serialPort->closePort();
 }
 
 
-bool InterfaceAvr::sendChar(unsigned char character)
+bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 {
 	int result = 0;
 // 	static int receiveErrorCounter = 0;
@@ -81,7 +84,7 @@ bool InterfaceAvr::sendChar(unsigned char character)
 
 	// send one byte to the serial port with direcsSerial
 	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeAtmelPort(&character);
+	result = serialPort->writeData((int) character, callingClassName); /// @todo convert character to int before!!
 
 	if (result < 0)
 	{
@@ -101,14 +104,14 @@ bool InterfaceAvr::sendChar(unsigned char character)
 }
 
 
-bool InterfaceAvr::receiveChar(unsigned char *character)
+bool InterfaceAvr::receiveChar(char *character, QString callingClassName)
 {
 	int result = 0;
 
 
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	result = serialPort->readAtmelPort(character, 1);
+	result = serialPort->readData(character, 1, callingClassName);
 
 	if (result != 1)
 	{
@@ -122,20 +125,20 @@ bool InterfaceAvr::receiveChar(unsigned char *character)
 }
 
 
-bool InterfaceAvr::sendString(QString string)
+bool InterfaceAvr::sendString(QString string, QString callingClassName)
 {
 //	QString debugstring;
 
 
 	// send starter
-	if (sendChar(starter) == true)
+	if (sendChar(starter, callingClassName) == true)
 	{
 		// send 'content' of string
 //		debugstring = "*";
 		for (int i=0; i<string.length(); i++)
 		{
 			// char by char
-			if (sendChar( string.at(i).toAscii() ) == false)
+			if (sendChar(string.at(i).toAscii(), callingClassName) == false)
 			{
 				return false;
 			}
@@ -143,7 +146,7 @@ bool InterfaceAvr::sendString(QString string)
 		}
 
 		// send terminator
-		if (sendChar(terminator) == true)
+		if (sendChar(terminator, callingClassName) == true)
 		{
 			// success
 //			debugstring.append("#");
@@ -156,17 +159,24 @@ bool InterfaceAvr::sendString(QString string)
 }
 
 
-bool InterfaceAvr::receiveString(QString &string)
+bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 {
 	int result = 0;
-	unsigned char character;
+	char character;
 	QByteArray ba;
 
+
+	// init byte array
+	ba.clear();
 
 	do
 	{
 		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readAtmelPort(&character, 1);
+		result = serialPort->readData(&character, 1, callingClassName);
+
+		// show in GUI / log to file (debugging)
+		// emit message(QString("character from readData: %1").arg(character));
+
 
 		if (result == 1)
 		{
@@ -179,12 +189,17 @@ bool InterfaceAvr::receiveString(QString &string)
 	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
-		qDebug() << "error at receiveString";
+		// show in GUI / log to file (debugging)
+		emit message(QString("ERROR at receiveString called from %1").arg(callingClassName));
+
 		return false;
 	}
 
 	// copy chars to QString to pointer to return the QString
 	string = QString::fromUtf8(ba.data(), ba.length());
+
+	// show in GUI / log to file (debugging)
+	// emit message(QString("QByteArray: %1").arg(string));
 
 	// check result!
 	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
@@ -197,17 +212,17 @@ bool InterfaceAvr::receiveString(QString &string)
 }
 
 
-bool InterfaceAvr::receiveInt(int *value)
+bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 {
 // 	static int receiveErrorCounter = 0;
-	unsigned char character = 0;
+	char character = 0;
 	int intValue = 0;
 
 
 	//-----------------
 	// receive MS-Byte
 	//-----------------
-	if (receiveChar(&character) == false)
+	if (receiveChar(&character, callingClassName) == false)
 	{
 // 		receiveErrorCounter++;
 		// emit error message already in calling receiveChar!
@@ -236,7 +251,7 @@ bool InterfaceAvr::receiveInt(int *value)
 	//-----------------
 	// receive LS-Byte
 	//-----------------
-	if (receiveChar(&character) == false)
+	if (receiveChar(&character, callingClassName) == false)
 	{
 		// emit error message already in calling receiveChar!
 		value = 0;
@@ -274,3 +289,120 @@ bool InterfaceAvr::convertStringToInt(QString string, int &value)
 	value = 0;
 	return false;
 }
+
+
+/*
+void InterfaceAvr::receiveData(QString data)
+{
+	int value = 0;
+
+
+	//-------------------
+	// check string / received data
+	//-------------------
+
+	// discard string if too long!
+	if (data.length() > MAXCOMMANDLENGTH)
+	{
+		// delete string
+		answer.clear();
+
+		// discard data!
+		emit message("STRING DISCARDED!");
+
+		commandStarted = false;
+		commandCompleted = false;
+
+		return;
+	}
+
+
+	//-------------------
+	// starts with * ?
+	//-------------------
+	if (data.startsWith(starter))
+	{
+		// ends with # ?
+		if (data.endsWith(terminator))
+		{
+			//-------------------
+			// commmand complete
+			//-------------------
+
+			// command complete "at once" in data!
+			// emit message("*# AT ONCE!");
+
+			// do we received a value?
+			if (convertStringToInt(data, value) == true)
+			{
+				// emit int
+				// also emit the name of the class, which (hopefully) waits for this answer
+				emit answerCompleteInt(callerClass, value);
+				emit message(">>> emit int");
+			}
+			else
+			{
+				// emit string
+				// also emit the name of the class, which (hopefully) waits for this answer
+				emit answerCompleteString(callerClass, data);
+				emit message(">>> emit string");
+			}
+
+			answer.clear();
+
+		}
+
+
+		//-----------------
+		// command started
+		//-----------------
+		// emit message("STARTED");
+
+		// store data locally
+		answer = data;
+
+		return;
+	}
+
+
+	//--------------------
+	// middle of command
+	//--------------------
+
+	// add data to previous string
+	answer.append(data);
+
+
+	//-------------------
+	// ends with # ?
+	//-------------------
+	if (answer.endsWith(terminator))
+	{
+		//--------------------
+		// commmand completed
+		//--------------------
+
+		// emit message("*# BUILT.");
+
+		// do we received a value?
+		if (convertStringToInt(data, value) == true)
+		{
+			// emit int
+			// also emit the name of the class, which (hopefully) waits for this answer
+			emit answerCompleteInt(callerClass, value);
+			emit message(">>> emit int");
+		}
+		else
+		{
+			// emit string
+			// also emit the name of the class, which (hopefully) waits for this answer
+			emit answerCompleteString(callerClass, data);
+			emit message(">>> emit string");
+		}
+
+		// delete string
+		answer.clear();
+
+	}
+}
+*/

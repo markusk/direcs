@@ -34,6 +34,8 @@
 #include "interfaceAvr.h"
 #include "laserSickS300.h"
 #include "laserThread.h"
+#include "timerThread.h"
+#include "sensorThread.h"
 
 //---------------------------------------------------------------------------------------------------
 
@@ -60,6 +62,12 @@ public slots:
 private slots:
 	  void about();
 	  void testSlot();      //    < < < <   this is the test slot where all magic happens
+	  /**
+	   * This slot sets (stores) the robots (circuits) state within this class.
+	   * This slot is also called, when the robot / Arduino was detected. This is event driven, caused by @sa initCircuit();
+	   * @param state can be ON or OFF
+	   */
+	  void setRobotState(bool state);
 
 signals:
 	  /**
@@ -103,6 +111,8 @@ private:
 	  InterfaceAvr *interface1;
 //	  SickS300 *sickS300;
 	  LaserThread *laserThread;
+	  TimerThread *timerThread;
+	  SensorThread *sensorThread;
 	  QString serialPortPath; // something like /dev/ttyUSB0
 
 	  /**

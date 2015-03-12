@@ -19,41 +19,14 @@
  *************************************************************************/
 
 
-#ifndef DIRECS_SERIAL_H
-#define DIRECS_SERIAL_H
+#ifndef DIRECS_SERIAL_QEXT_H
+#define DIRECS_SERIAL_QEXT_H
 
-#include <errno.h>
-#include <fcntl.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <termios.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/time.h>
+#include <qextserialport.h> /// This is for serial port communication
+#include <qextserialenumerator.h> /// This is for getting a list of serial ports
 
-#include <QtGlobal> // for Q_OS_* Makro!
-
-#ifdef CYGWIN
-#include <sys/socket.h>
-#else
-
-#ifdef Q_OS_LINUX
-#include <linux/serial.h>
-#endif
-
-#endif
-
-#define READ_TIMEOUT          250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
-#define READ_TIMEOUT_ATMEL    250000      /// the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort
-#define _POSIX
-
-#include <QtGlobal>
 #include <QString>
-#include <QDebug>
+#include <QTime> /// For measuring elapsed time while waiting for an answer on the serial port
 
 
 /**
@@ -62,31 +35,26 @@
 
 This class is used to communicate with laser scanners and with the robot (with the microcontroller).
 */
-class DirecsSerial : public QObject
+class DirecsSerialQext : public QObject
 {
 	Q_OBJECT
 
 	public:
-		DirecsSerial();
-		~DirecsSerial();
+		DirecsSerialQext();
+		~DirecsSerialQext();
 
 		/**
-		Open a connection to the serial line.
-
-		The serial port settings (8,N,1) for the serial port are set in this method, too!
-
-		@param dev_name the name of the serial device, e.g. /dev/ttyUSB0 or /dev/ttyS0
-		@param baudr The baud rate can be B0, B300, B600, B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200 or B500000.
-		@return the file descriptor if everything is fine, -1 in case of an error.
-		**/
-		int openPort(char *dev_name, int baudrate);
+		 * Open a connection to the serial line.
+		 * @param portName i.e. /dev/tty.usbmodemfd1411
+		 * @param baudrate i.e. BAUD9600
+		 * @return true on success
+		 */
+		bool openPort(QString portName, BaudRateType baudrate);
 
 		/**
-		Clears the read buffer.
-
-		@return Upon successful completion, this function returns zero.
+		 * Flushes the serial buffer.
 		*/
-		int purgeRx();
+		void purgeRx(); /// @todo rename to flush
 
 		/**
 		Writes data to the serial line.
@@ -95,24 +63,22 @@ class DirecsSerial : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes sent to the serial line.
 		 */
-		int writeData(unsigned char *c, QString callingClassName = "none");
+		int writeData(int value, QString callingClassName);
 
 		/**
 		Reads data from the serial line
 
-		@param *buf Pointer to unsigned char buffer for the data to be read.
-		@param nChars Number of bytes to be written (<= size of the buffer array).
+		@param *buf Pointer to char buffer for the data to be read.
+		@param nChars Number of bytes to be reaad (<= size of the buffer array).
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return The number of bytes read.
 		 */
-		int readData(unsigned char *buf, int nChars, QString callingClassName = "none");
+		int readData(char *buf, int charsToRead, QString callingClassName = "none");
 
 		/**
-		Closes the serial port.
-
-		@return the results reported by close.
+		 * Closes the serial port.
 		**/
-		int closePort();
+		void closePort();
 
 
 	signals:
@@ -122,11 +88,36 @@ class DirecsSerial : public QObject
 		*/
 		void message(QString text);
 
+		/**
+		  * This signal is sent when the received data are 'complete'
+		  * @param data contains the data as a QString
+		**/
+		void dataReceived(QString data);
+
+
+	private slots:
+		/**
+		 * @brief onReadyRead is automatically called, when data on the serial port are available.
+		 */
+		void onReadyRead();
+
 
 	private:
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 
 		int mDev_fd; //! the file descriptor of the serial port
+
+		QextSerialPort *port; /// The serial port
+		/// the settings for the serial port (Baudrate, Parity etc.)
+		/// Be aware, that the Arduino has to use the same speed (9600 Baud)
+		PortSettings settings;
+
+		QextSerialEnumerator *enumerator; /// This is for getting a list of serial ports (filenames like /dev/ttyUSB0)
+		QString serialPortName; /// for the (file)name of the serial port, like /dev/ttyUSB0 or COM1
+		int n;
+		bool portOpened; /// will be set in port open and checked in close port to avoid crash when trying to close an unopend port
+
+		static const int serialReadTimout = 500; /// time in ms for waiting for an answer for all bytes. @sa readData
 };
 
 #endif

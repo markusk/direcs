@@ -59,6 +59,18 @@ class Circuit : public QObject
 		bool initCircuit();
 
 		/**
+		 * @brief initArduino
+		 * @return
+		 */
+		bool initArduino();
+
+		/**
+		Puts the robot's circuits to sleep. This also disables the robot's watchdog!
+		@return true, when everything was fine
+		*/
+		bool sleep();
+
+		/**
 		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
 		@return true, when connected.
 		*/
@@ -91,12 +103,23 @@ class Circuit : public QObject
 		Sends a string to the GUI log.
 		@param text is the message to be emitted
 		*/
-		void emitMessage(QString text);
+		void message(QString text);
 
 
 	private:
+		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
+
 		mutable QMutex *mutex; // make this class thread-safe
 		InterfaceAvr *interface1;
+
+		QString atmelCommand;
+		QString atmelAnswer;
+		QString expectedAtmelAnswer;
+
+		QString commandInitCircuit;		///	*re#
+		QString commandInitCompass;		///	*cc#
+		QString commandSleep;			///	*sl#
+
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
 		bool circuitState; // stores the robot state within this class
@@ -105,6 +128,16 @@ class Circuit : public QObject
 
 		static const bool ON  = true;
 		static const bool OFF = false;
+
+		static const int atmelTimout = 500; // time in ms for waiting for an answer
+
+		/**
+		example answer string without value from Atmel: *re#
+		example answer string with value from Atmel:    *s7=42#
+		*/
+		static const char starter    = 42; /// This starts the serial string for the Atmel controller. 42 = *
+		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35 = #
+		static const char divider    = 61; /// This divides the serial string for the Atmel controller. 61 = =
 };
 
 #endif
