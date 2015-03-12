@@ -166,17 +166,6 @@ test::test()
 			timerThread->start();
 			emit message("Timer thread started.");
 		}
-
-
-		//==========================
-		// init the robots circuit
-		//==========================
-		textEdit->append("Searching robot...");
-
-		if (circuit1->initCircuit() == true)
-		{
-			textEdit->append("Robot is <font color=\"#00FF00\">ON</font> and answers.");
-		}
 	}
 	//---------------------------------------------------------------------------------------------------
 
