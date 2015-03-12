@@ -110,6 +110,10 @@ test::test()
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
+	sensorThread = new SensorThread(interface1, mutex);
+
+	// calls the arduino init after some time!
+	timerThread = new TimerThread();
 
 	// serialPortPath = "/dev/tty.SLAB_USBtoUART"; // Original driver "CP210x Macintosh OSX Driver v2." from SiLabs used.
 	// serialPortPath = "/dev/tty.usbserial-A900J1TU"; // ARM board with STM32F4 and FTDI RS232R chip
@@ -117,12 +121,21 @@ test::test()
 
 	// send messages from the other class to this class (to the GUI)
 	connect(interface1, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
+	connect(timerThread, SIGNAL(message(QString)), this, SLOT(appendLog(QString)));
+
+	//--------
+	// try to init Arduino after some seconds, not during exact start
+	//--------
+	// call Slot initArduino on Signal checkArduinoState
+	connect(timerThread, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
 
 	//--------------------------------------------------------------------------
 	// let some classes know the robots state
 	//--------------------------------------------------------------------------
 	// this is needed, when the first openCOMPort method fails:
 	connect(interface1,	SIGNAL( robotState(bool) ), circuit1,		SLOT( setRobotState(bool) ));
+	// the following slot is also used, when the robot ewas detected (event driven by initCircuit!)
+	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 
 
 	textEdit->append("Opening serial port for microcontroller communication...");
@@ -141,6 +154,17 @@ test::test()
 		// * The robot is ON *
 		// *******************
 		textEdit->append("Serial port opened.");
+
+
+		//-----------------------------------------------------------
+		// start the timer thread
+		//-----------------------------------------------------------
+		if (timerThread->isRunning() == false)
+		{
+			emit message("Starting timer thread...");
+			timerThread->start();
+			emit message("Timer thread started.");
+		}
 
 
 		//==========================
@@ -177,6 +201,101 @@ test::~test()
 	// SICK laser S300 test stuff
 	delete sickS300;
 	*/
+}
+
+
+void test::setRobotState(bool state)
+{
+	// init circuit was okay
+	if (state == true)
+	{
+		emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
+
+/*
+		// check compass module
+		if (circuit1->initCompass() == true)
+		{
+			emit message("3D compass module detected.");
+			if (!consoleMode)
+			{
+				gui->setLEDCompass(GREEN);
+			}
+		}
+		else
+		{
+			emit message("<font color=\"#FF0000\">3D compass module not connected!</font>");
+			if (!consoleMode)
+			{
+				gui->setLEDCompass(RED);
+			}
+		}
+*/
+
+/* >>> Arduino to be ported
+
+		//-------------------------------------------------------
+		// set the read motor speed
+		//-------------------------------------------------------
+		emit message("Setting motor speed in microcontroller");
+		motors->setMotorSpeed(MOTOR1, mot1Speed);
+		motors->setMotorSpeed(MOTOR2, mot2Speed);
+		motors->setMotorSpeed(MOTOR3, mot3Speed);
+		motors->setMotorSpeed(MOTOR4, mot4Speed);
+		emit message("Motor speed set.");
+*/
+
+/*
+		//-------------------------------------------------------
+		// move all Servos in their default positions
+		//-------------------------------------------------------
+		servos->init();
+		emit message("Servos moved to default positions");
+*/
+
+/* >>> Arduino to be ported
+		//-------------------------------------------------------
+		// set all RGB LEDs in their default brightness
+		//-------------------------------------------------------
+		rgbLeds->init();
+		emit message("RGB LEDs set to default brightness");
+*/
+
+		/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
+		/// currently done by sensor thread a bit...
+/*
+		//-----------------------------------------------------------
+		// start the heartbeat thread
+		//-----------------------------------------------------------
+		if (heartbeat->isRunning() == false)
+		{
+			emit splashMessage("Starting heartbeat thread...");
+
+			emit message("Starting heartbeat thread...", false);
+			heartbeat->start();
+			emit message("Heartbeat thread started.");
+		}
+*/
+
+		//-----------------------------------------------------------
+		// start the sensor thread for reading the sensors)
+		//-----------------------------------------------------------
+		if (sensorThread->isRunning() == false)
+		{
+			emit message("Starting sensor thread...");
+			sensorThread->start();
+			emit message("Sensor thread started.");
+
+			// whenever there is a material error, react!
+			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+		}
+	} // state / init circuit was successfull
+	else
+	{
+		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
+		emit message("Heartbeat thread NOT started!");
+		emit message("Sensor thread NOT started!");
+		emit message("Plot thread NOT started!");
+	} // state = false
 }
 
 
