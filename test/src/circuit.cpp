@@ -52,6 +52,8 @@ bool Circuit::initCircuit()
 	QString answer = "error";
 
 
+	emit message(">>> initCircuit Slot");
+
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
 	{
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
@@ -77,7 +79,6 @@ bool Circuit::initCircuit()
 					firstInitDone = true;
 					circuitState = true;
 					emit robotState(true);
-
 					return true;
 				}
 			}
