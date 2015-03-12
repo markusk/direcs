@@ -88,7 +88,7 @@ bool Circuit::initCircuit()
 
 	}
 
-	qDebug("INFO from initCircuit: Robot is OFF.");
+	emit message("INFO from initCircuit: Robot is OFF.");
 	firstInitDone = true;
 	circuitState = false;
 	emit robotState(false);

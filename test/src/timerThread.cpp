@@ -93,6 +93,7 @@ void TimerThread::run()
 			if (startTime.secsTo(now) >= timeToArduinoCheck)
 			{
 				arduinoStateSet = true;
+				emit message("Calling checkArduinoState...");
 				emit checkArduinoState();
 			}
 		}

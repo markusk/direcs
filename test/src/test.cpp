@@ -120,6 +120,7 @@ test::test()
 	serialPortPath = "/dev/tty.usbmodem1451"; // Arduino Uno
 
 	// send messages from the other class to this class (to the GUI)
+	connect(circuit1, SIGNAL(message(QString)), this, SLOT(appendLog(QString)));
 	connect(interface1, SIGNAL( message(QString) ), this, SLOT( appendLog(QString) ));
 	connect(timerThread, SIGNAL(message(QString)), this, SLOT(appendLog(QString)));
 
