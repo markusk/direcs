@@ -39,8 +39,8 @@ DirecsSerialQext::DirecsSerialQext()
 	portOpened = false;
 
 	// create the serial port object.
-	// we get the serial data on the port "event driven".
-	port = new QextSerialPort(serialPortName, settings, QextSerialPort::EventDriven);
+	// we get the serial data on the port asynchronously!
+	port = new QextSerialPort(serialPortName, settings);
 
 	// sets the read and write timeouts for the port to the given milliseconds.
 	port->setTimeout(serialReadTimout);
@@ -180,58 +180,6 @@ int DirecsSerialQext::readData(char *buf, int charsToRead, QString callingClassN
 	emit message(QString("ERROR: Timeout at readData, called from %1").arg(callingClassName));
 
 	return -1;
-}
-
-
-void DirecsSerialQext::onReadyRead()
-{
-	QByteArray receivedData; // the data received from the serial port
-	qint64 ba = 0; // bytes available
-	QString str; // a string to show it
-	QChar ch = 0; // the char of the received data
-	int dec = 0; // the int of the received data
-
-
-	// how many bytes are available?
-	ba = port->bytesAvailable();
-
-	// position in the string (index!)
-	n = 0;
-
-	// if data available (should _always_ be the case, since this method is called automatically by an event)
-	if (ba > 0)
-	{
-		// read data and convert them to a QString
-		receivedData = port->readAll();
-
-		// convert from QByteArray to QString
-		str = QString::fromUtf8(receivedData.constData());
-
-		// show in GUI / debug...
-		// emit message(QString("<font color=\"#0000FF\">%1 byte(s) received. ASCII: %2<font>").arg(ba).arg(str));
-		emit message(QString("<font color=\"#0000FF\">%1 byte/s: %2<font>").arg(ba).arg(str));
-
-		// show each byte
-		while (n < receivedData.length())
-		{
-			// show DEC of each char
-			//
-			// convert one byte to QChar
-			ch = receivedData.at(n);
-
-			// convert to int
-			dec = (int) ch.toAscii();
-
-			// show in GUI / debug...
-			// emit message(QString("<font color=\"#0000FF\">Byte No.%1: %2 (DEC)</font>").arg(n).arg(dec));
-
-			// counter +1
-			n++;
-		}
-
-		// all data received
-		emit dataReceived(str);
-	}
 }
 
 

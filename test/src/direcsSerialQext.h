@@ -95,13 +95,6 @@ class DirecsSerialQext : public QObject
 		void dataReceived(QString data);
 
 
-	private slots:
-		/**
-		 * @brief onReadyRead is automatically called, when data on the serial port are available.
-		 */
-		void onReadyRead();
-
-
 	private:
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 
@@ -117,7 +110,7 @@ class DirecsSerialQext : public QObject
 		int n;
 		bool portOpened; /// will be set in port open and checked in close port to avoid crash when trying to close an unopend port
 
-		static const int serialReadTimout = 500; /// time in ms for waiting for an answer for all bytes. @sa readData
+		static const int serialReadTimout = 10; /// time in ms for waiting for an answer for all bytes. @sa readData
 };
 
 #endif
