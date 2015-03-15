@@ -424,13 +424,13 @@ void loop()
         greenLED(OFF);
         yellowLED(OFF);
         
-        /*------------------ DEBUG ------------------------
+        /*------------------ DEBUG 1 ------------------------
         lcd.setCursor(0,0);
         lcd.print("ERROR:");
         lcd.setCursor(1,0);
         lcd.print("OVERFLOW");
         lcd.setBacklight(RED);
-        //------------------ DEBUG ------------------------*/
+        //------------------ DEBUG 1 ------------------------*/
 
         // clear string
         inputString = "";
@@ -530,6 +530,10 @@ void loop()
                 lcd.print(inChar);
                 lcd.setBacklight(WHITE);
                 //------------------ DEBUG ------------------------*/
+
+                //------------------ DEBUG 2 ------------------------*/
+                letter((String) inChar, LED_YELLOW);
+                //------------------ DEBUG 2 ------------------------*/
                 
                 // Daten in Puffer speichern
                 inputString += inChar;
@@ -539,6 +543,10 @@ void loop()
                 // everything else
                 greenLED(OFF);
                 yellowLED(OFF);
+
+                //------------------ DEBUG 2 ------------------------*/
+                letter((String) inChar, LED_YELLOW);
+                //------------------ DEBUG 2 ------------------------*/
               } // any string
             }
           }
