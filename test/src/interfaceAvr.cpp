@@ -176,7 +176,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 		result = serialPort->readData(string, callingClassName);
 
 		// show in GUI / log to file (debugging)
-		emit message(QString("String from readData: %1").arg(string));
+		// emit message(QString("String from readData: %1").arg(string));
 
 	} while ( (result != -1) && (string.right(1) != "#") );
 	// until no serial port read error and string does not end with terminator
@@ -192,7 +192,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 	}
 
 	// show in GUI / log to file (debugging)
-	emit message(QString("QString in InterfaceAvrreceiveString: %1").arg(string));
+	// emit message(QString("QString in InterfaceAvrreceiveString: %1").arg(string));
 
 	// check resulting string!
 	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
