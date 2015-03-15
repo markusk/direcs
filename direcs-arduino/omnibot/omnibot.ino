@@ -9,7 +9,7 @@ const int analogInPin = A0;  // Analog input pin that the potentiometer is attac
 int sensorValue = 0;        // value read from the poti
 
 
-/*------------------ DEBUG ------------------------
+/*------------------ DEBUG 1 ------------------------
 #include <Wire.h>
 #include <Adafruit_MCP23017.h>
 #include <Adafruit_RGBLCDShield.h>
@@ -28,7 +28,20 @@ Adafruit_RGBLCDShield lcd = Adafruit_RGBLCDShield();
 #define BLUE 0x4
 #define VIOLET 0x5
 #define WHITE 0x7
-//------------------ DEBUG ------------------------*/
+//------------------ DEBUG 1 ------------------------*/
+
+
+//------------------ DEBUG 2 ------------------------*/
+// Using Adafruit bi-color 8x8 LED matrix
+// Pins used: A4 = SDA  and  A5 = SCK
+
+#include <Wire.h>
+#include "Adafruit_LEDBackpack.h"
+#include "Adafruit_GFX.h"
+
+Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
+
+//------------------ DEBUG 2 ------------------------*/
 
 
 
@@ -173,11 +186,24 @@ String command = "";
 
 void setup()
 {
-  /*------------------ DEBUG ------------------------
+  /*------------------ DEBUG 1 ------------------------
   // set up the LCD's number of columns and rows: 
   lcd.begin(16, 2);
   lcd.setBacklight(RED);
-  //------------------ DEBUG ------------------------*/
+  //------------------ DEBUG 1 ------------------------*/
+
+  //------------------ DEBUG 2 ------------------------*/
+  // Bi-color 8x8 LED display with I2C
+  matrix.begin(0x70);  // pass in the address
+
+  matrix.setRotation(0);
+  matrix.setTextWrap(false);  // we dont want text to wrap so it scrolls nicely
+  matrix.setTextSize(1);
+  
+  // display letter "S"
+  letter("S", LED_GREEN);
+  //------------------ DEBUG 2 ------------------------*/
+
 
   // initialize serial
   Serial.begin(9600);
@@ -383,12 +409,14 @@ void loop()
 
 // Serial.println("serialEvent"); Okay
 
+  letter("w", LED_RED);
+
   do
   {
     if (Serial.available())
     {
       // get the new byte
-      char inChar = (char)Serial.read(); 
+      char inChar = (char)Serial.read();
 
       // max String length reached?
       if (inputString.length() >= stringSize)
@@ -396,13 +424,13 @@ void loop()
         greenLED(OFF);
         yellowLED(OFF);
         
-        /*------------------ DEBUG ------------------------
+        /*------------------ DEBUG 1 ------------------------
         lcd.setCursor(0,0);
         lcd.print("ERROR:");
         lcd.setCursor(1,0);
         lcd.print("OVERFLOW");
         lcd.setBacklight(RED);
-        //------------------ DEBUG ------------------------*/
+        //------------------ DEBUG 1 ------------------------*/
 
         // clear string
         inputString = "";
@@ -426,11 +454,16 @@ void loop()
             yellowLED(OFF);
 
             //Serial.println("STARTER");
-            /*------------------ DEBUG ------------------------
+            /*------------------ DEBUG 1 ------------------------
             lcd.setCursor(0,0);
             lcd.print(inChar);
             lcd.setBacklight(YELLOW);
-            //------------------ DEBUG ------------------------*/
+            //------------------ DEBUG 1 ------------------------*/
+
+            //------------------ DEBUG 2 ------------------------*/
+            letter("*", LED_YELLOW);
+            //------------------ DEBUG 2 ------------------------*/
+
 
             // clear the string
             inputString = "";
@@ -452,10 +485,14 @@ void loop()
               greenLED(OFF);
 
               //Serial.println("TERMINATOR");
-              /*------------------ DEBUG ------------------------
+              /*------------------ DEBUG 1 ------------------------
               lcd.print(inChar);
               lcd.setBacklight(GREEN);
-              //------------------ DEBUG ------------------------*/
+              //------------------ DEBUG 1 ------------------------*/
+              
+              //------------------ DEBUG 2 ------------------------*/
+              letter("#", LED_YELLOW);
+              //------------------ DEBUG 2 ------------------------*/
 
               // ja, dann terminator anhängen
               inputString += inChar;
@@ -493,6 +530,10 @@ void loop()
                 lcd.print(inChar);
                 lcd.setBacklight(WHITE);
                 //------------------ DEBUG ------------------------*/
+
+                //------------------ DEBUG 2 ------------------------*/
+                letter((String) inChar, LED_YELLOW);
+                //------------------ DEBUG 2 ------------------------*/
                 
                 // Daten in Puffer speichern
                 inputString += inChar;
@@ -502,6 +543,10 @@ void loop()
                 // everything else
                 greenLED(OFF);
                 yellowLED(OFF);
+
+                //------------------ DEBUG 2 ------------------------*/
+                letter((String) inChar, LED_YELLOW);
+                //------------------ DEBUG 2 ------------------------*/
               } // any string
             }
           }
@@ -1612,3 +1657,17 @@ void relais(uint8_t state)
  for (; ms>0; ms--) _delay_ms(1);
  }
  */
+ 
+
+// print a letter on the adafruit bi-color 8x8 led matrix
+ void letter(String text, uint16_t color)
+ {
+  //------------------ DEBUG 2 ------------------------*/
+  matrix.clear();
+  matrix.setTextColor(color);
+  matrix.setCursor(0,0);
+  matrix.print(text);
+  matrix.writeDisplay();
+  //------------------ DEBUG 2 ------------------------*/
+ }
+ 
