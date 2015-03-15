@@ -168,12 +168,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 {
 	int result = 0;
-	char character;
-	QByteArray ba;
 
-
-	// init byte array
-	ba.clear();
 
 	do
 	{
@@ -181,18 +176,13 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 		result = serialPort->readData(string, callingClassName);
 
 		// show in GUI / log to file (debugging)
-		// emit message(QString("character from readData: %1").arg(character));
+		emit message(QString("String from readData: %1").arg(string));
 
+	} while ( (result != 1) && (string.right(1) != "#") );
+	// until no serial port read error and string does not end with terminator
+	// (timeout is checked in direcsSerial::readData and will set error code to -1 as well)
 
-		if (result > 0)
-		{
-			// append received char to byte array
-			ba.append(character);
-		}
-
-	} while ( (result == 1) && (character != '#') );
-
-	if (result != 1)
+	if (result == 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
 		// show in GUI / log to file (debugging)
@@ -201,19 +191,17 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 		return false;
 	}
 
-	// copy chars to QString to pointer to return the QString
-	string = QString::fromUtf8(ba.data(), ba.length());
-
 	// show in GUI / log to file (debugging)
-	// emit message(QString("QByteArray: %1").arg(string));
+	emit message(QString("QString in InterfaceAvrreceiveString: %1").arg(string));
 
-	// check result!
+	// check resulting string!
 	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
 	{
 		return true;
 	}
 
 
+	emit message(QString("ERROR at receiveString '%1': wrong format, (no *x#) called from %1").arg(string).arg(callingClassName));
 	return false;
 }
 

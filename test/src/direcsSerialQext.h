@@ -109,7 +109,7 @@ class DirecsSerialQext : public QObject
 		int n;
 		bool portOpened; /// will be set in port open and checked in close port to avoid crash when trying to close an unopend port
 
-		static const int serialReadTimout = 500; /// time in ms for waiting for an answer for all bytes. @sa readData
+		static const int serialReadTimout = 500; /// time in ms for waiting for an answer for _all_ bytes, the whole string which is expected!
 };
 
 #endif
