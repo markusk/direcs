@@ -85,7 +85,7 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 	// send one byte to the serial port with direcsSerial
 	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
 	result = serialPort->writeData((int) character, callingClassName); /// @todo convert character to int before!!
-
+/*
 	if (result < 0)
 	{
 // 		receiveErrorCounter++;
@@ -99,19 +99,23 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 // 		}
 		return false;
 	}
-
+*/
 	return true;
 }
 
 
 bool InterfaceAvr::receiveChar(char *character, QString callingClassName)
 {
+	// no longer supported since Arduino!!
+	return false;
+
+	/*
 	int result = 0;
 
 
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	result = serialPort->readData(character, 1, callingClassName);
+	result = serialPort->readData(character, callingClassName);
 
 	if (result != 1)
 	{
@@ -122,6 +126,7 @@ bool InterfaceAvr::receiveChar(char *character, QString callingClassName)
 
 	// emit emitMessage( QString("Received '%1'.").arg(result) ); // this makes the program to slow and than to crash!!
 	return true;
+*/
 }
 
 
@@ -173,7 +178,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 	do
 	{
 		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readData(&character, 1, callingClassName);
+		result = serialPort->readData(string, callingClassName);
 
 		// show in GUI / log to file (debugging)
 		// emit message(QString("character from readData: %1").arg(character));
@@ -215,7 +220,11 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 
 bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 {
-// 	static int receiveErrorCounter = 0;
+	// no longer supported since Arduino!!
+	return false;
+
+	/*
+	// 	static int receiveErrorCounter = 0;
 	char character = 0;
 	int intValue = 0;
 
@@ -266,6 +275,7 @@ bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 
 	// emit emitMessage( QString("Received int '%1'.").arg(*value) ); // this makes the program to slow and than to crash!!
 	return true;
+	*/
 }
 
 

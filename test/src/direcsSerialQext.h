@@ -68,12 +68,11 @@ class DirecsSerialQext : public QObject
 		/**
 		Reads data from the serial line
 
-		@param *buf Pointer to char buffer for the data to be read.
-		@param nChars Number of bytes to be reaad (<= size of the buffer array).
+		@param string is a QString of all available data
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
-		@return The number of bytes read.
+		@return the number of bytes read.
 		 */
-		int readData(char *buf, int charsToRead, QString callingClassName = "none");
+		int readData(QString string, QString callingClassName = "none");
 
 		/**
 		 * Closes the serial port.
@@ -110,7 +109,7 @@ class DirecsSerialQext : public QObject
 		int n;
 		bool portOpened; /// will be set in port open and checked in close port to avoid crash when trying to close an unopend port
 
-		static const int serialReadTimout = 10; /// time in ms for waiting for an answer for all bytes. @sa readData
+		static const int serialReadTimout = 500; /// time in ms for waiting for an answer for all bytes. @sa readData
 };
 
 #endif
