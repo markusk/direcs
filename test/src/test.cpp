@@ -291,6 +291,35 @@ void test::setRobotState(bool state)
 }
 
 
+void test::systemerrorcatcher(int errorlevel)
+{
+	switch (errorlevel)
+	{
+	case -1: // error with laserscanner thread
+/*
+		if (robotDrives)
+		{
+			emit message("<font color=\"#0000FF\"Emergency stop due to laserscanner problems!/font>");
+			logfile->appendLog("Emergency stop due to laserscanner problems!");
+
+			// stop driving
+			drive(STOP);
+
+			// flashlight ON
+			motors->flashlight(ON);
+		}
+*/
+		break;
+
+	case -2: // error with sensor thread -> error in atmel read / write port!
+		emit message("Error with sensor thread. Forcing shutdown when exitng direcs later (No last hardware init).");
+
+		break;
+	}
+}
+
+
+
 void test::closeEvent(QCloseEvent *event)
 {
 	Q_UNUSED(event);
