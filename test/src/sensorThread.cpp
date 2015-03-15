@@ -176,6 +176,7 @@ void SensorThread::run()
 	//  start "threading"...
 	while (!stopped)
 	{
+		emit message(QString("%1 ms SLEEP STANDARD!").arg(THREADSLEEPTIME));
 		// let the thread sleep some time for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
@@ -204,6 +205,12 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
+
+
+			emit message(QString("%1 ms SLEEP TEST!").arg(THREADSLEEPTIME));
+			// let the thread sleep some time for having more time for the other threads
+			msleep(THREADSLEEPTIME);
+
 
 			emit message(QString("%1. reading s8").arg(testCounter));
 
