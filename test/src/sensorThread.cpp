@@ -1349,7 +1349,7 @@ bool SensorThread::readUltrasonicSensor(short int sensor)
 bool SensorThread::readVoltageSensor(short int sensor)
 {
 	int value = 0;
-	QString answer = "error";
+	QString answer;
 
 
 	switch (sensor)
