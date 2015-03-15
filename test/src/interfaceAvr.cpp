@@ -184,7 +184,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 		// emit message(QString("character from readData: %1").arg(character));
 
 
-		if (result == 1)
+		if (result > 0)
 		{
 			// append received char to byte array
 			ba.append(character);

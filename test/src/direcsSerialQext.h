@@ -72,7 +72,7 @@ class DirecsSerialQext : public QObject
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return the number of bytes read.
 		 */
-		int readData(QString string, QString callingClassName = "none");
+		int readData(QString &string, QString callingClassName = "none");
 
 		/**
 		 * Closes the serial port.

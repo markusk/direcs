@@ -49,7 +49,7 @@ Circuit::~Circuit()
 
 bool Circuit::initCircuit()
 {
-	QString answer = "error";
+	QString answer;
 
 
 	emit message("initCircuit Slot()");
