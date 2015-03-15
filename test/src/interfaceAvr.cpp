@@ -178,11 +178,11 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 		// show in GUI / log to file (debugging)
 		emit message(QString("String from readData: %1").arg(string));
 
-	} while ( (result != 1) && (string.right(1) != "#") );
+	} while ( (result != -1) && (string.right(1) != "#") );
 	// until no serial port read error and string does not end with terminator
 	// (timeout is checked in direcsSerial::readData and will set error code to -1 as well)
 
-	if (result == 1)
+	if (result == -1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
 		// show in GUI / log to file (debugging)
