@@ -130,6 +130,9 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 	int dec = 0;  // the int of the received data
 
 
+	//
+	string.clear();
+
 	// just to make sure...
 	if (port->isOpen() == false)
 	{
@@ -150,7 +153,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 		if (ba > 0)
 		{
 			// show in GUI / log to file (debugging)
-			// emit message(QString("<em>%1 byte(s) available.</em>").arg(ba));
+			emit message(QString("<em>%1 byte(s) available.</em>").arg(ba));
 
 			//--------------------------------------------------------------------
 			// read a maximum of 'charsToRead' of all available bytes
@@ -167,7 +170,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 			}
 
 			// show in GUI / log to file (debugging)
-			// emit message(QString("<em>%1 byte(s) received.</em>").arg(bytesRead));
+			emit message(QString("<em>%1 byte(s) received.</em>").arg(bytesRead));
 
 			//
 			// store/concat to QString!
@@ -180,7 +183,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 				string.append(buf[n]);
 
 				// show in GUI
-				// emit message(QString("Byte No.%1: %2 (ASCII) / %3 (DEC) / %4 (HEX)").arg(n+1).arg(ch).arg(dec).arg(dec, 0, 16));
+				emit message(QString("Byte No.%1: %2 (ASCII) %3 (INT)").arg(n+1).arg(buf[n]).arg((int)buf[n]));
 
 				// counter +1
 				n++;
@@ -192,9 +195,9 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 
 
 	// SUCCESS
-	if (bytesRead > 0)
+	if (string.length() > 0)
 	{
-		return bytesRead;
+		return string.length();
 	}
 
 
