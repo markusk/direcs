@@ -95,13 +95,6 @@ class DirecsSerialQext : public QObject
 		void dataReceived(QString data);
 
 
-	private slots:
-		/**
-		 * @brief onReadyRead is automatically called, when data on the serial port are available.
-		 */
-		void onReadyRead();
-
-
 	private:
 		QString className;	/// this will contain the name of this class at runtime for debug messages
 
