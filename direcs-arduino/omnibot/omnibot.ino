@@ -409,7 +409,7 @@ void loop()
 
 // Serial.println("serialEvent"); Okay
 
-  letter("w", LED_RED);
+//  letter("w", LED_RED);
 
   do
   {
@@ -711,27 +711,73 @@ void loop()
       // READ_SENSOR_7 (24 V supply)
       if (command == "*s7#")
       {
+        //------------------ DEBUG 2 ------------------------*/
+        letter("z", LED_YELLOW);
+        //------------------ DEBUG 2 ------------------------*/
+
         greenLED(OFF);
         yellowLED(OFF);
       
         // read the analog in value
         // print the results to the serial monitor:
-        Serial.print("*");
-        Serial.print( analogRead(SENSOR7) );
-        Serial.print("#");
+        if (Serial.print("*") < 1)
+        {
+          letter("y", LED_YELLOW);
+          return;
+        }
+
+//        if (Serial.print( analogRead(SENSOR7) ) < 1)
+        if (Serial.print( 127 ) < 3)
+        {
+          letter("x", LED_YELLOW);
+          return;
+        }
+
+        if (Serial.print("#") < 1)
+        {
+          letter("w", LED_YELLOW);
+          return;
+        }
+
+        //------------------ DEBUG 2 ------------------------*/
+        letter("A", LED_YELLOW);
+        //------------------ DEBUG 2 ------------------------*/
       }
       else
      // READ_SENSOR_8 (12 V supply)
       if (command == "*s8#")
       {
+        //------------------ DEBUG 2 ------------------------*/
+        letter("u", LED_YELLOW);
+        //------------------ DEBUG 2 ------------------------*/
+
         greenLED(OFF);
         yellowLED(OFF);
       
         // read the analog in value
         // print the results to the serial monitor:
-        Serial.print("*");
-        Serial.print( analogRead(SENSOR8) );
-        Serial.print("#");
+        if (Serial.print("*") < 1)
+        {
+          letter("t", LED_YELLOW);
+          return;
+        }
+
+//        if (Serial.print( analogRead(SENSOR8) ) < 1)
+        if (Serial.print( 128 ) < 3)
+        {
+          letter("s", LED_YELLOW);
+          return;
+        }
+
+        if (Serial.print("#") < 1)
+        {
+          letter("r", LED_YELLOW);
+          return;
+        }
+
+        //------------------ DEBUG 2 ------------------------*/
+        letter("q", LED_YELLOW);
+        //------------------ DEBUG 2 ------------------------*/
       }
     /*     else
      // READ_SENSOR_16
