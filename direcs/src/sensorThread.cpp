@@ -1354,6 +1354,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
 				{
+emit message(QString("receiveString: %1.").arg(answer));
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
 					{
@@ -1365,6 +1366,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			}
 
 			// error
+emit message("ERROR VOLTAGESENSOR1");
 			voltageSensorValue[VOLTAGESENSOR1] = 0;
 			return false;
 			break;
@@ -1375,6 +1377,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
 				{
+emit message(QString("receiveString: %1.").arg(answer));
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
 					{
@@ -1386,6 +1389,7 @@ bool SensorThread::readVoltageSensor(short int sensor)
 			}
 
 			// error
+emit message("ERROR VOLTAGESENSOR2");
 			voltageSensorValue[VOLTAGESENSOR2] = 0;
 			return false;
 			break;
