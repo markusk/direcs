@@ -108,7 +108,7 @@ int DirecsSerialQext::writeData(int value, QString callingClassName)
 		// flush serial port
 		port->flush();
 
-		if (bw == -1)
+		if (bw < 1)
 		{
 			emit message(QString("<font color=\"#FF0000\">ERROR '%1' when writing to serial port (%2 called from %3.</font>").arg(port->errorString()).arg(className).arg(callingClassName));
 		}
