@@ -86,7 +86,7 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
 	result = serialPort->writeData((int) character, callingClassName); /// @todo convert character to int before!!
 
-	if (result < 0)
+	if (result == -1)
 	{
 // 		receiveErrorCounter++;
 		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
@@ -140,6 +140,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 			// char by char
 			if (sendChar(string.at(i).toAscii(), callingClassName) == false)
 			{
+emit message("sendString ERROR 1");
 				return false;
 			}
 //			debugstring.append(string.at(i));
@@ -155,6 +156,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 		}
 	}
 
+emit message("sendString ERROR 2");
 	return false;
 }
 
