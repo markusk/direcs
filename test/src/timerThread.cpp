@@ -70,19 +70,6 @@ void TimerThread::run()
 		// qDebug("%d seconds from pgm start.", startTime.secsTo( QDateTime::currentDateTime() ));
 
 		//------------------
-		// master or slave?
-		//------------------
-		if (networkStateSet==false)
-		{
-			// time elapsed for receiving a master signal.
-			if (startTime.secsTo(now) >= timeToNetworkCheck)
-			{
-				networkStateSet = true;
-				emit checkNetworkState();
-			}
-		}
-
-		//------------------
 		// Arduino called?
 		//
 		// only do this, when robot is not already identified as 'off'. i.e. open com port did not work
@@ -98,12 +85,6 @@ void TimerThread::run()
 			}
 		}
 
-
-		//----------------------
-		// send 'master' signal
-		// every second
-		//----------------------
-		emit networkMessage();
 	}
 	stopped = false;
 }
