@@ -632,6 +632,8 @@ void loop()
       // answer with "ok"
       // this answer is used to see if the robot is "on"
       Serial.print("*re#");
+      // write all data immediately!
+      Serial.flush();
 
       // e n a b l e  watchdog!
       /* to be ported    
@@ -725,6 +727,8 @@ void loop()
           letter("y", LED_YELLOW);
           return;
         }
+        // write all data immediately!
+        Serial.flush();
 
 //        if (Serial.print( analogRead(SENSOR7) ) < 1)
         if (Serial.print( 127 ) < 3)
@@ -732,13 +736,17 @@ void loop()
           letter("x", LED_YELLOW);
           return;
         }
-
+        // write all data immediately!
+        Serial.flush();
+        
         if (Serial.print("#") < 1)
         {
           letter("w", LED_YELLOW);
           return;
         }
-
+        // write all data immediately!
+        Serial.flush();
+        
         //------------------ DEBUG 2 ------------------------*/
         letter("A", LED_YELLOW);
         //------------------ DEBUG 2 ------------------------*/
@@ -761,6 +769,8 @@ void loop()
           letter("t", LED_YELLOW);
           return;
         }
+        // write all data immediately!
+        Serial.flush();
 
 //        if (Serial.print( analogRead(SENSOR8) ) < 1)
         if (Serial.print( 128 ) < 3)
@@ -768,12 +778,16 @@ void loop()
           letter("s", LED_YELLOW);
           return;
         }
+        // write all data immediately!
+        Serial.flush();
 
         if (Serial.print("#") < 1)
         {
           letter("r", LED_YELLOW);
           return;
         }
+        // write all data immediately!
+        Serial.flush();
 
         //------------------ DEBUG 2 ------------------------*/
         letter("q", LED_YELLOW);
