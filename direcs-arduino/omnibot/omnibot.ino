@@ -44,6 +44,11 @@ Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
 //------------------ DEBUG 2 ------------------------*/
 
 
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(10, 11); // RX, TX
+
+
+
 
 //-------  from main.h  -------------------------------
 
@@ -186,6 +191,10 @@ String command = "";
 
 void setup()
 {
+  // set the data rate for the SoftwareSerial port
+  mySerial.begin(9600);
+  mySerial.println("Hello, world?");
+  
   /*------------------ DEBUG 1 ------------------------
   // set up the LCD's number of columns and rows: 
   lcd.begin(16, 2);
@@ -415,12 +424,15 @@ void loop()
   {
     if (Serial.available())
     {
+      mySerial.println("INFO: serial available");
+
       // get the new byte
       char inChar = (char)Serial.read();
 
       // max String length reached?
       if (inputString.length() >= stringSize)
       {
+        mySerial.println("INFO: Max string length reached!");
         greenLED(OFF);
         yellowLED(OFF);
         
@@ -462,6 +474,7 @@ void loop()
 
             //------------------ DEBUG 2 ------------------------*/
             letter("*", LED_YELLOW);
+            mySerial.print("*");
             //------------------ DEBUG 2 ------------------------*/
 
 
@@ -492,6 +505,7 @@ void loop()
               
               //------------------ DEBUG 2 ------------------------*/
               letter("#", LED_YELLOW);
+              mySerial.print("#");
               //------------------ DEBUG 2 ------------------------*/
 
               // ja, dann terminator anhängen
@@ -533,6 +547,7 @@ void loop()
 
                 //------------------ DEBUG 2 ------------------------*/
                 letter((String) inChar, LED_YELLOW);
+                mySerial.print(inChar);
                 //------------------ DEBUG 2 ------------------------*/
                 
                 // Daten in Puffer speichern
@@ -596,6 +611,8 @@ void loop()
     // RESET / INIT
     if (command == "*re#")
     {
+      mySerial.println();
+      mySerial.println("command: *re#");
       greenLED(OFF);
       yellowLED(OFF);
       
@@ -634,6 +651,7 @@ void loop()
       Serial.print("*re#");
       // write all data immediately!
       Serial.flush();
+      mySerial.println("answer: *re#");
 
       // e n a b l e  watchdog!
       /* to be ported    
@@ -713,6 +731,8 @@ void loop()
       // READ_SENSOR_7 (24 V supply)
       if (command == "*s7#")
       {
+        mySerial.println();
+        mySerial.println("command: *s7#");
         //------------------ DEBUG 2 ------------------------*/
         letter("z", LED_YELLOW);
         //------------------ DEBUG 2 ------------------------*/
@@ -755,6 +775,7 @@ void loop()
         
         //------------------ DEBUG 2 ------------------------*/
         letter("A", LED_YELLOW);
+        mySerial.println("answer: *127#");
         //------------------ DEBUG 2 ------------------------*/
       }
       else
@@ -763,6 +784,8 @@ void loop()
       {
         //------------------ DEBUG 2 ------------------------*/
         letter("u", LED_YELLOW);
+        mySerial.println();
+        mySerial.println("command: *s8#");
         //------------------ DEBUG 2 ------------------------*/
 
         greenLED(OFF);
@@ -803,6 +826,7 @@ void loop()
 
         //------------------ DEBUG 2 ------------------------*/
         letter("q", LED_YELLOW);
+        mySerial.println("answer: *128#");
         //------------------ DEBUG 2 ------------------------*/
       }
     /*     else
