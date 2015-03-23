@@ -191,10 +191,6 @@ String command = "";
 
 void setup()
 {
-  // set the data rate for the SoftwareSerial port
-  mySerial.begin(9600);
-  mySerial.println("Hello, world?");
-  
   /*------------------ DEBUG 1 ------------------------
   // set up the LCD's number of columns and rows: 
   lcd.begin(16, 2);
@@ -215,7 +211,7 @@ void setup()
 
 
   // initialize serial
-  Serial.begin(9600);
+  mySerial.begin(9600);
 
   // reserve 200 bytes for the inputString
   inputString.reserve(stringSize);
@@ -422,17 +418,14 @@ void loop()
 
   do
   {
-    if (Serial.available())
+    if (mySerial.available())
     {
-      mySerial.println("INFO: serial available");
-
       // get the new byte
-      char inChar = (char)Serial.read();
+      char inChar = (char)mySerial.read();
 
       // max String length reached?
       if (inputString.length() >= stringSize)
       {
-        mySerial.println("INFO: Max string length reached!");
         greenLED(OFF);
         yellowLED(OFF);
         
@@ -474,7 +467,6 @@ void loop()
 
             //------------------ DEBUG 2 ------------------------*/
             letter("*", LED_YELLOW);
-            mySerial.print("*");
             //------------------ DEBUG 2 ------------------------*/
 
 
@@ -505,7 +497,6 @@ void loop()
               
               //------------------ DEBUG 2 ------------------------*/
               letter("#", LED_YELLOW);
-              mySerial.print("#");
               //------------------ DEBUG 2 ------------------------*/
 
               // ja, dann terminator anhängen
@@ -547,7 +538,6 @@ void loop()
 
                 //------------------ DEBUG 2 ------------------------*/
                 letter((String) inChar, LED_YELLOW);
-                mySerial.print(inChar);
                 //------------------ DEBUG 2 ------------------------*/
                 
                 // Daten in Puffer speichern
@@ -611,8 +601,6 @@ void loop()
     // RESET / INIT
     if (command == "*re#")
     {
-      mySerial.println();
-      mySerial.println("command: *re#");
       greenLED(OFF);
       yellowLED(OFF);
       
@@ -648,10 +636,9 @@ void loop()
 
       // answer with "ok"
       // this answer is used to see if the robot is "on"
-      Serial.print("*re#");
+      mySerial.print("*re#");
       // write all data immediately!
-      Serial.flush();
-      mySerial.println("answer: *re#");
+      mySerial.flush();
 
       // e n a b l e  watchdog!
       /* to be ported    
@@ -731,8 +718,6 @@ void loop()
       // READ_SENSOR_7 (24 V supply)
       if (command == "*s7#")
       {
-        mySerial.println();
-        mySerial.println("command: *s7#");
         //------------------ DEBUG 2 ------------------------*/
         letter("z", LED_YELLOW);
         //------------------ DEBUG 2 ------------------------*/
@@ -742,7 +727,7 @@ void loop()
       
         // read the analog in value
         // print the results to the serial monitor:
-        if (Serial.print("*") < 1)
+        if (mySerial.print("*") < 1)
         {
           letter("y", LED_YELLOW);
           // ERROR!!
@@ -750,10 +735,10 @@ void loop()
           return;
         }
         // write all data immediately!
-        Serial.flush();
+        mySerial.flush();
 
 //        if (Serial.print( analogRead(SENSOR7) ) < 1)
-        if (Serial.print( 127 ) < 3)
+        if (mySerial.print( 127 ) < 3)
         {
           letter("x", LED_YELLOW);
           // ERROR!!
@@ -761,9 +746,9 @@ void loop()
           return;
         }
         // write all data immediately!
-        Serial.flush();
+        mySerial.flush();
         
-        if (Serial.print("#") < 1)
+        if (mySerial.print("#") < 1)
         {
           letter("w", LED_YELLOW);
           // ERROR!!
@@ -771,11 +756,10 @@ void loop()
           return;
         }
         // write all data immediately!
-        Serial.flush();
+        mySerial.flush();
         
         //------------------ DEBUG 2 ------------------------*/
         letter("A", LED_YELLOW);
-        mySerial.println("answer: *127#");
         //------------------ DEBUG 2 ------------------------*/
       }
       else
@@ -784,8 +768,6 @@ void loop()
       {
         //------------------ DEBUG 2 ------------------------*/
         letter("u", LED_YELLOW);
-        mySerial.println();
-        mySerial.println("command: *s8#");
         //------------------ DEBUG 2 ------------------------*/
 
         greenLED(OFF);
@@ -793,7 +775,7 @@ void loop()
       
         // read the analog in value
         // print the results to the serial monitor:
-        if (Serial.print("*") < 1)
+        if (mySerial.print("*") < 1)
         {
           letter("t", LED_YELLOW);
           // ERROR!!
@@ -801,10 +783,10 @@ void loop()
           return;
         }
         // write all data immediately!
-        Serial.flush();
+        mySerial.flush();
 
 //        if (Serial.print( analogRead(SENSOR8) ) < 1)
-        if (Serial.print( 128 ) < 3)
+        if (mySerial.print( 128 ) < 3)
         {
           letter("s", LED_YELLOW);
           // ERROR!!
@@ -812,9 +794,9 @@ void loop()
           return;
         }
         // write all data immediately!
-        Serial.flush();
+        mySerial.flush();
 
-        if (Serial.print("#") < 1)
+        if (mySerial.print("#") < 1)
         {
           letter("r", LED_YELLOW);
           // ERROR!!
@@ -822,11 +804,10 @@ void loop()
           return;
         }
         // write all data immediately!
-        Serial.flush();
+        mySerial.flush();
 
         //------------------ DEBUG 2 ------------------------*/
         letter("q", LED_YELLOW);
-        mySerial.println("answer: *128#");
         //------------------ DEBUG 2 ------------------------*/
       }
     /*     else
