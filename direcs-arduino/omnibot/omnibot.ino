@@ -725,6 +725,8 @@ void loop()
         if (Serial.print("*") < 1)
         {
           letter("y", LED_YELLOW);
+          // ERROR!!
+          delay(10000);
           return;
         }
         // write all data immediately!
@@ -734,6 +736,8 @@ void loop()
         if (Serial.print( 127 ) < 3)
         {
           letter("x", LED_YELLOW);
+          // ERROR!!
+          delay(10000);
           return;
         }
         // write all data immediately!
@@ -742,6 +746,8 @@ void loop()
         if (Serial.print("#") < 1)
         {
           letter("w", LED_YELLOW);
+          // ERROR!!
+          delay(10000);
           return;
         }
         // write all data immediately!
@@ -767,6 +773,8 @@ void loop()
         if (Serial.print("*") < 1)
         {
           letter("t", LED_YELLOW);
+          // ERROR!!
+          delay(10000);
           return;
         }
         // write all data immediately!
@@ -776,6 +784,8 @@ void loop()
         if (Serial.print( 128 ) < 3)
         {
           letter("s", LED_YELLOW);
+          // ERROR!!
+          delay(10000);
           return;
         }
         // write all data immediately!
@@ -784,6 +794,8 @@ void loop()
         if (Serial.print("#") < 1)
         {
           letter("r", LED_YELLOW);
+          // ERROR!!
+          delay(10000);
           return;
         }
         // write all data immediately!
