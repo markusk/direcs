@@ -172,11 +172,9 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 			// show in GUI / log to file (debugging)
 			emit message(QString("<em>%1 byte(s) received.</em>").arg(bytesRead));
 
-			//
-			// store/concat to QString!
-			//
 			// position in the string (index)
 			n = 0;
+
 			while (n < bytesRead)
 			{
 				// convert char to int
@@ -189,7 +187,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 				string.append(ch);
 
 				// show in GUI
-				emit message(QString("Byte No.%1: %2 (ASCII) %3 (INT)").arg(n+1).arg(buf[n]).arg((int)buf[n]));
+				emit message(QString("Byte No.%1: %2 (ASCII) / %3 (DEC) / %4 (HEX)").arg(n+1).arg(ch).arg(dec).arg(dec, 0, 16));
 
 				// counter +1
 				n++;
