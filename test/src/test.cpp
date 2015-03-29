@@ -440,7 +440,8 @@ void test::writeSettings()
 
 void test::appendLog(QString message)
 {
-	textEdit->append(message);
+	now = QDateTime::currentDateTime();
+	textEdit->append( QString("%1:%2:%3.%4:%5").arg(now.toString("hh")).arg(now.toString("mm")).arg(now.toString("ss")).arg(now.toString("zzz")).arg(message) );
 }
 
 

@@ -27,6 +27,7 @@
 #include <QtDebug>
 #include <QMutex>
 #include <QMetaType> // for qRegisterMetaType
+#include <QDateTime>
 
 //---------------------------------------------------------------------------------------------------
 
@@ -118,6 +119,7 @@ private:
 	  TimerThread *timerThread;
 	  SensorThread *sensorThread;
 	  QString serialPortPath; // something like /dev/ttyUSB0
+	  QDateTime now;
 
 	  /**
 	  For the integrated DIRECS laser module
