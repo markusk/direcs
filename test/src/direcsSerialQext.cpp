@@ -179,8 +179,14 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 			n = 0;
 			while (n < bytesRead)
 			{
+				// convert char to int
+				dec = (int) buf[n];
+
+				// convert chcar to QChar
+				ch = buf[n];
+
 				// build a QString for convenience
-				string.append(buf[n]);
+				string.append(ch);
 
 				// show in GUI
 				emit message(QString("Byte No.%1: %2 (ASCII) %3 (INT)").arg(n+1).arg(buf[n]).arg((int)buf[n]));
