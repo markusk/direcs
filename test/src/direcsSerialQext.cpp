@@ -195,7 +195,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 
 		} // bytes available
 
-	} while (startTime.elapsed() < serialReadTimout);
+	} while ((startTime.elapsed() < serialReadTimout) && (string.endsWith("#") == false));
 
 
 	// SUCCESS
