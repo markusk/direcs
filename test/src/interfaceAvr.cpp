@@ -178,7 +178,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 		// show in GUI / log to file (debugging)
 		// emit message(QString("String from readData: %1").arg(string));
 
-	} while ( (result != -1) && (string.right(1) != "#") );
+	} while ( (result != -1) && (string.endsWith(terminator) == false) );
 	// until no serial port read error and string does not end with terminator
 	// (timeout is checked in direcsSerial::readData and will set error code to -1 as well)
 
@@ -201,7 +201,7 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 	}
 
 
-	emit message(QString("ERROR at receiveString '%1': wrong format, (no *x#) called from %1").arg(string).arg(callingClassName));
+	emit message(QString("ERROR at receiveString '%1': wrong format (no *x#), called from %1").arg(string).arg(callingClassName));
 	return false;
 }
 
