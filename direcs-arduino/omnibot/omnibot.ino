@@ -44,10 +44,6 @@ Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
 //------------------ DEBUG 2 ------------------------*/
 
 
-#include <SoftwareSerial.h>
-SoftwareSerial mySerial(10, 11); // RX, TX
-
-
 
 
 //-------  from main.h  -------------------------------
@@ -211,7 +207,7 @@ void setup()
 
 
   // initialize serial
-  mySerial.begin(9600);
+  Serial.begin(9600);
 
   // reserve 200 bytes for the inputString
   inputString.reserve(stringSize);
@@ -418,10 +414,10 @@ void loop()
 
   do
   {
-    if (mySerial.available())
+    if (Serial.available())
     {
       // get the new byte
-      char inChar = (char)mySerial.read();
+      char inChar = (char)Serial.read();
 
       // max String length reached?
       if (inputString.length() >= stringSize)
@@ -636,9 +632,9 @@ void loop()
 
       // answer with "ok"
       // this answer is used to see if the robot is "on"
-      mySerial.print("*re#");
+      Serial.print("*re#");
       // write all data immediately!
-      mySerial.flush();
+      Serial.flush();
 
       // e n a b l e  watchdog!
       /* to be ported    
@@ -727,7 +723,7 @@ void loop()
       
         // read the analog in value
         // print the results to the serial monitor:
-        if (mySerial.print("*") < 1)
+        if (Serial.print("*") < 1)
         {
           letter("y", LED_YELLOW);
           // ERROR!!
@@ -735,10 +731,10 @@ void loop()
           return;
         }
         // write all data immediately!
-        mySerial.flush();
+        Serial.flush();
 
 //        if (Serial.print( analogRead(SENSOR7) ) < 1)
-        if (mySerial.print( 127 ) < 3)
+        if (Serial.print( 127 ) < 3)
         {
           letter("x", LED_YELLOW);
           // ERROR!!
@@ -746,9 +742,9 @@ void loop()
           return;
         }
         // write all data immediately!
-        mySerial.flush();
+        Serial.flush();
         
-        if (mySerial.print("#") < 1)
+        if (Serial.print("#") < 1)
         {
           letter("w", LED_YELLOW);
           // ERROR!!
@@ -756,7 +752,7 @@ void loop()
           return;
         }
         // write all data immediately!
-        mySerial.flush();
+        Serial.flush();
         
         //------------------ DEBUG 2 ------------------------*/
         letter("A", LED_YELLOW);
@@ -775,7 +771,7 @@ void loop()
       
         // read the analog in value
         // print the results to the serial monitor:
-        if (mySerial.print("*") < 1)
+        if (Serial.print("*") < 1)
         {
           letter("t", LED_YELLOW);
           // ERROR!!
@@ -783,10 +779,10 @@ void loop()
           return;
         }
         // write all data immediately!
-        mySerial.flush();
+        Serial.flush();
 
 //        if (Serial.print( analogRead(SENSOR8) ) < 1)
-        if (mySerial.print( 128 ) < 3)
+        if (Serial.print( 128 ) < 3)
         {
           letter("s", LED_YELLOW);
           // ERROR!!
@@ -794,9 +790,9 @@ void loop()
           return;
         }
         // write all data immediately!
-        mySerial.flush();
+        Serial.flush();
 
-        if (mySerial.print("#") < 1)
+        if (Serial.print("#") < 1)
         {
           letter("r", LED_YELLOW);
           // ERROR!!
@@ -804,7 +800,7 @@ void loop()
           return;
         }
         // write all data immediately!
-        mySerial.flush();
+        Serial.flush();
 
         //------------------ DEBUG 2 ------------------------*/
         letter("q", LED_YELLOW);
