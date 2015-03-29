@@ -43,7 +43,7 @@ DirecsSerialQext::DirecsSerialQext()
 	port = new QextSerialPort(serialPortName, settings);
 
 	// sets the read and write timeouts for the port to the given milliseconds.
-	port->setTimeout(serialReadTimout);
+//	port->setTimeout(serialReadTimout);
 }
 
 
