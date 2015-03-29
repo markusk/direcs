@@ -118,7 +118,7 @@ int DirecsSerialQext::writeData(int value, QString callingClassName)
 }
 
 
-int DirecsSerialQext::readData(QString &string, QString callingClassName)
+int DirecsSerialQext::readData(QString &str, QString callingClassName)
 {
 	QTime startTime; // For measuring elapsed time while waiting for an answer on the serial port
 	qint64 ba = 0; // bytes available on the serial port
@@ -131,7 +131,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 
 
 	//
-	string.clear();
+	str.clear();
 /*                                              < < < <  DEBUG TEST  DEBUG TEST
 	// just to make sure...
 	if (port->isOpen() == false)
@@ -184,7 +184,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 				ch = buf[n];
 
 				// build a QString for convenience
-				string.append(ch);
+				str.append(ch);
 
 				// show in GUI
 				emit message(QString("Byte No.%1: %2 (ASCII) / %3 (DEC) / %4 (HEX)").arg(n+1).arg(ch).arg(dec).arg(dec, 0, 16));
@@ -195,13 +195,13 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 
 		} // bytes available
 
-	} while ((startTime.elapsed() < serialReadTimout) && (string.endsWith("#") == false));
+	} while ((startTime.elapsed() < serialReadTimout) && (str.endsWith("#") == false));
 
 
 	// SUCCESS
-	if (string.length() > 0)
+	if (str.length() > 0)
 	{
-		return string.length();
+		return str.length();
 	}
 
 

@@ -68,11 +68,11 @@ class DirecsSerialQext : public QObject
 		/**
 		Reads data from the serial line
 
-		@param string is a QString of all available data
+		@param str is a QString of all available data
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
 		@return the number of bytes read.
 		 */
-		int readData(QString &string, QString callingClassName = "none");
+		int readData(QString &str, QString callingClassName = "none");
 
 		/**
 		 * Closes the serial port.
