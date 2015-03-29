@@ -132,7 +132,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 
 	//
 	string.clear();
-
+/*                                              < < < <  DEBUG TEST  DEBUG TEST
 	// just to make sure...
 	if (port->isOpen() == false)
 	{
@@ -140,7 +140,7 @@ int DirecsSerialQext::readData(QString &string, QString callingClassName)
 
 		return -1;
 	}
-
+*/
 	// check if the Arduino sends all data within an wanted time...
 	startTime.start();
 
