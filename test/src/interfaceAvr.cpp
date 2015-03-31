@@ -84,7 +84,7 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 
 	// send one byte to the serial port with direcsSerial
 	emit message( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeData((int) character, callingClassName); /// @todo convert character to int before!!
+	result = serialPort->writeData(&character, callingClassName);
 
 	if (result < 0)
 	{
@@ -168,40 +168,40 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 {
 	int result = 0;
+	unsigned char character;
+	QByteArray ba;
 
 
 	do
 	{
 		// reading one char. Must return 1 (one character succussfull read).
-		result = serialPort->readData(string, callingClassName);
+		result = serialPort->readData(&character, 1, callingClassName);
 
-		// show in GUI / log to file (debugging)
-		// emit message(QString("String from readData: %1").arg(string));
+		if (result == 1)
+		{
+			// append received char to byte array
+			ba.append(character);
+		}
 
-	} while ( (result != -1) && (string.endsWith(terminator) == false) );
-	// until no serial port read error and string does not end with terminator
-	// (timeout is checked in direcsSerial::readData and will set error code to -1 as well)
+	} while ( (result == 1) && (character != '#') );
 
-	if (result == -1)
+	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
-		// show in GUI / log to file (debugging)
-		emit message(QString("ERROR at receiveString called from %1").arg(callingClassName));
-
+		qDebug() << "error at receiveString called from" << callingClassName;
 		return false;
 	}
 
-	// show in GUI / log to file (debugging)
-	// emit message(QString("QString in InterfaceAvrreceiveString: %1").arg(string));
+	// copy chars to QString to pointer to return the QString
+	string = QString::fromUtf8(ba.data(), ba.length());
 
-	// check resulting string!
+	// check result!
 	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
 	{
 		return true;
 	}
 
 
-	emit message(QString("ERROR at receiveString '%1': wrong format (no *x#), called from %1").arg(string).arg(callingClassName));
 	return false;
 }
 
