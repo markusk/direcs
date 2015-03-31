@@ -26,7 +26,7 @@ InterfaceAvr::InterfaceAvr()
 	className = this->staticMetaObject.className();
 
 	// creating the serial port object
-	serialPort = new DirecsSerialQext();
+	serialPort = new DirecsSerial();
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
