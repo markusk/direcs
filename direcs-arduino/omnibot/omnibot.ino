@@ -234,6 +234,7 @@ void setup()
   // reserve 200 bytes for the inputString
   inputString.reserve(stringSize);
   command.reserve(stringSize);
+  stringComplete = false;  // Flag, String komplett empfangen
   //-------------------------------------------------------------------------------------------------
 
 
@@ -254,9 +255,6 @@ void setup()
 
   // this an input
   pinMode(analogInPin, INPUT);
-
-  // serial stuff
-  stringComplete = false;  // Flag, String komplett empfangen
 
   leftWheelCounter = 0;
   rightWheelCounter = 0;
@@ -420,18 +418,6 @@ void setup()
   unsigned char servoPWM123isOFF = 0;
   unsigned char servoPWM4isOFF   = 0;
   unsigned char servoPWM56isOFF  = 0;
-
-
-
-  //-----------------------------------------------------
-  //-----------------------------------------------------
-
-
-  // UART 3 konfigurieren
-  UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
-  UBRR3L = (unsigned char) USART_BAUD_SELECT;
-  // enable UART3 and Interrupts for RX and TX
-  UCSR3B |= (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
 
   //----------------------------------------------------------------------------
   // enable global interrupts
