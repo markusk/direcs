@@ -875,12 +875,12 @@ void loop()
     // check if micromag is connected to Atmel-Board (PB6 = high)
     if ( bit_is_set(PINB,PIN6) )
     {
-    put_string("*cc#");
+    Serial.print("*cc#");
     }
     else
     {
       // not connected.
-      put_string("*er#");
+      Serial.print("*er#");
     }
   }
   else
@@ -967,7 +967,8 @@ void loop()
     rightDistanceCounter = 0;
     rightWheelCounter = 0;
     // answer with "ok"
-    put_string("*ok#");
+    Serial.print("*ok#");
+    Serial.flush();
   }
   else
   // RESET_MOTOR_DISTANCE2
@@ -977,7 +978,8 @@ void loop()
     leftDistanceCounter = 0;
     leftWheelCounter = 0;
     // answer with "ok"
-    put_string("*ok#");
+    Serial.print("*ok#");
+    Serial.flush();
   }
   */
   else
@@ -1231,278 +1233,287 @@ void loop()
   }
 
   /*
-     else
-     // BOTSTOP
-     if (command == "*bst#")
-     {
-     // MOTOR 1 OFF
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // delete Motor1 B bit
-     PORTL &= ~(1<<PIN1);
-     // MOTOR 2 OFF
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // delete Motor2 B bit
-     PORTL &= ~(1<<PIN3);
-     // MOTOR 3 OFF
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // delete Motor3 B bit
-     PORTL &= ~(1<<PIN7);
-     // MOTOR 4 OFF
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // delete Motor4 B bit
-     PORTD &= ~(1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*bst#");
-     }
-     else
-     // BOTWAIT
-     if (command == "*bwa#")
-     {
-     // MOTOR 1 OFF
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // delete Motor1 B bit
-     PORTL &= ~(1<<PIN1);
-     // MOTOR 2 OFF
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // delete Motor2 B bit
-     PORTL &= ~(1<<PIN3);
-     // MOTOR 3 OFF
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // delete Motor3 B bit
-     PORTL &= ~(1<<PIN7);
-     // MOTOR 4 OFF
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // delete Motor4 B bit
-     PORTD &= ~(1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*bwa#");
-     }
-     else
-     // BOTSTART = "bot go"
-     if (command == "*bgo#")
-     {
-     // MOTOR 1 CLOCKWISE = forward
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // set Motor1 B bit
-     PORTL |= (1<<PIN1);
-     
-     // MOTOR 2 CLOCKWISE = forward
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // set Motor2 B bit
-     PORTL |= (1<<PIN3);
-     
-     // MOTOR 3 CLOCKWISE = forward
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // set Motor3 B bit
-     PORTL |= (1<<PIN7);
-     
-     // MOTOR 4 CLOCKWISE = forward
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // set Motor4 B bit
-     PORTD |= (1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*bgo#");
-     }
-     else
-     // BOTFORWARD = "bot drive forward"
-     if (command == "*bdf#")
-     {
-     // MOTOR 1 CLOCKWISE = forward
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // set Motor1 B bit
-     PORTL |= (1<<PIN1);
-     
-     // MOTOR 2 CLOCKWISE = forward
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // set Motor2 B bit
-     PORTL |= (1<<PIN3);
-     
-     // MOTOR 3 CLOCKWISE = forward
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // set Motor3 B bit
-     PORTL |= (1<<PIN7);
-     
-     // MOTOR 4 CLOCKWISE = forward
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // set Motor4 B bit
-     PORTD |= (1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*bdf#");
-     }
-     else
-     // BOTBACKWARD = "bot drive backward"
-     if (command == "*bdb#")
-     {
-     // MOTOR 1 COUNTERCLOCKWISE = backward
-     // set Motor1 A bit
-     PORTL |= (1<<PIN0);
-     // delete Motor1 B bit
-     PORTL &= ~(1<<PIN1);
-     
-     // MOTOR 2 COUNTERCLOCKWISE = backward
-     // set Motor2 A bit
-     PORTL |= (1<<PIN2);
-     // delete Motor2 B bit
-     PORTL &= ~(1<<PIN3);
-     
-     // MOTOR 3 COUNTERCLOCKWISE = backward
-     // set Motor3 A bit
-     PORTL |= (1<<PIN6);
-     // delete Motor3 B bit
-     PORTL &= ~(1<<PIN7);
-     
-     // MOTOR 4 COUNTERCLOCKWISE = backward
-     // set Motor4 A bit
-     PORTD |= (1<<PIN6);
-     // delete Motor4 B bit
-     PORTD &= ~(1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*bdb#");
-     }
-     else
-     // BOTLEFT = "bot drive left"
-     if (command == "*bdl#")
-     {
-     // MOTOR 1 COUNTERCLOCKWISE = backward
-     // set Motor1 A bit
-     PORTL |= (1<<PIN0);
-     // delete Motor1 B bit
-     PORTL &= ~(1<<PIN1);
-     
-     // MOTOR 2 CLOCKWISE = forward
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // set Motor2 B bit
-     PORTL |= (1<<PIN3);
-     
-     // MOTOR 3 CLOCKWISE = forward
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // set Motor3 B bit
-     PORTL |= (1<<PIN7);
-     
-     // MOTOR 4 COUNTERCLOCKWISE = backward
-     // set Motor4 A bit
-     PORTD |= (1<<PIN6);
-     // delete Motor4 B bit
-     PORTD &= ~(1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*bdl#");
-     }
-     else
-     // BOTRIGHT = "bot drive right"
-     if (command == "*bdr#")
-     {
-     // MOTOR 1 CLOCKWISE = forward
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // set Motor1 B bit
-     PORTL |= (1<<PIN1);
-     
-     // MOTOR 2 COUNTERCLOCKWISE = backward
-     // set Motor2 A bit
-     PORTL |= (1<<PIN2);
-     // delete Motor2 B bit
-     PORTL &= ~(1<<PIN3);
-     
-     // MOTOR 3 COUNTERCLOCKWISE = backward
-     // set Motor3 A bit
-     PORTL |= (1<<PIN6);
-     // delete Motor3 B bit
-     PORTL &= ~(1<<PIN7);
-     
-     // MOTOR 4 CLOCKWISE = forward
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // set Motor4 B bit
-     PORTD |= (1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*bdr#");
-     }
-     else
-     // TURNLEFT = "bot turn left"
-     if (command == "*btl#")
-     {
-     // MOTOR 1 CLOCKWISE = forward
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // set Motor1 B bit
-     PORTL |= (1<<PIN1);
-     
-     // MOTOR 2 COUNTERCLOCKWISE = backward
-     // set Motor2 A bit
-     PORTL |= (1<<PIN2);
-     // delete Motor2 B bit
-     PORTL &= ~(1<<PIN3);
-     
-     // MOTOR 3 CLOCKWISE = forward
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // set Motor3 B bit
-     PORTL |= (1<<PIN7);
-     
-     // MOTOR 4 COUNTERCLOCKWISE = backward
-     // set Motor4 A bit
-     PORTD |= (1<<PIN6);
-     // delete Motor4 B bit
-     PORTD &= ~(1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*btl#");
-     }
-     else
-     // TURNRIGHT = "bot turn right"
-     if (command == "*btr#")
-     {
-     // MOTOR 1 COUNTERCLOCKWISE = backward
-     // set Motor1 A bit
-     PORTL |= (1<<PIN0);
-     // delete Motor1 B bit
-     PORTL &= ~(1<<PIN1);
-     
-     // MOTOR 2 CLOCKWISE = forward
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // set Motor2 B bit
-     PORTL |= (1<<PIN3);
-     
-     // MOTOR 3 COUNTERCLOCKWISE = backward
-     // set Motor3 A bit
-     PORTL |= (1<<PIN6);
-     // delete Motor3 B bit
-     PORTL &= ~(1<<PIN7);
-     
-     // MOTOR 4 CLOCKWISE = forward
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // set Motor4 B bit
-     PORTD |= (1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*btr#");
+  else
+  // BOTSTOP
+  if (command == "*bst#")
+  {
+  // MOTOR 1 OFF
+  // delete Motor1 A bit
+  PORTL &= ~(1<<PIN0);
+  // delete Motor1 B bit
+  PORTL &= ~(1<<PIN1);
+  // MOTOR 2 OFF
+  // delete Motor2 A bit
+  PORTL &= ~(1<<PIN2);
+  // delete Motor2 B bit
+  PORTL &= ~(1<<PIN3);
+  // MOTOR 3 OFF
+  // delete Motor3 A bit
+  PORTL &= ~(1<<PIN6);
+  // delete Motor3 B bit
+  PORTL &= ~(1<<PIN7);
+  // MOTOR 4 OFF
+  // delete Motor4 A bit
+  PORTD &= ~(1<<PIN6);
+  // delete Motor4 B bit
+  PORTD &= ~(1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*bst#");
+    Serial.flush();
+  }
+  else
+  // BOTWAIT
+  if (command == "*bwa#")
+  {
+  // MOTOR 1 OFF
+  // delete Motor1 A bit
+  PORTL &= ~(1<<PIN0);
+  // delete Motor1 B bit
+  PORTL &= ~(1<<PIN1);
+  // MOTOR 2 OFF
+  // delete Motor2 A bit
+  PORTL &= ~(1<<PIN2);
+  // delete Motor2 B bit
+  PORTL &= ~(1<<PIN3);
+  // MOTOR 3 OFF
+  // delete Motor3 A bit
+  PORTL &= ~(1<<PIN6);
+  // delete Motor3 B bit
+  PORTL &= ~(1<<PIN7);
+  // MOTOR 4 OFF
+  // delete Motor4 A bit
+  PORTD &= ~(1<<PIN6);
+  // delete Motor4 B bit
+  PORTD &= ~(1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*bwa#");
+    Serial.flush();
+  }
+  else
+  // BOTSTART = "bot go"
+  if (command == "*bgo#")
+  {
+  // MOTOR 1 CLOCKWISE = forward
+  // delete Motor1 A bit
+  PORTL &= ~(1<<PIN0);
+  // set Motor1 B bit
+  PORTL |= (1<<PIN1);
+
+  // MOTOR 2 CLOCKWISE = forward
+  // delete Motor2 A bit
+  PORTL &= ~(1<<PIN2);
+  // set Motor2 B bit
+  PORTL |= (1<<PIN3);
+
+  // MOTOR 3 CLOCKWISE = forward
+  // delete Motor3 A bit
+  PORTL &= ~(1<<PIN6);
+  // set Motor3 B bit
+  PORTL |= (1<<PIN7);
+
+  // MOTOR 4 CLOCKWISE = forward
+  // delete Motor4 A bit
+  PORTD &= ~(1<<PIN6);
+  // set Motor4 B bit
+  PORTD |= (1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*bgo#");
+    Serial.flush();
+  }
+  else
+  // BOTFORWARD = "bot drive forward"
+  if (command == "*bdf#")
+  {
+  // MOTOR 1 CLOCKWISE = forward
+  // delete Motor1 A bit
+  PORTL &= ~(1<<PIN0);
+  // set Motor1 B bit
+  PORTL |= (1<<PIN1);
+
+  // MOTOR 2 CLOCKWISE = forward
+  // delete Motor2 A bit
+  PORTL &= ~(1<<PIN2);
+  // set Motor2 B bit
+  PORTL |= (1<<PIN3);
+
+  // MOTOR 3 CLOCKWISE = forward
+  // delete Motor3 A bit
+  PORTL &= ~(1<<PIN6);
+  // set Motor3 B bit
+  PORTL |= (1<<PIN7);
+
+  // MOTOR 4 CLOCKWISE = forward
+  // delete Motor4 A bit
+  PORTD &= ~(1<<PIN6);
+  // set Motor4 B bit
+  PORTD |= (1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*bdf#");
+    Serial.flush();
+  }
+  else
+  // BOTBACKWARD = "bot drive backward"
+  if (command == "*bdb#")
+  {
+  // MOTOR 1 COUNTERCLOCKWISE = backward
+  // set Motor1 A bit
+  PORTL |= (1<<PIN0);
+  // delete Motor1 B bit
+  PORTL &= ~(1<<PIN1);
+
+  // MOTOR 2 COUNTERCLOCKWISE = backward
+  // set Motor2 A bit
+  PORTL |= (1<<PIN2);
+  // delete Motor2 B bit
+  PORTL &= ~(1<<PIN3);
+
+  // MOTOR 3 COUNTERCLOCKWISE = backward
+  // set Motor3 A bit
+  PORTL |= (1<<PIN6);
+  // delete Motor3 B bit
+  PORTL &= ~(1<<PIN7);
+
+  // MOTOR 4 COUNTERCLOCKWISE = backward
+  // set Motor4 A bit
+  PORTD |= (1<<PIN6);
+  // delete Motor4 B bit
+  PORTD &= ~(1<<PIN7);
+
+  // answer with "ok"
+  Serial.print("*bdb#");
+    Serial.flush();
+  }
+  else
+  // BOTLEFT = "bot drive left"
+  if (command == "*bdl#")
+  {
+  // MOTOR 1 COUNTERCLOCKWISE = backward
+  // set Motor1 A bit
+  PORTL |= (1<<PIN0);
+  // delete Motor1 B bit
+  PORTL &= ~(1<<PIN1);
+
+  // MOTOR 2 CLOCKWISE = forward
+  // delete Motor2 A bit
+  PORTL &= ~(1<<PIN2);
+  // set Motor2 B bit
+  PORTL |= (1<<PIN3);
+
+  // MOTOR 3 CLOCKWISE = forward
+  // delete Motor3 A bit
+  PORTL &= ~(1<<PIN6);
+  // set Motor3 B bit
+  PORTL |= (1<<PIN7);
+
+  // MOTOR 4 COUNTERCLOCKWISE = backward
+  // set Motor4 A bit
+  PORTD |= (1<<PIN6);
+  // delete Motor4 B bit
+  PORTD &= ~(1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*bdl#");
+    Serial.flush();
+  }
+  else
+  // BOTRIGHT = "bot drive right"
+  if (command == "*bdr#")
+  {
+  // MOTOR 1 CLOCKWISE = forward
+  // delete Motor1 A bit
+  PORTL &= ~(1<<PIN0);
+  // set Motor1 B bit
+  PORTL |= (1<<PIN1);
+
+  // MOTOR 2 COUNTERCLOCKWISE = backward
+  // set Motor2 A bit
+  PORTL |= (1<<PIN2);
+  // delete Motor2 B bit
+  PORTL &= ~(1<<PIN3);
+
+  // MOTOR 3 COUNTERCLOCKWISE = backward
+  // set Motor3 A bit
+  PORTL |= (1<<PIN6);
+  // delete Motor3 B bit
+  PORTL &= ~(1<<PIN7);
+
+  // MOTOR 4 CLOCKWISE = forward
+  // delete Motor4 A bit
+  PORTD &= ~(1<<PIN6);
+  // set Motor4 B bit
+  PORTD |= (1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*bdr#");
+    Serial.flush();
+  }
+  else
+  // TURNLEFT = "bot turn left"
+  if (command == "*btl#")
+  {
+  // MOTOR 1 CLOCKWISE = forward
+  // delete Motor1 A bit
+  PORTL &= ~(1<<PIN0);
+  // set Motor1 B bit
+  PORTL |= (1<<PIN1);
+
+  // MOTOR 2 COUNTERCLOCKWISE = backward
+  // set Motor2 A bit
+  PORTL |= (1<<PIN2);
+  // delete Motor2 B bit
+  PORTL &= ~(1<<PIN3);
+
+  // MOTOR 3 CLOCKWISE = forward
+  // delete Motor3 A bit
+  PORTL &= ~(1<<PIN6);
+  // set Motor3 B bit
+  PORTL |= (1<<PIN7);
+
+  // MOTOR 4 COUNTERCLOCKWISE = backward
+  // set Motor4 A bit
+  PORTD |= (1<<PIN6);
+  // delete Motor4 B bit
+  PORTD &= ~(1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*btl#");
+    Serial.flush();
+  }
+  else
+  // TURNRIGHT = "bot turn right"
+  if (command == "*btr#")
+  {
+  // MOTOR 1 COUNTERCLOCKWISE = backward
+  // set Motor1 A bit
+  PORTL |= (1<<PIN0);
+  // delete Motor1 B bit
+  PORTL &= ~(1<<PIN1);
+
+  // MOTOR 2 CLOCKWISE = forward
+  // delete Motor2 A bit
+  PORTL &= ~(1<<PIN2);
+  // set Motor2 B bit
+  PORTL |= (1<<PIN3);
+
+  // MOTOR 3 COUNTERCLOCKWISE = backward
+  // set Motor3 A bit
+  PORTL |= (1<<PIN6);
+  // delete Motor3 B bit
+  PORTL &= ~(1<<PIN7);
+
+  // MOTOR 4 CLOCKWISE = forward
+  // delete Motor4 A bit
+  PORTD &= ~(1<<PIN6);
+  // set Motor4 B bit
+  PORTD |= (1<<PIN7);
+
+    // answer with "ok"
+    Serial.print("*btr#");
+    Serial.flush();
   }
 */    // to be ported    
 
@@ -1541,7 +1552,7 @@ void sendUInt(uint16_t value)
    
    
    // send answer
-   put_string(stringbuffer);
+   Serial.print(stringbuffer);
    */  // to be ported    
 }
 
