@@ -979,7 +979,7 @@ void loop()
   if (command == "*mp1of#")
   {
     digitalWrite(motor1aPin, LOW);
-    digitalWrite(motor1bPin, HIGH);
+    digitalWrite(motor1bPin, LOW);
     Serial.print("*mp1of#");
     Serial.flush();
   }
@@ -1021,18 +1021,16 @@ void loop()
      setPWMwidth(1, atoi(stringbuffer));
      // answer with "ok"
      put_string("*mv1#");
-     }
-     else
-     // MOTOR2_OFF
-     if (command == "*mp2of#")
-     {
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // delete Motor2 B bit
-     PORTL &= ~(1<<PIN3);
-     // answer with "ok"
-     put_string("*mp2of#");
-     }
+     }*/
+  else
+  // MOTOR2_OFF
+  if (command == "*mp2of#")
+  {
+    digitalWrite(motor2aPin, LOW);
+    digitalWrite(motor2bPin, LOW);
+    Serial.print("*mp2of#");
+    Serial.flush();
+  }/*
      else
      // MOTOR 2 CLOCKWISE = forward
      if (command == "*md2cw#")
@@ -1070,18 +1068,16 @@ void loop()
      setPWMwidth(2, atoi(stringbuffer));
      // answer with "ok"
      put_string("*mv2#");
-     }
-     else
-     // MOTOR3_OFF
-     if (command == "*mp3of#")
-     {
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // delete Motor3 B bit
-     PORTL &= ~(1<<PIN7);
-     // answer with "ok"
-     put_string("*mp3of#");
-     }
+     }*/
+  else
+  // MOTOR3_OFF
+  if (command == "*mp3of#")
+  {
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, LOW);
+    Serial.print("*mp3of#");
+    Serial.flush();
+  }/*
      else
      // MOTOR 3 CLOCKWISE = forward
      if (command == "*md3cw#")
