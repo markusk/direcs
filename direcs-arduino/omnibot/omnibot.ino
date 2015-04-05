@@ -1022,21 +1022,18 @@ void loop()
     digitalWrite(motor1bPin, LOW);
     Serial.print("*md1cc#");
     Serial.flush();
-  }/*
-     else
-     // MOTOR1_SPEED_SET
-     if (strncmp(stringbuffer, "*mv1", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string and set speed
-     setPWMwidth(1, atoi(stringbuffer));
-     // answer with "ok"
-     put_string("*mv1#");
-     }*/
+  }
+  else
+  // MOTOR1_SPEED_SET
+  if (command.startsWith("*mv1"))
+  {
+    // get the 3 digits which contain the speed
+    command = command.substring(5, 3);
+    // get value from string and set speed
+    analogWrite(motor1PWMPin, command.toInt());
+    Serial.print("*mv1#");
+    Serial.flush();
+  }
   else
   // MOTOR2_OFF
   if (command == "*mp2of#")
