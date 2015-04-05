@@ -1,7 +1,7 @@
 // give it a name:
-int ledGreen  =  2;
-int ledYellow =  3;
-int relaisPin =  4;
+int ledGreen  =   2;
+int ledYellow =   3;
+int relaisPin =   4;
 int motor1aPin =  5;
 int motor1bPin =  6;
 int motor2aPin =  7;
@@ -658,7 +658,7 @@ void loop()
     digitalWrite(motor2bPin, LOW);
     digitalWrite(motor3aPin, LOW);
     digitalWrite(motor3bPin, LOW);
-   
+    
     // flashlight off
     relais(OFF);
      
@@ -950,23 +950,26 @@ void loop()
     // answer with "ok"
     put_string("*ok#");
   }
+  */
   else
   // FLASHLIGHT ON
-     if (strcmp(stringbuffer, "*f0on#") == 0)
+  if (command == "*f0on#")
   {
     relais(ON);
     yellowLED(ON);
-     put_string("*f0on#");
+    Serial.print("*f0on#");
+    Serial.flush();
   }
   else
   // FLASHLIGHT OFF
-     if (strcmp(stringbuffer, "*f0of#") == 0)
+  if (command == "*f0of#")
   {
     relais(OFF);
     yellowLED(OFF);
-     put_string("*f0of#");
+    Serial.print("*f0of#");
+    Serial.flush();
   }
-     else
+/*    else
      // MOTOR1_OFF
      if (strcmp(stringbuffer, "*mp1of#") == 0)
      {
