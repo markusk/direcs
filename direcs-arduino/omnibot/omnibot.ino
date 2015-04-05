@@ -1,7 +1,11 @@
 // give it a name:
 int ledGreen     =  2;
 int ledYellow    =  3;
+// Pin 13 has an LED connected on most Arduino boards.
+int ledRed     = 13; /// @todo change name (color)
+
 int relaisPin    =  4;
+
 int motor1aPin   =  5;
 int motor1bPin   =  6;
 int motor1DirPin =  7;
@@ -19,8 +23,15 @@ int motor4bPin   = 18;
 int motor4DirPin = 19;
 int motor4PWMPin = 20;
 
-// Pin 13 has an LED connected on most Arduino boards.
-int ledRed     = 13; /// @todo change name (color)
+int RGBLED1red   = 21;
+int RGBLED1green = 22;
+int RGBLED1blue  = 23;
+int RGBLED2red   = 24;
+int RGBLED2green = 25;
+int RGBLED2blue  = 26;
+int RGBLED3red   = 27;
+int RGBLED3green = 28;
+int RGBLED3blue  = 29;
 
 // test:
 const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
@@ -268,6 +279,18 @@ void setup()
   pinMode(motor4bPin, OUTPUT);
   pinMode(motor4DirPin, OUTPUT);
   pinMode(motor4PWMPin, OUTPUT);
+
+  pinMode(RGBLED1red, OUTPUT;
+  pinMode(RGBLED1green, OUTPUT);
+  pinMode(RGBLED1blue, OUTPUT);
+
+  pinMode(RGBLED2red, OUTPUT;
+  pinMode(RGBLED2green, OUTPUT);
+  pinMode(RGBLED2blue, OUTPUT);
+
+  pinMode(RGBLED3red, OUTPUT;
+  pinMode(RGBLED3green, OUTPUT);
+  pinMode(RGBLED3blue, OUTPUT);
   //-------------------------------------------------------------------------------------------------
 
 
@@ -335,9 +358,24 @@ void setup()
   digitalWrite(motor4bPin, LOW);
   digitalWrite(motor4DirPin, LOW);  
   digitalWrite(motor4PWMPin, LOW);
+
+
   //-------------------------------------------------------------------------------------------------
-   
-   
+  // turn all RGB LEDs
+  //-------------------------------------------------------------------------------------------------
+  digitalWrite(RGBLED1red, LOW);
+  digitalWrite(RGBLED1green, LOW);
+  digitalWrite(RGBLED1blue, LOW);
+
+  digitalWrite(RGBLED2red, LOW);
+  digitalWrite(RGBLED2green, LOW);
+  digitalWrite(RGBLED2blue, LOW);
+
+  digitalWrite(RGBLED3red, LOW);
+  digitalWrite(RGBLED3green, LOW);
+  digitalWrite(RGBLED3blue, LOW);
+
+      
   /* omnibot to pe ported
    
   //-------------------------------------------------------------
@@ -584,11 +622,6 @@ void loop()
   // delete flag
   stringComplete = false;
 
-  /* to be ported    
-  // Everything's fine, so reset the watchdog timer (wdt).
-  //  wdt_reset();
-  */
-
   //--------------------------
   // check what was received
   //--------------------------
@@ -617,6 +650,19 @@ void loop()
     digitalWrite(motor2bPin, LOW);
     digitalWrite(motor3aPin, LOW);
     digitalWrite(motor3bPin, LOW);
+
+    // RGB LEDs off
+    digitalWrite(RGBLED1red, LOW);
+    digitalWrite(RGBLED1green, LOW);
+    digitalWrite(RGBLED1blue, LOW);
+
+    digitalWrite(RGBLED2red, LOW);
+    digitalWrite(RGBLED2green, LOW);
+    digitalWrite(RGBLED2blue, LOW);
+
+    digitalWrite(RGBLED3red, LOW);
+    digitalWrite(RGBLED3green, LOW);
+    digitalWrite(RGBLED3blue, LOW);
      
     // flashlight off
     relais(OFF);
@@ -624,23 +670,11 @@ void loop()
     // red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
     redLED(OFF);
 
-    // setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-    // setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-    // setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-    // setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-    // setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-    // setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-
     // answer with "ok"
     // this answer is used to see if the robot is "on"
     Serial.print("*re#");
     // write all data immediately!
     Serial.flush();
-
-    // e n a b l e  watchdog!
-    /* to be ported    
-     watchdog(ENABLE);
-     */
   }
   else
   // SLEEP (and turn off watchdog)
@@ -1129,11 +1163,7 @@ void loop()
     Serial.print("*mv0#");
     Serial.flush();
   }
-
-
-
-/* to be ported to Arduino
-
+  else
   // RGB LED 1
   if (command == "*rgb1", 5))
   {
@@ -1253,7 +1283,6 @@ void loop()
     // answer with "ok"
     put_string("*rgb6#");
   }
-*/
 
   /*
      else
@@ -1630,14 +1659,6 @@ void relais(uint8_t state)
   }
 }
 
-
-/* not needed anymore. replace calls w/ delay(n);
- void long_delay(uint16_t ms)
- {
- for (; ms>0; ms--) _delay_ms(1);
- }
- */
- 
 
 // print a letter on the adafruit bi-color 8x8 led matrix
 void letter(String text, uint16_t color)
