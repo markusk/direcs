@@ -969,17 +969,16 @@ void loop()
     Serial.print("*f0of#");
     Serial.flush();
   }
-/*    else
-     // MOTOR1_OFF
-     if (strcmp(stringbuffer, "*mp1of#") == 0)
-     {
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // delete Motor1 B bit
-     PORTL &= ~(1<<PIN1);
-     // answer with "ok"
-     put_string("*mp1of#");
-     }
+  else
+  // MOTOR1_OFF
+  if (command == "*mp1of#")
+  {
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, HIGH);
+    Serial.print("*mp1of#");
+    Serial.flush();
+  }
+  /*
      else
      // MOTOR 1 CLOCKWISE = forward
      if (command == "*md1cw#")
