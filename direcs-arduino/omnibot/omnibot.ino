@@ -14,6 +14,10 @@ int motor3aPin   = 13;
 int motor3bPin   = 14;
 int motor3DirPin = 15;
 int motor3PWMPin = 16;
+int motor4aPin   = 17;
+int motor4bPin   = 18;
+int motor4DirPin = 19;
+int motor4PWMPin = 20;
 
 // Pin 13 has an LED connected on most Arduino boards.
 int ledRed     = 13; /// @todo change name (color)
@@ -244,12 +248,26 @@ void setup()
   pinMode(ledRed, OUTPUT);
   pinMode(ledGreen, OUTPUT);
   pinMode(ledYellow, OUTPUT);
+
   pinMode(motor1aPin, OUTPUT);
   pinMode(motor1bPin, OUTPUT);
+  pinMode(motor1DirPin, OUTPUT);
+  pinMode(motor1PWMPin, OUTPUT);
+
   pinMode(motor2aPin, OUTPUT);
   pinMode(motor2bPin, OUTPUT);
+  pinMode(motor2DirPin, OUTPUT);
+  pinMode(motor2PWMPin, OUTPUT);
+
   pinMode(motor3aPin, OUTPUT);
   pinMode(motor3bPin, OUTPUT);
+  pinMode(motor3DirPin, OUTPUT);
+  pinMode(motor3PWMPin, OUTPUT);
+
+  pinMode(motor4aPin, OUTPUT);
+  pinMode(motor4bPin, OUTPUT);
+  pinMode(motor4DirPin, OUTPUT);
+  pinMode(motor4PWMPin, OUTPUT);
   //-------------------------------------------------------------------------------------------------
 
 
@@ -334,6 +352,12 @@ void setup()
   digitalWrite(motor3bPin, LOW);
   digitalWrite(motor3DirPin, LOW);  
   digitalWrite(motor3PWMPin, LOW);
+
+  digitalWrite(motor4aPin, LOW);
+  digitalWrite(motor4bPin, LOW);
+  digitalWrite(motor4DirPin, LOW);  
+  digitalWrite(motor4PWMPin, LOW);
+  //-------------------------------------------------------------------------------------------------
    
    
   /* omnibot to pe ported
@@ -1105,30 +1129,25 @@ void loop()
      setPWMwidth(3, atoi(stringbuffer));
      // answer with "ok"
      put_string("*mv3#");
-     }
-     else
-     // MOTOR4_OFF
-     if (command == "*mp4of#")
-     {
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // delete Motor4 B bit
-     PORTD &= ~(1<<PIN7);
-     // answer with "ok"
-     put_string("*mp4of#");
-     }
-     else
-     // MOTOR 4 CLOCKWISE = forward
-     if (command == "*md4cw#")
-     {
-     // delete Motor4 A bit
-     PORTD &= ~(1<<PIN6);
-     // set Motor4 B bit
-     PORTD |= (1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*md4cw#");
-     }
+     }*/
+  else
+  // MOTOR4_OFF
+  if (command == "*mp4of#")
+  {
+    digitalWrite(motor4aPin, LOW);
+    digitalWrite(motor4bPin, LOW);
+    Serial.print("*mp4of#");
+    Serial.flush();
+  }
+  else
+  // MOTOR 4 CLOCKWISE = forward
+  if (command == "*md4cw#")
+  {
+    digitalWrite(motor4aPin, LOW);
+    digitalWrite(motor4bPin, HIGH);
+    Serial.print("*md4cw#");
+    Serial.flush();
+  }/*
      else
      // MOTOR 4 COUNTERCLOCKWISE = backward
      if (command == "*md4cc#")
