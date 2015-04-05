@@ -1231,32 +1231,16 @@ void loop()
     Serial.print("*rgb6#");
     Serial.flush();
   }
-
-  /*
   else
   // BOTSTOP
   if (command == "*bst#")
   {
-    // MOTOR 1 OFF
-    // delete Motor1 A bit
-    PORTL &= ~(1<<PIN0);
-    // delete Motor1 B bit
-    PORTL &= ~(1<<PIN1);
-    // MOTOR 2 OFF
-    // delete Motor2 A bit
-    PORTL &= ~(1<<PIN2);
-    // delete Motor2 B bit
-    PORTL &= ~(1<<PIN3);
-    // MOTOR 3 OFF
-    // delete Motor3 A bit
-    PORTL &= ~(1<<PIN6);
-    // delete Motor3 B bit
-    PORTL &= ~(1<<PIN7);
-    // MOTOR 4 OFF
-    // delete Motor4 A bit
-    PORTD &= ~(1<<PIN6);
-    // delete Motor4 B bit
-    PORTD &= ~(1<<PIN7);
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, LOW);
+    digitalWrite(motor2aPin, LOW);
+    digitalWrite(motor2bPin, LOW);
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, LOW);
 
     // answer with "ok"
     Serial.print("*bst#");
@@ -1266,26 +1250,12 @@ void loop()
   // BOTWAIT
   if (command == "*bwa#")
   {
-    // MOTOR 1 OFF
-    // delete Motor1 A bit
-    PORTL &= ~(1<<PIN0);
-    // delete Motor1 B bit
-    PORTL &= ~(1<<PIN1);
-    // MOTOR 2 OFF
-    // delete Motor2 A bit
-    PORTL &= ~(1<<PIN2);
-    // delete Motor2 B bit
-    PORTL &= ~(1<<PIN3);
-    // MOTOR 3 OFF
-    // delete Motor3 A bit
-    PORTL &= ~(1<<PIN6);
-    // delete Motor3 B bit
-    PORTL &= ~(1<<PIN7);
-    // MOTOR 4 OFF
-    // delete Motor4 A bit
-    PORTD &= ~(1<<PIN6);
-    // delete Motor4 B bit
-    PORTD &= ~(1<<PIN7);
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, LOW);
+    digitalWrite(motor2aPin, LOW);
+    digitalWrite(motor2bPin, LOW);
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, LOW);
 
     // answer with "ok"
     Serial.print("*bwa#");
@@ -1295,31 +1265,16 @@ void loop()
   // BOTSTART = "bot go"
   if (command == "*bgo#")
   {
-    // MOTOR 1 CLOCKWISE = forward
-    // delete Motor1 A bit
-    PORTL &= ~(1<<PIN0);
-    // set Motor1 B bit
-    PORTL |= (1<<PIN1);
+    // motor 1 off
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, LOW);
+    // motor 2 = left = backward = counterclockwise
+    digitalWrite(motor2aPin, HIGH);
+    digitalWrite(motor2bPin, LOW);
+    // motor 3 = right = forward = clockwise
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, HIGH);
 
-    // MOTOR 2 CLOCKWISE = forward
-    // delete Motor2 A bit
-    PORTL &= ~(1<<PIN2);
-    // set Motor2 B bit
-    PORTL |= (1<<PIN3);
-
-    // MOTOR 3 CLOCKWISE = forward
-    // delete Motor3 A bit
-    PORTL &= ~(1<<PIN6);
-    // set Motor3 B bit
-    PORTL |= (1<<PIN7);
-
-    // MOTOR 4 CLOCKWISE = forward
-    // delete Motor4 A bit
-    PORTD &= ~(1<<PIN6);
-    // set Motor4 B bit
-    PORTD |= (1<<PIN7);
-
-    // answer with "ok"
     Serial.print("*bgo#");
     Serial.flush();
   }
@@ -1327,34 +1282,20 @@ void loop()
   // BOTFORWARD = "bot drive forward"
   if (command == "*bdf#")
   {
-    // MOTOR 1 CLOCKWISE = forward
-    // delete Motor1 A bit
-    PORTL &= ~(1<<PIN0);
-    // set Motor1 B bit
-    PORTL |= (1<<PIN1);
-
-    // MOTOR 2 CLOCKWISE = forward
-    // delete Motor2 A bit
-    PORTL &= ~(1<<PIN2);
-    // set Motor2 B bit
-    PORTL |= (1<<PIN3);
-
-    // MOTOR 3 CLOCKWISE = forward
-    // delete Motor3 A bit
-    PORTL &= ~(1<<PIN6);
-    // set Motor3 B bit
-    PORTL |= (1<<PIN7);
-
-    // MOTOR 4 CLOCKWISE = forward
-    // delete Motor4 A bit
-    PORTD &= ~(1<<PIN6);
-    // set Motor4 B bit
-    PORTD |= (1<<PIN7);
+    // motor 1 off
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, LOW);
+    // motor 2 = left = backward = counterclockwise
+    digitalWrite(motor2aPin, HIGH);
+    digitalWrite(motor2bPin, LOW);
+    // motor 3 = right = forward = clockwise
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, HIGH);
 
     // answer with "ok"
     Serial.print("*bdf#");
     Serial.flush();
-  }
+  } /*
   else
   // BOTBACKWARD = "bot drive backward"
   if (command == "*bdb#")
