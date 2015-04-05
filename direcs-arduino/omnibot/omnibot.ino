@@ -399,24 +399,22 @@ void setup()
   PRR0 &= ~(1<<PRSPI);
 
   init_spi();
-
+*/
 
   // initialize the PWM timer (with compare value 100)  [this is the motor speed!]
   // This value is changed by the mrs programm, when value is read from ini-file!
   // 100 * 64 µs = 6400 µs = 6,4 ms
   //
-  // drive motor 1
-  setPWMwidth(1, 60);
-  // drive motor 2
-  setPWMwidth(2, 60);
-  // drive motor 3
-  setPWMwidth(3, 60);
-  // drive motor 4
-  setPWMwidth(4, 60);
+  // PWM motor 1
+  analogWrite(motor1PWMPin, 60);
+  // PWM motor 2
+  analogWrite(motor2PWMPin, 60);
+  // PWM motor 3
+  analogWrite(motor3PWMPin, 60);
+  // PWM motor 4
+  analogWrite(motor4PWMPin, 60);
 
-  // start the motor PWM timers
-  startPWM();
-
+/*
   // initialize the servo PWM timers
   // This value will be changed by the direcs programm, when value is read from ini-file!
   setServoPosition(1, 0);
